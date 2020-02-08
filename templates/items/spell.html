@@ -1,0 +1,188 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary">
+                <li>
+                    {{labels.level}}
+                </li>
+                <li>
+                    {{labels.school}}
+                </li>
+                <li>
+                    <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "systems/pf1/templates/items/parts/item-description.html"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">Spell Details</h3>
+
+            {{!-- Spellbook --}}
+            {{#if owner}}
+            <div class="form-group">
+                <label>Spellbook</label>
+                <select name="data.spellbook">
+                    {{#select data.spellbook}}
+                    {{#each spellbooks as |spellbook a|}}
+                    <option value="{{a}}">{{spellbook.name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            {{else}}
+            <input type="hidden" name="data.spellbook" value="primary"/>
+            {{/if}}
+
+            {{!-- Spell Level --}}
+            <div class="form-group">
+                <label>Spell Level</label>
+                <select name="data.level" data-dtype="Number">
+                    {{#select data.level}}
+                    {{#each config.spellLevels as |name lvl|}}
+                    <option value="{{lvl}}">{{name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+            {{!-- Spell School --}}
+            <div class="form-group">
+                <label>Spell School</label>
+                <select name="data.school">
+                    {{#select data.school}}
+                    {{#each config.spellSchools as |name sch|}}
+                    <option value="{{sch}}">{{name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+            {{!-- Spell Components --}}
+            <div class="spell-components form-group stacked">
+                <label>Spell Components</label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.components.verbal" {{checked data.components.verbal}}/> Verbal
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.components.somatic" {{checked data.components.somatic}}/> Somatic
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.components.material" {{checked data.components.material}}/> Material
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.components.focus" {{checked data.components.focus}}/> Focus
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.components.divineFocus" {{checked data.components.divineFocus}}/> Divine Focus
+                </label>
+            </div>
+
+            {{!-- Misc --}}
+            <div class="spell-misc form-group stacked">
+                <label>Misc</label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.sr" {{checked data.sr}}/> Spell Resistance
+                </label>
+            </div>
+
+            {{!-- Material Components --}}
+            <div class="form-group stacked">
+                <label>Spellcasting Materials</label>
+                <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
+                {{#if data.materials.value}}
+                <div class="spell-materials flexrow">
+                    <label>Supply</label>
+                    <input type="text" name="data.materials.supply" value="{{data.materials.supply}}" data-dtype="Number" Placeholder="0"/>
+                    <label>Cost (GP)</label>
+                    <input type="text" name="data.materials.cost" value="{{data.materials.cost}}" data-dtype="Number" Placeholder="-"/>
+                    <label>Consumed</label>
+                    <input type="checkbox" name="data.materials.consumed" {{checked data.materials.consumed}}/>
+                </div>
+                {{/if}}
+            </div>
+
+            {{!-- Preparation Mode --}}
+            <div class="form-group input-select">
+                <label>Spell Preparation Mode</label>
+                <div class="form-fields">
+                    <select name="data.preparation.mode">
+                        {{#select data.preparation.mode}}
+                        {{#each config.spellPreparationModes as |name key|}}
+                        <option value="{{key}}">{{name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+
+            {{!-- Prepared Spells --}}
+            {{#if isPreparedSpell}}
+            <div class="form-group">
+                <div class="form-fields">
+                    <label>Prepared</label>
+                    <div class="form-fields">
+                        <input type="text" name="data.preparation.preparedAmount" value="{{data.preparation.preparedAmount}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+            {{!-- Caster Level Offset --}}
+            <div class="form-group">
+                <div class="form-fields">
+                    <label>Caster Level Offset</label>
+                    <div class="form-fields">
+                        <input type="text" name="data.clOffset" value="{{data.clOffset}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Spell Level Offset --}}
+            <div class="form-group">
+                <div class="form-fields">
+                    <label>Spell Level Offset</label>
+                    <div class="form-fields">
+                        <input type="text" name="data.slOffset" value="{{data.slOffset}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="form-header">Spell Casting</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "systems/pf1/templates/items/parts/item-activation.html"}}
+
+            <h3 class="form-header">Spell Effects</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "systems/pf1/templates/items/parts/item-action.html"}}
+        </div>
+    </section>
+</form>

@@ -1,0 +1,129 @@
+// Use 90 degrees cone in PF1 style
+const TemplateLayer__onDragStart = TemplateLayer.prototype._onDragStart;
+TemplateLayer.prototype._onDragStart = function(event) {
+  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragStart.call(this, event);
+
+  PlaceablesLayer.prototype._onDragStart.call(this, event);
+
+  // Create the new preview template
+  const tool = game.activeTool;
+  const origin = event.data.origin;
+  let pos;
+  pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
+  origin.x = pos.x;
+  origin.y = pos.y;
+
+  // Create the template
+  const data = {
+    user: game.user._id,
+    t: tool,
+    x: pos.x,
+    y: pos.y,
+    distance: 0,
+    direction: 0,
+    fillColor: game.user.data.color || "#FF0000"
+  };
+  if ( tool === "cone") data["angle"] = 90;
+  else if ( tool === "ray" ) data["width"] = canvas.dimensions.distance;
+
+  // Assign the template
+  let template = new MeasuredTemplate(data);
+  event.data.object = this.preview.addChild(template);
+  template.draw();
+};
+
+
+const TemplateLayer__onMouseMove = TemplateLayer.prototype._onMouseMove;
+TemplateLayer.prototype._onMouseMove = function(event) {
+  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onMouseMove.call(this, event);
+
+  PlaceablesLayer.prototype._onMouseMove.call(this, event);
+  if (event.data.createState >= 1) {
+    // Snap the destination to the grid
+    let dest = event.data.destination;
+    let {x, y} = canvas.grid.getSnappedPosition(dest.x, dest.y, 2);
+    dest.x = x;
+    dest.y = y;
+
+    // Compute the ray
+    let template = event.data.object,
+        ray = new Ray(event.data.origin, event.data.destination),
+        ratio = (canvas.dimensions.size / canvas.dimensions.distance);
+
+    // Update the shape data
+    if (["cone", "circle"].includes(template.data.t)) {
+      const direction = ray.angle;
+      template.data.direction = toDegrees(Math.floor((direction + (Math.PI * 0.125)) / (Math.PI * 0.25)) * (Math.PI * 0.25));
+      const distance = ray.distance / ratio;
+      template.data.distance = Math.floor(distance / canvas.dimensions.distance) * canvas.dimensions.distance;
+    }
+    else {
+      template.data.direction = toDegrees(ray.angle);
+      template.data.distance = ray.distance / ratio;
+    }
+
+    // Draw the pending shape
+    template.refresh();
+    event.data.createState = 2;
+  }
+};
+
+
+// Highlight grid in PF1 style
+const MeasuredTemplate__highlightGrid = MeasuredTemplate.prototype._highlightGrid;
+MeasuredTemplate.prototype._highlightGrid = function() {
+  if (!game.settings.get("pf1", "measureStyle") || !(["circle", "cone"].includes(this.data.t))) return MeasuredTemplate__highlightGrid.call(this);
+
+  const grid = canvas.grid,
+        d = canvas.dimensions,
+        bc = this.borderColor,
+        fc = this.fillColor;
+
+  // Only highlight for objects which have a defined shape
+  if ( !this.id || !this.shape ) return;
+
+  // Clear existing highlight
+  const hl = grid.getHighlightLayer(`Template.${this.id}`);
+  hl.clear();
+
+  // Get number of rows and columns
+  let nr = Math.ceil(((this.data.distance * 1.5) / d.distance) / (d.size / grid.h)),
+      nc = Math.ceil(((this.data.distance * 1.5) / d.distance) / (d.size / grid.w));
+
+  // Get the center of the grid position occupied by the template
+  let x = this.data.x,
+    y = this.data.y;
+
+  let [cx, cy] = grid.getCenter(x, y),
+    [col0, row0] = grid.grid.getGridPositionFromPixels(cx, cy),
+    minAngle = (360 + ((this.data.direction - this.data.angle * 0.5) % 360)) % 360,
+    maxAngle = (360 + ((this.data.direction + this.data.angle * 0.5) % 360)) % 360;
+
+  const within_angle = function(min, max, value) {
+    min = (360 + min % 360) % 360;
+    max = (360 + max % 360) % 360;
+    value = (360 + value % 360) % 360;
+
+    if (min < max) return (value >= min && value <= max);
+    return (value >= min || value <= max);
+  };
+
+  for (let a = -nc; a < nc; a++) {
+    for (let b = -nr; b < nr; b++) {
+      let [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
+      let [gx2, gy2] = [gx + d.size * 0.5, gy + d.size * 0.5];
+
+      let ray = new Ray({x: x, y: y}, {x: gx2, y: gy2});
+
+      let rayAngle = (360 + (ray.angle / (Math.PI / 180)) % 360) % 360;
+      if (this.data.t === "cone" && ray.distance === 0) continue;
+      if (this.data.t === "cone" && ray.distance > 0 && !within_angle(minAngle, maxAngle, rayAngle)) {
+        continue;
+      }
+
+      if (ray.distance < ((this.data.distance / d.distance)) * d.size) {
+        grid.grid.highlightGridPosition(hl, { x: gx, y: gy, color: fc, border: bc });
+      }
+    }
+  }
+};

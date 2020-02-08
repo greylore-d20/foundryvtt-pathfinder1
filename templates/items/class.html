@@ -1,0 +1,90 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary">
+                <li>
+                    <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+                </li>
+                <li class="tooltip">
+                    <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.levels}}</span>
+                    <input type="text" name="data.levels" value="{{data.levels}}" placeholder="Level" data-dtype="Number"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab flexcol active" data-group="primary" data-tab="description">
+            {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            {{!-- HD --}}
+            <div class="form-group">
+                <label>Hit Die</label>
+                <input type="text" name="data.hd" value="{{data.hd}}" data-dtype="Number" />
+            </div>
+
+            {{!-- Hit Points --}}
+            <div class="form-group">
+                <label>Hit Points</label>
+                <input type="text" name="data.hp" value="{{data.hp}}" data-dtype="Number" />
+            </div>
+
+            {{!-- BAB --}}
+            <div class="form-group">
+                <label>BAB</label>
+                <input type="text" name="data.bab" value="{{data.bab}}" data-dtype="Number" />
+            </div>
+
+            {{!-- Skills/Level --}}
+            <div class="form-group">
+                <label>Skills/Level</label>
+                <input type="text" name="data.skillsPerLevel" value="{{data.skillsPerLevel}}" data-dtype="Number" />
+            </div>
+
+            <h4 class="form-header">Saving Throws</h4>
+
+            {{!-- Saving Throws --}}
+            {{#each data.savingThrows as |savingThrow id|}}
+            <div class="form-group">
+                <label>{{savingThrow.label}}</label>
+                <input type="text" name="data.savingThrows.{{id}}.value" value="{{savingThrow.value}}" data-dtype="Number" />
+            </div>
+            {{/each}}
+
+            <h4 class="form-header">Favoured Class Bonuses</h4 class="form-header">
+
+            {{!-- Favoured Class Bonuses --}}
+            {{#each data.fc as |fc id|}}
+            <div class="form-group">
+                <label>{{fc.label}}</label>
+                <input type="text" name="data.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" />
+            </div>
+            {{/each}}
+        </div>
+    </section>
+</form>

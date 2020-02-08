@@ -1,0 +1,61 @@
+{{!-- Skill Rank Info --}}
+{{#if isCharacter}}
+{{#unless useBGSkills}}
+<div class="flexcol skill-rank">
+  <ol class="form-group">
+    <li class="flexrow skill-rank-formula">
+      <label>Bonus Rank Formula</label>
+      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="Formula"/>
+    </li>
+  </ol>
+  <ol class="form-group">
+    <li class="flexrow skill-rank-info">
+      <label>Skill Ranks</label>
+      <input type="text" disabled value="{{skillRanks.allowed}}"/>
+      <label>Used</label>
+      <input type="text" disabled value="{{skillRanks.used}}"/>
+    </li>
+  </ol>
+</div>
+{{else}}
+<div class="flexcol skill-rank">
+  <ol class="form-group">
+    <li class="flexrow skill-rank-formula">
+      <label>Bonus Rank Formula</label>
+      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="Formula"/>
+    </li>
+  </ol>
+  <ol class="form-group">
+    <li class="flexrow skill-rank-info">
+      <label>Skill Ranks</label>
+      <input type="text" disabled value="{{skillRanks.allowed}}"/>
+      <label>Used</label>
+      <input type="text" disabled value="{{skillRanks.used}}"/>
+      <label>Adventure Ranks sent to BG</label>
+      <input type="text" disabled value="{{skillRanks.sentToBG}}"/>
+      <label>BG Skill Ranks</label>
+      <input type="text" disabled value="{{skillRanks.bgAllowed}}"/>
+      <label>BG Used</label>
+      <input type="text" disabled value="{{skillRanks.bgUsed}}"/>
+    </li>
+  </ol>
+</div>
+
+<nav class="sheet-navigation tabs" data-group="skillset">
+  <a class="item active" data-tab="adventure">Adventure</a>
+  <a class="item" data-tab="background">Background</a>
+</nav>
+
+<div class="tab flexcol" data-group="skillset" data-tab="adventure">
+{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.adventure.skills isBackgroundSkills="false"}}
+</div>
+
+<div class="tab flexcol" data-group="skillset" data-tab="background">
+{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
+</div>
+{{/unless}}
+{{/if}}
+
+{{#unless useBGSkills}}
+{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.all.skills isBackgroundSkills="false"}}
+{{/unless}}

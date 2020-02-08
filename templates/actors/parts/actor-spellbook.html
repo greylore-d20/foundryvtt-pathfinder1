@@ -1,0 +1,152 @@
+<div class="inventory-filters spellbook-filters">
+    <div class="flexrow spellcasting-misc">
+        <div class="spellcasting-concentration flexrow">
+            <div class="rollable image-d20"></div>
+            <label><h3>Concentration</h3></label>
+            <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationFormula"
+                               value="{{spellbook.orig.concentrationFormula}}" placeholder="Concentration Bonus Formula" />
+        </div>
+
+        <div class="spellcasting-cl flexrow">
+            <div class="rollable image-d20"></div>
+            <label><h3>Caster Level</h3></label>
+            <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.formula"
+                               value="{{spellbook.orig.cl.formula}}" placeholder="CL Bonus Formula" />
+        </div>
+    </div>
+
+    <div class="flexrow spellcasting-notes">
+        <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="Concentration notes">{{spellbook.orig.concentrationNotes}}</textarea>
+        <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="Caster Level notes">{{spellbook.orig.clNotes}}</textarea>
+    </div>
+
+    <div class="form-group spellcasting-class tooltip">
+        <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
+        {{#if isCharacter}}
+        <label><h3>Spellcasting Class</h3></label>
+        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
+            {{#select spellbook.orig.class}}
+            <option value="">None</option>
+            <option value="_hd">Hit Die</option>
+            {{#each data.classes as |cls a|}}
+            <option value="{{a}}">{{cls.name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{else}}
+        <label><h3>Caster Level</h3></label>
+        <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.base"
+            value="{{#if spellbook.orig.cl.base}}{{spellbook.orig.cl.base}}{{/if}}" placeholder="Base Caster Level" data-dtype="Number"/>
+        {{/if}}
+    </div>
+
+    <div class="form-group spellcasting-ability">
+        <label><h3>Spellcasting Ability</h3></label>
+        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
+            {{#select spellbook.orig.ability}}
+            <option value="">None</option>
+            {{#each data.abilities as |abl a|}}
+            <option value="{{a}}">{{abl.label}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+
+    <div class="flexrow spell-range">
+        <label><h3>Close</h3></label>
+        <input type="text" value="{{spellbook.orig.range.close}}" disabled />
+        <label><h3>Medium</h3></label>
+        <input type="text" value="{{spellbook.orig.range.medium}}" disabled />
+        <label><h3>Long</h3></label>
+        <input type="text" value="{{spellbook.orig.range.long}}" disabled />
+    </div>
+</div>
+
+{{!-- Inventory Navigation --}}
+<nav class="sheet-navigation tabs subtabs spells" data-group="spells">
+  {{#each spellbook.data as |section sid|}}
+  <a class="item {{#unless sid}}active{{/unless}}" data-tab="{{sid}}">{{section.label}}</a>
+  {{/each}}
+</nav>
+
+{{#each spellbook.data as |section sid|}}
+<div class="tab inventory-group flexcol" data-group="spells" data-tab="{{sid}}">
+  <ol class="inventory-list sub-scroll">
+      <li>{{section.name}}</li>
+      <li class="flexrow inventory-header spellbook-header">
+          <div class="item-name flexrow">
+              <h3></h3>
+          </div>
+
+          <div class="item-detail item-actions"><span>Actions</span></div>
+
+          <div class="spell-uses">
+              {{#if section.usesSlots}}
+              <input type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
+              <span class="sep"> / </span>
+              <input type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.max" value="{{section.slots}}" placeholder="0" data-dtype="Number" />
+              {{ else }}
+              <span class="spell-slots">{{{section.uses}}}</span>
+              <span class="sep"> / </span>
+              <span class="spell-max">{{{section.slots}}}</span>
+              {{/if}}
+          </div>
+
+          <div class="spell-school">Spell School</div>
+
+          <div class="item-controls">
+              {{#if section.canCreate}}
+              <a class="item-control item-create" title="Create Spell" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+                  <i class="fas fa-plus"></i> Add
+              </a>
+              {{/if}}
+          </div>
+      </li>
+
+      <ol class="item-list">
+      {{#each section.spells as |item i|}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-name flexrow rollable">
+                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <h4>{{item.name}}</h4>
+              </div>
+      
+              <div class="item-detail item-actions">
+                  <div class="item-attack">
+                      {{#if item.hasAttack}}
+                      <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
+                      {{/if}}
+                  </div>
+                  <div class="item-multi-attack">
+                      {{#if item.hasMultiAttack}}
+                      <a class="item-control item-multi-attack"><img class="icon" src="systems/pf1/icons/actions/all-for-one.svg"></a>
+                      {{/if}}
+                  </div>
+                  <div class="item-effect">
+                      {{#if item.hasEffect}}
+                      <a class="item-control item-effect"><img class="icon" src="systems/pf1/icons/actions/punch-blast.svg"></a>
+                      {{/if}}
+                  </div>
+              </div>
+
+              <div class="spell-uses flexrow">
+                  {{#if item.isPrepared}}
+                  <span>Uses</span>
+                  <input type="text" value="{{item.data.preparation.preparedAmount}}" data-dtype="Number"/>
+                  {{/if}}
+              </div>
+
+              <div class="spell-school">{{labels.school}}</div>
+
+              {{#if ../../owner}}
+              <div class="item-controls">
+                  <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+              </div>
+              {{/if}}
+          </li>
+      {{/each}}
+      </ol>
+  </ol>
+</div>
+{{/each}}

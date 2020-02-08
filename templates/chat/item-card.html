@@ -1,0 +1,36 @@
+<div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <header class="card-header flexrow">
+        <img src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+        <h3 class="item-name">{{item.name}}</h3>
+    </header>
+
+    <div class="card-content">
+        {{{data.description.value}}}
+        {{#if data.materials.value}}
+        <p><strong>{{ localize "PF1.ChatReqMats" }}.</strong> {{data.materials.value}}</p>
+        {{/if}}
+    </div>
+
+    <div class="card-buttons">
+        {{#if hasAttack}}
+        <button data-action="attack">{{ localize "PF1.Attack" }}</button>
+        {{#if hasMultiAttack}}<button data-action="attack-full">{{ localize "PF1.FullRoundAttack" }}</button>{{/if}}
+        {{/if}}
+        {{#if hasDamage}}
+        <button data-action="damage">
+            {{#if isHealing}}{{ localize "PF1.Healing" }}
+            {{else}}{{localize "PF1.Damage" }}{{/if}}
+        </button>{{/if}}
+        {{#if hasSave}}
+        <button data-action="save" data-ability="{{data.save.ability}}" disabled>
+            {{ localize "PF1.Save" }} {{labels.save}}
+        </button>{{/if}}
+        {{#if data.formula}}<button data-action="formula">{{ localize "PF1.ChatOtherFormula"}}</button>{{/if}}
+    </div>
+
+    <footer class="card-footer">
+        {{#each data.properties}}
+        <span>{{this}}</span>
+        {{/each}}
+    </footer>
+</div>

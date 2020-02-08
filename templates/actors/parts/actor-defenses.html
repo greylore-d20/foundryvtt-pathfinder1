@@ -1,0 +1,107 @@
+{{!-- AC --}}
+<ul class="attributes armor-class flexrow">
+  {{#each data.attributes.ac as |ac id|}}
+  <li class="attribute armor-class tooltip" data-armorclass="{{id}}">
+    <div class="tooltipcontent">
+      @attributes.ac.{{id}}.total : {{ac.total}}
+
+      {{#if ac.sourceDetails.length}}
+      <br/><br/>From sources:<br/>
+      {{#each ac.sourceDetails as |src|}}
+      {{src.name}}: {{src.value}}<br/>
+      {{/each}}
+      {{/if}}
+    </div>
+    <h4 class="attribute-name box-title">{{ac.label}}</h4>
+    <div class="attribute-value">
+      <span>{{numberFormat ac.total decimals=0 sign=false}}</span>
+    </div>
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- Saving Throws --}}
+<ul class="attributes saving-throws flexrow">
+  {{#each data.attributes.savingThrows as |savingThrow id|}}
+  <li class="attribute saving-throw tooltip" data-savingthrow="{{id}}">
+    <div class="tooltipcontent">
+      @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
+
+      {{#if savingThrow.sourceDetails.length}}
+      <br/><br/>From sources:<br/>
+      {{#each savingThrow.sourceDetails as |src|}}
+      {{src.name}}: {{src.value}}<br/>
+      {{/each}}
+      {{/if}}
+    </div>
+    <h4 class="attribute-name box-title rollable">{{savingThrow.label}}</h4>
+    <div class="attribute-value">
+      <span>{{savingThrow.total}}</span>
+    </div>
+    {{#unless ../isCharacter}}
+    <footer class="attribute-footer">
+      <span>Base</span>
+      <input name="data.attributes.savingThrows.{{id}}.value" type="text" placeholder="0" data-dtype="Number"
+        value="{{numberFormat savingThrow.value decimals=0 sign=false}}"/>
+    </footer>
+    {{/unless}}
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- Misc --}}
+<ul class="attributes misc-defenses flexrow">
+  <li class="attribute cmd tooltip" data-attribute="cmd">
+    <div class="tooltipcontent">
+      @attributes.cmd.total : {{data.attributes.cmd.total}}
+
+      {{#if sourceDetails.data.attributes.cmd.total.length}}
+      <br/><br/>From sources:<br/>
+      {{#each sourceDetails.data.attributes.cmd.total as |src|}}
+      {{src.name}}: {{src.value}}<br/>
+      {{/each}}
+      {{/if}}
+    </div>
+    <h4 class="attribute-name box-title">CMD</h4>
+    <div class="attribute-value">
+      <span>{{data.attributes.cmd.total}}</span>
+    </div>
+  </li>
+
+  <li class="attribute cmd-flat-footed tooltip" data-attribute="cmd-flat-footed">
+    <div class="tooltipcontent">
+      @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
+
+      {{#if sourceDetails.data.attributes.cmd.flatFootedTotal.length}}
+      <br/><br/>From sources:<br/>
+      {{#each sourceDetails.data.attributes.cmd.flatFootedTotal as |src|}}
+      {{src.name}}: {{src.value}}<br/>
+      {{/each}}
+      {{/if}}
+    </div>
+    <h4 class="attribute-name box-title">FF CMD</h4>
+    <div class="attribute-value">
+      <span>{{data.attributes.cmd.flatFootedTotal}}</span>
+    </div>
+  </li>
+
+  <li class="attribute sr tooltip" data-attribute="sr">
+      <div class="tooltipcontent">
+        @attributes.sr.total : {{data.attributes.sr.total}}
+      </div>
+      <h4 class="attribute-name box-title">Spell Resistance</h4>
+      <div class="attribute-value">
+        <span>{{data.attributes.sr.total}}</span>
+      </div>
+      <footer class="attribute-footer">
+        <input name="data.attributes.sr.formula" type="text" placeholder="Formula"
+          value="{{#if data.attributes.sr.formula}}{{data.attributes.sr.formula}}{{/if}}"/>
+      </footer>
+    </li>
+</ul>
+
+<ul class="attributes notes flexrow">
+  <li>
+    <textarea name="data.attributes.saveNotes" placeholder="Save notes">{{data.attributes.saveNotes}}</textarea>
+  </li>
+</ul>

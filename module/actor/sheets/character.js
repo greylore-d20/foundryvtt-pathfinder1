@@ -321,10 +321,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Spell Preparation
     html.find('.toggle-prepared').click(this._onPrepareItem.bind(this));
-
-    // Short and Long Rest
-    html.find('.short-rest').click(this._onShortRest.bind(this));
-    html.find('.long-rest').click(this._onLongRest.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -339,32 +335,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
     return item.update({"data.preparation.prepared": !item.data.data.preparation.prepared});
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Take a short rest, calling the relevant function on the Actor instance
-   * @param {Event} event   The triggering click event
-   * @private
-   */
-  async _onShortRest(event) {
-    event.preventDefault();
-    await this._onSubmit(event);
-    return this.actor.shortRest();
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Take a long rest, calling the relevant function on the Actor instance
-   * @param {Event} event   The triggering click event
-   * @private
-   */
-  async _onLongRest(event) {
-    event.preventDefault();
-    await this._onSubmit(event);
-    return this.actor.longRest();
   }
 
   /* -------------------------------------------- */

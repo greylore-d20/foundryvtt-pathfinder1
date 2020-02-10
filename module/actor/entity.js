@@ -1148,16 +1148,11 @@ export class ActorPF extends Actor {
   _prepareCharacterData(actorData) {
     const data = actorData.data;
 
-    // Total levels
-    data.details.level.value = actorData.items.filter(obj => { return obj.type === "class"; }).reduce((cur, obj) => {
-      return cur + obj.data.levels;
-    }, 0);
-
     // Experience bar
-    data.details.xp.max = this.getLevelExp(data.details.level.value || 1);
     let prior = this.getLevelExp(data.details.level.value - 1 || 0),
           req = data.details.xp.max - prior;
-    data.details.xp.pct = Math.min(Math.round((data.details.xp.value -prior) * 100 / req), 99.5);
+    data.details.xp.value = Math.max(data.details.xp.value, prior);
+    data.details.xp.pct = Math.min(Math.round((data.details.xp.value - prior) * 100 / req), 99.5);
   }
 
   /* -------------------------------------------- */
@@ -1176,7 +1171,8 @@ export class ActorPF extends Actor {
    * @return {Number}       The XP required
    */
   getLevelExp(level) {
-    const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS;
+    const expRate = game.settings.get("pf1", "experienceRate");
+    const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS[expRate];
     return levels[Math.min(level, levels.length - 1)];
   }
 
@@ -1303,6 +1299,8 @@ export class ActorPF extends Actor {
       }
     }
 
+    if (this._updateExp(data)) options.diff = false;
+
     // Update changes
     const updateObj = await this._updateChanges({ data: data });
     if (Object.keys(updateObj.data).length > 0) data = updateObj.data;
@@ -1325,6 +1323,26 @@ export class ActorPF extends Actor {
     if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });
 
     super._onUpdate(data, options, userId, context);
+  }
+  
+  /**
+   * Makes sure experience values are correct in update data.
+   * @param {Object} data - The update data, as per ActorPF.update()
+   * @returns {Boolean} Whether to force an update or not.
+   */
+  _updateExp(data) {
+    if (this.data.type !== "character") return;
+
+    const classes = this.items.filter(o => o.type === "class");
+    const level = classes.reduce((cur, o) => {
+      return cur + o.data.data.levels;
+    }, 0);
+    data["data.details.level.value"] = level;
+    data["data.details.xp.max"] = this.getLevelExp(level);
+
+    const curExp = data["data.details.xp.value"] !== undefined ? data["data.details.xp.value"] : this.data.data.details.xp.value;
+    const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
+    if (curExp < minExp) data["data.details.xp.value"] = minExp;
   }
 
   async _onCreate(data, options, userId, context) {

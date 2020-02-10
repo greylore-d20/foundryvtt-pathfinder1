@@ -29,6 +29,31 @@ export const registerSystemSettings = function() {
   });
 
   /**
+   * Experience rate
+   */
+  game.settings.register("pf1", "experienceRate", {
+    name: "SETTINGS.pf1ExpRateN",
+    hint: "SETTINGS.pf1ExpRateL",
+    scope: "world",
+    config: true,
+    default: "medium",
+    type: String,
+    choices: {
+      "slow": "Slow",
+      "medium": "Medium",
+      "fast": "Fast",
+    },
+    onChange: () => {
+      game.actors.entities.filter(o => {
+        return o.data.type === "character";
+      }).forEach(o => {
+        o.update({});
+        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+      });
+    },
+  });
+
+  /**
    * Option to disable XP bar for session-based or story-based advancement.
    */
   game.settings.register("pf1", "disableExperienceTracking", {

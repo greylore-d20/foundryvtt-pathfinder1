@@ -84,6 +84,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Organize inventory
     for ( let i of items ) {
+      const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
       i.totalWeight = Math.round(i.data.quantity * i.data.weight * 10) / 10;

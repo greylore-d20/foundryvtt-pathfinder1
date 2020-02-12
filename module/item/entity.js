@@ -531,6 +531,10 @@ export class ItemPF extends Item {
       }
     }
 
+    const properties = this.getChatData().properties;
+    let props = [];
+    if (properties.length > 0) props.push({ header: "Info", value: properties });
+
     // Call the roll helper utility
     DicePF.d20Roll({
       event: options.event,
@@ -549,7 +553,12 @@ export class ItemPF extends Item {
       fastForward: options.fastForward || false,
       extraRolls: options.extraRolls || [],
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasExtraText: effectContent.length > 0, extraText: effectContent }
+      chatTemplateData: {
+        hasExtraText: effectContent.length > 0,
+        extraText: effectContent,
+        hasProperties: properties.length > 0,
+        properties: props,
+      }
     });
   }
 
@@ -622,6 +631,16 @@ export class ItemPF extends Item {
       }
     }
 
+    // Create chat template data
+    const properties = this.getChatData().properties;
+    let props = [];
+    if (properties.length > 0) props.push({ header: "Info", value: properties });
+    const chatTemplateData = {
+      hasProperties: props.length > 0,
+      properties: props,
+      hasExtraText: effectContent.length > 0,
+      extraText: effectContent,
+    };
     // Create chat data
     let rollMode = game.settings.get("core", "rollMode");
     let chatData = {
@@ -632,7 +651,7 @@ export class ItemPF extends Item {
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
       flavor: this.name,
       rollMode: rollMode,
-      content: effectContent
+      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.html", chatTemplateData)
     };
     // Handle different roll modes
     switch (chatData.rollMode) {
@@ -647,7 +666,6 @@ export class ItemPF extends Item {
         chatData["blind"] = true;
     }
 
-    // Send message
     ChatMessage.create(chatData);
   }
 
@@ -731,6 +749,10 @@ export class ItemPF extends Item {
     if (this.isHealing) title = `${this.name} - Healing`;
     const flavor = this.labels.damageTypes.length ? `${title} (${this.labels.damageTypes})` : title;
 
+    const properties = this.getChatData().properties;
+    let props = [];
+    if (properties.length > 0) props.push({ header: "Info", value: properties });
+
     // Call the roll helper utility
     DicePF.damageRoll({
       event: event,
@@ -746,7 +768,12 @@ export class ItemPF extends Item {
         left: window.innerWidth - 710
       },
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasExtraText: effectContent.length > 0, extraText: effectContent }
+      chatTemplateData: {
+        hasExtraText: effectContent.length > 0,
+        extraText: effectContent,
+        hasProperties: props.length > 0,
+        properties: props,
+      }
     });
   }
 

@@ -1,3 +1,4 @@
+{{#if formula}}
 <div class="dice-roll">
   {{#if flavor}}
   <div class="dice-flavor">{{flavor}}</div>
@@ -8,6 +9,7 @@
       <h4 class="dice-total">{{total}}</h4>
   </div>
 </div>
+{{/if}}
 
 {{#if hasExtraText}}
 <div class="extra-text">{{{extraText}}}</div>

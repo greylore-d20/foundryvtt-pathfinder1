@@ -55,7 +55,7 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
 
   let overrideRollMode = null,
     bonus = "";
-  if (keyModifiers && keyModifiers.shift) {
+  if (keyboard.isDown("Shift")) {
     const dialogData = await this.showInitiativeDialog(formula);
     overrideRollMode = dialogData.rollMode;
     bonus = dialogData.bonus;

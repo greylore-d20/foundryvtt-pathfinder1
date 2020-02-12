@@ -157,23 +157,6 @@ Hooks.on("updateToken", (_, sceneId, changedData) => {
 
 
 /* -------------------------------------------- */
-/*  Keyboard Modifier Tracking                  */
-/* -------------------------------------------- */
-
-window.keyModifiers = { shift: false, control: false, alt: false };
-
-window.addEventListener("keydown", ev => {
-  if (ev.key === "Shift") keyModifiers.shift = true;
-  if (ev.key === "Control") keyModifiers.control = true;
-  if (ev.key === "Alt") keyModifiers.alt = true;
-});
-window.addEventListener("keyup", ev => {
-  if (ev.key === "Shift") keyModifiers.shift = false;
-  if (ev.key === "Control") keyModifiers.control = false;
-  if (ev.key === "Alt") keyModifiers.alt = false;
-});
-
-/* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
 

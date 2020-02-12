@@ -299,48 +299,15 @@ export class ActorSheetPF extends ActorSheet {
         this["_sheetTab"] = clicked.data("tab");
       }
     });
-    new Tabs(html.find('.tabs[data-group="spellbook"]'), {
-      initial: this["_spellbookTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_spellbookTab"] = clicked.data("tab");
-      }
-    });
-    new Tabs(html.find('.tabs[data-group="skillset"]'), {
-      initial: this["_skillsetTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_skillsetTab"] = clicked.data("tab");
-      }
-    });
-    new Tabs(html.find('.tabs[data-group="inventory"]'), {
-      initial: this["_inventoryTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_inventoryTab"] = clicked.data("tab");
-      }
-    });
-    new Tabs(html.find('.tabs[data-group="feats"]'), {
-      initial: this["_featsTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_featsTab"] = clicked.data("tab");
-      }
-    });
-    new Tabs(html.find('.tabs[data-group="buffs"]'), {
-      initial: this["_buffsTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_buffsTab"] = clicked.data("tab");
-      }
-    });
-    new Tabs(html.find('.tabs[data-group="spells"]'), {
-      initial: this["_spellsTab"],
-      callback: clicked => {
-        this._subScroll = 0;
-        this["_spellsTab"] = clicked.data("tab");
-      }
-    });
+    for (let tabName of ["spellbook", "skillset", "inventory", "feats", "buffs", "spells"]) {
+      new Tabs(html.find(`.tabs[data-group="${tabName}"]`), {
+        initial: this[`_${tabName}Tab`],
+        callback: clicked => {
+          this._subScroll = 0;
+          this[`_${tabName}Tab`] = clicked.data("tab");
+        }
+      });
+    }
 
     // Save scroll position
     const activeTab = html.find('.tab.active[data-group="primary"]')[0];

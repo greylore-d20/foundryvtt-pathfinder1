@@ -1333,6 +1333,25 @@ export class ActorPF extends Actor {
   _updateExp(data) {
     if (this.data.type !== "character") return;
 
+    // Translate update exp value to number
+    let newExp = data["data.details.xp.value"];
+    if (typeof newExp === "string") {
+      if (newExp.match(/^\+([0-9]+)$/)) {
+        newExp = this.data.data.details.xp.value + parseInt(RegExp.$1);
+      }
+      else if (newExp.match(/^-([0-9]+)$/)) {
+        newExp = this.data.data.details.xp.value - parseInt(RegExp.$1);
+      }
+      else {
+        newExp = parseInt(newExp);
+        if (Number.isNaN(newExp)) newExp = this.data.data.details.xp.value;
+      }
+
+      if (typeof newExp === "number" && newExp !== this.data.data.details.xp.value) {
+        data["data.details.xp.value"] = newExp;
+      }
+    }
+
     const classes = this.items.filter(o => o.type === "class");
     const level = classes.reduce((cur, o) => {
       return cur + o.data.data.levels;

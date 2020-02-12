@@ -64,6 +64,7 @@ export class ActorSheetPF extends ActorSheet {
       i.data.hasMultiAttack = i.hasMultiAttack;
       i.data.hasDamage = i.hasDamage;
       i.data.hasEffect = i.hasEffect;
+      i.data.hasAction = i.hasAction;
       return i.data;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -711,18 +712,7 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Attack
     if (a.classList.contains("item-attack")) {
       await this._onSubmit(event);
-      item.rollAttack({ event: event, fastForward: true });
-    }
-    // Quick multi attack
-    else if (a.classList.contains("item-multi-attack")) {
-      await this._onSubmit(event);
-      item.rollAttackFull({ event: event, fastForward: true });
-    }
-    // Quick effect
-    else if (a.classList.contains("item-effect")) {
-      await this._onSubmit(event);
-      if (item.hasDamage) item.rollDamage({ event: event, fastForward: true });
-      else item.rollEffect({ event: event });
+      item.useAttack();
     }
   }
 

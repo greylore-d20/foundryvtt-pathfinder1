@@ -11,23 +11,6 @@
         {{/if}}
     </div>
 
-    <div class="card-buttons">
-        {{#if hasAttack}}
-        <button data-action="attack">{{ localize "PF1.Attack" }}</button>
-        {{#if hasMultiAttack}}<button data-action="attack-full">{{ localize "PF1.FullRoundAttack" }}</button>{{/if}}
-        {{/if}}
-        {{#if hasDamage}}
-        <button data-action="damage">
-            {{#if isHealing}}{{ localize "PF1.Healing" }}
-            {{else}}{{localize "PF1.Damage" }}{{/if}}
-        </button>{{/if}}
-        {{#if hasSave}}
-        <button data-action="save" data-ability="{{data.save.ability}}" disabled>
-            {{ localize "PF1.Save" }} {{labels.save}}
-        </button>{{/if}}
-        {{#if data.formula}}<button data-action="formula">{{ localize "PF1.ChatOtherFormula"}}</button>{{/if}}
-    </div>
-
     <footer class="card-footer">
         {{#each data.properties}}
         <span>{{this}}</span>

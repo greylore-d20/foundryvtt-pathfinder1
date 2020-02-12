@@ -1,4 +1,5 @@
 import { DicePF } from "../dice.js";
+import { createCustomChatMessage } from "../chat.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -19,6 +20,10 @@ export class ItemPF extends Item {
 
   get hasMultiAttack() {
     return this.hasAttack && this.data.data.attackParts != null && this.data.data.attackParts.length > 0;
+  }
+
+  get hasAction() {
+    return this.hasAttack || this.hasDamage || this.hasEffect;
   }
 
   /* -------------------------------------------- */
@@ -191,6 +196,7 @@ export class ItemPF extends Item {
       labels: this.labels,
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
+      hasAction: this.hasAction,
       isHealing: this.isHealing,
       hasDamage: this.hasDamage,
       hasEffect: this.hasEffect,
@@ -439,6 +445,140 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
+  async useAttack() {
+    const itemData = this.data.data;
+    const actorData = this.actor.data.data;
+    const rollData = duplicate(actorData);
+    rollData.item = duplicate(itemData);
+
+    // Add contextual attack string
+    let props = [];
+    let effectStr = "";
+    if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
+      effectStr = DicePF.messageRoll({
+        actor: this.actor,
+        data: rollData,
+        msgStr: itemData.attackNotes
+      });
+    }
+    let effectContent = "";
+    if (effectStr.length > 0) {
+      const effects = effectStr.split(/[\n\r]+/);
+      for (let fx of effects) {
+        effectContent += `<div class="extra-misc">${fx}</div>`;
+      }
+      effectContent = `<div><label>Effect Notes</label>${effectContent}</div>`;
+    }
+
+    const properties = this.getChatData().properties;
+    if (properties.length > 0) props.push({ header: "Info", value: properties });
+
+    // Define Critical threshold
+    let crit = itemData.ability.critRange || 20;
+
+    // Prepare the chat message data
+    let chatTemplateData = {
+      hasProperties: properties.length > 0,
+      properties: props,
+      name: this.name,
+    };
+    // Create attacks
+    const allAttacks = this.data.data.attackParts.reduce((cur, r) => {
+      cur.push({ bonus: r[0], label: r[1] });
+      return cur;
+    }, [{ bonus: "", label: "Attack 1" }]);
+    let attacks = [];
+    if (this.hasAttack) {
+      for (let atk of allAttacks) {
+        const attack = {};
+        let tooltip, roll, d20, critType = 0;
+        // Attack roll
+        if (this.hasAttack) {
+          roll = this.rollAttack({ bonus: atk.bonus !== "" ? atk.bonus : null });
+          d20 = roll.parts[0];
+          if (d20.total >= crit) critType = 1;
+          else if (d20.total <= 1) critType = 2;
+
+          tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+          attack.attack = {
+            flavor: atk.label,
+            tooltip: tooltip,
+            total: roll.total,
+            isCrit: critType === 1,
+            isFumble: critType === 2,
+          };
+
+          // Critical hit confirmation
+          if (critType === 1) {
+            let extraParts = [];
+            if (this.data.data.critConfirmBonus != null && this.data.data.critConfirmBonus !== "") extraParts.push(this.data.data.critConfirmBonus);
+            roll = this.rollAttack({
+              bonus: atk.bonus !== "" ? atk.bonus : null,
+              extraParts: extraParts,
+            });
+
+            tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+            attack.critConfirm = {
+              flavor: "Critical Confirmation",
+              tooltip: tooltip,
+              total: roll.total,
+            };
+          }
+        }
+        // Add damage
+        if (this.hasDamage) {
+          roll = this.rollDamage();
+          tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+          attack.damage = {
+            flavor: "Damage",
+            tooltip: tooltip,
+            total: roll.total,
+          };
+
+          if (critType === 1) {
+            roll = this.rollDamage({ critical: true });
+            tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+            attack.critDamage = {
+              flavor: "Critical Damage",
+              tooltip: tooltip,
+              total: roll.total,
+            };
+          }
+        }
+        // Add to list
+        attacks.push(attack);
+      };
+    }
+    // Add damage only
+    else if (this.hasDamage) {
+      let roll = this.rollDamage();
+      let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+      let attack = {};
+      attack.damage = {
+        flavor: "Damage",
+        tooltip: tooltip,
+        total: roll.total,
+      };
+      attacks.push(attack);
+    }
+    chatTemplateData.attacks = attacks;
+
+    if (this.hasEffect) {
+      let effectStr = this.rollEffect();
+      if (effectStr.length > 0) {
+        effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
+      }
+    }
+    if (effectContent.length > 0) {
+      chatTemplateData.hasExtraText = true;
+      chatTemplateData.extraText = effectContent;
+    }
+
+    createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, {
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+    });
+  }
+
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
@@ -507,88 +647,24 @@ export class ItemPF extends Item {
     }
     // Add proficiency penalty
     if ((this.data.type === "weapon") && !itemData.proficient) { parts.push("@item.proficiencyPenalty"); }
-
-    // Define Critical threshold
-    let crit = itemData.ability.critRange || 20;
-
-    // Define Roll Data
-    const title = `${this.name} - Attack Roll`;
-
-    // Add contextual attack string
-    let effectStr = "";
-    if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-      effectStr = DicePF.messageRoll({
-        actor: this.actor,
-        data: rollData,
-        msgStr: itemData.attackNotes
-      });
+    // Add bonus
+    if (options.bonus != null) {
+      rollData.bonus = options.bonus;
+      parts.push("@bonus");
     }
-    let effectContent = "";
-    if (effectStr.length > 0) {
-      const effects = effectStr.split(/[\n\r]+/);
-      for (let fx of effects) {
-        effectContent += `<div class="extra-misc">${fx}</div>`;
-      }
+    // Add extra parts
+    if (options.extraParts != null) {
+      parts = parts.concat(options.extraParts);
     }
 
-    const properties = this.getChatData().properties;
-    let props = [];
-    if (properties.length > 0) props.push({ header: "Info", value: properties });
-
-    // Call the roll helper utility
-    DicePF.d20Roll({
-      event: options.event,
-      parts: parts,
-      actor: this.actor,
-      data: rollData,
-      title: title,
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      critical: crit,
-      takeTwenty: false,
-      dialogOptions: {
-        width: 400,
-        top: options.event ? options.event.clientY - 80 : null,
-        left: window.innerWidth - 710
-      },
-      fastForward: options.fastForward || false,
-      extraRolls: options.extraRolls || [],
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: {
-        hasExtraText: effectContent.length > 0,
-        extraText: effectContent,
-        hasProperties: properties.length > 0,
-        properties: props,
-      }
-    });
-  }
-
-  async rollAttackFull(options={}) {
-    const itemData = this.data.data;
-    const actorData = this.actor.data.data;
-    const rollData = duplicate(actorData);
-    rollData.item = duplicate(itemData);
-
-    options.extraRolls = options.extraRolls || [];
-
-    const attackParts = this.data.data.attackParts;
-    for (let part of Object.values(attackParts)) {
-      const formula = part[0];
-      let bonus = 0;
-      if (formula !== "") {
-        const roll = new Roll(formula, rollData).roll();
-        bonus = roll.total;
-      }
-
-      options.extraRolls.push({ bonus: bonus, label: part[1] });
-    }
-
-    return this.rollAttack(options);
+    let roll = new Roll(["1d20"].concat(parts).join("+"), rollData).roll();
+    return roll;
   }
 
   /* -------------------------------------------- */
 
   // Only roll the item's effect
-  async rollEffect({event}={}) {
+  rollEffect({critical=false}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = mergeObject(duplicate(actorData), {
@@ -610,7 +686,7 @@ export class ItemPF extends Item {
 
     // Determine critical multiplier
     rollData.critMult = 1;
-    if (event.ctrlKey) rollData.critMult = this.data.data.ability.critMult;
+    if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
 
@@ -631,49 +707,14 @@ export class ItemPF extends Item {
       }
     }
 
-    // Create chat template data
-    const properties = this.getChatData().properties;
-    let props = [];
-    if (properties.length > 0) props.push({ header: "Info", value: properties });
-    const chatTemplateData = {
-      hasProperties: props.length > 0,
-      properties: props,
-      hasExtraText: effectContent.length > 0,
-      extraText: effectContent,
-    };
-    // Create chat data
-    let rollMode = game.settings.get("core", "rollMode");
-    let chatData = {
-      user: game.user._id,
-      type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-      rollMode: game.settings.get("core", "rollMode"),
-      sound: CONFIG.sounds.dice,
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      flavor: this.name,
-      rollMode: rollMode,
-      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.html", chatTemplateData)
-    };
-    // Handle different roll modes
-    switch (chatData.rollMode) {
-      case "gmroll":
-        chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
-        break;
-      case "selfroll":
-        chatData["whisper"] = [game.user._id];
-        break;
-      case "blindroll":
-        chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
-        chatData["blind"] = true;
-    }
-
-    ChatMessage.create(chatData);
+    return effectContent;
   }
 
   /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({event}={}) {
+  rollDamage({critical=false}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = mergeObject(duplicate(actorData), {
@@ -695,7 +736,7 @@ export class ItemPF extends Item {
 
     // Determine critical multiplier
     rollData.critMult = 1;
-    if (event.ctrlKey) rollData.critMult = this.data.data.ability.critMult;
+    if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
 
@@ -744,37 +785,11 @@ export class ItemPF extends Item {
       }
     }
 
-    // Define Roll Data
-    let title = `${this.name} - Damage`;
-    if (this.isHealing) title = `${this.name} - Healing`;
-    const flavor = this.labels.damageTypes.length ? `${title} (${this.labels.damageTypes})` : title;
+    // Create roll
+    const roll = new Roll(parts.join("+"), rollData);
+    if (critical) roll.alter(0, rollData.critMult)
 
-    const properties = this.getChatData().properties;
-    let props = [];
-    if (properties.length > 0) props.push({ header: "Info", value: properties });
-
-    // Call the roll helper utility
-    DicePF.damageRoll({
-      event: event,
-      parts: parts,
-      actor: this.actor,
-      data: rollData,
-      title: title,
-      flavor: flavor,
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      dialogOptions: {
-        width: 400,
-        top: event ? event.clientY - 80 : null,
-        left: window.innerWidth - 710
-      },
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: {
-        hasExtraText: effectContent.length > 0,
-        extraText: effectContent,
-        hasProperties: props.length > 0,
-        properties: props,
-      }
-    });
+    return roll.roll();
   }
 
   /* -------------------------------------------- */
@@ -1002,11 +1017,7 @@ export class ItemPF extends Item {
     const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
     // Attack and Damage Rolls
-    if ( action === "attack" ) await item.rollAttack({event: event, fastForward: true});
-    else if (action === "attack-full") await item.rollAttackFull({event: event, fastForward: true});
-    else if (action === "damage") await item.rollDamage({event: event, fastForward: true});
-    else if (action === "effect") await item.rollEffect({event: event, fastForward: true});
-    else if (action === "formula") await item.rollFormula({event: event, fastForward: true});
+    if ( action === "attack" ) await item.useAttack();
 
     // Saving Throws for card targets
     else if ( action === "save" ) {

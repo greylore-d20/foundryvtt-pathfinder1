@@ -1492,6 +1492,20 @@
   border-right: none;
   padding-right: 0;
 }
+#chat-log .message .chat-attack {
+  padding: 4px;
+  margin-bottom: 8px;
+  border: 1px solid #999;
+  border-radius: 3px;
+}
+#chat-log .message .chat-attack .dice-roll:nth-child(n+2) .dice-flavor {
+  margin-top: 12px;
+}
+#chat-log .message .chat-attack .dice-roll:first-child > .dice-flavor {
+  color: #4C6D9F;
+  font-size: 16px;
+  text-align: center;
+}
 #chat-log .message .property-group {
   flex: 0 0 24px;
   /* Tags */
@@ -1521,6 +1535,11 @@
   margin-top: 8px;
   flex: 0 0 100%;
   white-space: pre-wrap;
+}
+#chat-log .message .extra-text label {
+  flex: 2;
+  color: #4b4a44;
+  font-weight: bold;
 }
 #chat-log .message .extra-effect:not(:last-child),
 #chat-log .message .extra-misc:not(:last-child) {

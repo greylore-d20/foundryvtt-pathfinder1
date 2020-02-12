@@ -80,3 +80,28 @@ export const addChatMessageContextOptions = function(html, options) {
   );
   return options;
 };
+
+export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}) {
+  let rollMode = game.settings.get("core", "rollMode");
+  chatData = mergeObject({
+    rollMode: rollMode,
+    user: game.user._id,
+    type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+    sound: CONFIG.sounds.dice,
+    content: await renderTemplate(chatTemplate, chatTemplateData),
+  }, chatData);
+  // Handle different roll modes
+  switch (chatData.rollMode) {
+    case "gmroll":
+      chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+      break;
+    case "selfroll":
+      chatData["whisper"] = [game.user._id];
+      break;
+    case "blindroll":
+      chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+      chatData["blind"] = true;
+  }
+
+  ChatMessage.create(chatData);
+};

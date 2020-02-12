@@ -80,6 +80,23 @@
 }
 
 #chat-log .message {
+  .chat-attack {
+    padding: 4px;
+    margin-bottom: 8px;
+    border: 1px solid #999;
+    border-radius: 3px;
+
+    .dice-roll:nth-child(n+2) .dice-flavor {
+      margin-top: 12px;
+    }
+
+    .dice-roll:first-child > .dice-flavor {
+      color: #4C6D9F;
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+
   .property-group {
     flex: 0 0 24px;
 
@@ -113,6 +130,12 @@
     margin-top: 8px;
     flex: 0 0 100%;
     white-space: pre-wrap;
+    
+    label {
+      flex: 2;
+      color: @colorOlive;
+      font-weight: bold;
+    }
   }
 
   .extra-effect:not(:last-child),

@@ -1,0 +1,67 @@
+{{#if name}}<h2>{{name}}</h2>{{/if}}
+
+{{#each attacks as |atk|}}
+<div class="chat-attack">
+  {{#if atk.attack}}
+  <div class="dice-roll attack-roll">
+    {{#if atk.attack.flavor}}
+    <div class="dice-flavor">{{atk.attack.flavor}}</div>
+    {{/if}}
+    <div class="dice-result">
+      <h4 class="dice-total{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}">{{atk.attack.total}}</h4>
+      {{{atk.attack.tooltip}}}
+    </div>
+  </div>
+  {{/if}}
+  {{#if atk.critConfirm}}
+  <div class="dice-roll crit-confirm-roll">
+    {{#if atk.critConfirm.flavor}}
+    <div class="dice-flavor">{{atk.critConfirm.flavor}}</div>
+    {{/if}}
+    <div class="dice-result">
+      <h4 class="dice-total">{{atk.critConfirm.total}}</h4>
+      {{{atk.critConfirm.tooltip}}}
+    </div>
+  </div>
+  {{/if}}
+  {{#if atk.damage}}
+  <div class="dice-roll damage-roll">
+    {{#if atk.damage.flavor}}
+    <div class="dice-flavor">{{atk.damage.flavor}}</div>
+    {{/if}}
+    <div class="dice-result">
+      <h4 class="dice-total">{{atk.damage.total}}</h4>
+      {{{atk.damage.tooltip}}}
+    </div>
+  </div>
+  {{/if}}
+  {{#if atk.critDamage}}
+  <div class="dice-roll crit-damage-roll">
+    {{#if atk.critDamage.flavor}}
+    <div class="dice-flavor">{{atk.critDamage.flavor}}</div>
+    {{/if}}
+    <div class="dice-result">
+      <h4 class="dice-total">{{atk.critDamage.total}}</h4>
+      {{{atk.critDamage.tooltip}}}
+    </div>
+  </div>
+  {{/if}}
+</div>
+{{/each}}
+
+{{#if hasExtraText}}
+<div class="extra-text">{{{extraText}}}</div>
+{{/if}}
+
+{{#if hasProperties}}
+{{#each properties as |prop|}}
+<div class="flexcol property-group">
+  <label>{{prop.header}}</label>
+  <div class="flexrow">
+    {{#each prop.value as |v|}}
+    <span class="tag">{{v}}</span>
+    {{/each}}
+  </div>
+</div>
+{{/each}}
+{{/if}}

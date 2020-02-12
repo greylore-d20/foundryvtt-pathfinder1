@@ -764,8 +764,28 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onItemDelete(event) {
     event.preventDefault();
+
+    const button = event.currentTarget;
+    if (button.disabled) return;
+    
     const li = event.currentTarget.closest(".item");
-    this.actor.deleteOwnedItem(li.dataset.itemId);
+    if (keyboard.isDown("Shift")) {
+      this.actor.deleteOwnedItem(li.dataset.itemId);
+    }
+    else {
+      button.disabled = true;
+
+      const msg = "<p>Are you sure you want to delete this item?</p>";
+      Dialog.confirm({
+        title: "Delete Item",
+        content: msg,
+        yes: () => {
+          this.actor.deleteOwnedItem(li.dataset.itemId);
+          button.disabled = false;
+        },
+        no: () => button.disabled = false
+      });
+    }
   }
 
   /**

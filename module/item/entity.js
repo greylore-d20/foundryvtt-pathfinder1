@@ -488,10 +488,14 @@ export class ItemPF extends Item {
       return cur;
     }, [{ bonus: "", label: "Attack 1" }]);
     let attacks = [];
+    const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
+      if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
+      return cur;
+    }, []);
     if (this.hasAttack) {
       for (let atk of allAttacks) {
         const attack = {};
-        let tooltip, roll, d20, critType = 0;
+        let tooltip, roll, d20, flavor, critType = 0;
         // Attack roll
         if (this.hasAttack) {
           roll = this.rollAttack({ bonus: atk.bonus !== "" ? atk.bonus : null });
@@ -529,8 +533,9 @@ export class ItemPF extends Item {
         if (this.hasDamage) {
           roll = this.rollDamage();
           tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+          flavor = this.isHealing ? "Healing" : "Damage";
           attack.damage = {
-            flavor: this.isHealing ? "Healing" : "Damage",
+            flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
             tooltip: tooltip,
             total: roll.total,
           };
@@ -538,8 +543,9 @@ export class ItemPF extends Item {
           if (critType === 1) {
             roll = this.rollDamage({ critical: true });
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+            flavor = this.isHealing ? "Critical Healing" : "Critical Damage";
             attack.critDamage = {
-              flavor: this.isHealing ? "Critical Healing" : "Critical Damage",
+              flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
               tooltip: tooltip,
               total: roll.total,
             };
@@ -554,8 +560,9 @@ export class ItemPF extends Item {
       let roll = this.rollDamage();
       let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
       let attack = {};
+      let flavor = this.isHealing ? "Healing" : "Damage";
       attack.damage = {
-        flavor: this.isHealing ? "Healing" : "Damage",
+        flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
         tooltip: tooltip,
         total: roll.total,
       };

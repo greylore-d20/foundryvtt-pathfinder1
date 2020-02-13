@@ -530,7 +530,7 @@ export class ItemPF extends Item {
           roll = this.rollDamage();
           tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
           attack.damage = {
-            flavor: "Damage",
+            flavor: this.isHealing ? "Healing" : "Damage",
             tooltip: tooltip,
             total: roll.total,
           };
@@ -539,7 +539,7 @@ export class ItemPF extends Item {
             roll = this.rollDamage({ critical: true });
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
             attack.critDamage = {
-              flavor: "Critical Damage",
+              flavor: this.isHealing ? "Critical Healing" : "Critical Damage",
               tooltip: tooltip,
               total: roll.total,
             };
@@ -555,7 +555,7 @@ export class ItemPF extends Item {
       let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
       let attack = {};
       attack.damage = {
-        flavor: "Damage",
+        flavor: this.isHealing ? "Healing" : "Damage",
         tooltip: tooltip,
         total: roll.total,
       };

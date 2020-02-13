@@ -205,6 +205,7 @@ function rollItemMacro(itemName, actorName) {
   if ( !item ) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
   // Trigger the item roll
+  if (item.hasAction) return item.useAttack();
   if ( item.data.type === "spell" ) return actor.useSpell(item);
   return item.roll();
 }

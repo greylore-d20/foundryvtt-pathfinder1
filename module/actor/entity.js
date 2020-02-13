@@ -1042,7 +1042,7 @@ export class ActorPF extends Actor {
     }, { name: "Favoured Classes", value: 0 });
     if (fcHPBonus.value !== 0) sourceDetails["data.attributes.hp.max"].push(fcHPBonus);
     // HP from Ability Drain
-    if (actorData.data.attributes.energyDrain !== 0) {
+    if (actorData.data.attributes.energyDrain != null) {
       sourceDetails["data.attributes.hp.max"].push({
         name: "Energy Drain",
         value: -(actorData.data.attributes.energyDrain * 5)

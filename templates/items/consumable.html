@@ -58,19 +58,6 @@
             {{!-- Item Activation Template --}}
             {{> "systems/pf1/templates/items/parts/item-activation.html"}}
 
-            {{!-- Consumable Usage --}}
-            {{#if data.activation.type}}
-            <div class="form-group">
-                <label>Consumable Usage</label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.uses.autoUse" {{checked data.uses.autoUse}}/> Consume on Use
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.uses.autoDestroy" {{checked data.uses.autoDestroy}}/> Destroy on Empty
-                </label>
-            </div>
-            {{/if}}
-
             <h3 class="form-header">Consumable Action</h3>
 
             {{!-- Item Action Template --}}

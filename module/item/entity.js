@@ -907,31 +907,6 @@ export class ItemPF extends Item {
       // Send message
       ChatMessage.create(chatData);
     }
-
-    // Deduct consumed charges from the item
-    if ( itemData.uses.autoUse ) {
-      let q = itemData.quantity;
-      let c = itemData.uses.value;
-
-      // Deduct an item quantity
-      if ( c <= 1 && q > 1 ) {
-        this.actor.updateOwnedItem({
-          id: this.data.id,
-          'data.quantity': Math.max(q - 1, 0),
-          'data.uses.value': itemData.uses.max
-        }, true);
-      }
-
-      // Optionally destroy the item
-      else if ( c <= 1 && q <= 1 && itemData.uses.autoDestroy ) {
-        this.actor.deleteOwnedItem(this.data.id);
-      }
-
-      // Deduct the remaining charges
-      else {
-        this.actor.updateOwnedItem({id: this.data.id, 'data.uses.value': Math.max(c - 1, 0)});
-      }
-    }
   }
 
   /* -------------------------------------------- */

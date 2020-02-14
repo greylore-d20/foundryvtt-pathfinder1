@@ -1303,7 +1303,7 @@ export class ActorPF extends Actor {
 
     // Update changes
     const updateObj = await this._updateChanges({ data: data });
-    if (Object.keys(updateObj.data).length > 0) data = updateObj.data;
+    if (Object.keys(updateObj.data).length > 0) data = mergeObject(data, diffObject(data, updateObj.data));
 
     return super.update(data, options);
   }

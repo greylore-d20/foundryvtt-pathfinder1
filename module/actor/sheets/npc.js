@@ -95,16 +95,18 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Organize Features
     const features = {
-      feat: { label: "Feats", items: [], hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
-      classFeat: { label: "Class Features", items: [], hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
-      trait: { label: "Traits", items: [], hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
-      racial: { label: "Racial Traits", items: [], hasActions: true, dataset: { type: "feat", "feat-type": "racial" } },
-      misc: { label: "Misc", items: [], hasActions: true, dataset: { type: "feat", "feat-type": "misc" } },
+      feat: { label: "Feats", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
+      classFeat: { label: "Class Features", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
+      trait: { label: "Traits", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
+      racial: { label: "Racial Traits", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "racial" } },
+      misc: { label: "Misc", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "misc" } },
+      all: { label: "All", items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
     };
 
     for ( let f of feats ) {
       let k = f.data.featType;
       features[k].items.push(f);
+      features.all.items.push(f);
     }
 
     // Buffs

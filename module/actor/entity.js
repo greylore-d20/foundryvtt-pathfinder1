@@ -1333,6 +1333,13 @@ export class ActorPF extends Actor {
    * @returns {Boolean} Whether to force an update or not.
    */
   _updateExp(data) {
+    const classes = this.items.filter(o => o.type === "class");
+    const level = classes.reduce((cur, o) => {
+      return cur + o.data.data.levels;
+    }, 0);
+    data["data.details.level.value"] = level;
+
+    // The following is not for NPCs
     if (this.data.type !== "character") return;
 
     // Translate update exp value to number
@@ -1353,12 +1360,6 @@ export class ActorPF extends Actor {
         data["data.details.xp.value"] = newExp;
       }
     }
-
-    const classes = this.items.filter(o => o.type === "class");
-    const level = classes.reduce((cur, o) => {
-      return cur + o.data.data.levels;
-    }, 0);
-    data["data.details.level.value"] = level;
     data["data.details.xp.max"] = this.getLevelExp(level);
 
     const curExp = data["data.details.xp.value"] !== undefined ? data["data.details.xp.value"] : this.data.data.details.xp.value;

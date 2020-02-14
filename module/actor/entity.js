@@ -1404,16 +1404,20 @@ export class ActorPF extends Actor {
    * See the base Actor class for API documentation of this method
    */
   async createOwnedItem(itemData, options) {
+    let t = itemData.type;
+    let initial = {};
     // Assume NPCs are always proficient with weapons and always have spells prepared
     if ( !this.isPC ) {
-      let t = itemData.type;
-      let initial = {};
       if ( t === "weapon" ) initial["data.proficient"] = true;
       if ( ["weapon", "equipment"].includes(t) ) initial["data.equipped"] = true;
-      if ( t === "spell" ) initial["data.prepared"] = true;
-      mergeObject(itemData, initial);
+    }
+    if ( t === "spell" ) {
+      if (this.sheet != null && this.sheet._spellbookTab != null) {
+        initial["data.spellbook"] = this.sheet._spellbookTab;
+      }
     }
 
+    mergeObject(itemData, initial);
     return super.createOwnedItem(itemData, options);
   }
 

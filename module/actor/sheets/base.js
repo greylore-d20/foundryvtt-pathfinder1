@@ -21,7 +21,7 @@ export class ActorSheetPF extends ActorSheet {
      * @type {number}
      */
     this._scrollTab = 0;
-
+    
     this._scrollSub = 0;
 
     /**

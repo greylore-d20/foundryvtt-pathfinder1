@@ -300,7 +300,13 @@ export class ActorSheetPF extends ActorSheet {
         this["_sheetTab"] = clicked.data("tab");
       }
     });
-    for (let tabName of ["spellbook", "skillset", "inventory", "feats", "buffs", "spells"]) {
+    // Add sub tab groups
+    let tabGroups = ["spellbook", "skillset", "inventory", "feats", "buffs"];
+    for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
+      tabGroups.push(`spells_${a}`);
+    }
+
+    for (let tabName of tabGroups) {
       new Tabs(html.find(`.tabs[data-group="${tabName}"]`), {
         initial: this[`_${tabName}Tab`],
         callback: clicked => {

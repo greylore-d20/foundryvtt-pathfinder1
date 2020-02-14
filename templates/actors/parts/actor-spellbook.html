@@ -63,14 +63,14 @@
 </div>
 
 {{!-- Inventory Navigation --}}
-<nav class="sheet-navigation tabs subtabs spells" data-group="spells">
+<nav class="sheet-navigation tabs subtabs spells" data-group="spells_{{spellbookIndex}}">
   {{#each spellbook.data as |section sid|}}
   <a class="item {{#unless sid}}active{{/unless}}" data-tab="{{sid}}">{{section.label}}</a>
   {{/each}}
 </nav>
 
 {{#each spellbook.data as |section sid|}}
-<div class="tab inventory-group flexcol" data-group="spells" data-tab="{{sid}}">
+<div class="tab inventory-group flexcol" data-group="spells_{{../spellbookIndex}}" data-tab="{{sid}}">
   <ol class="inventory-list sub-scroll">
       <li>{{section.name}}</li>
       <li class="flexrow inventory-header spellbook-header">

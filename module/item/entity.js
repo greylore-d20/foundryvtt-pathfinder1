@@ -763,7 +763,7 @@ export class ItemPF extends Item {
         actorData.abilities[itemData.ability.damage].mod
       ));
       if (rollData.extraDamage < 0) parts.push("@extraDamage");
-      else if (rollDamage.critMult !== 1) parts.push("@extraDamage * @critMult");
+      else if (rollData.critMult !== 1) parts.push("@extraDamage * @critMult");
       else parts.push("@extraDamage");
     }
     // Add enhancement bonus

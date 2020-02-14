@@ -1,5 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
+import { alterRoll } from "../lib.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -758,6 +759,7 @@ export class ItemPF extends Item {
 
     // Define Roll parts
     let parts = itemData.damage.parts.map(d => d[0]);
+    parts[0] = alterRoll(parts[0], 0, rollData.critMult);
 
     // Determine ability score modifier
     let abl = itemData.ability.damage;
@@ -808,7 +810,6 @@ export class ItemPF extends Item {
 
     // Create roll
     const roll = new Roll(parts.join("+"), rollData);
-    if (critical) roll.alter(0, rollData.critMult)
 
     return roll.roll();
   }

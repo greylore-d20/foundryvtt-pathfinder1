@@ -9,3 +9,15 @@ export const createTag = function(str) {
     return s;
   }).join("");
 };
+
+/**
+ * Alters a roll in string form.
+ */
+export const alterRoll = function(str, add, multiply) {
+  const rgx = new RegExp(Die.rgx.die, "g");
+  return str.replace(rgx, (match, nd, d, mods) => {
+    nd = (nd * (multiply || 1)) + (add || 0);
+    mods = mods || "";
+    return nd + "d" + d + mods;
+  });
+};

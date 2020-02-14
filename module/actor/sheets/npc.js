@@ -43,7 +43,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
       weapon: { label: "Weapons/Attacks", canCreate: true, items: [], dataset: { type: "weapon" } },
-      equipment: { label: "Equipment", canCreate: true, items: [], dataset: { type: "equipment" }, hasSlots: true },
+      equipment: { label: "Armor/Equipment", canCreate: true, items: [], dataset: { type: "equipment" }, hasSlots: true },
       consumable: { label: "Consumables", canCreate: true, items: [], dataset: { type: "consumable" } },
       gear: { label: "Gear", canCreate: true, items: [], dataset: { type: "loot", "sub-type": "gear" } },
       ammo: { label: "Ammunition", canCreate: true, items: [], dataset: { type: "loot", "sub-type": "ammo" } },

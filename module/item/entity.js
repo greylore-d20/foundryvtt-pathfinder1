@@ -758,10 +758,8 @@ export class ItemPF extends Item {
     // Determine ability score modifier
     let abl = itemData.ability.damage;
     if (abl != null && abl !== "") {
-      rollData.extraDamage = Math.floor(Math.max(
-        actorData.abilities[itemData.ability.damage].mod * itemData.ability.damageMult,
-        actorData.abilities[itemData.ability.damage].mod
-      ));
+      rollData.extraDamage = Math.floor(actorData.abilities[abl].mod * itemData.ability.damageMult);
+      if (actorData.abilities[abl].mod < 0) rollData.extraDamage = actorData.abilities[abl].mod;
       if (rollData.extraDamage < 0) parts.push("@extraDamage");
       else if (rollData.critMult !== 1) parts.push("@extraDamage * @critMult");
       else parts.push("@extraDamage");

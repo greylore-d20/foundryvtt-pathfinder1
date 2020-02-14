@@ -337,6 +337,14 @@ export class ActorSheetPF extends ActorSheet {
     // Item summaries
     html.find('.item .item-name h4').click(event => this._onItemSummary(event));
 
+    // Item Dragging
+    let handler = ev => this._onDragItemStart(ev);
+    html.find('li.item').each((i, li) => {
+      if ( li.classList.contains("inventory-header") ) return;
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", handler, false);
+    });
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
@@ -395,14 +403,6 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item-create').click(ev => this._onItemCreate(ev));
     html.find('.item-edit').click(this._onItemEdit.bind(this));
     html.find('.item-delete').click(this._onItemDelete.bind(this));
-
-    // Item Dragging
-    let handler = ev => this._onDragItemStart(ev);
-    html.find('li.item').each((i, li) => {
-      if ( li.classList.contains("inventory-header") ) return;
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", handler, false);
-    });
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));

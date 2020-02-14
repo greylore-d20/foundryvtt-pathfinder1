@@ -90,6 +90,9 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.data.uses != null) {
       data.isCharged = ["day", "week", "charges"].includes(data.item.data.uses.per);
     }
+    if (data.item.data.range.units != null) {
+      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
+    }
 
     // Prepare spell specific stuff
     if (data.item.type === "spell") {

@@ -369,6 +369,7 @@ PF1.distanceUnits = {
   "medium": "PF1.DistMedium",
   "long": "PF1.DistLong",
   "ft": "PF1.DistFt",
+  "mi": "PF1.DistMi",
   "spec": "PF1.Special",
   "unlimited": "PF1.DistUnlimited"
 };

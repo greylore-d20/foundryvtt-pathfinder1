@@ -139,7 +139,7 @@ export class ItemPF extends Item {
 
       // Range Label
       let rng = data.range || {};
-      if (["none", "touch", "personal", "close", "medium", "long"].includes(rng.units) || (rng.value === 0)) {
+      if (!["ft", "mi", "spec"].includes(rng.units)) {
         rng.value = null;
         rng.long = null;
       }
@@ -269,6 +269,10 @@ export class ItemPF extends Item {
       if (data.range.units === "close") dynamicLabels.range = `Range: ${(25 + Math.floor(cl / 2) * 5)}`;
       else if (data.range.units === "medium") dynamicLabels.range = `Range: ${(100 + cl * 10)}`;
       else if (data.range.units === "long") dynamicLabels.range = `Range:  ${(400 + cl * 40)}`;
+      else if (data.hasOwnProperty("range") && ["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
+        let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
+        dynamicLabels.range = [range, CONFIG.PF1.distanceUnits[data.range.units]].join(" ");
+      }
     }
 
     // Rich text description

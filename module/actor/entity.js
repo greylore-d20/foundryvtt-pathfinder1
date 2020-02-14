@@ -748,7 +748,7 @@ export class ActorPF extends Actor {
     const classes = items.filter(obj => { return obj.type === "class"; });
 
     // Reset HD
-    updateData["data.attributes.hd.total"] = (data.attributes.hd.base || 0) + (this.data.type === "character" ? data.details.level.value : 0);
+    updateData["data.attributes.hd.total"] = (data.attributes.hd.base || 0) + data.details.level.value;
 
     // Reset abilities
     for (let [a, abl] of Object.entries(data.abilities)) {
@@ -1302,8 +1302,10 @@ export class ActorPF extends Actor {
     if (this._updateExp(data)) options.diff = false;
 
     // Update changes
-    const updateObj = await this._updateChanges({ data: data });
-    if (Object.keys(updateObj.data).length > 0) data = mergeObject(data, diffObject(data, updateObj.data));
+    if (options.updateChanges !== false) {
+      const updateObj = await this._updateChanges({ data: data });
+      if (Object.keys(updateObj.data).length > 0) data = mergeObject(data, diffObject(data, updateObj.data));
+    }
 
     return super.update(data, options);
   }

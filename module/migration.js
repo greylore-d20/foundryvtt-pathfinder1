@@ -11,8 +11,8 @@ export const migrateWorld = async function() {
       const updateData = migrateActorData(a.data);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
-        await a.update(updateData, {enforceTypes: false});
-        a.items = a._getItems(); // TODO - Temporary Hack
+        await a.update(updateData, {enforceTypes: false, updateChanges: false});
+        // a.items = a._getItems(); // TODO - Temporary Hack
       }
     } catch(err) {
       console.error(err);
@@ -38,7 +38,7 @@ export const migrateWorld = async function() {
       const updateData = migrateSceneData(s.data);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Scene entity ${s.name}`);
-        await s.update(updateData, {enforceTypes: false});
+        await s.update(updateData, {enforceTypes: false, updateChanges: false});
       }
     } catch(err) {
       console.error(err);
@@ -106,36 +106,19 @@ export const migrateCompendium = async function(pack) {
 export const migrateActorData = function(actor) {
   const updateData = {};
 
-  // Alter DR
-  if (typeof actor.data.traits.dr !== "string") {
-    updateData["data.traits.dr"] = "";
-  }
-
-  // Add attack and damage bonuses
-  if (typeof actor.data.attributes.attack !== "object") {
-    updateData["data.attributes.attack"] = { general: 0, melee: 0, ranged: 0 };
-  }
-  if (typeof actor.data.attributes.damage !== "object") {
-    updateData["data.attributes.damage"] = { general: 0, weapon: 0, spell: 0 };
-  }
-
-  // Add encumbrance level
-  if (typeof actor.data.attributes.encumbrance !== "object") {
-    updateData["data.attributes.encumbrance"] = { level: 0 };
-  }
+  _migrateCharacterLevel(actor, updateData);
 
   // Actor Data Updates
   // _migrateActorTraits(actor, updateData);
 
   // Flatten values and remove deprecated fields
-  const toFlatten = ["details.background", "details.trait", "details.ideal", "details.bond", "details.flaw",
-    "details.type", "details.environment", "details.cr", "details.source", "details.alignment", "details.race",
-    "attributes.exhaustion", "attributes.inspiration", "attributes.prof", "attributes.spellcasting",
-    "attributes.spellDC", "traits.size", "traits.senses", "currency.pp", "currency.gp", "currency.ep", "currency.sp",
-    "currency.cp"
-  ];
-  _migrateFlattenValues(actor, updateData, toFlatten);
-  _migrateRemoveDeprecated(actor, updateData, toFlatten);
+  // const toFlatten = ["details.background", "details.trait", "details.ideal", "details.bond", "details.flaw",
+  //   "details.type", "details.environment", "details.cr", "details.source", "details.alignment", "details.race",
+  //   "attributes.exhaustion", "attributes.inspiration", "attributes.prof", "attributes.spellcasting",
+  //   "attributes.spellDC", "traits.size", "traits.senses", "currency.pp", "currency.gp", "currency.sp", "currency.cp"
+  // ];
+  // _migrateFlattenValues(actor, updateData, toFlatten);
+  // _migrateRemoveDeprecated(actor, updateData, toFlatten);
 
   // // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -171,74 +154,13 @@ export const migrateActorData = function(actor) {
 export const migrateItemData = function(item) {
   const updateData = {};
 
-  // Migrate feats without type
-  if (item.type === "feat" && CONFIG.PF1.featTypes[item.data.featType] == null) {
-    updateData["data.featType"] = "feat";
-  }
-
-  // Migrate spell data
-  if (item.type === "spell" && !item.data.spellbook) {
-    updateData["data.spellbook.index"] = "primary";
-  }
-
-  // Migrate class data
-  if (item.type === "class" && !item.data.savingThrows) {
-    updateData["data.savingThrows"] = { fort: { value: 0 }, ref: { value: 0 }, will: { value: 0 } };
-    updateData["data.fc"] = { hp: { value: 0 }, skill: { value: 0 }, alt: { value: 0 } };
-    updateData["data.skillsPerLevel"] = 0;
-    updateData["data.bab"] = 0;
-  }
-
-  if (item.type === "equipment") {
-    if (!item.data.armor.enh) updateData["data.armor.enh"] = 0;
-  }
-
-  // Migrate backpack to loot
-  // if ( item.type === "backpack" ) {
-  //   _migrateBackpackLoot(item, updateData);
-  // }
-
-  // // Migrate Spell items
-  // if (item.type === "spell") {
-  //   _migrateSpellComponents(item, updateData);
-  //   _migrateSpellPreparation(item, updateData);
-  //   _migrateSpellAction(item, updateData);
-  // }
-
-  // // Migrate Equipment items
-  // else if ( item.type === "equipment" ) {
-  //   _migrateArmor(item, updateData);
-  // }
-
-  // // Migrate Weapon Items
-  // else if ( item.type === "weapon" ) {
-  //   _migrateWeaponProperties(item, updateData);
-  // }
-
-  // // Migrate Consumable Items
-  // else if ( item.type === "consumable" ) {
-  //   _migrateConsumableUsage(item, updateData);
-  // }
-
-  // // Spell and Feat cast times
-  // if (["spell", "feat"].includes(item.type)) {
-  //   _migrateCastTime(item, updateData);
-  //   _migrateTarget(item, updateData);
-  // }
-
-  // // Migrate General Properties
-  // _migrateRange(item, updateData);
-  // _migrateDuration(item, updateData);
-  // _migrateDamage(item, updateData);
-  // _migrateRarity(item, updateData);
-
   // Flatten values and remove deprecated fields
-  const toFlatten = ["ability", "attuned", "consumableType", "equipped", "identified", "quantity", "levels", "price",
-    "proficient", "rarity", "requirements", "stealth", "strength", "source", "subclass", "weight", "weaponType",
-    "school", "level", "recharge"
-  ];
-  _migrateFlattenValues(item, updateData, toFlatten);
-  _migrateRemoveDeprecated(item, updateData, toFlatten);
+  // const toFlatten = ["ability", "attuned", "consumableType", "equipped", "identified", "quantity", "levels", "price",
+  //   "proficient", "rarity", "requirements", "stealth", "strength", "source", "subclass", "weight", "weaponType",
+  //   "school", "level", "recharge"
+  // ];
+  // _migrateFlattenValues(item, updateData, toFlatten);
+  // _migrateRemoveDeprecated(item, updateData, toFlatten);
 
   // Return the migrated update data
   return updateData;
@@ -306,54 +228,6 @@ const _migrateActorTraits = function(actor, updateData) {
 
 /* -------------------------------------------- */
 
-/**
- * Migrate from a "backpack" item subtype to a "loot" item subtype for more coherent naming
- * @private
- */
-const _migrateBackpackLoot = function(item, updateData) {
-  updateData["type"] = "loot";
-  updateData["data.-=deprecationWarning"] = null;
-};
-
-/* -------------------------------------------- */
-
-/**
- * Migrate consumable items to have
- * @param item
- * @param updateData
- * @private
- */
-const _migrateConsumableUsage = function(item, updateData) {
-  const data = item.data;
-  if ( data.hasOwnProperty("charges") ) {
-    updateData["data.uses.value"] = data.charges.value;
-    updateData["data.uses.max"] = data.charges.max;
-    updateData["data.uses.per"] = "charges";
-    updateData["data.uses.autoUse"] = data.autoUse ? data.autoUse.value : false;
-    updateData["data.uses.autoDestroy"] = data.autoDestroy ? data.autoDestroy.value : false;
-
-    // Set default activation mode for potions
-    updateData["data.activation"] = {type: "action", cost: 1};
-    updateData["data.target.type"] = "self";
-  }
-};
-
-/* -------------------------------------------- */
-
-/**
- * Migrate from a string based armor class like "14" and a separate string armorType to a single armor object which
- * tracks both armor value and type.
- * @private
- */
-const _migrateArmor = function(item, updateData) {
-  const armor = item.data.armor;
-  if ( armor && item.data.armorType && item.data.armorType.value ) {
-    updateData["data.armor.type"] = item.data.armorType.value;
-  }
-};
-
-/* -------------------------------------------- */
-
 
 /**
  * Flatten several attributes which currently have an unnecessarily nested {value} object
@@ -373,6 +247,18 @@ const _migrateAddValues = function(ent, updateData, toAdd) {
     const attr = getProperty(ent.data, k);
     if (!attr && !updateData.hasOwnProperty(k)) {
       updateData[k] = v;
+    }
+  }
+};
+
+/* -------------------------------------------- */
+
+const _migrateCharacterLevel = function(ent, updateData) {
+  const arr = ["details.level.value", "details.level.min", "details.level.max"];
+  for (let k of arr) {
+    const value = getProperty(ent.data, k);
+    if (value == null) {
+      updateData["data."+k] = 0;
     }
   }
 };

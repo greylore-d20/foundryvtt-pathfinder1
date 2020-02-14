@@ -90,11 +90,11 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  // const NEEDS_MIGRATION_VERSION = 0.174;
-  // let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
-  // if ( needMigration && game.user.isGM ) {
-  //   await migrations.migrateWorld();
-  // }
+  const NEEDS_MIGRATION_VERSION = 0.1967;
+  let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
+  if ( needMigration && game.user.isGM ) {
+    await migrations.migrateWorld();
+  }
 
   game.actors.entities.forEach(obj => { obj._updateChanges({ sourceOnly: true }); });
 });

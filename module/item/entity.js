@@ -763,21 +763,28 @@ export class ItemPF extends Item {
         actorData.abilities[itemData.ability.damage].mod
       ));
       if (rollData.extraDamage < 0) parts.push("@extraDamage");
-      else parts.push("@extraDamage * @critMult");
+      else if (rollDamage.critMult !== 1) parts.push("@extraDamage * @critMult");
+      else parts.push("@extraDamage");
     }
     // Add enhancement bonus
-    if (rollData.item.enh != null && rollData.item.enh !== 0) {
-      parts.push("@item.enh * @critMult");
+    if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {
+      if (rollData.critMult !== 1) parts.push("@item.enh * @critMult");
+      else parts.push("@item.enh");
     }
 
     // Add general damage
-    if (rollData.attributes.damage.general !== 0) parts.push("@attributes.damage.general * @critMult");
+    if (rollData.attributes.damage.general !== 0) {
+      if (rollData.critMult !== 1) parts.push("@attributes.damage.general * @critMult");
+      else parts.push("@attributes.damage.general");
+    }
     // Add melee or spell damage
     if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(itemData.actionType)) {
-      parts.push("@attributes.damage.weapon * @critMult");
+      if (rollData.critMult !== 1) parts.push("@attributes.damage.weapon * @critMult");
+      else parts.push("@attributes.damage.weapon");
     }
     else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(itemData.actionType)) {
-      parts.push("@attributes.damage.spell * @critMult");
+      if (rollData.critMult !== 1) parts.push("@attributes.damage.spell * @critMult");
+      else parts.push("@attributes.damage.spell");
     }
 
     // Add contextual attack string

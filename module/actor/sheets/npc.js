@@ -52,7 +52,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     };
 
     // Partition items by category
-    let [items, spells, feats] = data.items.reduce((arr, item) => {
+    let [items, spells, feats, classes] = data.items.reduce((arr, item) => {
       item.img = item.img || DEFAULT_TOKEN;
       item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
       item.hasUses = item.data.uses && (item.data.uses.max > 0);
@@ -61,6 +61,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
       item.isCharged = !unusable;
       if ( item.type === "spell" ) arr[1].push(item);
       else if ( item.type === "feat" ) arr[2].push(item);
+      else if ( item.type === "class" ) arr[3].push(item);
       else if ( Object.keys(inventory).includes(item.type) || (item.data.subType != null && Object.keys(inventory).includes(item.data.subType)) ) arr[0].push(item);
       return arr;
     }, [[], [], [], []]);
@@ -95,6 +96,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Organize Features
     const features = {
+      classes: { label: "Classes", items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
       feat: { label: "Feats", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
       classFeat: { label: "Class Features", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
       trait: { label: "Traits", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
@@ -108,6 +110,8 @@ export class ActorSheetPFNPC extends ActorSheetPF {
       features[k].items.push(f);
       features.all.items.push(f);
     }
+    classes.sort((a, b) => b.levels - a.levels);
+    features.classes.items = classes;
 
     // Buffs
     let buffs = data.items.filter(obj => { return obj.type === "buff"; });

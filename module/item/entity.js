@@ -641,11 +641,11 @@ export class ItemPF extends Item {
       parts.push("@attributes.attack.ranged");
     }
     // Add BAB
-    if (rollData.attributes.bab.total !== 0) {
+    if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
       parts.push("@attributes.bab.total");
     }
     // Add item's enhancement bonus
-    if (rollData.item.enh !== 0) {
+    if (rollData.item.enh !== 0 && rollData.item.enh != null) {
       parts.push("@item.enh");
     }
     // Subtract energy drain
@@ -654,6 +654,11 @@ export class ItemPF extends Item {
     }
     // Add proficiency penalty
     if ((this.data.type === "weapon") && !itemData.proficient) { parts.push("@item.proficiencyPenalty"); }
+    // Add masterwork bonus
+    if (this.data.type === "weapon" && itemData.masterwork === true && itemData.enh < 1) {
+      rollData.item.masterworkBonus = 1;
+      parts.push("@item.masterworkBonus");
+    }
     // Add bonus
     if (options.bonus != null) {
       rollData.bonus = options.bonus;

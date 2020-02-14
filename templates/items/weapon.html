@@ -67,6 +67,9 @@
                 <label class="checkbox">
                     <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
                 </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> Masterwork
+                </label>
             </div>
 
             {{!-- Weapon Properties --}}
@@ -82,7 +85,7 @@
             <div class="form-group">
                 <label>Enhancement Bonus</label>
                 <div class="form-fields">
-                    <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number"/>
+                    <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
                 </div>
             </div>
 

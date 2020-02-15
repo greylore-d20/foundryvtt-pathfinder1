@@ -1,5 +1,4 @@
 {{!-- Skill Rank Info --}}
-{{#if isCharacter}}
 {{#unless useBGSkills}}
 <div class="flexcol skill-rank">
   <ol class="form-group">
@@ -54,7 +53,6 @@
 {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
 </div>
 {{/unless}}
-{{/if}}
 
 {{#unless useBGSkills}}
 {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.all.skills isBackgroundSkills="false"}}

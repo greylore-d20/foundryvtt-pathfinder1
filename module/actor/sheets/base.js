@@ -135,6 +135,52 @@ export class ActorSheetPF extends ActorSheet {
     // Prepare skillsets
     data.skillsets = this._prepareSkillsets(data.actor.data.skills);
 
+    // Skill rank counting
+    const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
+    // Count used skill ranks
+    for (let skl of Object.values(this.actor.data.data.skills)) {
+      if (skl.subSkills != null) {
+        for (let subSkl of Object.values(skl.subSkills)) {
+          if (data.useBGSkills && skl.background) {
+            skillRanks.bgUsed += subSkl.rank;
+          }
+          else {
+            skillRanks.used += subSkl.rank;
+          }
+        }
+      }
+      else if (data.useBGSkills && skl.background) {
+        skillRanks.bgUsed += skl.rank;
+      }
+      else {
+        skillRanks.used += skl.rank;
+      }
+    }
+    // Count allowed skill ranks
+    this.actor.data.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
+      const clsLevel = cls.data.levels;
+      const clsSkillsPerLevel = cls.data.skillsPerLevel;
+      const fcSkills = cls.data.fc.skill.value;
+      skillRanks.allowed += (Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel) + fcSkills;
+      if (data.useBGSkills) skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
+    });
+    if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
+      let roll = new Roll(
+        this.actor.data.data.details.bonusSkillRankFormula,
+        duplicate(this.actor.data.data)
+      ).roll();
+      skillRanks.allowed += roll.total;
+    }
+    // Calculate used background skills
+    if (data.useBGSkills) {
+      if (skillRanks.bgUsed > skillRanks.bgAllowed) {
+        skillRanks.sentToBG = (skillRanks.bgUsed - skillRanks.bgAllowed);
+        skillRanks.allowed -= skillRanks.sentToBG;
+        skillRanks.bgAllowed += skillRanks.sentToBG;
+      }
+    }
+    data.skillRanks = skillRanks;
+
     // Return data to the sheet
     return data
   }

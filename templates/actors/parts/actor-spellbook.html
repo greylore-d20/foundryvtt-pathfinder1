@@ -22,7 +22,6 @@
 
     <div class="form-group spellcasting-class tooltip">
         <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
-        {{#if isCharacter}}
         <label><h3>Spellcasting Class</h3></label>
         <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
             {{#select spellbook.orig.class}}
@@ -33,11 +32,6 @@
             {{/each}}
             {{/select}}
         </select>
-        {{else}}
-        <label><h3>Caster Level</h3></label>
-        <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.base"
-            value="{{#if spellbook.orig.cl.base}}{{spellbook.orig.cl.base}}{{/if}}" placeholder="Base Caster Level" data-dtype="Number"/>
-        {{/if}}
     </div>
 
     <div class="form-group spellcasting-ability">

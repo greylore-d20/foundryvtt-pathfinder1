@@ -45,7 +45,7 @@
 <div class="form-group input-select">
     <label>Duration</label>
     <div class="form-fields">
-        <input type="text" name="data.duration.value" value="{{data.duration.value}}" data-dtype="Number" placeholder="-"/>
+      {{#if canInputDuration}}<input type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="Formula"/>{{/if}}
         <select name="data.duration.units">
             {{#select data.duration.units}}
             <option value=""></option>

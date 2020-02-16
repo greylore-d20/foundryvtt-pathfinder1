@@ -93,6 +93,9 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.data.range != null) {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
     }
+    if (data.item.data.duration != null) {
+      data.canInputDuration = !(["", "inst", "perm"].includes(data.item.data.duration.units));
+    }
 
     // Prepare spell specific stuff
     if (data.item.type === "spell") {

@@ -266,13 +266,21 @@ export class ItemPF extends Item {
     const dynamicLabels = {};
     dynamicLabels.range = labels.range || "";
     dynamicLabels.level = labels.sl || "";
+    // Range
     if (data.range != null) {
       if (data.range.units === "close") dynamicLabels.range = `Range: ${(25 + Math.floor(cl / 2) * 5)}`;
       else if (data.range.units === "medium") dynamicLabels.range = `Range: ${(100 + cl * 10)}`;
       else if (data.range.units === "long") dynamicLabels.range = `Range:  ${(400 + cl * 40)}`;
-      else if (data.hasOwnProperty("range") && ["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
+      else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
         let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
         dynamicLabels.range = [range, CONFIG.PF1.distanceUnits[data.range.units]].join(" ");
+      }
+    }
+    // Duration
+    if (data.duration != null) {
+      if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
+        let duration = new Roll(data.duration.value.length > 0 ? data.duration.value : "0", rollData).roll().total;
+        dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].join(" ");
       }
     }
 
@@ -298,7 +306,7 @@ export class ItemPF extends Item {
         labels.target,
         labels.activation,
         dynamicLabels.range,
-        labels.duration
+        dynamicLabels.duration
       );
     }
 

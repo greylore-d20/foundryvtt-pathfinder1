@@ -34,6 +34,12 @@ export class ActorSheetPF extends ActorSheet {
       features: new Set(),
       buffs: new Set()
     };
+
+    /**
+     * Track item updates from the actor sheet.
+     * @type {Object[]}
+     */
+    this._itemUpdates = [];
   }
 
   /* -------------------------------------------- */
@@ -464,7 +470,7 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find(".item-list .spell-uses input[type='text'][data-type='amount']").off("focusout").focusout(this._setSpellUses.bind(this));
-    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("focusout").focusout(this._setSpellMaxUses.bind(this));
+    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("focusout").focusout(this._setMaxSpellUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
@@ -536,8 +542,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(event.currentTarget.value);
     const updateData = {};
-    updateData["data.uses.value"] = Math.min(item.data.data.uses.max, value);
-    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+    this.setItemUpdate(item._id, "data.uses.value", value);
   }
 
   _setSpellUses(event) {
@@ -546,19 +551,15 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     const value = Number(event.currentTarget.value);
-    const updateData = {};
-    updateData["data.preparation.preparedAmount"] = value;
-    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+    this.setItemUpdate(item._id, "data.preparation.preparedAmount", value);
   }
-  _setSpellMaxUses(event) {
+  _setMaxSpellUses(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
     const value = Number(event.currentTarget.value);
-    const updateData = {};
-    updateData["data.preparation.maxAmount"] = value;
-    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+    this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
   }
 
   _setBuffLevel(event) {
@@ -568,8 +569,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(event.currentTarget.value);
     const updateData = {};
-    updateData["data.level"] = value;
-    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+    this.setItemUpdate(item._id, "data.level", value);
   }
 
   _onRollConcentration(event) {
@@ -942,5 +942,35 @@ export class ActorSheetPF extends ActorSheet {
       top: this.position.top,
       configureDefault: !this.token
     }).render(true);
+  }
+
+  setItemUpdate(id, key, value) {
+    let obj = this._itemUpdates.filter(o => { return o._id === id; })[0];
+    if (obj == null) {
+      obj = { _id: id };
+      this._itemUpdates.push(obj);
+    }
+
+    obj[key] = value;
+  }
+
+  async _onSubmit(event, {updateData=null, preventClose=false}={}) {
+    event.preventDefault();
+    await this._updateItems();
+    return super._onSubmit(event, {updateData, preventClose});
+  }
+
+  async _updateItems() {
+    let promises = [];
+
+    for (const data of this._itemUpdates) {
+      const item = this.actor.items.filter(o => { return o._id === data._id; })[0];
+      if (item == null) continue;
+
+      delete data._id;
+      if (item.hasPerm(game.user, "OWNER")) promises.push(item.update(data));
+    }
+
+    await Promise.all(promises);
   }
 }

@@ -557,7 +557,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(event.currentTarget.value);
     const updateData = {};
-    updateData["data.preparation.preparedMax"] = value;
+    updateData["data.preparation.maxAmount"] = value;
     if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
   }
 

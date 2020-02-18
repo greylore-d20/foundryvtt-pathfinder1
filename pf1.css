@@ -444,7 +444,13 @@
   border-left: 2px groove #eeede0;
 }
 .pf1.sheet.actor .sheet-header img.profile {
-  border-right: unset;
+  flex: 0 0 200px;
+  max-width: 200px;
+  min-height: 120px;
+  max-height: 180px;
+  height: auto;
+  object-fit: contain;
+  border: none;
 }
 .pf1.sheet.actor .sheet-header .hd {
   flex: 0 0 160px;
@@ -1594,14 +1600,6 @@
   /* ----------------------------------------- */
   /*  Spellbook                                */
   /* ----------------------------------------- */
-}
-.pf1.sheet.actor.character .sheet-header img.profile {
-  flex: 0 0 200px;
-  max-width: 200px;
-  min-height: 120px;
-  max-height: 240px;
-  height: auto;
-  object-fit: contain;
 }
 .pf1.sheet.actor.character .sheet-header .charlevel {
   flex: 0 0 180px;

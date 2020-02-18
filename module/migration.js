@@ -161,6 +161,8 @@ export const migrateItemData = function(item) {
   // ];
   // _migrateFlattenValues(item, updateData, toFlatten);
   // _migrateRemoveDeprecated(item, updateData, toFlatten);
+  
+  _migrateItemSpellUses(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -261,6 +263,11 @@ const _migrateCharacterLevel = function(ent, updateData) {
       updateData["data."+k] = 0;
     }
   }
+};
+
+const _migrateItemSpellUses = function(ent, updateData) {
+  const value = getProperty(ent.data, "preparation.maxAmount");
+  if (typeof value !== "number") updateData["data.preparation.maxAmount"] = 0;
 };
 
 /* -------------------------------------------- */

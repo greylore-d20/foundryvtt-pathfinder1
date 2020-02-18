@@ -116,7 +116,9 @@
               <div class="spell-uses flexrow">
                   {{#if item.isPrepared}}
                   <span>Uses</span>
-                  <input type="text" value="{{item.data.preparation.preparedAmount}}" data-dtype="Number"/>
+                  <input type="text" value="{{item.data.preparation.preparedAmount}}" data-type="amount" data-dtype="Number"/>
+                  <span class="sep"> / </span>
+                  <input type="text" value="{{item.data.preparation.maxAmount}}" data-type="max" data-dtype="Number"/>
                   {{/if}}
               </div>
 

@@ -146,9 +146,15 @@
             {{#if isPreparedSpell}}
             <div class="form-group">
                 <div class="form-fields">
-                    <label>Prepared</label>
+                    <label>Casts Left</label>
                     <div class="form-fields">
                         <input type="text" name="data.preparation.preparedAmount" value="{{data.preparation.preparedAmount}}" data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <label>Prepared</label>
+                    <div class="form-fields">
+                        <input type="text" name="data.preparation.preparedMax" value="{{data.preparation.preparedMax}}" data-dtype="Number"/>
                     </div>
                 </div>
             </div>

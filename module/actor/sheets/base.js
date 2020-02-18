@@ -463,7 +463,8 @@ export class ActorSheetPF extends ActorSheet {
     /*  Spells
     /* -------------------------------------------- */
 
-    html.find(".item-list .spell-uses input[type='text']").off("focusout").focusout(this._setSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='text'][data-type='amount']").off("focusout").focusout(this._setSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("focusout").focusout(this._setSpellMaxUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
@@ -547,6 +548,16 @@ export class ActorSheetPF extends ActorSheet {
     const value = Number(event.currentTarget.value);
     const updateData = {};
     updateData["data.preparation.preparedAmount"] = value;
+    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+  }
+  _setSpellMaxUses(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.getOwnedItem(itemId);
+
+    const value = Number(event.currentTarget.value);
+    const updateData = {};
+    updateData["data.preparation.preparedMax"] = value;
     if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
   }
 

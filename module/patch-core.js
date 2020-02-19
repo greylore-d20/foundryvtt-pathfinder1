@@ -1,5 +1,6 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 
+const FormApplication_close = FormApplication.prototype.close;
 
 export function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
@@ -29,6 +30,16 @@ export function PatchCore() {
       displayBar2: bar2.attribute != null && bar2.value != null
     });
   }
+
+  // Patch FormApplication
+  FormApplication.prototype.saveMCEContent = async function(updateData=null) {
+    console.warn("Overwrite this function in subclasses");
+  };
+
+  FormApplication.prototype.close = async function(options={}) {
+    await this.saveMCEContent();
+    return FormApplication_close.call(this, options);
+  };
 
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;

@@ -452,4 +452,20 @@ export class ItemSheetPF extends ItemSheet {
       return this.item.update({"data.contextNotes": contextNotes});
     }
   }
+
+  async saveMCEContent(updateData=null) {
+    let manualUpdate = false;
+    if (updateData == null) {
+      manualUpdate = true;
+      updateData = {};
+    }
+
+    for (const [key, editor] of Object.entries(this.editors)) {
+      if (editor.mce == null) continue;
+
+      updateData[key] = editor.mce.getContent();
+    }
+
+    if (manualUpdate && Object.keys(updateData).length > 0) await this.item.update(updateData);
+  }
 }

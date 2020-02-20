@@ -129,7 +129,10 @@
                     <span class="tooltipcontent">
                         @abilities.{{id}}.total : {{ability.total}}<br/>
                         @abilities.{{id}}.value : {{ability.value}}<br/>
-                        @abilities.{{id}}.mod : {{ability.mod}}
+                        @abilities.{{id}}.mod : {{ability.mod}}<br/>
+                        @abilities.{{id}}.damage : {{ability.damage}}<br/>
+                        @abilities.{{id}}.drain : {{ability.drain}}<br/>
+                        @abilities.{{id}}.penalty : {{ability.penalty}}
 
                         {{#if ability.sourceDetails.length}}
                         <br/><br/>From sources:<br/>
@@ -141,7 +144,8 @@
                     <div class="ability-header flexrow">
                         <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text"
                         value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="DMG"/>
-                        <a class="proficiency-toggle ability-proficiency"></a>
+                        <input class="ability-penalty" name="data.abilities.{{id}}.penalty" type="text"
+                        value="{{#if ability.penalty}}{{ability.penalty}}{{/if}}" data-dtype="Number" placeholder="PNL"/>
                         <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text"
                         value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="DRN"/>
                     </div>

@@ -861,7 +861,7 @@ export class ActorPF extends Actor {
       if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
       updateData[`data.abilities.${a}.mod`] = Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2);
       updateData[`data.abilities.${a}.mod`] = Math.max(-5, updateData[`data.abilities.${a}.mod`] -
-        Math.floor(Math.abs(updateData[`data.abilities.${a}.damage`]) / 2) - Math.floor(Math.abs(changes[`data.abilities.${a}.penalty`] || 0) / 2));
+        Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor((updateData[`data.abilities.${a}.penalty`] || 0) / 2));
       modDiffs[a] = updateData[`data.abilities.${a}.mod`] - prevMods[a];
     }
 
@@ -1019,7 +1019,10 @@ export class ActorPF extends Actor {
     sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Base", value: 10 });
     for (let [a, abl] of Object.entries(actorData.data.abilities)) {
       sourceDetails[`data.abilities.${a}.total`].push({ name: "Base", value: abl.value });
-      // Add ability damage and drain
+      // Add ability penalty, damage and drain
+      if (abl.penalty != null) {
+        sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Penalty", value: `-${Math.floor(Math.abs(abl.penalty) / 2)} (Mod only)` });
+      }
       if (abl.damage != null) {
         sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Damage", value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)` });
       }

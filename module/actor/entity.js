@@ -1233,9 +1233,13 @@ export class ActorPF extends Actor {
       data = flattenObject(expandedData);
     }
 
-    // Alter energy drain
-    if (data["data.attributes.energyDrain"] != null) {
-      data["data.attributes.energyDrain"] = Math.abs(data["data.attributes.energyDrain"]);
+    // Make certain variables absolute
+    const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {
+      arr.push(`data.abilities.${abl}.penalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
+      return arr;
+    }, []).concat("data.attributes.energyDrain").filter(k => { return data[k] != null; });
+    for (const k of _absoluteKeys) {
+      data[k] = Math.abs(data[k]);
     }
 
     // Apply changes in Actor size to Token width/height

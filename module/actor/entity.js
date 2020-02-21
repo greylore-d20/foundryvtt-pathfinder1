@@ -1676,6 +1676,10 @@ export class ActorPF extends Actor {
         if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
       }
     }
+    // Add untrained note
+    if (skl.rt && skl.rank === 0) {
+      notes.push("Untrained");
+    }
 
     let props = [];
     if (notes.length > 0) props.push({ header: "Notes", value: notes });

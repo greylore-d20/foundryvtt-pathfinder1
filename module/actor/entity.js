@@ -1581,7 +1581,6 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Extend OwnedItem creation logic for the 5e system to make weapons proficient by default when dropped on a NPC sheet
    * See the base Actor class for API documentation of this method
    */
   async createOwnedItem(itemData, options) {
@@ -2046,6 +2045,16 @@ export class ActorPF extends Actor {
     }
 
     return [];
+  }
+
+  async createEmbeddedEntity(embeddedName, createData, options={}) {
+    const t = createData.type;
+    // Don't auto-equip transferred items
+    if (createData._id != null && ["weapon", "equipment"].includes(t)) {
+      createData.data.equipped = false;
+    }
+    
+    super.createEmbeddedEntity(embeddedName, createData, options);
   }
 }
 

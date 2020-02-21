@@ -146,7 +146,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     let buffs = data.items.filter(obj => { return obj.type === "buff"; });
     buffs = this._filterItems(buffs, this._filters.buffs);
     const buffSections = {
-      cond: { label: "Conditions", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "cond" } },
       temp: { label: "Temporary", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "temp" } },
       perm: { label: "Permanent", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "perm" } },
       item: { label: "Item", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "item" } },
@@ -165,7 +164,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data.inventory = Object.values(inventory);
     data.spellbookData = spellbookData;
     data.features = Object.values(features);
-    data.buffs = Object.values(buffSections);
+    data.buffs = buffSections;
   }
 
   /* -------------------------------------------- */

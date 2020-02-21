@@ -11,7 +11,6 @@ export class ActorPF extends Actor {
     if (type === "size") result = "Size";
     if (type === "buff") {
       result = "Buffs";
-      if (subtype === "cond") result = "Conditions";
       if (subtype === "temp") result = "Temporary Buffs";
       if (subtype === "perm") result = "Permanent Buffs";
       if (subtype === "item") result = "Item Buffs";
@@ -391,7 +390,7 @@ export class ActorPF extends Actor {
     return null;
   }
 
-  _addDefaultChanges(data, changes) {
+  _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Add Constitution to HP
     changes.push({
       raw: ["@abilities.con.mod * @attributes.hd.total", "misc", "mhp", "base", 0],
@@ -464,6 +463,153 @@ export class ActorPF extends Actor {
         source: {
           type: "size"
         }
+      });
+    }
+
+    // Add conditions
+    for (let [con, v] of Object.entries(data.attributes.conditions || {})) {
+      if (!v) continue;
+
+      switch (con) {
+        case "blind":
+          changes.push({
+            raw: ["-2", "ac", "ac", "penalty", 0],
+            source: { name: "Blind" }
+          });
+          break;
+        case "dazzled":
+          changes.push({
+            raw: ["-1", "attack", "attack", "penalty", 0],
+            source: { name: "Dazzled" }
+          });
+          break;
+        case "deaf":
+          changes.push({
+            raw: ["-4", "misc", "init", "penalty", 0],
+            source: { name: "Deaf" }
+          });
+          break;
+        case "entangled":
+          changes.push({
+            raw: ["-4", "ability", "dex", "penalty", 0],
+            source: { name: "Entangled" }
+          });
+          changes.push({
+            raw: ["-2", "attack", "attack", "penalty", 0],
+            source: { name: "Entangled" }
+          });
+          break;
+        case "grappled":
+          changes.push({
+            raw: ["-4", "ability", "dex", "penalty", 0],
+            source: { name: "Grappled" }
+          });
+          changes.push({
+            raw: ["-2", "attack", "attack", "penalty", 0],
+            source: { name: "Grappled" }
+          });
+          changes.push({
+            raw: ["-2", "misc", "cmb", "penalty", 0],
+            source: { name: "Grappled" }
+          });
+          break;
+        case "helpless":
+          flags["noDex"] = true;
+          sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
+          sourceInfo["data.abilities.dex.total"].negative.push({ name: "Helpless", value: "0 Dex" });
+          break;
+        case "paralyzed":
+          flags["noDex"] = true;
+          flags["noStr"] = true;
+          sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
+          sourceInfo["data.abilities.dex.total"].negative.push({ name: "Paralyzed", value: "0 Dex" });
+          sourceInfo["data.abilities.str.total"] = sourceInfo["data.abilities.str.total"] || { positive: [], negative: [] };
+          sourceInfo["data.abilities.str.total"].negative.push({ name: "Paralyzed", value: "0 Str" });
+          break;
+        case "pinned":
+          flags["loseDexToAC"] = true;
+          sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
+          break;
+        case "fear":
+          changes.push({
+            raw: ["-2", "attack", "attack", "penalty", 0],
+            source: { name: "Fear" }
+          });
+          changes.push({
+            raw: ["-2", "savingThrows", "allSavingThrows", "penalty", 0],
+            source: { name: "Fear" }
+          });
+          changes.push({
+            raw: ["-2", "skills", "skills", "penalty", 0],
+            source: { name: "Fear" }
+          });
+          changes.push({
+            raw: ["-2", "abilityChecks", "allChecks", "penalty", 0],
+            source: { name: "Fear" }
+          });
+          break;
+        case "sickened":
+          changes.push({
+            raw: ["-2", "attack", "attack", "penalty", 0],
+            source: { name: "Sickened" }
+          });
+          changes.push({
+            raw: ["-2", "damage", "wdamage", "penalty", 0],
+            source: { name: "Sickened" }
+          });
+          changes.push({
+            raw: ["-2", "savingThrows", "allSavingThrows", "penalty", 0],
+            source: { name: "Sickened" }
+          });
+          changes.push({
+            raw: ["-2", "skills", "skills", "penalty", 0],
+            source: { name: "Sickened" }
+          });
+          changes.push({
+            raw: ["-2", "abilityChecks", "allChecks", "penalty", 0],
+            source: { name: "Sickened" }
+          });
+          break;
+        case "stunned":
+          changes.push({
+            raw: ["-2", "ac", "ac", "penalty", 0],
+            source: { name: "Stunned" }
+          });
+          flags["loseDexToAC"] = true;
+          sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+          break;
+      }
+    }
+
+    // Handle fatigue and exhaustion so that they don't stack
+    if (data.attributes.conditions.exhausted) {
+      changes.push({
+        raw: ["-6", "ability", "str", "penalty", 0],
+        source: { name: "Exhausted" }
+      });
+      changes.push({
+        raw: ["-6", "ability", "dex", "penalty", 0],
+        source: { name: "Exhausted" }
+      });
+    }
+    else if (data.attributes.conditions.fatigued) {
+      changes.push({
+        raw: ["-2", "ability", "str", "penalty", 0],
+        source: { name: "Fatigued" }
+      });
+      changes.push({
+        raw: ["-2", "ability", "dex", "penalty", 0],
+        source: { name: "Fatigued" }
       });
     }
   }
@@ -546,16 +692,21 @@ export class ActorPF extends Actor {
       });
     });
 
-    // Check flags
+    // Add more changes
     let flags = {},
       sourceInfo = {};
+    this._addDefaultChanges(baseRollData, allChanges, flags, sourceInfo);
+
+    // Check flags
     for (let obj of changeObjects) {
       if (!obj.data.changeFlags) continue;
       for (let [flagKey, flagValue] of Object.entries(obj.data.changeFlags)) {
         if (flagValue === true) {
           flags[flagKey] = true;
+
           let targets = [];
           let value = "";
+
           switch (flagKey) {
             case "loseDexToAC":
               sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
@@ -571,48 +722,62 @@ export class ActorPF extends Actor {
             case "noDex":
               sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.dex.total"].negative];
-              updateData["data.abilities.dex.total"] = 0;
-              updateData["data.abilities.dex.mod"] = -5;
               value = "0 Dex";
               break;
             case "noStr":
               sourceInfo["data.abilities.str.total"] = sourceInfo["data.abilities.str.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.str.total"].negative];
-              updateData["data.abilities.str.total"] = 0;
-              updateData["data.abilities.str.mod"] = -5;
               value = "0 Str";
               break;
             case "noInt":
               sourceInfo["data.abilities.int.total"] = sourceInfo["data.abilities.int.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.int.total"].negative];
-              updateData["data.abilities.int.total"] = 1;
-              updateData["data.abilities.int.mod"] = -5;
               value = "1 Int";
               break;
             case "noWis":
               sourceInfo["data.abilities.wis.total"] = sourceInfo["data.abilities.wis.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.wis.total"].negative];
-              updateData["data.abilities.wis.total"] = 1;
-              updateData["data.abilities.wis.mod"] = -5;
               value = "1 Wis";
               break;
             case "noCha":
               sourceInfo["data.abilities.cha.total"] = sourceInfo["data.abilities.cha.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.cha.total"].negative];
-              updateData["data.abilities.cha.total"] = 1;
-              updateData["data.abilities.cha.mod"] = -5;
               value = "1 Cha";
               break;
           }
+
           for (let t of Object.values(targets)) {
             t.push({ type: obj.type, subtype: this.constructor._getChangeItemSubtype(obj), value: value });
           }
         }
       }
     }
+    for (let flagKey of Object.keys(flags)) {
+      if (!flags[flagKey]) continue;
 
-    // Add more changes
-    this._addDefaultChanges(baseRollData, allChanges);
+      switch (flagKey) {
+        case "noDex":
+          updateData["data.abilities.dex.total"] = 0;
+          updateData["data.abilities.dex.mod"] = -5;
+          break;
+        case "noStr":
+          updateData["data.abilities.str.total"] = 0;
+          updateData["data.abilities.str.mod"] = -5;
+          break;
+        case "noInt":
+          updateData["data.abilities.int.total"] = 1;
+          updateData["data.abilities.int.mod"] = -5;
+          break;
+        case "noWis":
+          updateData["data.abilities.wis.total"] = 1;
+          updateData["data.abilities.wis.mod"] = -5;
+          break;
+        case "noCha":
+          updateData["data.abilities.cha.total"] = 1;
+          updateData["data.abilities.cha.mod"] = -5;
+          break;
+      }
+    }
 
     // Initialize data
     if (!sourceOnly) this._resetData(updateData, mergeObject(this.data.data, data != null ? expandObject(data).data : {}, { inplace: false }), flags);
@@ -752,6 +917,7 @@ export class ActorPF extends Actor {
 
     // Reset abilities
     for (let [a, abl] of Object.entries(data.abilities)) {
+      updateData[`data.abilities.${a}.penalty`] = 0;
       if (a === "str" && flags.noStr === true) continue;
       if (a === "dex" && flags.noDex === true) continue;
       if (a === "int" && flags.oneInt === true) continue;
@@ -856,12 +1022,13 @@ export class ActorPF extends Actor {
         if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
         continue;
       }
+      const ablPenalty = Math.abs(updateData[`data.abilities.${a}.penalty`] || 0) + (updateData[`data.abilities.${a}.userPenalty`] || 0);
 
       updateData[`data.abilities.${a}.total`] += (changes[`data.abilities.${a}.total`] || 0);
       if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
       updateData[`data.abilities.${a}.mod`] = Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2);
       updateData[`data.abilities.${a}.mod`] = Math.max(-5, updateData[`data.abilities.${a}.mod`] -
-        Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor((updateData[`data.abilities.${a}.penalty`] || 0) / 2));
+        Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2));
       modDiffs[a] = updateData[`data.abilities.${a}.mod`] - prevMods[a];
     }
 
@@ -1020,13 +1187,10 @@ export class ActorPF extends Actor {
     for (let [a, abl] of Object.entries(actorData.data.abilities)) {
       sourceDetails[`data.abilities.${a}.total`].push({ name: "Base", value: abl.value });
       // Add ability penalty, damage and drain
-      if (abl.penalty != null) {
-        sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Penalty", value: `-${Math.floor(Math.abs(abl.penalty) / 2)} (Mod only)` });
-      }
-      if (abl.damage != null) {
+      if (abl.damage != null && abl.damage !== 0) {
         sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Damage", value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)` });
       }
-      if (abl.drain != null) {
+      if (abl.drain != null && abl.drain !== 0) {
         sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Drain", value: -Math.abs(abl.drain) });
       }
     }
@@ -1045,7 +1209,7 @@ export class ActorPF extends Actor {
     }, { name: "Favoured Classes", value: 0 });
     if (fcHPBonus.value !== 0) sourceDetails["data.attributes.hp.max"].push(fcHPBonus);
     // HP from Ability Drain
-    if (actorData.data.attributes.energyDrain != null) {
+    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
       sourceDetails["data.attributes.hp.max"].push({
         name: "Energy Drain",
         value: -(actorData.data.attributes.energyDrain * 5)
@@ -1075,7 +1239,7 @@ export class ActorPF extends Actor {
       sourceDetails["data.attributes.cmd.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.init.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
     }
-    if (actorData.data.attributes.energyDrain != null) {
+    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
       sourceDetails["data.attributes.cmb.total"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
       sourceDetails["data.attributes.cmd.total"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
@@ -1089,7 +1253,7 @@ export class ActorPF extends Actor {
           value: actorData.data.abilities[a].mod
         });
       }
-      if (actorData.data.attributes.energyDrain != null) {
+      if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
         sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
           name: "Negative Levels",
           value: -actorData.data.attributes.energyDrain
@@ -1238,7 +1402,7 @@ export class ActorPF extends Actor {
 
     // Make certain variables absolute
     const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {
-      arr.push(`data.abilities.${abl}.penalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
+      arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
       return arr;
     }, []).concat("data.attributes.energyDrain").filter(k => { return data[k] != null; });
     for (const k of _absoluteKeys) {
@@ -1570,6 +1734,10 @@ export class ActorPF extends Actor {
         }
         if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
       }
+    }
+    // Add grapple note
+    if (this.data.data.attributes.conditions.grappled) {
+      notes.push("+2 to Grapple");
     }
 
     let props = [];

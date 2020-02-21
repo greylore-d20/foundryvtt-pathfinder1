@@ -593,23 +593,38 @@ PF1.proficiencyLevels = {
 
 PF1.conditionTypes = {
   "bleed": "Bleed",
-  "blind": "Blinded",
-  "confuse": "Confused",
-  "daze": "Dazed",
-  "dazzle": "Dazzled",
-  "deaf": "Deafened",
+  "blind": "Blind",
+  "confuse": "Confuse",
+  "daze": "Daze",
+  "dazzle": "Dazzle",
+  "deaf": "Deaf",
   "energyDrain": "Energy Drain",
   "fatigue": "Fatigue",
   "fear": "Fear",
-  "sicken": "Sickened",
-  "paralyze": "Paralyzed",
+  "sicken": "Sicken",
+  "paralyze": "Paralyze",
   "petrify": "Petrification",
-  "stun": "Stunned",
+  "stun": "Stun",
   "sleep": "Sleep"
 };
 
+PF1.conditions = {
+  "blind": "PF1.CondBlind",
+  "dazzled": "PF1.CondDazzled",
+  "deaf": "PF1.CondDeaf",
+  "entangled": "PF1.CondEntangled",
+  "fatigued": "PF1.CondFatigued",
+  "exhausted": "PF1.CondExhausted",
+  "grappled": "PF1.CondGrappled",
+  "helpless": "PF1.CondHelpless",
+  "paralyzed": "PF1.CondParalyzed",
+  "pinned": "PF1.CondPinned",
+  "fear": "PF1.CondFear",
+  "sickened": "PF1.CondSickened",
+  "stunned": "PF1.CondStunned",
+};
+
 PF1.buffTypes = {
-  "cond": "Condition",
   "temp": "Temporary",
   "perm": "Permanent",
   "item": "Item",

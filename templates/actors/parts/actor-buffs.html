@@ -2,10 +2,22 @@
 
 {{!-- Buff Navigation --}}
 <nav class="sheet-navigation tabs subtabs buffs" data-group="buffs">
+  <a class="item active" data-tab="conditions">Conditions</a>
   {{#each sections as |section sid|}}
-  <a class="item {{#unless sid}}active{{/unless}}" data-tab="{{sid}}">{{section.label}}</a>
+  <a class="item" data-tab="{{sid}}">{{section.label}}</a>
   {{/each}}
 </nav>
+
+<div class="tab flexrow" data-group="buffs" data-tab="conditions">
+  {{#each data.attributes.conditions as |value con|}}
+  <div class="condition">
+    <label class="checkbox">
+      <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked value}}/>
+      <span>{{lookup ../config.conditions con}}</span>
+    </label>
+  </div>
+  {{/each}}
+</div>
 
 {{#each sections as |section sid|}}
 <div class="tab inventory-group flexcol" data-group="buffs" data-tab="{{sid}}">

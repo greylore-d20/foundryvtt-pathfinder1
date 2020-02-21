@@ -479,7 +479,7 @@ export class ItemPF extends Item {
       for (let fx of effects) {
         effectContent += `<div class="extra-misc">${fx}</div>`;
       }
-      effectContent = `<div><label>Effect Notes</label>${effectContent}</div>`;
+      effectContent = `<div><label>Attack Notes</label>${effectContent}</div>`;
     }
 
     const properties = this.getChatData().properties;

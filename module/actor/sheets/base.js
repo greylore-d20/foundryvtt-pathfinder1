@@ -437,6 +437,9 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Item Action control
     html.find(".item-actions a").click(ev => this._quickItemActionControl(ev));
 
+    // Quick (un)equip item
+    html.find("a.item-control.item-equip").click(ev => { this._quickEquipItem(ev); });
+
     // Roll Skill Checks
     html.find(".skill > .skill-name > .rollable").click(this._onRollSkillCheck.bind(this));
     html.find(".sub-skill > .skill-name > .rollable").click(this._onRollSubSkillCheck.bind(this));
@@ -776,6 +779,17 @@ export class ActorSheetPF extends ActorSheet {
     if (a.classList.contains("item-attack")) {
       await this._onSubmit(event);
       item.useAttack();
+    }
+  }
+
+  async _quickEquipItem(event) {
+    event.preventDefault();
+    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+
+    if (hasProperty(item.data, "data.equipped")) {
+      await this._onSubmit(event);
+      item.update({ "data.equipped": !item.data.data.equipped });
     }
   }
 

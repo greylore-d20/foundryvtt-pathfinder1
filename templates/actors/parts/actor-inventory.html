@@ -42,9 +42,9 @@
 
         {{#if ../isCharacter}}
         <div class="item-detail item-weight"><span>Weight</span></div>
-        <div class="item-detail item-equipped"><span>Equipped</span></div>
         {{/if}}
 
+        <div class="item-detail item-equipped"><span>Equipped</span></div>
         <div class="item-detail item-uses"><span>Charges</span></div>
 
         {{#if ../owner}}
@@ -95,11 +95,11 @@
                 </span>
                 {{/if}}
             </div>
+            {{/if}}
 
             <div class="item-detail item-equipped">
-              <span>{{item.labels.equipped}}</span>
+              <a class="item-control item-equip"><span>{{item.labels.equipped}}</span></a>
             </div>
-            {{/if}}
 
             <div class="item-detail item-uses flexrow">
                 {{#if item.data.uses.max}}

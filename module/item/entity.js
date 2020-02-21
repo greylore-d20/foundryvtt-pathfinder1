@@ -311,7 +311,7 @@ export class ItemPF extends Item {
     }
 
     // Add save DC
-    if (data.hasOwnProperty("actionType") && data.save.type !== "") {
+    if (data.hasOwnProperty("actionType") && hasProperty(data, "save.type") && data.save.type !== "") {
       let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
       let saveType = CONFIG.PF1.savingThrows[data.save.type];
       if (this.type === "spell") {
@@ -346,7 +346,7 @@ export class ItemPF extends Item {
 
     // Max uses
     if (data.hasOwnProperty("activation")) {
-      if (data.uses.maxFormula && data.uses.maxFormula !== "") {
+      if (hasProperty(data, "uses.maxFormula") && data.uses.maxFormula !== "") {
         let roll = new Roll(data.uses.maxFormula, duplicate(this.actor.data.data)).roll();
         if (data.uses.max !== roll.total) {
           updateData["data.uses.max"] = roll.total;

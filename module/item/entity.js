@@ -296,7 +296,6 @@ export class ItemPF extends Item {
     if ( data.hasOwnProperty("equipped") && ["weapon", "equipment"].includes(this.data.type) ) {
       props.push(
         data.equipped ? "Equipped" : "Not Equipped",
-        data.proficient ? "Proficient": "Not Proficient",
       );
     }
 

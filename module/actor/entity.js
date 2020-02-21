@@ -476,6 +476,14 @@ export class ActorPF extends Actor {
             raw: ["-2", "ac", "ac", "penalty", 0],
             source: { name: "Blind" }
           });
+          flags["loseDexToAC"] = true;
+          sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
+          break;
           break;
         case "dazzled":
           changes.push({

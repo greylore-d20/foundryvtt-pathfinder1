@@ -695,7 +695,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "loot", "class", "character", "spell", "feat", "buff"],
+    "types": ["weapon", "equipment", "consumable", "loot", "class", "character", "spell", "feat", "buff", "attack"],
     "templates": {
       "changes": {
         "changes": [],
@@ -830,7 +830,7 @@
       }
     },
     "equipment": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "changes", "contextNotes"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes"],
       "equipped": true,
       "armor": {
         "type": "misc",
@@ -922,7 +922,7 @@
       }
     },
     "weapon": {
-      "templates": ["itemDescription", "physicalItem" ,"activatedEffect", "action", "changes", "contextNotes"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes"],
       "equipped": true,
       "masterwork": false,
       "weaponType": {
@@ -947,6 +947,13 @@
         "value": "",
         "_deprecated": true
       }
+    },
+    "attack": {
+      "templates": ["itemDescription", "activatedEffect", "action"],
+      "attackType": "weapon",
+      "masterwork": false,
+      "enh": null,
+      "proficient": true
     }
   }
 }

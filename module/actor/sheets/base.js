@@ -353,7 +353,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     });
     // Add sub tab groups
-    let tabGroups = ["spellbook", "skillset", "inventory", "feats", "buffs"];
+    let tabGroups = ["spellbook", "skillset", "inventory", "feats", "buffs", "attacks"];
     for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
       tabGroups.push(`spells_${a}`);
     }

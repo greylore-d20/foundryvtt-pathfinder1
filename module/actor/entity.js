@@ -484,7 +484,6 @@ export class ActorPF extends Actor {
           sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
           sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
           break;
-          break;
         case "dazzled":
           changes.push({
             raw: ["-1", "attack", "attack", "penalty", 0],

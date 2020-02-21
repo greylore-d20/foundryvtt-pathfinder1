@@ -292,6 +292,14 @@ PF1.consumableTypes = {
   "trinket": "Trinket"
 };
 
+PF1.attackTypes = {
+  "weapon": "Weapon",
+  "natural": "Natural",
+  "ability": "Class Ability",
+  "racialAbility": "Racial Ability",
+  "misc": "Misc",
+};
+
 PF1.featTypes = {
   "feat": "Feat",
   "classFeat": "Class Feature",
@@ -508,7 +516,6 @@ PF1.weaponTypes = {
   "simple": "Simple",
   "martial": "Martial",
   "exotic": "Exotic",
-  "natural": "Natural",
   "improv": "Improvised",
   "ammo": "Ammunition",
   "splash": "Splash Weapon"

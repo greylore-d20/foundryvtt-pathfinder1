@@ -68,17 +68,17 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
-      weapon: { label: "Weapons/Attacks", canCreate: true, items: [], dataset: { type: "weapon" } },
-      equipment: { label: "Armor/Equipment", canCreate: true, items: [], dataset: { type: "equipment" }, hasSlots: true },
-      consumable: { label: "Consumables", canCreate: true, items: [], dataset: { type: "consumable" } },
-      gear: { label: "Gear", canCreate: true, items: [], dataset: { type: "loot", "sub-type": "gear" } },
-      ammo: { label: "Ammunition", canCreate: true, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
-      misc: { label: "Misc", canCreate: true, items: [], dataset: { type: "loot", "sub-type": "misc" } },
-      all: { label: "All", canCreate: false, items: [], dataset: {} },
+      weapon: { label: "Weapons", canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
+      equipment: { label: "Armor/Equipment", canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
+      consumable: { label: "Consumables", canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
+      gear: { label: "Gear", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
+      ammo: { label: "Ammunition", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
+      misc: { label: "Misc", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
+      all: { label: "All", canCreate: false, hasActions: true, items: [], dataset: {} },
     };
 
     // Partition items by category
-    let [items, spells, feats, classes] = data.items.reduce((arr, item) => {
+    let [items, spells, feats, classes, attacks] = data.items.reduce((arr, item) => {
       item.img = item.img || DEFAULT_TOKEN;
       item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
       item.hasUses = item.data.uses && (item.data.uses.max > 0);
@@ -88,9 +88,10 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       if ( item.type === "spell" ) arr[1].push(item);
       else if ( item.type === "feat" ) arr[2].push(item);
       else if ( item.type === "class" ) arr[3].push(item);
+      else if (item.type === "attack") arr[4].push(item);
       else if ( Object.keys(inventory).includes(item.type) || (item.data.subType != null && Object.keys(inventory).includes(item.data.subType)) ) arr[0].push(item);
       return arr;
-    }, [[], [], [], []]);
+    }, [[], [], [], [], []]);
 
     // Apply active item filters
     items = this._filterItems(items, this._filters.inventory);
@@ -160,11 +161,29 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       buffSections.all.items.push(b);
     }
 
+    // Attacks
+    const attackSections = {
+      weapon: { label: "Weapon Attacks", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
+      natural: { label: "Natural Attacks", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
+      ability: { label: "Class Abilities", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "ability" } },
+      racialAbility: { label: "Racial Abilities", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
+      misc: { label: "Misc", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
+      all: { label: "All", items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
+    };
+
+    for (let a of attacks) {
+      let s = a.data.attackType;
+      if (!attackSections[s]) continue;
+      attackSections[s].items.push(a);
+      attackSections.all.items.push(a);
+    }
+
     // Assign and return
     data.inventory = Object.values(inventory);
     data.spellbookData = spellbookData;
     data.features = Object.values(features);
     data.buffs = buffSections;
+    data.attacks = attackSections;
   }
 
   /* -------------------------------------------- */

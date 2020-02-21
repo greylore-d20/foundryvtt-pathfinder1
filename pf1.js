@@ -58,7 +58,7 @@ Hooks.once("init", async function() {
   Actors.registerSheet("PF1", ActorSheetPFCharacter, { types: ["character"], makeDefault: true });
   Actors.registerSheet("PF1", ActorSheetPFNPC, { types: ["npc"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff"], makeDefault: true });
+  Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack"], makeDefault: true });
 });
 
 

@@ -38,7 +38,7 @@
         <h3 class="item-name flexrow"></h3>
 
         {{#if section.hasSlots}}<div class="item-detail item-slot"><span>Slot</span></div>{{/if}}
-        <div class="item-detail item-actions"><span>Actions</span></div>
+        {{#if section.hasActions}}<div class="item-detail item-actions"><span>Actions</span></div>{{/if}}
 
         {{#if ../isCharacter}}
         <div class="item-detail item-weight"><span>Weight</span></div>
@@ -77,6 +77,7 @@
             </div>
             {{/if}}
 
+            {{#if section.hasActions}}
             <div class="item-detail item-actions">
                 <div class="item-attack">
                     {{#if item.hasAction}}
@@ -84,6 +85,7 @@
                     {{/if}}
                 </div>
             </div>
+            {{/if}}
     
             {{#if ../../isCharacter}}
             <div class="item-detail item-weight">

@@ -666,9 +666,9 @@ export class ItemPF extends Item {
       parts.push("- {@attributes.energyDrain, 0}kh");
     }
     // Add proficiency penalty
-    if ((this.data.type === "weapon") && !itemData.proficient) { parts.push("@item.proficiencyPenalty"); }
+    if ((this.data.type === "attack") && !itemData.proficient) { parts.push("@item.proficiencyPenalty"); }
     // Add masterwork bonus
-    if (this.data.type === "weapon" && itemData.masterwork === true && itemData.enh < 1) {
+    if (this.data.type === "attack" && itemData.masterwork === true && itemData.enh < 1) {
       rollData.item.masterworkBonus = 1;
       parts.push("@item.masterworkBonus");
     }

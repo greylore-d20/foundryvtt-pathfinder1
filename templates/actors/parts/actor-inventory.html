@@ -40,10 +40,7 @@
         {{#if section.hasSlots}}<div class="item-detail item-slot"><span>Slot</span></div>{{/if}}
         {{#if section.hasActions}}<div class="item-detail item-actions"><span>Actions</span></div>{{/if}}
 
-        {{#if ../isCharacter}}
         <div class="item-detail item-weight"><span>Weight</span></div>
-        {{/if}}
-
         <div class="item-detail item-equipped"><span>Equipped</span></div>
         <div class="item-detail item-uses"><span>Charges</span></div>
 
@@ -87,7 +84,6 @@
             </div>
             {{/if}}
     
-            {{#if ../../isCharacter}}
             <div class="item-detail item-weight">
                 {{#if item.totalWeight}}
                 <span>
@@ -95,7 +91,6 @@
                 </span>
                 {{/if}}
             </div>
-            {{/if}}
 
             <div class="item-detail item-equipped">
               <a class="item-control item-equip"><span>{{item.labels.equipped}}</span></a>
@@ -123,7 +118,6 @@
 {{/each}}
 
 
-{{#if isCharacter }}
 <div class="form-group carry-bonus">
     <label>Bonus Carry Strength</label>
     <input type="text" name="data.abilities.str.carryBonus" value="{{data.abilities.str.carryBonus}}" data-dtype="Number" placeholder="0"/>
@@ -131,7 +125,7 @@
     <input type="text" name="data.abilities.str.carryMultiplier" value="{{data.abilities.str.carryMultiplier}}"
         data-dtype="Number" placeholder="1"/>
 </div>
-{{#with data.attributes.encumbrance}}
+{{#with encumbrance}}
 Carrying {{value}} lbs.
 <div class="encumbrance {{#if encumbered.light}}encumbered{{/if}}">
     <span class="encumbrance-bar" style="width:{{pct.light}}%"></span>
@@ -146,4 +140,3 @@ Carrying {{value}} lbs.
     <span class="encumbrance-label">Heavy Load ({{heavy}})</span>
 </div>
 {{/with}}
-{{/if}}

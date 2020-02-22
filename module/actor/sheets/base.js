@@ -138,6 +138,9 @@ export class ActorSheetPF extends ActorSheet {
     // Prepare owned items
     this._prepareItems(data);
 
+    // Compute encumbrance
+    data.encumbrance = this._computeEncumbrance(data);
+
     // Prepare skillsets
     data.skillsets = this._prepareSkillsets(data.actor.data.skills);
 
@@ -330,6 +333,42 @@ export class ActorSheetPF extends ActorSheet {
       2: '<i class="fas fa-check-double"></i>'
     };
     return icons[level];
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Compute the level and percentage of encumbrance for an Actor.
+   *
+   * @param {Object} actorData      The data object for the Actor being rendered
+   * @return {Object}               An object describing the character's encumbrance level
+   * @private
+   */
+  _computeEncumbrance(actorData) {
+    const carriedWeight = actorData.data.attributes.encumbrance.carriedWeight;
+    const load = {
+      light: actorData.data.attributes.encumbrance.levels.light,
+      medium: actorData.data.attributes.encumbrance.levels.medium,
+      heavy: actorData.data.attributes.encumbrance.levels.heavy
+    };
+    const enc = {
+      pct: {
+        light: Math.max(0, Math.min(carriedWeight * 100 / load.light, 99.5)),
+        medium: Math.max(0, Math.min((carriedWeight - load.light) * 100 / (load.medium - load.light), 99.5)),
+        heavy: Math.max(0, Math.min((carriedWeight - load.medium) * 100 / (load.heavy - load.medium), 99.5)),
+      },
+      encumbered: {
+        light: actorData.data.attributes.encumbrance.level >= 1,
+        medium: actorData.data.attributes.encumbrance.level >= 2,
+        heavy: actorData.data.attributes.encumbrance.carriedWeight >= actorData.data.attributes.encumbrance.levels.heavy,
+      },
+      light: actorData.data.attributes.encumbrance.levels.light,
+      medium: actorData.data.attributes.encumbrance.levels.medium,
+      heavy: actorData.data.attributes.encumbrance.levels.heavy,
+      value: actorData.data.attributes.encumbrance.carriedWeight,
+    };
+
+    return enc;
   }
 
   /* -------------------------------------------- */

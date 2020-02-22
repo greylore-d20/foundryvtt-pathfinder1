@@ -111,7 +111,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     }
 
     // Organize Inventory
-    let totalWeight = 0;
     for ( let i of items ) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
@@ -120,9 +119,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
       inventory.all.items.push(i);
-      if (i.data.carried) totalWeight += i.totalWeight;
     }
-    data.data.attributes.encumbrance = this._computeEncumbrance(totalWeight, data);
 
     // Organize Features
     const features = {
@@ -184,97 +181,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data.features = Object.values(features);
     data.buffs = buffSections;
     data.attacks = attackSections;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Compute the level and percentage of encumbrance for an Actor.
-   *
-   * Optionally include the weight of carried currency across all denominations by applying the standard rule
-   * from the PHB pg. 143
-   *
-   * @param {Number} totalWeight    The cumulative item weight from inventory items
-   * @param {Object} actorData      The data object for the Actor being rendered
-   * @return {Object}               An object describing the character's encumbrance level
-   * @private
-   */
-  _computeEncumbrance(totalWeight, actorData) {
-
-    // Encumbrance classes
-    let mod = {
-      normal: {
-        fine: 0.125,
-        dim: 0.25,
-        tiny: 0.5,
-        sm: 0.75,
-        med: 1,
-        lg: 2,
-        huge: 4,
-        grg: 8,
-        col: 16
-      },
-      quadruped: {
-        fine: 0.25,
-        dim: 0.5,
-        tiny: 0.75,
-        sm: 1,
-        med: 1.5,
-        lg: 3,
-        huge: 6,
-        grg: 12,
-        col: 24
-      }
-    }[actorData.data.attributes.quadruped === true ? "quadruped" : "normal"][actorData.data.traits.size] || 1;
-
-    let table = [
-      0,
-      10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-      115, 130, 150, 175, 200, 230, 260, 300, 350,
-      400, 460, 520, 600, 700, 800, 920, 1040, 1200, 1400
-    ];
-
-    // Add Currency Weight
-    const currency = actorData.data.currency;
-    const numCoins = Object.values(currency).reduce((val, denom) => val += denom, 0);
-    totalWeight += numCoins / 50;
-
-    // Get carry capacity bonuses
-    const carryBonus = actorData.data.abilities.str.carryBonus || 0;
-    const carryMultiplier = actorData.data.abilities.str.carryMultiplier || 1;
-
-    // Compute Encumbrance percentage
-    const strength = actorData.data.abilities.str.total;
-    const totalStrength = strength + carryBonus;
-    let heavy = Math.max(3, (totalStrength > table.length ? table[table.length - 1] + 200 * totalStrength : table[totalStrength]) * mod * carryMultiplier);
-    const enc = {
-      light: Math.floor(heavy / 3),
-      medium: Math.floor(heavy / 3 * 2),
-      heavy: heavy,
-      carry: heavy * 2,
-      drag: heavy * 5,
-      value: Math.round(totalWeight * 10) / 10,
-    };
-    enc.pct = {
-      light: Math.max(0, Math.min(enc.value * 100 / enc.light, 99.5)),
-      medium: Math.max(0, Math.min((enc.value - enc.light) * 100 / (enc.medium - enc.light), 99.5)),
-      heavy: Math.max(0, Math.min((enc.value - enc.medium) * 100 / (enc.heavy - enc.medium), 99.5))
-    };
-    enc.encumbered = {
-      light: enc.value >= enc.light,
-      medium: enc.value >= enc.medium,
-      heavy: enc.value >= enc.heavy
-    };
-    enc.level = 0;
-    if (enc.encumbered.light) enc.level++;
-    if (enc.encumbered.medium) enc.level++;
-
-    if (actorData.data.attributes.encumbrance.level !== enc.level) {
-      const updateData = {"data.attributes.encumbrance.level": enc.level};
-      this.actor.update(updateData);
-    }
-
-    return enc;
   }
 
   /* -------------------------------------------- */

@@ -8,7 +8,7 @@ export const migrateWorld = async function() {
   // Migrate World Actors
   for ( let a of game.actors.entities ) {
     try {
-      const updateData = migrateActorData(a.data);
+      const updateData = migrateActorData(a);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
         await a.update(updateData, {enforceTypes: false, updateChanges: false});
@@ -22,7 +22,7 @@ export const migrateWorld = async function() {
   // Migrate World Items
   for ( let i of game.items.entities ) {
     try {
-      const updateData = migrateItemData(i.data);
+      const updateData = migrateItemData(i);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Item entity ${i.name}`);
         await i.update(updateData, {enforceTypes: false});
@@ -77,9 +77,9 @@ export const migrateCompendium = async function(pack) {
   for ( let ent of content ) {
     try {
       let updateData = null;
-      if (entity === "Item") updateData = migrateItemData(ent.data);
-      else if (entity === "Actor") updateData = migrateActorData(ent.data);
-      else if ( entity === "Scene" ) updateData = migrateSceneData(ent.data);
+      if (entity === "Item") updateData = migrateItemData(ent);
+      else if (entity === "Actor") updateData = migrateActorData(ent);
+      else if ( entity === "Scene" ) updateData = migrateSceneData(ent);
       if (!isObjectEmpty(updateData)) {
         expandObject(updateData);
         updateData["_id"] = ent._id;
@@ -106,19 +106,8 @@ export const migrateCompendium = async function(pack) {
 export const migrateActorData = function(actor) {
   const updateData = {};
 
-  _migrateCharacterLevel(actor, updateData);
-
-  // Actor Data Updates
-  // _migrateActorTraits(actor, updateData);
-
-  // Flatten values and remove deprecated fields
-  // const toFlatten = ["details.background", "details.trait", "details.ideal", "details.bond", "details.flaw",
-  //   "details.type", "details.environment", "details.cr", "details.source", "details.alignment", "details.race",
-  //   "attributes.exhaustion", "attributes.inspiration", "attributes.prof", "attributes.spellcasting",
-  //   "attributes.spellDC", "traits.size", "traits.senses", "currency.pp", "currency.gp", "currency.sp", "currency.cp"
-  // ];
-  // _migrateFlattenValues(actor, updateData, toFlatten);
-  // _migrateRemoveDeprecated(actor, updateData, toFlatten);
+  _migrateCharacterLevel(actor.data, updateData);
+  _migrateCharacterEncumbrance(actor, updateData);
 
   // // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -127,13 +116,6 @@ export const migrateActorData = function(actor) {
 
     // Migrate the Owned Item
     let itemUpdate = migrateItemData(i);
-
-  //   // Prepared, Equipped, and Proficient for NPC actors
-  //   if ( actor.type === "npc" ) {
-  //     if (getProperty(i.data, "preparation.prepared") === false) itemUpdate["data.preparation.prepared"] = true;
-  //     if (getProperty(i.data, "equipped") === false) itemUpdate["data.equipped"] = true;
-  //     if (getProperty(i.data, "proficient") === false) itemUpdate["data.proficient"] = true;
-  //   }
 
     // Update the Owned Item
     if ( !isObjectEmpty(itemUpdate) ) {
@@ -153,16 +135,8 @@ export const migrateActorData = function(actor) {
  */
 export const migrateItemData = function(item) {
   const updateData = {};
-
-  // Flatten values and remove deprecated fields
-  // const toFlatten = ["ability", "attuned", "consumableType", "equipped", "identified", "quantity", "levels", "price",
-  //   "proficient", "rarity", "requirements", "stealth", "strength", "source", "subclass", "weight", "weaponType",
-  //   "school", "level", "recharge"
-  // ];
-  // _migrateFlattenValues(item, updateData, toFlatten);
-  // _migrateRemoveDeprecated(item, updateData, toFlatten);
   
-  _migrateItemSpellUses(item, updateData);
+  _migrateItemSpellUses(item.data, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -263,6 +237,23 @@ const _migrateCharacterLevel = function(ent, updateData) {
       updateData["data."+k] = 0;
     }
   }
+};
+
+const _migrateCharacterEncumbrance = function(ent, updateData) {
+  const arr = ["attributes.encumbrance.level", "attributes.encumbrance.levels.light",
+  "attributes.encumbrance.levels.medium", "attributes.encumbrance.levels.heavy",
+  "attributes.encumbrance.levels.carry", "attributes.encumbrance.levels.drag",
+  "attributes.encumbrance.carriedWeight"];
+  let redoEncumbrance = false;
+  for (let k of arr) {
+    const value = getProperty(ent.data.data, k);
+    if (value == null) {
+      updateData["data."+k] = 0
+      redoEncumbrance = true;
+    }
+  }
+
+  if (redoEncumbrance) ent._computeEncumbrance(updateData);
 };
 
 const _migrateItemSpellUses = function(ent, updateData) {

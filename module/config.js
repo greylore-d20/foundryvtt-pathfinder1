@@ -208,6 +208,40 @@ PF1.sizeStealthMods = {
 
 /* -------------------------------------------- */
 
+PF1.encumbranceLoads = [
+  0,
+  10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+  115, 130, 150, 175, 200, 230, 260, 300, 350,
+  400, 460, 520, 600, 700, 800, 920, 1040, 1200, 1400
+];
+
+PF1.encumbranceMultipliers = {
+  normal: {
+    fine: 0.125,
+    dim: 0.25,
+    tiny: 0.5,
+    sm: 0.75,
+    med: 1,
+    lg: 2,
+    huge: 4,
+    grg: 8,
+    col: 16,
+  },
+  quadruped: {
+    fine: 0.25,
+    dim: 0.5,
+    tiny: 0.75,
+    sm: 1,
+    med: 1.5,
+    lg: 3,
+    huge: 6,
+    grg: 12,
+    col: 24,
+  },
+};
+
+/* -------------------------------------------- */
+
 /**
  * Classification types for item action types
  * @type {Object}

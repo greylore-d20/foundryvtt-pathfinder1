@@ -148,12 +148,12 @@ Hooks.on("deleteOwnedItem", (actor) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
 });
-Hooks.on("updateToken", (_, sceneId, changedData) => {
-  if (canvas.scene._id === sceneId) {
-    const actor = canvas.tokens.get(changedData._id).actor;
-    actor.refresh();
-  }
-});
+// Hooks.on("updateToken", (_, sceneId, changedData) => {
+//   if (canvas.scene._id === sceneId) {
+//     const actor = canvas.tokens.get(changedData._id).actor;
+//     actor.refresh();
+//   }
+// });
 
 
 /* -------------------------------------------- */

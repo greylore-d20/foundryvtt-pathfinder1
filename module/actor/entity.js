@@ -125,12 +125,13 @@ export class ActorPF extends Actor {
     return result;
   }
 
-  static get _sortChangePriority() {
+  get _sortChangePriority() {
+    const skillTargets = this._skillTargets;
     return { targets: [
       "ability", "misc", "ac", "attack", "damage", "savingThrows", "skills", "skill"
     ], types: [
         "str", "dex", "con", "int", "wis", "cha",
-        "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", "skill",
+        "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", ...skillTargets,
         "allChecks", "strChecks", "dexChecks", "conChecks", "intChecks", "wisChecks", "chaChecks",
         "ac", "aac", "sac", "nac",
         "attack", "mattack", "rattack",
@@ -145,19 +146,33 @@ export class ActorPF extends Actor {
     ]};
   }
 
-  static _sortChanges(a, b) {
+  get _skillTargets() {
+    let skills = [];
+    let subSkills = [];
+    for (let [sklKey, skl] of Object.entries(this.data.data.skills)) {
+      if (skl.subSkills != null) {
+        for (let subSklKey of Object.keys(skl.subSkills)) {
+          subSkills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
+        }
+      }
+      else skills.push(`skill.${sklKey}`);
+    }
+    return [...skills, ...subSkills];
+  }
+
+  _sortChanges(a, b) {
     const targetA = a.raw[1];
     const targetB = b.raw[1];
     const typeA = a.raw[2];
     const typeB = b.raw[2];
     const modA = a.raw[3];
     const modB = b.raw[3];
-    const priority = ActorPF._sortChangePriority;
-    let firstSort = priority.targets.indexOf(targetA) - priority.targets.indexOf(targetB);
-    let secondSort = priority.types.indexOf(typeA) - priority.types.indexOf(typeB);
-    let thirdSort = priority.modifiers.indexOf(modA) - priority.modifiers.indexOf(modB);
-    secondSort += Math.sign(firstSort) * priority.types.length * priority.targets.length;
-    thirdSort += Math.sign(secondSort) * priority.types.length;
+    const priority = this._sortChangePriority;
+    let firstSort = priority.types.indexOf(typeA) - priority.types.indexOf(typeB);
+    let secondSort = priority.modifiers.indexOf(modA) - priority.modifiers.indexOf(modB);
+    let thirdSort = priority.targets.indexOf(targetA) - priority.targets.indexOf(targetB);
+    secondSort += (Math.sign(firstSort) * priority.types.length);
+    thirdSort += (Math.sign(secondSort) * priority.modifiers.length);
     return firstSort + secondSort + thirdSort;
   }
 
@@ -790,7 +805,7 @@ export class ActorPF extends Actor {
     if (!sourceOnly) this._resetData(updateData, mergeObject(this.data.data, data != null ? expandObject(data).data : {}, { inplace: false }), flags);
 
     // Sort changes
-    allChanges.sort(this.constructor._sortChanges);
+    allChanges.sort(this._sortChanges.bind(this));
 
     // Parse changes
     let temp = [];
@@ -870,9 +885,6 @@ export class ActorPF extends Actor {
     if (this.collection != null && Object.keys(diffData).length > 0) {
       let newData = {};
       if (data != null) newData = flattenObject(mergeObject(data, flattenObject(diffData), { inplace: false }));
-      else if (this.hasPerm(game.user, "OWNER") && !sourceOnly) {
-        await this.update(diffData);
-      }
       return { data: newData, diff: diffData };
     }
     return { data: {}, diff: {} };
@@ -2070,12 +2082,12 @@ export class ActorPF extends Actor {
     if (mergedData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quad[size];
     else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
     const table = CONFIG.PF1.encumbranceLoads;
-    const heavy = updateData["data.attributes.encumbrance.levels.heavy"] = mergedData.data.attributes.encumbrance.levels.heavy = Math.max(
+    const heavy = updateData["data.attributes.encumbrance.levels.heavy"] = mergedData.data.attributes.encumbrance.levels.heavy = Math.floor(Math.max(
       3,
       carryStr >= table.length ?
         table[table.length - 1] + ((table[table.length - 1] - table[table.length - 2]) * (carryStr - (table.length - 1))) :
         table[carryStr]
-    ) * carryMultiplier;
+    ) * carryMultiplier);
     updateData["data.attributes.encumbrance.levels.light"] = mergedData.data.attributes.encumbrance.levels.light =
       Math.floor(heavy / 3);
     updateData["data.attributes.encumbrance.levels.medium"] = mergedData.data.attributes.encumbrance.levels.medium =

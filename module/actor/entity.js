@@ -992,17 +992,15 @@ export class ActorPF extends Actor {
     });
     // Set encumbrance
     updateData["data.attributes.acp.encumbrance"] = 0;
-    if (this.data.type === "character") {
-      switch (data.attributes.encumbrance.level) {
-        case 1:
-          updateData["data.attributes.acp.encumbrance"] = 3;
-          updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3);
-          break;
-        case 2:
-          updateData["data.attributes.acp.encumbrance"] = 6;
-          updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1);
-          break;
-      }
+    switch (data.attributes.encumbrance.level) {
+      case 1:
+        updateData["data.attributes.acp.encumbrance"] = 3;
+        updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3);
+        break;
+      case 2:
+        updateData["data.attributes.acp.encumbrance"] = 6;
+        updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1);
+        break;
     }
     // Set final ACP
     updateData["data.attributes.acp.total"] = updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"];

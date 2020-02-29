@@ -461,6 +461,8 @@ export class ItemSheetPF extends ItemSheet {
   async _createAttack(event) {
     if (this.item.actor == null) throw new Error("This item has no owner to create an attack on");
 
+    await this._onSubmit(event);
+
     await this.item.actor.createAttackFromWeapon(this.item);
   }
 

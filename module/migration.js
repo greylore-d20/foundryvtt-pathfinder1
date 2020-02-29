@@ -137,6 +137,7 @@ export const migrateItemData = function(item) {
   const updateData = {};
   
   _migrateItemSpellUses(item.data, updateData);
+  _migrateWeaponDamage(item.data, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -259,6 +260,15 @@ const _migrateCharacterEncumbrance = function(ent, updateData) {
 const _migrateItemSpellUses = function(ent, updateData) {
   const value = getProperty(ent.data, "preparation.maxAmount");
   if (typeof value !== "number") updateData["data.preparation.maxAmount"] = 0;
+};
+
+const _migrateWeaponDamage = function(ent, updateData) {
+  const value = getProperty(ent.data, "weaponData");
+  if (typeof value !== "object") {
+    updateData["data.weaponData"] = {};
+    updateData["data.weaponData.critRange"] = 20;
+    updateData["data.weaponData.critMult"] = 2;
+  }
 };
 
 /* -------------------------------------------- */

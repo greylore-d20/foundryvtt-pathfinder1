@@ -78,7 +78,7 @@ export class ItemPF extends Item {
     const labels = {};
 
     // Physical items
-    if (itemData.data.weight != null) {
+    if (hasProperty(itemData, "data.weight")) {
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;

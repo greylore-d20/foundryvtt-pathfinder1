@@ -1653,6 +1653,41 @@ export class ActorPF extends Actor {
     return item.roll();
   }
 
+  async createAttackFromWeapon(item) {
+    if (item.data.type !== "weapon") throw new Error("Wrong Item tyupe");
+
+    // Get attack template
+    let attackData = { data: {} };
+    for (const template of game.data.system.template.Item.attack.templates) {
+      mergeObject(attackData.data, game.data.system.template.Item.templates[template]);
+    }
+    mergeObject(attackData.data, duplicate(game.data.system.template.Item.attack));
+    attackData = flattenObject(attackData);
+
+    attackData["type"] = "attack";
+    attackData["name"] = item.data.name;
+    attackData["data.masterwork"] = item.data.data.masterwork;
+    attackData["data.attackType"] = "weapon";
+    attackData["data.enh"] = item.data.data.enh;
+    attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
+    attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
+    attackData["data.actionType"] = (item.data.data.weaponData.isMelee ? "mwak" : "rwak");
+    attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
+    attackData["img"] = item.data.img;
+
+    // Add additional attacks
+    let extraAttacks = [];
+    for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
+      extraAttacks = extraAttacks.concat([["-5", `Attack ${Math.floor((a+5) / 5)}`]]);
+    }
+    if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
+    
+    if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
+    await this.createOwnedItem(expandObject(attackData));
+
+    ui.notifications.info(`Created attack for weapon ${item.data.name}`);
+  }
+
   /* -------------------------------------------- */
 
   /**

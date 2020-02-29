@@ -67,6 +67,9 @@
                 <label class="checkbox">
                     <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> Masterwork
                 </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="data.weaponData.isMelee" {{checked data.weaponData.isMelee}}/> Melee
+                </label>
             </div>
 
             {{!-- Weapon Properties --}}
@@ -85,6 +88,30 @@
                     <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
                 </div>
             </div>
+
+            {{!-- Weapon Damage --}}
+            <div class="form-group">
+              <label>Base Weapon Damage</label>
+              <div class="form-fields">
+                <input type="text" name="data.weaponData.damageRoll" value="{{data.weaponData.damageRoll}}" placeholder="Damage Roll"/>
+                <input type="text" name="data.weaponData.damageType" value="{{data.weaponData.damageType}}" placeholder="Damage Type"/>
+              </div>
+            </div>
+            
+            {{!-- Weapon Critical Damage --}}
+            <div class="form-group">
+              <label>Base Weapon Critical</label>
+              <div class="form-fields">
+                <input type="text" name="data.weaponData.critRange" value="{{data.weaponData.critRange}}" placeholder="20"/>
+                <input type="text" name="data.weaponData.critMult" value="{{data.weaponData.critMult}}" placeholder="2"/>
+              </div>
+            </div>
+
+            {{#if owner}}
+            <div class="form-group">
+              <button type="button" name="create-attack">Create Attack</button>
+            </div>
+            {{/if}}
         </div>
     
         {{!-- Changes Tab --}}

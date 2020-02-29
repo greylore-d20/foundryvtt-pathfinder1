@@ -355,6 +355,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Trigger form submission from textarea elements.
     html.find("textarea").focusout(this._onSubmit.bind(this));
+
+    // Create attack
+    if (["weapon"].includes(this.item.data.type)) {
+      html.find("button[name='create-attack']").click(this._createAttack.bind(this));
+    }
   }
 
   /* -------------------------------------------- */
@@ -451,6 +456,12 @@ export class ItemSheetPF extends ItemSheet {
       contextNotes.splice(Number(li.dataset.note), 1);
       return this.item.update({"data.contextNotes": contextNotes});
     }
+  }
+
+  async _createAttack(event) {
+    if (this.item.actor == null) throw new Error("This item has no owner to create an attack on");
+
+    await this.item.actor.createAttackFromWeapon(this.item);
   }
 
   async saveMCEContent(updateData=null) {

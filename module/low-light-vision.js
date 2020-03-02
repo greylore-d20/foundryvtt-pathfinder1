@@ -44,9 +44,15 @@ TokenConfig.prototype.getData = async function() {
 
 // Patch lighting radius
 SightLayer.prototype.hasLowLight = function() {
-  return this._getTokens()[0].filter(obj => {
-    return obj.actorVision.lowLight === true;
-  }).length > 0;
+  let tokens = canvas.tokens.placeables.filter(o => {
+    return o.actor.hasPerm(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER) && o.actorVision.lowLight === true;
+  });
+  if (game.user.isGM) {
+    return tokens.filter(o => {
+      return o._controlled === true;
+    }).length > 0;
+  }
+  return tokens.length > 0;
 };
 
 const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
@@ -165,7 +171,7 @@ Token.prototype.release = function(...args) {
 };
 
 export function refreshLightingAndSight() {
-  canvas.sight.initializeSight();
+  // canvas.sight.initializeSight();
 
   for (let layer of [canvas.lighting, canvas.tokens]) {
     layer.placeables.filter(obj => obj.visible).forEach(obj => {

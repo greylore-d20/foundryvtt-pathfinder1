@@ -26,15 +26,13 @@ export function PatchCore() {
     const bar1 = this.object.getBarAttribute("bar1");
     const bar2 = this.object.getBarAttribute("bar2");
     return mergeObject(data, {
-      displayBar1: bar1.attribute != null && bar1.value != null,
-      displayBar2: bar2.attribute != null && bar2.value != null
+      displayBar1: bar1 != null && bar1.attribute != null && bar1.value != null,
+      displayBar2: bar2 != null && bar2.attribute != null && bar2.value != null
     });
   }
 
   // Patch FormApplication
-  FormApplication.prototype.saveMCEContent = async function(updateData=null) {
-    console.warn("Overwrite this function in subclasses");
-  };
+  FormApplication.prototype.saveMCEContent = async function(updateData=null) {};
 
   FormApplication.prototype.close = async function(options={}) {
     await this.saveMCEContent();

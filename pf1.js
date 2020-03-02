@@ -12,7 +12,7 @@ import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
 import { addChatMessageContextOptions } from "./module/combat.js";
-import { measureDistance, getBarAttribute } from "./module/canvas.js";
+import { measureDistance } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -108,9 +108,6 @@ Hooks.on("canvasInit", function() {
   // Extend Diagonal Measurement
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
   SquareGrid.prototype.measureDistance = measureDistance;
-
-  // Extend Token Resource Bars
-  Token.prototype.getBarAttribute = getBarAttribute;
 });
 
 
@@ -148,12 +145,6 @@ Hooks.on("deleteOwnedItem", (actor) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
 });
-// Hooks.on("updateToken", (_, sceneId, changedData) => {
-//   if (canvas.scene._id === sceneId) {
-//     const actor = canvas.tokens.get(changedData._id).actor;
-//     actor.refresh();
-//   }
-// });
 
 
 /* -------------------------------------------- */

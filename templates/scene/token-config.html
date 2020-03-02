@@ -63,8 +63,10 @@
 
         <div class="form-group">
             <label>{{localize "TOKEN.ImagePath"}}:</label>
-            {{filePicker target="img" type="imagevideo"}}
-            <input class="image" type="text" name="img" placeholder="path/image.png" value="{{object.img}}" data-dtype="String"/>
+            <div class="form-fields">
+                {{filePicker target="img" type="imagevideo"}}
+                <input class="image" type="text" name="img" placeholder="path/image.png" value="{{object.img}}"/>
+            </div>
         </div>
 
         {{#if isPrototype}}
@@ -77,8 +79,8 @@
             <label>{{localize "TOKEN.ImageAlts"}}:</label>
             <select class="alternate-images" name="alternateImages">
                 <option value=""></option>
-                {{#each alternateImages}}
-                <option value="{{this}}">{{this}}</option>
+                {{#each alternateImages as |name path|}}
+                <option value="{{path}}">{{name}}</option>
                 {{/each}}
             </select>
         </div>
@@ -96,8 +98,15 @@
 
         <div class="form-group">
             <label>{{localize "Scale"}} <span class="units">({{localize "Ratio"}})</span>:</label>
-            <input type="range" name="scale" value="{{object.scale}}" min="0.20" max="3.0" step="0.10" data-dtype="Number"/>
-            <span class="scale-value">{{object.scale}}</span>
+            <div class="form-fields">
+                <input type="range" name="scale" value="{{object.scale}}" min="0.20" max="3.0" step="0.10" data-dtype="Number"/>
+                <span class="range-value">{{object.scale}}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "TOKEN.MirrorX"}}</label>
+            <input type="checkbox" name="mirrorX" data-dtype="Boolean" {{checked object.mirrorX}}/>
         </div>
     </div>
 
@@ -181,10 +190,14 @@
         <div class="form-group">
             <label>{{localize "TOKEN.ResourceBar1A"}}:</label>
             <select class="bar-attribute" name="bar1.attribute">
-                {{#select object.bar1.attribute}}
+                {{#select bar1.attribute}}
                 <option value="">None</option>
-                {{#each barAttributes}}
-                <option value="{{this}}">{{this}}</option>
+                {{#each barAttributes as |attrs label|}}
+                <optgroup label="{{ label }}">
+                    {{#each attrs}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </optgroup>
                 {{/each}}
                 {{/select}}
             </select>
@@ -193,19 +206,23 @@
         <div class="form-group">
             <label>{{localize "TOKEN.ResourceBar1D"}}:</label>
             <div class="bar-data flexrow">
-                <input type="text" class="bar1-value" value="{{object.bar1.value}}" disabled/>
+                <input type="text" class="bar1-value" value="{{bar1.value}}" disabled/>
                 <span class="sep">/</span>
-                <input type="text" class="bar1-max" value="{{object.bar1.max}}" disabled/>
+                <input type="text" class="bar1-max" value="{{bar1.max}}" disabled/>
             </div>
         </div>
 
         <div class="form-group">
             <label>{{localize "TOKEN.ResourceBar2A"}}:</label>
             <select class="bar-attribute" name="bar2.attribute">
-                {{#select object.bar2.attribute}}
+                {{#select bar2.attribute}}
                 <option value="">None</option>
-                {{#each barAttributes}}
-                <option value="{{this}}">{{this}}</option>
+                 {{#each barAttributes as |attrs label|}}
+                <optgroup label="{{localize label}}">
+                    {{#each attrs}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </optgroup>
                 {{/each}}
                 {{/select}}
             </select>
@@ -214,9 +231,9 @@
         <div class="form-group">
             <label>{{localize "TOKEN.ResourceBar2D"}}:</label>
             <div class="bar-data flexrow">
-                <input type="text" class="bar2-value" value="{{object.bar2.value}}" disabled/>
+                <input type="text" class="bar2-value" value="{{bar2.value}}" disabled/>
                 <span class="sep">/</span>
-                <input type="text" class="bar2-max" value="{{object.bar2.max}}" disabled/>
+                <input type="text" class="bar2-max" value="{{bar2.max}}" disabled/>
             </div>
         </div>
     </div>

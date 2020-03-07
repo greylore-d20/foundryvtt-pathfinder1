@@ -1336,7 +1336,7 @@ export class ActorPF extends Actor {
     let prior = this.getLevelExp(data.details.level.value - 1 || 0),
           req = data.details.xp.max - prior;
     data.details.xp.value = Math.max(data.details.xp.value, prior);
-    data.details.xp.pct = Math.min(Math.round((data.details.xp.value - prior) * 100 / req), 99.5);
+    data.details.xp.pct = Math.min(Math.round((data.details.xp.value - prior) * 100 / (req || 1)), 99.5);
   }
 
   /* -------------------------------------------- */

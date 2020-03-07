@@ -15,9 +15,12 @@ export const createTag = function(str) {
  */
 export const alterRoll = function(str, add, multiply) {
   const rgx = new RegExp(Die.rgx.die, "g");
-  return str.replace(rgx, (match, nd, d, mods) => {
-    nd = (nd * (multiply || 1)) + (add || 0);
-    mods = mods || "";
-    return nd + "d" + d + mods;
-  });
+  if (str.match(/^([0-9]+)d([0-9]+)/)) {
+    return str.replace(rgx, (match, nd, d, mods) => {
+      nd = (nd * (multiply || 1)) + (add || 0);
+      mods = mods || "";
+      return ((nd == null || Number.isNaN(nd)) ? "" : nd) + "d" + d + mods;
+    });
+  }
+  return str;
 };

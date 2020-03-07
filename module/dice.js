@@ -77,7 +77,7 @@ export class DicePF {
           // Create chat data
           let chatData = {
             user: game.user._id,
-            type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             flavor: flavor,
@@ -185,7 +185,7 @@ export class DicePF {
     let rolled = false;
 
     // Inner roll function
-    let _roll = async (crit, form) => {
+    const _roll = async (crit, form) => {
       // Don't include situational bonus unless it is defined
       data.bonus = form ? form.find('[name="bonus"]').val() : 0;
 
@@ -221,7 +221,7 @@ export class DicePF {
         // Create chat data
         let chatData = {
           user: game.user._id,
-          type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+          type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           rollMode: game.settings.get("core", "rollMode"),
           sound: CONFIG.sounds.dice,
           speaker: speaker,

@@ -150,10 +150,6 @@ export class ItemPF extends Item {
       let dur = data.duration || {};
       if (["inst", "perm", "spec"].includes(dur.units)) dur.value = null;
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
-
-      // Recharge Label
-      let chg = data.recharge || {};
-      labels.recharge = chg.value ? (parseInt(chg.value) === 6 ? `Recharge [6]` : `Recharge [${chg.value}-6]`) : "";
     }
 
     // Item Actions
@@ -939,40 +935,6 @@ export class ItemPF extends Item {
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Perform an ability recharge test for an item which uses the d6 recharge mechanic
-   * @prarm {Object} options
-   */
-  async rollRecharge(options={}) {
-    const data = this.data.data;
-    if ( !data.recharge.value ) return;
-
-    // Roll the check
-    const roll = new Roll("1d6").roll();
-    const success = roll.total >= parseInt(data.recharge.value);
-
-    // Display a Chat Message
-    const rollMode = game.settings.get("core", "rollMode");
-    const chatData = {
-      user: game.user._id,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      flavor: `${this.name} recharge check - ${success ? "success!" : "failure!"}`,
-      whisper: ( ["gmroll", "blindroll"].includes(rollMode) ) ? ChatMessage.getWhisperIDs("GM") : null,
-      blind: rollMode === "blindroll",
-      roll: roll,
-      speaker: {
-        actor: this.actor._id,
-        token: this.actor.token,
-        alias: this.actor.name
-      }
-    };
-
-    // Update the Item data
-    const promises = [ChatMessage.create(chatData)];
-    if ( success ) promises.push(this.update({"data.recharge.charged": true}));
-    return Promise.all(promises);
-  }
 
   /**
    * @returns {Object} An object with data to be used in rolls in relation to this item.

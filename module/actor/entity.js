@@ -2049,6 +2049,7 @@ export class ActorPF extends Actor {
     }
 
     // Saving throws
+    console.log(context);
     if (context.match(/^savingThrow\.(.+)/)) {
       const saveKey = RegExp.$1;
       for (let note of result) {

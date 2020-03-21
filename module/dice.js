@@ -77,7 +77,7 @@ export class DicePF {
           // Create chat data
           let chatData = {
             user: game.user._id,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
             sound: a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             flavor: flavor,
@@ -221,7 +221,7 @@ export class DicePF {
         // Create chat data
         let chatData = {
           user: game.user._id,
-          type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
           rollMode: game.settings.get("core", "rollMode"),
           sound: CONFIG.sounds.dice,
           speaker: speaker,

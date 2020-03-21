@@ -126,7 +126,8 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
  * @return {Array}              The extended options Array including new context choices
  */
 export const addChatMessageContextOptions = function(html, options) {
-  let canApply = li => canvas.tokens.controlledTokens.length && li.find(".dice-roll").length;
+  let canApply = li => canvas.tokens.controlledTokens.length && li.find(".damage-roll .dice-total").length;
+  let canApplyCritical = li => canvas.tokens.controlledTokens.length && li.find(".crit-damage-roll .dice-total").length;
   options.push(
     {
       name: "Apply Damage",
@@ -141,17 +142,17 @@ export const addChatMessageContextOptions = function(html, options) {
       callback: li => ActorPF.applyDamage(li, -1)
     },
     {
-      name: "Double Damage",
-      icon: '<i class="fas fa-user-injured"></i>',
-      condition: canApply,
-      callback: li => ActorPF.applyDamage(li, 2)
+      name: "Apply Critical Damage",
+      icon: '<i class="fas fa-user-minus"></i>',
+      condition: canApplyCritical,
+      callback: li => ActorPF.applyDamage(li, 1, true)
     },
     {
-      name: "Half Damage",
-      icon: '<i class="fas fa-user-shield"></i>',
-      condition: canApply,
-      callback: li => ActorPF.applyDamage(li, 0.5)
-    }
+      name: "Apply Critical Healing",
+      icon: '<i class="fas fa-user-minus"></i>',
+      condition: canApplyCritical,
+      callback: li => ActorPF.applyDamage(li, -1, true)
+    },
   );
   return options;
 };

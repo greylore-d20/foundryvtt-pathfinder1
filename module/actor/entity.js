@@ -1980,8 +1980,9 @@ export class ActorPF extends Actor {
    * @param {Number} multiplier   A damage multiplier to apply to the rolled damage.
    * @return {Promise}
    */
-  static async applyDamage(roll, multiplier) {
-    let value = Math.floor(parseFloat(roll.find('.dice-total').text()) * multiplier);
+  static async applyDamage(roll, multiplier, critical=false) {
+    let value = Math.floor(parseFloat(roll.find('.damage-roll .dice-total').text()) * multiplier);
+    if (critical) value = Math.floor(parseFloat(roll.find('.crit-damage-roll .dice-total').text()) * multiplier);
     const promises = [];
     for ( let t of canvas.tokens.controlled ) {
       let a = t.actor,
@@ -1990,7 +1991,7 @@ export class ActorPF extends Actor {
           dt = value > 0 ? Math.min(tmp, value) : 0;
       promises.push(t.actor.update({
         "data.attributes.hp.temp": tmp - dt,
-        "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), 0, hp.max)
+        "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max)
       }));
     }
     return Promise.all(promises);

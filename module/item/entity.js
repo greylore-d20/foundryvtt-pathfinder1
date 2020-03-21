@@ -576,22 +576,32 @@ export class ItemPF extends Item {
       };
       attacks.push(attack);
     }
-    chatTemplateData.attacks = attacks;
 
-    if (this.hasEffect) {
-      let effectStr = this.rollEffect();
-      if (effectStr.length > 0) {
-        effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
+    for (let a = 0; a < attacks.length; a++) {
+      const atk = attacks[a];
+      chatTemplateData.attacks = [atk];
+      const chatData = {
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      };
+
+      // Don't play multiple sounds
+      if (a > 0) chatData.sound = null;
+
+      // Add effect text
+      if (this.hasEffect) {
+        let effectStr = this.rollEffect();
+        if (effectStr.length > 0) {
+          effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
+        }
       }
-    }
-    if (effectContent.length > 0) {
-      chatTemplateData.hasExtraText = true;
-      chatTemplateData.extraText = effectContent;
-    }
+      if (effectContent.length > 0) {
+        chatTemplateData.hasExtraText = true;
+        chatTemplateData.extraText = effectContent;
+      }
 
-    createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, {
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-    });
+      // Post message
+      await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+    }
   }
 
   /**

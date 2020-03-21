@@ -59,7 +59,7 @@ const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLigh
 Object.defineProperty(AmbientLight.prototype, "dimRadius", {
   get: function() {
     let result = AmbientLight__get__dimRadius.call(this);
-    if (canvas.sight.hasLowLight()) result *= 2;
+    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
     return result;
   }
 });
@@ -68,7 +68,7 @@ const AmbientLight__get__brightRadius = Object.getOwnPropertyDescriptor(AmbientL
 Object.defineProperty(AmbientLight.prototype, "brightRadius", {
   get: function() {
     let result = AmbientLight__get__brightRadius.call(this);
-    if (canvas.sight.hasLowLight()) result *= 2;
+    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
     return result;
   }
 });
@@ -77,7 +77,7 @@ const Token__get__dimLightRadius = Object.getOwnPropertyDescriptor(Token.prototy
 Object.defineProperty(Token.prototype, "dimLightRadius", {
   get: function() {
     let result = Token__get__dimLightRadius.call(this);
-    if (canvas.sight.hasLowLight()) result *= 2;
+    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
     return result;
   }
 });
@@ -86,7 +86,7 @@ const Token__get__brightLightRadius = Object.getOwnPropertyDescriptor(Token.prot
 Object.defineProperty(Token.prototype, "brightLightRadius", {
   get: function() {
     let result = Token__get__brightLightRadius.call(this);
-    if (canvas.sight.hasLowLight()) result *= 2;
+    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
     return result;
   }
 });

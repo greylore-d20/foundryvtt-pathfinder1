@@ -577,9 +577,11 @@ export class ItemPF extends Item {
       attacks.push(attack);
     }
 
-    for (let a = 0; a < attacks.length; a++) {
-      const atk = attacks[a];
-      chatTemplateData.attacks = [atk];
+    for (let a = 0; a < attacks.length || (attacks.length === 0 && a < 1); a++) {
+      if (attacks.length > 0) {
+        const atk = attacks[a];
+        chatTemplateData.attacks = [atk];
+      }
       const chatData = {
         speaker: ChatMessage.getSpeaker({actor: this.actor}),
       };

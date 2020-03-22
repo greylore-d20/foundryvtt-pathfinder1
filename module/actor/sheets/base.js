@@ -443,7 +443,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find('input[type="checkbox"]').change(this._onSubmit.bind(this));
 
     // Trigger form submission from textarea elements.
-    html.find("textarea").focusout(this._onSubmit.bind(this));
+    html.find("textarea").change(this._onSubmit.bind(this));
 
     /* -------------------------------------------- */
     /*  Abilities, Skills, Defenses and Traits
@@ -505,14 +505,14 @@ export class ActorSheetPF extends ActorSheet {
     /*  Feats
     /* -------------------------------------------- */
 
-    html.find(".item-detail.item-uses input[type='text']:not(:disabled)").off("focusout").focusout(this._setFeatUses.bind(this));
+    html.find(".item-detail.item-uses input[type='text']:not(:disabled)").off("change").change(this._setFeatUses.bind(this));
 
     /* -------------------------------------------- */
     /*  Spells
     /* -------------------------------------------- */
 
-    html.find(".item-list .spell-uses input[type='text'][data-type='amount']").off("focusout").focusout(this._setSpellUses.bind(this));
-    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("focusout").focusout(this._setMaxSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='text'][data-type='amount']").off("change").change(this._setSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("change").change(this._setMaxSpellUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
@@ -524,7 +524,7 @@ export class ActorSheetPF extends ActorSheet {
 
     html.find(".item-detail.item-active input[type='checkbox']").off("change").change(this._setItemActive.bind(this));
 
-    html.find(".item-detail.item-level input[type='text']").off("focusout").focusout(this._setBuffLevel.bind(this));
+    html.find(".item-detail.item-level input[type='text']").off("change").change(this._setBuffLevel.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -610,7 +610,6 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     const value = Number(event.currentTarget.value);
-    const updateData = {};
     this.setItemUpdate(item._id, "data.level", value);
   }
 
@@ -1021,6 +1020,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     obj[key] = value;
+    this._updateItems();
   }
 
   async _onSubmit(event, {updateData=null, preventClose=false}={}) {
@@ -1033,7 +1033,10 @@ export class ActorSheetPF extends ActorSheet {
   async _updateItems() {
     let promises = [];
 
-    for (const data of this._itemUpdates) {
+    const updates = duplicate(this._itemUpdates);
+    this._itemUpdates = [];
+
+    for (const data of updates) {
       const item = this.actor.items.filter(o => { return o._id === data._id; })[0];
       if (item == null) continue;
 

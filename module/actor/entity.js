@@ -1429,8 +1429,10 @@ export class ActorPF extends Actor {
     // Apply changes in Actor size to Token width/height
     if ( data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"] ) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      if ( this.isToken ) this.token.update({ width: size.w, height: size.h, scale: size.scale });
-      else {
+      let tokens = this.getActiveTokens();
+      if (this.isToken) tokens.push(this.token);
+      tokens.forEach(o => { o.update({ width: size.w, height: size.h, scale: size.scale }); });
+      if (!this.isToken) {
         data["token.width"] = size.w;
         data["token.height"] = size.h;
         data["token.scale"] = size.scale;

@@ -18,7 +18,8 @@
         <li>
           {{labels.buffType}}
         </li>
-        <li>
+        <li class="tooltip">
+          <span class="tooltipcontent">@item.level : {{data.level}}</span>
           <input type="text" name="data.level" value="{{#if data.level}}{{data.level}}{{/if}}" placeholder="Level"/>
         </li>
       </ul>

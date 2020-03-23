@@ -1477,6 +1477,7 @@ export class ActorPF extends Actor {
         tokens.forEach(token => {
           ["bar1", "bar2"].forEach(b => {
             const barAttr = token.getBarAttribute(b);
+            if (barAttr == null) return;
             if (barAttr.attribute === `resources.${tag}`) {
               const tokenUpdateData = {};
               tokenUpdateData[`${b}.attribute`] = null;

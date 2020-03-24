@@ -6,6 +6,13 @@ import { refreshLightingAndSight } from "../low-light-vision.js";
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
 export class ActorPF extends Actor {
+  get spellFailure() {
+    return this.items.filter(o => { return o.type === "equipment" && o.data.data.equipped === true; }).reduce((cur, o) => {
+      if (typeof o.data.data.spellFailure === "number") return cur + o.data.data.spellFailure;
+      return cur;
+    }, 0);
+  }
+
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = "Size";
@@ -1653,6 +1660,7 @@ export class ActorPF extends Actor {
     // } 
 
     // Invoke the Item roll
+    if (item.hasAction) return item.useAttack();
     return item.roll();
   }
 

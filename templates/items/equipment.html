@@ -1,130 +1,138 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+  {{!-- Item Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
-            </h1>
+    <div class="header-details flexrow">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+      </h1>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
+      <div class="item-subtitle">
+        <h4 class="item-type">{{itemType}}</h4>
+        <span class="item-status">{{itemStatus}}</span>
+      </div>
 
-            <ul class="summary">
-                <li>
-                    {{lookup config.equipmentTypes data.armor.type }}
-                </li>
-				<li></li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
-                </li>
-            </ul>
+      <ul class="summary">
+        <li>
+          {{lookup config.equipmentTypes data.armor.type }}
+        </li>
+        <li></li>
+        <li>
+          <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
+    <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    {{> "systems/pf1/templates/items/parts/item-description.html"}}
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      <h3 class="form-header">Equipment Details</h3>
+
+      {{!-- Equipment Type --}}
+      <div class="form-group">
+        <label>Equipment Type</label>
+        <select name="data.armor.type">
+          {{#select data.armor.type}}
+          <option value=""></option>
+          {{#each config.armorTypes as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Equipment Slot --}}
+      <div class="form-group">
+        <label>Slot</label>
+        <select name="data.slot">
+          {{#select data.slot}}
+          {{#each config.equipmentSlots as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group stacked">
+        <label>Equipment Status</label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> Equipped
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
+        </label>
+      </div>
+
+      {{!-- Armor Class --}}
+      <div class="form-group">
+        <label>Armor Class</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
         </div>
-    </header>
-
-    {{!-- Item Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
-        <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
-    </nav>
-
-    {{!-- Item Sheet Body --}}
-    <section class="sheet-body">
-
-        {{!-- Description Tab --}}
-        {{> "systems/pf1/templates/items/parts/item-description.html"}}
-
-        {{!-- Details Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
-            <h3 class="form-header">Equipment Details</h3>
-
-            {{!-- Equipment Type --}}
-            <div class="form-group">
-                <label>Equipment Type</label>
-                <select name="data.armor.type">
-                    {{#select data.armor.type}}
-                    <option value=""></option>
-                    {{#each config.armorTypes as |name type|}}
-                    <option value="{{type}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-
-            {{!-- Equipment Slot --}}
-            <div class="form-group">
-              <label>Slot</label>
-              <select name="data.slot">
-                {{#select data.slot}}
-                {{#each config.equipmentSlots as |name type|}}
-                <option value="{{type}}">{{name}}</option>
-                {{/each}}
-                {{/select}}
-              </select>
-            </div>
-
-            {{!-- Equipment Status --}}
-            <div class="form-group stacked">
-                <label>Equipment Status</label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> Equipped
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
-                </label>
-            </div>
-
-            {{!-- Armor Class --}}
-            <div class="form-group">
-                <label>Armor Class</label>
-                <div class="form-fields">
-                   <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Enhancement Bonus</label>
-                <div class="form-fields">
-                    <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
-                </div>
-            </div>
-
-            {{!-- Dexterity Modifier --}}
-            <div class="form-group">
-                <label>Max. Dexterity Modifier</label>
-                <div class="form-fields">
-                   <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="Unlimited"/>
-                </div>
-            </div>
-
-            {{!-- Armor Check Penalty --}}
-            <div class="form-group">
-                <label>Armor Check Penalty</label>
-                <div class="form-fields">
-                    <input type="text" name="data.armor.acp" value="{{data.armor.acp}}" data-dtype="Number" placeholder="0"/>
-                </div>
-            </div>
-
-            <h3 class="form-header">Equipment Usage</h3>
-
-            {{!-- Item Activation Template --}}
-            {{> "systems/pf1/templates/items/parts/item-activation.html"}}
-
-            <h3 class="form-header">Equipment Action</h3>
-
-            {{!-- Item Action Template --}}
-            {{> "systems/pf1/templates/items/parts/item-action.html"}}
+      </div>
+      <div class="form-group">
+        <label>Enhancement Bonus</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
         </div>
-    
-        {{!-- Changes Tab --}}
-        <div class="tab flexcol" data-group="primary" data-tab="changes">
-            {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+      </div>
 
-            {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+      {{!-- Dexterity Modifier --}}
+      <div class="form-group">
+        <label>Max. Dexterity Modifier</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="Unlimited"/>
         </div>
-    </section>
+      </div>
+
+      {{!-- Armor Check Penalty --}}
+      <div class="form-group">
+        <label>Armor Check Penalty</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.acp" value="{{data.armor.acp}}" data-dtype="Number" placeholder="0"/>
+        </div>
+      </div>
+
+      {{!-- Spell Failure --}}
+      <div class="form-group">
+        <label>Arcane Spell Failure</label>
+        <div class="form-fields">
+          <input type="text" name="data.spellFailure" value="{{data.spellFailure}}" data-dtype="Number" placeholder="0"/>
+        </div>
+      </div>
+
+      <h3 class="form-header">Equipment Usage</h3>
+
+      {{!-- Item Activation Template --}}
+      {{> "systems/pf1/templates/items/parts/item-activation.html"}}
+
+      <h3 class="form-header">Equipment Action</h3>
+
+      {{!-- Item Action Template --}}
+      {{> "systems/pf1/templates/items/parts/item-action.html"}}
+    </div>
+
+    {{!-- Changes Tab --}}
+    <div class="tab flexcol" data-group="primary" data-tab="changes">
+      {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+
+      {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+    </div>
+  </section>
 </form>

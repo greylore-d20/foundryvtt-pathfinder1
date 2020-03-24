@@ -198,8 +198,15 @@ export class ItemPF extends Item {
       hasDamage: this.hasDamage,
       hasEffect: this.hasEffect,
       isVersatile: this.isVersatile,
-      hasSave: this.hasSave
+      hasSave: this.hasSave,
+      isSpell: this.data.type === "spell",
     };
+
+    // Roll spell failure chance
+    if (templateData.isSpell && this.actor != null) {
+      templateData.spellFailure = new Roll("1d100").roll().total;
+      templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+    }
 
     // Render the chat card template
     const templateType = ["consumable"].includes(this.data.type) ? this.data.type : "item";
@@ -215,7 +222,7 @@ export class ItemPF extends Item {
         actor: this.actor._id,
         token: this.actor.token,
         alias: this.actor.name
-      }
+      },
     };
 
     // Toggle default roll mode
@@ -602,6 +609,7 @@ export class ItemPF extends Item {
       }
 
       // Post message
+      if (this.data.type === "spell") await this.roll();
       await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
     }
   }

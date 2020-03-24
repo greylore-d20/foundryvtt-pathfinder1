@@ -60,6 +60,7 @@ export class ActorSheetPF extends ActorSheet {
       hasRace: false,
       config: CONFIG.PF1,
       useBGSkills: this.entity.data.type === "character" && game.settings.get("pf1", "allowBackgroundSkills"),
+      spellFailure: this.entity.spellFailure,
     };
 
     // The Actor and its Items
@@ -568,13 +569,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
-    // Roll spells through the actor
-    if ( item.data.type === "spell" ) {
-      return this.actor.useSpell(item, {configureDialog: !event.shiftKey});
-    }
-
-    // Otherwise roll the Item directly
-    else return item.roll();
+    return item.roll();
   }
 
   _setFeatUses(event) {
@@ -816,7 +811,12 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Attack
     if (a.classList.contains("item-attack")) {
       await this._onSubmit(event);
-      item.useAttack();
+      if (item.data.type === "spell") {
+        await this.actor.useSpell(item);
+      }
+      else {
+        await item.useAttack();
+      }
     }
   }
 

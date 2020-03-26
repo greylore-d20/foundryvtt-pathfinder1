@@ -35,8 +35,8 @@ TokenConfig.prototype._updateActorData = function(tokenData) {
 };
 
 const TokenConfig_getData = TokenConfig.prototype.getData;
-TokenConfig.prototype.getData = async function() {
-  let result = await TokenConfig_getData.call(this);
+TokenConfig.prototype.getData = async function(...args) {
+  let result = await TokenConfig_getData.call(this, ...args);
   result.actor = result.actor || {};
   result.actor["vision"] = duplicate(this.token.actor.data.data.attributes.vision || {});
   return result;

@@ -1,13 +1,14 @@
 {{!-- Feat Navigation --}}
 <nav class="sheet-navigation tabs subtabs feats" data-group="feats">
   {{#each sections as |section sid|}}
-  <a class="item {{#unless sid}}active{{/unless}}" data-tab="{{sid}}">{{section.label}}</a>
+  <a class="item" data-tab="{{sid}}">{{section.label}}</a>
   {{/each}}
 </nav>
 
+<section class="feats-body">
 {{#each sections as |section sid|}}
 <div class="tab feats-group flexcol" data-group="feats" data-tab="{{sid}}">
-  <ol class="inventory-list sub-scroll">
+  <ol class="inventory-list scroll-feats">
       <li class="inventory-header flexrow">
           <h3 class="item-name flexrow"></h3>
 
@@ -79,3 +80,4 @@
   </ol>
 </div>
 {{/each}}
+</section>

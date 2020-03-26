@@ -1,3 +1,5 @@
+import { createTabs } from "../../lib.js";
+
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
  * @type {ItemSheet}
@@ -7,18 +9,6 @@ export class ItemSheetPF extends ItemSheet {
     super(...args);
 
     this.options.submitOnClose = false;
-
-    /**
-     * The tab being browsed
-     * @type {string}
-     */
-    this._sheetTab = null;
-
-    /**
-     * The scroll position on the active tab
-     * @type {number}
-     */
-    this._scrollTab = 0;
 
     /**
      * Track the set of item filters which are applied
@@ -319,18 +309,10 @@ export class ItemSheetPF extends ItemSheet {
     super.activateListeners(html);
 
     // Activate tabs
-    new Tabs(html.find(".tabs"), {
-      initial: this["_sheetTab"],
-      callback: clicked => {
-        this._scrollTab = 0;
-        this["_sheetTab"] = clicked.data("tab");
-        this.setPosition();
-      }
-    });
-
-    // Save scroll position
-    html.find(".tab.active")[0].scrollTop = this._scrollTab;
-    html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
+    const tabGroups = {
+      "primary": {},
+    };
+    createTabs.call(this, html, tabGroups);
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));

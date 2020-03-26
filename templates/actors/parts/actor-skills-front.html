@@ -41,17 +41,19 @@
 </div>
 
 <nav class="sheet-navigation tabs" data-group="skillset">
-  <a class="item active" data-tab="adventure">Adventure</a>
+  <a class="item" data-tab="adventure">Adventure</a>
   <a class="item" data-tab="background">Background</a>
 </nav>
 
-<div class="tab flexcol" data-group="skillset" data-tab="adventure">
-{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.adventure.skills isBackgroundSkills="false"}}
-</div>
+<section class="skillset-body">
+  <div class="tab flexcol" data-group="skillset" data-tab="adventure">
+  {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.adventure.skills isBackgroundSkills="false"}}
+  </div>
 
-<div class="tab flexcol" data-group="skillset" data-tab="background">
-{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
-</div>
+  <div class="tab flexcol" data-group="skillset" data-tab="background">
+  {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
+  </div>
+</section>
 {{/unless}}
 
 {{#unless useBGSkills}}

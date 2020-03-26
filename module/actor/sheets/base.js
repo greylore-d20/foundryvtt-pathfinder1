@@ -2,7 +2,7 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
-import { createTag } from "../../lib.js";
+import { createTag, createTabs } from "../../lib.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -20,9 +20,8 @@ export class ActorSheetPF extends ActorSheet {
      * The scroll position on the active tab
      * @type {number}
      */
-    this._scrollTab = 0;
-    
-    this._scrollSub = 0;
+    this._scrollTab = {};
+    this._initialTab = {};
 
     /**
      * Track the set of item filters which are applied
@@ -383,40 +382,74 @@ export class ActorSheetPF extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Activate tabs
-    new Tabs(html.find('.tabs[data-group="primary"]'), {
-      initial: this["_sheetTab"],
-      callback: clicked => {
-        this._scrollTab = 0;
-        this._subScroll = 0;
-        this["_sheetTab"] = clicked.data("tab");
-      }
-    });
-    // Add sub tab groups
-    let tabGroups = ["spellbook", "skillset", "inventory", "feats", "buffs", "attacks"];
+    const tabGroups = {
+      "primary": {
+        "inventory": {},
+        "feats": {},
+        "skillset": {},
+        "buffs": {},
+        "attacks": {},
+        "spellbooks": {},
+      },
+    };
+    // Add spellbooks to tabGroups
     for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-      tabGroups.push(`spells_${a}`);
+      tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
     }
+    createTabs.call(this, html, tabGroups);
 
-    for (let tabName of tabGroups) {
-      new Tabs(html.find(`.tabs[data-group="${tabName}"]`), {
-        initial: this[`_${tabName}Tab`],
-        callback: clicked => {
-          this._subScroll = 0;
-          this[`_${tabName}Tab`] = clicked.data("tab");
-        }
-      });
-    }
+    // Activate tabs
+    // let tabs = new TabsV2({
+      // navSelector: '.tabs[data-group="primary"]',
+      // contentSelector: '.sheet-body',
+      // initial: this["_sheetTab"],
+      // callback: (_, tabs) => {
+        // this._tabScroll = 0;
+        // const subTab = this[`_${tabs.active}Tab`];
+        // if (subTab instanceof TabsV2) this[`_${tabs.active}Tab`].activate();
+      // }
+    // });
+    // this._sheetTab = tabs;
+    // tabs.bind(html[0]);
+
+    // // Add sub tab groups
+    // let tabGroups = {
+      // "spellbooks": {},
+      // "skills": {},
+      // "inventory": {},
+      // "feats": {},
+      // "buffs": {},
+      // "attacks": {},
+    // ];
+    // for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
+      // tabGroups.push(`spells_${a}`);
+    // }
+
+    // for (let tabName of tabGroups) {
+      // this._subScroll[tabName] = 0;
+      // const subHtml = html.find(`.${tabName}-body div[data-group="${tabName}"]`);
+      // tabs = new TabsV2({
+        // navSelector: `.tabs[data-group="${tabName}"]`,
+        // contentSelector: `.${tabName}-body`,
+        // initial: subHtml.length > 0 ? subHtml[0].dataset.tab : "",
+        // callback: (_, tabs) => {
+          // console.log(tabs);
+          // // tabs._scroll[tabs.active]
+        // }
+      // });
+      // this[`_${tabName}Tab`] = tabs;
+      // tabs.bind(html[0]);
+    // }
 
     // Save scroll position
-    const activeTab = html.find('.tab.active[data-group="primary"]')[0];
-    if (activeTab) {
-      activeTab.scrollTop = this._scrollTab;
-      let subElem = $(activeTab).find(".sub-scroll:visible")[0];
-      if (subElem) subElem.scrollTop = this._subScroll;
-    }
-    html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
-    html.find(".sub-scroll").scroll(ev => this._subScroll = ev.currentTarget.scrollTop);
+    // const activeTab = html.find('.tab.active[data-group="primary"]')[0];
+    // if (activeTab) {
+      // activeTab.scrollTop = this._scrollTab;
+      // let subElem = $(activeTab).find(".sub-scroll:visible")[0];
+      // if (subElem) subElem.scrollTop = this._subScroll;
+    // }
+    // html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
+    // html.find(".sub-scroll").scroll(ev => this._subScroll = ev.currentTarget.scrollTop);
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
@@ -810,7 +843,6 @@ export class ActorSheetPF extends ActorSheet {
     
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await this._onSubmit(event);
       if (item.data.type === "spell") {
         await this.actor.useSpell(item);
       }
@@ -826,7 +858,6 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     if (hasProperty(item.data, "data.equipped")) {
-      await this._onSubmit(event);
       item.update({ "data.equipped": !item.data.data.equipped });
     }
   }

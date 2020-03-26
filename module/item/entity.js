@@ -203,7 +203,7 @@ export class ItemPF extends Item {
     };
 
     // Roll spell failure chance
-    if (templateData.isSpell && this.actor != null) {
+    if (templateData.isSpell && this.actor != null && this.actor.spellFailure > 0) {
       templateData.spellFailure = new Roll("1d100").roll().total;
       templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
     }

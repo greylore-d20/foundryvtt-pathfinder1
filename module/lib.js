@@ -56,8 +56,8 @@ export const createTabs = function(html, tabGroups) {
     if (this._scrollTab == null) this._scrollTab = {};
 
     const subHtml = html.find(`.${group}-body > div[data-group="${group}"]`);
-    const activeSubHtml = subHtml.find(".active");
-    const initial = this._initialTab[group] !== undefined ? this._initialTab[group] : (activeSubHtml.length > 0 ? subHtml[0].dataset.tab : "");
+    const activeSubHtml = subHtml.filter(".active");
+    const initial = this._initialTab[group] !== undefined ? this._initialTab[group] : (activeSubHtml.length > 0 ? activeSubHtml[0].dataset.tab : "");
 
     // Set up data for scroll position and active tab
     if (this._scrollTab[group] === undefined) this._scrollTab[group] = 0;

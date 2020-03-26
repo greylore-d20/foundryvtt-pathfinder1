@@ -398,59 +398,6 @@ export class ActorSheetPF extends ActorSheet {
     }
     createTabs.call(this, html, tabGroups);
 
-    // Activate tabs
-    // let tabs = new TabsV2({
-      // navSelector: '.tabs[data-group="primary"]',
-      // contentSelector: '.sheet-body',
-      // initial: this["_sheetTab"],
-      // callback: (_, tabs) => {
-        // this._tabScroll = 0;
-        // const subTab = this[`_${tabs.active}Tab`];
-        // if (subTab instanceof TabsV2) this[`_${tabs.active}Tab`].activate();
-      // }
-    // });
-    // this._sheetTab = tabs;
-    // tabs.bind(html[0]);
-
-    // // Add sub tab groups
-    // let tabGroups = {
-      // "spellbooks": {},
-      // "skills": {},
-      // "inventory": {},
-      // "feats": {},
-      // "buffs": {},
-      // "attacks": {},
-    // ];
-    // for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-      // tabGroups.push(`spells_${a}`);
-    // }
-
-    // for (let tabName of tabGroups) {
-      // this._subScroll[tabName] = 0;
-      // const subHtml = html.find(`.${tabName}-body div[data-group="${tabName}"]`);
-      // tabs = new TabsV2({
-        // navSelector: `.tabs[data-group="${tabName}"]`,
-        // contentSelector: `.${tabName}-body`,
-        // initial: subHtml.length > 0 ? subHtml[0].dataset.tab : "",
-        // callback: (_, tabs) => {
-          // console.log(tabs);
-          // // tabs._scroll[tabs.active]
-        // }
-      // });
-      // this[`_${tabName}Tab`] = tabs;
-      // tabs.bind(html[0]);
-    // }
-
-    // Save scroll position
-    // const activeTab = html.find('.tab.active[data-group="primary"]')[0];
-    // if (activeTab) {
-      // activeTab.scrollTop = this._scrollTab;
-      // let subElem = $(activeTab).find(".sub-scroll:visible")[0];
-      // if (subElem) subElem.scrollTop = this._subScroll;
-    // }
-    // html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
-    // html.find(".sub-scroll").scroll(ev => this._subScroll = ev.currentTarget.scrollTop);
-
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
 

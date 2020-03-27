@@ -11,6 +11,18 @@ export class ItemSheetPF extends ItemSheet {
     this.options.submitOnClose = false;
 
     /**
+     * The tab being browsed
+     * @type {string}
+     */
+    this._sheetTab = null;
+
+    /**
+     * The scroll position on the active tab
+     * @type {number}
+     */
+    this._scrollTab = 0;
+
+    /**
      * Track the set of item filters which are applied
      * @type {Set}
      */
@@ -309,10 +321,28 @@ export class ItemSheetPF extends ItemSheet {
     super.activateListeners(html);
 
     // Activate tabs
-    const tabGroups = {
-      "primary": {},
-    };
-    createTabs.call(this, html, tabGroups);
+    // Only run this if TabsV2 is already available (which is available since FoundryVTT 0.5.2)
+    if (typeof TabsV2 !== "undefined") {
+      const tabGroups = {
+        "primary": {},
+      };
+      createTabs.call(this, html, tabGroups);
+    }
+    // Run older Tabs as a fallback
+    else {
+      new Tabs(html.find(".tabs"), {
+        initial: this["_sheetTab"],
+        callback: clicked => {
+          this._scrollTab = 0;
+          this["_sheetTab"] = clicked.data("tab");
+          this.setPosition();
+        }
+      });
+
+      // Save scroll position
+      html.find(".tab.active")[0].scrollTop = this._scrollTab;
+      html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
+    }
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));

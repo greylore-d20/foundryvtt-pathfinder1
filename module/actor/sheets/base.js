@@ -382,21 +382,60 @@ export class ActorSheetPF extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    const tabGroups = {
-      "primary": {
-        "inventory": {},
-        "feats": {},
-        "skillset": {},
-        "buffs": {},
-        "attacks": {},
-        "spellbooks": {},
-      },
-    };
-    // Add spellbooks to tabGroups
-    for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-      tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
+    // Only run this if TabsV2 is already available (which is available since FoundryVTT 0.5.2)
+    if (typeof TabsV2 !== "undefined") {
+      const tabGroups = {
+        "primary": {
+          "inventory": {},
+          "feats": {},
+          "skillset": {},
+          "buffs": {},
+          "attacks": {},
+          "spellbooks": {},
+        },
+      };
+      // Add spellbooks to tabGroups
+      for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
+        tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
+      }
+      createTabs.call(this, html, tabGroups);
     }
-    createTabs.call(this, html, tabGroups);
+    // Run older Tabs as a fallback
+    else {
+      new Tabs(html.find('.tabs[data-group="primary"]'), {
+        initial: this["_sheetTab"],
+        callback: clicked => {
+          this._scrollTab = 0;
+          this._subScroll = 0;
+          this["_sheetTab"] = clicked.data("tab");
+        }
+      });
+      // Add sub tab groups
+      let tabGroups = ["spellbooks", "skillset", "inventory", "feats", "buffs", "attacks"];
+      for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
+        tabGroups.push(`spells_${a}`);
+      }
+
+      for (let tabName of tabGroups) {
+        new Tabs(html.find(`.tabs[data-group="${tabName}"]`), {
+          initial: this[`_${tabName}Tab`],
+          callback: clicked => {
+            this._subScroll = 0;
+            this[`_${tabName}Tab`] = clicked.data("tab");
+          }
+        });
+      }
+
+      // Save scroll position
+      const activeTab = html.find('.tab.active[data-group="primary"]')[0];
+      if (activeTab) {
+        activeTab.scrollTop = this._scrollTab;
+        let subElem = $(activeTab).find(".sub-scroll:visible")[0];
+        if (subElem) subElem.scrollTop = this._subScroll;
+      }
+      html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
+      html.find(".sub-scroll").scroll(ev => this._subScroll = ev.currentTarget.scrollTop);
+    }
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));

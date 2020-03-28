@@ -11,18 +11,6 @@ export class ItemSheetPF extends ItemSheet {
     this.options.submitOnClose = false;
 
     /**
-     * The tab being browsed
-     * @type {string}
-     */
-    this._sheetTab = null;
-
-    /**
-     * The scroll position on the active tab
-     * @type {number}
-     */
-    this._scrollTab = 0;
-
-    /**
      * Track the set of item filters which are applied
      * @type {Set}
      */

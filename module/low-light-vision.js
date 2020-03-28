@@ -34,14 +34,6 @@ TokenConfig.prototype._updateActorData = function(tokenData) {
   TokenConfig__updateActorData.call(this, tokenData);
 };
 
-const TokenConfig_getData = TokenConfig.prototype.getData;
-TokenConfig.prototype.getData = async function(...args) {
-  let result = await TokenConfig_getData.call(this, ...args);
-  result.actor = result.actor || {};
-  result.actor["vision"] = duplicate(this.token.actor.data.data.attributes.vision || {});
-  return result;
-};
-
 // Patch lighting radius
 SightLayer.prototype.hasLowLight = function() {
   let tokens = canvas.tokens.placeables.filter(o => {

@@ -92,3 +92,45 @@ export const createTabs = function(html, tabGroups) {
 
   _func.call(this, "primary", tabGroups.primary);
 };
+
+/**
+ * @param {String} version - A version string to unpack. Must be something like '0.5.1'.
+ * @returns {Object} An object containing the keys 'release', 'major', and 'minor', which are numbers.
+ */
+export const unpackVersion = function(version) {
+  if (version.match(/^([0-9]+)\.([0-9]+)(?:\.([0-9]+))?$/)) {
+    return {
+      release: parseInt(RegExp.$1),
+      major: parseInt(RegExp.$2),
+      minor: parseInt(RegExp.$3) || null,
+    };
+  }
+};
+
+/**
+ * @param {String} version - The minimum core version to compare to. Must be something like '0.5.1'.
+ * @returns {Boolean} Whether the current core version is at least the given version.
+ */
+export const isMinimumCoreVersion = function(version) {
+  const coreVersion = unpackVersion(game.data.version);
+  const compareVersion = unpackVersion(version);
+
+  for (const versionType of ["release", "major", "minor"]) {
+    const curValue = coreVersion[versionType];
+    const compareValue = compareVersion[versionType];
+
+    if (curValue == null) {
+      if (compareValue == null) continue;
+      return false;
+    }
+    if (compareValue == null) {
+      if (curValue == null) continue;
+      return true;
+    }
+
+    if (curValue > compareValue) return true;
+    if (curValue < compareValue) return false;
+  }
+
+  return true;
+};

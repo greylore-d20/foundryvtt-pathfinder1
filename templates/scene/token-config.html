@@ -109,10 +109,12 @@
             <input type="checkbox" name="mirrorX" data-dtype="Boolean" {{checked object.mirrorX}}/>
         </div>
 
+        {{#if version.v052}}
         <div class="form-group">
             <label>{{localize "TOKEN.MirrorY"}}</label>
             <input type="checkbox" name="mirrorY" data-dtype="Boolean" {{checked object.mirrorY}}/>
         </div>
+        {{/if}}
     </div>
 
     <!-- Token Position -->
@@ -176,6 +178,7 @@
             <label>{{localize "TOKEN.VisionLightAngle"}} <span class="units">({{localize "Degrees"}})</span>:</label>
             <input type="text" name="lightAngle" placeholder="units" value="{{object.lightAngle}}" data-dtype="Number"/>
         </div>
+        {{#if version.v052}}
         <div class="form-group">
             <label>{{ localize "LIGHT.LightColor" }}</label>
             <input class="color" type="text" name="lightColor" value="{{object.lightColor}}"/>
@@ -189,6 +192,7 @@
                 <span class="range-value">{{object.lightAlpha}}</span>
             </div>
         </div>
+        {{/if}}
     </div>
 
     <!-- Resource Bars -->

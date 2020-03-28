@@ -639,7 +639,6 @@ export class ActorSheetPF extends ActorSheet {
     let effectStr = "";
     if (typeof spellbook.concentrationNotes === "string" && spellbook.concentrationNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: rollData,
         msgStr: spellbook.concentrationNotes
       });
@@ -674,7 +673,6 @@ export class ActorSheetPF extends ActorSheet {
     let effectStr = "";
     if (typeof spellbook.clNotes === "string" && spellbook.clNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: rollData,
         msgStr: spellbook.clNotes
       });

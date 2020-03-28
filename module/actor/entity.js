@@ -1733,7 +1733,6 @@ export class ActorPF extends Actor {
         let noteStr = "";
         if (note.length > 0) {
           noteStr = DicePF.messageRoll({
-            actor: this.actor,
             data: rollData,
             msgStr: note
           });
@@ -1796,7 +1795,6 @@ export class ActorPF extends Actor {
         let noteStr = "";
         if (note.length > 0) {
           noteStr = DicePF.messageRoll({
-            actor: this.actor,
             data: rollData,
             msgStr: note
           });
@@ -1887,7 +1885,6 @@ export class ActorPF extends Actor {
         let noteStr = "";
         if (note.length > 0) {
           noteStr = DicePF.messageRoll({
-            actor: this.actor,
             data: rollData,
             msgStr: note
           });
@@ -1936,7 +1933,6 @@ export class ActorPF extends Actor {
         let noteStr = "";
         if (note.length > 0) {
           noteStr = DicePF.messageRoll({
-            actor: this.actor,
             data: rollData,
             msgStr: note
           });

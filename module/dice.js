@@ -1,3 +1,5 @@
+import { isMinimumCoreVersion } from "./lib.js";
+
 export class DicePF {
 
   /**
@@ -300,7 +302,11 @@ export class DicePF {
     });
   }
 
-  static messageRoll({actor, data, msgStr}) {
+  static messageRoll({data, msgStr}) {
+    // Use roll enrichment if possible, which is available since FoundryVTT 0.5.2
+    if (isMinimumCoreVersion("0.5.2")) return TextEditor.enrichHTML(msgStr, { rollData: data });
+
+    // Otherwise, fall back to old method
     let re = /(?:\[\[|\]\])/g;
     let arr,
       msgStartIndex;

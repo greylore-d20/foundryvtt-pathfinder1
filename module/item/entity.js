@@ -471,7 +471,6 @@ export class ItemPF extends Item {
     let effectStr = "";
     if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: rollData,
         msgStr: itemData.attackNotes
       });
@@ -734,7 +733,6 @@ export class ItemPF extends Item {
     let effectStr = "";
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: rollData,
         msgStr: itemData.effectNotes
       });
@@ -818,7 +816,6 @@ export class ItemPF extends Item {
     let effectStr = "";
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: rollData,
         msgStr: itemData.effectNotes
       });
@@ -894,7 +891,6 @@ export class ItemPF extends Item {
     let effectStr = "";
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
       effectStr = DicePF.messageRoll({
-        actor: this.actor,
         data: data,
         msgStr: itemData.effectNotes
       });

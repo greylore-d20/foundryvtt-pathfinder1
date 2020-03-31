@@ -134,3 +134,11 @@ export const isMinimumCoreVersion = function(version) {
 
   return true;
 };
+
+export const degtorad = function(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+export const radtodeg = function(radians) {
+  return radians / 180 * Math.PI;
+};

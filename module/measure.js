@@ -1,3 +1,5 @@
+import { degtorad } from "./lib.js";
+
 // Use 90 degrees cone in PF1 style
 const TemplateLayer__onDragStart = TemplateLayer.prototype._onDragStart;
 TemplateLayer.prototype._onDragStart = function(event) {
@@ -9,7 +11,11 @@ TemplateLayer.prototype._onDragStart = function(event) {
   const tool = game.activeTool;
   const origin = event.data.origin;
   let pos;
-  pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
+  pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 1);
+  if (tool === "cone") {
+    pos.x -= canvas.dimensions.size * 0.5;
+    pos.y -= canvas.dimensions.size * 0.5;
+  }
   origin.x = pos.x;
   origin.y = pos.y;
 
@@ -23,8 +29,8 @@ TemplateLayer.prototype._onDragStart = function(event) {
     direction: 0,
     fillColor: game.user.data.color || "#FF0000"
   };
-  if ( tool === "cone") data["angle"] = 90;
-  else if ( tool === "ray" ) data["width"] = canvas.dimensions.distance;
+  if (tool === "cone") data["angle"] = 90;
+  else if (tool === "ray") data["width"] = canvas.dimensions.distance;
 
   // Assign the template
   let template = new MeasuredTemplate(data);
@@ -108,20 +114,66 @@ MeasuredTemplate.prototype._highlightGrid = function() {
     return (value >= min || value <= max);
   };
 
+  const measureDistance = function(p0, p1) {
+    let gs = canvas.dimensions.size,
+    ray = new Ray(p0, p1),
+    nx = Math.abs(Math.ceil(ray.dx / gs)),
+    ny = Math.abs(Math.ceil(ray.dy / gs));
+
+    // Get the number of straight and diagonal moves
+    let nDiagonal = Math.min(nx, ny),
+        nStraight = Math.abs(ny - nx);
+        
+    let nd10 = Math.floor(nDiagonal / 2);
+    let spaces = (nd10 * 2) + (nDiagonal - nd10) + nStraight;
+    return spaces * canvas.dimensions.distance;
+  };
+
   for (let a = -nc; a < nc; a++) {
     for (let b = -nr; b < nr; b++) {
       let [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
       let [gx2, gy2] = [gx + d.size * 0.5, gy + d.size * 0.5];
 
-      let ray = new Ray({x: x, y: y}, {x: gx2, y: gy2});
+      // Determine point of origin
+      let p1 = {x: this.data.x, y: this.data.y};
+      let originOffset = {x: 0, y: 0};
+      // Offset measurement for cones
+      if (this.data.t === "cone") {
+        const dir = (this.data.direction >= 0 ? 360 - this.data.direction : -this.data.direction) % 360;
+        originOffset = {
+          x: Math.sign(1 * (Math.round(Math.cos(degtorad(dir)) * 100)) / 100),
+          y: -Math.sign(1 * (Math.round(Math.sin(degtorad(dir)) * 100)) / 100),
+        };
+      }
+      p1.x += (originOffset.x * d.size);
+      p1.y += (originOffset.y * d.size);
+
+      let ray = new Ray(p1, {x: gx2, y: gy2});
 
       let rayAngle = (360 + (ray.angle / (Math.PI / 180)) % 360) % 360;
-      if (this.data.t === "cone" && ray.distance === 0) continue;
+      // if (this.data.t === "cone" && ray.distance === 0) continue;
       if (this.data.t === "cone" && ray.distance > 0 && !within_angle(minAngle, maxAngle, rayAngle)) {
         continue;
       }
 
-      if (ray.distance < ((this.data.distance / d.distance)) * d.size) {
+      // Determine point of measurement
+      let p0 = {x: gx, y: gy};
+      if (this.data.x / d.size !== Math.floor(this.data.x / d.size)) p0.x = gx2;
+      if (this.data.y / d.size !== Math.floor(this.data.y / d.size)) p0.y = gy2;
+      // Offset measurement for non-cones
+      if (this.data.t !== "cone") {
+        if (p0.x > this.data.x) p0.x += d.size;
+        if (p0.y > this.data.y) p0.y += d.size;
+      }
+      // Reset point of origin for cones
+      if (this.data.t === "cone") {
+        p1.x -= (originOffset.x * d.size);
+        p1.y -= (originOffset.y * d.size);
+      }
+
+      // console.log(measureDistance(p0, p1), this.data, p0);
+      if (measureDistance(p0, p1) <= this.data.distance) {
+      // if (ray.distance < ((this.data.distance / d.distance)) * d.size) {
         grid.grid.highlightGridPosition(hl, { x: gx, y: gy, color: fc, border: bc });
       }
     }

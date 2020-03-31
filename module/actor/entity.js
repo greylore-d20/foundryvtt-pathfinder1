@@ -1,5 +1,5 @@
 import { DicePF } from "../dice.js";
-import { createTag } from "../lib.js";
+import { createTag, linkData } from "../lib.js";
 import { refreshLightingAndSight } from "../low-light-vision.js";
 
 /**
@@ -44,8 +44,8 @@ export class ActorPF extends Actor {
     return "";
   }
 
-  static _blacklistChangeData(baseRollData, changeTarget) {
-    let result = duplicate(baseRollData);
+  static _blacklistChangeData(data, changeTarget) {
+    let result = duplicate(data.data);
 
     switch (changeTarget) {
       case "mhp":
@@ -198,7 +198,9 @@ export class ActorPF extends Actor {
     // Add value
     if (changeValue > 0) {
       if (["untyped", "dodge", "penalty"].includes(changeType)) changeData[changeType].positive.value += changeValue;
-      else changeData[changeType].positive.value = Math.max(changeData[changeType].positive.value, changeValue);
+      else {
+        changeData[changeType].positive.value = Math.max(changeData[changeType].positive.value, changeValue);
+      }
     }
     else {
       if (["untyped", "dodge", "penalty"].includes(changeType)) changeData[changeType].negative.value += changeValue;
@@ -650,7 +652,7 @@ export class ActorPF extends Actor {
       return true;
     });
     let updateData = {};
-    let baseRollData = mergeObject(this.data.data, expandObject(data || {}).data, { inplace: false });
+    let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
 
     // Track previous values
     const prevValues = {
@@ -658,7 +660,6 @@ export class ActorPF extends Actor {
     };
 
     // Gather change types
-    const diceRgx = new RegExp(Roll.diceRgx);
     const changeData = {};
     const changeDataTemplate = {
       positive: {
@@ -682,7 +683,7 @@ export class ActorPF extends Actor {
               });
             }
             else {
-              for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+              for (let s2 of Object.keys(skl.subSkills)) {
                 changeData[`skill.${s}.subSkills.${s2}`] = {};
                 Object.keys(CONFIG.PF1.bonusModifiers).forEach(b => {
                   changeData[`skill.${s}.subSkills.${s2}`][b] = duplicate(changeDataTemplate);
@@ -693,11 +694,11 @@ export class ActorPF extends Actor {
         }
         // Add static targets
         else {
-          for (let [subKey, subTarget] of Object.entries(buffTarget)) {
+          for (let subKey of Object.keys(buffTarget)) {
             if (subKey.startsWith("_")) continue;
             changeData[subKey] = {};
             Object.keys(CONFIG.PF1.bonusModifiers).forEach(b => {
-              changeData[subKey][b] = duplicate(changeDataTemplate)
+              changeData[subKey][b] = duplicate(changeDataTemplate);
             });
           }
         }
@@ -724,7 +725,7 @@ export class ActorPF extends Actor {
     // Add more changes
     let flags = {},
       sourceInfo = {};
-    this._addDefaultChanges(baseRollData, allChanges, flags, sourceInfo);
+    this._addDefaultChanges(srcData1.data, allChanges, flags, sourceInfo);
 
     // Check flags
     for (let obj of changeObjects) {
@@ -786,30 +787,30 @@ export class ActorPF extends Actor {
 
       switch (flagKey) {
         case "noDex":
-          updateData["data.abilities.dex.total"] = 0;
-          updateData["data.abilities.dex.mod"] = -5;
+          linkData(data1, updateData, "data.abilities.dex.total", 0);
+          linkData(data1, updateData, "data.abilities.dex.mod", -5);
           break;
         case "noStr":
-          updateData["data.abilities.str.total"] = 0;
-          updateData["data.abilities.str.mod"] = -5;
+          linkData(data1, updateData, "data.abilities.str.total", 0);
+          linkData(data1, updateData, "data.abilities.str.mod", -5);
           break;
         case "noInt":
-          updateData["data.abilities.int.total"] = 1;
-          updateData["data.abilities.int.mod"] = -5;
+          linkData(data1, updateData, "data.abilities.int.total", 1);
+          linkData(data1, updateData, "data.abilities.int.mod", -5);
           break;
         case "noWis":
-          updateData["data.abilities.wis.total"] = 1;
-          updateData["data.abilities.wis.mod"] = -5;
+          linkData(data1, updateData, "data.abilities.wis.total", 1);
+          linkData(data1, updateData, "data.abilities.wis.mod", -5);
           break;
         case "noCha":
-          updateData["data.abilities.cha.total"] = 1;
-          updateData["data.abilities.cha.mod"] = -5;
+          linkData(data1, updateData, "data.abilities.cha.total", 1);
+          linkData(data1, updateData, "data.abilities.cha.mod", -5);
           break;
       }
     }
 
     // Initialize data
-    if (!sourceOnly) this._resetData(updateData, mergeObject(this.data.data, data != null ? expandObject(data).data : {}, { inplace: false }), flags);
+    if (!sourceOnly) this._resetData(updateData, srcData1, flags);
 
     // Sort changes
     allChanges.sort(this._sortChanges.bind(this));
@@ -818,13 +819,13 @@ export class ActorPF extends Actor {
     let temp = [];
     const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
     updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
-    this._addDynamicData(updateData, {}, flags, Object.keys(this.data.data.abilities), true);
+    this._addDynamicData(updateData, {}, flags, Object.keys(this.data.data.abilities), srcData1, true);
     allChanges.forEach((change, a) => {
       const formula = change.raw[0] || "";
       if (formula === "") return;
       const changeTarget = change.raw[2];
       if (changeData[changeTarget] == null) return;
-      const rollData = this.constructor._blacklistChangeData(mergeObject(baseRollData, expandObject(updateData).data, { inplace: false }), changeTarget);
+      const rollData = this.constructor._blacklistChangeData(srcData1, changeTarget);
 
       rollData.item = {};
       if (change.source.item != null) {
@@ -838,8 +839,8 @@ export class ActorPF extends Actor {
       temp.push(changeData[changeTarget]);
 
       if (allChanges.length <= a+1 || allChanges[a+1].raw[2] !== changeTarget) {
-        const newData = this._applyChanges(changeTarget, temp, baseRollData);
-        if (!sourceOnly) this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities));
+        const newData = this._applyChanges(changeTarget, temp, srcData1);
+        if (!sourceOnly) this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities), srcData1);
         temp = [];
       }
     });
@@ -849,24 +850,24 @@ export class ActorPF extends Actor {
     if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
       const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
       const dexBonus = maxDexBonus != null ? Math.min(maxDexBonus, updateData["data.abilities.dex.mod"]) : updateData["data.abilities.dex.mod"];
-      updateData["data.attributes.ac.normal.total"] += dexBonus;
-      updateData["data.attributes.ac.touch.total"] += dexBonus;
+      linkData(srcData1, updateData, "data.attributes.ac.normal.total", updateData["data.attributes.ac.normal.total"] + dexBonus);
+      linkData(srcData1, updateData, "data.attributes.ac.touch.total", updateData["data.attributes.ac.touch.total"] + dexBonus);
       if (updateData["data.abilities.dex.mod"] < 0) {
-        updateData["data.attributes.ac.flatFooted.total"] += dexBonus;
+        linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", updateData["data.attributes.ac.flatFooted.total"] + dexBonus);
       }
     }
     // Add current hit points
     if (updateData["data.attributes.hp.max"]) {
       const hpDiff = updateData["data.attributes.hp.max"] - prevValues.mhp;
       if (hpDiff !== 0) {
-        updateData["data.attributes.hp.value"] = Math.min(updateData["data.attributes.hp.max"], finalData.data.attributes.hp.value + hpDiff);
+        linkData(srcData1, updateData, "data.attributes.hp.value", Math.min(updateData["data.attributes.hp.max"], finalData.data.attributes.hp.value + hpDiff));
       }
     }
 
     // Refresh source info
     for (let [bt, change] of Object.entries(changeData)) {
       for (let [ct, values] of Object.entries(change)) {
-        let customBuffTargets = this._getChangeFlat(bt, ct, baseRollData);
+        let customBuffTargets = this._getChangeFlat(bt, ct, srcData1.data);
         if (!(customBuffTargets instanceof Array)) customBuffTargets = [customBuffTargets];
 
         // Replace certain targets
@@ -884,9 +885,9 @@ export class ActorPF extends Actor {
       }
     }
 
-    this._setSourceDetails(mergeObject(this.data, expandObject(updateData), { inplace: false }), sourceInfo, flags);
+    this._setSourceDetails(mergeObject(this.data, srcData1, { inplace: false }), sourceInfo, flags);
 
-    const diffData = diffObject(this.data, expandObject(updateData));
+    const diffData = diffObject(this.data, srcData1);
 
     // Apply changes
     if (this.collection != null && Object.keys(diffData).length > 0) {
@@ -918,7 +919,7 @@ export class ActorPF extends Actor {
 
     for (let [changeTarget, value] of Object.entries(changes)) {
       if (value.positive !== 0 || value.negative !== 0) {
-        let flatTargets = this._getChangeFlat(buffTarget, changeTarget, rollData);
+        let flatTargets = this._getChangeFlat(buffTarget, changeTarget, rollData.data);
         if (flatTargets == null) continue;
 
         if (!(flatTargets instanceof Array)) flatTargets = [flatTargets];
@@ -932,104 +933,109 @@ export class ActorPF extends Actor {
     return consolidatedChanges;
   }
 
-  _resetData(updateData, sourceData, flags) {
+  _resetData(updateData, data, flags) {
+    const data1 = data.data;
     if (flags == null) flags = {};
-    const items = duplicate(this.data.items);
-    const data = mergeObject(sourceData, expandObject(updateData).data, { inplace: false });
+    const items = this.data.items;
     const classes = items.filter(obj => { return obj.type === "class"; });
 
     // Reset HD
-    updateData["data.attributes.hd.total"] = (data.attributes.hd.base || 0) + data.details.level.value;
+    linkData(data, updateData, "data.attributes.hd.total", (data1.attributes.hd.base || 0) + data1.details.level.value);
 
     // Reset abilities
-    for (let [a, abl] of Object.entries(data.abilities)) {
-      updateData[`data.abilities.${a}.penalty`] = 0;
+    for (let [a, abl] of Object.entries(data1.abilities)) {
+      linkData(data, updateData, `data.abilities.${a}.penalty`, 0);
       if (a === "str" && flags.noStr === true) continue;
       if (a === "dex" && flags.noDex === true) continue;
       if (a === "int" && flags.oneInt === true) continue;
       if (a === "wis" && flags.oneWis === true) continue;
       if (a === "cha" && flags.oneCha === true) continue;
-      updateData[`data.abilities.${a}.checkMod`] = 0;
-      updateData[`data.abilities.${a}.total`] = abl.value - Math.abs(abl.drain);
-      updateData[`data.abilities.${a}.mod`] = Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2);
+      linkData(data, updateData, `data.abilities.${a}.checkMod`, 0);
+      linkData(data, updateData, `data.abilities.${a}.total`, abl.value - Math.abs(abl.drain));
+      linkData(data, updateData, `data.abilities.${a}.mod`, Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
     }
 
     // Reset maximum hit points
-    let mhp = data.attributes.hp.base;
+    let mhp = data1.attributes.hp.base;
     // Add class hp to hit points
     mhp += classes.reduce((cur, obj) => {
       return cur + obj.data.hp + obj.data.fc.hp.value;
     }, 0);
     // Apply level drain to hit points
-    mhp -= data.attributes.energyDrain * 5;
+    mhp -= data1.attributes.energyDrain * 5;
     // Set max hit points
-    updateData["data.attributes.hp.max"] = Math.max(0, mhp);
+    linkData(data, updateData, "data.attributes.hp.max", Math.max(0, mhp));
 
     // Reset AC
-    for (let [type, obj] of Object.entries(data.attributes.ac)) {
-      updateData[`data.attributes.ac.${type}.total`] = 10;
+    for (let type of Object.keys(data1.attributes.ac)) {
+      linkData(data, updateData, `data.attributes.ac.${type}.total`, 10);
     }
 
     // Reset attack and damage bonuses
-    updateData["data.attributes.attack.general"] = 0;
-    updateData["data.attributes.attack.melee"] = 0;
-    updateData["data.attributes.attack.ranged"] = 0;
-    updateData["data.attributes.damage.general"] = 0;
-    updateData["data.attributes.damage.weapon"] = 0;
-    updateData["data.attributes.damage.spell"] = 0;
+    linkData(data, updateData, "data.attributes.attack.general", 0);
+    linkData(data, updateData, "data.attributes.attack.melee", 0);
+    linkData(data, updateData, "data.attributes.attack.ranged", 0);
+    linkData(data, updateData, "data.attributes.damage.general", 0);
+    linkData(data, updateData, "data.attributes.damage.weapon", 0);
+    linkData(data, updateData, "data.attributes.damage.spell", 0);
 
     // Reset saving throws
-    for (let [a, s] of Object.entries(data.attributes.savingThrows)) {
-      updateData[`data.attributes.savingThrows.${a}.total`] = classes.reduce((cur, obj) => {
-        return cur + obj.data.savingThrows[a].value;
-      }, 0) + data.attributes.savingThrows[a].value - data.attributes.energyDrain;
+    for (let [a, s] of Object.entries(data1.attributes.savingThrows)) {
+      linkData(
+        data,
+        updateData,
+        `data.attributes.savingThrows.${a}.total`,
+        classes.reduce((cur, obj) => {
+          return cur + obj.data.savingThrows[a].value;
+        }, 0) + data1.attributes.savingThrows[a].value - data1.attributes.energyDrain
+      );
     }
 
     // Reset ACP and Max Dex bonus
-    updateData["data.attributes.acp.gear"] = 0;
-    updateData["data.attributes.maxDexBonus"] = null;
+    linkData(data, updateData, "data.attributes.acp.gear", 0);
+    linkData(data, updateData, "data.attributes.maxDexBonus", null);
     items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(obj => {
-      updateData["data.attributes.acp.gear"] += Math.abs(obj.data.armor.acp);
+      linkData(data, updateData, "data.attributes.acp.gear", updateData["data.attributes.acp.gear"] + Math.abs(obj.data.armor.acp));
       if(obj.data.armor.dex != null) {
-        if (updateData["data.attributes.maxDexBonus"] == null) updateData["data.attributes.maxDexBonus"] = Math.abs(obj.data.armor.dex);
+        if (updateData["data.attributes.maxDexBonus"] == null) linkData(data, updateData, "data.attributes.maxDexBonus", Math.abs(obj.data.armor.dex));
         else {
-          updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"], Math.abs(obj.data.armor.dex));
+          linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"], Math.abs(obj.data.armor.dex)));
         }
       }
     });
     // Set encumbrance
-    updateData["data.attributes.acp.encumbrance"] = 0;
-    switch (data.attributes.encumbrance.level) {
+    linkData(data, updateData, "data.attributes.acp.encumbrance", 0);
+    switch (data1.attributes.encumbrance.level) {
       case 1:
-        updateData["data.attributes.acp.encumbrance"] = 3;
-        updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3);
+        linkData(data, updateData, "data.attributes.acp.encumbrance", 3);
+        linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
         break;
       case 2:
-        updateData["data.attributes.acp.encumbrance"] = 6;
-        updateData["data.attributes.maxDexBonus"] = Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1);
+        linkData(data, updateData, "data.attributes.acp.encumbrance", 6);
+        linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
         break;
     }
     // Set final ACP
-    updateData["data.attributes.acp.total"] = updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"];
+    linkData(data, updateData, "data.attributes.acp.total", updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"]);
 
     // Reset specific skill bonuses
-    for (let sklKey of this._getChangeFlat("skills", "", data)) {
-      updateData[sklKey] = 0;
+    for (let sklKey of this._getChangeFlat("skills", "", data1.data)) {
+      linkData(data, updateData, sklKey, 0);
     }
 
     // Reset BAB, CMB and CMD
-    updateData["data.attributes.bab.total"] = data.attributes.bab.value + classes.reduce((cur, obj) => {
+    linkData(data, updateData, "data.attributes.bab.total", data1.attributes.bab.value + classes.reduce((cur, obj) => {
       return cur + (obj.data.bab || 0);
-    }, 0);
-    updateData["data.attributes.cmb.total"] = updateData["data.attributes.bab.total"] - data.attributes.energyDrain;
-    updateData["data.attributes.cmd.total"] = 10 + updateData["data.attributes.bab.total"] - data.attributes.energyDrain;
-    updateData["data.attributes.cmd.flatFootedTotal"] = 10 + updateData["data.attributes.bab.total"] - data.attributes.energyDrain;
+    }, 0));
+    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
+    linkData(data, updateData, "data.attributes.cmd.total", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
+    linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
 
     // Reset initiative
-    updateData["data.attributes.init.total"] = 0;
+    linkData(data, updateData, "data.attributes.init.total", 0);
   }
 
-  _addDynamicData(updateData, changes, flags, abilities, forceModUpdate=false) {
+  _addDynamicData(updateData, changes, flags, abilities, data, forceModUpdate=false) {
     if (changes == null) changes = {};
 
     const prevMods = {};
@@ -1048,57 +1054,57 @@ export class ActorPF extends Actor {
       }
       const ablPenalty = Math.abs(updateData[`data.abilities.${a}.penalty`] || 0) + (updateData[`data.abilities.${a}.userPenalty`] || 0);
 
-      updateData[`data.abilities.${a}.total`] += (changes[`data.abilities.${a}.total`] || 0);
+      linkData(data, updateData, `data.abilities.${a}.total`, updateData[`data.abilities.${a}.total`] + (changes[`data.abilities.${a}.total`] || 0));
       if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
-      updateData[`data.abilities.${a}.mod`] = Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2);
-      updateData[`data.abilities.${a}.mod`] = Math.max(-5, updateData[`data.abilities.${a}.mod`] -
-        Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2));
+      linkData(data, updateData, `data.abilities.${a}.mod`, Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
+      linkData(data, updateData, `data.abilities.${a}.mod`, Math.max(-5, updateData[`data.abilities.${a}.mod`] - Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2)));
       modDiffs[a] = updateData[`data.abilities.${a}.mod`] - prevMods[a];
     }
 
     // Add ability mods to CMB and CMD
-    updateData["data.attributes.cmb.total"] += modDiffs["str"];
-    updateData["data.attributes.cmd.total"] += modDiffs["str"];
-    if (!flags.loseDexToAC) updateData["data.attributes.cmd.total"] += modDiffs["dex"];
-    updateData["data.attributes.cmd.flatFootedTotal"] += modDiffs["str"];
+    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + modDiffs["str"]);
+    linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["str"]);
+    if (!flags.loseDexToAC) linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
+    linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", updateData["data.attributes.cmd.flatFootedTotal"] + modDiffs["str"]);
 
     // Add dex mod to initiative
-    updateData["data.attributes.init.total"] += modDiffs["dex"];
+    linkData(data, updateData, "data.attributes.init.total", updateData["data.attributes.init.total"] + modDiffs["dex"]);
 
     // Add ability mods to saving throws
     for (let [s, a] of Object.entries(CONFIG.PF1.savingThrowMods)) {
-      updateData[`data.attributes.savingThrows.${s}.total`] += modDiffs[a];
+      linkData(data, updateData, `data.attributes.savingThrows.${s}.total`, updateData[`data.attributes.savingThrows.${s}.total`] + modDiffs[a]);
     }
 
     // Apply changes
     for (let [changeTarget, value] of Object.entries(changes)) {
-      updateData[changeTarget] = (updateData[changeTarget] || 0) + value;
+      linkData(data, updateData, changeTarget, (updateData[changeTarget] || 0) + value);
     }
-    this._updateSkills(updateData, expandObject(updateData).data);
+    this._updateSkills(updateData, data);
   }
 
-  _updateSkills(updateData, actualData) {
-    const data = mergeObject(this.data.data, actualData, { inplace: false });
-
-    let energyDrainPenalty = Math.abs(data.attributes.energyDrain);
-    for (let [sklKey, skl] of Object.entries(data.skills)) {
+  _updateSkills(updateData, data) {
+    const data1 = data.data;
+    let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
+    for (let [sklKey, skl] of Object.entries(data1.skills)) {
       if (skl == null) continue;
       
-      let acpPenalty = (skl.acp ? data.attributes.acp.total : 0);
-      let ablMod = data.abilities[skl.ability].mod;
+      let acpPenalty = (skl.acp ? data1.attributes.acp.total : 0);
+      let ablMod = data1.abilities[skl.ability].mod;
       let specificSkillBonus = skl.changeBonus || 0;
 
       // Parse main skills
-      updateData[`data.skills.${sklKey}.mod`] = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
+      let sklValue = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
+      linkData(data, updateData, `data.skills.${sklKey}.mod`, sklValue);
       // Parse sub-skills
       for (let [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
         if (subSkl == null) continue;
         if (updateData[`data.skills.${sklKey}.subSkills.${subSklKey}`] === null) continue;
 
-        acpPenalty = (subSkl.acp ? data.attributes.acp.total : 0);
-        ablMod = data.abilities[subSkl.ability].mod;
+        acpPenalty = (subSkl.acp ? data1.attributes.acp.total : 0);
+        ablMod = data1.abilities[subSkl.ability].mod;
         specificSkillBonus = subSkl.changeBonus || 0;
-        updateData[`data.skills.${sklKey}.subSkills.${subSklKey}.mod`] = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
+        sklValue = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
+        linkData(data, updateData, `data.skills.${sklKey}.subSkills.${subSklKey}.mod`, sklValue);
       }
     }
   }
@@ -1310,7 +1316,7 @@ export class ActorPF extends Actor {
     
     // Add extra data
     for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
-      for (let [p, grp] of Object.entries(changeGrp)) {
+      for (let grp of Object.values(changeGrp)) {
         if (grp.length > 0) {
           sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
           for (let src of grp) {
@@ -2057,7 +2063,6 @@ export class ActorPF extends Actor {
     }
 
     // Saving throws
-    console.log(context);
     if (context.match(/^savingThrow\.(.+)/)) {
       const saveKey = RegExp.$1;
       for (let note of result) {

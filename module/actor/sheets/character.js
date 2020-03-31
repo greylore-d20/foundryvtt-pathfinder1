@@ -71,9 +71,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       weapon: { label: "Weapons", canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
       equipment: { label: "Armor/Equipment", canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
       consumable: { label: "Consumables", canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
-      gear: { label: "Gear", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
-      ammo: { label: "Ammunition", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
-      misc: { label: "Misc", canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
+      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
+      ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
+      misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
       all: { label: "All", canCreate: false, hasActions: true, items: [], dataset: {} },
     };
 

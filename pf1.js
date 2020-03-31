@@ -74,7 +74,7 @@ Hooks.once("setup", function() {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities", "abilitiesShort", "alignments", "currencies", "distanceUnits", "itemActionTypes", "senses", "skills", "targetTypes",
-    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions"
+    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes"
   ];
   for ( let o of toLocalize ) {
     CONFIG.PF1[o] = Object.entries(CONFIG.PF1[o]).reduce((obj, e) => {

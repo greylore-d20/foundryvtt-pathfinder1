@@ -310,6 +310,12 @@ PF1.equipmentSlots = {
   "feet": "Feet",
 };
 
+PF1.lootTypes = {
+  "gear": "PF1.LootTypeGear",
+  "ammo": "PF1.LootTypeAmmo",
+  "misc": "PF1.LootTypeMisc",
+};
+
 
 /* -------------------------------------------- */
 
@@ -551,7 +557,6 @@ PF1.weaponTypes = {
   "martial": "Martial",
   "exotic": "Exotic",
   "improv": "Improvised",
-  "ammo": "Ammunition",
   "splash": "Splash Weapon"
 };
 

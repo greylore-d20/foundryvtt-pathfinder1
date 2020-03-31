@@ -145,6 +145,7 @@ export class ItemPF extends Item {
         rng.long = null;
       }
       labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
+      if (labels.range.length > 0) labels.range = ["Range:", labels.range].join(" ");
 
       // Duration Label
       let dur = data.duration || {};
@@ -276,14 +277,14 @@ export class ItemPF extends Item {
       else if (data.range.units === "long") dynamicLabels.range = `Range:  ${(400 + cl * 40)}`;
       else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
         let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
-        dynamicLabels.range = [range, CONFIG.PF1.distanceUnits[data.range.units]].join(" ");
+        dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
       }
     }
     // Duration
     if (data.duration != null) {
       if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
         let duration = new Roll(data.duration.value.length > 0 ? data.duration.value : "0", rollData).roll().total;
-        dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].join(" ");
+        dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
       }
     }
 

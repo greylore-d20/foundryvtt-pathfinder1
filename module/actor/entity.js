@@ -1690,6 +1690,8 @@ export class ActorPF extends Actor {
     attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
     attackData["data.actionType"] = (item.data.data.weaponData.isMelee ? "mwak" : "rwak");
     attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
+    attackData["data.activation.type"] = "full";
+    attackData["data.duration.units"] = "inst";
     attackData["img"] = item.data.img;
 
     // Add additional attacks
@@ -1698,6 +1700,20 @@ export class ActorPF extends Actor {
       extraAttacks = extraAttacks.concat([["-5", `Attack ${Math.floor((a+5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
+
+    // Add ability modifiers
+    if (item.data.data.weaponData.isMelee) attackData["data.ability.attack"] = "str";
+    else attackData["data.ability.attack"] = "dex";
+    if (item.data.data.weaponData.isMelee || item.data.data.properties["thr"] === true) {
+      attackData["data.ability.damage"] = "str";
+      if (item.data.data.properties["two"] === true && item.data.data.weaponData.isMelee) attackData["data.ability.damageMult"] = 1.5;
+    }
+
+    // Add range
+    if (!item.data.data.weaponData.isMelee && item.data.data.weaponData.range != null) {
+      attackData["data.range.units"] = "ft";
+      attackData["data.range.value"] = item.data.data.weaponData.range.toString();
+    }
     
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
     await this.createOwnedItem(expandObject(attackData));

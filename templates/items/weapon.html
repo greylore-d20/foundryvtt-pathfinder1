@@ -1,124 +1,133 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+  {{!-- Item Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
-            </h1>
+    <div class="header-details flexrow">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+      </h1>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
+      <div class="item-subtitle">
+        <h4 class="item-type">{{itemType}}</h4>
+        <span class="item-status">{{itemStatus}}</span>
+      </div>
 
-            <ul class="summary">
-                <li>
-                    {{lookup config.weaponTypes data.weaponType }}
-                </li>
-				<li></li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
-                </li>
-            </ul>
+      <ul class="summary">
+        <li>
+          {{lookup config.weaponTypes data.weaponType }}
+        </li>
+        <li></li>
+        <li>
+          <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
+    <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section class="primary-body">
+
+    {{!-- Description Tab --}}
+    {{> "systems/pf1/templates/items/parts/item-description.html"}}
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      <h3 class="form-header">Weapon Details</h3>
+
+      {{!-- Weapon Type --}}
+      <div class="form-group">
+        <label>Weapon Type</label>
+        <select name="data.weaponType">
+          {{#select data.weaponType}}
+          {{#each config.weaponTypes as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Equipment Status --}}
+      <div class="form-group stacked">
+        <label>Equipment Status</label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> Equipped
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> Masterwork
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.weaponData.isMelee" {{checked data.weaponData.isMelee}}/> Melee
+        </label>
+      </div>
+
+      {{!-- Weapon Properties --}}
+      <div class="form-group stacked weapon-properties">
+        <label>Weapon Properties</label>
+        {{#each config.weaponProperties as |name prop|}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.properties.{{prop}}" {{checked (lookup ../data.properties prop)}}/> {{ name }}
+        </label>
+        {{/each}}
+      </div>
+
+      {{#if isRanged}}
+      <div class="form-group">
+        <label>Range</label>
+        <div class="form-fields">
+          <input type="text" name="data.weaponData.range" value="{{data.weaponData.range}}" data-dtype="Number"/>
         </div>
-    </header>
+      </div>
+      {{/if}}
 
-    {{!-- Item Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
-        <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
-    </nav>
-
-    {{!-- Item Sheet Body --}}
-    <section class="primary-body">
-
-        {{!-- Description Tab --}}
-        {{> "systems/pf1/templates/items/parts/item-description.html"}}
-
-        {{!-- Details Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
-            <h3 class="form-header">Weapon Details</h3>
-
-            {{!-- Weapon Type --}}
-            <div class="form-group">
-                <label>Weapon Type</label>
-                <select name="data.weaponType">
-                    {{#select data.weaponType}}
-                    {{#each config.weaponTypes as |name type|}}
-                    <option value="{{type}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-
-            {{!-- Equipment Status --}}
-            <div class="form-group stacked">
-                <label>Equipment Status</label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> Equipped
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> Masterwork
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox" name="data.weaponData.isMelee" {{checked data.weaponData.isMelee}}/> Melee
-                </label>
-            </div>
-
-            {{!-- Weapon Properties --}}
-            <div class="form-group stacked weapon-properties">
-                <label>Weapon Properties</label>
-                {{#each config.weaponProperties as |name prop|}}
-                <label class="checkbox">
-                    <input type="checkbox" name="data.properties.{{prop}}" {{checked (lookup ../data.properties prop)}}/> {{ name }}
-                </label>
-                {{/each}}
-            </div>
-
-            <div class="form-group">
-                <label>Enhancement Bonus</label>
-                <div class="form-fields">
-                    <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
-                </div>
-            </div>
-
-            {{!-- Weapon Damage --}}
-            <div class="form-group">
-              <label>Base Weapon Damage</label>
-              <div class="form-fields">
-                <input type="text" name="data.weaponData.damageRoll" value="{{data.weaponData.damageRoll}}" placeholder="Damage Roll"/>
-                <input type="text" name="data.weaponData.damageType" value="{{data.weaponData.damageType}}" placeholder="Damage Type"/>
-              </div>
-            </div>
-            
-            {{!-- Weapon Critical Damage --}}
-            <div class="form-group">
-              <label>Base Weapon Critical</label>
-              <div class="form-fields">
-                <input type="text" name="data.weaponData.critRange" value="{{data.weaponData.critRange}}" placeholder="20"/>
-                <input type="text" name="data.weaponData.critMult" value="{{data.weaponData.critMult}}" placeholder="2"/>
-              </div>
-            </div>
-
-            {{#if owner}}
-            <div class="form-group">
-              <button type="button" name="create-attack">Create Attack</button>
-            </div>
-            {{/if}}
+      <div class="form-group">
+        <label>Enhancement Bonus</label>
+        <div class="form-fields">
+          <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
         </div>
-    
-        {{!-- Changes Tab --}}
-        <div class="tab flexcol" data-group="primary" data-tab="changes">
-            {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+      </div>
 
-            {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+      {{!-- Weapon Damage --}}
+      <div class="form-group">
+        <label>Base Weapon Damage</label>
+        <div class="form-fields">
+          <input type="text" name="data.weaponData.damageRoll" value="{{data.weaponData.damageRoll}}" placeholder="Damage Roll"/>
+          <input type="text" name="data.weaponData.damageType" value="{{data.weaponData.damageType}}" placeholder="Damage Type"/>
         </div>
-    </section>
+      </div>
+
+      {{!-- Weapon Critical Damage --}}
+      <div class="form-group">
+        <label>Base Weapon Critical</label>
+        <div class="form-fields">
+          <input type="text" name="data.weaponData.critRange" value="{{data.weaponData.critRange}}" placeholder="20"/>
+          <input type="text" name="data.weaponData.critMult" value="{{data.weaponData.critMult}}" placeholder="2"/>
+        </div>
+      </div>
+
+      {{#if owner}}
+      <div class="form-group">
+        <button type="button" name="create-attack">Create Attack</button>
+      </div>
+      {{/if}}
+    </div>
+
+    {{!-- Changes Tab --}}
+    <div class="tab flexcol" data-group="primary" data-tab="changes">
+      {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+
+      {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+    </div>
+  </section>
 </form>

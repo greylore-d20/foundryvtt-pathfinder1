@@ -87,6 +87,11 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputDuration = !(["", "inst", "perm"].includes(data.item.data.duration.units));
     }
 
+    // Prepare weapon specific stuff
+    if (data.item.type === "weapon") {
+      data.isRanged = (!data.item.data.weaponData.isMelee || data.item.data.properties["thr"] === true);
+    }
+
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
       data.isPreparedSpell = data.item.data.preparation.mode === "prepared";

@@ -157,6 +157,7 @@ export class ActorPF extends Actor {
     let skills = [];
     let subSkills = [];
     for (let [sklKey, skl] of Object.entries(this.data.data.skills)) {
+      if (skl == null) continue;
       if (skl.subSkills != null) {
         for (let subSklKey of Object.keys(skl.subSkills)) {
           subSkills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
@@ -676,6 +677,7 @@ export class ActorPF extends Actor {
         // Add specific skills as targets
         if (key === "skill") {
           for (let [s, skl] of Object.entries(this.data.data.skills)) {
+            if (skl == null) continue;
             if (!skl.subSkills) {
               changeData[`skill.${s}`] = {};
               Object.keys(CONFIG.PF1.bonusModifiers).forEach(b => {
@@ -1020,7 +1022,7 @@ export class ActorPF extends Actor {
 
     // Reset specific skill bonuses
     for (let sklKey of this._getChangeFlat("skills", "", data1.data)) {
-      linkData(data, updateData, sklKey, 0);
+      if (hasProperty(data, sklKey)) linkData(data, updateData, sklKey, 0);
     }
 
     // Reset BAB, CMB and CMD

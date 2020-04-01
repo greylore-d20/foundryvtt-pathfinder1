@@ -778,7 +778,10 @@ PF1.contextNoteTargets = {
   },
   "misc": {
     "_label": "Misc",
+    "ac": "AC",
     "cmb": "CMB",
+    "cmd": "CMD",
+    "sr": "Spell Resistance",
   },
 };
 

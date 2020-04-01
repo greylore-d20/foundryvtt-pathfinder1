@@ -1,6 +1,7 @@
 import { DicePF } from "../dice.js";
-import { createTag, linkData } from "../lib.js";
+import { createTag, linkData, isMinimumCoreVersion } from "../lib.js";
 import { refreshLightingAndSight } from "../low-light-vision.js";
+import { createCustomChatMessage } from "../chat.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -1754,14 +1755,17 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
 
       for (let note of noteObj.notes) {
-        let noteStr = "";
-        if (note.length > 0) {
-          noteStr = DicePF.messageRoll({
-            data: rollData,
-            msgStr: note
-          });
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/));
       }
     }
     // Add untrained note
@@ -1816,14 +1820,17 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
 
       for (let note of noteObj.notes) {
-        let noteStr = "";
-        if (note.length > 0) {
-          noteStr = DicePF.messageRoll({
-            data: rollData,
-            msgStr: note
-          });
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/));
       }
     }
     // Add grapple note
@@ -1906,14 +1913,17 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
 
       for (let note of noteObj.notes) {
-        let noteStr = "";
-        if (note.length > 0) {
-          noteStr = DicePF.messageRoll({
-            data: rollData,
-            msgStr: note
-          });
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/));
       }
     }
 
@@ -1954,14 +1964,17 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
 
       for (let note of noteObj.notes) {
-        let noteStr = "";
-        if (note.length > 0) {
-          noteStr = DicePF.messageRoll({
-            data: rollData,
-            msgStr: note
-          });
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/));
       }
     }
 
@@ -1999,6 +2012,105 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
     });
+  }
+
+  /**
+   * Show defenses in chat
+   */
+  rollDefenses() {
+    const rollData = duplicate(this.data.data);
+
+    // Add contextual AC notes
+    let acNotes = [];
+    if (this.data.data.attributes.acNotes.length > 0) acNotes = this.data.data.attributes.acNotes.split(/[\n\r]+/);
+    const acNoteObjects = this.getContextNotes("misc.ac");
+    for (let noteObj of acNoteObjects) {
+      rollData.item = {};
+      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+
+      for (let note of noteObj.notes) {
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) acNotes.push(...noteStr.split(/[\n\r]+/));
+        }
+        else acNotes.push(...note.split(/[\n\r]+/));
+      }
+    }
+
+    // Add contextual CMD notes
+    let cmdNotes = [];
+    if (this.data.data.attributes.cmdNotes.length > 0) cmdNotes = this.data.data.attributes.cmdNotes.split(/[\n\r]+/);
+    const cmdNoteObjects = this.getContextNotes("misc.cmd");
+    for (let noteObj of cmdNoteObjects) {
+      rollData.item = {};
+      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+
+      for (let note of noteObj.notes) {
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) cmdDotes.push(...noteStr.split(/[\n\r]+/));
+        }
+        else cmdNotes.push(...note.split(/[\n\r]+/));
+      }
+    }
+
+    // Add contextual SR notes
+    let srNotes = [];
+    if (this.data.data.attributes.srNotes.length > 0) srNotes = this.data.data.attributes.srNotes.split(/[\n\r]+/);
+    const srNoteObjects = this.getContextNotes("misc.sr");
+    for (let noteObj of srNoteObjects) {
+      rollData.item = {};
+      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+
+      for (let note of noteObj.notes) {
+        if (!isMinimumCoreVersion("0.5.2")) {
+          let noteStr = "";
+          if (note.length > 0) {
+            noteStr = DicePF.messageRoll({
+              data: rollData,
+              msgStr: note
+            });
+          }
+          if (noteStr.length > 0) srNotes.push(...noteStr.split(/[\n\r]+/));
+        }
+        else srNotes.push(...note.split(/[\n\r]+/));
+      }
+    }
+
+    // Create message
+    const d = this.data.data;
+    const data = {
+      actor: this,
+      name: this.name,
+      ac: {
+        normal: d.attributes.ac.normal.total,
+        touch: d.attributes.ac.touch.total,
+        flatFooted: d.attributes.ac.flatFooted.total,
+        notes: acNotes,
+      },
+      cmd: {
+        normal: d.attributes.cmd.total,
+        flatFooted: d.attributes.cmd.flatFootedTotal,
+        notes: cmdNotes,
+      },
+      misc: {
+        sr: d.attributes.sr.total,
+        srNotes: srNotes,
+      },
+    };
+    createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data);
   }
 
   /* -------------------------------------------- */

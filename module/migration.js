@@ -108,6 +108,7 @@ export const migrateActorData = function(actor) {
 
   _migrateCharacterLevel(actor.data, updateData);
   _migrateCharacterEncumbrance(actor, updateData);
+  _migrateCharacterDefenseNotes(actor, updateData);
 
   // // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -245,16 +246,22 @@ const _migrateCharacterEncumbrance = function(ent, updateData) {
   "attributes.encumbrance.levels.medium", "attributes.encumbrance.levels.heavy",
   "attributes.encumbrance.levels.carry", "attributes.encumbrance.levels.drag",
   "attributes.encumbrance.carriedWeight"];
-  let redoEncumbrance = false;
   for (let k of arr) {
     const value = getProperty(ent.data.data, k);
     if (value == null) {
       updateData["data."+k] = 0
-      redoEncumbrance = true;
     }
   }
+};
 
-  if (redoEncumbrance) ent._computeEncumbrance(updateData);
+const _migrateCharacterDefenseNotes = function(ent, updateData) {
+  const arr = ["attributes.acNotes", "attributes.cmdNotes", "attributes.srNotes"];
+  for (let k of arr) {
+    const value = getProperty(ent.data.data, k);
+    if (value == null) {
+      updateData["data."+k] = "";
+    }
+  }
 };
 
 const _migrateItemSpellUses = function(ent, updateData) {

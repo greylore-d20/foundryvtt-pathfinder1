@@ -207,8 +207,36 @@
   /* ----------------------------------------- */
   
   .defenses {
+    .attributes {
+      flex: 0;
+    }
+
     .attribute .attribute-footer input {
       width: 32px;
+    }
+
+    .defense-rolls, .defense-notes {
+      label {
+        line-height: 20px;
+        white-space: nowrap;
+
+        h3 {
+          .nodesto();
+          font-size: 18px;
+        }
+      }
+    }
+
+    .defense-notes {
+      margin-top: 5px;
+
+      label {
+        flex: 1;
+      }
+
+      textarea {
+        flex: 3;
+      }
     }
   }
 
@@ -899,16 +927,6 @@
   // Empty spellbook controls
   .spellbook-empty .item-controls { flex: 1; }
 
-  .spellcasting-misc {
-    .rollable.image-d20 {
-      flex: 0 0 24px;
-      display: inline-block;
-      background-image: url(../../icons/dice/d20black.svg);
-      background-size: 100%;
-      height: 24px;
-    }
-  }
-
   .spell-failure {
     input[type="text"] {
       flex: 1;
@@ -928,11 +946,27 @@
     }
   }
 
+  .rollable.image-d20 {
+    flex: 0 0 24px;
+    display: inline-block;
+    background-image: url(../../icons/dice/d20black.svg);
+    background-size: 100%;
+    height: 24px;
+  }
+
   /* ----------------------------------------- */
   /*  TinyMCE                                  */
   /* ----------------------------------------- */
 
   .editor {
     padding: 0 8px;
+  }
+
+  /* ----------------------------------------- */
+  /*  Misc                                     */
+  /* ----------------------------------------- */
+
+  hr {
+    margin: 4px 0 4px 0;
   }
 }

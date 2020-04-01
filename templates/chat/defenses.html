@@ -1,0 +1,85 @@
+<div class="pf1 chat-card defense-card" data-actor-id="{{actor._id}}">
+  <header class="card-header flexrow">
+    <h3 class="actor-name">{{name}} - Defenses</h3>
+  </header>
+
+  <div class="card-content">
+    {{#if ac}}
+    <div class="defense ac">
+      <table>
+        <tr>
+          <th>AC</th>
+          <th>Touch</th>
+          <th>Flat-footed</th>
+        </tr>
+        <tr>
+          <td>{{ac.normal}}</td>
+          <td>{{ac.touch}}</td>
+          <td>{{ac.flatFooted}}</td>
+        </tr>
+      </table>
+    </div>
+
+    {{#if ac.notes}}
+    <div class="flexcol property-group">
+      <label>AC Notes</label>
+      <div class="flexrow">
+        {{#each ac.notes as |v|}}
+        <span class="tag">{{v}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{#if cmd}}
+    <div class="defense cmd">
+      <table>
+        <tr>
+          <th>CMD</th>
+          <th>Flat-footed CMD</th>
+        </tr>
+        <tr>
+          <td>{{cmd.normal}}</td>
+          <td>{{cmd.flatFooted}}</td>
+        </tr>
+      </table>
+    </div>
+
+    {{#if cmd.notes}}
+    <div class="flexcol property-group">
+      <label>CMD Notes</label>
+      <div class="flexrow">
+        {{#each cmd.notes as |v|}}
+        <span class="tag">{{v}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{#if misc}}
+    <div class="defense misc">
+      <table>
+        <tr>
+          <th>Spell Resistance</th>
+        </tr>
+        <tr>
+          <td>{{#if misc.sr}}{{misc.sr}}{{else}}N/A{{/if}}</td>
+        </tr>
+      </table>
+    </div>
+
+    {{#if misc.srNotes}}
+    <div class="flexcol property-group">
+      <label>Spell Resistance Notes</label>
+      <div class="flexrow">
+        {{#each misc.srNotes as |v|}}
+        <span class="tag">{{v}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+    {{/if}}
+  </div>
+</div>

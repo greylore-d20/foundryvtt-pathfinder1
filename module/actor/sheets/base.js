@@ -2,7 +2,7 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
-import { createTag, createTabs } from "../../lib.js";
+import { createTag, createTabs, isMinimumCoreVersion } from "../../lib.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -509,6 +509,9 @@ export class ActorSheetPF extends ActorSheet {
     // Configure Special Flags
     html.find('.configure-flags').click(this._onConfigureFlags.bind(this));
 
+    // Roll defenses
+    html.find(".defense-rolls .generic-defenses .rollable").click(ev => { this.actor.rollDefenses(); });
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -635,15 +638,21 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = duplicate(this.actor.data.data);
     rollData.cl = spellbook.cl.total;
 
-    // Add contextual attack string
-    let effectStr = "";
-    if (typeof spellbook.concentrationNotes === "string" && spellbook.concentrationNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: spellbook.concentrationNotes
-      });
+    // Add contextual concentration string
+    let notes = [];
+    if (spellbook.concentrationNotes.length > 0) {
+      if (!isMinimumCoreVersion("0.5.2")) {
+        let noteStr = DicePF.messageRoll({
+          data: rollData,
+          msgStr: spellbook.concentrationNotes
+        });
+        notes.push(...noteStr.split(/[\n\r]+/));
+      }
+      else notes.push(...spellbook.concentrationNotes.split(/[\n\r]+/));
     }
 
+    let props = [];
+    if (notes.length > 0) props.push({ header: "Notes", value: notes });
     let formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll();
     return DicePF.d20Roll({
       event: event,
@@ -658,7 +667,7 @@ export class ActorSheetPF extends ActorSheet {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasExtraText: effectStr.length > 0, extraText: effectStr }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props }
     });
   }
   
@@ -669,15 +678,21 @@ export class ActorSheetPF extends ActorSheet {
     const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.actor.data.data);
 
-    // Add contextual attack string
-    let effectStr = "";
-    if (typeof spellbook.clNotes === "string" && spellbook.clNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: spellbook.clNotes
-      });
+    // Add contextual caster level string
+    let notes = [];
+    if (spellbook.clNotes.length > 0) {
+      if (!isMinimumCoreVersion("0.5.2")) {
+        let noteStr = DicePF.messageRoll({
+          data: rollData,
+          msgStr: spellbook.clNotes
+        });
+        notes.push(...noteStr.split(/[\n\r]+/));
+      }
+      else notes.push(...spellbook.clNotes.split(/[\n\r]+/));
     }
 
+    let props = [];
+    if (notes.length > 0) props.push({ header: "Notes", value: notes });
     return DicePF.d20Roll({
       event: event,
       parts: [`@cl`],
@@ -686,7 +701,7 @@ export class ActorSheetPF extends ActorSheet {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasExtraText: effectStr.length > 0, extraText: effectStr }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props }
     });
   }
 

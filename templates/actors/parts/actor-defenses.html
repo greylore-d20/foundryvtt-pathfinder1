@@ -1,3 +1,11 @@
+{{!-- Roll Defenses --}}
+<ul class="attributes defense-rolls flexrow">
+  <li class="generic-defenses flexrow">
+    <div class="rollable image-d20"></div>
+    <label><h3>Defenses</h3></label>
+  </li>
+</ul>
+
 {{!-- AC --}}
 <ul class="attributes armor-class flexrow">
   {{#each data.attributes.ac as |ac id|}}
@@ -100,8 +108,25 @@
     </li>
 </ul>
 
-<ul class="attributes notes flexrow">
-  <li>
+<div class="attributes defense-notes flexcol">
+  <div class="flexrow">
+    <label><h3>Save notes</h3></label>
     <textarea name="data.attributes.saveNotes" placeholder="Save notes">{{data.attributes.saveNotes}}</textarea>
-  </li>
-</ul>
+  </div>
+  <hr>
+  <div class="flexrow">
+    <label><h3>AC notes</h3></label>
+    <textarea name="data.attributes.acNotes" placeholder="AC notes">{{data.attributes.acNotes}}</textarea>
+  </div>
+  <hr>
+  <div class="flexrow">
+    <label><h3>CMD notes</h3></label>
+    <textarea name="data.attributes.cmdNotes" placeholder="CMD notes">{{data.attributes.cmdNotes}}</textarea>
+  </div>
+  <hr>
+  <div class="flexrow">
+    <label><h3>SR notes</h3></label>
+    <textarea name="data.attributes.srNotes" placeholder="SR notes">{{data.attributes.srNotes}}</textarea>
+  </div>
+  <hr>
+</div>

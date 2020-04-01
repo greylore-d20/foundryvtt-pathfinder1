@@ -443,6 +443,9 @@
   /* ----------------------------------------- */
   /*  TinyMCE                                  */
   /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Misc                                     */
+  /* ----------------------------------------- */
 }
 .pf1.sheet.actor .sheet-header .header-details {
   border-left: 2px groove #eeede0;
@@ -598,8 +601,31 @@
   font-family: "Signika", "Palatino Linotype", serif;
   font-size: 12px;
 }
+.pf1.sheet.actor .defenses .attributes {
+  flex: 0;
+}
 .pf1.sheet.actor .defenses .attribute .attribute-footer input {
   width: 32px;
+}
+.pf1.sheet.actor .defenses .defense-rolls label,
+.pf1.sheet.actor .defenses .defense-notes label {
+  line-height: 20px;
+  white-space: nowrap;
+}
+.pf1.sheet.actor .defenses .defense-rolls label h3,
+.pf1.sheet.actor .defenses .defense-notes label h3 {
+  font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-size: 18px;
+}
+.pf1.sheet.actor .defenses .defense-notes {
+  margin-top: 5px;
+}
+.pf1.sheet.actor .defenses .defense-notes label {
+  flex: 1;
+}
+.pf1.sheet.actor .defenses .defense-notes textarea {
+  flex: 3;
 }
 .pf1.sheet.actor .notes {
   color: #191813;
@@ -1207,13 +1233,6 @@
 .pf1.sheet.actor .spellbook-empty .item-controls {
   flex: 1;
 }
-.pf1.sheet.actor .spellcasting-misc .rollable.image-d20 {
-  flex: 0 0 24px;
-  display: inline-block;
-  background-image: url(../../icons/dice/d20black.svg);
-  background-size: 100%;
-  height: 24px;
-}
 .pf1.sheet.actor .spell-failure input[type="text"] {
   flex: 1;
 }
@@ -1226,8 +1245,18 @@
 .pf1.sheet.actor .spell-range input[type="text"] {
   flex: 0 0 96px;
 }
+.pf1.sheet.actor .rollable.image-d20 {
+  flex: 0 0 24px;
+  display: inline-block;
+  background-image: url(../../icons/dice/d20black.svg);
+  background-size: 100%;
+  height: 24px;
+}
 .pf1.sheet.actor .editor {
   padding: 0 8px;
+}
+.pf1.sheet.actor hr {
+  margin: 4px 0 4px 0;
 }
 .pf1.sheet.item {
   min-height: 420px;
@@ -1659,6 +1688,14 @@
 #chat-log .message .extra-roll-label {
   font-weight: bold;
   font-size: 14px;
+}
+#chat-log .message div.defense table {
+  width: 100%;
+  table-layout: fixed;
+}
+#chat-log .message div.defense table td,
+#chat-log .message div.defense table th {
+  text-align: center;
 }
 /* ----------------------------------------- */
 /*  Basic Structure                          */

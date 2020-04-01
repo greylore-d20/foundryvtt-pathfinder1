@@ -2144,7 +2144,7 @@ export class ActorPF extends Actor {
     const carryStr = mergedData.data.abilities.str.value + mergedData.data.abilities.str.carryBonus;
     let carryMultiplier = mergedData.data.abilities.str.carryMultiplier;
     const size = mergedData.data.traits.size;
-    if (mergedData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quad[size];
+    if (mergedData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
     const table = CONFIG.PF1.encumbranceLoads;
     const heavy = updateData["data.attributes.encumbrance.levels.heavy"] = mergedData.data.attributes.encumbrance.levels.heavy = Math.floor(Math.max(

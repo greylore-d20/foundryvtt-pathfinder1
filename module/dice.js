@@ -1,5 +1,3 @@
-import { isMinimumCoreVersion } from "./lib.js";
-
 export class DicePF {
 
   /**
@@ -303,25 +301,11 @@ export class DicePF {
   }
 
   static messageRoll({data, msgStr}) {
-    // Use roll enrichment if possible, which is available since FoundryVTT 0.5.2
-    if (isMinimumCoreVersion("0.5.2")) return TextEditor.enrichHTML(msgStr, { rollData: data });
-
-    // Otherwise, fall back to old method
-    let re = /(?:\[\[|\]\])/g;
-    let arr,
-      msgStartIndex;
-    while ((arr = re.exec(msgStr)) !== null) {
-      if (arr[0] === "[[") {
-        msgStartIndex = arr.index;
-        msgStr = msgStr.slice(0, arr.index) + msgStr.slice(arr.index + 2);
-      }
-      else if (arr[0] === "]]") {
-        let subMsg = msgStr.slice(msgStartIndex, arr.index);
-        let roll = new Roll(subMsg, data).roll();
-        msgStr = msgStr.slice(0, msgStartIndex) + roll.total.toString() + msgStr.slice(arr.index + 2);
-        re.lastIndex = msgStartIndex;
-      }
-    }
+    let re = /\[\[(.+)\]\]/g;
+    return msgStr.replace(re, (_, p1) => {
+      const roll = new Roll(p1, data).roll();
+      return roll.total.toString();
+    });
 
     return msgStr;
   }

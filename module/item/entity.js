@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { alterRoll } from "../lib.js";
+import { alterRoll, isMinimumCoreVersion } from "../lib.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -471,10 +471,13 @@ export class ItemPF extends Item {
     let props = [];
     let effectStr = "";
     if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: itemData.attackNotes
-      });
+      if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.attackNotes, { rollData: rollData });
+      else {
+        effectStr = DicePF.messageRoll({
+          data: rollData,
+          msgStr: itemData.attackNotes
+        });
+      }
     }
     let effectContent = "";
     if (effectStr.length > 0) {
@@ -733,10 +736,13 @@ export class ItemPF extends Item {
     // Create effect string
     let effectStr = "";
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: itemData.effectNotes
-      });
+      if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.effectNotes, { rollData: rollData });
+      else {
+        effectStr = DicePF.messageRoll({
+          data: rollData,
+          msgStr: itemData.effectNotes
+        });
+      }
     }
     let effectContent = "";
     if (effectStr.length > 0) {
@@ -811,22 +817,6 @@ export class ItemPF extends Item {
     else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(itemData.actionType)) {
       if (rollData.critMult !== 1) parts.push("@attributes.damage.spell * @critMult");
       else parts.push("@attributes.damage.spell");
-    }
-
-    // Add contextual attack string
-    let effectStr = "";
-    if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: itemData.effectNotes
-      });
-    }
-    let effectContent = "";
-    if (effectStr.length > 0) {
-      const effects = effectStr.split(/[\n\r]+/);
-      for (let fx of effects) {
-        effectContent += `<div class="extra-misc">${fx}</div>`;
-      }
     }
 
     // Create roll

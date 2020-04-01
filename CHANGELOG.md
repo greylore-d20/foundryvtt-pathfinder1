@@ -1,6 +1,21 @@
 # Changelog
 
+## 0.21
+
+### Bug Fixes
+
+- Inability to delete custom skills and subskills
+- Bug with quadruped actors
+- Scrolling issue on skill pages
+- Unformatted inline rolls in item chat logs
+
+### Changelog
+
+- Add a button to show static defenses
+
 ## 0.2002
+
+### Changelog
 
 - Add weapon range
 - Automatically fill out more slots when creating an attack: attack ability,

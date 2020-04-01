@@ -47,15 +47,23 @@
 
 <section class="skillset-body">
   <div class="tab flexcol" data-group="skillset" data-tab="adventure">
-  {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.adventure.skills isBackgroundSkills="false"}}
+    {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.adventure.skills isBackgroundSkills="false"}}
   </div>
-
+  
   <div class="tab flexcol" data-group="skillset" data-tab="background">
-  {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
+    {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.background.skills isBackgroundSkills="true"}}
   </div>
 </section>
 {{/unless}}
 
 {{#unless useBGSkills}}
-{{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.all.skills isBackgroundSkills="false"}}
+<nav class="sheet-navigation tabs" data-group="skillset" style="display: none">
+  <a class="item" data-tab="all">All Skills</a>
+</nav>
+
+<section class="skillset-body">
+  <div class="tab flexcol" data-group="skillset" data-tab="all">
+    {{> "systems/pf1/templates/actors/parts/actor-skills.html" skillset=skillsets.all.skills isBackgroundSkills="false"}}
+  </div>
+</section>
 {{/unless}}

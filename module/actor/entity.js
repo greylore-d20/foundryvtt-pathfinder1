@@ -1765,7 +1765,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        else notes.push(...note.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
     // Add untrained note
@@ -1830,7 +1830,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        else notes.push(...note.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
     // Add grapple note
@@ -1923,7 +1923,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        else notes.push(...note.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -1974,7 +1974,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
         }
-        else notes.push(...note.split(/[\n\r]+/));
+        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -2039,7 +2039,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) acNotes.push(...noteStr.split(/[\n\r]+/));
         }
-        else acNotes.push(...note.split(/[\n\r]+/));
+        else acNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -2062,7 +2062,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) cmdDotes.push(...noteStr.split(/[\n\r]+/));
         }
-        else cmdNotes.push(...note.split(/[\n\r]+/));
+        else cmdNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -2085,7 +2085,7 @@ export class ActorPF extends Actor {
           }
           if (noteStr.length > 0) srNotes.push(...noteStr.split(/[\n\r]+/));
         }
-        else srNotes.push(...note.split(/[\n\r]+/));
+        else srNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 

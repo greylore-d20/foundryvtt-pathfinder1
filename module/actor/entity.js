@@ -1639,34 +1639,11 @@ export class ActorPF extends Actor {
 
   /**
    * Cast a Spell, consuming a spell slot of a certain level
-   * @param {Item5e} item   The spell being cast by the actor
-   * @param {Event} event   The originating user interaction which triggered the cast 
+   * @param {ItemPF} item   The spell being cast by the actor
    */
-  async useSpell(item, {configureDialog=true}={}) {
+  async useSpell(item) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
-
-    // Determine if the spell uses slots
-    // let lvl = item.data.data.level;
-    // const usesSlots = (lvl > 0) && item.data.data.preparation.mode === "spontaneous";
-    // if ( !usesSlots ) return item.roll();
-
-    // Configure the casting level and whether to consume a spell slot
-    // let consume = true;
-    // if ( configureDialog ) {
-    //   const spellFormData = await SpellCastDialog.create(this, item);
-    //   lvl = parseInt(spellFormData.get("level"));
-    //   consume = Boolean(spellFormData.get("consume"));
-    //   if ( lvl !== item.data.data.level ) {
-    //     item = item.constructor.createOwned(mergeObject(item.data, {"data.level": lvl}, {inplace: false}), this);
-    //   } 
-    // }
-
-    // Update Actor data
-    // if ( consume && (lvl > 0) ) {
-    //   await this.update({
-    //     [`data.spells.spell${lvl}.value`]: Math.max(parseInt(this.data.data.spells["spell"+lvl].value) - 1, 0)
-    //   });
-    // } 
 
     // Invoke the Item roll
     if (item.hasAction) return item.useAttack();
@@ -1674,6 +1651,8 @@ export class ActorPF extends Actor {
   }
 
   async createAttackFromWeapon(item) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+
     if (item.data.type !== "weapon") throw new Error("Wrong Item tyupe");
 
     // Get attack template
@@ -1735,6 +1714,8 @@ export class ActorPF extends Actor {
    * @param {String} subSkillId   The sub skill id (e.g. "prf1")
    */
   rollSkill(skillId, options={}, type=0, subSkillId="") {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+
     let skl, sklName;
     if (type === 0) {
       skl = this.data.data.skills[skillId];
@@ -1799,6 +1780,8 @@ export class ActorPF extends Actor {
   }
 
   rollBAB(options={}) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod - @drain"],
@@ -1810,6 +1793,7 @@ export class ActorPF extends Actor {
   }
 
   rollCMB(options={}) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
   
     // Add contextual notes
     let notes = [];
@@ -1903,6 +1887,7 @@ export class ActorPF extends Actor {
   }
 
   rollSavingThrow(savingThrowId, options={}) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
 
     // Add contextual notes
     let notes = [];
@@ -1954,6 +1939,7 @@ export class ActorPF extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options={}) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
 
     // Add contextual notes
     let notes = [];
@@ -1993,31 +1979,11 @@ export class ActorPF extends Actor {
     });
   }
 
-  /* -------------------------------------------- */
-
-  /**
-   * Roll an Ability Saving Throw
-   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {String} abilityId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
-   */
-  rollAbilitySave(abilityId, options={}) {
-    const label = CONFIG.PF1.abilities[abilityId];
-    const abl = this.data.data.abilities[abilityId];
-    return DicePF.d20Roll({
-      event: options.event,
-      parts: ["@mod"],
-      data: {mod: abl.save},
-      title: `${label} Saving Throw`,
-      speaker: ChatMessage.getSpeaker({actor: this}),
-      takeTwenty: false,
-    });
-  }
-
   /**
    * Show defenses in chat
    */
   rollDefenses() {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
     const rollData = duplicate(this.data.data);
 
     // Add contextual AC notes

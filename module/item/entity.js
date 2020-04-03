@@ -183,6 +183,8 @@ export class ItemPF extends Item {
    * @return {Promise}
    */
   async roll() {
+    const actor = this.actor;
+    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
 
     // Basic template rendering data
     const token = this.actor.token;
@@ -462,6 +464,8 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   async useAttack() {
+    const actor = this.actor;
+    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = duplicate(actorData);

@@ -227,7 +227,6 @@ function rollDefenses({actorName=null, actorId=null}={}) {
   if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);
   if (!actor) return ui.notifications.warn("No applicable actor found");
-  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
 
   return actor.rollDefenses();
 };

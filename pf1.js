@@ -38,6 +38,7 @@ Hooks.once("init", async function() {
     ItemPF,
     migrations,
     rollItemMacro,
+    rollDefenses,
   };
 
   // Record Configuration Values
@@ -198,7 +199,7 @@ function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) 
   if (actorId != null) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
   if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);
-  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(`You don't have permission to control this actor`);
+  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
   const item = actor ? actor.items.find(i => {
     if (itemId != null && i._id !== itemId) return false;
     if (itemType != null && i.type !== itemType) return false;
@@ -211,3 +212,22 @@ function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) 
   if (item.data.type === "spell") return actor.useSpell(item);
   return item.roll();
 }
+
+/**
+ * Show an actor's defenses.
+ */
+function rollDefenses({actorName=null, actorId=null}={}) {
+  const speaker = ChatMessage.getSpeaker();
+  let actor = game.actors.entities.filter(o => {
+    if (!actorName && !actorId) return false;
+    if (actorName && o.name !== actorName) return false;
+    if (actorId && o._id !== actorId) return false;
+    return true;
+  })[0];
+  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
+  if (!actor) actor = game.actors.get(speaker.actor);
+  if (!actor) return ui.notifications.warn("No applicable actor found");
+  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+
+  return actor.rollDefenses();
+};

@@ -20,6 +20,7 @@ import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
+import { getItemOwner } from "./module/lib.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -165,7 +166,12 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
  * @returns {Promise}
  */
 async function createItemMacro(item, slot) {
-  const command = `game.pf1.rollItemMacro("${item.name}");`;
+  const actor = getItemOwner(item);
+  const command = `game.pf1.rollItemMacro("${item.name}", {\n` +
+  `  itemId: "${item._id}",\n` +
+  `  itemType: "${item.type}",\n` +
+  (actor != null ? `  actorId: "${actor._id}",\n` : "") +
+  `});`;
   let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
   if ( !macro ) {
     macro = await Macro.create({
@@ -173,7 +179,7 @@ async function createItemMacro(item, slot) {
       type: "script",
       img: item.img,
       command: command,
-      flags: {"dnd5e.itemMacro": true}
+      flags: {"pf1.itemMacro": true}
     }, {displaySheet: false});
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -186,17 +192,22 @@ async function createItemMacro(item, slot) {
  * @param {string} actorName
  * @return {Promise}
  */
-function rollItemMacro(itemName, actorName) {
+function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) {
   const speaker = ChatMessage.getSpeaker();
   let actor;
-  if (actorName != null) actor = game.actors.entities.filter(o => { return o.name === actorName; })[0];
-  if ( speaker.token && !actor ) actor = game.actors.tokens[speaker.token];
-  if ( !actor ) actor = game.actors.get(speaker.actor);
-  const item = actor ? actor.items.find(i => i.name === itemName) : null;
-  if ( !item ) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+  if (actorId != null) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
+  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
+  if (!actor) actor = game.actors.get(speaker.actor);
+  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(`You don't have permission to control this actor`);
+  const item = actor ? actor.items.find(i => {
+    if (itemId != null && i._id !== itemId) return false;
+    if (itemType != null && i.type !== itemType) return false;
+    return i.name === itemName;
+  }) : null;
+  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
   // Trigger the item roll
   if (item.hasAction) return item.useAttack();
-  if ( item.data.type === "spell" ) return actor.useSpell(item);
+  if (item.data.type === "spell") return actor.useSpell(item);
   return item.roll();
 }

@@ -109,6 +109,9 @@ export class ItemSheetPF extends ItemSheet {
       for (let [a, s] of Object.entries(data.data.fc)) {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
+
+      data.autoHP = (game.settings.get("pf1", "autoHPFormula") !== "manual" && this.actor != null);
+      if (data.autoHP && !this.actor.isPC && !game.settings.get("pf1", "NPCAutoHP")) data.autoHP = false;
     }
 
     // Prepare stuff for items with changes

@@ -417,6 +417,44 @@ export class ActorPF extends Actor {
   }
 
   _addDefaultChanges(data, changes, flags, sourceInfo) {
+    // Class hit points
+    const classes = this.items.filter(o => o.type === "class").sort((a, b) => {
+      return a.data.sort - b.data.sort;
+    });
+    const autoHP = game.settings.get("pf1", "autoHPFormula");
+    if (autoHP === "manual" || (!this.isPC && !game.settings.get("pf1", "NPCAutoHP"))) {
+      classes.forEach(cls => {
+        const value = cls.data.data.hp + cls.data.data.fc.hp.value;
+        changes.push({
+          raw: [value.toString(), "misc", "mhp", "untyped", 0],
+          source: {
+            name: `${cls.name} (Class)`,
+            subtype: cls.name.toString()
+          }
+        });
+      });
+    }
+    else {
+      // Auto calculate hit points
+      let rate = 0.5;
+      if (autoHP === "75" || autoHP === "75F") rate = 0.75;
+      if (autoHP === "100") rate = 1;
+      classes.forEach((cls, a) => {
+        let value = Math.ceil(cls.data.data.hd * rate * cls.data.data.levels) + cls.data.data.fc.hp.value;
+        if ((autoHP === "50F" || autoHP === "75F") && a === 0) {
+          value = cls.data.data.hd + Math.ceil(cls.data.data.hd * rate * (cls.data.data.levels - 1)) + cls.data.data.fc.hp.value;
+        }
+
+        changes.push({
+          raw: [value.toString(), "misc", "mhp", "untyped", 0],
+          source: {
+            name: `${cls.name} (Class)`,
+            subtype: cls.name.toString()
+          }
+        });
+      }, 0);
+    }
+
     // Add Constitution to HP
     changes.push({
       raw: ["@abilities.con.mod * @attributes.hd.total", "misc", "mhp", "base", 0],
@@ -960,10 +998,6 @@ export class ActorPF extends Actor {
 
     // Reset maximum hit points
     let mhp = data1.attributes.hp.base;
-    // Add class hp to hit points
-    mhp += classes.reduce((cur, obj) => {
-      return cur + obj.data.hp + obj.data.fc.hp.value;
-    }, 0);
     // Apply level drain to hit points
     mhp -= data1.attributes.energyDrain * 5;
     // Set max hit points
@@ -1145,7 +1179,7 @@ export class ActorPF extends Actor {
 
     // Set class tags
     data.classes = {};
-    actorData.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
+    actorData.items.filter(obj => { return obj.type === "class"; }).forEach((cls, a) => {
       let tag = createTag(cls.name);
       let count = 1;
       while (actorData.items.filter(obj => { return obj.type === "class" && obj.data.tag === tag && obj !== cls; }).length > 0) {
@@ -1155,7 +1189,20 @@ export class ActorPF extends Actor {
       cls.data.tag = tag;
       data.classes[tag] = {
         level: cls.data.levels,
-        name: cls.name
+        name: cls.name,
+        hd: cls.data.hd,
+        bab: cls.data.bab,
+        hp: (game.settings.get("pf1", "autoHPFormula") !== "manual") ? 0 : cls.data.hp,
+        savingThrows: {
+          fort: cls.data.savingThrows.fort.value,
+          ref: cls.data.savingThrows.ref.value,
+          will: cls.data.savingThrows.will.value,
+        },
+        fc: {
+          hp: cls.data.fc.hp.value,
+          skill: cls.data.fc.skill.value,
+          alt: cls.data.fc.alt.value,
+        },
       };
     });
 
@@ -1228,19 +1275,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // HP from Classes
-    sourceDetails["data.attributes.hp.max"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
-      return {
-        name: obj.name,
-        value: obj.data.hp
-      };
-    }));
-    // HP from Favoured Classes
-    let fcHPBonus = actorData.items.filter(obj => { return obj.type === "class"; }).reduce((cur, obj) => {
-      cur.value += obj.data.fc.hp.value;
-      return cur;
-    }, { name: "Favoured Classes", value: 0 });
-    if (fcHPBonus.value !== 0) sourceDetails["data.attributes.hp.max"].push(fcHPBonus);
     // HP from Ability Drain
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
       sourceDetails["data.attributes.hp.max"].push({

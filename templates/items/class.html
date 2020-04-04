@@ -49,10 +49,12 @@
       </div>
 
       {{!-- Hit Points --}}
+      {{#unless autoHP}}
       <div class="form-group">
         <label>Hit Points</label>
         <input type="text" name="data.hp" value="{{data.hp}}" data-dtype="Number" />
       </div>
+      {{/unless}}
 
       {{!-- BAB --}}
       <div class="form-group">

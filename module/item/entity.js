@@ -491,6 +491,12 @@ export class ItemPF extends Item {
       }
       effectContent = `<div><label>Attack Notes</label>${effectContent}</div>`;
     }
+    if (this.hasEffect) {
+      let effectStr = this.rollEffect();
+      if (effectStr.length > 0) {
+        effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
+      }
+    }
 
     const properties = this.getChatData().properties;
     if (properties.length > 0) props.push({ header: "Info", value: properties });
@@ -604,12 +610,6 @@ export class ItemPF extends Item {
       if (a > 0) chatData.sound = null;
 
       // Add effect text
-      if (this.hasEffect) {
-        let effectStr = this.rollEffect();
-        if (effectStr.length > 0) {
-          effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
-        }
-      }
       if (effectContent.length > 0) {
         chatTemplateData.hasExtraText = true;
         chatTemplateData.extraText = effectContent;

@@ -2323,10 +2323,10 @@ export class ActorPF extends Actor {
     const table = CONFIG.PF1.encumbranceLoads;
     const heavy = updateData["data.attributes.encumbrance.levels.heavy"] = mergedData.data.attributes.encumbrance.levels.heavy = Math.floor(Math.max(
       3,
-      carryStr >= table.length ?
+      (carryStr >= table.length ?
         table[table.length - 1] + ((table[table.length - 1] - table[table.length - 2]) * (carryStr - (table.length - 1))) :
-        table[carryStr]
-    ) * carryMultiplier);
+        table[carryStr]) * carryMultiplier
+    ));
     updateData["data.attributes.encumbrance.levels.light"] = mergedData.data.attributes.encumbrance.levels.light =
       Math.floor(heavy / 3);
     updateData["data.attributes.encumbrance.levels.medium"] = mergedData.data.attributes.encumbrance.levels.medium =

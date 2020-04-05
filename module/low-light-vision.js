@@ -37,7 +37,7 @@ TokenConfig.prototype._updateActorData = function(tokenData) {
 // Patch lighting radius
 SightLayer.prototype.hasLowLight = function() {
   let tokens = canvas.tokens.placeables.filter(o => {
-    return o.actor.hasPerm(game.user, "OBSERVER") && o.actorVision.lowLight === true;
+    return o.actor && o.actor.hasPerm(game.user, "OBSERVER") && o.actorVision.lowLight === true;
   });
   if (game.user.isGM) {
     return tokens.filter(o => {

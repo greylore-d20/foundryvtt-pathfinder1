@@ -81,5 +81,33 @@
     </div>
     {{/if}}
     {{/if}}
+
+    {{#if misc.drNotes}}
+    <div class="flexcol property-group">
+      <label>Damage Reduction</label>
+      <div class="flexrow">
+        {{#each misc.drNotes as |v|}}
+        <span class="tag">{{v}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if misc.energyResistance}}
+    <div class="flexcol property-group">
+      <label>Energy Resistance</label>
+      <div class="flexrow">
+        {{#each misc.energyResistance as |v|}}
+        <span class="tag">{{v}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="flexrow">
+      <button data-action="save" data-save="fort">Fortitude</button>
+      <button data-action="save" data-save="ref">Reflex</button>
+      <button data-action="save" data-save="will">Will</button>
+    </div>
   </div>
 </div>

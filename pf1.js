@@ -130,6 +130,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
+Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();

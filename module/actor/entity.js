@@ -1,4 +1,5 @@
 import { DicePF } from "../dice.js";
+import { ItemPF } from "../item/entity.js";
 import { createTag, linkData, isMinimumCoreVersion } from "../lib.js";
 import { refreshLightingAndSight } from "../low-light-vision.js";
 import { createCustomChatMessage } from "../chat.js";
@@ -7,6 +8,34 @@ import { createCustomChatMessage } from "../chat.js";
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
 export class ActorPF extends Actor {
+
+  /* -------------------------------------------- */
+
+  static chatListeners(html) {
+    html.on('click', 'button[data-action]', this._onChatCardButtonAction.bind(this));
+  }
+
+  static async _onChatCardButtonAction(event) {
+    event.preventDefault();
+
+    // Extract card data
+    const button = event.currentTarget;
+    const card = button.closest(".chat-card");
+    const action = button.dataset.action;
+
+    // Get the Actor
+    const actor = ItemPF._getChatCardActor(card);
+    if (!actor) return;
+
+    // Roll saving throw
+    if (action === "save") {
+      const saveId = button.dataset.save;
+      actor.rollSavingThrow(saveId, { event: event });
+    }
+  }
+
+  /* -------------------------------------------- */
+
   get spellFailure() {
     return this.items.filter(o => { return o.type === "equipment" && o.data.data.equipped === true; }).reduce((cur, o) => {
       if (typeof o.data.data.spellFailure === "number") return cur + o.data.data.spellFailure;
@@ -1562,7 +1591,9 @@ export class ActorPF extends Actor {
       });
     }
 
-    if (hasProperty(data, "data.attributes.vision.lowLight")) {
+    if (hasProperty(data, "data.attributes.vision.lowLight") ||
+    hasProperty(data, "data.attributes.vision.darkvision") ||
+    hasProperty(data, "data.attributes.vision.darksight")) {
       refreshLightingAndSight();
     }
 
@@ -2089,6 +2120,35 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Add misc data
+    const reSplit = CONFIG.PF1.re.traitSeparator;
+    // Damage Reduction
+    let drNotes = [];
+    if (this.data.data.traits.dr.length) {
+      drNotes = this.data.data.traits.dr.split(reSplit);
+    }
+    // Energy Resistance
+    let energyResistance = [];
+    if (this.data.data.traits.eres.length) {
+      energyResistance.push(...this.data.data.traits.eres.split(reSplit));
+    }
+    // Damage Immunity
+    if (this.data.data.traits.di.value.length || this.data.data.traits.di.custom.length) {
+      const values = [
+        ...this.data.data.traits.di.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
+        ...this.data.data.traits.di.custom.length > 0 ? this.data.data.traits.di.custom.split(reSplit) : [],
+      ];
+      energyResistance.push(...values.map(o => `Immune to ${o}`));
+    }
+    // Damage Vulnerability
+    if (this.data.data.traits.dv.value.length || this.data.data.traits.dv.custom.length) {
+      const values = [
+        ...this.data.data.traits.dv.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
+        ...this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : [],
+      ];
+      energyResistance.push(...values.map(o => `Vulnerable to ${o}`));
+    }
+
     // Create message
     const d = this.data.data;
     const data = {
@@ -2108,6 +2168,8 @@ export class ActorPF extends Actor {
       misc: {
         sr: d.attributes.sr.total,
         srNotes: srNotes,
+        drNotes: drNotes,
+        energyResistance: energyResistance,
       },
     };
     createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data);

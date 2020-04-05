@@ -996,13 +996,6 @@ export class ItemPF extends Item {
     // Attack and Damage Rolls
     if ( action === "attack" ) await item.useAttack();
 
-    // Saving Throws for card targets
-    else if ( action === "save" ) {
-      for ( let t of targets ) {
-        await t.rollAbilitySave(button.dataset.ability, {event});
-      }
-    }
-
     // Consumable usage
     else if ( action === "consume" ) await item.rollConsumable({event});
 

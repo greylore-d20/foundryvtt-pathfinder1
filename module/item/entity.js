@@ -1059,9 +1059,4 @@ export class ItemPF extends Item {
     if ( !targets.length ) throw new Error(`You must designate a specific Token as the roll target`);
     return targets;
   }
-
-  _onUpdate(data, options, userId, context) {
-    console.log(context);
-    return super._onUpdate(data, options, userId, context);
-  }
 }

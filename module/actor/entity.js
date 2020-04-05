@@ -857,24 +857,24 @@ export class ActorPF extends Actor {
 
       switch (flagKey) {
         case "noDex":
-          linkData(data1, updateData, "data.abilities.dex.total", 0);
-          linkData(data1, updateData, "data.abilities.dex.mod", -5);
+          linkData(srcData1, updateData, "data.abilities.dex.total", 0);
+          linkData(srcData1, updateData, "data.abilities.dex.mod", -5);
           break;
         case "noStr":
-          linkData(data1, updateData, "data.abilities.str.total", 0);
-          linkData(data1, updateData, "data.abilities.str.mod", -5);
+          linkData(srcData1, updateData, "data.abilities.str.total", 0);
+          linkData(srcData1, updateData, "data.abilities.str.mod", -5);
           break;
         case "noInt":
-          linkData(data1, updateData, "data.abilities.int.total", 1);
-          linkData(data1, updateData, "data.abilities.int.mod", -5);
+          linkData(srcData1, updateData, "data.abilities.int.total", 1);
+          linkData(srcData1, updateData, "data.abilities.int.mod", -5);
           break;
         case "noWis":
-          linkData(data1, updateData, "data.abilities.wis.total", 1);
-          linkData(data1, updateData, "data.abilities.wis.mod", -5);
+          linkData(srcData1, updateData, "data.abilities.wis.total", 1);
+          linkData(srcData1, updateData, "data.abilities.wis.mod", -5);
           break;
         case "noCha":
-          linkData(data1, updateData, "data.abilities.cha.total", 1);
-          linkData(data1, updateData, "data.abilities.cha.mod", -5);
+          linkData(srcData1, updateData, "data.abilities.cha.total", 1);
+          linkData(srcData1, updateData, "data.abilities.cha.mod", -5);
           break;
       }
     }
@@ -1575,12 +1575,22 @@ export class ActorPF extends Actor {
     if (this._updateExp(data)) options.diff = false;
 
     // Update changes
+    let diff = data || {};
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      if (Object.keys(updateObj.data).length > 0) data = mergeObject(data, diffObject(data, updateObj.data));
+      diff = updateObj.diff;
+
+      // Handle certain variables different for tokens
+      if (this.isToken) {
+        if (diff.items != null) delete diff.items;
+      }
+
+      // if (Object.keys(updateObj.data).length > 0) mergeObject(data, updateObj.data);
     }
 
-    return super.update(data, options);
+    if (Object.keys(diff).length > 0) {
+      return super.update(diff, options);
+    }
   }
 
   _onUpdate(data, options, userId, context) {
@@ -1591,15 +1601,13 @@ export class ActorPF extends Actor {
       });
     }
 
-    if (hasProperty(data, "data.attributes.vision.lowLight") ||
-    hasProperty(data, "data.attributes.vision.darkvision") ||
-    hasProperty(data, "data.attributes.vision.darksight")) {
+    if (hasProperty(data, "data.attributes.vision.lowLight")) {
       refreshLightingAndSight();
     }
 
     if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });
 
-    super._onUpdate(data, options, userId, context);
+    return super._onUpdate(data, options, userId, context);
   }
   
   /**
@@ -2308,7 +2316,7 @@ export class ActorPF extends Actor {
       createData.data.equipped = false;
     }
     
-    super.createEmbeddedEntity(embeddedName, createData, options);
+    return super.createEmbeddedEntity(embeddedName, createData, options);
   }
 
   _computeEncumbrance(updateData) {

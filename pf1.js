@@ -139,6 +139,12 @@ Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (item == null) return;
   actor.updateItemResources(item);
 });
+Hooks.on("updateToken", (scene, sceneId, data) => {
+  const actor = game.actors.tokens[data._id];
+  if (actor != null && hasProperty(data, "actorData.items")) {
+    actor.refresh();
+  }
+});
 
 Hooks.on("createOwnedItem", (actor) => {
   if (!(actor instanceof Actor)) return;

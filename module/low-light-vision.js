@@ -31,7 +31,7 @@ TokenConfig.prototype._updateActorData = function(tokenData) {
     this.actor.update({ "data.attributes.vision.lowLight": tokenData.visionLL });
   }
 
-  TokenConfig__updateActorData.call(this, tokenData);
+  return TokenConfig__updateActorData.call(this, tokenData);
 };
 
 // Patch lighting radius

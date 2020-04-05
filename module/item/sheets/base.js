@@ -110,8 +110,12 @@ export class ItemSheetPF extends ItemSheet {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
-      data.autoHP = (game.settings.get("pf1", "autoHPFormula") !== "manual" && this.actor != null);
-      if (data.autoHP && !this.actor.isPC && !game.settings.get("pf1", "NPCAutoHP")) data.autoHP = false;
+      if (this.actor != null) {
+        let autoHP = game.settings.get("pf1", "autoHPFormula");
+        if (!this.actor.isPC) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
+        data.autoHP = autoHP !== "manual";
+      }
+      else data.autoHP = false;
     }
 
     // Prepare stuff for items with changes

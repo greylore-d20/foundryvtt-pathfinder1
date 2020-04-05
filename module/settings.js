@@ -30,24 +30,32 @@ export const registerSystemSettings = function() {
       "75F": "SETTINGS.pf1AutoHPFormula75F",
     },
     onChange: () => {
-      game.actors.entities.forEach(o => o.update({}));
-      Object.values(game.actors.tokens).forEach(o => o.update({}));
+      game.actors.entities.forEach(o => { if (o.isPC) o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { if (o.isPC) o.update({}); });
     }
   });
-  
+
   /**
-   * Auto calculate NPC hit points
+   * Auto calculate hit points
    */
-  game.settings.register("pf1", "NPCAutoHP", {
-    name: "SETTINGS.pf1NPCAutoHPN",
-    hint: "SETTINGS.pf1NPCAutoHPL",
+  game.settings.register("pf1", "NPCAutoHPFormula", {
+    name: "SETTINGS.pf1NPCAutoHPFormulaN",
+    hint: "SETTINGS.pf1NPCAutoHPFormulaL",
     scope: "world",
     config: true,
-    default: true,
-    type: Boolean,
+    default: "manual",
+    type: String,
+    choices: {
+      "manual": "SETTINGS.pf1AutoHPFormulaManual",
+      "50": "SETTINGS.pf1AutoHPFormula50",
+      "75": "SETTINGS.pf1AutoHPFormula75",
+      "100": "SETTINGS.pf1AutoHPFormula100",
+      "50F": "SETTINGS.pf1AutoHPFormula50F",
+      "75F": "SETTINGS.pf1AutoHPFormula75F",
+    },
     onChange: () => {
-      game.actors.entities.filter(o => !o.isPC).forEach(o => o.update({}));
-      Object.values(game.actors.tokens).filter(o => !o.isPC).forEach(o => o.update({}));
+      game.actors.entities.forEach(o => { if (!o.isPC) o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { if (!o.isPC) o.update({}); });
     }
   });
 

@@ -450,8 +450,9 @@ export class ActorPF extends Actor {
     const classes = this.items.filter(o => o.type === "class").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
-    const autoHP = game.settings.get("pf1", "autoHPFormula");
-    if (autoHP === "manual" || (!this.isPC && !game.settings.get("pf1", "NPCAutoHP"))) {
+    let autoHP = game.settings.get("pf1", "autoHPFormula");
+    if (!this.isPC) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
+    if (autoHP === "manual") {
       classes.forEach(cls => {
         const value = cls.data.data.hp + cls.data.data.fc.hp.value;
         changes.push({
@@ -1216,12 +1217,15 @@ export class ActorPF extends Actor {
         tag = createTag(cls.name) + count.toString();
       }
       cls.data.tag = tag;
+      let doAutoHP = false;
+      if (this.isPC) doAutoHP = game.settings.get("pf1", "autoHPFormula") !== "manual";
+      else doAutoHP = game.settings.get("pf1", "NPCAutoHPFormula") !== "manual";
       data.classes[tag] = {
         level: cls.data.levels,
         name: cls.name,
         hd: cls.data.hd,
         bab: cls.data.bab,
-        hp: (game.settings.get("pf1", "autoHPFormula") !== "manual") ? 0 : cls.data.hp,
+        hp: doAutoHP,
         savingThrows: {
           fort: cls.data.savingThrows.fort.value,
           ref: cls.data.savingThrows.ref.value,

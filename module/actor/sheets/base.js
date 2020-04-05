@@ -459,9 +459,6 @@ export class ActorSheetPF extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
-    // Handle checkboxes
-    html.find('input[type="checkbox"]').change(this._onSubmit.bind(this));
-
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));
 

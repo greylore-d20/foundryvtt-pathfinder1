@@ -343,9 +343,6 @@ export class ItemSheetPF extends ItemSheet {
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
 
-    // Handle checkboxes
-    html.find('input[type="checkbox"]').change(this._onSubmit.bind(this));
-
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 
@@ -357,12 +354,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
-
-    // Submit changes when adding or removing formulas, changes, etc.
-    html.find("input").focusout(this._onSubmit.bind(this));
-
-    // Trigger form submission from textarea elements.
-    html.find("textarea").focusout(this._onSubmit.bind(this));
 
     // Create attack
     if (["weapon"].includes(this.item.data.type)) {

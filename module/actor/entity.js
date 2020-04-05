@@ -829,17 +829,17 @@ export class ActorPF extends Actor {
               targets = [sourceInfo["data.abilities.str.total"].negative];
               value = "0 Str";
               break;
-            case "noInt":
+            case "oneInt":
               sourceInfo["data.abilities.int.total"] = sourceInfo["data.abilities.int.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.int.total"].negative];
               value = "1 Int";
               break;
-            case "noWis":
+            case "oneWis":
               sourceInfo["data.abilities.wis.total"] = sourceInfo["data.abilities.wis.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.wis.total"].negative];
               value = "1 Wis";
               break;
-            case "noCha":
+            case "oneCha":
               sourceInfo["data.abilities.cha.total"] = sourceInfo["data.abilities.cha.total"] || { positive: [], negative: [] };
               targets = [sourceInfo["data.abilities.cha.total"].negative];
               value = "1 Cha";
@@ -864,15 +864,15 @@ export class ActorPF extends Actor {
           linkData(srcData1, updateData, "data.abilities.str.total", 0);
           linkData(srcData1, updateData, "data.abilities.str.mod", -5);
           break;
-        case "noInt":
+        case "oneInt":
           linkData(srcData1, updateData, "data.abilities.int.total", 1);
           linkData(srcData1, updateData, "data.abilities.int.mod", -5);
           break;
-        case "noWis":
+        case "oneWis":
           linkData(srcData1, updateData, "data.abilities.wis.total", 1);
           linkData(srcData1, updateData, "data.abilities.wis.mod", -5);
           break;
-        case "noCha":
+        case "oneCha":
           linkData(srcData1, updateData, "data.abilities.cha.total", 1);
           linkData(srcData1, updateData, "data.abilities.cha.mod", -5);
           break;
@@ -1111,9 +1111,9 @@ export class ActorPF extends Actor {
       prevMods[a] = forceModUpdate ? 0 : updateData[`data.abilities.${a}.mod`];
       if (a === "str" && flags.noStr ||
         a === "dex" && flags.noDex ||
-        a === "int" && flags.noInt ||
-        a === "wis" && flags.noWis ||
-        a === "cha" && flags.noCha) {
+        a === "int" && flags.oneInt ||
+        a === "wis" && flags.oneWis ||
+        a === "cha" && flags.oneCha) {
         modDiffs[a] = forceModUpdate ? -5 : 0;
         if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
         continue;
@@ -1575,22 +1575,18 @@ export class ActorPF extends Actor {
     if (this._updateExp(data)) options.diff = false;
 
     // Update changes
-    let diff = data || {};
+    let diff = data;
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      diff = updateObj.diff;
+      diff = diffObject(diff, updateObj.diff);
 
       // Handle certain variables different for tokens
       if (this.isToken) {
         if (diff.items != null) delete diff.items;
       }
-
-      // if (Object.keys(updateObj.data).length > 0) mergeObject(data, updateObj.data);
     }
 
-    if (Object.keys(diff).length > 0) {
-      return super.update(diff, options);
-    }
+    return super.update(diff, options);
   }
 
   _onUpdate(data, options, userId, context) {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.1 (Emergency Update)
+
+### Bug Fixes
+
+- Certain elements (textareas) on item sheets not updating
+- Saving throw butons on efense chat cards for unlinked tokens not working
+- Certain actor data not updating
+
 ## 0.23
 
 ### Bug Fixes

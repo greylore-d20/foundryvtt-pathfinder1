@@ -612,7 +612,7 @@ export class ItemPF extends Item {
       };
 
       // Don't play multiple sounds
-      if (a > 0) chatData.sound = null;
+      if (a === 0) chatData.sound = CONFIG.sounds.dice;
 
       // Add effect text
       if (effectContent.length > 0) {

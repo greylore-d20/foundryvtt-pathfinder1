@@ -46,7 +46,6 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
     rollMode: rollMode,
     user: game.user._id,
     type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-    sound: CONFIG.sounds.dice,
     content: await renderTemplate(chatTemplate, chatTemplateData),
   }, chatData);
   // Handle different roll modes

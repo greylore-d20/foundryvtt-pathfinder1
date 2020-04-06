@@ -2188,6 +2188,7 @@ export class ActorPF extends Actor {
     const data = {
       actor: this,
       name: this.name,
+      tokenId: this.token ? `${this.token.scene._id}.${this.token.id}` : null,
       ac: {
         normal: d.attributes.ac.normal.total,
         touch: d.attributes.ac.touch.total,

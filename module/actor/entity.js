@@ -713,6 +713,14 @@ export class ActorPF extends Actor {
         source: { name: "Fatigued" }
       });
     }
+
+    // Apply level drain to hit points
+    if (!Number.isNaN(data.attributes.energyDrain) && data.attributes.energyDrain > 0) {
+      changes.push({
+        raw: ["-(@attributes.energyDrain * 5)", "misc", "mhp", "untyped", 0],
+        source: { name: "Energy Drain" }
+      });
+    }
   }
 
   async _updateChanges({ data=null, sourceOnly=false }={}) {
@@ -1028,8 +1036,6 @@ export class ActorPF extends Actor {
 
     // Reset maximum hit points
     let mhp = data1.attributes.hp.base;
-    // Apply level drain to hit points
-    mhp -= data1.attributes.energyDrain * 5;
     // Set max hit points
     linkData(data, updateData, "data.attributes.hp.max", Math.max(0, mhp));
 
@@ -1308,14 +1314,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // HP from Ability Drain
-    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
-      sourceDetails["data.attributes.hp.max"].push({
-        name: "Energy Drain",
-        value: -(actorData.data.attributes.energyDrain * 5)
-      });
-    }
-
     // BAB from Classes
     sourceDetails["data.attributes.bab.total"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
       return {
@@ -1372,6 +1370,25 @@ export class ActorPF extends Actor {
         }
       }
     });
+    
+    // Add energy drain to skills
+    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
+      for (let [sklKey, skl] of Object.entries(actorData.data.skills)) {
+        sourceDetails[`data.skills.${sklKey}.changeBonus`].push({
+          name: "Negative Levels",
+          value: -actorData.data.attributes.energyDrain
+        });
+        
+        if (skl.subSkills != null) {
+          for (let subSklKey of Object.keys(skl.subSkills)) {
+            sourceDetails[`data.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`].push({
+              name: "Negative Levels",
+              value: -actorData.data.attributes.energyDrain
+            });
+          }
+        }
+      }
+    }
 
     // AC from Dex mod
     const maxDexBonus = actorData.data.attributes.maxDexBonus;

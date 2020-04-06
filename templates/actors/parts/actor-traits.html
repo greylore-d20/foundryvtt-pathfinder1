@@ -93,14 +93,14 @@
     {{/if}}
 
     <div class="form-group">
-        <label>Quadruped</label>
+        <label>{{localize "PF1.Quadruped"}}</label>
         <label class="checkbox">
             <input type="checkbox" name="data.attributes.quadruped" {{checked data.attributes.quadruped}}/>
         </label>
     </div>
 
     <div class="form-group">
-        <label>Energy Drain</label>
+        <label>{{localize "PF1.LevelDrain"}}</label>
         <label class="checkbox">
             <input type="text" name="data.attributes.energyDrain" value="{{#if data.attributes.energyDrain}}{{data.attributes.energyDrain}}{{/if}}"
                 placeholder="0" data-dtype="Number" />

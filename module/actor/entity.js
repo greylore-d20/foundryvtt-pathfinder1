@@ -1604,7 +1604,7 @@ export class ActorPF extends Actor {
     let diff = data;
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      diff = diffObject(diff, updateObj.diff);
+      mergeObject(diff, updateObj.diff);
 
       if (diff.items != null) delete diff.items;
     }
@@ -1612,7 +1612,6 @@ export class ActorPF extends Actor {
     if (data.token != null) {
       diff.token = diffObject(this.data.token, data.token);
     }
-    // Update items
 
     return super.update(diff, options);
   }

@@ -1374,6 +1374,7 @@ export class ActorPF extends Actor {
     // Add energy drain to skills
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
       for (let [sklKey, skl] of Object.entries(actorData.data.skills)) {
+        if (sourceDetails[`data.skills.${sklKey}.changeBonus`] == null) continue;
         sourceDetails[`data.skills.${sklKey}.changeBonus`].push({
           name: "Negative Levels",
           value: -actorData.data.attributes.energyDrain

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.2 (Shameful Emergency Update 2)
+
+### Bug Fixes
+
+- Certain actor data not updating
+
 ## 0.23.1 (Emergency Update)
 
 ### Bug Fixes

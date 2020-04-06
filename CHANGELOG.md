@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.23
+
+### Bug Fixes
+
+- Carrying capacity for creatures small than medium with low strength
+- Glitch with token with deleted actor
+- Duplicate effect notes on multi attacks
+- Missing attack notes on attacks
+- Glitch with buff/change flags
+- Unlinked tokens not updating with item changes
+- Features as item resources sometimes not working
+- Level Drain not subtracting hit points
+
+### Changelog
+
+- Add world options to automatically calculate class hit points
+- Add or update items in the following compendiums:
+  - Classes (added NPC classes)
+  - Weapons (fixed description for Shortbows)
+  - Spells (unticked SR flag and removed saving throw)
+- Add the following compendiums:
+  - Bestiary
+  - Sample Macros
+  - Roll Tables
+- Show more info on defense chat logs, including buttons to roll saving throws
+- A slight performance increase in actor and owned item sheets
+- Remove sound effect from showing defenses
+
 ## 0.22
 
 ### Bug Fixes

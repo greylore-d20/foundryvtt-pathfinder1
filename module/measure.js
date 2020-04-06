@@ -171,9 +171,7 @@ MeasuredTemplate.prototype._highlightGrid = function() {
         p1.y -= (originOffset.y * d.size);
       }
 
-      // console.log(measureDistance(p0, p1), this.data, p0);
       if (measureDistance(p0, p1) <= this.data.distance) {
-      // if (ray.distance < ((this.data.distance / d.distance)) * d.size) {
         grid.grid.highlightGridPosition(hl, { x: gx, y: gy, color: fc, border: bc });
       }
     }

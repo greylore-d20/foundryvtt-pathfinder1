@@ -1537,11 +1537,13 @@ export class ActorPF extends Actor {
           if (item == null) continue;
 
           const itemUpdateData = {};
-          if (data[`data.resources.${resourceTag}.value`] !== item.data.data.uses.value) {
-            itemUpdateData["data.uses.value"] = data[`data.resources.${resourceTag}.value`];
+          let key = `data.resources.${resourceTag}.value`; 
+          if (data[key] != null && data[key] !== item.data.data.uses.value) {
+            itemUpdateData["data.uses.value"] = data[key];
           }
-          if (data[`data.resources.${resourceTag}.max`] !== item.data.data.uses.max) {
-            itemUpdateData["data.uses.max"] = data[`data.resources.${resourceTag}.max`];
+          key = `data.resources.${resourceTag}.max`;
+          if (data[key] != null && data[key] !== item.data.data.uses.max) {
+            itemUpdateData["data.uses.max"] = data[key];
           }
           if (Object.keys(itemUpdateData).length > 0) item.update(itemUpdateData);
         }
@@ -1560,7 +1562,9 @@ export class ActorPF extends Actor {
         tokens.forEach(token => {
           ["bar1", "bar2"].forEach(b => {
             const barAttr = token.getBarAttribute(b);
-            if (barAttr == null) return;
+            if (barAttr == null) {
+              return;
+            }
             if (barAttr.attribute === `resources.${tag}`) {
               const tokenUpdateData = {};
               tokenUpdateData[`${b}.attribute`] = null;
@@ -1584,25 +1588,29 @@ export class ActorPF extends Actor {
       const updateObj = await this._updateChanges({ data: data });
       diff = diffObject(diff, updateObj.diff);
 
-      // Handle certain variables different for tokens
-      if (this.isToken) {
-        if (diff.items != null) delete diff.items;
-      }
+      if (diff.items != null) delete diff.items;
     }
+    // Diff token data
+    if (data.token != null) {
+      diff.token = diffObject(this.data.token, data.token);
+    }
+    // Update items
 
     return super.update(diff, options);
   }
 
   _onUpdate(data, options, userId, context) {
-    // Refresh immediately-visible item data
-    if (userId === game.user._id) {
-      this.items.forEach(item => {
-        item.updateDirectData();
-      });
-    }
-
     if (hasProperty(data, "data.attributes.vision.lowLight")) {
       refreshLightingAndSight();
+    }
+
+    for (let i of this.items) {
+      let itemUpdateData = {};
+
+      i._updateMaxUses(itemUpdateData, { actorData: this.data });
+
+      const itemDiff = diffObject(flattenObject(i.data), itemUpdateData);
+      if (Object.keys(itemDiff).length > 0) i.update(itemDiff);
     }
 
     if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });

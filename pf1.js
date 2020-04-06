@@ -143,6 +143,11 @@ Hooks.on("updateToken", (scene, sceneId, data) => {
   const actor = game.actors.tokens[data._id];
   if (actor != null && hasProperty(data, "actorData.items")) {
     actor.refresh();
+
+    // Update items
+    for (let i of actor.items) {
+      actor.updateItemResources(i);
+    }
   }
 });
 

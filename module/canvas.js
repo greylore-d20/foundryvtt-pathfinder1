@@ -37,7 +37,12 @@ export const measureDistance = function(p0, p1, {gridSpaces=true}={}) {
  */
 const _TokenGetBarAttribute = Token.prototype.getBarAttribute;
 Token.prototype.getBarAttribute = function(barName, {alternative=null}={}) {
-  let data = _TokenGetBarAttribute.call(this, barName, {alternative: alternative});
+  let data;
+  try {
+    data = _TokenGetBarAttribute.call(this, barName, {alternative: alternative});
+  } catch (e) {
+    data = null;
+  }
   if (data != null && data.attribute === "attributes.hp") {
     data.value += parseInt(data['temp'] || 0);
   }

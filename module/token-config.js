@@ -19,4 +19,12 @@ export class TokenConfigPF extends TokenConfig {
 
     return result;
   }
+
+  async _updateActorData(tokenData) {
+    if (tokenData["visionLL"] != null) {
+      await this.actor.update({ "data.attributes.vision.lowLight": tokenData.visionLL });
+    }
+
+    return super._updateActorData(tokenData);
+  }
 }

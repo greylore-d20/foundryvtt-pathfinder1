@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { alterRoll, isMinimumCoreVersion } from "../lib.js";
+import { alterRoll, isMinimumCoreVersion, linkData } from "../lib.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -170,10 +170,34 @@ export class ItemPF extends Item {
       if (!data.attack) data.attack = { parts: [] };
     }
 
-    this.updateDirectData();
-
     // Assign labels and return the Item
     this.labels = labels;
+  }
+
+  async update(data, options={}) {
+    const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+
+    this._updateMaxUses(data, {srcData: srcData});
+
+    return super.update(diffObject(flattenObject(this.data), data), options);
+  }
+
+  _updateMaxUses(data, {srcData=null, actorData=null}={}) {
+    let doLinkData = true;
+    if (srcData == null) {
+      srcData = this.data;
+      doLinkData = false;
+    }
+    if (actorData == null) actorData = (this.actor != null ? this.actor.data : null);
+    if (actorData == null) return;
+
+    if (hasProperty(srcData, "data.uses.maxFormula")) {
+      if (getProperty(srcData, "data.uses.maxFormula") !== "") {
+        let roll = new Roll(getProperty(srcData, "data.uses.maxFormula"), actorData.data).roll();
+        if (doLinkData) linkData(srcData, data, "data.uses.max", roll.total);
+        else data["data.uses.max"] = roll.total;
+      }
+    }
   }
 
   /* -------------------------------------------- */
@@ -343,25 +367,6 @@ export class ItemPF extends Item {
     // Filter properties and return
     data.properties = props.filter(p => !!p);
     return data;
-  }
-
-  updateDirectData() {
-    const data = this.data.data;
-    const updateData = {};
-
-    // Max uses
-    if (data.hasOwnProperty("activation")) {
-      if (hasProperty(data, "uses.maxFormula") && data.uses.maxFormula !== "") {
-        let roll = new Roll(data.uses.maxFormula, duplicate(this.actor.data.data)).roll();
-        if (data.uses.max !== roll.total) {
-          updateData["data.uses.max"] = roll.total;
-        }
-      }
-    }
-
-    if (Object.keys(updateData).length > 0 && this.hasPerm(game.user, "OWNER")) {
-      this.update(updateData);
-    }
   }
 
   /* -------------------------------------------- */

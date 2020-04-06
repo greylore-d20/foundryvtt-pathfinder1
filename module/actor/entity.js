@@ -718,7 +718,7 @@ export class ActorPF extends Actor {
     if (!Number.isNaN(data.attributes.energyDrain) && data.attributes.energyDrain > 0) {
       changes.push({
         raw: ["-(@attributes.energyDrain * 5)", "misc", "mhp", "untyped", 0],
-        source: { name: "Energy Drain" }
+        source: { name: "Negative Levels" }
       });
     }
   }
@@ -1604,7 +1604,7 @@ export class ActorPF extends Actor {
     let diff = data;
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      mergeObject(diff, updateObj.diff);
+      diff = flattenObject(mergeObject(expandObject(diff), updateObj.diff));
 
       if (diff.items != null) delete diff.items;
     }

@@ -347,6 +347,9 @@ export class ItemSheetPF extends ItemSheet {
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
 
+    // Trigger form submission from textarea elements.
+    html.find("textarea").change(this._onSubmit.bind(this));
+
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 

@@ -445,13 +445,24 @@ export class ActorPF extends Actor {
     return null;
   }
 
+  _dataIsPC(data) {
+    if (data.permission != null) {
+      const nonGM = game.users.entities.filter(u => !u.isGM);
+      return nonGM.some(u => {
+        if (data.permission["default"] >= CONST.ENTITY_PERMISSIONS["OWNER"]) return true;
+        return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
+      });
+    }
+    return this.isPC;
+  }
+
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
     const classes = this.items.filter(o => o.type === "class").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
     let autoHP = game.settings.get("pf1", "autoHPFormula");
-    if (!this.isPC) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
+    if (!this._dataIsPC(data)) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
     if (autoHP === "manual") {
       classes.forEach(cls => {
         const value = cls.data.data.hp + cls.data.data.fc.hp.value;
@@ -521,7 +532,7 @@ export class ActorPF extends Actor {
     });
 
     // Add size bonuses to various attributes
-    const sizeKey = data.traits.size;
+    const sizeKey = data.data.traits.size;
     if (sizeKey !== "med") {
       // AC
       changes.push({
@@ -561,7 +572,7 @@ export class ActorPF extends Actor {
     }
 
     // Add conditions
-    for (let [con, v] of Object.entries(data.attributes.conditions || {})) {
+    for (let [con, v] of Object.entries(data.data.attributes.conditions || {})) {
       if (!v) continue;
 
       switch (con) {
@@ -693,7 +704,7 @@ export class ActorPF extends Actor {
     }
 
     // Handle fatigue and exhaustion so that they don't stack
-    if (data.attributes.conditions.exhausted) {
+    if (data.data.attributes.conditions.exhausted) {
       changes.push({
         raw: ["-6", "ability", "str", "penalty", 0],
         source: { name: "Exhausted" }
@@ -703,7 +714,7 @@ export class ActorPF extends Actor {
         source: { name: "Exhausted" }
       });
     }
-    else if (data.attributes.conditions.fatigued) {
+    else if (data.data.attributes.conditions.fatigued) {
       changes.push({
         raw: ["-2", "ability", "str", "penalty", 0],
         source: { name: "Fatigued" }
@@ -715,7 +726,7 @@ export class ActorPF extends Actor {
     }
 
     // Apply level drain to hit points
-    if (!Number.isNaN(data.attributes.energyDrain) && data.attributes.energyDrain > 0) {
+    if (!Number.isNaN(data.data.attributes.energyDrain) && data.data.attributes.energyDrain > 0) {
       changes.push({
         raw: ["-(@attributes.energyDrain * 5)", "misc", "mhp", "untyped", 0],
         source: { name: "Negative Levels" }
@@ -804,7 +815,7 @@ export class ActorPF extends Actor {
     // Add more changes
     let flags = {},
       sourceInfo = {};
-    this._addDefaultChanges(srcData1.data, allChanges, flags, sourceInfo);
+    this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
     // Check flags
     for (let obj of changeObjects) {
@@ -1604,7 +1615,7 @@ export class ActorPF extends Actor {
     let diff = data;
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      diff = flattenObject(mergeObject(expandObject(diff), updateObj.diff));
+      diff = mergeObject(diff, updateObj.diff, { inplace: false });
 
       if (diff.items != null) delete diff.items;
     }
@@ -1630,7 +1641,7 @@ export class ActorPF extends Actor {
       if (Object.keys(itemDiff).length > 0) i.update(itemDiff);
     }
 
-    if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });
+    // if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });
 
     return super._onUpdate(data, options, userId, context);
   }

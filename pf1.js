@@ -76,7 +76,7 @@ Hooks.once("setup", function() {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities", "abilitiesShort", "alignments", "currencies", "distanceUnits", "itemActionTypes", "senses", "skills", "targetTypes",
-    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes"
+    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes", "flyManeuverabilities"
   ];
   for ( let o of toLocalize ) {
     CONFIG.PF1[o] = Object.entries(CONFIG.PF1[o]).reduce((obj, e) => {
@@ -92,7 +92,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.21;
+  const NEEDS_MIGRATION_VERSION = 0.24;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
   if ( needMigration && game.user.isGM ) {
     await migrations.migrateWorld();

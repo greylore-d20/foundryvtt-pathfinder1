@@ -8,6 +8,43 @@
   .sheet-header {
     .header-details {
       border-left: @borderGroove;
+
+      .attributes > .attribute {
+        margin: 0;
+        border-left: none;
+        border-bottom: none;
+        border-top: @borderGroove;
+        border-right: @borderGroove;
+        border-radius: 0;
+        height: auto;
+      }
+
+      .attribute.speed {
+        flex: 1.5;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: start;
+
+        .attribute-speed {
+          flex: 0 0 33%;
+          max-width: 33%;
+
+          select {
+            width: 100%;
+          }
+
+          h4 {
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          input[type="text"] {
+            height: 16px;
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
     }
 
     img.profile {
@@ -140,7 +177,7 @@
 
   ul.attributes {
     list-style: none;
-    margin: 5px 0 0;
+    margin: 2px 0 0;
     padding: 0;
 
     li.attribute.health {

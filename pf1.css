@@ -146,6 +146,20 @@
 .pf1 .form-group {
   flex: 0 0 24px;
 }
+.pf1 .form-group label.header {
+  flex: 0 0 100%;
+}
+.pf1 .form-group .buff-flags {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 100%;
+  max-height: 96px;
+  overflow-y: auto;
+}
+.pf1 .form-group .buff-flags label.checkbox {
+  flex: 0 0 50%;
+  text-align: left;
+}
 .pf1 .form-group label {
   flex: 2;
   color: #4b4a44;
@@ -452,6 +466,37 @@
 .pf1.sheet.actor .sheet-header .header-details {
   border-left: 2px groove #eeede0;
 }
+.pf1.sheet.actor .sheet-header .header-details .attributes > .attribute {
+  margin: 0;
+  border-left: none;
+  border-bottom: none;
+  border-top: 2px groove #eeede0;
+  border-right: 2px groove #eeede0;
+  border-radius: 0;
+  height: auto;
+}
+.pf1.sheet.actor .sheet-header .header-details .attribute.speed {
+  flex: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+}
+.pf1.sheet.actor .sheet-header .header-details .attribute.speed .attribute-speed {
+  flex: 0 0 33%;
+  max-width: 33%;
+}
+.pf1.sheet.actor .sheet-header .header-details .attribute.speed .attribute-speed select {
+  width: 100%;
+}
+.pf1.sheet.actor .sheet-header .header-details .attribute.speed .attribute-speed h4 {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pf1.sheet.actor .sheet-header .header-details .attribute.speed .attribute-speed input[type="text"] {
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
 .pf1.sheet.actor .sheet-header img.profile {
   flex: 0 0 200px;
   max-width: 200px;
@@ -550,7 +595,7 @@
 }
 .pf1.sheet.actor ul.attributes {
   list-style: none;
-  margin: 5px 0 0;
+  margin: 2px 0 0;
   padding: 0;
 }
 .pf1.sheet.actor ul.attributes li.attribute.health {
@@ -1750,38 +1795,6 @@
 .pf1.sheet.actor.character .sheet-header .summary li:nth-last-child(2),
 .pf1.sheet.actor.character .sheet-header .summary li:nth-last-child(3) {
   border-bottom: none;
-}
-.pf1.sheet.actor.character .sheet-header .attributes {
-  height: 80px;
-  margin: 0;
-}
-.pf1.sheet.actor.character .sheet-header .attributes .attribute {
-  height: 80px;
-  margin: 0;
-  border: none;
-  border-right: 2px groove #eeede0;
-  border-radius: 0;
-}
-.pf1.sheet.actor.character .sheet-header .attributes .attribute:last-child {
-  border-right: none;
-}
-.pf1.sheet.actor.character .sheet-header .attributes .attribute .attribute-value {
-  margin: 5px 0 0;
-  height: 32px;
-  line-height: 32px;
-}
-.pf1.sheet.actor.character .sheet-header .attributes .attribute .attribute-name {
-  margin-top: 6px;
-}
-.pf1.sheet.actor.character .sheet-header .attributes .attribute .attribute-footer {
-  margin-bottom: 2px;
-}
-.pf1.sheet.actor.character .sheet-header .attributes a.rest {
-  border: 1px solid #b5b3a4;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.05);
-  padding: 1px 3px;
-  margin: 0 6px;
 }
 .pf1.sheet.actor.character .attributes .resource .attribute-name {
   margin: 0 8px;

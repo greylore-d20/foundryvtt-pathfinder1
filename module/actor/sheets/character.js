@@ -16,7 +16,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 	  return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "character"],
       width: 720,
-      height: 800
+      height: 840
     });
   }
 

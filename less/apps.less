@@ -104,6 +104,23 @@
   /* Form Groups */
   .form-group {
     flex: 0 0 24px;
+
+    label.header {
+      flex: 0 0 100%;
+    }
+
+    .buff-flags {
+      display: flex;
+      flex-wrap: wrap;
+      min-width: 100%;
+      max-height: 96px;
+      overflow-y: auto;
+
+      label.checkbox {
+        flex: 0 0 50%;
+        text-align: left;
+      }
+    }
     
     label {
       flex: 2;

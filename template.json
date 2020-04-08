@@ -171,10 +171,27 @@
           },
           "prof": 2,
           "speed": {
-            "land": 30,
-            "climb": null,
-            "swim": null,
-            "fly": null
+            "land": {
+              "base": 30,
+              "total": 30
+            },
+            "climb": {
+              "base": 0,
+              "total": null
+            },
+            "swim": {
+              "base": 0,
+              "total": null
+            },
+            "burrow": {
+              "base": 0,
+              "total": null
+            },
+            "fly": {
+              "base": 0,
+              "total": null,
+              "maneuverability": "average"
+            }
           },
           "conditions": {
             "blind": false,
@@ -758,7 +775,10 @@
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
         }
       },
       "contextNotes": {

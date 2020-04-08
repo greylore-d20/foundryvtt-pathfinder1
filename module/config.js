@@ -206,6 +206,41 @@ PF1.sizeStealthMods = {
   "col": -16
 };
 
+PF1.flyManeuverabilities = {
+  "clumsy": "PF1.FlyManeuverabilityClumsy",
+  "poor": "PF1.FlyManeuverabilityPoor",
+  "average": "PF1.FlyManeuverabilityAverage",
+  "good": "PF1.FlyManeuverabilityGood",
+  "perfect": "PF1.FlyManeuverabilityPerfect",
+};
+
+PF1.flyManeuverabilityValues = {
+  "clumsy": -8,
+  "poor": -4,
+  "average": 0,
+  "good": 4,
+  "perfect": 8,
+};
+
+PF1.speedReduction = {
+  "5": 5,
+  "15": 10,
+  "20": 15,
+  "30": 20,
+  "35": 25,
+  "45": 30,
+  "50": 35,
+  "60": 40,
+  "65": 45,
+  "75": 50,
+  "80": 55,
+  "90": 60,
+  "95": 65,
+  "105": 70,
+  "110": 75,
+  "120": 80,
+};
+
 /* -------------------------------------------- */
 
 PF1.encumbranceLoads = [
@@ -735,6 +770,15 @@ PF1.buffTargets = {
     "intChecks": "Intelligence Checks",
     "wisChecks": "Wisdom Checks",
     "chaChecks": "Charisma Checks",
+  },
+  "speed": {
+    "_label": "Speed",
+    "allSpeeds": "All",
+    "landSpeed": "Land Speed",
+    "climbSpeed": "Climb Speed",
+    "swimSpeed": "Swim Speed",
+    "burrowSpeed": "Burrow Speed",
+    "flySpeed": "Fly Speed",
   },
   "misc": {
     "_label": "Misc",

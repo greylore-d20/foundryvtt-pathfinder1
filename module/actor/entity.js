@@ -170,6 +170,7 @@ export class ActorPF extends Actor {
         "str", "dex", "con", "int", "wis", "cha",
         "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", ...skillTargets,
         "allChecks", "strChecks", "dexChecks", "conChecks", "intChecks", "wisChecks", "chaChecks",
+        "allSpeeds", "landSpeed", "climbSpeed", "swimSpeed", "burrowSpeed", "flySpeed",
         "ac", "aac", "sac", "nac",
         "attack", "mattack", "rattack",
         "damage", "wdamage", "sdamage",
@@ -420,6 +421,21 @@ export class ActorPF extends Actor {
         return "data.abilities.wis.checkMod";
       case "chaChecks":
         return "data.abilities.cha.checkMod";
+      case "allSpeeds":
+        for (let speedKey of Object.keys(curData.attributes.speed)) {
+          if (getProperty(curData, `attributes.speed.${speedKey}.base`)) result.push(`data.attributes.speed.${speedKey}.total`);
+        }
+        return result;
+      case "landSpeed":
+        return "data.attributes.speed.land.total";
+      case "climbSpeed":
+        return "data.attributes.speed.climb.total";
+      case "swimSpeed":
+        return "data.attributes.speed.swim.total";
+      case "burrowSpeed":
+        return "data.attributes.speed.burrow.total";
+      case "flySpeed":
+        return "data.attributes.speed.fly.total";
       case "cmb":
         return "data.attributes.cmb.total";
       case "cmd":
@@ -530,6 +546,18 @@ export class ActorPF extends Actor {
         });
       }
     });
+
+    // Add fly bonuses or penalties based on maneuverability
+    const flyKey = data.data.attributes.speed.fly.maneuverability;
+    const flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
+    if (flyValue !== 0) {
+      changes.push({
+        raw: [flyValue.toString(), "skill", "skill.fly", "untyped", 0],
+        source: {
+          name: "Maneuverability"
+        }
+      });
+    }
 
     // Add size bonuses to various attributes
     const sizeKey = data.data.traits.size;
@@ -935,7 +963,16 @@ export class ActorPF extends Actor {
       }
     });
 
-    const finalData = mergeObject(this.data, updateData, { inplace: false });
+    // Reduce final speed under certain circumstances
+    let armorItems = this.items.filter(o => o.type === "equipment");
+    if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||
+    (armorItems.filter(o => o.data.data.armor.type === "medium" && o.data.data.equipped).length && !flags.mediumArmorFullSpeed) ||
+    (armorItems.filter(o => o.data.data.armor.type === "heavy" && o.data.data.equipped).length && !flags.heavyArmorFullSpeed)) {
+      for (let speedKey of Object.keys(srcData1.data.attributes.speed)) {
+        let value = updateData[`data.attributes.speed.${speedKey}.total`];
+        linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
+      }
+    }
     // Add dex mod to AC
     if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
       const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
@@ -950,7 +987,7 @@ export class ActorPF extends Actor {
     if (updateData["data.attributes.hp.max"]) {
       const hpDiff = updateData["data.attributes.hp.max"] - prevValues.mhp;
       if (hpDiff !== 0) {
-        linkData(srcData1, updateData, "data.attributes.hp.value", Math.min(updateData["data.attributes.hp.max"], finalData.data.attributes.hp.value + hpDiff));
+        linkData(srcData1, updateData, "data.attributes.hp.value", Math.min(updateData["data.attributes.hp.max"], srcData1.data.attributes.hp.value + hpDiff));
       }
     }
 
@@ -1105,6 +1142,12 @@ export class ActorPF extends Actor {
     // Reset specific skill bonuses
     for (let sklKey of this._getChangeFlat("skills", "", data1.data)) {
       if (hasProperty(data, sklKey)) linkData(data, updateData, sklKey, 0);
+    }
+
+    // Reset movement speed
+    for (let speedKey of Object.keys(this.data.data.attributes.speed)) {
+      const base = getProperty(data, `data.attributes.speed.${speedKey}.base`);
+      linkData(data, updateData, `data.attributes.speed.${speedKey}.total`, base || 0);
     }
 
     // Reset BAB, CMB and CMD
@@ -1459,6 +1502,27 @@ export class ActorPF extends Actor {
   _prepareNPCData(data) {
     // Kill Experience
     data.details.xp.value = this.getCRExp(data.details.cr);
+  }
+
+  /**
+   * Return reduced movement speed.
+   * @param {Number} value - The non-reduced movement speed.
+   * @returns {Number} The reduced movement speed.
+   */
+  static getReducedMovementSpeed(value) {
+    if (value <= 0) return value;
+    if (value < 10) return 5;
+    value = Math.floor(value / 5) * 5;
+
+    let result = 0,
+      counter = 2;
+    for (let a = 5; a <= value; a += counter * 5) {
+      result += 5;
+      if (counter === 1) counter = 2;
+      else counter = 1;
+    }
+
+    return result;
   }
 
   /**

@@ -106,9 +106,10 @@ export const migrateCompendium = async function(pack) {
 export const migrateActorData = function(actor) {
   const updateData = {};
 
-  _migrateCharacterLevel(actor.data, updateData);
-  _migrateCharacterEncumbrance(actor, updateData);
-  _migrateCharacterDefenseNotes(actor, updateData);
+  _migrateCharacterLevel(actor, updateData);
+  _migrateActorEncumbrance(actor, updateData);
+  _migrateActorDefenseNotes(actor, updateData);
+  _migrateActorSpeed(actor, updateData);
 
   // // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -234,14 +235,14 @@ const _migrateAddValues = function(ent, updateData, toAdd) {
 const _migrateCharacterLevel = function(ent, updateData) {
   const arr = ["details.level.value", "details.level.min", "details.level.max"];
   for (let k of arr) {
-    const value = getProperty(ent.data, k);
+    const value = getProperty(ent.data.data, k);
     if (value == null) {
       updateData["data."+k] = 0;
     }
   }
 };
 
-const _migrateCharacterEncumbrance = function(ent, updateData) {
+const _migrateActorEncumbrance = function(ent, updateData) {
   const arr = ["attributes.encumbrance.level", "attributes.encumbrance.levels.light",
   "attributes.encumbrance.levels.medium", "attributes.encumbrance.levels.heavy",
   "attributes.encumbrance.levels.carry", "attributes.encumbrance.levels.drag",
@@ -254,12 +255,33 @@ const _migrateCharacterEncumbrance = function(ent, updateData) {
   }
 };
 
-const _migrateCharacterDefenseNotes = function(ent, updateData) {
+const _migrateActorDefenseNotes = function(ent, updateData) {
   const arr = ["attributes.acNotes", "attributes.cmdNotes", "attributes.srNotes"];
   for (let k of arr) {
     const value = getProperty(ent.data.data, k);
     if (value == null) {
       updateData["data."+k] = "";
+    }
+  }
+};
+
+const _migrateActorSpeed = function(ent, updateData) {
+  const arr = ["attributes.speed.land", "attributes.speed.climb", "attributes.speed.swim", "attributes.speed.fly", "attributes.speed.burrow"];
+  for (let k of arr) {
+    let value = getProperty(ent.data.data, k);
+    if (typeof value === "string") value = parseInt(value);
+    if (typeof value === "number") {
+      updateData[`data.${k}.base`] = value;
+      updateData[`data.${k}.total`] = value;
+    }
+    else if (value == null) {
+      updateData[`data.${k}.base`] = 0;
+      updateData[`data.${k}.total`] = null;
+    }
+
+    // Add maneuverability
+    if (k === "attributes.speed.fly") {
+      updateData[`data.${k}.maneuverability`] = "average";
     }
   }
 };

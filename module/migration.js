@@ -11,7 +11,7 @@ export const migrateWorld = async function() {
       const updateData = migrateActorData(a);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
-        await a.update(updateData, {enforceTypes: false, updateChanges: false});
+        await a.update(updateData);
         // a.items = a._getItems(); // TODO - Temporary Hack
       }
     } catch(err) {
@@ -38,7 +38,7 @@ export const migrateWorld = async function() {
       const updateData = migrateSceneData(s.data);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Scene entity ${s.name}`);
-        await s.update(updateData, {enforceTypes: false, updateChanges: false});
+        await s.update(updateData);
       }
     } catch(err) {
       console.error(err);
@@ -110,6 +110,7 @@ export const migrateActorData = function(actor) {
   _migrateActorEncumbrance(actor, updateData);
   _migrateActorDefenseNotes(actor, updateData);
   _migrateActorSpeed(actor, updateData);
+  _migrateActorSpellbookSlots(actor, updateData);
 
   // // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -282,6 +283,27 @@ const _migrateActorSpeed = function(ent, updateData) {
     // Add maneuverability
     if (k === "attributes.speed.fly") {
       updateData[`data.${k}.maneuverability`] = "average";
+    }
+  }
+};
+
+const _migrateActorSpellbookSlots = function(ent, updateData) {
+  for (let spellbookSlot of Object.keys(getProperty(ent.data.data, "attributes.spells.spellbooks") || {})) {
+    if (getProperty(ent.data.data, `attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
+      updateData[`attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
+    }
+
+    for (let a = 0; a < 10; a++) {
+      const baseKey = `attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.base`;
+      const maxKey = `attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
+      const base = getProperty(ent.data.data, baseKey);
+      const max = getProperty(ent.data.data, maxKey);
+      if (base == null && typeof max === "number" && max > 0) {
+        updateData[baseKey] = max.toString();
+      }
+      else {
+        updateData[baseKey] = "";
+      }
     }
   }
 };

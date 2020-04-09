@@ -135,7 +135,6 @@
   margin: 0;
   line-height: 20px;
   font-size: 11px;
-  text-align: right;
 }
 .pf1 label.checkbox input[type="checkbox"] {
   height: auto;
@@ -1001,6 +1000,12 @@
 .pf1.sheet.actor .tab.spellbook {
   overflow-y: hidden;
 }
+.pf1.sheet.actor .tab.features label.checkbox,
+.pf1.sheet.actor .tab.inventory label.checkbox,
+.pf1.sheet.actor .tab.spellbook label.checkbox {
+  text-align: left;
+  margin: 4px;
+}
 .pf1.sheet.actor .inventory-filters {
   margin: 0 8px;
   flex: 0 0 20px;
@@ -1244,7 +1249,7 @@
 .pf1.sheet.actor .spell-slots,
 .pf1.sheet.actor .spell-comps,
 .pf1.sheet.actor .spell-uses {
-  flex: 0 0 96px;
+  flex: 0 0 128px;
   font-size: 12px;
   text-align: center;
   color: #7a7971;
@@ -1252,6 +1257,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.pf1.sheet.actor .spell-slots input[type="text"].base,
+.pf1.sheet.actor .spell-comps input[type="text"].base,
+.pf1.sheet.actor .spell-uses input[type="text"].base {
+  flex: 1;
 }
 .pf1.sheet.actor .spell-slots input,
 .pf1.sheet.actor .spell-comps input,

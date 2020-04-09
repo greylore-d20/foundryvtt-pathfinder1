@@ -20,35 +20,46 @@
         <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="Caster Level notes">{{spellbook.orig.clNotes}}</textarea>
     </div>
 
-    <div class="form-group spellcasting-class tooltip">
-        <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
-        <label><h3>Spellcasting Class</h3></label>
-        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
-            {{#select spellbook.orig.class}}
-            <option value="">None</option>
-            <option value="_hd">Hit Die</option>
-            {{#each data.classes as |cls a|}}
-            <option value="{{a}}">{{cls.name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
+    <div class="flexrow">
+        <div class="flexcol">
+            <div class="form-group spellcasting-class tooltip">
+                <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
+                <label><h3>Spellcasting Class</h3></label>
+                <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
+                    {{#select spellbook.orig.class}}
+                    <option value="">None</option>
+                    <option value="_hd">Hit Die</option>
+                    {{#each data.classes as |cls a|}}
+                    <option value="{{a}}">{{cls.name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
 
-    <div class="form-group spellcasting-ability">
-        <label><h3>Spellcasting Ability</h3></label>
-        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
-            {{#select spellbook.orig.ability}}
-            <option value="">None</option>
-            {{#each data.abilities as |abl a|}}
-            <option value="{{a}}">{{abl.label}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
+            <div class="form-group spellcasting-ability">
+                <label><h3>Spellcasting Ability</h3></label>
+                <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
+                    {{#select spellbook.orig.ability}}
+                    <option value="">None</option>
+                    {{#each data.abilities as |abl a|}}
+                    <option value="{{a}}">{{abl.label}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
 
-    <div class="form-group spell-failure">
-      <label><h3>Arcane Spell Failure</h3></label>
-      <input type="text" disabled value="{{spellFailure}}%"/>
+            <div class="form-group spell-failure">
+            <label><h3>Arcane Spell Failure</h3></label>
+            <input type="text" disabled value="{{spellFailure}}%"/>
+            </div>
+        </div>
+        
+        <div class="flexcol">
+            <label class="checkbox">
+                <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevels"
+                    {{checked spellbook.orig.autoSpellLevels}}/> Automatic Spell Levels
+            </label>
+        </div>
     </div>
 
     <div class="flexrow spell-range">
@@ -82,9 +93,11 @@
 
             <div class="spell-uses">
                 {{#if section.usesSlots}}
+                <input class="base" type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
+                    value="{{section.baseSlots}}" placeholder="Base" />
                 <input type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
                 <span class="sep"> / </span>
-                <input type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.max" value="{{section.slots}}" placeholder="0" data-dtype="Number" />
+                <input type="text" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
                 {{ else }}
                 <span class="spell-slots">{{{section.uses}}}</span>
                 <span class="sep"> / </span>

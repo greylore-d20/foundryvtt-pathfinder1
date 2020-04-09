@@ -973,6 +973,28 @@ export class ActorPF extends Actor {
         linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
       }
     }
+    // Reset spell slots
+    for (let spellbookKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
+      const spellbookAbilityKey = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.ability`);
+      const spellbookAbilityMod = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.mod`);
+
+      for (let a = 0; a < 10; a++) {
+        let base = parseInt(getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`));
+        if (Number.isNaN(base)) {
+          linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
+          linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
+        }
+        else {
+          const value = (typeof spellbookAbilityMod === "number") ? (base + ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a)) : base;
+          if (getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`)) {
+            linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, value);
+          }
+          else {
+            linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
+          }
+        }
+      }
+    }
     // Add dex mod to AC
     if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
       const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
@@ -1327,7 +1349,7 @@ export class ActorPF extends Actor {
       // Add spell slots
       spellbook.spells = spellbook.spells || {};
       for (let a = 0; a < 10; a++) {
-        spellbook.spells[`spell${a}`] = spellbook.spells[`spell${a}`] || { value: 0, max: 0 };
+        spellbook.spells[`spell${a}`] = spellbook.spells[`spell${a}`] || { value: 0, max: 0, base: null };
       }
     }
   }
@@ -1523,6 +1545,18 @@ export class ActorPF extends Actor {
     }
 
     return result;
+  }
+
+  /**
+   * Return increased amount of spell slots by ability score modifier.
+   * @param {Number} mod - The associated ability modifier.
+   * @param {Number} level - Spell level.
+   * @returns {Number} Amount of spell levels to increase.
+   */
+  static getSpellSlotIncrease(mod, level) {
+    if (level === 0) return 0;
+    if (mod <= 0) return 0;
+    return Math.max(0, Math.ceil(((mod + 1) - level) / 4));
   }
 
   /**

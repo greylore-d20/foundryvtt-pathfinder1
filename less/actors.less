@@ -670,6 +670,11 @@
   .tab.inventory,
   .tab.spellbook {
     overflow-y: hidden;
+
+    label.checkbox {
+      text-align: left;
+      margin: 4px;
+    }
   }
 
   /* Inventory List Filters */
@@ -925,7 +930,7 @@
   .spell-slots,
   .spell-comps,
   .spell-uses {
-    flex: 0 0 96px;
+    flex: 0 0 128px;
     font-size: 12px;
     text-align: center;
     color: @colorTan;
@@ -933,6 +938,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    input[type="text"].base {
+      flex: 1;
+    }
 
     input, span.sep {
       text-align: center;

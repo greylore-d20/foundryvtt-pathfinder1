@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.24
+
+### Bug Fixes
+
+- Actor permissions not updating without a page refresh
+
+### Changelog
+
+- Add more movement types, and automate movement speedt totals based on encumbrance and armor
+- Automation of spell slot count (you'll have to re-enter your casters' spell slot count for this update)
+- Add lite version of the NPC sheet, which is meant to be used alongside an NPC stat block, and only shows the bare minimum
+- Added a bunch of feats to their compendium, thanks to Amakiir (some icons still missing, for now)
+
 ## 0.23.2 (Shameful Emergency Update 2)
 
 ### Bug Fixes

@@ -2445,13 +2445,20 @@ export class ActorPF extends Actor {
   }
 
   async createEmbeddedEntity(embeddedName, createData, options={}) {
-    const t = createData.type;
-    // Don't auto-equip transferred items
-    if (createData._id != null && ["weapon", "equipment"].includes(t)) {
-      createData.data.equipped = false;
+    let noArray = false;
+    if (!(createData instanceof Array)) {
+      createData = [createData];
+      noArray = true;
+    }
+
+    for (let obj of createData) {
+      // Don't auto-equip transferred items
+      if (obj._id != null && ["weapon", "equipment"].includes(obj.type)) {
+        obj.data.equipped = false;
+      }
     }
     
-    return super.createEmbeddedEntity(embeddedName, createData, options);
+    return super.createEmbeddedEntity(embeddedName, (noArray ? createData[0] : createData), options);
   }
 
   _computeEncumbrance(updateData) {

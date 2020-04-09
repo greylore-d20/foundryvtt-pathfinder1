@@ -16,6 +16,7 @@ import { measureDistance } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
+import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { PatchCore } from "./module/patch-core.js";
@@ -59,6 +60,7 @@ Hooks.once("init", async function() {
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("PF1", ActorSheetPFCharacter, { types: ["character"], makeDefault: true });
   Actors.registerSheet("PF1", ActorSheetPFNPC, { types: ["npc"], makeDefault: true });
+  Actors.registerSheet("PF1", ActorSheetPFNPCLite, { types: ["npc"], makeDefault: false });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack"], makeDefault: true });
 });

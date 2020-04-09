@@ -11,10 +11,12 @@
   <footer class="card-footer">
     {{#if isSpell}}
     {{#if spellFailure}}
-    <h3>Spell Failure</h3>
-    <div class="dice-roll">
-      <div class="dice-result">
-        <h4 class="dice-total spell-failure {{#unless spellFailureSuccess}}failure{{/unless}}">{{spellFailure}}</h4>
+    <div class="spell-failure">
+      <h3>Spell Failure</h3>
+      <div class="dice-roll">
+        <div class="dice-result">
+          <h4 class="dice-total spell-failure {{#unless spellFailureSuccess}}failure{{/unless}}">{{spellFailure}}</h4>
+        </div>
       </div>
     </div>
     {{/if}}

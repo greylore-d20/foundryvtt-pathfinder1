@@ -550,7 +550,7 @@ export class ActorPF extends Actor {
     // Add fly bonuses or penalties based on maneuverability
     const flyKey = getProperty(data, "data.attributes.speed.fly.maneuverability");
     let flyValue = 0;
-    if (flyKey != null) const flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
+    if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
     if (flyValue !== 0) {
       changes.push({
         raw: [flyValue.toString(), "skill", "skill.fly", "untyped", 0],

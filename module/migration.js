@@ -8,7 +8,7 @@ export const migrateWorld = async function() {
   // Migrate World Actors
   for ( let a of game.actors.entities ) {
     try {
-      const updateData = migrateActorData(a);
+      const updateData = await migrateActorData(a);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
         await a.update(updateData);
@@ -35,7 +35,7 @@ export const migrateWorld = async function() {
   // Migrate Actor Override Tokens
   for ( let s of game.scenes.entities ) {
     try {
-      const updateData = migrateSceneData(s.data);
+      const updateData = await migrateSceneData(s.data);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Scene entity ${s.name}`);
         await s.update(updateData);
@@ -78,8 +78,8 @@ export const migrateCompendium = async function(pack) {
     try {
       let updateData = null;
       if (entity === "Item") updateData = migrateItemData(ent);
-      else if (entity === "Actor") updateData = migrateActorData(ent);
-      else if ( entity === "Scene" ) updateData = migrateSceneData(ent);
+      else if (entity === "Actor") updateData = await migrateActorData(ent);
+      else if ( entity === "Scene" ) updateData = await migrateSceneData(ent);
       if (!isObjectEmpty(updateData)) {
         expandObject(updateData);
         updateData["_id"] = ent._id;
@@ -103,7 +103,7 @@ export const migrateCompendium = async function(pack) {
  * @param {Actor} actor   The actor to Update
  * @return {Object}       The updateData to apply
  */
-export const migrateActorData = function(actor) {
+export const migrateActorData = async function(actor) {
   const updateData = {};
 
   _migrateCharacterLevel(actor, updateData);
@@ -112,21 +112,17 @@ export const migrateActorData = function(actor) {
   _migrateActorSpeed(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData);
 
-  // // Migrate Owned Items
   if ( !actor.items ) return updateData;
-  let hasItemUpdates = false;
-  const items = actor.items.map(i => {
 
-    // Migrate the Owned Item
+  // Migrate Owned Items
+  for (let i of Object.values(actor.items)) {
     let itemUpdate = migrateItemData(i);
 
     // Update the Owned Item
-    if ( !isObjectEmpty(itemUpdate) ) {
-      hasItemUpdates = true;
-      return mergeObject(i, itemUpdate, {enforceTypes: false, inplace: false});
-    } else return i;
-  });
-  if ( hasItemUpdates ) updateData.items = items;
+    if (!isObjectEmpty(itemUpdate) && i instanceof Item) {
+      await i.update(itemUpdate);
+    }
+  }
   return updateData;
 };
 
@@ -139,8 +135,9 @@ export const migrateActorData = function(actor) {
 export const migrateItemData = function(item) {
   const updateData = {};
   
-  _migrateItemSpellUses(item.data, updateData);
-  _migrateWeaponDamage(item.data, updateData);
+  _migrateItemSpellUses(item, updateData);
+  _migrateWeaponDamage(item, updateData);
+  _migrateWeaponImprovised(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -154,30 +151,29 @@ export const migrateItemData = function(item) {
  * @param {Object} scene  The Scene data to Update
  * @return {Object}       The updateData to apply
  */
-export const migrateSceneData = function(scene) {
-  const tokens = duplicate(scene.tokens);
-  return {
-    tokens: tokens.map(t => {
-      if (!t.actorId || t.actorLink || !t.actorData.data) {
-        t.actorData = {};
-        return t;
-      }
-      const token = new Token(t);
-      if ( !token.actor ) {
-        t.actorId = null;
-        t.actorData = {};
-      }
-      const originalActor = game.actors.get(token.actor.id);
-      if (!originalActor) {
-        t.actorId = null;
-        t.actorData = {};
-      } else {
-        const updateData = migrateActorData(token.data.actorData);
-        t.actorData = mergeObject(token.data.actorData, updateData);
-      }
-      return t;
-    })
-  };
+export const migrateSceneData = async function(scene) {
+  const result = { tokens: duplicate(scene.tokens) };
+  for (let t of result.tokens) {
+    if (!t.actorId || t.actorLink || !t.actorData.data) {
+      t.actorData = {};
+      continue;
+    }
+    const token = new Token(t);
+    if (!token.actor) {
+      t.actorId = null;
+      t.actordata = {};
+    }
+    const originalActor = game.actors.get(token.actor.id);
+    if (!originalActor) {
+      t.actorId = null;
+      t.actorData = {};
+    }
+    else {
+      const updateData = await migrateActorData(token.data.actorData);
+      t.actorData = mergeObject(token.data.actorData, updateData);
+    }
+  }
+  return result;
 };
 
 /* -------------------------------------------- */
@@ -281,7 +277,7 @@ const _migrateActorSpeed = function(ent, updateData) {
     }
 
     // Add maneuverability
-    if (k === "attributes.speed.fly") {
+    if (k === "attributes.speed.fly" && getProperty(ent.data.data, `${k}.maneuverability`) === undefined) {
       updateData[`data.${k}.maneuverability`] = "average";
     }
   }
@@ -290,18 +286,18 @@ const _migrateActorSpeed = function(ent, updateData) {
 const _migrateActorSpellbookSlots = function(ent, updateData) {
   for (let spellbookSlot of Object.keys(getProperty(ent.data.data, "attributes.spells.spellbooks") || {})) {
     if (getProperty(ent.data.data, `attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
-      updateData[`attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
+      updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
     }
 
     for (let a = 0; a < 10; a++) {
-      const baseKey = `attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.base`;
-      const maxKey = `attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
-      const base = getProperty(ent.data.data, baseKey);
-      const max = getProperty(ent.data.data, maxKey);
-      if (base == null && typeof max === "number" && max > 0) {
+      const baseKey = `data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.base`;
+      const maxKey = `data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
+      const base = getProperty(ent.data, baseKey);
+      const max = getProperty(ent.data, maxKey);
+      if (base === undefined && typeof max === "number" && max > 0) {
         updateData[baseKey] = max.toString();
       }
-      else {
+      else if (base === undefined) {
         updateData[baseKey] = "";
       }
     }
@@ -309,16 +305,30 @@ const _migrateActorSpellbookSlots = function(ent, updateData) {
 };
 
 const _migrateItemSpellUses = function(ent, updateData) {
-  const value = getProperty(ent.data, "preparation.maxAmount");
+  if (getProperty(ent.data.data, "preparation") === undefined) return;
+
+  const value = getProperty(ent.data.data, "preparation.maxAmount");
   if (typeof value !== "number") updateData["data.preparation.maxAmount"] = 0;
 };
 
 const _migrateWeaponDamage = function(ent, updateData) {
-  const value = getProperty(ent.data, "weaponData");
+  if (ent.type !== "weapon") return;
+
+  const value = getProperty(ent.data.data, "weaponData");
   if (typeof value !== "object") {
     updateData["data.weaponData"] = {};
     updateData["data.weaponData.critRange"] = 20;
     updateData["data.weaponData.critMult"] = 2;
+  }
+};
+
+const _migrateWeaponImprovised = function(ent, updateData) {
+  if (ent.type !== "weapon") return;
+
+  const value = getProperty(ent.data.data, "weaponType");
+  if (value === "improv") {
+    updateData["data.weaponType"] = "misc";
+    updateData["data.properties.imp"] = true;
   }
 };
 

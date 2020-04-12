@@ -650,7 +650,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     let props = [];
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     let formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll();
     return DicePF.d20Roll({
       event: event,
@@ -661,7 +661,7 @@ export class ActorSheetPF extends ActorSheet {
         concentrationBonus: spellbook.concentration,
         formulaBonus: formulaRoll.total
       },
-      title: `Concentration Check`,
+      title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
@@ -690,12 +690,12 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     let props = [];
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: event,
       parts: [`@cl`],
       data: { cl: spellbook.cl.total },
-      title: `Caster Level Check`,
+      title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
@@ -789,7 +789,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const isBackground = $(event.currentTarget).parents(".skills-list").attr("data-background") === "true";
     const skillData = {
-      name: "New Skill",
+      name: "",
       ability: "int",
       rank: 0,
       notes: "",
@@ -908,9 +908,9 @@ export class ActorSheetPF extends ActorSheet {
     else {
       button.disabled = true;
 
-      const msg = "<p>Are you sure you want to delete this item?</p>";
+      const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
       Dialog.confirm({
-        title: "Delete Item",
+        title: game.i18n.localize("PF1.DeleteItem"),
         content: msg,
         yes: () => {
           this.actor.deleteOwnedItem(li.dataset.itemId);

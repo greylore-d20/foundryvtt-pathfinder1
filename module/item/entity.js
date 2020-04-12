@@ -208,7 +208,7 @@ export class ItemPF extends Item {
    */
   async roll() {
     const actor = this.actor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Basic template rendering data
     const token = this.actor.token;
@@ -360,7 +360,7 @@ export class ItemPF extends Item {
     // Add SR reminder
     if (this.type === "spell") {
       if (data.sr) {
-        props.push("Spell Resistance");
+        props.push(game.i18n.localize("PF1.SpellResistance"));
       }
     }
 
@@ -470,7 +470,7 @@ export class ItemPF extends Item {
 
   async useAttack() {
     const actor = this.actor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = duplicate(actorData);
@@ -494,17 +494,17 @@ export class ItemPF extends Item {
       for (let fx of effects) {
         effectContent += `<div class="extra-misc">${fx}</div>`;
       }
-      effectContent = `<div><label>Attack Notes</label>${effectContent}</div>`;
+      effectContent = `<div><label>${game.i18n.localize("PF1.AttackNotes")}</label>${effectContent}</div>`;
     }
     if (this.hasEffect) {
       let effectStr = this.rollEffect();
       if (effectStr.length > 0) {
-        effectContent += `<div><label>Effect Notes</label>${effectStr}</div>`;
+        effectContent += `<div><label>${game.i18n.localize("PF1.EffectNotes")}</label>${effectStr}</div>`;
       }
     }
 
     const properties = this.getChatData().properties;
-    if (properties.length > 0) props.push({ header: "Info", value: properties });
+    if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
     // Define Critical threshold
     let crit = itemData.ability.critRange || 20;
@@ -519,7 +519,7 @@ export class ItemPF extends Item {
     const allAttacks = this.data.data.attackParts.reduce((cur, r) => {
       cur.push({ bonus: r[0], label: r[1] });
       return cur;
-    }, [{ bonus: "", label: "Attack 1" }]);
+    }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]);
     let attacks = [];
     const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
       if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
@@ -556,7 +556,7 @@ export class ItemPF extends Item {
 
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
             attack.critConfirm = {
-              flavor: "Critical Confirmation",
+              flavor: game.i18n.localize("PF1.CriticalConfirmation"),
               tooltip: tooltip,
               total: roll.total,
             };
@@ -566,7 +566,7 @@ export class ItemPF extends Item {
         if (this.hasDamage) {
           roll = this.rollDamage();
           tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-          flavor = this.isHealing ? "Healing" : "Damage";
+          flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
           attack.damage = {
             flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
             tooltip: tooltip,
@@ -576,7 +576,7 @@ export class ItemPF extends Item {
           if (critType === 1) {
             roll = this.rollDamage({ critical: true });
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-            flavor = this.isHealing ? "Critical Healing" : "Critical Damage";
+            flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
             attack.critDamage = {
               flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
               tooltip: tooltip,
@@ -593,7 +593,7 @@ export class ItemPF extends Item {
       let roll = this.rollDamage();
       let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
       let attack = {};
-      let flavor = this.isHealing ? "Healing" : "Damage";
+      let flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
       attack.damage = {
         flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
         tooltip: tooltip,
@@ -636,7 +636,7 @@ export class ItemPF extends Item {
     const rollData = duplicate(actorData);
     rollData.item = duplicate(itemData);
     
-    if ( !this.hasAttack ) {
+    if (!this.hasAttack) {
       throw new Error("You may not place an Attack Roll with this Item.");
     }
 
@@ -776,7 +776,7 @@ export class ItemPF extends Item {
       extraDamage: 0
     }, { inplace: false });
 
-    if ( !this.hasDamage ) {
+    if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
 
@@ -860,13 +860,13 @@ export class ItemPF extends Item {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     if ( !itemData.formula ) {
-      throw new Error("This Item does not have a formula to roll!");
+      throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
     }
 
     // Define Roll Data
     const rollData = duplicate(actorData);
     rollData.item = itemData;
-    const title = `${this.name} - Other Formula`;
+    const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
     const roll = new Roll(itemData.formula, rollData).roll();
     return roll.toMessage({
@@ -903,7 +903,7 @@ export class ItemPF extends Item {
     if (effectStr === "") {
       new Roll(parts.join("+")).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `Uses ${this.name}`
+        flavor: game.i18n.localize("PF1.UsesItem").format(this.name)
       });
     }
     else {
@@ -927,7 +927,7 @@ export class ItemPF extends Item {
         rollMode: game.settings.get("core", "rollMode"),
         sound: CONFIG.sounds.dice,
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `Uses ${this.name}`,
+        flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
         rollMode: game.settings.get("core", "rollMode"),
         roll: roll,
         content: await renderTemplate(chatTemplate, rollData),

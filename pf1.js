@@ -25,6 +25,18 @@ import { getItemOwner } from "./module/lib.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
+// Add String.format
+if (!String.prototype.format) {
+  String.prototype.format = function(...args) {
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return args[number] != null
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
@@ -78,13 +90,22 @@ Hooks.once("setup", function() {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities", "abilitiesShort", "alignments", "currencies", "distanceUnits", "itemActionTypes", "senses", "skills", "targetTypes",
-    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes", "flyManeuverabilities"
+    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes", "flyManeuverabilities",
+    "spellPreparationModes", "weaponTypes", "weaponProperties", "spellComponents", "spellSchools", "spellLevels", "conditionTypes",
+    "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "limitedUsePeriods",
+    "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
+    "healingTypes",
   ];
-  for ( let o of toLocalize ) {
-    CONFIG.PF1[o] = Object.entries(CONFIG.PF1[o]).reduce((obj, e) => {
-      obj[e[0]] = game.i18n.localize(e[1]);
+
+  const doLocalize = function(obj) {
+    return Object.entries(obj).reduce((obj, e) => {
+      if (typeof e[1] === "string") obj[e[0]] = game.i18n.localize(e[1]);
+      else if (typeof e[1] === "object") obj[e[0]] = doLocalize(e[1]);
       return obj;
     }, {});
+  };
+  for ( let o of toLocalize ) {
+    CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o]);
   }
 });
 
@@ -213,7 +234,7 @@ function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) 
   if (actorId != null) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
   if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);
-  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
   const item = actor ? actor.items.find(i => {
     if (itemId != null && i._id !== itemId) return false;
     if (itemType != null && i.type !== itemType) return false;

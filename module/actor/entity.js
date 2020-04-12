@@ -1850,7 +1850,7 @@ export class ActorPF extends Actor {
    * @param {ItemPF} item   The spell being cast by the actor
    */
   async useSpell(item) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
 
     // Invoke the Item roll
@@ -1859,9 +1859,9 @@ export class ActorPF extends Actor {
   }
 
   async createAttackFromWeapon(item) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
-    if (item.data.type !== "weapon") throw new Error("Wrong Item tyupe");
+    if (item.data.type !== "weapon") throw new Error("Wrong Item type");
 
     // Get attack template
     let attackData = { data: {} };
@@ -1880,14 +1880,14 @@ export class ActorPF extends Actor {
     attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
     attackData["data.actionType"] = (item.data.data.weaponData.isMelee ? "mwak" : "rwak");
     attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
-    attackData["data.activation.type"] = "full";
+    attackData["data.activation.type"] = "attack";
     attackData["data.duration.units"] = "inst";
     attackData["img"] = item.data.img;
 
     // Add additional attacks
     let extraAttacks = [];
     for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
-      extraAttacks = extraAttacks.concat([["-5", `Attack ${Math.floor((a+5) / 5)}`]]);
+      extraAttacks = extraAttacks.concat([["-5", `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
 
@@ -1908,7 +1908,7 @@ export class ActorPF extends Actor {
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
     await this.createOwnedItem(expandObject(attackData));
 
-    ui.notifications.info(`Created attack for weapon ${item.data.name}`);
+    ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
   }
 
   /* -------------------------------------------- */
@@ -1922,7 +1922,7 @@ export class ActorPF extends Actor {
    * @param {String} subSkillId   The sub skill id (e.g. "prf1")
    */
   rollSkill(skillId, options={}, type=0, subSkillId="") {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     let skl, sklName;
     if (type === 0) {
@@ -1959,7 +1959,7 @@ export class ActorPF extends Actor {
     }
     // Add untrained note
     if (skl.rt && skl.rank === 0) {
-      notes.push("Untrained");
+      notes.push(game.i18n.localize("PF1.Untrained"));
     }
 
     let props = [];
@@ -1968,7 +1968,7 @@ export class ActorPF extends Actor {
       event: options.event,
       parts: ["@mod"],
       data: {mod: skl.mod},
-      title: `${sklName} Skill Check`,
+      title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props }
@@ -1988,20 +1988,20 @@ export class ActorPF extends Actor {
   }
 
   rollBAB(options={}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod - @drain"],
       data: {mod: this.data.data.attributes.bab.total, drain: this.data.data.attributes.energyDrain},
-      title: "Base Attack Bonus",
+      title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false
     });
   }
 
   rollCMB(options={}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
   
     // Add contextual notes
     let notes = [];
@@ -2031,12 +2031,12 @@ export class ActorPF extends Actor {
     }
 
     let props = [];
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod - @drain"],
       data: {mod: this.data.data.attributes.cmb.total, drain: this.data.data.attributes.energyDrain},
-      title: "Combat Maneuver Bonus",
+      title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
@@ -2053,11 +2053,11 @@ export class ActorPF extends Actor {
     
     // Damage reduction
     if (data.traits.dr.length) {
-      headers.push({ header: "Damage Reduction", value: data.traits.dr.split(reSplit) });
+      headers.push({ header: game.i18n.localize("PF1.DamRed"), value: data.traits.dr.split(reSplit) });
     }
     // Energy resistance
     if (data.traits.eres.length) {
-      headers.push({ header: "Energy Resistance", value: data.traits.eres.split(reSplit) });
+      headers.push({ header: game.i18n.localize("PF1.EnRes"), value: data.traits.eres.split(reSplit) });
     }
     // Damage vulnerabilities
     if (data.traits.dv.value.length || data.traits.dv.custom.length) {
@@ -2065,11 +2065,11 @@ export class ActorPF extends Actor {
         data.traits.dv.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
         data.traits.dv.custom.length > 0 ? data.traits.dv.custom.split(";") : [],
       );
-      headers.push({ header: "Damage Vulnerabilities", value: value });
+      headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
     }
     // Condition resistance
     if (data.traits.cres.length) {
-      headers.push({ header: "Condition Resistance", value: data.traits.cres.split(reSplit) });
+      headers.push({ header: game.i18n.localize("PF1.ConRes"), value: data.traits.cres.split(reSplit) });
     }
     // Immunities
     if (data.traits.di.value.length || data.traits.di.custom.length ||
@@ -2080,22 +2080,22 @@ export class ActorPF extends Actor {
         data.traits.ci.value.map(obj => { return CONFIG.PF1.conditionTypes[obj]; }),
         data.traits.ci.custom.length > 0 ? data.traits.ci.custom.split(";") : [],
       );
-      headers.push({ header: "Immunities", value: value });
+      headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
     // Spell Resistance
     if (data.attributes.sr.total > 0) {
-      misc.push(`Spell Resistance ${data.attributes.sr.total}`);
+      misc.push(game.i18n.localize("PF1.SpellResistanceNote").format(data.attributes.sr.total));
     }
 
     if (misc.length > 0) {
-      headers.push({ header: "Misc", value: misc });
+      headers.push({ header: game.i18n.localize("PF1.MiscShort"), value: misc });
     }
 
     return headers;
   }
 
   rollSavingThrow(savingThrowId, options={}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
     let notes = [];
@@ -2122,7 +2122,7 @@ export class ActorPF extends Actor {
 
     // Roll saving throw
     let props = this.getDefenseHeaders();
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
     const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
@@ -2130,7 +2130,7 @@ export class ActorPF extends Actor {
       parts: ["@mod - @drain"],
       situational: true,
       data: { mod: savingThrow.total, drain: this.data.data.attributes.energyDrain },
-      title: `${label} Saving Throw`,
+      title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
@@ -2147,7 +2147,7 @@ export class ActorPF extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options={}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
     let notes = [];
@@ -2180,7 +2180,7 @@ export class ActorPF extends Actor {
       event: options.event,
       parts: ["@mod + @checkMod - @drain"],
       data: {mod: abl.mod, checkMod: abl.checkMod, drain: this.data.data.attributes.energyDrain},
-      title: `${label} Ability Test`,
+      title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props }
@@ -2191,7 +2191,7 @@ export class ActorPF extends Actor {
    * Show defenses in chat
    */
   rollDefenses() {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn("You don't have permission to control this actor");
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const rollData = duplicate(this.data.data);
 
     // Add contextual AC notes
@@ -2281,7 +2281,7 @@ export class ActorPF extends Actor {
         ...this.data.data.traits.di.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
         ...this.data.data.traits.di.custom.length > 0 ? this.data.data.traits.di.custom.split(reSplit) : [],
       ];
-      energyResistance.push(...values.map(o => `Immune to ${o}`));
+      energyResistance.push(...values.map(o => game.i18n.localize("PF1.ImmuneTo").format(o)));
     }
     // Damage Vulnerability
     if (this.data.data.traits.dv.value.length || this.data.data.traits.dv.custom.length) {
@@ -2289,7 +2289,7 @@ export class ActorPF extends Actor {
         ...this.data.data.traits.dv.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
         ...this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : [],
       ];
-      energyResistance.push(...values.map(o => `Vulnerable to ${o}`));
+      energyResistance.push(...values.map(o => game.i18n.localize("PF1.VulnerableTo").format(o)));
     }
 
     // Create message

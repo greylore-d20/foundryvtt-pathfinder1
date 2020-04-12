@@ -195,14 +195,14 @@ export class ItemSheetPF extends ItemSheet {
   _getItemStatus(item) {
     if ( item.type === "spell" ) {
       if (item.data.preparation.mode === "prepared") {
-        return item.data.preparation.preparedAmount > 0 ? `${item.data.preparation.preparedAmount} Prepared` : "Unprepared";
+        return item.data.preparation.preparedAmount > 0 ? game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount) : game.i18n.localize("PF1.Unprepared");
       }
       else if (item.data.preparation.mode) {
         return item.data.preparation.mode.titleCase();
       }
       else return "";
     }
-    else if ( ["weapon", "equipment"].includes(item.type) ) return item.data.equipped ? "Equipped" : "Unequipped";
+    else if ( ["weapon", "equipment"].includes(item.type) ) return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
   }
 
   /* -------------------------------------------- */
@@ -465,7 +465,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _createAttack(event) {
-    if (this.item.actor == null) throw new Error("This item has no owner to create an attack on");
+    if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
 
     await this._onSubmit(event);
 

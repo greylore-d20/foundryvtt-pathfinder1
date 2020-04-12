@@ -12,17 +12,17 @@
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>
 
-        {{#if section.showTypes}}<div class="item-detail item-type"><span>Type</span></div>{{/if}}
+        {{#if section.showTypes}}<div class="item-detail item-type"><span>{{localize "PF1.Type"}}</span></div>{{/if}}
         
-        <div class="item-detail item-actions"><span>Actions</span></div>
+        <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
         
-        <div class="item-detail item-uses"><span>Charges</span></div>
+        <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
         
         {{#if ../owner}}
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" title="Create Item" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i> Add
+            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
           </a>
           {{/if}}
         </div>

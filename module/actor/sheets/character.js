@@ -68,13 +68,13 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
-      weapon: { label: "Weapons", canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
-      equipment: { label: "Armor/Equipment", canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
-      consumable: { label: "Consumables", canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
+      weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
+      equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
+      consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
       gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
-      all: { label: "All", canCreate: false, hasActions: true, items: [], dataset: {} },
+      all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], dataset: {} },
     };
 
     // Partition items by category
@@ -123,13 +123,13 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Organize Features
     const features = {
-      classes: { label: "Classes", items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
-      feat: { label: "Feats", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
-      classFeat: { label: "Class Features", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
-      trait: { label: "Traits", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
-      racial: { label: "Racial Traits", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "racial" } },
-      misc: { label: "Misc", items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "misc" } },
-      all: { label: "All", items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
+      classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
+      feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
+      classFeat: { label: game.i18n.localize("PF1.ClassFeaturePlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
+      trait: { label: game.i18n.localize("PF1.TraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
+      racial: { label: game.i18n.localize("PF1.RacialTraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "racial" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
     };
 
     for ( let f of feats ) {
@@ -144,11 +144,11 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     let buffs = data.items.filter(obj => { return obj.type === "buff"; });
     buffs = this._filterItems(buffs, this._filters.buffs);
     const buffSections = {
-      temp: { label: "Temporary", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "temp" } },
-      perm: { label: "Permanent", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "perm" } },
-      item: { label: "Item", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "item" } },
-      misc: { label: "Misc", items: [], hasActions: false, dataset: { type: "buff", "buff-type": "misc" } },
-      all: { label: "All", items: [], hasActions: false, dataset: { type: "buff" } },
+      temp: { label: game.i18n.localize("PF1.Temporary"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "temp" } },
+      perm: { label: game.i18n.localize("PF1.Permanent"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "perm" } },
+      item: { label: game.i18n.localize("PF1.Item"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "item" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], hasActions: false, dataset: { type: "buff" } },
     };
 
     for (let b of buffs) {
@@ -160,12 +160,12 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Attacks
     const attackSections = {
-      weapon: { label: "Weapon Attacks", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
-      natural: { label: "Natural Attacks", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
-      ability: { label: "Class Abilities", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "ability" } },
-      racialAbility: { label: "Racial Abilities", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
-      misc: { label: "Misc", items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
-      all: { label: "All", items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
+      weapon: { label: game.i18n.localize("PF1.AttackTypeWeaponPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
+      natural: { label: game.i18n.localize("PF1.AttackTypeNaturalPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
+      ability: { label: game.i18n.localize("PF1.AttackTypeAbilityPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "ability" } },
+      racialAbility: { label: game.i18n.localize("PF1.AttackTypeRacialAbilityPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
     };
 
     for (let a of attacks) {

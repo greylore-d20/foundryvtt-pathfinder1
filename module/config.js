@@ -49,9 +49,9 @@ PF1.savingThrowMods = {
 };
 
 PF1.favouredClassBonuses = {
-  "hp": "Hit Points",
-  "skill": "Skills",
-  "alt": "Alt"
+  "hp": "PF1.FavouredClassHP",
+  "skill": "PF1.FavouredClassSkill",
+  "alt": "PF1.FavouredClassAlt",
 };
 
 /**
@@ -99,16 +99,16 @@ PF1.alignments = {
  * @type {Object}
  */
 PF1.armorProficiencies = {
-  "lgt": "Light Armor",
-  "med": "Medium Armor",
-  "hvy": "Heavy Armor",
-  "shl": "Shields",
-  "twr": "Tower Shields"
+  "lgt": "PF1.ArmorProfLight",
+  "med": "PF1.ArmorProfMedium",
+  "hvy": "PF1.ArmorProfHeavy",
+  "shl": "PF1.ArmorProfShield",
+  "twr": "PF1.ArmorProfTowerShield",
 };
 
 PF1.weaponProficiencies = {
-  "sim": "Simple Weapons",
-  "mar": "Martial Weapons"
+  "sim": "PF1.WeaponProfSimple",
+  "mar": "PF1.WeaponProfMartial",
 };
 
 /* -------------------------------------------- */
@@ -118,32 +118,33 @@ PF1.weaponProficiencies = {
  * @type {Object}
  */
 PF1.abilityActivationTypes = {
-  "passive": "Passive",
-  "free": "Free Action",
-  "swift": "Swift Action",
-  "immediate": "Immediate Action",
-  "move": "Move Action",
-  "standard": "Standard Action",
-  "full": "Full-round Action",
-  "round": "Round",
-  "minute": "Minute",
-  "hour": "Hour",
-  "special": "Special"
+  "passive": "PF1.ActivationTypePassive",
+  "free": "PF1.ActivationTypeFree",
+  "swift": "PF1.ActivationTypeSwift",
+  "immediate": "PF1.ActivationTypeImmediate",
+  "move": "PF1.ActivationTypeMove",
+  "standard": "PF1.ActivationTypeStandard",
+  "full": "PF1.ActivationTypeFullround",
+  "attack": "PF1.ActivationTypeAttack",
+  "round": "PF1.ActivationTypeRound",
+  "minute": "PF1.ActivationTypeMinute",
+  "hour": "PF1.ActivationTypeHour",
+  "special": "PF1.ActivationTypeSpecial",
 };
 
 /* -------------------------------------------- */
 
 // Creature Sizes
 PF1.actorSizes = {
-  "fine": "Fine",
-  "dim": "Diminutive",
-  "tiny": "Tiny",
-  "sm": "Small",
-  "med": "Medium",
-  "lg": "Large",
-  "huge": "Huge",
-  "grg": "Gargantuan",
-  "col": "Colossal"
+  "fine": "PF1.ActorSizeFine",
+  "dim": "PF1.ActorSizeDiminutive",
+  "tiny": "PF1.ActorSizeTiny",
+  "sm": "PF1.ActorSizeSmall",
+  "med": "PF1.ActorSizeMedium",
+  "lg": "PF1.ActorSizeLarge",
+  "huge": "PF1.ActorSizeHuge",
+  "grg": "PF1.ActorSizeGargantuan",
+  "col": "PF1.ActorSizeColossal",
 };
 
 PF1.tokenSizes = {
@@ -306,11 +307,11 @@ PF1.itemCapacityTypes = {
  * @type {Object}
  */
 PF1.limitedUsePeriods = {
-  "single": "Single Use",
-  "unlimited": "Unlimited Use",
-  "day": "Day",
-  "week": "Week",
-  "charges": "Charges"
+  "single": "PF1.LimitedUseSingle",
+  "unlimited": "PF1.LimitedUseUnlimited",
+  "day": "PF1.LimitedUseDay",
+  "week": "PF1.LimitedUseWeek",
+  "charges": "PF1.LimitedUseCharges",
 };
 
 
@@ -318,37 +319,37 @@ PF1.limitedUsePeriods = {
 
 // Equipment Types
 PF1.equipmentTypes = {
-  "clothing": "Clothing",
-  "light": "Light Armor",
-  "medium": "Medium Armor",
-  "heavy": "Heavy Armor",
-  "natural": "Natural Armor",
-  "shield": "Shield",
-  "misc": "Misc"
+  "clothing": "PF1.EquipTypeClothing",
+  "light": "PF1.EquipTypeLight",
+  "medium": "PF1.EquipTypeMedium",
+  "heavy": "PF1.EquipTypeHeavy",
+  "natural": "PF1.EquipTypeNatural",
+  "shield": "PF1.EquipTypeShield",
+  "misc": "PF1.Misc",
 };
 PF1.armorTypes = PF1.equipmentTypes;
 
 PF1.equipmentSlots = {
-  "slotless": "Slotless",
-  "head": "Head",
-  "headband": "Headband",
-  "eyes": "Eyes",
-  "shoulders": "Shoulders",
-  "neck": "Neck",
-  "chest": "Chest",
-  "body": "Body",
-  "armor": "Armor",
-  "belt": "Belt",
-  "wrists": "Wrists",
-  "hands": "Hands",
-  "ring": "Ring",
-  "feet": "Feet",
+  "slotless": "PF1.EquipSlotSlotless",
+  "head": "PF1.EquipSlotHead",
+  "headband": "PF1.EquipSlotHeadband",
+  "eyes": "PF1.EquipSlotEyes",
+  "shoulders": "PF1.EquipSlotShoulders",
+  "neck": "PF1.EquipSlotNeck",
+  "chest": "PF1.EquipSlotChest",
+  "body": "PF1.EquipSlotBody",
+  "armor": "PF1.EquipSlotArmor",
+  "belt": "PF1.EquipSlotBelt",
+  "wrists": "PF1.EquipSlotWrists",
+  "hands": "PF1.EquipSlotHands",
+  "ring": "PF1.EquipSlotRing",
+  "feet": "PF1.EquipSlotFeet",
 };
 
 PF1.lootTypes = {
   "gear": "PF1.LootTypeGear",
   "ammo": "PF1.LootTypeAmmo",
-  "misc": "PF1.LootTypeMisc",
+  "misc": "PF1.Misc",
 };
 
 
@@ -359,28 +360,29 @@ PF1.lootTypes = {
  * @type {Object}
  */
 PF1.consumableTypes = {
-  "potion": "Potion/Oil",
-  "poison": "Poison",
-  "scroll": "Scroll",
-  "wand": "Wand",
-  "rod": "Rod",
-  "trinket": "Trinket"
+  "potion": "PF1.ConsumableTypePotion",
+  "poison": "PF1.ConsumableTypePoison",
+  "scroll": "PF1.ConsumableTypeScroll",
+  "wand": "PF1.ConsumableTypeWand",
+  "rod": "PF1.ConsumableTypeRod",
+  "trinket": "PF1.ConsumableTypeTrinket",
+  "misc": "PF1.Misc",
 };
 
 PF1.attackTypes = {
-  "weapon": "Weapon",
-  "natural": "Natural",
-  "ability": "Class Ability",
-  "racialAbility": "Racial Ability",
-  "misc": "Misc",
+  "weapon": "PF1.AttackTypeWeapon",
+  "natural": "PF1.AttackTypeNatural",
+  "ability": "PF1.AttackTypeAbility",
+  "racialAbility": "PF1.AttackTypeRacial",
+  "misc": "PF1.Misc",
 };
 
 PF1.featTypes = {
-  "feat": "Feat",
-  "classFeat": "Class Feature",
-  "trait": "Trait",
-  "racial": "Racial Trait",
-  "misc": "Misc"
+  "feat": "PF1.FeatTypeFeat",
+  "classFeat": "PF1.FeatTypeClassFeat",
+  "trait": "PF1.FeatTypeTraits",
+  "racial": "PF1.FeatTypeRacial",
+  "misc": "PF1.Misc",
 };
 
 /* -------------------------------------------- */
@@ -504,8 +506,8 @@ PF1.timePeriods = {
 
 // Healing Types
 PF1.healingTypes = {
-  "healing": "Healing",
-  "temphp": "Healing (Temporary)"
+  "healing": "PF1.Healing",
+  "temphp": "PF1.HealingTemp"
 };
 
 /* -------------------------------------------- */
@@ -577,9 +579,9 @@ PF1.arbitrarySkills = [
 /* -------------------------------------------- */
 
 PF1.spellPreparationModes = {
-  "atwill": "At-will",
-  "prepared": "Prepared Spell",
-  "spontaneous": "Spontaneous Spell"
+  "atwill": "PF1.SpellPrepAtWill",
+  "prepared": "PF1.SpellPrepPrepared",
+  "spontaneous": "Pf1.SpellPrepSpontaneous",
 };
 
 /* -------------------------------------------- */
@@ -588,11 +590,11 @@ PF1.spellPreparationModes = {
 
 // Weapon Types
 PF1.weaponTypes = {
-  "simple": "Simple",
-  "martial": "Martial",
-  "exotic": "Exotic",
-  "improv": "Improvised",
-  "splash": "Splash Weapon"
+  "simple": "PF1.WeaponTypeSimple",
+  "martial": "PF1.WeaponTypeMartial",
+  "exotic": "PF1.WeaponTypeExotic",
+  "splash": "PF1.WeaponTypeSplash",
+  "misc": "PF1.Misc",
 };
 
 
@@ -603,59 +605,58 @@ PF1.weaponTypes = {
  * @type {Object}
  */
 PF1.weaponProperties = {
-  "blc": "Blocking",
-  "brc": "Brace",
-  "dbl": "Double",
-  "dis": "Disarm",
-  "fin": "Finesse",
-  "frg": "Fragile",
-  "imp": "Improvised",
-  "lgt": "Light",
-  "mnk": "Monk",
-  "prf": "Performance",
-  "rch": "Reach",
-  "thr": "Thrown",
-  "trp": "Trip",
-  "two": "Two-Handed"
+  "blc": "PF1.WeaponPropBlocking",
+  "brc": "PF1.WeaponPropBrace",
+  "dbl": "PF1.WeaponPropDouble",
+  "dis": "PF1.WeaponPropDisarm",
+  "fin": "PF1.WeaponPropFinesse",
+  "frg": "PF1.WeaponPropFragile",
+  "imp": "PF1.WeaponPropImprovised",
+  "lgt": "PF1.WeaponPropLight",
+  "mnk": "PF1.WeaponPropMonk",
+  "prf": "PF1.WeaponPropPerformance",
+  "rch": "PF1.WeaponPropReach",
+  "thr": "PF1.WeaponPropThrown",
+  "trp": "PF1.WeaponPropTrip",
+  "two": "PF1.WeaponPropTwoHanded",
 };
 
 
 // Spell Components
 PF1.spellComponents = {
-  "V": "Verbal",
-  "S": "Somatic",
-  "M": "Material",
-  "F": "Focus",
-  "DF": "Divine Focus"
+  "V": "PF1.SpellComponentVerbal",
+  "S": "PF1.SpellComponentSomatic",
+  "M": "PF1.SpellComponentMaterial",
+  "F": "PF1.SpellComponentFocus",
+  "DF": "PF1.SpellComponentDivineFocus",
 };
 
 // Spell Schools
 PF1.spellSchools = {
-  "abj": "Abjuration",
-  "con": "Conjuration",
-  "div": "Divination",
-  "enc": "Enchantment",
-  "evo": "Evocation",
-  "ill": "Illusion",
-  "nec": "Necromancy",
-  "trs": "Transmutation",
-  "uni": "Universal",
-  "sphere": "Sphere Magic",
-  "misc": "Misc",
+  "abj": "PF1.SpellSchoolAbjuration",
+  "con": "PF1.SpellSchoolConjuration",
+  "div": "PF1.SpellSchoolDivination",
+  "enc": "PF1.SpellSchoolEnchantment",
+  "evo": "PF1.SpellSchoolEvocation",
+  "ill": "PF1.SpellSchoolIllusion",
+  "nec": "PF1.SpellSchoolNecromancy",
+  "trs": "PF1.SpellSchoolTransmutation",
+  "uni": "PF1.SpellSchoolUniversal",
+  "misc": "PF1.Misc",
 };
 
 // Spell Levels
 PF1.spellLevels = {
-  0: "Cantrip/Orison",
-  1: "1st Level",
-  2: "2nd Level",
-  3: "3rd Level",
-  4: "4th Level",
-  5: "5th Level",
-  6: "6th Level",
-  7: "7th Level",
-  8: "8th Level",
-  9: "9th Level"
+  0: "PF1.SpellLevel0",
+  1: "PF1.SpellLevel1",
+  2: "PF1.SpellLevel2",
+  3: "PF1.SpellLevel3",
+  4: "PF1.SpellLevel4",
+  5: "PF1.SpellLevel5",
+  6: "PF1.SpellLevel6",
+  7: "PF1.SpellLevel7",
+  8: "PF1.SpellLevel8",
+  9: "PF1.SpellLevel9",
 };
 
 /* -------------------------------------------- */
@@ -673,20 +674,23 @@ PF1.proficiencyLevels = {
 /* -------------------------------------------- */
 
 PF1.conditionTypes = {
-  "bleed": "Bleed",
-  "blind": "Blind",
-  "confuse": "Confuse",
-  "daze": "Daze",
-  "dazzle": "Dazzle",
-  "deaf": "Deaf",
-  "energyDrain": "Energy Drain",
-  "fatigue": "Fatigue",
-  "fear": "Fear",
-  "sicken": "Sicken",
-  "paralyze": "Paralyze",
-  "petrify": "Petrification",
-  "stun": "Stun",
-  "sleep": "Sleep"
+  "bleed": "PF1.CondTypeBleed",
+  "blind": "PF1.CondTypeBlind",
+  "confuse": "PF1.CondTypeConfuse",
+  "daze": "PF1.CondTypeDaze",
+  "dazzle": "PF1.CondTypeDazzle",
+  "deaf": "PF1.CondTypeDeaf",
+  "disease": "PF1.CondTypeDisease",
+  "energyDrain": "PF1.CondTypeEnergyDrain",
+  "fatigue": "PF1.CondTypeFatigue",
+  "fear": "PF1.CondTypeFear",
+  "mindAffecting": "PF1.CondTypeMindAffecting",
+  "poison": "PF1.CondTypePoison",
+  "sicken": "PF1.CondTypeSicken",
+  "paralyze": "PF1.CondTypeParalyze",
+  "petrify": "PF1.CondTypePetrify",
+  "stun": "PF1.CondTypeStun",
+  "sleep": "PF1.CondTypeSleep",
 };
 
 PF1.conditions = {
@@ -706,126 +710,126 @@ PF1.conditions = {
 };
 
 PF1.buffTypes = {
-  "temp": "Temporary",
-  "perm": "Permanent",
-  "item": "Item",
-  "misc": "Misc",
+  "temp": "PF1.Temporary",
+  "perm": "PF1.Permanent",
+  "item": "PF1.Item",
+  "misc": "PF1.Misc",
 };
 
 PF1.buffTargets = {
   "ac": {
-    "_label": "AC",
-    "ac": "Generic",
-    "aac": "Armor",
-    "sac": "Shield",
-    "nac": "Natural Armor",
+    "_label": "PF1.BuffTarAC",
+    "ac": "PF1.BuffTarACGeneric",
+    "aac": "PF1.BuffTarACArmor",
+    "sac": "PF1.BuffTarACShield",
+    "nac": "PF1.BuffTarACNatural",
   },
   "attack": {
-    "_label": "Attack Rolls",
-    "attack": "All",
-    "mattack": "Melee",
-    "rattack": "Ranged",
+    "_label": "PF1.AttackRollPlural",
+    "attack": "PF1.All",
+    "mattack": "PF1.Melee",
+    "rattack": "PF1.Ranged",
   },
   "damage": {
-    "_label": "Damage",
-    "damage": "All",
-    "wdamage": "Weapon Damage",
-    "sdamage": "Spell Damage",
+    "_label": "PF1.Damage",
+    "damage": "PF1.All",
+    "wdamage": "PF1.WeaponDamage",
+    "sdamage": "PF1.SpellDamage",
   },
   "ability": {
-    "_label": "Ability Score",
-    "str": "Strength",
-    "dex": "Dexterity",
-    "con": "Constitution",
-    "int": "Intelligence",
-    "wis": "Wisdom",
-    "cha": "Charisma",
+    "_label": "PF1.AbilityScore",
+    "str": "PF1.AbilityStr",
+    "dex": "PF1.AbilityDex",
+    "con": "PF1.AbilityCon",
+    "int": "PF1.AbilityInt",
+    "wis": "PF1.AbilityWis",
+    "cha": "PF1.AbilityCha",
   },
   "savingThrows": {
-    "_label": "Saving Throws",
-    "allSavingThrows": "All",
-    "fort": "Fortitude",
-    "ref": "Reflex",
-    "will": "Will",
+    "_label": "PF1.SavingThrowPlural",
+    "allSavingThrows": "PF1.All",
+    "fort": "PF1.SavingThrowFort",
+    "ref": "PF1.SavingThrowRef",
+    "will": "PF1.SavingThrowWill",
   },
   "skills": {
-    "_label": "Skills",
-    "skills": "All",
-    "strSkills": "Strength Skills",
-    "dexSkills": "Dexterity Skills",
-    "conSkills": "Constitution Skills",
-    "intSkills": "Intelligence Skills",
-    "wisSkills": "Wisdom Skills",
-    "chaSkills": "Charisma Skills",
+    "_label": "PF1.Skills",
+    "skills": "PF1.All",
+    "strSkills": "PF1.BuffTarStrSkills",
+    "dexSkills": "PF1.BuffTarDexSkills",
+    "conSkills": "PF1.BuffTarConSkills",
+    "intSkills": "PF1.BuffTarIntSkills",
+    "wisSkills": "PF1.BuffTarWisSkills",
+    "chaSkills": "PF1.BuffTarChaSkills",
   },
   "skill": {
-    "_label": "Specific Skill",
+    "_label": "PF1.BuffTarSpecificSkill",
   },
   "abilityChecks": {
-    "_label": "Ability Checks",
-    "allChecks": "All",
-    "strChecks": "Strength Checks",
-    "dexChecks": "Dexterity Checks",
-    "conChecks": "Constitution Checks",
-    "intChecks": "Intelligence Checks",
-    "wisChecks": "Wisdom Checks",
-    "chaChecks": "Charisma Checks",
+    "_label": "PF1.BuffTarAbilityChecks",
+    "allChecks": "PF1.All",
+    "strChecks": "PF1.BuffTarStrChecks",
+    "dexChecks": "PF1.BuffTarDexChecks",
+    "conChecks": "PF1.BuffTarConChecks",
+    "intChecks": "PF1.BuffTarIntChecks",
+    "wisChecks": "PF1.BuffTarWisChecks",
+    "chaChecks": "PF1.BuffTarChaChecks",
   },
   "speed": {
-    "_label": "Speed",
-    "allSpeeds": "All",
-    "landSpeed": "Land Speed",
-    "climbSpeed": "Climb Speed",
-    "swimSpeed": "Swim Speed",
-    "burrowSpeed": "Burrow Speed",
-    "flySpeed": "Fly Speed",
+    "_label": "PF1.Speed",
+    "allSpeeds": "PF1.All",
+    "landSpeed": "PF1.SpeedLand",
+    "climbSpeed": "PF1.SpeedClimb",
+    "swimSpeed": "PF1.SpeedSwim",
+    "burrowSpeed": "PF1.SpeedBurrow",
+    "flySpeed": "PF1.SpeedFly",
   },
   "misc": {
-    "_label": "Misc",
+    "_label": "PF1.MiscShort",
     "cmb": "CMB",
     "cmd": "CMD",
-    "init": "Initiative",
-    "mhp": "Maximum HP",
+    "init": "PF1.Initiative",
+    "mhp": "Hit Points",
   },
 };
 
 PF1.contextNoteTargets = {
   "savingThrows": {
-    "_label": "Saving Throws",
-    "allSavingThrows": "All",
-    "fort": "Fortitude",
-    "ref": "Reflex",
-    "will": "Will",
+    "_label": "PF1.SavingThrowPlural",
+    "allSavingThrows": "PF1.All",
+    "fort": "PF1.SavingThrowFort",
+    "ref": "PF1.SavingThrowRef",
+    "will": "PF1.SavingThrowWill",
   },
   "skills": {
-    "_label": "Skills",
-    "skills": "All",
-    "strSkills": "Strength Skills",
-    "dexSkills": "Dexterity Skills",
-    "conSkills": "Constitution Skills",
-    "intSkills": "Intelligence Skills",
-    "wisSkills": "Wisdom Skills",
-    "chaSkills": "Charisma Skills",
+    "_label": "PF1.Skills",
+    "skills": "PF1.All",
+    "strSkills": "PF1.BuffTarStrSkills",
+    "dexSkills": "PF1.BuffTarDexSkills",
+    "conSkills": "PF1.BuffTarConSkills",
+    "intSkills": "PF1.BuffTarIntSkills",
+    "wisSkills": "PF1.BuffTarWisSkills",
+    "chaSkills": "PF1.BuffTarChaSkills",
   },
   "skill": {
-    "_label": "Specific Skill",
+    "_label": "PF1.BuffTarSpecificSkill",
   },
   "abilityChecks": {
-    "_label": "Ability Checks",
-    "allChecks": "All",
-    "strChecks": "Strength Checks",
-    "dexChecks": "Dexterity Checks",
-    "conChecks": "Constitution Checks",
-    "intChecks": "Intelligence Checks",
-    "wisChecks": "Wisdom Checks",
-    "chaChecks": "Charisma Checks",
+    "_label": "PF1.BuffTarAbilityChecks",
+    "allChecks": "PF1.All",
+    "strChecks": "PF1.BuffTarStrChecks",
+    "dexChecks": "PF1.BuffTarDexChecks",
+    "conChecks": "PF1.BuffTarConChecks",
+    "intChecks": "PF1.BuffTarIntChecks",
+    "wisChecks": "PF1.BuffTarWisChecks",
+    "chaChecks": "PF1.BuffTarChaChecks",
   },
   "misc": {
-    "_label": "Misc",
-    "ac": "AC",
+    "_label": "PF1.MiscShort",
+    "ac": "PF1.ACNormal",
     "cmb": "CMB",
     "cmd": "CMD",
-    "sr": "Spell Resistance",
+    "sr": "PF1.SpellResistance",
   },
 };
 

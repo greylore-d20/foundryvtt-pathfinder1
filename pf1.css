@@ -356,7 +356,7 @@
 .pf1.sheet .sheet-navigation .item {
   height: 30px;
   line-height: 32px;
-  margin: 0 24px;
+  margin: 0 12px;
   border-bottom: 3px solid #b5b3a4;
   flex-basis: calc(20% - 48px);
 }
@@ -1127,6 +1127,9 @@
   font-size: 13px;
   font-weight: bold;
 }
+.pf1.sheet.actor .inventory-list .inventory-header .item-controls {
+  justify-content: flex-start;
+}
 .pf1.sheet.actor .inventory-list .inventory-header .item-controls a.item-create {
   flex: 0 0 100%;
 }
@@ -1212,12 +1215,14 @@
   padding: 0;
 }
 .pf1.sheet.actor .inventory-list .item-controls {
-  flex: 0 0 44px;
+  flex: 0 0 64px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  justify-content: flex-end;
+  overflow-x: hidden;
+  white-space: nowrap;
+  justify-content: center;
 }
 .pf1.sheet.actor .inventory-list .item-controls > * {
   flex: 1;

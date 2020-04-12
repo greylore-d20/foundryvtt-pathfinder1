@@ -822,8 +822,12 @@
         font-weight: bold;
       }
 
-      .item-controls a.item-create {
-        flex: 0 0 100%;
+      .item-controls {
+        justify-content: flex-start;
+
+        a.item-create {
+          flex: 0 0 100%;
+        }
       }
     }
 
@@ -902,9 +906,11 @@
 
     // Item Control Buttons
     .item-controls {
-      flex: 0 0 44px;
+      flex: 0 0 64px;
       .flexrow();
-      justify-content: flex-end;
+      overflow-x: hidden;
+      white-space: nowrap;
+      justify-content: center;
 
       a {
         flex: 0 0 22px;

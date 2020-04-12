@@ -137,7 +137,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
       weapon: { label: game.i18n.localize("PF1.AttackTypeWeaponPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
       natural: { label: game.i18n.localize("PF1.AttackTypeNaturalPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
       ability: { label: game.i18n.localize("PF1.AttackTypeAbilityPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "ability" } },
-      racialAbility: { label: game.i18n.localize("PF1.AttackTypeRacialAbilityPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
+      racialAbility: { label: game.i18n.localize("PF1.AttackTypeRacialPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
       misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
       all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
     };

@@ -22,7 +22,7 @@
           {{labels.school}}
         </li>
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
         </li>
       </ul>
     </div>
@@ -128,7 +128,7 @@
 
       {{!-- Preparation Mode --}}
       <div class="form-group input-select">
-        <label>Spell Preparation Mode</label>
+        <label>{{localize "PF1.SpellPreparationType"}}</label>
         <div class="form-fields">
           <select name="data.preparation.mode">
             {{#select data.preparation.mode}}
@@ -144,13 +144,13 @@
       {{#if isPreparedSpell}}
       <div class="form-group">
         <div class="form-fields">
-          <label>Casts Left</label>
+          <label>{{localize "PF1.CastsLeft"}}</label>
           <div class="form-fields">
             <input type="text" name="data.preparation.preparedAmount" value="{{data.preparation.preparedAmount}}" data-dtype="Number"/>
           </div>
         </div>
         <div class="form-fields">
-          <label>Prepared</label>
+          <label>{{localize "PF1.SpellPrepPrepared"}}</label>
           <div class="form-fields">
             <input type="text" name="data.preparation.maxAmount" value="{{data.preparation.maxAmount}}" data-dtype="Number"/>
           </div>
@@ -161,7 +161,7 @@
       {{!-- Caster Level Offset --}}
       <div class="form-group">
         <div class="form-fields">
-          <label>Caster Level Offset</label>
+          <label>{{localize "PF1.CasterLevelOffset"}}</label>
           <div class="form-fields">
             <input type="text" name="data.clOffset" value="{{data.clOffset}}" data-dtype="Number"/>
           </div>
@@ -171,19 +171,19 @@
       {{!-- Spell Level Offset --}}
       <div class="form-group">
         <div class="form-fields">
-          <label>Spell Level Offset</label>
+          <label>{{localize "PF1.SpellLevelOffset"}}</label>
           <div class="form-fields">
             <input type="text" name="data.slOffset" value="{{data.slOffset}}" data-dtype="Number"/>
           </div>
         </div>
       </div>
 
-      <h3 class="form-header">Spell Casting</h3>
+      <h3 class="form-header">{{localize "PF1.SpellCasting"}}</h3>
 
       {{!-- Item Activation Template --}}
       {{> "systems/pf1/templates/items/parts/item-activation.html"}}
 
-      <h3 class="form-header">Spell Effects</h3>
+      <h3 class="form-header">{{localize "PF1.SpellEffects"}}</h3>
 
       {{!-- Item Action Template --}}
       {{> "systems/pf1/templates/items/parts/item-action.html"}}

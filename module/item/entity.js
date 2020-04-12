@@ -85,8 +85,8 @@ export class ItemPF extends Item {
 
       // Equipped or carried label
       labels.equipped = "";
-      if (itemData.data.equipped === true) labels.equipped = "Equipped";
-      else if (itemData.data.carried === true) labels.equipped = "Carried";
+      if (itemData.data.equipped === true) labels.equipped = game.i18n.localize("PF1.Equipped");
+      else if (itemData.data.carried === true) labels.equipped = game.i18n.localize("PF1.Carried");
 
       // Slot label
       if (itemData.data.slot) labels.slot = CONFIG.PF1.equipmentSlots[itemData.data.slot];
@@ -298,9 +298,9 @@ export class ItemPF extends Item {
     dynamicLabels.level = labels.sl || "";
     // Range
     if (data.range != null) {
-      if (data.range.units === "close") dynamicLabels.range = `Range: ${(25 + Math.floor(cl / 2) * 5)}`;
-      else if (data.range.units === "medium") dynamicLabels.range = `Range: ${(100 + cl * 10)}`;
-      else if (data.range.units === "long") dynamicLabels.range = `Range:  ${(400 + cl * 40)}`;
+      if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(cl / 2) * 5);
+      else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + cl * 10);
+      else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + cl * 40);
       else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
         let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
         dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
@@ -325,7 +325,7 @@ export class ItemPF extends Item {
     // General equipment properties
     if ( data.hasOwnProperty("equipped") && ["weapon", "equipment"].includes(this.data.type) ) {
       props.push(
-        data.equipped ? "Equipped" : "Not Equipped",
+        data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"),
       );
     }
 
@@ -377,7 +377,7 @@ export class ItemPF extends Item {
    */
   _equipmentChatData(data, labels, props) {
     props.push(
-      CONFIG.PF1.armorTypes[data.armor.type],
+      CONFIG.PF1.equipmentTypes[data.armor.type],
       labels.armor || null,
     );
   }

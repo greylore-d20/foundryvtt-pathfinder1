@@ -2,7 +2,7 @@
 
   <ol class="currency flexrow">
     <h3>
-      Currency
+      {{localize "PF1.Currency"}}
       <!-- <a class="currency-convert" title="Convert Currency"><i class="fas fa-coins"></i></a> -->
     </h3>
     {{#each data.currency as |v k|}}
@@ -13,7 +13,7 @@
   {{#if isCharacter}}
   <ol class="currency flexrow">
     <h3>
-      Weightless Currency
+      {{localize "PF1.WeightlessCurrency"}}
       <!-- <a class="currency-convert" title="Convert Currency"><i class="fas fa-coins"></i></a> -->
     </h3>
     {{#each data.altCurrency as |v k|}}
@@ -38,18 +38,18 @@
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>
 
-        {{#if section.hasSlots}}<div class="item-detail item-slot"><span>Slot</span></div>{{/if}}
-        {{#if section.hasActions}}<div class="item-detail item-actions"><span>Actions</span></div>{{/if}}
+        {{#if section.hasSlots}}<div class="item-detail item-slot"><span>{{localize "PF1.Slot"}}</span></div>{{/if}}
+        {{#if section.hasActions}}<div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>{{/if}}
 
-        <div class="item-detail item-weight"><span>Weight</span></div>
-        <div class="item-detail item-equipped"><span>Equipped</span></div>
-        <div class="item-detail item-uses"><span>Charges</span></div>
+        <div class="item-detail item-weight"><span>{{localize "PF1.Weight"}}</span></div>
+        <div class="item-detail item-equipped"><span>{{localize "PF1.Equipped"}}</span></div>
+        <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
 
         {{#if ../owner}}
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" title="Create Item" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i> Add
+            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
           </a>
           {{/if}}
         </div>
@@ -121,24 +121,24 @@
 
 
 <div class="form-group carry-bonus">
-  <label>Bonus Carry Strength</label>
+  <label>{{localize "PF1.BonusCarryStrength"}}</label>
   <input type="text" name="data.abilities.str.carryBonus" value="{{data.abilities.str.carryBonus}}" data-dtype="Number" placeholder="0"/>
-  <label>Multiplier</label>
+  <label>{{localize "PF1.Multiplier"}}</label>
   <input type="text" name="data.abilities.str.carryMultiplier" value="{{data.abilities.str.carryMultiplier}}"
                                                                data-dtype="Number" placeholder="1"/>
 </div>
 {{#with encumbrance}}
-Carrying {{value}} lbs.
+{{carryLabel}}
 <div class="encumbrance {{#if encumbered.light}}encumbered{{/if}}">
   <span class="encumbrance-bar" style="width:{{pct.light}}%"></span>
-  <span class="encumbrance-label">Light Load ({{light}})</span>
+  <span class="encumbrance-label">{{localize "PF1.CarryLightLoad"}} ({{light}})</span>
 </div>
 <div class="encumbrance {{#if encumbered.medium}}encumbered{{/if}}">
   <span class="encumbrance-bar" style="width:{{pct.medium}}%"></span>
-  <span class="encumbrance-label">Medium Load ({{medium}})</span>
+  <span class="encumbrance-label">{{localize "PF1.CarryMediumLoad"}} ({{medium}})</span>
 </div>
 <div class="encumbrance {{#if encumbered.medium}}encumbered{{/if}}">
   <span class="encumbrance-bar" style="width:{{pct.heavy}}%"></span>
-  <span class="encumbrance-label">Heavy Load ({{heavy}})</span>
+  <span class="encumbrance-label">{{localize "PF1.CarryHeavyLoad"}} ({{heavy}})</span>
 </div>
 {{/with}}

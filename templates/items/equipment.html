@@ -6,7 +6,7 @@
 
     <div class="header-details flexrow">
       <h1 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
 
       <div class="item-subtitle">
@@ -20,7 +20,7 @@
         </li>
         <li></li>
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
         </li>
       </ul>
     </div>
@@ -41,11 +41,11 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
-      <h3 class="form-header">Equipment Details</h3>
+      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
 
       {{!-- Equipment Type --}}
       <div class="form-group">
-        <label>Equipment Type</label>
+        <label>{{localize "PF1.Type"}}</label>
         <select name="data.armor.type">
           {{#select data.armor.type}}
           {{#each config.equipmentTypes as |name type|}}
@@ -57,7 +57,7 @@
 
       {{!-- Equipment Slot --}}
       <div class="form-group">
-        <label>Slot</label>
+        <label>{{localize "PF1.Slot"}}</label>
         <select name="data.slot">
           {{#select data.slot}}
           {{#each config.equipmentSlots as |name type|}}
@@ -69,24 +69,24 @@
 
       {{!-- Equipment Status --}}
       <div class="form-group stacked">
-        <label>Equipment Status</label>
+        <label>{{localize "PF1.EquipmentStatus"}}</label>
         <label class="checkbox">
-          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> Equipped
+          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{localize "PF1.Equipped"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.identified" {{checked data.identified}}/> Identified
+          <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
         </label>
       </div>
 
       {{!-- Armor Class --}}
       <div class="form-group">
-        <label>Armor Class</label>
+        <label>{{localize "PF1.ArmorClass"}}</label>
         <div class="form-fields">
           <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
         </div>
       </div>
       <div class="form-group">
-        <label>Enhancement Bonus</label>
+        <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
           <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
         </div>
@@ -94,15 +94,15 @@
 
       {{!-- Dexterity Modifier --}}
       <div class="form-group">
-        <label>Max. Dexterity Modifier</label>
+        <label>{{localize "PF1.MaxDexterityModifier"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="Unlimited"/>
+          <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}"/>
         </div>
       </div>
 
       {{!-- Armor Check Penalty --}}
       <div class="form-group">
-        <label>Armor Check Penalty</label>
+        <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
         <div class="form-fields">
           <input type="text" name="data.armor.acp" value="{{data.armor.acp}}" data-dtype="Number" placeholder="0"/>
         </div>
@@ -110,18 +110,18 @@
 
       {{!-- Spell Failure --}}
       <div class="form-group">
-        <label>Arcane Spell Failure</label>
+        <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
         <div class="form-fields">
           <input type="text" name="data.spellFailure" value="{{data.spellFailure}}" data-dtype="Number" placeholder="0"/>
         </div>
       </div>
 
-      <h3 class="form-header">Equipment Usage</h3>
+      <h3 class="form-header">{{localize "PF1.EquipmentUsage"}}</h3>
 
       {{!-- Item Activation Template --}}
       {{> "systems/pf1/templates/items/parts/item-activation.html"}}
 
-      <h3 class="form-header">Equipment Action</h3>
+      <h3 class="form-header">{{localize "PF1.Action"}}</h3>
 
       {{!-- Item Action Template --}}
       {{> "systems/pf1/templates/items/parts/item-action.html"}}

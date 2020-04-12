@@ -48,7 +48,7 @@
     </div>
     {{#unless ../isCharacter}}
     <footer class="attribute-footer">
-      <span>Base</span>
+      <span>{{localize "PF1.Base"}}</span>
       <input name="data.attributes.savingThrows.{{id}}.value" type="text" placeholder="0" data-dtype="Number"
         value="{{numberFormat savingThrow.value decimals=0 sign=false}}"/>
     </footer>
@@ -102,7 +102,7 @@
         <span>{{data.attributes.sr.total}}</span>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.sr.formula" type="text" placeholder="Formula"
+        <input name="data.attributes.sr.formula" type="text" placeholder="{{localize "PF1.Formula"}}"
           value="{{#if data.attributes.sr.formula}}{{data.attributes.sr.formula}}{{/if}}"/>
       </footer>
     </li>
@@ -110,23 +110,23 @@
 
 <div class="attributes defense-notes flexcol">
   <div class="flexrow">
-    <label><h3>Save notes</h3></label>
-    <textarea name="data.attributes.saveNotes" placeholder="Save notes">{{data.attributes.saveNotes}}</textarea>
+    <label><h3>{{localize "PF1.SaveNotes"}}</h3></label>
+    <textarea name="data.attributes.saveNotes" placeholder="{{localize "PF1.SaveNotes"}}">{{data.attributes.saveNotes}}</textarea>
   </div>
   <hr>
   <div class="flexrow">
-    <label><h3>AC notes</h3></label>
-    <textarea name="data.attributes.acNotes" placeholder="AC notes">{{data.attributes.acNotes}}</textarea>
+    <label><h3>{{localize "PF1.ACNotes"}}</h3></label>
+    <textarea name="data.attributes.acNotes" placeholder="{{localize "PF1.ACNotes"}}">{{data.attributes.acNotes}}</textarea>
   </div>
   <hr>
   <div class="flexrow">
-    <label><h3>CMD notes</h3></label>
-    <textarea name="data.attributes.cmdNotes" placeholder="CMD notes">{{data.attributes.cmdNotes}}</textarea>
+    <label><h3>{{localize "PF1.CMDNotes"}}</h3></label>
+    <textarea name="data.attributes.cmdNotes" placeholder="{{localize "PF1.CMDNotes"}}">{{data.attributes.cmdNotes}}</textarea>
   </div>
   <hr>
   <div class="flexrow">
-    <label><h3>SR notes</h3></label>
-    <textarea name="data.attributes.srNotes" placeholder="SR notes">{{data.attributes.srNotes}}</textarea>
+    <label><h3>{{localize "PF1.SpellResistanceNotes"}}</h3></label>
+    <textarea name="data.attributes.srNotes" placeholder="{{localize "PF1.SpellResistanceNotes"}}">{{data.attributes.srNotes}}</textarea>
   </div>
   <hr>
 </div>

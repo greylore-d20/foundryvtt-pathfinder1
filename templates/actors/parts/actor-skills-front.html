@@ -3,15 +3,15 @@
 <div class="flexcol skill-rank">
   <ol class="form-group">
     <li class="flexrow skill-rank-formula">
-      <label>Bonus Rank Formula</label>
-      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="Formula"/>
+      <label>{{localize "PF1.SkillBonusRankFormula"}}</label>
+      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="{{localize "PF1.Formula"}}"/>
     </li>
   </ol>
   <ol class="form-group">
     <li class="flexrow skill-rank-info">
-      <label>Skill Ranks</label>
+      <label>{{localize "PF1.SkillRankPlural"}}</label>
       <input type="text" disabled value="{{skillRanks.allowed}}"/>
-      <label>Used</label>
+      <label>{{localize "PF1.Used"}}</label>
       <input type="text" disabled value="{{skillRanks.used}}"/>
     </li>
   </ol>
@@ -20,29 +20,29 @@
 <div class="flexcol skill-rank">
   <ol class="form-group">
     <li class="flexrow skill-rank-formula">
-      <label>Bonus Rank Formula</label>
-      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="Formula"/>
+      <label>{{localize "PF1.SkillBonusRankFormula"}}</label>
+      <input type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="{{localize "PF1.Formula"}}"/>
     </li>
   </ol>
   <ol class="form-group">
     <li class="flexrow skill-rank-info">
-      <label>Skill Ranks</label>
+      <label>{{localize "PF1.SkillRankPlural"}}</label>
       <input type="text" disabled value="{{skillRanks.allowed}}"/>
-      <label>Used</label>
+      <label>{{localize "PF1.Used"}}</label>
       <input type="text" disabled value="{{skillRanks.used}}"/>
-      <label>Adventure Ranks sent to BG</label>
+      <label>{{localize "PF1.AdventureRanksToBG"}}</label>
       <input type="text" disabled value="{{skillRanks.sentToBG}}"/>
-      <label>BG Skill Ranks</label>
+      <label>{{localize "PF1.BGSkillRanks"}}</label>
       <input type="text" disabled value="{{skillRanks.bgAllowed}}"/>
-      <label>BG Used</label>
+      <label>{{localize "PF1.BGUsed"}}</label>
       <input type="text" disabled value="{{skillRanks.bgUsed}}"/>
     </li>
   </ol>
 </div>
 
 <nav class="sheet-navigation tabs" data-group="skillset">
-  <a class="item" data-tab="adventure">Adventure</a>
-  <a class="item" data-tab="background">Background</a>
+  <a class="item" data-tab="adventure">{{localize "PF1.SkillTypeAdventure"}}</a>
+  <a class="item" data-tab="background">{{localize "PF1.SkillTypeBackground"}}</a>
 </nav>
 
 <section class="skillset-body">
@@ -58,7 +58,7 @@
 
 {{#unless useBGSkills}}
 <nav class="sheet-navigation tabs" data-group="skillset" style="display: none">
-  <a class="item" data-tab="all">All Skills</a>
+  <a class="item" data-tab="all">{{localize "PF1.AllSkills"}}</a>
 </nav>
 
 <section class="skillset-body">

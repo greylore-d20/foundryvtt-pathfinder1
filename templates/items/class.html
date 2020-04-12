@@ -6,7 +6,7 @@
 
     <div class="header-details flexrow">
       <h1 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
 
       <div class="item-subtitle">
@@ -16,11 +16,11 @@
 
       <ul class="summary">
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
         </li>
         <li class="tooltip">
           <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.levels}}</span>
-          <input type="text" name="data.levels" value="{{data.levels}}" placeholder="Level" data-dtype="Number"/>
+          <input type="text" name="data.levels" value="{{data.levels}}" placeholder="{{localize "PF1.Level"}}" data-dtype="Number"/>
         </li>
       </ul>
     </div>
@@ -44,14 +44,14 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{!-- HD --}}
       <div class="form-group">
-        <label>Hit Die</label>
+        <label>{{localize "PF1.HitDie"}}</label>
         <input type="text" name="data.hd" value="{{data.hd}}" data-dtype="Number" />
       </div>
 
       {{!-- Hit Points --}}
       {{#unless autoHP}}
       <div class="form-group">
-        <label>Hit Points</label>
+        <label>{{localize "PF1.HitPoints"}}</label>
         <input type="text" name="data.hp" value="{{data.hp}}" data-dtype="Number" />
       </div>
       {{/unless}}
@@ -64,11 +64,11 @@
 
       {{!-- Skills/Level --}}
       <div class="form-group">
-        <label>Skills/Level</label>
+        <label>{{localize "PF1.SkillsPerLevel"}}</label>
         <input type="text" name="data.skillsPerLevel" value="{{data.skillsPerLevel}}" data-dtype="Number" />
       </div>
 
-      <h4 class="form-header">Saving Throws</h4>
+      <h4 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h4>
 
       {{!-- Saving Throws --}}
       {{#each data.savingThrows as |savingThrow id|}}
@@ -78,7 +78,7 @@
       </div>
       {{/each}}
 
-      <h4 class="form-header">Favoured Class Bonuses</h4 class="form-header">
+      <h4 class="form-header">{{localize "PF1.FavouredClassBonuses"}}</h4 class="form-header">
 
       {{!-- Favoured Class Bonuses --}}
       {{#each data.fc as |fc id|}}

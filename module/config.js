@@ -308,7 +308,7 @@ PF1.itemCapacityTypes = {
  */
 PF1.limitedUsePeriods = {
   "single": "PF1.LimitedUseSingle",
-  "unlimited": "PF1.LimitedUseUnlimited",
+  "unlimited": "PF1.Unlimited",
   "day": "PF1.LimitedUseDay",
   "week": "PF1.LimitedUseWeek",
   "charges": "PF1.LimitedUseCharges",
@@ -327,7 +327,6 @@ PF1.equipmentTypes = {
   "shield": "PF1.EquipTypeShield",
   "misc": "PF1.Misc",
 };
-PF1.armorTypes = PF1.equipmentTypes;
 
 PF1.equipmentSlots = {
   "slotless": "PF1.EquipSlotSlotless",
@@ -456,7 +455,7 @@ PF1.distanceUnits = {
   "ft": "PF1.DistFt",
   "mi": "PF1.DistMi",
   "spec": "PF1.Special",
-  "unlimited": "PF1.DistUnlimited"
+  "unlimited": "PF1.Unlimited"
 };
 
 /* -------------------------------------------- */

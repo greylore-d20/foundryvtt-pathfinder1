@@ -1,33 +1,33 @@
 {{!-- Flags --}}
 <div class="form-group">
-  <label class="header">Flags</label>
+  <label class="header">{{localize "PF1.CheckFlags"}}</label>
   <div class="buff-flags">
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.loseDexToAC" {{checked data.changeFlags.loseDexToAC}}/> Lose Dex to AC
+      <input type="checkbox" name="data.changeFlags.loseDexToAC" {{checked data.changeFlags.loseDexToAC}}/> {{localize "PF1.ChangeFlagLoseDexToAC"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.noDex" {{checked data.changeFlags.noDex}}/> 0 Dexterity
+      <input type="checkbox" name="data.changeFlags.noDex" {{checked data.changeFlags.noDex}}/> {{localize "PF1.ChangeFlagNoDex"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.noStr" {{checked data.changeFlags.noStr}}/> 0 Strength
+      <input type="checkbox" name="data.changeFlags.noStr" {{checked data.changeFlags.noStr}}/> {{localize "PF1.ChangeFlagNoStr"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.oneInt" {{checked data.changeFlags.oneInt}}/> 1 Intelligence
+      <input type="checkbox" name="data.changeFlags.oneInt" {{checked data.changeFlags.oneInt}}/> {{localize "PF1.ChangeFlagOneInt"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.oneWis" {{checked data.changeFlags.oneWis}}/> 1 Wisdom
+      <input type="checkbox" name="data.changeFlags.oneWis" {{checked data.changeFlags.oneWis}}/> {{localize "PF1.ChangeFlagOneWis"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.oneCha" {{checked data.changeFlags.oneCha}}/> 1 Charisma
+      <input type="checkbox" name="data.changeFlags.oneCha" {{checked data.changeFlags.oneCha}}/> {{localize "PF1.ChangeFlagOneCha"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.noEncumbrance" {{checked data.changeFlags.noEncumbrance}}/> Dwarf-like Encumbrance
+      <input type="checkbox" name="data.changeFlags.noEncumbrance" {{checked data.changeFlags.noEncumbrance}}/> {{localize "PF1.ChangeFlagDwarflikeEncumbrance"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.mediumArmorFullSpeed" {{checked data.changeFlags.mediumArmorFullSpeed}}/> Full Speed in Medium Armor
+      <input type="checkbox" name="data.changeFlags.mediumArmorFullSpeed" {{checked data.changeFlags.mediumArmorFullSpeed}}/> {{localize "PF1.ChangeFlagMediumArmorFullSpeed"}}
     </label>
     <label class="checkbox">
-        <input type="checkbox" name="data.changeFlags.heavyArmorFullSpeed" {{checked data.changeFlags.heavyArmorFullSpeed}}/> Full Speed in Heavy Armor
+      <input type="checkbox" name="data.changeFlags.heavyArmorFullSpeed" {{checked data.changeFlags.heavyArmorFullSpeed}}/> {{localize "PF1.ChangeFlagHeavyArmorFullSpeed"}}
     </label>
   </div>
 </div>
@@ -35,17 +35,17 @@
 <div>
   {{!-- Changes --}}
   <h4 class="change-header">
-    Changes
+    {{localize "PF1.Changes"}}
     <a class="change-control add-change"><i class="fas fa-plus"></i></a>
   </h4>
   <ol class="changes form-group">
     {{#each data.changes as |change a|}}
     <li class="change flexrow" data-change="{{a}}">
       <input type="text" name="data.changes.{{a}}.0" value="{{lookup this "0"}}"
-        placeholder="Formula" />
+                                                     placeholder="{{localize "PF1.Formula"}}" />
       <select name="data.changes.{{a}}.1">
         {{#select (lookup this "1") }}
-        <option value="">None</option>
+        <option value="">{{localize "PF1.None"}}</option>
         {{#each ../changes.targets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}

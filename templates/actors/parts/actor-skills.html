@@ -25,10 +25,10 @@
         {{/if}}
       </span>
       <div class="rollable image-d20"></div>
-      <input type="text" name="data.skills.{{s}}.subSkills.{{b}}.name" value="{{subSkill.name}}" placeholder="Name"/>
+      <input type="text" name="data.skills.{{s}}.subSkills.{{b}}.name" value="{{subSkill.name}}" placeholder="{{localize "PF1.SkillName"}}"/>
     </div>
-    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.subSkills.{{b}}.notes" placeholder="Notes">{{#if subSkill.notes}}{{subSkill.notes}}{{/if}}</textarea>
-    <input type="text" class="skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" value="{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}" placeholder="Rank" data-dtype="Number"/>
+    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.subSkills.{{b}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if subSkill.notes}}{{subSkill.notes}}{{/if}}</textarea>
+    <input type="text" class="skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" value="{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
     <label class="checkbox skill-cs">
       CS <input type="checkbox" name="data.skills.{{s}}.subSkills.{{b}}.cs" {{checked subSkill.cs}}/>
     </label>
@@ -69,13 +69,13 @@
       </span>
       <div class="rollable image-d20"></div>
       {{#if skill.custom}}
-      <input type="text" name="data.skills.{{s}}.name" value="{{skill.name}}" placeholder="Name"/>
+      <input type="text" name="data.skills.{{s}}.name" value="{{skill.name}}" placeholder="{{localize "PF1.Name"}}"/>
       {{else}}
       <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
     <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="Notes">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
-    <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="Rank" data-dtype="Number"/>
+    <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
     <label class="checkbox skill-cs">
       CS <input type="checkbox" name="data.skills.{{s}}.cs" {{checked skill.cs}}/>
     </label>

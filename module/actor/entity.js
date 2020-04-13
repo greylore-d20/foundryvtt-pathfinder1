@@ -996,6 +996,8 @@ export class ActorPF extends Actor {
         }
       }
     }
+    // Update encumbrance
+    this._computeEncumbrance(updateData, srcData1);
     // Add dex mod to AC
     if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
       const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
@@ -1704,9 +1706,6 @@ export class ActorPF extends Actor {
         data[`data.resources.${tag}`] = null;
       }
     }
-
-    // Update encumbrance
-    this._computeEncumbrance(data);
 
     if (this._updateExp(data)) options.diff = false;
 
@@ -2462,44 +2461,39 @@ export class ActorPF extends Actor {
     return super.createEmbeddedEntity(embeddedName, (noArray ? createData[0] : createData), options);
   }
 
-  _computeEncumbrance(updateData) {
-    const mergedData = mergeObject(this.data, updateData, { inplace: false });
-
+  _computeEncumbrance(updateData, srcData) {
     // Determine carrying capacity
-    const carryStr = mergedData.data.abilities.str.value + mergedData.data.abilities.str.carryBonus;
-    let carryMultiplier = mergedData.data.abilities.str.carryMultiplier;
-    const size = mergedData.data.traits.size;
-    if (mergedData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
+    const carryStr = srcData.data.abilities.str.total + srcData.data.abilities.str.carryBonus;
+    let carryMultiplier = srcData.data.abilities.str.carryMultiplier;
+    const size = srcData.data.traits.size;
+    if (srcData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
     const table = CONFIG.PF1.encumbranceLoads;
-    const heavy = updateData["data.attributes.encumbrance.levels.heavy"] = mergedData.data.attributes.encumbrance.levels.heavy = Math.floor(Math.max(
+    const heavy = Math.floor(Math.max(
       3,
       (carryStr >= table.length ?
         table[table.length - 1] + ((table[table.length - 1] - table[table.length - 2]) * (carryStr - (table.length - 1))) :
         table[carryStr]) * carryMultiplier
     ));
-    updateData["data.attributes.encumbrance.levels.light"] = mergedData.data.attributes.encumbrance.levels.light =
-      Math.floor(heavy / 3);
-    updateData["data.attributes.encumbrance.levels.medium"] = mergedData.data.attributes.encumbrance.levels.medium =
-      Math.floor(heavy / 3 * 2);
-    updateData["data.attributes.encumbrance.levels.carry"] = mergedData.data.attributes.encumbrance.levels.carry =
-      Math.floor(heavy * 2);
-    updateData["data.attributes.encumbrance.levels.drag"] = mergedData.data.attributes.encumbrance.levels.drag =
-      Math.floor(heavy * 5);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.heavy", heavy);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.light", Math.floor(heavy / 3));
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.medium", Math.floor(heavy / 3 * 2));
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.carry", Math.floor(heavy * 2));
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.drag", Math.floor(heavy * 5));
 
     // Determine carried weight
     const physicalItems = this.items.filter(o => { return o.data.data.weight != null; });
     const carriedWeight = physicalItems.reduce((cur, o) => {
       if (!o.data.data.carried) return cur;
       return cur + (o.data.data.weight * o.data.data.quantity);
-    }, this._calculateCoinWeight(mergedData));
-    updateData["data.attributes.encumbrance.carriedWeight"] = mergedData.data.attributes.encumbrance.carriedWeight = Math.round(carriedWeight * 10) / 10;
+    }, this._calculateCoinWeight(srcData));
+    linkData(srcData, updateData, "data.attributes.encumbrance.carriedWeight", Math.round(carriedWeight * 10) / 10);
 
     // Determine load level
     let encLevel = 0;
-    if (carriedWeight >= mergedData.data.attributes.encumbrance.levels.light) encLevel++;
-    if (carriedWeight >= mergedData.data.attributes.encumbrance.levels.medium) encLevel++;
-    updateData["data.attributes.encumbrance.level"] = mergedData.data.attributes.encumbrance.level = encLevel;
+    if (carriedWeight >= srcData.data.attributes.encumbrance.levels.light) encLevel++;
+    if (carriedWeight >= srcData.data.attributes.encumbrance.levels.medium) encLevel++;
+    linkData(srcData, updateData, "data.attributes.encumbrance.level", encLevel);
   }
 
   _calculateCoinWeight(data) {

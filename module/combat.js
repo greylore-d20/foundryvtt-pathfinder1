@@ -33,7 +33,7 @@ Combat.prototype.showInitiativeDialog = function(formula=null) {
     // Show dialog
     renderTemplate(template, dialogData).then(dlg => {
       new Dialog({
-        title: `Initiative Bonus`,
+        title: game.i18n.localize("PF1.InitiativeBonus"),
         content: dlg,
         buttons: buttons,
         default: "normal",
@@ -90,7 +90,7 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
         token: c.token._id,
         alias: c.token.name
       },
-      flavor: `${c.token.name} rolls for Initiative!`
+      flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name)
     }, messageOptions);
     const chatData = roll.toMessage(messageData, {rollMode, create:false});
     if ( i > 0 ) chatData.sound = null;   // Only play 1 sound for the whole set
@@ -130,25 +130,25 @@ export const addChatMessageContextOptions = function(html, options) {
   let canApplyCritical = li => canvas.tokens.controlledTokens.length && li.find(".crit-damage-roll .dice-total").length;
   options.push(
     {
-      name: "Apply Damage",
+      name: game.i18n.localize("PF1.ApplyDamage"),
       icon: '<i class="fas fa-user-minus"></i>',
       condition: canApply,
       callback: li => ActorPF.applyDamage(li, 1)
     },
     {
-      name: "Apply Healing",
+      name: game.i18n.localize("PF1.ApplyHealing"),
       icon: '<i class="fas fa-user-plus"></i>',
       condition: canApply,
       callback: li => ActorPF.applyDamage(li, -1)
     },
     {
-      name: "Apply Critical Damage",
+      name: game.i18n.localize("PF1.ApplyCriticalDamage"),
       icon: '<i class="fas fa-user-minus"></i>',
       condition: canApplyCritical,
       callback: li => ActorPF.applyDamage(li, 1, true)
     },
     {
-      name: "Apply Critical Healing",
+      name: game.i18n.localize("PF1.ApplyCriticalHealing"),
       icon: '<i class="fas fa-user-minus"></i>',
       condition: canApplyCritical,
       callback: li => ActorPF.applyDamage(li, -1, true)

@@ -1100,7 +1100,7 @@ export class ItemPF extends Item {
       else if (key === "material" && value) components.push("M");
       else if (key === "focus" && value) components.push("F");
     }
-    if (components.length === 0 && getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
+    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
     const df = getProperty(srcData, "data.components.divineFocus");
     // Sort components
     const componentsOrder = ["V", "S", "M", "F", "DF"];
@@ -1154,6 +1154,12 @@ export class ItemPF extends Item {
           else label.range = `${rangeValue} ${label.range}`;
         }
       }
+    }
+    // Set area label
+    {
+      const area = getProperty(srcData, "data.spellArea");
+
+      if (area) label.area = area;
     }
 
     // Set DC and SR

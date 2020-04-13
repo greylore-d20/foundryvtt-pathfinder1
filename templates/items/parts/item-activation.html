@@ -40,6 +40,16 @@
   </div>
 </div>
 
+{{!-- Area --}}
+{{#if isSpell}}
+<div class="form-group input-select-select">
+  <label>{{localize "PF1.Area"}}</label>
+  <div class="form-fields">
+    <input type="text" name="data.spellArea" value="{{data.spellArea}}"/>
+  </div>
+</div>
+{{/if}}
+
 {{!-- Effect Duration --}}
 <div class="form-group input-select">
   <label>{{localize "PF1.Duration"}}</label>

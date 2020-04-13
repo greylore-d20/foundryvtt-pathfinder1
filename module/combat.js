@@ -1,4 +1,5 @@
 import { ActorPF } from "./actor/entity.js";
+import { isMinimumCoreVersion } from "./lib.js";
 
 /* -------------------------------------------- */
 
@@ -102,13 +103,15 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
   if ( !updates.length ) return this;
 
   // Update multiple combatants
-  await this.updateManyEmbeddedEntities("Combatant", updates);
+  if (isMinimumCoreVersion("0.5.4")) await this.updateEmbeddedEntity("Combatant", updates);
+  else await this.updateManyEmbeddedEntities("Combatant", updates);
 
   // Ensure the turn order remains with the same combatant
   await this.update({turn: this.turns.findIndex(t => t._id === currentId)});
 
   // Create multiple chat messages
-  await ChatMessage.createMany(messages);
+  if (isMinimumCoreVersion("0.5.4")) await ChatMessage.create(messages);
+  else await ChatMessage.createMany(messages);
 
   // Return the updated Combat
   return this;

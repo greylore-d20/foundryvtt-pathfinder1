@@ -345,7 +345,7 @@ export class ItemPF extends Item {
     }
 
     // Add save DC
-    if (data.hasOwnProperty("actionType") && hasProperty(data, "save.type") && data.save.type !== "") {
+    if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
       let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
       let saveType = data.save.description;
       if (this.type === "spell") {
@@ -1080,7 +1080,7 @@ export class ItemPF extends Item {
       const activationCost = getProperty(srcData, "data.activation.cost");
       const activationType = getProperty(srcData, "data.activation.type");
   
-      if (activationType != null) {
+      if (activationType) {
         if (CONFIG.PF1.abilityActivationTypesPlurals[activationType] != null) {
           if (activationCost === 1) label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
           else label.castingTime = `${CONFIG.PF1.abilityActivationTypesPlurals[activationType]}`;

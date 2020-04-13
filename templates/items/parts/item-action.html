@@ -104,7 +104,15 @@
   {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
   <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
 </h4>
-<ol class="damage-parts form-group">
+<ol class="damage-parts form-group tooltip">
+  <span class="tooltipcontent">
+    NOTE: Normally, every variable entered in these fields are not multiplied on a critical hit,
+    EXCEPT the first damage die in the first field. If you want to have something multiplied on
+    a critical hit, multiply it by the variable @critMult.<br>
+    Examples:<br>
+    1d8 + 2 * @critMult<br>
+    2d6 + (@critMult)d6
+  </span>
   {{#each data.damage.parts as |part i| }}
   <li class="damage-part flexrow" data-damage-part="{{i}}">
     <input type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>

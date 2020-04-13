@@ -28,7 +28,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
+    {{#if canInputRange}}<input type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="data.range.units">
       {{#select data.range.units}}
       <option value=""></option>
@@ -41,10 +41,12 @@
 </div>
 
 {{!-- Effect Duration --}}
-{{#unless isSpell}}
 <div class="form-group input-select">
   <label>{{localize "PF1.Duration"}}</label>
   <div class="form-fields">
+    {{#if isSpell}}
+    <input type="text" name="data.spellDuration" value="{{data.spellDuration}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
+    {{else}}
     {{#if canInputDuration}}<input type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
     <select name="data.duration.units">
       {{#select data.duration.units}}
@@ -54,9 +56,9 @@
       {{/each}}
       {{/select}}
     </select>
+    {{/if}}
   </div>
 </div>
-{{/unless}}
 
 {{!-- Limited Uses --}}
 {{#unless isSpell}}

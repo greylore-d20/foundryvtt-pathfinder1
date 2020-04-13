@@ -33,6 +33,9 @@ export const preloadHandlebarsTemplates = async function() {
     // Chat
     "systems/pf1/templates/chat/roll-ext.html",
     "systems/pf1/templates/chat/defenses.html",
+
+    // Internal Rendering Partials
+    "systems/pf1/templates/internal/spell-description.html",
   ];
 
   // Load the template parts

@@ -12,7 +12,6 @@ export const migrateWorld = async function() {
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
         await a.update(updateData);
-        // a.items = a._getItems(); // TODO - Temporary Hack
       }
     } catch(err) {
       console.error(err);
@@ -115,14 +114,19 @@ export const migrateActorData = async function(actor) {
   if ( !actor.items ) return updateData;
 
   // Migrate Owned Items
-  for (let i of Object.values(actor.items)) {
+  let items = [];
+  let hasItemUpdates = false;
+  for (let a = 0; a < actor.items.length; a++) {
+    let i = actor.items[a];
+    items[a] = i;
     let itemUpdate = migrateItemData(i);
 
     // Update the Owned Item
-    if (!isObjectEmpty(itemUpdate) && i instanceof Item) {
-      await i.update(itemUpdate);
+    if (!isObjectEmpty(itemUpdate)) {
+      items[a] = mergeObject(i, itemUpdate, { enforceTypes: false, inplace: false });
     }
   }
+  if (hasItemUpdates) updateData.items = items;
   return updateData;
 };
 
@@ -138,6 +142,8 @@ export const migrateItemData = function(item) {
   _migrateItemSpellUses(item, updateData);
   _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
+  _migrateSpellDescription(item, updateData);
+  _migrateItemDC(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -330,6 +336,37 @@ const _migrateWeaponImprovised = function(ent, updateData) {
     updateData["data.weaponType"] = "misc";
     updateData["data.properties.imp"] = true;
   }
+};
+
+const _migrateSpellDescription = function(ent, updateData) {
+  if (ent.type !== "spell") return;
+
+  const curValue = getProperty(ent.data.data, "shortDescription");
+  if (curValue != null) return;
+
+  const obj = getProperty(ent.data.data, "description.value");
+  if (typeof obj !== "string") return;
+  const html = $(`<div>${obj}</div>`);
+  const elem = html.find("h2").next();
+  if (elem.length === 1) updateData["data.shortDescription"] = elem.prop("outerHTML");
+  else updateData["data.shortDescription"] = html.prop("innerHTML");
+};
+
+const _migrateSpellDivineFocus = function(ent, updateData) {
+  if (ent.type !== "spell") return;
+
+  const value = getProperty(ent.data.data, "components.divineFocus");
+  if (typeof value === "boolean") updateData["data.components.divineFocus"] = (value === true ? 1 : 0);
+};
+
+const _migrateItemDC = function(ent, updateData) {
+  const value = getProperty(ent.data.data, "save.type");
+  if (value == null) return;
+  if (value === "") updateData["data.save.description"] = "";
+  else if (value === "fort") updateData["data.save.description"] = "Fortitude partial";
+  else if (value === "ref") updateData["data.save.description"] = "Reflex half";
+  else if (value === "will") updateData["data.save.description"] = "Will negates";
+  updateData["data.save.-=type"] = null;
 };
 
 /* -------------------------------------------- */

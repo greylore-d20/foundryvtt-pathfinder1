@@ -132,6 +132,29 @@ PF1.abilityActivationTypes = {
   "special": "PF1.ActivationTypeSpecial",
 };
 
+/**
+ * This describes plurals for activation types.
+ */
+PF1.abilityActivationTypesPlurals = {
+  "free": "PF1.ActivationTypeFreePlural",
+  "swift": "PF1.ActivationTypeSwiftPlural",
+  "immediate": "PF1.ActivationTypeImmediatePlural",
+  "move": "PF1.ActivationTypeMovePlural",
+  "standard": "PF1.ActivationTypeStandardPlural",
+  "full": "PF1.ActivationTypeFullroundPlural",
+  "attack": "PF1.ActivationTypeAttackPlural",
+  "round": "PF1.ActivationTypeRoundPlural",
+  "minute": "PF1.ActivationTypeMinutePlural",
+  "hour": "PF1.ActivationTypeHourPlural",
+};
+
+PF1.divineFocus = {
+  "0": "",
+  "1": "PF1.SpellComponentDivineFocusAlone",
+  "2": "PF1.SpellComponentDivineFocusMaterial",
+  "3": "PF1.SpellComponentDivineFocusFocus",
+};
+
 /* -------------------------------------------- */
 
 // Creature Sizes
@@ -455,7 +478,8 @@ PF1.distanceUnits = {
   "ft": "PF1.DistFt",
   "mi": "PF1.DistMi",
   "spec": "PF1.Special",
-  "unlimited": "PF1.Unlimited"
+  "seeText": "PF1.SeeText",
+  "unlimited": "PF1.Unlimited",
 };
 
 /* -------------------------------------------- */
@@ -498,7 +522,8 @@ PF1.timePeriods = {
   "month": "PF1.TimeMonth",
   "year": "PF1.TimeYear",
   "perm": "PF1.TimePerm",
-  "spec": "PF1.Special"
+  "seeText": "PF1.SeeText",
+  "spec": "PF1.Special",
 };
 
 /* -------------------------------------------- */
@@ -580,7 +605,7 @@ PF1.arbitrarySkills = [
 PF1.spellPreparationModes = {
   "atwill": "PF1.SpellPrepAtWill",
   "prepared": "PF1.SpellPrepPrepared",
-  "spontaneous": "Pf1.SpellPrepSpontaneous",
+  "spontaneous": "PF1.SpellPrepSpontaneous",
 };
 
 /* -------------------------------------------- */

@@ -84,7 +84,7 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
     }
     if (data.item.data.duration != null) {
-      data.canInputDuration = !(["", "inst", "perm"].includes(data.item.data.duration.units));
+      data.canInputDuration = !(["", "inst", "perm", "seeText"].includes(data.item.data.duration.units));
     }
 
     // Prepare weapon specific stuff

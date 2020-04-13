@@ -12,6 +12,15 @@
 </div>
 {{#if data.actionType}}
 
+{{#if isSpell}}
+<div class="form-group">
+  <label>{{localize "PF1.SpellEffect"}}</label>
+  <div class="form-fields">
+    <input type="text" name="data.spellEffect" value="{{data.spellEffect}}" placeholder="{{localize "PF1.SpellEffectExample"}}"/>
+  </div>
+</div>
+{{/if}}
+
 {{!-- Attack Roll Bonus --}}
 {{#if hasAttackRoll }}
 <div class="form-group">
@@ -107,17 +116,10 @@
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">
-  <label>{{localize "PF1.SavingThrow"}}</label>
+  <label>DC</label>
   <div class="form-fields">
-    <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="DC"/>
-    <select name="data.save.type">
-      {{#select data.save.type}}
-      <option value="">N/A</option>
-      {{#each config.savingThrows as |savingThrowType a|}}
-      <option value="{{a}}">{{savingThrowType}}</option>
-      {{/each}}
-      {{/select}}
-    </select>
+    <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}DC{{else}}{{localize "PF1.DCOffset"}}{{/unless}}"/>
+    <input type="text" name="data.save.description" value="{{data.save.description}}" placeholder="{{localize "PF1.DCDescriptionExample"}}"/>
   </div>
 </div>
 

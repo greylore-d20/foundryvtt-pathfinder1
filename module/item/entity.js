@@ -157,7 +157,9 @@ export class ItemPF extends Item {
     if ( data.hasOwnProperty("actionType") ) {
       // Save DC
       let save = data.save || {};
-      labels.save = save.ability ? `DC ${save.dc || ""} ${C.savingThrows[save.type]}` : "";
+      if (save.description) {
+        labels.save = `DC ${save.dc}`;
+      }
 
       // Damage
       let dam = data.damage || {};
@@ -176,6 +178,9 @@ export class ItemPF extends Item {
 
   async update(data, options={}) {
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+
+    // Update description
+    if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
     this._updateMaxUses(data, {srcData: srcData});
 
@@ -342,7 +347,7 @@ export class ItemPF extends Item {
     // Add save DC
     if (data.hasOwnProperty("actionType") && hasProperty(data, "save.type") && data.save.type !== "") {
       let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
-      let saveType = CONFIG.PF1.savingThrows[data.save.type];
+      let saveType = data.save.description;
       if (this.type === "spell") {
         saveDC += 10;
         // Add spellbook's ability modifier
@@ -350,10 +355,9 @@ export class ItemPF extends Item {
         // Add spell level
         saveDC += sl;
       }
-      if (saveDC > 0) {
-        props.push(
-          `DC ${saveDC} ${saveType}`
-        );
+      if (saveDC > 0 && saveType) {
+        props.push(`DC ${saveDC}`);
+        props.push(saveType);
       }
     }
 
@@ -1046,6 +1050,125 @@ export class ItemPF extends Item {
     // Case 2 - use Actor ID directory
     const actorId = card.dataset.actorId;
     return game.actors.get(actorId) || null;
+  }
+
+  /**
+   * Updates the spell's description.
+   */
+
+  async _updateSpellDescription(updateData, srcData) {
+    const reSplit = CONFIG.PF1.re.traitSeparator;
+
+    const label = {
+      school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
+      subschool: (getProperty(srcData, "data.subschool") || ""),
+      types: "",
+    };
+    const data = {
+      data: mergeObject(this.data.data, srcData.data, { inplace: false }),
+      label: label,
+    };
+
+    // Set subschool and types label
+    const types = getProperty(srcData, "data.types");
+    if (typeof types === "string" && types.length > 0) {
+      label.types = types.split(reSplit).join(", ");
+    }
+
+    // Set casting time label
+    if (getProperty(srcData, "data.activation")) {
+      const activationCost = getProperty(srcData, "data.activation.cost");
+      const activationType = getProperty(srcData, "data.activation.type");
+  
+      if (activationType != null) {
+        if (CONFIG.PF1.abilityActivationTypesPlurals[activationType] != null) {
+          if (activationCost === 1) label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
+          else label.castingTime = `${CONFIG.PF1.abilityActivationTypesPlurals[activationType]}`;
+        }
+        else label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
+      }
+      if (!Number.isNaN(activationCost) && label.castingTime != null) label.castingTime = `${activationCost} ${label.castingTime}`;
+      if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();
+    }
+
+    // Set components label
+    let components = [];
+    for (let [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
+      if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
+      else if (key === "verbal" && value) components.push("V");
+      else if (key === "somatic" && value) components.push("S");
+      else if (key === "material" && value) components.push("M");
+      else if (key === "focus" && value) components.push("F");
+    }
+    if (components.length === 0 && getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
+    const df = getProperty(srcData, "data.components.divineFocus");
+    // Sort components
+    const componentsOrder = ["V", "S", "M", "F", "DF"];
+    components.sort((a, b) => {
+      let index = [componentsOrder.indexOf(a), components.indexOf(b)];
+      if (index[0] === -1 && index[1] === -1) return 0;
+      if (index[0] === -1 && index[1] >= 0) return 1;
+      if (index[0] >= 0 && index[1] === -1) return -1;
+      return index[0] - index[1];
+    });
+    components = components.map(o => {
+      if (o === "M") {
+        if (df === 2) o = "M/DF";
+        if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
+      }
+      if (o === "F") {
+        if (df === 3) o = "F/DF";
+        if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
+      }
+      return o;
+    });
+    if (components.length > 0) label.components = components.join(", ");
+
+    // Set duration label
+    {
+      const duration = getProperty(srcData, "data.spellDuration");
+      if (duration) label.duration = duration;
+    }
+    // Set effect label
+    {
+      const effect = getProperty(srcData, "data.spellEffect");
+      if (effect) label.effect = effect;
+    }
+    // Set targets label
+    {
+      const targets = getProperty(srcData, "data.target.value");
+      if (targets) label.targets = targets;
+    }
+    // Set range label
+    {
+      const rangeUnit = getProperty(srcData, "data.range.units");
+      const rangeValue = getProperty(srcData, "data.range.value");
+
+      if (rangeUnit != null && rangeUnit !== "none") {
+        label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
+        if (rangeUnit === "close") label.range = `${label.range} (25 ft. + 5 ft./2 levels)`;
+        else if (rangeUnit === "medium") label.range = `${label.range} (100 ft. + 10 ft./level)`;
+        else if (rangeUnit === "long") label.range = `${label.range} (400 ft. + 40 ft./level)`;
+        else if (["ft", "mi"].includes(rangeUnit)) {
+          if (!rangeValue) label.range = "";
+          else label.range = `${rangeValue} ${label.range}`;
+        }
+      }
+    }
+
+    // Set DC and SR
+    {
+      const savingThrowDescription = getProperty(srcData, "data.save.description");
+      if (savingThrowDescription) label.savingThrow = savingThrowDescription;
+      else label.savingThrow = "none";
+
+      const sr = getProperty(srcData, "data.sr");
+      label.sr = (sr === true ? "yes" : "no");
+
+      if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
+    }
+
+    linkData(srcData, updateData, "data.description.value", await renderTemplate("systems/pf1/templates/internal/spell-description.html", data));
   }
 
   /* -------------------------------------------- */

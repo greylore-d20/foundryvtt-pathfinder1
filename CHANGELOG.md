@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.25
+
+### Bug Fixes
+
+- Error with looking up fly maneuverability
+
+### Changelog
+
+- Turned most of the hardcoded UI text into translatable strings
+- Generate spell descriptions automatically (will require some re-editing of spells)
+- Updated spells compendium to reflect spell changes
+
 ## 0.24
 
 ### Bug Fixes

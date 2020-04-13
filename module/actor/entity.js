@@ -957,7 +957,7 @@ export class ActorPF extends Actor {
         change.raw[4] = roll.roll().total;
       }
       catch (e) {
-        ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name));
+        ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name, this.name));
       }
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);

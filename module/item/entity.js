@@ -472,7 +472,8 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async useAttack() {
+  async useAttack({ev=null, skipDialog=false}={}) {
+    if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.actor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const itemData = this.data.data;
@@ -480,154 +481,212 @@ export class ItemPF extends Item {
     const rollData = duplicate(actorData);
     rollData.item = duplicate(itemData);
 
-    // Add contextual attack string
-    let props = [];
-    let effectStr = "";
-    if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-      if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.attackNotes, { rollData: rollData });
-      else {
-        effectStr = DicePF.messageRoll({
-          data: rollData,
-          msgStr: itemData.attackNotes
-        });
+    let rolled = false;
+    const _roll = async function(fullAttack, form) {
+      let attackExtraParts = [];
+      let damageExtraParts = [];
+      if (form) {
+        rollData.attackBonus = form.find('[name="attack-bonus"]').val();
+        if (rollData.attackBonus) attackExtraParts.push("@attackBonus");
+        rollData.damageBonus = form.find('[name="damage-bonus"]').val();
+        if (rollData.damageBonus) damageExtraParts.push("@damageBonus");
+
+        if (form.find('[name="power-attack"]').prop("checked")) {
+          rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
+          damageExtraParts.push("floor(@powerAttackBonus * @ablMult * @critMult)");
+          rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
+          attackExtraParts.push("@powerAttackPenalty");
+        }
       }
-    }
-    let effectContent = "";
-    if (effectStr.length > 0) {
-      const effects = effectStr.split(/[\n\r]+/);
-      for (let fx of effects) {
-        effectContent += `<div class="extra-misc">${fx}</div>`;
+      // Add contextual attack string
+      let props = [];
+      let effectStr = "";
+      if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
+        if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.attackNotes, { rollData: rollData });
+        else {
+          effectStr = DicePF.messageRoll({
+            data: rollData,
+            msgStr: itemData.attackNotes
+          });
+        }
       }
-      effectContent = `<div><label>${game.i18n.localize("PF1.AttackNotes")}</label>${effectContent}</div>`;
-    }
-    if (this.hasEffect) {
-      let effectStr = this.rollEffect();
+      let effectContent = "";
       if (effectStr.length > 0) {
-        effectContent += `<div><label>${game.i18n.localize("PF1.EffectNotes")}</label>${effectStr}</div>`;
+        const effects = effectStr.split(/[\n\r]+/);
+        for (let fx of effects) {
+          effectContent += `<div class="extra-misc">${fx}</div>`;
+        }
+        effectContent = `<div><label>${game.i18n.localize("PF1.AttackNotes")}</label>${effectContent}</div>`;
       }
-    }
+      if (this.hasEffect) {
+        let effectStr = this.rollEffect();
+        if (effectStr.length > 0) {
+          effectContent += `<div><label>${game.i18n.localize("PF1.EffectNotes")}</label>${effectStr}</div>`;
+        }
+      }
 
-    const properties = this.getChatData().properties;
-    if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
+      const properties = this.getChatData().properties;
+      if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
-    // Define Critical threshold
-    let crit = itemData.ability.critRange || 20;
+      // Define Critical threshold
+      let crit = itemData.ability.critRange || 20;
 
-    // Prepare the chat message data
-    let chatTemplateData = {
-      hasProperties: properties.length > 0,
-      properties: props,
-      name: this.name,
-    };
-    // Create attacks
-    const allAttacks = this.data.data.attackParts.reduce((cur, r) => {
-      cur.push({ bonus: r[0], label: r[1] });
-      return cur;
-    }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]);
-    let attacks = [];
-    const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
-      if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
-      return cur;
-    }, []);
-    if (this.hasAttack) {
-      for (let atk of allAttacks) {
-        const attack = {};
-        let tooltip, roll, d20, flavor, critType = 0;
-        // Attack roll
-        if (this.hasAttack) {
-          roll = this.rollAttack({ bonus: atk.bonus !== "" ? atk.bonus : null });
-          d20 = roll.parts[0];
-          if (d20.total >= crit) critType = 1;
-          else if (d20.total <= 1) critType = 2;
-
-          tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-          attack.attack = {
-            flavor: atk.label,
-            tooltip: tooltip,
-            total: roll.total,
-            isCrit: critType === 1,
-            isFumble: critType === 2,
-          };
-
-          // Critical hit confirmation
-          if (critType === 1) {
-            let extraParts = [];
-            if (this.data.data.critConfirmBonus != null && this.data.data.critConfirmBonus !== "") extraParts.push(this.data.data.critConfirmBonus);
+      // Prepare the chat message data
+      let chatTemplateData = {
+        hasProperties: properties.length > 0,
+        properties: props,
+        name: this.name,
+      };
+      // Create attacks
+      const allAttacks = fullAttack ? this.data.data.attackParts.reduce((cur, r) => {
+        cur.push({ bonus: r[0], label: r[1] });
+        return cur;
+      }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
+      let attacks = [];
+      const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
+        if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
+        return cur;
+      }, []);
+      if (this.hasAttack) {
+        for (let atk of allAttacks) {
+          const attack = {};
+          let tooltip, roll, d20, flavor, critType = 0;
+          // Attack roll
+          if (this.hasAttack) {
             roll = this.rollAttack({
+              data: rollData,
               bonus: atk.bonus !== "" ? atk.bonus : null,
-              extraParts: extraParts,
+              extraParts: attackExtraParts,
             });
+            d20 = roll.parts[0];
+            if (d20.total >= crit) critType = 1;
+            else if (d20.total <= 1) critType = 2;
 
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-            attack.critConfirm = {
-              flavor: game.i18n.localize("PF1.CriticalConfirmation"),
+            attack.attack = {
+              flavor: atk.label,
               tooltip: tooltip,
               total: roll.total,
+              isCrit: critType === 1,
+              isFumble: critType === 2,
             };
-          }
-        }
-        // Add damage
-        if (this.hasDamage) {
-          roll = this.rollDamage();
-          tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-          flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-          attack.damage = {
-            flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
-            tooltip: tooltip,
-            total: roll.total,
-          };
 
-          if (critType === 1) {
-            roll = this.rollDamage({ critical: true });
+            // Critical hit confirmation
+            if (critType === 1) {
+              if (this.data.data.critConfirmBonus != null && this.data.data.critConfirmBonus !== "") attackExtraParts.push(this.data.data.critConfirmBonus);
+              roll = this.rollAttack({
+                data: rollData,
+                bonus: atk.bonus !== "" ? atk.bonus : null,
+                extraParts: attackExtraParts,
+              });
+
+              tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+              attack.critConfirm = {
+                flavor: game.i18n.localize("PF1.CriticalConfirmation"),
+                tooltip: tooltip,
+                total: roll.total,
+              };
+            }
+          }
+          // Add damage
+          if (this.hasDamage) {
+            roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts });
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-            flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
-            attack.critDamage = {
+            flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+            attack.damage = {
               flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
               tooltip: tooltip,
               total: roll.total,
             };
+
+            if (critType === 1) {
+              roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, critical: true });
+              tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+              flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+              attack.critDamage = {
+                flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
+                tooltip: tooltip,
+                total: roll.total,
+              };
+            }
           }
-        }
-        // Add to list
+          // Add to list
+          attacks.push(attack);
+        };
+      }
+      // Add damage only
+      else if (this.hasDamage) {
+        let roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts });
+        let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+        let attack = {};
+        let flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+        attack.damage = {
+          flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
+          tooltip: tooltip,
+          total: roll.total,
+        };
         attacks.push(attack);
-      };
-    }
-    // Add damage only
-    else if (this.hasDamage) {
-      let roll = this.rollDamage();
-      let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-      let attack = {};
-      let flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-      attack.damage = {
-        flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
-        tooltip: tooltip,
-        total: roll.total,
-      };
-      attacks.push(attack);
-    }
-
-    for (let a = 0; a < attacks.length || (attacks.length === 0 && a < 1); a++) {
-      if (attacks.length > 0) {
-        const atk = attacks[a];
-        chatTemplateData.attacks = [atk];
-      }
-      const chatData = {
-        speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      };
-
-      // Don't play multiple sounds
-      if (a === 0) chatData.sound = CONFIG.sounds.dice;
-
-      // Add effect text
-      if (effectContent.length > 0) {
-        chatTemplateData.hasExtraText = true;
-        chatTemplateData.extraText = effectContent;
       }
 
-      // Post message
-      if (this.data.type === "spell") await this.roll();
-      await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+      for (let a = 0; a < attacks.length || (attacks.length === 0 && a < 1); a++) {
+        if (attacks.length > 0) {
+          const atk = attacks[a];
+          chatTemplateData.attacks = [atk];
+        }
+        const chatData = {
+          speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        };
+
+        // Don't play multiple sounds
+        if (a === 0) chatData.sound = CONFIG.sounds.dice;
+
+        // Add effect text
+        if (effectContent.length > 0) {
+          chatTemplateData.hasExtraText = true;
+          chatTemplateData.extraText = effectContent;
+        }
+
+        // Post message
+        if (this.data.type === "spell") await this.roll();
+        rolled = true;
+        await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+      }
     }
+
+    // Modify the roll and handle fast-forwarding
+    if (skipDialog || (ev instanceof MouseEvent && (ev.shiftKey || ev.button === 2))) return _roll.call(this, true);
+
+    // Render modal dialog
+    let template = "systems/pf1/templates/chat/attack-roll-dialog.html";
+    let rollMode = game.settings.get("core", "rollMode");
+    let dialogData = {
+      data: rollData,
+      rollMode: rollMode,
+      rollModes: CONFIG.rollModes
+    };
+    const html = await renderTemplate(template, dialogData);
+
+    let roll;
+    return new Promise(resolve => {
+      new Dialog({
+        title: `${this.name}: ${game.i18n.localize("PF1.Attack")}`,
+        content: html,
+        buttons: {
+          normal: {
+            label: "Single Attack",
+            callback: html => roll = _roll.call(this, false, html)
+          },
+          multi: {
+            label: "Full Attack",
+            callback: html => roll = _roll.call(this, true, html)
+          },
+        },
+        default: "multi",
+        close: html => {
+          resolve(rolled ? roll : false);
+        }
+      }).render(true);
+    });
   }
 
   /**
@@ -637,8 +696,12 @@ export class ItemPF extends Item {
   rollAttack(options={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
-    const rollData = duplicate(actorData);
-    rollData.item = duplicate(itemData);
+    let rollData;
+    if (!options.data) {
+      rollData = duplicate(actorData);
+      rollData.item = duplicate(itemData);
+    }
+    else rollData = options.data;
     
     if (!this.hasAttack) {
       throw new Error("You may not place an Attack Roll with this Item.");
@@ -772,13 +835,15 @@ export class ItemPF extends Item {
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({critical=false}={}) {
+  rollDamage({data=null, critical=false, extraParts=[]}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
-    const rollData = mergeObject(duplicate(actorData), {
-      item: itemData,
-      extraDamage: 0
-    }, { inplace: false });
+    let rollData = null;
+    if (!data) {
+      rollData = duplicate(actorData);
+      rollData.item = duplicate(itemData);
+    }
+    else rollData = data;
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
@@ -831,6 +896,9 @@ export class ItemPF extends Item {
       if (rollData.critMult !== 1) parts.push("@attributes.damage.spell * @critMult");
       else parts.push("@attributes.damage.spell");
     }
+
+    // Add extra parts
+    parts = parts.concat(extraParts);
 
     // Create roll
     const roll = new Roll(parts.join("+"), rollData);
@@ -1002,11 +1070,8 @@ export class ItemPF extends Item {
     // Get card targets
     const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
-    // Attack and Damage Rolls
-    if ( action === "attack" ) await item.useAttack();
-
     // Consumable usage
-    else if ( action === "consume" ) await item.rollConsumable({event});
+    if ( action === "consume" ) await item.rollConsumable({event});
 
     // Re-enable the button
     button.disabled = false;

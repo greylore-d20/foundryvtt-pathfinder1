@@ -494,7 +494,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".skill > .skill-controls > .skill-delete").click(ev => this._onSkillDelete(ev));
 
     // Quick Item Action control
-    html.find(".item-actions a").click(ev => this._quickItemActionControl(ev));
+    html.find(".item-actions a").mouseup(ev => this._quickItemActionControl(ev));
 
     // Quick (un)equip item
     html.find("a.item-control.item-equip").click(ev => { this._quickEquipItem(ev); });
@@ -843,10 +843,10 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Attack
     if (a.classList.contains("item-attack")) {
       if (item.data.type === "spell") {
-        await this.actor.useSpell(item);
+        await this.actor.useSpell(item, event);
       }
       else {
-        await item.useAttack();
+        await item.useAttack({ev: event});
       }
     }
   }

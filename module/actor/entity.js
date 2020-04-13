@@ -1852,13 +1852,14 @@ export class ActorPF extends Actor {
   /**
    * Cast a Spell, consuming a spell slot of a certain level
    * @param {ItemPF} item   The spell being cast by the actor
+   * @param {MouseEvent} ev The click event
    */
-  async useSpell(item) {
+  async useSpell(item, ev) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
 
     // Invoke the Item roll
-    if (item.hasAction) return item.useAttack();
+    if (item.hasAction) return item.useAttack({ev: ev});
     return item.roll();
   }
 

@@ -953,7 +953,12 @@ export class ActorPF extends Actor {
 
       const roll = new Roll(formula, rollData);
 
-      change.raw[4] = roll.roll().total;
+      try {
+        change.raw[4] = roll.roll().total;
+      }
+      catch (e) {
+        ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name));
+      }
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);
 

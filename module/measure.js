@@ -11,11 +11,14 @@ TemplateLayer.prototype._onDragStart = function(event) {
   const tool = game.activeTool;
   const origin = event.data.origin;
   let pos;
-  pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 1);
-  if (tool === "cone") {
-    pos.x -= canvas.dimensions.size * 0.5;
-    pos.y -= canvas.dimensions.size * 0.5;
+  if (["cone", "circle"].includes(tool)) {
+    pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 1);
+    if (tool === "cone") {
+      pos.x -= canvas.dimensions.size * 0.5;
+      pos.y -= canvas.dimensions.size * 0.5;
+    }
   }
+  else pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
   origin.x = pos.x;
   origin.y = pos.y;
 
@@ -30,7 +33,7 @@ TemplateLayer.prototype._onDragStart = function(event) {
     fillColor: game.user.data.color || "#FF0000"
   };
   if (tool === "cone") data["angle"] = 90;
-  else if (tool === "ray") data["width"] = canvas.dimensions.distance;
+  else if (tool === "ray") data["width"] = Math.floor(canvas.dimensions.distance * 0.8 * 10) / 10;
 
   // Assign the template
   let template = new MeasuredTemplate(data);

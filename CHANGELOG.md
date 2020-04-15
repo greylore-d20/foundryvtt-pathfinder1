@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.26
+
+### Bug Fixes
+
+- Only base strength was used for calculating carrying capacity.
+- Item changes with wrong formulas crashing/locking the actor's updates
+- Delay with encumbrance penalties rolling in
+- Low-light Vision always on under certain circumstances for players with multiple owned tokens
+
+### Changelog
+
+- Add power attack option to attack rolls, and show their dialog by default (shift-click or right-click to circumvent dialog)
+- Add world setting to change low-light vision behaviour for players
+
 ## 0.25
 
 ### Bug Fixes

@@ -30,7 +30,6 @@ SightLayer.prototype.hasLowLight = function() {
   const relevantTokens = canvas.tokens.placeables.filter(o => {
     return o.actor && o.actor.hasPerm(game.user, "OBSERVER");
   });
-  const controlledTokens = relevantTokens.filter(o => o._controlled);
   const lowLightTokens = relevantTokens.filter(o => getProperty(o, "actorVision.lowLight"));
   if (game.user.isGM) {// || game.settings.get("pf1", "lowLightVisionMode")) {
     return lowLightTokens.filter(o => o._controlled).length;

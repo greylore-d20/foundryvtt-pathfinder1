@@ -151,4 +151,16 @@ export const registerSystemSettings = function() {
     default: true,
     type: Boolean,
   });
+
+  /**
+   * Low-light Vision Mode
+   */
+  game.settings.register("pf1", "lowLightVisionMode", {
+    name: "SETTINGS.pf1LowLightVisionModeN",
+    hint: "SETTINGS.pf1LowLightVisionModeH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
 };

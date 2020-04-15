@@ -27,15 +27,18 @@ Token.prototype.update = async function(data, options={}) {
 
 // Patch lighting radius
 SightLayer.prototype.hasLowLight = function() {
-  let tokens = canvas.tokens.placeables.filter(o => {
-    return o.actor && o.actor.hasPerm(game.user, "OBSERVER") && o.actorVision.lowLight === true;
+  const relevantTokens = canvas.tokens.placeables.filter(o => {
+    return o.actor && o.actor.hasPerm(game.user, "OBSERVER");
   });
-  if (game.user.isGM) {
-    return tokens.filter(o => {
-      return o._controlled === true;
-    }).length > 0;
+  const controlledTokens = relevantTokens.filter(o => o._controlled);
+  const lowLightTokens = relevantTokens.filter(o => getProperty(o, "actorVision.lowLight"));
+  if (game.user.isGM) {// || game.settings.get("pf1", "lowLightVisionMode")) {
+    return lowLightTokens.filter(o => o._controlled).length;
   }
-  return tokens.length > 0;
+  if (game.settings.get("pf1", "lowLightVisionMode")) {
+    return lowLightTokens.filter(o => o._controlled).length;
+  }
+  return (!relevantTokens.filter(o => o._controlled).length && lowLightTokens.length) || lowLightTokens.filter(o => o._controlled).length;
 };
 
 const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;

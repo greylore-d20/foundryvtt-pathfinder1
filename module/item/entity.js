@@ -137,6 +137,7 @@ export class ItemPF extends Item {
         tgt.units = null;
       }
       labels.target = [tgt.value, C.distanceUnits[tgt.units], C.targetTypes[tgt.type]].filterJoin(" ");
+      if (labels.target) labels.target = `Target: ${labels.target}`;
 
       // Range Label
       let rng = data.range || {};

@@ -928,6 +928,9 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Update encumbrance
+    this._computeEncumbrance(updateData, srcData1);
+
     // Initialize data
     if (!sourceOnly) this._resetData(updateData, srcData1, flags);
 
@@ -1001,8 +1004,6 @@ export class ActorPF extends Actor {
         }
       }
     }
-    // Update encumbrance
-    this._computeEncumbrance(updateData, srcData1);
     // Add dex mod to AC
     if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
       const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
@@ -2487,12 +2488,7 @@ export class ActorPF extends Actor {
     linkData(srcData, updateData, "data.attributes.encumbrance.levels.carry", Math.floor(heavy * 2));
     linkData(srcData, updateData, "data.attributes.encumbrance.levels.drag", Math.floor(heavy * 5));
 
-    // Determine carried weight
-    const physicalItems = this.items.filter(o => { return o.data.data.weight != null; });
-    const carriedWeight = physicalItems.reduce((cur, o) => {
-      if (!o.data.data.carried) return cur;
-      return cur + (o.data.data.weight * o.data.data.quantity);
-    }, this._calculateCoinWeight(srcData));
+    const carriedWeight = Math.max(0, this.getCarriedWeight(srcData));
     linkData(srcData, updateData, "data.attributes.encumbrance.carriedWeight", Math.round(carriedWeight * 10) / 10);
 
     // Determine load level
@@ -2506,6 +2502,15 @@ export class ActorPF extends Actor {
     return Object.values(data.data.currency).reduce((cur, amount) => {
       return cur + amount;
     }, 0) / 50;
+  }
+
+  getCarriedWeight(srcData) {
+    // Determine carried weight
+    const physicalItems = this.items.filter(o => { return o.data.data.weight != null; });
+    return physicalItems.reduce((cur, o) => {
+      if (!o.data.data.carried) return cur;
+      return cur + (o.data.data.weight * o.data.data.quantity);
+    }, this._calculateCoinWeight(srcData));
   }
 }
 

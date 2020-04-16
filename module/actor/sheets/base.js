@@ -385,60 +385,7 @@ export class ActorSheetPF extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Only run this if TabsV2 is already available (which is available since FoundryVTT 0.5.2)
-    if (typeof TabsV2 !== "undefined") {
-      const tabGroups = {
-        "primary": {
-          "inventory": {},
-          "feats": {},
-          "skillset": {},
-          "buffs": {},
-          "attacks": {},
-          "spellbooks": {},
-        },
-      };
-      // Add spellbooks to tabGroups
-      for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-        tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
-      }
-      createTabs.call(this, html, tabGroups);
-    }
-    // Run older Tabs as a fallback
-    else {
-      new Tabs(html.find('.tabs[data-group="primary"]'), {
-        initial: this["_sheetTab"],
-        callback: clicked => {
-          this._scrollTab = 0;
-          this._subScroll = 0;
-          this["_sheetTab"] = clicked.data("tab");
-        }
-      });
-      // Add sub tab groups
-      let tabGroups = ["spellbooks", "skillset", "inventory", "feats", "buffs", "attacks"];
-      for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-        tabGroups.push(`spells_${a}`);
-      }
-
-      for (let tabName of tabGroups) {
-        new Tabs(html.find(`.tabs[data-group="${tabName}"]`), {
-          initial: this[`_${tabName}Tab`],
-          callback: clicked => {
-            this._subScroll = 0;
-            this[`_${tabName}Tab`] = clicked.data("tab");
-          }
-        });
-      }
-
-      // Save scroll position
-      const activeTab = html.find('.tab.active[data-group="primary"]')[0];
-      if (activeTab) {
-        activeTab.scrollTop = this._scrollTab;
-        let subElem = $(activeTab).find(".sub-scroll:visible")[0];
-        if (subElem) subElem.scrollTop = this._subScroll;
-      }
-      html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
-      html.find(".sub-scroll").scroll(ev => this._subScroll = ev.currentTarget.scrollTop);
-    }
+    this.createTabs(html);
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
@@ -551,6 +498,24 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-detail.item-active input[type='checkbox']").off("change").change(this._setItemActive.bind(this));
 
     html.find(".item-detail.item-level input[type='text']").off("change").change(this._setBuffLevel.bind(this));
+  }
+
+  createTabs(html) {
+    const tabGroups = {
+      "primary": {
+        "inventory": {},
+        "feats": {},
+        "skillset": {},
+        "buffs": {},
+        "attacks": {},
+        "spellbooks": {},
+      },
+    };
+    // Add spellbooks to tabGroups
+    for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
+      tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
+    }
+    createTabs.call(this, html, tabGroups);
   }
 
   /* -------------------------------------------- */
@@ -959,6 +924,129 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Organize and classify Owned Items
+   * @private
+   */
+  _prepareItems(data) {
+
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory = {
+      weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
+      equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
+      consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
+      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
+      ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
+      misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], dataset: {} },
+    };
+
+    // Partition items by category
+    let [items, spells, feats, classes, attacks] = data.items.reduce((arr, item) => {
+      item.img = item.img || DEFAULT_TOKEN;
+      item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
+      item.hasUses = item.data.uses && (item.data.uses.max > 0);
+      item.isOnCooldown = item.data.recharge && !!item.data.recharge.value && (item.data.recharge.charged === false);
+      const unusable = item.isOnCooldown && (item.data.uses.per && (item.data.uses.value > 0));
+      item.isCharged = !unusable;
+      if ( item.type === "spell" ) arr[1].push(item);
+      else if ( item.type === "feat" ) arr[2].push(item);
+      else if ( item.type === "class" ) arr[3].push(item);
+      else if (item.type === "attack") arr[4].push(item);
+      else if ( Object.keys(inventory).includes(item.type) || (item.data.subType != null && Object.keys(inventory).includes(item.data.subType)) ) arr[0].push(item);
+      return arr;
+    }, [[], [], [], [], []]);
+
+    // Apply active item filters
+    items = this._filterItems(items, this._filters.inventory);
+    spells = this._filterItems(spells, this._filters.spellbook);
+    feats = this._filterItems(feats, this._filters.features);
+
+    // Organize Spellbook
+    let spellbookData = {};
+    const spellbooks = data.actor.data.attributes.spells.spellbooks;
+    for (let [a, spellbook] of Object.entries(spellbooks)) {
+      const spellbookSpells = spells.filter(obj => { return obj.data.spellbook === a; });
+      spellbookData[a] = {
+        data: this._prepareSpellbook(data, spellbookSpells, a),
+        prepared: spellbookSpells.filter(obj => { return obj.data.preparation.mode === "prepared" && obj.data.preparation.prepared; }).length,
+        orig: spellbook
+      };
+    }
+
+    // Organize Inventory
+    for ( let i of items ) {
+      const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
+      i.data.quantity = i.data.quantity || 0;
+      i.data.weight = i.data.weight || 0;
+      i.totalWeight = Math.round(i.data.quantity * i.data.weight * 10) / 10;
+      if (inventory[i.type] != null) inventory[i.type].items.push(i);
+      if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
+      inventory.all.items.push(i);
+    }
+
+    // Organize Features
+    const features = {
+      classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
+      feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
+      classFeat: { label: game.i18n.localize("PF1.ClassFeaturePlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
+      trait: { label: game.i18n.localize("PF1.TraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
+      racial: { label: game.i18n.localize("PF1.RacialTraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "racial" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
+    };
+
+    for ( let f of feats ) {
+      let k = f.data.featType;
+      features[k].items.push(f);
+      features.all.items.push(f);
+    }
+    classes.sort((a, b) => b.levels - a.levels);
+    features.classes.items = classes;
+
+    // Buffs
+    let buffs = data.items.filter(obj => { return obj.type === "buff"; });
+    buffs = this._filterItems(buffs, this._filters.buffs);
+    const buffSections = {
+      temp: { label: game.i18n.localize("PF1.Temporary"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "temp" } },
+      perm: { label: game.i18n.localize("PF1.Permanent"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "perm" } },
+      item: { label: game.i18n.localize("PF1.Item"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "item" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], hasActions: false, dataset: { type: "buff" } },
+    };
+
+    for (let b of buffs) {
+      let s = b.data.buffType;
+      if (!buffSections[s]) continue;
+      buffSections[s].items.push(b);
+      buffSections.all.items.push(b);
+    }
+
+    // Attacks
+    const attackSections = {
+      weapon: { label: game.i18n.localize("PF1.AttackTypeWeaponPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
+      natural: { label: game.i18n.localize("PF1.AttackTypeNaturalPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
+      ability: { label: game.i18n.localize("PF1.AttackTypeAbilityPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "ability" } },
+      racialAbility: { label: game.i18n.localize("PF1.AttackTypeRacialPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
+      misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
+      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
+    };
+
+    for (let a of attacks) {
+      let s = a.data.attackType;
+      if (!attackSections[s]) continue;
+      attackSections[s].items.push(a);
+      attackSections.all.items.push(a);
+    }
+
+    // Assign and return
+    data.inventory = Object.values(inventory);
+    data.spellbookData = spellbookData;
+    data.features = Object.values(features);
+    data.buffs = buffSections;
+    data.attacks = attackSections;
+  }
 
   /**
    * Handle rolling a Skill check

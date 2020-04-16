@@ -18,4 +18,8 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
     if ( !game.user.isGM && this.actor.limited ) return "systems/pf1/templates/actors/limited-sheet.html";
     return "systems/pf1/templates/actors/npc-sheet-lite.html";
   }
+
+  static get name() {
+    return game.i18n.localize("PF1.ActorSheetPFNPCLite");
+  }
 }

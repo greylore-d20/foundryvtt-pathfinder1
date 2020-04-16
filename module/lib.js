@@ -90,7 +90,9 @@ export const createTabs = function(html, tabGroups) {
     return tabs;
   };
 
-  _func.call(this, "primary", tabGroups.primary);
+  for (const groupKey of Object.keys(tabGroups)) {
+    _func.call(this, groupKey, tabGroups[groupKey]);
+  }
 };
 
 /**

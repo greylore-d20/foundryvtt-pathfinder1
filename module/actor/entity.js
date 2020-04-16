@@ -2551,5 +2551,15 @@ export class ActorPF extends Actor {
       return cur + (o.data.data.weight * o.data.data.quantity);
     }, this._calculateCoinWeight(srcData));
   }
+
+  /**
+   * @returns {number} The total amount of currency this actor has, in gold pieces
+   */
+  mergeCurrency() {
+    const carried = getProperty(this.data.data, "currency");
+    const alt = getProperty(this.data.data, "altCurrency");
+    return (carried ? carried.pp * 10 + carried.gp + carried.sp / 10 + carried.cp / 100 : 0) +
+      (alt ? alt.pp * 10 + alt.gp + alt.sp / 10 + alt.cp / 100 : 0);
+  }
 }
 

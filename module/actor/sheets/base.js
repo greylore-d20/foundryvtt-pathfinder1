@@ -478,6 +478,9 @@ export class ActorSheetPF extends ActorSheet {
     // CMB Check
     html.find(".attribute.cmb .attribute-name").click(this._onRollCMB.bind(this));
 
+    // Initiative Check
+    html.find(".attribute.initiative .attribute-name").click(this._onRollInitiative.bind(this));
+
     // Saving Throw
     html.find(".defenses .saving-throw .attribute-name").click(this._onRollSavingThrow.bind(this));
 
@@ -942,6 +945,11 @@ export class ActorSheetPF extends ActorSheet {
   _onRollCMB(event) {
     event.preventDefault();
     this.actor.rollCMB({event: event});
+  }
+
+  _onRollInitiative(event) {
+    event.preventDefault();
+    this.actor.rollInitiative();
   }
 
   _onRollSavingThrow(event) {

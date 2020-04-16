@@ -9,14 +9,13 @@ import { isMinimumCoreVersion } from "./lib.js";
  * Apply the dexterity score as a decimal tiebreaker if requested
  * See Combat._getInitiativeFormula for more detail.
  */
-export const _getInitiativeFormula = function(combatant) {
-  const actor = combatant.actor;
-  if ( !actor ) return "1d20";
+export const _getInitiativeFormula = function(actor) {
+  if (!actor) return "1d20";
   const parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
   return parts.filter(p => p !== null).join(" + ");
 };
 
-Combat.prototype.showInitiativeDialog = function(formula=null) {
+Combat.showInitiativeDialog = function(formula=null) {
   return new Promise(resolve => {
     let template = "systems/pf1/templates/chat/roll-dialog.html";
     let rollMode = game.settings.get("core", "rollMode");
@@ -29,6 +28,11 @@ Combat.prototype.showInitiativeDialog = function(formula=null) {
     let buttons = {
       normal: {
         label: "Roll",
+        callback: html => {
+          rollMode = html.find('[name="rollMode"]').val();
+          const bonus = html.find('[name="bonus"]').val();
+          resolve({ rollMode: rollMode, bonus: bonus });
+        },
       }
     };
     // Show dialog
@@ -39,9 +43,7 @@ Combat.prototype.showInitiativeDialog = function(formula=null) {
         buttons: buttons,
         default: "normal",
         close: html => {
-          rollMode = html.find('[name="rollMode"]').val();
-          const bonus = html.find('[name="bonus"]').val();
-          resolve({ rollMode: rollMode, bonus: bonus });
+          resolve({ stop: true });
         }
       }, {}).render(true);
     });
@@ -53,14 +55,19 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
   // Structure input data
   ids = typeof ids === "string" ? [ids] : ids;
   const currentId = this.combatant._id;
+  if (!formula) formula = _getInitiativeFormula(this.combatant.actor);
 
   let overrideRollMode = null,
-    bonus = "";
+    bonus = "",
+    stop = false;
   if (keyboard.isDown("Shift")) {
-    const dialogData = await this.showInitiativeDialog(formula);
+    const dialogData = await Combat.showInitiativeDialog(formula);
     overrideRollMode = dialogData.rollMode;
-    bonus = dialogData.bonus;
+    bonus = dialogData.bonus || "";
+    stop = dialogData.stop || false;
   }
+
+  if (stop) return this;
 
   // Iterate over Combatants, performing an initiative roll for each
   const [updates, messages] = ids.reduce((results, id, i) => {
@@ -70,7 +77,7 @@ export const _rollInitiative = async function(ids, formula=null, messageOptions=
     const c = this.getCombatant(id);
     if ( !c ) return results;
     const actorData = c.actor ? c.actor.data.data : {};
-    formula = formula || this._getInitiativeFormula(c);
+    formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
 
     actorData.bonus = bonus;
     // Add bonus

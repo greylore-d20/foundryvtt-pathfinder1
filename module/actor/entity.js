@@ -3,6 +3,7 @@ import { ItemPF } from "../item/entity.js";
 import { createTag, linkData, isMinimumCoreVersion } from "../lib.js";
 import { refreshLightingAndSight } from "../low-light-vision.js";
 import { createCustomChatMessage } from "../chat.js";
+import { _getInitiativeFormula } from "../combat.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -2098,6 +2099,44 @@ export class ActorPF extends Actor {
     }
 
     return headers;
+  }
+
+  async rollInitiative() {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+
+    let formula = _getInitiativeFormula(this);
+    let overrideRollMode = null,
+      bonus = "",
+      stop = false;
+    if (keyboard.isDown("Shift")) {
+      const dialogData = await Combat.showInitiativeDialog(formula);
+      overrideRollMode = dialogData.rollMode;
+      bonus = dialogData.bonus || "";
+      stop = dialogData.stop || false;
+    }
+
+    if (stop) return;
+
+    const actorData = duplicate(this.data.data);
+    // Add bonus
+    actorData.bonus = bonus;
+    if (bonus.length > 0) formula += " + @bonus";
+
+    // Roll initiative
+    const rollMode = overrideRollMode;
+    const roll = new Roll(formula, actorData).roll();
+
+    // Construct chat message data
+    let messageData = {
+      speaker: {
+        scene: canvas.scene._id,
+        actor: this._id,
+        token: this.token ? this.token._id : null,
+        alias: this.token ? this.token.name : null,
+      },
+      flavor: game.i18n.localize("PF1.RollsForInitiative").format(this.token ? this.token.name : this.name),
+    };
+    roll.toMessage(messageData, {rollMode});
   }
 
   rollSavingThrow(savingThrowId, options={}) {

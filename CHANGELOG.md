@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.301
+
+### Changelog
+
+- Increased the compatible core version so that it works with FoundryVTT 0.5.5
+
 ## 0.3
 
 ### Bug Fixes

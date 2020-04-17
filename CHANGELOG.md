@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3
+
+### Bug Fixes
+
+- Rectangle and ray measurements using too strict snapping
+
+### Changelog
+
+- Allow rolling initiative without combat
+- Add another type of NPC sheet, which only shows inventory (useful for party loot tracking, for example)
+- Automate scaling of BAB and Saving Throws with class levels (NOTE: you'll have to re-enter that info on your existing classes, one time only)
+- Add a german translation (thanks, arwec!)
+- Add a french translation (thanks, rectulo!)
+
 ## 0.26
 
 ### Bug Fixes

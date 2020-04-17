@@ -475,14 +475,14 @@ export class ActorPF extends Actor {
 
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
-    const classes = this.items.filter(o => o.type === "class").sort((a, b) => {
+    const classes = data.items.filter(o => o.type === "class").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
     let autoHP = game.settings.get("pf1", "autoHPFormula");
     if (!this._dataIsPC(data)) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
     if (autoHP === "manual") {
       classes.forEach(cls => {
-        const value = cls.data.data.hp + cls.data.data.fc.hp.value;
+        const value = cls.data.data.hp + (cls.data.classType === "base" ? cls.data.data.fc.hp.value : 0);
         changes.push({
           raw: [value.toString(), "misc", "mhp", "untyped", 0],
           source: {
@@ -498,9 +498,9 @@ export class ActorPF extends Actor {
       if (autoHP === "75" || autoHP === "75F") rate = 0.75;
       if (autoHP === "100") rate = 1;
       classes.forEach((cls, a) => {
-        let value = Math.ceil(cls.data.data.hd * rate * cls.data.data.levels) + cls.data.data.fc.hp.value;
+        let value = Math.ceil(cls.data.hd * rate * cls.data.levels) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
         if ((autoHP === "50F" || autoHP === "75F") && a === 0) {
-          value = cls.data.data.hd + Math.ceil(cls.data.data.hd * rate * (cls.data.data.levels - 1)) + cls.data.data.fc.hp.value;
+          value = cls.data.hd + Math.ceil(cls.data.hd * rate * (cls.data.levels - 1)) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
         }
 
         changes.push({
@@ -522,7 +522,7 @@ export class ActorPF extends Actor {
     });
 
     // Add armor bonuses from equipment
-    this.data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(item => {
+    data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(item => {
       let armorTarget = "aac";
       if (item.data.armor.type === "shield") armorTarget = "sac";
       else if (item.data.armor.type === "natural") armorTarget = "nac";
@@ -765,13 +765,19 @@ export class ActorPF extends Actor {
   }
 
   async _updateChanges({ data=null, sourceOnly=false }={}) {
-    const changeObjects = this.data.items.filter(obj => { return obj.data.changes != null; }).filter(obj => {
+    let updateData = {};
+    let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
+    srcData1.items = this.items.reduce((cur, i) => {
+      const otherItem = srcData1.items.filter(o => o._id === i._id)[0];
+      if (otherItem) cur.push(mergeObject(i.data, otherItem, { inplace: false }));
+      else cur.push(i.data);
+      return cur;
+    }, []);
+    const changeObjects = srcData1.items.filter(obj => { return obj.data.changes != null; }).filter(obj => {
       if (obj.type === "buff") return obj.data.active;
       if (obj.type === "equipment" || obj.type === "weapon") return obj.data.equipped;
       return true;
     });
-    let updateData = {};
-    let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
 
     // Track previous values
     const prevValues = {
@@ -974,10 +980,10 @@ export class ActorPF extends Actor {
     });
 
     // Reduce final speed under certain circumstances
-    let armorItems = this.items.filter(o => o.type === "equipment");
+    let armorItems = srcData1.items.filter(o => o.type === "equipment");
     if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||
-    (armorItems.filter(o => o.data.data.armor.type === "medium" && o.data.data.equipped).length && !flags.mediumArmorFullSpeed) ||
-    (armorItems.filter(o => o.data.data.armor.type === "heavy" && o.data.data.equipped).length && !flags.heavyArmorFullSpeed)) {
+    (armorItems.filter(o => o.data.armor.type === "medium" && o.data.equipped).length && !flags.mediumArmorFullSpeed) ||
+    (armorItems.filter(o => o.data.armor.type === "heavy" && o.data.equipped).length && !flags.heavyArmorFullSpeed)) {
       for (let speedKey of Object.keys(srcData1.data.attributes.speed)) {
         let value = updateData[`data.attributes.speed.${speedKey}.total`];
         linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
@@ -1095,7 +1101,7 @@ export class ActorPF extends Actor {
   _resetData(updateData, data, flags) {
     const data1 = data.data;
     if (flags == null) flags = {};
-    const items = this.data.items;
+    const items = data.items;
     const classes = items.filter(obj => { return obj.type === "class"; });
 
     // Reset HD
@@ -1133,13 +1139,16 @@ export class ActorPF extends Actor {
     linkData(data, updateData, "data.attributes.damage.spell", 0);
 
     // Reset saving throws
-    for (let [a, s] of Object.entries(data1.attributes.savingThrows)) {
+    for (let a of Object.keys(data1.attributes.savingThrows)) {
       linkData(
         data,
         updateData,
         `data.attributes.savingThrows.${a}.total`,
         classes.reduce((cur, obj) => {
-          return cur + obj.data.savingThrows[a].value;
+          const classType = obj.data.classType;
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
+          if (formula == null) formula = "0";
+          return cur + new Roll(formula, {level: obj.data.levels}).roll().total;
         }, 0) + data1.attributes.savingThrows[a].value - data1.attributes.energyDrain
       );
     }
@@ -1184,7 +1193,8 @@ export class ActorPF extends Actor {
 
     // Reset BAB, CMB and CMD
     linkData(data, updateData, "data.attributes.bab.total", data1.attributes.bab.value + classes.reduce((cur, obj) => {
-      return cur + (obj.data.bab || 0);
+      const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
+      return cur + new Roll(formula, {level: obj.data.levels}).roll().total;
     }, 0));
     linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
     linkData(data, updateData, "data.attributes.cmd.total", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
@@ -1301,7 +1311,7 @@ export class ActorPF extends Actor {
 
     // Set class tags
     data.classes = {};
-    actorData.items.filter(obj => { return obj.type === "class"; }).forEach((cls, a) => {
+    actorData.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
       let tag = createTag(cls.name);
       let count = 1;
       while (actorData.items.filter(obj => { return obj.type === "class" && obj.data.tag === tag && obj !== cls; }).length > 0) {
@@ -1312,6 +1322,7 @@ export class ActorPF extends Actor {
       let doAutoHP = false;
       if (this.isPC) doAutoHP = game.settings.get("pf1", "autoHPFormula") !== "manual";
       else doAutoHP = game.settings.get("pf1", "NPCAutoHPFormula") !== "manual";
+      const classType = cls.data.classType || "base";
       data.classes[tag] = {
         level: cls.data.levels,
         name: cls.name,
@@ -1319,17 +1330,24 @@ export class ActorPF extends Actor {
         bab: cls.data.bab,
         hp: doAutoHP,
         savingThrows: {
-          fort: cls.data.savingThrows.fort.value,
-          ref: cls.data.savingThrows.ref.value,
-          will: cls.data.savingThrows.will.value,
+          fort: 0,
+          ref: 0,
+          will: 0,
         },
         fc: {
-          hp: cls.data.fc.hp.value,
-          skill: cls.data.fc.skill.value,
-          alt: cls.data.fc.alt.value,
+          hp: classType === "base" ? cls.data.fc.hp.value : 0,
+          skill: classType === "base" ? cls.data.fc.skill.value : 0,
+          alt: classType === "base" ? cls.data.fc.alt.value : 0,
         },
       };
+
+      for (let k of Object.keys(data.classes[tag].savingThrows)) {
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
+        if (formula == null) formula =  "0";
+        data.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.levels}).roll().total;
+      }
     });
+
 
     // Prepare modifier containers
     data.attributes.mods = data.attributes.mods || {};
@@ -1402,9 +1420,11 @@ export class ActorPF extends Actor {
 
     // BAB from Classes
     sourceDetails["data.attributes.bab.total"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
+      const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
+      const value = new Roll(formula, {level: obj.data.levels}).roll().total;
       return {
         name: obj.name,
-        value: obj.data.bab
+        value: value,
       }
     }));
 
@@ -1446,8 +1466,11 @@ export class ActorPF extends Actor {
     }
     // Add class bonuses to saving throws
     actorData.items.filter(obj => { return obj.type === "class"; }).forEach(obj => {
-      for (let [s, sobj] of Object.entries(obj.data.savingThrows)) {
-        const value = sobj.value;
+      for (let s of Object.keys(obj.data.savingThrows)) {
+        const classType = obj.data.classType;
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[s].value];
+        if (formula == null) formula =  "0";
+        const value = new Roll(formula, {level: obj.data.levels}).roll().total;
         if (value !== 0) {
           sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
             name: obj.name,
@@ -1721,8 +1744,6 @@ export class ActorPF extends Actor {
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
       diff = mergeObject(diff, updateObj.diff, { inplace: false });
-
-      if (diff.items != null) delete diff.items;
     }
     // Diff token data
     if (data.token != null) {
@@ -2545,10 +2566,10 @@ export class ActorPF extends Actor {
 
   getCarriedWeight(srcData) {
     // Determine carried weight
-    const physicalItems = this.items.filter(o => { return o.data.data.weight != null; });
+    const physicalItems = srcData.items.filter(o => { return o.data.weight != null; });
     return physicalItems.reduce((cur, o) => {
-      if (!o.data.data.carried) return cur;
-      return cur + (o.data.data.weight * o.data.data.quantity);
+      if (!o.data.carried) return cur;
+      return cur + (o.data.weight * o.data.quantity);
     }, this._calculateCoinWeight(srcData));
   }
 

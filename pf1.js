@@ -96,7 +96,7 @@ Hooks.once("setup", function() {
     "spellPreparationModes", "weaponTypes", "weaponProperties", "spellComponents", "spellSchools", "spellLevels", "conditionTypes",
     "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
     "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
-    "healingTypes", "divineFocus",
+    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes",
   ];
 
   const doLocalize = function(obj) {
@@ -117,9 +117,9 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.25;
+  const NEEDS_MIGRATION_VERSION = 0.27;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
-  if ( needMigration && game.user.isGM ) {
+  if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
   }
 

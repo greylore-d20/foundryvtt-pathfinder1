@@ -42,6 +42,19 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+
+      {{!-- Class Type --}}
+      <div class="form-group">
+        <label>{{localize "PF1.ClassType"}}</label>
+        <select name="data.classType">
+          {{#select data.classType}}
+          {{#each config.classTypes as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
       {{!-- HD --}}
       <div class="form-group">
         <label>{{localize "PF1.HitDie"}}</label>
@@ -59,7 +72,14 @@
       {{!-- BAB --}}
       <div class="form-group">
         <label>BAB</label>
-        <input type="text" name="data.bab" value="{{data.bab}}" data-dtype="Number" />
+        <select name="data.bab">
+          {{#select data.bab}}
+          <option value="">{{localize "PF1.None"}}</option>
+          {{#each config.classBAB as |name value|}}
+          <option value="{{value}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
       </div>
 
       {{!-- Skills/Level --}}
@@ -74,10 +94,18 @@
       {{#each data.savingThrows as |savingThrow id|}}
       <div class="form-group">
         <label>{{savingThrow.label}}</label>
-        <input type="text" name="data.savingThrows.{{id}}.value" value="{{savingThrow.value}}" data-dtype="Number" />
+        <select name="data.savingThrows.{{id}}.value">
+          {{#select savingThrow.value}}
+          <option value="">{{localize "PF1.None"}}</option>
+          {{#each ../config.classSavingThrows as |name value|}}
+          <option value="{{value}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
       </div>
       {{/each}}
 
+      {{#if isBaseClass}}
       <h4 class="form-header">{{localize "PF1.FavouredClassBonuses"}}</h4 class="form-header">
 
       {{!-- Favoured Class Bonuses --}}
@@ -87,6 +115,7 @@
         <input type="text" name="data.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" />
       </div>
       {{/each}}
+      {{/if}}
     </div>
   </section>
 </form>

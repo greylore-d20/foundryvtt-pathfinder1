@@ -48,6 +48,39 @@ PF1.savingThrowMods = {
   "will": "wis"
 };
 
+PF1.classTypes = {
+  "base": "PF1.ClassTypeBase",
+  "prestige": "PF1.ClassTypePrestige",
+};
+
+PF1.classBAB = {
+  "low": "PF1.Low",
+  "med": "PF1.Medium",
+  "high": "PF1.High",
+};
+
+PF1.classSavingThrows = {
+  "low": "PF1.Poor",
+  "high": "PF1.Good",
+};
+
+PF1.classBABFormulas = {
+  "low": "floor(@level * 0.5)",
+  "med": "floor(@level * 0.75)",
+  "high": "@level",
+};
+
+PF1.classSavingThrowFormulas = {
+  "base": {
+    "low": "floor(@level / 3)",
+    "high": "2 + floor(@level / 2)",
+  },
+  "prestige": {
+    "low": "floor((1 + @level) / 3)",
+    "high": "floor((1 + @level) / 2)",
+  },
+};
+
 PF1.favouredClassBonuses = {
   "hp": "PF1.FavouredClassHP",
   "skill": "PF1.FavouredClassSkill",

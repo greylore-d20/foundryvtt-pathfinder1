@@ -109,6 +109,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorEncumbrance(actor, updateData);
   _migrateActorDefenseNotes(actor, updateData);
   _migrateActorSpeed(actor, updateData);
+  _migrateSpellDivineFocus(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData);
 
   if ( !actor.items ) return updateData;
@@ -123,6 +124,7 @@ export const migrateActorData = async function(actor) {
 
     // Update the Owned Item
     if (!isObjectEmpty(itemUpdate)) {
+      hasItemUpdates = true;
       items[a] = mergeObject(i, itemUpdate, { enforceTypes: false, inplace: false });
     }
   }
@@ -144,6 +146,8 @@ export const migrateItemData = function(item) {
   _migrateWeaponImprovised(item, updateData);
   _migrateSpellDescription(item, updateData);
   _migrateItemDC(item, updateData);
+  _migrateClassDynamics(item, updateData);
+  _migrateClassType(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -367,6 +371,25 @@ const _migrateItemDC = function(ent, updateData) {
   else if (value === "ref") updateData["data.save.description"] = "Reflex half";
   else if (value === "will") updateData["data.save.description"] = "Will negates";
   updateData["data.save.-=type"] = null;
+};
+
+const _migrateClassDynamics = function(ent, updateData) {
+  if (ent.type !== "class") return;
+
+  const bab = getProperty(ent.data.data, "bab");
+  if (typeof bab === "number") updateData["data.bab"] = "low";
+
+  const stKeys = ["data.savingThrows.fort.value", "data.savingThrows.ref.value", "data.savingThrows.will.value"];
+  for (let key of stKeys) {
+    let value = getProperty(ent.data, key);
+    if (typeof value === "number") updateData[key] = "low";
+  }
+};
+
+const _migrateClassType = function(ent, updateData) {
+  if (ent.type !== "class") return;
+
+  if (getProperty(ent.data.data, "classType") == null) updateData["data.classType"] = "base";
 };
 
 /* -------------------------------------------- */

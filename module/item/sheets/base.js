@@ -116,6 +116,8 @@ export class ItemSheetPF extends ItemSheet {
         data.autoHP = autoHP !== "manual";
       }
       else data.autoHP = false;
+
+      data.isBaseClass = data.data.classType === "base";
     }
 
     // Prepare stuff for items with changes

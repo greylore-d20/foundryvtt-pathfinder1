@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.302
+
+### Bug Fixes
+
+- Error with actor sheets in certain circumstances, causing them to not update
+
 ## 0.301
 
 ### Changelog

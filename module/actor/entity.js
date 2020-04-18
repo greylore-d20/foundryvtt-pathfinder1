@@ -482,7 +482,7 @@ export class ActorPF extends Actor {
     if (!this._dataIsPC(data)) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
     if (autoHP === "manual") {
       classes.forEach(cls => {
-        const value = cls.data.data.hp + (cls.data.classType === "base" ? cls.data.data.fc.hp.value : 0);
+        const value = cls.data.hp + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
         changes.push({
           raw: [value.toString(), "misc", "mhp", "untyped", 0],
           source: {

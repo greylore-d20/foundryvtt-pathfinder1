@@ -1946,43 +1946,34 @@ export class ActorPF extends Actor {
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
-   * @param {Boolean} type        Type of skill to roll (0=normal, 1=sub skill, 2=custom skill)
-   * @param {String} subSkillId   The sub skill id (e.g. "prf1")
    */
-  rollSkill(skillId, options={}, type=0, subSkillId="") {
+  rollSkill(skillId, options={}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     let skl, sklName;
-    if (type === 0) {
+    const skillParts = skillId.split("."),
+      isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
+    if (isSubSkill) {
+      skillId = skillParts[0];
+      skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
+      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
+    }
+    else {
       skl = this.data.data.skills[skillId];
       if (skl.name != null) sklName = skl.name;
       else sklName = CONFIG.PF1.skills[skillId];
-    }
-    else if (type === 1) {
-      skl = this.data.data.skills[skillId].subSkills[subSkillId];
-      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
     }
 
     // Add contextual attack string
     let notes = [];
     const rollData = duplicate(this.data.data);
-    const noteObjects = this.getContextNotes(`skill.${type === 1 ? subSkillId : skillId}`);
+    const noteObjects = this.getContextNotes(`skill.${isSubSkill ? skillParts[2] : skillId}`);
     for (let noteObj of noteObjects) {
       rollData.item = {};
       if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note
-            });
-          }
-          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
     // Add untrained note

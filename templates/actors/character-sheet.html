@@ -1,7 +1,10 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
+  {{#unless hasClasses}}<span class="warning">Your character is missing a class. Some attributes require a class to function.</span>{{/unless}}
+
   {{!-- Sheet Header --}}
   <header class="sheet-header flexrow">
+
     <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 
     <div class="header-details flexcol">

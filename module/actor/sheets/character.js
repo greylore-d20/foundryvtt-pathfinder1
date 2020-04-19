@@ -43,23 +43,15 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
    */
   getData() {
-    const sheetData = super.getData();
-
-    // Resources
-    sheetData["resources"] = ["primary", "secondary", "tertiary"].reduce((arr, r) => {
-      const res = sheetData.data.resources[r] || {};
-      res.name = r;
-      res.placeholder = game.i18n.localize("pf1.Resource"+r.titleCase());
-      if (res && res.value === 0) delete res.value;
-      if (res && res.max === 0) delete res.max;
-      return arr.concat([res]);
-    }, []);
+    const data = super.getData();
 
     // Experience Tracking
-    sheetData["disableExperience"] = game.settings.get("pf1", "disableExperienceTracking");
+    data["disableExperience"] = game.settings.get("pf1", "disableExperienceTracking");
+
+    data.hasClasses = this.actor.items.filter(o => o.type === "class").length > 0;
 
     // Return data for rendering
-    return sheetData;
+    return data;
   }
 
   /* -------------------------------------------- */

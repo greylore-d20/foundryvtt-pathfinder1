@@ -244,13 +244,11 @@ export class ItemPF extends Item {
     // Render the chat card template
     const templateType = ["consumable"].includes(this.data.type) ? this.data.type : "item";
     const template = `systems/pf1/templates/chat/${templateType}-card.html`;
-    const html = await renderTemplate(template, templateData);
 
     // Basic chat message data
     const chatData = {
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      content: html,
       speaker: {
         actor: this.actor._id,
         token: this.actor.token,
@@ -264,7 +262,7 @@ export class ItemPF extends Item {
     if ( rollMode === "blindroll" ) chatData["blind"] = true;
 
     // Create the chat message
-    return ChatMessage.create(chatData, {displaySheet: false});
+    return createCustomChatMessage(template, templateData, chatData);
   }
 
   /* -------------------------------------------- */
@@ -537,6 +535,7 @@ export class ItemPF extends Item {
         hasProperties: properties.length > 0,
         properties: props,
         name: this.name,
+        type: CONST.CHAT_MESSAGE_TYPES.CHAT,
       };
       // Create attacks
       const allAttacks = fullAttack ? this.data.data.attackParts.reduce((cur, r) => {

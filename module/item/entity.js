@@ -485,30 +485,34 @@ export class ItemPF extends Item {
     const _roll = async function(fullAttack, form) {
       let attackExtraParts = [];
       let damageExtraParts = [];
+      let primaryAttack = true;
       if (form) {
         rollData.attackBonus = form.find('[name="attack-bonus"]').val();
         if (rollData.attackBonus) attackExtraParts.push("@attackBonus");
         rollData.damageBonus = form.find('[name="damage-bonus"]').val();
         if (rollData.damageBonus) damageExtraParts.push("@damageBonus");
 
+        // Power Attack
         if (form.find('[name="power-attack"]').prop("checked")) {
           rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
-          damageExtraParts.push("floor(@powerAttackBonus * @ablMult * @critMult)");
+          damageExtraParts.push("floor(@powerAttackBonus * @ablMult) * @critMult");
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
           attackExtraParts.push("@powerAttackPenalty");
+        }
+        // Primary Attack (for natural attacks)
+        let html = form.find('[name="primary-attack"]');
+        if (typeof html.prop("checked") === "boolean") {
+          primaryAttack = html.prop("checked");
         }
       }
       // Add contextual attack string
       let props = [];
       let effectStr = "";
       if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-        if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.attackNotes, { rollData: rollData });
-        else {
-          effectStr = DicePF.messageRoll({
-            data: rollData,
-            msgStr: itemData.attackNotes
-          });
-        }
+        effectStr = DicePF.messageRoll({
+          data: rollData,
+          msgStr: itemData.attackNotes
+        });
       }
       let effectContent = "";
       if (effectStr.length > 0) {
@@ -519,7 +523,7 @@ export class ItemPF extends Item {
         effectContent = `<div><label>${game.i18n.localize("PF1.AttackNotes")}</label>${effectContent}</div>`;
       }
       if (this.hasEffect) {
-        let effectStr = this.rollEffect();
+        let effectStr = this.rollEffect({ primaryAttack: primaryAttack });
         if (effectStr.length > 0) {
           effectContent += `<div><label>${game.i18n.localize("PF1.EffectNotes")}</label>${effectStr}</div>`;
         }
@@ -558,6 +562,7 @@ export class ItemPF extends Item {
               data: rollData,
               bonus: atk.bonus !== "" ? atk.bonus : null,
               extraParts: attackExtraParts,
+              primaryAttack: primaryAttack,
             });
             d20 = roll.parts[0];
             if (d20.total >= crit) critType = 1;
@@ -579,6 +584,7 @@ export class ItemPF extends Item {
                 data: rollData,
                 bonus: atk.bonus !== "" ? atk.bonus : null,
                 extraParts: attackExtraParts,
+                primaryAttack: primaryAttack,
               });
 
               tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
@@ -591,7 +597,7 @@ export class ItemPF extends Item {
           }
           // Add damage
           if (this.hasDamage) {
-            roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts });
+            roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, primaryAttack: primaryAttack });
             tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
             flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
             attack.damage = {
@@ -601,7 +607,7 @@ export class ItemPF extends Item {
             };
 
             if (critType === 1) {
-              roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, critical: true });
+              roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, critical: true, primaryAttack: primaryAttack });
               tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
               flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
               attack.critDamage = {
@@ -662,8 +668,11 @@ export class ItemPF extends Item {
     let rollMode = game.settings.get("core", "rollMode");
     let dialogData = {
       data: rollData,
+      item: this.data.data,
       rollMode: rollMode,
-      rollModes: CONFIG.rollModes
+      rollModes: CONFIG.rollModes,
+      isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
+      isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
     };
     const html = await renderTemplate(template, dialogData);
 
@@ -767,6 +776,8 @@ export class ItemPF extends Item {
       rollData.item.masterworkBonus = 1;
       parts.push("@item.masterworkBonus");
     }
+    // Add secondary natural attack penalty
+    if (options.primaryAttack === false) parts.push("-5");
     // Add bonus
     if (options.bonus != null) {
       rollData.bonus = options.bonus;
@@ -784,7 +795,7 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   // Only roll the item's effect
-  rollEffect({critical=false}={}) {
+  rollEffect({critical=false, primaryAttack=true}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = mergeObject(duplicate(actorData), {
@@ -809,17 +820,15 @@ export class ItemPF extends Item {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Create effect string
     let effectStr = "";
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
-      if (isMinimumCoreVersion("0.5.2")) effectStr = TextEditor.enrichHTML(itemData.effectNotes, { rollData: rollData });
-      else {
-        effectStr = DicePF.messageRoll({
-          data: rollData,
-          msgStr: itemData.effectNotes
-        });
-      }
+      effectStr = DicePF.messageRoll({
+        data: rollData,
+        msgStr: itemData.effectNotes
+      });
     }
     let effectContent = "";
     if (effectStr.length > 0) {
@@ -836,7 +845,7 @@ export class ItemPF extends Item {
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({data=null, critical=false, extraParts=[]}={}) {
+  rollDamage({data=null, critical=false, extraParts=[], primaryAttack=true}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     let rollData = null;
@@ -863,6 +872,7 @@ export class ItemPF extends Item {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = itemData.damage.parts.map(d => d[0]);
@@ -870,12 +880,12 @@ export class ItemPF extends Item {
 
     // Determine ability score modifier
     let abl = itemData.ability.damage;
-    if (abl != null && abl !== "") {
-      rollData.extraDamage = Math.floor(actorData.abilities[abl].mod * itemData.ability.damageMult);
-      if (actorData.abilities[abl].mod < 0) rollData.extraDamage = actorData.abilities[abl].mod;
-      if (rollData.extraDamage < 0) parts.push("@extraDamage");
-      else if (rollData.critMult !== 1) parts.push("@extraDamage * @critMult");
-      else parts.push("@extraDamage");
+    if (typeof abl === "string" && abl !== "") {
+      rollData.ablDamage = Math.floor(actorData.abilities[abl].mod * rollData.ablMult);
+      if (actorData.abilities[abl].mod < 0) rollData.ablDamage = actorData.abilities[abl].mod;
+      if (rollData.ablDamage < 0) parts.push("@ablDamage");
+      else if (rollData.critMult !== 1) parts.push("@ablDamage * @critMult");
+      else if (rollData.ablDamage !== 0) parts.push("@ablDamage");
     }
     // Add enhancement bonus
     if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {

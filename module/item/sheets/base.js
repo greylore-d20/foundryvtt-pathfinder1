@@ -92,6 +92,11 @@ export class ItemSheetPF extends ItemSheet {
       data.isRanged = (!data.item.data.weaponData.isMelee || data.item.data.properties["thr"] === true);
     }
 
+    if (data.item.type === "attack") {
+      data.isWeaponAttack = data.item.data.attackType === "weapon";
+      data.isNaturalAttack = data.item.data.attackType === "natural";
+    }
+
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
       data.isPreparedSpell = data.item.data.preparation.mode === "prepared";

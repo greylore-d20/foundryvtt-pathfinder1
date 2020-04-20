@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.311
+
+### Bug Fixes
+
+- Character sheet glitch with incorrect class type set
+
 ## 0.31
 
 ### Bug Fixes

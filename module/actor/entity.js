@@ -1158,7 +1158,7 @@ export class ActorPF extends Actor {
         updateData,
         `data.attributes.savingThrows.${a}.total`,
         classes.reduce((cur, obj) => {
-          const classType = obj.data.classType;
+          const classType = getProperty(obj.data, "classType") || "base";
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
           if (formula == null) formula = "0";
           return cur + new Roll(formula, {level: obj.data.levels}).roll().total;
@@ -1466,7 +1466,7 @@ export class ActorPF extends Actor {
     // Add class bonuses to saving throws
     actorData.items.filter(obj => { return obj.type === "class"; }).forEach(obj => {
       for (let s of Object.keys(obj.data.savingThrows)) {
-        const classType = obj.data.classType;
+        const classType = getProperty(obj.data, "classType") || "base";
         let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[s].value];
         if (formula == null) formula =  "0";
         const value = new Roll(formula, {level: obj.data.levels}).roll().total;

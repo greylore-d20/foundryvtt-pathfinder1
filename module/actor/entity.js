@@ -1544,8 +1544,7 @@ export class ActorPF extends Actor {
 
     // Experience bar
     let prior = this.getLevelExp(data.details.level.value - 1 || 0),
-          req = data.details.xp.max - prior;
-    data.details.xp.value = Math.max(data.details.xp.value, prior);
+      req = data.details.xp.max - prior;
     data.details.xp.pct = Math.min(Math.round((data.details.xp.value - prior) * 100 / (req || 1)), 99.5);
   }
 
@@ -1737,7 +1736,7 @@ export class ActorPF extends Actor {
       }
     }
 
-    if (this._updateExp(data)) options.diff = false;
+    this._updateExp(data);
 
     // Update changes
     let diff = data;
@@ -1768,8 +1767,6 @@ export class ActorPF extends Actor {
       if (Object.keys(itemDiff).length > 0) i.update(itemDiff);
     }
 
-    // if (this.hasPerm(game.user, "LIMITED")) this._updateChanges({ sourceOnly: true });
-
     return super._onUpdate(data, options, userId, context);
   }
   
@@ -1783,13 +1780,16 @@ export class ActorPF extends Actor {
     const level = classes.reduce((cur, o) => {
       return cur + o.data.data.levels;
     }, 0);
-    data["data.details.level.value"] = level;
+    if (getProperty(this.data, "data.details.level.value") !== level) {
+      data["data.details.level.value"] = level;
+    }
 
     // The following is not for NPCs
     if (this.data.type !== "character") return;
 
     // Translate update exp value to number
-    let newExp = data["data.details.xp.value"];
+    let newExp = data["data.details.xp.value"],
+      resetExp = false;
     if (typeof newExp === "string") {
       if (newExp.match(/^\+([0-9]+)$/)) {
         newExp = this.data.data.details.xp.value + parseInt(RegExp.$1);
@@ -1797,20 +1797,25 @@ export class ActorPF extends Actor {
       else if (newExp.match(/^-([0-9]+)$/)) {
         newExp = this.data.data.details.xp.value - parseInt(RegExp.$1);
       }
+      else if (newExp === "") {
+        resetExp = true;
+      }
       else {
         newExp = parseInt(newExp);
         if (Number.isNaN(newExp)) newExp = this.data.data.details.xp.value;
       }
 
-      if (typeof newExp === "number" && newExp !== this.data.data.details.xp.value) {
+      if (typeof newExp === "number" && newExp !== getProperty(this.data, "data.details.xp.value")) {
         data["data.details.xp.value"] = newExp;
       }
     }
-    data["data.details.xp.max"] = this.getLevelExp(level);
+    const maxExp = this.getLevelExp(level);
+    if (maxExp !== getProperty(this.data, "data.details.xp.max")) {
+      data["data.details.xp.max"] = maxExp;
+    }
 
-    const curExp = data["data.details.xp.value"] !== undefined ? data["data.details.xp.value"] : this.data.data.details.xp.value;
     const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
-    if (curExp < minExp) data["data.details.xp.value"] = minExp;
+    if (resetExp) data["data.details.xp.value"] = minExp;
   }
 
   async _onCreate(data, options, userId, context) {

@@ -1991,6 +1991,8 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
     return DicePF.d20Roll({
       event: options.event,
+      fastForward: options.skipDialog === true,
+      staticRoll: options.staticRoll,
       parts: ["@mod"],
       data: {mod: skl.mod},
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),

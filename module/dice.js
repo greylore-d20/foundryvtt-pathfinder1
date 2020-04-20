@@ -25,7 +25,8 @@ export class DicePF {
    * @param {Boolean} autoRender    Whether to automatically render the chat messages
    */
   static async d20Roll({event, parts, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
-                  fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData }) {
+                  fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
+                  staticRoll=null }) {
     // Handle input arguments
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
@@ -49,7 +50,7 @@ export class DicePF {
         }
 
         // Do set roll
-        if (setRoll >= 0) {
+        if (setRoll != null && setRoll >= 0) {
           curParts[0] = `${setRoll}`;
           flavor += ` (Take ${setRoll})`;
         }
@@ -58,7 +59,7 @@ export class DicePF {
         let roll = new Roll(curParts.join(" + "), data).roll();
 
         // Flag critical thresholds
-        if (setRoll == null || setRoll <= 0) {
+        if (setRoll == null || setRoll < 0) {
           let d20 = roll.parts[0];
           d20.options.critical = critical;
           d20.options.fumble = fumble;
@@ -116,7 +117,7 @@ export class DicePF {
 
     // Modify the roll and handle fast-forwarding
     parts = ["1d20"].concat(parts);
-    if (fastForward === true && !event.shiftKey) return _roll(parts);
+    if (fastForward === true || event.shiftKey) return _roll(parts, staticRoll);
     else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog
@@ -137,7 +138,7 @@ export class DicePF {
         buttons: {
           normal: {
             label: "Normal",
-            callback: html => roll = _roll(parts, -1, html)
+            callback: html => roll = _roll(parts, staticRoll != null ? staticRoll : -1, html)
           },
           takeTen: {
             label: "Take 10",

@@ -935,9 +935,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // Update encumbrance
-    this._computeEncumbrance(updateData, srcData1);
-
     // Initialize data
     if (!sourceOnly) this._resetData(updateData, srcData1, flags);
 
@@ -979,6 +976,22 @@ export class ActorPF extends Actor {
       }
     });
 
+    // Update encumbrance
+    this._computeEncumbrance(updateData, srcData1);
+    switch (srcData1.data.attributes.encumbrance.level) {
+      case 0:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
+        break;
+      case 1:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
+        break;
+      case 2:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
+        break;
+    }
+    linkData(srcData1, updateData, "data.attributes.acp.total", updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"]);
     // Reduce final speed under certain circumstances
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
     if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||
@@ -1165,20 +1178,6 @@ export class ActorPF extends Actor {
         }
       }
     });
-    // Set encumbrance
-    linkData(data, updateData, "data.attributes.acp.encumbrance", 0);
-    switch (data1.attributes.encumbrance.level) {
-      case 1:
-        linkData(data, updateData, "data.attributes.acp.encumbrance", 3);
-        linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
-        break;
-      case 2:
-        linkData(data, updateData, "data.attributes.acp.encumbrance", 6);
-        linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
-        break;
-    }
-    // Set final ACP
-    linkData(data, updateData, "data.attributes.acp.total", updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"]);
 
     // Reset specific skill bonuses
     for (let sklKey of this._getChangeFlat("skills", "", data1.data)) {
@@ -2528,24 +2527,12 @@ export class ActorPF extends Actor {
   }
 
   _computeEncumbrance(updateData, srcData) {
-    // Determine carrying capacity
-    const carryStr = srcData.data.abilities.str.total + srcData.data.abilities.str.carryBonus;
-    let carryMultiplier = srcData.data.abilities.str.carryMultiplier;
-    const size = srcData.data.traits.size;
-    if (srcData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
-    else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
-    const table = CONFIG.PF1.encumbranceLoads;
-    const heavy = Math.floor(Math.max(
-      3,
-      (carryStr >= table.length ?
-        table[table.length - 1] + ((table[table.length - 1] - table[table.length - 2]) * (carryStr - (table.length - 1))) :
-        table[carryStr]) * carryMultiplier
-    ));
-    linkData(srcData, updateData, "data.attributes.encumbrance.levels.heavy", heavy);
-    linkData(srcData, updateData, "data.attributes.encumbrance.levels.light", Math.floor(heavy / 3));
-    linkData(srcData, updateData, "data.attributes.encumbrance.levels.medium", Math.floor(heavy / 3 * 2));
-    linkData(srcData, updateData, "data.attributes.encumbrance.levels.carry", Math.floor(heavy * 2));
-    linkData(srcData, updateData, "data.attributes.encumbrance.levels.drag", Math.floor(heavy * 5));
+    const carry = this.getCarryCapacity(srcData);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.light", carry.light);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.medium", carry.medium);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.heavy", carry.heavy);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.carry", carry.heavy * 2);
+    linkData(srcData, updateData, "data.attributes.encumbrance.levels.drag", carry.heavy * 5);
 
     const carriedWeight = Math.max(0, this.getCarriedWeight(srcData));
     linkData(srcData, updateData, "data.attributes.encumbrance.carriedWeight", Math.round(carriedWeight * 10) / 10);
@@ -2561,6 +2548,26 @@ export class ActorPF extends Actor {
     return Object.values(data.data.currency).reduce((cur, amount) => {
       return cur + amount;
     }, 0) / 50;
+  }
+
+  getCarryCapacity(srcData) {
+    // Determine carrying capacity
+    const carryStr = srcData.data.abilities.str.total + srcData.data.abilities.str.carryBonus;
+    let carryMultiplier = srcData.data.abilities.str.carryMultiplier;
+    const size = srcData.data.traits.size;
+    if (srcData.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
+    else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
+    const table = CONFIG.PF1.encumbranceLoads;
+
+    let heavy = Math.floor(table[carryStr] * carryMultiplier);
+    if (carryStr >= table.length) {
+      heavy = Math.floor(table[table.length-1] * (1 + (0.3 * (carryStr - (table.length-1)))));
+    }
+    return {
+      light: Math.floor(heavy / 3),
+      medium: Math.floor(heavy / 3 * 2),
+      heavy: heavy,
+    };
   }
 
   getCarriedWeight(srcData) {

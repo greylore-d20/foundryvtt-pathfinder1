@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.31
+
+### Bug Fixes
+
+- Freeze on adding/removing items to/from unlinked tokens
+
+### Changelog
+
+- Improved existing sample macros
+- Added a journal compendium for conditions
+- Shows a warning on character sheets without a class, indicating that some attributes require one
+- Add option for natural attacks on whether it's a primary or secondary attack, and apply penalties as appropriate
+
 ## 0.302
 
 ### Bug Fixes

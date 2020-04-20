@@ -1743,7 +1743,8 @@ export class ActorPF extends Actor {
     let diff = data;
     if (options.updateChanges !== false) {
       const updateObj = await this._updateChanges({ data: data });
-      diff = mergeObject(diff, updateObj.diff, { inplace: false });
+      if (updateObj.diff.items) delete updateObj.diff.items;
+      diff = mergeObject(diff, updateObj.diff);
     }
     // Diff token data
     if (data.token != null) {
@@ -1761,7 +1762,7 @@ export class ActorPF extends Actor {
     for (let i of this.items) {
       let itemUpdateData = {};
 
-      i._updateMaxUses(itemUpdateData, { actorData: this.data });
+      i._updateMaxUses(itemUpdateData, { actorData: data });
 
       const itemDiff = diffObject(flattenObject(i.data), itemUpdateData);
       if (Object.keys(itemDiff).length > 0) i.update(itemDiff);

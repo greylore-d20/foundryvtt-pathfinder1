@@ -1161,7 +1161,7 @@ export class ActorPF extends Actor {
     }
 
     // Reset maximum hit points
-    linkData(data, updateData, "data.attributes.hp.max", 0);
+    linkData(data, updateData, "data.attributes.hp.max", getProperty(data, "data.attributes.hp.base") || 0);
 
     // Reset AC
     for (let type of Object.keys(data1.attributes.ac)) {

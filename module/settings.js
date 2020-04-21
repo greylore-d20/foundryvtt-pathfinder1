@@ -60,6 +60,30 @@ export const registerSystemSettings = function() {
   });
 
   /**
+   * Auto calculate racial hit points
+   */
+  game.settings.register("pf1", "RacialAutoHPFormula", {
+    name: "SETTINGS.pf1RacialAutoHPN",
+    hint: "SETTINGS.pf1RacialAutoHPL",
+    scope: "world",
+    config: true,
+    default: "manual",
+    type: String,
+    choices: {
+      "manual": "SETTINGS.pf1AutoHPFormulaManual",
+      "50": "SETTINGS.pf1AutoHPFormula50",
+      "75": "SETTINGS.pf1AutoHPFormula75",
+      "100": "SETTINGS.pf1AutoHPFormula100",
+      "50F": "SETTINGS.pf1AutoHPFormula50F",
+      "75F": "SETTINGS.pf1AutoHPFormula75F",
+    },
+    onChange: () => {
+      game.actors.entities.forEach(o => { if (!o.isPC) o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { if (!o.isPC) o.update({}); });
+    }
+  });
+
+  /**
    * Register diagonal movement rule setting
    */
   game.settings.register("pf1", "diagonalMovement", {

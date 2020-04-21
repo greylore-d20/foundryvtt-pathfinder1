@@ -105,15 +105,13 @@ export const migrateCompendium = async function(pack) {
 export const migrateActorData = async function(actor) {
   const updateData = {};
 
-  const toFlatten = ["attributes.hd.base", "attributes.hd.max"];
-  _migrateRemoveDeprecated(actor, updateData, toFlatten);
-
   _migrateCharacterLevel(actor, updateData);
   _migrateActorEncumbrance(actor, updateData);
   _migrateActorDefenseNotes(actor, updateData);
   _migrateActorSpeed(actor, updateData);
   _migrateSpellDivineFocus(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData);
+  _migrateActorBaseStats(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -313,6 +311,18 @@ const _migrateActorSpellbookSlots = function(ent, updateData) {
       else if (base === undefined) {
         updateData[baseKey] = "";
       }
+    }
+  }
+};
+
+const _migrateActorBaseStats = function(ent, updateData) {
+  const keys = ["attributes.hp.base", "attributes.hd.base", "attributes.savingThrows.fort.value",
+    "attributes.savingThrows.ref.value", "attributes.savingThrows.will.value"];
+  for (let k of keys) {
+    if (getProperty(ent.data.data, k) != null) {
+      let kList = k.split(".");
+      kList[kList.length-1] = `-=${kList[kList.length-1]}`;
+      updateData[`data.${kList.join(".")}`] = null;
     }
   }
 };

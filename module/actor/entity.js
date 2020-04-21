@@ -475,42 +475,56 @@ export class ActorPF extends Actor {
 
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
-    const classes = data.items.filter(o => o.type === "class").sort((a, b) => {
+    const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "data.classType") !== "racial").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
-    let autoHP = game.settings.get("pf1", "autoHPFormula");
-    if (!this._dataIsPC(data)) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
-    if (autoHP === "manual") {
-      classes.forEach(cls => {
-        const value = cls.data.hp + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
-        changes.push({
-          raw: [value.toString(), "misc", "mhp", "untyped", 0],
-          source: {
-            name: cls.name,
-            subtype: cls.name.toString()
-          }
+    const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "data.classType") === "racial").sort((a, b) => {
+      return a.data.sort - b.data.sort;
+    });
+    const autoHP = {
+      character: {
+        classes: game.settings.get("pf1", "autoHPFormula"),
+        racial: game.settings.get("pf1", "RacialAutoHPFormula"),
+      },
+      npc: {
+        classes: game.settings.get("pf1", "NPCAutoHPFormula"),
+        racial: game.settings.get("pf1", "RacialAutoHPFormula"),
+      },
+    };
+    for (let [k, auto] of Object.entries(autoHP[this.data.type])) {
+      const list = k === "classes" ? classes : racialHD;
+      if (auto === "manual") {
+        list.forEach(cls => {
+          const value = cls.data.hp + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
+          changes.push({
+            raw: [value.toString(), "misc", "mhp", "untyped", 0],
+            source: {
+              name: cls.name,
+              subtype: cls.name.toString()
+            }
+          });
         });
-      });
-    }
-    else {
-      // Auto calculate hit points
-      let rate = 0.5;
-      if (autoHP === "75" || autoHP === "75F") rate = 0.75;
-      if (autoHP === "100") rate = 1;
-      classes.forEach((cls, a) => {
-        let value = Math.ceil(cls.data.hd * rate * cls.data.levels) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
-        if ((autoHP === "50F" || autoHP === "75F") && a === 0) {
-          value = cls.data.hd + Math.ceil(cls.data.hd * rate * (cls.data.levels - 1)) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
-        }
+      }
+      else {
+        // Auto calculate hit points
+        let rate = 0.5;
+        if (auto === "75" || auto === "75F") rate = 0.75;
+        if (auto === "100") rate = 1;
+        list.forEach((cls, a) => {
+          let value = Math.ceil(cls.data.hd * rate * cls.data.levels) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
+          if ((auto === "50F" || auto === "75F") && a === 0) {
+            value = cls.data.hd + Math.ceil(cls.data.hd * rate * (cls.data.levels - 1)) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
+          }
 
-        changes.push({
-          raw: [value.toString(), "misc", "mhp", "untyped", 0],
-          source: {
-            name: cls.name,
-            subtype: cls.name.toString()
-          }
-        });
-      }, 0);
+          changes.push({
+            raw: [value.toString(), "misc", "mhp", "untyped", 0],
+            source: {
+              name: cls.name,
+              subtype: cls.name.toString()
+            }
+          });
+        }, 0);
+      }
     }
 
     // Add Constitution to HP
@@ -1147,9 +1161,7 @@ export class ActorPF extends Actor {
     }
 
     // Reset maximum hit points
-    let mhp = data1.attributes.hp.base;
-    // Set max hit points
-    linkData(data, updateData, "data.attributes.hp.max", Math.max(0, mhp));
+    linkData(data, updateData, "data.attributes.hp.max", 0);
 
     // Reset AC
     for (let type of Object.keys(data1.attributes.ac)) {
@@ -1397,7 +1409,8 @@ export class ActorPF extends Actor {
       }
       cls.data.tag = tag;
       let doAutoHP = false;
-      if (this.isPC) doAutoHP = game.settings.get("pf1", "autoHPFormula") !== "manual";
+      if (getProperty(cls.data, "data.classType") === "racial") doAutoHP = game.settings.get("pf1", "RacialAutoHPFormula") !== "manual";
+      else if (this.isPC) doAutoHP = game.settings.get("pf1", "autoHPFormula") !== "manual";
       else doAutoHP = game.settings.get("pf1", "NPCAutoHPFormula") !== "manual";
       const classType = cls.data.classType || "base";
       data.classes[tag] = {

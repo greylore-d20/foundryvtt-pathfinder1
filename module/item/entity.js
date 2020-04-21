@@ -709,7 +709,7 @@ export class ItemPF extends Item {
     let roll;
     const buttons = {};
     if (this.hasAttack) {
-      if (!this.isSpell) {
+      if (this.type !== "spell") {
         buttons.normal = {
           label: "Single Attack",
           callback: html => roll = _roll.call(this, false, html)
@@ -717,14 +717,14 @@ export class ItemPF extends Item {
       }
       if ((getProperty(this.data, "data.attackParts") || []).length || this.isSpell) {
         buttons.multi = {
-          label: this.isSpell ? "Cast" : "Full Attack",
+          label: this.type === "spell" ? "Cast" : "Full Attack",
           callback: html => roll = _roll.call(this, true, html)
         };
       }
     }
     else {
       buttons.normal = {
-        label: this.isSpell ? "Cast" : "Use",
+        label: this.type === "spell" ? "Cast" : "Use",
         callback: html => roll = _roll.call(this, false, html)
       };
     }

@@ -271,7 +271,7 @@ export class ItemPF extends Item {
     }, altChatData);
 
     // Toggle default roll mode
-    let rollMode = game.settings.get("core", "rollMode");
+    let rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
     if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
     if ( rollMode === "blindroll" ) chatData["blind"] = true;
 

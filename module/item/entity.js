@@ -223,7 +223,7 @@ export class ItemPF extends Item {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-  async roll() {
+  async roll(altChatData={}) {
     const actor = this.actor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
@@ -260,7 +260,7 @@ export class ItemPF extends Item {
     const template = `systems/pf1/templates/chat/${templateType}-card.html`;
 
     // Basic chat message data
-    const chatData = {
+    const chatData = mergeObject({
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       speaker: {
@@ -268,7 +268,7 @@ export class ItemPF extends Item {
         token: this.actor.token,
         alias: this.actor.name
       },
-    };
+    }, altChatData);
 
     // Toggle default roll mode
     let rollMode = game.settings.get("core", "rollMode");
@@ -499,12 +499,14 @@ export class ItemPF extends Item {
       let attackExtraParts = [],
         damageExtraParts = [],
         primaryAttack = true,
-        useMeasureTemplate = false;
+        useMeasureTemplate = false,
+        rollMode = null;
       if (form) {
         rollData.attackBonus = form.find('[name="attack-bonus"]').val();
         if (rollData.attackBonus) attackExtraParts.push("@attackBonus");
         rollData.damageBonus = form.find('[name="damage-bonus"]').val();
         if (rollData.damageBonus) damageExtraParts.push("@damageBonus");
+        rollMode = form.find('[name="rollMode"]').val();
 
         // Power Attack
         if (form.find('[name="power-attack"]').prop("checked")) {
@@ -559,7 +561,8 @@ export class ItemPF extends Item {
         hasProperties: properties.length > 0,
         properties: props,
         name: this.name,
-        type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        rollMode: rollMode,
       };
       // Create attacks
       const allAttacks = fullAttack ? this.data.data.attackParts.reduce((cur, r) => {
@@ -675,6 +678,7 @@ export class ItemPF extends Item {
         }
         const chatData = {
           speaker: ChatMessage.getSpeaker({actor: this.actor}),
+          rollMode: rollMode,
         };
 
         // Don't play multiple sounds
@@ -687,9 +691,9 @@ export class ItemPF extends Item {
         }
 
         // Post message
-        if (this.data.type === "spell") await this.roll();
+        if (this.data.type === "spell") await this.roll({ rollMode: rollMode });
         rolled = true;
-        if (attacks.length) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+        if (this.hasDamage || this.hasEffect) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
       }
     }
 
@@ -698,11 +702,10 @@ export class ItemPF extends Item {
 
     // Render modal dialog
     let template = "systems/pf1/templates/apps/attack-roll-dialog.html";
-    let rollMode = game.settings.get("core", "rollMode");
     let dialogData = {
       data: rollData,
       item: this.data.data,
-      rollMode: rollMode,
+      rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.rollModes,
       hasAttack: this.hasAttack,
       hasDamage: this.hasDamage,

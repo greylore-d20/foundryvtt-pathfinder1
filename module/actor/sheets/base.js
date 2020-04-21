@@ -521,7 +521,7 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   _moveTooltips(event) {
-    $(event.currentTarget).find(".tooltipcontent").css("left", `${event.clientX}px`).css("top", `${event.clientY + 24}px`);
+    $(event.currentTarget).find(".tooltip:hover .tooltipcontent").css("left", `${event.clientX}px`).css("top", `${event.clientY + 24}px`);
   }
 
   /**

@@ -59,6 +59,7 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
     case "blindroll":
       chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
       chatData["blind"] = true;
+      break;
   }
 
   ChatMessage.create(chatData);

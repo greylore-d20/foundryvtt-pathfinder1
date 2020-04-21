@@ -1800,13 +1800,13 @@ export class ActorPF extends Actor {
     }
 
     // Clean up old item resources
-    for (let [tag, res] of Object.entries(this.data.data.resources)) {
+    for (let [tag, res] of Object.entries(getProperty(this.data, "data.resources") || {})) {
       if (!res) continue;
       if (!res._id) continue;
       const itemId = res._id;
       const item = this.getOwnedItem(itemId);
+      // Remove resource from token bars
       if (item == null) {
-        // Remove resource from token bars
         const tokens = this.getActiveTokens();
         tokens.forEach(token => {
           ["bar1", "bar2"].forEach(b => {
@@ -1821,8 +1821,10 @@ export class ActorPF extends Actor {
             }
           });
         });
-        // Remove resource
-        data[`data.resources.${tag}`] = null;
+      }
+      // Remove resource
+      if (item == null || createTag(item.name) !== tag) {
+        data[`data.resources.-=${tag}`] = null;
       }
     }
 

@@ -147,6 +147,10 @@ export const registerSystemSettings = function() {
     config: true,
     default: false,
     type: Boolean,
+    onChange: () => {
+      game.actors.entities.forEach(o => { if (o.sheet && o.sheet.rendered) o.sheet.render(true); });
+      Object.values(game.actors.tokens).forEach(o => { if (o.sheet && o.sheet.rendered) o.sheet.render(true); });
+    },
   });
 
   /**
@@ -160,13 +164,9 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
     onChange: () => {
-      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
-        return o.data.type === "character";
-      }).forEach(o => {
-        o.update({});
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-    }
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+    },
   });
 
   /**

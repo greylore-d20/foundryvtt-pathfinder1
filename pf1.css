@@ -992,7 +992,13 @@
 .pf1.sheet.actor .tab.inventory label.checkbox,
 .pf1.sheet.actor .tab.spellbook label.checkbox {
   text-align: left;
-  margin: 4px;
+  flex: 0;
+  margin: 0 0 0 4px;
+}
+.pf1.sheet.actor .tab.features label.checkbox:first-child,
+.pf1.sheet.actor .tab.inventory label.checkbox:first-child,
+.pf1.sheet.actor .tab.spellbook label.checkbox:first-child {
+  margin-top: 4px;
 }
 .pf1.sheet.actor .inventory-filters {
   margin: 0 8px;

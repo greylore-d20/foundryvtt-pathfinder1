@@ -245,8 +245,11 @@ export class ItemPF extends Item {
 
     // Roll spell failure chance
     if (templateData.isSpell && this.actor != null && this.actor.spellFailure > 0) {
-      templateData.spellFailure = new Roll("1d100").roll().total;
-      templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+      const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+      if (spellbook && spellbook.arcaneSpellFailure) {
+        templateData.spellFailure = new Roll("1d100").roll().total;
+        templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+      }
     }
 
     // Render the chat card template
@@ -715,7 +718,7 @@ export class ItemPF extends Item {
           callback: html => roll = _roll.call(this, false, html)
         };
       }
-      if ((getProperty(this.data, "data.attackParts") || []).length || this.isSpell) {
+      if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
         buttons.multi = {
           label: this.type === "spell" ? "Cast" : "Full Attack",
           callback: html => roll = _roll.call(this, true, html)

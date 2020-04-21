@@ -53,13 +53,6 @@
     <div class="attribute-value">
       <span>{{savingThrow.total}}</span>
     </div>
-    {{#unless ../isCharacter}}
-    <footer class="attribute-footer">
-      <span>{{localize "PF1.Base"}}</span>
-      <input name="data.attributes.savingThrows.{{id}}.value" type="text" placeholder="0" data-dtype="Number"
-        value="{{numberFormat savingThrow.value decimals=0 sign=false}}"/>
-    </footer>
-    {{/unless}}
   </li>
   {{/each}}
 </ul>

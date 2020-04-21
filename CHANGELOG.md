@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.32
+
+### Bug Fixes
+
+- Sample macros' accidental reliance on Furnace
+
+### Changelog
+
+- Add Fractional Base Bonuses optional ruleset as a world setting
+- Add another type of class, Racial HD, which represents a creature's racial hit die
+  - Added a compendium for racial hit die
+  - What little exists in the bestiary compendium has been updated to reflect this
+- Classes can now have changes, similar to buffs, feats, weapons and equipment
+- Added a list of all skills to classes with checkboxes to make them class skills
+  - A skill is now a class skill if it's checked as a class skill on at least one of the actor's classes
+  - Updated all classes in the classes compendium to reflect these changes
+- Add option for items with actions (like spells and attacks) to have an associated measure template
+  - When using the attack or spell, you get an option on whether you want to automatically insert the template
+- Add option to ignore arcane spell failure, on a per-spellbook basis
+
 ## 0.311
 
 ### Bug Fixes

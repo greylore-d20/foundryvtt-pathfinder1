@@ -33,7 +33,7 @@ TemplateLayer.prototype._onDragStart = function(event) {
     fillColor: game.user.data.color || "#FF0000"
   };
   if (tool === "cone") data["angle"] = 90;
-  else if (tool === "ray") data["width"] = Math.floor(canvas.dimensions.distance * 0.8 * 10) / 10;
+  else if (tool === "ray") data["width"] = 5;
 
   // Assign the template
   let template = new MeasuredTemplate(data);

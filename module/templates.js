@@ -26,9 +26,13 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/items/parts/item-description.html",
     "systems/pf1/templates/items/parts/item-changes.html",
     "systems/pf1/templates/items/parts/item-notes.html",
+    "systems/pf1/templates/items/parts/item-template.html",
 
     // Misc
     "systems/pf1/templates/misc/token-config.html",
+
+    // Apps
+    "systems/pf1/templates/apps/attack-roll-dialog.html",
 
     // Chat
     "systems/pf1/templates/chat/roll-ext.html",

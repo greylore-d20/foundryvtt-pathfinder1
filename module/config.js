@@ -193,6 +193,12 @@ PF1.divineFocus = {
   "3": "PF1.SpellComponentDivineFocusFocus",
 };
 
+PF1.measureTemplateTypes = {
+  "cone": "PF1.MeasureTemplateCone",
+  "circle": "PF1.MeasureTemplateCircle",
+  "ray": "PF1.MeasureTemplateRay",
+};
+
 /* -------------------------------------------- */
 
 // Creature Sizes

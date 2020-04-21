@@ -1,6 +1,7 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { alterRoll, isMinimumCoreVersion, linkData } from "../lib.js";
+import { AbilityTemplate } from "../pixi/ability-template.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -23,8 +24,14 @@ export class ItemPF extends Item {
     return this.hasAttack && this.data.data.attackParts != null && this.data.data.attackParts.length > 0;
   }
 
+  get hasTemplate() {
+    const v = getProperty(this.data, "data.measureTemplate.type");
+    const s = getProperty(this.data, "data.measureTemplate.size");
+    return (typeof v === "string" && v !== "") && (typeof s === "number" && s > 0);
+  }
+
   get hasAction() {
-    return this.hasAttack || this.hasDamage || this.hasEffect;
+    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasTemplate;
   }
 
   /* -------------------------------------------- */
@@ -483,9 +490,10 @@ export class ItemPF extends Item {
 
     let rolled = false;
     const _roll = async function(fullAttack, form) {
-      let attackExtraParts = [];
-      let damageExtraParts = [];
-      let primaryAttack = true;
+      let attackExtraParts = [],
+        damageExtraParts = [],
+        primaryAttack = true,
+        useMeasureTemplate = false;
       if (form) {
         rollData.attackBonus = form.find('[name="attack-bonus"]').val();
         if (rollData.attackBonus) attackExtraParts.push("@attackBonus");
@@ -503,6 +511,11 @@ export class ItemPF extends Item {
         let html = form.find('[name="primary-attack"]');
         if (typeof html.prop("checked") === "boolean") {
           primaryAttack = html.prop("checked");
+        }
+        // Use measure template
+        html = form.find('[name="measure-template"]');
+        if (typeof html.prop("checked") === "boolean") {
+          useMeasureTemplate = html.prop("checked");
         }
       }
       // Add contextual attack string
@@ -635,6 +648,20 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
 
+      // Prompt measure template
+      if (useMeasureTemplate) {
+        const template = AbilityTemplate.fromData(getProperty(this.data, "data.measureTemplate.type"), getProperty(this.data, "data.measureTemplate.size"));
+        if (template) {
+          if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
+          const success = await template.drawPreview(ev);
+          if (!success) {
+            if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.maximize();
+            return;
+          }
+        }
+      }
+      
+      // Roll attack(s)
       for (let a = 0; a < attacks.length || (attacks.length === 0 && a < 1); a++) {
         if (attacks.length > 0) {
           const atk = attacks[a];
@@ -656,7 +683,7 @@ export class ItemPF extends Item {
         // Post message
         if (this.data.type === "spell") await this.roll();
         rolled = true;
-        await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+        if (attacks.length) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
       }
     }
 
@@ -664,34 +691,49 @@ export class ItemPF extends Item {
     if (skipDialog || (ev instanceof MouseEvent && (ev.shiftKey || ev.button === 2))) return _roll.call(this, true);
 
     // Render modal dialog
-    let template = "systems/pf1/templates/chat/attack-roll-dialog.html";
+    let template = "systems/pf1/templates/apps/attack-roll-dialog.html";
     let rollMode = game.settings.get("core", "rollMode");
     let dialogData = {
       data: rollData,
       item: this.data.data,
       rollMode: rollMode,
       rollModes: CONFIG.rollModes,
+      hasAttack: this.hasAttack,
+      hasDamage: this.hasDamage,
       isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
       isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
+      hasTemplate: this.hasTemplate,
     };
     const html = await renderTemplate(template, dialogData);
 
     let roll;
+    const buttons = {};
+    if (this.hasAttack) {
+      if (!this.isSpell) {
+        buttons.normal = {
+          label: "Single Attack",
+          callback: html => roll = _roll.call(this, false, html)
+        };
+      }
+      if ((getProperty(this.data, "data.attackParts") || []).length || this.isSpell) {
+        buttons.multi = {
+          label: this.isSpell ? "Cast" : "Full Attack",
+          callback: html => roll = _roll.call(this, true, html)
+        };
+      }
+    }
+    else {
+      buttons.normal = {
+        label: this.isSpell ? "Cast" : "Use",
+        callback: html => roll = _roll.call(this, false, html)
+      };
+    }
     return new Promise(resolve => {
       new Dialog({
-        title: `${this.name}: ${game.i18n.localize("PF1.Attack")}`,
+        title: `Use: ${this.name}`,
         content: html,
-        buttons: {
-          normal: {
-            label: "Single Attack",
-            callback: html => roll = _roll.call(this, false, html)
-          },
-          multi: {
-            label: "Full Attack",
-            callback: html => roll = _roll.call(this, true, html)
-          },
-        },
-        default: "multi",
+        buttons: buttons,
+        default: buttons.multi != null ? "multi" : "normal",
         close: html => {
           resolve(rolled ? roll : false);
         }

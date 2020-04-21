@@ -776,7 +776,7 @@ export class ActorPF extends Actor {
     }
   }
 
-  async _updateChanges({ data=null, sourceOnly=false }={}) {
+  async _updateChanges({data=null}={}) {
     let updateData = {};
     let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
     srcData1.items = this.items.reduce((cur, i) => {
@@ -948,7 +948,7 @@ export class ActorPF extends Actor {
     }
 
     // Initialize data
-    if (!sourceOnly) this._resetData(updateData, srcData1, flags);
+    this._resetData(updateData, srcData1, flags, sourceInfo);
 
     // Sort changes
     allChanges.sort(this._sortChanges.bind(this));
@@ -983,7 +983,7 @@ export class ActorPF extends Actor {
 
       if (allChanges.length <= a+1 || allChanges[a+1].raw[2] !== changeTarget) {
         const newData = this._applyChanges(changeTarget, temp, srcData1);
-        if (!sourceOnly) this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities), srcData1);
+        this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities), srcData1);
         temp = [];
       }
     });
@@ -1123,11 +1123,12 @@ export class ActorPF extends Actor {
     return consolidatedChanges;
   }
 
-  _resetData(updateData, data, flags) {
+  _resetData(updateData, data, flags, sourceInfo) {
     const data1 = data.data;
     if (flags == null) flags = {};
     const items = data.items;
     const classes = items.filter(obj => { return obj.type === "class"; });
+    const useFractionalBaseBonuses = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
 
     // Reset HD
     linkData(data, updateData, "data.attributes.hd.total", data1.details.level.value);
@@ -1165,17 +1166,42 @@ export class ActorPF extends Actor {
 
     // Reset saving throws
     for (let a of Object.keys(data1.attributes.savingThrows)) {
-      linkData(
-        data,
-        updateData,
-        `data.attributes.savingThrows.${a}.total`,
-        classes.reduce((cur, obj) => {
-          const classType = getProperty(obj.data, "classType") || "base";
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
-          if (formula == null) formula = "0";
-          return cur + new Roll(formula, {level: obj.data.levels}).roll().total;
-        }, 0) + data1.attributes.savingThrows[a].value - data1.attributes.energyDrain
-      );
+      {
+        const k = `data.attributes.savingThrows.${a}.total`;
+        if (useFractionalBaseBonuses) {
+          linkData(data, updateData, k,
+            Math.floor(classes.reduce((cur, obj) => {
+              const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
+              if (saveScale === "high") return cur + obj.data.levels / 2;
+              if (saveScale === "low") return cur + obj.data.levels / 3;
+              return cur;
+            }, 0)) - data1.attributes.energyDrain
+          );
+
+          const v = updateData[k];
+          if (v !== 0) {
+            sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
+            sourceInfo[k].positive.push({ name: game.i18n.localize("PF1.Base"), value: updateData[k] });
+          }
+        }
+        else {
+          linkData(data, updateData, k,
+            classes.reduce((cur, obj) => {
+              const classType = getProperty(obj.data, "classType") || "base";
+              let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
+              if (formula == null) formula = "0";
+              const v = Math.floor(new Roll(formula, {level: obj.data.levels}).roll().total);
+
+              if (v !== 0) {
+                sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
+                sourceInfo[k].positive.push({ name: getProperty(obj, "name"), value: v });
+              }
+
+              return cur + v;
+            }, 0) - data1.attributes.energyDrain
+          );
+        }
+      }
     }
 
     // Reset ACP and Max Dex bonus
@@ -1203,10 +1229,37 @@ export class ActorPF extends Actor {
     }
 
     // Reset BAB, CMB and CMD
-    linkData(data, updateData, "data.attributes.bab.total", data1.attributes.bab.value + classes.reduce((cur, obj) => {
-      const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-      return cur + new Roll(formula, {level: obj.data.levels}).roll().total;
-    }, 0));
+    {
+      const k = "data.attributes.bab.total";
+      if (useFractionalBaseBonuses) {
+        linkData(data, updateData, k, Math.floor(classes.reduce((cur, obj) => {
+          const babScale = getProperty(obj, "data.bab") || "";
+          if (babScale === "high") return cur + obj.data.levels;
+          if (babScale === "med") return cur + obj.data.levels * 0.75;
+          if (babScale === "low") return cur + obj.data.levels * 0.5;
+          return cur;
+        }, 0)));
+
+        const v = updateData[k];
+        if (v !== 0) {
+          sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
+          sourceInfo[k].positive.push({ name: game.i18n.localize("PF1.Base"), value: v });
+        }
+      }
+      else {
+        linkData(data, updateData, k, classes.reduce((cur, obj) => {
+          const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
+          const v = new Roll(formula, {level: obj.data.levels}).roll().total;
+
+          if (v !== 0) {
+            sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
+            sourceInfo[k].positive.push({ name: getProperty(obj, "name"), value: v });
+          }
+
+          return cur + v;
+        }, 0));
+      }
+    }
     linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
     linkData(data, updateData, "data.attributes.cmd.total", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
     linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
@@ -1443,14 +1496,14 @@ export class ActorPF extends Actor {
     }
 
     // BAB from Classes
-    sourceDetails["data.attributes.bab.total"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
-      const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-      const value = new Roll(formula, {level: obj.data.levels}).roll().total;
-      return {
-        name: obj.name,
-        value: value,
-      }
-    }));
+    // sourceDetails["data.attributes.bab.total"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
+    //   const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
+    //   const value = new Roll(formula, {level: obj.data.levels}).roll().total;
+    //   return {
+    //     name: obj.name,
+    //     value: value,
+    //   }
+    // }));
 
     // Add CMB, CMD and initiative
     if (actorData.data.attributes.bab.total !== 0) {
@@ -1489,20 +1542,20 @@ export class ActorPF extends Actor {
       }
     }
     // Add class bonuses to saving throws
-    actorData.items.filter(obj => { return obj.type === "class"; }).forEach(obj => {
-      for (let s of Object.keys(obj.data.savingThrows)) {
-        const classType = getProperty(obj.data, "classType") || "base";
-        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[s].value];
-        if (formula == null) formula =  "0";
-        const value = new Roll(formula, {level: obj.data.levels}).roll().total;
-        if (value !== 0) {
-          sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
-            name: obj.name,
-            value: value
-          });
-        }
-      }
-    });
+    // actorData.items.filter(obj => { return obj.type === "class"; }).forEach(obj => {
+    //   for (let s of Object.keys(obj.data.savingThrows)) {
+    //     const classType = getProperty(obj.data, "classType") || "base";
+    //     let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[s].value];
+    //     if (formula == null) formula =  "0";
+    //     const value = new Roll(formula, {level: obj.data.levels}).roll().total;
+    //     if (value !== 0) {
+    //       sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
+    //         name: obj.name,
+    //         value: value
+    //       });
+    //     }
+    //   }
+    // });
     
     // Add energy drain to skills
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {

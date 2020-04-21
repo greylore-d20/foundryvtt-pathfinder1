@@ -92,7 +92,7 @@ export const registerSystemSettings = function() {
       "fast": "Fast",
     },
     onChange: () => {
-      game.actors.entities.filter(o => {
+      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
         return o.data.type === "character";
       }).forEach(o => {
         o.update({});
@@ -117,12 +117,32 @@ export const registerSystemSettings = function() {
    * Option to allow the background skills optional ruleset.
    */
   game.settings.register("pf1", "allowBackgroundSkills", {
-    name: "Allow Background Skills",
-    hint: "Allows for the background skills optional ruleset.",
+    name: "SETTINGS.pf1BackgroundSkillsN",
+    hint: "SETTINGS.pf1BackgroundSkillsH",
     scope: "world",
     config: true,
     default: false,
     type: Boolean,
+  });
+
+  /**
+   * Option to use the Fractional Base Bonuses optional ruleset.
+   */
+  game.settings.register("pf1", "useFractionalBaseBonuses", {
+    name: "SETTINGS.pf1FractionalBaseBonusesN",
+    hint: "SETTINGS.pf1FractionalBaseBonusesH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
+        return o.data.type === "character";
+      }).forEach(o => {
+        o.update({});
+        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+      });
+    }
   });
 
   /**
@@ -135,7 +155,7 @@ export const registerSystemSettings = function() {
     config: true,
     default: false,
     type: Boolean,
-    onChange: _ => {
+    onChange: () => {
       ui.chat.render();
     }
   });

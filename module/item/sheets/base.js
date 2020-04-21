@@ -119,8 +119,10 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       if (this.actor != null) {
-        let autoHP = game.settings.get("pf1", "autoHPFormula");
-        if (!this.actor.isPC) autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
+        let autoHP = "manual";
+        if (getProperty(this.item.data, "data.classType") === "racial") autoHP = game.settings.get("pf1", "RacialAutoHPFormula");
+        else if (this.actor.isPC) autoHP = game.settings.get("pf1", "autoHPFormula");
+        else autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
         data.autoHP = autoHP !== "manual";
       }
       else data.autoHP = false;

@@ -78,8 +78,8 @@ export const registerSystemSettings = function() {
       "75F": "SETTINGS.pf1AutoHPFormula75F",
     },
     onChange: () => {
-      game.actors.entities.forEach(o => { if (!o.isPC) o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { if (!o.isPC) o.update({}); });
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
     }
   });
 

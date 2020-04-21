@@ -475,10 +475,10 @@ export class ActorPF extends Actor {
 
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
-    const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "data.classType") !== "racial").sort((a, b) => {
+    const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") !== "racial").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
-    const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "data.classType") === "racial").sort((a, b) => {
+    const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") === "racial").sort((a, b) => {
       return a.data.sort - b.data.sort;
     });
     const autoHP = {
@@ -1840,7 +1840,10 @@ export class ActorPF extends Actor {
       diff.token = diffObject(this.data.token, data.token);
     }
 
-    return super.update(diff, options);
+    if (Object.keys(diff).length) {
+      return super.update(diff, options);
+    }
+    return false;
   }
 
   _onUpdate(data, options, userId, context) {

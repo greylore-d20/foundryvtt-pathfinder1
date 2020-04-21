@@ -193,7 +193,10 @@ export class ItemPF extends Item {
     this._updateMaxUses(data, {srcData: srcData});
 
     const diff = diffObject(flattenObject(this.data), data);
-    return super.update(diff, options);
+    if (Object.keys(diff).length) {
+      return super.update(diff, options);
+    }
+    return false;
   }
 
   _updateMaxUses(data, {srcData=null, actorData=null}={}) {

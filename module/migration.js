@@ -105,6 +105,9 @@ export const migrateCompendium = async function(pack) {
 export const migrateActorData = async function(actor) {
   const updateData = {};
 
+  const toFlatten = ["attributes.hd.base", "attributes.hd.max"];
+  _migrateRemoveDeprecated(actor, updateData, toFlatten);
+
   _migrateCharacterLevel(actor, updateData);
   _migrateActorEncumbrance(actor, updateData);
   _migrateActorDefenseNotes(actor, updateData);

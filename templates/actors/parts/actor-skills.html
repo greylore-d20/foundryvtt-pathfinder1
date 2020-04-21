@@ -30,7 +30,7 @@
     <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.subSkills.{{b}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if subSkill.notes}}{{subSkill.notes}}{{/if}}</textarea>
     <input type="text" class="skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" value="{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
     <label class="checkbox skill-cs">
-      CS <input type="checkbox" name="data.skills.{{s}}.subSkills.{{b}}.cs" {{checked subSkill.cs}}/>
+      CS <input type="checkbox" disabled {{checked subSkill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
       ACP <input type="checkbox" name="data.skills.{{s}}.subSkills.{{b}}.acp" {{checked subSkill.acp}}/>
@@ -77,7 +77,7 @@
     <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="Notes">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
     <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
     <label class="checkbox skill-cs">
-      CS <input type="checkbox" name="data.skills.{{s}}.cs" {{checked skill.cs}}/>
+      CS <input type="checkbox" disabled {{checked skill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
       ACP <input type="checkbox" name="data.skills.{{s}}.acp" {{checked skill.acp}}/>

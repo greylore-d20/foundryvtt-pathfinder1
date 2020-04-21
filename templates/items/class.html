@@ -30,6 +30,7 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="changes">{{localize "PF1.Changes"}}</a>
   </nav>
 
   {{!-- Item Sheet Body --}}
@@ -106,7 +107,7 @@
       {{/each}}
 
       {{#if isBaseClass}}
-      <h4 class="form-header">{{localize "PF1.FavouredClassBonuses"}}</h4 class="form-header">
+      <h4 class="form-header">{{localize "PF1.FavouredClassBonuses"}}</h4>
 
       {{!-- Favoured Class Bonuses --}}
       {{#each data.fc as |fc id|}}
@@ -116,6 +117,27 @@
       </div>
       {{/each}}
       {{/if}}
+
+      <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>
+
+      <div class="form-group">
+        <ol class="item-list">
+        {{#each skills as |skill key|}}
+        <li class="item flexrow" data-skill="{{key}}">
+          <label class="checkbox skill-cs">
+            <input type="checkbox" name="data.classSkills.{{key}}" {{checked skill.classSkill}} />
+          </label>
+          <h4>{{skill.name}}</h4>
+        </li>
+        {{/each}}
+        </ol>
+      </div>
+    </div>
+
+    <div class="tab flexcol" data-group="primary" data-tab="changes">
+      {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+
+      {{> "systems/pf1/templates/items/parts/item-notes.html"}}
     </div>
   </section>
 </form>

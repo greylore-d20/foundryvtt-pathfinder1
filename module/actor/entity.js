@@ -521,6 +521,18 @@ export class ActorPF extends Actor {
       }
     });
 
+    // Natural armor
+    {
+      const natAC = getProperty(data, "data.attributes.naturalAC") || 0;
+      if (natAC > 0) {
+        changes.push({
+          raw: [natAC.toString(), "ac", "nac", "base", 0],
+          source: {
+            name: "Natural Armor"
+          }
+        });
+      }
+    }
     // Add armor bonuses from equipment
     data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(item => {
       let armorTarget = "aac";
@@ -1118,7 +1130,7 @@ export class ActorPF extends Actor {
     const classes = items.filter(obj => { return obj.type === "class"; });
 
     // Reset HD
-    linkData(data, updateData, "data.attributes.hd.total", (data1.attributes.hd.base || 0) + data1.details.level.value);
+    linkData(data, updateData, "data.attributes.hd.total", data1.details.level.value);
 
     // Reset abilities
     for (let [a, abl] of Object.entries(data1.abilities)) {
@@ -1201,6 +1213,19 @@ export class ActorPF extends Actor {
 
     // Reset initiative
     linkData(data, updateData, "data.attributes.init.total", 0);
+
+    // Reset class skills
+    for (let [k, s] of Object.entries(getProperty(data, "data.skills"))) {
+      if (!s) continue;
+      const isClassSkill = classes.reduce((cur, o) => {
+        if ((getProperty(o, "data.classSkills") || {})[k] === true) return true;
+        return cur;
+      }, false);
+      linkData(data, updateData, `data.skills.${k}.cs`, isClassSkill);
+      for (let k2 of Object.keys(getProperty(s, "subSkills") || {})) {
+        linkData(data, updateData, `data.skills.${k}.subSkills.${k2}.cs`, isClassSkill);
+      }
+    }
   }
 
   _addDynamicData(updateData, changes, flags, abilities, data, forceModUpdate=false) {

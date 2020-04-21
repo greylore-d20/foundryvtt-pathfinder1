@@ -1,8 +1,15 @@
-{{!-- Roll Defenses --}}
+{{!-- Defenses Header --}}
 <ul class="attributes defense-rolls flexrow">
+  {{!-- Roll Defenses --}}
   <li class="generic-defenses flexrow">
     <div class="rollable image-d20"></div>
     <label><h3>{{localize "PF1.Defenses"}}</h3></label>
+  </li>
+
+  {{!-- Natural Armor --}}
+  <li class="natural-armor flexrow">
+    <label><h3>{{localize "PF1.BuffTarACNatural"}}</h3></label>
+    <input type="text" name="data.attributes.naturalAC" value="{{data.attributes.naturalAC}}" placeholder="0" data-dtype="Number"/>
   </li>
 </ul>
 

@@ -104,6 +104,9 @@ export class ItemSheetPF extends ItemSheet {
       if (this.item.actor) {
         data.spellbooks = duplicate(this.item.actor.data.data.attributes.spells.spellbooks);
       }
+
+      // Enrich description
+      data.description = TextEditor.enrichHTML(data.data.description.value);
     }
 
     // Prepare class specific stuff
@@ -123,6 +126,22 @@ export class ItemSheetPF extends ItemSheet {
       else data.autoHP = false;
 
       data.isBaseClass = data.data.classType === "base";
+
+      // Add skill list
+      if (!this.item.actor) {
+        data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
+          cur[o[0]] = { name: o[1], classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
+          return cur;
+        }, {});
+      }
+      else {
+        data.skills = Object.entries(this.item.actor.data.data.skills).reduce((cur, o) => {
+          const key = o[0];
+          const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
+          cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
+          return cur;
+        }, {});
+      }
     }
 
     // Prepare stuff for items with changes

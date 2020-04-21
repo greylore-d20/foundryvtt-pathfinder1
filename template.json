@@ -84,10 +84,17 @@
             "lowLight": false
           },
           "hd": {
-            "base": 0,
+            "base": {
+              "_deprecated": true,
+              "value": 0
+            },
             "total": 1,
-            "max": 0
+            "max": {
+              "_deprecated": true,
+              "value": 0
+            }
           },
+          "naturalAC": 0,
           "ac": {
             "normal": {
               "value": 0,
@@ -855,7 +862,7 @@
       }
     },
     "class": {
-      "templates": ["itemDescription"],
+      "templates": ["itemDescription", "changes"],
       "classType": "base",
       "levels": 1,
       "hd": 8,
@@ -871,7 +878,8 @@
         "hp": { "value": 0 },
         "skill": { "value": 0 },
         "alt": { "value": 0 }
-      }
+      },
+      "classSkills": {}
     },
     "buff": {
       "templates": ["itemDescription", "changes", "contextNotes"],

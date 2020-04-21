@@ -51,6 +51,7 @@ PF1.savingThrowMods = {
 PF1.classTypes = {
   "base": "PF1.ClassTypeBase",
   "prestige": "PF1.ClassTypePrestige",
+  "racial": "PF1.ClassTypeRacial",
 };
 
 PF1.classBAB = {
@@ -78,6 +79,10 @@ PF1.classSavingThrowFormulas = {
   "prestige": {
     "low": "floor((1 + @level) / 3)",
     "high": "floor((1 + @level) / 2)",
+  },
+  "racial": {
+    "low": "floor(@level / 3)",
+    "high": "2 + floor(@level / 2)",
   },
 };
 

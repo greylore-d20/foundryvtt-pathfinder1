@@ -739,7 +739,7 @@ export class ActorSheetPF extends ActorSheet {
       mod: 0,
       rt: mainSkillData.rt,
       cs: mainSkillData.cs,
-      acp: mainSkillData.acp
+      acp: mainSkillData.acp,
     };
 
     // Get tag
@@ -789,7 +789,7 @@ export class ActorSheetPF extends ActorSheet {
     const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
 
     const updateData = {};
-    updateData[`data.skills.${mainSkillId}.subSkills.${subSkillId}`] = null;
+    updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
     if (this.actor.hasPerm(game.user, "OWNER")) this.actor.update(updateData);
   }
 
@@ -798,7 +798,7 @@ export class ActorSheetPF extends ActorSheet {
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
 
     const updateData = {};
-    updateData[`data.skills.${skillId}`] = null;
+    updateData[`data.skills.-=${skillId}`] = null;
     if (this.actor.hasPerm(game.user, "OWNER")) this.actor.update(updateData);
   }
 
@@ -1147,6 +1147,15 @@ export class ActorSheetPF extends ActorSheet {
 
     obj[key] = value;
     this._updateItems();
+  }
+
+  async _render(...args) {
+    // Trick to avoid error on elements with changing name
+    let focus = this.element.find(":focus");
+    focus = focus.length ? focus[0] : null;
+    if (focus && focus.name.match(/^data\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
+
+    return super._render(...args);
   }
 
   async _onSubmit(event, {updateData=null, preventClose=false}={}) {

@@ -486,7 +486,7 @@ export class ActorPF extends Actor {
         changes.push({
           raw: [value.toString(), "misc", "mhp", "untyped", 0],
           source: {
-            name: `${cls.name} (Class)`,
+            name: cls.name,
             subtype: cls.name.toString()
           }
         });
@@ -506,7 +506,7 @@ export class ActorPF extends Actor {
         changes.push({
           raw: [value.toString(), "misc", "mhp", "untyped", 0],
           source: {
-            name: `${cls.name} (Class)`,
+            name: cls.name,
             subtype: cls.name.toString()
           }
         });

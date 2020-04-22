@@ -693,7 +693,7 @@ export class ItemPF extends Item {
         // Post message
         if (this.data.type === "spell") await this.roll({ rollMode: rollMode });
         rolled = true;
-        if (this.hasDamage || this.hasEffect) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+        if (this.hasAttack || this.hasDamage || this.hasEffect) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
       }
     }
 

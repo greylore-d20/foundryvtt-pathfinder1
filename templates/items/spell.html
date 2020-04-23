@@ -73,6 +73,20 @@
           {{/select}}
         </select>
       </div>
+      
+      <div class="form-group stacked">
+        <label>{{localize "PF1.LearnedAt"}}</label>
+
+        <button class="entry-selector" for="data.learnedAt.class" data-fields="{{localize "PF1.CasterLevel"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.CasterLevel"}}</button>
+
+        <button class="entry-selector" for="data.learnedAt.domain" data-fields="{{localize "PF1.Domain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.Domain"}}</button>
+
+        <button class="entry-selector" for="data.learnedAt.subDomain" data-fields="{{localize "PF1.SubDomain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.SubDomain"}}</button>
+
+        <button class="entry-selector" for="data.learnedAt.elementalSchool" data-fields="{{localize "PF1.ElementalSchool"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.ElementalSchool"}}</button>
+
+        <button class="entry-selector" for="data.learnedAt.bloodline" data-fields="{{localize "PF1.Bloodline"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.Bloodline"}}</button>
+      </div>
 
       {{!-- Spell School --}}
       <div class="form-group">

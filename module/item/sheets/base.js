@@ -1,4 +1,5 @@
 import { createTabs } from "../../lib.js";
+import { EntrySelector } from "../../apps/entry-selector.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -375,6 +376,9 @@ export class ItemSheetPF extends ItemSheet {
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
 
+    // Everything below here is only needed if the sheet is editable
+    if (!this.options.editable) return;
+
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));
 
@@ -394,6 +398,9 @@ export class ItemSheetPF extends ItemSheet {
     if (["weapon"].includes(this.item.data.type)) {
       html.find("button[name='create-attack']").click(this._createAttack.bind(this));
     }
+
+    // Listen to field entries
+    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -498,6 +505,18 @@ export class ItemSheetPF extends ItemSheet {
     await this._onSubmit(event);
 
     await this.item.actor.createAttackFromWeapon(this.item);
+  }
+
+  _onEntrySelector(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const options = {
+      name: a.getAttribute("for"),
+      title: a.innerText,
+      fields: a.dataset.fields,
+      dtypes: a.dataset.dtypes,
+    };
+    new EntrySelector(this.item, options).render(true);
   }
 
   async saveMCEContent(updateData=null) {

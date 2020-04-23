@@ -1201,6 +1201,23 @@ export class ItemPF extends Item {
     if (typeof types === "string" && types.length > 0) {
       label.types = types.split(reSplit).join(", ");
     }
+    // Set information about when the spell is learned
+    data.learnedAt = {};
+    data.learnedAt.class = (getProperty(srcData, "data.learnedAt.class") || []).map(o => {
+      return `${o[0]} ${o[1]}`;
+    }).sort().join(", ");
+    data.learnedAt.domain = (getProperty(srcData, "data.learnedAt.domain") || []).map(o => {
+      return `${o[0]} ${o[1]}`;
+    }).sort().join(", ");
+    data.learnedAt.subDomain = (getProperty(srcData, "data.learnedAt.subDomain") || []).map(o => {
+      return `${o[0]} ${o[1]}`;
+    }).sort().join(", ");
+    data.learnedAt.elementalSchool = (getProperty(srcData, "data.learnedAt.elementalSchool") || []).map(o => {
+      return `${o[0]} ${o[1]}`;
+    }).sort().join(", ");
+    data.learnedAt.bloodline = (getProperty(srcData, "data.learnedAt.bloodline") || []).map(o => {
+      return `${o[0]} ${o[1]}`;
+    }).sort().join(", ");
 
     // Set casting time label
     if (getProperty(srcData, "data.activation")) {

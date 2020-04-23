@@ -171,6 +171,16 @@
 .pf1 .form-group .form-fields > *:last-child {
   margin-right: 0;
 }
+.pf1 .form-group .group {
+  flex: 1 1 96px;
+}
+.pf1 .form-group .group label {
+  flex: 1;
+  font-weight: normal;
+}
+.pf1 .form-group .group a {
+  flex: 0 0 16px;
+}
 .pf1 .form-group.stacked label {
   flex: 0 0 100%;
 }
@@ -392,6 +402,26 @@
 #trait-selector input[type="text"] {
   height: 24px;
   margin: 2px;
+}
+.pf1.entry table {
+  border: 1px solid #888888;
+  font-weight: normal;
+  table-layout: fixed;
+}
+.pf1.entry table th.entry-control {
+  width: 16px;
+}
+.pf1.entry table tr {
+  height: 16px;
+}
+.pf1.entry table thead {
+  background-color: #cfe2f3;
+}
+.pf1.entry table tbody tr {
+  background-color: white;
+}
+.pf1.entry table tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
 }
 .pf1.sheet.actor {
   /* ----------------------------------------- */
@@ -1397,6 +1427,11 @@
 .pf1.sheet.item .details select {
   border: 1px solid #7a7971;
   background: rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .details .form-group .entry-selector {
+  flex: 1;
+  height: 28px;
+  overflow: hidden;
 }
 .pf1.sheet.item .details .form-group.input-select select {
   flex: 1.8;

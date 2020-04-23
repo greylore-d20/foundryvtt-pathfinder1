@@ -112,6 +112,19 @@
         &:last-child { margin-right: 0; }
       }
     }
+
+    .group {
+      flex: 1 1 96px;
+
+      label {
+        flex: 1;
+        font-weight: normal;
+      }
+
+      a {
+        flex: 0 0 16px;
+      }
+    }
   }
 
   // Stacked Groups
@@ -387,5 +400,35 @@
   input[type="text"] {
     height: 24px;
     margin: 2px;
+  }
+}
+
+.pf1.entry {
+  table {
+    border: 1px solid rgb(136, 136, 136);
+    font-weight: normal;
+    table-layout: fixed;
+
+    th.entry-control {
+      width: 16px;
+    }
+
+    tr {
+      height: 16px;
+    }
+
+    thead {
+      background-color: #cfe2f3;
+    }
+
+    tbody {
+      tr {
+        background-color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f3;
+      }
+    }
   }
 }

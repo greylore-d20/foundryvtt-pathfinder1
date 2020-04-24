@@ -520,25 +520,29 @@ export class ActorPF extends Actor {
         });
       }
       else {
-        // Auto calculate hit points
-        let rate = 0.5;
-        if (auto === "75" || auto === "75F") rate = 0.75;
-        if (auto === "100") rate = 1;
-        list.forEach((cls, a) => {
-          let value = Math.ceil(cls.data.hd * rate * cls.data.levels) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
-          if ((auto === "50F" || auto === "75F") && a === 0) {
-            value = cls.data.hd + Math.ceil(cls.data.hd * rate * (cls.data.levels - 1)) + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
-          }
+        // Auto calculate health
+        const rate    = (auto === "100") ? 1 : (auto === "75" || auto === "75F") ? 0.75 : 0.5;
+        const max_1st = auto === "50F" || auto === "75F";
 
+        const compute_health = (cls, first = false) => {
+          const first_health = (first && max_1st) * cls.data.hd
+          const level_health = (cls.data.levels - (first && max_1st)) * Math.ceil(1 + (cls.data.hd-1) * rate)
+          const favor_health = (cls.data.classType === "base") * cls.data.fc.hp.value
+          const health = first_health + level_health + favor_health
+
+          // Push changes to hp and vigor.
           changes.push({
-            raw: [value.toString(), "misc", "mhp", "untyped", 0],
+            raw: [health.toString(), "misc", "mhp", "untyped", 0],
             source: {name: cls.name, subtype: cls.name.toString()}
           });
           changes.push({
-            raw: [value.toString(), "misc", "vigor", "untyped", 0],
+            raw: [health.toString(), "misc", "vigor", "untyped", 0],
             source: {name: cls.name, subtype: cls.name.toString()}
           });
-        }, 0);
+        }
+
+        list.slice(0, max_1st).forEach((cls) => compute_health(cls, true));
+        list.slice(max_1st, list.length).forEach((cls) => compute_health(cls, false));
       }
     }
 
@@ -1256,7 +1260,7 @@ export class ActorPF extends Actor {
                 const acc = highStart ? 0 : 2;
                 highStart = true;
                 return cur + obj.data.levels / 2 + acc;
-              } 
+              }
               if (saveScale === "low") return cur + obj.data.levels / 3;
               return cur;
             }, 0)) - data1.attributes.energyDrain

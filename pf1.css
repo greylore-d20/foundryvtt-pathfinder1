@@ -423,6 +423,73 @@
 .pf1.entry table tbody tr:nth-child(even) {
   background-color: #f3f3f3;
 }
+.compendium-browser {
+  max-height: 100%;
+}
+.compendium-browser .rollable:hover {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+.compendium-browser .header {
+  flex: 1;
+  padding-right: 8px;
+  border-right: 2px groove #eeede0;
+  max-height: 100%;
+}
+.compendium-browser .header .search {
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.compendium-browser .header .search .fas.fa-search {
+  margin: 4px;
+}
+.compendium-browser .header .filter-container {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: calc(100% - 48px);
+}
+.compendium-browser .header .filter-container .filter {
+  margin-top: 8px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  max-height: 100%;
+}
+.compendium-browser .header .filter-container .filter h3 {
+  text-align: center;
+}
+.compendium-browser .header .filter-container .filter .filter-content {
+  max-height: 100%;
+}
+.compendium-browser .header .filter-container .filter .filter-content .checkbox {
+  display: flex;
+  align-items: center;
+}
+.compendium-browser .directory-container {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex: 1;
+  max-height: 100%;
+}
+.compendium-browser .directory-container .directory-list {
+  padding: 0;
+}
+.compendium-browser .directory-container .directory-list .directory-item {
+  align-items: center;
+}
+.compendium-browser .directory-container .directory-list .directory-item img {
+  flex: 0;
+  width: 48px;
+  height: 48px;
+  margin: 2px;
+}
+.compendium-browser .directory-container .directory-list .directory-item h4 {
+  margin-left: 4px;
+}
+.compendium-browser .directory-container .directory-list .directory-item:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 .pf1.sheet.actor {
   /* ----------------------------------------- */
   /*  Sheet Header                             */

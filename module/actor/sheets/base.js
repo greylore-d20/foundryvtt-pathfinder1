@@ -939,6 +939,7 @@ export class ActorSheetPF extends ActorSheet {
       gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
+      tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "tradeGoods" } },
       all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], dataset: {} },
     };
 

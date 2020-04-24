@@ -390,7 +390,6 @@ PF1.equipmentTypes = {
   "light": "PF1.EquipTypeLight",
   "medium": "PF1.EquipTypeMedium",
   "heavy": "PF1.EquipTypeHeavy",
-  "natural": "PF1.EquipTypeNatural",
   "shield": "PF1.EquipTypeShield",
   "misc": "PF1.Misc",
 };
@@ -415,6 +414,7 @@ PF1.equipmentSlots = {
 PF1.lootTypes = {
   "gear": "PF1.LootTypeGear",
   "ammo": "PF1.LootTypeAmmo",
+  "tradeGoods": "PF1.LootTypeTradeGoods",
   "misc": "PF1.Misc",
 };
 

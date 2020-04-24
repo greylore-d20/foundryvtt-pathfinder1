@@ -432,3 +432,87 @@
     }
   }
 }
+
+.compendium-browser {
+  
+  max-height: 100%;
+  
+  .rollable:hover {
+    color: #000;
+    text-shadow: 0 0 10px red;
+    cursor: pointer;
+  }
+
+  .header {
+    flex: 1;
+    padding-right: 8px;
+    border-right: @borderGroove;
+    max-height: 100%;
+
+    .search {
+      height: 48px;
+      display: flex;
+      align-items: center;
+
+      .fas.fa-search {
+        margin: 4px;
+      }
+    }
+
+    .filter-container {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      max-height: calc(100% - 48px);
+
+      .filter {
+        margin-top: 8px;
+        border: 1px solid @borderDark;
+        border-radius: 4px;
+        max-height: 100%;
+
+        h3 {
+          text-align: center;
+        }
+
+        .filter-content {
+          max-height: 100%;
+
+          .checkbox {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+
+  .directory-container {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex: 1;
+    max-height: 100%;
+
+    .directory-list {
+      padding: 0;
+
+      .directory-item {
+        align-items: center;
+
+        img {
+          flex: 0;
+          width: 48px;
+          height: 48px;
+          margin: 2px;
+        }
+
+        h4 {
+          margin-left: 4px;
+        }
+
+        &:nth-child(even) {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+  }
+}

@@ -34,6 +34,9 @@ export const preloadHandlebarsTemplates = async function() {
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.html",
 
+    // Sidebar
+    "systems/pf1/templates/sidebar/compendiums-footer.html",
+
     // Chat
     "systems/pf1/templates/chat/roll-ext.html",
     "systems/pf1/templates/chat/defenses.html",

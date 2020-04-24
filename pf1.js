@@ -20,6 +20,7 @@ import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
+import { SidebarPF } from "./module/apps/sidebar.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner } from "./module/lib.js";
@@ -53,12 +54,14 @@ Hooks.once("init", async function() {
     migrations,
     rollItemMacro,
     rollDefenses,
+    SidebarPF,
   };
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.entityClass = ActorPF;
   CONFIG.Item.entityClass = ItemPF;
+  CONFIG.ui.sidebar = SidebarPF;
 
   // Register System Settings
   registerSystemSettings();
@@ -156,6 +159,10 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
+Hooks.on("renderSidebar", (app, html) => {
+  alterSidebar(html);
+});
+
 Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();

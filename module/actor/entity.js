@@ -526,9 +526,9 @@ export class ActorPF extends Actor {
 
         const compute_health = (cls, first = false) => {
           const first_health = (first && max_1st) * cls.data.hd
-          const level_health = (cls.data.levels - (first && max_1st)) * Math.ceil(1 + (cls.data.hd-1) * rate)
+          const level_health = (cls.data.levels - (first && max_1st)) * (1 + (cls.data.hd-1) * rate)
           const favor_health = (cls.data.classType === "base") * cls.data.fc.hp.value
-          const health = first_health + level_health + favor_health
+          const health = Math.ceil(first_health + level_health + favor_health)
 
           // Push changes to hp and vigor.
           changes.push({

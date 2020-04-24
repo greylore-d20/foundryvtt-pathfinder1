@@ -82,6 +82,14 @@ export class ActorPF extends Actor {
         result.attributes.hp = null;
         result.skills = null;
         break;
+      case "wounds":
+        result.attributes.wounds = null;
+        result.skills = null;
+        break;
+      case "vigor":
+        result.attributes.vigor = null;
+        result.skills = null;
+        break;
       case "str":
         result.abilities.str = null;
         result.skills = null;
@@ -89,6 +97,7 @@ export class ActorPF extends Actor {
       case "con":
         result.abilities.con = null;
         result.attributes.hp = null;
+        result.attributes.wounds = null;
         result.skills = null;
         result.attributes.savingThrows = null;
         break;
@@ -175,7 +184,7 @@ export class ActorPF extends Actor {
         "attack", "mattack", "rattack",
         "damage", "wdamage", "sdamage",
         "allSavingThrows", "fort", "ref", "will",
-        "cmb", "cmd", "init", "mhp"
+        "cmb", "cmd", "init", "mhp", "wounds", "vigor"
     ], modifiers: [
       "untyped", "base", "enh", "dodge", "inherent", "deflection",
       "morale", "luck", "sacred", "insight", "resist", "profane",
@@ -273,6 +282,10 @@ export class ActorPF extends Actor {
     switch(changeTarget) {
       case "mhp":
         return "data.attributes.hp.max";
+      case "wounds":
+        return "data.attributes.wounds.max";
+      case "vigor":
+        return "data.attributes.vigor.max";
       case "str":
         if (changeType === "penalty") return "data.abilities.str.penalty";
         return "data.abilities.str.total";
@@ -495,12 +508,14 @@ export class ActorPF extends Actor {
       if (auto === "manual") {
         list.forEach(cls => {
           const value = cls.data.hp + (cls.data.classType === "base" ? cls.data.fc.hp.value : 0);
+
           changes.push({
             raw: [value.toString(), "misc", "mhp", "untyped", 0],
-            source: {
-              name: cls.name,
-              subtype: cls.name.toString()
-            }
+            source: {name: cls.name, subtype: cls.name.toString()}
+          });
+          changes.push({
+            raw: [value.toString(), "misc", "vigor", "untyped", 0],
+            source: {name: cls.name, subtype: cls.name.toString()}
           });
         });
       }
@@ -517,10 +532,11 @@ export class ActorPF extends Actor {
 
           changes.push({
             raw: [value.toString(), "misc", "mhp", "untyped", 0],
-            source: {
-              name: cls.name,
-              subtype: cls.name.toString()
-            }
+            source: {name: cls.name, subtype: cls.name.toString()}
+          });
+          changes.push({
+            raw: [value.toString(), "misc", "vigor", "untyped", 0],
+            source: {name: cls.name, subtype: cls.name.toString()}
           });
         }, 0);
       }
@@ -529,9 +545,11 @@ export class ActorPF extends Actor {
     // Add Constitution to HP
     changes.push({
       raw: ["@abilities.con.mod * @attributes.hd.total", "misc", "mhp", "base", 0],
-      source: {
-        name: "Constitution"
-      }
+      source: {name: "Constitution"}
+    });
+    changes.push({
+      raw: ["2 * (@abilities.con.total + @abilities.con.drain)", "misc", "wounds", "base", 0],
+      source: {name: "Constitution"}
     });
 
     // Natural armor
@@ -809,6 +827,10 @@ export class ActorPF extends Actor {
         raw: ["-(@attributes.energyDrain * 5)", "misc", "mhp", "untyped", 0],
         source: { name: "Negative Levels" }
       });
+      changes.push({
+        raw: ["-(@attributes.energyDrain * 5)", "misc", "vigor", "untyped", 0],
+        source: { name: "Negative Levels" }
+      });
     }
   }
 
@@ -829,7 +851,9 @@ export class ActorPF extends Actor {
 
     // Track previous values
     const prevValues = {
-      mhp: this.data.data.attributes.hp.max
+      mhp: this.data.data.attributes.hp.max,
+      wounds: getProperty(this.data, "data.attributes.wounds.max") || 0,
+      vigor: getProperty(this.data, "data.attributes.vigor.max") || 0,
     };
 
     // Gather change types
@@ -1089,6 +1113,19 @@ export class ActorPF extends Actor {
         linkData(srcData1, updateData, "data.attributes.hp.value", Math.min(updateData["data.attributes.hp.max"], srcData1.data.attributes.hp.value + hpDiff));
       }
     }
+    if (updateData["data.attributes.wounds.max"]) {
+      const wDiff = updateData["data.attributes.wounds.max"] - prevValues.wounds;
+      if (wDiff !== 0) {
+        linkData(srcData1, updateData, "data.attributes.wounds.value", Math.min(updateData["data.attributes.wounds.max"], srcData1.data.attributes.wounds.value + wDiff));
+      }
+    }
+    if (updateData["data.attributes.vigor.max"]) {
+      const vDiff = updateData["data.attributes.vigor.max"] - prevValues.vigor;
+      if (vDiff !== 0) {
+        linkData(srcData1, updateData, "data.attributes.vigor.value", Math.min(updateData["data.attributes.vigor.max"], srcData1.data.attributes.vigor.value + vDiff));
+      }
+    }
+
 
     // Refresh source info
     for (let [bt, change] of Object.entries(changeData)) {
@@ -1190,6 +1227,8 @@ export class ActorPF extends Actor {
 
     // Reset maximum hit points
     linkData(data, updateData, "data.attributes.hp.max", getProperty(data, "data.attributes.hp.base") || 0);
+    linkData(data, updateData, "data.attributes.wounds.max", getProperty(data, "data.attributes.wounds.base") || 0);
+    linkData(data, updateData, "data.attributes.vigor.max", getProperty(data, "data.attributes.vigor.base") || 0);
 
     // Reset AC
     for (let type of Object.keys(data1.attributes.ac)) {
@@ -1381,7 +1420,7 @@ export class ActorPF extends Actor {
     let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
     for (let [sklKey, skl] of Object.entries(data1.skills)) {
       if (skl == null) continue;
-      
+
       let acpPenalty = (skl.acp ? data1.attributes.acp.total : 0);
       let ablMod = data1.abilities[skl.ability].mod;
       let specificSkillBonus = skl.changeBonus || 0;
@@ -1606,7 +1645,7 @@ export class ActorPF extends Actor {
     //     }
     //   }
     // });
-    
+
     // Add energy drain to skills
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
       for (let [sklKey, skl] of Object.entries(actorData.data.skills)) {
@@ -1615,7 +1654,7 @@ export class ActorPF extends Actor {
           name: "Negative Levels",
           value: -actorData.data.attributes.energyDrain
         });
-        
+
         if (skl.subSkills != null) {
           for (let subSklKey of Object.keys(skl.subSkills)) {
             sourceDetails[`data.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`].push({
@@ -1637,7 +1676,7 @@ export class ActorPF extends Actor {
         sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: "Dexterity", value: dexBonus });
       }
     }
-    
+
     // Add extra data
     for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
       for (let grp of Object.values(changeGrp)) {
@@ -1661,7 +1700,7 @@ export class ActorPF extends Actor {
     if (this.hasPerm(game.user, "OWNER")) {
       return this.update({});
     }
-  } 
+  }
 
   /**
    * Prepare Character type specific data
@@ -1823,7 +1862,7 @@ export class ActorPF extends Actor {
           if (item == null) continue;
 
           const itemUpdateData = {};
-          let key = `data.resources.${resourceTag}.value`; 
+          let key = `data.resources.${resourceTag}.value`;
           if (data[key] != null && data[key] !== item.data.data.uses.value) {
             itemUpdateData["data.uses.value"] = data[key];
           }
@@ -1901,7 +1940,7 @@ export class ActorPF extends Actor {
 
     return super._onUpdate(data, options, userId, context);
   }
-  
+
   /**
    * Makes sure experience values are correct in update data.
    * @param {Object} data - The update data, as per ActorPF.update()
@@ -2074,7 +2113,7 @@ export class ActorPF extends Actor {
       attackData["data.range.units"] = "ft";
       attackData["data.range.value"] = item.data.data.weaponData.range.toString();
     }
-    
+
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
     await this.createOwnedItem(expandObject(attackData));
 
@@ -2165,7 +2204,7 @@ export class ActorPF extends Actor {
 
   rollCMB(options={}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
-  
+
     // Add contextual notes
     let notes = [];
     const rollData = duplicate(this.data.data);
@@ -2213,7 +2252,7 @@ export class ActorPF extends Actor {
 
     const reSplit = CONFIG.PF1.re.traitSeparator;
     let misc = [];
-    
+
     // Damage reduction
     if (data.traits.dr.length) {
       headers.push({ header: game.i18n.localize("PF1.DamRed"), value: data.traits.dr.split(reSplit) });
@@ -2659,7 +2698,7 @@ export class ActorPF extends Actor {
         obj.data.equipped = false;
       }
     }
-    
+
     return super.createEmbeddedEntity(embeddedName, (noArray ? createData[0] : createData), options);
   }
 

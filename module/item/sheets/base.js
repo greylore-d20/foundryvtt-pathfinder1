@@ -129,6 +129,7 @@ export class ItemSheetPF extends ItemSheet {
       else data.autoHP = false;
 
       data.isBaseClass = data.data.classType === "base";
+      data.isRacialHD = data.data.classType === "racial";
 
       // Add skill list
       if (!this.item.actor) {

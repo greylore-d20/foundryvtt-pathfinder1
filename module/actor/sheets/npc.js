@@ -1,4 +1,5 @@
 import { ActorSheetPF } from "../sheets/base.js";
+import { CR } from "../../lib.js";
 
 /**
  * An Actor sheet for NPC type characters in the D&D5E system.
@@ -46,8 +47,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Challenge Rating
     const cr = parseFloat(data.data.details.cr || 0);
-    const crLabels = {0: "0", 0.125: "1/8", 0.25: "1/4", 0.3375: "1/3", 0.5: "1/2"};
-    data.labels["cr"] = cr >= 1 ? String(cr) : crLabels[cr] || 1;
+    data.labels.cr = CR.fromNumber(cr);
     return data;
   }
 
@@ -64,11 +64,9 @@ export class ActorSheetPFNPC extends ActorSheetPF {
   async _updateObject(event, formData) {
 
     // Format NPC Challenge Rating
-    const crs = {"1/8": 0.125, "1/4": 0.25, "1/3": 0.3375, "1/2": 0.5};
     let crv = "data.details.cr";
     let cr = formData[crv];
-    cr = crs[cr] || parseFloat(cr);
-    if ( cr ) formData[crv] = cr < 1 ? cr : parseInt(cr);
+    formData[crv] = CR.fromString(cr);
 
     // Parent ActorSheet update steps
     super._updateObject(event, formData);

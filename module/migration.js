@@ -112,6 +112,7 @@ export const migrateActorData = async function(actor) {
   _migrateSpellDivineFocus(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData);
   _migrateActorBaseStats(actor, updateData);
+  _migrateActorCreatureType(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -325,6 +326,12 @@ const _migrateActorBaseStats = function(ent, updateData) {
       kList[kList.length-1] = `-=${kList[kList.length-1]}`;
       updateData[`data.${kList.join(".")}`] = null;
     }
+  }
+};
+
+const _migrateActorCreatureType = function(ent, updateData) {
+  if (getProperty(ent.data, "data.attributes.creatureType") == null) {
+    updateData["data.attributes.creatureType"] = "humanoid";
   }
 };
 

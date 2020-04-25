@@ -477,6 +477,7 @@
 }
 .compendium-browser .directory-container .directory-list .directory-item {
   align-items: center;
+  border-bottom: 1px solid #CCC;
 }
 .compendium-browser .directory-container .directory-list .directory-item img {
   flex: 0;
@@ -486,9 +487,6 @@
 }
 .compendium-browser .directory-container .directory-list .directory-item h4 {
   margin-left: 4px;
-}
-.compendium-browser .directory-container .directory-list .directory-item:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.05);
 }
 .pf1.sheet.actor {
   /* ----------------------------------------- */
@@ -2060,5 +2058,6 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltipcontent {
   visibility: visible;
+  pointer-events: none;
   opacity: 1;
 }

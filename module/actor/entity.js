@@ -582,9 +582,30 @@ export class ActorPF extends Actor {
       changes.push({
         raw: [flyValue.toString(), "skill", "skill.fly", "untyped", 0],
         source: {
-          name: "Maneuverability"
-        }
+          name: game.i18n.localize("PF1.FlyManeuverability"),
+        },
       });
+    }
+    // Add swim and climb skill bonuses based on having speeds for them
+    {
+      const climbSpeed = getProperty(data, "data.attributes.speed.climb.total") || 0;
+      const swimSpeed = getProperty(data, "data.attributes.speed.swim.total") || 0;
+      if (climbSpeed > 0) {
+        changes.push({
+          raw: ["8", "skill", "skill.clm", "racial", 0],
+          source: {
+            name: game.i18n.localize("PF1.SpeedClimb"),
+          },
+        });
+      }
+      if (swimSpeed > 0) {
+        changes.push({
+          raw: ["8", "skill", "skill.swm", "racial", 0],
+          source: {
+            name: game.i18n.localize("PF1.SpeedSwim"),
+          },
+        });
+      }
     }
 
     // Add size bonuses to various attributes
@@ -877,7 +898,6 @@ export class ActorPF extends Actor {
     // Add more changes
     let flags = {},
       sourceInfo = {};
-    this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
     // Check flags
     for (let obj of changeObjects) {
@@ -963,6 +983,7 @@ export class ActorPF extends Actor {
 
     // Initialize data
     this._resetData(updateData, srcData1, flags, sourceInfo);
+    this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
     // Sort changes
     allChanges.sort(this._sortChanges.bind(this));
@@ -1142,7 +1163,13 @@ export class ActorPF extends Actor {
     if (flags == null) flags = {};
     const items = data.items;
     const classes = items.filter(obj => { return obj.type === "class"; });
+    const racialHD = classes.filter(o => getProperty(o.data, "classType") === "racial");
     const useFractionalBaseBonuses = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
+
+    // Set creature type
+    if (racialHD.length === 1) {
+      linkData(data, updateData, "data.attributes.creatureType", getProperty(racialHD[0].data, "creatureType") || "humanoid");
+    }
 
     // Reset HD
     linkData(data, updateData, "data.attributes.hd.total", data1.details.level.value);
@@ -2008,7 +2035,6 @@ export class ActorPF extends Actor {
     attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
     attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
     attackData["data.actionType"] = (item.data.data.weaponData.isMelee ? "mwak" : "rwak");
-    attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
     attackData["data.activation.type"] = "attack";
     attackData["data.duration.units"] = "inst";
     attackData["img"] = item.data.img;
@@ -2026,6 +2052,11 @@ export class ActorPF extends Actor {
     if (item.data.data.weaponData.isMelee || item.data.data.properties["thr"] === true) {
       attackData["data.ability.damage"] = "str";
       if (item.data.data.properties["two"] === true && item.data.data.weaponData.isMelee) attackData["data.ability.damageMult"] = 1.5;
+    }
+
+    // Add damage formula
+    if (item.data.data.weaponData.damageRoll) {
+      attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
     }
 
     // Add range

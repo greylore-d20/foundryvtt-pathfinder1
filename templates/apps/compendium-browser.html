@@ -10,10 +10,10 @@
       <div class="filter" data-path="{{filter.path}}">
         <h3 class="rollable">{{filter.label}}</h3>
         <div class="filter-content">
-          {{#each filter.items as |name key|}}
+          {{#each filter.items as |i|}}
           <div class="checkbox">
-            <input type="checkbox" name="{{key}}" />
-            <span>{{name}}</span>
+            <input type="checkbox" name="{{i.key}}" />
+            <span>{{i.name}}</span>
           </div>
           {{/each}}
         </div>

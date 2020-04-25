@@ -206,7 +206,7 @@ export class ItemPF extends Item {
       doLinkData = false;
     }
     if (actorData == null) actorData = (this.actor != null ? this.actor.data : null);
-    if (actorData == null) return;
+    if (actorData == null) actorData = {};
 
     if (hasProperty(srcData, "data.uses.maxFormula")) {
       if (getProperty(srcData, "data.uses.maxFormula") !== "") {

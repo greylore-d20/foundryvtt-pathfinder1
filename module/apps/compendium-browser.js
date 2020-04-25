@@ -1,3 +1,5 @@
+import { CR } from "../lib.js";
+
 export class CompendiumBrowser extends Application {
   constructor(...args) {
     super(...args);
@@ -38,11 +40,15 @@ export class CompendiumBrowser extends Application {
     return [this.typeName, "Browser"].join(" ");
   }
 
+  get entityType() {
+    return this.options.entityType;
+  }
+
   async _fetchMetadata() {
     this.items = [];
 
     for (let p of game.packs) {
-      if (p.entity !== "Item") continue;
+      if (p.entity !== this.entityType) continue;
 
       const items = await p.getContent();
       for (let i of items) {
@@ -58,6 +64,7 @@ export class CompendiumBrowser extends Application {
 
     if (this.type === "spells") this._fetchSpellFilters();
     else if (this.type === "items") this._fetchItemFilters();
+    else if (this.type === "bestiary") this._fetchBestiaryFilters();
   }
 
   _filterItems(item) {
@@ -78,7 +85,19 @@ export class CompendiumBrowser extends Application {
       },
     };
 
-    // Handle spell data
+    // Item-specific variables
+    if (this.type === "items") {
+      if (!this.extraFilters) {
+        this.extraFilters = {};
+      }
+
+      result.item.weaponProps = Object.entries(getProperty(item.data, "data.properties") || []).reduce((cur, o) => {
+        if (o[1]) cur.push(o[0]);
+        return cur;
+      }, []);
+    }
+
+    // Spell-specific variables
     if (this.type === "spells") {
       if (!this.extraFilters) {
         this.extraFilters = {
@@ -165,6 +184,21 @@ export class CompendiumBrowser extends Application {
       }
     }
 
+    // Bestiary-specific variables
+    if (this.type === "bestiary") {
+      if (!this.extraFilters) {
+        this.extraFilters = {
+          "data.details.cr": [],
+        };
+      }
+
+      // Add CR filters
+      if (item.data.type === "npc") {
+        const cr = getProperty(item.data, "data.details.cr");
+        if (cr && !this.extraFilters["data.details.cr"].includes(cr)) this.extraFilters["data.details.cr"].push(cr);
+      }
+    }
+
     return result;
   }
 
@@ -182,68 +216,74 @@ export class CompendiumBrowser extends Application {
       {
         path: "data.school",
         label: game.i18n.localize("PF1.SpellSchool"),
-        items: CONFIG.PF1.spellSchools,
+        items: Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
       {
         path: "data.subschool",
         label: game.i18n.localize("PF1.SubSchool"),
         items: this.extraFilters["data.subschool"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "spellTypes",
         label: game.i18n.localize("PF1.TypePlural"),
         items: this.extraFilters["spellTypes"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "learnedAt.class",
         label: game.i18n.localize("PF1.ClassPlural"),
         items: this.extraFilters["learnedAt.class"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "learnedAt.domain",
         label: game.i18n.localize("PF1.Domain"),
         items: this.extraFilters["learnedAt.domain"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "learnedAt.subDomain",
         label: game.i18n.localize("PF1.SubDomain"),
         items: this.extraFilters["learnedAt.subDomain"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "learnedAt.elementalSchool",
         label: game.i18n.localize("PF1.ElementalSchool"),
         items: this.extraFilters["learnedAt.elementalSchool"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "learnedAt.bloodline",
         label: game.i18n.localize("PF1.Bloodline"),
         items: this.extraFilters["learnedAt.bloodline"].reduce((cur, o) => {
-          cur[o] = o;
+          cur.push({ key: o, name: o });
           return cur;
-        }, {}),
+        }, []),
       },
       {
         path: "_spellLevel",
         label: game.i18n.localize("PF1.SpellLevel"),
-        items: CONFIG.PF1.spellLevels,
+        items: Object.entries(CONFIG.PF1.spellLevels).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
     ];
 
@@ -258,37 +298,86 @@ export class CompendiumBrowser extends Application {
       {
         path: "type",
         label: game.i18n.localize("PF1.Type"),
-        items: {
-          "weapon": game.i18n.localize("PF1.ItemTypeWeapon"),
-          "equipment": game.i18n.localize("PF1.ItemTypeEquipment"),
-          "consumable": game.i18n.localize("PF1.ItemTypeConsumable"),
-          "loot": game.i18n.localize("PF1.Misc"),
-        }
+        items: [
+          { key: "weapon", name: game.i18n.localize("PF1.ItemTypeWeapon") },
+          { key: "equipment", name: game.i18n.localize("PF1.ItemTypeEquipment") },
+          { key: "consumable", name: game.i18n.localize("PF1.ItemTypeConsumable") },
+          { key: "loot", name: game.i18n.localize("PF1.Misc") },
+        ],
       },
       {
         path: "data.weaponType",
         label: game.i18n.localize("PF1.WeaponType"),
-        items: CONFIG.PF1.weaponTypes,
+        items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "weaponProps",
+        label: game.i18n.localize("PF1.WeaponProperties"),
+        items: Object.entries(CONFIG.PF1.weaponProperties).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
       {
         path: "data.armor.type",
         label: game.i18n.localize("PF1.EquipmentType"),
-        items: CONFIG.PF1.equipmentTypes,
+        items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
       {
         path: "data.slot",
         label: game.i18n.localize("PF1.Slot"),
-        items: CONFIG.PF1.equipmentSlots,
+        items: Object.entries(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
       {
         path: "data.consumableType",
         label: game.i18n.localize("PF1.ConsumableType"),
-        items: CONFIG.PF1.consumableTypes,
+        items: Object.entries(CONFIG.PF1.consumableTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
       {
         path: "data.subType",
         label: game.i18n.localize("PF1.Misc"),
-        items: CONFIG.PF1.lootTypes,
+        items: Object.entries(CONFIG.PF1.lootTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+    ];
+
+    this.activeFilters = this.filters.reduce((cur, f) => {
+      cur[f.path] = [];
+      return cur;
+    }, {});
+  }
+
+  _fetchBestiaryFilters() {
+    this.filters = [
+      {
+        path: "data.details.cr",
+        label: "CR",
+        items: this.extraFilters["data.details.cr"].sort().reduce((cur, o) => {
+          cur.push({ key: o, name: CR.fromNumber(o) });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.attributes.creatureType",
+        label: game.i18n.localize("PF1.CreatureType"),
+        items: Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
     ];
 
@@ -446,6 +535,9 @@ export class CompendiumBrowser extends Application {
       // Handle the rest
       const prop = getProperty(item, path);
       if (prop == null) return false;
+      if (typeof prop === "number") {
+        filter = filter.map(o => parseFloat(o)).filter(o => !isNaN(o));
+      }
       if (prop instanceof Array) {
         if (!filter.every(o => prop.includes(o))) return false;
         continue;

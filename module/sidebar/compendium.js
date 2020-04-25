@@ -1,6 +1,6 @@
 import { CompendiumBrowser } from "../apps/compendium-browser.js";
 
-export class SidebarPF extends Sidebar {
+export class CompendiumDirectoryPF extends CompendiumDirectory {
   constructor(...args) {
     super(...args);
 
@@ -11,16 +11,15 @@ export class SidebarPF extends Sidebar {
     };
   }
 
-  async _render(...args) {
-    await super._render(...args);
-
-    const parent = this.element.find("#compendium .directory-footer");
-    const child = await renderTemplate("systems/pf1/templates/sidebar/compendiums-footer.html", {});
-    parent.append(child);
-    this.activateExtraListeners(parent);
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      template: "systems/pf1/templates/sidebar/compendium.html",
+    });
   }
 
-  activateExtraListeners(html) {
+  activateListeners(html) {
+    super.activateListeners(html);
+
     html.find(".compendium-footer .compendium.spells").click(e => this._onBrowseCompendium(e, "spells"));
     html.find(".compendium-footer .compendium.items").click(e => this._onBrowseCompendium(e, "items"));
     html.find(".compendium-footer .compendium.bestiary").click(e => this._onBrowseCompendium(e, "bestiary"));

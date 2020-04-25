@@ -682,6 +682,7 @@ PF1.weaponProperties = {
   "imp": "PF1.WeaponPropImprovised",
   "lgt": "PF1.WeaponPropLight",
   "mnk": "PF1.WeaponPropMonk",
+  "nnl": "PF1.WeaponPropNonLethal",
   "prf": "PF1.WeaponPropPerformance",
   "rch": "PF1.WeaponPropReach",
   "thr": "PF1.WeaponPropThrown",
@@ -938,6 +939,22 @@ PF1.languages = {
   "treant": "Treant",
   "undercommon": "Undercommon",
   "vegepygmy": "Vegepygmy"
+};
+
+PF1.creatureTypes = {
+  "aberration": "PF1.CreatureTypeAberration",
+  "animal": "PF1.CreatureTypeAnimal",
+  "construct": "PF1.CreatureTypeConstruct",
+  "dragon": "PF1.CreatureTypeDragon",
+  "fey": "PF1.CreatureTypeFey",
+  "humanoid": "PF1.CreatureTypeHumanoid",
+  "magicalBeast": "PF1.CreatureTypeMagicalBeast",
+  "monstrousHumanoid": "PF1.CreatureTypeMonstrousHumanoid",
+  "ooze": "PF1.CreatureTypeOoze",
+  "outsider": "PF1.CreatureTypeOutsider",
+  "plant": "PF1.CreatureTypePlant",
+  "undead": "PF1.CreatureTypeUndead",
+  "vermin": "PF1.CreatureTypeVermin",
 };
 
 // Character Level XP Requirements

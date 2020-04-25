@@ -20,7 +20,7 @@ import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
-import { SidebarPF } from "./module/apps/sidebar.js";
+import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner } from "./module/lib.js";
@@ -54,14 +54,14 @@ Hooks.once("init", async function() {
     migrations,
     rollItemMacro,
     rollDefenses,
-    SidebarPF,
+    CompendiumDirectoryPF,
   };
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.entityClass = ActorPF;
   CONFIG.Item.entityClass = ItemPF;
-  CONFIG.ui.sidebar = SidebarPF;
+  CONFIG.ui.compendium = CompendiumDirectoryPF;
 
   // Register System Settings
   registerSystemSettings();
@@ -99,7 +99,7 @@ Hooks.once("setup", function() {
     "spellPreparationModes", "weaponTypes", "weaponProperties", "spellComponents", "spellSchools", "spellLevels", "conditionTypes",
     "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
     "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
-    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes",
+    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes",
   ];
 
   const doLocalize = function(obj) {
@@ -120,7 +120,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.32;
+  const NEEDS_MIGRATION_VERSION = 0.33;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
@@ -159,9 +159,6 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
-Hooks.on("renderSidebar", (app, html) => {
-  alterSidebar(html);
-});
 
 Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (!(actor instanceof Actor)) return;

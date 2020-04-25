@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.33
+
+### Changelog
+
+- Add level requirement data fields for spells
+  - Updated the spells compendium to reflect these changes
+- Add compendium browsers
+  - Currently only for spells, items and a bestiary, but more to come
+- Creatures with a climb or swim speed now gain a +8 Racial bonus to the Climb and Swim skills, respectively, as per the core rules
+- Merged the Armor, Weapons and Magic Items compendium into a single compendium
+- Added a bunch of entries to the following compendiums: bestiary, spells and items
+
 ## 0.32
 
 ### Bug Fixes

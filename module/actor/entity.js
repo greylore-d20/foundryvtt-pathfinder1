@@ -1038,7 +1038,7 @@ export class ActorPF extends Actor {
         linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
         break;
     }
-    linkData(srcData1, updateData, "data.attributes.acp.total", updateData["data.attributes.acp.gear"] + updateData["data.attributes.acp.encumbrance"]);
+    linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
     // Reduce final speed under certain circumstances
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
     if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||

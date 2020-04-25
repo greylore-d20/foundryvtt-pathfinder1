@@ -24,6 +24,7 @@ import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner } from "./module/lib.js";
+import { refreshLightingAndSight } from "./module/low-light-vision.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -187,6 +188,11 @@ Hooks.on("createOwnedItem", (actor) => {
 Hooks.on("deleteOwnedItem", (actor) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
+});
+
+// Refresh lighting and sight when the canvas is drawn
+Hooks.on("canvasReady", () => {
+  refreshLightingAndSight();
 });
 
 

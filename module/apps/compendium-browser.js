@@ -546,23 +546,23 @@ export class CompendiumBrowser extends Application {
       // Handle Spell Level
       {
         let result = null;
-      if (this.type === "spells" && path === "_spellLevel") {
+        if (this.type === "spells" && path === "_spellLevel") {
           result = false;
           let hasActiveFilter = false;
-        const spellLevels = this.activeFilters[path];
-        const checks = [
-          { path: "learnedAt.class", type: "class" },
-          { path: "learnedAt.domain", type: "domain" },
-          { path: "learnedAt.subDomain", type: "subDomain" },
-          { path: "learnedAt.elementalSchool", type: "elementalSchool" },
-          { path: "learnedAt.bloodline", type: "bloodline" },
-        ];
-        for (let c of checks) {
-          const f = this.activeFilters[c.path];
-          if (!f || !f.length) continue;
+          const spellLevels = this.activeFilters[path];
+          const checks = [
+            { path: "learnedAt.class", type: "class" },
+            { path: "learnedAt.domain", type: "domain" },
+            { path: "learnedAt.subDomain", type: "subDomain" },
+            { path: "learnedAt.elementalSchool", type: "elementalSchool" },
+            { path: "learnedAt.bloodline", type: "bloodline" },
+          ];
+          for (let c of checks) {
+            const f = this.activeFilters[c.path];
+            if (!f || !f.length) continue;
             hasActiveFilter = true;
             for (let fi of f) {
-          const p = getProperty(item, `learnedAt.spellLevel.${c.type}`);
+              const p = getProperty(item, `learnedAt.spellLevel.${c.type}`);
               for (let sl of spellLevels) {
                 if (p[fi] === parseInt(sl)) result = true;
                 // console.log(fi, p[1], parseInt(sl));

@@ -10,7 +10,11 @@ export class AbilityTemplate extends MeasuredTemplate {
    * @param {number} distance -         The distance/size of the template
    * @return {AbilityTemplate|null}     The template object, or null if the data does not produce a template
    */
-  static fromData(type, distance) {
+  static fromData(options) {
+    let type = options.type;
+    let distance = options.distance;
+    if (!type) return null;
+    if (!distance) return null;
     if (!["cone", "circle", "rect", "ray"].includes(type)) return null;
 
     // Prepare template data
@@ -21,7 +25,8 @@ export class AbilityTemplate extends MeasuredTemplate {
       direction: 0,
       x: 0,
       y: 0,
-      fillColor: game.user.color
+      fillColor: options.color ? options.color : game.user.color,
+      texture: options.texture ? options.texture : null,
     };
 
     // Additional type-specific data
@@ -116,6 +121,7 @@ export class AbilityTemplate extends MeasuredTemplate {
         const destination = canvas.grid.getSnappedPosition(this.x, this.y, 2);
         this.data.x = destination.x;
         this.data.y = destination.y;
+        console.log(this.data);
 
         // Create the template
         canvas.scene.createEmbeddedEntity("MeasuredTemplate", this.data);

@@ -659,7 +659,20 @@ export class ItemPF extends Item {
 
       // Prompt measure template
       if (useMeasureTemplate) {
-        const template = AbilityTemplate.fromData(getProperty(this.data, "data.measureTemplate.type"), getProperty(this.data, "data.measureTemplate.size"));
+        // Gather data
+        const templateOptions = {
+          type: getProperty(this.data, "data.measureTemplate.type"),
+          distance: getProperty(this.data, "data.measureTemplate.size"),
+        };
+        if (getProperty(this.data, "data.measureTemplate.overrideColor")) {
+          templateOptions.color = getProperty(this.data, "data.measureTemplate.customColor");
+        }
+        if (getProperty(this.data, "data.measureTemplate.overrideTexture")) {
+          templateOptions.texture = getProperty(this.data, "data.measureTemplate.customTexture");
+        }
+
+        // Create template
+        const template = AbilityTemplate.fromData(templateOptions);
         if (template) {
           if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
           const success = await template.drawPreview(ev);

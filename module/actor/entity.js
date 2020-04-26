@@ -662,9 +662,11 @@ export class ActorPF extends Actor {
           sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
+          sourceInfo["data.attributes.cmd.flatFootedTotal"] = sourceInfo["data.attributes.cmd.flatFootedTotal"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
           sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
           sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.cmd.flatFootedTotal"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
           break;
         case "dazzled":
           changes.push({
@@ -1349,7 +1351,10 @@ export class ActorPF extends Actor {
     // Add ability mods to CMB and CMD
     linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + modDiffs["str"]);
     linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["str"]);
-    if (!flags.loseDexToAC) linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
+    if (!flags.loseDexToAC || modDiffs["dex"] < 0) {
+      linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
+      linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", updateData["data.attributes.cmd.flatFootedTotal"] + modDiffs["dex"]);
+    }
     linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", updateData["data.attributes.cmd.flatFootedTotal"] + modDiffs["str"]);
 
     // Add dex mod to initiative
@@ -1558,6 +1563,7 @@ export class ActorPF extends Actor {
     }
     if (actorData.data.abilities.dex.mod !== 0) {
       sourceDetails["data.attributes.cmd.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
+      sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.init.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
     }
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {

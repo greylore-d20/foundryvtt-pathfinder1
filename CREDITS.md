@@ -8,3 +8,4 @@ None of the people on this list necessarily endorse me. See the respective licen
 - [Punch Blast](https://game-icons.net/1x1/lorc/punch-blast.html)
 - [Brain](https://game-icons.net/1x1/lorc/brain.html)
 - [Divert](https://game-icons.net/1x1/lorc/divert.html)
+- [Magic Swirl](https://game-icons.net/1x1/lorc/magic-swirl.html)

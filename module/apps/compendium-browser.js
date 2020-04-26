@@ -290,6 +290,14 @@ export class CompendiumBrowser extends Application {
           return 0;
         }),
       },
+      // {
+      //   path: "learnedAt.elementalSchool",
+      //   label: game.i18n.localize("PF1.ElementalSchool"),
+      //   items: this.extraFilters["learnedAt.elementalSchool"].reduce((cur, o) => {
+      //     cur.push({ key: o, name: o });
+      //     return cur;
+      //   }, []),
+      // },
       {
         path: "learnedAt.bloodline",
         label: game.i18n.localize("PF1.Bloodline"),

@@ -536,7 +536,11 @@ export class CompendiumBrowser extends Application {
 
       // Handle special cases
       // Handle Spell Level
+      {
+        let result = null;
       if (this.type === "spells" && path === "_spellLevel") {
+          result = false;
+          let hasActiveFilter = false;
         const spellLevels = this.activeFilters[path];
         const checks = [
           { path: "learnedAt.class", type: "class" },
@@ -548,13 +552,26 @@ export class CompendiumBrowser extends Application {
         for (let c of checks) {
           const f = this.activeFilters[c.path];
           if (!f || !f.length) continue;
+            hasActiveFilter = true;
+            for (let fi of f) {
           const p = getProperty(item, `learnedAt.spellLevel.${c.type}`);
-          for (let fi of f) {
-            if (!spellLevels.every(sl => p[fi] === parseInt(sl))) return false;
+              for (let sl of spellLevels) {
+                if (p[fi] === parseInt(sl)) result = true;
+                // console.log(fi, p[1], parseInt(sl));
+              }
+              // if (!spellLevels.every(sl => p[fi] === parseInt(sl))) return false;
+            }
           }
+          if (!hasActiveFilter) {
+            for (let sl of spellLevels) {
+              if (item.allSpellLevels.includes(parseInt(sl))) result = true;
+            }
+          }
+          // if (!spellLevels.every(sl => item.allSpellLevels.includes(parseInt(sl)))) return false;
+          // continue;
         }
-        if (!spellLevels.every(sl => item.allSpellLevels.includes(parseInt(sl)))) return false;
-        continue;
+        if (result === false) return false;
+        else if (result === true) continue;
       }
 
       // Handle the rest

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.34
+
+### Bug Fixes
+
+- Armor Check Penalty stacked incorrectly
+- Fog of War was not being loaded
+- Items from hidden compendiums were visible to players in the compendium browsers
+- Dexterity penalties didn't apply to flat-footed CMD
+- Having multiple spell level checkboxes ticked in the compendium browser used to be an AND comparison, when it should have been an OR comparison
+
+### Changelog
+
+- Imported most (if not all) spells into a compendium
+  - The old spells compendium is replaced
+  - The spells all have a generic icon, and a lot of them don't have a damage formula or template yet when they could make use of one
+
 ## 0.33
 
 ### Changelog

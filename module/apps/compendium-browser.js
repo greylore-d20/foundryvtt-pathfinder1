@@ -48,6 +48,7 @@ export class CompendiumBrowser extends Application {
     this.items = [];
 
     for (let p of game.packs) {
+      if (p.private && !game.user.isGM) continue;
       if (p.entity !== this.entityType) continue;
 
       const items = await p.getContent();
@@ -61,6 +62,10 @@ export class CompendiumBrowser extends Application {
       if (a.item.name > b.item.name) return 1;
       return 0;
     });
+
+    if (this.items.length === 0) {
+      return;
+    }
 
     if (this.type === "spells") this._fetchSpellFilters();
     else if (this.type === "items") this._fetchItemFilters();
@@ -219,7 +224,11 @@ export class CompendiumBrowser extends Application {
         items: Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "data.subschool",
@@ -227,7 +236,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["data.subschool"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "spellTypes",
@@ -235,7 +248,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["spellTypes"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "learnedAt.class",
@@ -243,7 +260,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["learnedAt.class"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "learnedAt.domain",
@@ -251,7 +272,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["learnedAt.domain"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "learnedAt.subDomain",
@@ -259,15 +284,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["learnedAt.subDomain"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
-      },
-      {
-        path: "learnedAt.elementalSchool",
-        label: game.i18n.localize("PF1.ElementalSchool"),
-        items: this.extraFilters["learnedAt.elementalSchool"].reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "learnedAt.bloodline",
@@ -275,7 +296,11 @@ export class CompendiumBrowser extends Application {
         items: this.extraFilters["learnedAt.bloodline"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
       },
       {
         path: "_spellLevel",

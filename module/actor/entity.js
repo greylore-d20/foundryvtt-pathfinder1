@@ -1210,10 +1210,15 @@ export class ActorPF extends Actor {
       {
         const k = `data.attributes.savingThrows.${a}.total`;
         if (useFractionalBaseBonuses) {
+          let highStart = false;
           linkData(data, updateData, k,
             Math.floor(classes.reduce((cur, obj) => {
               const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
-              if (saveScale === "high") return cur + obj.data.levels / 2;
+              if (saveScale === "high"){
+                const acc = highStart ? 0 : 2;
+                highStart = true;
+                return cur + obj.data.levels / 2 + acc;
+              } 
               if (saveScale === "low") return cur + obj.data.levels / 3;
               return cur;
             }, 0)) - data1.attributes.energyDrain

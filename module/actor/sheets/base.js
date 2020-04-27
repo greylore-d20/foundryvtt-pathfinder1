@@ -143,7 +143,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Prepare skillsets
     data.skillsets = this._prepareSkillsets(data.actor.data.skills);
-
+        
     // Skill rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
     // Count used skill ranks
@@ -273,12 +273,16 @@ export class ActorSheetPF extends ActorSheet {
       background: { skills: {} }
     };
 
-    for (let [a, skl] of Object.entries(skillset)) {
+    // sort skills by label
+    let keys = Object.keys(skillset).sort(function(a,b) { return ('' + skillset[a].label).localeCompare(skillset[b].label) })
+    
+    keys.forEach( a => {
+      let skl = skillset[a]
       result.all.skills[a] = skl;
       if (skl.background) result.background.skills[a] = skl;
       else result.adventure.skills[a] = skl;
-    }
-
+    })
+    
     return result;
   }
 

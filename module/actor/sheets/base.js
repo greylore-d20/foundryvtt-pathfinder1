@@ -274,7 +274,11 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     // sort skills by label
-    let keys = Object.keys(skillset).sort(function(a,b) { return ('' + skillset[a].label).localeCompare(skillset[b].label) })
+    let keys = Object.keys(skillset).sort(function(a,b) {
+      if (skillset[a].custom && !skillset[b].custom) return 1;
+      if (!skillset[a].custom && skillset[b].custom) return -1;
+      return ('' + skillset[a].label).localeCompare(skillset[b].label)
+    });
     
     keys.forEach( a => {
       let skl = skillset[a]

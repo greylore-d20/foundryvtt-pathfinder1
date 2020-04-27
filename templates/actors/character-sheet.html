@@ -243,7 +243,7 @@
               {{/each}}
               {{/if}}
             </span>
-            <h4 class="attribute-name box-title rollable">BAB</h4>
+            <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
             <div class="attribute-value">
               <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
               {{!-- <input name="data.attributes.bab.total" type="text" placeholder="0" data-dtype="Number"
@@ -262,7 +262,7 @@
               {{/each}}
               {{/if}}
             </span>
-            <h4 class="attribute-name box-title rollable">CMB</h4>
+            <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
             <div class="attribute-value">
               <span>{{data.attributes.cmb.total}}</span>
             </div>
@@ -291,7 +291,7 @@
         <ul class="attributes misc-base2 flexrow">
           <li class="attribute acp tooltip" data-attribute="acp">
             <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
-            <h4 class="attribute-name box-title">ACP</h4>
+            <h4 class="attribute-name box-title"><abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr></h4>
             <div class="attribute-value">
               <span>{{data.attributes.acp.total}}</span>
             </div>
@@ -305,7 +305,7 @@
           </li>
         </ul>
 
-        <textarea name="data.attributes.cmbNotes" placeholder="CMB {{localize "PF1.Notes"}}">{{data.attributes.cmbNotes}}</textarea>
+        <textarea name="data.attributes.cmbNotes" placeholder="{{localize "PF1.CMBAbbr"}} {{localize "PF1.Notes"}}">{{data.attributes.cmbNotes}}</textarea>
       </div>
 
       <section class="center-pane">

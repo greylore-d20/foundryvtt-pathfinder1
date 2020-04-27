@@ -21,7 +21,7 @@
       @attributes.ac.{{id}}.total : {{ac.total}}
 
       {{#if ac.sourceDetails.length}}
-      <br/><br/>From sources:<br/>
+      <br/><br/>{{localize "PF1.FromSources"}}:<br/>
       {{#each ac.sourceDetails as |src|}}
       {{src.name}}: {{src.value}}<br/>
       {{/each}}
@@ -43,7 +43,7 @@
       @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
 
       {{#if savingThrow.sourceDetails.length}}
-      <br/><br/>From sources:<br/>
+      <br/><br/>{{localize "PF1.FromSources"}}:<br/>
       {{#each savingThrow.sourceDetails as |src|}}
       {{src.name}}: {{src.value}}<br/>
       {{/each}}
@@ -64,7 +64,7 @@
       @attributes.cmd.total : {{data.attributes.cmd.total}}
 
       {{#if sourceDetails.data.attributes.cmd.total.length}}
-      <br/><br/>From sources:<br/>
+      <br/><br/>{{localize "PF1.FromSources"}}:<br/>
       {{#each sourceDetails.data.attributes.cmd.total as |src|}}
       {{src.name}}: {{src.value}}<br/>
       {{/each}}
@@ -81,7 +81,7 @@
       @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
 
       {{#if sourceDetails.data.attributes.cmd.flatFootedTotal.length}}
-      <br/><br/>From sources:<br/>
+      <br/><br/>{{localize "PF1.FromSources"}}:<br/>
       {{#each sourceDetails.data.attributes.cmd.flatFootedTotal as |src|}}
       {{src.name}}: {{src.value}}<br/>
       {{/each}}

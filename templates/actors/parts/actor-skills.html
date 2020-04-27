@@ -18,7 +18,7 @@
         @skills.{{s}}.subSkills.{{b}}.mod : {{subSkill.mod}}
 
         {{#if subSkill.sourceDetails.length}}
-        <br/><br/>From sources:<br/>
+        <br/><br/>{{localize "PF1.FromSources"}}:<br/>
         {{#each subSkill.sourceDetails as |src|}}
         {{src.name}}: {{src.value}}<br/>
         {{/each}}
@@ -61,7 +61,7 @@
         @skills.{{s}}.mod : {{skill.mod}}
 
         {{#if skill.sourceDetails.length}}
-        <br/><br/>From sources:<br/>
+        <br/><br/>{{localize "PF1.FromSources"}}:<br/>
         {{#each skill.sourceDetails as |src|}}
         {{src.name}}: {{src.value}}<br/>
         {{/each}}

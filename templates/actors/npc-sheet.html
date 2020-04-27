@@ -57,7 +57,7 @@
               @attributes.hp.nonlethal : {{data.attributes.hp.nonlethal}}
               
               {{#if sourceDetails.data.attributes.hp.max.length}}
-              <br/><br/>From sources:<br/>
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.data.attributes.hp.max as |src|}}
               {{src.name}}: {{src.value}}<br/>
               {{/each}}
@@ -180,7 +180,7 @@
               @abilities.{{id}}.penalty : {{ability.penalty}}
               
               {{#if ability.sourceDetails.length}}
-              <br/><br/>From sources:<br/>
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each ability.sourceDetails as |src|}}
               {{src.name}}: {{src.value}}<br/>
               {{/each}}
@@ -213,7 +213,7 @@
                 @attributes.bab.total : {{data.attributes.bab.total}}
                 
                 {{#if sourceDetails.data.attributes.bab.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.bab.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
@@ -230,7 +230,7 @@
                 @attributes.cmb.total : {{data.attributes.cmb.total}}
                 
                 {{#if sourceDetails.data.attributes.cmb.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.cmb.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
@@ -249,7 +249,7 @@
                 @attributes.init.total : {{data.attributes.init.total}}
                 
                 {{#if sourceDetails.data.attributes.init.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.init.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}

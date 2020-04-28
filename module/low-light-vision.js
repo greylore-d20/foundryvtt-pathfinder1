@@ -105,6 +105,7 @@ SightLayer.prototype.initializeTokens = function(options) {
   options.defer = true;
 
   SightLayer_initializeTokens.call(this, options);
+  this.initializeLights(options);
   canvas.lighting.update();
 
   if (!defer) this.update();

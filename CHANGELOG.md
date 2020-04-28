@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.35
+
+### Bug Fixes
+
+- Using spells with multiple attacks showed the spell description multiple times
+
+### Changelog
+
+- Add color and texture override options to measure templates on items
+- Added a dedicated field for darkvision in token configurations
+  - Unlike bright vision, darkvision radius ignores the scene's darkness level, making it seem fully lit for darkvision owners (up to their darkvision radius)
+  - Updated creatures in the bestiary to use darkvision instead of bright vision
+- @Dorgendubal and @rectulo improved the French translation (many thanks!)
+
 ## 0.34
 
 ### Bug Fixes

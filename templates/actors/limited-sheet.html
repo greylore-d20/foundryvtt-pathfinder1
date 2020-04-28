@@ -9,13 +9,9 @@
 
   <!-- BODY -->
   <section class="sheet-body">
+    <img class="sheet-profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
     <div class="tab biography">
       {{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
     </div>
-  </section>
-
-  <!-- SIDEBAR -->
-  <section class="sheet-sidebar">
-    <img class="sheet-profile" src="{{actor.img}}" title="{{actor.name}}" height="220" width="220" data-edit="img"/>
   </section>
 </form>

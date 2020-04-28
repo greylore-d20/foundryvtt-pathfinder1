@@ -57,7 +57,7 @@
               @attributes.hp.nonlethal : {{data.attributes.hp.nonlethal}}
               
               {{#if sourceDetails.data.attributes.hp.max.length}}
-              <br/><br/>From sources:<br/>
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.data.attributes.hp.max as |src|}}
               {{src.name}}: {{src.value}}<br/>
               {{/each}}
@@ -180,7 +180,7 @@
               @abilities.{{id}}.penalty : {{ability.penalty}}
               
               {{#if ability.sourceDetails.length}}
-              <br/><br/>From sources:<br/>
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each ability.sourceDetails as |src|}}
               {{src.name}}: {{src.value}}<br/>
               {{/each}}
@@ -188,11 +188,11 @@
             </span>
             <div class="ability-header flexrow">
               <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text"
-              value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="DMG"/>
+              value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.DMG" }}"/>
               <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text"
-              value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="PNL"/>
+              value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.PNL" }}"/>
               <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text"
-              value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="DRN"/>
+              value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.DRN" }}"/>
             </div>
             <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
             <span class="ability-score">{{numberFormat ability.total decimals=0 sign=false}}</span>
@@ -213,13 +213,13 @@
                 @attributes.bab.total : {{data.attributes.bab.total}}
                 
                 {{#if sourceDetails.data.attributes.bab.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.bab.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
                 {{/if}}
               </span>
-              <h4 class="attribute-name box-title rollable">BAB</h4>
+              <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
               <div class="attribute-value">
                 <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
               </div>
@@ -230,7 +230,7 @@
                 @attributes.cmb.total : {{data.attributes.cmb.total}}
                 
                 {{#if sourceDetails.data.attributes.cmb.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.cmb.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
@@ -249,7 +249,7 @@
                 @attributes.init.total : {{data.attributes.init.total}}
                 
                 {{#if sourceDetails.data.attributes.init.total.length}}
-                <br/><br/>From sources:<br/>
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.init.total as |src|}}
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
@@ -265,7 +265,7 @@
           <ul class="attributes misc-base2 flexrow">
             <li class="attribute acp tooltip" data-attribute="acp">
               <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
-              <h4 class="attribute-name box-title">ACP</h4>
+              <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
               <div class="attribute-value">
                 <span>{{data.attributes.acp.total}}</span>
               </div>

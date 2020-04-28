@@ -1,7 +1,6 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
 import { createTag, linkData, isMinimumCoreVersion } from "../lib.js";
-import { refreshLightingAndSight } from "../low-light-vision.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 
@@ -1887,8 +1886,8 @@ export class ActorPF extends Actor {
   }
 
   _onUpdate(data, options, userId, context) {
-    if (hasProperty(data, "data.attributes.vision.lowLight")) {
-      refreshLightingAndSight();
+    if (hasProperty(data, "data.attributes.vision.lowLight") || hasProperty(data, "data.attributes.vision.darkvision")) {
+      canvas.sight.initializeTokens();
     }
 
     for (let i of this.items) {

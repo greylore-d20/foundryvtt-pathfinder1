@@ -204,7 +204,7 @@ export const registerSystemSettings = function() {
     hint: "SETTINGS.pf1LowLightVisionModeH",
     scope: "world",
     config: true,
-    default: true,
+    default: false,
     type: Boolean,
   });
 };

@@ -154,6 +154,10 @@
             <input type="checkbox" name="visionLL" data-dtype="Boolean" {{checked actor.vision.lowLight}}/>
         </div>
         <div class="form-group">
+            <label>{{localize "TOKEN.VisionDarkvision"}} <span class="units">({{localize "GridUnits"}})</span>:</label>
+            <input type="text" name="darkvision" placeholder="units" value="{{actor.vision.darkvision}}" data-dtype="Number"/>
+        </div>
+        <div class="form-group">
             <label>{{localize "TOKEN.VisionDimDist"}} <span class="units">({{localize "GridUnits"}})</span>:</label>
             <input type="text" name="dimSight" placeholder="units" value="{{object.dimSight}}" data-dtype="Number"/>
         </div>

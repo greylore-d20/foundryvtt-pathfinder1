@@ -1,5 +1,3 @@
-import { ActorPF } from "./actor/entity.js";
-
 /**
  * Highlight critical success or failure on d20 rolls
  */
@@ -63,4 +61,17 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
   }
 
   ChatMessage.create(chatData);
+};
+
+export const hideRollInfo = function(app, html, data) {
+  const whisper = app.data.whisper || [];
+  const isBlind = whisper.length && app.data.blind;
+  const isVisible = whisper.length ? (whisper.includes(game.user._id) || (app.isAuthor && !isBlind)) : true;
+  if (!isVisible) {
+    html.find(".dice-formula").text("???");
+    html.find(".dice-total").text("?");
+    html.find(".dice").text("");
+    html.find(".success").removeClass("success");
+    html.find(".failure").removeClass("failure");
+  }
 };

@@ -152,6 +152,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Highlight critical success or failure
   chat.highlightCriticalSuccessFailure(app, html, data);
 
+  // Hide roll info
+  chat.hideRollInfo(app, html, data);
+
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
 });

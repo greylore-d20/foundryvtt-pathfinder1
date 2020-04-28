@@ -35,6 +35,7 @@ export class DicePF {
     // Inner roll function
     let _roll = async (parts, setRoll, form) => {
       const originalFlavor = flavor;
+      rollMode = form ? form.find('[name="rollMode"]').val() : rollMode;
       for (let a = 0; a < 1 + extraRolls.length; a++) {
         flavor = originalFlavor;
         let curParts = duplicate(parts);

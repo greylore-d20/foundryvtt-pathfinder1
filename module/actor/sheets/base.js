@@ -1075,12 +1075,6 @@ export class ActorSheetPF extends ActorSheet {
     this.actor.rollSkill(`${mainSkill}.subSkills.${skill}`, {event: event});
   }
 
-  _onRollCustomSkillCheck(event) {
-    event.preventDefault();
-    const skill = event.currentTarget.parentElement.parentElement.dataset.customSkill;
-    this.actor.rollSkill(skill, {event: event});
-  }
-
   /* -------------------------------------------- */
 
   /**

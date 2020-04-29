@@ -104,10 +104,15 @@ export class ItemPF extends Item {
       itemData.data.hardness = itemData.data.hardness || 0;
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
 
-      // Equipped or carried label
+      // Equipped label
       labels.equipped = "";
-      if (itemData.data.equipped === true) labels.equipped = game.i18n.localize("PF1.Equipped");
-      else if (itemData.data.carried === true) labels.equipped = game.i18n.localize("PF1.Carried");
+      if (itemData.data.equipped === true) labels.equipped = game.i18n.localize("PF1.Yes");
+      else labels.equipped = game.i18n.localize("PF1.No");
+
+      // Carried label
+      labels.carried = "";
+      if (itemData.data.carried === true) labels.carried = game.i18n.localize("PF1.Yes");
+      else labels.carried = game.i18n.localize("PF1.No");
 
       // Slot label
       if (itemData.data.slot) labels.slot = CONFIG.PF1.equipmentSlots[itemData.data.slot];

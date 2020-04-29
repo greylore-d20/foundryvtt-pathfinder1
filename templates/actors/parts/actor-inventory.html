@@ -42,6 +42,7 @@
         {{#if section.hasActions}}<div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>{{/if}}
 
         <div class="item-detail item-weight"><span>{{localize "PF1.Weight"}}</span></div>
+        <div class="item-detail item-carried"><span>{{localize "PF1.Carried"}}</span></div>
         <div class="item-detail item-equipped"><span>{{localize "PF1.Equipped"}}</span></div>
         <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
 
@@ -93,6 +94,10 @@
               {{ item.totalWeight }} lbs.
             </span>
             {{/if}}
+          </div>
+
+          <div class="item-detail item-carried">
+            <a class="item-control item-carry"><span>{{item.labels.carried}}</span></a>
           </div>
 
           <div class="item-detail item-equipped">

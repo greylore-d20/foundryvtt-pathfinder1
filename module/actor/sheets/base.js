@@ -457,9 +457,6 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Item Action control
     html.find(".item-actions a").mouseup(ev => this._quickItemActionControl(ev));
 
-    // Quick (un)equip item
-    html.find("a.item-control.item-equip").click(ev => { this._quickEquipItem(ev); });
-
     // Roll Skill Checks
     html.find(".skill > .skill-name > .rollable").click(this._onRollSkillCheck.bind(this));
     html.find(".sub-skill > .skill-name > .rollable").click(this._onRollSubSkillCheck.bind(this));
@@ -484,6 +481,12 @@ export class ActorSheetPF extends ActorSheet {
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));
+
+    // Quick (un)equip item
+    html.find("a.item-control.item-equip").click(ev => { this._quickEquipItem(ev); });
+
+    // Quick carry item
+    html.find("a.item-control.item-carry").click(ev => { this._quickCarryItem(ev); });
 
     /* -------------------------------------------- */
     /*  Feats
@@ -840,6 +843,16 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
+  async _quickCarryItem(event) {
+    event.preventDefault();
+    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+
+    if (hasProperty(item.data, "data.carried")) {
+      item.update({ "data.carried": !item.data.data.carried });
+    }
+  }
+
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @private
@@ -944,14 +957,14 @@ export class ActorSheetPF extends ActorSheet {
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
-      weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], dataset: { type: "weapon" } },
-      equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: false, items: [], dataset: { type: "equipment" }, hasSlots: true },
-      consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], dataset: { type: "consumable" } },
-      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "gear" } },
-      ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "ammo" } },
-      misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "misc" } },
-      tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], dataset: { type: "loot", "sub-type": "tradeGoods" } },
-      all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], dataset: {} },
+      weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "weapon" } },
+      equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "equipment" }, hasSlots: true },
+      consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], canEquip: false, dataset: { type: "consumable" } },
+      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "sub-type": "gear" } },
+      ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "sub-type": "ammo" } },
+      misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "sub-type": "misc" } },
+      tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "sub-type": "tradeGoods" } },
+      all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], canEquip: true, dataset: {} },
     };
 
     // Partition items by category

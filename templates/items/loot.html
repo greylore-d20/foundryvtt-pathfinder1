@@ -5,9 +5,25 @@
     <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
 
     <div class="header-details flexrow">
-      <h1 class="charname">
+      {{#if isGM}}
+      <h3 class="charname">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+      </h3>
+
+      <h3 class="charname">
+        <input name="data.unidentified.name" type="text" value="{{data.unidentified.name}}" placeholder="{{localize "PF1.UnidentifiedName"}}"/>
+      </h3>
+      {{else}}
+      {{#if showUnidentifiedData}}
+      <h1 class="charname">
+        <input name="data.unidentified.name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
+      {{else}}
+      <h1 class="charname">
+        <input name="name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
+      </h1>
+      {{/if}}
+      {{/if}}
 
       <div class="item-subtitle">
         <h4 class="item-type">{{itemType}}</h4>
@@ -47,6 +63,12 @@
           {{/select}}
         </select>
       </div>
+
+      {{#if isGM}}
+      <label class="checkbox">
+        <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+      </label>
+      {{/if}}
     </div>
   </section>
 </form>

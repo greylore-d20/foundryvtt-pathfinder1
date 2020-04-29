@@ -78,9 +78,11 @@
           {{#if section.hasActions}}
           <div class="item-detail item-actions">
             <div class="item-attack">
+              {{#unless item.showUnidentifiedData}}
               {{#if item.hasAction}}
               <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
               {{/if}}
+              {{/unless}}
             </div>
           </div>
           {{/if}}

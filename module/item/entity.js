@@ -68,6 +68,14 @@ export class ItemPF extends Item {
     return !!(this.data.data.save && this.data.data.save.ability);
   }
 
+  /**
+   * Should the item show unidentified data
+   * @type {boolean}
+   */
+  get showUnidentifiedData() {
+    return (!game.user.isGM && getProperty(this.data, "data.identified") === false);
+  }
+
   /* -------------------------------------------- */
   /*	Data Preparation														*/
   /* -------------------------------------------- */
@@ -86,6 +94,12 @@ export class ItemPF extends Item {
 
     // Physical items
     if (hasProperty(itemData, "data.weight")) {
+      // Sync name
+      if (getProperty(this.data, "data.identifiedName") == null) setProperty(this.data, "data.identifiedName", this.name);
+      // Prepare unidentified cost
+      if (getProperty(this.data, "data.unidentified.price") == null) setProperty(this.data, "data.unidentified.price", 0);
+
+      // Set basic data
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
@@ -186,6 +200,9 @@ export class ItemPF extends Item {
 
   async update(data, options={}) {
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+
+    // Update name
+    if (data["data.identifiedName"] != null) data["name"] = data["data.identifiedName"];
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
@@ -310,67 +327,74 @@ export class ItemPF extends Item {
       rollData.sl = sl;
     }
 
-    // Gather dynamic labels
-    const dynamicLabels = {};
-    dynamicLabels.range = labels.range || "";
-    dynamicLabels.level = labels.sl || "";
-    // Range
-    if (data.range != null) {
-      if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(cl / 2) * 5);
-      else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + cl * 10);
-      else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + cl * 40);
-      else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
-        let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
-        dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
-      }
-    }
-    // Duration
-    if (data.duration != null) {
-      if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
-        let duration = new Roll(data.duration.value.length > 0 ? data.duration.value : "0", rollData).roll().total;
-        dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
-      }
-    }
-
     // Rich text description
-    data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
-
-    // Item type specific properties
-    const props = [];
-    const fn = this[`_${this.data.type}ChatData`];
-    if ( fn ) fn.bind(this)(data, labels, props);
+    if (this.showUnidentifiedData) {
+      data.description.value = TextEditor.enrichHTML(data.description.unidentified, htmlOptions);
+    }
+    else {
+      data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+    }
 
     // General equipment properties
+    const props = [];
     if ( data.hasOwnProperty("equipped") && ["weapon", "equipment"].includes(this.data.type) ) {
       props.push(
         data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"),
       );
     }
 
-    // Ability activation properties
-    if ( data.hasOwnProperty("activation") ) {
-      props.push(
-        labels.target,
-        labels.activation,
-        dynamicLabels.range,
-        dynamicLabels.duration
-      );
-    }
-
-    // Add save DC
-    if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
-      let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
-      let saveType = data.save.description;
-      if (this.type === "spell") {
-        saveDC += 10;
-        // Add spellbook's ability modifier
-        saveDC += ablMod;
-        // Add spell level
-        saveDC += sl;
+    if (!this.showUnidentifiedData) {
+      // Gather dynamic labels
+      const dynamicLabels = {};
+      dynamicLabels.range = labels.range || "";
+      dynamicLabels.level = labels.sl || "";
+      // Range
+      if (data.range != null) {
+        if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(cl / 2) * 5);
+        else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + cl * 10);
+        else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + cl * 40);
+        else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
+          let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
+          dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
+        }
       }
-      if (saveDC > 0 && saveType) {
-        props.push(`DC ${saveDC}`);
-        props.push(saveType);
+      // Duration
+      if (data.duration != null) {
+        if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
+          let duration = new Roll(data.duration.value.length > 0 ? data.duration.value : "0", rollData).roll().total;
+          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
+        }
+      }
+
+      // Item type specific properties
+      const fn = this[`_${this.data.type}ChatData`];
+      if (fn) fn.bind(this)(data, labels, props);
+
+      // Ability activation properties
+      if ( data.hasOwnProperty("activation") ) {
+        props.push(
+          labels.target,
+          labels.activation,
+          dynamicLabels.range,
+          dynamicLabels.duration
+        );
+      }
+
+      // Add save DC
+      if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
+        let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+        let saveType = data.save.description;
+        if (this.type === "spell") {
+          saveDC += 10;
+          // Add spellbook's ability modifier
+          saveDC += ablMod;
+          // Add spell level
+          saveDC += sl;
+        }
+        if (saveDC > 0 && saveType) {
+          props.push(`DC ${saveDC}`);
+          props.push(saveType);
+        }
       }
     }
 

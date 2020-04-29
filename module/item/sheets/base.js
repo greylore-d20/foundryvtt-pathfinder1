@@ -69,9 +69,20 @@ export class ItemSheetPF extends ItemSheet {
     data.itemType = data.item.type.titleCase();
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
+    data.itemName = data.item.name;
     data.isPhysical = data.item.data.hasOwnProperty("quantity");
     data.isSpell = this.item.type === "spell";
     data.owner = this.item.actor != null;
+    data.isGM = game.user.isGM;
+    data.showUnidentifiedData = this.item.showUnidentifiedData;
+
+    // Unidentified data
+    if (this.item.showUnidentifiedData) {
+      data.itemName = getProperty(this.item.data, "data.unidentified.name") || getProperty(this.item, "temp.name") || this.item.name;
+    }
+    else {
+      data.itemName = getProperty(this.item, "temp.name") || this.item.name;
+    }
 
     // Action Details
     data.hasAttackRoll = this.item.hasAttack;
@@ -354,7 +365,9 @@ export class ItemSheetPF extends ItemSheet {
     // Only run this if TabsV2 is already available (which is available since FoundryVTT 0.5.2)
     if (typeof TabsV2 !== "undefined") {
       const tabGroups = {
-        "primary": {},
+        "primary": {
+          "description": {},
+        },
       };
       createTabs.call(this, html, tabGroups);
     }

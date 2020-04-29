@@ -5,9 +5,25 @@
     <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
 
     <div class="header-details flexrow">
-      <h1 class="charname">
+      {{#if isGM}}
+      <h3 class="charname">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+      </h3>
+
+      <h3 class="charname">
+        <input name="data.unidentified.name" type="text" value="{{data.unidentified.name}}" placeholder="{{localize "PF1.UnidentifiedName"}}"/>
+      </h3>
+      {{else}}
+      {{#if showUnidentifiedData}}
+      <h1 class="charname">
+        <input name="data.unidentified.name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
+      {{else}}
+      <h1 class="charname">
+        <input name="name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
+      </h1>
+      {{/if}}
+      {{/if}}
 
       <div class="item-subtitle">
         <h4 class="item-type">{{itemType}}</h4>
@@ -16,7 +32,7 @@
 
       <ul class="summary">
         <li>
-          {{lookup config.consumableTypes data.consumableType }}
+          {{#unless showUnidentifiedData}}{{lookup config.consumableTypes data.consumableType }}{{/unless}}
         </li>
         <li>
           <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
@@ -42,6 +58,7 @@
       <h3 class="form-header">{{localize "PF1.Details"}}</h3>
 
       {{!-- Consumable Type --}}
+      {{#unless showUnidentifiedData}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <select name="data.consumableType">
@@ -52,6 +69,12 @@
           {{/select}}
         </select>
       </div>
+
+      {{#if isGM}}
+      <label class="checkbox">
+        <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+      </label>
+      {{/if}}
 
       <h3 class="form-header">{{localize "PF1.ConsumableUsage"}}</h3>
 
@@ -67,6 +90,7 @@
 
       {{!-- Item Measure Template --}}
       {{> "systems/pf1/templates/items/parts/item-template.html"}}
+      {{/unless}}
     </div>
   </section>
 </form>

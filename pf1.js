@@ -1,10 +1,7 @@
 /**
- * The Dungeons & Dragons 5th Edition game system for Foundry Virtual Tabletop
- * Author: Atropos
+ * The Pathfinder 1st edition game system for Foundry Virtual Tabletop
+ * Author: Furyspark
  * Software License: GNU GPLv3
- * Content License: https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf
- * Repository: https://gitlab.com/foundrynet/PF1
- * Issue Tracker: https://gitlab.com/foundrynet/PF1/issues
  */
 
 // Import Modules

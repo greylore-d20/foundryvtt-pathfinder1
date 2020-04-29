@@ -1,10 +1,29 @@
 # Changelog
 
+## 0.36
+
+### Bug Fixes
+
+- Blind rolls were not hidden
+
+### Changelog
+
+- Slightly improve styling of actor sheets with limited visibility
+- Add initial support for unidentified items
+  - Only GMs can toggle an item's identified state
+  - Players will see an alternate name, description and price, and some info is completely missing for unidentified items
+  - Actions of unidentified items are unusable by players
+- Add separate carried column for actors' inventories, and a quick way to mark an item as carried/not carried.
+- Add an alternate style for item names without a quantity in actors' inventories (a line through the name)
+- @Grenadier added the Wounds and Vigor optional rules system (many thanks!)
+- @Grenadier changed automatic hit point calculation to be slightly higher (acknowledge the fact that there's no 0 on a dice) (many thanks!)
+
 ## 0.35
 
 ### Bug Fixes
 
 - Using spells with multiple attacks showed the spell description multiple times
+- John Shetler fixed a giant oversight in the Fractional Base Bonuses optional rule system (many thanks!)
 
 ### Changelog
 

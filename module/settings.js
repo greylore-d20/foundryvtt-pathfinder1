@@ -170,6 +170,38 @@ export const registerSystemSettings = function() {
   });
 
   /**
+   * Option to use the Wounds and Vigor optional ruleset for PCs.
+   */
+  game.settings.register("pf1", "useWoundsAndVigorPC", {
+    name: "SETTINGS.pf1PCWoundsAndVigorN",
+    hint: "SETTINGS.pf1PCWoundsAndVigorH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+    },
+  });
+
+  /**
+   * Option to use the Wounds and Vigor optional ruleset for NPCs.
+   */
+  game.settings.register("pf1", "useWoundsAndVigorNPC", {
+    name: "SETTINGS.pf1NPCWoundsAndVigorN",
+    hint: "SETTINGS.pf1NPCWoundsAndVigorH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+    },
+  });
+
+  /**
    * Option to automatically collapse Item Card descriptions
    */
   game.settings.register("pf1", "autoCollapseItemCards", {

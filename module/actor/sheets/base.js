@@ -193,6 +193,12 @@ export class ActorSheetPF extends ActorSheet {
     }
     data.skillRanks = skillRanks;
 
+    // Fetch the game settings relevant to sheet rendering.
+    data.settings = {
+      useWoundsAndVigorPC:  game.settings.get("pf1", "useWoundsAndVigorPC"),
+      useWoundsAndVigorNPC: game.settings.get("pf1", "useWoundsAndVigorNPC")
+    }
+
     // Return data to the sheet
     return data
   }
@@ -326,7 +332,7 @@ export class ActorSheetPF extends ActorSheet {
       if (filters.has("active")) {
         if (!data.active) return false;
       }
-      
+
       return true;
     });
   }
@@ -652,7 +658,7 @@ export class ActorSheetPF extends ActorSheet {
       chatTemplateData: { hasProperties: props.length > 0, properties: props }
     });
   }
-  
+
   _onRollCL(event) {
     event.preventDefault();
 
@@ -763,7 +769,7 @@ export class ActorSheetPF extends ActorSheet {
       count++;
       tag = `${skillId}${count}`;
     }
-    
+
     const updateData = {};
     updateData[`data.skills.${skillId}.subSkills.${tag}`] = skillData;
     if (this.actor.hasPerm(game.user, "OWNER")) this.actor.update(updateData);
@@ -821,7 +827,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.actor.getOwnedItem(itemId);
-    
+
     // Quick Attack
     if (a.classList.contains("item-attack")) {
       if (item.data.type === "spell") {
@@ -894,7 +900,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const button = event.currentTarget;
     if (button.disabled) return;
-    
+
     const li = event.currentTarget.closest(".item");
     if (keyboard.isDown("Shift")) {
       this.actor.deleteOwnedItem(li.dataset.itemId);

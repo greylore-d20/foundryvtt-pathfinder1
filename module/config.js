@@ -859,6 +859,8 @@ PF1.buffTargets = {
     "cmd": "CMD",
     "init": "PF1.Initiative",
     "mhp": "Hit Points",
+    "wounds": "PF1.Wounds",
+    "vigor": "PF1.Vigor",
   },
 };
 

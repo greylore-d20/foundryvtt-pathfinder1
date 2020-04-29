@@ -525,19 +525,19 @@ export class ActorPF extends Actor {
         const max_1st = auto === "50F" || auto === "75F";
 
         const compute_health = (cls, first = false) => {
-          const first_health = (first && max_1st) * cls.data.hd
-          const level_health = (cls.data.levels - (first && max_1st)) * Math.ceil(1 + (cls.data.hd-1) * rate)
-          const favor_health = (cls.data.classType === "base") * cls.data.fc.hp.value
-          const health = Math.ceil(first_health + level_health + favor_health)
+          const first_health = (first && max_1st) * cls.data.hd;
+          const level_health = (cls.data.levels - (first && max_1st)) * Math.ceil(1 + (cls.data.hd-1) * rate);
+          const favor_health = (cls.data.classType === "base") * cls.data.fc.hp.value;
+          const health = Math.ceil(first_health + level_health + favor_health);
 
           // Push changes to hp and vigor.
           changes.push({
             raw: [health.toString(), "misc", "mhp", "untyped", 0],
-            source: {name: cls.name, subtype: cls.name.toString()}
+            source: {name: cls.name },
           });
           changes.push({
             raw: [health.toString(), "misc", "vigor", "untyped", 0],
-            source: {name: cls.name, subtype: cls.name.toString()}
+            source: {name: cls.name },
           });
         }
 

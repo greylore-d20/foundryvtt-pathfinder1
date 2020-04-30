@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.361
+
+### Bug Fixes
+
+- Automated HP calculation was not being done properly past level 2
+- Identified weapon names were being forgotten
+
 ## 0.36
 
 ### Bug Fixes

@@ -240,11 +240,11 @@
         <li class="ability" data-ability="{{id}}">
           <div class="ability-header flexrow">
             <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text"
-            value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="DMG"/>
+            value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DMG"}}"/>
             <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text"
-            value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="PNL"/>
+            value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.PNL"}}"/>
             <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text"
-            value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="DRN"/>
+            value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DRN"}}"/>
           </div>
           <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
           <span class="ability-score tooltip">
@@ -276,7 +276,7 @@
       <div class="flexcol attributes-root">
         <ul class="attributes misc-base flexrow">
           <li class="attribute bab" data-attribute="bab">
-            <h4 class="attribute-name box-title rollable">BAB</h4>
+            <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
             <div class="attribute-value tooltip">
               <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
               <span class="tooltipcontent">
@@ -290,7 +290,7 @@
           </li>
 
           <li class="attribute cmb" data-attribute="cmb">
-            <h4 class="attribute-name box-title rollable">CMB</h4>
+            <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
             <div class="attribute-value tooltip">
               <span>{{data.attributes.cmb.total}}</span>
               <span class="tooltipcontent">
@@ -323,7 +323,7 @@
 
         <ul class="attributes misc-base2 flexrow">
           <li class="attribute acp" data-attribute="acp">
-            <h4 class="attribute-name box-title">ACP</h4>
+            <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
             <div class="attribute-value tooltip">
               <span>{{data.attributes.acp.total}}</span>
               <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>

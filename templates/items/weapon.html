@@ -7,7 +7,7 @@
     <div class="header-details flexrow">
       {{#if isGM}}
       <h3 class="charname">
-        <input name="data.identifiedName" type="text" value="{{data.identifiedName}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h3>
 
       <h3 class="charname">
@@ -16,11 +16,11 @@
       {{else}}
       {{#if showUnidentifiedData}}
       <h1 class="charname">
-        <input name="data.unidentified.name" type="text" value="{{data.unidentified.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="data.unidentified.name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
       {{else}}
       <h1 class="charname">
-        <input name="data.identifiedName" type="text" value="{{data.identifiedName}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
       </h1>
       {{/if}}
       {{/if}}

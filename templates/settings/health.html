@@ -1,69 +1,71 @@
 <form autocomplete="off">
-  <!-- <nav class="sheet-tabs tabs">
+  <nav class="sheet-tabs tabs">
     <a class="item" data-tab="base"><i class="fas fa-heartbeat"></i> {{localize "SETTINGS.pf1HealthConfigTabBase"}}</a>
     <a class="item" data-tab="variants"><i class="fas fa-prescription-bottle-alt"></i> {{localize "SETTINGS.pf1HealthConfigTabVariant"}}</a>
-  </nav> -->
+  </nav>
 
-  <!-- General Tab -->
-  <!-- <div class="tab active" data-tab="base"> -->
-    <p class="notes">{{localize 'SETTINGS.pf1HealthConfigInstructions'}}</p>
-    <header class="table-header flexrow">
-      <label class="index">{{localize 'PF1.HitDie'}}</label>
-      {{#each hitdieOptions}}
-        <label>{{ this }}</label>
-      {{/each}}
-    </header>
-    <ul class="settings-list">
-      <li class="form-group">
-        {{#each hitdice as |opt hd|}}
-          <label class="index">{{hd}}</label>
-          <div class="form-fields">
-              <input type="checkbox" {{#if opt.auto}}checked{{/if}} name="hitdice.{{hd}}.auto">
-              <input type="text" data-dtype="Number" name="hitdice.{{hd}}.rate" value="{{opt.rate}}">
-              <input type="text" data-dtype="Number" name="hitdice.{{hd}}.maximized" value="{{opt.maximized}}">
-          </div>
+  <div class="tabbed">
+  <!-- Base Tab -->
+    <section class="tab" data-tab="base">
+      <p class="notes">{{localize 'SETTINGS.pf1HealthConfigInstructions'}}</p>
+      <header class="table-header flexrow">
+        <label class="index">{{localize 'PF1.HitDie'}}</label>
+        {{#each hitdieOptions}}
+          <label>{{ this }}</label>
         {{/each}}
-      </li>
-    </ul>
+      </header>
+      <ul class="settings-list">
+        <li class="form-group">
+          {{#each hitdice as |opt hd|}}
+            <label class="index">{{hd}}</label>
+            <div class="form-fields">
+                <input type="checkbox" {{#if opt.auto}}checked{{/if}} name="hitdice.{{hd}}.auto">
+                <input type="text" data-dtype="Number" name="hitdice.{{hd}}.rate" value="{{opt.rate}}">
+                <input type="text" data-dtype="Number" name="hitdice.{{hd}}.maximized" value="{{opt.maximized}}">
+            </div>
+          {{/each}}
+        </li>
+      </ul>
 
-    <div class="form-group">
-      <label>{{localize 'SETTINGS.pf1HealthRoundingName'}}</label>
-      <select name="rounding">
-        {{#select rounding}}
-          <option value="up">&uarr;</option>
-          <option value="nearest">&#8597;</option>
-          <option value="down">&darr;</option>
-        {{/select}}
-      </select>
-      <p class="notes">{{localize 'SETTINGS.pf1HealthRoundingHint'}}</p>
-    </div>
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthRoundingName'}}</label>
+        <select name="rounding">
+          {{#select rounding}}
+            <option value="up">&uarr;</option>
+            <option value="nearest">&#8597;</option>
+            <option value="down">&darr;</option>
+          {{/select}}
+        </select>
+        <p class="notes">{{localize 'SETTINGS.pf1HealthRoundingHint'}}</p>
+      </div>
 
-    <div class="form-group">
-      <label>{{localize 'SETTINGS.pf1HealthContinuityName'}}</label>
-      <select name="continuity">
-        {{#select continuity}}
-          <option value="continuous">{{localize 'SETTINGS.pf1HealthContinuityContinuous'}}</option>
-          <option value="discrete">{{localize 'SETTINGS.pf1HealthContinuityDiscrete'}}</option>
-        {{/select}}
-      </select>
-      <p class="notes">{{localize 'SETTINGS.pf1HealthContinuityHint'}}</p>
-    </div>
-  <!-- </div> -->
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthContinuityName'}}</label>
+        <select name="continuity">
+          {{#select continuity}}
+            <option value="continuous">{{localize 'SETTINGS.pf1HealthContinuityContinuous'}}</option>
+            <option value="discrete">{{localize 'SETTINGS.pf1HealthContinuityDiscrete'}}</option>
+          {{/select}}
+        </select>
+        <p class="notes">{{localize 'SETTINGS.pf1HealthContinuityHint'}}</p>
+      </div>
+    </section>
 
-  <!-- Variants Tab -->
-  <!-- <div class="tab" data-tab="variants"> -->
-    <div class="form-group">
-      <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorPCName'}}</label>
-      <input type="checkbox" {{#if variants.pc.useWoundsAndVigor}}checked{{/if}} name="variants.pc.useWoundsAndVigor">
-      <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorPCHint'}}</p>
-    </div>
+    <!-- Variants Tab -->
+    <section class="tab" data-tab="variants">
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorPCName'}}</label>
+        <input type="checkbox" {{#if variants.pc.useWoundsAndVigor}}checked{{/if}} name="variants.pc.useWoundsAndVigor">
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorPCHint'}}</p>
+      </div>
 
-    <div class="form-group">
-      <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCName'}}</label>
-      <input type="checkbox" {{#if variants.npc.useWoundsAndVigor}}checked{{/if}} name="variants.npc.useWoundsAndVigor">
-      <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint'}}</p>
-    </div>
-  <!-- </div> -->
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCName'}}</label>
+        <input type="checkbox" {{#if variants.npc.useWoundsAndVigor}}checked{{/if}} name="variants.npc.useWoundsAndVigor">
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint'}}</p>
+      </div>
+    </section>
+  </div>
 
   <div class="form-group">
     <button type="button" name="reset">

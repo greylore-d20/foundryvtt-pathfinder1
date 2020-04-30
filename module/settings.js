@@ -177,7 +177,12 @@ class HealthConfig extends FormApplication {
       id: 'health-config',
       template: "systems/pf1/templates/settings/health.html",
       width: 480,
-      height: "auto"
+      height: "auto",
+      tabs: [{
+        navSelector: ".tabs",
+        contentSelector: ".tabbed",
+        initial: "base"
+      }]
     })
   }
 

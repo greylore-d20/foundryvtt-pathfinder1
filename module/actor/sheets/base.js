@@ -60,6 +60,7 @@ export class ActorSheetPF extends ActorSheet {
       config: CONFIG.PF1,
       useBGSkills: this.entity.data.type === "character" && game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.entity.spellFailure,
+      isGM: game.user.isGM,
     };
 
     // The Actor and its Items
@@ -494,6 +495,9 @@ export class ActorSheetPF extends ActorSheet {
     // Quick carry item
     html.find("a.item-control.item-carry").click(ev => { this._quickCarryItem(ev); });
 
+    // Quick (un)identify item
+    html.find("a.item-control.item-identify").click(ev => { this._quickIdentifyItem(ev); });
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
@@ -856,6 +860,20 @@ export class ActorSheetPF extends ActorSheet {
 
     if (hasProperty(item.data, "data.carried")) {
       item.update({ "data.carried": !item.data.data.carried });
+    }
+  }
+
+  async _quickIdentifyItem(event) {
+    event.preventDefault();
+    if (!game.user.isGM) {
+      ui.notifications.error("You are not allowed to identify items");
+      return;
+    }
+    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+
+    if (hasProperty(item.data, "data.identified")) {
+      item.update({ "data.identified": !item.data.data.identified });
     }
   }
 

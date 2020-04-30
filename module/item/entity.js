@@ -114,6 +114,11 @@ export class ItemPF extends Item {
       if (itemData.data.carried === true) labels.carried = game.i18n.localize("PF1.Yes");
       else labels.carried = game.i18n.localize("PF1.No");
 
+      // Identified label
+      labels.identified = "";
+      if (itemData.data.identified === true) labels.identified = game.i18n.localize("PF1.YesShort");
+      else labels.identified = game.i18n.localize("PF1.NoShort");
+
       // Slot label
       if (itemData.data.slot) labels.slot = CONFIG.PF1.equipmentSlots[itemData.data.slot];
     }

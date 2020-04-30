@@ -124,9 +124,9 @@
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">
-  <label>DC</label>
+  <label>{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}</label>
   <div class="form-fields">
-    <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}DC{{else}}{{localize "PF1.DCOffset"}}{{/unless}}"/>
+    <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}"/>
     <input type="text" name="data.save.description" value="{{data.save.description}}" placeholder="{{localize "PF1.DCDescriptionExample"}}"/>
   </div>
 </div>

@@ -65,7 +65,7 @@
 
       {{!-- Weapon Type --}}
       <div class="form-group">
-        <label>{{localize "PF1.WeaponType"}}</label>
+        <label>{{localize "PF1.Category"}}</label>
         <select name="data.weaponType">
           {{#select data.weaponType}}
           {{#each weaponCategories.types as |name type|}}
@@ -77,7 +77,7 @@
 
       {{!-- Weapon Subtype --}}
       <div class="form-group">
-        <label>{{localize "PF1.WeaponSubtype"}}</label>
+        <label>{{localize "PF1.Type"}}</label>
         <select name="data.weaponSubtype">
           {{#select data.weaponSubtype}}
           {{#each weaponCategories.subTypes as |name type|}}

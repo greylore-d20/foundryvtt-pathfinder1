@@ -488,10 +488,10 @@ export class ActorPF extends Actor {
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
     const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") !== "racial").sort((a, b) => {
-      return a.data.sort - b.data.sort;
+      return a.sort - b.sort;
     });
     const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") === "racial").sort((a, b) => {
-      return a.data.sort - b.data.sort;
+      return a.sort - b.sort;
     });
 
     const healthConfig = game.settings.get("pf1", "healthConfig");

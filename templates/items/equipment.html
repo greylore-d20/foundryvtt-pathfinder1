@@ -35,10 +35,10 @@
           {{itemType}}
         </li>
         <li>
-          {{labels.equipmentSubtype}}
+          {{#unless showUnidentifiedData}}{{labels.equipmentSubtype}}{{/unless}}
         </li>
         <li>
-          {{labels.slot}}
+          {{#unless showUnidentifiedData}}{{labels.slot}}{{/unless}}
         </li>
       </ul>
     </div>

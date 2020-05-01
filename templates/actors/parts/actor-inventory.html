@@ -65,7 +65,7 @@
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style="background-image: url({{item.img}})"></div>
-            <h4 {{#unless item.data.quantity}}class="strikethrough-text"{{/unless}}>
+            <h4 {{#if item.empty}}class="strikethrough-text"{{/if}}>
               {{~#if item.isStack}}({{item.data.quantity}}) {{/if}}
               {{item.name~}}
             </h4>

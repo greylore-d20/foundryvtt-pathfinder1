@@ -567,7 +567,7 @@ export class ItemPF extends Item {
     }
 
     const isCharged = ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
-    let charges = getProperty(this.data, "data.uses.value") || 0;
+    let charges = isCharged ? getProperty(this.data, "data.uses.value") || 0 : 0;
     if (isCharged && charges <= 0) {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
     }
@@ -786,9 +786,11 @@ export class ItemPF extends Item {
           // Deduct a charge
           if (autoDeductCharges) {
             const newCharges = charges > 0 ? charges - 1 : charges;
-            const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
             itemUpdateData["data.uses.value"] = newCharges;
-            itemUpdateData["data.quantity"] = newQuantity;
+            if (isSingleUse) {
+              const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
+              itemUpdateData["data.quantity"] = newQuantity;
+            }
           }
 
           // Update item

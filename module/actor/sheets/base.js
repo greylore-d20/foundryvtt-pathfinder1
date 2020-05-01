@@ -997,6 +997,10 @@ export class ActorSheetPF extends ActorSheet {
       item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
       item.hasUses = item.data.uses && (item.data.uses.max > 0);
       item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
+
+      const itemQuantity = getProperty(item, "data.quantity") != null ? getProperty(item, "data.quantity") : 1;
+      const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;
+      item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
       if ( item.type === "spell" ) arr[1].push(item);
       else if ( item.type === "feat" ) arr[2].push(item);
       else if ( item.type === "class" ) arr[3].push(item);

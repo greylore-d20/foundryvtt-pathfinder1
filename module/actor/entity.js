@@ -494,51 +494,51 @@ export class ActorPF extends Actor {
       return a.data.sort - b.data.sort;
     });
 
-    const healthConfig = game.settings.get("pf1", "healthConfig")
-    const cls_options  = this.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC
-    const race_options = healthConfig.hitdice.Racial
-    const round = {up: Math.ceil, nearest: Math.round, down: Math.floor}[healthConfig.rounding]
-    const continuous = {discrete: false, continuous: true}[healthConfig.continuity]
+    const healthConfig = game.settings.get("pf1", "healthConfig");
+    const cls_options  = this.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+    const race_options = healthConfig.hitdice.Racial;
+    const round = {up: Math.ceil, nearest: Math.round, down: Math.floor}[healthConfig.rounding];
+    const continuous = {discrete: false, continuous: true}[healthConfig.continuity];
 
     const push_health = (value, source) => {
       changes.push({
         raw: [value.toString(), "misc", "mhp", "untyped", 0],
         source: {name: source.name, subtype: source.name.toString()}
-      })
+      });
       changes.push({
         raw: [value.toString(), "misc", "vigor", "untyped", 0],
         source: {name: source.name, subtype: source.name.toString()}
-      })
+      });
     }
     const manual_health = (health_source) => {
-      const health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value
-      if (!continuous) health = round(health)
-      push_health(health, health_source)
+      let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+      if (!continuous) health = round(health);
+      push_health(health, health_source);
     }
     const auto_health = (health_source, options, maximized=0) => {
-      let die_health = 1 + (health_source.data.hd-1) * options.rate
-      if (!continuous) die_health = round(die_health)
+      let die_health = 1 + (health_source.data.hd-1) * options.rate;
+      if (!continuous) die_health = round(die_health);
 
-      const maxed_health = Math.min(health_source.data.levels, maximized) * health_source.data.hd
-      const level_health = Math.max(0, health_source.data.levels - maximized) * die_health
-      const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value
-      let   health = maxed_health + level_health + favor_health
+      const maxed_health = Math.min(health_source.data.levels, maximized) * health_source.data.hd;
+      const level_health = Math.max(0, health_source.data.levels - maximized) * die_health;
+      const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+      let   health = maxed_health + level_health + favor_health;
 
-      push_health(health, health_source)
+      push_health(health, health_source);
     }
     const compute_health = (health_sources, options) => {
       // Compute and push health, tracking the remaining maximized levels.
       if (options.auto) {
-        let maximized = options.maximized
+        let maximized = options.maximized;
         for (const hd of health_sources) {
-          auto_health(hd, options, maximized)
-          maximized = Math.max(0, maximized - hd.data.levels)
+          auto_health(hd, options, maximized);
+          maximized = Math.max(0, maximized - hd.data.levels);
         }
-      } else health_sources.forEach(race => manual_health(race))
+      } else health_sources.forEach(race => manual_health(race));
     }
 
-    compute_health(racialHD, race_options)
-    compute_health(classes, cls_options)
+    compute_health(racialHD, race_options);
+    compute_health(classes, cls_options);
 
     // Add Constitution to HP
     changes.push({

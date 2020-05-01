@@ -235,6 +235,11 @@ class HealthConfig extends FormApplication {
    */
   async _updateObject(event, formData) {
     const settings = expandObject(formData)
+    // Some mild sanitation for the numeric values.
+    for (const hd of Object.values(settings.hitdice)) {
+      hd.rate = Math.max(0, Math.min(hd.rate, 100))
+      hd.maximized = Math.max(0, Math.min(Math.floor(hd.maximized), 100))
+    }
     await game.settings.set("pf1", "healthConfig", settings)
     ui.notifications.info(`Updated Pathfinder health configuration.`)
   }

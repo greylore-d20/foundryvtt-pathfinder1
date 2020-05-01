@@ -523,7 +523,6 @@ export class ActorPF extends Actor {
       const level_health = Math.max(0, health_source.data.levels - maximized) * die_health
       const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value
       let   health = maxed_health + level_health + favor_health
-      if (continuous) health = round(health)
 
       push_health(health, health_source)
     }
@@ -1186,12 +1185,20 @@ export class ActorPF extends Actor {
 
         if (!(flatTargets instanceof Array)) flatTargets = [flatTargets];
         for (let target of flatTargets) {
-          consolidatedChanges[target] = consolidatedChanges[target] || 0;
-          consolidatedChanges[target] = consolidatedChanges[target] + value.positive + value.negative;
+          consolidatedChanges[target] = (consolidatedChanges[target] || 0) + value.positive + value.negative;
+
+           // Apply final rounding of health, if required.
+          if (["data.attributes.hp.max", "data.attributes.wounds.max", "data.attributes.vigor.max"].includes(target)) {
+            const healthConfig = game.settings.get("pf1", "healthConfig")
+            const continuous = {discrete: false, continuous: true}[healthConfig.continuity]
+            if (continuous) {
+              const round = {up: Math.ceil, nearest: Math.round, down: Math.floor}[healthConfig.rounding]
+              consolidatedChanges[target] = round(consolidatedChanges[target])
+            }
+          }
         }
       }
     }
-
     return consolidatedChanges;
   }
 

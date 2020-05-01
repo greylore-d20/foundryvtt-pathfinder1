@@ -77,7 +77,7 @@
       </div>
 
       {{!-- Hit Points --}}
-      {{#unless autoHP}}
+      {{#unless healthConfig.auto}}
       <div class="form-group">
         <label>{{localize "PF1.HitPoints"}}</label>
         <input type="text" name="data.hp" value="{{data.hp}}" data-dtype="Number" />

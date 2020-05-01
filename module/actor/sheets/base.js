@@ -153,7 +153,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Prepare skillsets
     data.skillsets = this._prepareSkillsets(data.actor.data.skills);
-        
+
     // Skill rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
     // Count used skill ranks
@@ -201,10 +201,7 @@ export class ActorSheetPF extends ActorSheet {
     data.skillRanks = skillRanks;
 
     // Fetch the game settings relevant to sheet rendering.
-    data.settings = {
-      useWoundsAndVigorPC:  game.settings.get("pf1", "useWoundsAndVigorPC"),
-      useWoundsAndVigorNPC: game.settings.get("pf1", "useWoundsAndVigorNPC")
-    }
+    data.healthConfig =  game.settings.get("pf1", "healthConfig");
 
     // Return data to the sheet
     return data
@@ -295,14 +292,14 @@ export class ActorSheetPF extends ActorSheet {
       if (!skillset[a].custom && skillset[b].custom) return -1;
       return ('' + skillset[a].label).localeCompare(skillset[b].label)
     });
-    
+
     keys.forEach( a => {
       let skl = skillset[a]
       result.all.skills[a] = skl;
       if (skl.background) result.background.skills[a] = skl;
       else result.adventure.skills[a] = skl;
     })
-    
+
     return result;
   }
 

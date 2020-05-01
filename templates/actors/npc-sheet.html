@@ -195,15 +195,15 @@
     {{!-- NPC Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
       <a class="item active" data-tab="attributes">{{ localize "PF1.Attributes" }}</a>
+      <a class="item" data-tab="attacks">{{ localize "PF1.Attacks" }}</a>
       <a class="item" data-tab="inventory">{{ localize "PF1.Inventory" }}</a>
       <a class="item" data-tab="feats">{{ localize "PF1.Features" }}</a>
       <a class="item" data-tab="skills">{{ localize "PF1.Skills" }}</a>
-      <a class="item" data-tab="spellbook">{{ localize "PF1.Spells" }}</a>
-      <a class="item" data-tab="attacks">{{ localize "PF1.Attacks" }}</a>
       <a class="item" data-tab="defenses">{{ localize "PF1.Defenses" }}</a>
+      <a class="item" data-tab="buffs">{{ localize "PF1.Buffs" }}</a>
+      <a class="item" data-tab="spellbook">{{ localize "PF1.Spells" }}</a>
       <a class="item" data-tab="biography">{{ localize "PF1.Biography" }}</a>
       <a class="item" data-tab="notes">{{ localize "PF1.Notes" }}</a>
-      <a class="item" data-tab="buffs">{{ localize "PF1.Buffs" }}</a>
     </nav>
 
     {{!-- NPC Sheet Body --}}
@@ -323,6 +323,11 @@
         </section>
       </div>
 
+      {{!-- Attacks Tab --}}
+      <div class="tab attacks flexcol" data-group="primary" data-tab="attacks">
+        {{> "systems/pf1/templates/actors/parts/actor-attacks.html" sections=attacks}}
+      </div>
+
       {{!-- Inventory Tab --}}
       <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
         {{> "systems/pf1/templates/actors/parts/actor-inventory.html" sections=inventory}}
@@ -338,19 +343,19 @@
         {{> "systems/pf1/templates/actors/parts/actor-skills-front.html"}}
       </div>
 
-      {{!-- Spellbook Tab --}}
-      <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-        {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.html"}}
-      </div>
-
-      {{!-- Attacks Tab --}}
-      <div class="tab attacks flexcol" data-group="primary" data-tab="attacks">
-        {{> "systems/pf1/templates/actors/parts/actor-attacks.html" sections=attacks}}
-      </div>
-
       {{!-- Defenses Tab --}}
       <div class="tab defenses flexcol" data-group="primary" data-tab="defenses">
         {{> "systems/pf1/templates/actors/parts/actor-defenses.html"}}
+      </div>
+
+      {{!-- Buffs Tab --}}
+      <div class="tab buffs flexcol" data-group="primary" data-tab="buffs">
+        {{> "systems/pf1/templates/actors/parts/actor-buffs.html" sections=buffs}}
+      </div>
+
+      {{!-- Spellbook Tab --}}
+      <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
+        {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.html"}}
       </div>
 
       {{!-- Biography Tab --}}
@@ -361,11 +366,6 @@
       {{!-- Notes Tab --}}
       <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">
         {{editor content=data.details.notes.value target="data.details.notes.value" button=true owner=owner editable=editable}}
-      </div>
-
-      {{!-- Buffs Tab --}}
-      <div class="tab buffs flexcol" data-group="primary" data-tab="buffs">
-        {{> "systems/pf1/templates/actors/parts/actor-buffs.html" sections=buffs}}
       </div>
     </section>
   </form>

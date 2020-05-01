@@ -51,7 +51,7 @@
           </div>
 
           <div class="item-detail item-uses flexrow">
-            {{#if item.data.uses.max}}
+            {{#if item.isCharged}}
             <input type="text" value="{{item.data.uses.value}}" data-dtype="Number"/>
             <span class="sep"> of </span>
             <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>

@@ -996,9 +996,7 @@ export class ActorSheetPF extends ActorSheet {
       item.img = item.img || DEFAULT_TOKEN;
       item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
       item.hasUses = item.data.uses && (item.data.uses.max > 0);
-      item.isOnCooldown = item.data.recharge && !!item.data.recharge.value && (item.data.recharge.charged === false);
-      const unusable = item.isOnCooldown && (item.data.uses.per && (item.data.uses.value > 0));
-      item.isCharged = !unusable;
+      item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
       if ( item.type === "spell" ) arr[1].push(item);
       else if ( item.type === "feat" ) arr[2].push(item);
       else if ( item.type === "class" ) arr[3].push(item);

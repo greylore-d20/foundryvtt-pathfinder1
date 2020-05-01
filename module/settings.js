@@ -1,5 +1,6 @@
-export const registerSystemSettings = function() {
+import { HealthConfig } from "./config/health.js";
 
+export const registerSystemSettings = function() {
   /**
    * Track the system version upon which point a migration was last applied
    */
@@ -11,72 +12,22 @@ export const registerSystemSettings = function() {
     default: 0
   });
 
-  /**
-   * Auto calculate hit points
-   */
-  game.settings.register("pf1", "autoHPFormula", {
-    name: "SETTINGS.pf1AutoHPFormulaN",
-    hint: "SETTINGS.pf1AutoHPFormulaL",
-    scope: "world",
-    config: true,
-    default: "manual",
-    type: String,
-    choices: {
-      "manual": "SETTINGS.pf1AutoHPFormulaManual",
-      "50": "SETTINGS.pf1AutoHPFormula50",
-      "75": "SETTINGS.pf1AutoHPFormula75",
-      "100": "SETTINGS.pf1AutoHPFormula100",
-      "50F": "SETTINGS.pf1AutoHPFormula50F",
-      "75F": "SETTINGS.pf1AutoHPFormula75F",
-    },
-    onChange: () => {
-      game.actors.entities.forEach(o => { if (o.isPC) o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { if (o.isPC) o.update({}); });
-    }
+  // Health configuration
+  game.settings.registerMenu("system", "healthConfig", {
+    name: "SETTINGS.pf1HealthConfigName",
+    label: "SETTINGS.pf1HealthConfigLabel",
+    hint: "SETTINGS.pf1HealthConfigHint",
+    icon: "fas fa-heartbeat",
+    type: HealthConfig,
+    restricted: true
   });
 
-  /**
-   * Auto calculate hit points
-   */
-  game.settings.register("pf1", "NPCAutoHPFormula", {
-    name: "SETTINGS.pf1NPCAutoHPFormulaN",
-    hint: "SETTINGS.pf1NPCAutoHPFormulaL",
+  game.settings.register("pf1", "healthConfig", {
+    name: "SETTINGS.pf1HealthConfigName",
     scope: "world",
-    config: true,
-    default: "manual",
-    type: String,
-    choices: {
-      "manual": "SETTINGS.pf1AutoHPFormulaManual",
-      "50": "SETTINGS.pf1AutoHPFormula50",
-      "75": "SETTINGS.pf1AutoHPFormula75",
-      "100": "SETTINGS.pf1AutoHPFormula100",
-      "50F": "SETTINGS.pf1AutoHPFormula50F",
-      "75F": "SETTINGS.pf1AutoHPFormula75F",
-    },
-    onChange: () => {
-      game.actors.entities.forEach(o => { if (!o.isPC) o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { if (!o.isPC) o.update({}); });
-    }
-  });
-
-  /**
-   * Auto calculate racial hit points
-   */
-  game.settings.register("pf1", "RacialAutoHPFormula", {
-    name: "SETTINGS.pf1RacialAutoHPN",
-    hint: "SETTINGS.pf1RacialAutoHPL",
-    scope: "world",
-    config: true,
-    default: "manual",
-    type: String,
-    choices: {
-      "manual": "SETTINGS.pf1AutoHPFormulaManual",
-      "50": "SETTINGS.pf1AutoHPFormula50",
-      "75": "SETTINGS.pf1AutoHPFormula75",
-      "100": "SETTINGS.pf1AutoHPFormula100",
-      "50F": "SETTINGS.pf1AutoHPFormula50F",
-      "75F": "SETTINGS.pf1AutoHPFormula75F",
-    },
+    default: HealthConfig.defaultSettings,
+    type: Object,
+    config: false,
     onChange: () => {
       game.actors.entities.forEach(o => { o.update({}); });
       Object.values(game.actors.tokens).forEach(o => { o.update({}); });
@@ -159,38 +110,6 @@ export const registerSystemSettings = function() {
   game.settings.register("pf1", "useFractionalBaseBonuses", {
     name: "SETTINGS.pf1FractionalBaseBonusesN",
     hint: "SETTINGS.pf1FractionalBaseBonusesH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
-    },
-  });
-
-  /**
-   * Option to use the Wounds and Vigor optional ruleset for PCs.
-   */
-  game.settings.register("pf1", "useWoundsAndVigorPC", {
-    name: "SETTINGS.pf1PCWoundsAndVigorN",
-    hint: "SETTINGS.pf1PCWoundsAndVigorH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
-    },
-  });
-
-  /**
-   * Option to use the Wounds and Vigor optional ruleset for NPCs.
-   */
-  game.settings.register("pf1", "useWoundsAndVigorNPC", {
-    name: "SETTINGS.pf1NPCWoundsAndVigorN",
-    hint: "SETTINGS.pf1NPCWoundsAndVigorH",
     scope: "world",
     config: true,
     default: false,

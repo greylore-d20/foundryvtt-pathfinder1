@@ -2771,5 +2771,28 @@ export class ActorPF extends Actor {
     return (carried ? carried.pp * 10 + carried.gp + carried.sp / 10 + carried.cp / 100 : 0) +
       (alt ? alt.pp * 10 + alt.gp + alt.sp / 10 + alt.cp / 100 : 0);
   }
+
+  /**
+   * Import a new owned Item from a compendium collection
+   * The imported Item is then added to the Actor as an owned item.
+   *
+   * @param collection {String}     The name of the pack from which to import
+   * @param entryId {String}        The ID of the compendium entry to import
+   */
+  importItemFromCollection(collection, entryId) {
+    const pack = game.packs.find(p => p.collection === collection);
+    if (pack.metadata.entity !== "Item") return;
+
+    return pack.getEntity(entryId).then(ent => {
+      console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
+
+      let data = duplicate(ent.data);
+      if (this.sheet != null && this.sheet.rendered) {
+        data = mergeObject(data, this.sheet.getDropData(data));
+      }
+      delete data._id;
+      return this.createOwnedItem(data);
+    });
+  }
 }
 

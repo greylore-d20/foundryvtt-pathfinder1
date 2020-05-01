@@ -41,6 +41,12 @@ export class ActorSheetPF extends ActorSheet {
     this._itemUpdates = [];
   }
 
+  get currentSpellbookKey() {
+    const elems = this.element.find("nav.spellbooks .item.active");
+    if (elems.length !== 1) return Object.keys(getProperty(this.data, "data.attributes.spells.spellbook") || { "primary": null })[0];
+    return elems.attr("data-tab");
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -1225,5 +1231,51 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     await Promise.all(promises);
+  }
+
+  async _onDrop(event) {
+    event.preventDefault();
+
+    // Try to extract the data
+    let data;
+    let extraData = {};
+    try {
+      data = JSON.parse(event.dataTransfer.getData('text/plain'));
+      if (data.type !== "Item") return;
+    } catch (err) {
+      return false;
+    }
+
+    // Case 1 - Import from a Compendium pack
+    const actor = this.actor;
+    if (data.pack) {
+      return actor.importItemFromCollection(data.pack, data.id);
+    }
+
+    // Case 2 - Data explicitly provided
+    else if (data.data) {
+      let sameActor = data.actorId === actor._id;
+      if (sameActor && actor.isToken) sameActor = data.tokenId === actor.token.id;
+      if (sameActor) return this._onSortItem(event, data.data); // Sort existing items
+      else {
+        return actor.createEmbeddedEntity("OwnedItem", mergeObject(data.data, this.getDropData(data.data), { inplace: false }));  // Create a new Item
+      }
+    }
+
+    // Case 3 - Import from World entity
+    else {
+      let item = game.items.get(data.id);
+      if (!item) return;
+      return actor.createEmbeddedEntity("OwnedItem", mergeObject(item.data, this.getDropData(item.data), { inplace: false }));
+    }
+  }
+
+  getDropData(origData) {
+    let result = {};
+
+    // Set spellbook for spell
+    if (getProperty(origData, "type") === "spell") setProperty(result, "data.spellbook", this.currentSpellbookKey);
+
+    return result;
   }
 }

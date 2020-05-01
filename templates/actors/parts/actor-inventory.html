@@ -46,7 +46,9 @@
         <div class="item-detail item-identified"><span>{{localize "PF1.IdentifiedShort"}}</span></div>
         {{/if}}
         <div class="item-detail item-carried"><span>{{localize "PF1.Carried"}}</span></div>
+        {{#if section.canEquip}}
         <div class="item-detail item-equipped"><span>{{localize "PF1.Equipped"}}</span></div>
+        {{/if}}
         <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
 
         {{#if ../owner}}
@@ -109,9 +111,11 @@
             <a class="item-control item-carry"><span>{{item.labels.carried}}</span></a>
           </div>
 
+          {{#if section.canEquip}}
           <div class="item-detail item-equipped">
             <a class="item-control item-equip"><span>{{item.labels.equipped}}</span></a>
           </div>
+          {{/if}}
 
           <div class="item-detail item-uses flexrow">
             {{#if item.isCharged}}

@@ -169,17 +169,13 @@ export class ItemSheetPF extends ItemSheet {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
-      if (this.actor != null) {
-        let autoHP = "manual";
-        if (getProperty(this.item.data, "data.classType") === "racial") autoHP = game.settings.get("pf1", "RacialAutoHPFormula");
-        else if (this.actor.isPC) autoHP = game.settings.get("pf1", "autoHPFormula");
-        else autoHP = game.settings.get("pf1", "NPCAutoHPFormula");
-        data.autoHP = autoHP !== "manual";
-      }
-      else data.autoHP = false;
-
       data.isBaseClass = data.data.classType === "base";
       data.isRacialHD = data.data.classType === "racial";
+
+      if (this.actor != null) {
+        let healthConfig  = game.settings.get("pf1", "healthConfig");
+        data.healthConfig =  data.isRacialHD ? healthConfig.hitdice.Racial : this.actor.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+      } else data.healthConfig = {auto: false};
 
       // Add skill list
       if (!this.item.actor) {

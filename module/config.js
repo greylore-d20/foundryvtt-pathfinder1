@@ -448,10 +448,9 @@ PF1.lootTypes = {
 PF1.consumableTypes = {
   "potion": "PF1.ConsumableTypePotion",
   "poison": "PF1.ConsumableTypePoison",
+  "drug": "PF1.ConsumableTypeDrug",
   "scroll": "PF1.ConsumableTypeScroll",
   "wand": "PF1.ConsumableTypeWand",
-  "rod": "PF1.ConsumableTypeRod",
-  "trinket": "PF1.ConsumableTypeTrinket",
   "misc": "PF1.Misc",
 };
 

@@ -559,10 +559,25 @@ export class ItemPF extends Item {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.actor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    
+    const isSingleUse = getProperty(this.data, "data.uses.per") === "single";
+    const itemQuantity = getProperty(this.data, "data.quantity");
+    if (itemQuantity != null && itemQuantity <= 0) {
+      return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+    }
+
+    const isCharged = ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
+    let charges = getProperty(this.data, "data.uses.value") || 0;
+    if (isCharged && charges <= 0) {
+      return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
+    }
+
+    const autoDeductCharges = ((isCharged || isSingleUse) && getProperty(this.data, "data.uses.autoDeductCharges") === true);
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
     const rollData = duplicate(actorData);
     rollData.item = duplicate(itemData);
+    const itemUpdateData = {};
 
     let rolled = false;
     const _roll = async function(fullAttack, form) {
@@ -764,8 +779,21 @@ export class ItemPF extends Item {
           rollMode: rollMode,
         };
 
-        // Don't play multiple sounds
-        if (a === 0) chatData.sound = CONFIG.sounds.dice;
+        if (a === 0) {
+          // Don't play multiple sounds
+          chatData.sound = CONFIG.sounds.dice;
+
+          // Deduct a charge
+          if (autoDeductCharges) {
+            const newCharges = charges > 0 ? charges - 1 : charges;
+            const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
+            itemUpdateData["data.uses.value"] = newCharges;
+            itemUpdateData["data.quantity"] = newQuantity;
+          }
+
+          // Update item
+          this.update(itemUpdateData);
+        }
 
         // Add effect text
         if (effectContent.length > 0) {

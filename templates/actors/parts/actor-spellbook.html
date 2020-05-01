@@ -48,9 +48,15 @@
         </select>
       </div>
       
-      <div class="form-group spell-failure">
+      <div class="flexrow spell-failure">
         <label><h3>{{localize "PF1.ArcaneSpellFailure"}}</h3></label>
         <input type="text" disabled value="{{spellFailure}}%"/>
+      </div>
+
+      <div class="flexrow formulas">
+        <label><h3>{{localize "PF1.BaseDCFormula"}}</h3></label>
+        <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
+        value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
       </div>
     </div>
     

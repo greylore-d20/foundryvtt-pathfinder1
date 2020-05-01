@@ -113,6 +113,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorSpellbookSlots(actor, updateData);
   _migrateActorBaseStats(actor, updateData);
   _migrateActorCreatureType(actor, updateData);
+  _migrateActorSpellbookDCFormula(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -334,6 +335,16 @@ const _migrateActorBaseStats = function(ent, updateData) {
 const _migrateActorCreatureType = function(ent, updateData) {
   if (getProperty(ent.data, "data.attributes.creatureType") == null) {
     updateData["data.attributes.creatureType"] = "humanoid";
+  }
+};
+
+const _migrateActorSpellbookDCFormula = function(ent, updateData) {
+  const spellbooks = Object.keys(getProperty(ent.data, "data.attributes.spells.spellbooks") || {});
+
+  for (let k of spellbooks) {
+    const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
+    const curFormula = getProperty(ent.data, key);
+    if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
   }
 };
 

@@ -7,7 +7,7 @@
     <div class="header-details flexcol">
       <div class="flexrow">
         <h1 class="charname">
-          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
+          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}" title="{{localize "PF1.CharacterName"}}"/>
         </h1>
 
         <div class="hd tooltip">
@@ -32,10 +32,10 @@
         <div class="flexcol">
           <ul class="summary">
             <li>
-              <input type="text" name="data.details.type" value="{{data.details.type}}" placeholder="{{localize "PF1.TypeSubType"}}"/>
+              <input type="text" name="data.details.type" value="{{data.details.type}}" placeholder="{{localize "PF1.TypeSubType"}}" title="{{localize "PF1.TypeSubType"}}"/>
             </li>
             <li>
-              <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{localize "PF1.Alignment"}}"/>
+              <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{localize "PF1.Alignment"}}" title="{{localize "PF1.Alignment"}}"/>
             </li>
             <select name="data.attributes.creatureType">
               {{#select data.attributes.creatureType}}
@@ -114,9 +114,9 @@
             </div>
             <footer class="attribute-footer">
               <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{localize 'PF1.TempShort'}}"
-                                                                              value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" data-dtype="Number"/>
+                value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" data-dtype="Number" title="{{localize "PF1.TempHP"}}"/>
               <input name="data.attributes.hp.nonlethal" type="text" class="temphp" placeholder="{{localize 'PF1.Nonlethal'}}"
-                                                                                    value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" data-dtype="Number"/>
+                value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" data-dtype="Number" title="{{localize "PF1.Nonlethal"}}"/>
             </footer>
           {{/if}}
           </li>
@@ -359,7 +359,7 @@
       </div>
 
       {{!-- Notes Tab --}}
-      <div class="tab notes flexcol" data-group="primary" data-tab="notes">
+      <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">
         {{editor content=data.details.notes.value target="data.details.notes.value" button=true owner=owner editable=editable}}
       </div>
 

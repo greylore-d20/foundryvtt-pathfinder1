@@ -356,14 +356,16 @@ export class ItemPF extends Item {
 
     // Get the spell specific info
     let spellbookIndex, spellAbility, ablMod = 0;
+    let spellbook = null;
     let cl = 0;
     let sl = 0;
     if (this.type === "spell") {
       spellbookIndex = data.spellbook;
-      spellAbility = this.actor.data.data.attributes.spells.spellbooks[spellbookIndex].ability;
-      if (spellAbility !== "") ablMod = this.actor.data.data.abilities[spellAbility].mod;
+      spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookIndex}`) || {};
+      spellAbility = spellbook.ability;
+      if (spellAbility !== "") ablMod = getProperty(this.actor.data, `data.abilities.${spellAbility}.mod`);
 
-      cl += this.actor.data.data.attributes.spells.spellbooks[spellbookIndex].cl.total;
+      cl += getProperty(spellbook, "cl.total") || 0;
       cl += data.clOffset || 0;
 
       sl += data.level;
@@ -371,6 +373,7 @@ export class ItemPF extends Item {
 
       rollData.cl = cl;
       rollData.sl = sl;
+      rollData.ablMod = ablMod;
     }
 
     // Rich text description
@@ -431,11 +434,7 @@ export class ItemPF extends Item {
         let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
         let saveType = data.save.description;
         if (this.type === "spell") {
-          saveDC += 10;
-          // Add spellbook's ability modifier
-          saveDC += ablMod;
-          // Add spell level
-          saveDC += sl;
+          saveDC += new Roll(spellbook.baseDCFormula || "", rollData).roll().total;
         }
         if (saveDC > 0 && saveType) {
           props.push(`DC ${saveDC}`);

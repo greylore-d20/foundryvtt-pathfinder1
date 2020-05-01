@@ -26,17 +26,19 @@
       {{/if}}
 
       <div class="item-subtitle">
-        <h4 class="item-type">{{itemType}}</h4>
+        <h4 class="item-type">{{localize "PF1.Item"}}</h4>
         <span class="item-status">{{itemStatus}}</span>
       </div>
 
       <ul class="summary">
         <li>
-          {{lookup config.weaponTypes data.weaponType }}
+          {{itemType}}
         </li>
-        <li></li>
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
+          {{labels.weaponType}}
+        </li>
+        <li>
+          {{labels.weaponSubtype}}
         </li>
       </ul>
     </div>
@@ -66,7 +68,19 @@
         <label>{{localize "PF1.WeaponType"}}</label>
         <select name="data.weaponType">
           {{#select data.weaponType}}
-          {{#each config.weaponTypes as |name type|}}
+          {{#each weaponCategories.types as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Weapon Subtype --}}
+      <div class="form-group">
+        <label>{{localize "PF1.WeaponSubtype"}}</label>
+        <select name="data.weaponSubtype">
+          {{#select data.weaponSubtype}}
+          {{#each weaponCategories.subTypes as |name type|}}
           <option value="{{type}}">{{name}}</option>
           {{/each}}
           {{/select}}
@@ -86,9 +100,6 @@
         {{/if}}
         <label class="checkbox">
           <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" name="data.weaponData.isMelee" {{checked data.weaponData.isMelee}}/> {{localize "PF1.Melee"}}
         </label>
       </div>
 

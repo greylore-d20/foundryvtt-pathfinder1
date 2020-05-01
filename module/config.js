@@ -386,29 +386,49 @@ PF1.limitedUsePeriods = {
 
 // Equipment Types
 PF1.equipmentTypes = {
-  "clothing": "PF1.EquipTypeClothing",
-  "light": "PF1.EquipTypeLight",
-  "medium": "PF1.EquipTypeMedium",
-  "heavy": "PF1.EquipTypeHeavy",
-  "shield": "PF1.EquipTypeShield",
-  "misc": "PF1.Misc",
+  "armor": {
+    "_label": "PF1.EquipTypeArmor",
+    "lightArmor": "PF1.EquipTypeLight",
+    "mediumArmor": "PF1.EquipTypeMedium",
+    "heavyArmor": "PF1.EquipTypeHeavy",
+  },
+  "shield": {
+    "_label": "PF1.EquipTypeShield",
+    "lightShield": "PF1.EquipTypeLightShield",
+    "heavyShield": "PF1.EquipTypeHeavyShield",
+    "towerShield": "PF1.EquipTypeTowerShield",
+    "other": "PF1.Other",
+  },
+  "misc": {
+    "_label": "PF1.Misc",
+    "wondrous": "PF1.EquipTypeWondrousItem",
+    "clothing": "PF1.EquipTypeClothing",
+    "other": "PF1.Other",
+  },
 };
 
 PF1.equipmentSlots = {
-  "slotless": "PF1.EquipSlotSlotless",
-  "head": "PF1.EquipSlotHead",
-  "headband": "PF1.EquipSlotHeadband",
-  "eyes": "PF1.EquipSlotEyes",
-  "shoulders": "PF1.EquipSlotShoulders",
-  "neck": "PF1.EquipSlotNeck",
-  "chest": "PF1.EquipSlotChest",
-  "body": "PF1.EquipSlotBody",
-  "armor": "PF1.EquipSlotArmor",
-  "belt": "PF1.EquipSlotBelt",
-  "wrists": "PF1.EquipSlotWrists",
-  "hands": "PF1.EquipSlotHands",
-  "ring": "PF1.EquipSlotRing",
-  "feet": "PF1.EquipSlotFeet",
+  "armor": {
+    "armor": "PF1.EquipSlotArmor",
+  },
+  "shield": {
+    "shield": "PF1.EquipSlotShield",
+  },
+  "misc": {
+    "slotless": "PF1.EquipSlotSlotless",
+    "head": "PF1.EquipSlotHead",
+    "headband": "PF1.EquipSlotHeadband",
+    "eyes": "PF1.EquipSlotEyes",
+    "shoulders": "PF1.EquipSlotShoulders",
+    "neck": "PF1.EquipSlotNeck",
+    "chest": "PF1.EquipSlotChest",
+    "body": "PF1.EquipSlotBody",
+    "belt": "PF1.EquipSlotBelt",
+    "wrists": "PF1.EquipSlotWrists",
+    "hands": "PF1.EquipSlotHands",
+    "ring": "PF1.EquipSlotRing",
+    "feet": "PF1.EquipSlotFeet",
+  },
 };
 
 PF1.lootTypes = {
@@ -658,11 +678,32 @@ PF1.spellPreparationModes = {
 
 // Weapon Types
 PF1.weaponTypes = {
-  "simple": "PF1.WeaponTypeSimple",
-  "martial": "PF1.WeaponTypeMartial",
-  "exotic": "PF1.WeaponTypeExotic",
-  "splash": "PF1.WeaponTypeSplash",
-  "misc": "PF1.Misc",
+  "simple": {
+    "_label": "PF1.WeaponTypeSimple",
+    "light": "PF1.WeaponPropLight",
+    "1h": "PF1.WeaponPropOneHanded",
+    "2h": "PF1.WeaponPropTwoHanded",
+    "ranged": "PF1.WeaponSubtypeRanged",
+  },
+  "martial": {
+    "_label": "PF1.WeaponTypeMartial",
+    "light": "PF1.WeaponPropLight",
+    "1h": "PF1.WeaponPropOneHanded",
+    "2h": "PF1.WeaponPropTwoHanded",
+    "ranged": "PF1.WeaponSubtypeRanged",
+  },
+  "exotic": {
+    "_label": "PF1.WeaponTypeExotic",
+    "light": "PF1.WeaponPropLight",
+    "1h": "PF1.WeaponPropOneHanded",
+    "2h": "PF1.WeaponPropTwoHanded",
+    "ranged": "PF1.WeaponSubtypeRanged",
+  },
+  "misc": {
+    "_label": "PF1.Misc",
+    "splash": "PF1.WeaponTypeSplash",
+    "other": "PF1.Other",
+  }
 };
 
 
@@ -680,14 +721,12 @@ PF1.weaponProperties = {
   "fin": "PF1.WeaponPropFinesse",
   "frg": "PF1.WeaponPropFragile",
   "imp": "PF1.WeaponPropImprovised",
-  "lgt": "PF1.WeaponPropLight",
   "mnk": "PF1.WeaponPropMonk",
   "nnl": "PF1.WeaponPropNonLethal",
   "prf": "PF1.WeaponPropPerformance",
   "rch": "PF1.WeaponPropReach",
   "thr": "PF1.WeaponPropThrown",
   "trp": "PF1.WeaponPropTrip",
-  "two": "PF1.WeaponPropTwoHanded",
 };
 
 

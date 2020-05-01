@@ -150,6 +150,8 @@ export const migrateItemData = function(item) {
   _migrateItemDC(item, updateData);
   _migrateClassDynamics(item, updateData);
   _migrateClassType(item, updateData);
+  _migrateWeaponCategories(item, updateData);
+  _migrateEquipmentCategories(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -411,6 +413,80 @@ const _migrateClassType = function(ent, updateData) {
   if (ent.type !== "class") return;
 
   if (getProperty(ent.data.data, "classType") == null) updateData["data.classType"] = "base";
+};
+
+const _migrateWeaponCategories = function(ent, updateData) {
+  if (ent.type !== "weapon") return;
+
+  // Change category
+  const type = getProperty(ent.data.data, "weaponType");
+  if (type === "misc") {
+    updateData["data.weaponType"] = "misc";
+    updateData["data.weaponSubtype"] = "other";
+  }
+  else if (type === "splash") {
+    updateData["data.weaponType"] = "misc";
+    updateData["data.weaponSubtype"] = "splash";
+  }
+
+  const changeProp = (["simple", "martial", "exotic"].includes(type));
+  if (changeProp && getProperty(ent.data.data, "weaponSubtype") == null) {
+    updateData["data.weaponSubtype"] = "1h";
+  }
+
+  // Change light property
+  const lgt = getProperty(ent.data.data, "properties.lgt");
+  if (lgt != null) {
+    updateData["data.properties.-=lgt"] = null;
+    if (lgt === true && changeProp) {
+      updateData["data.weaponSubtype"] = "light";
+    }
+  }
+
+  // Change two-handed property
+  const two = getProperty(ent.data.data, "properties.two");
+  if (two != null) {
+    updateData["data.properties.-=two"] = null;
+    if (two === true && changeProp) {
+      updateData["data.weaponSubtype"] = "2h";
+    }
+  }
+
+  // Change melee property
+  const melee = getProperty(ent.data.data, "weaponData.isMelee");
+  if (melee != null) {
+    updateData["data.weaponData.-=isMelee"] = null;
+    if (melee === false && changeProp) {
+      updateData["data.weaponSubtype"] = "ranged";
+    }
+  }
+};
+
+const _migrateEquipmentCategories = function(ent, updateData) {
+  if (ent.type !== "equipment") return;
+
+  const oldType = getProperty(ent.data.data, "armor.type");
+  if (oldType == null) return;
+
+  if (oldType === "clothing") {
+    updateData["data.equipmentType"] = "misc";
+    updateData["data.equipmentSubtype"] = "clothing";
+  }
+  else if (oldType === "shield") {
+    updateData["data.equipmentType"] = "shield";
+    updateData["data.equipmentSubtype"] = "lightShield";
+    updateData["data.slot"] = "shield";
+  }
+  else if (oldType === "misc") {
+    updateData["data.equipmentType"] = "misc";
+    updateData["data.equipmentSubtype"] = "wondrous";
+  }
+  else if (["light", "medium", "heavy"].includes(oldType)) {
+    updateData["data.equipmentType"] = "armor";
+    updateData["data.equipmentSubtype"] = `${oldType}Armor`;
+  }
+
+  updateData["data.armor.-=type"] = null;
 };
 
 /* -------------------------------------------- */

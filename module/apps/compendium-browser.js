@@ -342,7 +342,20 @@ export class CompendiumBrowser extends Application {
         path: "data.weaponType",
         label: game.i18n.localize("PF1.WeaponType"),
         items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
+          cur.push({ key: o[0], name: o[1]._label });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.weaponSubtype",
+        label: game.i18n.localize("PF1.WeaponSubtype"),
+        items: Object.values(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
+          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
+            if (!cur.filter(a => a.key === i[0]).length) {
+              arr.push({ key: i[0], name: i[1] });
+            }
+            return arr;
+          }, [])));
           return cur;
         }, []),
       },
@@ -355,18 +368,36 @@ export class CompendiumBrowser extends Application {
         }, []),
       },
       {
-        path: "data.armor.type",
+        path: "data.equipmentType",
         label: game.i18n.localize("PF1.EquipmentType"),
         items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
+          cur.push({ key: o[0], name: o[1]._label });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.equipmentSubtype",
+        label: game.i18n.localize("PF1.EquipmentSubtype"),
+        items: Object.values(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
+          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
+            if (!cur.filter(a => a.key === i[0]).length) {
+              arr.push({ key: i[0], name: i[1] });
+            }
+            return arr;
+          }, [])));
           return cur;
         }, []),
       },
       {
         path: "data.slot",
         label: game.i18n.localize("PF1.Slot"),
-        items: Object.entries(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
+        items: Object.values(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
+          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
+            if (!cur.filter(a => a.key === i[0]).length) {
+              arr.push({ key: i[0], name: i[1] });
+            }
+            return arr;
+          }, [])));
           return cur;
         }, []),
       },
@@ -565,9 +596,7 @@ export class CompendiumBrowser extends Application {
               const p = getProperty(item, `learnedAt.spellLevel.${c.type}`);
               for (let sl of spellLevels) {
                 if (p[fi] === parseInt(sl)) result = true;
-                // console.log(fi, p[1], parseInt(sl));
               }
-              // if (!spellLevels.every(sl => p[fi] === parseInt(sl))) return false;
             }
           }
           if (!hasActiveFilter) {
@@ -575,8 +604,6 @@ export class CompendiumBrowser extends Application {
               if (item.allSpellLevels.includes(parseInt(sl))) result = true;
             }
           }
-          // if (!spellLevels.every(sl => item.allSpellLevels.includes(parseInt(sl)))) return false;
-          // continue;
         }
         if (result === false) return false;
         else if (result === true) continue;

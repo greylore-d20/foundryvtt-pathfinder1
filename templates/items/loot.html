@@ -26,14 +26,16 @@
       {{/if}}
 
       <div class="item-subtitle">
-        <h4 class="item-type">{{itemType}}</h4>
+        <h4 class="item-type">{{localize "PF1.Item"}}</h4>
         <span class="item-status">{{itemStatus}}</span>
       </div>
 
       <ul class="summary">
-        <li></li>
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
+          {{itemType}}
+        </li>
+        <li>
+          {{#unless showUnidentifiedData}}{{lookup config.lootTypes data.subType}}{{/unless}}
         </li>
       </ul>
     </div>

@@ -120,7 +120,15 @@ export class ItemPF extends Item {
       else labels.identified = game.i18n.localize("PF1.NoShort");
 
       // Slot label
-      if (itemData.data.slot) labels.slot = CONFIG.PF1.equipmentSlots[itemData.data.slot];
+      if (itemData.data.slot) {
+        // Add equipment slot
+        const equipmentType = getProperty(this.data, "data.equipmentType") || null;
+        if (equipmentType != null) {
+          const equipmentSlot = getProperty(this.data, "data.slot") || null;
+          labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType][equipmentSlot];
+        }
+        else labels.slot = null;
+      }
     }
 
     // Spell Level,  School, and Components
@@ -142,8 +150,36 @@ export class ItemPF extends Item {
       labels.buffType = C.buffTypes[data.buffType];
     }
 
+    // Weapon Items
+    else if (itemData.type === "weapon") {
+      // Type and subtype labels
+      let wType = getProperty(this.data, "data.weaponType");
+      let typeKeys = Object.keys(C.weaponTypes);
+      if (!typeKeys.includes(wType)) wType = typeKeys[0];
+
+      let wSubtype = getProperty(this.data, "data.weaponSubtype");
+      let subtypeKeys = Object.keys(C.weaponTypes[wType]).filter(o => !o.startsWith("_"));
+      if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
+
+      labels.weaponType = C.weaponTypes[wType]._label;
+      labels.weaponSubtype = C.weaponTypes[wType][wSubtype];
+    }
+
     // Equipment Items
-    else if ( itemData.type === "equipment" ) {
+    else if (itemData.type === "equipment") {
+      // Type and subtype labels
+      let eType = getProperty(this.data, "data.equipmentType");
+      let typeKeys = Object.keys(C.equipmentTypes);
+      if (!typeKeys.includes(eType)) eType = typeKeys[0];
+
+      let eSubtype = getProperty(this.data, "data.equipmentSubtype");
+      let subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter(o => !o.startsWith("_"));
+      if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
+
+      labels.equipmentType = C.equipmentTypes[eType]._label;
+      labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
+
+      // AC labels
       labels.armor = data.armor.value ? `${data.armor.value} AC` : "";
       if (data.armor.dex === "") data.armor.dex = null;
       else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {

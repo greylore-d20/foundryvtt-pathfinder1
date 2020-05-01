@@ -28,7 +28,7 @@ Token.prototype.update = async function(data, options={}) {
   }
 
   if (Object.keys(updateData).length) {
-    this.actor.update(updateData);
+    await this.actor.update(updateData);
   }
 
   return Token_update.call(this, data, options);

@@ -2100,11 +2100,12 @@ export class ActorPF extends Actor {
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
 
     // Add ability modifiers
-    if (item.data.data.weaponData.isMelee) attackData["data.ability.attack"] = "str";
+    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged";
+    if (isMelee) attackData["data.ability.attack"] = "str";
     else attackData["data.ability.attack"] = "dex";
-    if (item.data.data.weaponData.isMelee || item.data.data.properties["thr"] === true) {
+    if (isMelee || item.data.data.properties["thr"] === true) {
       attackData["data.ability.damage"] = "str";
-      if (item.data.data.properties["two"] === true && item.data.data.weaponData.isMelee) attackData["data.ability.damageMult"] = 1.5;
+      if (item.data.data.weaponSubtype === "2h" && isMelee) attackData["data.ability.damageMult"] = 1.5;
     }
 
     // Add damage formula
@@ -2113,9 +2114,9 @@ export class ActorPF extends Actor {
     }
 
     // Add range
-    if (!item.data.data.weaponData.isMelee && item.data.data.weaponData.range != null) {
+    if (!isMelee && getProperty(item.data, "data.weaponData.range") != null) {
       attackData["data.range.units"] = "ft";
-      attackData["data.range.value"] = item.data.data.weaponData.range.toString();
+      attackData["data.range.value"] = getProperty(item.data, "data.weaponData.range").toString();
     }
 
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];

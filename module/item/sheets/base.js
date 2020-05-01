@@ -102,8 +102,44 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
       data.isRanged = (!data.item.data.weaponData.isMelee || data.item.data.properties["thr"] === true);
+
+      // Prepare categories for weapons
+      data.weaponCategories = { types: {}, subTypes: {} };
+      for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
+        if (typeof v === "object") data.weaponCategories.types[k] = v._label;
+      }
+      const type = data.item.data.weaponType;
+      if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
+        for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
+          // Add static targets
+          if (!k.startsWith("_")) data.weaponCategories.subTypes[k] = v;
+        }
+      }
     }
 
+    // Prepare equipment specific stuff
+    if (data.item.type === "equipment") {
+      // Prepare categories for equipment
+      data.equipmentCategories = { types: {}, subTypes: {} };
+      for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
+        if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
+      }
+      const type = data.item.data.equipmentType;
+      if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
+        for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
+          // Add static targets
+          if (!k.startsWith("_")) data.equipmentCategories.subTypes[k] = v;
+        }
+      }
+
+      // Prepare slots for equipment
+      data.equipmentSlots = CONFIG.PF1.equipmentSlots[type];
+
+      // Whether the equipment should show armor data
+      data.showArmorData = ["armor", "shield"].includes(type);
+    }
+
+    // Prepare attack specific stuff
     if (data.item.type === "attack") {
       data.isWeaponAttack = data.item.data.attackType === "weapon";
       data.isNaturalAttack = data.item.data.attackType === "natural";
@@ -306,7 +342,45 @@ export class ItemSheetPF extends ItemSheet {
 
   /* -------------------------------------------- */
   /*  Form Submission                             */
-	/* -------------------------------------------- */
+  /* -------------------------------------------- */
+
+  async update(data, options={}) {
+    // Set weapon subtype
+    if (data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
+      const type = data["data.weaponType"];
+      const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
+      const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
+        .filter(o => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        data["data.weaponSubtype"] = keys[0];
+      }
+    }
+
+    // Set equipment subtype and slot
+    if (data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
+      // Set subtype
+      const type = data["data.equipmentType"];
+      const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
+      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
+        .filter(o => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        data["data.equipmentSubtype"] = keys[0];
+      }
+
+      // Set slot
+      const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
+      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
+      if (!slot || !keys.includes(slot)) {
+        data["data.slot"] = keys[0];
+      }
+    }
+
+    const diff = diffObject(this.data, data);
+    if (Object.keys(diff).length > 0) {
+      return super.update(data, options);
+    }
+    return false;
+  }
 
   /**
    * Extend the parent class _updateObject method to ensure that damage ends up in an Array

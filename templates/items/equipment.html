@@ -26,17 +26,19 @@
       {{/if}}
 
       <div class="item-subtitle">
-        <h4 class="item-type">{{itemType}}</h4>
+        <h4 class="item-type">{{localize "PF1.Item"}}</h4>
         <span class="item-status">{{itemStatus}}</span>
       </div>
 
       <ul class="summary">
         <li>
-          {{lookup config.equipmentTypes data.armor.type }}
+          {{itemType}}
         </li>
-        <li></li>
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
+          {{labels.equipmentSubtype}}
+        </li>
+        <li>
+          {{labels.slot}}
         </li>
       </ul>
     </div>
@@ -64,9 +66,21 @@
       {{!-- Equipment Type --}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="data.armor.type">
-          {{#select data.armor.type}}
-          {{#each config.equipmentTypes as |name type|}}
+        <select name="data.equipmentType">
+          {{#select data.equipmentType}}
+          {{#each equipmentCategories.types as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      {{!-- Equipment Subtype --}}
+      <div class="form-group">
+        <label>{{localize "PF1.EquipmentSubtype"}}</label>
+        <select name="data.equipmentSubtype">
+          {{#select data.equipmentSubtype}}
+          {{#each equipmentCategories.subTypes as |name type|}}
           <option value="{{type}}">{{name}}</option>
           {{/each}}
           {{/select}}
@@ -78,7 +92,7 @@
         <label>{{localize "PF1.Slot"}}</label>
         <select name="data.slot">
           {{#select data.slot}}
-          {{#each config.equipmentSlots as |name type|}}
+          {{#each equipmentSlots as |name type|}}
           <option value="{{type}}">{{name}}</option>
           {{/each}}
           {{/select}}
@@ -98,6 +112,7 @@
         {{/if}}
       </div>
 
+      {{#if showArmorData}}
       {{!-- Armor Class --}}
       <div class="form-group">
         <label>{{localize "PF1.ArmorClass"}}</label>
@@ -105,12 +120,15 @@
           <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
         </div>
       </div>
+
+      {{!-- Enhancement Bonus --}}
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
           <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
         </div>
       </div>
+      {{/if}}
 
       {{#unless showUnidentifiedData}}
       {{!-- Dexterity Modifier --}}

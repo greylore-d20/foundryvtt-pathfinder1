@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4
+
+### Changelog
+
+- @Xam changed up some hardcoded strings (many thanks!)
+- Add an actor inventory column for GMs to set an item's identified state
+- Refactored weapons' and equipments' categories, adding subcategories to them as well
+  - The items compendium has been updated to reflect these changes
+  - The migration will do a decent job at updating the (sub)types of these items, but sometimes it's not possible to get appropriate data from previous entries (most notably with shield subtypes)
+- Added a sample macro for toggling buffs
+- Add an option to automatically deduct charges from items
+- Changed styling of character sheet tabs somewhat
+- Add an option to adjust the base DC formula of spells, on a per-spellbook basis
+- Spells dropped on an actor's sheet now start out belonging to the currently open spellbook
+- Hovering over certain attributes on character sheets now shows a tooltip, where previously the intent was completely hidden (such as with alignment, deity, temp hp, etc.)
+
 ## 0.361
 
 ### Bug Fixes

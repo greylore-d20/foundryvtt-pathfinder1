@@ -167,7 +167,7 @@ class HealthConfig extends FormApplication {
   async getData() {
     let settings = await game.settings.get("pf1", "healthConfig")
     settings = mergeObject(HealthConfig.defaultSettings, settings)
-    return settings;
+    return settings
   }
 
   /** @override */

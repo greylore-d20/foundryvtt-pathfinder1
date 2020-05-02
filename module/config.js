@@ -397,7 +397,7 @@ PF1.equipmentTypes = {
     "lightShield": "PF1.EquipTypeLightShield",
     "heavyShield": "PF1.EquipTypeHeavyShield",
     "towerShield": "PF1.EquipTypeTowerShield",
-    "other": "PF1.Other",
+    "other": "PF1.EquipTypeOtherShield",
   },
   "misc": {
     "_label": "PF1.Misc",

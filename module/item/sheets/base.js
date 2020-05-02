@@ -74,6 +74,7 @@ export class ItemSheetPF extends ItemSheet {
     data.isSpell = this.item.type === "spell";
     data.owner = this.item.actor != null;
     data.isGM = game.user.isGM;
+    data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
 
     // Unidentified data
@@ -137,6 +138,9 @@ export class ItemSheetPF extends ItemSheet {
 
       // Whether the equipment should show armor data
       data.showArmorData = ["armor", "shield"].includes(type);
+
+      // Whether the current equipment type has multiple slots
+      data.hasMultipleSlots = Object.keys(data.equipmentSlots).length > 1;
     }
 
     // Prepare attack specific stuff
@@ -339,44 +343,6 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
   /*  Form Submission                             */
   /* -------------------------------------------- */
-
-  async update(data, options={}) {
-    // Set weapon subtype
-    if (data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
-      const type = data["data.weaponType"];
-      const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
-      const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
-        .filter(o => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        data["data.weaponSubtype"] = keys[0];
-      }
-    }
-
-    // Set equipment subtype and slot
-    if (data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
-      // Set subtype
-      const type = data["data.equipmentType"];
-      const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
-      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
-        .filter(o => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        data["data.equipmentSubtype"] = keys[0];
-      }
-
-      // Set slot
-      const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
-      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
-      if (!slot || !keys.includes(slot)) {
-        data["data.slot"] = keys[0];
-      }
-    }
-
-    const diff = diffObject(this.data, data);
-    if (Object.keys(diff).length > 0) {
-      return super.update(data, options);
-    }
-    return false;
-  }
 
   /**
    * Extend the parent class _updateObject method to ensure that damage ends up in an Array

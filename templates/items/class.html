@@ -16,7 +16,7 @@
 
       <ul class="summary">
         <li>
-          <input type="text" name="data.source" value="{{data.source}}" placeholder="{{localize "PF1.Source"}}"/>
+          {{lookup config.classTypes data.classType}}
         </li>
         <li class="tooltip">
           <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.levels}}</span>

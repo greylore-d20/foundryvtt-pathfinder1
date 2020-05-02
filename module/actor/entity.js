@@ -488,10 +488,10 @@ export class ActorPF extends Actor {
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
     const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") !== "racial").sort((a, b) => {
-      return a.data.sort - b.data.sort;
+      return a.sort - b.sort;
     });
     const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") === "racial").sort((a, b) => {
-      return a.data.sort - b.data.sort;
+      return a.sort - b.sort;
     });
 
     const healthConfig = game.settings.get("pf1", "healthConfig");
@@ -1065,8 +1065,8 @@ export class ActorPF extends Actor {
     // Reduce final speed under certain circumstances
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
     if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||
-    (armorItems.filter(o => o.data.armor.type === "medium" && o.data.equipped).length && !flags.mediumArmorFullSpeed) ||
-    (armorItems.filter(o => o.data.armor.type === "heavy" && o.data.equipped).length && !flags.heavyArmorFullSpeed)) {
+    (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "mediumArmor" && o.data.equipped).length && !flags.mediumArmorFullSpeed) ||
+    (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "heavyArmor" && o.data.equipped).length && !flags.heavyArmorFullSpeed)) {
       for (let speedKey of Object.keys(srcData1.data.attributes.speed)) {
         let value = updateData[`data.attributes.speed.${speedKey}.total`];
         linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));

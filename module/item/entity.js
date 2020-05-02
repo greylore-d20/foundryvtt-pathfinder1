@@ -253,6 +253,36 @@ export class ItemPF extends Item {
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
+    // Set weapon subtype
+    if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
+      const type = data["data.weaponType"];
+      const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
+      const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
+        .filter(o => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        data["data.weaponSubtype"] = keys[0];
+      }
+    }
+
+    // Set equipment subtype and slot
+    if (data["data.equipmentType"] != null && data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
+      // Set subtype
+      const type = data["data.equipmentType"];
+      const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
+      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
+        .filter(o => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        data["data.equipmentSubtype"] = keys[0];
+      }
+
+      // Set slot
+      const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
+      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
+      if (!slot || !keys.includes(slot)) {
+        data["data.slot"] = keys[0];
+      }
+    }
+
     this._updateMaxUses(data, {srcData: srcData});
 
     const diff = diffObject(flattenObject(this.data), data);
@@ -326,11 +356,7 @@ export class ItemPF extends Item {
     const chatData = mergeObject({
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      speaker: {
-        actor: this.actor._id,
-        token: this.actor.token,
-        alias: this.actor.name
-      },
+      speaker: ChatMessage.getSpeaker(),
     }, altChatData);
 
     // Toggle default roll mode

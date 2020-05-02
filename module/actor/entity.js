@@ -1735,14 +1735,16 @@ export class ActorPF extends Actor {
    * @returns {Number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
+    const incr = game.settings.get("pf1", "units") === "metric" ? 1.5 : 5
+    
     if (value <= 0) return value;
-    if (value < 10) return 5;
-    value = Math.floor(value / 5) * 5;
+    if (value < 2*incr) return incr;
+    value = Math.floor(value / incr) * incr;
 
     let result = 0,
       counter = 2;
-    for (let a = 5; a <= value; a += counter * 5) {
-      result += 5;
+    for (let a = incr; a <= value; a += counter * incr) {
+      result += incr;
       if (counter === 1) counter = 2;
       else counter = 1;
     }
@@ -2747,6 +2749,11 @@ export class ActorPF extends Actor {
     if (carryStr >= table.length) {
       heavy = Math.floor(table[table.length-1] * (1 + (0.3 * (carryStr - (table.length-1)))));
     }
+    // 1 Kg = 0.5 Kg
+    if(game.settings.get("pf1", "units") === "metric") {
+      heavy = heavy / 2
+    }
+      
     return {
       light: Math.floor(heavy / 3),
       medium: Math.floor(heavy / 3 * 2),

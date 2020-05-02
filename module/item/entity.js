@@ -254,7 +254,7 @@ export class ItemPF extends Item {
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
     // Set weapon subtype
-    if (data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
+    if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
       const type = data["data.weaponType"];
       const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
       const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
@@ -265,7 +265,7 @@ export class ItemPF extends Item {
     }
 
     // Set equipment subtype and slot
-    if (data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
+    if (data["data.equipmentType"] != null && data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
       // Set subtype
       const type = data["data.equipmentType"];
       const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";

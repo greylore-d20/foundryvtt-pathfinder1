@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.41
+
+### Bug Fixes
+
+- Actor inventories didn't show an equipment's label under certain circumstances
+- An error in physical item updates
+- A niche error with item attacks
+- Actors weren't being slowed down by armor anymore
+
+### Changelog
+
+- @Grenadier added an advanced health configuration screen (many thanks!)
+- A lot of feats were updated (thanks, @Og and @Krise !)
+- Added 3 creatures to the bestiary
+
 ## 0.4
 
 ### Changelog

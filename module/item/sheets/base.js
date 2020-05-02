@@ -74,6 +74,7 @@ export class ItemSheetPF extends ItemSheet {
     data.isSpell = this.item.type === "spell";
     data.owner = this.item.actor != null;
     data.isGM = game.user.isGM;
+    data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
 
     // Unidentified data

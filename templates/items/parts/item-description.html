@@ -1,5 +1,5 @@
 <div class="tab active flexcol" data-group="primary" data-tab="description">
-  {{#if isGM}}
+  {{#if showIdentifyDescription}}
   <nav class="sheet-navigation tabs subtabs description" data-group="description">
     <a class="item active" data-tab="identified">{{localize "PF1.Identified"}}</a>
     <a class="item" data-tab="unidentified">{{localize "PF1.Unidentified"}}</a>
@@ -22,7 +22,7 @@
       </div>
 
       {{!-- Price --}}
-      {{#if isGM}}
+      {{#if showIdentifyDescription}}
       <div class="form-group">
         <label>{{localize "PF1.Price"}}</label>
         <input type="text" name="data.price" value="{{data.price}}" data-dtype="Number"/>
@@ -75,7 +75,7 @@
       </ol>
     </div>
 
-    {{#if isGM}}
+    {{#if showIdentifyDescription}}
     <section class="description-body">
       <div class="tab description-group flexcol" data-group="description" data-tab="identified">
       {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}

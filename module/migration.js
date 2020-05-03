@@ -9,10 +9,8 @@ export const migrateWorld = async function() {
   for ( let a of game.actors.entities ) {
     try {
       const updateData = await migrateActorData(a);
-      if ( !isObjectEmpty(updateData) ) {
-        console.log(`Migrating Actor entity ${a.name}`);
-        await a.update(updateData);
-      }
+      console.log(`Migrating Actor entity ${a.name}`);
+      await a.update(updateData);
     } catch(err) {
       console.error(err);
     }
@@ -22,10 +20,8 @@ export const migrateWorld = async function() {
   for ( let i of game.items.entities ) {
     try {
       const updateData = migrateItemData(i);
-      if ( !isObjectEmpty(updateData) ) {
-        console.log(`Migrating Item entity ${i.name}`);
-        await i.update(updateData, {enforceTypes: false});
-      }
+      console.log(`Migrating Item entity ${i.name}`);
+      await i.update(updateData, {enforceTypes: false});
     } catch(err) {
       console.error(err);
     }
@@ -35,10 +31,8 @@ export const migrateWorld = async function() {
   for ( let s of game.scenes.entities ) {
     try {
       const updateData = await migrateSceneData(s.data);
-      if ( !isObjectEmpty(updateData) ) {
-        console.log(`Migrating Scene entity ${s.name}`);
-        await s.update(updateData);
-      }
+      console.log(`Migrating Scene entity ${s.name}`);
+      await s.update(updateData);
     } catch(err) {
       console.error(err);
     }
@@ -79,12 +73,10 @@ export const migrateCompendium = async function(pack) {
       if (entity === "Item") updateData = migrateItemData(ent);
       else if (entity === "Actor") updateData = await migrateActorData(ent);
       else if ( entity === "Scene" ) updateData = await migrateSceneData(ent);
-      if (!isObjectEmpty(updateData)) {
-        expandObject(updateData);
-        updateData["_id"] = ent._id;
-        await pack.updateEntity(updateData);
-        console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
-      }
+      expandObject(updateData);
+      updateData["_id"] = ent._id;
+      await pack.updateEntity(updateData);
+      console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
     } catch(err) {
       console.error(err);
     }
@@ -119,19 +111,15 @@ export const migrateActorData = async function(actor) {
 
   // Migrate Owned Items
   let items = [];
-  let hasItemUpdates = false;
   for (let a = 0; a < actor.items.length; a++) {
     let i = actor.items[a];
     items[a] = i;
     let itemUpdate = migrateItemData(i);
 
     // Update the Owned Item
-    if (!isObjectEmpty(itemUpdate)) {
-      hasItemUpdates = true;
-      items[a] = mergeObject(i, itemUpdate, { enforceTypes: false, inplace: false });
-    }
+    items[a] = mergeObject(i, itemUpdate, { enforceTypes: false, inplace: false });
   }
-  if (hasItemUpdates) updateData.items = items;
+  updateData.items = items;
   return updateData;
 };
 

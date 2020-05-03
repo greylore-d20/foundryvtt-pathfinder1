@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.411
+
+### Bug Fixes
+
+- Shields were not applying their AC
+
 ## 0.41
 
 ### Bug Fixes

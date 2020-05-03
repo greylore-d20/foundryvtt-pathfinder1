@@ -373,7 +373,7 @@ export class ActorSheetPF extends ActorSheet {
       medium: actorData.data.attributes.encumbrance.levels.medium,
       heavy: actorData.data.attributes.encumbrance.levels.heavy
     };
-    const carryLabel = game.i18n.localize("PF1.CarryLabel").format(carriedWeight);
+    const carryLabel = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.CarryLabelKg").format(carriedWeight) : game.i18n.localize("PF1.CarryLabel").format(carriedWeight);
     const enc = {
       pct: {
         light: Math.max(0, Math.min(carriedWeight * 100 / load.light, 99.5)),

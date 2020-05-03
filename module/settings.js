@@ -87,8 +87,8 @@ export const registerSystemSettings = function() {
     default: "imperial",
     type: String,
     choices: {
-      "imperial": "Imperial (feet,lbs)",
-      "metric": "Metric (meters, kgs)"
+      "imperial": "Imperial (feet, lbs)",
+      "metric": "Metric (meters, kg)"
     },
     onChange: () => {
       [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {

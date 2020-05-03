@@ -492,6 +492,11 @@ export class ActorSheetPF extends ActorSheet {
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));
 
+    // Quick add item quantity
+    html.find("a.item-control.item-quantity-add").click(ev => { this._quickChangeItemQuantity(ev, 1); });
+    // Quick subtract item quantity
+    html.find("a.item-control.item-quantity-subtract").click(ev => { this._quickChangeItemQuantity(ev, -1); });
+
     // Quick (un)equip item
     html.find("a.item-control.item-equip").click(ev => { this._quickEquipItem(ev); });
 
@@ -844,6 +849,16 @@ export class ActorSheetPF extends ActorSheet {
         await item.useAttack({ev: event});
       }
     }
+  }
+
+  async _quickChangeItemQuantity(event, add=1) {
+    event.preventDefault();
+    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+
+    const curQuantity = getProperty(item.data, "data.quantity") || 0;
+    const newQuantity = Math.max(0, curQuantity + add);
+    item.update({ "data.quantity": newQuantity });
   }
 
   async _quickEquipItem(event) {

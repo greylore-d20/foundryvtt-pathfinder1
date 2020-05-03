@@ -565,8 +565,7 @@ export class ActorPF extends Actor {
     // Add armor bonuses from equipment
     data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(item => {
       let armorTarget = "aac";
-      if (item.data.armor.type === "shield") armorTarget = "sac";
-      else if (item.data.armor.type === "natural") armorTarget = "nac";
+      if (item.data.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
       if (item.data.armor.value) {
         changes.push({

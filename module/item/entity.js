@@ -636,40 +636,12 @@ export class ItemPF extends Item {
           useMeasureTemplate = html.prop("checked");
         }
       }
-      // Add contextual attack string
-      let props = [];
-      let effectStr = "";
-      if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-        effectStr = DicePF.messageRoll({
-          data: rollData,
-          msgStr: itemData.attackNotes
-        });
-      }
-      let effectContent = "";
-      if (effectStr.length > 0) {
-        const effects = effectStr.split(/[\n\r]+/);
-        for (let fx of effects) {
-          effectContent += `<div class="extra-misc">${fx}</div>`;
-        }
-        effectContent = `<div><label>${game.i18n.localize("PF1.AttackNotes")}</label>${effectContent}</div>`;
-      }
-      if (this.hasEffect) {
-        let effectStr = this.rollEffect({ primaryAttack: primaryAttack });
-        if (effectStr.length > 0) {
-          effectContent += `<div><label>${game.i18n.localize("PF1.EffectNotes")}</label>${effectStr}</div>`;
-        }
-      }
-
-      const properties = this.getChatData().properties;
-      if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
       // Define Critical threshold
       let crit = itemData.ability.critRange || 20;
 
       // Prepare the chat message data
       let chatTemplateData = {
-        hasProperties: properties.length > 0,
-        properties: props,
         name: this.name,
         type: CONST.CHAT_MESSAGE_TYPES.OTHER,
         rollMode: rollMode,
@@ -822,16 +794,33 @@ export class ItemPF extends Item {
           this.update(itemUpdateData);
         }
 
-        // Add effect text
-        if (effectContent.length > 0) {
-          chatTemplateData.hasExtraText = true;
-          chatTemplateData.extraText = effectContent;
-        }
-
         // Post message
         if (this.data.type === "spell" && a === 0) await this.roll({ rollMode: rollMode });
         rolled = true;
-        if (this.hasAttack || this.hasDamage || this.hasEffect) await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", chatTemplateData, chatData);
+        if (this.hasAttack || this.hasDamage || this.hasEffect) {
+          let props = [],
+            extraText = "";
+          if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
+            let attackNotes = itemData.attackNotes.split(/[\n\r]+/),
+              attackStr = "";
+            for (let an of attackNotes) {
+              attackStr += `<span class="tag">${an}</span>`;
+            }
+            if (attackStr.length > 0) {
+              extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(attackStr, rollData)}</div></div>`;
+            }
+          }
+          extraText += this.rollEffect({ primaryAttack: primaryAttack });
+          const properties = this.getChatData().properties;
+          if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
+          const templateData = mergeObject(chatTemplateData, {
+            extraText: extraText,
+            hasExtraText: extraText.length > 0,
+            properties: props,
+            hasProperties: props.length > 0,
+          }, { inplace: false });
+          await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
+        }
       }
     }
 
@@ -983,7 +972,9 @@ export class ItemPF extends Item {
 
   /* -------------------------------------------- */
 
-  // Only roll the item's effect
+  /**
+   * Only roll the item's effect.
+   */
   rollEffect({critical=false, primaryAttack=true}={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
@@ -996,12 +987,14 @@ export class ItemPF extends Item {
       throw new Error("You may not make an Effect Roll with this Item.");
     }
 
-    // Add CL
+    // Add spell data
     if (this.type === "spell") {
       const spellbookIndex = itemData.spellbook;
       const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
       const cl = spellbook.cl.total + (itemData.clOffset || 0);
+      const sl = this.data.data.level + (this.data.data.slOffset || 0);
       rollData.cl = cl;
+      rollData.sl = sl;
     }
 
     // Determine critical multiplier
@@ -1012,22 +1005,16 @@ export class ItemPF extends Item {
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Create effect string
-    let effectStr = "";
-    if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: rollData,
-        msgStr: itemData.effectNotes
-      });
-    }
-    let effectContent = "";
-    if (effectStr.length > 0) {
-      const effects = effectStr.split(/[\n\r]+/);
-      for (let fx of effects) {
-        effectContent += `<div class="extra-effect">${fx}</div>`;
+    let effects = (itemData.effectNotes || "").split(/[\n\r]+/),
+      effectContent = "";
+    for (let fx of effects) {
+      if (fx.length > 0) {
+        effectContent += `<span class="tag">${fx}</span>`;
       }
     }
 
-    return effectContent;
+    if (effectContent.length === 0) return "";
+    return `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(effectContent, rollData)}</div></div>`;
   }
 
   /**

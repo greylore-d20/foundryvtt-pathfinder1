@@ -75,6 +75,30 @@ export const registerSystemSettings = function() {
       });
     },
   });
+  
+  /**
+   * System of Units
+   */
+  game.settings.register("pf1", "units", {
+    name: "SETTINGS.pf1UnitsN",
+    hint: "SETTINGS.pf1UnitsL",
+    scope: "world",
+    config: true,
+    default: "imperial",
+    type: String,
+    choices: {
+      "imperial": "Imperial (feet,lbs)",
+      "metric": "Metric (meters, kgs)"
+    },
+    onChange: () => {
+      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
+        return o.data.type === "character";
+      }).forEach(o => {
+        o.update({});
+        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+      });
+    },
+  });
 
   /**
    * Option to disable XP bar for session-based or story-based advancement.

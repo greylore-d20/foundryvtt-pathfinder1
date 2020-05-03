@@ -531,7 +531,7 @@ export class ItemPF extends Item {
    */
   _lootChatData(data, labels, props) {
     props.push(
-      data.weight ? data.weight + " lbs." : null
+      data.weight ? data.weight + " " + (game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")) : null
     );
   }
 

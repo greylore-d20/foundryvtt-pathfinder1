@@ -1035,6 +1035,7 @@ export class ActorSheetPF extends ActorSheet {
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
       i.totalWeight = Math.round(i.data.quantity * i.data.weight * 10) / 10;
+      i.units = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
       inventory.all.items.push(i);

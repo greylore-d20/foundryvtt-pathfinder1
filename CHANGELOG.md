@@ -6,6 +6,10 @@
 
 - Shields were not applying their AC
 
+### Changelog
+
+- Moved defense tab on character and npc sheets
+
 ## 0.41
 
 ### Bug Fixes

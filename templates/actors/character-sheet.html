@@ -218,11 +218,11 @@
   {{!-- NPC Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="attributes">{{ localize "PF1.Attributes" }}</a>
+    <a class="item" data-tab="defenses">{{ localize "PF1.Defenses" }}</a>
     <a class="item" data-tab="attacks">{{ localize "PF1.Attacks" }}</a>
     <a class="item" data-tab="inventory">{{ localize "PF1.Inventory" }}</a>
     <a class="item" data-tab="feats">{{ localize "PF1.Features" }}</a>
     <a class="item" data-tab="skills">{{ localize "PF1.Skills" }}</a>
-    <a class="item" data-tab="defenses">{{ localize "PF1.Defenses" }}</a>
     <a class="item" data-tab="buffs">{{ localize "PF1.Buffs" }}</a>
     <a class="item" data-tab="spellbook">{{ localize "PF1.Spells" }}</a>
     <a class="item" data-tab="biography">{{ localize "PF1.Biography" }}</a>
@@ -348,6 +348,11 @@
       </section>
     </div>
 
+    {{!-- Defenses Tab --}}
+    <div class="tab defenses flexcol" data-group="primary" data-tab="defenses">
+      {{> "systems/pf1/templates/actors/parts/actor-defenses.html"}}
+    </div>
+
     {{!-- Attacks Tab --}}
     <div class="tab attacks flexcol" data-group="primary" data-tab="attacks">
       {{> "systems/pf1/templates/actors/parts/actor-attacks.html" sections=attacks}}
@@ -366,11 +371,6 @@
     {{!-- Skills Tab --}}
     <div class="tab skills flexcol" data-group="primary" data-tab="skills">
       {{> "systems/pf1/templates/actors/parts/actor-skills-front.html"}}
-    </div>
-
-    {{!-- Defenses Tab --}}
-    <div class="tab defenses flexcol" data-group="primary" data-tab="defenses">
-      {{> "systems/pf1/templates/actors/parts/actor-defenses.html"}}
     </div>
 
     {{!-- Buffs Tab --}}

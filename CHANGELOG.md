@@ -8,6 +8,7 @@
 
 ### Changelog
 
+- Dorgendubal added initial support for the metric system (many thanks!)
 - Moved defense tab on character and npc sheets
 
 ## 0.41

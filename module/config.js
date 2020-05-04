@@ -719,6 +719,7 @@ PF1.weaponProperties = {
   "dis": "PF1.WeaponPropDisarm",
   "fin": "PF1.WeaponPropFinesse",
   "frg": "PF1.WeaponPropFragile",
+  "grp": "PF1.WeaponPropGrapple",
   "imp": "PF1.WeaponPropImprovised",
   "mnk": "PF1.WeaponPropMonk",
   "nnl": "PF1.WeaponPropNonLethal",

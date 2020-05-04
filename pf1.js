@@ -22,6 +22,7 @@ import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
+import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -126,6 +127,8 @@ Hooks.once("ready", async function() {
   }
 
   game.actors.entities.forEach(obj => { obj._updateChanges({ sourceOnly: true }); });
+  
+  Hooks.on('renderTokenHUD', (app, html, data) => { TokenQuickActions.addTop3Attacks(app, html, data) });
 });
 
 /* -------------------------------------------- */

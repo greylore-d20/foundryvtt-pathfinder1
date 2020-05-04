@@ -1,3 +1,5 @@
+import { ChatMessagePF } from "./sidebar/chat-message.js";
+
 export class DicePF {
 
   /**
@@ -79,12 +81,13 @@ export class DicePF {
           // Create chat data
           let chatData = {
             user: game.user._id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             flavor: flavor,
             rollMode: rollMode,
             roll: roll,
+            MEOW: true,
             content: await renderTemplate(chatTemplate, rollData),
           };
           // Handle different roll modes
@@ -102,7 +105,8 @@ export class DicePF {
 
           // Send message
           rolled = true;
-          ChatMessage.create(chatData);
+          const c = await ChatMessagePF.create(chatData);
+          await c.setFlag("pf1", "noRollRender", true);
         }
         else {
           rolled = true;
@@ -223,7 +227,7 @@ export class DicePF {
         // Create chat data
         let chatData = {
           user: game.user._id,
-          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+          type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           rollMode: game.settings.get("core", "rollMode"),
           sound: CONFIG.sounds.dice,
           speaker: speaker,
@@ -231,6 +235,7 @@ export class DicePF {
           rollMode: rollMode,
           roll: roll,
           content: await renderTemplate(chatTemplate, rollData),
+          useCustomContent: true,
         };
         // Handle different roll modes
         switch (chatData.rollMode) {
@@ -247,7 +252,7 @@ export class DicePF {
 
         // Send message
         rolled = true;
-        ChatMessage.create(chatData);
+        ChatMessagePF.create(chatData);
       }
       else {
         rolled = true;

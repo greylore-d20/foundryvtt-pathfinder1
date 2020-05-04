@@ -21,6 +21,7 @@ import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner } from "./module/lib.js";
+import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -59,6 +60,7 @@ Hooks.once("init", async function() {
   CONFIG.Actor.entityClass = ActorPF;
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
+  CONFIG.ChatMessage.entityClass = ChatMessagePF;
 
   // Register System Settings
   registerSystemSettings();

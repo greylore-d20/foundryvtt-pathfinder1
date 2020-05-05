@@ -15,7 +15,8 @@
     <input type="hidden" name="data.skills.{{s}}.subSkills.{{b}}.value" value="{{subSkill.value}}" data-dtype="Number"/>
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
-        @skills.{{s}}.subSkills.{{b}}.mod : {{subSkill.mod}}
+        @skills.{{s}}.subSkills.{{b}}.mod : {{subSkill.mod}}<br>
+        @skills.{{s}}.subSkills.{{b}}.rank : {{subSkill.rank}}<br>
 
         {{#if subSkill.sourceDetails.length}}
         <br/><br/>{{localize "PF1.FromSources"}}:<br/>
@@ -58,7 +59,8 @@
     <input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number"/>
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
-        @skills.{{s}}.mod : {{skill.mod}}
+        @skills.{{s}}.mod : {{skill.mod}}<br>
+        @skills.{{s}}.rank : {{skill.rank}}<br>
 
         {{#if skill.sourceDetails.length}}
         <br/><br/>{{localize "PF1.FromSources"}}:<br/>

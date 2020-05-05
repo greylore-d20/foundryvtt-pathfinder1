@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { alterRoll, isMinimumCoreVersion, linkData } from "../lib.js";
+import { createTag, alterRoll, linkData } from "../lib.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 
 /**

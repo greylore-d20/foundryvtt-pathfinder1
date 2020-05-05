@@ -996,6 +996,15 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _prepareItems(data) {
+    // Set item tags
+    for (let [key, res] of Object.entries(getProperty(this.actor.data, "data.resources"))) {
+      if (!res) continue;
+      const id = res._id;
+      if (!id) continue;
+      const item = this.actor.items.find(o => o._id === id);
+      if (!item) continue;
+      item.data.tag = key;
+    }
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
@@ -1067,7 +1076,7 @@ export class ActorSheetPF extends ActorSheet {
       all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
     };
 
-    for ( let f of feats ) {
+    for (let f of feats) {
       let k = f.data.featType;
       features[k].items.push(f);
       features.all.items.push(f);

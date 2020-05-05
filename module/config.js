@@ -725,6 +725,7 @@ PF1.weaponProperties = {
   "nnl": "PF1.WeaponPropNonLethal",
   "prf": "PF1.WeaponPropPerformance",
   "rch": "PF1.WeaponPropReach",
+  "snd": "PF1.WeaponPropSunder",
   "thr": "PF1.WeaponPropThrown",
   "trp": "PF1.WeaponPropTrip",
 };

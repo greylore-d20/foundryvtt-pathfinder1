@@ -309,10 +309,8 @@
 }
 .pf1.sheet .sheet-header img.profile {
   flex: 0 0 100px;
-  max-width: 100px;
-  min-height: 50px;
-  max-height: 100px;
-  height: auto;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   border: none;
   border-right: 2px groove #eeede0;
@@ -543,6 +541,7 @@
   border-radius: 2px;
 }
 .pf1.sheet.actor .sheet-header .header-details {
+  height: 100%;
   border-left: 2px groove #eeede0;
 }
 .pf1.sheet.actor .sheet-header .header-details .attributes > .attribute {
@@ -674,7 +673,7 @@
 }
 .pf1.sheet.actor ul.attributes {
   list-style: none;
-  margin: 2px 0 0;
+  margin: 8px 0 0;
   padding: 0;
 }
 .pf1.sheet.actor ul.attributes li.attribute.health {
@@ -2138,20 +2137,4 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
 }
 #hitdice .switch-check:checked + .switch-label .switch-manual {
   display: none;
-}
-
-#token-hud .col.actions {
-  height: calc(100% + 150px);
-  width: 100%;
-  justify-content: center;
-}
-
-.col.actions .below {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-}
-
-.below .control-icon.token-quick-action {
-  margin: 0 5px;
 }

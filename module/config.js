@@ -521,7 +521,7 @@ PF1.damageTypes = {
   "slashing": "Slashing",
   "cold": "Cold",
   "fire": "Fire",
-  "electric": "Electric",
+  "electric": "Electricity",
   "sonic": "Sonic",
   "acid": "Acid",
   "force": "Force",

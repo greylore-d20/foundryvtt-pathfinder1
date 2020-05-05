@@ -87,7 +87,6 @@ export class DicePF {
             flavor: flavor,
             rollMode: rollMode,
             roll: roll,
-            MEOW: true,
             content: await renderTemplate(chatTemplate, rollData),
           };
           // Handle different roll modes
@@ -106,7 +105,7 @@ export class DicePF {
           // Send message
           rolled = true;
           const c = await ChatMessagePF.create(chatData);
-          await c.setFlag("pf1", "noRollRender", true);
+          c.setFlag("pf1", "noRollRender", true);
         }
         else {
           rolled = true;

@@ -489,7 +489,7 @@ export class ItemPF extends Item {
    */
   _equipmentChatData(data, labels, props) {
     props.push(
-      CONFIG.PF1.equipmentTypes[data.armor.type],
+      CONFIG.PF1.equipmentTypes[data.equipmentType][data.equipmentSubtype],
       labels.armor || null,
     );
   }
@@ -502,7 +502,8 @@ export class ItemPF extends Item {
    */
   _weaponChatData(data, labels, props) {
     props.push(
-      CONFIG.PF1.weaponTypes[data.weaponType],
+      CONFIG.PF1.weaponTypes[data.weaponType]._label,
+      CONFIG.PF1.weaponTypes[data.weaponType][data.weaponSubtype],
     );
   }
 

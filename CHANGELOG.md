@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.42
+
+### Bug Fixes
+
+- Inability to rename items in certain conditions
+
+### Changelog
+
+- Improved styling of attack and effect notes
+- Added a quick way of adding and subtracting item quantities in inventory screens
+- Og added more weapons, ammo, armor and shields (this did change around some icon files, so unfortunately it'll mean you have to manually change icons or replace items) (many thanks!)
+- Turned certain dice rolls (such as skills and saving throws, but not attacks) into actual Roll type messages again, meaning they will work with modules that rely on that data (such as BubbleRolls)
+- Dorgendubal added quick attacks to tokens (many thanks!)
+
 ## 0.411
 
 ### Bug Fixes

@@ -79,10 +79,10 @@ export class ItemSheetPF extends ItemSheet {
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {
-      data.itemName = getProperty(this.item.data, "data.unidentified.name") || getProperty(this.item, "temp.name") || this.item.name;
+      data.itemName = getProperty(this.item.data, "data.unidentified.name") || getProperty(this.item.data, "data.identifiedName") || this.item.name;
     }
     else {
-      data.itemName = getProperty(this.item, "temp.name") || this.item.name;
+      data.itemName = getProperty(this.item.data, "data.identifiedName") || this.item.name;
     }
 
     // Action Details

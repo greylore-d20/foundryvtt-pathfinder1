@@ -87,7 +87,6 @@ export class ItemPF extends Item {
     super.prepareData();
 
     const itemData = this.data;
-    const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
     const C = CONFIG.PF1;
     const labels = {};
@@ -95,9 +94,9 @@ export class ItemPF extends Item {
     // Physical items
     if (hasProperty(itemData, "data.weight")) {
       // Sync name
-      if (getProperty(this.data, "data.identifiedName") == null) setProperty(this.data, "data.identifiedName", this.name);
+      if (!hasProperty(this.data, "data.identifiedName")) setProperty(this.data, "data.identifiedName", this.name);
       // Prepare unidentified cost
-      if (getProperty(this.data, "data.unidentified.price") == null) setProperty(this.data, "data.unidentified.price", 0);
+      if (!hasProperty(this.data, "data.unidentified.price")) setProperty(this.data, "data.unidentified.price", 0);
 
       // Set basic data
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
@@ -248,7 +247,8 @@ export class ItemPF extends Item {
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
 
     // Update name
-    if (data["data.identifiedName"] != null) data["name"] = data["data.identifiedName"];
+    if (data["data.identifiedName"]) data["name"] = data["data.identifiedName"];
+    else if (data["name"]) data["data.identifiedName"] = data["name"];
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);

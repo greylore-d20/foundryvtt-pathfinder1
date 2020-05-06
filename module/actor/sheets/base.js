@@ -803,11 +803,11 @@ export class ActorSheetPF extends ActorSheet {
       custom: true
     };
 
-    let tag = createTag(skillData.name);
+    let tag = createTag(skillData.name || "skill");
     let count = 1;
     while (this.actor.data.data.skills[tag] != null) {
       count++;
-      tag = createTag(skillData.name) + count.toString();
+      tag = createTag(skillData.name || "skill") + count.toString();
     }
 
     const updateData = {};

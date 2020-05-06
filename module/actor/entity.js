@@ -1790,11 +1790,12 @@ export class ActorPF extends Actor {
 
         // Rename custom skills
         if (curSkl != null && curSkl.custom && skl.name != null) {
-          let tag = createTag(skl.name);
+          let tag = createTag(skl.name || "skill");
           let count = 1;
+          const skillData = getProperty(this.data, `data.skills.${tag}`) || {};
           while (this.data.data.skills[tag] != null && this.data.data.skills[tag] != curSkl) {
             count++;
-            tag = createTag(skillData.name) + count.toString();
+            tag = createTag(skillData.name || "skill") + count.toString();
           }
 
           if (s !== tag) {

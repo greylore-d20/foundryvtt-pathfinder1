@@ -816,7 +816,7 @@ export class ItemPF extends Item {
             attackStr += `<span class="tag">${an}</span>`;
           }
           if (attackStr.length > 0) {
-            extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(attackStr, rollData)}</div></div>`;
+            extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(attackStr, { rollData: rollData })}</div></div>`;
           }
           extraText += this.rollEffect({ primaryAttack: primaryAttack });
 
@@ -1031,7 +1031,7 @@ export class ItemPF extends Item {
     }
 
     if (effectContent.length === 0) return "";
-    return `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(effectContent, rollData)}</div></div>`;
+    return `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(effectContent, { rollData: rollData})}</div></div>`;
   }
 
   /**

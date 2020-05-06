@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.43
+
+### Bug Fixes
+
+- Fix missing icons for classes
+
+### Changelog
+
+- Added a few more tooltips for formula uses
+- Added a new variable for formulas: `@size`, which is a number in the range of -4 to 4, based on the actor's size, where 0 equals Medium
+- Added a new function to use in formulas: `sizeRoll(c, s[, size[, crit]])`, which returns a random number based on a given die for different sizes (for more information, check [https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/advanced/formula-data/](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/advanced/formula-data/))
+- Added some data fields for weapons to account for the new size functionality, and creating an attack from a weapon now uses the new function
+- Added feat tags and a feat compendium browser
+- Added context note options for all attack and damage rolls to items with changes
+
 ## 0.42
 
 ### Bug Fixes

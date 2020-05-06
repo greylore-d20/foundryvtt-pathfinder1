@@ -44,7 +44,7 @@ export function PatchCore() {
   const Roll__replaceData = Roll.prototype._replaceData;
   Roll.prototype._replaceData = function(formula) {
     let result = Roll__replaceData.call(this, formula);
-    result = _preProcessDiceFormula(result);
+    result = _preProcessDiceFormula(result, this.data);
     return result;
   };
 

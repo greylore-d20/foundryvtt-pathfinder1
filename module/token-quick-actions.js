@@ -8,7 +8,6 @@ export class TokenQuickActions {
         return;
     
     let quickActions = '<div class="col actions"><div class="below">'
-    console.log(actor.items.filter(o => o.type === "attack"));
     let items = actor.data.items.filter(o => o.type === "attack" && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
       return a.data.sort - b.data.sort;
     });

@@ -2,11 +2,13 @@ export class TokenQuickActions {
 
   static async addTop3Attacks(app, html, data) {
    
-    let actor = game.actors.get(data.actorId);
-    if (actor === undefined)
+    let actor = game.actors.tokens[data._id];
+    if (!actor) actor = game.actors.get(data.actorId);
+    if (actor == null)
         return;
     
     let quickActions = '<div class="col actions"><div class="below">'
+    console.log(actor.items.filter(o => o.type === "attack"));
     let items = actor.data.items.filter(o => o.type === "attack" && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
       return a.data.sort - b.data.sort;
     });

@@ -316,3 +316,44 @@ export class DicePF {
     return msgStr;
   }
 }
+
+export const _preProcessDiceFormula = function(formula) {
+
+  // Replace parentheses with semicolons to use for splitting
+  let toSplit = formula.replace(/([A-z]+)?\(/g, (match, prefix) => {
+    return prefix in game.pf1.rollPreProcess ? `;${prefix};(` : ";(";
+  }).replace(/\)/g, ");");
+  let terms = toSplit.split(";");
+
+  // Match parenthetical groups
+  let nOpen = 0;
+  terms = terms.reduce((arr, t) => {
+
+    // Handle cases where the prior term is a math function
+    const beginMathFn = (t[0] === "(") && (arr[arr.length-1] in game.pf1.rollPreProcess);
+
+    // Add terms to the array
+    if ( (nOpen > 0) || beginMathFn ) {
+      if (beginMathFn) {
+        let f = game.pf1.rollPreProcess[arr[arr.length - 1]];
+        let params = t.slice(1, -1).split(/\s*,\s*/).map(o => {
+          let numberValue = parseFloat(o);
+          if (isNaN(numberValue)) return o;
+          return numberValue;
+        });
+        arr[arr.length - 1] = f(...params);
+      }
+      else {
+        arr[arr.length - 1] += t;
+      }
+    }
+    else arr.push(t);
+
+    // Increment the number of open parentheses
+    if ( !beginMathFn && (t === "(") ) nOpen++;
+    if ( (nOpen > 0) && (t === ")") ) nOpen--;
+    return arr;
+  }, []);
+  
+  return terms.join("");
+};

@@ -178,16 +178,7 @@ export const CR = {
   },
 };
 
-/**
- * Returns the result of a roll of die, which changes based on different sizes.
- * @param {number} origCount - The original number of die to roll.
- * @param {number} origSides - The original number of sides per die to roll.
- * @param {string|number} [targetSize="M"] - The target size to change the die to.
- *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
- *   Can also be a number in the range of -4 to 4, where 0 is Medium.
- * @returns {number} The result of the new roll.
- */
-export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
+export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
   if (typeof targetSize === "string") targetSize = Object.values(CONFIG.PF1.sizeChart).indexOf(targetSize.toUpperCase());
   else if (typeof targetSize === "number") targetSize = Math.max(0, Math.min(Object.values(CONFIG.PF1.sizeChart).length - 1, Object.values(CONFIG.PF1.sizeChart).indexOf("M") + targetSize));
   const c = duplicate(CONFIG.PF1.sizeDie);
@@ -227,7 +218,7 @@ export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
     if (d8Index === -1) d8Index = c.indexOf("2d4");
     let indexOffset = (targetSize - 4);
     while (indexOffset !== 0) {
-      if ((index <= d8Index || indexOffset < 1) ||
+      if ((index <= d8Index && indexOffset < 1) ||
       (index <= d6Index && indexOffset < 0)) {
         if (indexOffset < 0) {
           index--;
@@ -264,5 +255,18 @@ export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
     ui.notifications.warn(game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula));
   }
 
-  return new Roll(formula).roll().total;
+  return formula;
+};
+
+/**
+ * Returns the result of a roll of die, which changes based on different sizes.
+ * @param {number} origCount - The original number of die to roll.
+ * @param {number} origSides - The original number of sides per die to roll.
+ * @param {string|number} [targetSize="M"] - The target size to change the die to.
+ *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
+ *   Can also be a number in the range of -4 to 4, where 0 is Medium.
+ * @returns {number} The result of the new roll.
+ */
+export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
+  return new Roll(sizeDie(origCount, origSides, targetSize, crit)).roll().total;
 };

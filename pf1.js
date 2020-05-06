@@ -20,7 +20,7 @@ import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeRoll } from "./module/lib.js";
+import { getItemOwner, sizeDie } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
@@ -54,7 +54,9 @@ Hooks.once("init", async function() {
     rollItemMacro,
     rollDefenses,
     CompendiumDirectoryPF,
-    sizeRoll,
+    rollPreProcess: {
+      sizeRoll: sizeDie
+    },
   };
 
   // Record Configuration Values
@@ -63,7 +65,6 @@ Hooks.once("init", async function() {
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.entityClass = ChatMessagePF;
-  CONFIG.Roll.mathProxy.sizeRoll = sizeRoll;
 
   // Register System Settings
   registerSystemSettings();

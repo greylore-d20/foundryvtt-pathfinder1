@@ -1,4 +1,5 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
+import { _preProcessDiceFormula } from "./dice.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -37,6 +38,14 @@ export function PatchCore() {
   FormApplication.prototype.close = async function(options={}) {
     await this.saveMCEContent();
     return FormApplication_close.call(this, options);
+  };
+
+  // Patch Roll._replaceData
+  const Roll__replaceData = Roll.prototype._replaceData;
+  Roll.prototype._replaceData = function(formula) {
+    let result = Roll__replaceData.call(this, formula);
+    result = _preProcessDiceFormula(result);
+    return result;
   };
 
   // Patch, patch, patch

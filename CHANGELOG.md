@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.431
+
+### Changelog
+
+- Now pre-processes the `sizeRoll` function, which gives the ability to show the die you rolled as a result
+
 ## 0.43
 
 ### Bug Fixes

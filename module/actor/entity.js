@@ -75,7 +75,7 @@ export class ActorPF extends Actor {
   }
 
   static _blacklistChangeData(data, changeTarget) {
-    let result = duplicate(data.data);
+    let result = duplicate(data);
 
     switch (changeTarget) {
       case "mhp":
@@ -1020,7 +1020,7 @@ export class ActorPF extends Actor {
       if (formula === "") return;
       const changeTarget = change.raw[2];
       if (changeData[changeTarget] == null) return;
-      const rollData = this.constructor._blacklistChangeData(srcData1, changeTarget);
+      const rollData = this.constructor._blacklistChangeData(this.getRollData(srcData1.data), changeTarget);
 
       rollData.item = {};
       if (change.source.item != null) {
@@ -1587,16 +1587,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // BAB from Classes
-    // sourceDetails["data.attributes.bab.total"].push(...actorData.items.filter(obj => { return obj.type === "class"; }).map(obj => {
-    //   const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-    //   const value = new Roll(formula, {level: obj.data.levels}).roll().total;
-    //   return {
-    //     name: obj.name,
-    //     value: value,
-    //   }
-    // }));
-
     // Add CMB, CMD and initiative
     if (actorData.data.attributes.bab.total !== 0) {
       sourceDetails["data.attributes.cmb.total"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
@@ -1634,21 +1624,6 @@ export class ActorPF extends Actor {
         });
       }
     }
-    // Add class bonuses to saving throws
-    // actorData.items.filter(obj => { return obj.type === "class"; }).forEach(obj => {
-    //   for (let s of Object.keys(obj.data.savingThrows)) {
-    //     const classType = getProperty(obj.data, "classType") || "base";
-    //     let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[s].value];
-    //     if (formula == null) formula =  "0";
-    //     const value = new Roll(formula, {level: obj.data.levels}).roll().total;
-    //     if (value !== 0) {
-    //       sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
-    //         name: obj.name,
-    //         value: value
-    //       });
-    //     }
-    //   }
-    // });
 
     // Add energy drain to skills
     if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
@@ -2112,7 +2087,25 @@ export class ActorPF extends Actor {
 
     // Add damage formula
     if (item.data.data.weaponData.damageRoll) {
-      attackData["data.damage.parts"] = [[item.data.data.weaponData.damageRoll || "1d4", item.data.data.weaponData.damageType || ""]];
+      const die = item.data.data.weaponData.damageRoll || "1d4";
+      let part = die;
+      let dieCount = 1,
+        dieSides = 4;
+      if (die.match(/^([0-9]+)d([0-9]+)$/)) {
+        dieCount = parseInt(RegExp.$1);
+        dieSides = parseInt(RegExp.$2);
+        const weaponSize = Object.keys(CONFIG.PF1.sizeChart).indexOf(item.data.data.weaponData.size) - 4;
+        part = `sizeRoll(${dieCount}, ${dieSides}, ${weaponSize}, @critMult)`;
+      }
+      const bonusFormula = getProperty(item.data, "data.weaponData.damageFormula");
+      if (bonusFormula != null && bonusFormula.length) part = `${part} + ${bonusFormula}`;
+      attackData["data.damage.parts"] = [[part, item.data.data.weaponData.damageType || ""]];
+    }
+
+    // Add attack bonus formula
+    {
+      const bonusFormula = getProperty(item.data, "data.weaponData.attackFormula");
+      if (bonusFormula != null && bonusFormula.length) attackData["data.attackBonus"] = bonusFormula;
     }
 
     // Add range
@@ -2319,7 +2312,7 @@ export class ActorPF extends Actor {
 
     if (stop) return;
 
-    const actorData = duplicate(this.data.data);
+    const actorData = this.getRollData();
     // Add bonus
     actorData.bonus = bonus;
     if (bonus.length > 0) formula += " + @bonus";
@@ -2563,7 +2556,9 @@ export class ActorPF extends Actor {
         energyResistance: energyResistance,
       },
     };
-    createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data);
+    createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data, {
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
   }
 
   /* -------------------------------------------- */
@@ -2800,6 +2795,15 @@ export class ActorPF extends Actor {
       delete data._id;
       return this.createOwnedItem(data);
     });
+  }
+
+  getRollData(data=null) {
+    if (data == null) data = this.data.data;
+    const result = mergeObject(data, {
+      size: Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4,
+    }, { inplace: false });
+
+    return result;
   }
 }
 

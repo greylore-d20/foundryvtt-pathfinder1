@@ -177,3 +177,92 @@ export const CR = {
     return value.toString();
   },
 };
+
+/**
+ * Returns the result of a roll of die, which changes based on different sizes.
+ * @param {number} origCount - The original number of die to roll.
+ * @param {number} origSides - The original number of sides per die to roll.
+ * @param {string|number} [targetSize="M"] - The target size to change the die to.
+ *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
+ *   Can also be a number in the range of -4 to 4, where 0 is Medium.
+ * @returns {number} The result of the new roll.
+ */
+export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
+  if (typeof targetSize === "string") targetSize = Object.values(CONFIG.PF1.sizeChart).indexOf(targetSize.toUpperCase());
+  else if (typeof targetSize === "number") targetSize = Math.max(0, Math.min(Object.values(CONFIG.PF1.sizeChart).length - 1, Object.values(CONFIG.PF1.sizeChart).indexOf("M") + targetSize));
+  const c = duplicate(CONFIG.PF1.sizeDie);
+
+  const mediumDie = `${origCount}d${origSides}`;
+
+  // Alter chart based on original die
+  for (let a = 0; a < c.length; a++) {
+    const d = c[a];
+    if (d.match(/^([0-9]+)d([0-9]+)$/)) {
+      const dieCount = parseInt(RegExp.$1),
+        dieSides = parseInt(RegExp.$2),
+        dieMaxValue = dieCount * dieSides;
+
+      if (origSides === 4 && origCount >= 2) {
+        if (dieSides === 8) {
+          c[a] = `${dieCount*2}d4`;
+        }
+        else if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
+          c[a] = `${Math.floor(dieMaxValue / origSides)}d4`;
+        }
+      }
+      else if (origSides === 12) {
+        if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
+          c[a] = `${Math.floor(dieMaxValue / origSides)}d12`;
+        }
+      }
+    }
+  }
+
+  // Pick an index from the chart
+  let index = c.indexOf(mediumDie),
+    formula = mediumDie;
+  if (index >= 0) {
+    const d6Index = c.indexOf("1d6");
+    let d8Index = c.indexOf("1d8");
+    if (d8Index === -1) d8Index = c.indexOf("2d4");
+    let indexOffset = (targetSize - 4);
+    while (indexOffset !== 0) {
+      if ((index <= d8Index || indexOffset < 1) ||
+      (index <= d6Index && indexOffset < 0)) {
+        if (indexOffset < 0) {
+          index--;
+          indexOffset++;
+        }
+        else {
+          index++;
+          indexOffset--;
+        }
+      }
+      else {
+        if (indexOffset < 0) {
+          index -= 2;
+          indexOffset++;
+        }
+        else {
+          index += 2;
+          indexOffset--;
+        }
+      }
+    }
+
+    // Alter crit
+    index = Math.max(0, Math.min(c.length - 1, index));
+    formula = c[index];
+  }
+
+  if (crit !== 1 && formula.match(/^([0-9]+)d([0-9]+)(.*)/)) {
+    const count = parseInt(RegExp.$1);
+    const sides = parseInt(RegExp.$2);
+    formula = `${count * crit}d${sides}${RegExp.$3}`;
+  }
+  if (index === -1) {
+    ui.notifications.warn(game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula));
+  }
+
+  return new Roll(formula).roll().total;
+};

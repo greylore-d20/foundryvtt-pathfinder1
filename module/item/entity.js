@@ -298,12 +298,12 @@ export class ItemPF extends Item {
       srcData = this.data;
       doLinkData = false;
     }
-    if (actorData == null) actorData = (this.actor != null ? this.actor.data : null);
-    if (actorData == null) actorData = {};
+    let rollData = {};
+    if (actorData == null && this.actor != null) rollData = this.actor.getRollData();
 
     if (hasProperty(srcData, "data.uses.maxFormula")) {
       if (getProperty(srcData, "data.uses.maxFormula") !== "") {
-        let roll = new Roll(getProperty(srcData, "data.uses.maxFormula"), actorData.data).roll();
+        let roll = new Roll(getProperty(srcData, "data.uses.maxFormula"), rollData).roll();
         if (doLinkData) linkData(srcData, data, "data.uses.max", roll.total);
         else data["data.uses.max"] = roll.total;
       }
@@ -356,7 +356,7 @@ export class ItemPF extends Item {
     const chatData = mergeObject({
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      speaker: ChatMessage.getSpeaker(),
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     }, altChatData);
 
     // Toggle default roll mode
@@ -376,8 +376,7 @@ export class ItemPF extends Item {
     const data = duplicate(this.data.data);
     const labels = this.labels;
 
-    const actorData = this.actor ? this.actor.data.data : {};
-    const rollData = duplicate(actorData);
+    const rollData = this.actor ? this.actor.getRollData() : {};
     rollData.item = data;
 
     // Get the spell specific info
@@ -600,8 +599,7 @@ export class ItemPF extends Item {
 
     const autoDeductCharges = ((isCharged || isSingleUse) && getProperty(this.data, "data.uses.autoDeductCharges") === true);
     const itemData = this.data.data;
-    const actorData = this.actor.data.data;
-    const rollData = duplicate(actorData);
+    const rollData = this.actor.getRollData();
     rollData.item = duplicate(itemData);
     const itemUpdateData = {};
 
@@ -884,10 +882,9 @@ export class ItemPF extends Item {
    */
   rollAttack(options={}) {
     const itemData = this.data.data;
-    const actorData = this.actor.data.data;
     let rollData;
     if (!options.data) {
-      rollData = duplicate(actorData);
+      rollData = this.actor.getRollData();
       rollData.item = duplicate(itemData);
     }
     else rollData = options.data;
@@ -904,7 +901,7 @@ export class ItemPF extends Item {
       rollData.cl = cl;
     }
     // Determine size bonus
-    rollData.sizeBonus = CONFIG.PF1.sizeMods[actorData.traits.size];
+    rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];
     // Add misc bonuses/penalties
     rollData.item.proficiencyPenalty = -4;
 
@@ -1024,10 +1021,9 @@ export class ItemPF extends Item {
    */
   rollDamage({data=null, critical=false, extraParts=[], primaryAttack=true}={}) {
     const itemData = this.data.data;
-    const actorData = this.actor.data.data;
     let rollData = null;
     if (!data) {
-      rollData = duplicate(actorData);
+      rollData = this.actor.getRollData();
       rollData.item = duplicate(itemData);
     }
     else rollData = data;
@@ -1058,8 +1054,8 @@ export class ItemPF extends Item {
     // Determine ability score modifier
     let abl = itemData.ability.damage;
     if (typeof abl === "string" && abl !== "") {
-      rollData.ablDamage = Math.floor(actorData.abilities[abl].mod * rollData.ablMult);
-      if (actorData.abilities[abl].mod < 0) rollData.ablDamage = actorData.abilities[abl].mod;
+      rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
+      if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
       if (rollData.ablDamage < 0) parts.push("@ablDamage");
       else if (rollData.critMult !== 1) parts.push("@ablDamage * @critMult");
       else if (rollData.ablDamage !== 0) parts.push("@ablDamage");
@@ -1118,13 +1114,12 @@ export class ItemPF extends Item {
    */
   async rollFormula(options={}) {
     const itemData = this.data.data;
-    const actorData = this.actor.data.data;
     if ( !itemData.formula ) {
       throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
     }
 
     // Define Roll Data
-    const rollData = duplicate(actorData);
+    const rollData = this.actor.getRollData();
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
@@ -1145,7 +1140,7 @@ export class ItemPF extends Item {
     let itemData = this.data.data;
     const labels = this.labels;
     let parts = itemData.damage.parts;
-    const data = duplicate(this.actor.data.data);
+    const data = this.actor.getRollData();
 
     // Add effect string
     let effectStr = "";

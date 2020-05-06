@@ -20,7 +20,7 @@ import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner } from "./module/lib.js";
+import { getItemOwner, sizeRoll } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
@@ -54,6 +54,7 @@ Hooks.once("init", async function() {
     rollItemMacro,
     rollDefenses,
     CompendiumDirectoryPF,
+    sizeRoll,
   };
 
   // Record Configuration Values
@@ -62,6 +63,7 @@ Hooks.once("init", async function() {
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.entityClass = ChatMessagePF;
+  CONFIG.Roll.mathProxy.sizeRoll = sizeRoll;
 
   // Register System Settings
   registerSystemSettings();
@@ -120,7 +122,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.411;
+  const NEEDS_MIGRATION_VERSION = 0.43;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();

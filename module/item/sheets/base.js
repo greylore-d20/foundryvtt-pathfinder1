@@ -102,7 +102,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = (!data.item.data.weaponData.isMelee || data.item.data.properties["thr"] === true);
+      data.isRanged = (data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true);
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };

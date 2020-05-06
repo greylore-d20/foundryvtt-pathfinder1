@@ -214,6 +214,18 @@ PF1.actorSizes = {
   "col": "PF1.ActorSizeColossal",
 };
 
+PF1.sizeChart = {
+  "fine": "F",
+  "dim":  "D",
+  "tiny": "T",
+  "sm":   "S",
+  "med":  "M",
+  "lg":   "L",
+  "huge": "H",
+  "grg":  "G",
+  "col":  "C",
+};
+
 PF1.tokenSizes = {
   "fine": { w: 1, h: 1, scale: 0.2 },
   "dim": { w: 1, h: 1, scale: 0.4 },
@@ -998,6 +1010,30 @@ PF1.creatureTypes = {
   "undead": "PF1.CreatureTypeUndead",
   "vermin": "PF1.CreatureTypeVermin",
 };
+
+PF1.sizeDie = [
+  "1",
+  "1d2",
+  "1d3",
+  "1d4",
+  "1d6",
+  "1d8",
+  "1d10",
+  "2d6",
+  "2d8",
+  "3d6",
+  "3d8",
+  "4d6",
+  "4d8",
+  "6d6",
+  "6d8",
+  "8d6",
+  "8d8",
+  "12d6",
+  "12d8",
+  "16d6",
+  "16d8",
+];
 
 // Character Level XP Requirements
 PF1.CHARACTER_EXP_LEVELS =  {

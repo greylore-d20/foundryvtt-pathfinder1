@@ -87,6 +87,18 @@
         </select>
       </div>
 
+      {{!-- Weapon Size --}}
+      <div class="form-group">
+        <label>{{localize "PF1.WeaponSize"}}</label>
+        <select name="data.weaponData.size">
+          {{#select data.weaponData.size}}
+          {{#each config.actorSizes as |name type|}}
+          <option value="{{type}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
       {{!-- Equipment Status --}}
       <div class="form-group stacked">
         <label>{{localize "PF1.EquipmentStatus"}}</label>
@@ -130,12 +142,28 @@
         </div>
       </div>
 
+      {{!-- Weapon Bonus Attack Formula --}}
+      <div class="form-group">
+        <label>{{localize "PF1.BonusAttackFormula"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.weaponData.attackFormula" value="{{data.weaponData.attackFormula}}" placeholder="{{localize "PF1.BonusAttackFormula"}}"/>
+        </div>
+      </div>
+
       {{!-- Weapon Damage --}}
       <div class="form-group">
-        <label>{{localize "PF1.BaseWeaponDamage"}}</label>
+        <label>{{localize "PF1.BaseWeaponDamage"}} ({{localize "PF1.ActorSizeMedium"}})</label>
         <div class="form-fields">
           <input type="text" name="data.weaponData.damageRoll" value="{{data.weaponData.damageRoll}}" placeholder="{{localize "PF1.DamageRoll"}}"/>
           <input type="text" name="data.weaponData.damageType" value="{{data.weaponData.damageType}}" placeholder="{{localize "PF1.DamageType"}}"/>
+        </div>
+      </div>
+
+      {{!-- Weapon Bonus Damage Formula --}}
+      <div class="form-group">
+        <label>{{localize "PF1.BonusDamageFormula"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.weaponData.damageFormula" value="{{data.weaponData.damageFormula}}" placeholder="{{localize "PF1.BonusDamageFormula"}}"/>
         </div>
       </div>
 

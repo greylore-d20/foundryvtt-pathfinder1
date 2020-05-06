@@ -917,6 +917,11 @@ PF1.buffTargets = {
 };
 
 PF1.contextNoteTargets = {
+  "attacks": {
+    "_label": "PF1.Attacks",
+    "attack": "PF1.AttackRollPlural",
+    "effect": "PF1.DamageRollPlural",
+  },
   "savingThrows": {
     "_label": "PF1.SavingThrowPlural",
     "allSavingThrows": "PF1.All",

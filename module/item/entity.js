@@ -799,17 +799,27 @@ export class ItemPF extends Item {
         if (this.hasAttack || this.hasDamage || this.hasEffect) {
           let props = [],
             extraText = "";
+          let attackNotes = this.actor.getContextNotes("attacks.attack").reduce((cur, o) => {
+            o.notes.reduce((cur2, n) => {
+              cur2.push(...n.split(/[\n\r]+/));
+              return cur2;
+            }, []).forEach(n => {
+              cur.push(n);
+            });
+            return cur;
+          }, []);
           if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-            let attackNotes = itemData.attackNotes.split(/[\n\r]+/),
-              attackStr = "";
-            for (let an of attackNotes) {
-              attackStr += `<span class="tag">${an}</span>`;
-            }
-            if (attackStr.length > 0) {
-              extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(attackStr, rollData)}</div></div>`;
-            }
+            attackNotes.push(...itemData.attackNotes.split(/[\n\r]+/));
+          }
+          let attackStr = "";
+          for (let an of attackNotes) {
+            attackStr += `<span class="tag">${an}</span>`;
+          }
+          if (attackStr.length > 0) {
+            extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${TextEditor.enrichHTML(attackStr, rollData)}</div></div>`;
           }
           extraText += this.rollEffect({ primaryAttack: primaryAttack });
+
           const properties = this.getChatData().properties;
           if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
           const templateData = mergeObject(chatTemplateData, {
@@ -1003,9 +1013,18 @@ export class ItemPF extends Item {
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Create effect string
-    let effects = (itemData.effectNotes || "").split(/[\n\r]+/),
-      effectContent = "";
-    for (let fx of effects) {
+    let effectNotes = this.actor.getContextNotes("attacks.effect").reduce((cur, o) => {
+      o.notes.reduce((cur2, n) => {
+        cur2.push(...n.split(/[\n\r]+/));
+        return cur2;
+      }, []).forEach(n => {
+        cur.push(n);
+      });
+      return cur;
+    }, []);
+    effectNotes.push(...(itemData.effectNotes || "").split(/[\n\r]+/));
+    let effectContent = "";
+    for (let fx of effectNotes) {
       if (fx.length > 0) {
         effectContent += `<span class="tag">${fx}</span>`;
       }

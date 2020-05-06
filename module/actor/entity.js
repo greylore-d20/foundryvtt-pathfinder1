@@ -2622,6 +2622,18 @@ export class ActorPF extends Actor {
   getContextNotes(context) {
     let result = this.allNotes;
 
+    // Attacks
+    if (context.match(/^attacks\.(.+)/)) {
+      const key = RegExp.$1;
+      for (let note of result) {
+        note.notes = note.notes.filter(o => {
+          return (o[1] === "attacks" && o[2] === key);
+        }).map(o => { return o[0]; });
+      }
+
+      return result;
+    }
+
     // Skill
     if (context.match(/^skill\.(.+)/)) {
       const skillKey = RegExp.$1;

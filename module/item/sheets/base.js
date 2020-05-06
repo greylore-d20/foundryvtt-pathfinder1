@@ -330,6 +330,13 @@ export class ItemSheetPF extends ItemSheet {
       )
     }
 
+    // Tags
+    if (getProperty(item, "data.tags") != null) {
+      props.push(...getProperty(item, "data.tags").map(o => {
+        return o[0];
+      }));
+    }
+
     return props.filter(p => !!p);
   }
 

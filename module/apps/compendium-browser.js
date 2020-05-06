@@ -54,7 +54,7 @@ export class CompendiumBrowser extends Application {
       const items = await p.getContent();
       for (let i of items) {
         if (!this._filterItems(i)) continue;
-        this.items.push(this._mapItems(p, i));
+        this.items.push(this._mapItem(p, i));
       }
     }
     this.items.sort((a, b) => {
@@ -70,15 +70,22 @@ export class CompendiumBrowser extends Application {
     if (this.type === "spells") this._fetchSpellFilters();
     else if (this.type === "items") this._fetchItemFilters();
     else if (this.type === "bestiary") this._fetchBestiaryFilters();
+    else if (this.type === "feats") this._fetchFeatFilters();
+
+    this.activeFilters = this.filters.reduce((cur, f) => {
+      cur[f.path] = [];
+      return cur;
+    }, {});
   }
 
   _filterItems(item) {
     if (this.type === "spells" && item.type !== "spell") return false;
     if (this.type === "items" && !["weapon", "equipment", "loot", "consumable"].includes(item.type)) return false;
+    if (this.type === "feats" && item.type !== "feat") return false;
     return true;
   }
 
-  _mapItems(pack, item) {
+  _mapItem(pack, item) {
     const result = {
       collection: pack.collection,
       item: {
@@ -89,6 +96,21 @@ export class CompendiumBrowser extends Application {
         data: item.data.data,
       },
     };
+
+    // Feat-specific variables
+    if (this.type === "feats") {
+      if (!this.extraFilters) {
+        this.extraFilters = {
+          "tags": [],
+        };
+      }
+
+      result.item.tags = (getProperty(item.data, "data.tags") || []).reduce((cur, o) => {
+        if (!this.extraFilters["tags"].includes(o[0])) this.extraFilters["tags"].push(o[0]);
+        cur.push(o[0]);
+        return cur;
+      }, []);
+    }
 
     // Item-specific variables
     if (this.type === "items") {
@@ -319,11 +341,6 @@ export class CompendiumBrowser extends Application {
         }, []),
       },
     ];
-
-    this.activeFilters = this.filters.reduce((cur, f) => {
-      cur[f.path] = [];
-      return cur;
-    }, {});
   }
 
   _fetchItemFilters() {
@@ -418,11 +435,6 @@ export class CompendiumBrowser extends Application {
         }, []),
       },
     ];
-
-    this.activeFilters = this.filters.reduce((cur, f) => {
-      cur[f.path] = [];
-      return cur;
-    }, {});
   }
 
   _fetchBestiaryFilters() {
@@ -444,11 +456,31 @@ export class CompendiumBrowser extends Application {
         }, []),
       },
     ];
+  }
 
-    this.activeFilters = this.filters.reduce((cur, f) => {
-      cur[f.path] = [];
-      return cur;
-    }, {});
+  _fetchFeatFilters() {
+    this.filters = [
+      {
+        path: "data.featType",
+        label: game.i18n.localize("PF1.Type"),
+        items: Object.entries(CONFIG.PF1.featTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "tags",
+        label: game.i18n.localize("PF1.Tags"),
+        items: this.extraFilters.tags.reduce((cur, o) => {
+          cur.push({ key: o, name: o });
+          return cur;
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
+      },
+    ];
   }
 
   async _render(...args) {

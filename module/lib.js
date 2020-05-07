@@ -277,7 +277,7 @@ export const getActorFromId = function(id) {
   let actor = null;
   if (id) {
     actor = game.actors.tokens[id];
-    if (!actor) actor = game.actors.entities.get(id);
+    if (!actor) actor = game.actors.get(id);
   }
   if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);

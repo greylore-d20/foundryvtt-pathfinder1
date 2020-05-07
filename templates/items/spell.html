@@ -195,6 +195,14 @@
       </div>
       {{/if}}
 
+      {{#unless isAtWill}}
+      <div class="spell-misc form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="data.preparation.autoDeductCharges" {{checked data.preparation.autoDeductCharges}}/> {{localize "PF1.AutoDeductCharges"}}
+        </label>
+      </div>
+      {{/unless}}
+
       {{!-- Caster Level Offset --}}
       <div class="form-group">
         <div class="form-fields">

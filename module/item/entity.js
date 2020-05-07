@@ -597,7 +597,9 @@ export class ItemPF extends Item {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
     }
 
-    const autoDeductCharges = ((isCharged || isSingleUse) && getProperty(this.data, "data.uses.autoDeductCharges") === true);
+    const autoDeductCharges = this.type === "spell"
+      ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
+      : ((isCharged || isSingleUse) && getProperty(this.data, "data.uses.autoDeductCharges") === true);
     const itemData = this.data.data;
     const rollData = this.actor.getRollData();
     rollData.item = duplicate(itemData);
@@ -773,11 +775,14 @@ export class ItemPF extends Item {
           const atk = attacks[a];
           chatTemplateData.attacks = [atk];
         }
-        const chatData = mergeObject(attackRoll.toMessage(null, { create: false }), {
+        let chatData = {
           speaker: ChatMessage.getSpeaker({actor: this.actor}),
           rollMode: rollMode,
           "flags.pf1.noRollRender": true,
-        });
+        };
+        if (attackRoll) {
+          chatData = mergeObject(attackRoll.toMessage(null, { create: false }), chatData);
+        }
 
         if (a === 0) {
           // Don't play multiple sounds
@@ -785,11 +790,16 @@ export class ItemPF extends Item {
 
           // Deduct a charge
           if (autoDeductCharges) {
-            const newCharges = charges > 0 ? charges - 1 : charges;
-            itemUpdateData["data.uses.value"] = newCharges;
-            if (isSingleUse) {
-              const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
-              itemUpdateData["data.quantity"] = newQuantity;
+            if (this.type === "spell") {
+              this.addSpellUses(-1, itemUpdateData);
+            }
+            else {
+              const newCharges = Math.max(0, charges - 1);
+              itemUpdateData["data.uses.value"] = newCharges;
+              if (isSingleUse) {
+                const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
+                itemUpdateData["data.quantity"] = newQuantity;
+              }
             }
           }
 
@@ -1482,4 +1492,44 @@ export class ItemPF extends Item {
         if ( !targets.length ) throw new Error(`You must designate a specific Token as the roll target`);
         return targets;
       }
-    }
+
+      async addSpellUses(value, data=null) {
+        const preparationMode = getProperty(this.data, "data.preparation.mode") || "prepared",
+          spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
+          spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`) || {},
+          spellLevel = getProperty(this.data, "data.level");
+        const newCharges = preparationMode === "prepared"
+          ? Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value)
+          : Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value);
+
+        if (preparationMode === "prepared") {
+          const key = "data.preparation.preparedAmount";
+          if (data == null) {
+            data = {};
+            data[key] = newCharges;
+            return this.update(data);
+          }
+          else {
+            data[key] = newCharges;
+          }
+        }
+        else if (preparationMode === "spontaneous") {
+          const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
+          const actorUpdateData = {};
+          actorUpdateData[key] = newCharges;
+          return this.actor.update(actorUpdateData);
+        }
+
+        return null;
+      }
+
+      getSpellUses() {
+        const preparationMode = getProperty(this.data, "data.preparation.mode") || "prepared",
+          spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
+          spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`) || {},
+          spellLevel = getProperty(this.data, "data.level");
+        return preparationMode === "prepared"
+          ? (getProperty(this.data, "data.preparation.preparedAmount") || 0)
+          : (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0);
+      }
+}

@@ -152,6 +152,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
       data.isPreparedSpell = data.item.data.preparation.mode === "prepared";
+      data.isAtWill = data.item.data.preparation.mode === "atwill";
       data.spellbooks = {};
       if (this.item.actor) {
         data.spellbooks = duplicate(this.item.actor.data.data.attributes.spells.spellbooks);

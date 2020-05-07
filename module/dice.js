@@ -84,10 +84,9 @@ export class DicePF {
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
-            flavor: flavor,
-            rollMode: rollMode,
-            roll: roll,
             content: await renderTemplate(chatTemplate, rollData),
+            "flags.pf1.noRollRender": true,
+            "flags.pf1.speaker": speaker,
           };
           // Handle different roll modes
           switch (chatData.rollMode) {
@@ -104,8 +103,8 @@ export class DicePF {
 
           // Send message
           rolled = true;
-          const c = await ChatMessagePF.create(chatData);
-          c.setFlag("pf1", "noRollRender", true);
+          chatData = mergeObject(roll.toMessage({flavor}, { create: false }), chatData);
+          await ChatMessagePF.create(chatData);
         }
         else {
           rolled = true;

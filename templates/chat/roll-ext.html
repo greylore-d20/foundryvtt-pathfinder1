@@ -1,12 +1,12 @@
 {{#if formula}}
 <div class="dice-roll">
   {{#if flavor}}
-  <div class="dice-flavor{{#if isCrit}} success{{/if}}{{#if isFumble}} failure{{/if}}">{{flavor}}</div>
+  <div class="dice-flavor">{{flavor}}</div>
   {{/if}}
   <div class="dice-result">
       <div class="dice-formula">{{formula}}</div>
       {{{tooltip}}}
-      <h4 class="dice-total">{{total}}</h4>
+      <h4 class="dice-total{{#if isCrit}} success{{/if}}{{#if isFumble}} failure{{/if}}">{{total}}</h4>
   </div>
 </div>
 {{/if}}

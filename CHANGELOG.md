@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.44
+
+### Bug Fixes
+
+- Quick attack actions not using token data when applicable
+- Pre-processed functions (sizeRoll) couldn't use calculated parameters
+- Attack and effect/damage notes were not using any actor data
+
+### Changelog
+
+- Dice So Nice integration
+- Obfuscate roll notes from players without at least LIMITED permission over the actor
+- Added mechanism to automatically deduct spell uses
+- Added sample macro to award experience points
+
 ## 0.431
 
 ### Changelog

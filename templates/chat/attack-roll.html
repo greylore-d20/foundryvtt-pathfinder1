@@ -19,7 +19,7 @@
     <div class="dice-flavor">{{atk.critConfirm.flavor}}</div>
     {{/if}}
     <div class="dice-result">
-      <h4 class="dice-total">{{atk.critConfirm.total}}</h4>
+      <h4 class="dice-total{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.cfirConfirm.isFumble}} failure{{/if}}">{{atk.critConfirm.total}}</h4>
       {{{atk.critConfirm.tooltip}}}
     </div>
   </div>

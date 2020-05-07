@@ -61,21 +61,17 @@ export class DicePF {
         // Execute the roll
         let roll = new Roll(curParts.join(" + "), data).roll();
 
-        // Flag critical thresholds
-        if (setRoll == null || setRoll < 0) {
-          let d20 = roll.parts[0];
-          d20.options.critical = critical;
-          d20.options.fumble = fumble;
-        }
-
         // Convert the roll to a chat message
         if (chatTemplate) {
           // Create roll template data
+          const d20 = roll.parts[0];
           const rollData = mergeObject({
             user: game.user._id,
             formula: roll.formula,
             tooltip: await roll.getTooltip(),
             total: roll.total,
+            isCrit: d20.total >= critical,
+            isFumble: d20.total <= fumble,
           }, chatTemplateData || {});
 
           // Create chat data
@@ -104,6 +100,12 @@ export class DicePF {
           // Send message
           rolled = true;
           chatData = mergeObject(roll.toMessage({flavor}, { create: false }), chatData);
+          // Dice So Nice integration
+          if (game.dice3d != null) {
+            await game.dice3d.showForRoll(roll, chatData.whisper, chatData.blind);
+            chatData.sound = null;
+          }
+
           await ChatMessagePF.create(chatData);
         }
         else {

@@ -1,22 +1,4 @@
 /**
- * Highlight critical success or failure on d20 rolls
- */
-export const highlightCriticalSuccessFailure = function(message, html, data) {
-  if ( !message.roll || !message.roll.parts.length ) return;
-
-  // Highlight rolls where the first part is a d20 roll
-  let d = message.roll.parts[0];
-  const isD20Roll = d instanceof Die && (d.faces === 20) && (d.results.length === 1);
-  const isModifiedRoll = (d.rolls != null && "success" in d.rolls[0]) || (d.options != null && (d.options.marginSuccess || d.options.marginFailure));
-  if ( isD20Roll && !isModifiedRoll ) {
-    if (d.total >= (d.options.critical || 20)) html.find(".dice-total").addClass("success");
-    else if (d.total <= (d.options.fumble || 1)) html.find(".dice-total").addClass("failure");
-  }
-};
-
-/* -------------------------------------------- */
-
-/**
  * Optionally hide the display of chat card action buttons which cannot be performed by the user
  */
 export const displayChatActionButtons = function(message, html, data) {
@@ -58,6 +40,12 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
       chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
       chatData["blind"] = true;
       break;
+  }
+
+  // Dice So Nice integration
+  if (chatData.roll != null && game.dice3d != null) {
+    await game.dice3d.showForRoll(Roll.fromJSON(chatData.roll), chatData.whisper, chatData.blind);
+    chatData.sound = null;
   }
 
   ChatMessage.create(chatData);

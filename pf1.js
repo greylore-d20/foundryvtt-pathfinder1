@@ -154,9 +154,6 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Display action buttons
   chat.displayChatActionButtons(app, html, data);
 
-  // Highlight critical success or failure
-  chat.highlightCriticalSuccessFailure(app, html, data);
-
   // Hide roll info
   chat.hideRollInfo(app, html, data);
 

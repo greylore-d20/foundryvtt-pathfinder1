@@ -239,13 +239,16 @@ async function createItemMacro(item, slot) {
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
  * @param {string} itemName
- * @param {string} actorName
+ * @param {object} [options={}]
  * @return {Promise}
  */
 function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) {
   const speaker = ChatMessage.getSpeaker();
   let actor;
-  if (actorId != null) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
+  if (actorId != null) {
+    actor = game.actors.tokens[actorId];
+    if (!actor) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
+  }
   if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);
   if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));

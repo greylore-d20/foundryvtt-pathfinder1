@@ -1,9 +1,14 @@
 export class TokenQuickActions {
 
   static async addTop3Attacks(app, html, data) {
-   
-    let actor = game.actors.tokens[data._id];
-    if (!actor) actor = game.actors.get(data.actorId);
+
+    let actorId = data.actorId,
+      actor = game.actors.get(actorId);
+    if (data._id && game.actors.tokens[data._id] != null) {
+      actorId = data._id;
+      actor = game.actors.tokens[actorId];
+    }
+
     if (actor == null)
         return;
     
@@ -28,7 +33,7 @@ export class TokenQuickActions {
           game.pf1.rollItemMacro(item.name, {
             itemId: item._id,
             itemType: "attack",
-            actorId: actor._id
+            actorId: actorId
           });
         });
       }

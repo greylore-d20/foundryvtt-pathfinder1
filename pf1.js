@@ -20,7 +20,7 @@ import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDie } from "./module/lib.js";
+import { getItemOwner, sizeDie, getActorFromId } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
@@ -243,14 +243,7 @@ async function createItemMacro(item, slot) {
  * @return {Promise}
  */
 function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) {
-  const speaker = ChatMessage.getSpeaker();
-  let actor;
-  if (actorId != null) {
-    actor = game.actors.tokens[actorId];
-    if (!actor) actor = game.actors.entities.filter(o => { return o._id === actorId; })[0];
-  }
-  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
+  let actor = getActorFromId(actorId);
   if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
   const item = actor ? actor.items.find(i => {
     if (itemId != null && i._id !== itemId) return false;

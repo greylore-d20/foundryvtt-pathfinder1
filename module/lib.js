@@ -271,3 +271,15 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
 export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
   return new Roll(sizeDie(origCount, origSides, targetSize, crit)).roll().total;
 };
+
+export const getActorFromId = function(id) {
+  const speaker = ChatMessage.getSpeaker();
+  let actor = null;
+  if (id) {
+    actor = game.actors.tokens[id];
+    if (!actor) actor = game.actors.entities.get(id);
+  }
+  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
+  if (!actor) actor = game.actors.get(speaker.actor);
+  return actor;
+};

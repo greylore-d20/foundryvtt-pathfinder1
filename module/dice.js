@@ -86,10 +86,9 @@ export class DicePF {
             speaker: speaker,
             content: await renderTemplate(chatTemplate, rollData),
             "flags.pf1.noRollRender": true,
-            "flags.pf1.speaker": speaker,
           };
           // Handle different roll modes
-          switch (chatData.rollMode) {
+          switch (rollMode) {
             case "gmroll":
               chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
               break;
@@ -99,6 +98,7 @@ export class DicePF {
             case "blindroll":
               chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
               chatData["blind"] = true;
+              break;
           }
 
           // Send message

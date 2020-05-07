@@ -650,7 +650,7 @@ export class ItemPF extends Item {
         cur.push({ bonus: r[0], label: r[1] });
         return cur;
       }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
-      let attacks = [];
+      let attacks = [], attackRoll;
       const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
         if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
         return cur;
@@ -661,7 +661,7 @@ export class ItemPF extends Item {
           let tooltip, roll, d20, flavor, critType = 0;
           // Attack roll
           if (this.hasAttack) {
-            roll = this.rollAttack({
+            roll = attackRoll = this.rollAttack({
               data: rollData,
               bonus: atk.bonus !== "" ? atk.bonus : null,
               extraParts: attackExtraParts,
@@ -770,10 +770,11 @@ export class ItemPF extends Item {
           const atk = attacks[a];
           chatTemplateData.attacks = [atk];
         }
-        const chatData = {
+        const chatData = mergeObject(attackRoll.toMessage(null, { create: false }), {
           speaker: ChatMessage.getSpeaker({actor: this.actor}),
           rollMode: rollMode,
-        };
+          "flags.pf1.noRollRender": true,
+        });
 
         if (a === 0) {
           // Don't play multiple sounds

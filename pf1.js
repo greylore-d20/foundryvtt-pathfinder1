@@ -160,6 +160,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Hide roll info
   chat.hideRollInfo(app, html, data);
 
+  // Hide GM sensitive info
+  chat.hideGMSensitiveInfo(app, html, data);
+
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
 });

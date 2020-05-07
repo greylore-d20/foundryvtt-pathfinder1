@@ -50,12 +50,12 @@
 {{/each}}
 
 {{#if hasExtraText}}
-<div class="extra-text">{{{extraText}}}</div>
+<div class="extra-text gm-sensitive">{{{extraText}}}</div>
 {{/if}}
 
 {{#if hasProperties}}
 {{#each properties as |prop|}}
-<div class="flexcol property-group">
+<div class="flexcol property-group gm-sensitive">
   <label>{{prop.header}}</label>
   <div class="flexrow">
     {{#each prop.value as |v|}}

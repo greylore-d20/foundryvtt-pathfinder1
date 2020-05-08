@@ -47,7 +47,7 @@ export class CompendiumBrowser extends Application {
   async _fetchMetadata() {
     this.items = [];
 
-    for (let p of game.packs) {
+    for (let p of game.packs.values()) {
       if (p.private && !game.user.isGM) continue;
       if (p.entity !== this.entityType) continue;
 

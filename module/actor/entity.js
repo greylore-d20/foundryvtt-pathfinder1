@@ -1911,7 +1911,7 @@ export class ActorPF extends Actor {
       canvas.sight.initializeTokens();
     }
 
-    for (let i of this.items) {
+    for (let i of this.items.values()) {
       let itemUpdateData = {};
 
       i._updateMaxUses(itemUpdateData, { actorData: data });
@@ -2040,7 +2040,7 @@ export class ActorPF extends Actor {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
 
-    if (item.getSpellUses() <= 0) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
+    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() <= 0) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
 
     // Invoke the Item roll
     if (item.hasAction) return item.useAttack({ev: ev, skipDialog: skipDialog});

@@ -215,11 +215,11 @@
           {{#each data.abilities as |ability id|}}
           <li class="ability" data-ability="{{id}}">
             <div class="ability-header flexrow">
-              <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text"
+              <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text" title="{{localize "PF1.Damage"}}"
               value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.DMG" }}"/>
-              <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text"
+              <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text" title="{{localize "PF1.Penalty"}}"
               value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.PNL" }}"/>
-              <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text"
+              <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text" title="{{localize "PF1.Drain"}}"
               value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="{{ localize "PF1.DRN" }}"/>
             </div>
             <h4 class="ability-name box-title rollable">{{ability.label}}</h4>

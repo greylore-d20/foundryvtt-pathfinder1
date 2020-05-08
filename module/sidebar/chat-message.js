@@ -2,14 +2,16 @@ export class ChatMessagePF extends ChatMessage {
   async render() {
 
     // Determine some metadata
+    const data = duplicate(this.data);
     const isWhisper = this.data.whisper.length;
+    const isVisible = this.isContentVisible;
 
     // Construct message data
     const messageData = {
+      message: data,
       user: game.user,
       author: this.user,
       alias: this.alias,
-      message: duplicate(this.data),
       cssClass: [
         this.data.type === CONST.CHAT_MESSAGE_TYPES.IC ? "ic" : null,
         this.data.type === CONST.CHAT_MESSAGE_TYPES.EMOTE ? "emote" : null,
@@ -25,13 +27,15 @@ export class ChatMessagePF extends ChatMessage {
 
     // Enrich some data for dice rolls
     if (this.isRoll && !this.getFlag("pf1", "noRollRender")) {
-      const isVisible = this.isRollVisible;
-      messageData.message.content = await this.roll.render({isPrivate: !isVisible});
-      if ( isWhisper ) {
-        const subject = this.data.user === game.user._id ? "You" : this.user.name;
-        messageData.message.flavor = messageData.message.flavor || `${subject} privately rolled some dice`;
+
+      // Render HTML if needed
+      if ( data.content.slice(0, 1) !== "<" ) {
+        data.content = await this.roll.render({isPrivate: !isVisible});
       }
+
+      // Conceal some private roll information
       if ( !isVisible ) {
+        data.flavor = `${this.user.name} privately rolled some dice`;
         messageData.isWhisper = false;
         messageData.alias = this.user.name;
       }

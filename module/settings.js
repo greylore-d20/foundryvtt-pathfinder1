@@ -13,7 +13,7 @@ export const registerSystemSettings = function() {
   });
 
   // Health configuration
-  game.settings.registerMenu("system", "healthConfig", {
+  game.settings.registerMenu("pf1", "healthConfig", {
     name: "SETTINGS.pf1HealthConfigName",
     label: "SETTINGS.pf1HealthConfigLabel",
     hint: "SETTINGS.pf1HealthConfigHint",

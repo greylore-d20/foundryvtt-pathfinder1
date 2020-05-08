@@ -9,7 +9,7 @@ import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
 import { addChatMessageContextOptions } from "./module/combat.js";
-import { measureDistance } from "./module/canvas.js";
+import { measureDistances } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -142,7 +142,7 @@ Hooks.on("canvasInit", function() {
 
   // Extend Diagonal Measurement
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
-  SquareGrid.prototype.measureDistance = measureDistance;
+  SquareGrid.prototype.measureDistances = measureDistances;
 });
 
 

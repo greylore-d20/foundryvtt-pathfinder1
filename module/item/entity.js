@@ -785,9 +785,6 @@ export class ItemPF extends Item {
         }
 
         if (a === 0) {
-          // Don't play multiple sounds
-          chatData.sound = CONFIG.sounds.dice;
-
           // Deduct a charge
           if (autoDeductCharges) {
             if (this.type === "spell") {
@@ -805,6 +802,10 @@ export class ItemPF extends Item {
 
           // Update item
           this.update(itemUpdateData);
+        }
+        else {
+          // Don't play multiple sounds
+          chatData.sound = null;
         }
 
         // Post message

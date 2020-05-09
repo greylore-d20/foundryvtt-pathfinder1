@@ -706,23 +706,50 @@ export class ItemPF extends Item {
           }
           // Add damage
           if (this.hasDamage) {
-            roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, primaryAttack: primaryAttack });
-            tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+            let rolls = [];
+            rolls = this.rollDamage({ data: rollData, extraParts: damageExtraParts, primaryAttack: primaryAttack });
+            let tooltips = "";
+            for (let roll of rolls) {
+              let tooltip = $(await roll.roll.getTooltip()).prepend(`<div class="dice-formula">${roll.roll.formula}</div>`)[0].outerHTML;
+              // Alter tooltip
+              let tooltipHtml = $(tooltip);
+              let totalText = roll.roll.total.toString();
+              if (roll.damageType.length) totalText += ` (${roll.damageType})`;
+              tooltipHtml.find(".part-total").text(totalText);
+              tooltip = tooltipHtml[0].outerHTML;
+              // Add tooltip
+              tooltips += tooltip;
+            }
             flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
             attack.damage = {
               flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
-              tooltip: tooltip,
-              total: roll.total,
+              tooltip: tooltips,
+              total: rolls.reduce((cur, roll) => {
+                return cur + roll.roll.total
+              }, 0),
             };
 
             if (critType === 1) {
-              roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts, critical: true, primaryAttack: primaryAttack });
-              tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
-              flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+              rolls = this.rollDamage({ data: rollData, extraParts: damageExtraParts, critical: true, primaryAttack: primaryAttack });
+              let tooltips = "";
+              for (let roll of rolls) {
+                let tooltip = $(await roll.roll.getTooltip()).prepend(`<div class="dice-formula">${roll.roll.formula}</div>`)[0].outerHTML;
+                // Alter tooltip
+                let tooltipHtml = $(tooltip);
+                let totalText = roll.roll.total.toString();
+                if (roll.damageType.length) totalText += ` (${roll.damageType})`;
+                tooltipHtml.find(".part-total").text(totalText);
+                tooltip = tooltipHtml[0].outerHTML;
+                // Add tooltip
+                tooltips += tooltip;
+              }
+              flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
               attack.critDamage = {
                 flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
-                tooltip: tooltip,
-                total: roll.total,
+                tooltip: tooltips,
+                total: rolls.reduce((cur, roll) => {
+                  return cur + roll.roll.total
+                }, 0),
               };
             }
           }
@@ -732,14 +759,28 @@ export class ItemPF extends Item {
       }
       // Add damage only
       else if (this.hasDamage) {
-        let roll = this.rollDamage({ data: rollData, extraParts: damageExtraParts });
-        let tooltip = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
+        let rolls = [];
+        rolls = this.rollDamage({ data: rollData, extraParts: damageExtraParts, primaryAttack: primaryAttack });
+        let tooltips = "";
         let attack = {};
+        for (let roll of rolls) {
+          let tooltip = $(await roll.roll.getTooltip()).prepend(`<div class="dice-formula">${roll.roll.formula}</div>`)[0].outerHTML;
+          // Alter tooltip
+          let tooltipHtml = $(tooltip);
+          let totalText = roll.roll.total.toString();
+          if (roll.damageType.length) totalText += ` (${roll.damageType})`;
+          tooltipHtml.find(".part-total").text(totalText);
+          tooltip = tooltipHtml[0].outerHTML;
+          // Add tooltip
+          tooltips += tooltip;
+        }
         let flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
         attack.damage = {
           flavor: damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor,
-          tooltip: tooltip,
-          total: roll.total,
+          tooltip: tooltips,
+          total: rolls.reduce((cur, roll) => {
+            return cur + roll.roll.total
+          }, 0),
         };
         attacks.push(attack);
       }
@@ -1084,46 +1125,51 @@ export class ItemPF extends Item {
         if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
         // Define Roll parts
-        let parts = itemData.damage.parts.map(d => d[0]);
-        parts[0] = alterRoll(parts[0], 0, rollData.critMult);
+        let parts = itemData.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
+        parts[0].base = alterRoll(parts[0].base, 0, rollData.critMult);
 
         // Determine ability score modifier
         let abl = itemData.ability.damage;
         if (typeof abl === "string" && abl !== "") {
           rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
           if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
-          if (rollData.ablDamage < 0) parts.push("@ablDamage");
-          else if (rollData.critMult !== 1) parts.push("@ablDamage * @critMult");
-          else if (rollData.ablDamage !== 0) parts.push("@ablDamage");
+          if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
+          else if (rollData.critMult !== 1) parts[0].extra.push("@ablDamage * @critMult");
+          else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
         }
         // Add enhancement bonus
         if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {
-          if (rollData.critMult !== 1) parts.push("@item.enh * @critMult");
-          else parts.push("@item.enh");
+          if (rollData.critMult !== 1) parts[0].extra.push("@item.enh * @critMult");
+          else parts[0].extra.push("@item.enh");
         }
 
         // Add general damage
         if (rollData.attributes.damage.general !== 0) {
-          if (rollData.critMult !== 1) parts.push("@attributes.damage.general * @critMult");
-          else parts.push("@attributes.damage.general");
+          if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.general * @critMult");
+          else parts[0].extra.push("@attributes.damage.general");
         }
         // Add melee or spell damage
         if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(itemData.actionType)) {
-          if (rollData.critMult !== 1) parts.push("@attributes.damage.weapon * @critMult");
-          else parts.push("@attributes.damage.weapon");
+          if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.weapon * @critMult");
+          else parts[0].extra.push("@attributes.damage.weapon");
         }
         else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(itemData.actionType)) {
-          if (rollData.critMult !== 1) parts.push("@attributes.damage.spell * @critMult");
-          else parts.push("@attributes.damage.spell");
+          if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.spell * @critMult");
+          else parts[0].extra.push("@attributes.damage.spell");
         }
 
-        // Add extra parts
-        parts = parts.concat(extraParts);
-
         // Create roll
-        const roll = new Roll(parts.join("+"), rollData);
+        let rolls = [];
+        for (let a = 0; a < parts.length; a++) {
+          const part = parts[a];
+          const roll = {
+            roll: new Roll([part.base, ...part.extra].join("+"), rollData).roll(),
+            damageType: part.damageType,
+          };
+          rolls.push(roll);
+        }
 
-        return roll.roll();
+        return rolls;
       }
 
       /* -------------------------------------------- */

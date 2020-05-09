@@ -2076,7 +2076,7 @@ export class ActorPF extends Actor {
     // Add additional attacks
     let extraAttacks = [];
     for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
-      extraAttacks = extraAttacks.concat([["-5", `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
+      extraAttacks = extraAttacks.concat([[`-${a}`, `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
 

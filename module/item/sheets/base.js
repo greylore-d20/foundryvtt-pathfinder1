@@ -100,6 +100,11 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputDuration = !(["", "inst", "perm", "seeText"].includes(data.item.data.duration.units));
     }
 
+    // Prepare feat specific stuff
+    if (data.item.type === "feat") {
+      data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
+    }
+
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
       data.isRanged = (data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true);

@@ -74,15 +74,25 @@
       <div class="form-group stacked">
         <label>{{localize "PF1.LearnedAt"}}</label>
 
-        <button class="entry-selector" for="data.learnedAt.class" data-fields="{{localize "PF1.CasterLevel"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.CasterLevel"}}</button>
+        <div class="data-selector">
+          <a class="entry-selector" for="data.learnedAt.class" data-fields="{{localize "PF1.CasterLevel"}};{{localize "PF1.Level"}}" data-dtypes="String;Number"><i class="fas fa-edit"></i></a>
+          <label for="data.learnedAt.class">{{localize "PF1.CasterLevel"}}</label>
+        </div>
 
-        <button class="entry-selector" for="data.learnedAt.domain" data-fields="{{localize "PF1.Domain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.Domain"}}</button>
+        <div class="data-selector">
+          <a class="entry-selector" for="data.learnedAt.domain" data-fields="{{localize "PF1.Domain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number"><i class="fas fa-edit"></i></a>
+          <label for="data.learnedAt.domain">{{localize "PF1.Domain"}}</label>
+        </div>
 
-        <button class="entry-selector" for="data.learnedAt.subDomain" data-fields="{{localize "PF1.SubDomain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.SubDomain"}}</button>
+        <div class="data-selector">
+          <a class="entry-selector" for="data.learnedAt.subDomain" data-fields="{{localize "PF1.SubDomain"}};{{localize "PF1.Level"}}" data-dtypes="String;Number"><i class="fas fa-edit"></i></a>
+          <label for="data.learnedAt.subDomain">{{localize "PF1.SubDomain"}}</label>
+        </div>
 
-        {{!-- <button class="entry-selector" for="data.learnedAt.elementalSchool" data-fields="{{localize "PF1.ElementalSchool"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.ElementalSchool"}}</button> --}}
-
-        <button class="entry-selector" for="data.learnedAt.bloodline" data-fields="{{localize "PF1.Bloodline"}};{{localize "PF1.Level"}}" data-dtypes="String;Number">{{localize "PF1.Bloodline"}}</button>
+        <div class="data-selector">
+          <a class="entry-selector" for="data.learnedAt.bloodline" data-fields="{{localize "PF1.Bloodline"}};{{localize "PF1.Level"}}" data-dtypes="String;Number"><i class="fas fa-edit"></i></a>
+          <label for="data.learnedAt.bloodline">{{localize "PF1.Bloodline"}}</label>
+        </div>
       </div>
 
       {{!-- Spell School --}}

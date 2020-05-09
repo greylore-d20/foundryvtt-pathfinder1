@@ -25,12 +25,11 @@ export class ActorPF extends Actor {
 
     // Get the Actor
     const actor = ItemPF._getChatCardActor(card);
-    if (!actor) return;
 
     // Roll saving throw
     if (action === "save") {
       const saveId = button.dataset.save;
-      actor.rollSavingThrow(saveId, { event: event });
+      if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
   }
 
@@ -2575,11 +2574,9 @@ export class ActorPF extends Actor {
    * @param {Number} multiplier   A damage multiplier to apply to the rolled damage.
    * @return {Promise}
    */
-  static async applyDamage(roll, multiplier, critical=false) {
-    let value = Math.floor(parseFloat(roll.find('.damage-roll .dice-total').text()) * multiplier);
-    if (critical) value = Math.floor(parseFloat(roll.find('.crit-damage-roll .dice-total').text()) * multiplier);
+  static async applyDamage(value) {
     const promises = [];
-    for ( let t of canvas.tokens.controlled ) {
+    for (let t of canvas.tokens.controlled) {
       let a = t.actor,
           hp = a.data.data.attributes.hp,
           tmp = parseInt(hp.temp) || 0,

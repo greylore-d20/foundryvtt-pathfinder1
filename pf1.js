@@ -8,7 +8,6 @@
 import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
-import { addChatMessageContextOptions } from "./module/combat.js";
 import { measureDistances } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -164,7 +163,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
 });
 
-Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
+// Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 

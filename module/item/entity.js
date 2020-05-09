@@ -938,7 +938,7 @@ export class ItemPF extends Item {
       // Define Roll parts
       let parts = [];
       // Add ability modifier
-      if (abl != "") parts.push(`@abilities.${abl}.mod`);
+      if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) parts.push(`@abilities.${abl}.mod`);
       // Add bonus parts
       if (options.parts != null) parts = parts.concat(options.parts);
       // Add size bonus
@@ -969,7 +969,7 @@ export class ItemPF extends Item {
         parts.push("@item.enh");
       }
       // Subtract energy drain
-      if (rollData.attributes.energyDrain != null) {
+      if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
         parts.push("- {@attributes.energyDrain, 0}kh");
       }
       // Add proficiency penalty

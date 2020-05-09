@@ -652,7 +652,7 @@ export class ItemPF extends Item {
         cur.push({ bonus: r[0], label: r[1] });
         return cur;
       }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
-      let attacks = [], attackRoll;
+      let attacks = [], attackRolls = [];
       const damageTypes = this.data.data.damage.parts.reduce((cur, o) => {
         if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
         return cur;
@@ -663,12 +663,13 @@ export class ItemPF extends Item {
           let tooltip, roll, d20, flavor, critType = 0;
           // Attack roll
           if (this.hasAttack) {
-            roll = attackRoll = this.rollAttack({
+            roll = this.rollAttack({
               data: rollData,
               bonus: atk.bonus !== "" ? atk.bonus : null,
               extraParts: attackExtraParts,
               primaryAttack: primaryAttack,
             });
+            attackRolls.push(roll);
             d20 = roll.parts[0];
             if (d20.total >= crit) critType = 1;
             else if (d20.total <= 1) critType = 2;
@@ -780,8 +781,8 @@ export class ItemPF extends Item {
           rollMode: rollMode,
           "flags.pf1.noRollRender": true,
         };
-        if (attackRoll) {
-          chatData = mergeObject(attackRoll.toMessage(null, { create: false }), chatData);
+        if (attackRolls[a] != null) {
+          chatData = mergeObject(attackRolls[a].toMessage(null, { create: false }), chatData);
         }
 
         if (a === 0) {

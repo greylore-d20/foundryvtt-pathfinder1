@@ -1,4 +1,5 @@
 import { HealthConfig } from "./config/health.js";
+import { isMinimumCoreVersion } from "./lib.js";
 
 export const registerSystemSettings = function() {
   /**
@@ -13,14 +14,16 @@ export const registerSystemSettings = function() {
   });
 
   // Health configuration
-  game.settings.registerMenu("pf1", "healthConfig", {
-    name: "SETTINGS.pf1HealthConfigName",
-    label: "SETTINGS.pf1HealthConfigLabel",
-    hint: "SETTINGS.pf1HealthConfigHint",
-    icon: "fas fa-heartbeat",
-    type: HealthConfig,
-    restricted: true
-  });
+  game.settings.registerMenu(isMinimumCoreVersion("0.5.6") ? "pf1" : "system",
+    "healthConfig", {
+      name: "SETTINGS.pf1HealthConfigName",
+      label: "SETTINGS.pf1HealthConfigLabel",
+      hint: "SETTINGS.pf1HealthConfigHint",
+      icon: "fas fa-heartbeat",
+      type: HealthConfig,
+      restricted: true
+    }
+  );
 
   game.settings.register("pf1", "healthConfig", {
     name: "SETTINGS.pf1HealthConfigName",

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5
+
+### Bug Fixes
+
+- Saving throw and skill roll criticals and fumbles weren't being highlighted anymore
+- Dice So Nice integration for multi attacks was showing the result of the last roll on every dice toss
+- Attacks without damage or effect notes weren't useable
+
+### Changelog
+
+- Attacks with multiple damage parts now have their parts clearly separated in the chat tooltip
+- Full attacks are now consolidated into a single chat card again
+- Added a few more bestiary entries
+- Edited the Award XP sample macro to add an option for distributing experience evenly among those selected
+
 ## 0.44
 
 ### Bug Fixes

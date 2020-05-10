@@ -871,7 +871,9 @@ export class ItemPF extends Item {
           const innerHTML = TextEditor.enrichHTML(attackStr, { rollData: rollData });
           extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${innerHTML}</div></div>`;
         }
-        extraText += this.rollEffect({ primaryAttack: primaryAttack });
+        if (this.hasEffect) {
+          extraText += this.rollEffect({ primaryAttack: primaryAttack });
+        }
 
         const properties = this.getChatData().properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });

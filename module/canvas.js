@@ -35,6 +35,28 @@ export const measureDistances = function(segments, options={}) {
   });
 };
 
+export const measureDistance = function(p0, p1, {gridSpaces=true}={}) {
+  if ( !gridSpaces ) return BaseGrid.prototype.measureDistance.bind(this)(p0, p1, {gridSpaces});
+  let gs = canvas.dimensions.size,
+      ray = new Ray(p0, p1),
+      nx = Math.abs(Math.ceil(ray.dx / gs)),
+      ny = Math.abs(Math.ceil(ray.dy / gs));
+
+  // Get the number of straight and diagonal moves
+  let nDiagonal = Math.min(nx, ny),
+      nStraight = Math.abs(ny - nx);
+
+  // Alternative DMG Movement
+  if ( this.parent.diagonalRule === "5105" ) {
+    let nd10 = Math.floor(nDiagonal / 2);
+    let spaces = (nd10 * 2) + (nDiagonal - nd10) + nStraight;
+    return spaces * canvas.dimensions.distance;
+  }
+
+  // Standard PHB Movement
+  else return (nStraight + nDiagonal) * canvas.scene.data.gridDistance;
+};
+
 /* -------------------------------------------- */
 
 /**

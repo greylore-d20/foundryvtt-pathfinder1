@@ -8,7 +8,7 @@
 import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
-import { measureDistances } from "./module/canvas.js";
+import { measureDistances, measureDistance } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -19,7 +19,7 @@ import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDie, getActorFromId } from "./module/lib.js";
+import { getItemOwner, sizeDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
@@ -141,7 +141,8 @@ Hooks.on("canvasInit", function() {
 
   // Extend Diagonal Measurement
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
-  SquareGrid.prototype.measureDistances = measureDistances;
+  if (isMinimumCoreVersion("0.5.6")) SquareGrid.prototype.measureDistances = measureDistances;
+  else SquareGrid.prototype.measureDistance = measureDistance;
 });
 
 

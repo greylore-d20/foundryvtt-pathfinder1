@@ -121,6 +121,9 @@
         <label class="checkbox">
           <input type="checkbox" name="data.sr" {{checked data.sr}}/> {{localize "PF1.SpellResistance"}}
         </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.atWill" {{checked data.atWill}}/> {{localize "PF1.SpellPrepAtWill"}}
+        </label>
       </div>
 
       {{!-- Spell Components --}}
@@ -172,20 +175,6 @@
         <input class="focus" type="text" name="data.materials.focus" value="{{data.materials.focus}}"/>
       </div>
       {{/if}}
-
-      {{!-- Preparation Mode --}}
-      <div class="form-group input-select">
-        <label>{{localize "PF1.SpellPreparationType"}}</label>
-        <div class="form-fields">
-          <select name="data.preparation.mode">
-            {{#select data.preparation.mode}}
-            {{#each config.spellPreparationModes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
-        </div>
-      </div>
 
       {{!-- Prepared Spells --}}
       {{#if isPreparedSpell}}

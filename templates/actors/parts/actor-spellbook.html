@@ -66,6 +66,10 @@
         {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
       </label>
       <label class="checkbox">
+        <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"
+        {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
+      </label>
+      <label class="checkbox">
         <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.arcaneSpellFailure"
         {{checked spellbook.orig.arcaneSpellFailure}}/> {{localize "PF1.ArcaneSpellFailure"}}
       </label>
@@ -141,12 +145,12 @@
           </div>
           
           <div class="spell-uses flexrow">
-            {{#if item.isPrepared}}
+            {{#unless ../../spellbook.orig.spontaneous}}
             <span>{{localize "PF1.Uses"}}</span>
             <input type="text" value="{{item.data.preparation.preparedAmount}}" data-type="amount" data-dtype="Number"/>
             <span class="sep"> / </span>
             <input type="text" value="{{item.data.preparation.maxAmount}}" data-type="max" data-dtype="Number"/>
-            {{/if}}
+            {{/unless}}
           </div>
           
           <div class="spell-school">{{labels.school}}</div>

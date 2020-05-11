@@ -1546,15 +1546,19 @@ export class ItemPF extends Item {
   }
 
   async addSpellUses(value, data=null) {
-    const preparationMode = getProperty(this.data, "data.preparation.mode") || "prepared",
-      spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
-      spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`) || {},
-      spellLevel = getProperty(this.data, "data.level");
-    const newCharges = preparationMode === "prepared"
-      ? Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value)
-      : Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value);
+    if (!this.actor) return;
+    if (this.data.data.atWill) return;
+    if (this.data.data.level === 0) return;
 
-    if (preparationMode === "prepared") {
+    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+      isSpontaneous = spellbook.spontaneous,
+      spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
+      spellLevel = getProperty(this.data, "data.level");
+    const newCharges = isSpontaneous
+      ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
+      : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);
+
+    if (!isSpontaneous) {
       const key = "data.preparation.preparedAmount";
       if (data == null) {
         data = {};
@@ -1565,7 +1569,7 @@ export class ItemPF extends Item {
         data[key] = newCharges;
       }
     }
-    else if (preparationMode === "spontaneous") {
+    else {
       const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
       const actorUpdateData = {};
       actorUpdateData[key] = newCharges;
@@ -1576,12 +1580,14 @@ export class ItemPF extends Item {
   }
 
   getSpellUses() {
-    const preparationMode = getProperty(this.data, "data.preparation.mode") || "prepared",
-      spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
-      spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`) || {},
+    if (!this.actor) return 0;
+    if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
+
+    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+      isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
-    return preparationMode === "prepared"
-      ? (getProperty(this.data, "data.preparation.preparedAmount") || 0)
-      : (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0);
+    return isSpontaneous
+      ? (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0)
+      : (getProperty(this.data, "data.preparation.preparedAmount") || 0);
   }
 }

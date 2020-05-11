@@ -1396,7 +1396,8 @@ export class ActorPF extends Actor {
     }
 
     // Add ability mods to CMB and CMD
-    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + modDiffs["str"]);
+    const cmbMod = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(data, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny") ? modDiffs["dex"] : modDiffs["str"];
+    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + cmbMod);
     linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["str"]);
     if (!flags.loseDexToAC || modDiffs["dex"] < 0) {
       linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
@@ -1592,12 +1593,14 @@ export class ActorPF extends Actor {
       sourceDetails["data.attributes.cmd.total"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
     }
+    const useDexForCMB = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(actorData, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny");
     if (actorData.data.abilities.str.mod !== 0) {
-      sourceDetails["data.attributes.cmb.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
+      if (!useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
       sourceDetails["data.attributes.cmd.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
     }
     if (actorData.data.abilities.dex.mod !== 0) {
+      if (useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.cmd.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.init.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });

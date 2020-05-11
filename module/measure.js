@@ -1,11 +1,11 @@
 import { degtorad } from "./lib.js";
 
 // Use 90 degrees cone in PF1 style
-const TemplateLayer__onDragStart = TemplateLayer.prototype._onDragStart;
-TemplateLayer.prototype._onDragStart = function(event) {
-  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragStart.call(this, event);
+const TemplateLayer__onDragLeftStart = TemplateLayer.prototype._onDragLeftStart;
+TemplateLayer.prototype._onDragLeftStart = function(event) {
+  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragLeftStart.call(this, event);
 
-  PlaceablesLayer.prototype._onDragStart.call(this, event);
+  PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
 
   // Create the new preview template
   const tool = game.activeTool;
@@ -37,16 +37,16 @@ TemplateLayer.prototype._onDragStart = function(event) {
 
   // Assign the template
   let template = new MeasuredTemplate(data);
-  event.data.object = this.preview.addChild(template);
+  event.data.preview = this.preview.addChild(template);
   template.draw();
 };
 
 
-const TemplateLayer__onMouseMove = TemplateLayer.prototype._onMouseMove;
-TemplateLayer.prototype._onMouseMove = function(event) {
-  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onMouseMove.call(this, event);
+const TemplateLayer__onDragLeftMove = TemplateLayer.prototype._onDragLeftMove;
+TemplateLayer.prototype._onDragLeftMove = function(event) {
+  if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragLeftMove.call(this, event);
 
-  PlaceablesLayer.prototype._onMouseMove.call(this, event);
+  PlaceablesLayer.prototype._onDragLeftMove.call(this, event);
   if (event.data.createState >= 1) {
     // Snap the destination to the grid
     let dest = event.data.destination;
@@ -55,7 +55,7 @@ TemplateLayer.prototype._onMouseMove = function(event) {
     dest.y = y;
 
     // Compute the ray
-    let template = event.data.object,
+    let template = event.data.preview,
         ray = new Ray(event.data.origin, event.data.destination),
         ratio = (canvas.dimensions.size / canvas.dimensions.distance);
 
@@ -81,7 +81,7 @@ TemplateLayer.prototype._onMouseMove = function(event) {
 // Highlight grid in PF1 style
 const MeasuredTemplate_highlightGrid = MeasuredTemplate.prototype.highlightGrid;
 MeasuredTemplate.prototype.highlightGrid = function() {
-  if (!game.settings.get("pf1", "measureStyle") || !(["circle", "cone"].includes(this.data.t))) return MeasuredTemplate__highlightGrid.call(this);
+  if (!game.settings.get("pf1", "measureStyle") || !(["circle", "cone"].includes(this.data.t))) return MeasuredTemplate_highlightGrid.call(this);
 
   const grid = canvas.grid,
         d = canvas.dimensions,

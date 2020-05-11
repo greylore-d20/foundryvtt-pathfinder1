@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.51
+
+### Bug Fixes
+
+- Measure templates for attacks didn't work since Foundry 0.5.6 anymore
+- CMB incorrectly used Strength instead of Dexterity for actors that were Tiny or smaller
+
+### Changelog
+
+- Spellbooks are now set to spontaneous or not, rather than individual spells
+- Added a rest option to actors which will automatically heal hit point and ability score damage, as well as restore daily uses of items, features, attacks, spells and spellbooks
+- Measure template previews now highlight the grid they affect
+
 ## 0.5
 
 ### Bug Fixes

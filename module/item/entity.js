@@ -841,11 +841,7 @@ export class ItemPF extends Item {
       };
 
       // Post message
-      if (this.data.type === "spell" && a === 0) await this.roll({ rollMode: rollMode });
-      // if (attackRolls[a] != null) {
-      // chatData = mergeObject(attackRolls[a].toMessage(null, { create: false }), chatData);
-      // }
-      // rolled = true;
+      if (this.data.type === "spell") await this.roll({ rollMode: rollMode });
       
       if (this.hasAttack || this.hasDamage || this.hasEffect) {
         // Get extra text and properties

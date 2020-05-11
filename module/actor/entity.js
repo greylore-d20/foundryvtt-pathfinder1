@@ -2570,11 +2570,11 @@ export class ActorPF extends Actor {
    * Apply rolled dice damage to the token or tokens which are currently controlled.
    * This allows for damage to be scaled by a multiplier to account for healing, critical hits, or resistance
    *
-   * @param {HTMLElement} roll    The chat entry which contains the roll data
-   * @param {Number} multiplier   A damage multiplier to apply to the rolled damage.
+   * @param {Number} value   The amount of damage to deal.
    * @return {Promise}
    */
   static async applyDamage(value) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const promises = [];
     for (let t of canvas.tokens.controlled) {
       let a = t.actor,

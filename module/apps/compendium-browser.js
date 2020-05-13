@@ -536,6 +536,7 @@ export class CompendiumBrowser extends Application {
   async _render(...args) {
     await super._render(...args);
 
+    this.filterQuery = /.*/;
     this.element.find(".filter-content").css("display", "none");
   }
 

@@ -8,8 +8,25 @@ export class CompendiumBrowser extends Application {
 
     this.filters = [];
 
-    this.filterQuery = /.*/i;
     this.activeFilters = {};
+
+    this._data = {
+      loaded: false,
+      data: {},
+      promise: null,
+    };
+  }
+
+  async _gatherData() {
+    await this._fetchMetadata();
+
+    this._data.data = {
+      filters: this.filters,
+      collection: this.items,
+    };
+
+    this._data.loaded = true;
+    this._data.promise = null;
   }
 
   static get defaultOptions() {
@@ -241,12 +258,22 @@ export class CompendiumBrowser extends Application {
   }
 
   async getData() {
-    await this._fetchMetadata();
+    if (!this._data.loaded) {
+      if (this._data.promise != null) await this._data.promise;
+      else {
+        this._data.promise = this._gatherData();
+        await this._data.promise;
+      }
+    }
 
-    return {
-      filters: this.filters,
-      collection: this.items,
-    };
+    return this._data.data;
+  }
+
+  async refresh() {
+    if (this._data.promise != null) return;
+    this._data.promise = this._gatherData();
+    await this._data.promise;
+    this.render(false);
   }
 
   _fetchSpellFilters() {
@@ -532,6 +559,8 @@ export class CompendiumBrowser extends Application {
     html.find('.filter input[type="checkbox"]').change(this._onActivateBooleanFilter.bind(this));
 
     html.find('.filter h3').click(this._toggleFilterVisibility.bind(this));
+
+    html.find("button.refresh").click(this.refresh.bind(this));
   }
 
   /**

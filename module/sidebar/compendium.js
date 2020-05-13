@@ -33,3 +33,11 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     this.compendiums[type]._render(true);
   }
 }
+
+Hooks.once("ready", () => {
+  if (game.settings.get("pf1", "preloadCompendiums") === true) {
+    for (let c of Object.values(ui.compendium.compendiums)) {
+      c._data.promise = c._gatherData();
+    }
+  }
+});

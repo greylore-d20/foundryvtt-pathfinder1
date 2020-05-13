@@ -185,4 +185,16 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Preload Compendiums
+   */
+  game.settings.register("pf1", "preloadCompendiums", {
+    name: "SETTINGS.pf1PreloadCompendiumsN",
+    hint: "SETTINGS.pf1PreloadCompendiumsH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };

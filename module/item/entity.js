@@ -754,6 +754,11 @@ export class ItemPF extends Item {
               };
             }
           }
+          // Roll effects
+          if (this.hasEffect) {
+            attack.effectNotes = this.rollEffect({ primaryAttack: primaryAttack });
+          }
+          // Set attack flags
           attack.isHealing = this.isHealing;
           // Add to list
           attacks.push(attack);
@@ -866,9 +871,6 @@ export class ItemPF extends Item {
         if (attackStr.length > 0) {
           const innerHTML = TextEditor.enrichHTML(attackStr, { rollData: rollData });
           extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${innerHTML}</div></div>`;
-        }
-        if (this.hasEffect) {
-          extraText += this.rollEffect({ primaryAttack: primaryAttack });
         }
 
         const properties = this.getChatData().properties;

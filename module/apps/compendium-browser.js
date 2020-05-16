@@ -15,6 +15,27 @@ export class CompendiumBrowser extends Application {
       data: {},
       promise: null,
     };
+
+    // Preload compendiums
+    // if (game.settings.get("pf1", "preloadCompendiums") === true) {
+      // this.loadData();
+    // }
+  }
+
+  loadData() {
+    return new Promise(resolve => {
+      let promise = this._data.promise;
+      if (promise == null) {
+        promise = this._gatherData();
+        this._data.promise = promise;
+      }
+
+      promise.then(() => {
+        this._data.loaded = true;
+        this._data.promise = null;
+        resolve(this._data.data);
+      });
+    });
   }
 
   async _gatherData() {
@@ -24,9 +45,6 @@ export class CompendiumBrowser extends Application {
       filters: this.filters,
       collection: this.items,
     };
-
-    this._data.loaded = true;
-    this._data.promise = null;
   }
 
   static get defaultOptions() {
@@ -258,21 +276,13 @@ export class CompendiumBrowser extends Application {
   }
 
   async getData() {
-    if (!this._data.loaded) {
-      if (this._data.promise != null) await this._data.promise;
-      else {
-        this._data.promise = this._gatherData();
-        await this._data.promise;
-      }
-    }
+    if (!this._data.loaded) await this.loadData();
 
     return this._data.data;
   }
 
   async refresh() {
-    if (this._data.promise != null) return;
-    this._data.promise = this._gatherData();
-    await this._data.promise;
+    await this.loadData();
     this.render(false);
   }
 

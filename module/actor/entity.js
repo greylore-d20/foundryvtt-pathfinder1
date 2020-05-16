@@ -2577,13 +2577,16 @@ export class ActorPF extends Actor {
    * @return {Promise}
    */
   static async applyDamage(value) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const promises = [];
     for (let t of canvas.tokens.controlled) {
       let a = t.actor,
           hp = a.data.data.attributes.hp,
           tmp = parseInt(hp.temp) || 0,
           dt = value > 0 ? Math.min(tmp, value) : 0;
+      if (!a.hasPerm(game.user, "OWNER")) {
+        ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+        continue;
+      }
       promises.push(t.actor.update({
         "data.attributes.hp.temp": tmp - dt,
         "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max)

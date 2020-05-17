@@ -3,7 +3,7 @@ export class ActorSheetFlags extends BaseEntitySheet {
     const options = super.defaultOptions;
     return mergeObject(options, {
       id: "actor-flags",
-	    classes: ["pf1"],
+      classes: ["pf1"],
       template: "systems/pf1/templates/apps/actor-flags.html",
       width: 500,
       closeOnSubmit: true
@@ -17,7 +17,7 @@ export class ActorSheetFlags extends BaseEntitySheet {
    * @type {String}
    */
   get title() {
-    return `${game.i18n.localize('pf1.FlagsTitle')}: ${this.object.name}`;
+    return `${game.i18n.localize('PF1.FlagsTitle')}: ${this.object.name}`;
   }
 
   /* -------------------------------------------- */

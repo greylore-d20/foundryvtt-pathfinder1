@@ -100,6 +100,11 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputDuration = !(["", "inst", "perm", "seeText"].includes(data.item.data.duration.units));
     }
 
+    // Prepare feat specific stuff
+    if (data.item.type === "feat") {
+      data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
+    }
+
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
       data.isRanged = (data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true);
@@ -151,8 +156,13 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
-      data.isPreparedSpell = data.item.data.preparation.mode === "prepared";
-      data.isAtWill = data.item.data.preparation.mode === "atwill";
+      let spellbook = null;
+      if (this.actor != null) {
+        spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.item.data.data.spellbook}`);
+      }
+
+      data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous : false;
+      data.isAtWill = data.item.data.atWill;
       data.spellbooks = {};
       if (this.item.actor) {
         data.spellbooks = duplicate(this.item.actor.data.data.attributes.spells.spellbooks);

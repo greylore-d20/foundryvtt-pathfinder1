@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.51
+
+### Bug Fixes
+
+- Measure templates for attacks didn't work since Foundry 0.5.6 anymore
+- CMB incorrectly used Strength instead of Dexterity for actors that were Tiny or smaller
+
+### Changelog
+
+- Spellbooks are now set to spontaneous or not, rather than individual spells
+- Added a rest option to actors which will automatically heal hit point and ability score damage, as well as restore daily uses of items, features, attacks, spells and spellbooks
+- Measure template previews now highlight the grid they affect
+
+## 0.5
+
+### Bug Fixes
+
+- Saving throw and skill roll criticals and fumbles weren't being highlighted anymore
+- Dice So Nice integration for multi attacks was showing the result of the last roll on every dice toss
+- Attacks without damage or effect notes weren't useable
+
+### Changelog
+
+- Attacks with multiple damage parts now have their parts clearly separated in the chat tooltip
+- Full attacks are now consolidated into a single chat card again
+- Added a few more bestiary entries
+- Edited the Award XP sample macro to add an option for distributing experience evenly among those selected
+
 ## 0.44
 
 ### Bug Fixes

@@ -102,6 +102,9 @@ export class CompendiumBrowser extends Application {
       if (!this.extraFilters) {
         this.extraFilters = {
           "tags": [],
+          "associations": {
+            "class": [],
+          },
         };
       }
 
@@ -110,6 +113,14 @@ export class CompendiumBrowser extends Application {
         cur.push(o[0]);
         return cur;
       }, []);
+
+      result.item.assocations = {
+        "class": (getProperty(item.data, "data.featType") === "classFeat" ? getProperty(item.data, "data.assocations.classes") || [] : []).reduce((cur, o) => {
+          if (!this.extraFilters["assocations.class"].includes(o[0])) this.extraFilters["assocations.class"].push(o[0]);
+          cur.push(o[0]);
+          return cur;
+        }, []),
+      };
     }
 
     // Item-specific variables
@@ -472,6 +483,18 @@ export class CompendiumBrowser extends Application {
         path: "tags",
         label: game.i18n.localize("PF1.Tags"),
         items: this.extraFilters.tags.reduce((cur, o) => {
+          cur.push({ key: o, name: o });
+          return cur;
+        }, []).sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
+      },
+      {
+        path: "assocations.class",
+        label: game.i18n.localize("PF1.ClassPlural"),
+        items: this.extraFilters.associations["class"].reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {

@@ -20,7 +20,7 @@ export const displayChatActionButtons = function(message, html, data) {
 
 /* -------------------------------------------- */
 
-export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}) {
+export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}, {rolls=[]}={}) {
   let rollMode = game.settings.get("core", "rollMode");
   chatData = mergeObject({
     rollMode: rollMode,
@@ -43,9 +43,12 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
   }
 
   // Dice So Nice integration
-  if (chatData.roll != null && game.dice3d != null) {
-    await game.dice3d.showForRoll(Roll.fromJSON(chatData.roll), chatData.whisper, chatData.blind);
-    chatData.sound = null;
+  if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
+  if (game.dice3d != null) {
+    for (let roll of rolls) {
+      await game.dice3d.showForRoll(roll, chatData.whisper, chatData.blind);
+      chatData.sound = null;
+    }
   }
 
   ChatMessage.create(chatData);

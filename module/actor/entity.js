@@ -25,12 +25,11 @@ export class ActorPF extends Actor {
 
     // Get the Actor
     const actor = ItemPF._getChatCardActor(card);
-    if (!actor) return;
 
     // Roll saving throw
     if (action === "save") {
       const saveId = button.dataset.save;
-      actor.rollSavingThrow(saveId, { event: event });
+      if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
   }
 
@@ -1397,7 +1396,8 @@ export class ActorPF extends Actor {
     }
 
     // Add ability mods to CMB and CMD
-    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + modDiffs["str"]);
+    const cmbMod = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(data, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny") ? modDiffs["dex"] : modDiffs["str"];
+    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + cmbMod);
     linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["str"]);
     if (!flags.loseDexToAC || modDiffs["dex"] < 0) {
       linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
@@ -1593,12 +1593,14 @@ export class ActorPF extends Actor {
       sourceDetails["data.attributes.cmd.total"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
     }
+    const useDexForCMB = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(actorData, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny");
     if (actorData.data.abilities.str.mod !== 0) {
-      sourceDetails["data.attributes.cmb.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
+      if (!useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
       sourceDetails["data.attributes.cmd.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
     }
     if (actorData.data.abilities.dex.mod !== 0) {
+      if (useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.cmd.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
       sourceDetails["data.attributes.init.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
@@ -2076,7 +2078,7 @@ export class ActorPF extends Actor {
     // Add additional attacks
     let extraAttacks = [];
     for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
-      extraAttacks = extraAttacks.concat([["-5", `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
+      extraAttacks = extraAttacks.concat([[`-${a}`, `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
 
@@ -2571,15 +2573,13 @@ export class ActorPF extends Actor {
    * Apply rolled dice damage to the token or tokens which are currently controlled.
    * This allows for damage to be scaled by a multiplier to account for healing, critical hits, or resistance
    *
-   * @param {HTMLElement} roll    The chat entry which contains the roll data
-   * @param {Number} multiplier   A damage multiplier to apply to the rolled damage.
+   * @param {Number} value   The amount of damage to deal.
    * @return {Promise}
    */
-  static async applyDamage(roll, multiplier, critical=false) {
-    let value = Math.floor(parseFloat(roll.find('.damage-roll .dice-total').text()) * multiplier);
-    if (critical) value = Math.floor(parseFloat(roll.find('.crit-damage-roll .dice-total').text()) * multiplier);
+  static async applyDamage(value) {
+    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     const promises = [];
-    for ( let t of canvas.tokens.controlled ) {
+    for (let t of canvas.tokens.controlled) {
       let a = t.actor,
           hp = a.data.data.attributes.hp,
           tmp = parseInt(hp.temp) || 0,

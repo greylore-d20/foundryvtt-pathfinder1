@@ -6,18 +6,18 @@ const FormApplication_close = FormApplication.prototype.close;
 export function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
   async function PF1_getTemplate(path) {
-          if ( !_templateCache.hasOwnProperty(path) ) {
+    if ( !_templateCache.hasOwnProperty(path) ) {
       await new Promise(resolve => {
-          game.socket.emit('template', path, resp => {
-          compiled = Handlebars.compile(resp.html, { preventIndent: true });
-                Handlebars.registerPartial(path, compiled);
-                _templateCache[path] = compiled;
-                console.log(`Foundry VTT | Retrieved and compiled template ${path}`);
-                resolve(compiled);
-              });
+        game.socket.emit('template', path, resp => {
+          const compiled = Handlebars.compile(resp.html, { preventIndent: true });
+          Handlebars.registerPartial(path, compiled);
+          _templateCache[path] = compiled;
+          console.log(`Foundry VTT | Retrieved and compiled template ${path}`);
+          resolve(compiled);
+        });
       });
-          } 
-          return _templateCache[path];
+    } 
+    return _templateCache[path];
   }
 
   // Patch TokenHUD.getData to show resource bars even if their value is 0

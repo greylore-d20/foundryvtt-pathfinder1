@@ -1,4 +1,5 @@
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
+import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
@@ -258,6 +259,7 @@ export class ActorSheetPF extends ActorSheet {
       spellbook[a] = {
         level: a,
         usesSlots: true,
+        spontaneous: book.spontaneous,
         canCreate: owner === true,
         canPrepare: (data.actor.type === "character"),
         label: CONFIG.PF1.spellLevels[a],
@@ -480,6 +482,9 @@ export class ActorSheetPF extends ActorSheet {
     // Roll defenses
     html.find(".defense-rolls .generic-defenses .rollable").click(ev => { this.actor.rollDefenses(); });
 
+    // Rest
+    html.find(".rest").click(this._onRest.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -578,6 +583,11 @@ export class ActorSheetPF extends ActorSheet {
   _onConfigureFlags(event) {
     event.preventDefault();
     new ActorSheetFlags(this.actor).render(true);
+  }
+
+  _onRest(event) {
+    event.preventDefault();
+    new ActorRestDialog(this.actor).render(true);
   }
 
   /* -------------------------------------------- */

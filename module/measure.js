@@ -79,8 +79,8 @@ TemplateLayer.prototype._onMouseMove = function(event) {
 
 
 // Highlight grid in PF1 style
-const MeasuredTemplate__highlightGrid = MeasuredTemplate.prototype._highlightGrid;
-MeasuredTemplate.prototype._highlightGrid = function() {
+const MeasuredTemplate_highlightGrid = MeasuredTemplate.prototype.highlightGrid;
+MeasuredTemplate.prototype.highlightGrid = function() {
   if (!game.settings.get("pf1", "measureStyle") || !(["circle", "cone"].includes(this.data.t))) return MeasuredTemplate__highlightGrid.call(this);
 
   const grid = canvas.grid,

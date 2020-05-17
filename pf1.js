@@ -56,6 +56,7 @@ Hooks.once("init", async function() {
     rollPreProcess: {
       sizeRoll: sizeDie
     },
+    migrateWorld: migrations.migrateWorld,
   };
 
   // Record Configuration Values

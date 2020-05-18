@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.52
+
+### Bug Fixes
+
+- Normal measure templates were no longer working
+- Applying damage from an item attack chat entry gave an error
+- Compendium browsers were working incorrectly when reopening after previously filtering by name
+- Worlds that were just being migrated from an older version had actors with missing items
+- Positive dexterity modifiers were being applied to flat-footed CMD
+- CSS styling for actors' skill tabs looked strange since the FoundryVTT 0.5.7 update
+
+### Changelog
+
+- Effect Notes (on attacks and spells) are now added to each individual attack roll, rather than once in the whole (full-round) attack
+
 ## 0.51
 
 ### Bug Fixes

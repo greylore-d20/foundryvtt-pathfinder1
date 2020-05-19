@@ -104,6 +104,21 @@
     </div>
     {{/if}}
 
+    {{#if regen}}
+    <div class="defense regen">
+      <table>
+        <tr>
+          <th>{{localize "PF1.Regeneration"}}</th>
+          <th>{{localize "PF1.FastHealing"}}</th>
+        </tr>
+        <tr>
+          <td>{{#if regen.regen}}{{regen.regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
+          <td>{{#if regen.fastHealing}}{{regen.fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
     <div class="saving-throws flexrow">
       <button data-action="save" data-save="fort">{{localize "PF1.SavingThrowFort"}}</button>
       <button data-action="save" data-save="ref">{{localize "PF1.SavingThrowRef"}}</button>

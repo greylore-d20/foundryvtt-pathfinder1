@@ -20,6 +20,16 @@
     <input type="text" name="data.traits.dr" value="{{data.traits.dr}}" placeholder="{{localize "PF1.None"}}"/>
   </div>
 
+  <div class="form-group {{#unless data.traits.regen}}inactive{{/unless}}">
+    <label>{{localize "PF1.Regeneration"}}</label>
+    <input type="text" name="data.traits.regen" value="{{data.traits.regen}}" placeholder="{{localize "PF1.None"}}"/>
+  </div>
+
+  <div class="form-group {{#unless data.traits.fastHealing}}inactive{{/unless}}">
+    <label>{{localize "PF1.FastHealing"}}</label>
+    <input type="text" name="data.traits.fastHealing" value="{{data.traits.fastHealing}}" placeholder="{{localize "PF1.None"}}"/>
+  </div>
+
   <div class="form-group {{#unless data.traits.eres}}inactive{{/unless}}">
     <label>{{localize "PF1.EnRes"}}</label>
     <input type="text" name="data.traits.eres" value="{{data.traits.eres}}" placeholder="{{localize "PF1.None"}}"/>

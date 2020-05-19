@@ -638,6 +638,11 @@ export class ItemPF extends Item {
         if (typeof html.prop("checked") === "boolean") {
           useMeasureTemplate = html.prop("checked");
         }
+        // Damage ability multiplier
+        html = form.find('[name="damage-ability-multiplier"]');
+        if (html.length > 0) {
+          rollData.item.ability.damageMult = parseFloat(html.val());
+        }
       }
 
       // Define Critical threshold
@@ -903,6 +908,7 @@ export class ItemPF extends Item {
       rollModes: CONFIG.rollModes,
       hasAttack: this.hasAttack,
       hasDamage: this.hasDamage,
+      hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
       isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
       isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
       hasTemplate: this.hasTemplate,
@@ -1117,9 +1123,9 @@ export class ItemPF extends Item {
 
     // Determine critical multiplier
     rollData.critMult = 1;
-    if (critical) rollData.critMult = this.data.data.ability.critMult;
+    if (critical) rollData.critMult = rollData.item.ability.critMult;
     // Determine ability multiplier
-    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (rollData.item.ability.damageMult != null) rollData.ablMult = rollData.item.ability.damageMult;
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts

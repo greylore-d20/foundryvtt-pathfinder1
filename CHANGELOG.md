@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.53
+
+### Bug Fixes
+
+- Maximum dexterity bonus was not showing up on actor sheets
+- Power attack didn't add damage
+- Changes to a category of skill bonuses didn't apply to subskills
+
+### Changelog
+
+- Added a way to select the ability damage multiplier one time on attack roll dialogs
+- Add fields for fast healing and regeneration
+- Shift-clicking an item macro now just shows the item to chat, rather than using it when applicable
+- Once-per-attack attack notes can now be added to all attacks, not just those with attack rolls
+- A spell resistance table is no longer shown on defense chat entries for creatures without spell resistance
+- Dan Gomme greatly improved the PF1 style measure templates (many thanks!)
+
 ## 0.52
 
 ### Bug Fixes

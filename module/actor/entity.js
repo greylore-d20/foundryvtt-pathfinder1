@@ -352,7 +352,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "str") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "str") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -364,7 +364,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "dex") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "dex") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -376,7 +376,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "con") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "con") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -388,7 +388,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "int") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "int") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -400,7 +400,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "wis") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "wis") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -412,7 +412,7 @@ export class ActorPF extends Actor {
           if (skl.ability === "cha") result.push(`data.skills.${a}.changeBonus`);
 
           if (skl.subSkills != null) {
-            for (let [b, subSkl] of Object.keys(skl.subSkills)) {
+            for (let [b, subSkl] of Object.entries(skl.subSkills)) {
               if (subSkl != null && subSkl.ability === "cha") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
             }
           }
@@ -1306,7 +1306,7 @@ export class ActorPF extends Actor {
     });
 
     // Reset specific skill bonuses
-    for (let sklKey of this._getChangeFlat("skills", "", data1.data)) {
+    for (let sklKey of this._getChangeFlat("skills", "", this.data.data)) {
       if (hasProperty(data, sklKey)) linkData(data, updateData, sklKey, 0);
     }
 
@@ -1436,7 +1436,7 @@ export class ActorPF extends Actor {
       // Parse sub-skills
       for (let [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
         if (subSkl == null) continue;
-        if (updateData[`data.skills.${sklKey}.subSkills.${subSklKey}`] === null) continue;
+        if (getProperty(data1, `skills.${sklKey}.subSkills.${subSklKey}`) == null) continue;
 
         acpPenalty = (subSkl.acp ? data1.attributes.acp.total : 0);
         ablMod = data1.abilities[subSkl.ability].mod;

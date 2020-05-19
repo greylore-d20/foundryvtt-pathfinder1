@@ -3,7 +3,6 @@ import { createCustomChatMessage } from "../chat.js";
 import { createTag, alterRoll, linkData, isMinimumCoreVersion } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
-import { AbilityTemplateLegacy } from "../pixi/ability-template_legacy.js";
 import { ChatAttack } from "../misc/chat-attack.js";
 
 /**
@@ -709,7 +708,7 @@ export class ItemPF extends Item {
         }
 
         // Create template
-        const template = isMinimumCoreVersion("0.5.6") ? AbilityTemplate.fromData(templateOptions) : AbilityTemplateLegacy.fromData(templateOptions);
+        const template = AbilityTemplate.fromData(templateOptions);
         if (template) {
           if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
           const success = await template.drawPreview(ev);

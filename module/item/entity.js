@@ -914,26 +914,26 @@ export class ItemPF extends Item {
     if (this.hasAttack) {
       if (this.type !== "spell") {
         buttons.normal = {
-          label: "Single Attack",
+          label: game.i18n.localize("PF1.SingleAttack"),
           callback: html => roll = _roll.call(this, false, html)
         };
       }
       if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
         buttons.multi = {
-          label: this.type === "spell" ? "Cast" : "Full Attack",
+          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
           callback: html => roll = _roll.call(this, true, html)
         };
       }
     }
     else {
       buttons.normal = {
-        label: this.type === "spell" ? "Cast" : "Use",
+        label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
         callback: html => roll = _roll.call(this, false, html)
       };
     }
     return new Promise(resolve => {
       new Dialog({
-        title: `Use: ${this.name}`,
+        title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
         content: html,
         buttons: buttons,
         default: buttons.multi != null ? "multi" : "normal",

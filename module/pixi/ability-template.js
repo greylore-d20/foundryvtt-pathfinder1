@@ -138,12 +138,12 @@ export class AbilityTemplate extends MeasuredTemplate {
     let pos;
     if (this.pfStyle && this.data.t === "cone") {
       const cs = canvas.dimensions.size * 0.5;
-      pos = canvas.grid.getSnappedPosition(center.x - cs, center.y - cs, 1);
+      pos = canvas.grid.getSnappedPosition(center.x - cs, center.y - cs, 2);
       pos.x += cs;
       pos.y += cs;
     }
     else if (this.pfStyle && this.data.t === "circle") {
-      pos = canvas.grid.getSnappedPosition(center.x, center.y, 1);
+      pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
     }
     else pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
     this.data.x = pos.x;

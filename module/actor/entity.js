@@ -2563,11 +2563,14 @@ export class ActorPF extends Actor {
         drNotes: drNotes,
         energyResistance: energyResistance,
       },
-      regen: {
+    };
+    // Add regeneration and fast healing
+    if ((getProperty(d, "traits.fastHealing") || "").length || (getProperty(d, "traits.regen") || "").length) {
+      data.regen = {
         regen: d.traits.regen,
         fastHealing: d.traits.fastHealing,
-      },
-    };
+      };
+    }
     createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data, {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     });

@@ -13,10 +13,6 @@ TemplateLayer.prototype._onDragLeftStart = function(event) {
   let pos;
   if (["cone", "circle"].includes(tool)) {
     pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
-    if (tool === "cone") {
-      pos.x -= canvas.dimensions.size * 0.5;
-      pos.y -= canvas.dimensions.size * 0.5;
-    }
   }
   else pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
   origin.x = pos.x;
@@ -134,24 +130,40 @@ MeasuredTemplate.prototype.highlightGrid = function() {
     return distanceOnGrid;
   };
 
+
+  let originOffset = {x: 0, y: 0};
+  // Offset measurement for cones
+  // Offset is to ensure that cones only start measuring from cell borders, as in https://www.d20pfsrd.com/magic/#Aiming_a_Spell
+  if (this.data.t === "cone") {
+    // Degrees anticlockwise from pointing right. In 45-degree increments from 0 to 360
+    const dir = (this.data.direction >= 0 ? 360 - this.data.direction : -this.data.direction) % 360;
+    // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
+    let xOffset = this.data.x % d.size != 0 ?
+      Math.sign(1 * (Math.round(Math.cos(degtorad(dir)) * 100)) / 100) /2 // /2 turns from 1/0/-1 to 0.5/0/-0.5
+      : 0;
+    // Same for Y, but cos Y goes down on screens, we invert
+    let yOffset = this.data.y % d.size != 0 ?
+      -Math.sign(1 * (Math.round(Math.sin(degtorad(dir)) * 100)) / 100) /2
+      : 0;
+    originOffset.x = xOffset;
+    originOffset.y = yOffset;
+  }
+
+  // Point we are measuring distances from
+  let origin = {
+    x: this.data.x + (originOffset.x * d.size),
+    y: this.data.y + (originOffset.y * d.size)
+  }
+
   for (let a = -nc; a < nc; a++) {
     for (let b = -nr; b < nr; b++) {
-      // Position of cell's top-left corner, in piexls
+      // Position of cell's top-left corner, in pixels
       let [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
       // Position of cell's center, in pixels
       let [cellCenterX, cellCenterY] = [gx + d.size * 0.5, gy + d.size * 0.5];
 
       // Determine point of origin
       let origin = {x: this.data.x, y: this.data.y};
-      let originOffset = {x: 0, y: 0};
-      // Offset measurement for cones
-      if (this.data.t === "cone") {
-        const dir = (this.data.direction >= 0 ? 360 - this.data.direction : -this.data.direction) % 360;
-        originOffset = {
-          x: Math.sign(1 * (Math.round(Math.cos(degtorad(dir)) * 100)) / 100),
-          y: -Math.sign(1 * (Math.round(Math.sin(degtorad(dir)) * 100)) / 100),
-        };
-      }
       origin.x += (originOffset.x * d.size);
       origin.y += (originOffset.y * d.size);
 
@@ -164,11 +176,6 @@ MeasuredTemplate.prototype.highlightGrid = function() {
 
       // Determine point we're measuring the distance to - always in the center of a grid square
       let destination = {x: cellCenterX, y: cellCenterY};
-      // Reset point of origin for cones
-      if (this.data.t === "cone") {
-        origin.x -= (originOffset.x * d.size);
-        origin.y -= (originOffset.y * d.size);
-      }
 
       let distance = measureDistance(destination, origin);
       if (distance <= this.data.distance) {

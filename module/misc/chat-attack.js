@@ -78,16 +78,6 @@ export class ChatAttack {
     data.isCrit   = critType === 1;
     data.isFumble = critType === 2;
 
-    // Add card
-    if (critical) {
-      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalHealing"), value: -roll.total, action: "applyDamage", });
-      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalDamage") , value: roll.total , action: "applyDamage", });
-    }
-    else {
-      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyHealing"), value: -roll.total, action: "applyDamage", });
-      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyDamage") , value: roll.total , action: "applyDamage", });
-    }
-
     // Add crit confirm
     if (!critical && d20.total >= this.critRange) {
       this.hasCritConfirm = true;
@@ -105,10 +95,12 @@ export class ChatAttack {
     const rolls = this.item.rollDamage({data: this.rollData, extraParts: extraParts, primaryAttack: primaryAttack, critical: critical});
     // Add tooltip
     let tooltips = "";
+    let totalDamage = 0;
     for (let roll of rolls) {
       let tooltip = $(await roll.roll.getTooltip()).prepend(`<div class="dice-formula">${roll.roll.formula}</div>`)[0].outerHTML;
       // Alter tooltip
       let tooltipHtml = $(tooltip);
+      totalDamage += roll.roll.total;
       let totalText = roll.roll.total.toString();
       if (roll.damageType.length) totalText += ` (${roll.damageType})`;
       tooltipHtml.find(".part-total").text(totalText);
@@ -124,6 +116,16 @@ export class ChatAttack {
       if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
       return cur;
     }, []);
+
+    // Add card
+    if (critical) {
+      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalHealing"), value: -totalDamage, action: "applyDamage", });
+      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalDamage") , value:  totalDamage, action: "applyDamage", });
+    }
+    else {
+      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyHealing"), value: -totalDamage, action: "applyDamage", });
+      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyDamage") , value:  totalDamage, action: "applyDamage", });
+    }
 
     data.flavor = damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor;
     data.tooltip = tooltips;

@@ -1161,7 +1161,7 @@ export class ItemPF extends Item {
     for (let a = 0; a < parts.length; a++) {
       const part = parts[a];
       const roll = {
-        roll: new Roll([part.base, ...part.extra].join("+"), rollData).roll(),
+        roll: new Roll([part.base, ...part.extra, ...extraParts].join("+"), rollData).roll(),
         damageType: part.damageType,
       };
       rolls.push(roll);

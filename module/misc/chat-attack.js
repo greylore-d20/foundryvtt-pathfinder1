@@ -1,5 +1,6 @@
 export class ChatAttack {
-  constructor(item, label="") {
+  constructor(item, {label="", rollData={}}={}) {
+    this._baseRollData = rollData;
     this.setItem(item);
     this.label = label;
 
@@ -54,6 +55,7 @@ export class ChatAttack {
     this.item = item;
     this.rollData = item.actor != null ? item.actor.getRollData() : {};
     this.rollData.item = duplicate(this.item.data.data);
+    this.rollData = mergeObject(this.rollData, this._baseRollData);
   }
 
   async addAttack({bonus=null, extraParts=[], primaryAttack=true, critical=false}={}) {

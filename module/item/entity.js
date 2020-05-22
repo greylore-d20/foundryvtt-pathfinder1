@@ -633,12 +633,12 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ev=null}) {
+  async use({ev=null, skipDialog=false}) {
     if (this.type === "spell") {
-      return this.actor.useSpell(this, ev);
+      return this.actor.useSpell(this, ev, {skipDialog: skipDialog});
     }
     else if (this.hasAction) {
-      return this.useAttack({ev: ev});
+      return this.useAttack({ev: ev, skipDialog: skipDialog});
     }
 
     if (this.isCharged) {

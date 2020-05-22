@@ -852,7 +852,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await item.use(event);
+      await item.use({ev: event, skipDialog: event.shiftKey});
     }
   }
 

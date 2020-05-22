@@ -363,7 +363,7 @@ export class ItemPF extends Item {
 
     // Toggle default roll mode
     let rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
-    if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
+    if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
     if ( rollMode === "blindroll" ) chatData["blind"] = true;
 
     // Create the chat message
@@ -796,7 +796,7 @@ export class ItemPF extends Item {
       data: rollData,
       item: this.data.data,
       rollMode: game.settings.get("core", "rollMode"),
-      rollModes: CONFIG.rollModes,
+      rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.hasAttack,
       hasDamage: this.hasDamage,
       hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",

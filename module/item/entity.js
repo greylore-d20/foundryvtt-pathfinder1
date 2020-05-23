@@ -33,7 +33,79 @@ export class ItemPF extends Item {
   }
 
   get hasAction() {
-    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasTemplate;
+    return this.hasAttack
+    || this.hasDamage
+    || this.hasEffect
+    || this.hasTemplate;
+  }
+
+  get isSingleUse() {
+    return getProperty(this.data, "data.uses.per") === "single";
+  }
+
+  get isCharged() {
+    if (this.type === "consumable" && getProperty(this.data, "data.uses.per") === "single") return true;
+    return ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
+  }
+
+  get autoDeductCharges() {
+    return this.type === "spell"
+      ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
+      : (this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true);
+  }
+
+  get charges() {
+    if (getProperty(this.data, "data.uses.per") === "single") return getProperty(this.data, "data.quantity");
+    if (this.type === "spell") return this.getSpellUses();
+    return getProperty(this.data, "data.uses.value") || 0;
+  }
+
+  get spellbook() {
+    if (this.type !== "spell") return null;
+    if (this.actor == null)    return null;
+    
+    const spellbookIndex = this.data.data.spellbook;
+    return this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
+  }
+
+  get casterLevel() {
+    const spellbook = this.spellbook;
+    if (!spellbook) return null;
+
+    return spellbook.cl.total + (this.data.data.clOffset || 0);
+  }
+
+  get spellLevel() {
+    if (this.type !== "spell") return null;
+
+    return this.data.data.level + (this.data.data.slOffset || 0);
+  }
+
+  /**
+   * Generic charge addition (or subtraction) function that either adds charges
+   * or quantity, based on item data.
+   * @param {number} value       - The amount of charges to add.
+   * @param {Object} [data=null] - An object in the style of that of an update call to alter, rather than applying the change immediately.
+   * @returns {Promise}
+   */
+  async addCharges(value, data=null) {
+    if ( getProperty(this.data, "data.uses.per") === "single"
+      && getProperty(this.data, "data.quantity") == null) return;
+
+    if (this.type === "spell") return this.addSpellUses(value, data);
+
+    let prevValue = this.isSingleUse ? getProperty(this.data, "data.quantity") : getProperty(this.data, "data.uses.value");
+    if      (data != null && this.isSingleUse  && data["data.quantity"]  != null)  prevValue = data["data.quantity"];
+    else if (data != null && !this.isSingleUse && data["data.uses.value"] != null) prevValue = data["data.uses.value"];
+
+    if (data != null) {
+      if (this.isSingleUse) data["data.quantity"]   = prevValue + value;
+      else                  data["data.uses.value"] = prevValue + value;
+    }
+    else {
+      if (this.isSingleUse) await this.update({ "data.quantity"  : prevValue + value });
+      else                  await this.update({ "data.uses.value": prevValue + value });
+    }
   }
 
   /* -------------------------------------------- */
@@ -332,7 +404,7 @@ export class ItemPF extends Item {
       labels: this.labels,
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
-      hasAction: this.hasAction,
+      hasAction: this.hasAction || this.isCharged,
       isHealing: this.isHealing,
       hasDamage: this.hasDamage,
       hasEffect: this.hasEffect,
@@ -363,7 +435,7 @@ export class ItemPF extends Item {
 
     // Toggle default roll mode
     let rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
-    if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
+    if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
     if ( rollMode === "blindroll" ) chatData["blind"] = true;
 
     // Create the chat message
@@ -384,19 +456,13 @@ export class ItemPF extends Item {
     // Get the spell specific info
     let spellbookIndex, spellAbility, ablMod = 0;
     let spellbook = null;
-    let cl = 0;
-    let sl = 0;
+    let cl = this.casterLevel || 0;
+    let sl = this.spellLevel  || 0;
     if (this.type === "spell") {
       spellbookIndex = data.spellbook;
       spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookIndex}`) || {};
       spellAbility = spellbook.ability;
       if (spellAbility !== "") ablMod = getProperty(this.actor.data, `data.abilities.${spellAbility}.mod`);
-
-      cl += getProperty(spellbook, "cl.total") || 0;
-      cl += data.clOffset || 0;
-
-      sl += data.level;
-      sl += data.slOffset || 0;
 
       rollData.cl = cl;
       rollData.sl = sl;
@@ -582,26 +648,38 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
+  async use({ev=null, skipDialog=false}) {
+    if (this.type === "spell") {
+      return this.actor.useSpell(this, ev, {skipDialog: skipDialog});
+    }
+    else if (this.hasAction) {
+      return this.useAttack({ev: ev, skipDialog: skipDialog});
+    }
+
+    if (this.isCharged) {
+      if (this.charges <= 0) {
+        if (this.isSingleUse) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+        return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
+      }
+      this.addCharges(-1);
+    }
+    this.roll();
+  }
+
   async useAttack({ev=null, skipDialog=false}={}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.actor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
-    const isSingleUse = getProperty(this.data, "data.uses.per") === "single";
     const itemQuantity = getProperty(this.data, "data.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
     }
 
-    const isCharged = ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
-    let charges = isCharged ? getProperty(this.data, "data.uses.value") || 0 : 0;
-    if (isCharged && charges <= 0) {
+    if (this.isCharged && this.charges <= 0) {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
     }
 
-    const autoDeductCharges = this.type === "spell"
-      ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
-      : ((isCharged || isSingleUse) && getProperty(this.data, "data.uses.autoDeductCharges") === true);
     const itemData = this.data.data;
     const rollData = this.actor.getRollData();
     rollData.item = duplicate(itemData);
@@ -613,7 +691,7 @@ export class ItemPF extends Item {
         damageExtraParts = [],
         primaryAttack = true,
         useMeasureTemplate = false,
-        rollMode = null;
+        rollMode = game.settings.get("core", "rollMode");
       // Get form data
       if (form) {
         rollData.attackBonus = form.find('[name="attack-bonus"]').val();
@@ -660,17 +738,28 @@ export class ItemPF extends Item {
       }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
       if (this.hasAttack) {
-        for (let atk of allAttacks) {
+        for (let a = 0; a < allAttacks.length; a++) {
+          let atk = allAttacks[a];
           // Create attack object
-          let attack = new ChatAttack(this, {label: atk.label, rollData: rollData});
-          await attack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts, primaryAttack: primaryAttack});
+          let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+          // Add attack roll
+          await attack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+
+          // Add damage
           if (this.hasDamage) {
-            await attack.addDamage({extraParts: damageExtraParts, primaryAttack: primaryAttack, critical: false});
+            await attack.addDamage({extraParts: damageExtraParts, critical: false});
+
+            // Add critical hit damage
             if (attack.hasCritConfirm) {
-              await attack.addDamage({extraParts: damageExtraParts, primaryAttack: primaryAttack, critical: true});
+              await attack.addDamage({extraParts: damageExtraParts, critical: true});
             }
           }
-          await attack.addEffect({primaryAttack: primaryAttack});
+
+          // Add attack notes
+          if (a === 0) attack.addAttackNotes();
+
+          // Add effect notes
+          attack.addEffectNotes();
 
           // Add to list
           attacks.push(attack);
@@ -678,16 +767,29 @@ export class ItemPF extends Item {
       }
       // Add damage only
       else if (this.hasDamage) {
-        let attack = new ChatAttack(this, {rollData: rollData});
-        await attack.addDamage({extraParts: damageExtraParts, primaryAttack: primaryAttack, critical: false});
-        await attack.addEffect({primaryAttack: primaryAttack});
+        let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
+        // Add damage
+        await attack.addDamage({extraParts: damageExtraParts, critical: false});
+
+        // Add attack notes
+        attack.addAttackNotes();
+
+        // Add effect notes
+        attack.addEffectNotes();
+
         // Add to list
         attacks.push(attack);
       }
       // Add effect notes only
       else if (this.hasEffect) {
-        let attack = new ChatAttack(this, {rollData: rollData});
-        await attack.addEffect({primaryAttack: primaryAttack});
+        let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
+
+        // Add attack notes
+        attack.addAttackNotes();
+
+        // Add effect notes
+        attack.addEffectNotes();
+        
         // Add to list
         attacks.push(attack);
       }
@@ -720,18 +822,8 @@ export class ItemPF extends Item {
       }
 
       // Deduct charge
-      if (autoDeductCharges) {
-        if (this.type === "spell") {
-          this.addSpellUses(-1, itemUpdateData);
-        }
-        else {
-          const newCharges = Math.max(0, charges - 1);
-          itemUpdateData["data.uses.value"] = newCharges;
-          if (isSingleUse) {
-            const newQuantity = newCharges > 0 ? itemQuantity : itemQuantity - 1;
-            itemUpdateData["data.quantity"] = newQuantity;
-          }
-        }
+      if (this.autoDeductCharges) {
+        this.addCharges(-1, itemUpdateData);
       }
       // Update item
       this.update(itemUpdateData);
@@ -744,33 +836,48 @@ export class ItemPF extends Item {
         "flags.pf1.noRollRender": true,
       };
 
-      // Post message
+      // Send spell info
       if (this.data.type === "spell") await this.roll({ rollMode: rollMode });
+
+      // Dice So Nice integration
+      if (game.dice3d != null) {
+        let dice3dData = attacks.reduce((obj, a) => {
+          if (a.attack.roll != null)      obj.results.push(a.attack.roll.parts[0].total);
+          if (a.critConfirm.roll != null) obj.results.push(a.critConfirm.roll.parts[0].total);
+          return obj;
+        }, {
+          formula: "",
+          results: [],
+          whisper: [],
+          blind: false,
+        });
+        if (dice3dData.results.length) {
+          dice3dData.formula = `${dice3dData.results.length}d20`;
+          // Handle different roll modes
+          switch (rollMode) {
+            case "gmroll":
+              dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              break;
+            case "selfroll":
+              dice3dData.whisper = [game.user._id];
+              break;
+            case "blindroll":
+              dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              dice3dData.blind = true;
+              break;
+          }
+          // Roll 3D dice
+          chatData.sound = null;
+          await game.dice3d.show(dice3dData);
+        }
+      }
       
+      // Post message
       if (this.hasAttack || this.hasDamage || this.hasEffect) {
         // Get extra text and properties
-        let props = [],
-          extraText = "";
-        let attackNotes = this.actor.getContextNotes("attacks.attack").reduce((cur, o) => {
-          o.notes.reduce((cur2, n) => {
-            cur2.push(...n.split(/[\n\r]+/));
-            return cur2;
-          }, []).forEach(n => {
-            cur.push(n);
-          });
-          return cur;
-        }, []);
-        if (typeof itemData.attackNotes === "string" && itemData.attackNotes.length) {
-          attackNotes.push(...itemData.attackNotes.split(/[\n\r]+/));
-        }
-        let attackStr = "";
-        for (let an of attackNotes) {
-          attackStr += `<span class="tag">${an}</span>`;
-        }
-        if (attackStr.length > 0) {
-          const innerHTML = TextEditor.enrichHTML(attackStr, { rollData: rollData });
-          extraText += `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${innerHTML}</div></div>`;
-        }
+        let props = [];
+        let extraText = "";
+        if (chatTemplateData.attacks.length > 0) extraText = chatTemplateData.attacks[0].attackNotesHTML;
 
         const properties = this.getChatData().properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
@@ -796,7 +903,7 @@ export class ItemPF extends Item {
       data: rollData,
       item: this.data.data,
       rollMode: game.settings.get("core", "rollMode"),
-      rollModes: CONFIG.rollModes,
+      rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.hasAttack,
       hasDamage: this.hasDamage,
       hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
@@ -845,22 +952,15 @@ export class ItemPF extends Item {
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
    */
-  rollAttack(options={}) {
+  rollAttack({data=null, extraParts=[], bonus=null, primaryAttack=true}={}) {
     const itemData = this.data.data;
     let rollData;
-    if (!options.data) {
+    if (!data) {
       rollData = this.actor.getRollData();
       rollData.item = duplicate(itemData);
     }
-    else rollData = options.data;
+    else rollData = duplicate(data);
 
-    // Add CL
-    if (this.type === "spell") {
-      const spellbookIndex = itemData.spellbook;
-      const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
-      const cl = spellbook.cl.total + (itemData.clOffset || 0);
-      rollData.cl = cl;
-    }
     // Determine size bonus
     rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];
     // Add misc bonuses/penalties
@@ -874,7 +974,7 @@ export class ItemPF extends Item {
     // Add ability modifier
     if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) parts.push(`@abilities.${abl}.mod`);
     // Add bonus parts
-    if (options.parts != null) parts = parts.concat(options.parts);
+    parts = parts.concat(extraParts);
     // Add size bonus
     if (rollData.sizeBonus !== 0) parts.push("@sizeBonus");
     // Add attack bonus
@@ -914,15 +1014,11 @@ export class ItemPF extends Item {
       parts.push("@item.masterworkBonus");
     }
     // Add secondary natural attack penalty
-    if (options.primaryAttack === false) parts.push("-5");
+    if (primaryAttack === false) parts.push("-5");
     // Add bonus
-    if (options.bonus != null) {
-      rollData.bonus = options.bonus;
+    if (bonus != null) {
+      rollData.bonus = bonus;
       parts.push("@bonus");
-    }
-    // Add extra parts
-    if (options.extraParts != null) {
-      parts = parts.concat(options.extraParts);
     }
 
     let roll = new Roll(["1d20"].concat(parts).join("+"), rollData).roll();
@@ -948,12 +1044,8 @@ export class ItemPF extends Item {
 
     // Add spell data
     if (this.type === "spell") {
-      const spellbookIndex = itemData.spellbook;
-      const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
-      const cl = spellbook.cl.total + (itemData.clOffset || 0);
-      const sl = this.data.data.level + (this.data.data.slOffset || 0);
-      rollData.cl = cl;
-      rollData.sl = sl;
+      rollData.cl = this.casterLevel || 0;
+      rollData.sl = this.spellLevel  || 0;
     }
 
     // Determine critical multiplier
@@ -998,26 +1090,11 @@ export class ItemPF extends Item {
       rollData = this.actor.getRollData();
       rollData.item = duplicate(itemData);
     }
-    else rollData = data;
+    else rollData = duplicate(data);
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
-
-    // Add CL
-    if (this.type === "spell") {
-      const spellbookIndex = itemData.spellbook;
-      const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
-      const cl = spellbook.cl.total + (itemData.clOffset || 0);
-      rollData.cl = cl;
-    }
-
-    // Determine critical multiplier
-    rollData.critMult = 1;
-    if (critical) rollData.critMult = rollData.item.ability.critMult;
-    // Determine ability multiplier
-    if (rollData.item.ability.damageMult != null) rollData.ablMult = rollData.item.ability.damageMult;
-    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = itemData.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
@@ -1029,27 +1106,27 @@ export class ItemPF extends Item {
       rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
       if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
-      else if (rollData.critMult !== 1) parts[0].extra.push("@ablDamage * @critMult");
+      else if (critical === true) parts[0].extra.push("@ablDamage * @critMult");
       else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
     }
     // Add enhancement bonus
     if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {
-      if (rollData.critMult !== 1) parts[0].extra.push("@item.enh * @critMult");
+      if (critical === true) parts[0].extra.push("@item.enh * @critMult");
       else parts[0].extra.push("@item.enh");
     }
 
     // Add general damage
     if (rollData.attributes.damage.general !== 0) {
-      if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.general * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.general * @critMult");
       else parts[0].extra.push("@attributes.damage.general");
     }
     // Add melee or spell damage
     if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(itemData.actionType)) {
-      if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.weapon * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.weapon * @critMult");
       else parts[0].extra.push("@attributes.damage.weapon");
     }
     else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(itemData.actionType)) {
-      if (rollData.critMult !== 1) parts[0].extra.push("@attributes.damage.spell * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.spell * @critMult");
       else parts[0].extra.push("@attributes.damage.spell");
     }
 
@@ -1057,8 +1134,10 @@ export class ItemPF extends Item {
     let rolls = [];
     for (let a = 0; a < parts.length; a++) {
       const part = parts[a];
+      let rollParts = [];
+      if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: new Roll([part.base, ...part.extra, ...extraParts].join("+"), rollData).roll(),
+        roll: new Roll([part.base, ...rollParts].join("+"), rollData).roll(),
         damageType: part.damageType,
       };
       rolls.push(roll);

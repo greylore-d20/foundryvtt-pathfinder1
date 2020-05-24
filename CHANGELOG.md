@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.55
+
+### Bug Fixes
+
+- Fixed Dice So Nice integration with attack rolls
+- Power attack damage bonuses are no longer applied to additional damage formulas on attacks
+
+### Changelog
+
+- Added the possibility to add features to token quickbars
+
+## 0.54
+
+### Bug Fixes
+
+- Attack measure templates appeared frozen during the preview under certain circumstances
+- sizeRoll was not functioning correctly under certain circumstances
+- Fixed power attack (again)
+
+### Changelog
+
+- You can now use features that have no real action, but do have charges, making it subtract a charge before showing its chat entry
+- You can now add features to the token quickbar
+- The modifier key to show an item from the macro bar, rather than using the item, has been changed from Shift to Control
+
 ## 0.53
 
 ### Bug Fixes

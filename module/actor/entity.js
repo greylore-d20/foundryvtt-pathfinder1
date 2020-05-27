@@ -924,9 +924,11 @@ export class ActorPF extends Actor {
       });
     });
 
-    // Add more changes
+    // Initialize data
     let flags = {},
       sourceInfo = {};
+    this._resetData(updateData, srcData1, flags, sourceInfo);
+    this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
     // Check flags
     for (let obj of changeObjects) {
@@ -1009,10 +1011,6 @@ export class ActorPF extends Actor {
           break;
       }
     }
-
-    // Initialize data
-    this._resetData(updateData, srcData1, flags, sourceInfo);
-    this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
     // Sort changes
     allChanges.sort(this._sortChanges.bind(this));

@@ -82,7 +82,7 @@ Hooks.once("init", async function() {
   Actors.registerSheet("PF1", ActorSheetPFNPCLite, { types: ["npc"], makeDefault: false });
   Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { types: ["npc"], makeDefault: false });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack"], makeDefault: true });
+  Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"], makeDefault: true });
 });
 
 
@@ -186,6 +186,17 @@ Hooks.on("updateToken", (scene, sceneId, data) => {
     for (let i of actor.items) {
       actor.updateItemResources(i);
     }
+  }
+});
+
+// Create race on actor
+Hooks.on("preCreateOwnedItem", (actor, item) => {
+  if (!(actor instanceof Actor)) return;
+  if (actor.race == null) return;
+
+  if (item.type === "race") {
+    actor.race.update(item);
+    return false;
   }
 });
 

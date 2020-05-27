@@ -169,7 +169,10 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Enrich description
-      data.description = TextEditor.enrichHTML(data.data.description.value);
+      data.description = TextEditor.enrichHTML(data.data.description.value, { rollData: this.item.getRollData() });
+      if (data.data.shortDescription != null) {
+        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, { rollData: this.item.getRollData() });
+      }
     }
 
     // Prepare class specific stuff
@@ -215,16 +218,23 @@ export class ItemSheetPF extends ItemSheet {
       data.item.data.changes.forEach(item => {
         item.subTargets = {};
         // Add specific skills
-        if (item[1] === "skill" && this.item.actor != null) {
-          const actorSkills = this.item.actor.data.data.skills;
-          for (let [s, skl] of Object.entries(actorSkills)) {
-            if (!skl.subSkills) {
-              if (skl.custom) item.subTargets[`skill.${s}`] = skl.name;
-              else item.subTargets[`skill.${s}`] = CONFIG.PF1.skills[s];
+        if (item[1] === "skill") {
+          if (this.item.actor == null) {
+            for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
+              item.subTargets[`skill.${s}`] = skl;
             }
-            else {
-              for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-                item.subTargets[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+          }
+          else {
+            const actorSkills = this.item.actor.data.data.skills;
+            for (let [s, skl] of Object.entries(actorSkills)) {
+              if (!skl.subSkills) {
+                if (skl.custom) item.subTargets[`skill.${s}`] = skl.name;
+                else item.subTargets[`skill.${s}`] = CONFIG.PF1.skills[s];
+              }
+              else {
+                for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+                  item.subTargets[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+                }
               }
             }
           }
@@ -247,16 +257,23 @@ export class ItemSheetPF extends ItemSheet {
       data.item.data.contextNotes.forEach(item => {
         item.subNotes = {};
         // Add specific skills
-        if (item[1] === "skill" && this.item.actor != null) {
-          const actorSkills = this.item.actor.data.data.skills;
-          for (let [s, skl] of Object.entries(actorSkills)) {
-            if (!skl.subSkills) {
-              if (skl.custom) item.subNotes[`skill.${s}`] = skl.name;
-              else item.subNotes[`skill.${s}`] = CONFIG.PF1.skills[s];
+        if (item[1] === "skill") {
+          if (this.item.actor == null) {
+            for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
+              item.subNotes[`skill.${s}`] = skl;
             }
-            else {
-              for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-                item.subNotes[`skill.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+          }
+          else {
+            const actorSkills = this.item.actor.data.data.skills;
+            for (let [s, skl] of Object.entries(actorSkills)) {
+              if (!skl.subSkills) {
+                if (skl.custom) item.subNotes[`skill.${s}`] = skl.name;
+                else item.subNotes[`skill.${s}`] = CONFIG.PF1.skills[s];
+              }
+              else {
+                for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+                  item.subNotes[`skill.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+                }
               }
             }
           }

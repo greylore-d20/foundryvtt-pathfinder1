@@ -65,6 +65,39 @@
       border: none;
     }
 
+    .race-container {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+      border: @borderGroove;
+      align-items: center;
+
+      .item-controls {
+        display: flex;
+        flex: 0;
+        width: 100%;
+
+        a {
+          flex: 0 0 16px;
+          font-size: 10px;
+          text-align: center;
+          color: #666;
+        }
+      }
+
+      .race {
+        line-height: 48px;
+        vertical-align: middle;
+        text-align: center;
+        width: 48px;
+        background-size: contain;
+
+        &.rollable:hover {
+          background-image: url("/icons/svg/d20-black.svg") !important;
+        }
+      }
+    }
+
     .hd {
       flex: 0 0 88px;
       height: 60px;
@@ -785,10 +818,6 @@
 
         h4 {
           margin: 0;
-        }
-
-        &:hover .item-image {
-          background-image: url("/icons/svg/d20-grey.svg") !important;
         }
 
         .item-image:hover {

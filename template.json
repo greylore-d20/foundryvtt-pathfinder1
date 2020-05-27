@@ -69,7 +69,6 @@
         },
         "resources": {},
         "attributes": {
-          "creatureType": "humanoid",
           "encumbrance": {
             "level": 0,
             "levels": {
@@ -754,8 +753,6 @@
           "min": 0,
           "max": 300
         },
-        "race": "",
-        "raceType": "",
         "height": "",
         "weight": "",
         "gender": "",
@@ -793,7 +790,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "loot", "class", "character", "spell", "feat", "buff", "attack"],
+    "types": ["weapon", "equipment", "consumable", "loot", "class", "character", "spell", "feat", "buff", "attack", "race"],
     "templates": {
       "changes": {
         "changes": [],
@@ -900,7 +897,6 @@
       "hp": 8,
       "bab": "low",
       "skillsPerLevel": 0,
-      "creatureType": "humanoid",
       "savingThrows": {
         "fort": { "value": "low" },
         "ref": { "value": "low" },
@@ -1007,10 +1003,6 @@
       "castTime": "",
       "materials": {
         "value": "",
-        "consumed": {
-          "value": false,
-          "_deprecated": true
-        },
         "focus": ""
       },
       "spellbook": "primary",
@@ -1025,10 +1017,6 @@
       "spellDuration": "",
       "spellEffect": "",
       "spellArea": "",
-      "spellType": {
-        "value": "",
-        "_deprecated": true
-      },
       "showInQuickbar": false
     },
     "weapon": {
@@ -1074,6 +1062,11 @@
       "proficient": true,
       "primaryAttack": true,
       "showInQuickbar": true
+    },
+    "race": {
+      "templates": ["itemDescription", "changes", "contextNotes"],
+      "creatureType": "humanoid",
+      "subTypes": []
     }
   }
 }

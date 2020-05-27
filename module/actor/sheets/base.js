@@ -68,6 +68,7 @@ export class ActorSheetPF extends ActorSheet {
       useBGSkills: this.entity.data.type === "character" && game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.entity.spellFailure,
       isGM: game.user.isGM,
+      race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
     };
 
     // The Actor and its Items
@@ -485,6 +486,9 @@ export class ActorSheetPF extends ActorSheet {
     // Rest
     html.find(".rest").click(this._onRest.bind(this));
 
+    // Race controls
+    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -601,6 +605,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
+    if (item == null) return;
     return item.roll();
   }
 
@@ -842,6 +847,28 @@ export class ActorSheetPF extends ActorSheet {
     const updateData = {};
     updateData[`data.skills.-=${skillId}`] = null;
     if (this.actor.hasPerm(game.user, "OWNER")) this.actor.update(updateData);
+  }
+
+  async _onRaceControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    // Add race
+    if (a.classList.contains("add")) {
+      const itemData = {
+        name: "New Race",
+        type: "race",
+      };
+      this.actor.createOwnedItem(itemData);
+    }
+    // Edit race
+    else if (a.classList.contains("edit")) {
+      this._onItemEdit(event);
+    }
+    // Delete race
+    else if (a.classList.contains("delete")) {
+      this._onItemDelete(event);
+    }
   }
 
   async _quickItemActionControl(event) {
@@ -1260,6 +1287,9 @@ export class ActorSheetPF extends ActorSheet {
     await Promise.all(promises);
   }
 
+  /**
+   * @override
+   */
   async _onDrop(event) {
     event.preventDefault();
 

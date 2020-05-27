@@ -366,14 +366,13 @@ export class ItemPF extends Item {
     return false;
   }
 
-  _updateMaxUses(data, {srcData=null, actorData=null}={}) {
+  _updateMaxUses(data, {srcData=null}={}) {
     let doLinkData = true;
     if (srcData == null) {
       srcData = this.data;
       doLinkData = false;
     }
-    let rollData = {};
-    if (actorData == null && this.actor != null) rollData = this.actor.getRollData();
+    const rollData = this.getRollData();
 
     if (hasProperty(srcData, "data.uses.maxFormula")) {
       if (getProperty(srcData, "data.uses.maxFormula") !== "") {
@@ -450,24 +449,11 @@ export class ItemPF extends Item {
     const data = duplicate(this.data.data);
     const labels = this.labels;
 
-    const rollData = this.actor ? this.actor.getRollData() : {};
-    rollData.item = data;
+    const rollData = this.getRollData();
 
-    // Get the spell specific info
-    let spellbookIndex, spellAbility, ablMod = 0;
-    let spellbook = null;
-    let cl = this.casterLevel || 0;
-    let sl = this.spellLevel  || 0;
-    if (this.type === "spell") {
-      spellbookIndex = data.spellbook;
-      spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookIndex}`) || {};
-      spellAbility = spellbook.ability;
-      if (spellAbility !== "") ablMod = getProperty(this.actor.data, `data.abilities.${spellAbility}.mod`);
-
-      rollData.cl = cl;
-      rollData.sl = sl;
-      rollData.ablMod = ablMod;
-    }
+    htmlOptions = mergeObject(htmlOptions || {}, {
+      rollData: rollData,
+    });
 
     // Rich text description
     if (this.showUnidentifiedData) {
@@ -492,9 +478,9 @@ export class ItemPF extends Item {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (data.range != null) {
-        if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(cl / 2) * 5);
-        else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + cl * 10);
-        else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + cl * 40);
+        if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(rollData.cl / 2) * 5);
+        else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + rollData.cl * 10);
+        else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + rollData.cl * 40);
         else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
           let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
           dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
@@ -527,7 +513,7 @@ export class ItemPF extends Item {
         let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
         let saveType = data.save.description;
         if (this.type === "spell") {
-          saveDC += new Roll(spellbook.baseDCFormula || "", rollData).roll().total;
+          saveDC += new Roll(this.spellbook.baseDCFormula || "", rollData).roll().total;
         }
         if (saveDC > 0 && saveType) {
           props.push(`DC ${saveDC}`);
@@ -680,9 +666,7 @@ export class ItemPF extends Item {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
     }
 
-    const itemData = this.data.data;
-    const rollData = this.actor.getRollData();
-    rollData.item = duplicate(itemData);
+    const rollData = this.getRollData();
     const itemUpdateData = {};
 
     let rolled = false;
@@ -954,12 +938,7 @@ export class ItemPF extends Item {
    */
   rollAttack({data=null, extraParts=[], bonus=null, primaryAttack=true}={}) {
     const itemData = this.data.data;
-    let rollData;
-    if (!data) {
-      rollData = this.actor.getRollData();
-      rollData.item = duplicate(itemData);
-    }
-    else rollData = duplicate(data);
+    const rollData = mergeObject(this.getRollData(), data || {});
 
     // Determine size bonus
     rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];
@@ -1031,21 +1010,10 @@ export class ItemPF extends Item {
    * Only roll the item's effect.
    */
   rollEffect({critical=false, primaryAttack=true}={}) {
-    const itemData = this.data.data;
-    const actorData = this.actor.data.data;
-    const rollData = mergeObject(duplicate(actorData), {
-      item: itemData,
-      ablMult: 0
-    }, { inplace: false });
+    const rollData = this.getRollData();
 
     if (!this.hasEffect) {
       throw new Error("You may not make an Effect Roll with this Item.");
-    }
-
-    // Add spell data
-    if (this.type === "spell") {
-      rollData.cl = this.casterLevel || 0;
-      rollData.sl = this.spellLevel  || 0;
     }
 
     // Determine critical multiplier
@@ -1065,7 +1033,7 @@ export class ItemPF extends Item {
       });
       return cur;
     }, []);
-    effectNotes.push(...(itemData.effectNotes || "").split(/[\n\r]+/));
+    effectNotes.push(...(this.data.data.effectNotes || "").split(/[\n\r]+/));
     let effectContent = "";
     for (let fx of effectNotes) {
       if (fx.length > 0) {
@@ -1080,28 +1048,45 @@ export class ItemPF extends Item {
   }
 
   /**
+   * Place an attack roll using an item (weapon, feat, spell, or equipment)
+   * Rely upon the DicePF.d20Roll logic for the core implementation
+   */
+  async rollFormula(options={}) {
+    const itemData = this.data.data;
+    if ( !itemData.formula ) {
+      throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
+    }
+
+    // Define Roll Data
+    const rollData = this.actor.getRollData();
+    rollData.item = itemData;
+    const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
+
+    const roll = new Roll(itemData.formula, rollData).roll();
+    return roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: itemData.chatFlavor || title,
+      rollMode: game.settings.get("core", "rollMode")
+    });
+  }
+
+  /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({data=null, critical=false, extraParts=[], primaryAttack=true}={}) {
-    const itemData = this.data.data;
-    let rollData = null;
-    if (!data) {
-      rollData = this.actor.getRollData();
-      rollData.item = duplicate(itemData);
-    }
-    else rollData = duplicate(data);
+  rollDamage({data=null, critical=false, extraParts=[]}={}) {
+    const rollData = mergeObject(this.getRollData(), data || {});
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
 
     // Define Roll parts
-    let parts = itemData.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
+    let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
     parts[0].base = alterRoll(parts[0].base, 0, rollData.critMult);
 
     // Determine ability score modifier
-    let abl = itemData.ability.damage;
+    let abl = this.data.data.ability.damage;
     if (typeof abl === "string" && abl !== "") {
       rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
@@ -1121,11 +1106,11 @@ export class ItemPF extends Item {
       else parts[0].extra.push("@attributes.damage.general");
     }
     // Add melee or spell damage
-    if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(itemData.actionType)) {
+    if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(this.data.data.actionType)) {
       if (critical === true) parts[0].extra.push("@attributes.damage.weapon * @critMult");
       else parts[0].extra.push("@attributes.damage.weapon");
     }
-    else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(itemData.actionType)) {
+    else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(this.data.data.actionType)) {
       if (critical === true) parts[0].extra.push("@attributes.damage.spell * @critMult");
       else parts[0].extra.push("@attributes.damage.spell");
     }
@@ -1165,38 +1150,12 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   /**
-   * Place an attack roll using an item (weapon, feat, spell, or equipment)
-   * Rely upon the DicePF.d20Roll logic for the core implementation
-   */
-  async rollFormula(options={}) {
-    const itemData = this.data.data;
-    if ( !itemData.formula ) {
-      throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
-    }
-
-    // Define Roll Data
-    const rollData = this.actor.getRollData();
-    rollData.item = itemData;
-    const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
-
-    const roll = new Roll(itemData.formula, rollData).roll();
-    return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      flavor: itemData.chatFlavor || title,
-      rollMode: game.settings.get("core", "rollMode")
-    });
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * Use a consumable item
    */
-  async rollConsumable(options={}) {
+  async useConsumable(options={}) {
     let itemData = this.data.data;
-    const labels = this.labels;
     let parts = itemData.damage.parts;
-    const data = this.actor.getRollData();
+    const data = this.getRollData();
 
     // Add effect string
     let effectStr = "";
@@ -1267,9 +1226,20 @@ export class ItemPF extends Item {
    * @returns {Object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const result = {};
+    const result = this.actor != null ? this.actor.getRollData() : {};
+    result.item = duplicate(this.data.data);
 
-    if (this.type === "buff") result.level = this.data.data.level;
+    if (this.type === "spell" && this.actor != null) {
+      const spellbook = this.spellbook;
+      const spellAbility = spellbook.ability;
+      let ablMod = "";
+      if (spellAbility !== "") ablMod = getProperty(this.actor.data, `data.abilities.${spellAbility}.mod`);
+
+      result.cl = this.casterLevel || 0;
+      result.sl = this.spellLevel  || 0;
+      result.ablMod = ablMod;
+    }
+    if (this.type === "buff") result.item.level = this.data.data.level;
 
     return result;
   }
@@ -1310,7 +1280,7 @@ export class ItemPF extends Item {
     const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
     // Consumable usage
-    if (action === "consume") await item.rollConsumable({event});
+    if (action === "consume") await item.useConsumable({event});
     // Apply damage
     else if (action === "applyDamage") {
       const value = button.dataset.value;

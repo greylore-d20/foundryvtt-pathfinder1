@@ -42,6 +42,11 @@ export class ActorPF extends Actor {
     }, 0);
   }
 
+  get race() {
+    if (this.items == null) return null;
+    return this.items.filter(o => o.type === "race")[0];
+  }
+
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = "Size";
@@ -60,6 +65,9 @@ export class ActorPF extends Actor {
       if (subtype === "trait") result = "Traits";
       if (subtype === "racial") result = "Racial Traits";
       if (subtype === "misc") result = "Misc Features";
+    }
+    if (type === "race") {
+      result = "Race";
     }
 
     if (!name || name.length === 0) return result;
@@ -1205,13 +1213,7 @@ export class ActorPF extends Actor {
     if (flags == null) flags = {};
     const items = data.items;
     const classes = items.filter(obj => { return obj.type === "class"; });
-    const racialHD = classes.filter(o => getProperty(o.data, "classType") === "racial");
     const useFractionalBaseBonuses = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
-
-    // Set creature type
-    if (racialHD.length === 1) {
-      linkData(data, updateData, "data.attributes.creatureType", getProperty(racialHD[0].data, "creatureType") || "humanoid");
-    }
 
     // Reset HD
     linkData(data, updateData, "data.attributes.hd.total", data1.details.level.value);
@@ -1549,6 +1551,10 @@ export class ActorPF extends Actor {
         spellbook.spells[`spell${a}`] = spellbook.spells[`spell${a}`] || { value: 0, max: 0, base: null };
       }
     }
+
+    // Set labels
+    this.labels = {};
+    this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
   }
 
   _setSourceDetails(actorData, extraData, flags) {

@@ -595,6 +595,34 @@
   object-fit: contain;
   border: none;
 }
+.pf1.sheet.actor .sheet-header .race-container {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  border: 2px groove #eeede0;
+  align-items: center;
+}
+.pf1.sheet.actor .sheet-header .race-container .item-controls {
+  display: flex;
+  flex: 0;
+  width: 100%;
+}
+.pf1.sheet.actor .sheet-header .race-container .item-controls a {
+  flex: 0 0 16px;
+  font-size: 10px;
+  text-align: center;
+  color: #666;
+}
+.pf1.sheet.actor .sheet-header .race-container .race {
+  line-height: 48px;
+  vertical-align: middle;
+  text-align: center;
+  width: 48px;
+  background-size: contain;
+}
+.pf1.sheet.actor .sheet-header .race-container .race.rollable:hover {
+  background-image: url("/icons/svg/d20-black.svg") !important;
+}
 .pf1.sheet.actor .sheet-header .hd {
   flex: 0 0 88px;
   height: 60px;
@@ -1192,9 +1220,6 @@
 }
 .pf1.sheet.actor .inventory-list .item .item-name h4 {
   margin: 0;
-}
-.pf1.sheet.actor .inventory-list .item .item-name:hover .item-image {
-  background-image: url("/icons/svg/d20-grey.svg") !important;
 }
 .pf1.sheet.actor .inventory-list .item .item-name .item-image:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;

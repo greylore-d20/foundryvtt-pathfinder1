@@ -42,17 +42,22 @@
         <label class="checkbox">
           <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{localize "PF1.Proficient"}}
         </label>
+
         <label class="checkbox">
           <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
+
         {{#if isNaturalAttack}}
         <label class="checkbox">
           <input type="checkbox" name="data.primaryAttack" {{checked data.primaryAttack}}/> {{localize "PF1.PrimaryAttack"}}
         </label>
         {{/if}}
+
+        {{#if owner}}
         <label class="checkbox">
           <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
+        {{/if}}
       </div>
 
       <div class="form-group">

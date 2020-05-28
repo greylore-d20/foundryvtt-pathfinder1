@@ -126,9 +126,11 @@
           <input type="checkbox" name="data.atWill" {{checked data.atWill}}/> {{localize "PF1.SpellPrepAtWill"}}
         </label>
 
+        {{#if owner}}
         <label class="checkbox">
           <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
+        {{/if}}
       </div>
 
       {{!-- Spell Components --}}

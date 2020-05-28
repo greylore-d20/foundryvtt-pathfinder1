@@ -17,9 +17,9 @@ export class CompendiumBrowser extends Application {
     };
 
     // Preload compendiums
-    // if (game.settings.get("pf1", "preloadCompendiums") === true) {
-      // this.loadData();
-    // }
+    if (game.settings.get("pf1", "preloadCompendiums") === true) {
+      this.loadData();
+    }
   }
 
   loadData() {
@@ -262,13 +262,25 @@ export class CompendiumBrowser extends Application {
       if (!this.extraFilters) {
         this.extraFilters = {
           "data.details.cr": [],
+          "subTypes": [],
         };
       }
+      result.item.creatureType = "";
+      result.item.subTypes = [];
 
       // Add CR filters
       if (item.data.type === "npc") {
         const cr = getProperty(item.data, "data.details.cr");
         if (cr && !this.extraFilters["data.details.cr"].includes(cr)) this.extraFilters["data.details.cr"].push(cr);
+      }
+      // Get creature (sub)type
+      const race = item.race;
+      if (race != null) {
+        result.item.creatureType = getProperty(race.data, "data.creatureType");
+        result.item.subTypes = getProperty(race.data, "data.subTypes").map(o => {
+          if (!this.extraFilters["subTypes"].includes(o[0])) this.extraFilters["subTypes"].push(o[0]);
+          return o[0];
+        });
       }
     }
 
@@ -496,10 +508,18 @@ export class CompendiumBrowser extends Application {
         }, []),
       },
       {
-        path: "data.attributes.creatureType",
+        path: "creatureType",
         label: game.i18n.localize("PF1.CreatureType"),
         items: Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "subTypes",
+        label: game.i18n.localize("PF1.RaceSubtypePlural"),
+        items: this.extraFilters["subTypes"].sort().reduce((cur, o) => {
+          cur.push({ key: o, name: o });
           return cur;
         }, []),
       },

@@ -6,10 +6,15 @@
 
 - Fixed Dice So Nice integration with attack rolls
 - Power attack damage bonuses are no longer applied to additional damage formulas on attacks
+- Fixed the 'toggle buff' sample macro
 
 ### Changelog
 
+- Added races as item types
 - Added the possibility to add features to token quickbars
+- You can now add specific skill changes to items without an associated actor
+- You can now easily select what ability score affects your hit points and saving throws
+- Added an option to preload compendiums
 
 ## 0.54
 

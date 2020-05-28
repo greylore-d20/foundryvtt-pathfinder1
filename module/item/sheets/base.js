@@ -1,5 +1,6 @@
 import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
+import { ClassLinksApp } from "../../apps/links/class-links.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -489,6 +490,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
+
+    // Listen to links application selector
+    html.find(".links-app").click(this._onLinksApp.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -610,6 +614,19 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
     new EntrySelector(this.item, options).render(true);
+  }
+
+  _onLinksApp(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const options = {
+      name: a.getAttribute("for"),
+      title: a.innerText,
+    };
+
+    if (this.item.type === "class") {
+      new ClassLinksApp(this.item, options).render(true);
+    }
   }
 
   async saveMCEContent(updateData=null) {

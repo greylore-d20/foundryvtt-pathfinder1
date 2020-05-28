@@ -81,6 +81,28 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  get typeColor() {
+    switch (this.type) {
+      case "feat":
+        return "#8900EA";
+      case "spell":
+        return "#5C37FF";
+      case "class":
+        return "#85B1D2";
+      case "race":
+        return "#00BD29";
+      case "attack":
+        return "#F21B1B";
+      case "weapon":
+      case "equipment":
+      case "consumable":
+      case "loot":
+        return "#909090";
+    }
+
+    return "white";
+  }
+
   /**
    * Generic charge addition (or subtraction) function that either adds charges
    * or quantity, based on item data.
@@ -313,8 +335,16 @@ export class ItemPF extends Item {
       if (!data.attack) data.attack = { parts: [] };
     }
 
-    // Assign labels and return the Item
+    // Assign labels
     this.labels = labels;
+
+    // Add links
+    if (typeof data.links === "string" && data.links.length > 0) {
+      this.links = JSON.parse(data.links);
+    }
+    else {
+      this.links = [];
+    }
   }
 
   async update(data, options={}) {

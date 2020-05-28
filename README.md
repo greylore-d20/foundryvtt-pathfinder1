@@ -14,6 +14,12 @@ If you wish to manually install the system, you must clone or extract it into
 the Data/systems/pf1 folder. You may do this by cloning the repository or
 downloading a zip archive from the [Releases Page](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/releases).
 
+## Building
+
+1. Clone or download this repository.
+2. Change directory to the repository root and run `npm install`.
+3. Run `npx gulp` to create the output script, and watch for changes.
+
 ## Information
 
 You can view information on this game system [here](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/).

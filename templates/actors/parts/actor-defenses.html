@@ -53,6 +53,17 @@
     <div class="attribute-value">
       <span>{{savingThrow.total}}</span>
     </div>
+
+    {{!-- Saving Throw Ability --}}
+    <div class="flexrow">
+      <select name="data.attributes.savingThrows.{{id}}.ability">
+        {{#select savingThrow.ability}}
+        {{#each ../config.abilities as |ability a|}}
+        <option value="{{a}}">{{ability}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
   </li>
   {{/each}}
 </ul>

@@ -107,6 +107,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorBaseStats(actor, updateData);
   _migrateActorCreatureType(actor, updateData);
   _migrateActorSpellbookDCFormula(actor, updateData);
+  _migrateActorHPAbility(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -336,6 +337,28 @@ const _migrateActorSpellbookDCFormula = function(ent, updateData) {
     const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = getProperty(ent.data, key);
     if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
+  }
+};
+
+const _migrateActorHPAbility = function(ent, updateData) {
+  // Set HP ability
+  if (getProperty(ent.data, "data.attributes.hpAbility") === undefined) {
+    updateData["data.attributes.hpAbility"] = "con";
+  }
+
+  // Set Fortitude save ability
+  if (getProperty(ent.data, "data.attributes.savingThrows.fort.ability") === undefined) {
+    updateData["data.attributes.savingThrows.fort.ability"] = "con";
+  }
+
+  // Set Reflex save ability
+  if (getProperty(ent.data, "data.attributes.savingThrows.ref.ability") === undefined) {
+    updateData["data.attributes.savingThrows.ref.ability"] = "dex";
+  }
+
+  // Set Will save ability
+  if (getProperty(ent.data, "data.attributes.savingThrows.will.ability") === undefined) {
+    updateData["data.attributes.savingThrows.will.ability"] = "wis";
   }
 };
 

@@ -47,6 +47,10 @@ export class ActorPF extends Actor {
     return this.items.filter(o => o.type === "race")[0];
   }
 
+  get typeColor() {
+    return "#FDE600";
+  }
+
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = "Size";
@@ -548,14 +552,18 @@ export class ActorPF extends Actor {
     compute_health(classes, cls_options);
 
     // Add Constitution to HP
-    changes.push({
-      raw: ["@abilities.con.mod * @attributes.hd.total", "misc", "mhp", "base", 0],
-      source: {name: "Constitution"}
-    });
-    changes.push({
-      raw: ["2 * (@abilities.con.total + @abilities.con.drain)", "misc", "wounds", "base", 0],
-      source: {name: "Constitution"}
-    });
+    let hpAbility = getProperty(data, "data.attributes.hpAbility");
+    if (hpAbility == null) hpAbility = "con";
+    if (hpAbility !== "") {
+      changes.push({
+        raw: [`@abilities.${hpAbility}.mod * @attributes.hd.total`, "misc", "mhp", "base", 0],
+        source: {name: "Constitution"}
+      });
+      changes.push({
+        raw: [`2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, "misc", "wounds", "base", 0],
+        source: {name: "Constitution"}
+      });
+    }
 
     // Natural armor
     {
@@ -1409,8 +1417,8 @@ export class ActorPF extends Actor {
     linkData(data, updateData, "data.attributes.init.total", updateData["data.attributes.init.total"] + modDiffs["dex"]);
 
     // Add ability mods to saving throws
-    for (let [s, a] of Object.entries(CONFIG.PF1.savingThrowMods)) {
-      linkData(data, updateData, `data.attributes.savingThrows.${s}.total`, updateData[`data.attributes.savingThrows.${s}.total`] + modDiffs[a]);
+    for (let [s, v] of Object.entries(getProperty(data, "data.attributes.savingThrows"))) {
+      linkData(data, updateData, `data.attributes.savingThrows.${s}.total`, updateData[`data.attributes.savingThrows.${s}.total`] + modDiffs[v.ability]);
     }
 
     // Apply changes
@@ -1618,7 +1626,8 @@ export class ActorPF extends Actor {
     }
 
     // Add ability mods (and energy drain) to saving throws
-    for (let [s, a] of Object.entries(CONFIG.PF1.savingThrowMods)) {
+    for (let [s, v] of Object.entries(getProperty(actorData, "data.attributes.savingThrows"))) {
+      const a = v.ability;
       if (actorData.data.abilities[a].mod !== 0) {
         sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
           name: CONFIG.PF1.abilities[a],

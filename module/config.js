@@ -38,16 +38,6 @@ PF1.savingThrows = {
   "will": "PF1.SavingThrowWill"
 };
 
-/**
- * The set of modifiers for Saving Throws
- * @type {Object}
- */
-PF1.savingThrowMods = {
-  "fort": "con",
-  "ref": "dex",
-  "will": "wis"
-};
-
 PF1.classTypes = {
   "base": "PF1.ClassTypeBase",
   "prestige": "PF1.ClassTypePrestige",

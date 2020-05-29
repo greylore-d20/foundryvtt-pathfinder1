@@ -218,9 +218,13 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
     let d8Index = c.indexOf("1d8");
     if (d8Index === -1) d8Index = c.indexOf("2d4");
     let indexOffset = (targetSize - 4);
+    const sizeIncrease = indexOffset > 0;
+
     while (indexOffset !== 0) {
-      if ((index <= d8Index && indexOffset < 1) ||
-      (index <= d6Index && indexOffset < 0)) {
+      if ((sizeIncrease && index <= d6Index) ||
+        (!sizeIncrease && index <= d8Index)) {
+      // if ((index <= d8Index && indexOffset < 1) ||
+      // (index <= d6Index && indexOffset < 0)) {
         if (indexOffset < 0) {
           index--;
           indexOffset++;

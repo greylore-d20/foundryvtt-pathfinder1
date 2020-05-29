@@ -1064,7 +1064,7 @@ export class ActorSheetPF extends ActorSheet {
       else if ( item.type === "feat" ) arr[2].push(item);
       else if ( item.type === "class" ) arr[3].push(item);
       else if (item.type === "attack") arr[4].push(item);
-      else if ( Object.keys(inventory).includes(item.type) || (item.data.subType != null && Object.keys(inventory).includes(item.data.subType)) ) arr[0].push(item);
+      else if (["weapon", "equipment", "consumable", "loot"].includes(item.type)) arr[0].push(item);
       return arr;
     }, [[], [], [], [], []]);
 

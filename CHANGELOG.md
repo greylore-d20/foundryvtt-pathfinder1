@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.551
+
+### Bug Fixes
+
+- Some sample macros were throwing errors
+- Hidden tokens would not show up on the combat tracker
+- sizeRoll with an original die of 1d6 would increase too much for larger sizes
+- Races couldn't be dragged from actor sheets
+
+### Changelog
+
+- holyplankton added unchained classes (many thanks!)
+- Added Omdura as a class
+- Added Lo's item compendium (many thanks!)
+- holyplankton added a bunch of races (many thanks!)
+
 ## 0.55
 
 ### Bug Fixes

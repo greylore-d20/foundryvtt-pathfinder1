@@ -97,10 +97,36 @@ export class ItemPF extends Item {
       case "equipment":
       case "consumable":
       case "loot":
-        return "#909090";
+        return "#E5E5E5";
+      case "buff":
+        return "#FDF767";
     }
 
     return "white";
+  }
+
+  get typeColor2() {
+    switch (this.type) {
+      case "feat":
+        return "#5F00A3";
+      case "spell":
+        return "#4026B2";
+      case "class":
+        return "#6A8DA8";
+      case "race":
+        return "#00841C";
+      case "attack":
+        return "#A91212";
+      case "weapon":
+      case "equipment":
+      case "consumable":
+      case "loot":
+        return "#B7B7B7";
+      case "buff":
+        return "#FDF203";
+    }
+
+    return "#C1C1C1";
   }
 
   /**

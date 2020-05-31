@@ -160,6 +160,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
+
+  // Alter chat card title color
+  chat.addChatCardTitleGradient(app, html, data);
 });
 
 // Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);

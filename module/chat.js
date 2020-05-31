@@ -1,3 +1,6 @@
+import { ItemPF } from "./item/entity.js";
+const Color = require("color");
+
 /* -------------------------------------------- */
 
 export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}, {rolls=[]}={}) {
@@ -56,4 +59,21 @@ export const hideGMSensitiveInfo = function(app, html, data) {
 
   // Hide info
   html.find(".gm-sensitive").remove();
+};
+
+export const addChatCardTitleGradient = function(app, html, data) {
+  const card = html.find(".chat-card")[0];
+  if (!card) return;
+  const actor = ItemPF._getChatCardActor(card);
+  if (!actor) return;
+  const item = actor.getOwnedItem(card.dataset.itemId);
+  if (!item) return;
+  const title = $(card).find(".card-header");
+  if (!title.length) return;
+
+  title.css("background-image", `linear-gradient(to right, ${item.typeColor}, ${item.typeColor2})`);
+
+  const titleText = title.find("h2, h3");
+  if (Color(item.typeColor).isLight()) titleText.css("color", "black");
+  else titleText.css("color", "white");
 };

@@ -152,9 +152,6 @@ Hooks.on("canvasInit", function() {
 /* -------------------------------------------- */
 
 Hooks.on("renderChatMessage", (app, html, data) => {
-  // Display action buttons
-  chat.displayChatActionButtons(app, html, data);
-
   // Hide roll info
   chat.hideRollInfo(app, html, data);
 

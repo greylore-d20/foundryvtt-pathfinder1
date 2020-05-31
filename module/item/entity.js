@@ -1277,13 +1277,13 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on('click', '.card-buttons button', this._onChatCardAction.bind(this));
+    html.on('click', '.card-buttons button', this._onChatCardButton.bind(this));
     html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
   }
 
   /* -------------------------------------------- */
 
-  static async _onChatCardAction(event) {
+  static async _onChatCardButton(event) {
     event.preventDefault();
 
     // Extract card data
@@ -1296,8 +1296,8 @@ export class ItemPF extends Item {
 
     // Validate permission to proceed with the roll
     // const isTargetted = action === "save";
-    const isTargetted = false;
-    if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
+    // const isTargetted = false;
+    // if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
 
     // Get the Actor from a synthetic Token
     const actor = this._getChatCardActor(card);
@@ -1306,8 +1306,16 @@ export class ItemPF extends Item {
     // Get the Item
     const item = actor.getOwnedItem(card.dataset.itemId);
 
+    // Perform action
+    await this._onChatCardAction(action, {button: button, item: item});
+
+    // Re-enable the button
+    button.disabled = false;
+  }
+
+  static async _onChatCardAction(action, {button=null, item=null}={}) {
     // Get card targets
-    const targets = isTargetted ? this._getChatCardTargets(card) : [];
+    // const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
     // Consumable usage
     if (action === "consume") await item.useConsumable({event});
@@ -1316,9 +1324,6 @@ export class ItemPF extends Item {
       const value = button.dataset.value;
       if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value));
     }
-
-    // Re-enable the button
-    button.disabled = false;
   }
 
   /* -------------------------------------------- */

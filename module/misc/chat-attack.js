@@ -89,7 +89,10 @@ export class ChatAttack {
   }
 
   setAttackNotesHTML() {
-    if (this.attackNotes.length === 0) return "";
+    if (this.attackNotes.length === 0) {
+      this.attackNotesHTML = "";
+      return;
+    }
 
     let result = "";
     for (let n of this.attackNotes) {
@@ -98,11 +101,14 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.attackNotesHTML =  `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${inner}</div></div>`;
+    this.attackNotesHTML =  `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${inner}</div></div>`;
   }
 
   setEffectNotesHTML() {
-    if (this.effectNotes.length === 0) return "";
+    if (this.effectNotes.length === 0) {
+      this.effectNotesHTML = "";
+      return;
+    }
 
     let result = "";
     for (let n of this.effectNotes) {
@@ -111,7 +117,7 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.effectNotesHTML = `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${inner}</div></div>`;
+    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${inner}</div></div>`;
   }
 
   async addAttack({bonus=null, extraParts=[], critical=false}={}) {
@@ -160,7 +166,7 @@ export class ChatAttack {
         return arr;
       }, []);
     }
-    if (this.item != null && this.item.data.data.attackNotes != null) {
+    if (this.item != null && this.item.data.data.attackNotes) {
       notes.push(...this.item.data.data.attackNotes.split(/[\n\r]+/));
     }
 
@@ -234,7 +240,7 @@ export class ChatAttack {
         return arr;
       }, []);
     }
-    if (this.item != null && this.item.data.data.effectNotes != null) {
+    if (this.item != null && this.item.data.data.effectNotes) {
       notes.push(...this.item.data.data.effectNotes.split(/[\n\r]+/));
     }
 

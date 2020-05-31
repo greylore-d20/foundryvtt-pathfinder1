@@ -1,23 +1,3 @@
-/**
- * Optionally hide the display of chat card action buttons which cannot be performed by the user
- */
-export const displayChatActionButtons = function(message, html, data) {
-  const chatCard = html.find(".pf1.chat-card");
-  if (chatCard.length > 0) {
-
-    // If the user is the message author or the actor owner, proceed
-    const actor = game.actors.get(data.message.speaker.actor);
-    if (actor && actor.owner) return;
-    else if (game.user.isGM || (data.author.id === game.user.id)) return;
-
-    // Otherwise conceal action buttons
-    const buttons = chatCard.find("button[data-action]");
-    buttons.each((a, btn) => {
-      btn.style.display = "none"
-    });
-  }
-};
-
 /* -------------------------------------------- */
 
 export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}, {rolls=[]}={}) {

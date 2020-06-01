@@ -673,6 +673,49 @@ PF1.spellPreparationModes = {
   "spontaneous": "PF1.SpellPrepSpontaneous",
 };
 
+PF1.classCasterType = {
+  "sorcerer": "high",
+  "wizard": "high",
+  "cleric": "high",
+  "oracle": "high",
+  "druid": "high",
+  "psychic": "high",
+  "shaman": "high",
+  "witch": "high",
+  "alchemist": "med",
+  "bard": "med",
+  "hunter": "med",
+  "inquisitor": "med",
+  "investigator": "med",
+  "magus": "med",
+  "mesmerist": "med",
+  "occultist": "med",
+  "skald": "med",
+  "spiritualist": "med",
+  "summoner": "med",
+  "unchained Summoner": "med",
+  "antipaladin": "low",
+  "bloodrager": "low",
+  "medium": "low",
+  "paladin": "low",
+  "ranger": "low",
+};
+
+PF1.magicAuraByLevel = {
+  "spell": [
+    { power: "faint", level: 1 },
+    { power: "moderate", level: 4 },
+    { power: "strong", level: 7 },
+    { power: "overwhelming", level: 10 },
+  ],
+  "item": [
+    { power: "faint", level: 1 },
+    { power: "moderate", level: 6 },
+    { power: "strong", level: 12 },
+    { power: "overwhelming", level: 21 },
+  ],
+};
+
 /* -------------------------------------------- */
 
 /* -------------------------------------------- */

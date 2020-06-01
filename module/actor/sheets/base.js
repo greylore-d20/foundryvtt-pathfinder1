@@ -42,6 +42,12 @@ export class ActorSheetPF extends ActorSheet {
     this._itemUpdates = [];
   }
 
+  get currentPrimaryTab() {
+    const primaryElem = this.element.find('nav[data-group="primary"] .item.active');
+    if (primaryElem.length !== 1 || primaryElem.attr("data-tab") !== "inventory") return null;
+    return primaryElem.attr("data-tab");
+  }
+
   get currentSpellbookKey() {
     const elems = this.element.find("nav.spellbooks .item.active");
     if (elems.length !== 1) return Object.keys(getProperty(this.data, "data.attributes.spells.spellbook") || { "primary": null })[0];
@@ -1303,10 +1309,21 @@ export class ActorSheetPF extends ActorSheet {
       return false;
     }
 
+    let itemData = {};
+    let dataType = "";
+
     // Case 1 - Import from a Compendium pack
     const actor = this.actor;
     if (data.pack) {
-      return actor.importItemFromCollection(data.pack, data.id);
+      dataType = "compendium";
+      const pack = game.packs.find(p => p.collection === data.pack);
+      const packItem = await pack.getEntity(data.id);
+      if (packItem != null) itemData = packItem.data;
+
+      // if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
+        // return actor.createConsumableSpell(itemData);
+      // }
+      // return actor.importItemFromCollection(data.pack, data.id);
     }
 
     // Case 2 - Data explicitly provided
@@ -1314,17 +1331,18 @@ export class ActorSheetPF extends ActorSheet {
       let sameActor = data.actorId === actor._id;
       if (sameActor && actor.isToken) sameActor = data.tokenId === actor.token.id;
       if (sameActor) return this._onSortItem(event, data.data); // Sort existing items
-      else {
-        return actor.createEmbeddedEntity("OwnedItem", mergeObject(data.data, this.getDropData(data.data), { inplace: false }));  // Create a new Item
-      }
+
+      dataType = "data";
+      itemData = data.data;
     }
 
     // Case 3 - Import from World entity
     else {
-      let item = game.items.get(data.id);
-      if (!item) return;
-      return actor.createEmbeddedEntity("OwnedItem", mergeObject(item.data, this.getDropData(item.data), { inplace: false }));
+      dataType = "world";
+      itemData = game.items.get(data.id).data;
     }
+
+    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType);
   }
 
   getDropData(origData) {
@@ -1334,5 +1352,14 @@ export class ActorSheetPF extends ActorSheet {
     if (getProperty(origData, "type") === "spell") setProperty(result, "data.spellbook", this.currentSpellbookKey);
 
     return result;
+  }
+
+  async importItem(itemData, dataType) {
+    if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
+      return this.actor._createConsumableSpellDialog(itemData);
+    }
+
+    if (itemData._id) delete itemData._id;
+    return this.actor.createEmbeddedEntity("OwnedItem", itemData);
   }
 }

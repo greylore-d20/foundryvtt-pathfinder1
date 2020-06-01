@@ -2838,6 +2838,38 @@ export class ActorPF extends Actor {
     });
   }
 
+  _createConsumableSpellDialog(itemData) {
+    new Dialog({
+      title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
+      content: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
+      buttons: {
+        potion: {
+          icon: '<i class="fas fa-prescription-bottle"></i>',
+          label: "Potion",
+          callback: () => this.createConsumableSpell(itemData, "potion"),
+        },
+        scroll: {
+          icon: '<i class="fas fa-scroll"></i>',
+          label: "Scroll",
+          callback: () => this.createConsumableSpell(itemData, "scroll"),
+        },
+        wand: {
+          icon: '<i class="fas fa-magic"></i>',
+          label: "Wand",
+          callback: () => this.createConsumableSpell(itemData, "wand"),
+        },
+      },
+      default: "potion",
+    }).render(true);
+  }
+
+  async createConsumableSpell(itemData, type) {
+    let data = await ItemPF.toConsumable(itemData, type);
+
+    if (data._id) delete data._id;
+    this.createEmbeddedEntity("OwnedItem", data);
+  }
+
   getRollData(data=null) {
     if (data == null) data = this.data.data;
     const result = mergeObject(data, {

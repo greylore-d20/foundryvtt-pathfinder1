@@ -1596,4 +1596,150 @@ export class ItemPF extends Item {
       ? (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0)
       : (getProperty(this.data, "data.preparation.preparedAmount") || 0);
   }
+
+  static async toConsumable(origData, type) {
+    let data = duplicate(game.system.template.Item.consumable);
+    for (let t of data.templates) {
+      mergeObject(data, duplicate(game.system.template.Item.templates[t]));
+    }
+    delete data.templates;
+    data = {
+      type: "consumable",
+      name: origData.name,
+      data: data,
+    };
+
+    const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
+
+    // Set consumable type
+    data.data.consumableType = type;
+
+    // Set name
+    if (type === "wand") {
+      data.name = `Wand of ${origData.name}`;
+      data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
+      data.data.price = slcl[0] * slcl[1] * 750;
+      data.data.hardness = 5;
+      data.data.hp.max = 5;
+      data.data.hp.value = 5;
+    }
+    else if (type === "potion") {
+      data.name = `Potion of ${origData.name}`;
+      data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
+      data.data.price = slcl[0] * slcl[1] * 50;
+      data.data.hardness = 1;
+      data.data.hp.max = 1;
+      data.data.hp.value = 1;
+    }
+    else if (type === "scroll") {
+      data.name = `Scroll of ${origData.name}`;
+      data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
+      data.data.price = slcl[0] * slcl[1] * 25;
+      data.data.hardness = 0;
+      data.data.hp.max = 1;
+      data.data.hp.value = 1;
+    }
+
+    // Set charges
+    if (type === "wand") {
+      data.data.uses.maxFormula = "50";
+      data.data.uses.value      = 50;
+      data.data.uses.max        = 50;
+      data.data.uses.per        = "charges";
+    }
+    else {
+      data.data.uses.per = "single";
+    }
+
+    // Set activation method
+    data.data.activation.type = "standard";
+
+    // Set measure template
+    if (type !== "potion") {
+      data.data.measureTemplate = getProperty(origData, "data.measureTemplate");
+    }
+
+    // Set damage formula
+    data.data.actionType = origData.data.actionType;
+    for (let d of getProperty(origData, "data.damage.parts")) {
+      d[0] = d[0].replace(/@sl/g, slcl[0]);
+      d[0] = d[0].replace(/@cl/g, slcl[1]);
+      data.data.damage.parts.push(d);
+    }
+
+    // Set saves
+    data.data.save.description = origData.data.save.description;
+    data.data.save.dc = 10 + slcl[0] + Math.floor(slcl[0] / 2);
+
+    // Copy variables
+    data.data.attackNotes = origData.data.attackNotes;
+    data.data.effectNotes = origData.data.effectNotes;
+    data.data.attackBonus = origData.data.attackBonus;
+    data.data.critConfirmBonus = origData.data.critConfirmBonus;
+
+    // Determine aura power
+    let auraPower = "faint";
+    for (let a of CONFIG.PF1.magicAuraByLevel.item) {
+      if (a.level <= slcl[1]) auraPower = a.power;
+    }
+    // Determine caster level label
+    let clLabel;
+    if (slcl[1] === 1) clLabel = "1st";
+    else if (slcl[1] === 2) clLabel = "2nd";
+    else if (slcl[1] === 3) clLabel = "3rd";
+    else clLabel = `${slcl[1]}th`;
+    // Determine spell level label
+    let slLabel;
+    if (slcl[0] === 1) slLabel = "1st";
+    else if (slcl[0] === 2) slLabel = "2nd";
+    else if (slcl[0] === 3) slLabel = "3rd";
+    else slLabel = `${slcl[0]}th`;
+
+    // Set description
+    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {
+      origData: origData,
+      data: data,
+      isWand: type === "wand",
+      isPotion: type === "potion",
+      isScroll: type === "scroll",
+      auraPower: auraPower,
+      aura: (CONFIG.PF1.spellSchools[origData.data.school] || "").toLowerCase(),
+      sl: slcl[0],
+      cl: slcl[1],
+      slLabel: slLabel,
+      clLabel: clLabel,
+      config: CONFIG.PF1,
+    });
+
+    return data;
+  }
+
+  /**
+   * @param {object} itemData - A spell item's data.
+   * @returns {number[]} An array containing the spell level and caster level.
+   */
+  static getMinimumCasterLevelBySpellData(itemData) {
+    const learnedAt = getProperty(itemData, "learnedAt.class").reduce((cur, o) => {
+      const classes = o[0].split("/");
+      for (let cls of classes) cur.push([cls, o[1]]);
+      return cur;
+    }, []);
+    let result = [9, 20];
+    for (let o of learnedAt) {
+      result[0] = Math.min(result[0], o[1]);
+      
+      const tc = CONFIG.PF1.classCasterType[o[0]] || "high";
+      if (tc === "high") {
+        result[1] = Math.min(result[1], 1 + Math.max(0, (o[1] - 1)) * 2);
+      }
+      else if (tc === "med") {
+        result[1] = Math.min(result[1], 1 + Math.max(0, (o[1] - 1)) * 3);
+      }
+      else if (tc === "low") {
+        result[1] = Math.min(result[1], 4 + Math.max(0, (o[1] - 1)) * 3);
+      }
+    }
+
+    return result;
+  }
 }

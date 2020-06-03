@@ -44,6 +44,14 @@
           {{/each}}
           {{/select}}
         </select>
+
+        <select name="data.abilityType" value="{{data.abilityType}}">
+          {{#select data.abilityType}}
+          {{#each config.abilityTypes as |type a|}}
+          <option value="{{a}}">{{type.short}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
       </div>
 
       {{!-- Feat Tags --}}

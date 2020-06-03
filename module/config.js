@@ -472,6 +472,21 @@ PF1.featTypes = {
   "misc": "PF1.Misc",
 };
 
+PF1.abilityTypes = {
+  "ex": {
+    "short": "Ex",
+    "long": "Extraordinary",
+  },
+  "su": {
+    "short": "Su",
+    "long": "Supernatural",
+  },
+  "sp": {
+    "short": "Sp",
+    "long": "Spell-Like",
+  },
+};
+
 /* -------------------------------------------- */
 
 /**

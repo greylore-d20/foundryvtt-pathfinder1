@@ -1116,6 +1116,14 @@ export class ActorSheetPF extends ActorSheet {
 
     for (let f of feats) {
       let k = f.data.featType;
+      if (f.data.abilityType && f.data.abilityType !== "n/a") {
+        f.abilityType = CONFIG.PF1.abilityTypes[f.data.abilityType].long;
+        f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.data.abilityType].short;
+      }
+      else {
+        f.abilityType = "";
+        f.abilityTypeShort = "";
+      }
       features[k].items.push(f);
       features.all.items.push(f);
     }

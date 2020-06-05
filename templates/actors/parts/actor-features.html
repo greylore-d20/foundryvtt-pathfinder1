@@ -12,6 +12,10 @@
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>
 
+        {{#unless section.isClass}}
+        <div class="item-detail item-type"><span>{{localize "PF1.Type"}}</span></div>
+        {{/unless}}
+
         {{#if section.hasActions}}
         <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
         <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
@@ -40,6 +44,12 @@
             <div class="item-image" style="background-image: url({{item.img}})"></div>
             <h4>{{item.name}}</h4>
           </div>
+
+          {{#unless section.isClass}}
+          <div class="item-detail item-type">
+            <span>{{item.abilityTypeShort}}</span>
+          </div>
+          {{/unless}}
 
           {{#if section.hasActions}}
           <div class="item-detail item-actions">

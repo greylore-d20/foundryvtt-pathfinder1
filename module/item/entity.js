@@ -274,6 +274,14 @@ export class ItemPF extends Item {
     // Feat Items
     else if ( itemData.type === "feat" ) {
       labels.featType = C.featTypes[data.featType];
+
+      // Ability type
+      if (data.abilityType && data.abilityType !== "n/a") {
+        labels.abilityType = C.abilityTypes[data.abilityType].short;
+      }
+      else if (labels.abilityType) {
+        delete labels.abilityType;
+      }
     }
 
     // Buff Items
@@ -603,6 +611,13 @@ export class ItemPF extends Item {
     if (this.type === "spell") {
       if (data.sr) {
         props.push(game.i18n.localize("PF1.SpellResistance"));
+      }
+    }
+
+    // Add ability type label
+    if (this.type === "feat") {
+      if (labels.abilityType) {
+        props.push(labels.abilityType);
       }
     }
 

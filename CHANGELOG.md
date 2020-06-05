@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.56
+
+### Bug Fixes
+
+- Chat card buttons were not visible to players who didn't own the message
+
+### Changelog
+
+- Added title coloring to chat cards involving items
+- holyplankton added the Esufey (many thanks!)
+- Added ability to drag spells to an actor's inventory tab to create a consumable item from it
+- Added ability types (ex, su and sp) to features
+- Added masterwork property to armor and shields
+- Added creature templates to actors' feature lists
+
+### Internal Changes
+
+- Class items now use 'data.level' instead of 'data.levels', to be in sync with the internal data of buff levels
+
 ## 0.551
 
 ### Bug Fixes

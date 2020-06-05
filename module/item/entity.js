@@ -276,7 +276,7 @@ export class ItemPF extends Item {
       labels.featType = C.featTypes[data.featType];
 
       // Ability type
-      if (data.abilityType && data.abilityType !== "n/a") {
+      if (data.abilityType && data.abilityType !== "none") {
         labels.abilityType = C.abilityTypes[data.abilityType].short;
       }
       else if (labels.abilityType) {

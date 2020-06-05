@@ -1106,6 +1106,7 @@ export class ActorSheetPF extends ActorSheet {
     // Organize Features
     const features = {
       classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
+      template: { label: game.i18n.localize("PF1.TemplatePlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "feat", "feat-type": "template" } },
       feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
       classFeat: { label: game.i18n.localize("PF1.ClassFeaturePlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "classFeat" } },
       trait: { label: game.i18n.localize("PF1.TraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "trait" } },
@@ -1116,7 +1117,7 @@ export class ActorSheetPF extends ActorSheet {
 
     for (let f of feats) {
       let k = f.data.featType;
-      if (f.data.abilityType && f.data.abilityType !== "n/a") {
+      if (f.data.abilityType && f.data.abilityType !== "none") {
         f.abilityType = CONFIG.PF1.abilityTypes[f.data.abilityType].long;
         f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.data.abilityType].short;
       }

@@ -527,8 +527,8 @@ const _migrateWeaponSize = function(ent, updateData) {
 const _migrateAbilityTypes = function(ent, updateData) {
   if (ent.type !== "feat") return;
 
-  if (!getProperty(ent.data, "data.abilityType")) {
-    updateData["data.abilityType"] = "ex";
+  if (getProperty(ent.data, "data.abilityType") == null) {
+    updateData["data.abilityType"] = "none";
   }
 };
 

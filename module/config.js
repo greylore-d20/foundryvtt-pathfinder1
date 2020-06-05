@@ -470,6 +470,7 @@ PF1.featTypes = {
   "trait": "PF1.FeatTypeTraits",
   "racial": "PF1.FeatTypeRacial",
   "misc": "PF1.Misc",
+  "template": "PF1.FeatTypeTemplate",
 };
 
 PF1.abilityTypes = {

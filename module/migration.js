@@ -533,7 +533,7 @@ const _migrateAbilityTypes = function(ent, updateData) {
 };
 
 const _migrateClassLevels = function(ent, updateData) {
-  if (getProperty(ent.data, "data.levels") != null) {
+  if (getProperty(ent.data, "data.levels") != null && updateData["data.level"] == null) {
     updateData["data.level"] = getProperty(ent.data, "data.levels");
   }
 };

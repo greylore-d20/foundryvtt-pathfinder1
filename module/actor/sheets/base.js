@@ -185,7 +185,7 @@ export class ActorSheetPF extends ActorSheet {
     }
     // Count allowed skill ranks
     this.actor.data.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
-      const clsLevel = cls.data.levels;
+      const clsLevel = cls.data.level;
       const clsSkillsPerLevel = cls.data.skillsPerLevel;
       const fcSkills = cls.data.fc.skill.value;
       skillRanks.allowed += (Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel) + fcSkills;
@@ -1119,7 +1119,7 @@ export class ActorSheetPF extends ActorSheet {
       features[k].items.push(f);
       features.all.items.push(f);
     }
-    classes.sort((a, b) => b.levels - a.levels);
+    classes.sort((a, b) => b.level - a.level);
     features.classes.items = classes;
 
     // Buffs

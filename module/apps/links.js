@@ -1,6 +1,19 @@
 import cytoscape from "../cytoscape.js";
+import { LinkOptions } from "./links/link-options.js";
 
 export class LinksApp extends FormApplication {
+  constructor(item, ...args) {
+    super(item, ...args);
+
+    if (item != null) {
+      item.apps[this.appId] = this;
+
+      if (item.actor != null) {
+        item.actor.apps[this.appId] = this;
+      }
+    }
+  }
+
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "links"],
@@ -18,7 +31,7 @@ export class LinksApp extends FormApplication {
         return this.edgeType(sn, tn);
       },
       complete: (sn, tn, el) => {
-        el.addClass(this.edgeClasses);
+        this._edgeHandlesConnect(sn, tn, el);
       },
     };
   }
@@ -117,7 +130,7 @@ export class LinksApp extends FormApplication {
     let result = [];
 
     const nodes = this.cy.nodes(".save");
-    const edges = this.cy.$(".save");
+    const edges = this.cy.edges(".save");
 
     // Add nodes
     for (let n of nodes) {
@@ -289,6 +302,9 @@ export class LinksApp extends FormApplication {
       if (item != null) {
         this._setNodeInfo(n, item);
       }
+      else if (n.classes().includes("save")) {
+        this.cy.remove(n);
+      }
     }
 
     // Update edges
@@ -309,13 +325,13 @@ export class LinksApp extends FormApplication {
     const src = e.source();
     const target = e.target();
     const item = [src.data("item"), target.data("item")];
+    const type = e.data("type");
+    let value = e.data("value");
 
     // Set minimum level label
-    {
-      const minLevel = e.data("minLevel");
-      if (minLevel != null) {
-        e.css("label", game.i18n.localize("PF1.LinkMinLevelLabel").format(minLevel));
-      }
+    if (type === "minLevel") {
+      if (value == null) value = game.i18n.localize("PF1.NonApplicable");
+      e.css("label", game.i18n.localize("PF1.LinkMinLevelLabel").format(value));
     }
   }
 
@@ -426,6 +442,108 @@ export class LinksApp extends FormApplication {
       },
     });
 
+    // Set value
+    result.push({
+      content: "Edit",
+      select: e => {
+        this.editLink(e);
+      },
+    });
+
     return result;
+  }
+
+  async _edgeHandlesConnect(sn, tn, e) {
+    if (sn != null && tn != null) {
+      e.addClass(this.edgeClasses);
+    }
+
+    const result = await this.editLink(e);
+    if (result === false) {
+      this.cy.remove(e);
+    }
+  }
+
+  async editLink(e) {
+    new LinkOptions(e).render(true);
+
+    // return new Promise(resolve => {
+
+    //   // Gather data
+    //   const sn = e.source(), tn = e.target();
+    //   const linkTypes = this._getLinkTypes(sn, tn);
+    //   if (linkTypes.length === 0) return;
+
+    //   const linkTypesObj = linkTypes.reduce((cur, o) => {
+    //     cur[o] = `PF1.Link_${o}`;
+    //     return cur;
+    //   }, {});
+
+    //   // Get command options
+    //   const options = this._getLinkTypeCommandOptions(e);
+
+    //   // Get render template
+    //   const content = await renderTemplate("systems/pf1/templates/apps/link-type.html", {
+    //     linkTypes: linkTypesObj,
+    //     options: options,
+    //     isNumber: options.type === "number",
+    //     isString: options.type === "string",
+    //   });
+
+    //   // Show dialog
+    //   let cancelled = true;
+    //   new Dialog({
+    //     title: game.i18n.localize("PF1.LinkType"),
+    //     content: content,
+    //     buttons: {
+    //       confirm: {
+    //         label: game.i18n.localize("PF1.Confirm"),
+    //         callback: html => {
+    //           cancelled = false;
+    //           const type = html.find('select[name="linkType"] option:selected').attr("value");
+    //           this._setLinkType(e, type);
+    //         },
+    //       },
+    //     },
+    //     default: confirm,
+    //     close: () => {
+    //       if (cancelled) {
+    //         cancelCallback();
+    //         resolve(false);
+    //       }
+    //       else {
+    //         this._updateItemInfo();
+    //         resolve(true);
+    //       }
+    //     }
+    //   }).render(true);
+    // });
+  }
+
+  /**
+   * Determines the types of links the source and target can have with each other.
+   * @param {Object} sn - The source node.
+   * @param {Object} tn - The target node.
+   * @returns {String[]} An array containing the possible link types as strings.
+   */
+  static getLinkTypes(sn, tn) {
+    const item = [sn.data("item"), tn.data("item")];
+    if (item[0] == null || item[1] == null) return [];
+
+    let result = [];
+
+    // Minimum level
+    if (item[0] instanceof Item && item[0].type === "class" &&
+      item[1] instanceof Item && item[1].type === "feat") {
+      result.push("minLevel");
+    }
+
+    return result;
+  }
+
+  _setLinkType(e, type) {
+    e.data("type", type);
+
+    if (type === "minLevel") e.data("value", 1);
   }
 }

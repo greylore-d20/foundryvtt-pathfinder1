@@ -10,6 +10,16 @@ import { ChatAttack } from "../misc/chat-attack.js";
  */
 export class ItemPF extends Item {
 
+  constructor(...args) {
+    super(...args);
+
+    /**
+     * @property {Object} _prevData
+     * When an item gets updated, certain data is stored here for use in _onUpdate.
+     */
+    this._prevData = {};
+  }
+
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */
@@ -365,12 +375,7 @@ export class ItemPF extends Item {
     this.labels = labels;
 
     // Add links
-    if (typeof data.links === "string" && data.links.length > 0) {
-      this.links = JSON.parse(data.links);
-    }
-    else {
-      this.links = [];
-    }
+    this._parseLinkData(data.links);
   }
 
   async update(data, options={}) {
@@ -413,6 +418,10 @@ export class ItemPF extends Item {
       }
     }
 
+    // Set previous data
+    this._prevData["level"] = getProperty(this.data, "data.level");
+
+    // Update maximum uses
     this._updateMaxUses(data, {srcData: srcData});
 
     const diff = diffObject(flattenObject(this.data), data);
@@ -420,6 +429,18 @@ export class ItemPF extends Item {
       return super.update(diff, options);
     }
     return false;
+  }
+
+  _onUpdate(data, options, userId, context) {
+    super._onUpdate(data, options, userId, context);
+
+    // Get changed attributes
+    const changed = new Set(Object.keys(data));
+
+    // Level changed
+    if (changed.has("data.level")) {
+      this._onLevelChange(this._prevData["level"], data["data.level"]);
+    }
   }
 
   _updateMaxUses(data, {srcData=null}={}) {
@@ -1741,5 +1762,53 @@ export class ItemPF extends Item {
     }
 
     return result;
+  }
+
+  _parseLinkData(linkData) {
+    this.links = {};
+    if (!(typeof linkData === "string" && linkData.length > 0)) return;
+
+    const data = JSON.parse(linkData);
+    const nodes = data.filter(o => o.group === "nodes");
+    const edges = data.filter(o => o.group === "edges");
+
+    // Parse edges
+    for (let e of edges) {
+      // Set minimum level
+      if (e.data.type === "minLevel") {
+        if (!this.links.minLevel) this.links.minLevel = [];
+
+        this.links.minLevel.push({
+          level: parseInt(e.data.value),
+          target: e.data.target,
+        });
+      }
+    }
+  }
+
+  async _onLevelChange(curLevel, newLevel) {
+
+    let newItems = [];
+    // Add linked items by minLevel
+    for (let o of this.links.minLevel) {
+      if (newLevel > curLevel && newLevel >= o.level) {
+        const id = o.target.split(".");
+
+        // Add from compendium
+        if (id.length === 3) {
+          const pack = game.packs.get([id[0], id[1]].join("."));
+          const item = await pack.getEntity(id[2]);
+          if (item != null) {
+            newItems.push(item);
+          }
+        }
+      }
+    }
+
+    if (this.actor != null) {
+      if (newItems.length > 0) {
+        this.actor.createEmbeddedEntity("OwnedItem", newItems);
+      }
+    }
   }
 }

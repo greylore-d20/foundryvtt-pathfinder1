@@ -146,6 +146,7 @@ export const migrateItemData = function(item) {
   _migrateEquipmentCategories(item, updateData);
   _migrateWeaponSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
+  _migrateClassLevels(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -528,6 +529,12 @@ const _migrateAbilityTypes = function(ent, updateData) {
 
   if (!getProperty(ent.data, "data.abilityType")) {
     updateData["data.abilityType"] = "ex";
+  }
+};
+
+const _migrateClassLevels = function(ent, updateData) {
+  if (getProperty(ent.data, "data.levels") != null) {
+    updateData["data.level"] = getProperty(ent.data, "data.levels");
   }
 };
 

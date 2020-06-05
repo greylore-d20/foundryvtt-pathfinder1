@@ -530,8 +530,8 @@ export class ActorPF extends Actor {
       let die_health = 1 + (health_source.data.hd-1) * options.rate;
       if (!continuous) die_health = round(die_health);
 
-      const maxed_health = Math.min(health_source.data.levels, maximized) * health_source.data.hd;
-      const level_health = Math.max(0, health_source.data.levels - maximized) * die_health;
+      const maxed_health = Math.min(health_source.data.level, maximized) * health_source.data.hd;
+      const level_health = Math.max(0, health_source.data.level - maximized) * die_health;
       const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value;
       let   health = maxed_health + level_health + favor_health;
 
@@ -543,7 +543,7 @@ export class ActorPF extends Actor {
         let maximized = options.maximized;
         for (const hd of health_sources) {
           auto_health(hd, options, maximized);
-          maximized = Math.max(0, maximized - hd.data.levels);
+          maximized = Math.max(0, maximized - hd.data.level);
         }
       } else health_sources.forEach(race => manual_health(race));
     }
@@ -1267,9 +1267,9 @@ export class ActorPF extends Actor {
               if (saveScale === "high"){
                 const acc = highStart ? 0 : 2;
                 highStart = true;
-                return cur + obj.data.levels / 2 + acc;
+                return cur + obj.data.level / 2 + acc;
               }
-              if (saveScale === "low") return cur + obj.data.levels / 3;
+              if (saveScale === "low") return cur + obj.data.level / 3;
               return cur;
             }, 0)) - data1.attributes.energyDrain
           );
@@ -1286,7 +1286,7 @@ export class ActorPF extends Actor {
               const classType = getProperty(obj.data, "classType") || "base";
               let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
               if (formula == null) formula = "0";
-              const v = Math.floor(new Roll(formula, {level: obj.data.levels}).roll().total);
+              const v = Math.floor(new Roll(formula, {level: obj.data.level}).roll().total);
 
               if (v !== 0) {
                 sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
@@ -1330,9 +1330,9 @@ export class ActorPF extends Actor {
       if (useFractionalBaseBonuses) {
         linkData(data, updateData, k, Math.floor(classes.reduce((cur, obj) => {
           const babScale = getProperty(obj, "data.bab") || "";
-          if (babScale === "high") return cur + obj.data.levels;
-          if (babScale === "med") return cur + obj.data.levels * 0.75;
-          if (babScale === "low") return cur + obj.data.levels * 0.5;
+          if (babScale === "high") return cur + obj.data.level;
+          if (babScale === "med") return cur + obj.data.level * 0.75;
+          if (babScale === "low") return cur + obj.data.level * 0.5;
           return cur;
         }, 0)));
 
@@ -1345,7 +1345,7 @@ export class ActorPF extends Actor {
       else {
         linkData(data, updateData, k, classes.reduce((cur, obj) => {
           const formula = CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-          const v = new Roll(formula, {level: obj.data.levels}).roll().total;
+          const v = new Roll(formula, {level: obj.data.level}).roll().total;
 
           if (v !== 0) {
             sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
@@ -1501,7 +1501,7 @@ export class ActorPF extends Actor {
       healthConfig  = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
       const classType = cls.data.classType || "base";
       data.classes[tag] = {
-        level: cls.data.levels,
+        level: cls.data.level,
         name: cls.name,
         hd: cls.data.hd,
         bab: cls.data.bab,
@@ -1521,7 +1521,7 @@ export class ActorPF extends Actor {
       for (let k of Object.keys(data.classes[tag].savingThrows)) {
         let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
         if (formula == null) formula =  "0";
-        data.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.levels}).roll().total;
+        data.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.level}).roll().total;
       }
     });
 
@@ -1948,7 +1948,7 @@ export class ActorPF extends Actor {
   _updateExp(data) {
     const classes = this.items.filter(o => o.type === "class");
     const level = classes.reduce((cur, o) => {
-      return cur + o.data.data.levels;
+      return cur + o.data.data.level;
     }, 0);
     if (getProperty(this.data, "data.details.level.value") !== level) {
       data["data.details.level.value"] = level;

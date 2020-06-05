@@ -1,0 +1,10 @@
+<select name="linkType">
+  {{#each linkTypes as |name type|}}
+  <option value="{{type}}">{{localize name}}</option>
+  {{/each}}
+</select>
+
+{{#if isNumber}}
+<input type="number" {{#if options.min}}min="{{options.min}}"{{/if}} {{#if options.max}}max="{{options.max}}"{{/if}}
+  value="{{options.initial}}" name="value" />
+{{/if}}

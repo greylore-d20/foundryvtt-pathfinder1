@@ -1,6 +1,6 @@
 import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
-import { ClassLinksApp } from "../../apps/links/class-links.js";
+import { LinksApp } from "../../apps/links.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -624,9 +624,7 @@ export class ItemSheetPF extends ItemSheet {
       title: a.innerText,
     };
 
-    if (this.item.type === "class") {
-      new ClassLinksApp(this.item, options).render(true);
-    }
+    new LinksApp(this.item, options).render(true);
   }
 
   async saveMCEContent(updateData=null) {

@@ -19,8 +19,8 @@
           {{lookup config.classTypes data.classType}}
         </li>
         <li class="tooltip">
-          <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.levels}}</span>
-          <input type="text" name="data.levels" value="{{data.levels}}" placeholder="{{localize "PF1.Level"}}" data-dtype="Number"/>
+          <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.level}}</span>
+          <input type="text" name="data.level" value="{{data.level}}" placeholder="{{localize "PF1.Level"}}" data-dtype="Number"/>
         </li>
       </ul>
     </div>
@@ -57,12 +57,12 @@
       </div>
 
       {{!-- Links --}}
-      {{!-- <div class="form-group stacked">
+      <div class="form-group stacked">
         <div class="data-selector">
           <a class="links-app" for="data.links"><i class="fas fa-edit"></i></a>
           <label for="data.links">{{localize "PF1.Links"}}</label>
         </div>
-      </div> --}}
+      </div>
 
       {{!-- HD --}}
       <div class="form-group">

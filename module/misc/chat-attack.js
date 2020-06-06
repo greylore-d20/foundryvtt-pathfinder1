@@ -206,10 +206,17 @@ export class ChatAttack {
     let flavor;
     if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing")         : game.i18n.localize("PF1.Damage");
     else           flavor = this.item.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
-    const damageTypes = this.item.data.data.damage.parts.reduce((cur, o) => {
+    let damageTypes = this.item.data.data.damage.parts.reduce((cur, o) => {
       if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
       return cur;
     }, []);
+    // Add critical damage parts
+    if (critical === true && getProperty(this.item.data, "data.damage.critParts") != null) {
+      damageTypes.push(this.item.data.data.damage.critParts.reduce((cur, o) => {
+        if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
+        return cur;
+      }, []));
+    }
 
     // Add card
     if (critical) {

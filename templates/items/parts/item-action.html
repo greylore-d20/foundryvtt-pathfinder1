@@ -99,6 +99,8 @@
   </select>
 </div>
 
+<hr />
+
 {{!-- Damage Formula --}}
 <h4 class="damage-header">
   {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
@@ -121,6 +123,32 @@
   </li>
   {{/each}}
 </ol>
+
+<hr />
+
+{{!-- Critical Damage Bonus Formula --}}
+<h4 class="damage-header">
+  {{#unless isHealing }}{{localize "PF1.CritDamageBonusFormula"}}{{ else }}{{localize "PF1.CritHealingBonusFormula"}}{{/unless}}
+  <a class="crit-damage-control add-damage"><i class="fas fa-plus"></i></a>
+</h4>
+<ol class="damage-parts form-group tooltip">
+  <span class="tooltipcontent">
+    NOTE: Normally, every variable entered in these fields are not multiplied on a critical hit,
+    If you want to have something multiplied on a critical hit, multiply it by the variable @critMult.<br>
+    Examples:<br>
+    2 * @critMult<br>
+    (@critMult)d6
+  </span>
+  {{#each data.damage.critParts as |part i| }}
+  <li class="damage-part flexrow" data-damage-part="{{i}}">
+    <input type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+    <input type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+    <a class="crit-damage-control delete-damage"><i class="fas fa-minus"></i></a>
+  </li>
+  {{/each}}
+</ol>
+
+<hr />
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">

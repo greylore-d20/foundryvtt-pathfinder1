@@ -1176,6 +1176,10 @@ export class ItemPF extends Item {
     // Define Roll parts
     let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
     parts[0].base = alterRoll(parts[0].base, 0, rollData.critMult);
+    // Add critical damage parts
+    if (critical === true && getProperty(this.data, "data.damage.critParts") != null) {
+      parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; }));
+    }
 
     // Determine ability score modifier
     let abl = this.data.data.ability.damage;

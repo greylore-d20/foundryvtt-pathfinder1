@@ -530,6 +530,10 @@ const _migrateAbilityTypes = function(ent, updateData) {
   if (getProperty(ent.data, "data.abilityType") == null) {
     updateData["data.abilityType"] = "none";
   }
+  // Fix buggy value
+  if (getProperty(ent.data, "data.abilityType") === "n/a") {
+    updateData["data.abilityType"] = "none";
+  }
 };
 
 const _migrateClassLevels = function(ent, updateData) {

@@ -47,7 +47,7 @@
 
         <select name="data.abilityType" value="{{data.abilityType}}">
           {{#select data.abilityType}}
-          <option value="n/a"></option>
+          <option value="none"></option>
           {{#each config.abilityTypes as |type a|}}
           <option value="{{a}}">{{type.short}}</option>
           {{/each}}

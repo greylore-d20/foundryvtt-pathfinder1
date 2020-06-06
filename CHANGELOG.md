@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.561
+
+### Bug Fixes
+
+- Fatal bug with feats causing character sheets to be unopenable
+
+### Changelog
+
+- Added fields for damage that's only applied on critical hits
+
 ## 0.56
 
 ### Bug Fixes

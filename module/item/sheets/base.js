@@ -394,6 +394,15 @@ export class ItemSheetPF extends ItemSheet {
       return arr;
     }, []);
 
+    // Handle Critical Damage Array
+    let critDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.critParts"));
+    formData["data.damage.critParts"] = critDamage.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(3);
+      if ( !arr[i] ) arr[i] = [];
+      arr[i][j] = entry[1];
+      return arr;
+    }, []);
+
     // Handle Attack Array
     let attacks = Object.entries(formData).filter(e => e[0].startsWith("data.attackParts"));
     formData["data.attackParts"] = attacks.reduce((arr, entry) => {
@@ -477,6 +486,9 @@ export class ItemSheetPF extends ItemSheet {
     // Modify damage formula
     html.find(".damage-control").click(this._onDamageControl.bind(this));
 
+    // Modify damage formula
+    html.find(".crit-damage-control").click(this._onCritDamageControl.bind(this));
+
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
 
@@ -530,6 +542,28 @@ export class ItemSheetPF extends ItemSheet {
       const damage = duplicate(this.item.data.data.damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);
       return this.item.update({"data.damage.parts": damage.parts});
+    }
+  }
+
+  async _onCritDamageControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    console.log(this.item);
+
+    // Add new damage component
+    if ( a.classList.contains("add-damage") ) {
+      await this._onSubmit(event);  // Submit any unsaved changes
+      const damage = this.item.data.data.damage;
+      return this.item.update({"data.damage.critParts": damage.critParts.concat([["", ""]])});
+    }
+
+    // Remove a damage component
+    if ( a.classList.contains("delete-damage") ) {
+      await this._onSubmit(event);  // Submit any unsaved changes
+      const li = a.closest(".damage-part");
+      const damage = duplicate(this.item.data.data.damage);
+      damage.critParts.splice(Number(li.dataset.damagePart), 1);
+      return this.item.update({"data.damage.critParts": damage.critParts});
     }
   }
 

@@ -300,8 +300,17 @@ export class ItemSheetPF extends ItemSheet {
    */
   _getItemStatus(item) {
     if ( item.type === "spell" ) {
+      const spellbook = this.item.spellbook;
       if (item.data.preparation.mode === "prepared") {
-        return item.data.preparation.preparedAmount > 0 ? game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount) : game.i18n.localize("PF1.Unprepared");
+        if (item.data.preparation.preparedAmount > 0) {
+          if (spellbook != null && spellbook.spontaneous) {
+            return game.i18n.localize("PF1.SpellPrepPrepared");
+          }
+          else {
+            return game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount);
+          }
+        }
+        return game.i18n.localize("PF1.Unprepared");
       }
       else if (item.data.preparation.mode) {
         return item.data.preparation.mode.titleCase();

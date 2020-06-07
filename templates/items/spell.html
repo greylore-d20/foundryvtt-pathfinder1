@@ -199,6 +199,12 @@
           </div>
         </div>
       </div>
+      {{else}}
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="data.prepared.spontaneousPrepared" {{checked data.prepared.spontaneousPrepared}}> {{localize "PF1.SpellPrepPrepared"}}
+        </label>
+      </div>
       {{/if}}
 
       {{#unless isAtWill}}

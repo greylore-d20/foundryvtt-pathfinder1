@@ -1632,9 +1632,16 @@ export class ItemPF extends Item {
     const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
-    return isSpontaneous
-      ? (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0)
-      : (getProperty(this.data, "data.preparation.preparedAmount") || 0);
+    
+    if (isSpontaneous) {
+      if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
+        return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
+      }
+    }
+    else {
+      return getProperty(this.data, "data.preparation.preparedAmount") || 0;
+    }
+    return 0;
   }
 
   static async toConsumable(origData, type) {

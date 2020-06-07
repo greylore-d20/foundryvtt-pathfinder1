@@ -521,6 +521,9 @@ export class ActorSheetPF extends ActorSheet {
     // Quick (un)identify item
     html.find("a.item-control.item-identify").click(ev => { this._quickIdentifyItem(ev); });
 
+    // Quick toggle item property
+    html.find("a.item-control.item-toggle-data").click(this._itemToggleData.bind(this));
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
@@ -931,6 +934,19 @@ export class ActorSheetPF extends ActorSheet {
     if (hasProperty(item.data, "data.identified")) {
       item.update({ "data.identified": !item.data.data.identified });
     }
+  }
+
+  async _itemToggleData(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    const itemId = $(a).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+    const property = $(a).attr("name");
+
+    const updateData = {};
+    updateData[property] = !getProperty(item.data, property);
+    item.update(updateData);
   }
 
   /**

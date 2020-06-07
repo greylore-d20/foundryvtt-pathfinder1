@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6
+
+### Changelog
+
+- Added a flag for spell preparation in spontaneous spellbooks (for Arcanists)
+
 ## 0.561
 
 ### Bug Fixes

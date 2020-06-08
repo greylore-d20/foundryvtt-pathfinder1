@@ -791,7 +791,7 @@ export class ItemPF extends Item {
         }
         
         // Rapid Shot
-        if (form.find('[name="point-blank-shot"]').prop("checked")) {
+        if (form.find('[name="rapid-shot"]').prop("checked")) {
           rollData.rapidShotPenalty = -2;
           attackExtraParts.push("@rapidShotPenalty");
         }
@@ -831,6 +831,7 @@ export class ItemPF extends Item {
           let atk = allAttacks[a];
           // Create attack object
           let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+
           // Add attack roll
           await attack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
 
@@ -852,6 +853,26 @@ export class ItemPF extends Item {
 
           // Add to list
           attacks.push(attack);
+          
+          if(a === 0 && form.find('[name="rapid-shot"]').prop("checked")) {
+              let rapidShotAttack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+              await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+
+              // Add damage
+              if (this.hasDamage) {
+                await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: false});
+    
+                // Add critical hit damage
+                if (rapidShotAttack.hasCritConfirm) {
+                  await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: true});
+                }
+              }
+    
+              // Add effect notes
+              rapidShotAttack.addEffectNotes();
+              
+              attacks.push(rapidShotAttack);
+          }
         }
       }
       // Add damage only

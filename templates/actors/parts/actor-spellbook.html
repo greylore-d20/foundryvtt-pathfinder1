@@ -105,10 +105,11 @@
         
         <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
         
-        <div class="spell-uses">
+        <div class="spell-uses config">
           {{#if section.usesSlots}}
+          <a class="config-icon config-control" for="spellSlots"><i class="fas fa-cog"></i></a>
           <input class="base" type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
-          value="{{section.baseSlots}}" placeholder="Base" />
+            value="{{section.baseSlots}}" placeholder="Base" style="display: none" />
           <input type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
           <span class="sep"> / </span>
           <input type="text" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />

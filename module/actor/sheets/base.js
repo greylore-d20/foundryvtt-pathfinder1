@@ -1398,7 +1398,7 @@ export class ActorSheetPF extends ActorSheet {
     const f = $(a).attr("for");
     const html = this.element;
 
-    $(a).css("opacity", 0);
+    $(a).css("display", "none");
 
     // Show CR field
     if (f === "cr") {
@@ -1406,6 +1406,14 @@ export class ActorSheetPF extends ActorSheet {
       elem.attr("value", CR.fromNumber(this.actor.data.data.details.cr));
       elem.attr("name", "data.details.cr");
       elem.prop("disabled", false);
+      elem.focus();
+      elem.select();
+    }
+
+    // Show base Spell Slots field
+    else if (f === "spellSlots") {
+      const elem = $(a).closest(".spell-uses").find(".base");
+      elem.css("display", "block");
       elem.focus();
       elem.select();
     }

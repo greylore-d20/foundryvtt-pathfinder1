@@ -104,6 +104,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
+      data.isTemplate = getProperty(this.item.data, "data.featType") === "template";
     }
 
     // Prepare weapon specific stuff

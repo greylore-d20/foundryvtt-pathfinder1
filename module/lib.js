@@ -167,7 +167,7 @@ export const CR = {
     if (value === "1/4") return 0.25;
     if (value === "1/3") return 0.3375;
     if (value === "1/2") return 0.5;
-    return parseInt(value);
+    return parseFloat(value);
   },
 
   fromNumber(value) {

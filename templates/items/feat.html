@@ -70,6 +70,13 @@
         {{/if}}
       </div>
 
+      {{#if isTemplate}}
+      <div class="form-group">
+        <label>{{localize "PF1.CROffset"}}</label>
+        <input type="text" data-dtype="Number" name="data.crOffset" value="{{data.crOffset}}" placeholder="0" />
+      </div>
+      {{/if}}
+
       <div class="form-group stacked">
         {{#if owner}}
         <label class="checkbox">

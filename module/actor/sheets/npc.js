@@ -46,8 +46,8 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     const data = super.getData();
 
     // Challenge Rating
-    const cr = parseFloat(data.data.details.cr || 0);
-    data.labels.cr = CR.fromNumber(cr);
+    const crTotal = this.actor.getCR();
+    data.labels.cr = CR.fromNumber(crTotal);
     return data;
   }
 

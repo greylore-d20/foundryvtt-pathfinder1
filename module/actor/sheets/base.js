@@ -3,7 +3,7 @@ import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
-import { createTag, createTabs, isMinimumCoreVersion } from "../../lib.js";
+import { createTag, createTabs, isMinimumCoreVersion, CR } from "../../lib.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -441,6 +441,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));
+
+    // Show configureable fields
+    html.find(".config .config-control").click(this._onConfigControl.bind(this));
 
     /* -------------------------------------------- */
     /*  Abilities, Skills, Defenses and Traits
@@ -1387,5 +1390,24 @@ export class ActorSheetPF extends ActorSheet {
 
     if (itemData._id) delete itemData._id;
     return this.actor.createEmbeddedEntity("OwnedItem", itemData);
+  }
+
+  async _onConfigControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const f = $(a).attr("for");
+    const html = this.element;
+
+    $(a).css("opacity", 0);
+
+    // Show CR field
+    if (f === "cr") {
+      const elem = html.find('input[for="data.details.cr"]');
+      elem.attr("value", CR.fromNumber(this.actor.data.data.details.cr));
+      elem.attr("name", "data.details.cr");
+      elem.prop("disabled", false);
+      elem.focus();
+      elem.select();
+    }
   }
 }

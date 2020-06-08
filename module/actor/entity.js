@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, linkData, isMinimumCoreVersion } from "../lib.js";
+import { createTag, linkData, isMinimumCoreVersion, CR } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 
@@ -2882,6 +2882,19 @@ export class ActorPF extends Actor {
     }, { inplace: false });
 
     return result;
+  }
+
+  getCR() {
+    if (this.data.type !== "npc") return 0;
+
+    const base = (typeof this.data.data.details.cr === "number") ? this.data.data.details.cr : CR.fromNumber(this.data.data.details.cr);
+
+    // Gather CR from templates
+    const templates = this.items.filter(o => o.type === "feat" && o.data.data.featType === "template");
+    return templates.reduce((cur, o) => {
+      if (o.data.data.crOffset > 0 && cur < 1) return o.data.data.crOffset;
+      return cur + (o.data.data.crOffset || 0);
+    }, base);
   }
 }
 

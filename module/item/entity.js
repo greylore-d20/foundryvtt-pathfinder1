@@ -790,6 +790,12 @@ export class ItemPF extends Item {
           attackExtraParts.push("@pointBlankBonus");
         }
         
+        // Rapid Shot
+        if (form.find('[name="point-blank-shot"]').prop("checked")) {
+          rollData.rapidShotPenalty = -2;
+          attackExtraParts.push("@rapidShotPenalty");
+        }
+        
         // Primary Attack (for natural attacks)
         let html = form.find('[name="primary-attack"]');
         if (typeof html.prop("checked") === "boolean") {

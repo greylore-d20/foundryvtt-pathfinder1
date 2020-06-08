@@ -4,7 +4,9 @@
 
 ### Changelog
 
-- Added a flag for spell preparation in spontaneous spellbooks (for Arcanists)
+- Added a flag for spell preparation in spontaneous spellbooks (for Arcanists, mainly)
+- Added a CR offset field to creature templates
+- Improved visibility of editing base spell slots
 
 ## 0.561
 

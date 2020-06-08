@@ -783,6 +783,13 @@ export class ItemPF extends Item {
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
           attackExtraParts.push("@powerAttackPenalty");
         }
+        
+        // Point-Blank Shot
+        if (form.find('[name="point-blank-shot"]').prop("checked")) {
+          rollData.pointBlankBonus = 1;
+          attackExtraParts.push("@pointBlankBonus");
+        }
+        
         // Primary Attack (for natural attacks)
         let html = form.find('[name="primary-attack"]');
         if (typeof html.prop("checked") === "boolean") {

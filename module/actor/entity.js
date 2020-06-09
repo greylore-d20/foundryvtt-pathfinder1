@@ -2120,8 +2120,8 @@ export class ActorPF extends Actor {
       if (die.match(/^([0-9]+)d([0-9]+)$/)) {
         dieCount = parseInt(RegExp.$1);
         dieSides = parseInt(RegExp.$2);
-        const weaponSize = Object.keys(CONFIG.PF1.sizeChart).indexOf(item.data.data.weaponData.size) - 4;
-        part = `sizeRoll(${dieCount}, ${dieSides}, ${weaponSize}, @critMult)`;
+        // const weaponSize = Object.keys(CONFIG.PF1.sizeChart).indexOf(item.data.data.weaponData.size) - 4;
+        part = `sizeRoll(${dieCount}, ${dieSides}, @size, @critMult)`;
       }
       const bonusFormula = getProperty(item.data, "data.weaponData.damageFormula");
       if (bonusFormula != null && bonusFormula.length) part = `${part} + ${bonusFormula}`;

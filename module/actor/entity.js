@@ -2140,8 +2140,17 @@ export class ActorPF extends Actor {
       attackData["data.range.value"] = getProperty(item.data, "data.weaponData.range").toString();
     }
 
+    // Create attack
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
-    await this.createOwnedItem(expandObject(attackData));
+    const itemData = await this.createOwnedItem(expandObject(attackData));
+
+    // Create link
+    const link = {
+      id: itemData._id,
+      dataType: "data",
+    };
+    const links = [...(getProperty(item.data, "data.links.children") || []), link];
+    await item.update({"data.links.children": links});
 
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
   }

@@ -1819,23 +1819,43 @@ export class ItemPF extends Item {
 
     let result = [];
     for (let l of children) {
-      const id = l.id.split(".");
-
-      // Compendium entry
-      if (l.dataType === "compendium") {
-        const pack = game.packs.get(id.slice(0, 2).join("."));
-        result.push(await pack.getEntity(id[2]));
-      }
-      // World entry
-      else if (l.dataType === "world") {
-        result.push(game.items.get(id[1]));
-      }
-      // Same actor's item
-      else if (this.actor != null) {
-        result.push(this.actor.items.find(o => o._id === id[0]));
-      }
+      result.push(await this.getLinkItem(l));
     }
 
     return result;
+  }
+
+  async getLinkItem(l) {
+    const id = l.id.split(".");
+
+    // Compendium entry
+    if (l.dataType === "compendium") {
+      const pack = game.packs.get(id.slice(0, 2).join("."));
+      return await pack.getEntity(id[2]);
+    }
+    // World entry
+    else if (l.dataType === "world") {
+      return game.items.get(id[1]);
+    }
+    // Same actor's item
+    else if (this.actor != null && this.actor.items != null) {
+      return this.actor.items.find(o => o._id === id[0]);
+    }
+
+    return null;
+  }
+
+  async updateLinkItems() {
+
+    // Update link items
+    const linkGroups = (getProperty(this.data, "data.links") || {});
+    for (let links of Object.values(linkGroups)) {
+      for (let l of links) {
+        const i = await this.getLinkItem(l);
+        if (i == null) continue;
+        l.name = i.name;
+        l.img = i.img;
+      }
+    }
   }
 }

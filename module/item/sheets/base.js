@@ -313,6 +313,11 @@ export class ItemSheetPF extends ItemSheet {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
       for (let i of items) {
         l.items.push(i);
+
+        // Update link items
+        this.item.updateLinkItems().then(() => {
+          this.render(true);
+        });
       }
     }
   }
@@ -632,9 +637,13 @@ export class ItemSheetPF extends ItemSheet {
     const actor = this.item.actor;
     const sameActor = actor != null && data != null && data.actorId === actor._id;
 
+    // Don't create link to self
+    const itemId = itemLink.split(".").slice(-1)[0];
+    if (itemId === this.item._id) return false;
+
     // Don't create existing links
-    const links = Object.entries(getProperty(this.item.data, `data.links.${linkType}`) || {});
-    if (links.filter(o => o[0] === itemLink).length) return false;
+    const links = getProperty(this.item.data, `data.links.${linkType}`) || [];
+    if (links.filter(o => o.id === itemLink).length) return false;
 
     if (linkType === "children" && sameActor) return true;
 
@@ -693,7 +702,6 @@ export class ItemSheetPF extends ItemSheet {
   async _onCritDamageControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    console.log(this.item);
 
     // Add new damage component
     if ( a.classList.contains("add-damage") ) {

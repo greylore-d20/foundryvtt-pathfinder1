@@ -381,9 +381,6 @@ export class ItemPF extends Item {
 
     // Assign labels
     this.labels = labels;
-
-    // Add links
-    this._parseLinkData(data.links);
   }
 
   async update(data, options={}) {
@@ -1790,51 +1787,55 @@ export class ItemPF extends Item {
     return result;
   }
 
-  _parseLinkData(linkData) {
-    this.links = {};
-    if (!(typeof linkData === "string" && linkData.length > 0)) return;
-
-    const data = JSON.parse(linkData);
-    const nodes = data.filter(o => o.group === "nodes");
-    const edges = data.filter(o => o.group === "edges");
-
-    // Parse edges
-    for (let e of edges) {
-      // Set minimum level
-      if (e.data.type === "minLevel") {
-        if (!this.links.minLevel) this.links.minLevel = [];
-
-        this.links.minLevel.push({
-          level: parseInt(e.data.value),
-          target: e.data.target,
-        });
-      }
-    }
-  }
-
   async _onLevelChange(curLevel, newLevel) {
 
-    let newItems = [];
-    // Add linked items by minLevel
-    for (let o of this.links.minLevel) {
-      if (newLevel > curLevel && newLevel >= o.level) {
-        const id = o.target.split(".");
+    // let newItems = [];
+    // // Add linked items by minLevel
+    // for (let o of this.links.minLevel) {
+      // if (newLevel > curLevel && newLevel >= o.level) {
+        // const id = o.target.split(".");
 
-        // Add from compendium
-        if (id.length === 3) {
-          const pack = game.packs.get([id[0], id[1]].join("."));
-          const item = await pack.getEntity(id[2]);
-          if (item != null) {
-            newItems.push(item);
-          }
-        }
+        // // Add from compendium
+        // if (id.length === 3) {
+          // const pack = game.packs.get([id[0], id[1]].join("."));
+          // const item = await pack.getEntity(id[2]);
+          // if (item != null) {
+            // newItems.push(item);
+          // }
+        // }
+      // }
+    // }
+
+    // if (this.actor != null) {
+      // if (newItems.length > 0) {
+        // this.actor.createEmbeddedEntity("OwnedItem", newItems);
+      // }
+    // }
+  }
+
+  async getLinkChildren() {
+    const children = getProperty(this.data, "data.links.children");
+    if (!children) return [];
+
+    let result = [];
+    for (let l of children) {
+      const id = l.id.split(".");
+
+      // Compendium entry
+      if (l.dataType === "compendium") {
+        const pack = game.packs.get(id.slice(0, 2).join("."));
+        result.push(await pack.getEntity(id[2]));
+      }
+      // World entry
+      else if (l.dataType === "world") {
+        result.push(game.items.get(id[1]));
+      }
+      // Same actor's item
+      else if (this.actor != null) {
+        result.push(this.actor.items.find(o => o._id === id[0]));
       }
     }
 
-    if (this.actor != null) {
-      if (newItems.length > 0) {
-        this.actor.createEmbeddedEntity("OwnedItem", newItems);
-      }
-    }
+    return result;
   }
 }

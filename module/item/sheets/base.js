@@ -1,6 +1,5 @@
 import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
-import { LinksApp } from "../../apps/links.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -289,7 +288,33 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
+    // Add links
+    this._prepareLinks(data);
+
     return data;
+  }
+
+  _prepareLinks(data) {
+
+    data.links = {
+      list: [],
+    };
+
+    // Add children link type
+    data.links.list.push({
+      id: "children",
+      label: game.i18n.localize("PF1.LinkTypeChildren"),
+      help: game.i18n.localize("PF1.LinkHelpChildren"),
+      items: [],
+    });
+
+    // Post process data
+    for (let l of data.links.list) {
+      const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
+      for (let i of items) {
+        l.items.push(i);
+      }
+    }
   }
 
   /* -------------------------------------------- */
@@ -440,6 +465,18 @@ export class ItemSheetPF extends ItemSheet {
       return arr;
     }, []);
 
+    // Handle links arrays
+    let links = Object.entries(formData).filter(e => e[0].startsWith("data.links"));
+    for (let e of links) {
+
+      formData[e[0]] = e[1].reduce((arr, entry) => {
+        let [i, j] = entry[0].split(".").slice(2);
+        if ( !arr[i] ) arr[i] = [];
+        arr[i][j] = entry[1];
+        return arr;
+      }, []);
+    }
+
     // Update the Item
     super._updateObject(event, formData);
   }
@@ -458,6 +495,7 @@ export class ItemSheetPF extends ItemSheet {
       const tabGroups = {
         "primary": {
           "description": {},
+          "links": {},
         },
       };
       createTabs.call(this, html, tabGroups);
@@ -513,8 +551,10 @@ export class ItemSheetPF extends ItemSheet {
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
 
-    // Listen to links application selector
-    html.find(".links-app").click(this._onLinksApp.bind(this));
+    // Add drop handler to link tabs
+    html.find('div[data-group="links"]').on("drop", this._onLinksDrop.bind(this));
+
+    html.find(".link-control").click(this._onLinkControl.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -524,8 +564,103 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _onTextAreaDrop(event) {
-    event.preventDefault();
     const elem = event.currentTarget;
+  }
+
+  async _onLinksDrop(event) {
+    const elem = event.currentTarget;
+    const linkType = elem.dataset.tab;
+    
+    // Try to extract the data
+    let data;
+    try {
+      data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      if (data.type !== "Item") return;
+    } catch (err) {
+      return false;
+    }
+
+    let itemData = {};
+    let dataType = "";
+    let itemLink = "";
+
+    // Case 1 - Import from a Compendium pack
+    if (data.pack) {
+      dataType = "compendium";
+      const pack = game.packs.find(p => p.collection === data.pack);
+      const packItem = await pack.getEntity(data.id);
+      if (packItem != null) {
+        itemData = packItem.data;
+        itemLink = `${pack.key}.${packItem._id}`;
+      }
+    }
+
+    // Case 2 - Data explicitly provided
+    else if (data.data) {
+      dataType = "data";
+      itemData = data.data;
+      itemLink = itemData._id;
+    }
+
+    // Case 3 - Import from World entity
+    else {
+      dataType = "world";
+      itemData = game.items.get(data.id).data;
+      itemLink = `world.${data.id}`;
+    }
+
+    if (this.canCreateLink(linkType, dataType, itemData, itemLink, data)) {
+      const updateData = {};
+      let _links = duplicate(getProperty(this.item.data, `data.links.${linkType}`) || []);
+      _links.push(this.generateInitialLinkData(linkType, dataType, itemData, itemLink));
+      updateData[`data.links.${linkType}`] = _links;
+
+      await this.item.update(updateData);
+      this.render();
+    }
+  }
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} itemData - The (new) item's data.
+   * @param {string} itemLink - The link identifier for the item.
+   * @param {Object} [data] - The raw data from a drop event.
+   * @returns {boolean} Whether a link to the item is possible here.
+   */
+  canCreateLink(linkType, dataType, itemData, itemLink, data=null) {
+    const actor = this.item.actor;
+    const sameActor = actor != null && data != null && data.actorId === actor._id;
+
+    // Don't create existing links
+    const links = Object.entries(getProperty(this.item.data, `data.links.${linkType}`) || {});
+    if (links.filter(o => o[0] === itemLink).length) return false;
+
+    if (linkType === "children" && sameActor) return true;
+
+    return false;
+  }
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} itemData - The (new) item's data.
+   * @param {string} itemLink - The link identifier for the item.
+   * @param {Object} [data] - The raw data from a drop event.
+   * @returns {Array} An array to insert into this item's link data.
+   */
+  generateInitialLinkData(linkType, dataType, itemData, itemLink, data=null) {
+
+    if (linkType === "children") {
+      return {
+        id: itemLink,
+        dataType: dataType,
+        name: itemData.name,
+        img: itemData.img,
+      };
+    }
+
+    return null;
   }
 
   /**
@@ -640,6 +775,23 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
+  async _onLinkControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    // Delete link
+    if (a.classList.contains("delete-link")) {
+      await this._onSubmit(event);
+      const li = a.closest(".links-item");
+      const group = a.closest('div[data-group="links"]');
+      const links = duplicate(getProperty(this.item.data, `data.links.${group.dataset.tab}`) || []).filter(o => o.id !== li.dataset.link);
+
+      const updateData = {};
+      updateData[`data.links.${group.dataset.tab}`] = links;
+      return this.item.update(updateData);
+    }
+  }
+
   async _createAttack(event) {
     if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
 
@@ -658,17 +810,6 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
     new EntrySelector(this.item, options).render(true);
-  }
-
-  _onLinksApp(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    const options = {
-      name: a.getAttribute("for"),
-      title: a.innerText,
-    };
-
-    new LinksApp(this.item, options).render(true);
   }
 
   async saveMCEContent(updateData=null) {

@@ -30,6 +30,7 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
+    <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
   </nav>
 
   {{!-- Item Sheet Body --}}
@@ -56,6 +57,10 @@
       {{> "systems/pf1/templates/items/parts/item-changes.html"}}
 
       {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+    </div>
+
+    <div class="tab flexcol" data-group="primary" data-tab="links">
+      {{> "systems/pf1/templates/items/parts/item-links.html"}}
     </div>
   </section>
 </form>

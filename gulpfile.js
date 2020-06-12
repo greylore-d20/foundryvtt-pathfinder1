@@ -16,7 +16,7 @@ function compileLESS() {
 }
 function compileJS() {
   return new Promise(resolve => {
-    let proc = spawn("npm", ["run", "build:release"]);
+    let proc = spawn("npm", ["run", "build:release"], {shell: true});
 
     proc.on("close", () => { resolve(); });
   });

@@ -204,7 +204,7 @@ Hooks.on("createOwnedItem", (actor) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
 });
-Hooks.on("deleteOwnedItem", (actor) => {
+Hooks.on("deleteOwnedItem", (actor, ...args) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
 });

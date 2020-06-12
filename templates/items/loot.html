@@ -45,6 +45,7 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
   </nav>
 
   {{!-- Item Sheet Body --}}
@@ -71,6 +72,10 @@
         <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
       </label>
       {{/if}}
+    </div>
+
+    <div class="tab flexcol" data-group="primary" data-tab="links">
+      {{> "systems/pf1/templates/items/parts/item-links.html"}}
     </div>
   </section>
 </form>

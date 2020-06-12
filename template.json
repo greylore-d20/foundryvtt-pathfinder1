@@ -892,10 +892,15 @@
         },
         "effectNotes": "",
         "attackNotes": ""
+      },
+      "links": {
+        "links": {
+          "children": []
+        }
       }
     },
     "class": {
-      "templates": ["itemDescription", "changes"],
+      "templates": ["itemDescription", "changes", "links"],
       "classType": "base",
       "levels": {
         "value": 0,
@@ -920,13 +925,13 @@
       "links": ""
     },
     "buff": {
-      "templates": ["itemDescription", "changes", "contextNotes"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links"],
       "buffType": "temp",
       "active": false,
       "level": 0
     },
     "consumable": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action"],
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "links"],
       "consumableType": "potion",
       "uses": {
         "value": 0,
@@ -936,7 +941,7 @@
       }
     },
     "equipment": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
       "equipped": true,
       "equipmentType": "armor",
       "equipmentSubtype": "lightArmor",
@@ -951,7 +956,7 @@
       "masterwork": false
     },
     "feat": {
-      "templates": ["itemDescription", "activatedEffect", "action", "changes", "contextNotes"],
+      "templates": ["itemDescription", "activatedEffect", "action", "changes", "contextNotes", "links"],
       "featType": "feat",
       "associations": {
         "classes": []
@@ -961,11 +966,11 @@
       "crOffset": 0
     },
     "loot": {
-      "templates": ["itemDescription", "physicalItem"],
+      "templates": ["itemDescription", "physicalItem", "links"],
       "subType": "misc"
     },
     "spell": {
-      "templates": ["itemDescription", "activatedEffect", "action"],
+      "templates": ["itemDescription", "activatedEffect", "action", "links"],
       "learnedAt": {
         "class": [],
         "domain": [],
@@ -1008,7 +1013,7 @@
       "showInQuickbar": false
     },
     "weapon": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
       "equipped": true,
       "masterwork": false,
       "weaponType": "simple",
@@ -1043,7 +1048,7 @@
       }
     },
     "attack": {
-      "templates": ["itemDescription", "activatedEffect", "action"],
+      "templates": ["itemDescription", "activatedEffect", "action", "links"],
       "attackType": "weapon",
       "masterwork": false,
       "enh": null,
@@ -1052,7 +1057,7 @@
       "showInQuickbar": true
     },
     "race": {
-      "templates": ["itemDescription", "changes", "contextNotes"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links"],
       "creatureType": "humanoid",
       "subTypes": []
     }

@@ -172,6 +172,44 @@
     border-radius: 3px;
     background: rgba(0, 0, 0, 0.05);
   }
+
+  div.links-body {
+    table {
+
+      .links-controls {
+        width: 48px;
+
+        & > div {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      .links-item {
+        .links-item-name {
+          img {
+            vertical-align: middle;
+          }
+
+          span {
+            vertical-align: middle;
+          }
+        }
+      }
+
+      th {
+        background-color: rgb(116, 116, 116);
+      }
+
+      tr:not(:last-child) {
+        border-bottom: 1px solid rgb(136, 136, 136);
+      }
+
+      td:not(:last-child), th:not(:last-child) {
+        border-right: 1px solid rgb(136, 136, 136);
+      }
+    }
+  }
 }
 
 
@@ -522,14 +560,6 @@
         }
       }
     }
-  }
-}
-
-.pf1.links {
-  .cytoscape {
-    width: 100%;
-    height: 100%;
-    display: block;
   }
 }
 

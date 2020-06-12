@@ -2896,5 +2896,27 @@ export class ActorPF extends Actor {
       return cur + (o.data.data.crOffset || 0);
     }, base);
   }
-}
 
+  async deleteEmbeddedEntity(embeddedName, data, options={}) {
+    if (embeddedName === "OwnedItem") {
+      if (!(data instanceof Array)) data = [data];
+
+      // Add children to list of items to be deleted
+      const _addChildren = async function(id) {
+        const item = this.items.find(o => o._id === id);
+        const children = await item.getLinkChildren();
+        for (let child of children) {
+          if (!data.includes(child._id)) {
+            data.push(child._id);
+            await _addChildren.call(this, child._id);
+          }
+        }
+      }
+      for (let id of data) {
+        await _addChildren.call(this, id);
+      }
+    }
+
+    super.deleteEmbeddedEntity(embeddedName, data, options);
+  }
+}

@@ -1,3 +1,5 @@
+import { ListTabs} from "./misc/list-tabs.js";
+
 /**
  * Creates a tag from a string.
  * For example, if you input the string "Wizard of Oz 2", you will get "wizardOfOz2"
@@ -69,8 +71,17 @@ export const createTabs = function(html, tabGroups) {
     if (scrollElems.length === 0) scrollElems = html.find(`.tab[data-group="${group}"]`);
     scrollElems.scroll(ev => this._scrollTab[group] = ev.currentTarget.scrollTop);
 
+    // Determine tab type
+    const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
+    if (!tabsElem) return;
+    let type = tabsElem.dataset.tabsType;
+    let cls = TabsV2;
+    if (type === "list") {
+      cls = ListTabs;
+    }
+
     // Create tabs object
-    const tabs = new TabsV2({
+    const tabs = new cls({
       navSelector: `.tabs[data-group="${group}"]`,
       contentSelector: `.${group}-body`,
       callback: (_, tabs) => {

@@ -1330,7 +1330,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Try to extract the data
     let data;
-    let extraData = {};
     try {
       data = JSON.parse(event.dataTransfer.getData('text/plain'));
       if (data.type !== "Item") return;
@@ -1348,11 +1347,6 @@ export class ActorSheetPF extends ActorSheet {
       const pack = game.packs.find(p => p.collection === data.pack);
       const packItem = await pack.getEntity(data.id);
       if (packItem != null) itemData = packItem.data;
-
-      // if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
-        // return actor.createConsumableSpell(itemData);
-      // }
-      // return actor.importItemFromCollection(data.pack, data.id);
     }
 
     // Case 2 - Data explicitly provided

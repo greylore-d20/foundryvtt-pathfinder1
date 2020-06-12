@@ -175,6 +175,7 @@ export const getItemOwner = function(item) {
 export const CR = {
   fromString(value) {
     if (value === "1/8") return 0.125;
+    if (value === "1/6") return 0.1625;
     if (value === "1/4") return 0.25;
     if (value === "1/3") return 0.3375;
     if (value === "1/2") return 0.5;
@@ -183,6 +184,7 @@ export const CR = {
 
   fromNumber(value) {
     if (value === 0.125) return "1/8";
+    if (value === 0.1625) return "1/6";
     if (value === 0.25) return "1/4";
     if (value === 0.3375) return "1/3";
     if (value === 0.5) return "1/2";

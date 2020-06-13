@@ -855,7 +855,7 @@ export class ItemPF extends Item {
           attacks.push(attack);
           
           if(a === 0 && form.find('[name="rapid-shot"]').prop("checked")) {
-              let rapidShotAttack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+              let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
               await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
 
               // Add damage

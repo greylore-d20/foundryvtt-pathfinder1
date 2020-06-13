@@ -109,12 +109,18 @@
             <input type="checkbox" name="mirrorX" data-dtype="Boolean" {{checked object.mirrorX}}/>
         </div>
 
-        {{#if version.v052}}
         <div class="form-group">
             <label>{{localize "TOKEN.MirrorY"}}</label>
             <input type="checkbox" name="mirrorY" data-dtype="Boolean" {{checked object.mirrorY}}/>
         </div>
-        {{/if}}
+
+        <div class="form-group">
+            <label>{{ localize "TOKEN.TintColor" }}</label>
+            <div class="form-fields">
+                <input class="color" type="text" name="tint" value="{{object.tint}}"/>
+                <input type="color" value="{{object.tint}}" data-edit="tint"/>
+            </div>
+        </div>
     </div>
 
     <!-- Token Position -->

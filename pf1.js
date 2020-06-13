@@ -165,7 +165,6 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   chat.addChatCardTitleGradient(app, html, data);
 });
 
-// Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 

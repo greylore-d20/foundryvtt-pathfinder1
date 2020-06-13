@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - 1/6 CR was not an option
+- Token tint was missing from the token configuration window
 
 ### Changelog
 
@@ -13,6 +14,8 @@
 - Improved visibility of editing base spell slots
 - Added initial item linking support, which for now only has one type of linking (automatic deletion of linked child items)
 - Creating attacks from weapons now adds the newly created attack as a linked child of the weapon (see above)
+- Marc Robinson added Rapid Shot and Point-blank Shot to attack dialogs (many thanks!)
+- rectulo updated the French translation (many thanks!)
 
 ## 0.561
 

@@ -780,6 +780,19 @@ export class ItemPF extends Item {
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
           attackExtraParts.push("@powerAttackPenalty");
         }
+        
+        // Point-Blank Shot
+        if (form.find('[name="point-blank-shot"]').prop("checked")) {
+          rollData.pointBlankBonus = 1;
+          attackExtraParts.push("@pointBlankBonus");
+        }
+        
+        // Rapid Shot
+        if (form.find('[name="rapid-shot"]').prop("checked")) {
+          rollData.rapidShotPenalty = -2;
+          attackExtraParts.push("@rapidShotPenalty");
+        }
+        
         // Primary Attack (for natural attacks)
         let html = form.find('[name="primary-attack"]');
         if (typeof html.prop("checked") === "boolean") {
@@ -815,6 +828,7 @@ export class ItemPF extends Item {
           let atk = allAttacks[a];
           // Create attack object
           let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+
           // Add attack roll
           await attack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
 
@@ -836,6 +850,26 @@ export class ItemPF extends Item {
 
           // Add to list
           attacks.push(attack);
+          
+          if(a === 0 && form.find('[name="rapid-shot"]').prop("checked")) {
+              let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
+              await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+
+              // Add damage
+              if (this.hasDamage) {
+                await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: false});
+    
+                // Add critical hit damage
+                if (rapidShotAttack.hasCritConfirm) {
+                  await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: true});
+                }
+              }
+    
+              // Add effect notes
+              rapidShotAttack.addEffectNotes();
+              
+              attacks.push(rapidShotAttack);
+          }
         }
       }
       // Add damage only

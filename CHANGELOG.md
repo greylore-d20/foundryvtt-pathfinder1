@@ -2,11 +2,17 @@
 
 ## 0.6
 
+### Bug Fixes
+
+- 1/6 CR was not an option
+
 ### Changelog
 
 - Added a flag for spell preparation in spontaneous spellbooks (for Arcanists, mainly)
 - Added a CR offset field to creature templates
 - Improved visibility of editing base spell slots
+- Added initial item linking support, which for now only has one type of linking (automatic deletion of linked child items)
+- Creating attacks from weapons now adds the newly created attack as a linked child of the weapon (see above)
 
 ## 0.561
 

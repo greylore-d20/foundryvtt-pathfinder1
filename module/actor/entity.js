@@ -1722,7 +1722,8 @@ export class ActorPF extends Actor {
    */
   _prepareNPCData(data) {
     // Kill Experience
-    data.details.xp.value = this.getCRExp(data.details.cr);
+    const crTotal = this.getCR(data);
+    data.details.xp.value = this.getCRExp(crTotal);
   }
 
   /**
@@ -2893,10 +2894,12 @@ export class ActorPF extends Actor {
     return result;
   }
 
-  getCR() {
+  getCR(data=null) {
     if (this.data.type !== "npc") return 0;
+    if (data == null) data = this.data.data;
 
-    const base = (typeof this.data.data.details.cr === "number") ? this.data.data.details.cr : CR.fromNumber(this.data.data.details.cr);
+    const base = (typeof data.details.cr === "number") ? data.details.cr : 1;
+    if (this.items == null) return base;
 
     // Gather CR from templates
     const templates = this.items.filter(o => o.type === "feat" && o.data.data.featType === "template");

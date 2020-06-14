@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.601
+
+### Bug Fixes
+
+- Point-blank Shot was not adding damage
+- Shift-clicking attacks to bypass the dialog didn't work
+- Amulets of Natural Armor other than +1 didn't give the right amount of AC
+- Haste didn't give speed increases
+- The Toggle Buff sample macro incorrectly tried to toggle items that weren't buffs if the name matched
+
+### Changelog
+
+- Improved visibility of saving throw DCs on attack and spell chat cards
+
 ## 0.6
 
 ### Bug Fixes

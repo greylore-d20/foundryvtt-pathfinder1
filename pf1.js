@@ -123,7 +123,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.561;
+  const NEEDS_MIGRATION_VERSION = 0.601;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
@@ -274,15 +274,7 @@ function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) 
  * Show an actor's defenses.
  */
 function rollDefenses({actorName=null, actorId=null}={}) {
-  const speaker = ChatMessage.getSpeaker();
-  let actor = game.actors.entities.filter(o => {
-    if (!actorName && !actorId) return false;
-    if (actorName && o.name !== actorName) return false;
-    if (actorId && o._id !== actorId) return false;
-    return true;
-  })[0];
-  if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
+  const actor = ActorPF.getActiveActor({actorName: actorName, actorId: actorId});
   if (!actor) return ui.notifications.warn("No applicable actor found");
 
   return actor.rollDefenses();

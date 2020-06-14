@@ -8,6 +8,12 @@
     {{{data.description.value}}}
   </div>
 
+  <div class="flexcol card-buttons">
+    {{#if save.hasSave}}
+    <button data-action="save" data-dc="{{save.dc}}" data-type="{{save.type}}">{{save.label}}</button>
+    {{/if}}
+  </div>
+
   <footer class="card-footer">
     {{#if isSpell}}
     {{#if spellFailure}}

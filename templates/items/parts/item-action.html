@@ -152,9 +152,23 @@
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">
-  <label>{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}</label>
+  <label>{{#unless isSpell}}{{localize "PF1.DC"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}</label>
   <div class="form-fields">
     <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}"/>
+    <select name="data.save.type">
+      {{#select data.save.type}}
+      <option value=""></option>
+      {{#each config.savingThrows as |save type|}}
+      <option value="{{type}}">{{save}}</type>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
+</div>
+
+<div class="form-group input-select">
+  <label>{{localize "PF1.SavingThrowEffect"}}</label>
+  <div class="form-fields">
     <input type="text" name="data.save.description" value="{{data.save.description}}" placeholder="{{localize "PF1.DCDescriptionExample"}}"/>
   </div>
 </div>

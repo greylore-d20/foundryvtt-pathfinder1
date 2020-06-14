@@ -91,6 +91,19 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  get dc() {
+    const rollData = this.getRollData();
+    const data = this.data.data;
+
+    if (this.type === "spell") {
+      const spellbook = this.spellbook;
+      if (spellbook != null) {
+        return new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+      }
+    }
+    return new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+  }
+
   get typeColor() {
     switch (this.type) {
       case "feat":
@@ -364,8 +377,8 @@ export class ItemPF extends Item {
     if ( data.hasOwnProperty("actionType") ) {
       // Save DC
       let save = data.save || {};
-      if (save.description) {
-        labels.save = `DC ${save.dc}`;
+      if (save.type) {
+        labels.save = `DC ${this.dc}`;
       }
 
       // Damage
@@ -471,12 +484,14 @@ export class ItemPF extends Item {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-  async roll(altChatData={}) {
+  async roll(altChatData={}, {addDC=true}={}) {
     const actor = this.actor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Basic template rendering data
     const token = this.actor.token;
+    const saveType = getProperty(this.data, "data.save.type");
+    const saveDC = this.dc;
     const templateData = {
       actor: this.actor,
       tokenId: token ? `${token.scene._id}.${token.id}` : null,
@@ -492,6 +507,12 @@ export class ItemPF extends Item {
       isVersatile: this.isVersatile,
       hasSave: this.hasSave,
       isSpell: this.data.type === "spell",
+      save: {
+        hasSave: addDC === true && typeof saveType === "string" && saveType.length > 0,
+        dc: saveDC,
+        type: saveType,
+        label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
+      },
     };
 
     // Roll spell failure chance
@@ -592,14 +613,11 @@ export class ItemPF extends Item {
 
       // Add save DC
       if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
-        let saveDC = new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
-        let saveType = data.save.description;
-        if (this.type === "spell") {
-          saveDC += new Roll(this.spellbook.baseDCFormula || "", rollData).roll().total;
-        }
-        if (saveDC > 0 && saveType) {
+        let saveDC = this.dc;
+        let saveDesc = data.save.description;
+        if (saveDC > 0 && saveDesc) {
           props.push(`DC ${saveDC}`);
-          props.push(saveType);
+          props.push(saveDesc);
         }
       }
     }
@@ -945,7 +963,7 @@ export class ItemPF extends Item {
       };
 
       // Send spell info
-      if (this.data.type === "spell") await this.roll({ rollMode: rollMode });
+      if (this.data.type === "spell") await this.roll({ rollMode: rollMode }, {addDC: false});
 
       // Dice So Nice integration
       if (game.dice3d != null) {
@@ -989,6 +1007,11 @@ export class ItemPF extends Item {
 
         const properties = this.getChatData().properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
+
+        // Get saving throw data
+        const save = getProperty(this.data, "data.save.type");
+        const saveDC = this.dc;
+
         const templateData = mergeObject(chatTemplateData, {
           extraText: extraText,
           hasExtraText: extraText.length > 0,
@@ -996,6 +1019,12 @@ export class ItemPF extends Item {
           hasProperties: props.length > 0,
           item: this.data,
           actor: this.actor.data,
+          save: {
+            hasSave: typeof save === "string" && save.length > 0,
+            dc: saveDC,
+            type: save,
+            label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
+          },
         }, { inplace: false });
         // Create message
         await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
@@ -1393,9 +1422,8 @@ export class ItemPF extends Item {
     const action = button.dataset.action;
 
     // Validate permission to proceed with the roll
-    // const isTargetted = action === "save";
-    // const isTargetted = false;
-    // if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
+    let isTargetted = ["save", "applyDamage"].includes(action);
+    if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
 
     // Get the Actor from a synthetic Token
     const actor = this._getChatCardActor(card);

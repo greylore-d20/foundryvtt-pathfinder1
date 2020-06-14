@@ -24,13 +24,27 @@ export class ActorPF extends Actor {
     const action = button.dataset.action;
 
     // Get the Actor
-    const actor = ItemPF._getChatCardActor(card);
+    // const actor = ItemPF._getChatCardActor(card);
+    const actor = ActorPF.getActiveActor();
 
     // Roll saving throw
     if (action === "save") {
-      const saveId = button.dataset.save;
+      const saveId = button.dataset.type;
       if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
+  }
+
+  static getActiveActor({actorName=null, actorId=null}={}) {
+    const speaker = ChatMessage.getSpeaker();
+    let actor = game.actors.entities.filter(o => {
+      if (!actorName && !actorId) return false;
+      if (actorName && o.name !== actorName) return false;
+      if (actorId && o._id !== actorId) return false;
+      return true;
+    })[0];
+    if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
+    if (!actor) actor = game.actors.get(speaker.actor);
+    return actor;
   }
 
   /* -------------------------------------------- */

@@ -139,7 +139,6 @@ export const migrateItemData = function(item) {
   _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
   _migrateSpellDescription(item, updateData);
-  _migrateItemDC(item, updateData);
   _migrateClassDynamics(item, updateData);
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
@@ -147,6 +146,7 @@ export const migrateItemData = function(item) {
   _migrateWeaponSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
+  _migrateSavingThrowTypes(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -413,16 +413,6 @@ const _migrateSpellDivineFocus = function(ent, updateData) {
   if (typeof value === "boolean") updateData["data.components.divineFocus"] = (value === true ? 1 : 0);
 };
 
-const _migrateItemDC = function(ent, updateData) {
-  const value = getProperty(ent.data.data, "save.type");
-  if (value == null) return;
-  if (value === "") updateData["data.save.description"] = "";
-  else if (value === "fort") updateData["data.save.description"] = "Fortitude partial";
-  else if (value === "ref") updateData["data.save.description"] = "Reflex half";
-  else if (value === "will") updateData["data.save.description"] = "Will negates";
-  updateData["data.save.-=type"] = null;
-};
-
 const _migrateClassDynamics = function(ent, updateData) {
   if (ent.type !== "class") return;
 
@@ -539,6 +529,15 @@ const _migrateAbilityTypes = function(ent, updateData) {
 const _migrateClassLevels = function(ent, updateData) {
   if (getProperty(ent.data, "data.levels") != null && updateData["data.level"] == null) {
     updateData["data.level"] = getProperty(ent.data, "data.levels");
+  }
+};
+
+const _migrateSavingThrowTypes = function(ent, updateData) {
+  if (getProperty(ent.data, "data.save.type") == null && typeof getProperty(ent.data, "data.save.description") === "string") {
+    const desc = getProperty(ent.data, "data.save.description");
+    if (desc.match(/REF/i)) updateData["data.save.type"] = "ref";
+    else if (desc.match(/FORT/i)) updateData["data.save.type"] = "fort";
+    else if (desc.match(/WILL/i)) updateData["data.save.type"] = "will";
   }
 };
 

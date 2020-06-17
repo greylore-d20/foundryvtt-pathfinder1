@@ -23,12 +23,14 @@ export class ActorPF extends Actor {
     const card = button.closest(".chat-card");
     const action = button.dataset.action;
 
-    // Get the Actor
-    // const actor = ItemPF._getChatCardActor(card);
-    const actor = ActorPF.getActiveActor();
-
     // Roll saving throw
-    if (action === "save") {
+    if (action === "defense-save") {
+      const actor = ItemPF._getChatCardActor(card);
+      const saveId = button.dataset.save;
+      if (actor) actor.rollSavingThrow(saveId, { event: event });
+    }
+    else if (action === "save") {
+      const actor = ActorPF.getActiveActor()
       const saveId = button.dataset.type;
       if (actor) actor.rollSavingThrow(saveId, { event: event });
     }

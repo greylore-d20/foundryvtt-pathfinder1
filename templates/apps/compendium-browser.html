@@ -12,8 +12,10 @@
         <div class="filter-content">
           {{#each filter.items as |i|}}
           <div class="checkbox">
-            <input type="checkbox" name="{{i.key}}" />
-            <span>{{i.name}}</span>
+            <input type="checkbox" name="{{i.key}}" id="{{filter.path}}_{{i.key}}" />
+            <label type="checkbox" for="{{filter.path}}_{{i.key}}">
+              {{i.name}}
+            </label>
           </div>
           {{/each}}
         </div>

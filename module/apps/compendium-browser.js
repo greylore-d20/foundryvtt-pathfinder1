@@ -150,8 +150,8 @@ export class CompendiumBrowser extends Application {
       }, []);
 
       result.item.assocations = {
-        "class": (getProperty(item.data, "data.featType") === "classFeat" ? getProperty(item.data, "data.assocations.classes") || [] : []).reduce((cur, o) => {
-          if (!this.extraFilters["assocations.class"].includes(o[0])) this.extraFilters["assocations.class"].push(o[0]);
+        "class": (getProperty(item.data, "data.featType") === "classFeat" ? getProperty(item.data, "data.associations.classes") || [] : []).reduce((cur, o) => {
+          if (!this.extraFilters.associations["class"].includes(o[0])) this.extraFilters.associations["class"].push(o[0]);
           cur.push(o[0]);
           return cur;
         }, []),

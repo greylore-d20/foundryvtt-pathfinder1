@@ -100,11 +100,6 @@ export class DicePF {
           // Send message
           rolled = true;
           chatData = mergeObject(roll.toMessage({flavor}, { create: false }), chatData);
-          // Dice So Nice integration
-          if (game.dice3d != null) {
-            await game.dice3d.showForRoll(roll, chatData.whisper, chatData.blind);
-            chatData.sound = null;
-          }
 
           await ChatMessagePF.create(chatData);
         }

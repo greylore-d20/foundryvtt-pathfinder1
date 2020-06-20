@@ -1240,6 +1240,11 @@ export class ActorPF extends Actor {
     // Reset HD
     linkData(data, updateData, "data.attributes.hd.total", data1.details.level.value);
 
+    // Reset CR
+    if (this.data.type === "npc") {
+      linkData(data, updateData, "data.details.cr.total", this.getCR(data1));
+    }
+
     // Reset abilities
     for (let [a, abl] of Object.entries(data1.abilities)) {
       linkData(data, updateData, `data.abilities.${a}.penalty`, 0);
@@ -1738,8 +1743,13 @@ export class ActorPF extends Actor {
    */
   _prepareNPCData(data) {
     // Kill Experience
-    const crTotal = this.getCR(data);
-    data.details.xp.value = this.getCRExp(crTotal);
+    try {
+      const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
+      data.details.xp.value = this.getCRExp(crTotal);
+    }
+    catch (e) {
+      data.details.xp.value = this.getCRExp(1);
+    }
   }
 
   /**
@@ -2914,14 +2924,15 @@ export class ActorPF extends Actor {
     if (this.data.type !== "npc") return 0;
     if (data == null) data = this.data.data;
 
-    const base = (typeof data.details.cr === "number") ? data.details.cr : 1;
+    const base = data.details.cr.base;
     if (this.items == null) return base;
 
     // Gather CR from templates
     const templates = this.items.filter(o => o.type === "feat" && o.data.data.featType === "template");
     return templates.reduce((cur, o) => {
-      if (o.data.data.crOffset > 0 && cur < 1) return o.data.data.crOffset;
-      return cur + (o.data.data.crOffset || 0);
+      const crOffset = o.data.data.crOffset;
+      if (typeof crOffset === "string" && crOffset.length) cur += new Roll(crOffset, this.getRollData(data)).roll().total;
+      return cur;
     }, base);
   }
 

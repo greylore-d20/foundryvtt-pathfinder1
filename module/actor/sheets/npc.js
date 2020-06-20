@@ -46,8 +46,17 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     const data = super.getData();
 
     // Challenge Rating
-    const crTotal = this.actor.getCR();
-    data.labels.cr = CR.fromNumber(crTotal);
+    try {
+      data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr.total"));
+    }
+    catch (e) {
+      try {
+        data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr"));
+      }
+      catch (e) {
+        data.labels.cr = CR.fromNumber(1);
+      }
+    }
     return data;
   }
 
@@ -62,11 +71,6 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * @private
    */
   async _updateObject(event, formData) {
-
-    // Format NPC Challenge Rating
-    let crv = "data.details.cr";
-    let cr = formData[crv];
-    formData[crv] = CR.fromString(cr);
 
     // Parent ActorSheet update steps
     super._updateObject(event, formData);

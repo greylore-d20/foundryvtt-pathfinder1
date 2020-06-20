@@ -74,15 +74,17 @@
       {{#if isTemplate}}
       <div class="form-group">
         <label>{{localize "PF1.CROffset"}}</label>
-        <input type="text" data-dtype="Number" name="data.crOffset" value="{{data.crOffset}}" placeholder="0" />
+        <input type="text" name="data.crOffset" value="{{data.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
       </div>
       {{/if}}
 
       <div class="form-group stacked">
         {{#if owner}}
+        {{#unless isTemplate}}
         <label class="checkbox">
           <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
+        {{/unless}}
         {{/if}}
       </div>
 

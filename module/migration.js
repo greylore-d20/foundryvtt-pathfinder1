@@ -108,6 +108,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorCreatureType(actor, updateData);
   _migrateActorSpellbookDCFormula(actor, updateData);
   _migrateActorHPAbility(actor, updateData);
+  _migrateActorCR(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -147,6 +148,7 @@ export const migrateItemData = function(item) {
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
   _migrateSavingThrowTypes(item, updateData);
+  _migrateCR(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -527,8 +529,9 @@ const _migrateAbilityTypes = function(ent, updateData) {
 };
 
 const _migrateClassLevels = function(ent, updateData) {
-  if (getProperty(ent.data, "data.levels") != null && updateData["data.level"] == null) {
-    updateData["data.level"] = getProperty(ent.data, "data.levels");
+  const level = getProperty(ent.data, "data.levels");
+  if (typeof level === "number" && updateData["data.level"] == null) {
+    updateData["data.level"] = level;
   }
 };
 
@@ -538,6 +541,27 @@ const _migrateSavingThrowTypes = function(ent, updateData) {
     if (desc.match(/REF/i)) updateData["data.save.type"] = "ref";
     else if (desc.match(/FORT/i)) updateData["data.save.type"] = "fort";
     else if (desc.match(/WILL/i)) updateData["data.save.type"] = "will";
+  }
+};
+
+const _migrateCR = function(ent, updateData) {
+  // Migrate CR offset
+  const crOffset = getProperty(ent.data, "data.crOffset");
+  if (typeof crOffset === "number") {
+    updateData["data.crOffset"] = crOffset.toString();
+  }
+};
+
+const _migrateActorCR = function(ent, updateData) {
+  // Migrate base CR
+  const cr = getProperty(ent.data, "data.details.cr");
+  if (typeof cr === "number") {
+    updateData["data.details.cr.base"] = cr;
+    updateData["data.details.cr.total"] = cr;
+  }
+  else if (cr == null) {
+    updateData["data.details.cr.base"] = 1;
+    updateData["data.details.cr.total"] = 1;
   }
 };
 

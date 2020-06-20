@@ -1397,8 +1397,8 @@ export class ActorSheetPF extends ActorSheet {
     // Show CR field
     if (f === "cr") {
       const elem = html.find('input[for="data.details.cr"]');
-      elem.attr("value", CR.fromNumber(this.actor.data.data.details.cr || "1"));
-      elem.attr("name", "data.details.cr");
+      elem.attr("value", CR.fromNumber(this.actor.data.data.details.cr.base));
+      elem.attr("name", "data.details.cr.base");
       elem.prop("disabled", false);
       elem.focus();
       elem.select();

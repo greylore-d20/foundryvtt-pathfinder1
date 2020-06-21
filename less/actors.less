@@ -65,36 +65,41 @@
       border: none;
     }
 
-    .race-container {
-      flex: 0 0 64px;
-      width: 64px;
-      height: 64px;
-      border: @borderGroove;
-      align-items: center;
-      margin-right: 8px;
-
-      .item-controls {
-        display: flex;
-        flex: 0;
-        width: 100%;
-
-        a {
-          flex: 0 0 16px;
-          font-size: 10px;
-          text-align: center;
-          color: #666;
-        }
+    .misc-header-items {
+      &>* {
+        margin-right: 8px;
       }
 
-      .race {
-        line-height: 48px;
-        vertical-align: middle;
-        text-align: center;
-        width: 48px;
-        background-size: contain;
+      .race-container {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+        border: @borderGroove;
+        align-items: center;
 
-        &.rollable:hover {
-          background-image: url("/icons/svg/d20-black.svg") !important;
+        .item-controls {
+          display: flex;
+          flex: 0;
+          width: 100%;
+
+          a {
+            flex: 0 0 16px;
+            font-size: 10px;
+            text-align: center;
+            color: #666;
+          }
+        }
+
+        .race {
+          line-height: 48px;
+          vertical-align: middle;
+          text-align: center;
+          width: 48px;
+          background-size: contain;
+
+          &.rollable:hover {
+            background-image: url("/icons/svg/d20-black.svg") !important;
+          }
         }
       }
     }

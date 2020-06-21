@@ -4,6 +4,7 @@ import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
 import { createTag, createTabs, isMinimumCoreVersion, CR } from "../../lib.js";
+import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -498,6 +499,9 @@ export class ActorSheetPF extends ActorSheet {
     // Race controls
     html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
 
+    // Point Buy Calculator
+    html.find("button.pointbuy-calculator").click(this._onPointBuyCalculator.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -881,6 +885,12 @@ export class ActorSheetPF extends ActorSheet {
     else if (a.classList.contains("delete")) {
       this._onItemDelete(event);
     }
+  }
+
+  async _onPointBuyCalculator(event) {
+    event.preventDefault();
+
+    new PointBuyCalculator(this).render(true);
   }
 
   async _quickItemActionControl(event) {

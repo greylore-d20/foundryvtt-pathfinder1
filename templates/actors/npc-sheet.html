@@ -42,7 +42,7 @@
           </ul>
         </div>
 
-        <div class="flexrow item-list">
+        <div class="flexrow item-list misc-header-items">
           <div class="race-container item flexcol" {{#if race}}data-item-id="{{race._id}}"{{/if}}>
             <div class="item-controls">
               {{#if owner}}
@@ -72,6 +72,12 @@
               {{/each}}
               {{/select}}
             </select>
+          </div>
+
+          {{!-- Rest --}}
+          <div class="form-group">
+            <label>{{localize "PF1.Rest"}}</label>
+            <a class="rest"><i class="fas fa-edit"></i></a>
           </div>
         </div>
 

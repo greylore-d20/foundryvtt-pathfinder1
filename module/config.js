@@ -28,6 +28,21 @@ PF1.abilitiesShort = {
   "cha": "PF1.AbilityShortCha"
 };
 
+PF1.abilityCost = {
+  "7": -4,
+  "8": -2,
+  "9": -1,
+  "10": 0,
+  "11": 1,
+  "12": 2,
+  "13": 3,
+  "14": 5,
+  "15": 7,
+  "16": 10,
+  "17": 13,
+  "18": 17,
+};
+
 /**
  * The set of Saving Throws
  * @type {Object}

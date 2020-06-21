@@ -532,6 +532,23 @@
   color: #888888;
   opacity: 1;
 }
+.pf1.pointbuy-calculator ol.item-list li {
+  background-color: rgba(155, 155, 155, 0.3);
+}
+.pf1.pointbuy-calculator ol.item-list li:nth-child(2n+1) {
+  background-color: rgba(210, 210, 210, 0.3);
+}
+.pf1.pointbuy-calculator ol.item-list .ability-controls {
+  flex: 0 0 32px;
+  padding: 0 1px 0 1px;
+}
+.pf1.pointbuy-calculator ol.item-list .item-detail.ability-value {
+  flex: 0 0 32px;
+  padding: 0 1px 0 1px;
+}
+.pf1.pointbuy-calculator table tr td {
+  text-align: center;
+}
 .pf1.sheet.actor {
   /* ----------------------------------------- */
   /*  Sheet Header                             */
@@ -628,33 +645,35 @@
   object-fit: contain;
   border: none;
 }
-.pf1.sheet.actor .sheet-header .race-container {
+.pf1.sheet.actor .sheet-header .misc-header-items > * {
+  margin-right: 8px;
+}
+.pf1.sheet.actor .sheet-header .misc-header-items .race-container {
   flex: 0 0 64px;
   width: 64px;
   height: 64px;
   border: 2px groove #eeede0;
   align-items: center;
-  margin-right: 8px;
 }
-.pf1.sheet.actor .sheet-header .race-container .item-controls {
+.pf1.sheet.actor .sheet-header .misc-header-items .race-container .item-controls {
   display: flex;
   flex: 0;
   width: 100%;
 }
-.pf1.sheet.actor .sheet-header .race-container .item-controls a {
+.pf1.sheet.actor .sheet-header .misc-header-items .race-container .item-controls a {
   flex: 0 0 16px;
   font-size: 10px;
   text-align: center;
   color: #666;
 }
-.pf1.sheet.actor .sheet-header .race-container .race {
+.pf1.sheet.actor .sheet-header .misc-header-items .race-container .race {
   line-height: 48px;
   vertical-align: middle;
   text-align: center;
   width: 48px;
   background-size: contain;
 }
-.pf1.sheet.actor .sheet-header .race-container .race.rollable:hover {
+.pf1.sheet.actor .sheet-header .misc-header-items .race-container .race.rollable:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
 .pf1.sheet.actor .sheet-header .hd {

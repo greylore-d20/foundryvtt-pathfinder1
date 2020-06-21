@@ -3,6 +3,7 @@ import { ItemPF } from "../item/entity.js";
 import { createTag, linkData, isMinimumCoreVersion, CR } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
+import { LinkFunctions } from "../misc/links.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -1484,7 +1485,7 @@ export class ActorPF extends Actor {
   /**
    * Augment the basic actor data with additional dynamic data.
    */
-  prepareData() {
+  async prepareData() {
     super.prepareData();
 
     const actorData = this.data;
@@ -1587,6 +1588,23 @@ export class ActorPF extends Actor {
     // Set labels
     this.labels = {};
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
+
+    // Setup links
+    await this.prepareItemLinks();
+  }
+
+  async prepareItemLinks() {
+    if (!this.items) return;
+
+    for (let a of this.items) {
+      if (a.data.data.links == null) continue;
+
+      for (let l of Object.keys(a.data.data.links)) {
+        if (LinkFunctions[l] != null) {
+          await LinkFunctions[l].call(this, a, a.data.data.links[l]);
+        }
+      }
+    }
   }
 
   _setSourceDetails(actorData, extraData, flags) {
@@ -2943,7 +2961,7 @@ export class ActorPF extends Actor {
       // Add children to list of items to be deleted
       const _addChildren = async function(id) {
         const item = this.items.find(o => o._id === id);
-        const children = await item.getLinkChildren();
+        const children = await item.getLinkedItems("children");
         for (let child of children) {
           if (!data.includes(child._id)) {
             data.push(child._id);

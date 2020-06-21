@@ -18,6 +18,12 @@ export class ItemPF extends Item {
      * When an item gets updated, certain data is stored here for use in _onUpdate.
      */
     this._prevData = {};
+
+    /**
+     * @property {Object} links
+     * Links are stored here during runtime.
+     */
+    this.links = {};
   }
 
   /* -------------------------------------------- */
@@ -65,6 +71,11 @@ export class ItemPF extends Item {
   }
 
   get charges() {
+    // Get linked charges
+    const link = getProperty(this, "links.charges");
+    if (link) return link.charges;
+
+    // Get own charges
     if (getProperty(this.data, "data.uses.per") === "single") return getProperty(this.data, "data.quantity");
     if (this.type === "spell") return this.getSpellUses();
     return getProperty(this.data, "data.uses.value") || 0;
@@ -156,27 +167,23 @@ export class ItemPF extends Item {
    * Generic charge addition (or subtraction) function that either adds charges
    * or quantity, based on item data.
    * @param {number} value       - The amount of charges to add.
-   * @param {Object} [data=null] - An object in the style of that of an update call to alter, rather than applying the change immediately.
    * @returns {Promise}
    */
-  async addCharges(value, data=null) {
+  async addCharges(value) {
+    // Add link charges
+    const link = getProperty(this, "links.charges");
+    if (link) return link.addCharges(value);
+
+    // Add own charges
     if ( getProperty(this.data, "data.uses.per") === "single"
       && getProperty(this.data, "data.quantity") == null) return;
 
     if (this.type === "spell") return this.addSpellUses(value, data);
 
     let prevValue = this.isSingleUse ? getProperty(this.data, "data.quantity") : getProperty(this.data, "data.uses.value");
-    if      (data != null && this.isSingleUse  && data["data.quantity"]  != null)  prevValue = data["data.quantity"];
-    else if (data != null && !this.isSingleUse && data["data.uses.value"] != null) prevValue = data["data.uses.value"];
 
-    if (data != null) {
-      if (this.isSingleUse) data["data.quantity"]   = prevValue + value;
-      else                  data["data.uses.value"] = prevValue + value;
-    }
-    else {
-      if (this.isSingleUse) await this.update({ "data.quantity"  : prevValue + value });
-      else                  await this.update({ "data.uses.value": prevValue + value });
-    }
+    if (this.isSingleUse) await this.update({ "data.quantity"  : prevValue + value });
+    else                  await this.update({ "data.uses.value": prevValue + value });
   }
 
   /* -------------------------------------------- */
@@ -394,6 +401,23 @@ export class ItemPF extends Item {
 
     // Assign labels
     this.labels = labels;
+
+    this.prepareLinks();
+  }
+
+  prepareLinks() {
+    if (!this.links) return;
+
+    for (let [k, i] of Object.entries(this.links)) {
+      switch(k) {
+        case "charges":
+          const uses = i.data.data.uses;
+          for (let [k, v] of Object.entries(uses)) {
+            this.data.data.uses[k] = v;
+          }
+          break;
+      }
+    }
   }
 
   async update(data, options={}) {
@@ -441,6 +465,14 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses(data, {srcData: srcData});
+
+    // Update charges for linked items
+    if (data["data.uses.value"] != null) {
+      const link = getProperty(this, "links.charges");
+      if (link && getProperty(link, "links.charges") == null) {
+        await link.update({"data.uses.value": data["data.uses.value"]});
+      }
+    }
 
     const diff = diffObject(flattenObject(this.data), data);
     if (Object.keys(diff).length) {
@@ -774,7 +806,6 @@ export class ItemPF extends Item {
     }
 
     const rollData = this.getRollData();
-    const itemUpdateData = {};
 
     let rolled = false;
     const _roll = async function(fullAttack, form) {
@@ -949,10 +980,8 @@ export class ItemPF extends Item {
 
       // Deduct charge
       if (this.autoDeductCharges) {
-        this.addCharges(-1, itemUpdateData);
+        this.addCharges(-1);
       }
-      // Update item
-      this.update(itemUpdateData);
       
       // Set chat data
       let chatData = {
@@ -1876,12 +1905,12 @@ export class ItemPF extends Item {
     // }
   }
 
-  async getLinkChildren() {
-    const children = getProperty(this.data, "data.links.children");
-    if (!children) return [];
+  async getLinkedItems(type) {
+    const items = getProperty(this.data, `data.links.${type}`);
+    if (!items) return [];
 
     let result = [];
-    for (let l of children) {
+    for (let l of items) {
       result.push(await this.getLinkItem(l));
     }
 

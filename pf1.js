@@ -19,7 +19,7 @@ import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
+import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import * as chat from "./module/chat.js";
@@ -54,7 +54,8 @@ Hooks.once("init", async function() {
     rollDefenses,
     CompendiumDirectoryPF,
     rollPreProcess: {
-      sizeRoll: sizeDie
+      sizeRoll: sizeDie,
+      roll: normalDie,
     },
     migrateWorld: migrations.migrateWorld,
   };
@@ -206,6 +207,22 @@ Hooks.on("createOwnedItem", (actor) => {
 Hooks.on("deleteOwnedItem", (actor, ...args) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
+});
+
+// On link removal
+Hooks.on("deleteItemLink", (parentItem, link, linkType) => {
+  const actor = parentItem.actor;
+
+  switch (linkType) {
+    case "charges":
+      if (actor) {
+        const otherItem = actor.items[link.id];
+        if (otherItem) {
+          if (hasProperty(otherItem, "links.charges")) delete otherItem.links.charges;
+        }
+      }
+      break;
+  }
 });
 
 

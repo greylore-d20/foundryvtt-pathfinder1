@@ -276,17 +276,40 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
   return formula;
 };
 
+export const normalDie = function(origCount, origSides, crit=1) {
+  let formula = `${origCount}d${origSides}`;
+
+  if (crit !== 1 && formula.match(/^([0-9]+)d([0-9]+)(.*)/)) {
+    const count = parseInt(RegExp.$1);
+    const sides = parseInt(RegExp.$2);
+    formula = `${count * crit}d${sides}${RegExp.$3}`;
+  }
+
+  return formula;
+};
+
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
  * @param {number} origCount - The original number of die to roll.
  * @param {number} origSides - The original number of sides per die to roll.
  * @param {string|number} [targetSize="M"] - The target size to change the die to.
+ * @param {number} [crit=1] - The critical multiplier (for if the attack is a critical threat).
  *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
  *   Can also be a number in the range of -4 to 4, where 0 is Medium.
  * @returns {number} The result of the new roll.
  */
 export const sizeRoll = function(origCount, origSides, targetSize="M", crit=1) {
   return new Roll(sizeDie(origCount, origSides, targetSize, crit)).roll().total;
+};
+
+/**
+ * Returns the result of a roll of die.
+ * @param {number} count - The original number of die to roll.
+ * @param {number} sides - The original number of sides per die to roll.
+ * @returns {number} The result of the new roll.
+ */
+export const normalRoll = function(count, sides, crit=1) {
+  return new Roll(normalDie(count, sides, crit)).roll().total;
 };
 
 export const getActorFromId = function(id) {

@@ -308,6 +308,16 @@ export class ItemSheetPF extends ItemSheet {
       items: [],
     });
 
+    // Add charges link type
+    if (this.item.type === "feat") {
+      data.links.list.push({
+        id: "charges",
+        label: game.i18n.localize("PF1.LinkTypeCharges"),
+        help: game.i18n.localize("PF1.LinkHelpCharges"),
+        items: [],
+      });
+    }
+
     // Post process data
     for (let l of data.links.list) {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
@@ -617,8 +627,12 @@ export class ItemSheetPF extends ItemSheet {
     if (this.canCreateLink(linkType, dataType, itemData, itemLink, data)) {
       const updateData = {};
       let _links = duplicate(getProperty(this.item.data, `data.links.${linkType}`) || []);
-      _links.push(this.generateInitialLinkData(linkType, dataType, itemData, itemLink));
+      const link = this.generateInitialLinkData(linkType, dataType, itemData, itemLink);
+      _links.push(link);
       updateData[`data.links.${linkType}`] = _links;
+
+      // Call link creation hook
+      Hooks.call("createItemLink", this.item, link, linkType);
 
       await this.item.update(updateData);
       this.render();
@@ -645,7 +659,7 @@ export class ItemSheetPF extends ItemSheet {
     const links = getProperty(this.item.data, `data.links.${linkType}`) || [];
     if (links.filter(o => o.id === itemLink).length) return false;
 
-    if (linkType === "children" && sameActor) return true;
+    if (["children", "charges"].includes(linkType) && sameActor) return true;
 
     return false;
   }
@@ -660,16 +674,12 @@ export class ItemSheetPF extends ItemSheet {
    */
   generateInitialLinkData(linkType, dataType, itemData, itemLink, data=null) {
 
-    if (linkType === "children") {
-      return {
-        id: itemLink,
-        dataType: dataType,
-        name: itemData.name,
-        img: itemData.img,
-      };
-    }
-
-    return null;
+    return {
+      id: itemLink,
+      dataType: dataType,
+      name: itemData.name,
+      img: itemData.img,
+    };
   }
 
   /**
@@ -792,10 +802,16 @@ export class ItemSheetPF extends ItemSheet {
       await this._onSubmit(event);
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
-      const links = duplicate(getProperty(this.item.data, `data.links.${group.dataset.tab}`) || []).filter(o => o.id !== li.dataset.link);
+      let links = duplicate(getProperty(this.item.data, `data.links.${group.dataset.tab}`) || []);
+      const link = links.find(o => o.id === li.dataset.link);
+      links = links.filter(o => o !== link);
 
       const updateData = {};
       updateData[`data.links.${group.dataset.tab}`] = links;
+
+      // Call hook for deleting a link
+      Hooks.call("deleteItemLink", this.item, link, group.dataset.tab);
+
       return this.item.update(updateData);
     }
   }

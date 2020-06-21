@@ -261,7 +261,7 @@ export class CompendiumBrowser extends Application {
     if (this.type === "bestiary") {
       if (!this.extraFilters) {
         this.extraFilters = {
-          "data.details.cr": [],
+          "data.details.cr.total": [],
           "subTypes": [],
         };
       }
@@ -270,8 +270,8 @@ export class CompendiumBrowser extends Application {
 
       // Add CR filters
       if (item.data.type === "npc") {
-        const cr = getProperty(item.data, "data.details.cr");
-        if (cr && !this.extraFilters["data.details.cr"].includes(cr)) this.extraFilters["data.details.cr"].push(cr);
+        const cr = getProperty(item.data, "data.details.cr.total");
+        if (cr && !this.extraFilters["data.details.cr.total"].includes(cr)) this.extraFilters["data.details.cr.total"].push(cr);
       }
       // Get creature (sub)type
       const race = item.race;
@@ -500,9 +500,9 @@ export class CompendiumBrowser extends Application {
   _fetchBestiaryFilters() {
     this.filters = [
       {
-        path: "data.details.cr",
+        path: "data.details.cr.total",
         label: "CR",
-        items: this.extraFilters["data.details.cr"].sort().reduce((cur, o) => {
+        items: this.extraFilters["data.details.cr.total"].sort().reduce((cur, o) => {
           cur.push({ key: o, name: CR.fromNumber(o) });
           return cur;
         }, []),

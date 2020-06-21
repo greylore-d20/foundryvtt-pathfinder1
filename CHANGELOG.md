@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.61
+
+### Bug Fixes
+
+- Dice So Nice integration
+- Defense Chat Card saving throw buttons not working
+
+### Changelog
+
+- Added initial class abilities compendium
+- DC offsets for creature templates are now formulas
+- Added a new item link type: charge sharing (only for features for now)
+- Added a point buy calculator to actor sheets
+
 ## 0.601
 
 ### Bug Fixes

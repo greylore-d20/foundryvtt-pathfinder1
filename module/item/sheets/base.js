@@ -632,10 +632,14 @@ export class ItemSheetPF extends ItemSheet {
       updateData[`data.links.${linkType}`] = _links;
 
       // Call link creation hook
+      await this.item.update(updateData);
       Hooks.call("createItemLink", this.item, link, linkType);
 
-      await this.item.update(updateData);
-      this.render();
+      /**
+       * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
+       * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
+       */
+      window.setTimeout(() => { if (this.item.actor) this.item.actor.sheet.render(); }, 50);
     }
   }
 
@@ -809,14 +813,14 @@ export class ItemSheetPF extends ItemSheet {
       const updateData = {};
       updateData[`data.links.${group.dataset.tab}`] = links;
 
-      // Clean link
-      game.socket.emit("system.pf1", { eventType: "cleanItemLink", actorUUID: this.item.actor.uuid, itemUUID: this.item.uuid, link: link, linkType: group.dataset.tab });
-      this.item._cleanLink(link, group.dataset.tab);
-
       // Call hook for deleting a link
       Hooks.call("deleteItemLink", this.item, link, group.dataset.tab);
 
-      return this.item.update(updateData);
+      await this.item.update(updateData);
+
+      // Clean link
+      this.item._cleanLink(link, group.dataset.tab);
+      game.socket.emit("system.pf1", { eventType: "cleanItemLink", actorUUID: this.item.actor.uuid, itemUUID: this.item.uuid, link: link, linkType: group.dataset.tab });
     }
   }
 

@@ -1485,7 +1485,7 @@ export class ActorPF extends Actor {
   /**
    * Augment the basic actor data with additional dynamic data.
    */
-  async prepareData() {
+  prepareData() {
     super.prepareData();
 
     const actorData = this.data;
@@ -1590,10 +1590,10 @@ export class ActorPF extends Actor {
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
 
     // Setup links
-    await this.prepareItemLinks();
+    this.prepareItemLinks();
   }
 
-  async prepareItemLinks() {
+  prepareItemLinks() {
     if (!this.items) return;
 
     for (let a of this.items) {
@@ -1601,7 +1601,7 @@ export class ActorPF extends Actor {
 
       for (let l of Object.keys(a.data.data.links)) {
         if (LinkFunctions[l] != null) {
-          await LinkFunctions[l].call(this, a, a.data.data.links[l]);
+          LinkFunctions[l].call(this, a, a.data.data.links[l]);
         }
       }
     }

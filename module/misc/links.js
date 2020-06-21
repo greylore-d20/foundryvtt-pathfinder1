@@ -1,5 +1,5 @@
 export const LinkFunctions = {
-  "charges": async function(item, links) {
+  "charges": function(item, links) {
     for (let l of links) {
       const otherItem = this.items.find(o => o._id === l.id);
       if (!otherItem) continue;

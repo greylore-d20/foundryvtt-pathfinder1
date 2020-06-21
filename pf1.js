@@ -22,6 +22,7 @@ import { DicePF } from "./module/dice.js";
 import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
+import { initializeSocket } from "./module/socket.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -84,6 +85,8 @@ Hooks.once("init", async function() {
   Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { types: ["npc"], makeDefault: false });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"], makeDefault: true });
+
+  initializeSocket();
 });
 
 
@@ -208,23 +211,6 @@ Hooks.on("deleteOwnedItem", (actor, ...args) => {
   if (!(actor instanceof Actor)) return;
   actor.refresh();
 });
-
-// On link removal
-Hooks.on("deleteItemLink", (parentItem, link, linkType) => {
-  const actor = parentItem.actor;
-
-  switch (linkType) {
-    case "charges":
-      if (actor) {
-        const otherItem = actor.items[link.id];
-        if (otherItem) {
-          if (hasProperty(otherItem, "links.charges")) delete otherItem.links.charges;
-        }
-      }
-      break;
-  }
-});
-
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

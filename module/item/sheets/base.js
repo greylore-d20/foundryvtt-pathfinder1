@@ -809,6 +809,10 @@ export class ItemSheetPF extends ItemSheet {
       const updateData = {};
       updateData[`data.links.${group.dataset.tab}`] = links;
 
+      // Clean link
+      game.socket.emit("system.pf1", { eventType: "cleanItemLink", actorUUID: this.item.actor.uuid, itemUUID: this.item.uuid, link: link, linkType: group.dataset.tab });
+      this.item._cleanLink(link, group.dataset.tab);
+
       // Call hook for deleting a link
       Hooks.call("deleteItemLink", this.item, link, group.dataset.tab);
 

@@ -902,23 +902,23 @@ export class ItemPF extends Item {
           attacks.push(attack);
           
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
-              let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
-              await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+            let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
+            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
 
-              // Add damage
-              if (this.hasDamage) {
-                await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: false});
-    
-                // Add critical hit damage
-                if (rapidShotAttack.hasCritConfirm) {
-                  await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: true});
-                }
+            // Add damage
+            if (this.hasDamage) {
+              await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: false});
+  
+              // Add critical hit damage
+              if (rapidShotAttack.hasCritConfirm) {
+                await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: true});
               }
-    
-              // Add effect notes
-              rapidShotAttack.addEffectNotes();
-              
-              attacks.push(rapidShotAttack);
+            }
+  
+            // Add effect notes
+            rapidShotAttack.addEffectNotes();
+            
+            attacks.push(rapidShotAttack);
           }
         }
       }
@@ -1948,6 +1948,15 @@ export class ItemPF extends Item {
         l.name = i.name;
         l.img = i.img;
       }
+    }
+  }
+
+  _cleanLink(oldLink, linkType) {
+    if (!this.actor) return;
+
+    const otherItem = this.actor.items.find(o => o._id === oldLink.id);
+    if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
+      delete otherItem.links.charges;
     }
   }
 }

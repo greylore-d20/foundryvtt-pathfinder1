@@ -34,10 +34,15 @@
           </div>
         </div>
 
+        {{!-- Character Summary --}}
         <div class="flexcol">
           <ul class="summary">
+            {{!-- Alignment --}}
             <li>
-              <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{localize "PF1.Alignment"}}" title="{{localize "PF1.Alignment"}}"/>
+              <div class="controls alignment flexrow">
+                <a class="control alignment"><i class="fas fa-cog"></i></a>
+                <span>{{labels.alignment}}</span>
+              </div>
             </li>
           </ul>
         </div>
@@ -75,9 +80,8 @@
           </div>
 
           {{!-- Rest --}}
-          <div class="form-group">
-            <label>{{localize "PF1.Rest"}}</label>
-            <a class="rest"><i class="fas fa-edit"></i></a>
+          <div class="actor-quick-actions">
+            <button type="button" class="rest">{{localize "PF1.Rest"}}</button>
           </div>
         </div>
 

@@ -1588,6 +1588,7 @@ export class ActorPF extends Actor {
     // Set labels
     this.labels = {};
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
+    this.labels.alignment = CONFIG.PF1.alignments[this.data.data.details.alignment];
 
     // Setup links
     this.prepareItemLinks();

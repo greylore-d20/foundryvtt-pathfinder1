@@ -135,6 +135,18 @@ PF1.alignments = {
   'ce': "PF1.AlignmentCE"
 };
 
+PF1.alignmentsShort = {
+  'lg': "LG",
+  'ng': "NG",
+  'cg': "CG",
+  'ln': "LN",
+  'tn': "N",
+  'cn': "CN",
+  'le': "LE",
+  'ne': "NE",
+  'ce': "CE"
+};
+
 /* -------------------------------------------- */
 
 /**

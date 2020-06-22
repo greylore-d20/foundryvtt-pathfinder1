@@ -40,9 +40,6 @@
             <input type="text" name="data.details.gender" value="{{data.details.gender}}" placeholder="{{localize "PF1.Gender"}}" title="{{localize "PF1.Gender"}}"/>
           </li>
           <li>
-            <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{localize "PF1.Alignment"}}" title="{{localize "PF1.Alignment"}}"/>
-          </li>
-          <li>
             <input type="text" name="data.details.deity" value="{{data.details.deity}}" placeholder="{{localize "PF1.Deity"}}" title="{{localize "PF1.Deity"}}"/>
           </li>
           <li>
@@ -53,6 +50,14 @@
           </li>
           <li>
             <input type="text" name="data.details.weight" value="{{data.details.weight}}" placeholder="{{localize "PF1.Weight"}}" title="{{localize "PF1.Weight"}}"/>
+          </li>
+
+          {{!-- Alignment --}}
+          <li>
+            <div class="controls alignment flexrow">
+              <a class="control alignment"><i class="fas fa-cog"></i></a>
+              <span>{{labels.alignment}}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -90,9 +95,8 @@
         </div>
 
         {{!-- Rest --}}
-        <div class="form-group">
-          <label>{{localize "PF1.Rest"}}</label>
-          <a class="rest"><i class="fas fa-edit"></i></a>
+        <div class="actor-quick-actions">
+          <button type="button" class="rest">{{localize "PF1.Rest"}}</button>
         </div>
       </div>
 

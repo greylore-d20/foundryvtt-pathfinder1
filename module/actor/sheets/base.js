@@ -5,6 +5,7 @@ import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
 import { createTag, createTabs, isMinimumCoreVersion, CR } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
+import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -502,6 +503,9 @@ export class ActorSheetPF extends ActorSheet {
     // Point Buy Calculator
     html.find("button.pointbuy-calculator").click(this._onPointBuyCalculator.bind(this));
 
+    // Alignment
+    html.find(".control.alignment").click(this._onControlAlignment.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -891,6 +895,20 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     new PointBuyCalculator(this).render(true);
+  }
+
+  async _onControlAlignment(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    const items = Object.entries(CONFIG.PF1.alignmentsShort).reduce((cur, o) => {
+      cur.push({ value: o[0], label: o[1] });
+      return cur;
+    }, []);
+    const w = new Widget_ItemPicker(alignment => {
+      this.actor.update({"data.details.alignment": alignment});
+    }, {items: items, columns: 3});
+    w.render($(a));
   }
 
   async _quickItemActionControl(event) {

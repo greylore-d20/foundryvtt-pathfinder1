@@ -102,6 +102,14 @@
           }
         }
       }
+
+      .actor-quick-actions {
+        button {
+          width: calc(50% - 6px);
+          height: calc(50% - 6px);
+          line-height: 50%;
+        }
+      }
     }
 
     .hd {
@@ -178,6 +186,24 @@
         padding-right: 5px;
         font-size: 16px;
         color: @colorOlive;
+      }
+    }
+  }
+
+  .alignment {
+    color: black;
+  }
+
+  .controls {
+    .control {
+      flex: 0;
+      visibility: hidden;
+      margin-right: 4px;
+    }
+
+    &:hover {
+      .control {
+        visibility: visible;
       }
     }
   }

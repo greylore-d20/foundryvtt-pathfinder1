@@ -676,6 +676,11 @@
 .pf1.sheet.actor .sheet-header .misc-header-items .race-container .race.rollable:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
+.pf1.sheet.actor .sheet-header .misc-header-items .actor-quick-actions button {
+  width: calc(50% - 6px);
+  height: calc(50% - 6px);
+  line-height: 50%;
+}
 .pf1.sheet.actor .sheet-header .hd {
   flex: 0 0 88px;
   height: 60px;
@@ -740,6 +745,17 @@
   padding-right: 5px;
   font-size: 16px;
   color: #4b4a44;
+}
+.pf1.sheet.actor .alignment {
+  color: black;
+}
+.pf1.sheet.actor .controls .control {
+  flex: 0;
+  visibility: hidden;
+  margin-right: 4px;
+}
+.pf1.sheet.actor .controls:hover .control {
+  visibility: visible;
 }
 .pf1.sheet.actor .attributes input[type="text"] {
   height: 24px;
@@ -2255,4 +2271,34 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
 }
 #hitdice .switch-check:checked + .switch-label .switch-manual {
   display: none;
+}
+.widget {
+  z-index: 100;
+}
+.widget.item-picker {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  border: 1px solid black;
+  border-radius: 2px;
+  background: #E1E1E1;
+}
+.widget.item-picker .row {
+  display: flex;
+  flex-direction: row;
+}
+.widget.item-picker .row .item {
+  height: 28px;
+  line-height: 24px;
+  border: 1px solid #4F4F4F;
+  background: #D3D3D3;
+  margin: 2px;
+  padding: 1px;
+  overflow: hidden;
+  text-align: center;
+}
+.widget.item-picker .row .item:hover {
+  border-color: #DA0000;
 }

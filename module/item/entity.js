@@ -112,7 +112,8 @@ export class ItemPF extends Item {
         return new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
       }
     }
-    return new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+    const dcFormula = getProperty(data, "save.dc") || "";
+    return new Roll(dcFormula.length > 0 ? data.save.dc : "0", rollData).roll().total;
   }
 
   get typeColor() {

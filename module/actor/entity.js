@@ -2129,6 +2129,16 @@ export class ActorPF extends Actor {
     mergeObject(attackData.data, duplicate(game.data.system.template.Item.attack));
     attackData = flattenObject(attackData);
 
+    // Add ability modifiers
+    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged" && !getProperty(item.data, "data.properties.thr");
+    if (isMelee) attackData["data.ability.attack"] = "str";
+    else attackData["data.ability.attack"] = "dex";
+    if (isMelee || item.data.data.properties["thr"] === true) {
+      attackData["data.ability.damage"] = "str";
+      if (item.data.data.weaponSubtype === "2h" && isMelee) attackData["data.ability.damageMult"] = 1.5;
+    }
+
+    // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
     attackData["data.masterwork"] = item.data.data.masterwork;
@@ -2136,7 +2146,7 @@ export class ActorPF extends Actor {
     attackData["data.enh"] = item.data.data.enh;
     attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
     attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
-    attackData["data.actionType"] = (item.data.data.weaponData.isMelee ? "mwak" : "rwak");
+    attackData["data.actionType"] = isMelee ? "mwak" : "rwak";
     attackData["data.activation.type"] = "attack";
     attackData["data.duration.units"] = "inst";
     attackData["img"] = item.data.img;
@@ -2147,15 +2157,6 @@ export class ActorPF extends Actor {
       extraAttacks = extraAttacks.concat([[`-${a}`, `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
-
-    // Add ability modifiers
-    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged";
-    if (isMelee) attackData["data.ability.attack"] = "str";
-    else attackData["data.ability.attack"] = "dex";
-    if (isMelee || item.data.data.properties["thr"] === true) {
-      attackData["data.ability.damage"] = "str";
-      if (item.data.data.weaponSubtype === "2h" && isMelee) attackData["data.ability.damageMult"] = 1.5;
-    }
 
     // Add damage formula
     if (item.data.data.weaponData.damageRoll) {

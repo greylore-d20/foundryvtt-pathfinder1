@@ -237,25 +237,23 @@ export class ActorPF extends Actor {
   }
 
   _sortChanges(a, b) {
-    const targetA = a.raw[1];
-    const targetB = b.raw[1];
-    const typeA = a.raw[2];
-    const typeB = b.raw[2];
-    const modA = a.raw[3];
-    const modB = b.raw[3];
     const priority = this._sortChangePriority;
-    let firstSort = priority.types.indexOf(typeA) - priority.types.indexOf(typeB);
-    let secondSort = priority.modifiers.indexOf(modA) - priority.modifiers.indexOf(modB);
-    let thirdSort = priority.targets.indexOf(targetA) - priority.targets.indexOf(targetB);
-    secondSort += (Math.sign(firstSort) * priority.types.length);
-    thirdSort += (Math.sign(secondSort) * priority.modifiers.length);
-    return firstSort + secondSort + thirdSort;
+    const targetA = priority.targets.indexOf(a.raw.target);
+    const targetB = priority.targets.indexOf(b.raw.target);
+    const typeA = priority.types.indexOf(a.raw.subTarget);
+    const typeB = priority.types.indexOf(b.raw.subTarget);
+    const modA = priority.modifiers.indexOf(a.raw.modifier);
+    const modB = priority.modifiers.indexOf(b.raw.modifier);
+    const prioA = (a.raw.priority || 0) + 1000;
+    const prioB = (b.raw.priority || 0) + 1000;
+
+    return prioB - prioA || typeA - typeB || modA - modB || targetA - targetB;
   }
 
   _parseChange(change, changeData, flags) {
     if (flags == null) flags = {};
-    const changeType = change.raw[3];
-    const changeValue = change.raw[4];
+    const changeType = change.raw.modifier;
+    const changeValue = change.raw.value;
 
     if (!changeData[changeType]) return;
     if (changeValue === 0) return;
@@ -276,26 +274,19 @@ export class ActorPF extends Actor {
       else changeData[changeType].negative.value = Math.min(changeData[changeType].negative.value, changeValue);
     }
 
-    // Add source
+    // Add positive source
     if (changeValue > 0) {
       if (["untyped", "dodge", "penalty"].includes(changeType)) {
-        const compareData = changeData[changeType].positive.sources.filter(o => { return o.type === change.source.type && o.subtype === change.source.subtype; });
-        if (compareData.length > 0) compareData[0].value += changeValue;
-        else {
-          changeData[changeType].positive.sources.push(change.source);
-        }
+        changeData[changeType].positive.sources.push(change.source);
       }
       else if (prevValue.positive < changeValue) {
         changeData[changeType].positive.sources = [change.source];
       }
     }
+    // Add negative source
     else {
       if (["untyped", "dodge", "penalty"].includes(changeType)) {
-        const compareData = changeData[changeType].negative.sources.filter(o => { return o.type === change.source.type && o.subtype === change.source.subtype; });
-        if (compareData.length > 0) compareData[0].value += changeValue;
-        else {
-          changeData[changeType].negative.sources.push(change.source);
-        }
+        changeData[changeType].negative.sources.push(change.source);
       }
       else if (prevValue.negative > changeValue) {
         changeData[changeType].negative.sources = [change.source];
@@ -530,11 +521,11 @@ export class ActorPF extends Actor {
 
     const push_health = (value, source) => {
       changes.push({
-        raw: [value.toString(), "misc", "mhp", "untyped", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "mhp", modifier: "untyped" }, {inplace: false}),
         source: {name: source.name, subtype: source.name.toString()}
       });
       changes.push({
-        raw: [value.toString(), "misc", "vigor", "untyped", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untyped" }, {inplace: false}),
         source: {name: source.name, subtype: source.name.toString()}
       });
     }
@@ -573,23 +564,116 @@ export class ActorPF extends Actor {
     if (hpAbility == null) hpAbility = "con";
     if (hpAbility !== "") {
       changes.push({
-        raw: [`@abilities.${hpAbility}.mod * @attributes.hd.total`, "misc", "mhp", "base", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`, target: "misc", subTarget: "mhp", modifier: "base" }, {inplace: false}),
         source: {name: "Constitution"}
       });
       changes.push({
-        raw: [`2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, "misc", "wounds", "base", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: `2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, target: "misc", subTarget: "wounds", modifier: "base" }, {inplace: false}),
         source: {name: "Constitution"}
       });
     }
 
+    // Add variables to CMD and CMD
+    {
+      // BAB to CMB
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+        source: {name: game.i18n.localize("PF1.BAB")},
+      });
+      // Strength to CMB
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities["str"]},
+      });
+      // Energy Drain to CMB
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+        source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
+      });
+
+      // BAB to CMD
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+        source: {name: game.i18n.localize("PF1.BAB")},
+      });
+      // Strength to CMD
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities["str"]},
+      });
+      // Energy Drain to CMD
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+        source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
+      });
+    }
+    
+    // Add Dexterity Modifier to Initiative
+    {
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities["dex"]},
+      });
+    }
+
+    // Add Ability modifiers and Energy Drain to saving throws
+    {
+      let abl;
+      // Ability Mod to Fortitude
+      abl = getProperty(data, "data.attributes.savingThrows.fort.ability");
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+      // Ability Mod to Reflex
+      abl = getProperty(data, "data.attributes.savingThrows.ref.ability");
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+      // Ability Mod to Will
+      abl = getProperty(data, "will");
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untyped" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+      // Energy Drain
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+        source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
+      });
+    }
+
+    // Add Dexterity Modifier to AC (and CMD)
+    {
+      let formula = "@abilities.dex.mod";
+      if (getProperty(data, "data.attributes.maxDexBonus") != null) {
+        formula = "min(@abilities.dex.mod, @attributes.maxDexBonus)";
+      }
+      else if (flags.loseDexToAC) {
+        formula = "min(@abilities.dex.mod, 0)";
+      }
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: formula, target: "ac", subTarget: "ac", modifier: "dodge" }, {inplace: false}),
+        source: {
+          name: CONFIG.PF1.abilities["dex"],
+        },
+      });
+      // changes.push({
+        // raw: mergeObject(ItemPF.defaultChange, { formula: formula, target: "misc", subTarget: "cmd", modifier: "dodge" }, {inplace: false}),
+        // source: {
+          // name: CONFIG.PF1.abilities["dex"],
+        // },
+      // });
+    }
     // Natural armor
     {
       const natAC = getProperty(data, "data.attributes.naturalAC") || 0;
       if (natAC > 0) {
         changes.push({
-          raw: [natAC.toString(), "ac", "nac", "base", 0],
+          raw: mergeObject(ItemPF.defaultChange, { formula: natAC.toString(), target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
           source: {
-            name: "Natural Armor"
+            name: game.i18n.localize("PF1.BuffTarACNatural"),
           }
         });
       }
@@ -601,7 +685,7 @@ export class ActorPF extends Actor {
       // Push base armor
       if (item.data.armor.value) {
         changes.push({
-          raw: [item.data.armor.value.toString(), "ac", armorTarget, "base", 0],
+          raw: mergeObject(ItemPF.defaultChange, { formula: item.data.armor.value.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
           source: {
             type: item.type,
             name: item.name
@@ -611,7 +695,7 @@ export class ActorPF extends Actor {
       // Push enhancement bonus to armor
       if (item.data.armor.enh) {
         changes.push({
-          raw: [item.data.armor.enh.toString(), "ac", armorTarget, "enh", 0],
+          raw: mergeObject(ItemPF.defaultChange, { formula: item.data.armor.enh.toString(), target: "ac", subTarget: armorTarget, modifier: "enh" }, {inplace: false}),
           source: {
             type: item.type,
             name: item.name
@@ -626,7 +710,7 @@ export class ActorPF extends Actor {
     if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
     if (flyValue !== 0) {
       changes.push({
-        raw: [flyValue.toString(), "skill", "skill.fly", "untyped", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: flyValue.toString(), target: "skill", subTarget: "skill.fly", modifier: "untyped" }, {inplace: false}),
         source: {
           name: game.i18n.localize("PF1.FlyManeuverability"),
         },
@@ -638,7 +722,7 @@ export class ActorPF extends Actor {
       const swimSpeed = getProperty(data, "data.attributes.speed.swim.total") || 0;
       if (climbSpeed > 0) {
         changes.push({
-          raw: ["8", "skill", "skill.clm", "racial", 0],
+          raw: mergeObject(ItemPF.defaultChange, { formula: "8", target: "skill", subTarget: "skill.clm", modifier: "racial" }, {inplace: false}),
           source: {
             name: game.i18n.localize("PF1.SpeedClimb"),
           },
@@ -646,7 +730,7 @@ export class ActorPF extends Actor {
       }
       if (swimSpeed > 0) {
         changes.push({
-          raw: ["8", "skill", "skill.swm", "racial", 0],
+          raw: mergeObject(ItemPF.defaultChange, { formula: "8", target: "skill", subTarget: "skill.swm", modifier: "racial" }, {inplace: false}),
           source: {
             name: game.i18n.localize("PF1.SpeedSwim"),
           },
@@ -659,35 +743,35 @@ export class ActorPF extends Actor {
     if (sizeKey !== "med") {
       // AC
       changes.push({
-        raw: [CONFIG.PF1.sizeMods[sizeKey].toString(), "ac", "ac", "size", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeMods[sizeKey].toString(), target: "ac", subTarget: "ac", modifier: "size" }, {inplace: false}),
         source: {
           type: "size"
         }
       });
       // Stealth skill
       changes.push({
-        raw: [CONFIG.PF1.sizeStealthMods[sizeKey].toString(), "skill", "skill.ste", "size", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeStealthMods[sizeKey].toString(), target: "skill", subTarget: "skill.ste", modifier: "size" }, {inplace: false}),
         source: {
           type: "size"
         }
       });
       // Fly skill
       changes.push({
-        raw: [CONFIG.PF1.sizeFlyMods[sizeKey].toString(), "skill", "skill.fly", "size", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeFlyMods[sizeKey].toString(), target: "skill", subTarget: "skill.fly", modifier: "size" }, {inplace: false}),
         source: {
           type: "size"
         }
       });
       // CMB
       changes.push({
-        raw: [CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), "misc", "cmb", "size", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmb", modifier: "size" }, {inplace: false}),
         source: {
           type: "size"
         }
       });
       // CMD
       changes.push({
-        raw: [CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), "misc", "cmd", "size", 0],
+        raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmd", modifier: "size" }, {inplace: false}),
         source: {
           type: "size"
         }
@@ -701,121 +785,121 @@ export class ActorPF extends Actor {
       switch (con) {
         case "blind":
           changes.push({
-            raw: ["-2", "ac", "ac", "penalty", 0],
-            source: { name: "Blind" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondBlind") }
           });
           flags["loseDexToAC"] = true;
           sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.cmd.flatFootedTotal"] = sourceInfo["data.attributes.cmd.flatFootedTotal"] || { positive: [], negative: [] };
-          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
-          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
-          sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
-          sourceInfo["data.attributes.cmd.flatFootedTotal"].negative.push({ name: "Blind", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+          sourceInfo["data.attributes.cmd.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+          sourceInfo["data.attributes.cmd.flatFootedTotal"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
           break;
         case "dazzled":
           changes.push({
-            raw: ["-1", "attack", "attack", "penalty", 0],
-            source: { name: "Dazzled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-1", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondDazzled") }
           });
           break;
         case "deaf":
           changes.push({
-            raw: ["-4", "misc", "init", "penalty", 0],
-            source: { name: "Deaf" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "misc", subTarget: "init", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondDeaf") }
           });
           break;
         case "entangled":
           changes.push({
-            raw: ["-4", "ability", "dex", "penalty", 0],
-            source: { name: "Entangled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondEntangled") }
           });
           changes.push({
-            raw: ["-2", "attack", "attack", "penalty", 0],
-            source: { name: "Entangled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondEntangled") }
           });
           break;
         case "grappled":
           changes.push({
-            raw: ["-4", "ability", "dex", "penalty", 0],
-            source: { name: "Grappled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondGrappled") }
           });
           changes.push({
-            raw: ["-2", "attack", "attack", "penalty", 0],
-            source: { name: "Grappled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondGrappled") }
           });
           changes.push({
-            raw: ["-2", "misc", "cmb", "penalty", 0],
-            source: { name: "Grappled" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "misc", subTarget: "cmb", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondGrappled") }
           });
           break;
         case "helpless":
           flags["noDex"] = true;
           sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
-          sourceInfo["data.abilities.dex.total"].negative.push({ name: "Helpless", value: "0 Dex" });
+          sourceInfo["data.abilities.dex.total"].negative.push({ name: game.i18n.localize("PF1.CondHelpless"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
           break;
         case "paralyzed":
           flags["noDex"] = true;
           flags["noStr"] = true;
           sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
-          sourceInfo["data.abilities.dex.total"].negative.push({ name: "Paralyzed", value: "0 Dex" });
+          sourceInfo["data.abilities.dex.total"].negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
           sourceInfo["data.abilities.str.total"] = sourceInfo["data.abilities.str.total"] || { positive: [], negative: [] };
-          sourceInfo["data.abilities.str.total"].negative.push({ name: "Paralyzed", value: "0 Str" });
+          sourceInfo["data.abilities.str.total"].negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoStr") });
           break;
         case "pinned":
           flags["loseDexToAC"] = true;
           sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
           sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
-          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
-          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
-          sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Pinned", value: "Lose Dex to AC" });
+          sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+          sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+          sourceInfo["data.attributes.cmd.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
           break;
         case "fear":
           changes.push({
-            raw: ["-2", "attack", "attack", "penalty", 0],
-            source: { name: "Fear" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondFear") }
           });
           changes.push({
-            raw: ["-2", "savingThrows", "allSavingThrows", "penalty", 0],
-            source: { name: "Fear" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondFear") }
           });
           changes.push({
-            raw: ["-2", "skills", "skills", "penalty", 0],
-            source: { name: "Fear" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondFear") }
           });
           changes.push({
-            raw: ["-2", "abilityChecks", "allChecks", "penalty", 0],
-            source: { name: "Fear" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondFear") }
           });
           break;
         case "sickened":
           changes.push({
-            raw: ["-2", "attack", "attack", "penalty", 0],
-            source: { name: "Sickened" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondSickened") }
           });
           changes.push({
-            raw: ["-2", "damage", "wdamage", "penalty", 0],
-            source: { name: "Sickened" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "damage", subTarget: "wdamage", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondSickened") }
           });
           changes.push({
-            raw: ["-2", "savingThrows", "allSavingThrows", "penalty", 0],
-            source: { name: "Sickened" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondSickened") }
           });
           changes.push({
-            raw: ["-2", "skills", "skills", "penalty", 0],
-            source: { name: "Sickened" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondSickened") }
           });
           changes.push({
-            raw: ["-2", "abilityChecks", "allChecks", "penalty", 0],
-            source: { name: "Sickened" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondSickened") }
           });
           break;
         case "stunned":
           changes.push({
-            raw: ["-2", "ac", "ac", "penalty", 0],
-            source: { name: "Stunned" }
+            raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
+            source: { name: game.i18n.localize("PF1.CondStunned") }
           });
           flags["loseDexToAC"] = true;
           sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
@@ -831,34 +915,34 @@ export class ActorPF extends Actor {
     // Handle fatigue and exhaustion so that they don't stack
     if (data.data.attributes.conditions.exhausted) {
       changes.push({
-        raw: ["-6", "ability", "str", "penalty", 0],
-        source: { name: "Exhausted" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-6", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondExhausted") }
       });
       changes.push({
-        raw: ["-6", "ability", "dex", "penalty", 0],
-        source: { name: "Exhausted" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-6", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondExhausted") }
       });
     }
     else if (data.data.attributes.conditions.fatigued) {
       changes.push({
-        raw: ["-2", "ability", "str", "penalty", 0],
-        source: { name: "Fatigued" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondFatigued") }
       });
       changes.push({
-        raw: ["-2", "ability", "dex", "penalty", 0],
-        source: { name: "Fatigued" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondFatigued") }
       });
     }
 
     // Apply level drain to hit points
     if (!Number.isNaN(data.data.attributes.energyDrain) && data.data.attributes.energyDrain > 0) {
       changes.push({
-        raw: ["-(@attributes.energyDrain * 5)", "misc", "mhp", "untyped", 0],
-        source: { name: "Negative Levels" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "mhp", modifier: "untyped" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
       });
       changes.push({
-        raw: ["-(@attributes.energyDrain * 5)", "misc", "vigor", "untyped", 0],
-        source: { name: "Negative Levels" }
+        raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "vigor", modifier: "untyped" }, {inplace: false}),
+        source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
       });
     }
   }
@@ -1046,11 +1130,11 @@ export class ActorPF extends Actor {
     updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
     this._addDynamicData(updateData, {}, flags, Object.keys(this.data.data.abilities), srcData1, true);
     allChanges.forEach((change, a) => {
-      const formula = change.raw[0] || "";
+      const formula = change.raw.formula || "";
       if (formula === "") return;
-      const changeTarget = change.raw[2];
+      const changeTarget = change.raw.subTarget;
       if (changeData[changeTarget] == null) return;
-      const rollData = this.constructor._blacklistChangeData(this.getRollData(srcData1.data), changeTarget);
+      const rollData = this.getRollData(srcData1.data);
 
       rollData.item = {};
       if (change.source.item != null) {
@@ -1060,7 +1144,7 @@ export class ActorPF extends Actor {
       const roll = new Roll(formula, rollData);
 
       try {
-        change.raw[4] = roll.roll().total;
+        change.raw.value = roll.roll().total;
       }
       catch (e) {
         ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name, this.name));
@@ -1068,7 +1152,7 @@ export class ActorPF extends Actor {
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);
 
-      if (allChanges.length <= a+1 || allChanges[a+1].raw[2] !== changeTarget) {
+      if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
         const newData = this._applyChanges(changeTarget, temp, srcData1);
         this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities), srcData1);
         temp = [];
@@ -1123,16 +1207,7 @@ export class ActorPF extends Actor {
         }
       }
     }
-    // Add dex mod to AC
-    if (updateData["data.abilities.dex.mod"] < 0 || !flags.loseDexToAC) {
-      const maxDexBonus = mergeObject(this.data, expandObject(updateData), { inplace: false }).data.attributes.maxDexBonus;
-      const dexBonus = maxDexBonus != null ? Math.min(maxDexBonus, updateData["data.abilities.dex.mod"]) : updateData["data.abilities.dex.mod"];
-      linkData(srcData1, updateData, "data.attributes.ac.normal.total", updateData["data.attributes.ac.normal.total"] + dexBonus);
-      linkData(srcData1, updateData, "data.attributes.ac.touch.total", updateData["data.attributes.ac.touch.total"] + dexBonus);
-      if (updateData["data.abilities.dex.mod"] < 0) {
-        linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", updateData["data.attributes.ac.flatFooted.total"] + dexBonus);
-      }
-    }
+
     // Add current hit points
     if (updateData["data.attributes.hp.max"]) {
       const hpDiff = updateData["data.attributes.hp.max"] - prevValues.mhp;
@@ -1293,7 +1368,7 @@ export class ActorPF extends Actor {
               }
               if (saveScale === "low") return cur + obj.data.level / 3;
               return cur;
-            }, 0)) - data1.attributes.energyDrain
+            }, 0))
           );
 
           const v = updateData[k];
@@ -1316,7 +1391,7 @@ export class ActorPF extends Actor {
               }
 
               return cur + v;
-            }, 0) - data1.attributes.energyDrain
+            }, 0)
           );
         }
       }
@@ -1383,9 +1458,9 @@ export class ActorPF extends Actor {
         }, 0));
       }
     }
-    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
-    linkData(data, updateData, "data.attributes.cmd.total", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
-    linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10 + updateData["data.attributes.bab.total"] - data1.attributes.energyDrain);
+    linkData(data, updateData, "data.attributes.cmb.total", 0);
+    linkData(data, updateData, "data.attributes.cmd.total", 10);
+    linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10);
 
     // Reset initiative
     linkData(data, updateData, "data.attributes.init.total", 0);
@@ -1428,24 +1503,6 @@ export class ActorPF extends Actor {
       linkData(data, updateData, `data.abilities.${a}.mod`, Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
       linkData(data, updateData, `data.abilities.${a}.mod`, Math.max(-5, updateData[`data.abilities.${a}.mod`] - Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2)));
       modDiffs[a] = updateData[`data.abilities.${a}.mod`] - prevMods[a];
-    }
-
-    // Add ability mods to CMB and CMD
-    const cmbMod = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(data, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny") ? modDiffs["dex"] : modDiffs["str"];
-    linkData(data, updateData, "data.attributes.cmb.total", updateData["data.attributes.cmb.total"] + cmbMod);
-    linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["str"]);
-    if (!flags.loseDexToAC || modDiffs["dex"] < 0) {
-      linkData(data, updateData, "data.attributes.cmd.total", updateData["data.attributes.cmd.total"] + modDiffs["dex"]);
-      linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", updateData["data.attributes.cmd.flatFootedTotal"] + Math.min(0, modDiffs["dex"]));
-    }
-    linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", updateData["data.attributes.cmd.flatFootedTotal"] + modDiffs["str"]);
-
-    // Add dex mod to initiative
-    linkData(data, updateData, "data.attributes.init.total", updateData["data.attributes.init.total"] + modDiffs["dex"]);
-
-    // Add ability mods to saving throws
-    for (let [s, v] of Object.entries(getProperty(data, "data.attributes.savingThrows"))) {
-      linkData(data, updateData, `data.attributes.savingThrows.${s}.total`, updateData[`data.attributes.savingThrows.${s}.total`] + modDiffs[v.ability]);
     }
 
     // Apply changes
@@ -1628,93 +1685,19 @@ export class ActorPF extends Actor {
 
 
     // Add base values to certain bonuses
-    sourceDetails["data.attributes.ac.normal.total"].push({ name: "Base", value: 10 });
-    sourceDetails["data.attributes.ac.touch.total"].push({ name: "Base", value: 10 });
-    sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: "Base", value: 10 });
-    sourceDetails["data.attributes.cmd.total"].push({ name: "Base", value: 10 });
-    sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Base", value: 10 });
+    sourceDetails["data.attributes.ac.normal.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+    sourceDetails["data.attributes.ac.touch.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+    sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+    sourceDetails["data.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+    sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     for (let [a, abl] of Object.entries(actorData.data.abilities)) {
-      sourceDetails[`data.abilities.${a}.total`].push({ name: "Base", value: abl.value });
+      sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
       // Add ability penalty, damage and drain
       if (abl.damage != null && abl.damage !== 0) {
-        sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Damage", value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)` });
+        sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.AbilityDamage"), value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)` });
       }
       if (abl.drain != null && abl.drain !== 0) {
-        sourceDetails[`data.abilities.${a}.total`].push({ name: "Ability Drain", value: -Math.abs(abl.drain) });
-      }
-    }
-
-    // Add CMB, CMD and initiative
-    if (actorData.data.attributes.bab.total !== 0) {
-      sourceDetails["data.attributes.cmb.total"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
-      sourceDetails["data.attributes.cmd.total"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
-      sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "BAB", value: actorData.data.attributes.bab.total });
-    }
-    const useDexForCMB = Object.keys(CONFIG.PF1.actorSizes).indexOf(getProperty(actorData, "data.traits.size") || "") <= Object.keys(CONFIG.PF1.actorSizes).indexOf("tiny");
-    if (actorData.data.abilities.str.mod !== 0) {
-      if (!useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
-      sourceDetails["data.attributes.cmd.total"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
-      sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Strength", value: actorData.data.abilities.str.mod });
-    }
-    if (actorData.data.abilities.dex.mod !== 0) {
-      if (useDexForCMB) sourceDetails["data.attributes.cmb.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
-      sourceDetails["data.attributes.cmd.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
-      if (actorData.data.abilities.dex.mod < 0) {
-        sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
-      }
-      sourceDetails["data.attributes.init.total"].push({ name: "Dexterity", value: actorData.data.abilities.dex.mod });
-    }
-    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
-      sourceDetails["data.attributes.cmb.total"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
-      sourceDetails["data.attributes.cmd.total"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
-      sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: "Negative Levels", value: -actorData.data.attributes.energyDrain });
-    }
-
-    // Add ability mods (and energy drain) to saving throws
-    for (let [s, v] of Object.entries(getProperty(actorData, "data.attributes.savingThrows"))) {
-      const a = v.ability;
-      if (actorData.data.abilities[a].mod !== 0) {
-        sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
-          name: CONFIG.PF1.abilities[a],
-          value: actorData.data.abilities[a].mod
-        });
-      }
-      if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
-        sourceDetails[`data.attributes.savingThrows.${s}.total`].push({
-          name: "Negative Levels",
-          value: -actorData.data.attributes.energyDrain
-        });
-      }
-    }
-
-    // Add energy drain to skills
-    if (actorData.data.attributes.energyDrain != null && actorData.data.attributes.energyDrain !== 0) {
-      for (let [sklKey, skl] of Object.entries(actorData.data.skills)) {
-        if (sourceDetails[`data.skills.${sklKey}.changeBonus`] == null) continue;
-        sourceDetails[`data.skills.${sklKey}.changeBonus`].push({
-          name: "Negative Levels",
-          value: -actorData.data.attributes.energyDrain
-        });
-
-        if (skl.subSkills != null) {
-          for (let subSklKey of Object.keys(skl.subSkills)) {
-            sourceDetails[`data.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`].push({
-              name: "Negative Levels",
-              value: -actorData.data.attributes.energyDrain
-            });
-          }
-        }
-      }
-    }
-
-    // AC from Dex mod
-    const maxDexBonus = actorData.data.attributes.maxDexBonus;
-    const dexBonus = maxDexBonus != null ? Math.min(maxDexBonus, actorData.data.abilities.dex.mod) : actorData.data.abilities.dex.mod;
-    if (dexBonus < 0 || (!flags.loseDexToAC && dexBonus > 0)) {
-      sourceDetails["data.attributes.ac.normal.total"].push({ name: "Dexterity", value: dexBonus });
-      sourceDetails["data.attributes.ac.touch.total"].push({ name: "Dexterity", value: dexBonus });
-      if (dexBonus < 0) {
-        sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: "Dexterity", value: dexBonus });
+        sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.AbilityDrain"), value: -Math.abs(abl.drain) });
       }
     }
 
@@ -1725,6 +1708,7 @@ export class ActorPF extends Actor {
           sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
           for (let src of grp) {
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+            // if (this.name === "Testy") console.log(changeTarget, src, srcInfo)
             sourceDetails[changeTarget].push({
               name: srcInfo,
               value: src.value
@@ -1734,6 +1718,7 @@ export class ActorPF extends Actor {
       }
     }
 
+    // if (this.name === "Testy") console.log(sourceDetails)
     this.sourceDetails = sourceDetails;
   }
 
@@ -2276,8 +2261,8 @@ export class ActorPF extends Actor {
 
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod - @drain"],
-      data: {mod: this.data.data.attributes.bab.total, drain: this.data.data.attributes.energyDrain},
+      parts: ["@mod"],
+      data: {mod: this.data.data.attributes.bab.total},
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false
@@ -2318,8 +2303,8 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod - @drain"],
-      data: {mod: this.data.data.attributes.cmb.total, drain: this.data.data.attributes.energyDrain},
+      parts: ["@mod"],
+      data: {mod: this.data.data.attributes.cmb.total},
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
@@ -2449,9 +2434,9 @@ export class ActorPF extends Actor {
     const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod - @drain"],
+      parts: ["@mod"],
       situational: true,
-      data: { mod: savingThrow.total, drain: this.data.data.attributes.energyDrain },
+      data: { mod: savingThrow.total },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
@@ -2500,8 +2485,8 @@ export class ActorPF extends Actor {
     const abl = this.data.data.abilities[abilityId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod + @checkMod - @drain"],
-      data: {mod: abl.mod, checkMod: abl.checkMod, drain: this.data.data.attributes.energyDrain},
+      parts: ["@mod + @checkMod"],
+      data: {mod: abl.mod, checkMod: abl.checkMod},
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
@@ -2717,8 +2702,8 @@ export class ActorPF extends Actor {
       const key = RegExp.$1;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return (o[1] === "attacks" && o[2] === key);
-        }).map(o => { return o[0]; });
+          return (o.target === "attacks" && o.subTarget === key);
+        }).map(o => { return o.text; });
       }
 
       return result;
@@ -2731,8 +2716,8 @@ export class ActorPF extends Actor {
       const ability = skill.ability;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return (o[1] === "skill" && o[2] === context) || (o[1] === "skills" && (o[2] === `${ability}Skills` || o[2] === "skills"));
-        }).map(o => { return o[0]; });
+          return (o.target === "skill" && o.subTarget === context) || (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"));
+        }).map(o => { return o.text; });
       }
 
       if (skill.notes != null && skill.notes !== "") {
@@ -2747,8 +2732,8 @@ export class ActorPF extends Actor {
       const saveKey = RegExp.$1;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return o[1] === "savingThrows" && (o[2] === saveKey || o[2] === "allSavingThrows");
-        }).map(o => { return o[0]; });
+          return o.target === "savingThrows" && (o.subTarget === saveKey || o.subTarget === "allSavingThrows");
+        }).map(o => { return o.text; });
       }
 
       if (this.data.data.attributes.saveNotes != null && this.data.data.attributes.saveNotes !== "") {
@@ -2763,8 +2748,8 @@ export class ActorPF extends Actor {
       const ablKey = RegExp.$1;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return o[1] === "abilityChecks" && (o[2] === `${ablKey}Checks` || o[2] === "allChecks");
-        }).map(o => { return o[0]; });
+          return o.target === "abilityChecks" && (o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks");
+        }).map(o => { return o.text; });
       }
 
       return result;
@@ -2775,8 +2760,8 @@ export class ActorPF extends Actor {
       const miscKey = RegExp.$1;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return o[1] === "misc" && o[2] === miscKey;
-        }).map(o => { return o[0]; });
+          return o.target === "misc" && o.subTarget === miscKey;
+        }).map(o => { return o.note; });
       }
 
       if (miscKey === "cmb" && this.data.data.attributes.cmbNotes != null && this.data.data.attributes.cmbNotes !== "") {

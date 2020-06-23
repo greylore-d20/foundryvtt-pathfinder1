@@ -1,5 +1,6 @@
 import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
+import { ItemPF } from "../entity.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -217,35 +218,7 @@ export class ItemSheetPF extends ItemSheet {
         if (typeof v === "object") data.changes.targets[k] = v._label;
       }
       data.item.data.changes.forEach(item => {
-        item.subTargets = {};
-        // Add specific skills
-        if (item[1] === "skill") {
-          if (this.item.actor == null) {
-            for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
-              item.subTargets[`skill.${s}`] = skl;
-            }
-          }
-          else {
-            const actorSkills = this.item.actor.data.data.skills;
-            for (let [s, skl] of Object.entries(actorSkills)) {
-              if (!skl.subSkills) {
-                if (skl.custom) item.subTargets[`skill.${s}`] = skl.name;
-                else item.subTargets[`skill.${s}`] = CONFIG.PF1.skills[s];
-              }
-              else {
-                for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-                  item.subTargets[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
-                }
-              }
-            }
-          }
-        }
-        // Add static targets
-        else if (item[1] != null && CONFIG.PF1.buffTargets.hasOwnProperty(item[1])) {
-          for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets[item[1]])) {
-            if (!k.startsWith("_")) item.subTargets[k] = v;
-          }
-        }
+        item.subTargets = this.item.getChangeSubTargets(item.target);
       });
     }
 
@@ -256,35 +229,7 @@ export class ItemSheetPF extends ItemSheet {
         if (typeof v === "object") data.contextNotes.targets[k] = v._label;
       }
       data.item.data.contextNotes.forEach(item => {
-        item.subNotes = {};
-        // Add specific skills
-        if (item[1] === "skill") {
-          if (this.item.actor == null) {
-            for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
-              item.subNotes[`skill.${s}`] = skl;
-            }
-          }
-          else {
-            const actorSkills = this.item.actor.data.data.skills;
-            for (let [s, skl] of Object.entries(actorSkills)) {
-              if (!skl.subSkills) {
-                if (skl.custom) item.subNotes[`skill.${s}`] = skl.name;
-                else item.subNotes[`skill.${s}`] = CONFIG.PF1.skills[s];
-              }
-              else {
-                for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-                  item.subNotes[`skill.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
-                }
-              }
-            }
-          }
-        }
-        // Add static targets
-        else if (item[1] != null && CONFIG.PF1.contextNoteTargets.hasOwnProperty(item[1])) {
-          for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets[item[1]])) {
-            if (!k.startsWith("_")) item.subNotes[k] = v;
-          }
-        }
+        item.subNotes = this.item.getContextNoteSubTargets(item.target);
       });
     }
 
@@ -466,8 +411,22 @@ export class ItemSheetPF extends ItemSheet {
     let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
     formData["data.changes"] = change.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = [];
+      if ( !arr[i] ) arr[i] = {};
       arr[i][j] = entry[1];
+      // Reset subtarget (if necessary)
+      if (j === "subTarget") {
+        const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
+        const subTarget = entry[1];
+        if (typeof target === "string") {
+          const keys = Object.keys(this.item.getChangeSubTargets(target));
+          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+        }
+      }
+      // Limit priority
+      if (j === "priority") {
+        const prio = Math.max(-1000, Math.min(1000, entry[1]));
+        arr[i][j] = prio;
+      }
       return arr;
     }, []);
 
@@ -475,8 +434,18 @@ export class ItemSheetPF extends ItemSheet {
     let note = Object.entries(formData).filter(e => e[0].startsWith("data.contextNotes"));
     formData["data.contextNotes"] = note.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = [];
+      if ( !arr[i] ) arr[i] = {};
       arr[i][j] = entry[1];
+      // Reset subtarget (if necessary)
+      if (j === "subTarget") {
+        const target = (note.find(o => o[0] === `data.contextNotes.${i}.target`) || [])[1];
+        const subTarget = entry[1];
+        if (typeof target === "string") {
+          const keys = Object.keys(this.item.getContextNoteSubTargets(target));
+          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+        }
+      }
+      // }
       return arr;
     }, []);
 
@@ -763,7 +732,7 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("add-change")) {
       await this._onSubmit(event);  // Submit any unsaved changes
       const changes = this.item.data.data.changes || [];
-      return this.item.update({"data.changes": changes.concat([["", "", "", "", 0]])});
+      return this.item.update({"data.changes": changes.concat([ItemPF.defaultChange])});
     }
 
     // Remove a change
@@ -784,7 +753,7 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("add-note")) {
       await this._onSubmit(event);  // Submit any unsaved changes
       const contextNotes = this.item.data.data.contextNotes || [];
-      return this.item.update({"data.contextNotes": contextNotes.concat([["", "", "", 0]])});
+      return this.item.update({"data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote])});
     }
 
     // Remove a note

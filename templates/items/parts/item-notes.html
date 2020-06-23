@@ -7,17 +7,17 @@
   <ol class="context-notes form-group">
     {{#each data.contextNotes as |note a|}}
     <li class="context-note flexrow" data-note="{{a}}">
-      <textarea name="data.contextNotes.{{a}}.0" placeholder="{{localize "PF1.Notes"}}">{{lookup this "0"}}</textarea>
-      <select name="data.contextNotes.{{a}}.1">
-        {{#select (lookup this "1") }}
+      <textarea class="context-note-text" name="data.contextNotes.{{a}}.text" placeholder="{{localize "PF1.Notes"}}">{{lookup this "text"}}</textarea>
+      <select class="context-note-target" name="data.contextNotes.{{a}}.target">
+        {{#select (lookup this "target") }}
         <option value="">{{localize "PF1.None"}}</option>
         {{#each ../contextNotes.targets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
         {{/select}}
       </select>
-      <select name="data.contextNotes.{{a}}.2">
-        {{#select (lookup this "2") }}
+      <select class="context-note-sub-target" name="data.contextNotes.{{a}}.subTarget">
+        {{#select (lookup this "subTarget") }}
         {{#each subNotes as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}

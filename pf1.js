@@ -8,7 +8,7 @@
 import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
-import { measureDistances, measureDistance } from "./module/canvas.js";
+import { measureDistances } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -127,7 +127,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = 0.61;
+  const NEEDS_MIGRATION_VERSION = 0.62;
   let needMigration = game.settings.get("pf1", "systemMigrationVersion") < NEEDS_MIGRATION_VERSION;
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
@@ -146,8 +146,7 @@ Hooks.on("canvasInit", function() {
 
   // Extend Diagonal Measurement
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
-  if (isMinimumCoreVersion("0.5.6")) SquareGrid.prototype.measureDistances = measureDistances;
-  else SquareGrid.prototype.measureDistance = measureDistance;
+  SquareGrid.prototype.measureDistances = measureDistances;
 });
 
 
@@ -282,3 +281,6 @@ function rollDefenses({actorName=null, actorId=null}={}) {
 
   return actor.rollDefenses();
 };
+
+export { ActorPF, ItemPF, ActorSheetPFCharacter, ActorSheetPFNPC, ActorSheetPFNPCLite, ActorSheetPFNPCLoot };
+export { DicePF, ChatMessagePF, measureDistances };

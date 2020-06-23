@@ -1,3 +1,5 @@
+import { ItemPF } from "./item/entity.js";
+
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
  * @return {Promise}      A Promise which resolves once the migration is completed
@@ -149,6 +151,7 @@ export const migrateItemData = function(item) {
   _migrateClassLevels(item, updateData);
   _migrateSavingThrowTypes(item, updateData);
   _migrateCR(item, updateData);
+  _migrateItemChanges(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -549,6 +552,38 @@ const _migrateCR = function(ent, updateData) {
   const crOffset = getProperty(ent.data, "data.crOffset");
   if (typeof crOffset === "number") {
     updateData["data.crOffset"] = crOffset.toString();
+  }
+};
+
+const _migrateItemChanges = function(ent, updateData) {
+  // Migrate changes
+  const changes = getProperty(ent.data, "data.changes");
+  if (changes != null && changes instanceof Array) {
+    let newChanges = [];
+    for (let c of changes) {
+      if (c instanceof Array) {
+        newChanges.push(mergeObject(ItemPF.defaultChange, { formula: c[0], target: c[1], subTarget: c[2], modifier: c[3], value: c[4] }, {inplace: false}));
+      }
+      else {
+        newChanges.push(c);
+      }
+    }
+    updateData["data.changes"] = newChanges;
+  }
+
+  // Migrate context notes
+  const notes = getProperty(ent.data, "data.contextNotes");
+  if (notes != null && notes instanceof Array) {
+    let newNotes = [];
+    for (let n of notes) {
+      if (n instanceof Array) {
+        newNotes.push(mergeObject(ItemPF.defaultChange, { text: n[0], target: n[1], subTarget: n[2] }, {inplace: false}));
+      }
+      else {
+        newNotes.push(n);
+      }
+    }
+    updateData["data.contextNotes"] = newNotes;
   }
 };
 

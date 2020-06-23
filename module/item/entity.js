@@ -164,6 +164,26 @@ export class ItemPF extends Item {
     return "#C1C1C1";
   }
 
+  static get defaultChange() {
+    return {
+      formula: "",
+      operator: "+",
+      target: "",
+      subTarget: "",
+      modifier: "",
+      priority: 0,
+      value: 0,
+    };
+  }
+
+  static get defaultContextNote() {
+    return {
+      text: "",
+      target: "",
+      subTarget: "",
+    };
+  }
+
   /**
    * Generic charge addition (or subtraction) function that either adds charges
    * or quantity, based on item data.
@@ -1960,5 +1980,85 @@ export class ItemPF extends Item {
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }
+  }
+
+  /**
+   * Generates lists of change subtargets this item can have.
+   * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
+   * @returns {Object.<string, string>} A list of changes
+   */
+  getChangeSubTargets(target) {
+
+    let result = {};
+    // Add specific skills
+    if (target === "skill") {
+      if (this.actor == null) {
+        for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
+          result[`skill.${s}`] = skl;
+        }
+      }
+      else {
+        const actorSkills = this.actor.data.data.skills;
+        for (let [s, skl] of Object.entries(actorSkills)) {
+          if (!skl.subSkills) {
+            if (skl.custom) result[`skill.${s}`] = skl.name;
+            else result[`skill.${s}`] = CONFIG.PF1.skills[s];
+          }
+          else {
+            for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+              result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+            }
+          }
+        }
+      }
+    }
+    // Add static subtargets
+    else if (hasProperty(CONFIG.PF1.buffTargets, target)) {
+      for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets[target])) {
+        if (!k.startsWith("_")) result[k] = v;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Generates lists of context note subtargets this item can have.
+   * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
+   * @returns {Object.<string, string>} A list of changes
+   */
+  getContextNoteSubTargets(target) {
+
+    let result = {};
+    // Add specific skills
+    if (target === "skill") {
+      if (this.actor == null) {
+        for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
+          result[`skill.${s}`] = skl;
+        }
+      }
+      else {
+        const actorSkills = this.actor.data.data.skills;
+        for (let [s, skl] of Object.entries(actorSkills)) {
+          if (!skl.subSkills) {
+            if (skl.custom) result[`skill.${s}`] = skl.name;
+            else result[`skill.${s}`] = CONFIG.PF1.skills[s];
+          }
+          else {
+            for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+              result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+            }
+          }
+        }
+      }
+    }
+    // Add static subtargets
+    else if (hasProperty(CONFIG.PF1.contextNoteTargets, target)) {
+      for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets[target])) {
+        if (!k.startsWith("_")) result[k] = v;
+      }
+    }
+
+    return result;
   }
 }

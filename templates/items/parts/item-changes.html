@@ -41,25 +41,34 @@
   <ol class="changes form-group">
     {{#each data.changes as |change a|}}
     <li class="change flexrow" data-change="{{a}}">
-      <input type="text" name="data.changes.{{a}}.0" value="{{lookup this "0"}}"
-                                                     placeholder="{{localize "PF1.Formula"}}" />
-      <select name="data.changes.{{a}}.1">
-        {{#select (lookup this "1") }}
+      <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this "formula"}}"
+                                                                                  placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
+      <input class="change-priority" type="text" name="data.changes.{{a}}.priority" value="{{lookup this "priority"}}"
+                                                                                    placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
+
+      <select class="change-operator" name="data.changes.${{a}}.operator">
+        {{#select (lookup this "operator") }}
+        <option value="+">+</option>
+        {{!-- <option value="=">=</option> --}}
+        {{/select}}
+      </select>
+      <select class="change-target" name="data.changes.{{a}}.target">
+        {{#select (lookup this "target") }}
         <option value="">{{localize "PF1.None"}}</option>
         {{#each ../changes.targets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
         {{/select}}
       </select>
-      <select name="data.changes.{{a}}.2">
-        {{#select (lookup this "2") }}
+      <select class="change-sub-target" name="data.changes.{{a}}.subTarget">
+        {{#select (lookup this "subTarget") }}
         {{#each subTargets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
         {{/select}}
       </select>
-      <select name="data.changes.{{a}}.3">
-        {{#select (lookup this "3") }}
+      <select class="change-modifier" name="data.changes.{{a}}.modifier">
+        {{#select (lookup this "modifier") }}
         {{#each ../changes.modifiers as |name type|}}
         <option value="{{type}}">{{name}}</option>
         {{/each}}

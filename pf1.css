@@ -70,6 +70,9 @@
   /* Form Groups */
   /* Tags */
 }
+.pf1 input[type="text"]::placeholder {
+  color: #7a7971;
+}
 .pf1 li {
   align-items: center;
 }
@@ -1133,9 +1136,6 @@
 .pf1.sheet.actor .traits .inactive {
   color: #7a7971;
 }
-.pf1.sheet.actor .traits .inactive input[type="text"]::placeholder {
-  color: #7a7971;
-}
 .pf1.sheet.actor .encumbrance {
   flex: 0 0 12px;
   background: #7a7971;
@@ -1830,9 +1830,21 @@
 .pf1.sheet.item .context-notes .change select,
 .pf1.sheet.item .changes .context-note select,
 .pf1.sheet.item .context-notes .context-note select {
-  flex: 0 0 96px;
-  width: 96px;
+  flex: 0 0 80px;
+  width: 80px;
   margin-left: 5px;
+}
+.pf1.sheet.item .changes .change .change-priority,
+.pf1.sheet.item .context-notes .change .change-priority,
+.pf1.sheet.item .changes .context-note .change-priority,
+.pf1.sheet.item .context-notes .context-note .change-priority {
+  flex: 0 0 64px;
+}
+.pf1.sheet.item .changes .change .change-operator,
+.pf1.sheet.item .context-notes .change .change-operator,
+.pf1.sheet.item .changes .context-note .change-operator,
+.pf1.sheet.item .context-notes .context-note .change-operator {
+  flex: 0 0 24px;
 }
 .pf1.sheet.item .damage-control,
 .pf1.sheet.item .crit-damage-control,

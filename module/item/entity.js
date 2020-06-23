@@ -1912,7 +1912,8 @@ export class ItemPF extends Item {
 
     let result = [];
     for (let l of items) {
-      result.push(await this.getLinkItem(l));
+      let item = await this.getLinkItem(l);
+      if (item) result.push(item);
     }
 
     return result;

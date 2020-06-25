@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.62
+
+### Bug Fixes
+
+- Inspire Courage was using an incorrect formula for its bonuses
+- Pressing enter to confirm a change on an actor sheet triggered the point buy calculator
+- Ammunition now uses the price and weight for a single unit in their compendium
+- Melee weapons' attacks were being created as ranged attacks
+- Client freeze when adding a certain number of item links
+
+### Changelog
+
+- Changed the way alignment is selected (WARNING: Creature alignments will have to be re-selected this update)
+- Pecomica added missing items to the items compendium (many thanks!)
+- holyplankton created a compendium for creature templates (many thanks!)
+- Added a priority field to item changes
+
 ## 0.61
 
 ### Bug Fixes

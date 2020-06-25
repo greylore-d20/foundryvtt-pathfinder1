@@ -535,6 +535,9 @@ export class ActorSheetPF extends ActorSheet {
     // Quick toggle item property
     html.find("a.item-control.item-toggle-data").click(this._itemToggleData.bind(this));
 
+    // Duplicate item
+    html.find("a.item-control.item-duplicate").click(this._duplicateItem.bind(this));
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
@@ -978,6 +981,21 @@ export class ActorSheetPF extends ActorSheet {
     const updateData = {};
     updateData[property] = !getProperty(item.data, property);
     item.update(updateData);
+  }
+
+  async _duplicateItem(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    const itemId = $(a).parents(".item").attr("data-item-id");
+    const item = this.actor.getOwnedItem(itemId);
+    const data = duplicate(item.data);
+
+    delete data._id;
+    data.name = `${data.name} (Copy)`;
+    if (data.links) data.links = {};
+
+    this.actor.createOwnedItem(data);
   }
 
   /**

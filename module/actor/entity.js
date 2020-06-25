@@ -244,10 +244,12 @@ export class ActorPF extends Actor {
     const typeB = priority.types.indexOf(b.raw.subTarget);
     const modA = priority.modifiers.indexOf(a.raw.modifier);
     const modB = priority.modifiers.indexOf(b.raw.modifier);
-    const prioA = (a.raw.priority || 0) + 1000;
-    const prioB = (b.raw.priority || 0) + 1000;
+    let prioA = (typeof a.raw.priority === "string") ? parseInt(a.raw.priority) : a.raw.priority;
+    let prioB = (typeof b.raw.priority === "string") ? parseInt(b.raw.priority) : b.raw.priority;
+    prioA = (prioA || 0) + 1000;
+    prioB = (prioB || 0) + 1000;
 
-    return prioB - prioA || typeA - typeB || modA - modB || targetA - targetB;
+    return typeA - typeB || prioB - prioA || modA - modB || targetA - targetB;
   }
 
   _parseChange(change, changeData, flags) {
@@ -611,7 +613,7 @@ export class ActorPF extends Actor {
     // Add Dexterity Modifier to Initiative
     {
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untyped" }, {inplace: false}),
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untyped", priority: -100 }, {inplace: false}),
         source: {name: CONFIG.PF1.abilities["dex"]},
       });
     }
@@ -1126,7 +1128,7 @@ export class ActorPF extends Actor {
     const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
     updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
     this._addDynamicData({ updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
-    let newDataList = {};
+    // let newDataList = {};
     allChanges.forEach((change, a) => {
       const formula = change.raw.formula || "";
       if (formula === "") return;
@@ -1150,13 +1152,18 @@ export class ActorPF extends Actor {
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);
 
-      if (!newDataList[changeTarget]) newDataList[changeTarget] = [];
-        newDataList[changeTarget].push(changeData[changeTarget]);
+      // if (!newDataList[changeTarget]) newDataList[changeTarget] = [];
+      // newDataList[changeTarget].push(changeData[changeTarget]);
+      if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
+        const newData = this._applyChanges(changeTarget, temp, srcData1);
+        this._addDynamicData({ updateData: updateData, data: srcData1, changes: newData, flags: flags });
+        temp = [];
+      }
     });
-    for (const [ct, list] of Object.entries(newDataList)) {
-      const changes = this._applyChanges(ct, list, srcData1);
-      this._addDynamicData({ updateData: updateData, data: srcData1, changes: changes, flags: flags });
-    }
+    // for (const [ct, list] of Object.entries(newDataList)) {
+      // const changes = this._applyChanges(ct, list, srcData1);
+      // this._addDynamicData({ updateData: updateData, data: srcData1, changes: changes, flags: flags });
+    // }
 
     // Update encumbrance
     this._computeEncumbrance(updateData, srcData1);
@@ -1462,7 +1469,7 @@ export class ActorPF extends Actor {
     linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10);
 
     // Reset initiative
-    linkData(data, updateData, "data.attributes.init.total", 0);
+    linkData(data, updateData, "data.attributes.init.total", getProperty(data, "data.attributes.init.value") || 0);
 
     // Reset class skills
     for (let [k, s] of Object.entries(getProperty(data, "data.skills"))) {

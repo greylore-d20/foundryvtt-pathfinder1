@@ -668,15 +668,12 @@ export class ActorPF extends Actor {
     }
     // Natural armor
     {
-      const natAC = getProperty(data, "data.attributes.naturalAC") || 0;
-      if (natAC > 0) {
-        changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: natAC.toString(), target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
-          source: {
-            name: game.i18n.localize("PF1.BuffTarACNatural"),
-          }
-        });
-      }
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.naturalAC", target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
+        source: {
+          name: game.i18n.localize("PF1.BuffTarACNatural"),
+        }
+      });
     }
     // Add armor bonuses from equipment
     data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(item => {
@@ -1128,7 +1125,8 @@ export class ActorPF extends Actor {
     let temp = [];
     const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
     updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
-    this._addDynamicData(updateData, {}, flags, Object.keys(this.data.data.abilities), srcData1, true);
+    this._addDynamicData({ updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
+    let newDataList = {};
     allChanges.forEach((change, a) => {
       const formula = change.raw.formula || "";
       if (formula === "") return;
@@ -1152,12 +1150,13 @@ export class ActorPF extends Actor {
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);
 
-      if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
-        const newData = this._applyChanges(changeTarget, temp, srcData1);
-        this._addDynamicData(updateData, newData, flags, Object.keys(this.data.data.abilities), srcData1);
-        temp = [];
-      }
+      if (!newDataList[changeTarget]) newDataList[changeTarget] = [];
+        newDataList[changeTarget].push(changeData[changeTarget]);
     });
+    for (const [ct, list] of Object.entries(newDataList)) {
+      const changes = this._applyChanges(ct, list, srcData1);
+      this._addDynamicData({ updateData: updateData, data: srcData1, changes: changes, flags: flags });
+    }
 
     // Update encumbrance
     this._computeEncumbrance(updateData, srcData1);
@@ -1479,12 +1478,12 @@ export class ActorPF extends Actor {
     }
   }
 
-  _addDynamicData(updateData, changes, flags, abilities, data, forceModUpdate=false) {
-    if (changes == null) changes = {};
-
+  _addDynamicData({updateData={}, data={}, changes={}, flags={}, forceModUpdate=false}={}) {
     const prevMods = {};
     const modDiffs = {};
+
     // Reset ability modifiers
+    const abilities = Object.keys(getProperty(data, "data.abilities") || {});
     for (let a of abilities) {
       prevMods[a] = forceModUpdate ? 0 : updateData[`data.abilities.${a}.mod`];
       if (a === "str" && flags.noStr ||

@@ -2491,8 +2491,8 @@ export class ActorPF extends Actor {
     const abl = this.data.data.abilities[abilityId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod + @checkMod"],
-      data: {mod: abl.mod, checkMod: abl.checkMod},
+      parts: ["@mod + @checkMod - @energyDrain"],
+      data: {mod: abl.mod, checkMod: abl.checkMod, energyDrain: this.data.data.attributes.energyDrain},
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",

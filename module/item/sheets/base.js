@@ -50,7 +50,7 @@ export class ItemSheetPF extends ItemSheet {
    * Prepare item sheet data
    * Start with the base item data and extending with additional properties for rendering.
    */
-  getData() {
+  async getData() {
     const data = super.getData();
     data.labels = this.item.labels;
 
@@ -234,12 +234,12 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add links
-    this._prepareLinks(data);
+    await this._prepareLinks(data);
 
     return data;
   }
 
-  _prepareLinks(data) {
+  async _prepareLinks(data) {
 
     data.links = {
       list: [],
@@ -268,13 +268,10 @@ export class ItemSheetPF extends ItemSheet {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
       for (let i of items) {
         l.items.push(i);
-
-        // Update link items
-        this.item.updateLinkItems().then(() => {
-          this.render(true);
-        });
       }
     }
+
+    await this.item.updateLinkItems();
   }
 
   /* -------------------------------------------- */

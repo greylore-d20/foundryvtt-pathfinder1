@@ -23,6 +23,9 @@ const conf = {
     ],
   },
   output: {
+    library: "pf1",
+    libraryTarget: "umd",
+    umdNamedDefine: true,
     publicPath: "systems/pf1/dist/",
     filename: "pf1.js",
     chunkFilename: "bundles/[name].js",

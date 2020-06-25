@@ -195,37 +195,52 @@ export const CR = {
 export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
   if (typeof targetSize === "string") targetSize = Object.values(CONFIG.PF1.sizeChart).indexOf(targetSize.toUpperCase());
   else if (typeof targetSize === "number") targetSize = Math.max(0, Math.min(Object.values(CONFIG.PF1.sizeChart).length - 1, Object.values(CONFIG.PF1.sizeChart).indexOf("M") + targetSize));
-  const c = duplicate(CONFIG.PF1.sizeDie);
+  let c = duplicate(CONFIG.PF1.sizeDie);
 
   const mediumDie = `${origCount}d${origSides}`;
+  const mediumDieMax = origCount * origSides;
+  if (c.indexOf(mediumDie) === -1) {
+    c = c.map(d => {
+      if (d.match(/^([0-9]+)d([0-9]+)$/)) {
+        const dieCount = parseInt(RegExp.$1),
+          dieSides = parseInt(RegExp.$2),
+          dieMaxValue = dieCount * dieSides;
+        
+        if (dieMaxValue === mediumDieMax) return mediumDie;
+      }
+
+      return d;
+    });
+  }
 
   // Alter chart based on original die
-  for (let a = 0; a < c.length; a++) {
-    const d = c[a];
-    if (d.match(/^([0-9]+)d([0-9]+)$/)) {
-      const dieCount = parseInt(RegExp.$1),
-        dieSides = parseInt(RegExp.$2),
-        dieMaxValue = dieCount * dieSides;
+  // for (let a = 0; a < c.length; a++) {
+    // const d = c[a];
+    // if (d.match(/^([0-9]+)d([0-9]+)$/)) {
+      // const dieCount = parseInt(RegExp.$1),
+        // dieSides = parseInt(RegExp.$2),
+        // dieMaxValue = dieCount * dieSides;
 
-      if (origSides === 4 && origCount >= 2) {
-        if (dieSides === 8) {
-          c[a] = `${dieCount*2}d4`;
-        }
-        else if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
-          c[a] = `${Math.floor(dieMaxValue / origSides)}d4`;
-        }
-      }
-      else if (origSides === 12) {
-        if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
-          c[a] = `${Math.floor(dieMaxValue / origSides)}d12`;
-        }
-      }
-    }
-  }
+      // if (origSides === 4 && origCount >= 2) {
+        // if (dieSides === 8) {
+          // c[a] = `${dieCount*2}d4`;
+        // }
+        // else if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
+          // c[a] = `${Math.floor(dieMaxValue / origSides)}d4`;
+        // }
+      // }
+      // else if (origSides === 12) {
+        // if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
+          // c[a] = `${Math.floor(dieMaxValue / origSides)}d12`;
+        // }
+      // }
+    // }
+  // }
 
   // Pick an index from the chart
   let index = c.indexOf(mediumDie),
     formula = mediumDie;
+  console.log(c);
   if (index >= 0) {
     const d6Index = c.indexOf("1d6");
     let d8Index = c.indexOf("1d8");

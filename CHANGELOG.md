@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.621
+
+### Bug Fixes
+
+- Items compendium was empty since v0.62
+- Races compendium items' changes were empty since v0.62
+
 ## 0.62
 
 ### Bug Fixes

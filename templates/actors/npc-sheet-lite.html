@@ -53,6 +53,15 @@
                                                               data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
           </footer>
         </li>
+        <li class="attribute init tooltip">
+          <div class="tooltipcontent">
+            @attributes.init.total : {{data.attributes.init.total}}
+          </div>
+          <h4 class="attribute-name box-title">{{ localize "PF1.Initiative" }}</h5>
+          <footer class="attribute-footer">
+            <input name="data.attributes.init.total" type="text" class="" placeholder="+{{localize "PF1.Initiative"}}" 
+              value="{{#if data.attributes.init.total}}{{data.attributes.init.total}}{{/if}}"/>
+          </footer>
       </ul>
     </div>
   </header>

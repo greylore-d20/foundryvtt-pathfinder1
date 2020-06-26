@@ -1458,4 +1458,12 @@ export class ActorSheetPF extends ActorSheet {
       elem.select();
     }
   }
+
+  async _updateObject(event, formData) {
+    // Translate CR
+    const cr = formData["data.details.cr.base"];
+    if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
+
+    return super._updateObject(event, formData);
+  }
 }

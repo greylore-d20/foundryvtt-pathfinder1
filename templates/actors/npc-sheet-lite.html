@@ -10,10 +10,15 @@
           <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
         </h1>
         
-        <div class="charlevel">
-          <div class="level">
+        <div class="charlevel tooltip">
+          <div class="tooltipcontent">
+            @details.cr.base : {{data.details.cr.base}}<br/>
+            @details.cr.total : {{data.details.cr.total}}
+          </div>
+          <div class="level config">
+            <a class="config-icon config-control" for="cr"><i class="fas fa-cog"></i></a>
             <label>CR</label>
-            <input name="data.details.cr" type="text" value="{{labels.cr}}" placeholder="1"/>
+            <input disabled for="data.details.cr" type="text" value="{{labels.cr}}" placeholder="1"/>
           </div>
           <div class="experience">
             <span>{{data.details.xp.value}} XP</span>

@@ -199,7 +199,7 @@ export class ItemPF extends Item {
     if ( getProperty(this.data, "data.uses.per") === "single"
       && getProperty(this.data, "data.quantity") == null) return;
 
-    if (this.type === "spell") return this.addSpellUses(value, data);
+    if (this.type === "spell") return this.addSpellUses(value);
 
     let prevValue = this.isSingleUse ? getProperty(this.data, "data.quantity") : getProperty(this.data, "data.uses.value");
 

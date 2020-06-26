@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.622
+
+### Bug Fixes
+
+- Spells didn't auto subtract uses under certain circumstances
+- Will Saving Throws didn't use an ability modifier
+- Critical confirmation bonuses were not being applied
+
+### Changelog
+
+- Add button to duplicate an item on an actor
+
 ## 0.621
 
 ### Bug Fixes

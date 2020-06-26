@@ -240,7 +240,6 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
   // Pick an index from the chart
   let index = c.indexOf(mediumDie),
     formula = mediumDie;
-  console.log(c);
   if (index >= 0) {
     const d6Index = c.indexOf("1d6");
     let d8Index = c.indexOf("1d8");

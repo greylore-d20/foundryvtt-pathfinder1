@@ -75,6 +75,8 @@ export class ChatAttack {
     let data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
+    // Add critical confirmation bonus
+    data.critConfirmBonus = data.item.critConfirmBonus;
     // Determine ability multiplier
     if (data.item.ability.damageMult != null) data.ablMult = data.item.ability.damageMult;
     // Lower ability multiplier for secondary attacks
@@ -125,7 +127,10 @@ export class ChatAttack {
 
     this.hasAttack = true;
     let data = this.attack;
-    if (critical === true) data = this.critConfirm;
+    if (critical === true) {
+      data = this.critConfirm;
+      extraParts.push("@critConfirmBonus");
+    }
 
     // Roll attack
     let roll = this.item.rollAttack({data: this.rollData, bonus: bonus, extraParts: extraParts, primaryAttack: this.primaryAttack });

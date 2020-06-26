@@ -634,7 +634,7 @@ export class ActorPF extends Actor {
         source: {name: CONFIG.PF1.abilities[abl]},
       });
       // Ability Mod to Will
-      abl = getProperty(data, "will");
+      abl = getProperty(data, "data.attributes.savingThrows.will.ability");
       changes.push({
         raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untyped" }, {inplace: false}),
         source: {name: CONFIG.PF1.abilities[abl]},

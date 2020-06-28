@@ -1013,7 +1013,8 @@ export class ItemPF extends Item {
       };
 
       // Send spell info
-      if (this.data.type === "spell") await this.roll({ rollMode: rollMode }, {addDC: false});
+      const hasAction = this.hasAttack || this.hasDamage || this.hasEffect;
+      if (this.data.type === "spell") await this.roll({ rollMode: rollMode }, {addDC: hasAction ? false : true});
 
       // Dice So Nice integration
       if (game.dice3d != null) {
@@ -1049,7 +1050,7 @@ export class ItemPF extends Item {
       }
       
       // Post message
-      if (this.hasAttack || this.hasDamage || this.hasEffect) {
+      if (hasAction) {
         // Get extra text and properties
         let props = [];
         let extraText = "";

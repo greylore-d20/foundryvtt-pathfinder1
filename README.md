@@ -1,4 +1,4 @@
-# Foundry VTT 5th Edition
+# Pathfinder 1e for Foundry VTT
 
 An implementation of the first edition of Pathfinder for Foundry Virtual
 Tabletop (http://foundryvtt.com).
@@ -19,6 +19,10 @@ downloading a zip archive from the [Releases Page](https://gitlab.com/Furyspark/
 1. Clone or download this repository.
 2. Change directory to the repository root and run `npm install`.
 3. Run `npx gulp` to create the output script, and watch for changes.
+
+## Legal
+
+"This system uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content. This [website, character sheet, or whatever it is] is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit paizo.com/communityuse. For more information about Paizo Inc. and Paizo products, please visit paizo.com."
 
 ## Information
 

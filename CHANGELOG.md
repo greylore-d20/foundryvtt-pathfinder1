@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.623
+
+### Bug Fixes
+
+- Entering a CR lower than 1 resulted in it becoming NaN
+- Item descriptions should now correctly use their normal roll data for inline rolls
+- The Distribute XP macro sometimes wasn't correctly adding xp to characters
+- Negative dexterity wasn't being added to FF AC
+
 ## 0.622
 
 ### Bug Fixes
@@ -7,6 +16,7 @@
 - Spells didn't auto subtract uses under certain circumstances
 - Will Saving Throws didn't use an ability modifier
 - Critical confirmation bonuses were not being applied
+- Divine Favor (buff) formula was incorrect
 
 ### Changelog
 

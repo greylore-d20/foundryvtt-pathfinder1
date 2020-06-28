@@ -249,7 +249,7 @@ export class ActorPF extends Actor {
     prioA = (prioA || 0) + 1000;
     prioB = (prioB || 0) + 1000;
 
-    return typeA - typeB || prioB - prioA || modA - modB || targetA - targetB;
+    return targetA - targetB || typeA - typeB || prioB - prioA || modA - modB;
   }
 
   _parseChange(change, changeData, flags) {
@@ -649,20 +649,42 @@ export class ActorPF extends Actor {
     // Add Dexterity Modifier to AC (and CMD)
     {
       let formula = "@abilities.dex.mod";
-      if (getProperty(data, "data.attributes.maxDexBonus") != null) {
+      const maxDexBonus = getProperty(data, "data.attributes.maxDexBonus");
+      if (maxDexBonus != null) {
         formula = "min(@abilities.dex.mod, @attributes.maxDexBonus)";
       }
-      else if (flags.loseDexToAC) {
+      if (flags.loseDexToAC) {
         formula = "min(@abilities.dex.mod, 0)";
       }
+
+      // Negative dex
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: formula, target: "ac", subTarget: "ac", modifier: "dodge" }, {inplace: false}),
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod < 0 ? @abilities.dex.mod : 0`, target: "ac", subTarget: "ac", modifier: "untyped" }, {inplace: false}),
         source: {
           name: CONFIG.PF1.abilities["dex"],
         },
       });
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod < 0 ? @abilities.dex.mod : 0`, target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+        source: {
+          name: CONFIG.PF1.abilities["dex"],
+        },
+      });
+      // Positive dex
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod > 0 ? ${formula} : 0`, target: "ac", subTarget: "ac", modifier: "dodge" }, {inplace: false}),
+        source: {
+          name: CONFIG.PF1.abilities["dex"],
+        },
+      });
+
+      // let dexMod = getProperty(data, "data.abilities.dex.mod");
+      // const maxDexBonus = getProperty(data, "data.attributes.maxDexBonus");
+      // if (maxDexBonus != null) dexMod = Math.min(dexMod, maxDexBonus);
+      // if (flags.loseDexToAC) dexMod = Math.min(dexMod, 0);
+      
       // changes.push({
-        // raw: mergeObject(ItemPF.defaultChange, { formula: formula, target: "misc", subTarget: "cmd", modifier: "dodge" }, {inplace: false}),
+        // raw: mergeObject(ItemPF.defaultChange, { formula: dexMod.toString(), target: "ac", subTarget: "ac", modifier: dexMod > 0 ? "dodge" : "untyped" }, {inplace: false}),
         // source: {
           // name: CONFIG.PF1.abilities["dex"],
         // },

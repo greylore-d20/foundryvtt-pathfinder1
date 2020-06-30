@@ -593,6 +593,9 @@ export class ItemPF extends Item {
     if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
     if ( rollMode === "blindroll" ) chatData["blind"] = true;
 
+    //Only render the arcane spell failure on a failed roll, and if the spell actually has a failure chance 
+    if (templateData.spellFailureSuccess || !this.spellbook.arcaneSpellFailure) { return null; }
+
     // Create the chat message
     return createCustomChatMessage(template, templateData, chatData);
   }

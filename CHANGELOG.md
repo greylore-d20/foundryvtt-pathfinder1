@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.63
+
+### Changelog
+
+- holyplankton added more class abilities (many thanks!)
+
 ## 0.623
 
 ### Bug Fixes

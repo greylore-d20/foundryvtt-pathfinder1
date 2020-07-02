@@ -17,7 +17,10 @@
     {{#if label.targets}}<strong>{{localize "PF1.Targets"}}</strong>&nbsp;{{label.targets}}<br>{{/if}}
     {{#if label.effect}}<strong>{{localize "PF1.Effect"}}</strong>&nbsp;{{label.effect}}<br>{{/if}}
     {{#if label.duration}}<strong>{{localize "PF1.Duration"}}</strong>&nbsp;{{label.duration}}<br>{{/if}}
-    {{#if useDCandSR}}<strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{label.savingThrow}};&nbsp;<strong>Spell Resistance</strong>&nbsp;{{label.sr}}<br>{{/if}}
+    {{#if useDCandSR}}
+      <strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{label.savingThrow}};&nbsp;
+      <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{#ifeq label.sr "yes"}}{{localize "PF1.Yes"}}{{/ifeq}}{{#ifeq label.sr "no"}}{{localize "PF1.No"}}{{/ifeq}}<br>
+    {{/if}}
   </p>
   {{#if data.shortDescription}}
   <h2>{{localize "PF1.Description"}}</h2>

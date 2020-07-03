@@ -1060,6 +1060,23 @@ export class ActorPF extends Actor {
     this._resetData(updateData, srcData1, flags, sourceInfo);
     this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
+    // Update encumbrance
+    this._computeEncumbrance(updateData, srcData1);
+    switch (srcData1.data.attributes.encumbrance.level) {
+      case 0:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
+        break;
+      case 1:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
+        break;
+      case 2:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
+        break;
+    }
+    linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
+
     // Check flags
     for (let obj of changeObjects) {
       if (!obj.data.changeFlags) continue;
@@ -1174,35 +1191,13 @@ export class ActorPF extends Actor {
       this._parseChange(change, changeData[changeTarget], flags);
       temp.push(changeData[changeTarget]);
 
-      // if (!newDataList[changeTarget]) newDataList[changeTarget] = [];
-      // newDataList[changeTarget].push(changeData[changeTarget]);
       if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
         const newData = this._applyChanges(changeTarget, temp, srcData1);
         this._addDynamicData({ updateData: updateData, data: srcData1, changes: newData, flags: flags });
         temp = [];
       }
     });
-    // for (const [ct, list] of Object.entries(newDataList)) {
-      // const changes = this._applyChanges(ct, list, srcData1);
-      // this._addDynamicData({ updateData: updateData, data: srcData1, changes: changes, flags: flags });
-    // }
 
-    // Update encumbrance
-    this._computeEncumbrance(updateData, srcData1);
-    switch (srcData1.data.attributes.encumbrance.level) {
-      case 0:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
-        break;
-      case 1:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
-        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
-        break;
-      case 2:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
-        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
-        break;
-    }
-    linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
     // Reduce final speed under certain circumstances
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
     if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||

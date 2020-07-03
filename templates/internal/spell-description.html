@@ -19,7 +19,7 @@
     {{#if label.duration}}<strong>{{localize "PF1.Duration"}}</strong>&nbsp;{{label.duration}}<br>{{/if}}
     {{#if useDCandSR}}
       <strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{label.savingThrow}};&nbsp;
-      <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{#ifeq label.sr "yes"}}{{localize "PF1.Yes"}}{{/ifeq}}{{#ifeq label.sr "no"}}{{localize "PF1.No"}}{{/ifeq}}<br>
+      <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{label.sr}}<br>
     {{/if}}
   </p>
   {{#if data.shortDescription}}

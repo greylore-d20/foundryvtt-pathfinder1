@@ -1685,7 +1685,7 @@ export class ItemPF extends Item {
       else label.savingThrow = "none";
 
       const sr = getProperty(srcData, "data.sr");
-      label.sr = (sr === true ? "yes" : "no");
+      label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
 
       if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
     }

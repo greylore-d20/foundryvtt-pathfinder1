@@ -55,7 +55,7 @@
           {{!-- Alignment --}}
           <li>
             <div class="controls alignment flexrow">
-              <span>{{labels.alignment}}</span>
+              {{#if labels.alignment}}<span>{{labels.alignment}}</span>{{else}}<span class="placeholder">{{localize "PF1.Alignment"}}</span>{{/if}}
               <a class="control alignment"><i class="fas fa-cog"></i></a>
             </div>
           </li>

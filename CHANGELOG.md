@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.625
+
+### Bug Fixes
+
+- Spells were not updating since 0.624
+
 ## 0.624
 
 ### Bug Fixes

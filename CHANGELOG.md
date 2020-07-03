@@ -1,10 +1,18 @@
 # Changelog
 
-## 0.63
+## 0.624
+
+### Bug Fixes
+
+- Changing the masterwork flag on equipment changed the ACP another update later
+- Spells no longer show duplicate chat information when used
+- Showing defenses didn't work if some item added AC notes (Fixed by Marco (many thanks!))
 
 ### Changelog
 
 - holyplankton added more class abilities (many thanks!)
+- Added a loading bar when opening compendium browsers
+- Adam added an initial version of a Wild Shape sample macro (many thanks!)
 
 ## 0.623
 

@@ -38,7 +38,7 @@ export class AbilityTemplate extends MeasuredTemplate {
         break;
       case "rect":
         templateData.distance = distance || 5;
-        templateData.width = target.value;
+        // templateData.width = target.value;
         templateData.direction = 45;
         break;
       case "ray":
@@ -130,15 +130,26 @@ export class AbilityTemplate extends MeasuredTemplate {
         if (event.ctrlKey) event.preventDefault(); // Avoid zooming the browser window
         event.stopPropagation();
         let delta, snap;
-        if (pfStyle && this.data.t === "cone") {
-          delta = 90;
-          snap = event.shiftKey ? delta : 45;
+        if (event.ctrlKey) {
+          if (this.data.t === "rect") {
+            delta = Math.sqrt(canvas.dimensions.distance*canvas.dimensions.distance);
+          }
+          else {
+            delta = canvas.dimensions.distance;
+          }
+          this.data.distance += (delta * -Math.sign(event.deltaY));
         }
         else {
-          delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
-          snap = event.shiftKey ? delta : 5;
+          if (pfStyle && this.data.t === "cone") {
+            delta = 90;
+            snap = event.shiftKey ? delta : 45;
+          }
+          else {
+            delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
+            snap = event.shiftKey ? delta : 5;
+          }
+          this.data.direction += (snap * Math.sign(event.deltaY));
         }
-        this.data.direction += (snap * Math.sign(event.deltaY));
         this.refresh();
       };
 

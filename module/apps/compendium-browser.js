@@ -79,29 +79,51 @@ export class CompendiumBrowser extends Application {
     return this.options.entityType;
   }
 
+  _onProgress(progress) {
+    progress.loaded++;
+    progress.pct = Math.round(progress.loaded * 10 / progress.total) * 10;
+    SceneNavigation._onLoadProgress(progress.message, progress.pct);
+  }
+
   async _fetchMetadata() {
     this.items = [];
 
+    // Initialize progress bar
+    const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: 0, total: game.packs.size };
+    this._onProgress(progress);
+
+    // Load compendiums
     for (let p of game.packs.values()) {
-      if (p.private && !game.user.isGM) continue;
-      if (p.entity !== this.entityType) continue;
+      if (p.private && !game.user.isGM) {
+        this._onProgress(progress);
+        continue;
+      }
+      if (p.entity !== this.entityType) {
+        this._onProgress(progress);
+        continue;
+      }
 
       const items = await p.getContent();
       for (let i of items) {
         if (!this._filterItems(i)) continue;
         this.items.push(this._mapItem(p, i));
       }
+      this._onProgress(progress);
     }
+
+    // Sort items
     this.items.sort((a, b) => {
       if (a.item.name < b.item.name) return -1;
       if (a.item.name > b.item.name) return 1;
       return 0;
     });
 
+    // Return if no appropriate items were found
     if (this.items.length === 0) {
       return;
     }
 
+    // Gather filter data
     if (this.type === "spells") this._fetchSpellFilters();
     else if (this.type === "items") this._fetchItemFilters();
     else if (this.type === "bestiary") this._fetchBestiaryFilters();

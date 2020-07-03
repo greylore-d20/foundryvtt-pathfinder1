@@ -72,6 +72,17 @@
   <div class="extra-text gm-sensitive">{{{extraText}}}</div>
   {{/if}}
 
+  {{#if spellFailure}}
+  <div class="spell-failure">
+    <h3>{{localize "PF1.ArcaneSpellFailure"}}</h3>
+    <div class="dice-roll">
+      <div class="dice-result">
+        <h4 class="dice-total spell-failure {{#unless spellFailureSuccess}}failure{{/unless}}">{{spellFailure}}</h4>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
   {{#if hasProperties}}
   {{#each properties as |prop|}}
   <div class="flexcol property-group gm-sensitive">

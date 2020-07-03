@@ -1014,7 +1014,7 @@ export class ItemPF extends Item {
 
       // Send spell info
       const hasAction = this.hasAttack || this.hasDamage || this.hasEffect;
-      if (this.data.type === "spell") await this.roll({ rollMode: rollMode }, {addDC: hasAction ? false : true});
+      if (this.data.type === "spell" && !hasAction) await this.roll({ rollMode: rollMode }, {addDC: hasAction ? false : true});
 
       // Dice So Nice integration
       if (game.dice3d != null) {
@@ -1077,6 +1077,14 @@ export class ItemPF extends Item {
             label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
           },
         }, { inplace: false });
+        // Spell failure
+        if (this.type === "spell" && this.actor != null && this.actor.spellFailure > 0) {
+          const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+          if (spellbook && spellbook.arcaneSpellFailure) {
+            templateData.spellFailure = new Roll("1d100").roll().total;
+            templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+          }
+        }
         // Create message
         await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
       }

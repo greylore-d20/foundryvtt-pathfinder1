@@ -2784,7 +2784,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes.filter(o => {
           return o.target === "misc" && o.subTarget === miscKey;
-        }).map(o => { return o.note; });
+        }).map(o => { return o.text; });
       }
 
       if (miscKey === "cmb" && this.data.data.attributes.cmbNotes != null && this.data.data.attributes.cmbNotes !== "") {

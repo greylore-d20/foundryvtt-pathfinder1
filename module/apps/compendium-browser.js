@@ -89,7 +89,7 @@ export class CompendiumBrowser extends Application {
     this.items = [];
 
     // Initialize progress bar
-    const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: 0, total: game.packs.size };
+    const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: game.packs.size };
     this._onProgress(progress);
 
     // Load compendiums

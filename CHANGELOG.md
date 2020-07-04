@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.626
+
+### Changelog
+
+- Added many entries to the bestiary, due to the efforts of Dorgendubal, Primer and jimjambojangles (many thanks!)
+  - The individual entries of the bestiary are missing some info, so it's probably best to use them as a base only
+- Added a lot more class abilities, due to the efforts of holyplankton (many thanks!)
+
 ## 0.625
 
 ### Bug Fixes

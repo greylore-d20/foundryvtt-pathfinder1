@@ -29,14 +29,14 @@
   /* ----------------------------------------- */
 
   // Item Sheet form fields
-  input[type="text"], select {
+  input[type="text"], input[type="number"], select {
     border: 1px solid @colorTan;
     background: rgba(0, 0, 0, 0.05);
     color: @colorDark;
   }
 
   // Hovered Fields
-  input[type="text"] {
+  input[type="text"], input[type="number"] {
     &:hover,
     &:focus {
       border: 1px solid #111;
@@ -251,6 +251,7 @@
 
   // Input Fields
   input[type="text"],
+  input[type="number"],
   textarea {
     background: none;
     border: 1px solid transparent;

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.627
+
+### Changelog
+
+- Removed some space from spellbook checkboxes so it's more difficult to accidentally click them, due to the efforts of Marco (many thanks!)
+- Changed spell counts in spellbooks to be easily adjustable numbers, thanks to the efforts of Marco (many thanks!)
+
+### Bug Fixes
+
+- Actor sheets couldn't be opened in FoundryVTT 0.6.5
+- Changing the type of change the first time around had a delay of being applied until the next change to the item
+
 ## 0.626
 
 ### Changelog

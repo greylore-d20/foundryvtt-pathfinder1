@@ -83,13 +83,16 @@
   color: #191813;
 }
 .pf1 input[type="text"],
+.pf1 input[type="number"],
 .pf1 select {
   border: 1px solid #7a7971;
   background: rgba(0, 0, 0, 0.05);
   color: #191813;
 }
 .pf1 input[type="text"]:hover,
-.pf1 input[type="text"]:focus {
+.pf1 input[type="number"]:hover,
+.pf1 input[type="text"]:focus,
+.pf1 input[type="number"]:focus {
   border: 1px solid #111;
   box-shadow: 0 0 8px red;
 }
@@ -290,13 +293,16 @@
   align-content: flex-start;
 }
 .pf1.sheet input[type="text"],
+.pf1.sheet input[type="number"],
 .pf1.sheet textarea {
   background: none;
   border: 1px solid transparent;
 }
 .pf1.sheet input[type="text"]:hover,
+.pf1.sheet input[type="number"]:hover,
 .pf1.sheet textarea:hover,
 .pf1.sheet input[type="text"]:focus,
+.pf1.sheet input[type="number"]:focus,
 .pf1.sheet textarea:focus {
   border: 1px solid #111;
 }
@@ -1490,9 +1496,29 @@
   align-items: center;
   justify-content: center;
 }
+.pf1.sheet.actor .spell-slots input[type="number"],
+.pf1.sheet.actor .spell-comps input[type="number"],
+.pf1.sheet.actor .spell-uses input[type="number"] {
+  width: calc(100% - 2px);
+  min-width: 40px;
+  height: 24px;
+  padding: 1px 3px;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border-radius: 3px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
 .pf1.sheet.actor .spell-slots input[type="text"].base,
 .pf1.sheet.actor .spell-comps input[type="text"].base,
-.pf1.sheet.actor .spell-uses input[type="text"].base {
+.pf1.sheet.actor .spell-uses input[type="text"].base,
+.pf1.sheet.actor .spell-slots input[type="number"].base,
+.pf1.sheet.actor .spell-comps input[type="number"].base,
+.pf1.sheet.actor .spell-uses input[type="number"].base {
   flex: 1;
 }
 .pf1.sheet.actor .spell-slots input,
@@ -2140,6 +2166,9 @@
 }
 .pf1.sheet.actor.character .spellbook .item-controls .toggle-prepared.prepared {
   color: #4b4a44;
+}
+.pf1.sheet.actor.character .spellbook .caster-preferences {
+  align-items: flex-start;
 }
 /* ----------------------------------------- */
 /*  Basic Structure                          */

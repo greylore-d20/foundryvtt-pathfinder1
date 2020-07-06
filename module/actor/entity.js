@@ -1649,8 +1649,10 @@ export class ActorPF extends Actor {
     // Set spellbook info
     for (let spellbook of Object.values(data.attributes.spells.spellbooks)) {
       // Set CL
-      let roll = new Roll(spellbook.cl.formula, data).roll();
-      spellbook.cl.total = roll.total || 0;
+      if (spellbook.cl.formula.length > 0) {
+        let roll = new Roll(spellbook.cl.formula, data).roll();
+        spellbook.cl.total = roll.total || 0;
+      }
       if (actorData.type === "npc") spellbook.cl.total += spellbook.cl.base;
       if (spellbook.class === "_hd") {
         spellbook.cl.total += data.attributes.hd.total;

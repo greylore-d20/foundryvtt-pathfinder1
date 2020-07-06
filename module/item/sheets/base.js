@@ -408,7 +408,7 @@ export class ItemSheetPF extends ItemSheet {
     let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
     formData["data.changes"] = change.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = {};
+      if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
       arr[i][j] = entry[1];
       // Reset subtarget (if necessary)
       if (j === "subTarget") {

@@ -46,7 +46,7 @@
       <input class="change-priority" type="text" name="data.changes.{{a}}.priority" value="{{lookup this "priority"}}"
                                                                                     placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
 
-      <select class="change-operator" name="data.changes.${{a}}.operator">
+      <select class="change-operator" name="data.changes.{{a}}.operator">
         {{#select (lookup this "operator") }}
         <option value="+">+</option>
         {{!-- <option value="=">=</option> --}}
@@ -62,9 +62,13 @@
       </select>
       <select class="change-sub-target" name="data.changes.{{a}}.subTarget">
         {{#select (lookup this "subTarget") }}
+        {{#if (lookup this "target") }}
         {{#each subTargets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
+        {{else}}
+        <option value=""></option>
+        {{/if}}
         {{/select}}
       </select>
       <select class="change-modifier" name="data.changes.{{a}}.modifier">

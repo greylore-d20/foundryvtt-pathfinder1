@@ -548,8 +548,8 @@ export class ActorSheetPF extends ActorSheet {
     /*  Spells
     /* -------------------------------------------- */
 
-    html.find(".item-list .spell-uses input[type='text'][data-type='amount']").off("change").change(this._setSpellUses.bind(this));
-    html.find(".item-list .spell-uses input[type='text'][data-type='max']").off("change").change(this._setMaxSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='number'][data-type='amount']").off("change").change(this._setSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[type='number'][data-type='max']").off("change").change(this._setMaxSpellUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 

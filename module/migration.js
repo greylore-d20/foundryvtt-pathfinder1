@@ -1,4 +1,5 @@
 import { ItemPF } from "./item/entity.js";
+import { ExperienceConfig } from "./config/experience.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -7,6 +8,8 @@ import { ItemPF } from "./item/entity.js";
 export const migrateWorld = async function() {
   if (!game.user.isGM) return ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
   ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
+
+  await _migrateWorldSettings();
 
   // Migrate World Actors
   for ( let a of game.actors.entities ) {
@@ -85,6 +88,21 @@ export const migrateCompendium = async function(pack) {
     }
   }
   console.log(`Migrated all ${entity} entities from Compendium ${pack.collection}`);
+};
+
+/**
+ * Migrates world settings.
+ */
+const _migrateWorldSettings = async function() {
+  const oldXPTrack = game.settings.get("pf1", "experienceRate");
+  if (oldXPTrack !== "" && oldXPTrack != null) {
+    // Set new config style
+    const config = game.settings.get("pf1", "experienceConfig") || ExperienceConfig.defaultSettings;
+    config.track = oldXPTrack;
+    await game.settings.set("pf1", "experienceConfig", config);
+    // Remove old config style
+    await game.settings.set("pf1", "experienceRate", "");
+  }
 };
 
 /* -------------------------------------------- */

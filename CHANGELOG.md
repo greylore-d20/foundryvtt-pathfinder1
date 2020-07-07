@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.63
+
+### Bug Fixes
+
+- Actors' caster levels were being temporarily increased under certain circumstances
+
+### Changelog
+
+- Sizes for measure templates on items are now formulas, rather than static numbers
+
 ## 0.627
 
 ### Changelog

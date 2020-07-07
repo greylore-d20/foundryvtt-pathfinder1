@@ -1,5 +1,5 @@
 import { HealthConfig } from "./config/health.js";
-import { isMinimumCoreVersion } from "./lib.js";
+import { ExperienceConfig } from "./config/experience.js";
 
 export const registerSystemSettings = function() {
   /**
@@ -14,7 +14,7 @@ export const registerSystemSettings = function() {
   });
 
   // Health configuration
-  game.settings.registerMenu(isMinimumCoreVersion("0.5.6") ? "pf1" : "system",
+  game.settings.registerMenu("pf1",
     "healthConfig", {
       name: "SETTINGS.pf1HealthConfigName",
       label: "SETTINGS.pf1HealthConfigLabel",
@@ -24,11 +24,33 @@ export const registerSystemSettings = function() {
       restricted: true
     }
   );
-
   game.settings.register("pf1", "healthConfig", {
     name: "SETTINGS.pf1HealthConfigName",
     scope: "world",
     default: HealthConfig.defaultSettings,
+    type: Object,
+    config: false,
+    onChange: () => {
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+    }
+  });
+
+  // Experience configuration
+  game.settings.registerMenu("pf1",
+    "experienceConfig", {
+      name: "PF1.ExperienceConfigName",
+      label: "PF1.ExperienceConfigLabel",
+      hint: "PF1.ExperienceConfigHint",
+      icon: "fas fa-book",
+      type: ExperienceConfig,
+      restricted: true,
+    }
+  );
+  game.settings.register("pf1", "experienceConfig", {
+    name: "PF1.ExperienceConfigName",
+    scope: "world",
+    default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
     onChange: () => {
@@ -56,19 +78,15 @@ export const registerSystemSettings = function() {
 
   /**
    * Experience rate
+   * @deprecated
    */
   game.settings.register("pf1", "experienceRate", {
     name: "SETTINGS.pf1ExpRateN",
     hint: "SETTINGS.pf1ExpRateL",
     scope: "world",
-    config: true,
+    config: false,
     default: "medium",
     type: String,
-    choices: {
-      "slow": "Slow",
-      "medium": "Medium",
-      "fast": "Fast",
-    },
     onChange: () => {
       [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
         return o.data.type === "character";

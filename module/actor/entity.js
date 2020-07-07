@@ -1823,9 +1823,24 @@ export class ActorPF extends Actor {
    * @return {Number}       The XP required
    */
   getLevelExp(level) {
-    const expRate = game.settings.get("pf1", "experienceRate");
-    const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS[expRate];
-    return levels[Math.min(level, levels.length - 1)];
+    const expConfig = game.settings.get("pf1", "experienceConfig");
+    const expTrack = expConfig.track;
+    // Preset experience tracks
+    if (["fast", "medium", "slow"].includes(expTrack)) {
+      const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS[expTrack];
+      return levels[Math.min(level, levels.length - 1)];
+    }
+    // Custom formula experience track
+    let totalXP = 0;
+    if (expConfig.custom.formula.length > 0) {
+      for (let a = 0; a < level; a++) {
+        const rollData = this.getRollData();
+        rollData.level = a+1;
+        const roll = new Roll(expConfig.custom.formula, rollData).roll();
+        totalXP += roll.total;
+      }
+    }
+    return Math.max(1, totalXP);
   }
 
   /* -------------------------------------------- */

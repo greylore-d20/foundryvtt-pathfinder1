@@ -81,6 +81,6 @@ export class HealthConfig extends FormApplication {
       hd.maximized = Math.max(0, Math.min(Math.floor(hd.maximized), 100))
     }
     await game.settings.set("pf1", "healthConfig", settings)
-    ui.notifications.info(`Updated Pathfinder health configuration.`)
+    ui.notifications.info("Updated Pathfinder health configuration.")
   }
 }

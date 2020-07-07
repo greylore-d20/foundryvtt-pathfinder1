@@ -152,6 +152,7 @@ export const migrateItemData = function(item) {
   _migrateSavingThrowTypes(item, updateData);
   _migrateCR(item, updateData);
   _migrateItemChanges(item, updateData);
+  _migrateTemplateSize(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -584,6 +585,13 @@ const _migrateItemChanges = function(ent, updateData) {
       }
     }
     updateData["data.contextNotes"] = newNotes;
+  }
+};
+
+const _migrateTemplateSize = function(ent, updateData) {
+  const measureSize = getProperty(ent.data, "data.measureTemplate.size");
+  if (typeof measureSize === "number") {
+    updateData["data.measureTemplate.size"] = measureSize.toString();
   }
 };
 

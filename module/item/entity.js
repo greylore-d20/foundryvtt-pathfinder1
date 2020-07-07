@@ -45,7 +45,7 @@ export class ItemPF extends Item {
   get hasTemplate() {
     const v = getProperty(this.data, "data.measureTemplate.type");
     const s = getProperty(this.data, "data.measureTemplate.size");
-    return (typeof v === "string" && v !== "") && (typeof s === "string" && s.length > 0);
+    return (typeof v === "string" && v !== "") && ((typeof s === "string" && s.length > 0) || (typeof s === "number" && s > 0));
   }
 
   get hasAction() {
@@ -976,7 +976,10 @@ export class ItemPF extends Item {
       // Prompt measure template
       if (useMeasureTemplate) {
         // Gather data
-        const dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), this.getRollData()).roll().total;
+        let dist = getProperty(this.data, "data.measureTemplate.size");
+        if (typeof dist === "string") {
+          dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), this.getRollData()).roll().total;
+        }
         const templateOptions = {
           type: getProperty(this.data, "data.measureTemplate.type"),
           distance: dist,

@@ -9,6 +9,7 @@
 ### Changelog
 
 - Sizes for measure templates on items are now formulas, rather than static numbers
+- Added an option for a custom experience track
 
 ## 0.627
 

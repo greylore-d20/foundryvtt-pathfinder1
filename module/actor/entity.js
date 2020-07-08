@@ -1639,8 +1639,14 @@ export class ActorPF extends Actor {
 
     // Set spell resistance
     if (typeof data.attributes.sr.formula === "string" && data.attributes.sr.formula.length) {
-      let roll = new Roll(data.attributes.sr.formula, data).roll();
-      data.attributes.sr.total = roll.total;
+      try {
+        let roll = new Roll(data.attributes.sr.formula, data).roll();
+        data.attributes.sr.total = roll.total;
+      }
+      catch (e) {
+        console.error(`Could not calculate SR for actor ${this.name} with the following formula: '${data.attributes.sr.formula}'`);
+        data.attributes.sr.total = 0;
+      }
     }
     else {
       data.attributes.sr.total = 0;

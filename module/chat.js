@@ -1,4 +1,5 @@
 import { ItemPF } from "./item/entity.js";
+import { ChatMessagePF } from "./sidebar/chat-message.js";
 const Color = require("color");
 
 /* -------------------------------------------- */
@@ -27,14 +28,14 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
-  if (game.dice3d != null) {
+  if (game.dice3d != null && game.dice3d.isEnabled()) {
     for (let roll of rolls) {
       await game.dice3d.showForRoll(roll, game.user, false, chatData.whisper, chatData.blind);
       chatData.sound = null;
     }
   }
 
-  ChatMessage.create(chatData);
+  ChatMessagePF.create(chatData);
 };
 
 export const hideRollInfo = function(app, html, data) {

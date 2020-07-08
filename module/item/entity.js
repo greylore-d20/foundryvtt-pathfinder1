@@ -1021,7 +1021,7 @@ export class ItemPF extends Item {
       if (this.data.type === "spell" && !hasAction) await this.roll({ rollMode: rollMode }, {addDC: hasAction ? false : true});
 
       // Dice So Nice integration
-      if (game.dice3d != null) {
+      if (game.dice3d != null && game.dice3d.isEnabled()) {
         let dice3dData = attacks.reduce((obj, a) => {
           if (a.attack.roll != null)      obj.results.push(a.attack.roll.parts[0].total);
           if (a.critConfirm.roll != null) obj.results.push(a.critConfirm.roll.parts[0].total);

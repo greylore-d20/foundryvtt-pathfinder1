@@ -63,6 +63,12 @@ export class CompendiumBrowser extends Application {
         return game.i18n.localize("PF1.Spells");
       case "items":
         return game.i18n.localize("PF1.Items");
+      case "feats":
+        return game.i18n.localize("PF1.Features");
+      case "bestiary":
+        return game.i18n.localize("PF1.Creatures");
+      case "classes":
+        return game.i18n.localize("PF1.ItemTypeClass");
     }
     return this.type;
   }
@@ -124,10 +130,23 @@ export class CompendiumBrowser extends Application {
     }
 
     // Gather filter data
-    if (this.type === "spells") this._fetchSpellFilters();
-    else if (this.type === "items") this._fetchItemFilters();
-    else if (this.type === "bestiary") this._fetchBestiaryFilters();
-    else if (this.type === "feats") this._fetchFeatFilters();
+    switch (this.type) {
+      case "spells":
+        this._fetchSpellFilters();
+        break;
+      case "items":
+        this._fetchItemFilters();
+        break;
+      case "bestiary":
+        this._fetchBestiaryFilters();
+        break;
+      case "feats":
+        this._fetchFeatFilters();
+        break;
+      case "classes":
+        this._fetchClassFilters();
+        break;
+    }
 
     this.activeFilters = this.filters.reduce((cur, f) => {
       cur[f.path] = [];
@@ -139,6 +158,7 @@ export class CompendiumBrowser extends Application {
     if (this.type === "spells" && item.type !== "spell") return false;
     if (this.type === "items" && !["weapon", "equipment", "loot", "consumable"].includes(item.type)) return false;
     if (this.type === "feats" && item.type !== "feat") return false;
+    if (this.type === "classes" && item.type !== "class") return false;
     return true;
   }
 
@@ -303,6 +323,27 @@ export class CompendiumBrowser extends Application {
           if (!this.extraFilters["subTypes"].includes(o[0])) this.extraFilters["subTypes"].push(o[0]);
           return o[0];
         });
+      }
+    }
+
+    // Class-specific filters
+    if (this.type === "classes") {
+      if (!this.extraFilters) {
+        this.extraFilters = {
+          "data.hd": [],
+          "data.skillsPerLevel": [],
+        };
+      }
+
+      // Add HD
+      {
+        const hd = item.data.data.hd;
+        if (hd && !this.extraFilters["data.hd"].includes(hd)) this.extraFilters["data.hd"].push(hd);
+      }
+      // Add skills per level
+      {
+        const s = item.data.data.skillsPerLevel;
+        if (s && !this.extraFilters["data.skillsPerLevel"].includes(s)) this.extraFilters["data.skillsPerLevel"].push(s);
       }
     }
 
@@ -581,6 +622,67 @@ export class CompendiumBrowser extends Application {
           if (a.name < b.name) return -1;
           return 0;
         }),
+      },
+    ];
+  }
+
+  _fetchClassFilters() {
+    this.filters = [
+      {
+        path: "data.classType",
+        label: game.i18n.localize("PF1.ClassType"),
+        items: Object.entries(CONFIG.PF1.classTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.hd",
+        label: game.i18n.localize("PF1.HitDie"),
+        items: this.extraFilters["data.hd"].reduce((cur, o) => {
+          cur.push({ key: o.toString(), name: o.toString() });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.bab",
+        label: game.i18n.localize("PF1.BAB"),
+        items: Object.entries(CONFIG.PF1.classBAB).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.skillsPerLevel",
+        label: game.i18n.localize("PF1.SkillsPerLevel"),
+        items: this.extraFilters["data.skillsPerLevel"].reduce((cur, o) => {
+          cur.push({ key: o.toString(), name: o.toString() });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.savingThrows.fort.value",
+        label: game.i18n.localize("PF1.SavingThrowFort"),
+        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.savingThrows.ref.value",
+        label: game.i18n.localize("PF1.SavingThrowRef"),
+        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "data.savingThrows.will.value",
+        label: game.i18n.localize("PF1.SavingThrowWill"),
+        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
       },
     ];
   }

@@ -2019,8 +2019,7 @@
   border: 1px solid #999;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.05);
-  flex: 0 0 24px;
-  white-space: nowrap;
+  flex: 0 1 auto;
 }
 #chat-log .message .property-group input[type="text"] {
   height: 24px;
@@ -2258,6 +2257,13 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
   visibility: visible;
   pointer-events: none;
   opacity: 1;
+}
+.sidebar-tab[data-tab="compendium"] footer {
+  flex-direction: column;
+}
+.sidebar-tab[data-tab="compendium"] footer span {
+  margin: 0 3px;
+  padding: 2px 7px;
 }
 #token-hud .col.actions {
   height: calc(100% + 150px);

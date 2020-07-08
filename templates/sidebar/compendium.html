@@ -29,11 +29,19 @@
     <button class="create-compendium" type="submit"><i class="fas fa-atlas"></i> {{localize "COMPENDIUM.Create"}}</button>
     {{/if}}
     
-    <div class="compendium-footer">
-      <button class="compendium spells">{{localize "PF1.BrowseSpells"}}</button>
-      <button class="compendium items">{{localize "PF1.BrowseItems"}}</button>
-      <button class="compendium bestiary">{{localize "PF1.BrowseBestiary"}}</button>
-      <button class="compendium feats">{{localize "PF1.BrowseFeats"}}</button>
+    <div class="compendium-footer flexcol">
+      <div class="flexrow">
+        <button class="compendium spells">{{localize "PF1.BrowseSpells"}}</button>
+        <button class="compendium items">{{localize "PF1.BrowseItems"}}</button>
+      </div>
+      <div class="flexrow">
+        <button class="compendium bestiary">{{localize "PF1.BrowseBestiary"}}</button>
+        <button class="compendium feats">{{localize "PF1.BrowseFeats"}}</button>
+      </div>
+      <div class="flexrow">
+        <button class="compendium classes">{{localize "PF1.ItemTypeClass"}}</button>
+        <span></span>
+      </div>
     </div>
   </footer>
 </section>

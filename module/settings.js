@@ -85,7 +85,7 @@ export const registerSystemSettings = function() {
     hint: "SETTINGS.pf1ExpRateL",
     scope: "world",
     config: false,
-    default: "medium",
+    default: "",
     type: String,
     onChange: () => {
       [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
@@ -119,18 +119,6 @@ export const registerSystemSettings = function() {
         if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
       });
     },
-  });
-
-  /**
-   * Option to disable XP bar for session-based or story-based advancement.
-   */
-  game.settings.register("pf1", "disableExperienceTracking", {
-    name: "SETTINGS.pf1NoExpN",
-    hint: "SETTINGS.pf1NoExpL",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
   });
 
   /**

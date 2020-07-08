@@ -36,6 +36,7 @@ export class ExperienceConfig extends FormApplication {
   static get defaultSettings() {
     return {
       track: "medium",
+      disableExperienceTracking: false,
       custom: {
         formula: "",
       },

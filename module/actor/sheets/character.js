@@ -44,9 +44,10 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
    */
   getData() {
     const data = super.getData();
+    const xpSettings = game.settings.get("pf1", "experienceConfig");
 
     // Experience Tracking
-    data["disableExperience"] = game.settings.get("pf1", "disableExperienceTracking");
+    data["disableExperience"] = xpSettings.disableExperienceTracking;
 
     data.hasClasses = this.actor.items.filter(o => o.type === "class").length > 0;
 

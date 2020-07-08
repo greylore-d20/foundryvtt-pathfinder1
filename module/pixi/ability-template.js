@@ -159,10 +159,14 @@ export class AbilityTemplate extends MeasuredTemplate {
       canvas.stage.on("mousedown", handlers.lc);
       canvas.app.view.oncontextmenu = handlers.rc;
       canvas.app.view.onwheel = handlers.mw;
+      console.log(this);
+      this.hitArea = new PIXI.Polygon([]);
     });
   }
 
   refresh() {
+    if (!this.template) return;
+
     super.refresh();
 
     if (this.active) {

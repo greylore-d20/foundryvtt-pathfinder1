@@ -536,6 +536,9 @@ export class ItemSheetPF extends ItemSheet {
     html.find('div[data-group="links"]').on("drop", this._onLinksDrop.bind(this));
 
     html.find(".link-control").click(this._onLinkControl.bind(this));
+
+    // Handle alternative file picker
+    html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -788,6 +791,29 @@ export class ItemSheetPF extends ItemSheet {
       this.item._cleanLink(link, group.dataset.tab);
       game.socket.emit("system.pf1", { eventType: "cleanItemLink", actorUUID: this.item.actor.uuid, itemUUID: this.item.uuid, link: link, linkType: group.dataset.tab });
     }
+  }
+
+  async _onFilePickerAlt(event) {
+    const button = event.currentTarget;
+    const attr = button.dataset.for;
+    const current = getProperty(this.item.data, attr);
+    const form = button.form;
+    const targetField = form[attr];
+    if (!targetField) return;
+
+    const fp = new FilePicker({
+      type: button.dataset.type,
+      current: current,
+      callback: path => {
+        targetField.value = path;
+        if (this.options.submitOnChange) {
+          this._onSubmit(event);
+        }
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    fp.browse(current);
   }
 
   async _createAttack(event) {

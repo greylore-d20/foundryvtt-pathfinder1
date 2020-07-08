@@ -21,7 +21,7 @@
     h3 {
       flex: 1;
       margin: 0;
-      line-height: 36px;
+      line-height: 28px;
       .nodesto();
       color: @colorOlive;
     }
@@ -45,19 +45,19 @@
   }
 
   .card-buttons {
-    margin: 5px 0;
+    margin: 2px 0;
 
     span {
       display: block;
-      line-height: 28px;
+      line-height: 20px;
       text-align: center;
       border: 1px solid @borderLight;
     }
 
     button {
       font-size: 12px;
-      height: 24px;
-      line-height: 20px;
+      height: 20px;
+      line-height: 16px;
       margin: 2px 0;
     }
   }
@@ -99,18 +99,25 @@
 #chat-log .message {
   .chat-attack {
     padding: 4px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     border: 1px solid #999;
     border-radius: 3px;
 
     .dice-roll:nth-child(n+2) .dice-flavor {
-      margin-top: 12px;
+      margin-top: 4px;
     }
 
     .dice-roll:first-child > .dice-flavor {
       color: #4C6D9F;
-      font-size: 16px;
+      font-size: 12px;
       text-align: center;
+    }
+
+    .dice-roll {
+      .dice-total {
+        font-size: 16px;
+        line-height: 20px;
+      }
     }
   }
 

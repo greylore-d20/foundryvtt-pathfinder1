@@ -1166,10 +1166,10 @@ export class ActorPF extends Actor {
         normal: srcData1.data.attributes.cmd.total,
         ff: srcData1.data.attributes.cmd.flatFootedTotal,
       };
-      linkData(srcData1, updateData, "data.attributes.ac.normal.total", ac.normal + Math.min(maxDex, dex));
-      linkData(srcData1, updateData, "data.attributes.ac.touch.total", ac.touch + Math.min(maxDex, dex));
+      linkData(srcData1, updateData, "data.attributes.ac.normal.total", ac.normal + (maxDex != null ? Math.min(maxDex, dex) : dex));
+      linkData(srcData1, updateData, "data.attributes.ac.touch.total", ac.touch + (maxDex != null ? Math.min(maxDex, dex) : dex));
       linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", ac.ff + Math.min(0, dex));
-      linkData(srcData1, updateData, "data.attributes.cmd.total", cmd.normal + Math.min(maxDex, dex));
+      linkData(srcData1, updateData, "data.attributes.cmd.total", cmd.normal + (maxDex != null ? Math.min(maxDex, dex) : dex));
       linkData(srcData1, updateData, "data.attributes.cmd.flatFootedTotal", cmd.ff + Math.min(0, dex));
     }
 
@@ -1712,12 +1712,12 @@ export class ActorPF extends Actor {
       const dex = actorData.data.abilities.dex.mod;
       const maxDex = actorData.data.attributes.maxDexBonus;
       const ac = {
-        normal: Math.min(maxDex, dex),
-        touch: Math.min(maxDex, dex),
+        normal: maxDex != null ? Math.min(maxDex, dex) : dex,
+        touch: maxDex != null ? Math.min(maxDex, dex) : dex,
         ff: Math.min(0, dex),
       };
       const cmd = {
-        normal: Math.min(maxDex, dex),
+        normal: maxDex != null ? Math.min(maxDex, dex) : dex,
         ff: Math.min(0, dex),
       };
       if (ac.normal  !== 0) sourceDetails["data.attributes.ac.normal.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.normal });

@@ -133,7 +133,7 @@ Hooks.once("ready", async function() {
     await migrations.migrateWorld();
   }
 
-  // game.actors.entities.forEach(obj => { obj._updateChanges({ sourceOnly: true }); });
+  game.actors.entities.forEach(obj => { obj._updateChanges({ sourceOnly: true }); });
   
   Hooks.on('renderTokenHUD', (app, html, data) => { TokenQuickActions.addTop3Attacks(app, html, data) });
 });

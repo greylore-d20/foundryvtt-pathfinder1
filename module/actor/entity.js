@@ -645,51 +645,6 @@ export class ActorPF extends Actor {
         source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
       });
     }
-
-    // Add Dexterity Modifier to AC (and CMD)
-    {
-      let formula = "@abilities.dex.mod";
-      const maxDexBonus = getProperty(data, "data.attributes.maxDexBonus");
-      if (maxDexBonus != null) {
-        formula = "min(@abilities.dex.mod, @attributes.maxDexBonus)";
-      }
-      if (flags.loseDexToAC) {
-        formula = "min(@abilities.dex.mod, 0)";
-      }
-
-      // Negative dex
-      changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod < 0 ? @abilities.dex.mod : 0`, target: "ac", subTarget: "ac", modifier: "untyped" }, {inplace: false}),
-        source: {
-          name: CONFIG.PF1.abilities["dex"],
-        },
-      });
-      changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod < 0 ? @abilities.dex.mod : 0`, target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
-        source: {
-          name: CONFIG.PF1.abilities["dex"],
-        },
-      });
-      // Positive dex
-      changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.dex.mod > 0 ? ${formula} : 0`, target: "ac", subTarget: "ac", modifier: "dodge" }, {inplace: false}),
-        source: {
-          name: CONFIG.PF1.abilities["dex"],
-        },
-      });
-
-      // let dexMod = getProperty(data, "data.abilities.dex.mod");
-      // const maxDexBonus = getProperty(data, "data.attributes.maxDexBonus");
-      // if (maxDexBonus != null) dexMod = Math.min(dexMod, maxDexBonus);
-      // if (flags.loseDexToAC) dexMod = Math.min(dexMod, 0);
-      
-      // changes.push({
-        // raw: mergeObject(ItemPF.defaultChange, { formula: dexMod.toString(), target: "ac", subTarget: "ac", modifier: dexMod > 0 ? "dodge" : "untyped" }, {inplace: false}),
-        // source: {
-          // name: CONFIG.PF1.abilities["dex"],
-        // },
-      // });
-    }
     // Natural armor
     {
       changes.push({
@@ -1060,23 +1015,6 @@ export class ActorPF extends Actor {
     this._resetData(updateData, srcData1, flags, sourceInfo);
     this._addDefaultChanges(srcData1, allChanges, flags, sourceInfo);
 
-    // Update encumbrance
-    this._computeEncumbrance(updateData, srcData1);
-    switch (srcData1.data.attributes.encumbrance.level) {
-      case 0:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
-        break;
-      case 1:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
-        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
-        break;
-      case 2:
-        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
-        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
-        break;
-    }
-    linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
-
     // Check flags
     for (let obj of changeObjects) {
       if (!obj.data.changeFlags) continue;
@@ -1167,7 +1105,6 @@ export class ActorPF extends Actor {
     const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
     updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
     this._addDynamicData({ updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
-    // let newDataList = {};
     allChanges.forEach((change, a) => {
       const formula = change.raw.formula || "";
       if (formula === "") return;
@@ -1197,6 +1134,44 @@ export class ActorPF extends Actor {
         temp = [];
       }
     });
+
+    // Update encumbrance
+    this._computeEncumbrance(updateData, srcData1);
+    switch (srcData1.data.attributes.encumbrance.level) {
+      case 0:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
+        break;
+      case 1:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
+        break;
+      case 2:
+        linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
+        linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
+        break;
+    }
+    linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
+
+    // Update skills and AC and CMD from Dexterity
+    {
+      this._updateSkills(updateData, srcData1);
+      const dex = srcData1.data.abilities.dex.mod;
+      const maxDex = srcData1.data.attributes.maxDexBonus;
+      const ac = {
+        normal: srcData1.data.attributes.ac.normal.total,
+        touch: srcData1.data.attributes.ac.touch.total,
+        ff: srcData1.data.attributes.ac.flatFooted.total,
+      };
+      const cmd = {
+        normal: srcData1.data.attributes.cmd.total,
+        ff: srcData1.data.attributes.cmd.flatFootedTotal,
+      };
+      linkData(srcData1, updateData, "data.attributes.ac.normal.total", ac.normal + Math.min(maxDex, dex));
+      linkData(srcData1, updateData, "data.attributes.ac.touch.total", ac.touch + Math.min(maxDex, dex));
+      linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", ac.ff + Math.min(0, dex));
+      linkData(srcData1, updateData, "data.attributes.cmd.total", cmd.normal + Math.min(maxDex, dex));
+      linkData(srcData1, updateData, "data.attributes.cmd.flatFootedTotal", cmd.ff + Math.min(0, dex));
+    }
 
     // Reduce final speed under certain circumstances
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
@@ -1532,7 +1507,6 @@ export class ActorPF extends Actor {
     for (let [changeTarget, value] of Object.entries(changes)) {
       linkData(data, updateData, changeTarget, (updateData[changeTarget] || 0) + value);
     }
-    this._updateSkills(updateData, data);
   }
 
   _updateSkills(updateData, data) {
@@ -1731,6 +1705,26 @@ export class ActorPF extends Actor {
       if (abl.drain != null && abl.drain !== 0) {
         sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.AbilityDrain"), value: -Math.abs(abl.drain) });
       }
+    }
+
+    // Add AC and CMD details
+    {
+      const dex = actorData.data.abilities.dex.mod;
+      const maxDex = actorData.data.attributes.maxDexBonus;
+      const ac = {
+        normal: Math.min(maxDex, dex),
+        touch: Math.min(maxDex, dex),
+        ff: Math.min(0, dex),
+      };
+      const cmd = {
+        normal: Math.min(maxDex, dex),
+        ff: Math.min(0, dex),
+      };
+      if (ac.normal  !== 0) sourceDetails["data.attributes.ac.normal.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.normal });
+      if (ac.touch   !== 0) sourceDetails["data.attributes.ac.touch.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.touch });
+      if (ac.ff      !== 0) sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.ff });
+      if (cmd.normal !== 0) sourceDetails["data.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: cmd.normal });
+      if (cmd.ff     !== 0) sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: cmd.ff });
     }
 
     // Add extra data

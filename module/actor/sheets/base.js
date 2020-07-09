@@ -691,7 +691,8 @@ export class ActorSheetPF extends ActorSheet {
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    let formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll();
+    let formulaRoll = 0;
+    if (spellbook.concentrationFormula.length) formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
     return DicePF.d20Roll({
       event: event,
       parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
@@ -699,7 +700,7 @@ export class ActorSheetPF extends ActorSheet {
         cl: spellbook.cl.total,
         mod: this.actor.data.data.abilities[spellbook.ability].mod,
         concentrationBonus: spellbook.concentration,
-        formulaBonus: formulaRoll.total
+        formulaBonus: formulaRoll,
       },
       title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({actor: this}),

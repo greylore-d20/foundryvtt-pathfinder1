@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.64
+
+### Bug Fixes
+
+- Added a safeguard for SR calculation
+- Word wrap attack and effect notes, due to the efforts of Marco (many thanks!)
+- Selecting a measure template texture for an attack item didn't submit the form, possibly resulting in not updating the value
+- Measure templates from attacks with textures couldn't be placed due to hitbox issues
+- Strength added (or subtracted) from item changes didn't alter carrying capacity
+
+### Changelog
+
+- Made attack chat cards a bit more compact
+- Moved setting for disabling xp tracking to the new experience config panel
+- Added more class abilities, due to the efforts of holyplankton (many thanks!)
+- Added a class compendium browser
+
 ## 0.63
 
 ### Bug Fixes

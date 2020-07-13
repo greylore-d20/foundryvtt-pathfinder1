@@ -81,6 +81,15 @@ export class ItemPF extends Item {
     return getProperty(this.data, "data.uses.value") || 0;
   }
 
+  get chargeCost() {
+    if (this.type === "spell") return 1;
+    
+    const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
+    if (!(typeof formula === "string" && formula.length > 0)) return 1;
+    const cost = new Roll(formula, this.getRollData()).roll().total;
+    return cost;
+  }
+
   get spellbook() {
     if (this.type !== "spell") return null;
     if (this.actor == null)    return null;
@@ -807,7 +816,7 @@ export class ItemPF extends Item {
         if (this.isSingleUse) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
         return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
       }
-      this.addCharges(-1);
+      this.addCharges(-this.chargeCost);
     }
     this.roll();
   }
@@ -1005,7 +1014,7 @@ export class ItemPF extends Item {
 
       // Deduct charge
       if (this.autoDeductCharges) {
-        this.addCharges(-1);
+        this.addCharges(-this.chargeCost);
       }
       
       // Set chat data

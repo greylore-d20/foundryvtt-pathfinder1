@@ -97,9 +97,12 @@
 {{/if}}
 
 <div class="form-group stacked">
-  <label class="checkbox">
-    <input type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/> {{localize "PF1.AutoDeductCharges"}}
-  </label>
+  <label>{{localize "PF1.AutoDeductCharges"}}</label>
+  <div class="flexrow">
+    <input type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
+    {{#if data.uses.autoDeductCharges}}<input type="text" name="data.uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
+      value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
+  </div>
 </div>
 {{/unless}}
 {{/if}}

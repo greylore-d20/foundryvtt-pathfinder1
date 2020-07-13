@@ -481,6 +481,7 @@ PF1.consumableTypes = {
   "drug": "PF1.ConsumableTypeDrug",
   "scroll": "PF1.ConsumableTypeScroll",
   "wand": "PF1.ConsumableTypeWand",
+  "staff": "PF1.ConsumableTypeStaff",
   "misc": "PF1.Misc",
 };
 
@@ -489,6 +490,7 @@ PF1.attackTypes = {
   "natural": "PF1.AttackTypeNatural",
   "ability": "PF1.AttackTypeAbility",
   "racialAbility": "PF1.AttackTypeRacial",
+  "item": "PF1.Item",
   "misc": "PF1.Misc",
 };
 

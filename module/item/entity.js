@@ -443,6 +443,7 @@ export class ItemPF extends Item {
         case "charges":
           const uses = i.data.data.uses;
           for (let [k, v] of Object.entries(uses)) {
+            if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
             this.data.data.uses[k] = v;
           }
           break;
@@ -816,7 +817,9 @@ export class ItemPF extends Item {
         if (this.isSingleUse) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
         return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
       }
-      this.addCharges(-this.chargeCost);
+      if (this.autoDeductCharges) {
+        this.addCharges(-this.chargeCost);
+      }
     }
     this.roll();
   }

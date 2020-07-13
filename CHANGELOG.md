@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.65
+
+### Bug Fixes
+
+- Concentration checks didn't roll
+- Limit power attack damage multiplier to 1.5x
+
+### Changelog
+
+- Added more class abilities to its compendium, due to the efforts of holyplankton (many thanks!)
+- Added more creatures to the bestiary, due to the efforts of Dorgendubal, Primer and jimjambojangles (many thanks!)
+- You can now choose how many charges charged items cost to use
+- Consumables and attacks can now have items linked to them to share charges
+
 ## 0.64
 
 ### Bug Fixes

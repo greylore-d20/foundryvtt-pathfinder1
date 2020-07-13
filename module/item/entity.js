@@ -846,7 +846,7 @@ export class ItemPF extends Item {
         // Power Attack
         if (form.find('[name="power-attack"]').prop("checked")) {
           rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
-          damageExtraParts.push("floor(@powerAttackBonus * @ablMult) * @critMult");
+          damageExtraParts.push("floor(@powerAttackBonus * max(0.5, min(1.5, @ablMult))) * @critMult");
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
           attackExtraParts.push("@powerAttackPenalty");
         }

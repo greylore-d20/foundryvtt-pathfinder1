@@ -57,6 +57,7 @@ PF1.classTypes = {
   "base": "PF1.ClassTypeBase",
   "prestige": "PF1.ClassTypePrestige",
   "racial": "PF1.ClassTypeRacial",
+  "mythic": "PF1.ClassTypeMythic",
 };
 
 PF1.classBAB = {
@@ -88,6 +89,10 @@ PF1.classSavingThrowFormulas = {
   "racial": {
     "low": "floor(@level / 3)",
     "high": "2 + floor(@level / 2)",
+  },
+  "mythic": {
+    "low": "0",
+    "high": "0",
   },
 };
 

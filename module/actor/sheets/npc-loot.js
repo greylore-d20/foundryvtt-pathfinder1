@@ -23,10 +23,11 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return game.i18n.localize("PF1.ActorSheetPFNPCLoot");
   }
 
-  getData() {
+  async getData() {
     const data = super.getData();
 
     data.isLootSheet = true;
+    data.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");
 
     // Get total value
     const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
@@ -66,9 +67,10 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
   calculateSellItemValue() {
     const items = this.actor.items;
+    const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
     return Math.floor(items.reduce((cur, i) => {
       if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") return cur + (i.data.data.price * i.data.data.quantity);
-      return cur + (i.data.data.price * i.data.data.quantity) * 0.5;
+      return cur + (i.data.data.price * i.data.data.quantity) * sellMultiplier;
     }, 0) * 100) / 100;
   }
 

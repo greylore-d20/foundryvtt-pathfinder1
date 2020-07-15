@@ -9,6 +9,18 @@
         <h1 class="charname">
           <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
         </h1>
+      </div>
+
+      {{!-- Options --}}
+      <div class="flexcol">
+        <ul class="summary options">
+          {{!-- Sell Multiplier --}}
+          <li>
+            <input type="text" name="flags.pf1.sellMultiplier" value="{{sellMultiplier}}" placeholder="0.5" data-dtype="Number"
+              title="{{localize "PF1.HelpSellMultiplier"}}" />
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
   

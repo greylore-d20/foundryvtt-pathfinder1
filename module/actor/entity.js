@@ -508,7 +508,7 @@ export class ActorPF extends Actor {
 
   _addDefaultChanges(data, changes, flags, sourceInfo) {
     // Class hit points
-    const classes = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") !== "racial").sort((a, b) => {
+    const classes = data.items.filter(o => o.type === "class" && !["racial"].includes(getProperty(o.data, "classType"))).sort((a, b) => {
       return a.sort - b.sort;
     });
     const racialHD = data.items.filter(o => o.type === "class" && getProperty(o.data, "classType") === "racial").sort((a, b) => {
@@ -530,13 +530,15 @@ export class ActorPF extends Actor {
         raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untyped" }, {inplace: false}),
         source: {name: source.name, subtype: source.name.toString()}
       });
-    }
+    };
     const manual_health = (health_source) => {
       let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
       if (!continuous) health = round(health);
       push_health(health, health_source);
-    }
+    };
     const auto_health = (health_source, options, maximized=0) => {
+      if (health_source.data.hd === 0) return;
+      
       let die_health = 1 + (health_source.data.hd-1) * options.rate;
       if (!continuous) die_health = round(die_health);
 
@@ -546,7 +548,7 @@ export class ActorPF extends Actor {
       let   health = maxed_health + level_health + favor_health;
 
       push_health(health, health_source);
-    }
+    };
     const compute_health = (health_sources, options) => {
       // Compute and push health, tracking the remaining maximized levels.
       if (options.auto) {
@@ -556,7 +558,7 @@ export class ActorPF extends Actor {
           maximized = Math.max(0, maximized - hd.data.level);
         }
       } else health_sources.forEach(race => manual_health(race));
-    }
+    };
 
     compute_health(racialHD, race_options);
     compute_health(classes, cls_options);
@@ -1544,6 +1546,7 @@ export class ActorPF extends Actor {
 
     const actorData = this.data;
     const data = actorData.data;
+    const rollData = this.getRollData();
 
     // Prepare Character data
     if ( actorData.type === "character" ) this._prepareCharacterData(actorData);
@@ -1566,46 +1569,6 @@ export class ActorPF extends Actor {
         delete data.skills[skillId];
       }
     }
-
-    // Set class tags
-    data.classes = {};
-    actorData.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
-      let tag = createTag(cls.name);
-      let count = 1;
-      while (actorData.items.filter(obj => { return obj.type === "class" && obj.data.tag === tag && obj !== cls; }).length > 0) {
-        count++;
-        tag = createTag(cls.name) + count.toString();
-      }
-      cls.data.tag = tag;
-
-      let healthConfig = game.settings.get("pf1", "healthConfig");
-      healthConfig  = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
-      const classType = cls.data.classType || "base";
-      data.classes[tag] = {
-        level: cls.data.level,
-        name: cls.name,
-        hd: cls.data.hd,
-        bab: cls.data.bab,
-        hp: healthConfig.auto,
-        savingThrows: {
-          fort: 0,
-          ref: 0,
-          will: 0,
-        },
-        fc: {
-          hp: classType === "base" ? cls.data.fc.hp.value : 0,
-          skill: classType === "base" ? cls.data.fc.skill.value : 0,
-          alt: classType === "base" ? cls.data.fc.alt.value : 0,
-        },
-      };
-
-      for (let k of Object.keys(data.classes[tag].savingThrows)) {
-        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
-        if (formula == null) formula =  "0";
-        data.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.level}).roll().total;
-      }
-    });
-
 
     // Prepare modifier containers
     data.attributes.mods = data.attributes.mods || {};
@@ -1638,8 +1601,8 @@ export class ActorPF extends Actor {
       if (spellbook.class === "_hd") {
         spellbook.cl.total += data.attributes.hd.total;
       }
-      else if (spellbook.class !== "" && data.classes[spellbook.class] != null) {
-        spellbook.cl.total += data.classes[spellbook.class].level;
+      else if (spellbook.class !== "" && rollData.classes[spellbook.class] != null) {
+        spellbook.cl.total += rollData.classes[spellbook.class].level;
       }
       // Add spell slots
       spellbook.spells = spellbook.spells || {};
@@ -1734,7 +1697,6 @@ export class ActorPF extends Actor {
           sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
           for (let src of grp) {
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
-            // if (this.name === "Testy") console.log(changeTarget, src, srcInfo)
             sourceDetails[changeTarget].push({
               name: srcInfo,
               value: src.value
@@ -1744,7 +1706,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // if (this.name === "Testy") console.log(sourceDetails)
     this.sourceDetails = sourceDetails;
   }
 
@@ -2024,7 +1985,6 @@ export class ActorPF extends Actor {
    */
   _updateExp(data) {
     const classes = this.items.filter(o => o.type === "class" && o.data.data.classType !== "mythic");
-    console.log(classes);
     const level = classes.reduce((cur, o) => {
       return cur + o.data.data.level;
     }, 0);
@@ -2963,6 +2923,45 @@ export class ActorPF extends Actor {
     const result = mergeObject(data, {
       size: Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4,
     }, { inplace: false });
+    
+    // Set class data
+    result.classes = {};
+    this.data.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
+      let tag = createTag(cls.name);
+      let count = 1;
+      while (this.data.items.filter(obj => { return obj.type === "class" && obj.data.tag === tag && obj !== cls; }).length > 0) {
+        count++;
+        tag = createTag(cls.name) + count.toString();
+      }
+      cls.data.tag = tag;
+
+      let healthConfig = game.settings.get("pf1", "healthConfig");
+      healthConfig = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+      const classType = cls.data.classType || "base";
+      result.classes[tag] = {
+        level: cls.data.level,
+        name: cls.name,
+        hd: cls.data.hd,
+        bab: cls.data.bab,
+        hp: healthConfig.auto,
+        savingThrows: {
+          fort: 0,
+          ref: 0,
+          will: 0,
+        },
+        fc: {
+          hp: classType === "base" ? cls.data.fc.hp.value : 0,
+          skill: classType === "base" ? cls.data.fc.skill.value : 0,
+          alt: classType === "base" ? cls.data.fc.alt.value : 0,
+        },
+      };
+
+      for (let k of Object.keys(result.classes[tag].savingThrows)) {
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
+        if (formula == null) formula = "0";
+        result.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.level}).roll().total;
+      }
+    });
 
     return result;
   }

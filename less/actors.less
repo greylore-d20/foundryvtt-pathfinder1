@@ -12,6 +12,10 @@
     border-radius: 2px;
   }
 
+  .tab-footer {
+    flex: 0;
+  }
+
   .sheet-header {
     .header-details {
       height: 100%;
@@ -741,8 +745,10 @@
     }
   }
 
-  .carry-label, .inventory-total-value {
-    flex: 0;
+  .tab-footer {
+    .tag {
+      flex: 0 1 auto;
+    }
   }
 
   .tab.features,
@@ -943,6 +949,11 @@
 
       &.item-type {
         flex: 0 0 96px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-value {
+        flex: 0 0 54px;
         padding: 0 1px 0 1px;
       }
 
@@ -1154,6 +1165,7 @@
 
   hr {
     margin: 4px 0 4px 0;
+    flex: 0;
   }
 
   .header-details {

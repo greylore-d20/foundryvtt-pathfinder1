@@ -611,6 +611,9 @@
   border: 1px solid #909000;
   border-radius: 2px;
 }
+.pf1.sheet.actor .tab-footer {
+  flex: 0;
+}
 .pf1.sheet.actor .sheet-header .header-details {
   height: 100%;
   border-left: 2px groove #eeede0;
@@ -1198,9 +1201,8 @@
 .pf1.sheet.actor .encumbrance.encumbered .arrow-down {
   border-top: 4px solid #000;
 }
-.pf1.sheet.actor .carry-label,
-.pf1.sheet.actor .inventory-total-value {
-  flex: 0;
+.pf1.sheet.actor .tab-footer .tag {
+  flex: 0 1 auto;
 }
 .pf1.sheet.actor .tab.features,
 .pf1.sheet.actor .tab.inventory,
@@ -1391,6 +1393,10 @@
   flex: 0 0 96px;
   padding: 0 1px 0 1px;
 }
+.pf1.sheet.actor .inventory-list .item-detail.item-value {
+  flex: 0 0 54px;
+  padding: 0 1px 0 1px;
+}
 .pf1.sheet.actor .inventory-list .item-detail.item-weight {
   flex: 0 0 54px;
   padding: 0 1px 0 1px;
@@ -1572,6 +1578,7 @@
 }
 .pf1.sheet.actor hr {
   margin: 4px 0 4px 0;
+  flex: 0;
 }
 .pf1.sheet.actor .header-details .form-group label {
   font-weight: normal;

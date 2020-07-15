@@ -27,7 +27,32 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const data = super.getData();
 
     data.isLootSheet = true;
-    data.inventoryTotalValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
+
+    // Get total value
+    const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
+    const sellValue = this.calculateSellItemValue() + this.actor.mergeCurrency();
+    data.totalValue = {
+      gp: Math.floor(gpValue),
+      sp: Math.floor(gpValue*10 - Math.floor(gpValue)*10),
+      cp: Math.floor(Math.floor(gpValue*100 - Math.floor(gpValue)*100) - (Math.floor(gpValue*10 - Math.floor(gpValue)*10)*10)),
+    };
+    data.sellValue = {
+      gp: Math.floor(sellValue),
+      sp: Math.floor(sellValue*10 - Math.floor(sellValue)*10),
+      cp: Math.floor(Math.floor(sellValue*100 - Math.floor(sellValue)*100) - (Math.floor(sellValue*10 - Math.floor(sellValue)*10)*10)),
+    };
+    
+    // Set labels
+    if (!data.labels) data.labels = {};
+    data.labels.totalValue = game.i18n.localize("PF1.ItemContainerTotalValue").format(data.totalValue.gp, data.totalValue.sp, data.totalValue.cp);
+    data.labels.sellValue = game.i18n.localize("PF1.ItemContainerSellValue").format(data.sellValue.gp, data.sellValue.sp, data.sellValue.cp);
+
+    // Alter inventory columns
+    for (let inv of data.inventory) {
+      inv.hasActions = false;
+      inv.canEquip = false;
+      inv.showValue = true;
+    }
 
     return data;
   }
@@ -36,6 +61,14 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const items = this.actor.items;
     return Math.floor(items.reduce((cur, i) => {
       return cur + (i.data.data.price * i.data.data.quantity);
+    }, 0) * 100) / 100;
+  }
+
+  calculateSellItemValue() {
+    const items = this.actor.items;
+    return Math.floor(items.reduce((cur, i) => {
+      if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") return cur + (i.data.data.price * i.data.data.quantity);
+      return cur + (i.data.data.price * i.data.data.quantity) * 0.5;
     }, 0) * 100) / 100;
   }
 

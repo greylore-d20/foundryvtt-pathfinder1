@@ -2023,7 +2023,8 @@ export class ActorPF extends Actor {
    * @returns {Boolean} Whether to force an update or not.
    */
   _updateExp(data) {
-    const classes = this.items.filter(o => o.type === "class");
+    const classes = this.items.filter(o => o.type === "class" && o.data.data.classType !== "mythic");
+    console.log(classes);
     const level = classes.reduce((cur, o) => {
       return cur + o.data.data.level;
     }, 0);

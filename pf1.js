@@ -289,7 +289,7 @@ function rollDefenses({actorName=null, actorId=null}={}) {
  */
 Handlebars.registerHelper('roll-editor', function(options) {
   // Find item and/or actor
-  const _id = (getProperty(options, "data.root.entity") || {})._id;
+  const _id = (getProperty(options, "data.root.entity") || getProperty(options, "data.root.actor") || {})._id;
   let actor = null, item = null;
   const actors = [...Array.from(game.actors.entities), ...Array.from(game.actors.tokens)];
   const items = [...Array.from(game.items.entities)];

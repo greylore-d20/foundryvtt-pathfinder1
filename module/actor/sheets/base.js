@@ -196,7 +196,7 @@ export class ActorSheetPF extends ActorSheet {
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
       let roll = new Roll(
         this.actor.data.data.details.bonusSkillRankFormula,
-        duplicate(this.actor.data.data)
+        this.actor.getRollData(),
       ).roll();
       skillRanks.allowed += roll.total;
     }
@@ -673,7 +673,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
     const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookKey];
-    const rollData = duplicate(this.actor.data.data);
+    const rollData = this.actor.getRollData();
     rollData.cl = spellbook.cl.total;
 
     // Add contextual concentration string

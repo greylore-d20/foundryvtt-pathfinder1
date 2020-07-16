@@ -1577,7 +1577,7 @@ export class ActorPF extends Actor {
     // Set spell resistance
     if (typeof data.attributes.sr.formula === "string" && data.attributes.sr.formula.length) {
       try {
-        let roll = new Roll(data.attributes.sr.formula, data).roll();
+        let roll = new Roll(data.attributes.sr.formula, this.getRollData()).roll();
         data.attributes.sr.total = roll.total;
       }
       catch (e) {
@@ -1594,7 +1594,7 @@ export class ActorPF extends Actor {
       // Set CL
       spellbook.cl.total = 0;
       if (spellbook.cl.formula.length > 0) {
-        let roll = new Roll(spellbook.cl.formula, data).roll();
+        let roll = new Roll(spellbook.cl.formula, this.getRollData()).roll();
         spellbook.cl.total += roll.total;
       }
       if (actorData.type === "npc") spellbook.cl.total += spellbook.cl.base;
@@ -2216,11 +2216,11 @@ export class ActorPF extends Actor {
 
     // Add contextual attack string
     let notes = [];
-    const rollData = duplicate(this.data.data);
+    let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`skill.${isSubSkill ? skillParts[2] : skillId}`);
     for (let noteObj of noteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
@@ -2276,11 +2276,11 @@ export class ActorPF extends Actor {
 
     // Add contextual notes
     let notes = [];
-    const rollData = duplicate(this.data.data);
+    let rollData = this.getRollData();
     const noteObjects = this.getContextNotes("misc.cmb");
     for (let noteObj of noteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2408,11 +2408,11 @@ export class ActorPF extends Actor {
 
     // Add contextual notes
     let notes = [];
-    const rollData = duplicate(this.data.data);
+    let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
     for (let noteObj of noteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2460,11 +2460,11 @@ export class ActorPF extends Actor {
 
     // Add contextual notes
     let notes = [];
-    const rollData = duplicate(this.data.data);
+    let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
     for (let noteObj of noteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2501,7 +2501,7 @@ export class ActorPF extends Actor {
    */
   rollDefenses() {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
-    const rollData = duplicate(this.data.data);
+    let rollData = this.getRollData();
 
     // Add contextual AC notes
     let acNotes = [];
@@ -2509,7 +2509,7 @@ export class ActorPF extends Actor {
     const acNoteObjects = this.getContextNotes("misc.ac");
     for (let noteObj of acNoteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2532,7 +2532,7 @@ export class ActorPF extends Actor {
     const cmdNoteObjects = this.getContextNotes("misc.cmd");
     for (let noteObj of cmdNoteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2555,7 +2555,7 @@ export class ActorPF extends Actor {
     const srNoteObjects = this.getContextNotes("misc.sr");
     for (let noteObj of srNoteObjects) {
       rollData.item = {};
-      if (noteObj.item != null) rollData.item = duplicate(noteObj.item.data.data);
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
         if (!isMinimumCoreVersion("0.5.2")) {
@@ -2920,9 +2920,10 @@ export class ActorPF extends Actor {
 
   getRollData(data=null) {
     if (data == null) data = this.data.data;
-    const result = mergeObject(data, {
-      size: Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4,
-    }, { inplace: false });
+    let result = duplicate(data);
+
+    // Set size index
+    result.size = Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4;
     
     // Set class data
     result.classes = {};

@@ -813,9 +813,9 @@ export class ItemPF extends Item {
     }
 
     if (this.isCharged) {
-      if (this.charges <= 0) {
+      if (this.charges < this.chargeCost) {
         if (this.isSingleUse) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
-        return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
+        return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
       }
       if (this.autoDeductCharges) {
         this.addCharges(-this.chargeCost);
@@ -834,8 +834,8 @@ export class ItemPF extends Item {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
     }
 
-    if (this.isCharged && this.charges <= 0) {
-      return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoCharges").format(this.name));
+    if (this.isCharged && this.charges < this.chargeCost) {
+      return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
     }
 
     const rollData = this.getRollData();

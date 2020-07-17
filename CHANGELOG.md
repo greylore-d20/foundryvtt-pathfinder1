@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.66
+
+### Bug Fixes
+
+- Charged items will now check their charge cost before usage, rather than only denying usage at 0 charges
+- A bunch of formula fields on actors didn't use the correct function for fetching roll data
+
+### Changelog
+
+- Added more class abilities to its compendium, due to the efforts of holyplankton (many thanks!)
+- Loot sheets now show the total value and the sale value of its contents
+- Added mythic paths, due to the efforts of ManaHime (many thanks!)
+- Show at-will status instead of spell uses in spellbooks for at-will useable spells
+
 ## 0.65
 
 ### Bug Fixes

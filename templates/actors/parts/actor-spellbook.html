@@ -146,6 +146,7 @@
           </div>
           
           <div class="spell-uses flexrow">
+            {{#unless item.data.atWill}}
             {{#unless ../../spellbook.orig.spontaneous}}
             <span>{{localize "PF1.Uses"}}</span>
             <input type="number" value="{{item.data.preparation.preparedAmount}}" data-type="amount" data-dtype="Number"/>
@@ -156,6 +157,9 @@
               title="{{#if data.preparation.spontaneousPrepared}}{{localize "PF1.Prepared"}}{{else}}{{localize "PF1.Unprepared"}}{{/if}}">
               <i class="fas fa-cog"></i>
             </a>
+            {{/unless}}
+            {{else}}
+            {{localize "PF1.SpellPrepAtWill"}}
             {{/unless}}
           </div>
           

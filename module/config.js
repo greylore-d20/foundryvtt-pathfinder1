@@ -510,16 +510,16 @@ PF1.featTypes = {
 
 PF1.abilityTypes = {
   "ex": {
-    "short": "Ex",
-    "long": "Extraordinary",
+    "short": "PF1.AbilityTypeShortExtraordinary",
+    "long": "PF1.AbilityTypeExtraordinary",
   },
   "su": {
-    "short": "Su",
-    "long": "Supernatural",
+    "short": "PF1.AbilityTypeShortSupernatural",
+    "long": "PF1.AbilityTypeSupernatural",
   },
   "sp": {
-    "short": "Sp",
-    "long": "Spell-Like",
+    "short": "PF1.AbilityTypeShortSpell-Like",
+    "long": "PF1.AbilityTypeSpell-Like",
   },
 };
 
@@ -543,25 +543,25 @@ PF1.acTypes = {
 };
 
 PF1.bonusModifiers = {
-  "untyped": "Untyped",
-  "base": "Base",
-  "enh": "Enhancement",
-  "dodge": "Dodge",
-  "inherent": "Inherent",
-  "deflection": "Deflection",
-  "morale": "Morale",
-  "luck": "Luck",
-  "sacred": "Sacred",
-  "insight": "Insight",
-  "resist": "Resistance",
-  "profane": "Profane",
-  "trait": "Trait",
-  "racial": "Racial",
-  "size": "Size",
-  "competence": "Competence",
-  "circumstance": "Circumstance",
-  "alchemical": "Alchemical",
-  "penalty": "Penalty",
+  "untyped": "PF1.BonusModifierUntyped",
+  "base": "PF1.BonusModifierBase",
+  "enh": "PF1.BonusModifierEnhancement",
+  "dodge": "PF1.BonusModifierDodge",
+  "inherent": "PF1.BonusModifierInherent",
+  "deflection": "PF1.BonusModifierDeflection",
+  "morale": "PF1.BonusModifierMorale",
+  "luck": "PF1.BonusModifierLuck",
+  "sacred": "PF1.BonusModifierSacred",
+  "insight": "PF1.BonusModifierInsight",
+  "resist": "PF1.BonusModifierResistance",
+  "profane": "PF1.BonusModifierProfane",
+  "trait": "PF1.BonusModifierTrait",
+  "racial": "PF1.BonusModifierRacial",
+  "size": "PF1.BonusModifierSize",
+  "competence": "PF1.BonusModifierCompetence",
+  "circumstance": "PF1.BonusModifierCircumstance",
+  "alchemical": "PF1.BonusModifierAlchemical",
+  "penalty": "PF1.BonusModifierPenalty",
 };
 
 /* -------------------------------------------- */
@@ -991,10 +991,10 @@ PF1.buffTargets = {
   },
   "misc": {
     "_label": "PF1.MiscShort",
-    "cmb": "CMB",
-    "cmd": "CMD",
+    "cmb": "PF1.CMBAbbr",
+    "cmd": "PF1.CMDAbbr",
     "init": "PF1.Initiative",
-    "mhp": "Hit Points",
+    "mhp": "PF1.HitPoints",
     "wounds": "PF1.Wounds",
     "vigor": "PF1.Vigor",
   },
@@ -1039,8 +1039,8 @@ PF1.contextNoteTargets = {
   "misc": {
     "_label": "PF1.MiscShort",
     "ac": "PF1.ACNormal",
-    "cmb": "CMB",
-    "cmd": "CMD",
+    "cmb": "PF1.CMBAbbr",
+    "cmd": "PF1.CMDAbbr",
     "sr": "PF1.SpellResistance",
   },
 };

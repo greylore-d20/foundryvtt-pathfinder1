@@ -1185,8 +1185,8 @@ export class ActorSheetPF extends ActorSheet {
     for (let f of feats) {
       let k = f.data.featType;
       if (f.data.abilityType && f.data.abilityType !== "none") {
-        f.abilityType = CONFIG.PF1.abilityTypes[f.data.abilityType].long;
-        f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.data.abilityType].short;
+        f.abilityType = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].long);
+        f.abilityTypeShort = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].short);
       }
       else {
         f.abilityType = "";

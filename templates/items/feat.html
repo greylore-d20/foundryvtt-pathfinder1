@@ -50,7 +50,7 @@
           {{#select data.abilityType}}
           <option value="none"></option>
           {{#each config.abilityTypes as |type a|}}
-          <option value="{{a}}">{{type.short}}</option>
+          <option value="{{a}}">{{localize type.short}}</option>
           {{/each}}
           {{/select}}
         </select>

@@ -1,5 +1,5 @@
 /**
- * A helper class for building MeasuredTemplates for 5e spells and abilities
+ * A helper class for building MeasuredTemplates for PF1 spells and abilities
  * @extends {MeasuredTemplate}
  */
 export class AbilityTemplate extends MeasuredTemplate {
@@ -37,8 +37,7 @@ export class AbilityTemplate extends MeasuredTemplate {
         else templateData.angle = 53.13;
         break;
       case "rect":
-        templateData.distance = distance || 5;
-        // templateData.width = target.value;
+        templateData.distance = Math.sqrt(Math.pow(distance, 2) + Math.pow(distance, 2));
         templateData.direction = 45;
         break;
       case "ray":
@@ -148,7 +147,13 @@ export class AbilityTemplate extends MeasuredTemplate {
             delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
             snap = event.shiftKey ? delta : 5;
           }
-          this.data.direction += (snap * Math.sign(event.deltaY));
+          if (this.data.t === "rect") {
+            snap = Math.sqrt(Math.pow(5, 2) + Math.pow(5, 2));
+            this.data.distance += (snap * -Math.sign(event.deltaY));
+          }
+          else {
+            this.data.direction += (snap * Math.sign(event.deltaY));
+          }
         }
         this.refresh();
       };
@@ -159,7 +164,6 @@ export class AbilityTemplate extends MeasuredTemplate {
       canvas.stage.on("mousedown", handlers.lc);
       canvas.app.view.oncontextmenu = handlers.rc;
       canvas.app.view.onwheel = handlers.mw;
-      console.log(this);
       this.hitArea = new PIXI.Polygon([]);
     });
   }

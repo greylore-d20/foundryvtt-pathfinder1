@@ -219,7 +219,7 @@ PF1.measureTemplateTypes = {
   "cone": "PF1.MeasureTemplateCone",
   "circle": "PF1.MeasureTemplateCircle",
   "ray": "PF1.MeasureTemplateRay",
-  // "rect": "PF1.MeasureTemplateRectangle",
+  "rect": "PF1.MeasureTemplateRectangle",
 };
 
 /* -------------------------------------------- */

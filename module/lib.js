@@ -17,14 +17,15 @@ export const createTag = function(str) {
  * Alters a roll in string form.
  */
 export const alterRoll = function(str, add, multiply) {
-  const rgx = new RegExp(Die.rgx.die, "g");
-  if (str.match(/^([0-9]+)d([0-9]+)/)) {
+  const rgx = /^([0-9]+)d([0-9]+)/;
+  // const rgx = new RegExp(Die.rgx.die, "g");
+  // if (str.match(/^([0-9]+)d([0-9]+)/)) {
     return str.replace(rgx, (match, nd, d, mods) => {
       nd = (nd * (multiply || 1)) + (add || 0);
       mods = mods || "";
       return ((nd == null || Number.isNaN(nd)) ? "" : nd) + "d" + d + mods;
     });
-  }
+  // }
   return str;
 };
 
@@ -75,7 +76,7 @@ export const createTabs = function(html, tabGroups) {
     const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
     if (!tabsElem) return;
     let type = tabsElem.dataset.tabsType;
-    let cls = TabsV2;
+    let cls = isMinimumCoreVersion("0.7.0") ? Tabs : TabsV2;
     if (type === "list") {
       cls = ListTabs;
     }

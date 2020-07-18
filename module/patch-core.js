@@ -41,12 +41,22 @@ export function PatchCore() {
   };
 
   // Patch Roll._replaceData
-  const Roll__replaceData = Roll.prototype._replaceData;
-  Roll.prototype._replaceData = function(formula) {
-    let result = Roll__replaceData.call(this, formula);
-    result = _preProcessDiceFormula(result, this.data);
-    return result;
-  };
+  if (!isMinimumCoreVersion("0.7.0")) {
+    const Roll__replaceData = Roll.prototype._replaceData;
+    Roll.prototype._replaceData = function(formula) {
+      let result = Roll__replaceData.call(this, formula);
+      result = _preProcessDiceFormula(result, this.data);
+      return result;
+    };
+  }
+  else {
+    const Roll__identifyTerms = Roll.prototype._identifyTerms;
+    Roll.prototype._identifyTerms = function(formula) {
+      formula = _preProcessDiceFormula(formula, this.data);
+      const terms = Roll__identifyTerms.call(this, formula);
+      return terms;
+    };
+  }
 
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
@@ -56,3 +66,5 @@ export function PatchCore() {
 
 import "./low-light-vision.js";
 import "./measure.js";
+import { isMinimumCoreVersion } from "./lib.js";
+

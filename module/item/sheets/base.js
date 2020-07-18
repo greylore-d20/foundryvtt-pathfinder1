@@ -1,4 +1,4 @@
-import { createTabs } from "../../lib.js";
+import { createTabs, isMinimumCoreVersion } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 
@@ -471,31 +471,13 @@ export class ItemSheetPF extends ItemSheet {
     super.activateListeners(html);
 
     // Activate tabs
-    // Only run this if TabsV2 is already available (which is available since FoundryVTT 0.5.2)
-    if (typeof TabsV2 !== "undefined") {
-      const tabGroups = {
-        "primary": {
-          "description": {},
-          "links": {},
-        },
-      };
-      createTabs.call(this, html, tabGroups);
-    }
-    // Run older Tabs as a fallback
-    else {
-      new Tabs(html.find(".tabs"), {
-        initial: this["_sheetTab"],
-        callback: clicked => {
-          this._scrollTab = 0;
-          this["_sheetTab"] = clicked.data("tab");
-          this.setPosition();
-        }
-      });
-
-      // Save scroll position
-      html.find(".tab.active")[0].scrollTop = this._scrollTab;
-      html.find(".tab").scroll(ev => this._scrollTab = ev.currentTarget.scrollTop);
-    }
+    const tabGroups = {
+      "primary": {
+        "description": {},
+        "links": {},
+      },
+    };
+    createTabs.call(this, html, tabGroups);
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));

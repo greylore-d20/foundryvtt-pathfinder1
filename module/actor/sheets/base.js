@@ -906,7 +906,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
 
     const items = Object.entries(CONFIG.PF1.alignmentsShort).reduce((cur, o) => {
-      cur.push({ value: o[0], label: o[1] });
+      cur.push({ value: o[0], label: game.i18n.localize(o[1]) });
       return cur;
     }, []);
     const w = new Widget_ItemPicker(alignment => {

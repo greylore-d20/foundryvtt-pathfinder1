@@ -244,32 +244,26 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
     const d6Index = c.indexOf("1d6");
     let d8Index = c.indexOf("1d8");
     if (d8Index === -1) d8Index = c.indexOf("2d4");
-    let indexOffset = (targetSize - 4);
-    const sizeIncrease = indexOffset > 0;
+    let curSize = 4;
 
-    while (indexOffset !== 0) {
-      if ((sizeIncrease && index <= d6Index) ||
-        (!sizeIncrease && index <= d8Index)) {
-      // if ((index <= d8Index && indexOffset < 1) ||
-      // (index <= d6Index && indexOffset < 0)) {
-        if (indexOffset < 0) {
-          index--;
-          indexOffset++;
-        }
-        else {
-          index++;
-          indexOffset--;
-        }
+    while (curSize > targetSize) {
+      if (curSize <= 4 || index <= d8Index) {
+        index--;
+        curSize--;
       }
       else {
-        if (indexOffset < 0) {
-          index -= 2;
-          indexOffset++;
-        }
-        else {
-          index += 2;
-          indexOffset--;
-        }
+        index -= 2;
+        curSize--;
+      }
+    }
+    while (curSize < targetSize) {
+      if (curSize >= 3 || index <= d6Index) {
+        index++;
+        curSize++;
+      }
+      else {
+        index += 2;
+        curSize += 2;
       }
     }
 

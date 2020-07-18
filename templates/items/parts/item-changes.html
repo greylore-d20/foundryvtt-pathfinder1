@@ -74,7 +74,7 @@
       <select class="change-modifier" name="data.changes.{{a}}.modifier">
         {{#select (lookup this "modifier") }}
         {{#each ../changes.modifiers as |name type|}}
-        <option value="{{type}}">{{name}}</option>
+        <option value="{{type}}">{{localize name}}</option>
         {{/each}}
         {{/select}}
       </select>

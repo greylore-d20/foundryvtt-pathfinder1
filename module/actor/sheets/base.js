@@ -910,7 +910,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
 
     const items = Object.entries(CONFIG.PF1.alignmentsShort).reduce((cur, o) => {
-      cur.push({ value: o[0], label: o[1] });
+      cur.push({ value: o[0], label: game.i18n.localize(o[1]) });
       return cur;
     }, []);
     const w = new Widget_ItemPicker(alignment => {
@@ -1189,8 +1189,8 @@ export class ActorSheetPF extends ActorSheet {
     for (let f of feats) {
       let k = f.data.featType;
       if (f.data.abilityType && f.data.abilityType !== "none") {
-        f.abilityType = CONFIG.PF1.abilityTypes[f.data.abilityType].long;
-        f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.data.abilityType].short;
+        f.abilityType = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].long);
+        f.abilityTypeShort = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].short);
       }
       else {
         f.abilityType = "";

@@ -212,7 +212,7 @@ export class ChatAttack {
     }, []);
     // Add critical damage parts
     if (critical === true && getProperty(this.item.data, "data.damage.critParts") != null) {
-      damageTypes.push(this.item.data.data.damage.critParts.reduce((cur, o) => {
+      damageTypes.push(...this.item.data.data.damage.critParts.reduce((cur, o) => {
         if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
         return cur;
       }, []));
@@ -228,7 +228,15 @@ export class ChatAttack {
       else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyDamage") , value:  totalDamage, action: "applyDamage", });
     }
 
-    data.flavor = damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor;
+    // Filter damage types
+    damageTypes = damageTypes.reduce((cur, o) => {
+      if (cur.indexOf(o) === -1) cur.push(o);
+      return cur;
+    }, []);
+
+    // Finalize data
+    // data.flavor = damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor;
+    data.flavor = flavor;
     data.tooltip = tooltips;
     data.total = rolls.reduce((cur, roll) => {
       return cur + roll.roll.total;

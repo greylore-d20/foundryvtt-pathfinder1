@@ -9,51 +9,61 @@
 
   {{#each attacks as |atk|}}
   <div class="chat-attack">
-    {{#if atk.hasAttack}}
-    <div class="dice-roll attack-roll">
-      {{#if atk.attack.flavor}}
-      <div class="dice-flavor">{{atk.attack.flavor}}</div>
-      {{/if}}
-      <div class="dice-result">
-        <h4 class="dice-total{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}">{{atk.attack.total}}</h4>
-        {{{atk.attack.tooltip}}}
+    <div class="flexrow">
+      {{#if atk.hasAttack}}
+      <div class="dice-roll attack-roll">
+        {{#if atk.attack.flavor}}
+        <div class="dice-flavor">{{atk.attack.flavor}}</div>
+        {{/if}}
+        <div class="dice-result">
+          <h4 class="dice-total{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}">{{atk.attack.total}}</h4>
+          {{{atk.attack.tooltip}}}
+        </div>
       </div>
-    </div>
-    {{#if atk.hasCritConfirm}}
-    <div class="dice-roll crit-confirm-roll">
-      {{#if atk.critConfirm.flavor}}
-      <div class="dice-flavor">{{atk.critConfirm.flavor}}</div>
-      {{/if}}
-      <div class="dice-result">
-        <h4 class="dice-total{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.cfirConfirm.isFumble}} failure{{/if}}">{{atk.critConfirm.total}}</h4>
-        {{{atk.critConfirm.tooltip}}}
+      {{#if atk.hasCritConfirm}}
+      <div class="dice-roll crit-confirm-roll">
+        {{#if atk.critConfirm.flavor}}
+        <div class="dice-flavor">{{atk.critConfirm.flavor}}</div>
+        {{/if}}
+        <div class="dice-result">
+          <h4 class="dice-total{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.cfirConfirm.isFumble}} failure{{/if}}">{{atk.critConfirm.total}}</h4>
+          {{{atk.critConfirm.tooltip}}}
+        </div>
       </div>
+      {{/if}}{{/if}}
     </div>
+
+    {{#if atk.hasAttack}}{{#if atk.hasDamage}}
+    <hr>
     {{/if}}{{/if}}
 
-    {{#if atk.hasDamage}}
-    <div class="dice-roll damage-roll">
-      {{#if atk.damage.flavor}}
-      <div class="dice-flavor">{{atk.damage.flavor}}</div>
-      {{/if}}
-      <div class="dice-result">
-        <h4 class="dice-total">{{atk.damage.total}}</h4>
-        {{{atk.damage.tooltip}}}
+    <div class="flexrow">
+      {{#if atk.hasDamage}}
+      <div class="dice-roll damage-roll">
+        {{#if atk.damage.flavor}}
+        <div class="dice-flavor">{{atk.damage.flavor}}</div>
+        {{/if}}
+        <div class="dice-result">
+          <h4 class="dice-total">{{atk.damage.total}}</h4>
+          {{{atk.damage.tooltip}}}
+        </div>
       </div>
-    </div>
-    {{#if atk.hasCritConfirm}}
-    <div class="dice-roll crit-damage-roll">
-      {{#if atk.critDamage.flavor}}
-      <div class="dice-flavor">{{atk.critDamage.flavor}}</div>
-      {{/if}}
-      <div class="dice-result">
-        <h4 class="dice-total">{{atk.critDamage.total}}</h4>
-        {{{atk.critDamage.tooltip}}}
+      {{#if atk.hasCritConfirm}}
+      <div class="dice-roll crit-damage-roll">
+        {{#if atk.critDamage.flavor}}
+        <div class="dice-flavor">{{atk.critDamage.flavor}}</div>
+        {{/if}}
+        <div class="dice-result">
+          <h4 class="dice-total">{{atk.critDamage.total}}</h4>
+          {{{atk.critDamage.tooltip}}}
+        </div>
       </div>
+      {{/if}}{{/if}}
     </div>
-    {{/if}}{{/if}}
 
     {{#if atk.cards.length}}
+    <hr>
+
     <div class="flexcol card-buttons">
       {{#each atk.cards as |card|}}
       <button data-action="{{card.action}}" data-value="{{card.value}}">{{card.label}}</button>

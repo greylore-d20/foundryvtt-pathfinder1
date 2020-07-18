@@ -103,17 +103,17 @@
     border: 1px solid #999;
     border-radius: 3px;
 
-    .dice-roll:nth-child(n+2) .dice-flavor {
-      margin-top: 4px;
-    }
-
-    .dice-roll:first-child > .dice-flavor {
-      color: #4C6D9F;
-      font-size: 12px;
-      text-align: center;
-    }
-
     .dice-roll {
+      width: 50%;
+      overflow: hidden;
+
+      .dice-flavor {
+        color: #4C6D9F;
+        font-size: 11px;
+        text-align: center;
+        white-space: nowrap;
+      }
+
       .dice-total {
         font-size: 16px;
         line-height: 20px;

@@ -78,6 +78,7 @@ export class ActorSheetPF extends ActorSheet {
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
     };
+    const rollData = this.actor.getRollData();
 
     // The Actor and its Items
     data.actor = duplicate(this.actor.data);
@@ -196,7 +197,7 @@ export class ActorSheetPF extends ActorSheet {
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
       let roll = new Roll(
         this.actor.data.data.details.bonusSkillRankFormula,
-        this.actor.getRollData(),
+        rollData,
       ).roll();
       skillRanks.allowed += roll.total;
     }
@@ -212,6 +213,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Fetch the game settings relevant to sheet rendering.
     data.healthConfig =  game.settings.get("pf1", "healthConfig");
+
+    // Get classes
+    data.data.classes = rollData.classes;
 
     // Return data to the sheet
     return data

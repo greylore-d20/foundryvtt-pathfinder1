@@ -76,7 +76,7 @@
       <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
-    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="Notes">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
+    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
     <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
     <label class="checkbox skill-cs">
       <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked skill.cs}}/>

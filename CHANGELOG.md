@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.67
+
+### Bug Fixes
+
+- sizeRoll for smaller characters was using the incorrect die
+- Couldn't select spellcasting classes for spellbooks anymore
+
+### Changelog
+
+- Added a rectangle measure template for items with actions
+- Added fields for adjusting the CL and SL of Spells in their attack dialogs
+- Made critical hits more compact in chat
+
 ## 0.66
 
 ### Bug Fixes

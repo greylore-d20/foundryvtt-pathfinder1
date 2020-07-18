@@ -2004,13 +2004,15 @@
   border: 1px solid #999;
   border-radius: 3px;
 }
-#chat-log .message .chat-attack .dice-roll:nth-child(n+2) .dice-flavor {
-  margin-top: 4px;
+#chat-log .message .chat-attack .dice-roll {
+  width: 50%;
+  overflow: hidden;
 }
-#chat-log .message .chat-attack .dice-roll:first-child > .dice-flavor {
+#chat-log .message .chat-attack .dice-roll .dice-flavor {
   color: #4C6D9F;
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
+  white-space: nowrap;
 }
 #chat-log .message .chat-attack .dice-roll .dice-total {
   font-size: 16px;

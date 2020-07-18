@@ -12,6 +12,7 @@
 - Added a rectangle measure template for items with actions
 - Added fields for adjusting the CL and SL of Spells in their attack dialogs
 - Made critical hits more compact in chat
+- Added an Italian translation, due to the efforts of Marco (many thanks!)
 
 ## 0.66
 

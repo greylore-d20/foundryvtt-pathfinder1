@@ -141,15 +141,15 @@ PF1.alignments = {
 };
 
 PF1.alignmentsShort = {
-  'lg': "LG",
-  'ng': "NG",
-  'cg': "CG",
-  'ln': "LN",
-  'tn': "N",
-  'cn': "CN",
-  'le': "LE",
-  'ne': "NE",
-  'ce': "CE"
+  'lg': "PF1.AlignmentShortLG",
+  'ng': "PF1.AlignmentShortNG",
+  'cg': "PF1.AlignmentShortCG",
+  'ln': "PF1.AlignmentShortLN",
+  'tn': "PF1.AlignmentShortTN",
+  'cn': "PF1.AlignmentShortCN",
+  'le': "PF1.AlignmentShortLE",
+  'ne': "PF1.AlignmentShortNE",
+  'ce': "PF1.AlignmentShortCE"
 };
 
 /* -------------------------------------------- */

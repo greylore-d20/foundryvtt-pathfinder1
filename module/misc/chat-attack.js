@@ -83,11 +83,6 @@ export class ChatAttack {
     if (this.primaryAttack === false && getProperty(data.ablMult > 0)) {
       data.ablMult = 0.5;
     }
-    // Set spell data
-    if (this.item.type === "spell") {
-      const spellbook = this.item.spellbook;
-      data.cl = spellbook.cl.total + (this.item.data.data.clOffset || 0);
-    }
   }
 
   setAttackNotesHTML() {

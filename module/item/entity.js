@@ -111,8 +111,12 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
-  get dc() {
-    const rollData = this.getRollData();
+  /**
+   * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
+   * @returns {Number} The Difficulty Class for this item.
+   */
+  getDC(rollData=null) {
+    if (!rollData) rollData = this.getRollData();
     const data = this.data.data;
 
     if (this.type === "spell") {
@@ -415,7 +419,7 @@ export class ItemPF extends Item {
       // Save DC
       let save = data.save || {};
       if (save.type) {
-        labels.save = `DC ${this.dc}`;
+        labels.save = `DC ${this.getDC()}`;
       }
 
       // Damage
@@ -554,7 +558,7 @@ export class ItemPF extends Item {
     // Basic template rendering data
     const token = this.actor.token;
     const saveType = getProperty(this.data, "data.save.type");
-    const saveDC = this.dc;
+    const saveDC = this.getDC();
     const templateData = {
       actor: this.actor,
       tokenId: token ? `${token.scene._id}.${token.id}` : null,
@@ -611,11 +615,11 @@ export class ItemPF extends Item {
   /*  Chat Cards																	*/
   /* -------------------------------------------- */
 
-  getChatData(htmlOptions) {
+  getChatData(htmlOptions, rollData=null) {
     const data = duplicate(this.data.data);
     const labels = this.labels;
 
-    const rollData = this.getRollData();
+    if (!rollData) rollData = this.getRollData();
 
     htmlOptions = mergeObject(htmlOptions || {}, {
       rollData: rollData,
@@ -676,7 +680,7 @@ export class ItemPF extends Item {
 
       // Add save DC
       if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
-        let saveDC = this.dc;
+        let saveDC = this.getDC(rollData);
         let saveDesc = data.save.description;
         if (saveDC > 0 && saveDesc) {
           props.push(`DC ${saveDC}`);
@@ -891,6 +895,17 @@ export class ItemPF extends Item {
         if (html.length > 0) {
           rollData.item.ability.damageMult = parseFloat(html.val());
         }
+
+        // Caster level offset
+        html = form.find('[name="cl-offset"]');
+        if (html.length > 0) {
+          rollData.cl += parseInt(html.val());
+        }
+        // Spell level offset
+        html = form.find('[name="sl-offset"]');
+        if (html.length > 0) {
+          rollData.sl += parseInt(html.val());
+        }
       }
 
       // Prepare the chat message data
@@ -1072,12 +1087,12 @@ export class ItemPF extends Item {
         let extraText = "";
         if (chatTemplateData.attacks.length > 0) extraText = chatTemplateData.attacks[0].attackNotesHTML;
 
-        const properties = this.getChatData().properties;
+        const properties = this.getChatData(null, rollData).properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
-        const saveDC = this.dc;
+        const saveDC = this.getDC(rollData);
 
         const templateData = mergeObject(chatTemplateData, {
           extraText: extraText,
@@ -1121,6 +1136,7 @@ export class ItemPF extends Item {
       hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
       isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
       isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
+      isSpell: this.type === "spell",
       hasTemplate: this.hasTemplate,
     };
     const html = await renderTemplate(template, dialogData);

@@ -220,30 +220,6 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
     });
   }
 
-  // Alter chart based on original die
-  // for (let a = 0; a < c.length; a++) {
-    // const d = c[a];
-    // if (d.match(/^([0-9]+)d([0-9]+)$/)) {
-      // const dieCount = parseInt(RegExp.$1),
-        // dieSides = parseInt(RegExp.$2),
-        // dieMaxValue = dieCount * dieSides;
-
-      // if (origSides === 4 && origCount >= 2) {
-        // if (dieSides === 8) {
-          // c[a] = `${dieCount*2}d4`;
-        // }
-        // else if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
-          // c[a] = `${Math.floor(dieMaxValue / origSides)}d4`;
-        // }
-      // }
-      // else if (origSides === 12) {
-        // if (dieSides === 6 && Math.floor(dieMaxValue / origSides) === dieMaxValue / origSides) {
-          // c[a] = `${Math.floor(dieMaxValue / origSides)}d12`;
-        // }
-      // }
-    // }
-  // }
-
   // Pick an index from the chart
   let index = c.indexOf(mediumDie),
     formula = mediumDie;
@@ -253,6 +229,7 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
     if (d8Index === -1) d8Index = c.indexOf("2d4");
     let curSize = 4;
 
+    // When decreasing in size (e.g. from medium to small)
     while (curSize > targetSize) {
       if (curSize <= 4 || index <= d8Index) {
         index--;
@@ -263,14 +240,15 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
         curSize--;
       }
     }
+    // When increasing in size (e.g. from medium to large)
     while (curSize < targetSize) {
-      if (curSize >= 3 || index <= d6Index) {
+      if (curSize <= 3 || index <= d6Index) {
         index++;
         curSize++;
       }
       else {
         index += 2;
-        curSize += 2;
+        curSize++;
       }
     }
 

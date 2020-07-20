@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.68
+
+### Bug Fixes
+
+- Fixed sizeRoll (again...)
+- Loot sheets with items other than inventory items on them gave NaN for prices
+- Dragging spells to the loot sheet added them as an actual spell, rather than showing the Create Consumable dialog
+- Creating consumables from 0 level spells gave them a 0gp value
+
+### Changelog
+
+- Improved actor sheets in regards to scrollable areas
+- Improved load speeds of compendium browsers
+
 ## 0.67
 
 ### Bug Fixes

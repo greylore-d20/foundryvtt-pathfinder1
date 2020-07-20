@@ -1816,7 +1816,7 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = `Wand of ${origData.name}`;
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data.data.price = slcl[0] * slcl[1] * 750;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750;
       data.data.hardness = 5;
       data.data.hp.max = 5;
       data.data.hp.value = 5;
@@ -1824,7 +1824,7 @@ export class ItemPF extends Item {
     else if (type === "potion") {
       data.name = `Potion of ${origData.name}`;
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data.data.price = slcl[0] * slcl[1] * 50;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50;
       data.data.hardness = 1;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
@@ -1832,7 +1832,7 @@ export class ItemPF extends Item {
     else if (type === "scroll") {
       data.name = `Scroll of ${origData.name}`;
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data.data.price = slcl[0] * slcl[1] * 25;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25;
       data.data.hardness = 0;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
@@ -1882,16 +1882,36 @@ export class ItemPF extends Item {
     }
     // Determine caster level label
     let clLabel;
-    if (slcl[1] === 1) clLabel = "1st";
-    else if (slcl[1] === 2) clLabel = "2nd";
-    else if (slcl[1] === 3) clLabel = "3rd";
-    else clLabel = `${slcl[1]}th`;
+    switch (slcl[1]) {
+      case 1:
+        clLabel = "1st";
+        break;
+      case 2:
+        clLabel = "2nd";
+        break;
+      case 3:
+        clLabel = "3rd";
+        break;
+      default:
+        clLabel = `${slcl[1]}th`;
+        break;
+    }
     // Determine spell level label
     let slLabel;
-    if (slcl[0] === 1) slLabel = "1st";
-    else if (slcl[0] === 2) slLabel = "2nd";
-    else if (slcl[0] === 3) slLabel = "3rd";
-    else slLabel = `${slcl[0]}th`;
+    switch (slcl[0]) {
+      case 1:
+        slLabel = "1st";
+        break;
+      case 2:
+        slLabel = "2nd";
+        break;
+      case 3:
+        slLabel = "3rd";
+        break;
+      default:
+        slLabel = `${slcl[1]}th`;
+        break;
+    }
 
     // Set description
     data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {

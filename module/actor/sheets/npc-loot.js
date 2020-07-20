@@ -23,6 +23,10 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return game.i18n.localize("PF1.ActorSheetPFNPCLoot");
   }
 
+  get currentPrimaryTab() {
+    return "inventory";
+  }
+
   async getData() {
     const data = super.getData();
 
@@ -59,14 +63,14 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   }
 
   calculateTotalItemValue() {
-    const items = this.actor.items;
+    const items = this.actor.items.filter(o => o.data.data.price != null);
     return Math.floor(items.reduce((cur, i) => {
       return cur + (i.data.data.price * i.data.data.quantity);
     }, 0) * 100) / 100;
   }
 
   calculateSellItemValue() {
-    const items = this.actor.items;
+    const items = this.actor.items.filter(o => o.data.data.price != null);
     const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
     return Math.floor(items.reduce((cur, i) => {
       if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") return cur + (i.data.data.price * i.data.data.quantity);

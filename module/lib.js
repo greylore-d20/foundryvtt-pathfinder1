@@ -44,7 +44,10 @@ export const createTabs = function(html, tabGroups) {
     // Scroll to previous position
     let scrollElems = html.find(`.scroll-${rtabs.group}`);
     if (scrollElems.length === 0) scrollElems = html.find(`.tab[data-group="${rtabs.group}"]`);
-    for (let o of scrollElems) { o.scrollTop = this._scrollTab[rtabs.group]; }
+    for (let o of scrollElems) {
+      const scrollIndex = o.dataset.scrollIndex || rtabs.group;
+      o.scrollTop = this._scrollTab[scrollIndex];
+    }
 
     // Recursively activate tabs
     for (let subTab of rtabs.subTabs) {
@@ -70,7 +73,10 @@ export const createTabs = function(html, tabGroups) {
     // Set up scrolling callback
     let scrollElems = html.find(`.scroll-${group}`);
     if (scrollElems.length === 0) scrollElems = html.find(`.tab[data-group="${group}"]`);
-    scrollElems.scroll(ev => this._scrollTab[group] = ev.currentTarget.scrollTop);
+    scrollElems.scroll(ev => {
+      const scrollIndex = ev.currentTarget.dataset.scrollIndex || group;
+      this._scrollTab[scrollIndex] = ev.currentTarget.scrollTop;
+    });
 
     // Determine tab type
     const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];

@@ -28,11 +28,12 @@
     </div>
   </header>
 
-  <div class="directory-container">
+  <div class="directory-container flexcol">
+    <span>{{labels.itemCount}}</span>
     <ol class="directory-list">
       {{#each collection as |c|}}
       <li class="directory-item flexrow" data-collection="{{c.collection}}" data-entry-id="{{c.item._id}}">
-        <img class="profile" src="{{c.item.img}}" title="{{c.item.name}}"/>
+        <img class="profile" data-src="{{c.item.img}}" title="{{c.item.name}}"/>
         <h4 class="entry-name"><a>{{c.item.name}}</a></h4>
       </li>
       {{/each}}

@@ -5,7 +5,7 @@
 @detailsHeight: 30px;
 
 /* ----------------------------------------- */
-/*  All D&D5e Apps                           */
+/*  All PF1 Apps                           */
 /* ----------------------------------------- */
 
 .pf1 {
@@ -21,7 +21,8 @@
   .window-content {
     background: @sheetBackground;
     font-size: 13px;
-    color: @colorDark
+    color: @colorDark;
+    overflow: hidden;
   }
 
   /* ----------------------------------------- */
@@ -263,8 +264,8 @@
 
   textarea {
     font-family: sans-serif;
-    min-height: 16px;
     padding: 1px 5px;
+    resize: none;
   }
 
   // Select Fields
@@ -545,13 +546,21 @@
   }
 
   .directory-container {
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     flex: 1;
     max-height: 100%;
 
+    > span {
+      width: 100%;
+      text-align: center;
+      flex: 0;
+    }
+
     .directory-list {
+      overflow-x: hidden;
+      overflow-y: auto;
       padding: 0;
+      height: 100vh;
 
       .directory-item {
         align-items: center;

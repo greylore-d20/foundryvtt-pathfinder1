@@ -235,12 +235,19 @@
 
   // Sections
   section {
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   /* ----------------------------------------- */
   /*  Attributes                               */
   /* ----------------------------------------- */
+
+  .attributes {
+    .traits {
+      overflow-y: scroll;
+      height: 100%;
+    }
+  }
 
   ul.attributes.misc-base, ul.attributes.misc-defenses {
     .attribute-footer input {
@@ -256,6 +263,7 @@
     list-style: none;
     margin: 8px 0 0;
     padding: 0;
+    flex: 0;
 
     li.attribute.health {
       height: 100%;
@@ -343,6 +351,8 @@
 
     .defense-notes {
       margin-top: 5px;
+      overflow-y: scroll;
+      flex: 1;
 
       label {
         flex: 1;
@@ -359,7 +369,7 @@
   /* ----------------------------------------- */
 
   .ability-scores {
-    flex: 0 0 100%;
+    flex: 0;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -441,6 +451,10 @@
         visibility: hidden;
       }
     }
+  }
+
+  .bottom {
+    overflow-y: auto;
   }
 
   /* ----------------------------------------- */
@@ -622,6 +636,8 @@
   /* ----------------------------------------- */
 
   .traits {
+    overflow-x: hidden;
+    overflow-y: hidden;
     margin: 0 5px;
 
     .form-group, .form-group-stacked {
@@ -753,7 +769,9 @@
 
   .tab.features,
   .tab.inventory,
-  .tab.spellbook {
+  .tab.spellbook,
+  .tab.attributes,
+  .tab.defenses {
     overflow-y: hidden;
 
     label.checkbox {
@@ -765,6 +783,12 @@
         margin-top: 4px;
       }
     }
+  }
+
+  div.attributes-traits {
+    align-items: flex-start;
+    margin: 0;
+    overflow-y: hidden;
   }
 
   /* Inventory List Filters */

@@ -262,7 +262,7 @@
   {{!-- NPC Sheet Body --}}
   <section class="primary-body">
 
-    <div class="tab attributes flexrow" data-group="primary" data-tab="attributes">
+    <div class="tab attributes flexcol" data-group="primary" data-tab="attributes">
 
       {{!-- Ability Scores --}}
       <ul class="ability-scores flexrow">
@@ -303,79 +303,79 @@
       </ul>
 
       {{!-- Misc --}}
-      <div class="flexcol attributes-root">
-        <ul class="attributes misc-base flexrow">
-          <li class="attribute bab" data-attribute="bab">
-            <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
-            <div class="attribute-value tooltip">
-              <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
-              <span class="tooltipcontent">
-                @attributes.bab.total : {{data.attributes.bab.total}}
-                {{#if sourceDetails.data.attributes.bab.total.length}}
-                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                  {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-              </span>
-            </div>
-          </li>
+      <div class="attributes-traits flexrow">
+        <div class="flexcol attributes-root">
+          <ul class="attributes misc-base flexrow">
+            <li class="attribute bab" data-attribute="bab">
+              <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
+              <div class="attribute-value tooltip">
+                <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
+                <span class="tooltipcontent">
+                  @attributes.bab.total : {{data.attributes.bab.total}}
+                  {{#if sourceDetails.data.attributes.bab.total.length}}
+                    <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                    {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                  {{/if}}
+                </span>
+              </div>
+            </li>
 
-          <li class="attribute cmb" data-attribute="cmb">
-            <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
-            <div class="attribute-value tooltip">
-              <span>{{data.attributes.cmb.total}}</span>
-              <span class="tooltipcontent">
-                @attributes.cmb.total : {{data.attributes.cmb.total}}
-                {{#if sourceDetails.data.attributes.cmb.total.length}}
-                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                  {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-              </span>
-            </div>
-          </li>
-        </ul>
+            <li class="attribute cmb" data-attribute="cmb">
+              <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
+              <div class="attribute-value tooltip">
+                <span>{{data.attributes.cmb.total}}</span>
+                <span class="tooltipcontent">
+                  @attributes.cmb.total : {{data.attributes.cmb.total}}
+                  {{#if sourceDetails.data.attributes.cmb.total.length}}
+                    <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                    {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                  {{/if}}
+                </span>
+              </div>
+            </li>
+          </ul>
 
-        <ul class="attributes misc-base flexrow">
-          <li class="attribute initiative" data-attribute="init">
+          <ul class="attributes misc-base flexrow">
+            <li class="attribute initiative" data-attribute="init">
 
-            <h4 class="attribute-name box-title rollable">{{localize "PF1.Initiative"}}</h4>
-            <div class="attribute-value tooltip">
-              <span>{{data.attributes.init.total}}</span>
-              <span class="tooltipcontent">
-                @attributes.init.total : {{data.attributes.init.total}}
-                {{#if sourceDetails.data.attributes.init.total.length}}
-                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                  {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-              </span>
-            </div>
-          </li>
-        </ul>
+              <h4 class="attribute-name box-title rollable">{{localize "PF1.Initiative"}}</h4>
+              <div class="attribute-value tooltip">
+                <span>{{data.attributes.init.total}}</span>
+                <span class="tooltipcontent">
+                  @attributes.init.total : {{data.attributes.init.total}}
+                  {{#if sourceDetails.data.attributes.init.total.length}}
+                    <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                    {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                  {{/if}}
+                </span>
+              </div>
+            </li>
+          </ul>
 
-        <ul class="attributes misc-base2 flexrow">
-          <li class="attribute acp" data-attribute="acp">
-            <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
-            <div class="attribute-value tooltip">
-              <span>{{data.attributes.acp.total}}</span>
-              <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
-            </div>
-          </li>
+          <ul class="attributes misc-base2 flexrow">
+            <li class="attribute acp" data-attribute="acp">
+              <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
+              <div class="attribute-value tooltip">
+                <span>{{data.attributes.acp.total}}</span>
+                <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
+              </div>
+            </li>
 
-          <li class="attribute maxdex" data-attribute="maxdex">
-            <h4 class="attribute-name box-title">{{localize "PF1.MaxDexShort"}}</h4>
-            <div class="attribute-value tooltip">
-              <span>{{data.attributes.maxDexBonus}}</span>
-              <span class="tooltipcontent">@attributes.maxDexBonus : {{data.attributes.maxDexBonus}}</span>
-            </div>
-          </li>
-        </ul>
+            <li class="attribute maxdex" data-attribute="maxdex">
+              <h4 class="attribute-name box-title">{{localize "PF1.MaxDexShort"}}</h4>
+              <div class="attribute-value tooltip">
+                <span>{{data.attributes.maxDexBonus}}</span>
+                <span class="tooltipcontent">@attributes.maxDexBonus : {{data.attributes.maxDexBonus}}</span>
+              </div>
+            </li>
+          </ul>
 
-        <textarea name="data.attributes.cmbNotes" placeholder="{{localize "PF1.CMBAbbr"}} {{localize "PF1.Notes"}}">{{data.attributes.cmbNotes}}</textarea>
-      </div>
+          <textarea name="data.attributes.cmbNotes" placeholder="{{localize "PF1.CMBAbbr"}} {{localize "PF1.Notes"}}">{{data.attributes.cmbNotes}}</textarea>
+        </div>
 
-      <section class="center-pane">
         {{!-- Traits --}}
         {{> "systems/pf1/templates/actors/parts/actor-traits.html"}}
-      </section>
+      </div>
     </div>
 
     {{!-- Defenses Tab --}}

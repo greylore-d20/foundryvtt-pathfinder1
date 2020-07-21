@@ -42,11 +42,6 @@ export class CompendiumBrowser extends Application {
      * @property
      */
     this.lazyAdd = 20;
-
-    // Preload compendiums
-    if (game.settings.get("pf1", "preloadCompendiums") === true) {
-      this.loadData();
-    }
   }
 
   static get defaultOptions() {

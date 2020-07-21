@@ -18,31 +18,77 @@ export class CompendiumBrowser extends Application {
       progress: null,
     };
 
+    /**
+     * The bottom scroll treshold (in pixels) at which the browser should start lazy loading some more items.
+     * @type {Number}
+     * @property
+     */
+    this.lazyLoadTreshold = 80;
+    /**
+     * The maximum number of items initially visible in regards to lazy loading.
+     * @type {Number}
+     * @property
+     */
+    this.lazyStart = 80;
+    /**
+     * The current amount of items visible in regards to lazy loading.
+     * @type {Number}
+     * @property
+     */
+    this.lazyIndex = 0;
+    /**
+     * The amount of new items to lazy load when triggered.
+     * @type {Number}
+     * @property
+     */
+    this.lazyAdd = 20;
+
     // Preload compendiums
     if (game.settings.get("pf1", "preloadCompendiums") === true) {
       this.loadData();
     }
   }
 
-  _initLazyLoad() {
-    const imgElems = this.element[0].querySelectorAll('img[data-src]');
-    const options = {
-      root: this.element[0].querySelector(".directory-list"),
-      rootMargin: "0px",
-      treshold: 0,
-    };
-
-    const observer = new IntersectionObserver(this._lazyLoad.bind(this), options);
-
-    for (let e of imgElems) {
-      observer.observe(e);
-    }
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      template: "systems/pf1/templates/apps/compendium-browser.html",
+      classes: ["pf1", "app"],
+      width: 720,
+      height: window.innerHeight - 60,
+      top: 30,
+      left: 40,
+    });
   }
 
-  _lazyLoad(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.src = entry.target.dataset.src;
+  _initLazyLoad() {
+    const rootElem = this.element.find(".directory-list");
+    const elems = rootElem.find('.directory-item');
+    this.lazyIndex = Math.min(this.lazyStart, elems.length);
+    elems.slice(this.lazyIndex).hide();
+
+    // Create function for lazy loading
+    const lazyLoad = () => {
+      let newItems = 0;
+      const initialIndex = this.lazyIndex;
+      for (let a = 0; a < elems.length && this.lazyIndex < initialIndex + this.lazyAdd; a++) {
+        const elem = elems[a];
+        if (elem.style.display !== "none") continue;
+        const item = this._data.data.collection[elem.dataset.entryId].item;
+
+        if (this._passesFilters(item)) {
+          $(elem).fadeIn(500);
+          newItems++;
+          this.lazyIndex++;
+        }
+      }
+    };
+
+    // Create callback for lazy loading
+    $(rootElem).on("scroll", () => {
+      const top = rootElem.scrollTop() + rootElem.height();
+      const bottom = rootElem[0].scrollHeight - this.lazyLoadTreshold;
+      if (top >= bottom) {
+        lazyLoad();
       }
     });
   }
@@ -68,21 +114,14 @@ export class CompendiumBrowser extends Application {
 
     this._data.data = {
       filters: this.filters,
-      collection: this.items,
+      collection: this.items.reduce((cur, o) => {
+        cur[o.item._id] = o;
+        return cur;
+      }, {}),
       labels: {
         itemCount: game.i18n.localize("PF1.TotalItems").format(this.items.length),
       },
     };
-  }
-
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/apps/compendium-browser.html",
-      width: 720,
-      height: window.innerHeight - 60,
-      top: 30,
-      left: 40,
-    });
   }
 
   get typeName() {
@@ -842,11 +881,21 @@ export class CompendiumBrowser extends Application {
   }
 
   _filterResults() {
+    this.lazyIndex = 0;
+    // Hide items that don't match the filters, and show items that DO match the filters
     this.element.find("li.directory-item").each((a, li) => {
       const id = li.dataset.entryId;
-      let item = this.items.find(i => i.item._id === id).item;
-      li.style.display = this._passesFilters(item) ? "flex" : "none";
+      const item = this._data.data.collection[id].item;
+      if (this._passesFilters(item) && this.lazyIndex < this.lazyStart) {
+        $(li).fadeIn(500);
+        this.lazyIndex++;
+      }
+      else $(li).hide();
     });
+
+    // Scroll up a bit to prevent a lot of 'lazy' loading at once
+    const rootElem = this.element[0].querySelector(".directory-list");
+    rootElem.scrollTop = Math.max(0, rootElem.scrollTop - this.lazyLoadTreshold);
   }
 
   _passesFilters(item) {

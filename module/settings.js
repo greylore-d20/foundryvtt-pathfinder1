@@ -191,4 +191,20 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Set coin weight
+   */
+  game.settings.register("pf1", "coinWeight", {
+    name: "SETTINGS.pf1CoinWeightN",
+    hint: "SETTINGS.pf1CoinWeightH",
+    scope: "world",
+    config: true,
+    default: 50,
+    type: Number,
+    onChange: () => {
+      game.actors.entities.forEach(o => { o.update({}); });
+      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+    },
+  });
 };

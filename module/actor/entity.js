@@ -1756,7 +1756,7 @@ export class ActorPF extends Actor {
    * @returns {Number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
-    const incr = convertDistance(5);
+    const incr = 5;
     
     if (value <= 0) return value;
     if (value < 2*incr) return incr;

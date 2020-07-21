@@ -120,6 +120,7 @@ export class CompendiumBrowser extends Application {
       }, {}),
       labels: {
         itemCount: game.i18n.localize("PF1.TotalItems").format(this.items.length),
+        filteredItemCount: game.i18n.localize("PF1.FilteredItems").format(this.items.length),
       },
     };
   }
@@ -919,15 +920,22 @@ export class CompendiumBrowser extends Application {
   _filterResults() {
     this.lazyIndex = 0;
     // Hide items that don't match the filters, and show items that DO match the filters
+    let itemCount = 0;
     this.element.find("li.directory-item").each((a, li) => {
       const id = li.dataset.entryId;
       const item = this._data.data.collection[id].item;
-      if (this._passesFilters(item) && this.lazyIndex < this.lazyStart) {
-        $(li).fadeIn(500);
-        this.lazyIndex++;
+      if (this._passesFilters(item)) {
+        // Show item
+        if (this.lazyIndex < this.lazyStart) {
+          $(li).show();
+          this.lazyIndex++;
+        }
+        // Set item count
+        itemCount++;
       }
       else $(li).hide();
     });
+    this.element.find('span[data-type="filterItemCount"]').text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
 
     // Scroll up a bit to prevent a lot of 'lazy' loading at once
     const rootElem = this.element[0].querySelector(".directory-list");

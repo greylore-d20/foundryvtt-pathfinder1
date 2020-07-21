@@ -549,10 +549,16 @@
     flex: 1;
     max-height: 100%;
 
-    > span {
-      width: 100%;
-      text-align: center;
+    .top {
       flex: 0;
+
+      span {
+        flex: 1;
+        text-align: center;
+      }
+      span:not(:last-child) {
+        border-right: @borderGroove;
+      }
     }
 
     .directory-list {

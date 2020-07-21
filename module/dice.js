@@ -28,7 +28,7 @@ export class DicePF {
    */
   static async d20Roll({event, parts, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
                   fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
-                  staticRoll=null }) {
+                  staticRoll=null, noSound=false }) {
     // Handle input arguments
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
@@ -78,7 +78,7 @@ export class DicePF {
           let chatData = {
             user: game.user._id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            sound: a === 0 ? CONFIG.sounds.dice : null,
+            sound: noSound ? null : (a === 0 ? CONFIG.sounds.dice : null),
             speaker: speaker,
             content: await renderTemplate(chatTemplate, rollData),
             "flags.pf1.noRollRender": true,
@@ -180,7 +180,8 @@ export class DicePF {
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
    * @param {Object} dialogOptions  Modal dialog options
    */
-  static async damageRoll({event={}, parts, actor, data, template, title, speaker, flavor, critical=true, onClose, dialogOptions, chatTemplate, chatTemplateData }) {
+  static async damageRoll({event={}, parts, actor, data, template, title, speaker, flavor, critical=true, onClose, dialogOptions,
+      chatTemplate, chatTemplateData, noSound=false }) {
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
     let rolled = false;
@@ -224,7 +225,7 @@ export class DicePF {
           user: game.user._id,
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           rollMode: game.settings.get("core", "rollMode"),
-          sound: CONFIG.sounds.dice,
+          sound: noSound ? null : CONFIG.sounds.dice,
           speaker: speaker,
           flavor: flavor,
           rollMode: rollMode,

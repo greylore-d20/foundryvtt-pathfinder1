@@ -31,9 +31,14 @@ export class ActorPF extends Actor {
       if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
     else if (action === "save") {
-      const actor = ActorPF.getActiveActor()
+      const actors = ActorPF.getSelectedActors();
       const saveId = button.dataset.type;
-      if (actor) actor.rollSavingThrow(saveId, { event: event });
+      let noSound = false;
+      for (let a of actors) {
+        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound });
+        noSound = true;
+      }
+      // if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
   }
 
@@ -48,6 +53,18 @@ export class ActorPF extends Actor {
     if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
     if (!actor) actor = game.actors.get(speaker.actor);
     return actor;
+  }
+
+  /**
+   * Returns an array of all selected tokens, along with their actors.
+   * @returns {Array.<ActorPF, Token>[]}
+   */
+  static getSelectedActors() {
+    let result = [];
+    for (let t of canvas.tokens.controlled) {
+      result.push([t.actor, t]);
+    }
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -2410,7 +2427,7 @@ export class ActorPF extends Actor {
     roll.toMessage(messageData, {rollMode});
   }
 
-  rollSavingThrow(savingThrowId, options={}) {
+  rollSavingThrow(savingThrowId, options={ event: null, noSound: false }) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
@@ -2450,7 +2467,8 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   };
 

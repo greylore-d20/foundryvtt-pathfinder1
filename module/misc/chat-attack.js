@@ -38,7 +38,8 @@ export class ChatAttack {
     };
     this.hasDamage = false;
 
-    this.cards           = [];
+    this.cards           = {};
+    this.hasCards        = false;
     this.attackNotes     = [];
     this.effectNotes     = [];
     this.attackNotesHTML = "";
@@ -220,12 +221,26 @@ export class ChatAttack {
 
     // Add card
     if (critical) {
-      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalHealing"), value: -totalDamage, action: "applyDamage", });
-      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyCriticalDamage") , value:  totalDamage, action: "applyDamage", });
+      if (!this.cards.critical) this.cards.critical = { label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"), items: [] };
+      if (this.item.isHealing) {
+        this.cards.critical.items.push({ label: game.i18n.localize("PF1.Apply"), value: -totalDamage, action: "applyDamage", });
+        this.cards.critical.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: -Math.floor(totalDamage / 2), action: "applyDamage", });
+      }
+      else {
+        this.cards.critical.items.push({ label: game.i18n.localize("PF1.Apply"), value: totalDamage, action: "applyDamage", });
+        this.cards.critical.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: Math.floor(totalDamage / 2), action: "applyDamage", });
+      }
     }
     else {
-      if (this.item.isHealing) this.cards.push({ label: game.i18n.localize("PF1.ApplyHealing"), value: -totalDamage, action: "applyDamage", });
-      else                     this.cards.push({ label: game.i18n.localize("PF1.ApplyDamage") , value:  totalDamage, action: "applyDamage", });
+      if (!this.cards.damage)  this.cards.damage = { label: game.i18n.localize(this.item.isHealing ? "PF1.Healing" : "PF1.Damage"), items: [] };
+      if (this.item.isHealing) {
+        this.cards.damage.items.push({ label: game.i18n.localize("PF1.Apply"), value: -totalDamage, action: "applyDamage", });
+        this.cards.damage.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: -Math.floor(totalDamage / 2), action: "applyDamage", });
+      }
+      else {
+        this.cards.damage.items.push({ label: game.i18n.localize("PF1.Apply"), value: totalDamage, action: "applyDamage", });
+        this.cards.damage.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: Math.floor(totalDamage / 2), action: "applyDamage", });
+      }
     }
 
     // Filter damage types
@@ -261,5 +276,11 @@ export class ChatAttack {
 
     this.effectNotes = notes;
     this.setEffectNotesHTML();
+  }
+
+  finalize() {
+    this.hasCards = Object.keys(this.cards).length > 0;
+
+    return this;
   }
 }

@@ -61,12 +61,19 @@
       {{/if}}{{/if}}
     </div>
 
-    {{#if atk.cards.length}}
+    {{#if atk.hasCards}}
     <hr>
 
     <div class="flexcol card-buttons">
-      {{#each atk.cards as |card|}}
-      <button data-action="{{card.action}}" data-value="{{card.value}}">{{card.label}}</button>
+      {{#each atk.cards as |cardGroup|}}
+      <div class="card-button-group flexcol">
+        <label>{{cardGroup.label}}</label>
+        <div class="flexrow">
+        {{#each cardGroup.items as |item|}}
+          <button data-action="{{item.action}}" data-value="{{item.value}}">{{item.label}}</button>
+        {{/each}}
+        </div>
+      </div>
       {{/each}}
       {{#if ../save.hasSave}}
       <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}">{{../save.label}}</button>

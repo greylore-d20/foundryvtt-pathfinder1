@@ -999,7 +999,7 @@ export class ItemPF extends Item {
         // Add to list
         attacks.push(attack);
       }
-      chatTemplateData.attacks = attacks;
+      chatTemplateData.attacks = attacks.map(o => o.finalize());
 
       // Prompt measure template
       if (useMeasureTemplate) {

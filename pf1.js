@@ -106,7 +106,7 @@ Hooks.once("setup", function() {
     "spellPreparationModes", "weaponTypes", "weaponProperties", "spellComponents", "spellSchools", "spellLevels", "conditionTypes",
     "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
     "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
-    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes",
+    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes", "measureUnits", "measureUnitsShort",
   ];
 
   const doLocalize = function(obj) {
@@ -202,9 +202,13 @@ Hooks.on("preCreateOwnedItem", (actor, item) => {
   }
 });
 
-Hooks.on("createOwnedItem", (actor) => {
+Hooks.on("createOwnedItem", (actor, itemData) => {
   if (!(actor instanceof Actor)) return;
-  actor.refresh();
+  // actor.refresh();
+
+  const item = actor.items.find(o => o._id === itemData._id);
+  // Refresh item
+  item.update({});
 });
 Hooks.on("deleteOwnedItem", (actor, ...args) => {
   if (!(actor instanceof Actor)) return;

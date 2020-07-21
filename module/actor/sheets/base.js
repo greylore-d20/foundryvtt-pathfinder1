@@ -3,7 +3,7 @@ import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
 import { TokenConfigPF } from "../../token-config.js";
-import { createTag, createTabs, isMinimumCoreVersion, CR } from "../../lib.js";
+import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 
@@ -388,7 +388,15 @@ export class ActorSheetPF extends ActorSheet {
       medium: actorData.data.attributes.encumbrance.levels.medium,
       heavy: actorData.data.attributes.encumbrance.levels.heavy
     };
-    const carryLabel = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.CarryLabelKg").format(carriedWeight) : game.i18n.localize("PF1.CarryLabel").format(carriedWeight);
+    let carryLabel;
+    switch (game.settings.get("pf1", "units")) {
+      case "metric":
+        carryLabel = game.i18n.localize("PF1.CarryLabelKg").format(carriedWeight);
+        break;
+      default:
+        carryLabel = game.i18n.localize("PF1.CarryLabel").format(carriedWeight);
+        break;
+    }
     const enc = {
       pct: {
         light: Math.max(0, Math.min(carriedWeight * 100 / load.light, 99.5)),
@@ -1167,7 +1175,7 @@ export class ActorSheetPF extends ActorSheet {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(i.data.quantity * i.data.weight * 10) / 10;
+      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
       i.units = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);

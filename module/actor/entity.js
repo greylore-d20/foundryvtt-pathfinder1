@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, linkData, isMinimumCoreVersion, CR } from "../lib.js";
+import { createTag, linkData, isMinimumCoreVersion, convertDistance, convertWeight } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
@@ -1616,6 +1616,13 @@ export class ActorPF extends Actor {
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
     this.labels.alignment = CONFIG.PF1.alignments[this.data.data.details.alignment];
 
+    // Set speed labels
+    this.labels.speed = {};
+    for (let [key, obj] of Object.entries(getProperty(this.data, "data.attributes.speed") || {})) {
+      const dist = convertDistance(obj.total);
+      this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
+    }
+
     // Setup links
     this.prepareItemLinks();
   }
@@ -1749,7 +1756,7 @@ export class ActorPF extends Actor {
    * @returns {Number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
-    const incr = game.settings.get("pf1", "units") === "metric" ? 1.5 : 5
+    const incr = convertDistance(5);
     
     if (value <= 0) return value;
     if (value < 2*incr) return incr;
@@ -2833,10 +2840,8 @@ export class ActorPF extends Actor {
     if (carryStr >= table.length) {
       heavy = Math.floor(table[table.length-1] * (1 + (0.3 * (carryStr - (table.length-1)))));
     }
-    // 1 Kg = 0.5 Kg
-    if(game.settings.get("pf1", "units") === "metric") {
-      heavy = heavy / 2
-    }
+    // Convert to world unit system
+    heavy = convertWeight(heavy);
       
     return {
       light: Math.floor(heavy / 3),
@@ -2848,10 +2853,12 @@ export class ActorPF extends Actor {
   getCarriedWeight(srcData) {
     // Determine carried weight
     const physicalItems = srcData.items.filter(o => { return o.data.weight != null; });
-    return physicalItems.reduce((cur, o) => {
+    const weight = physicalItems.reduce((cur, o) => {
       if (!o.data.carried) return cur;
       return cur + (o.data.weight * o.data.quantity);
     }, this._calculateCoinWeight(srcData));
+
+    return convertWeight(weight);
   }
 
   /**

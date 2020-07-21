@@ -598,6 +598,20 @@ PF1.distanceUnits = {
   "unlimited": "PF1.Unlimited",
 };
 
+PF1.measureUnits = {
+  "ft": "PF1.DistFt",
+  "mi": "PF1.DistMi",
+  "m": "PF1.DistM",
+  "km": "PF1.DistKM",
+};
+
+PF1.measureUnitsShort = {
+  "ft": "PF1.DistFtShort",
+  "mi": "PF1.DistMiShort",
+  "m": "PF1.DistMShort",
+  "km": "PF1.DistKMShort",
+};
+
 /* -------------------------------------------- */
 
 /**

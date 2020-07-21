@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, alterRoll, linkData, isMinimumCoreVersion } from "../lib.js";
+import { createTag, alterRoll, linkData, isMinimumCoreVersion, convertDistance } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
@@ -648,13 +648,26 @@ export class ItemPF extends Item {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (data.range != null) {
-        if (data.range.units === "close") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(25 + Math.floor(rollData.cl / 2) * 5);
-        else if (data.range.units === "medium") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(100 + rollData.cl * 10);
-        else if (data.range.units === "long") dynamicLabels.range = game.i18n.localize("PF1.RangeNote").format(400 + rollData.cl * 40);
-        else if (["ft", "mi", "spec"].includes(data.range.units) && typeof data.range.value === "string") {
-          let range = new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total;
-          dynamicLabels.range = [range > 0 ? "Range:" : null, range, CONFIG.PF1.distanceUnits[data.range.units]].filterJoin(" ");
+        let rangeValue = [0, "ft"];
+        switch (data.range.units) {
+          case "close":
+            rangeValue = convertDistance(25 + Math.floor(rollData.cl / 2) * 5);
+            break;
+          case "medium":
+            rangeValue = convertDistance(100 + rollData.cl * 10);
+            break;
+          case "long":
+            rangeValue = convertDistance(400 + rollData.cl * 40);
+            break;
+          case "ft":
+          case "mi":
+            rangeValue = convertDistance(new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total, data.range.units);
+            break;
+          case "spec":
+            rangeValue = convertDistance(new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total);
+            break;
         }
+        dynamicLabels.range = rangeValue[0] > 0 ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue[0]} ${CONFIG.PF1.measureUnits[rangeValue[1]]}`) : null;
       }
       // Duration
       if (data.duration != null) {
@@ -749,18 +762,6 @@ export class ItemPF extends Item {
     }
     else props.push(CONFIG.PF1.limitedUsePeriods[data.uses.per]);
     data.hasCharges = data.uses.value >= 0;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for tool type items
-   * @private
-   */
-  _lootChatData(data, labels, props) {
-    props.push(
-      data.weight ? data.weight + " " + (game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")) : null
-    );
   }
 
   /* -------------------------------------------- */
@@ -1002,11 +1003,14 @@ export class ItemPF extends Item {
 
       // Prompt measure template
       if (useMeasureTemplate) {
-        // Gather data
+        // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
         if (typeof dist === "string") {
           dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), this.getRollData()).roll().total;
         }
+        dist = convertDistance(dist)[0];
+
+        // Create data object
         const templateOptions = {
           type: getProperty(this.data, "data.measureTemplate.type"),
           distance: dist,

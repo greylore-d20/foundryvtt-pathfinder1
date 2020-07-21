@@ -282,6 +282,20 @@
         flex: 0 0 18px;
       }
 
+      .attribute-speed {
+        .attribute {
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: center;
+        }
+      }
+
+      &.health {
+        div.attribute {
+          max-width: 33%;
+        }
+      }
+
       .attribute-value {
         height: 28px;
         line-height: 20px;
@@ -296,7 +310,6 @@
         div.attribute {
           display: inline-block;
           min-width: 24px;
-          max-width: 33%;
           font-size: 24px;
           width: calc(100% - 2px);
         }

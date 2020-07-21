@@ -316,3 +316,37 @@ export const getActorFromId = function(id) {
   if (!actor) actor = game.actors.get(speaker.actor);
   return actor;
 };
+
+/**
+ * Converts feet to what the world is using as a measurement unit.
+ * @param {Number} value - The value (in feet) to convert.
+ * @param {String} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
+ * @returns {Array.<Number, String>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
+ */
+export const convertDistance = function(value, type="ft") {
+  switch (game.settings.get("pf1", "units")) {
+    case "metric":
+      switch (type) {
+        case "mi":
+          return [Math.round((value * 1.6) * 100) / 100, "km"];
+        default:
+          return [Math.round((value / 5 * 1.5) * 100) / 100, "m"];
+      }
+    default:
+      return [value, type];
+  }
+};
+
+/**
+ * Converts lbs to what the world is using as a measurement unit.
+ * @param {Number} value - The value (in lbs) to convert.
+ * @returns {Number} The converted value. In the case of the metric system, converts to kg.
+ */
+export const convertWeight = function(value) {
+  switch (game.settings.get("pf1", "units")) {
+    case "metric":
+      return Math.round((value / 2.2) * 100) / 100;
+    default:
+      return value;
+  }
+};

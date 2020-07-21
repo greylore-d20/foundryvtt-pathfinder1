@@ -515,20 +515,23 @@
   align-items: center;
 }
 .compendium-browser .directory-container {
-  overflow: hidden;
   flex: 1;
   max-height: 100%;
 }
-.compendium-browser .directory-container > span {
-  width: 100%;
-  text-align: center;
+.compendium-browser .directory-container .top {
   flex: 0;
+}
+.compendium-browser .directory-container .top span {
+  flex: 1;
+  text-align: center;
+}
+.compendium-browser .directory-container .top span:not(:last-child) {
+  border-right: 2px groove #eeede0;
 }
 .compendium-browser .directory-container .directory-list {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
-  height: 100vh;
 }
 .compendium-browser .directory-container .directory-list .directory-item {
   align-items: center;
@@ -826,6 +829,14 @@
 .pf1.sheet.actor ul.attributes li.attribute .attribute-name {
   flex: 0 0 18px;
 }
+.pf1.sheet.actor ul.attributes li.attribute .attribute-speed .attribute {
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+.pf1.sheet.actor ul.attributes li.attribute.health div.attribute {
+  max-width: 33%;
+}
 .pf1.sheet.actor ul.attributes li.attribute .attribute-value {
   height: 28px;
   line-height: 20px;
@@ -839,7 +850,6 @@
 .pf1.sheet.actor ul.attributes li.attribute .attribute-value div.attribute {
   display: inline-block;
   min-width: 24px;
-  max-width: 33%;
   font-size: 24px;
   width: calc(100% - 2px);
 }
@@ -1041,6 +1051,7 @@
 .pf1.sheet.actor ul.skills-list li.skill .skill-notes,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-notes {
   flex: 1 0 160px;
+  min-height: unset;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-rank,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-rank {
@@ -1194,6 +1205,10 @@
   text-align: right;
   color: #EEE;
   text-shadow: 0 0 5px #000;
+}
+.pf1.sheet.actor .encumbrance.encumbered .encumbrance-bar {
+  background: #A80D0D;
+  border-color: #E14949;
 }
 .pf1.sheet.actor .encumbrance .encumbrance-breakpoint {
   position: absolute;
@@ -1989,17 +2004,20 @@
 .pf1.chat-card .card-buttons {
   margin: 2px 0;
 }
+.pf1.chat-card .card-buttons .card-button-group label {
+  text-align: center;
+}
+.pf1.chat-card .card-buttons .card-button-group button {
+  font-size: 12px;
+  height: 20px;
+  line-height: 16px;
+  margin: 2px 0;
+}
 .pf1.chat-card .card-buttons span {
   display: block;
   line-height: 20px;
   text-align: center;
   border: 1px solid #CCC;
-}
-.pf1.chat-card .card-buttons button {
-  font-size: 12px;
-  height: 20px;
-  line-height: 16px;
-  margin: 2px 0;
 }
 .pf1.chat-card .card-footer {
   padding: 3px 0 0;

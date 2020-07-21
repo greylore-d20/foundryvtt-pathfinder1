@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.69
+
+### Bug Fixes
+
+- Compendium filters weren't being sorted since last update
+- Results from rollable tables were not private (solves issue #65)
+
+### Changelog
+
+- Added more class abilities, due to the efforts of holyplankton (many thanks!)
+- Added roll tables for Ultimate Equipment, due to the efforts of Iron (many thanks!)
+- Implemented lazy loading of list items in compendium browsers, improving performance
+- Show number of matching filtered items on compendium browsers
+- Removed the option to preload compendiums
+- Made the metric system more useable (solves issue #71, possibly)
+- Added an option to change the weight of coins, on a per-world basis (solves issue #99)
+- Items now refresh upon being created on an actor, which helps clear up actor-dependent formulas after getting one from the compendiums, for example
+- Buttons for saving throws on chat cards will now roll saving throws for all selected tokens
+- Added chat card buttons for applying half damage/healing
+
 ## 0.68
 
 ### Bug Fixes

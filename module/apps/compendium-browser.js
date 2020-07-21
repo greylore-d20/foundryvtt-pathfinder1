@@ -464,7 +464,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o[0], name: o[1] });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -474,7 +478,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -484,7 +492,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -494,7 +506,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -504,7 +520,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -514,7 +534,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       // {
@@ -532,7 +556,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -686,7 +714,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
       {
@@ -696,7 +728,11 @@ export class CompendiumBrowser extends Application {
           cur.push({ key: o, name: o });
           return cur;
         }, []).sort((a, b) => {
-          return a.name - b.name;
+          const A = a.name.toUpperCase();
+          const B = b.name.toUpperCase();
+          if (A > B) return 1;
+          if (A < B) return -1;
+          return 0;
         }),
       },
     ];

@@ -28,13 +28,15 @@ export class ChatMessagePF extends ChatMessage {
     // Enrich some data for dice rolls
     if (this.isRoll && !this.getFlag("pf1", "noRollRender")) {
 
-      // Render HTML if needed
-      if ( data.content.slice(0, 1) !== "<" ) {
-        data.content = await this.roll.render({isPrivate: !isVisible});
+      // Render public rolls if they do not already start with valid HTML
+      const hasHTMLContent = data.content.slice(0, 1) === "<";
+      if ( isVisible && !hasHTMLContent ) {
+        data.content = await this.roll.render();
       }
 
       // Conceal some private roll information
       if ( !isVisible ) {
+        data.content = await this.roll.render({isPrivate: !isVisible});
         data.flavor = `${this.user.name} privately rolled some dice`;
         messageData.isWhisper = false;
         messageData.alias = this.user.name;

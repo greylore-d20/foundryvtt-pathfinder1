@@ -281,6 +281,7 @@ export class ActorSheetPF extends ActorSheet {
         baseSlots: book.spells["spell"+a].base,
         slots: book.spells["spell"+a].max || 0,
         dataset: { type: "spell", level: a, spellbook: bookKey },
+        name: game.i18n.localize(`PF1.SpellLevel${a}`),
       };
     }
     spells.forEach(spell => {

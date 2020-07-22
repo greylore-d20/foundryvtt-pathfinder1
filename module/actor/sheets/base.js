@@ -1184,13 +1184,13 @@ export class ActorSheetPF extends ActorSheet {
 
     // Organize Features
     const features = {
-      classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
-      template: { label: game.i18n.localize("PF1.TemplatePlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTemplate"), "feat-type": "template" } },
+      // classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
       feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
       classFeat: { label: game.i18n.localize("PF1.ClassFeaturePlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeClassFeat"), "feat-type": "classFeat" } },
       trait: { label: game.i18n.localize("PF1.TraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTraits"), "feat-type": "trait" } },
       racial: { label: game.i18n.localize("PF1.RacialTraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeRacial"), "feat-type": "racial" } },
       misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.Misc"), "feat-type": "misc" } },
+      template: { label: game.i18n.localize("PF1.TemplatePlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTemplate"), "feat-type": "template" } },
       all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
     };
 
@@ -1208,7 +1208,6 @@ export class ActorSheetPF extends ActorSheet {
       features.all.items.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
-    features.classes.items = classes;
 
     // Buffs
     let buffs = data.items.filter(obj => { return obj.type === "buff"; });
@@ -1252,6 +1251,7 @@ export class ActorSheetPF extends ActorSheet {
     data.features = Object.values(features);
     data.buffs = buffSections;
     data.attacks = attackSections;
+    data.classes = classes;
   }
 
   /**

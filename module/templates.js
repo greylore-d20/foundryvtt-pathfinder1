@@ -9,6 +9,7 @@ export const preloadHandlebarsTemplates = async function() {
   const templatePaths = [
 
     // Actor Sheet Partials
+    "systems/pf1/templates/actors/parts/actor-details.html",
     "systems/pf1/templates/actors/parts/actor-traits.html",
     "systems/pf1/templates/actors/parts/actor-inventory.html",
     "systems/pf1/templates/actors/parts/actor-features.html",

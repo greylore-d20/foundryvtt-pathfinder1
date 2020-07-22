@@ -3027,6 +3027,13 @@ export class ActorPF extends Actor {
       for (let id of data) {
         await _addChildren.call(this, id);
       }
+
+      // Remove links to this item (and child items)
+      for (const id of data) {
+        for (const i of this.items) {
+          await i.removeItemLink(id);
+        }
+      }
     }
 
     super.deleteEmbeddedEntity(embeddedName, data, options);

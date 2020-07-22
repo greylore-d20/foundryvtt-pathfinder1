@@ -2004,6 +2004,35 @@ export class ItemPF extends Item {
     return result;
   }
 
+  async getAllLinkedItems() {
+    let result = [];
+
+    for (let items of Object.values(getProperty(this.data, "data.links"))) {
+      for (let l of items) {
+        let item = await this.getLinkItem(l);
+        if (item) result.push(item);
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Removes all link references to an item.
+   * @param {String} id - The id of the item to remove links to.
+   */
+  async removeItemLink(id) {
+    for (let items of Object.values(getProperty(this.data, "data.links"))) {
+      for (let a = 0; a < items.length; a++) {
+        let item = items[a];
+        if (item.id === id) {
+          items.splice(a, 1);
+          a--;
+        }
+      }
+    }
+  }
+
   async getLinkItem(l) {
     const id = l.id.split(".");
 

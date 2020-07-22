@@ -33,7 +33,7 @@
 
 <section class="inventory-body">
   {{#each sections as |section sid|}}
-  <div class="tab inventory-group flexcol" data-group="inventory" data-tab="{{sid}}">
+  <div class="tab inventory-group flexcol {{#if section.initial}}active{{/if}}" data-group="inventory" data-tab="{{sid}}">
     <ol class="inventory-list sub-scroll scroll-inventory">
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>

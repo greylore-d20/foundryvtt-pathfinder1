@@ -575,6 +575,8 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-detail.item-active input[type='checkbox']").off("change").change(this._setItemActive.bind(this));
 
     html.find(".item-detail.item-level input[type='text']").off("change").change(this._setBuffLevel.bind(this));
+
+    html.find("a.hide-show").click(this._hideShowElement.bind(this));
   }
 
   createTabs(html) {
@@ -679,6 +681,23 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(event.currentTarget.value);
     this.setItemUpdate(item._id, "data.level", value);
+  }
+
+  _hideShowElement(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const target = this.element.find(`.${a.dataset.for}`);
+
+    if (target.hasClass("hidden")) {
+      $(a).find("i").removeClass("fa-arrow-circle-down").addClass("fa-arrow-circle-up");
+      target.removeClass("hidden");
+      target.hide();
+      target.slideDown(200);
+    }
+    else {
+      $(a).find("i").removeClass("fa-arrow-circle-up").addClass("fa-arrow-circle-down");
+      target.slideUp(200, () => target.addClass("hidden"));
+    }
   }
 
   _onRollConcentration(event) {
@@ -1133,7 +1152,7 @@ export class ActorSheetPF extends ActorSheet {
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" } },
       tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"), "sub-type": "tradeGoods" } },
-      all: { label: game.i18n.localize("PF1.All"), canCreate: false, hasActions: true, items: [], canEquip: true, dataset: {} },
+      all: { label: game.i18n.localize("PF1.All"), canCreate: false, initial: true, hasActions: true, items: [], canEquip: true, dataset: {} },
     };
 
     // Partition items by category

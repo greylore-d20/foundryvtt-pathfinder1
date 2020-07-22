@@ -15,64 +15,67 @@
     </div>
   </div>
   
-  <div class="flexrow spellcasting-notes">
-    <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
-    <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>
-  </div>
-  
-  <div class="flexrow">
-    <div class="flexcol">
-      <div class="form-group spellcasting-class tooltip">
-        <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
-        <label><h3>{{localize "PF1.SpellcastingClass"}}</h3></label>
-        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
-          {{#select spellbook.orig.class}}
-          <option value="">{{localize "PF1.None"}}</option>
-          <option value="_hd">{{localize "PF1.HitDie"}}</option>
-          {{#each data.classes as |cls a|}}
-          <option value="{{a}}">{{cls.name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
-      </div>
-      
-      <div class="form-group spellcasting-ability">
-        <label><h3>{{localize "PF1.SpellcastingAbility"}}</h3></label>
-        <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
-          {{#select spellbook.orig.ability}}
-          <option value="">{{localize "PF1.None"}}</option>
-          {{#each data.abilities as |abl a|}}
-          <option value="{{a}}">{{abl.label}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
-      </div>
-      
-      <div class="flexrow spell-failure">
-        <label><h3>{{localize "PF1.ArcaneSpellFailure"}}</h3></label>
-        <input type="text" disabled value="{{spellFailure}}%"/>
-      </div>
-
-      <div class="flexrow formulas">
-        <label><h3>{{localize "PF1.BaseDCFormula"}}</h3></label>
-        <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
-        value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
-      </div>
+  <a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}"><i class="fas fa-arrow-circle-down"></i></a>
+  <div class="hide hidden spellbook-info_{{spellbookIndex}}">
+    <div class="flexrow spellcasting-notes">
+      <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
+      <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>
     </div>
     
-    <div class="flexcol caster-preferences">
-      <label class="checkbox">
-        <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevels"
-        {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"
-        {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.arcaneSpellFailure"
-        {{checked spellbook.orig.arcaneSpellFailure}}/> {{localize "PF1.ArcaneSpellFailure"}}
-      </label>
+    <div class="flexrow">
+      <div class="flexcol">
+        <div class="form-group spellcasting-class tooltip">
+          <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
+          <label><h3>{{localize "PF1.SpellcastingClass"}}</h3></label>
+          <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
+            {{#select spellbook.orig.class}}
+            <option value="">{{localize "PF1.None"}}</option>
+            <option value="_hd">{{localize "PF1.HitDie"}}</option>
+            {{#each data.classes as |cls a|}}
+            <option value="{{a}}">{{cls.name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        
+        <div class="form-group spellcasting-ability">
+          <label><h3>{{localize "PF1.SpellcastingAbility"}}</h3></label>
+          <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
+            {{#select spellbook.orig.ability}}
+            <option value="">{{localize "PF1.None"}}</option>
+            {{#each data.abilities as |abl a|}}
+            <option value="{{a}}">{{abl.label}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        
+        <div class="flexrow spell-failure">
+          <label><h3>{{localize "PF1.ArcaneSpellFailure"}}</h3></label>
+          <input type="text" disabled value="{{spellFailure}}%"/>
+        </div>
+
+        <div class="flexrow formulas">
+          <label><h3>{{localize "PF1.BaseDCFormula"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
+          value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
+        </div>
+      </div>
+      
+      <div class="flexcol caster-preferences">
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevels"
+          {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"
+          {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.arcaneSpellFailure"
+          {{checked spellbook.orig.arcaneSpellFailure}}/> {{localize "PF1.ArcaneSpellFailure"}}
+        </label>
+      </div>
     </div>
   </div>
   

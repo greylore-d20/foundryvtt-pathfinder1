@@ -28,8 +28,8 @@
       <div class="rollable image-d20"></div>
       <input type="text" name="data.skills.{{s}}.subSkills.{{b}}.name" value="{{subSkill.name}}" placeholder="{{localize "PF1.SkillName"}}"/>
     </div>
-    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.subSkills.{{b}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if subSkill.notes}}{{subSkill.notes}}{{/if}}</textarea>
-    <input type="text" class="skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" value="{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
+    <input type="text" disabled class="skill-mod" value="{{numberFormat skill.mod decimals=0}}" title="{{localize "PF1.SkillModTooltip"}}">
+    <input type="text" class="skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" value="{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}"/>
     <label class="checkbox skill-cs">
       <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked subSkill.cs}}/>
     </label>
@@ -48,7 +48,7 @@
         {{/select}}
       </select>
     </div>
-    <span class="skill-mod">{{numberFormat subSkill.mod decimals=0}}</span>
+    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.subSkills.{{b}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if subSkill.notes}}{{subSkill.notes}}{{/if}}</textarea>
     <div class="skill-controls">
       <a class="skill-control skill-delete" title="Delete Skill"><i class="fas fa-trash"></i></a>
     </div>
@@ -76,8 +76,8 @@
       <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
-    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
-    <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number"/>
+    <input type="text" disabled class="skill-mod" value="{{numberFormat skill.mod decimals=0}}" title="{{localize "PF1.SkillModTooltip"}}">
+    <input type="text" class="skill-rank" name="data.skills.{{s}}.rank" value="{{#if skill.rank}}{{skill.rank}}{{/if}}" placeholder="{{localize "PF1.Rank"}}" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}"/>
     <label class="checkbox skill-cs">
       <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked skill.cs}}/>
     </label>
@@ -96,7 +96,7 @@
         {{/select}}
       </select>
     </div>
-    <span class="skill-mod">{{numberFormat skill.mod decimals=0}}</span>
+    <textarea class="skill-notes" rows="1" name="data.skills.{{s}}.notes" placeholder="{{localize "PF1.Notes"}}">{{#if skill.notes}}{{skill.notes}}{{/if}}</textarea>
     <div class="skill-controls">
       {{#if ../owner}}{{#if skill.custom}}
       <a class="skill-control skill-delete" title="Delete Skill"><i class="fas fa-trash"></i></a>

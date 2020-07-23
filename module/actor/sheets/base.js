@@ -495,7 +495,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".attribute.initiative .attribute-name").click(this._onRollInitiative.bind(this));
 
     // Saving Throw
-    html.find(".defenses .saving-throw .attribute-name").click(this._onRollSavingThrow.bind(this));
+    html.find(".attribute.saving-throw .attribute-name").click(this._onRollSavingThrow.bind(this));
 
     // Add arbitrary skill
     html.find(".skill.arbitrary .skill-create").click(ev => this._onArbitrarySkillCreate(ev));
@@ -523,7 +523,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.configure-flags').click(this._onConfigureFlags.bind(this));
 
     // Roll defenses
-    html.find(".defense-rolls .generic-defenses .rollable").click(ev => { this.actor.rollDefenses(); });
+    html.find(".generic-defenses .rollable").click(ev => { this.actor.rollDefenses(); });
 
     // Rest
     html.find(".rest").click(this._onRest.bind(this));

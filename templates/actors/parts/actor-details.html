@@ -276,7 +276,13 @@
 <section class="subdetails-body">
   <div class="tab quick-info" data-group="subdetails" data-tab="quick-info">
     <div class="flexcol">
-      {{!-- AC --}}
+      {{!-- Roll Defenses --}}
+      <li class="generic-defenses flexrow">
+        <div class="rollable image-d20"></div>
+        <label><h3>{{localize "PF1.Defenses"}}</h3></label>
+      </li>
+
+      {{!-- Row 1 - AC and BAB --}}
       <ul class="attributes armor-class flexrow">
         {{#each data.attributes.ac as |ac id|}}
         <li class="attribute armor-class tooltip" data-armorclass="{{id}}">
@@ -296,9 +302,61 @@
           </div>
         </li>
         {{/each}}
+
+        {{!-- BAB --}}
+        <li class="attribute bab" data-attribute="bab">
+          <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
+          <div class="attribute-value tooltip">
+            <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
+            <span class="tooltipcontent">
+              @attributes.bab.total : {{data.attributes.bab.total}}
+              {{#if sourceDetails.data.attributes.bab.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      {{!-- Row 2 - Saving Throws and CMB --}}
+      <ul class="attributes saving-throws flexrow">
+        {{#each data.attributes.savingThrows as |savingThrow id|}}
+        <li class="attribute saving-throw tooltip" data-savingthrow="{{id}}">
+          <div class="tooltipcontent">
+            @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
+      
+            {{#if savingThrow.sourceDetails.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each savingThrow.sourceDetails as |src|}}
+            {{src.name}}: {{src.value}}<br/>
+            {{/each}}
+            {{/if}}
+          </div>
+          <h4 class="attribute-name box-title rollable">{{savingThrow.label}}</h4>
+          <div class="attribute-value">
+            <span>{{savingThrow.total}}</span>
+          </div>
+        </li>
+        {{/each}}
+
+        {{!-- CMB --}}
+        <li class="attribute cmb" data-attribute="cmb">
+          <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
+          <div class="attribute-value tooltip">
+            <span>{{data.attributes.cmb.total}}</span>
+            <span class="tooltipcontent">
+              @attributes.cmb.total : {{data.attributes.cmb.total}}
+              {{#if sourceDetails.data.attributes.cmb.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+            </span>
+          </div>
+        </li>
       </ul>
       
-      {{!-- Misc --}}
+      {{!-- Row 3 - CMD, SR and Initiative --}}
       <ul class="attributes misc-defenses flexrow">
         <li class="attribute cmd tooltip" data-attribute="cmd">
           <div class="tooltipcontent">
@@ -343,40 +401,7 @@
             <span>{{data.attributes.sr.total}}</span>
           </div>
         </li>
-      </ul>
-      
-      <ul class="attributes misc-base flexrow">
-        {{!-- BAB --}}
-        <li class="attribute bab" data-attribute="bab">
-          <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
-          <div class="attribute-value tooltip">
-            <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
-            <span class="tooltipcontent">
-              @attributes.bab.total : {{data.attributes.bab.total}}
-              {{#if sourceDetails.data.attributes.bab.total.length}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-              {{/if}}
-            </span>
-          </div>
-        </li>
-        
-        
-        {{!-- CMB --}}
-        <li class="attribute cmb" data-attribute="cmb">
-          <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
-          <div class="attribute-value tooltip">
-            <span>{{data.attributes.cmb.total}}</span>
-            <span class="tooltipcontent">
-              @attributes.cmb.total : {{data.attributes.cmb.total}}
-              {{#if sourceDetails.data.attributes.cmb.total.length}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-              {{/if}}
-            </span>
-          </div>
-        </li>
-        
+
         {{!-- Initiative --}}
         <li class="attribute initiative" data-attribute="init">
           <h4 class="attribute-name box-title rollable">{{localize "PF1.Initiative"}}</h4>

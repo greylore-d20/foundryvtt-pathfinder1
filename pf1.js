@@ -7,7 +7,8 @@
 // Import Modules
 import { PF1 } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
-import { preloadHandlebarsTemplates } from "./module/templates.js";
+import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
+import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { measureDistances } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -73,6 +74,7 @@ Hooks.once("init", async function() {
 
   // Preload Handlebars Templates
   await preloadHandlebarsTemplates();
+  registerHandlebarsHelpers();
 
   // Patch Core Functions
   PatchCore();

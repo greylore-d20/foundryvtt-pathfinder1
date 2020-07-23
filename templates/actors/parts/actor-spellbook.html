@@ -15,8 +15,10 @@
     </div>
   </div>
   
-  <a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}"><i class="fas fa-arrow-circle-down"></i></a>
-  <div class="hide hidden spellbook-info_{{spellbookIndex}}">
+  <a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}">
+    <i class="fas {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}fa-arrow-circle-down{{else}}fa-arrow-circle-up{{/if}}"></i>
+  </a>
+  <div class="hide spellbook-info_{{spellbookIndex}} {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}hidden{{/if}}">
     <div class="flexrow spellcasting-notes">
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>

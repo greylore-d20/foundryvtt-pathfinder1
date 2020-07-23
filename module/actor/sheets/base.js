@@ -42,6 +42,11 @@ export class ActorSheetPF extends ActorSheet {
      * @type {Object[]}
      */
     this._itemUpdates = [];
+
+    /**
+     * Track hidden elements of the sheet.
+     */
+    this._hiddenElems = {};
   }
 
   get currentPrimaryTab() {
@@ -217,11 +222,24 @@ export class ActorSheetPF extends ActorSheet {
     // Get classes
     data.data.classes = rollData.classes;
 
+    // Determine hidden elements
+    this._prepareHiddenElements();
+    data.hiddenElems = this._hiddenElems;
+
     // Return data to the sheet
     return data
   }
 
   /* -------------------------------------------- */
+
+  _prepareHiddenElements() {
+    // Hide spellbook info
+    const spellbooks = getProperty(this.actor.data, "data.attributes.spells.spellbooks");
+    for (let k of Object.keys(spellbooks)) {
+      const key = `spellbook-info_${k}`;
+      if (this._hiddenElems[key] == null) this._hiddenElems[key] = true;
+    }
+  }
 
   _prepareTraits(traits) {
     const map = {
@@ -697,10 +715,14 @@ export class ActorSheetPF extends ActorSheet {
       target.removeClass("hidden");
       target.hide();
       target.slideDown(200);
+
+      this._hiddenElems[a.dataset.for] = false;
     }
     else {
       $(a).find("i").removeClass("fa-arrow-circle-up").addClass("fa-arrow-circle-down");
       target.slideUp(200, () => target.addClass("hidden"));
+
+      this._hiddenElems[a.dataset.for] = true;
     }
   }
 

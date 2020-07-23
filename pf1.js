@@ -205,13 +205,13 @@ Hooks.on("preCreateOwnedItem", (actor, item) => {
   }
 });
 
-Hooks.on("createOwnedItem", (actor, itemData) => {
+Hooks.on("createOwnedItem", async (actor, itemData) => {
   if (!(actor instanceof Actor)) return;
-  // actor.refresh();
 
   const item = actor.items.find(o => o._id === itemData._id);
   // Refresh item
-  item.update({});
+  await item.update({});
+  await actor.refresh();
 });
 Hooks.on("deleteOwnedItem", (actor, ...args) => {
   if (!(actor instanceof Actor)) return;

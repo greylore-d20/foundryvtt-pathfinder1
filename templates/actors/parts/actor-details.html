@@ -18,7 +18,7 @@
           </div>
           {{#unless disableExperience}}
           <div class="experience">
-            <input name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
+            <input class="select-on-click" name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
             placeholder="0"/>
             <span class="max"> / {{data.details.xp.max}}</span>
           </div>
@@ -143,12 +143,12 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}" data-dtype="Number" placeholder="0"/>
+      <input class="select-on-click" name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}" data-dtype="Number" placeholder="0"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.vigor.max}}</div>
     </div>
     <footer class="attribute-footer">
-      <input name="data.attributes.vigor.temp" type="text" class="temphp" placeholder="{{localize 'PF1.Temporary'}}" value="{{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}" data-dtype="Number"/>
+      <input name="data.attributes.vigor.temp" type="text" class="temphp select-on-click" placeholder="{{localize 'PF1.Temporary'}}" value="{{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}" data-dtype="Number"/>
     </footer>
     
     <h4 class="attribute-name box-title tooltip">
@@ -165,7 +165,7 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}" data-dtype="Number" placeholder="0"/>
+      <input class="select-on-click" name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}" data-dtype="Number" placeholder="0"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.wounds.max}}</div>
     </div>
@@ -185,14 +185,14 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" data-dtype="Number" placeholder="10"/>
+      <input class="select-on-click" name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" data-dtype="Number" placeholder="10"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.hp.max}}</div>
     </div>
     <footer class="attribute-footer">
-      <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{localize 'PF1.TempShort'}}"
+      <input name="data.attributes.hp.temp" type="text" class="temphp select-on-click" placeholder="+{{localize 'PF1.TempShort'}}"
       value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" data-dtype="Number" title="{{localize "PF1.TempHP"}}"/>
-      <input name="data.attributes.hp.nonlethal" type="text" class="temphp" placeholder="{{localize 'PF1.Nonlethal'}}"
+      <input name="data.attributes.hp.nonlethal" type="text" class="temphp select-on-click" placeholder="{{localize 'PF1.Nonlethal'}}"
       value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" data-dtype="Number" title="{{localize "PF1.Nonlethal"}}"/>
     </footer>
     {{/if}}
@@ -205,7 +205,7 @@
         <div class="attribute">{{#if data.attributes.speed.land.total}}{{labels.speed.land}}{{/if}}</div>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.speed.land.base" type="text"
+        <input class="select-on-click" name="data.attributes.speed.land.base" type="text"
         value="{{#if data.attributes.speed.land.base}}{{data.attributes.speed.land.base}}{{/if}}"
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
@@ -216,7 +216,7 @@
         <div class="attribute">{{#if data.attributes.speed.climb.total}}{{labels.speed.climb}}{{/if}}</div>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.speed.climb.base" type="text"
+        <input class="select-on-click" name="data.attributes.speed.climb.base" type="text"
         value="{{#if data.attributes.speed.climb.base}}{{data.attributes.speed.climb.base}}{{/if}}"
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
@@ -227,7 +227,7 @@
         <div class="attribute">{{#if data.attributes.speed.swim.total}}{{labels.speed.swim}}{{/if}}</div>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.speed.swim.base" type="text"
+        <input class="select-on-click" name="data.attributes.speed.swim.base" type="text"
         value="{{#if data.attributes.speed.swim.base}}{{data.attributes.speed.swim.base}}{{/if}}"
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
@@ -238,7 +238,7 @@
         <div class="attribute">{{#if data.attributes.speed.burrow.total}}{{labels.speed.burrow}}{{/if}}</div>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.speed.burrow.base" type="text"
+        <input class="select-on-click" name="data.attributes.speed.burrow.base" type="text"
         value="{{#if data.attributes.speed.burrow.base}}{{data.attributes.speed.burrow.base}}{{/if}}"
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
@@ -249,7 +249,7 @@
         <div class="attribute">{{#if data.attributes.speed.fly.total}}{{labels.speed.fly}}{{/if}}</div>
       </div>
       <footer class="attribute-footer">
-        <input name="data.attributes.speed.fly.base" type="text"
+        <input class="select-on-click" name="data.attributes.speed.fly.base" type="text"
         value="{{#if data.attributes.speed.fly.base}}{{data.attributes.speed.fly.base}}{{/if}}"
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>

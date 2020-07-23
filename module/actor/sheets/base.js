@@ -479,6 +479,9 @@ export class ActorSheetPF extends ActorSheet {
     // Show configureable fields
     html.find(".config .config-control").click(this._onConfigControl.bind(this));
 
+    // Select the whole text on click
+    html.find(".select-on-click").click(this._selectOnClick.bind(this));
+
     /* -------------------------------------------- */
     /*  Abilities, Skills, Defenses and Traits
     /* -------------------------------------------- */
@@ -1529,6 +1532,12 @@ export class ActorSheetPF extends ActorSheet {
       elem.focus();
       elem.select();
     }
+  }
+
+  _selectOnClick(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+    el.select();
   }
 
   async _updateObject(event, formData) {

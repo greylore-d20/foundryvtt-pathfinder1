@@ -115,9 +115,9 @@
           <a class="config-icon config-control" for="spellSlots"><i class="fas fa-cog"></i></a>
           <input class="base" type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
             value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
-          <input type="number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
+          <input type="number" class="select-on-click" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
           <span class="sep"> / </span>
-          <input type="text" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
+          <input type="text" class="select-on-click" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
           {{ else }}
           <span class="spell-slots">{{{section.uses}}}</span>
           <span class="sep"> / </span>
@@ -154,9 +154,9 @@
             {{#unless item.data.atWill}}
             {{#unless ../../spellbook.orig.spontaneous}}
             <span>{{localize "PF1.Uses"}}</span>
-            <input type="number" value="{{item.data.preparation.preparedAmount}}" data-type="amount" data-dtype="Number"/>
+            <input class="select-on-click" type="number" value="{{item.data.preparation.preparedAmount}}" data-type="amount" data-dtype="Number"/>
             <span class="sep"> / </span>
-            <input type="number" value="{{item.data.preparation.maxAmount}}" data-type="max" data-dtype="Number"/>
+            <input class="select-on-click" type="number" value="{{item.data.preparation.maxAmount}}" data-type="max" data-dtype="Number"/>
             {{else}}
             <a class="item-control item-toggle-data {{#if data.preparation.spontaneousPrepared}}enabled{{/if}}" name="data.preparation.spontaneousPrepared"
               title="{{#if data.preparation.spontaneousPrepared}}{{localize "PF1.Prepared"}}{{else}}{{localize "PF1.Unprepared"}}{{/if}}">

@@ -6,11 +6,11 @@ export class ActorTraitSelector extends FormApplication {
 	static get defaultOptions() {
 	  const options = super.defaultOptions;
 	  options.id = "trait-selector";
-	  options.classes = ["pf1"];
+	  options.classes = ["pf1", "trait-selector"];
 	  options.title = "Actor Trait Selection";
 	  options.template = "systems/pf1/templates/apps/trait-selector.html";
-	  options.width = 320;
-	  options.height = "auto";
+    options.width = 320;
+    options.height = "auto";
 	  return options;
   }
 

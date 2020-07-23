@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.7
+
+### Bug Fixes
+
+- When deleting an item, links to that item remained
+- Inventory items of different types couldn't be sorted manually
+- The merfolk race had an incorrect amount of Charisma bonus
+
+### Changelog
+
+- Big revamp to actor sheets
+- Added more class abilities, due to the efforts of holyplankton (many thanks!)
+- Alexandre Nizoux updated the French translation (many thanks!)
+- Added most human languages to the list of pre-selectable languages
+- There's now a tab in actors' spellbooks that shows all spells
+- Certain input fields can now be clicked once to select their content
+- Certain input fields now react to the mouse wheel while hovering over them
+- Add client-side setting for quick rolling items
+- Skills which require training and have no ranks are now displayed in a lighter shade
+
 ## 0.69
 
 ### Bug Fixes

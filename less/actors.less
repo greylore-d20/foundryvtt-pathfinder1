@@ -587,9 +587,19 @@
       height: 28px;
       padding: 3px 0;
 
-      background-color: rgba(155, 155, 155, 0.3);
+      background-color: rgba(170, 170, 170, 0.3);
       &:nth-child(2n+1) {
         background-color: rgba(210, 210, 210, 0.3);
+      }
+
+      .skill-name.untrained {
+        color: rgba(0, 0, 0, 0.6);
+
+        .rollable {
+          img {
+            opacity: 60%;
+          }
+        }
       }
 
       .skill-name {
@@ -599,12 +609,20 @@
         font-size: 11px;
         align-items: center;
 
-        .image-d20 {
+        .untrained-label {
+          vertical-align: super;
+          font-size: 8px;
+          flex: 0;
+        }
+
+        .rollable {
           display: inline-block;
-          background-image: url(../../icons/dice/d20black.svg);
-          background-size: 100%;
-          width: 24px;
-          height: 24px;
+
+          img {
+            width: 24px;
+            height: 24px;
+            border: unset;
+          }
         }
 
         h4, input[type="text"] {

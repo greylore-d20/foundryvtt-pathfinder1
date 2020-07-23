@@ -133,12 +133,14 @@ export class ActorSheetPF extends ActorSheet {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) ? data.sourceDetails.data.skills[s].changeBonus : [];
+      skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (let [s2, skl2] of Object.entries(skl.subSkills)) {
           if (data.sourceDetails == null) continue;
           if (data.sourceDetails.data.skills[s] == null) continue;
           if (data.sourceDetails.data.skills[s].subSkills == null) continue;
           skl2.sourceDetails = data.sourceDetails.data.skills[s].subSkills[s2] != null ? data.sourceDetails.data.skills[s].subSkills[s2].changeBonus : [];
+          skl2.untrained = skl2.rt === true && skl2.rank <= 0;
         }
       }
     }

@@ -583,14 +583,20 @@ export class ActorSheetPF extends ActorSheet {
     /*  Feats
     /* -------------------------------------------- */
 
-    html.find(".item-detail.item-uses input[type='text']:not(:disabled)").off("change").change(this._setFeatUses.bind(this));
+    html.find(".item-detail.item-uses input[type='text']:not(:disabled)").off("change")
+    .change(this._setFeatUses.bind(this))
+    .on("wheel", this._setFeatUses.bind(this));
 
     /* -------------------------------------------- */
     /*  Spells
     /* -------------------------------------------- */
 
-    html.find(".item-list .spell-uses input[type='number'][data-type='amount']").off("change").change(this._setSpellUses.bind(this));
-    html.find(".item-list .spell-uses input[type='number'][data-type='max']").off("change").change(this._setMaxSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[data-type='amount']").off("change")
+    .change(this._setSpellUses.bind(this))
+    .on("wheel", this._setSpellUses.bind(this));
+    html.find(".item-list .spell-uses input[data-type='max']").off("change")
+    .change(this._setMaxSpellUses.bind(this))
+    .on("wheel", this._setMaxSpellUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
@@ -676,39 +682,61 @@ export class ActorSheetPF extends ActorSheet {
     return item.roll();
   }
 
+  _mouseWheelAdd(event, el) {
+    if (event && event instanceof WheelEvent) {
+      const value = parseFloat(el.value);
+      if (Number.isNaN(value)) return;
+  
+      const increase = -Math.sign(event.deltaY);
+      const amount = parseFloat(el.dataset.wheelStep) || 1;
+      el.value = value + amount * increase;
+    }
+  }
+
   _setFeatUses(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const el = event.currentTarget;
+    const itemId = el.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
-    const value = Number(event.currentTarget.value);
-    const updateData = {};
+    this._mouseWheelAdd(event.originalEvent, el);
+
+    const value = Number(el.value);
     this.setItemUpdate(item._id, "data.uses.value", value);
   }
 
   _setSpellUses(event) {
     event.preventDefault();
+    const el = event.currentTarget;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
-    const value = Number(event.currentTarget.value);
+    this._mouseWheelAdd(event.originalEvent, el);
+
+    const value = Number(el.value);
     this.setItemUpdate(item._id, "data.preparation.preparedAmount", value);
   }
   _setMaxSpellUses(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const el = event.currentTarget;
+    const itemId = el.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
-    const value = Number(event.currentTarget.value);
+    this._mouseWheelAdd(event.originalEvent, el);
+
+    const value = Number(el.value);
     this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
   }
 
   _setBuffLevel(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const el = event.currentTarget;
+    const itemId = el.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
 
-    const value = Number(event.currentTarget.value);
+    this._mouseWheelAdd(event.originalEvent, el);
+
+    const value = Number(el.value);
     this.setItemUpdate(item._id, "data.level", value);
   }
 
@@ -1584,6 +1612,17 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const el = event.currentTarget;
     el.select();
+  }
+
+  _onWheelChange(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+    const value = parseFloat(el.value);
+    if (Number.isNaN(value)) return;
+
+    const increase = -Math.sign(event.originalEvent.deltaY);
+    const amount = parseFloat(el.dataset.wheelStep) || 1;
+    el.value = value + amount * increase;
   }
 
   async _updateObject(event, formData) {

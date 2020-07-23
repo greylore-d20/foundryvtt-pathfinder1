@@ -422,14 +422,14 @@
     {{!-- Quick Actions --}}
     <h2>{{localize "PF1.QuickActions"}}</h2>
 
-    <div class="quick-actions">
+    <ol class="quick-actions">
       {{#each quickActions as |i|}}
-      <div class="quick-action" data-id="{{i.item._id}}" data-type="{{i.item.type}}" style="border-color: {{i.color1}};" title="{{i.item.name}}">
+      <li class="item" data-item-id="{{i.item._id}}" data-type="{{i.item.type}}" style="border-color: {{i.color1}};" title="{{i.item.name}}">
         <img src="{{i.item.img}}">
         <span class="icon-label">{{i.item.name}}</span>
-      </div>
+      </li>
       {{/each}}
-    </div>
+    </ol>
   </div>
   
   {{!-- Classes --}}

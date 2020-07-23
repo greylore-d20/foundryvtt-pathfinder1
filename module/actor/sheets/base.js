@@ -576,7 +576,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find("a.item-control.item-duplicate").click(this._duplicateItem.bind(this));
 
     // Quick Action
-    html.find(".quick-action").click(this._quickAction.bind(this));
+    html.find(".quick-actions li").click(this._quickAction.bind(this));
 
     /* -------------------------------------------- */
     /*  Feats
@@ -1066,7 +1066,7 @@ export class ActorSheetPF extends ActorSheet {
   _quickAction(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const itemId = a.dataset.id;
+    const itemId = a.dataset.itemId;
     const item = this.actor.items.find(o => o._id === itemId);
     if (!item) return;
 

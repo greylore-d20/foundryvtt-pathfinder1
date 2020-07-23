@@ -3038,4 +3038,16 @@ export class ActorPF extends Actor {
 
     super.deleteEmbeddedEntity(embeddedName, data, options);
   }
+
+  getQuickActions() {
+    return this.data.items.filter(o => (o.type === "attack" || o.type === "spell" || o.type === "feat") && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
+      return a.data.sort - b.data.sort;
+    }).map(o => {
+      return {
+        item: o,
+        color1: ItemPF.getTypeColor(o.type, 0),
+        color2: ItemPF.getTypeColor(o.type, 1),
+      };
+    });
+  }
 }

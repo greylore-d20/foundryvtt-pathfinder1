@@ -551,6 +551,9 @@ export class ActorSheetPF extends ActorSheet {
     // Duplicate item
     html.find("a.item-control.item-duplicate").click(this._duplicateItem.bind(this));
 
+    // Quick Action
+    html.find(".quick-action").click(this._quickAction.bind(this));
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
@@ -582,6 +585,7 @@ export class ActorSheetPF extends ActorSheet {
   createTabs(html) {
     const tabGroups = {
       "primary": {
+        "subdetails": {},
         "inventory": {},
         "feats": {},
         "skillset": {},
@@ -1031,6 +1035,16 @@ export class ActorSheetPF extends ActorSheet {
     this.actor.createOwnedItem(data);
   }
 
+  _quickAction(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const itemId = a.dataset.id;
+    const item = this.actor.items.find(o => o._id === itemId);
+    if (!item) return;
+
+    game.pf1.rollItemMacro(item.name, { itemId: item._id, itemType: item.type, actorId: this.actor._id });
+  }
+
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @private
@@ -1272,6 +1286,7 @@ export class ActorSheetPF extends ActorSheet {
     data.buffs = buffSections;
     data.attacks = attackSections;
     data.classes = classes;
+    data.quickActions = this.actor.getQuickActions();
   }
 
   /**

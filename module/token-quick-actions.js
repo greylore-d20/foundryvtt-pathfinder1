@@ -13,17 +13,17 @@ export class TokenQuickActions {
         return;
     
     let quickActions = '<div class="col actions"><div class="below">'
-    let items = actor.data.items.filter(o => (o.type === "attack" || o.type === "spell" || o.type === "feat") && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
-      return a.data.sort - b.data.sort;
-    });
-    items.forEach(function(item) {
+    let items = actor.getQuickActions();
+    items.forEach(function(i) {
+      const item = i.item;
       const icon = item.img;
       let title = "";
       if      (item.type === "attack") title = game.i18n.localize("PF1.AttackWith").format(item.name);
       else if (item.type === "spell")  title = game.i18n.localize("PF1.AttackWithSpell").format(item.name);
       else if (item.type === "feat")   title = game.i18n.localize("PF1.AttackWithFeat").format(item.name);
       const type = item.type;
-      quickActions += `<div id="${type}-${item._id}" class="control-icon token-quick-action"><img src="${icon}" width="36" height="36" title="${title}"></div>`;
+      quickActions += `<div id="${type}-${item._id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
+      `<img src="${icon}" width="36" height="36" title="${title}"></div>`;
     });
     
     html.find('.col.middle').after(quickActions + '</div></div>');

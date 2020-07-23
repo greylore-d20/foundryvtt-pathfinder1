@@ -1,6 +1,6 @@
 <div class="flexrow details-header">
   <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
-
+  
   <div class="flexcol">
     <div class="flexrow name-xp">
       <h1 class="charname">
@@ -37,7 +37,7 @@
           <label>HD</label>
           <input disabled type="text" value="{{data.attributes.hd.total}}" placeholder="1" data-dtype="Number" />
         </div>
-
+        
         <div class="charlevel tooltip">
           <div class="tooltipcontent">
             @details.cr.base : {{data.details.cr.base}}<br/>
@@ -55,7 +55,7 @@
       </div>
       {{/if}}
     </div>
-
+    
     {{!-- Character Summary --}}
     <div class="summary flexrow">
       <div>
@@ -80,36 +80,38 @@
         <a class="control alignment"><i class="fas fa-cog"></i></a>
       </div>
     </div>
-
-    <div class="race-container item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} title="{{localize "PF1.Race"}}">
-      <div class="race item-image rollable" style="background-image: url({{race.img}})" title="{{labels.race}}">
-        {{#unless race}}{{localize "PF1.Race"}}{{/unless}}
+    
+    <div class="flexrow">
+      <div class="race-container item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} title="{{localize "PF1.Race"}}">
+        <div class="race item-image rollable" style="background-image: url({{race.img}})" title="{{labels.race}}">
+          {{#unless race}}{{localize "PF1.Race"}}{{/unless}}
+        </div>
+        
+        <div class="item-controls flexcol">
+          {{#if owner}}
+          {{#unless race}}
+          <a class="item-control add" title="{{localize "PF1.CreateItem"}}"><i class="fas fa-plus"></i></a>
+          {{/unless}}
+          {{#if race}}
+          <a class="item-control edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
+          <a class="item-control delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+          {{/if}}
+          {{/if}}
+        </div>
       </div>
-
-      <div class="item-controls flexcol">
-        {{#if owner}}
-        {{#unless race}}
-        <a class="item-control add" title="{{localize "PF1.CreateItem"}}"><i class="fas fa-plus"></i></a>
-        {{/unless}}
-        {{#if race}}
-        <a class="item-control edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
-        <a class="item-control delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
-        {{/if}}
-        {{/if}}
+      
+      {{!-- Hit Point Ability --}}
+      <div class="form-group select hp-ability">
+        <label>{{localize "PF1.HPAbility"}}</label>
+        <select name="data.attributes.hpAbility">
+          {{#select data.attributes.hpAbility}}
+          <option value=""></option>
+          {{#each config.abilities as |ability a|}}
+          <option value="{{a}}">{{ability}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
       </div>
-    </div>
-  
-    {{!-- Hit Point Ability --}}
-    <div class="form-group select hp-ability">
-      <label>{{localize "PF1.HPAbility"}}</label>
-      <select name="data.attributes.hpAbility">
-        {{#select data.attributes.hpAbility}}
-        <option value=""></option>
-        {{#each config.abilities as |ability a|}}
-        <option value="{{a}}">{{ability}}</option>
-        {{/each}}
-        {{/select}}
-      </select>
     </div>
   </div>
 </div>
@@ -265,47 +267,186 @@
   </li>
 </ul>
 
-{{!-- Classes --}}
-<div class="classes-body scroll-primary" data-scroll-index="classes">
-  <h2>{{localize "PF1.ClassPlural"}}</h2>
+{{!-- Footer Navigation --}}
+<nav class="sheet-navigation tabs subtabs subdetails" data-group="subdetails">
+  <a class="item active" data-tab="quick-info">{{localize "PF1.QuickInfo"}}</a>
+  <a class="item" data-tab="classes">{{localize "PF1.ClassPlural"}}</a>
+</nav>
 
-  <ol class="inventory-list">
-    <li class="inventory-header flexrow">
-      <h3 class="item-name flexrow"></h3>
+<section class="subdetails-body">
+  <div class="tab quick-info" data-group="subdetails" data-tab="quick-info">
+    <div class="flexcol">
+      {{!-- AC --}}
+      <ul class="attributes armor-class flexrow">
+        {{#each data.attributes.ac as |ac id|}}
+        <li class="attribute armor-class tooltip" data-armorclass="{{id}}">
+          <div class="tooltipcontent">
+            @attributes.ac.{{id}}.total : {{ac.total}}
+            
+            {{#if ac.sourceDetails.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each ac.sourceDetails as |src|}}
+            {{src.name}}: {{src.value}}<br/>
+            {{/each}}
+            {{/if}}
+          </div>
+          <h4 class="attribute-name box-title">{{ac.label}}</h4>
+          <div class="attribute-value">
+            <span>{{numberFormat ac.total decimals=0 sign=false}}</span>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+      
+      {{!-- Misc --}}
+      <ul class="attributes misc-defenses flexrow">
+        <li class="attribute cmd tooltip" data-attribute="cmd">
+          <div class="tooltipcontent">
+            @attributes.cmd.total : {{data.attributes.cmd.total}}
+            
+            {{#if sourceDetails.data.attributes.cmd.total.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.attributes.cmd.total as |src|}}
+            {{src.name}}: {{src.value}}<br/>
+            {{/each}}
+            {{/if}}
+          </div>
+          <h4 class="attribute-name box-title">{{localize "PF1.CMDAbbr"}}</h4>
+          <div class="attribute-value">
+            <span>{{data.attributes.cmd.total}}</span>
+          </div>
+        </li>
+        
+        <li class="attribute cmd-flat-footed tooltip" data-attribute="cmd-flat-footed">
+          <div class="tooltipcontent">
+            @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
+            
+            {{#if sourceDetails.data.attributes.cmd.flatFootedTotal.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.attributes.cmd.flatFootedTotal as |src|}}
+            {{src.name}}: {{src.value}}<br/>
+            {{/each}}
+            {{/if}}
+          </div>
+          <h4 class="attribute-name box-title">{{localize "PF1.CMDFFAbbr"}}</h4>
+          <div class="attribute-value">
+            <span>{{data.attributes.cmd.flatFootedTotal}}</span>
+          </div>
+        </li>
+        
+        <li class="attribute sr tooltip" data-attribute="sr">
+          <div class="tooltipcontent">
+            @attributes.sr.total : {{data.attributes.sr.total}}
+          </div>
+          <h4 class="attribute-name box-title">{{localize "PF1.SpellResistance"}}</h4>
+          <div class="attribute-value">
+            <span>{{data.attributes.sr.total}}</span>
+          </div>
+        </li>
+      </ul>
+      
+      <ul class="attributes misc-base flexrow">
+        {{!-- BAB --}}
+        <li class="attribute bab" data-attribute="bab">
+          <h4 class="attribute-name box-title rollable">{{localize "PF1.BABAbbr"}}</h4>
+          <div class="attribute-value tooltip">
+            <span>{{numberFormat data.attributes.bab.total decimals=0 sign=false}}</span>
+            <span class="tooltipcontent">
+              @attributes.bab.total : {{data.attributes.bab.total}}
+              {{#if sourceDetails.data.attributes.bab.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+            </span>
+          </div>
+        </li>
+        
+        
+        {{!-- CMB --}}
+        <li class="attribute cmb" data-attribute="cmb">
+          <h4 class="attribute-name box-title rollable">{{localize "PF1.CMBAbbr"}}</h4>
+          <div class="attribute-value tooltip">
+            <span>{{data.attributes.cmb.total}}</span>
+            <span class="tooltipcontent">
+              @attributes.cmb.total : {{data.attributes.cmb.total}}
+              {{#if sourceDetails.data.attributes.cmb.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+            </span>
+          </div>
+        </li>
+        
+        {{!-- Initiative --}}
+        <li class="attribute initiative" data-attribute="init">
+          <h4 class="attribute-name box-title rollable">{{localize "PF1.Initiative"}}</h4>
+          <div class="attribute-value tooltip">
+            <span>{{data.attributes.init.total}}</span>
+            <span class="tooltipcontent">
+              @attributes.init.total : {{data.attributes.init.total}}
+              {{#if sourceDetails.data.attributes.init.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
 
-      <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
+    {{!-- Quick Actions --}}
+    <h2>{{localize "PF1.QuickActions"}}</h2>
 
-      {{#if owner}}
-      <div class="item-controls">
-        <a class="item-control item-create" title="Create Item" data-type="class">
-          <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
-        </a>
+    <div class="quick-actions">
+      {{#each quickActions as |i|}}
+      <div class="quick-action" data-id="{{i.item._id}}" data-type="{{i.item.type}}" style="border-color: {{i.color1}};" title="{{i.item.name}}">
+        <img src="{{i.item.img}}">
+        <span class="icon-label">{{i.item.name}}</span>
       </div>
-      {{/if}}
-    </li>
-
-    <ol class="item-list">
-      {{#each classes as |item iid|}}
-      <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
-        <div class="item-name flexrow rollable">
-          <div class="item-image" style="background-image: url({{item.img}})"></div>
-          <h4>{{item.name}}</h4>
-        </div>
-
-        <div class="item-detail item-feat-level tooltip">
-          <span>Level {{item.data.level}}</span>
-          <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{item.data.level}}</span>
-        </div>
-
-        {{#if ../owner}}
+      {{/each}}
+    </div>
+  </div>
+  
+  {{!-- Classes --}}
+  <div class="tab classes-body" data-group="subdetails" data-tab="classes">
+    <ol class="inventory-list">
+      <li class="inventory-header flexrow">
+        <h3 class="item-name flexrow"></h3>
+        
+        <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
+        
+        {{#if owner}}
         <div class="item-controls">
-          <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
-          <a class="item-control item-duplicate" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
-          <a class="item-control item-delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+          <a class="item-control item-create" title="Create Item" data-type="class">
+            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+          </a>
         </div>
         {{/if}}
       </li>
-      {{/each}}
+      
+      <ol class="item-list">
+        {{#each classes as |item iid|}}
+        <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
+          <div class="item-name flexrow rollable">
+            <div class="item-image" style="background-image: url({{item.img}})"></div>
+            <h4>{{item.name}}</h4>
+          </div>
+          
+          <div class="item-detail item-feat-level tooltip">
+            <span>Level {{item.data.level}}</span>
+            <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{item.data.level}}</span>
+          </div>
+          
+          {{#if ../owner}}
+          <div class="item-controls">
+            <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-duplicate" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
+            <a class="item-control item-delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+          </div>
+          {{/if}}
+        </li>
+        {{/each}}
+      </ol>
     </ol>
-  </ol>
-</div>
+  </div>
+</section>

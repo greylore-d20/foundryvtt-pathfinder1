@@ -65,7 +65,7 @@
       }
 
       .race-container {
-        flex: 0 0 64px;
+        flex: 1;
         margin: 3px 0;
 
         .item-controls {
@@ -86,6 +86,7 @@
           text-align: center;
           vertical-align: baseline;
           margin-right: 4px;
+          height: 64px;
 
           &.rollable:hover {
             background-image: url("/icons/svg/d20-black.svg") !important;
@@ -94,6 +95,9 @@
       }
 
       .hp-ability {
+        flex: 1;
+        justify-content: flex-end;
+
         > label {
           flex: 0;
           margin-right: 4px;
@@ -145,7 +149,7 @@
     img.profile {
       flex: 0 0 200px;
       width: 200px;
-      height: 240px;
+      height: 200px;
       padding: 0 3px;
       object-fit: contain;
       border: none;
@@ -243,6 +247,46 @@
 
     .attributes {
       border-bottom: @borderGroove;
+    }
+
+    .tab.quick-info {
+      ul.attributes {
+        margin: 2px 0;
+      }
+
+      .quick-actions {
+        display: flex;
+        flex-direction: row;
+
+        .quick-action {
+          cursor: pointer;
+          flex: 0 0 52px;
+          border-width: 2px;
+          border-style: solid;
+          border-radius: 4px;
+          display: flex;
+          margin: 2px;
+          overflow: hidden;
+
+          &:hover {
+            filter: brightness(150%);
+
+            .icon-label {
+              visibility: initial;
+            }
+          }
+
+          img {
+            border: none;
+            width: 48px;
+            height: 48px;
+          }
+
+          .icon-label {
+            visibility: hidden;
+          }
+        }
+      }
     }
   }
 

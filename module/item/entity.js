@@ -26,6 +26,10 @@ export class ItemPF extends Item {
     this.links = {};
   }
 
+  static isInventoryItem(type) {
+    return ["weapon", "equipment", "consumable", "loot"].includes(type);
+  }
+
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */

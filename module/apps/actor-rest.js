@@ -26,7 +26,7 @@ export class ActorRestDialog extends BaseEntitySheet {
    * Update the Actor using the configured options
    * Remove/unset any flags which are no longer configured
    */
-  _updateObject(event, formData) {
+  async _updateObject(event, formData) {
     const actor = this.object;
     const actorData = actor.data.data;
 
@@ -50,32 +50,29 @@ export class ActorRestDialog extends BaseEntitySheet {
       }
     }
 
+    let itemPromises = [];
     // Restore daily uses of spells, feats, etc.
     if (formData["restoreDailyUses"] === true) {
-      let items = [],
-        hasItemUpdates = false;
-      for (let a = 0; a < actor.data.items.length; a++) {
-        let item = actor.data.items[a];
-        items[a] = item;
-        let itemUpdate = {};
-        const itemData = item.data;
+      for (let item of actor.items) {
+        const itemData = item.data.data;
 
         if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
-          hasItemUpdates = true;
-          itemUpdate["data.uses.value"] = itemData.uses.max;
+          const itemUpdateData = {
+            "data.uses.value": itemData.uses.max,
+          };
+          itemPromises.push(item.update(itemUpdateData));
         }
         else if (item.type === "spell") {
           const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
             isSpontaneous = spellbook.spontaneous;
           if (!isSpontaneous && itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-            hasItemUpdates = true;
-            itemUpdate["data.preparation.preparedAmount"] = itemData.preparation.maxAmount;
+            const itemUpdateData = {
+              "data.preparation.preparedAmount": itemData.preparation.maxAmount,
+            };
+            itemPromises.push(item.update(itemUpdateData));
           }
         }
-
-        items[a] = mergeObject(item, itemUpdate, { enforceTypes: false, inplace: false });
       }
-      if (hasItemUpdates) updateData.items = items;
 
       // Restore spontaneous spellbooks
       for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
@@ -87,6 +84,7 @@ export class ActorRestDialog extends BaseEntitySheet {
       }
     }
 
-    actor.update(updateData);
+    await Promise.all(itemPromises);
+    return actor.update(updateData);
   }
 }

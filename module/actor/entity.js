@@ -4,6 +4,7 @@ import { createTag, linkData, isMinimumCoreVersion, convertDistance, convertWeig
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
+import { getSkipActionPrompt } from "../settings.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -28,17 +29,16 @@ export class ActorPF extends Actor {
     if (action === "defense-save") {
       const actor = ItemPF._getChatCardActor(card);
       const saveId = button.dataset.save;
-      if (actor) actor.rollSavingThrow(saveId, { event: event });
+      if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt(), });
     }
     else if (action === "save") {
       const actors = ActorPF.getSelectedActors();
       const saveId = button.dataset.type;
       let noSound = false;
       for (let a of actors) {
-        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound });
+        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt(), });
         noSound = true;
       }
-      // if (actor) actor.rollSavingThrow(saveId, { event: event });
     }
   }
 
@@ -2221,7 +2221,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options={}) {
+  rollSkill(skillId, options={event: null, skipDialog: false}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     let skl, sklName;
@@ -2266,7 +2266,8 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      fastForward: options.skipDialog,
     });
   }
 
@@ -2427,7 +2428,7 @@ export class ActorPF extends Actor {
     roll.toMessage(messageData, {rollMode});
   }
 
-  rollSavingThrow(savingThrowId, options={ event: null, noSound: false }) {
+  rollSavingThrow(savingThrowId, options={ event: null, noSound: false, skipPrompt: true }) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
@@ -2466,6 +2467,7 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
+      fastForward: options.skipPrompt !== false ? true : false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,

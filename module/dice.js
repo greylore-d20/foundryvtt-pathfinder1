@@ -117,7 +117,7 @@ export class DicePF {
 
     // Modify the roll and handle fast-forwarding
     parts = ["1d20"].concat(parts);
-    if (fastForward === true || event.shiftKey) return _roll(parts, staticRoll);
+    if (fastForward === true) return _roll(parts, staticRoll);
     else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog

@@ -6,7 +6,7 @@
 
 // Import Modules
 import { PF1 } from "./module/config.js";
-import { registerSystemSettings } from "./module/settings.js";
+import { registerSystemSettings, getSkipActionPrompt } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { measureDistances } from "./module/canvas.js";
@@ -273,7 +273,7 @@ function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) 
 
   // Trigger the item roll
   if (!game.keyboard.isDown("Control")) {
-    return item.use({skipDialog: keyboard.isDown("Shift")});
+    return item.use({skipDialog: getSkipActionPrompt()});
   }
   return item.roll();
 }

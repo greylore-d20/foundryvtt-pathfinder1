@@ -1141,7 +1141,7 @@ export class ItemPF extends Item {
     };
 
     // Handle fast-forwarding
-    if (skipDialog || (ev instanceof MouseEvent && (ev.shiftKey || ev.button === 2))) return _roll.call(this, true);
+    if (skipDialog) return _roll.call(this, true);
 
     // Render modal dialog
     let template = "systems/pf1/templates/apps/attack-roll-dialog.html";

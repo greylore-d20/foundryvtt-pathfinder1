@@ -207,4 +207,21 @@ export const registerSystemSettings = function() {
       Object.values(game.actors.tokens).forEach(o => { o.update({}); });
     },
   });
+
+  /**
+   * Skip action dialog prompts
+   */
+  game.settings.register("pf1", "skipActionDialogs", {
+    name: "SETTINGS.pf1SkipActionDialogsN",
+    hint: "SETTINGS.pf1SkipActionDialogsH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+};
+
+export const getSkipActionPrompt = function() {
+  return (game.settings.get("pf1", "skipActionDialogs") && !game.keyboard.isDown("Shift")) ||
+  (!game.settings.get("pf1", "skipActionDialogs") && game.keyboard.isDown("Shift"));
 };

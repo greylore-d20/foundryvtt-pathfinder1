@@ -6,6 +6,7 @@ import { TokenConfigPF } from "../../token-config.js";
 import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
+import { getSkipActionPrompt } from "../../settings.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -981,7 +982,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await item.use({ev: event, skipDialog: event.shiftKey});
+      await item.use({ev: event, skipDialog: getSkipActionPrompt()});
     }
   }
 
@@ -1159,7 +1160,7 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSavingThrow(event) {
     event.preventDefault();
     let savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
-    this.actor.rollSavingThrow(savingThrow, {event: event});
+    this.actor.rollSavingThrow(savingThrow, {event: event, skipPrompt: getSkipActionPrompt()});
   }
 
   /* -------------------------------------------- */
@@ -1319,14 +1320,14 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSkillCheck(event) {
     event.preventDefault();
     const skill = event.currentTarget.parentElement.parentElement.dataset.skill;
-    this.actor.rollSkill(skill, {event: event});
+    this.actor.rollSkill(skill, {event: event, skipDialog: getSkipActionPrompt()});
   }
 
   _onRollSubSkillCheck(event) {
     event.preventDefault();
     const mainSkill = event.currentTarget.parentElement.parentElement.dataset.mainSkill;
     const skill = event.currentTarget.parentElement.parentElement.dataset.skill;
-    this.actor.rollSkill(`${mainSkill}.subSkills.${skill}`, {event: event});
+    this.actor.rollSkill(`${mainSkill}.subSkills.${skill}`, {event: event, skipDialog: getSkipActionPrompt()});
   }
 
   /* -------------------------------------------- */

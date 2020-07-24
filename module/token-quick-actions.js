@@ -28,7 +28,8 @@ export class TokenQuickActions {
     
     html.find('.col.middle').after(quickActions + '</div></div>');
     
-    items.forEach(function(item) {
+    items.forEach(function(i) {
+      const item = i.item;
       const type = item.type;
       html.find(`#${type}-${item._id}`).click(function(event) {
         game.pf1.rollItemMacro(item.name, {

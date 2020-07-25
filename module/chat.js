@@ -1,6 +1,10 @@
 import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
-const Color = require("color");
+
+let Color;
+if (typeof require === 'function') {
+  Color = require("color");
+}
 
 /* -------------------------------------------- */
 

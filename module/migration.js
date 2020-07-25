@@ -171,6 +171,7 @@ export const migrateItemData = function(item) {
   _migrateCR(item, updateData);
   _migrateItemChanges(item, updateData);
   _migrateTemplateSize(item, updateData);
+  _migrateEquipmentSize(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -611,6 +612,15 @@ const _migrateTemplateSize = function(ent, updateData) {
   const measureSize = getProperty(ent.data, "data.measureTemplate.size");
   if (typeof measureSize === "number") {
     updateData["data.measureTemplate.size"] = measureSize.toString();
+  }
+};
+
+const _migrateEquipmentSize = function(ent, updateData) {
+  if (ent.type !== "equipment") return;
+
+  const size = getProperty(ent.data, "data.size");
+  if (!size) {
+    updateData["data.size"] = "med";
   }
 };
 

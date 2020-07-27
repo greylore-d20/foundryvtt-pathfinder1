@@ -39,7 +39,7 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
     }
   }
 
-  ChatMessagePF.create(chatData);
+  return ChatMessagePF.create(chatData);
 };
 
 export const hideRollInfo = function(app, html, data) {

@@ -2530,7 +2530,7 @@ export class ActorPF extends Actor {
   /**
    * Show defenses in chat
    */
-  rollDefenses() {
+  async rollDefenses() {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     let rollData = this.getRollData();
 
@@ -2543,17 +2543,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note
-            });
-          }
-          if (noteStr.length > 0) acNotes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else acNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        acNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -2663,8 +2653,8 @@ export class ActorPF extends Actor {
         fastHealing: d.traits.fastHealing,
       };
     }
-    createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data, {
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data, {
+      speaker: ChatMessage.getSpeaker({ actor: this }),
     });
   }
 

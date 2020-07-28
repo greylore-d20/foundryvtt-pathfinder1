@@ -262,7 +262,7 @@ async function createItemMacro(item, slot) {
  * @param {object} [options={}]
  * @return {Promise}
  */
-function rollItemMacro(itemName, {itemId=null, itemType=null, actorId=null}={}) {
+function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
   let actor = getActorFromId(actorId);
   if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
   const item = actor ? actor.items.find(i => {

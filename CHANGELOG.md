@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.701
+
+### Bug Fixes
+
+- Token quick actions were no longer working
+- Unlinked tokens linked size with the main actor
+
+### Changelog
+
+- Added more class abilities, due to the efforts of holyplankton (many thanks!)
+- Updated the Ultimate Equipment roll tables, due to the efforts of Iron (many thanks!)
+
 ## 0.7
 
 ### Bug Fixes

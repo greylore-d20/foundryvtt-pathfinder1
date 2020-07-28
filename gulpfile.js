@@ -37,7 +37,7 @@ const js = gulp.series(cleanDist, compileJS);
 
 function watchUpdates() {
   gulp.watch(PF1_LESS, css);
-  gulp.watch(PF1_MODULE, js);
+  // gulp.watch(PF1_MODULE, js);
 }
 
 /* ----------------------------------------- */
@@ -46,7 +46,7 @@ function watchUpdates() {
 
 exports.default = gulp.series(
   gulp.parallel(css),
-  gulp.parallel(js),
+  // gulp.parallel(js),
   watchUpdates
 );
 exports.css = css;

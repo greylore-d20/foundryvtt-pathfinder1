@@ -3036,6 +3036,7 @@ export class ActorPF extends Actor {
   }
 
   getQuickActions() {
+    console.log("MEW");
     return this.data.items.filter(o => (o.type === "attack" || o.type === "spell" || o.type === "feat") && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
       return a.data.sort - b.data.sort;
     }).map(o => {

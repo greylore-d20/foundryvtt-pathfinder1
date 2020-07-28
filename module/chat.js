@@ -1,10 +1,6 @@
 import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
-
-let Color;
-if (typeof require === 'function') {
-  Color = require("color");
-}
+import { Color } from "./lib/color/color.js";
 
 /* -------------------------------------------- */
 

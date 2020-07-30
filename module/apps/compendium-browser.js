@@ -163,12 +163,17 @@ export class CompendiumBrowser extends Application {
     }
 
     // const items = await p.getContent();
-    const items = (await SocketInterface.dispatch("modifyCompendium", {
+    let items = (await SocketInterface.dispatch("modifyCompendium", {
       type: p.collection,
       action: "get",
       data: {},
       options: { returnType: "content" },
     })).result;
+
+    if(p.translated) {
+      items = items.map(item => p.translate(item)).sort((a, b) => (a.name > b.name) ? 1 : -1);
+    }
+
     for (let i of items) {
       if (!this._filterItems(i)) continue;
       this.items.push(this._mapEntry(p, i));

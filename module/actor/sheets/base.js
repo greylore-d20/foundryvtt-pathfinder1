@@ -204,11 +204,16 @@ export class ActorSheetPF extends ActorSheet {
       if (data.useBGSkills) skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
     });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-      let roll = new Roll(
-        this.actor.data.data.details.bonusSkillRankFormula,
-        rollData,
-      ).roll();
-      skillRanks.allowed += roll.total;
+      try {
+        let roll = new Roll(
+          this.actor.data.data.details.bonusSkillRankFormula,
+          rollData,
+        ).roll();
+        skillRanks.allowed += roll.total;
+      }
+      catch (e) {
+        console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+      }
     }
     // Calculate used background skills
     if (data.useBGSkills) {

@@ -2879,10 +2879,50 @@ export class ActorPF extends Actor {
    * @returns {number} The total amount of currency this actor has, in gold pieces
    */
   mergeCurrency() {
-    const carried = getProperty(this.data.data, "currency");
-    const alt = getProperty(this.data.data, "altCurrency");
-    return (carried ? carried.pp * 10 + carried.gp + carried.sp / 10 + carried.cp / 100 : 0) +
-      (alt ? alt.pp * 10 + alt.gp + alt.sp / 10 + alt.cp / 100 : 0);
+    return this.getTotalCurrency("currency") + this.getTotalCurrency("altCurrency");
+  }
+
+  getTotalCurrency(category="currency") {
+    const currencies = getProperty(this.data.data, category);
+    return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
+  }
+
+  /**
+   * Converts currencies of the given category to the given currency type
+   * @param {string} category - Either 'currency' or 'altCurrency'.
+   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   */
+  convertCurrency(category="currency", type="pp") {
+
+    const totalValue = category === "currency" ? this.getTotalCurrency("currency") : this.getTotalCurrency("altCurrency");
+    let values = [0, 0, 0, 0];
+    switch (type) {
+      case "pp":
+        values[0] = Math.floor(totalValue / 10);
+        values[1] = Math.max(0, Math.floor(totalValue) - (values[0] * 10));
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[0] * 100) - (values[1] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[0] * 1000) - (values[1] * 100) - (values[2] * 10));
+        break;
+      case "gp":
+        values[1] = Math.floor(totalValue);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[1] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[1] * 100) - (values[2] * 10));
+        break;
+      case "sp":
+        values[2] = Math.floor(totalValue * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[2] * 10));
+        break;
+      case "cp":
+        values[3] = Math.floor(totalValue * 100);
+        break;
+    }
+
+    const updateData = {};
+    updateData[`data.${category}.pp`] = values[0];
+    updateData[`data.${category}.gp`] = values[1];
+    updateData[`data.${category}.sp`] = values[2];
+    updateData[`data.${category}.cp`] = values[3];
+    return this.update(updateData);
   }
 
   /**

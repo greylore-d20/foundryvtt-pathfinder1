@@ -579,6 +579,9 @@ export class ActorSheetPF extends ActorSheet {
     // Quick Action
     html.find(".quick-actions li").click(this._quickAction.bind(this));
 
+    // Convert currency
+    html.find("a.convert-currency").click(this._convertCurrency.bind(this));
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
@@ -1100,6 +1103,15 @@ export class ActorSheetPF extends ActorSheet {
     if (!item) return;
 
     game.pf1.rollItemMacro(item.name, { itemId: item._id, itemType: item.type, actorId: this.actor._id });
+  }
+
+  _convertCurrency(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const currencyType = a.dataset.type;
+    const category = a.dataset.category;
+
+    this.actor.convertCurrency(category, currencyType);
   }
 
   /**

@@ -1139,6 +1139,44 @@ export class ItemPF extends Item {
             templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
           }
         }
+        // Add metadata
+        const metadata = {};
+        metadata.item = this._id;
+        metadata.rolls = {
+          attacks: {},
+        };
+        // Add attack rolls
+        for (let a = 0; a < attacks.length; a++) {
+          const atk = attacks[a];
+          const attackRolls = { attack: null, damage: {}, critConfirm: null, critDamage: {} };
+          // Add attack roll
+          if (atk.attack.roll) attackRolls.attack = atk.attack.roll.toJSON();
+          // Add damage rolls
+          if (atk.damage.rolls.length) {
+            for (let b = 0; b < atk.damage.rolls.length; b++) {
+              const r = atk.damage.rolls[b];
+              attackRolls.damage[b] = {
+                damageType: r.damageType,
+                roll: r.roll.toJSON(),
+              };
+            }
+          }
+          // Add critical confirmation roll
+          if (atk.critConfirm.roll) attackRolls.critConfirm = atk.critConfirm.roll.toJSON();
+          // Add critical damage rolls
+          if (atk.critDamage.rolls.length) {
+            for (let b = 0; b < atk.critDamage.rolls.length; b++) {
+              const r = atk.critDamage.rolls[b];
+              attackRolls.critDamage[b] = {
+                damageType: r.damageType,
+                roll: r.roll.toJSON(),
+              };
+            }
+          }
+
+          metadata.rolls.attacks[a] = attackRolls;
+        }
+        setProperty(chatData, "flags.pf1.metadata", metadata);
         // Create message
         await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
       }

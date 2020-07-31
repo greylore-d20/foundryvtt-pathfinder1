@@ -1630,6 +1630,24 @@ export class ActorSheetPF extends ActorSheet {
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
 
+    // Iterate over data
+    for (let [k, v] of Object.entries(formData)) {
+      // Add or subtract currencies
+      if (k.startsWith("data.currency.") || k.startsWith("data.altCurrency.")) {
+        const originalValue = getProperty(this.actor.data, k);
+        if (v.match(/(\+|-)([0-9]+)/)) {
+          const operator = RegExp.$1;
+          let value = parseInt(RegExp.$2);
+          if (operator === "-") value = -value;
+          formData[k] = originalValue + value;
+        }
+        else if (v.match(/([0-9]+)/)) {
+          formData[k] = parseInt(v);
+        }
+        else formData[k] = originalValue;
+      }
+    }
+
     return super._updateObject(event, formData);
   }
 }

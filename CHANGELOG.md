@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.71
+
+### Changelog
+
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+- Updated Compendium Browser compatibility with Babele, due to the efforts of Simone Ricciardi (many thanks!)
+
 ## 0.701
 
 ### Bug Fixes

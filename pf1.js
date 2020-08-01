@@ -24,6 +24,7 @@ import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion 
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
+import { updateChanges } from "./module/actor/update-changes.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -136,7 +137,7 @@ Hooks.once("ready", async function() {
     await migrations.migrateWorld();
   }
 
-  game.actors.entities.forEach(obj => { obj._updateChanges({ sourceOnly: true }); });
+  game.actors.entities.forEach(obj => { updateChanges.call(obj, { sourceOnly: true }); });
   
   Hooks.on('renderTokenHUD', (app, html, data) => { TokenQuickActions.addTop3Attacks(app, html, data) });
 });

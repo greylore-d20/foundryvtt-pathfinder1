@@ -204,11 +204,16 @@ export class ActorSheetPF extends ActorSheet {
       if (data.useBGSkills) skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
     });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-      let roll = new Roll(
-        this.actor.data.data.details.bonusSkillRankFormula,
-        rollData,
-      ).roll();
-      skillRanks.allowed += roll.total;
+      try {
+        let roll = new Roll(
+          this.actor.data.data.details.bonusSkillRankFormula,
+          rollData,
+        ).roll();
+        skillRanks.allowed += roll.total;
+      }
+      catch (e) {
+        console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+      }
     }
     // Calculate used background skills
     if (data.useBGSkills) {
@@ -578,6 +583,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Action
     html.find(".quick-actions li").click(this._quickAction.bind(this));
+
+    // Convert currency
+    html.find("a.convert-currency").click(this._convertCurrency.bind(this));
 
     /* -------------------------------------------- */
     /*  Feats
@@ -1100,6 +1108,15 @@ export class ActorSheetPF extends ActorSheet {
     if (!item) return;
 
     game.pf1.rollItemMacro(item.name, { itemId: item._id, itemType: item.type, actorId: this.actor._id });
+  }
+
+  _convertCurrency(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const currencyType = a.dataset.type;
+    const category = a.dataset.category;
+
+    this.actor.convertCurrency(category, currencyType);
   }
 
   /**
@@ -1629,6 +1646,24 @@ export class ActorSheetPF extends ActorSheet {
     // Translate CR
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
+
+    // Iterate over data
+    for (let [k, v] of Object.entries(formData)) {
+      // Add or subtract currencies
+      if (k.startsWith("data.currency.") || k.startsWith("data.altCurrency.")) {
+        const originalValue = getProperty(this.actor.data, k);
+        if (v.match(/(\+|-)([0-9]+)/)) {
+          const operator = RegExp.$1;
+          let value = parseInt(RegExp.$2);
+          if (operator === "-") value = -value;
+          formData[k] = originalValue + value;
+        }
+        else if (v.match(/([0-9]+)/)) {
+          formData[k] = parseInt(v);
+        }
+        else formData[k] = originalValue;
+      }
+    }
 
     return super._updateObject(event, formData);
   }

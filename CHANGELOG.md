@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.71
+
+### Bug Fixes
+
+- Fixed a compability issue with Babele, due to the efforts of Simone Ricciardi (many thanks!)
+
+### Changelog
+
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+- Added the ability to offset currencies by entering things like '+5' or '-5'
+- Added buttons to convert currencies
+- Added metadata to ChatMessagePF attacks for use by macro and module creators
+- Added the '=' operator to changes, setting an actor variable to a given value rather than adding to it
+  - The '=' operator is modifier-specific, meaning that for example multiple Enhancement modifiers replace one another, but an Enhancement modifier and a Deflection modifier are added to each other
+  - Changes with the '=' operator get applied before changes with the '+' operator
+  - Internally, the base speeds as entered on the front page of an actor sheet is used as a change with the appropriate target, a 'Base' modifier, an '=' operator and a priority of 1000
+- Added the ability to assign a sound effect to attacks, which will be fired upon showing the message for it
+
 ## 0.701
 
 ### Bug Fixes

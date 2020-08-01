@@ -12,6 +12,10 @@ People and credits are listed in no particular order.
 - [Divert](https://game-icons.net/1x1/lorc/divert.html)
 - [Magic Swirl](https://game-icons.net/1x1/lorc/magic-swirl.html)
 
+## Simone Ricciardi
+
+- Fixed a compatibility issue with Babele
+
 ## holyplankton
 
 - Added most class abilities to their compendium

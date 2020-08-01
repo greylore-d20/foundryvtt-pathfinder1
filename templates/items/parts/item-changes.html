@@ -48,8 +48,8 @@
 
       <select class="change-operator" name="data.changes.{{a}}.operator">
         {{#select (lookup this "operator") }}
-        <option value="+">+</option>
-        {{!-- <option value="=">=</option> --}}
+        <option value="add">+</option>
+        <option value="set">=</option>
         {{/select}}
       </select>
       <select class="change-target" name="data.changes.{{a}}.target">

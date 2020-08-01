@@ -7,7 +7,8 @@
     </h3>
     {{#each data.currency as |v k|}}
     <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
-    <input type="text" name="data.currency.{{k}}" value="{{v}}" data-dtype="Number"/>
+    <input type="text" class="select-on-click" name="data.currency.{{k}}" value="{{v}}" data-dtype="String"/>
+    <a class="convert-currency" data-type="{{k}}" data-category="currency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
     {{/each}}
   </ol>
   {{#if isCharacter}}
@@ -18,7 +19,8 @@
     </h3>
     {{#each data.altCurrency as |v k|}}
     <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
-    <input type="text" name="data.altCurrency.{{k}}" value="{{v}}" data-dtype="Number"/>
+    <input type="text" class="select-on-click" name="data.altCurrency.{{k}}" value="{{v}}" data-dtype="String"/>
+    <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
     {{/each}}
   </ol>
   {{/if}}

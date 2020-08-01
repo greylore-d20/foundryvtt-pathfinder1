@@ -481,6 +481,10 @@ export const mergeObjectExt = function(original, other={}, {
   return original;
 };
 
-export const naturalSort = function(a, b) {
-  return new Intl.Collator(game.settings.get("core", "language"), { numeric: true }).compare(a, b);
+export const naturalSort = function(arr, propertyKey="") {
+  return arr.sort((a, b) => {
+    const propA = propertyKey ? getProperty(a, propertyKey) : a;
+    const propB = propertyKey ? getProperty(b, propertyKey) : b;
+    return new Intl.Collator(game.settings.get("core", "language"), { numeric: true }).compare(propA, propB);
+  });
 };

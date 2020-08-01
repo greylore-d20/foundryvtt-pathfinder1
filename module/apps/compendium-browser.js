@@ -172,7 +172,7 @@ export class CompendiumBrowser extends Application {
     })).result;
 
     if(p.translated) {
-      items = items.map(item => p.translate(item)).sort(naturalSort);
+      items = items.map(item => p.translate(item));
     }
 
     for (let i of items) {
@@ -205,7 +205,7 @@ export class CompendiumBrowser extends Application {
     await Promise.all(promises);
 
     // Sort items
-    this.items.sort(naturalSort);
+    this.items = naturalSort(this.items, "name");
 
     // Return if no appropriate items were found
     if (this.items.length === 0) {
@@ -481,50 +481,50 @@ export class CompendiumBrowser extends Application {
       {
         path: "data.school",
         label: game.i18n.localize("PF1.SpellSchool"),
-        items: Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
+        items: naturalSort(Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "data.subschool",
         label: game.i18n.localize("PF1.SubSchool"),
-        items: Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "spellTypes",
         label: game.i18n.localize("PF1.TypePlural"),
-        items: Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "learnedAt.class",
         label: game.i18n.localize("PF1.ClassPlural"),
-        items: Object.keys(this.extraFilters["learnedAt.class"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["learnedAt.class"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "learnedAt.domain",
         label: game.i18n.localize("PF1.Domain"),
-        items: Object.keys(this.extraFilters["learnedAt.domain"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["learnedAt.domain"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "learnedAt.subDomain",
         label: game.i18n.localize("PF1.SubDomain"),
-        items: Object.keys(this.extraFilters["learnedAt.subDomain"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["learnedAt.subDomain"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       // {
       //   path: "learnedAt.elementalSchool",
@@ -537,10 +537,10 @@ export class CompendiumBrowser extends Application {
       {
         path: "learnedAt.bloodline",
         label: game.i18n.localize("PF1.Bloodline"),
-        items: Object.keys(this.extraFilters["learnedAt.bloodline"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["learnedAt.bloodline"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "_spellLevel",
@@ -652,26 +652,26 @@ export class CompendiumBrowser extends Application {
       {
         path: "data.details.cr.total",
         label: "CR",
-        items: Object.keys(this.extraFilters["data.details.cr.total"]).sort(naturalSort).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["data.details.cr.total"]).reduce((cur, o) => {
           cur.push({ key: o, name: CR.fromNumber(o) });
           return cur;
-        }, []),
+        }, []), "name"),
       },
       {
         path: "creatureType",
         label: game.i18n.localize("PF1.CreatureType"),
-        items: Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+        items: naturalSort(Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
           return cur;
-        }, []),
+        }, []), "name"),
       },
       {
         path: "subTypes",
         label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: Object.keys(this.extraFilters["subTypes"]).sort(naturalSort).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []), "name"),
       },
     ];
   }
@@ -689,18 +689,18 @@ export class CompendiumBrowser extends Application {
       {
         path: "tags",
         label: game.i18n.localize("PF1.Tags"),
-        items: Object.keys(this.extraFilters.tags).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters.tags).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
       {
         path: "assocations.class",
         label: game.i18n.localize("PF1.ClassPlural"),
-        items: Object.keys(this.extraFilters.associations["class"]).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters.associations["class"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort(naturalSort),
+        }, []), "name"),
       },
     ];
   }
@@ -771,18 +771,18 @@ export class CompendiumBrowser extends Application {
       {
         path: "data.creatureType",
         label: game.i18n.localize("PF1.CreatureType"),
-        items: Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+        items: naturalSort(Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
           return cur;
-        }, []),
+        }, []), "name"),
       },
       {
         path: "subTypes",
         label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: Object.keys(this.extraFilters["subTypes"]).sort(naturalSort).reduce((cur, o) => {
+        items: naturalSort(Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []),
+        }, []), "name"),
       },
     ];
   }

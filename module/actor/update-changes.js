@@ -235,10 +235,6 @@ export const updateChanges = async function({data=null}={}) {
       flats.forEach(f => {
         sourceInfo[f] = sourceInfo[f] || { positive: [], negative: [] };
         sourceInfo[f].positive.push(change.source);
-        // sourceInfo[f].positive.push({
-          // name: this.constructor._translateSourceInfo(change.raw.subTarget, change.raw.modifier, change.source.name, change.raw.operator),
-          // value: change.raw.value,
-        // });
       });
     }
     // Add change

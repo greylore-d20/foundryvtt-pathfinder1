@@ -131,7 +131,9 @@ export class CompendiumBrowser extends Application {
       case "bestiary":
         return game.i18n.localize("PF1.Creatures");
       case "classes":
-        return game.i18n.localize("PF1.ItemTypeClass");
+        return game.i18n.localize("PF1.Classes");
+      case "races":
+        return game.i18n.localize("PF1.Races");
     }
     return this.type;
   }
@@ -230,6 +232,9 @@ export class CompendiumBrowser extends Application {
       case "classes":
         this._fetchClassFilters();
         break;
+      case "races":
+        this._fetchRaceFilters();
+        break;
     }
 
     this.activeFilters = this.filters.reduce((cur, f) => {
@@ -243,6 +248,7 @@ export class CompendiumBrowser extends Application {
     if (this.type === "items" && !["weapon", "equipment", "loot", "consumable"].includes(item.type)) return false;
     if (this.type === "feats" && item.type !== "feat") return false;
     if (this.type === "classes" && item.type !== "class") return false;
+    if (this.type === "races" && item.type !== "race") return false;
     return true;
   }
 
@@ -411,6 +417,20 @@ export class CompendiumBrowser extends Application {
     }
   }
 
+  _mapRaces(result, item) {
+
+    this.extraFilters = this.extraFilters || {
+      "subTypes": {},
+    };
+    result.item.subTypes = [];
+
+    // Get subtypes
+    result.item.subTypes = item.data.subTypes.map(o => {
+      this.extraFilters.subTypes[o[0]] = true;
+      return o[0];
+    });
+  }
+
   _mapEntry(pack, item) {
 
     const result = {
@@ -439,6 +459,9 @@ export class CompendiumBrowser extends Application {
         break;
       case "classes":
         this._mapClasses(result, item);
+        break;
+      case "races":
+        this._mapRaces(result, item);
         break;
     }
 
@@ -794,6 +817,27 @@ export class CompendiumBrowser extends Application {
         label: game.i18n.localize("PF1.SavingThrowWill"),
         items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+    ];
+  }
+
+  _fetchRaceFilters() {
+    this.filters = [
+      {
+        path: "data.creatureType",
+        label: game.i18n.localize("PF1.CreatureType"),
+        items: Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1] });
+          return cur;
+        }, []),
+      },
+      {
+        path: "subTypes",
+        label: game.i18n.localize("PF1.RaceSubtypePlural"),
+        items: Object.keys(this.extraFilters["subTypes"]).sort().reduce((cur, o) => {
+          cur.push({ key: o, name: o });
           return cur;
         }, []),
       },

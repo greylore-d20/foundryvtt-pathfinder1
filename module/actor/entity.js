@@ -312,9 +312,11 @@ export class ActorPF extends Actor {
           sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
           for (let src of grp) {
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+            let srcValue = src.value;
+            if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             sourceDetails[changeTarget].push({
               name: srcInfo,
-              value: src.value
+              value: srcValue,
             });
           }
         }

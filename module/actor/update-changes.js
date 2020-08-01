@@ -86,7 +86,8 @@ export const updateChanges = async function({data=null}={}) {
           type: item.type,
           subtype: this.constructor._getChangeItemSubtype(item),
           name: item.name,
-          item: item
+          item: item,
+          operator: change.operator,
         }
       });
     });
@@ -191,14 +192,16 @@ export const updateChanges = async function({data=null}={}) {
   }
 
   // Sort changes
-  allChanges.sort(_sortChanges.bind(this));
+  allChanges = allChanges.sort(_sortChanges.bind(this));
 
   // Parse changes
   let temp = [];
   const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
   updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
   _addDynamicData.call(this, { updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
-  allChanges.forEach(change => {
+
+  // Parse change formulas
+  allChanges.forEach((change, a) => {
     const formula = change.raw.formula || "";
     if (formula === "") return;
     const changeTarget = change.raw.subTarget;
@@ -214,26 +217,39 @@ export const updateChanges = async function({data=null}={}) {
 
     try {
       change.raw.value = roll.roll().total;
+      change.source.value = change.raw.value;
     }
     catch (e) {
       ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name, this.name));
     }
     _parseChange.call(this, change, changeData[changeTarget], flags);
-  });
-  _applySetChanges(updateData, srcData1, allChanges.filter(o => o.raw.operator === "set"));
-  {
-    const addChanges = allChanges.filter(o => ["add", "+"].includes(o.raw.operator));
-    addChanges.forEach((change, a) => {
-      const changeTarget = change.raw.subTarget;
-      temp.push(changeData[changeTarget]);
 
-      if (addChanges.length <= a+1 || addChanges[a+1].raw.subTarget !== changeTarget) {
+    temp.push(changeData[changeTarget]);
+
+    // Set change
+    if (change.raw.operator === "set") {
+      _applySetChanges(updateData, srcData1, [change]);
+      // Set source info
+      let flats = getChangeFlat(change.raw.subTarget, change.raw.modifier, srcData1.data);
+      if (!(flats instanceof Array)) flats = [flats];
+      flats.forEach(f => {
+        sourceInfo[f] = sourceInfo[f] || { positive: [], negative: [] };
+        sourceInfo[f].positive.push(change.source);
+        // sourceInfo[f].positive.push({
+          // name: this.constructor._translateSourceInfo(change.raw.subTarget, change.raw.modifier, change.source.name, change.raw.operator),
+          // value: change.raw.value,
+        // });
+      });
+    }
+    // Add change
+    else if (["add", "+"].includes(change.raw.operator)) {
+      if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
         const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
         _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags });
         temp = [];
       }
-    });
-  }
+    }
+  });
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
@@ -341,9 +357,9 @@ export const updateChanges = async function({data=null}={}) {
 
       // Add sources
       for (let ebt of Object.values(customBuffTargets)) {
-          sourceInfo[ebt] = sourceInfo[ebt] || { positive: [], negative: [] };
-          if (values.positive.value > 0) sourceInfo[ebt].positive.push(...values.positive.sources);
-          if (values.negative.value < 0) sourceInfo[ebt].negative.push(...values.negative.sources);
+        sourceInfo[ebt] = sourceInfo[ebt] || { positive: [], negative: [] };
+        if (values.positive.value > 0) sourceInfo[ebt].positive.push(...values.positive.sources);
+        if (values.negative.value < 0) sourceInfo[ebt].negative.push(...values.negative.sources);
       }
     }
   }
@@ -1075,11 +1091,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   // Apply level drain to hit points
   if (!Number.isNaN(data.data.attributes.energyDrain) && data.data.attributes.energyDrain > 0) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "mhp", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "mhp", modifier: "untyped", priority: -750 }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "vigor", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "vigor", modifier: "untyped", priority: -750 }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
     });
   }

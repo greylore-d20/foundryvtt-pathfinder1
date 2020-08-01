@@ -1,5 +1,4 @@
-import { CR } from "../lib.js";
-import { benchmarkFunction } from "../debug.js";
+import { CR, naturalSort } from "../lib.js";
 
 export class CompendiumBrowser extends Application {
   constructor(...args) {
@@ -173,7 +172,7 @@ export class CompendiumBrowser extends Application {
     })).result;
 
     if(p.translated) {
-      items = items.map(item => p.translate(item)).sort((a, b) => (a.name > b.name) ? 1 : -1);
+      items = items.map(item => p.translate(item)).sort(naturalSort);
     }
 
     for (let i of items) {
@@ -206,9 +205,7 @@ export class CompendiumBrowser extends Application {
     await Promise.all(promises);
 
     // Sort items
-    this.items.sort((a, b) => {
-      return a.item.name - b.item.name;
-    });
+    this.items.sort(naturalSort);
 
     // Return if no appropriate items were found
     if (this.items.length === 0) {
@@ -487,13 +484,7 @@ export class CompendiumBrowser extends Application {
         items: Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
           cur.push({ key: o[0], name: o[1] });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "data.subschool",
@@ -501,13 +492,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "spellTypes",
@@ -515,13 +500,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "learnedAt.class",
@@ -529,13 +508,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["learnedAt.class"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "learnedAt.domain",
@@ -543,13 +516,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["learnedAt.domain"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "learnedAt.subDomain",
@@ -557,13 +524,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["learnedAt.subDomain"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       // {
       //   path: "learnedAt.elementalSchool",
@@ -579,13 +540,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters["learnedAt.bloodline"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "_spellLevel",
@@ -697,7 +652,7 @@ export class CompendiumBrowser extends Application {
       {
         path: "data.details.cr.total",
         label: "CR",
-        items: Object.keys(this.extraFilters["data.details.cr.total"]).sort().reduce((cur, o) => {
+        items: Object.keys(this.extraFilters["data.details.cr.total"]).sort(naturalSort).reduce((cur, o) => {
           cur.push({ key: o, name: CR.fromNumber(o) });
           return cur;
         }, []),
@@ -713,7 +668,7 @@ export class CompendiumBrowser extends Application {
       {
         path: "subTypes",
         label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: Object.keys(this.extraFilters["subTypes"]).sort().reduce((cur, o) => {
+        items: Object.keys(this.extraFilters["subTypes"]).sort(naturalSort).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
         }, []),
@@ -737,13 +692,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters.tags).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
       {
         path: "assocations.class",
@@ -751,13 +700,7 @@ export class CompendiumBrowser extends Application {
         items: Object.keys(this.extraFilters.associations["class"]).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
-        }, []).sort((a, b) => {
-          const A = a.name.toUpperCase();
-          const B = b.name.toUpperCase();
-          if (A > B) return 1;
-          if (A < B) return -1;
-          return 0;
-        }),
+        }, []).sort(naturalSort),
       },
     ];
   }
@@ -836,7 +779,7 @@ export class CompendiumBrowser extends Application {
       {
         path: "subTypes",
         label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: Object.keys(this.extraFilters["subTypes"]).sort().reduce((cur, o) => {
+        items: Object.keys(this.extraFilters["subTypes"]).sort(naturalSort).reduce((cur, o) => {
           cur.push({ key: o, name: o });
           return cur;
         }, []),

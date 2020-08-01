@@ -480,3 +480,7 @@ export const mergeObjectExt = function(original, other={}, {
   // Return the object for use
   return original;
 };
+
+export const naturalSort = function(a, b) {
+  return new Intl.Collator(game.settings.get("core", "language"), { numeric: true }).compare(a, b);
+};

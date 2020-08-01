@@ -845,6 +845,8 @@ export class ItemPF extends Item {
         this.addCharges(-this.chargeCost);
       }
     }
+    const chatData = {};
+    if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
     this.roll();
   }
 
@@ -1065,6 +1067,9 @@ export class ItemPF extends Item {
         sound: CONFIG.sounds.dice,
         "flags.pf1.noRollRender": true,
       };
+
+      // Set attack sound
+      if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
 
       // Send spell info
       const hasAction = this.hasAttack || this.hasDamage || this.hasEffect;

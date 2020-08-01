@@ -719,7 +719,10 @@ export class ActorPF extends Actor {
     // Invoke the Item roll
     if (item.hasAction) return item.useAttack({ev: ev, skipDialog: skipDialog});
     item.addSpellUses(-1);
-    return item.roll();
+
+    const chatData = {};
+    if (item.data.data.soundEffect) chatData.sound = item.data.data.soundEffect;
+    return item.roll(chatData);
   }
 
   async createAttackFromWeapon(item) {

@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.72
+
+### Bug Fixes
+
+- Change formulas incorrectly used base data
+- Changes with the set (=) operator didn't show up in source info
+
+### Changelog
+
+- Added more class abilities, due to the efforts of holyplankton (many thanks!)
+- Updated the italian translation, due to the efforts of Marco (many thanks!)
+- Added a race compendium browser
+- Compendium browsers now implement natural sorting in regards to filters and entries
+- Changes with the '=' operator no longer get applied before changes with the '+' operator, but will instead depend on priority
+- Added base ability scores and modifiers which are unaffected by changes except for the modifiers 'Untyped (Permanent)', 'Racial', 'Trait' and 'Base'
+  - These can be accessed for formulas by writing something like `@abilities.str.base` or `@abilities.wis.baseMod` (see ability score tooltips as well)
+
 ## 0.71
 
 ### Bug Fixes

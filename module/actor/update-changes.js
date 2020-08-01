@@ -160,22 +160,32 @@ export const updateChanges = async function({data=null}={}) {
       case "noDex":
         linkData(srcData1, updateData, "data.abilities.dex.total", 0);
         linkData(srcData1, updateData, "data.abilities.dex.mod", -5);
+        linkData(srcData1, updateData, "data.abilities.dex.base", 0);
+        linkData(srcData1, updateData, "data.abilities.dex.baseMod", -5);
         break;
       case "noStr":
         linkData(srcData1, updateData, "data.abilities.str.total", 0);
         linkData(srcData1, updateData, "data.abilities.str.mod", -5);
+        linkData(srcData1, updateData, "data.abilities.str.base", 0);
+        linkData(srcData1, updateData, "data.abilities.str.baseMod", -5);
         break;
       case "oneInt":
         linkData(srcData1, updateData, "data.abilities.int.total", 1);
         linkData(srcData1, updateData, "data.abilities.int.mod", -5);
+        linkData(srcData1, updateData, "data.abilities.int.base", 1);
+        linkData(srcData1, updateData, "data.abilities.int.baseMod", -5);
         break;
       case "oneWis":
         linkData(srcData1, updateData, "data.abilities.wis.total", 1);
         linkData(srcData1, updateData, "data.abilities.wis.mod", -5);
+        linkData(srcData1, updateData, "data.abilities.wis.base", 1);
+        linkData(srcData1, updateData, "data.abilities.wis.baseMod", -5);
         break;
       case "oneCha":
         linkData(srcData1, updateData, "data.abilities.cha.total", 1);
         linkData(srcData1, updateData, "data.abilities.cha.mod", -5);
+        linkData(srcData1, updateData, "data.abilities.cha.base", 1);
+        linkData(srcData1, updateData, "data.abilities.cha.baseMod", -5);
         break;
     }
   }
@@ -421,6 +431,8 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
     linkData(data, updateData, `data.abilities.${a}.checkMod`, 0);
     linkData(data, updateData, `data.abilities.${a}.total`, abl.value - Math.abs(abl.drain));
     linkData(data, updateData, `data.abilities.${a}.mod`, Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
+    linkData(data, updateData, `data.abilities.${a}.base`, abl.value - Math.abs(abl.drain));
+    linkData(data, updateData, `data.abilities.${a}.baseMod`, Math.floor((updateData[`data.abilities.${a}.base`] - 10) / 2));
   }
 
   // Reset maximum hit points
@@ -509,12 +521,6 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
     if (hasProperty(data, sklKey)) linkData(data, updateData, sklKey, 0);
   }
 
-  // Reset movement speed
-  // for (let speedKey of Object.keys(this.data.data.attributes.speed)) {
-    // const base = getProperty(data, `data.attributes.speed.${speedKey}.base`);
-    // linkData(data, updateData, `data.attributes.speed.${speedKey}.total`, base || 0);
-  // }
-
   // Reset BAB, CMB and CMD
   {
     const k = "data.attributes.bab.total";
@@ -569,29 +575,52 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 };
 
 const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, forceModUpdate=false}={}) {
-  const prevMods = {};
-  const modDiffs = {};
+  const prevMods = { total: {}, base: {} };
+  const modDiffs = { total: {}, base: {} };
 
   // Reset ability modifiers
   const abilities = Object.keys(getProperty(data, "data.abilities") || {});
   for (let a of abilities) {
-    prevMods[a] = forceModUpdate ? 0 : updateData[`data.abilities.${a}.mod`];
+    prevMods.total[a] = forceModUpdate ? 0 : updateData[`data.abilities.${a}.mod`];
+    prevMods.base[a] = forceModUpdate ? 0 : updateData[`data.abilities.${a}.baseMod`];
     if (a === "str" && flags.noStr ||
       a === "dex" && flags.noDex ||
       a === "int" && flags.oneInt ||
       a === "wis" && flags.oneWis ||
       a === "cha" && flags.oneCha) {
-      modDiffs[a] = forceModUpdate ? -5 : 0;
-      if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
+      modDiffs.total[a] = forceModUpdate ? -5 : 0;
+      modDiffs.base[a] = forceModUpdate ? -5 : 0;
+      if (changes[`data.abilities.${a}.total`]) changes[`data.abilities.${a}.total`] = null; // Remove used mods to prevent doubling
+      if (changes[`data.abilities.${a}.base`]) changes[`data.abilities.${a}.base`] = null;
       continue;
     }
     const ablPenalty = Math.abs(updateData[`data.abilities.${a}.penalty`] || 0) + (updateData[`data.abilities.${a}.userPenalty`] || 0);
 
-    linkData(data, updateData, `data.abilities.${a}.total`, updateData[`data.abilities.${a}.total`] + (changes[`data.abilities.${a}.total`] || 0));
-    if (changes[`data.abilities.${a}.total`]) delete changes[`data.abilities.${a}.total`]; // Remove used mods to prevent doubling
-    linkData(data, updateData, `data.abilities.${a}.mod`, Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
-    linkData(data, updateData, `data.abilities.${a}.mod`, Math.max(-5, updateData[`data.abilities.${a}.mod`] - Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2)));
-    modDiffs[a] = updateData[`data.abilities.${a}.mod`] - prevMods[a];
+    // Update total ability score
+    linkData(data, updateData,
+      `data.abilities.${a}.total`,
+      updateData[`data.abilities.${a}.total`] + (changes[`data.abilities.${a}.total`] || 0));
+    if (changes[`data.abilities.${a}.total`]) changes[`data.abilities.${a}.total`] = null; // Remove used mods to prevent doubling
+    linkData(data, updateData,
+      `data.abilities.${a}.mod`,
+      Math.floor((updateData[`data.abilities.${a}.total`] - 10) / 2));
+    linkData(data, updateData,
+      `data.abilities.${a}.mod`,
+      Math.max(-5, updateData[`data.abilities.${a}.mod`] - Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2)));
+    modDiffs.total[a] = updateData[`data.abilities.${a}.mod`] - prevMods.total[a];
+
+    // Update base ability score
+    linkData(data, updateData,
+      `data.abilities.${a}.base`,
+      updateData[`data.abilities.${a}.base`] + (changes[`data.abilities.${a}.base`] || 0));
+    if (changes[`data.abilities.${a}.base`]) changes[`data.abilities.${a}.base`] = null; // Remove used mods to prevent doubling
+    linkData(data, updateData,
+      `data.abilities.${a}.baseMod`,
+      Math.floor((updateData[`data.abilities.${a}.base`] - 10) / 2));
+    linkData(data, updateData,
+      `data.abilities.${a}.baseMod`,
+      Math.max(-5, updateData[`data.abilities.${a}.baseMod`] - Math.floor(updateData[`data.abilities.${a}.damage`] / 2) - Math.floor(ablPenalty / 2)));
+    modDiffs.base[a] = updateData[`data.abilities.${a}.baseMod`] - prevMods.base[a];
   }
 
   // Apply changes
@@ -644,11 +673,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
 
   const push_health = (value, source) => {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "mhp", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "mhp", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: source.name, subtype: source.name.toString()}
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: source.name, subtype: source.name.toString()}
     });
   };
@@ -712,28 +741,28 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   {
     // BAB to CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.BAB")},
     });
     // Strength to CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities["str"]},
     });
     // Energy Drain to CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
     });
 
     // BAB to CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.BAB")},
     });
     // Strength to CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities["str"]},
     });
     // Energy Drain to CMD
@@ -746,7 +775,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   // Add Dexterity Modifier to Initiative
   {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untyped", priority: -100 }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untypedPerm", priority: -100 }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities["dex"]},
     });
   }
@@ -757,19 +786,19 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     // Ability Mod to Fortitude
     abl = getProperty(data, "data.attributes.savingThrows.fort.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Ability Mod to Reflex
     abl = getProperty(data, "data.attributes.savingThrows.ref.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Ability Mod to Will
     abl = getProperty(data, "data.attributes.savingThrows.will.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Energy Drain
@@ -819,7 +848,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
   if (flyValue !== 0) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: flyValue.toString(), target: "skill", subTarget: "skill.fly", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: flyValue.toString(), target: "skill", subTarget: "skill.fly", modifier: "untypedPerm" }, {inplace: false}),
       source: {
         name: game.i18n.localize("PF1.FlyManeuverability"),
       },
@@ -1056,6 +1085,10 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   }
 };
 
+export const isPermanentModifier = function(modifier) {
+  return ["untypedPerm", "racial", "base", "inherent", "trait"].includes(modifier);
+};
+
 export const getChangeFlat = function(changeTarget, changeType, curData) {
   if (curData == null) curData = this.data.data;
   let result = [];
@@ -1068,23 +1101,14 @@ export const getChangeFlat = function(changeTarget, changeType, curData) {
     case "vigor":
       return "data.attributes.vigor.max";
     case "str":
-      if (changeType === "penalty") return "data.abilities.str.penalty";
-      return "data.abilities.str.total";
     case "dex":
-      if (changeType === "penalty") return "data.abilities.dex.penalty";
-      return "data.abilities.dex.total";
     case "con":
-      if (changeType === "penalty") return "data.abilities.con.penalty";
-      return "data.abilities.con.total";
     case "int":
-      if (changeType === "penalty") return "data.abilities.int.penalty";
-      return "data.abilities.int.total";
     case "wis":
-      if (changeType === "penalty") return "data.abilities.wis.penalty";
-      return "data.abilities.wis.total";
     case "cha":
-      if (changeType === "penalty") return "data.abilities.cha.penalty";
-      return "data.abilities.cha.total";
+      if (changeType === "penalty") return `data.abilities.${changeTarget}.penalty`;
+      if (isPermanentModifier(changeType)) return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
+      return `data.abilities.${changeTarget}.total`;
     case "ac":
       if (changeType === "dodge") return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
       else if (changeType === "deflection") {
@@ -1367,7 +1391,7 @@ const getSortChangePriority = function() {
       "allSavingThrows", "fort", "ref", "will",
       "cmb", "cmd", "init", "mhp", "wounds", "vigor"
   ], modifiers: [
-    "untyped", "base", "enh", "dodge", "inherent", "deflection",
+    "untyped", "untypedPerm", "base", "enh", "dodge", "inherent", "deflection",
     "morale", "luck", "sacred", "insight", "resist", "profane",
     "trait", "racial", "size", "competence", "circumstance",
     "alchemical", "penalty"
@@ -1408,19 +1432,19 @@ const _parseChange = function(change, changeData, flags) {
   if (["add", "+"].includes(changeOperator)) {
     // Add value
     if (changeValue > 0) {
-      if (["untyped", "dodge", "penalty"].includes(changeType)) changeData[changeType].positive.value += changeValue;
+      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) changeData[changeType].positive.value += changeValue;
       else {
         changeData[changeType].positive.value = Math.max(changeData[changeType].positive.value, changeValue);
       }
     }
     else {
-      if (["untyped", "dodge", "penalty"].includes(changeType)) changeData[changeType].negative.value += changeValue;
+      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) changeData[changeType].negative.value += changeValue;
       else changeData[changeType].negative.value = Math.min(changeData[changeType].negative.value, changeValue);
     }
 
     // Add positive source
     if (changeValue > 0) {
-      if (["untyped", "dodge", "penalty"].includes(changeType)) {
+      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) {
         changeData[changeType].positive.sources.push(change.source);
       }
       else if (prevValue.positive < changeValue) {
@@ -1429,7 +1453,7 @@ const _parseChange = function(change, changeData, flags) {
     }
     // Add negative source
     else {
-      if (["untyped", "dodge", "penalty"].includes(changeType)) {
+      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) {
         changeData[changeType].negative.sources.push(change.source);
       }
       else if (prevValue.negative > changeValue) {

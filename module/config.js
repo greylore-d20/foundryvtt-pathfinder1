@@ -544,6 +544,7 @@ PF1.acTypes = {
 
 PF1.bonusModifiers = {
   "untyped": "PF1.BonusModifierUntyped",
+  "untypedPerm": "PF1.BonusModifierUntypedPerm",
   "base": "PF1.BonusModifierBase",
   "enh": "PF1.BonusModifierEnhancement",
   "dodge": "PF1.BonusModifierDodge",

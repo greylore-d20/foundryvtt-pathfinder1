@@ -199,7 +199,7 @@ export class ItemPF extends Item {
   static get defaultChange() {
     return {
       formula: "",
-      operator: "+",
+      operator: "add",
       target: "",
       subTarget: "",
       modifier: "",

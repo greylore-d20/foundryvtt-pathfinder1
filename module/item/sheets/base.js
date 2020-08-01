@@ -377,88 +377,88 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _updateObject(event, formData) {
-    formData = expandObjectExt(formData);
+    // formData = expandObjectExt(formData);
 
-    // // Handle Damage Array
-    // let damage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.parts"));
-    // formData["data.damage.parts"] = damage.reduce((arr, entry) => {
-    //   let [i, j] = entry[0].split(".").slice(3);
-    //   if ( !arr[i] ) arr[i] = [];
-    //   arr[i][j] = entry[1];
-    //   return arr;
-    // }, []);
+    // Handle Damage Array
+    let damage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.parts"));
+    formData["data.damage.parts"] = damage.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(3);
+      if ( !arr[i] ) arr[i] = [];
+      arr[i][j] = entry[1];
+      return arr;
+    }, []);
 
-    // // Handle Critical Damage Array
-    // let critDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.critParts"));
-    // formData["data.damage.critParts"] = critDamage.reduce((arr, entry) => {
-    //   let [i, j] = entry[0].split(".").slice(3);
-    //   if ( !arr[i] ) arr[i] = [];
-    //   arr[i][j] = entry[1];
-    //   return arr;
-    // }, []);
+    // Handle Critical Damage Array
+    let critDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.critParts"));
+    formData["data.damage.critParts"] = critDamage.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(3);
+      if ( !arr[i] ) arr[i] = [];
+      arr[i][j] = entry[1];
+      return arr;
+    }, []);
 
-    // // Handle Attack Array
-    // let attacks = Object.entries(formData).filter(e => e[0].startsWith("data.attackParts"));
-    // formData["data.attackParts"] = attacks.reduce((arr, entry) => {
-    //   let [i, j] = entry[0].split(".").slice(2);
-    //   if ( !arr[i] ) arr[i] = [];
-    //   arr[i][j] = entry[1];
-    //   return arr;
-    // }, []);
+    // Handle Attack Array
+    let attacks = Object.entries(formData).filter(e => e[0].startsWith("data.attackParts"));
+    formData["data.attackParts"] = attacks.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(2);
+      if ( !arr[i] ) arr[i] = [];
+      arr[i][j] = entry[1];
+      return arr;
+    }, []);
 
-    // // Handle change array
-    // let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
-    // formData["data.changes"] = change.reduce((arr, entry) => {
-    //   let [i, j] = entry[0].split(".").slice(2);
-    //   if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
-    //   arr[i][j] = entry[1];
-    //   // Reset subtarget (if necessary)
-    //   if (j === "subTarget") {
-    //     const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
-    //     const subTarget = entry[1];
-    //     if (typeof target === "string") {
-    //       const keys = Object.keys(this.item.getChangeSubTargets(target));
-    //       if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-    //     }
-    //   }
-    //   // Limit priority
-    //   if (j === "priority") {
-    //     const prio = Math.max(-1000, Math.min(1000, entry[1]));
-    //     arr[i][j] = prio;
-    //   }
-    //   return arr;
-    // }, []);
+    // Handle change array
+    let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
+    formData["data.changes"] = change.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(2);
+      if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
+      arr[i][j] = entry[1];
+      // Reset subtarget (if necessary)
+      if (j === "subTarget") {
+        const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
+        const subTarget = entry[1];
+        if (typeof target === "string") {
+          const keys = Object.keys(this.item.getChangeSubTargets(target));
+          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+        }
+      }
+      // Limit priority
+      if (j === "priority") {
+        const prio = Math.max(-1000, Math.min(1000, entry[1]));
+        arr[i][j] = prio;
+      }
+      return arr;
+    }, []);
 
-    // // Handle notes array
-    // let note = Object.entries(formData).filter(e => e[0].startsWith("data.contextNotes"));
-    // formData["data.contextNotes"] = note.reduce((arr, entry) => {
-    //   let [i, j] = entry[0].split(".").slice(2);
-    //   if ( !arr[i] ) arr[i] = {};
-    //   arr[i][j] = entry[1];
-    //   // Reset subtarget (if necessary)
-    //   if (j === "subTarget") {
-    //     const target = (note.find(o => o[0] === `data.contextNotes.${i}.target`) || [])[1];
-    //     const subTarget = entry[1];
-    //     if (typeof target === "string") {
-    //       const keys = Object.keys(this.item.getContextNoteSubTargets(target));
-    //       if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-    //     }
-    //   }
-    //   // }
-    //   return arr;
-    // }, []);
+    // Handle notes array
+    let note = Object.entries(formData).filter(e => e[0].startsWith("data.contextNotes"));
+    formData["data.contextNotes"] = note.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(2);
+      if ( !arr[i] ) arr[i] = {};
+      arr[i][j] = entry[1];
+      // Reset subtarget (if necessary)
+      if (j === "subTarget") {
+        const target = (note.find(o => o[0] === `data.contextNotes.${i}.target`) || [])[1];
+        const subTarget = entry[1];
+        if (typeof target === "string") {
+          const keys = Object.keys(this.item.getContextNoteSubTargets(target));
+          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+        }
+      }
+      // }
+      return arr;
+    }, []);
 
-    // // Handle links arrays
-    // let links = Object.entries(formData).filter(e => e[0].startsWith("data.links"));
-    // for (let e of links) {
+    // Handle links arrays
+    let links = Object.entries(formData).filter(e => e[0].startsWith("data.links"));
+    for (let e of links) {
 
-    //   formData[e[0]] = e[1].reduce((arr, entry) => {
-    //     let [i, j] = entry[0].split(".").slice(2);
-    //     if ( !arr[i] ) arr[i] = [];
-    //     arr[i][j] = entry[1];
-    //     return arr;
-    //   }, []);
-    // }
+      formData[e[0]] = e[1].reduce((arr, entry) => {
+        let [i, j] = entry[0].split(".").slice(2);
+        if ( !arr[i] ) arr[i] = [];
+        arr[i][j] = entry[1];
+        return arr;
+      }, []);
+    }
 
     // Update the Item
     super._updateObject(event, formData);

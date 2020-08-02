@@ -352,6 +352,20 @@ export const convertWeight = function(value) {
 };
 
 /**
+* Converts back to lbs from what the world is using as a measurement unit.
+* @param {Number} value - The value to convert back to lbs.
+* @returns {Number} The converted value. In the case of the metric system, converts from kg.
+*/
+export const convertWeightBack = function(value) {
+  switch (game.settings.get("pf1", "units")) {
+    case "metric":
+    return Math.round((value * 2.2) * 100) / 100;
+    default:
+    return value;
+  }
+};
+
+/**
 * Like Foundry's default expandObject function, except it can make arrays
 */
 export const expandObjectExt = function(obj, options={makeArrays: true}, _d=0) {

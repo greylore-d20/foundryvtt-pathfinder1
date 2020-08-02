@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, alterRoll, linkData, isMinimumCoreVersion, convertDistance } from "../lib.js";
+import { createTag, alterRoll, linkData, isMinimumCoreVersion, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
@@ -303,6 +303,11 @@ export class ItemPF extends Item {
       // Prepare unidentified cost
       if (!hasProperty(this.data, "data.unidentified.price")) setProperty(this.data, "data.unidentified.price", 0);
 
+      // Convert weight according metric system (lb vs kg)
+      itemData.data.weightConverted = convertWeight(itemData.data.weight)
+      itemData.data.weightUnits = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")
+      itemData.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase()
+      
       // Set basic data
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
@@ -484,6 +489,11 @@ export class ItemPF extends Item {
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
+    // Update weight according metric system (lb vs kg)
+    if (data["data.weightConverted"]) {
+      data["data.weight"] = convertWeightBack(data["data.weightConverted"])
+    }
+    
     // Set weapon subtype
     if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
       const type = data["data.weaponType"];

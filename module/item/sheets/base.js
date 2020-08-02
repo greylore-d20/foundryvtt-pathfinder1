@@ -529,8 +529,36 @@ export class ItemSheetPF extends ItemSheet {
     $(event.currentTarget).find(".tooltip:hover .tooltipcontent").css("left", `${event.clientX}px`).css("top", `${event.clientY + 24}px`);
   }
 
-  _onTextAreaDrop(event) {
+  async _onTextAreaDrop(event) {
+    event.preventDefault();
+	  const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+    if ( !data ) return;
+    
     const elem = event.currentTarget;
+    let link;
+
+	  // Case 1 - Entity from Compendium Pack
+    if ( data.pack ) {
+      const pack = game.packs.get(data.pack);
+      if (!pack) return;
+      const entity = await pack.getEntity(data.id);
+      link = `@Compendium[${data.pack}.${data.id}]{${entity.name}}`;
+    }
+
+    // Case 2 - Entity from World
+    else {
+      const config = CONFIG[data.type];
+      if ( !config ) return false;
+      const entity = config.collection.instance.get(data.id);
+      if ( !entity ) return false;
+      link = `@${data.type}[${entity._id}]{${entity.name}}`
+    }
+
+    // Insert link
+    if (link) {
+      elem.value = !elem.value ? link : elem.value + "\n" + link;
+    }
+    return this._onSubmit(event);
   }
 
   async _onLinksDrop(event) {

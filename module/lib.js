@@ -345,7 +345,7 @@ export const convertDistance = function(value, type="ft") {
 export const convertWeight = function(value) {
   switch (game.settings.get("pf1", "units")) {
     case "metric":
-    return Math.round((value / 2.2) * 100) / 100;
+    return Math.round((value / 2) * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
     default:
     return value;
   }
@@ -359,7 +359,7 @@ export const convertWeight = function(value) {
 export const convertWeightBack = function(value) {
   switch (game.settings.get("pf1", "units")) {
     case "metric":
-    return Math.round((value * 2.2) * 100) / 100;
+    return Math.round((value * 2) * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
     default:
     return value;
   }

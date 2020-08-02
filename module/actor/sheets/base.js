@@ -429,7 +429,7 @@ export class ActorSheetPF extends ActorSheet {
     const load = {
       light: actorData.data.attributes.encumbrance.levels.light,
       medium: actorData.data.attributes.encumbrance.levels.medium,
-      heavy: actorData.data.attributes.encumbrance.levels.heavy
+      heavy: actorData.data.attributes.encumbrance.levels.heavy,
     };
     let carryLabel;
     switch (game.settings.get("pf1", "units")) {
@@ -454,6 +454,9 @@ export class ActorSheetPF extends ActorSheet {
       light: actorData.data.attributes.encumbrance.levels.light,
       medium: actorData.data.attributes.encumbrance.levels.medium,
       heavy: actorData.data.attributes.encumbrance.levels.heavy,
+      aboveHead: actorData.data.attributes.encumbrance.levels.heavy,
+      offGround: actorData.data.attributes.encumbrance.levels.heavy * 2,
+      dragPush: actorData.data.attributes.encumbrance.levels.heavy * 5,
       value: actorData.data.attributes.encumbrance.carriedWeight,
       carryLabel: carryLabel,
     };

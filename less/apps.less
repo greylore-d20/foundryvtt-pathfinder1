@@ -253,7 +253,7 @@
 
     .tab {
       height: 100%;
-      overflow-y: hidden;
+      overflow-y: auto;
       align-content: flex-start;
     }
   }
@@ -284,7 +284,7 @@
   select {
     flex: 1;
     font-size: 12px;
-    height: 22px;
+    height: 24px;
     background: transparent;
   }
 
@@ -377,18 +377,27 @@
 
   .sheet-navigation {
     flex: 0 0 @navHeight;
-    margin-bottom: 5px;
     .nodesto();
+    margin: 4px 0;
+    background: rgba(155, 155, 155, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 6px 6px 0 0;
 
     .item {
       height: 30px;
       line-height: 32px;
-      margin: 0 8px;
+      margin: 0 2px;
       white-space: nowrap;
-      border-bottom: 3px solid @colorBeige;
+      border: 1px solid rgba(0, 0, 0, 0);
+      border-radius: 12px 12px 0 0;
+      // border-bottom: 3px solid @colorBeige;
 
       &.active {
-        border-bottom: 3px solid @colorCrimson;
+        background: rgba(155, 155, 155, 0.5);
+      //   border-bottom: 3px solid @colorCrimson;
+      }
+      &:hover {
+        background: rgba(155, 155, 155, 0.2);
       }
     }
 

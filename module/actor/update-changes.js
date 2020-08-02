@@ -238,7 +238,7 @@ export const updateChanges = async function({data=null}={}) {
       });
     }
     // Add change
-    else if (["add", "+"].includes(change.raw.operator)) {
+    else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
       if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
         const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
         _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags });
@@ -1441,7 +1441,7 @@ const _parseChange = function(change, changeData, flags) {
   const prevValue = { positive: changeData[changeType].positive.value, negative: changeData[changeType].negative.value };
 
   // 'Add' operator
-  if (["add", "+"].includes(changeOperator)) {
+  if (["add", "+"].includes(changeOperator) || !changeOperator) {
     // Add value
     if (changeValue > 0) {
       if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) changeData[changeType].positive.value += changeValue;

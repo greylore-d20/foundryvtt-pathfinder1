@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.72.1
+
+### Bug Fixes
+
+- TinyMCE editors were showing 2 scrollbars, depending on the content
+- Added backwards compatibility with old changes
+  
+### Changelog
+
+- Improved visibility of tabs
+- You can now drop world or compendium entities onto items' attack, effect and change notes to create a link to them
+- Added a feat tracking interface from the feat tab on actor sheets
+
 ## 0.72
 
 ### Bug Fixes

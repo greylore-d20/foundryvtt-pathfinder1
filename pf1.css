@@ -299,7 +299,7 @@
 }
 .pf1.sheet .window-content .tab {
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: auto;
   align-content: flex-start;
 }
 .pf1.sheet input[type="text"],
@@ -324,7 +324,7 @@
 .pf1.sheet select {
   flex: 1;
   font-size: 12px;
-  height: 22px;
+  height: 24px;
   background: transparent;
 }
 .pf1.sheet .editable .rollable:hover {
@@ -392,19 +392,26 @@
 }
 .pf1.sheet .sheet-navigation {
   flex: 0 0 30px;
-  margin-bottom: 5px;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
   font-size: 20px;
+  margin: 4px 0;
+  background: rgba(155, 155, 155, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 6px 6px 0 0;
 }
 .pf1.sheet .sheet-navigation .item {
   height: 30px;
   line-height: 32px;
-  margin: 0 8px;
+  margin: 0 2px;
   white-space: nowrap;
-  border-bottom: 3px solid #b5b3a4;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 12px 12px 0 0;
 }
 .pf1.sheet .sheet-navigation .item.active {
-  border-bottom: 3px solid #44191A;
+  background: rgba(155, 155, 155, 0.5);
+}
+.pf1.sheet .sheet-navigation .item:hover {
+  background: rgba(155, 155, 155, 0.2);
 }
 .pf1.sheet .sheet-navigation.tabs {
   border-bottom: 2px groove #eeede0;
@@ -1745,7 +1752,9 @@
   float: left;
 }
 .pf1.sheet.item {
-  min-height: 420px;
+  min-width: 580px;
+  min-height: 620px;
+  max-height: calc(100% - 24px);
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
@@ -2069,6 +2078,7 @@
 }
 .pf1.sheet.item div[data-tab="description"][data-group="primary"] .description-container {
   flex: 1;
+  height: 100%;
 }
 /* ----------------------------------------- */
 /*  Chat Cards

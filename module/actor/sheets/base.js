@@ -225,6 +225,21 @@ export class ActorSheetPF extends ActorSheet {
     }
     data.skillRanks = skillRanks;
 
+    // Feat count
+    {
+      data.featCount = {};
+      data.featCount.value = this.actor.items.filter(o => o.type === "feat" && o.data.data.featType === "feat").length;
+      const totalLevels = this.actor.items.filter(o => o.type === "class" && ["base", "prestige", "racial"].includes(o.data.data.classType))
+      .reduce((cur, o) => {
+        return cur + o.data.data.level;
+      }, 0);
+      data.featCount.byLevel = Math.ceil(totalLevels / 2);
+      data.featCount.byFormula = this.actor.data.data.details.bonusFeatFormula
+        ? new Roll(this.actor.data.data.details.bonusFeatFormula, rollData).roll().total
+        : 0;
+      data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
+    }
+
     // Fetch the game settings relevant to sheet rendering.
     data.healthConfig =  game.settings.get("pf1", "healthConfig");
 
@@ -1293,7 +1308,7 @@ export class ActorSheetPF extends ActorSheet {
     // Organize Features
     const features = {
       // classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
-      feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "feat-type": "feat" } },
+      feat: { label: game.i18n.localize("PF1.FeatPlural"), items: [], canCreate: true, hasActions: true, showFeatCount: true, dataset: { type: "feat", "feat-type": "feat" } },
       classFeat: { label: game.i18n.localize("PF1.ClassFeaturePlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeClassFeat"), "feat-type": "classFeat" } },
       trait: { label: game.i18n.localize("PF1.TraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTraits"), "feat-type": "trait" } },
       racial: { label: game.i18n.localize("PF1.RacialTraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeRacial"), "feat-type": "racial" } },

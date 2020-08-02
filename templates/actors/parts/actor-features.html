@@ -94,6 +94,26 @@
         {{/each}}
       </ol>
     </ol>
+
+    {{#if section.showFeatCount}}
+    <hr>
+    <div class="tab-footer flexcol">
+      <div class="flexrow form-group">
+        <label>{{localize "PF1.BonusFeatFormula"}}</label>
+        <input type="text" name="data.details.bonusFeatFormula" value="{{../data.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+      </div>
+      <div class="flexrow form-group">
+        <label>{{localize "PF1.Feats"}}</label>
+        <input type="text" disabled value="{{../featCount.value}}" />
+        <label>{{localize "PF1.ByLevel"}}</label>
+        <input type="text" disabled value="{{../featCount.byLevel}}" />
+        <label>{{localize "PF1.ByBonus"}}</label>
+        <input type="text" disabled value="{{../featCount.byFormula}}" />
+        <label>{{localize "PF1.Total"}}</label>
+        <input type="text" disabled value="{{../featCount.total}}" />
+      </div>
+    </div>
+    {{/if}}
   </div>
   {{/each}}
 </section>

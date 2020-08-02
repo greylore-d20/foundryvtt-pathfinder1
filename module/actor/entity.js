@@ -741,10 +741,10 @@ export class ActorPF extends Actor {
     attackData = flattenObject(attackData);
 
     // Add ability modifiers
-    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged" && !getProperty(item.data, "data.properties.thr");
+    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged";
     if (isMelee) attackData["data.ability.attack"] = "str";
     else attackData["data.ability.attack"] = "dex";
-    if (isMelee || item.data.data.properties["thr"] === true) {
+    if (isMelee) {
       attackData["data.ability.damage"] = "str";
       if (item.data.data.weaponSubtype === "2h" && isMelee) attackData["data.ability.damageMult"] = 1.5;
     }
@@ -760,6 +760,7 @@ export class ActorPF extends Actor {
     attackData["data.actionType"] = isMelee ? "mwak" : "rwak";
     attackData["data.activation.type"] = "attack";
     attackData["data.duration.units"] = "inst";
+    attackData["data.range.units"] = "melee";
     attackData["img"] = item.data.img;
 
     // Add additional attacks

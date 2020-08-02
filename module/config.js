@@ -589,6 +589,7 @@ PF1.distanceUnits = {
   "none": "PF1.None",
   "personal": "PF1.DistPersonal",
   "touch": "PF1.DistTouch",
+  "melee": "PF1.DistMelee",
   "close": "PF1.DistClose",
   "medium": "PF1.DistMedium",
   "long": "PF1.DistLong",

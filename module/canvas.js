@@ -72,7 +72,7 @@ Token.prototype.getBarAttribute = function(barName, {alternative=null}={}) {
     data = null;
   }
   if (data != null && data.attribute === "attributes.hp") {
-    data.value += parseInt(data['temp'] || 0);
+    data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
   }
   return data;
 };

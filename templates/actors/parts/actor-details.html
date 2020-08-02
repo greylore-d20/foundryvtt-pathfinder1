@@ -143,12 +143,12 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input class="select-on-click" name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}" data-dtype="Number" placeholder="0"/>
+      <input class="select-on-click" name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}" placeholder="0"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.vigor.max}}</div>
     </div>
     <footer class="attribute-footer">
-      <input name="data.attributes.vigor.temp" type="text" class="temphp select-on-click" placeholder="{{localize 'PF1.Temporary'}}" value="{{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}" data-dtype="Number"/>
+      <input name="data.attributes.vigor.temp" type="text" class="temphp select-on-click" placeholder="{{localize 'PF1.Temporary'}}" value="{{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}" />
     </footer>
     
     <h4 class="attribute-name box-title tooltip">
@@ -165,7 +165,7 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input class="select-on-click" name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}" data-dtype="Number" placeholder="0"/>
+      <input class="select-on-click" name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}" placeholder="0"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.wounds.max}}</div>
     </div>
@@ -185,15 +185,15 @@
       </div>
     </h4>
     <div class="attribute-value multiple">
-      <input class="select-on-click" name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" data-dtype="Number" placeholder="10"/>
+      <input class="select-on-click" name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10"/>
       <span class="sep"> / </span>
       <div class="attribute">{{data.attributes.hp.max}}</div>
     </div>
     <footer class="attribute-footer">
       <input name="data.attributes.hp.temp" type="text" class="temphp select-on-click" placeholder="+{{localize 'PF1.TempShort'}}"
-      value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" data-dtype="Number" title="{{localize "PF1.TempHP"}}"/>
+      value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" title="{{localize "PF1.TempHP"}}"/>
       <input name="data.attributes.hp.nonlethal" type="text" class="temphp select-on-click" placeholder="{{localize 'PF1.Nonlethal'}}"
-      value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" data-dtype="Number" title="{{localize "PF1.Nonlethal"}}"/>
+      value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" title="{{localize "PF1.Nonlethal"}}"/>
     </footer>
     {{/if}}
   </li>

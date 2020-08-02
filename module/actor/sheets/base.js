@@ -1666,9 +1666,25 @@ export class ActorSheetPF extends ActorSheet {
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
 
     // Iterate over data
+    const relativeKeys = [
+      "data.currency.pp",
+      "data.currency.gp",
+      "data.currency.sp",
+      "data.currency.cp",
+      "data.altCurrency.pp",
+      "data.altCurrency.gp",
+      "data.altCurrency.sp",
+      "data.altCurrency.cp",
+      "data.attributes.hp.value",
+      "data.attributes.hp.temp",
+      "data.attributes.hp.nonlethal",
+      "data.attributes.vigor.value",
+      "data.attributes.vigor.temp",
+      "data.attributes.wounds.value",
+    ];
     for (let [k, v] of Object.entries(formData)) {
-      // Add or subtract currencies
-      if (k.startsWith("data.currency.") || k.startsWith("data.altCurrency.")) {
+      // Add or subtract values
+      if (relativeKeys.includes(k)) {
         const originalValue = getProperty(this.actor.data, k);
         if (v.match(/(\+|-)([0-9]+)/)) {
           const operator = RegExp.$1;

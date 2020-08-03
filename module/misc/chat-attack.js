@@ -76,6 +76,7 @@ export class ChatAttack {
     let data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
+    data.noCrit = 1;
     // Add critical confirmation bonus
     data.critConfirmBonus = data.item.critConfirmBonus;
     // Determine ability multiplier
@@ -147,7 +148,8 @@ export class ChatAttack {
     // Add crit confirm
     if (!critical && d20.total >= this.critRange) {
       this.hasCritConfirm    = true;
-      this.rollData.critMult = this.rollData.item.ability.critMult;
+      this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
+      this.rollData.noCrit = 0;
 
       await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true});
     }
@@ -184,7 +186,14 @@ export class ChatAttack {
 
     let rollData = duplicate(this.rollData);
     // Enforce critical multiplier
-    if (!critical) rollData.critMult = 1;
+    if (!critical) {
+      rollData.critMult = 1;
+      rollData.noCrit = 1;
+    }
+    // Add normal damage to critical damage
+    else if (critical && this.damage.total && this.damage.total > 0) {
+      extraParts.push(this.damage.total);
+    }
     
     const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical});
     data.rolls = rolls;
@@ -211,7 +220,7 @@ export class ChatAttack {
       if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
       return cur;
     }, []);
-    // Add critical damage parts
+    // Add critical damage types
     if (critical === true && getProperty(this.item.data, "data.damage.critParts") != null) {
       damageTypes.push(...this.item.data.data.damage.critParts.reduce((cur, o) => {
         if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);

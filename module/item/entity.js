@@ -1321,6 +1321,7 @@ export class ItemPF extends Item {
    */
   rollEffect({critical=false, primaryAttack=true}={}) {
     const rollData = this.getRollData();
+    rollData.noCrit = critical ? 0 : 1;
 
     if (!this.hasEffect) {
       throw new Error("You may not make an Effect Roll with this Item.");
@@ -1386,6 +1387,7 @@ export class ItemPF extends Item {
    */
   rollDamage({data=null, critical=false, extraParts=[]}={}) {
     const rollData = mergeObject(this.getRollData(), data || {});
+    rollData.noCrit = critical ? 0 : 1;
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");

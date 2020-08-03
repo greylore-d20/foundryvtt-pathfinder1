@@ -37,14 +37,14 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
     const sellValue = this.calculateSellItemValue() + this.actor.mergeCurrency();
     data.totalValue = {
-      gp: Math.floor(gpValue),
-      sp: Math.floor(gpValue*10 - Math.floor(gpValue)*10),
-      cp: Math.floor(Math.floor(gpValue*100 - Math.floor(gpValue)*100) - (Math.floor(gpValue*10 - Math.floor(gpValue)*10)*10)),
+      gp: Math.max(0, Math.floor(gpValue)),
+      sp: Math.max(0, Math.floor(gpValue*10 - Math.floor(gpValue)*10)),
+      cp: Math.max(0, Math.floor(Math.floor(gpValue*100 - Math.floor(gpValue)*100) - (Math.floor(gpValue*10 - Math.floor(gpValue)*10)*10))),
     };
     data.sellValue = {
-      gp: Math.floor(sellValue),
-      sp: Math.floor(sellValue*10 - Math.floor(sellValue)*10),
-      cp: Math.floor(Math.floor(sellValue*100 - Math.floor(sellValue)*100) - (Math.floor(sellValue*10 - Math.floor(sellValue)*10)*10)),
+      gp: Math.max(0, Math.floor(sellValue)),
+      sp: Math.max(0, Math.floor(sellValue*10 - Math.floor(sellValue)*10)),
+      cp: Math.max(0, Math.floor(Math.floor(sellValue*100 - Math.floor(sellValue)*100) - (Math.floor(sellValue*10 - Math.floor(sellValue)*10)*10))),
     };
     
     // Set labels
@@ -65,6 +65,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   calculateTotalItemValue() {
     const items = this.actor.items.filter(o => o.data.data.price != null);
     return Math.floor(items.reduce((cur, i) => {
+      if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity);
       return cur + (i.data.data.price * i.data.data.quantity);
     }, 0) * 100) / 100;
   }
@@ -73,7 +74,11 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const items = this.actor.items.filter(o => o.data.data.price != null);
     const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
     return Math.floor(items.reduce((cur, i) => {
-      if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") return cur + (i.data.data.price * i.data.data.quantity);
+      if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") {
+        if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity);
+        return cur + (i.data.data.price * i.data.data.quantity);
+      }
+      if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity) * sellMultiplier;
       return cur + (i.data.data.price * i.data.data.quantity) * sellMultiplier;
     }, 0) * 100) / 100;
   }

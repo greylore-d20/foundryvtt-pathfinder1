@@ -1185,6 +1185,10 @@ export class ItemPF extends Item {
         // Create message
         await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
       }
+      // Post chat card even without action
+      else {
+        this.roll();
+      }
     };
 
     // Handle fast-forwarding

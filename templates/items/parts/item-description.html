@@ -17,14 +17,14 @@
 
       {{!-- Weight --}}
       <div class="form-group">
-        <label>{{localize "PF1.Weight"}}</label>
-        <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+        <label>{{localize "PF1.Weight"}} ({{data.weightUnits}})</label>
+        <input type="text" name="data.weightConverted" value="{{data.weightConverted}}" data-dtype="Number"/>
       </div>
 
       {{!-- Price --}}
       {{#if showIdentifyDescription}}
       <div class="form-group">
-        <label>{{localize "PF1.Price"}}</label>
+        <label>{{localize "PF1.Price"}} ({{data.priceUnits}})</label>
         <input type="text" name="data.price" value="{{data.price}}" data-dtype="Number"/>
       </div>
 

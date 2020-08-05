@@ -644,6 +644,46 @@
 .pf1.sheet.actor .tab-footer {
   flex: 0;
 }
+.pf1.sheet.actor .charlevel {
+  flex: 0;
+  height: 60px;
+  margin: 0;
+  padding: 2px;
+  text-align: right;
+}
+.pf1.sheet.actor .charlevel .level {
+  width: 100%;
+  height: 20px;
+  font-size: 16px;
+  line-height: 20px;
+}
+.pf1.sheet.actor .charlevel .level label {
+  font-size: 24px;
+  text-align: right;
+}
+.pf1.sheet.actor .charlevel .level input {
+  width: 48px;
+  font-size: 24px;
+  text-align: center;
+}
+.pf1.sheet.actor .charlevel .level.noxp {
+  margin-top: 10px;
+}
+.pf1.sheet.actor .charlevel .level.noxp > label {
+  font-size: 32px;
+}
+.pf1.sheet.actor .charlevel .level.noxp > input {
+  font-size: 32px;
+  flex: 0 0 40px;
+  height: 44px;
+}
+.pf1.sheet.actor .charlevel .experience {
+  width: 100%;
+  height: 20px;
+  padding-right: 5px;
+  font-size: 16px;
+  color: #4b4a44;
+}
 .pf1.sheet.actor .tab.details {
   height: 100%;
   border-left: 2px groove #eeede0;
@@ -786,48 +826,6 @@
   flex: 0 0 28px;
   font-size: 24px;
   height: 28px;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel {
-  flex: 0;
-  height: 60px;
-  margin: 0;
-  padding: 2px;
-  text-align: right;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level {
-  width: 100%;
-  height: 20px;
-  font-size: 16px;
-  line-height: 20px;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level label {
-  display: inline;
-  font-size: 24px;
-  text-align: right;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level input {
-  display: inline;
-  width: 36px;
-  font-size: 24px;
-  text-align: center;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level.noxp {
-  margin-top: 10px;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level.noxp > label {
-  font-size: 32px;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .level.noxp > input {
-  font-size: 32px;
-  flex: 0 0 40px;
-  height: 44px;
-}
-.pf1.sheet.actor .tab.details .hd-level .charlevel .experience {
-  width: 100%;
-  height: 20px;
-  padding-right: 5px;
-  font-size: 16px;
-  color: #4b4a44;
 }
 .pf1.sheet.actor .tab.details .attributes {
   border-bottom: 2px groove #eeede0;
@@ -1289,7 +1287,7 @@
   color: #7a7971;
 }
 .pf1.sheet.actor .encumbrance {
-  flex: 0 0 12px;
+  height: 12px;
   background: #7a7971;
   margin: 1px 15px 0 1px;
   border: 1px solid #191813;
@@ -1544,12 +1542,16 @@
   flex: 4;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-actions {
-  flex: 0 0 54px;
+  flex: 0 0 50px;
   padding: 0 1px 0 1px;
   justify-content: center;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-actions > div {
   flex: 0 0 16px;
+}
+.pf1.sheet.actor .inventory-list .item-detail.item-slot {
+  flex: 0 0 54px;
+  padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-usage {
   flex: 0 0 96px;
@@ -1564,7 +1566,7 @@
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-weight {
-  flex: 0 0 54px;
+  flex: 0 0 50px;
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-identified {
@@ -1572,11 +1574,11 @@
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-carried {
-  flex: 0 0 62px;
+  flex: 0 0 50px;
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-equipped {
-  flex: 0 0 70px;
+  flex: 0 0 50px;
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-uses {
@@ -2256,6 +2258,31 @@
 }
 .chat-card.defense-card .saving-throws {
   margin-top: 4px;
+}
+.damage-tooltip {
+  align-items: baseline;
+}
+.damage-tooltip.tooltip .tooltipcontent {
+  width: 160px;
+}
+.damage-tooltip.tooltip .tooltipcontent .roll-formula {
+  border-bottom: 1px solid white;
+}
+.damage-tooltip .damage-amount {
+  font-size: 14px;
+  text-align: right;
+  margin-right: 4px;
+}
+.damage-tooltip .damage-type {
+  font-size: 14px;
+  flex: 0 0 96px;
+  max-width: 64px;
+  overflow: hidden;
+  text-align: left;
+  margin-left: 4px;
+  padding: 2px;
+  border: 1px solid #666;
+  border-radius: 4px;
 }
 /* ----------------------------------------- */
 /*  Basic Structure                          */

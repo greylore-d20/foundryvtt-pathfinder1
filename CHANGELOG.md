@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.73
+
+### Bug Fixes
+
+- Temporary hit points were not being added to a token's hit point bar
+- Unidentified items showed up at their identified value in actors' inventories
+- Items without damage rolls, attack rolls or effect notes, but which did have a measure template, didn't show a chat card on use
+- The equipment tab (on actor inventories) didn't show action buttons where appropriate
+- Fixed CSS for Lite NPC sheets, and the CR display on normal NPC sheets (the CR went off-sheet partially for wide CR text)
+- Nested Ultimate Equipment roll tables were not working correctly, because they were set to reference roll tables in the world, rather than in their own compendium
+- The Ultimate Equipment roll table for Greater Medium Weapons had an incorrect reference type
+
+### Changelog
+
+- Improved the way item weight is edited, due to the efforts of Dorgendubal (many thanks!)
+  - When using the metric system, item weights can now be edited in kg values (2 kg = 1 lbs)
+  - Internally, the item stores an lbs value, but that shouldn't affect gameplay
+- Added additional inventory statistics (carrying above head, above ground and dragging/pushing)
+- Added the ability to add non-critical hit damage formulas (damage that only gets applied on normal hits)
+- Changed the way damage is displayed on chat cards
+- Critical hit damage now includes the non-critical hit damage part
+  - Due to the way damage handling has changed, the variable `@critMult` may no longer be required, and old formulas will need to be changed
+  - This also makes the last parameter on `sizeRoll` obsolete, though it won't do harm to leave it in (for now, at least)
+
 ## 0.72.1
 
 ### Bug Fixes

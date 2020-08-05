@@ -214,7 +214,7 @@ export class ChatAttack {
     let tooltips = "";
     let consolidatedParts = data.parts.reduce((cur, o) => {
       if (!cur[o.damageType]) {
-        cur[o.damageType] = o;
+        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.rolls, critical ? "critical" : o.type);
       }
       else {
         cur[o.damageType].amount += o.amount;
@@ -296,11 +296,16 @@ export class ChatAttack {
 }
 
 export class DamagePart {
-  constructor(amount, damageType, roll, type="normal") {
+  constructor(amount, damageType, rolls, type="normal") {
     this.amount = amount;
     this.damageType = damageType;
     if (!this.damageType) this.damageType = "Untyped";
     this.type = type;
-    this.rolls = [roll];
+    this.rolls = [];
+    
+    if (rolls != null) {
+      if (!(rolls instanceof Array)) rolls = [rolls];
+      this.rolls = rolls;
+    }
   }
 }

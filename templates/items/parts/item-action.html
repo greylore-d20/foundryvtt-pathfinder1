@@ -99,56 +99,64 @@
   </select>
 </div>
 
-<hr />
+<hr>
 
 {{!-- Damage Formula --}}
-<h4 class="damage-header">
-  {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
-  <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
-</h4>
-<ol class="damage-parts form-group tooltip">
-  <span class="tooltipcontent">
-    NOTE: Normally, every variable entered in these fields are not multiplied on a critical hit,
-    EXCEPT the first damage die in the first field. If you want to have something multiplied on
-    a critical hit, multiply it by the variable @critMult.<br>
-    Examples:<br>
-    1d8 + 2 * @critMult<br>
-    2d6 + (@critMult)d6
-  </span>
-  {{#each data.damage.parts as |part i| }}
-  <li class="damage-part flexrow" data-damage-part="{{i}}">
-    <input type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-    <input type="text" name="data.damage.parts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
-    <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
-  </li>
-  {{/each}}
-</ol>
+<div class="damage" data-key="data.damage.parts">
+  <h4 class="damage-header">
+    {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
+    <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
+  </h4>
+  <ol class="damage-parts form-group tooltip">
+    {{#each data.damage.parts as |part i| }}
+    <li class="damage-part flexrow" data-damage-part="{{i}}">
+      <input type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input type="text" name="data.damage.parts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
+    </li>
+    {{/each}}
+  </ol>
+</div>
 
-<hr />
+<hr>
 
 {{!-- Critical Damage Bonus Formula --}}
-<h4 class="damage-header">
-  {{#unless isHealing }}{{localize "PF1.CritDamageBonusFormula"}}{{ else }}{{localize "PF1.CritHealingBonusFormula"}}{{/unless}}
-  <a class="crit-damage-control add-damage"><i class="fas fa-plus"></i></a>
-</h4>
-<ol class="damage-parts form-group tooltip">
-  <span class="tooltipcontent">
-    NOTE: Normally, every variable entered in these fields are not multiplied on a critical hit,
-    If you want to have something multiplied on a critical hit, multiply it by the variable @critMult.<br>
-    Examples:<br>
-    2 * @critMult<br>
-    (@critMult)d6
-  </span>
-  {{#each data.damage.critParts as |part i| }}
-  <li class="damage-part flexrow" data-damage-part="{{i}}">
-    <input type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-    <input type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
-    <a class="crit-damage-control delete-damage"><i class="fas fa-minus"></i></a>
-  </li>
-  {{/each}}
-</ol>
+<div class="damage" data-key="data.damage.critParts">
+  <h4 class="damage-header">
+    {{#unless isHealing }}{{localize "PF1.CritDamageBonusFormula"}}{{ else }}{{localize "PF1.CritHealingBonusFormula"}}{{/unless}}
+    <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
+  </h4>
+  <ol class="damage-parts form-group tooltip">
+    {{#each data.damage.critParts as |part i| }}
+    <li class="damage-part flexrow" data-damage-part="{{i}}">
+      <input type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
+    </li>
+    {{/each}}
+  </ol>
+</div>
 
-<hr />
+<hr>
+
+{{!-- Non-critical Damage Bonus Formula --}}
+<div class="damage" data-key="data.damage.nonCritParts">
+  <h4 class="damage-header">
+    {{#unless isHealing }}{{localize "PF1.NonCritDamageBonusFormula"}}{{ else }}{{localize "PF1.NonCritHealingBonusFormula"}}{{/unless}}
+    <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
+  </h4>
+  <ol class="damage-parts form-group">
+    {{#each data.damage.nonCritParts as |part i| }}
+    <li class="damage-part flexrow" data-damage-part="{{i}}">
+      <input type="text" name="data.damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input type="text" name="data.damage.nonCritParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
+    </li>
+    {{/each}}
+  </ol>
+</div>
+
+<hr>
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">

@@ -395,6 +395,15 @@ export class ItemSheetPF extends ItemSheet {
       return arr;
     }, []);
 
+    // Handle Non-critical Damage Array
+    let nonCritDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.nonCritParts"));
+    formData["data.damage.nonCritParts"] = nonCritDamage.reduce((arr, entry) => {
+      let [i, j] = entry[0].split(".").slice(3);
+      if ( !arr[i] ) arr[i] = [];
+      arr[i][j] = entry[1];
+      return arr;
+    }, []);
+
     // Handle Attack Array
     let attacks = Object.entries(formData).filter(e => e[0].startsWith("data.attackParts"));
     formData["data.attackParts"] = attacks.reduce((arr, entry) => {
@@ -497,9 +506,6 @@ export class ItemSheetPF extends ItemSheet {
     // Modify damage formula
     html.find(".damage-control").click(this._onDamageControl.bind(this));
 
-    // Modify damage formula
-    html.find(".crit-damage-control").click(this._onCritDamageControl.bind(this));
-
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
 
@@ -526,7 +532,10 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   _moveTooltips(event) {
-    $(event.currentTarget).find(".tooltip:hover .tooltipcontent").css("left", `${event.clientX}px`).css("top", `${event.clientY + 24}px`);
+    const elem = $(event.currentTarget);
+    const x = event.clientX;
+    const y = event.clientY + 24;
+    elem.find(".tooltip:hover .tooltipcontent").css("left", `${x}px`).css("top", `${y}px`);
   }
 
   async _onTextAreaDrop(event) {
@@ -674,42 +683,29 @@ export class ItemSheetPF extends ItemSheet {
   async _onDamageControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
+    const list = a.closest(".damage");
+    const k = list.dataset.key || "data.damage.parts";
+    const k2 = k.split(".").slice(0, -1).join(".");
+    const k3 = k.split(".").slice(-1).join(".");
 
     // Add new damage component
     if ( a.classList.contains("add-damage") ) {
       await this._onSubmit(event);  // Submit any unsaved changes
-      const damage = this.item.data.data.damage;
-      return this.item.update({"data.damage.parts": damage.parts.concat([["", ""]])});
+      const damage = getProperty(this.item.data, k2);
+      const updateData = {};
+      updateData[k] = getProperty(damage, k3).concat([["", ""]]);
+      return this.item.update(updateData);
     }
 
     // Remove a damage component
     if ( a.classList.contains("delete-damage") ) {
       await this._onSubmit(event);  // Submit any unsaved changes
       const li = a.closest(".damage-part");
-      const damage = duplicate(this.item.data.data.damage);
-      damage.parts.splice(Number(li.dataset.damagePart), 1);
-      return this.item.update({"data.damage.parts": damage.parts});
-    }
-  }
-
-  async _onCritDamageControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    // Add new damage component
-    if ( a.classList.contains("add-damage") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
-      const damage = this.item.data.data.damage;
-      return this.item.update({"data.damage.critParts": damage.critParts.concat([["", ""]])});
-    }
-
-    // Remove a damage component
-    if ( a.classList.contains("delete-damage") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
-      const li = a.closest(".damage-part");
-      const damage = duplicate(this.item.data.data.damage);
-      damage.critParts.splice(Number(li.dataset.damagePart), 1);
-      return this.item.update({"data.damage.critParts": damage.critParts});
+      const damage = duplicate(getProperty(this.item.data, k2));
+      getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
+      const updateData = {};
+      updateData[k] = getProperty(damage, k3);
+      return this.item.update(updateData);
     }
   }
 

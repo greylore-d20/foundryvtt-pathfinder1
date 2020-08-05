@@ -170,6 +170,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 
   // Alter chat card title color
   chat.addChatCardTitleGradient(app, html, data);
+
+  // Handle chat tooltips
+  html.find(".tooltip").on("mousemove", ev => handleChatTooltips(ev));
 });
 
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
@@ -337,6 +340,18 @@ Handlebars.registerHelper('roll-editor', function(options) {
   if ( button && editable ) editor.append($('<a class="editor-edit"><i class="fas fa-edit"></i></a>'));
   return new Handlebars.SafeString(editor[0].outerHTML);
 });
+
+// Handle chat tooltips
+const handleChatTooltips = function(event) {
+  const elem = $(event.currentTarget);
+  const rect = event.currentTarget.getBoundingClientRect();
+  // const x = event.pageX;
+  // const y = event.pageY;
+  const x = rect.x;
+  const y = rect.y;
+  const w = rect.width;
+  elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
+};
 
 
 

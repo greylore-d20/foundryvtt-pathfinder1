@@ -46,6 +46,7 @@ export const preloadHandlebarsTemplates = async function() {
     // Internal Rendering Partials
     "systems/pf1/templates/internal/spell-description.html",
     "systems/pf1/templates/internal/consumable-description.html",
+    "systems/pf1/templates/internal/damage-tooltip.html",
   ];
 
   // Load the template parts

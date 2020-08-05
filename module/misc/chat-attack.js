@@ -29,12 +29,14 @@ export class ChatAttack {
       tooltip: "",
       total: 0,
       rolls: [],
+      parts: [],
     };
     this.critDamage = {
       flavor : "",
       tooltip: "",
       total  : 0,
       rolls: [],
+      parts: [],
     };
     this.hasDamage = false;
 
@@ -76,7 +78,7 @@ export class ChatAttack {
     let data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
-    data.noCrit = 1;
+    data.critCount = 0;
     // Add critical confirmation bonus
     data.critConfirmBonus = data.item.critConfirmBonus;
     // Determine ability multiplier
@@ -149,7 +151,6 @@ export class ChatAttack {
     if (!critical && d20.total >= this.critRange) {
       this.hasCritConfirm    = true;
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
-      this.rollData.noCrit = 0;
 
       await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true});
     }
@@ -186,49 +187,58 @@ export class ChatAttack {
 
     let rollData = duplicate(this.rollData);
     // Enforce critical multiplier
+    rollData.critCount = 0;
     if (!critical) {
       rollData.critMult = 1;
-      rollData.noCrit = 1;
     }
     // Add normal damage to critical damage
-    else if (critical && this.damage.total && this.damage.total > 0) {
-      extraParts.push(this.damage.total);
+    else if (critical) {
+      const normalParts = this.damage.parts.filter(p => p.type === "normal");
+      data.parts.push(...normalParts);
     }
     
-    const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical});
-    data.rolls = rolls;
-    // Add tooltip
-    let tooltips = "";
-    let totalDamage = 0;
-    for (let roll of rolls) {
-      let tooltip = $(await roll.roll.getTooltip()).prepend(`<div class="dice-formula">${roll.roll.formula}</div>`)[0].outerHTML;
-      // Alter tooltip
-      let tooltipHtml = $(tooltip);
-      totalDamage += roll.roll.total;
-      let totalText = roll.roll.total.toString();
-      if (roll.damageType.length) totalText += ` (${roll.damageType})`;
-      tooltipHtml.find(".part-total").text(totalText);
-      tooltip = tooltipHtml[0].outerHTML;
-      
-      tooltips += tooltip;
+    // Roll damages
+    const repeatCount = critical ? Math.max(1, this.rollData.item.ability.critMult - 1) : 1;
+    for (let repeat = 0; repeat < repeatCount; ++repeat) {
+      if (critical) rollData.critCount++;
+      const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical});
+      data.rolls = rolls;
+      // Add damage parts
+      for (let roll of rolls) {
+        const dtype = roll.damageType;
+        data.parts.push(new DamagePart(roll.roll.total, dtype, roll.roll, roll.type));
+      }
     }
+
+    // Consolidate damage parts based on damage type
+    let tooltips = "";
+    let consolidatedParts = data.parts.reduce((cur, o) => {
+      if (!cur[o.damageType]) {
+        cur[o.damageType] = o;
+      }
+      else {
+        cur[o.damageType].amount += o.amount;
+        cur[o.damageType].rolls.push(...o.rolls);
+      }
+      return cur;
+    }, {});
+
+    // Add tooltip
+    for (let p of Object.values(consolidatedParts)) {
+      tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.html", {
+        part: p,
+      });
+    }
+
     // Add normal data
     let flavor;
     if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing")         : game.i18n.localize("PF1.Damage");
     else           flavor = this.item.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
-    let damageTypes = this.item.data.data.damage.parts.reduce((cur, o) => {
-      if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
-      return cur;
-    }, []);
-    // Add critical damage types
-    if (critical === true && getProperty(this.item.data, "data.damage.critParts") != null) {
-      damageTypes.push(...this.item.data.data.damage.critParts.reduce((cur, o) => {
-        if (o[1] !== "" && cur.indexOf(o[1]) === -1) cur.push(o[1]);
-        return cur;
-      }, []));
-    }
 
     // Add card
+    const totalDamage = data.parts.reduce((cur, p) => {
+      return cur + p.amount;
+    }, 0);
     if (critical) {
       if (!this.cards.critical) this.cards.critical = { label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"), items: [] };
       if (this.item.isHealing) {
@@ -252,19 +262,10 @@ export class ChatAttack {
       }
     }
 
-    // Filter damage types
-    damageTypes = damageTypes.reduce((cur, o) => {
-      if (cur.indexOf(o) === -1) cur.push(o);
-      return cur;
-    }, []);
-
     // Finalize data
-    // data.flavor = damageTypes.length > 0 ? `${flavor} (${damageTypes.join(", ")})` : flavor;
     data.flavor = flavor;
     data.tooltip = tooltips;
-    data.total = rolls.reduce((cur, roll) => {
-      return cur + roll.roll.total;
-    }, 0);
+    data.total = totalDamage;
   }
 
   addEffectNotes() {
@@ -291,5 +292,15 @@ export class ChatAttack {
     this.hasCards = Object.keys(this.cards).length > 0;
 
     return this;
+  }
+}
+
+export class DamagePart {
+  constructor(amount, damageType, roll, type="normal") {
+    this.amount = amount;
+    this.damageType = damageType;
+    if (!this.damageType) this.damageType = "Untyped";
+    this.type = type;
+    this.rolls = [roll];
   }
 }

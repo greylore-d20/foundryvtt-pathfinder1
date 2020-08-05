@@ -894,7 +894,7 @@ export class ItemPF extends Item {
         // Power Attack
         if (form.find('[name="power-attack"]').prop("checked")) {
           rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
-          damageExtraParts.push("floor(@powerAttackBonus * max(0.5, min(1.5, @ablMult))) * @critMult");
+          damageExtraParts.push("floor(@powerAttackBonus * max(0.5, min(1.5, @ablMult)))");
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
           attackExtraParts.push("@powerAttackPenalty");
         }
@@ -1335,7 +1335,6 @@ export class ItemPF extends Item {
    */
   rollEffect({critical=false, primaryAttack=true}={}) {
     const rollData = this.getRollData();
-    rollData.noCrit = critical ? 0 : 1;
 
     if (!this.hasEffect) {
       throw new Error("You may not make an Effect Roll with this Item.");
@@ -1401,18 +1400,20 @@ export class ItemPF extends Item {
    */
   rollDamage({data=null, critical=false, extraParts=[]}={}) {
     const rollData = mergeObject(this.getRollData(), data || {});
-    rollData.noCrit = critical ? 0 : 1;
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
 
     // Define Roll parts
-    let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; });
-    parts[0].base = alterRoll(parts[0].base, 0, rollData.critMult);
+    let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "normal" }; });
     // Add critical damage parts
     if (critical === true && getProperty(this.data, "data.damage.critParts") != null) {
-      parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1] }; }));
+      parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "crit" }; }));
+    }
+    // Add non-critical damage parts
+    if (critical === false && getProperty(this.data, "data.damage.nonCritParts") != null) {
+      parts = parts.concat(this.data.data.damage.nonCritParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" }; }));
     }
 
     // Determine ability score modifier
@@ -1421,27 +1422,27 @@ export class ItemPF extends Item {
       rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
       if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
-      else if (critical === true) parts[0].extra.push("@ablDamage * @critMult");
+      else if (critical === true) parts[0].extra.push("@ablDamage");
       else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
     }
     // Add enhancement bonus
     if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {
-      if (critical === true) parts[0].extra.push("@item.enh * @critMult");
+      if (critical === true) parts[0].extra.push("@item.enh");
       else parts[0].extra.push("@item.enh");
     }
 
     // Add general damage
     if (rollData.attributes.damage.general !== 0) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.general * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.general");
       else parts[0].extra.push("@attributes.damage.general");
     }
     // Add melee or spell damage
     if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(this.data.data.actionType)) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.weapon * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.weapon");
       else parts[0].extra.push("@attributes.damage.weapon");
     }
     else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(this.data.data.actionType)) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.spell * @critMult");
+      if (critical === true) parts[0].extra.push("@attributes.damage.spell");
       else parts[0].extra.push("@attributes.damage.spell");
     }
 
@@ -1454,6 +1455,7 @@ export class ItemPF extends Item {
       const roll = {
         roll: new Roll([part.base, ...rollParts].join("+"), rollData).roll(),
         damageType: part.damageType,
+        type: part.type,
       };
       rolls.push(roll);
     }

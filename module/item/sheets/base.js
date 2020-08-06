@@ -690,10 +690,14 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new damage component
     if ( a.classList.contains("add-damage") ) {
+      // Get initial data
+      const initialData = ["", ""];
+
+      // Add data
       await this._onSubmit(event);  // Submit any unsaved changes
       const damage = getProperty(this.item.data, k2);
       const updateData = {};
-      updateData[k] = getProperty(damage, k3).concat([["", ""]]);
+      updateData[k] = getProperty(damage, k3).concat([initialData]);
       return this.item.update(updateData);
     }
 

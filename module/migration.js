@@ -172,6 +172,7 @@ export const migrateItemData = function(item) {
   _migrateItemChanges(item, updateData);
   _migrateTemplateSize(item, updateData);
   _migrateEquipmentSize(item, updateData);
+  _migrateDamageCriticalMultiply(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -622,6 +623,19 @@ const _migrateEquipmentSize = function(ent, updateData) {
   if (!size) {
     updateData["data.size"] = "med";
   }
+};
+
+const _migrateDamageCriticalMultiply = function(ent, updateData) {
+  const parts = getProperty(ent.data, "data.damage.parts");
+  if (!parts) return;
+
+  for (let part of parts) {
+    if (part.length < 3) {
+      part.push(true);
+    }
+  }
+
+  updateData["data.damage.parts"] = parts;
 };
 
 const _migrateActorCR = function(ent, updateData) {

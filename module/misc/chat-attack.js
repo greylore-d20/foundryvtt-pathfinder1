@@ -193,7 +193,7 @@ export class ChatAttack {
     }
     // Add normal damage to critical damage
     else if (critical) {
-      const normalParts = this.damage.parts.filter(p => p.type === "normal");
+      const normalParts = this.damage.parts;//.filter(p => p.type === "normal");
       data.parts.push(...normalParts);
     }
     
@@ -214,7 +214,7 @@ export class ChatAttack {
     let tooltips = "";
     let consolidatedParts = data.parts.reduce((cur, o) => {
       if (!cur[o.damageType]) {
-        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.rolls, critical ? "critical" : o.type);
+        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.rolls.slice(), critical ? "critical" : o.type);
       }
       else {
         cur[o.damageType].amount += o.amount;

@@ -868,7 +868,6 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      fastForward: options.skipDialog,
     });
   }
 

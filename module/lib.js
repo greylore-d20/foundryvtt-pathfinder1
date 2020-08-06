@@ -1,4 +1,5 @@
 import { ListTabs} from "./misc/list-tabs.js";
+import { SemanticVersion } from "./semver.js";
 
 /**
 * Creates a tag from a string.
@@ -133,27 +134,10 @@ export const unpackVersion = function(version) {
 * @returns {Boolean} Whether the current core version is at least the given version.
 */
 export const isMinimumCoreVersion = function(version) {
-  const coreVersion = unpackVersion(game.data.version);
-  const compareVersion = unpackVersion(version);
-  
-  for (const versionType of ["release", "major", "minor"]) {
-    const curValue = coreVersion[versionType];
-    const compareValue = compareVersion[versionType];
-    
-    if (curValue == null) {
-      if (compareValue == null) continue;
-      return false;
-    }
-    if (compareValue == null) {
-      if (curValue == null) continue;
-      return true;
-    }
-    
-    if (curValue > compareValue) return true;
-    if (curValue < compareValue) return false;
-  }
-  
-  return true;
+  const coreVersion = SemanticVersion.fromString(game.data.version);
+  const compareVersion = SemanticVersion.fromString(version);
+
+  return !coreVersion.isLowerThan(compareVersion);
 };
 
 export const degtorad = function(degrees) {

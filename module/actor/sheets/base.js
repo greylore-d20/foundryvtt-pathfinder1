@@ -1699,6 +1699,9 @@ export class ActorSheetPF extends ActorSheet {
         else if (v.match(/([0-9]+)/)) {
           formData[k] = parseInt(v);
         }
+        else if (v === "") {
+          formData[k] = 0;
+        }
         else formData[k] = originalValue;
       }
     }

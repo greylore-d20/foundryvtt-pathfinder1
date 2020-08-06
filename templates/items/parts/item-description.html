@@ -69,11 +69,11 @@
 
       {{!-- Properties --}}
       <ol class="properties-list">
-        {{#if showIdentifyDescription}}
+        {{#unless showUnidentifiedData}}
         {{#each itemProperties}}
         <li>{{this}}</li>
         {{/each}}
-        {{/if}}
+        {{/unless}}
       </ol>
     </div>
 

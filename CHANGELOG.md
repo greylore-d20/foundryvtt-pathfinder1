@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.73.1
+
+### Bug Fixes
+
+- Non-critical damage formulas didn't get applied to critical hits at all (they should just not be multiplied)
+- Clearing certain fields (like temporary hit points, non-lethal damage and currencies) reverted them back to the previous value
+
+### Changelog
+
+- Added the `template` property to chat card metadata (for use by module/macro developers)
+
 ## 0.73
 
 ### Bug Fixes

@@ -1033,6 +1033,7 @@ export class ItemPF extends Item {
       chatTemplateData.attacks = attacks.map(o => o.finalize());
 
       // Prompt measure template
+      let template;
       if (useMeasureTemplate) {
         // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
@@ -1054,7 +1055,7 @@ export class ItemPF extends Item {
         }
 
         // Create template
-        const template = AbilityTemplate.fromData(templateOptions);
+        template = AbilityTemplate.fromData(templateOptions);
         if (template) {
           if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
           const success = await template.drawPreview(ev);
@@ -1157,6 +1158,7 @@ export class ItemPF extends Item {
         // Add metadata
         const metadata = {};
         metadata.item = this._id;
+        metadata.template = template ? template.data._id : null;
         metadata.rolls = {
           attacks: {},
         };

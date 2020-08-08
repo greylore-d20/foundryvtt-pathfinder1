@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.73.2
+
+### Bug Fixes
+
+- Chat metadata used an incorrect measure template ID
+- Entering a non-working formula for bonus feats caused the character sheet to not open anymore
+- Some item properties were still visible while unidentified which should have been invisible
+  
+### Changelog
+
+- Added sample macro for creating a loot sheet from one or more tokens
+
 ## 0.73.1
 
 ### Bug Fixes

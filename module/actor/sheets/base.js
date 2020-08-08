@@ -234,9 +234,15 @@ export class ActorSheetPF extends ActorSheet {
         return cur + o.data.data.level;
       }, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
-      data.featCount.byFormula = this.actor.data.data.details.bonusFeatFormula
-        ? new Roll(this.actor.data.data.details.bonusFeatFormula, rollData).roll().total
-        : 0;
+      try {
+        data.featCount.byFormula = this.actor.data.data.details.bonusFeatFormula
+          ? new Roll(this.actor.data.data.details.bonusFeatFormula, rollData).roll().total
+          : 0;
+      }
+      catch (e) {
+        ui.notifications.error(game.i18n.localize("PF1.ErrorActorFormula").format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name));
+        data.featCount.byFormula = 0;
+      }
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
     }
 

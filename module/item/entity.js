@@ -1058,8 +1058,8 @@ export class ItemPF extends Item {
         template = AbilityTemplate.fromData(templateOptions);
         if (template) {
           if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
-          const success = await template.drawPreview(ev);
-          if (!success) {
+          template = await template.drawPreview(ev);
+          if (!template) {
             if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.maximize();
             return;
           }
@@ -1158,7 +1158,7 @@ export class ItemPF extends Item {
         // Add metadata
         const metadata = {};
         metadata.item = this._id;
-        metadata.template = template ? template.data._id : null;
+        metadata.template = template ? template._id : null;
         metadata.rolls = {
           attacks: {},
         };

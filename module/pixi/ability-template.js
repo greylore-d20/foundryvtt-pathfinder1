@@ -111,7 +111,7 @@ export class AbilityTemplate extends MeasuredTemplate {
       };
 
       // Confirm the workflow (left-click)
-      handlers.lc = event => {
+      handlers.lc = async event => {
         handlers.rc(event, false);
 
         // Confirm final snapped position
@@ -120,8 +120,8 @@ export class AbilityTemplate extends MeasuredTemplate {
         this.data.y = destination.y;
 
         // Create the template
-        canvas.scene.createEmbeddedEntity("MeasuredTemplate", this.data);
-        resolve(true);
+        const result = await canvas.scene.createEmbeddedEntity("MeasuredTemplate", this.data);
+        resolve(result);
       };
 
       // Rotate the template by 3 degree increments (mouse-wheel)

@@ -551,9 +551,11 @@ export class ItemPF extends Item {
     // Get changed attributes
     const changed = new Set(Object.keys(data));
 
-    // Level changed
-    if (changed.has("data.level")) {
-      this._onLevelChange(this._prevData["level"], data["data.level"]);
+    if (this.hasPerm(game.user, "OWNER")) {
+      // Level changed
+      if (changed.has("data.level")) {
+        this._onLevelChange(this._prevData["level"], data["data.level"]);
+      }
     }
   }
 

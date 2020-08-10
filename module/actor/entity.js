@@ -593,7 +593,7 @@ export class ActorPF extends Actor {
       i._updateMaxUses(itemUpdateData, { actorData: data });
 
       const itemDiff = diffObject(flattenObject(i.data), itemUpdateData);
-      if (Object.keys(itemDiff).length > 0) i.update(itemDiff);
+      if (Object.keys(itemDiff).length > 0 && i.hasPerm(game.user, "OWNER")) i.update(itemDiff);
     }
 
     return super._onUpdate(data, options, userId, context);

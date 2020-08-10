@@ -188,19 +188,23 @@ Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (!(actor instanceof Actor)) return;
+  if (!actor.hasPerm(game.user, "OWNER")) return;
   actor.refresh();
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
+  if (!item.hasPerm(game.user, "OWNER")) return;
   actor.updateItemResources(item);
 });
 Hooks.on("updateToken", (scene, sceneId, data) => {
   const actor = game.actors.tokens[data._id];
   if (actor != null && hasProperty(data, "actorData.items")) {
+    if (!actor.hasPerm(game.user, "OWNER")) return;
     actor.refresh();
 
     // Update items
     for (let i of actor.items) {
+      if (!i.hasPerm(game.user, "OWNER")) continue;
       actor.updateItemResources(i);
     }
   }
@@ -219,6 +223,7 @@ Hooks.on("preCreateOwnedItem", (actor, item) => {
 
 Hooks.on("createOwnedItem", async (actor, itemData) => {
   if (!(actor instanceof Actor)) return;
+  if (!actor.hasPerm(game.user, "OWNER")) return actor.refresh();
 
   const item = actor.items.find(o => o._id === itemData._id);
   // Refresh item

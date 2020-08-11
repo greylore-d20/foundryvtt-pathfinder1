@@ -486,6 +486,11 @@ export class ActorSheetPF extends ActorSheet {
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));
 
+    // Remove default change handler
+    html.off("change");
+    // Add alternative change handler
+    html.find("input,select,textarea").on("change", this._onChangeInput.bind(this));
+
     // Activate Item Filters
     const filterLists = html.find(".filter-list");
     filterLists.each(this._initializeFilterItemList.bind(this));
@@ -638,9 +643,9 @@ export class ActorSheetPF extends ActorSheet {
     /*  Buffs
     /* -------------------------------------------- */
 
-    html.find(".item-detail.item-active input[type='checkbox']").off("change").change(this._setItemActive.bind(this));
+    html.find(".item-detail.item-active input[type='checkbox']").off("change").on("change", this._setItemActive.bind(this));
 
-    html.find(".item-detail.item-level input[type='text']").off("change").change(this._setBuffLevel.bind(this));
+    html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
   }
@@ -1497,6 +1502,8 @@ export class ActorSheetPF extends ActorSheet {
 
   async _onSubmit(event, {updateData=null, preventClose=false}={}) {
     event.preventDefault();
+
+    // Update items
     await this._updateItems();
 
     return super._onSubmit(event, {updateData, preventClose});

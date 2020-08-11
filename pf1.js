@@ -188,8 +188,8 @@ Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("updateOwnedItem", (actor, _, changedData) => {
   if (!(actor instanceof Actor)) return;
-  if (!actor.hasPerm(game.user, "OWNER")) return;
-  actor.refresh();
+  // if (!actor.hasPerm(game.user, "OWNER")) return;
+  // actor.refresh();
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;

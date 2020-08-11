@@ -519,6 +519,12 @@ export class ActorSheetPF extends ActorSheet {
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
+    // Submit on blur
+    html.find(".submit-on-blur").on("blur", async ev => {
+      await this._onSubmit(ev, { preventRender: true });
+      this.render();
+    });
+
     /* -------------------------------------------- */
     /*  Abilities, Skills, Defenses and Traits
     /* -------------------------------------------- */
@@ -629,10 +635,10 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find(".item-list .spell-uses input[data-type='amount']").off("change")
-    .change(this._setSpellUses.bind(this))
+    .on("change", this._setSpellUses.bind(this))
     .on("wheel", this._setSpellUses.bind(this));
     html.find(".item-list .spell-uses input[data-type='max']").off("change")
-    .change(this._setMaxSpellUses.bind(this))
+    .on("change", this._setMaxSpellUses.bind(this))
     .on("wheel", this._setMaxSpellUses.bind(this));
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
@@ -1110,7 +1116,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const itemId = $(a).parents(".item").attr("data-item-id");
     const item = this.actor.getOwnedItem(itemId);
-    const property = $(a).attr("name");
+    const property = $(a).attr("name") || a.dataset.name;
 
     const updateData = {};
     updateData[property] = !getProperty(item.data, property);
@@ -1681,6 +1687,28 @@ export class ActorSheetPF extends ActorSheet {
     // Translate CR
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
+
+    // Update from elements with 'data-name'
+    {
+      const elems = this.element.find("*[data-name]");
+      let changedData = {};
+      for (const el of elems) {
+        const name = el.dataset.name;
+        let value;
+        if (el.nodeName === "INPUT") value = el.value;
+
+        if (el.dataset.dtype === "Number") value = Number(value);
+        else if (el.dataset.dtype === "Boolean") value = Boolean(value);
+
+        if (getProperty(this.actor.data, name) !== value) {
+          changedData[name] = value;
+        }
+      }
+
+      for (let [k, v] of Object.entries(changedData)) {
+        formData[k] = v;
+      }
+    }
 
     // Change relative values
     const relativeKeys = [

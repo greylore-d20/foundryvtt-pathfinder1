@@ -198,7 +198,7 @@
           <a class="config-icon config-control" for="spellSlots"><i class="fas fa-cog"></i></a>
           <input class="base submit-on-blur" type="text" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
             value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
-          <input type="text" class="select-on-click" value="{{section.uses}}" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" placeholder="0" data-dtype="Number" />
+          <input type="text" value="{{section.uses}}" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" placeholder="0" data-dtype="Number" />
           <span class="sep"> / </span>
           <input type="text" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
           {{ else }}

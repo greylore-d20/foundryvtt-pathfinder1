@@ -1107,8 +1107,6 @@ export class ItemPF extends Item {
               dice3dData.blind = true;
               break;
           }
-          // Roll 3D dice
-          chatData.sound = null;
           await game.dice3d.show(dice3dData);
         }
       }

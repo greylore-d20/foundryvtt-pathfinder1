@@ -71,7 +71,8 @@ export class ItemSheetPF extends ItemSheet {
     data.itemName = data.item.name;
     data.isPhysical = data.item.data.hasOwnProperty("quantity");
     data.isSpell = this.item.type === "spell";
-    data.owner = this.item.actor != null;
+    data.owned = this.item.actor != null;
+    data.owner = this.item.hasPerm(game.user, "OWNER");
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
@@ -261,11 +262,38 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
+    // Add class associations
+    if (this.item.type === "class") {
+      data.links.list.push({
+        id: "classAssociations",
+        label: game.i18n.localize("PF1.LinkTypeClassAssociations"),
+        help: game.i18n.localize("PF1.LinkHelpClassAssociations"),
+        fields: {
+          level: {
+            type: "Number",
+            label: game.i18n.localize("PF1.Level"),
+          },
+        },
+        items: [],
+      });
+    }
+
     // Post process data
     for (let l of data.links.list) {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
-      for (let i of items) {
+      for (let a = 0; a < items.length; a++) {
+        const i = items[a];
+        i._index = a;
+
+        // Add item to stack
         l.items.push(i);
+      }
+
+      // Sort items
+      if (l.id === "classAssociations") {
+        l.items = l.items.sort((a, b) => {
+          return a.level - b.level;
+        });
       }
     }
 
@@ -374,9 +402,7 @@ export class ItemSheetPF extends ItemSheet {
    * Extend the parent class _updateObject method to ensure that damage ends up in an Array
    * @private
    */
-  _updateObject(event, formData) {
-    // formData = expandObjectExt(formData);
-
+  async _updateObject(event, formData) {
     // Handle Damage Array
     let damage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.parts"));
     formData["data.damage.parts"] = damage.reduce((arr, entry) => {
@@ -458,17 +484,21 @@ export class ItemSheetPF extends ItemSheet {
     // Handle links arrays
     let links = Object.entries(formData).filter(e => e[0].startsWith("data.links"));
     for (let e of links) {
+      const path = e[0].split(".");
+      const linkType = path[2];
+      const index = path[3];
+      const subPath = path.slice(4).join(".");
+      const value = e[1];
 
-      formData[e[0]] = e[1].reduce((arr, entry) => {
-        let [i, j] = entry[0].split(".").slice(2);
-        if ( !arr[i] ) arr[i] = [];
-        arr[i][j] = entry[1];
-        return arr;
-      }, []);
+      delete formData[e[0]];
+
+      if (!formData[`data.links.${linkType}`]) formData[`data.links.${linkType}`] = duplicate(getProperty(this.item.data, `data.links.${linkType}`));
+
+      setProperty(formData[`data.links.${linkType}`][index], subPath, value);
     }
 
     // Update the Item
-    super._updateObject(event, formData);
+    return super._updateObject(event, formData);
   }
 
   /* -------------------------------------------- */
@@ -594,7 +624,7 @@ export class ItemSheetPF extends ItemSheet {
       const packItem = await pack.getEntity(data.id);
       if (packItem != null) {
         itemData = packItem.data;
-        itemLink = `${pack.key}.${packItem._id}`;
+        itemLink = `${pack.collection}.${packItem._id}`;
       }
     }
 
@@ -653,6 +683,8 @@ export class ItemSheetPF extends ItemSheet {
 
     if (["children", "charges"].includes(linkType) && sameActor) return true;
 
+    if (linkType === "classAssociations" && dataType === "compendium") return true;
+
     return false;
   }
 
@@ -666,12 +698,19 @@ export class ItemSheetPF extends ItemSheet {
    */
   generateInitialLinkData(linkType, dataType, itemData, itemLink, data=null) {
 
-    return {
+    const result = {
       id: itemLink,
       dataType: dataType,
       name: itemData.name,
       img: itemData.img,
+      hiddenLinks: {},
     };
+
+    if (linkType === "classAssociations") {
+      result.level = 1;
+    }
+
+    return result;
   }
 
   /**

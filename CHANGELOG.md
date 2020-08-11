@@ -11,6 +11,7 @@
 - Reduced amount of actor updates in some cases, resulting in improved performance
 - Improved spellbook accessability, especially in regards to the 'All' tab
 - Added customizable class tag
+- Added a new item link type for classes, which automatically adds class abilities at certain levels
 
 ## 0.73.2
 

@@ -551,20 +551,6 @@ export class ItemPF extends Item {
     return false;
   }
 
-  _onUpdate(data, options, userId, context) {
-    super._onUpdate(data, options, userId, context);
-
-    // Get changed attributes
-    const changed = new Set(Object.keys(data));
-
-    if (this.hasPerm(game.user, "OWNER")) {
-      // Level changed
-      if (changed.has("data.level")) {
-        this._onLevelChange(this._prevData["level"], data["data.level"]);
-      }
-    }
-  }
-
   _updateMaxUses(data, {srcData=null}={}) {
     let doLinkData = true;
     if (srcData == null) {
@@ -2057,28 +2043,46 @@ export class ItemPF extends Item {
 
   async _onLevelChange(curLevel, newLevel) {
 
-    // let newItems = [];
-    // // Add linked items by minLevel
-    // for (let o of this.links.minLevel) {
-      // if (newLevel > curLevel && newLevel >= o.level) {
-        // const id = o.target.split(".");
+    if (!this.actor) return;
 
-        // // Add from compendium
-        // if (id.length === 3) {
-          // const pack = game.packs.get([id[0], id[1]].join("."));
-          // const item = await pack.getEntity(id[2]);
-          // if (item != null) {
-            // newItems.push(item);
-          // }
-        // }
-      // }
-    // }
+    // Add items associated to this class
+    if (newLevel > curLevel) {
+      const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
+        o.__index = index;
+        return o.level > curLevel && o.level <= newLevel;
+      });
 
-    // if (this.actor != null) {
-      // if (newItems.length > 0) {
-        // this.actor.createEmbeddedEntity("OwnedItem", newItems);
-      // }
-    // }
+      for (let co of classAssociations) {
+        const collection = co.id.split(".").slice(0, 2).join(".");
+        const itemId = co.id.split(".")[2];
+        const pack = game.packs.get(collection);
+        const item = await pack.getEntity(itemId);
+
+        const itemData = duplicate(item.data);
+        delete itemData._id;
+        const newItem = await this.actor.createOwnedItem(itemData);
+
+        await this.setFlag("pf1", `links.classAssociations.${newItem._id}`, co.level);
+      }
+    }
+
+    // Remove items associated to this class
+    if (newLevel < curLevel) {
+      let associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
+      for (let [id, level] of Object.entries(associations)) {
+        const item = this.actor.items.find(o => o._id === id);
+        if (!item) {
+          delete associations[id];
+          continue;
+        }
+
+        if (level > newLevel) {
+          await this.actor.deleteOwnedItem(id);
+          delete associations[id];
+        }
+      }
+      await this.setFlag("pf1", "links.classAssociations", associations);
+    }
   }
 
   async getLinkedItems(type) {

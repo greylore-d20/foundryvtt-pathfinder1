@@ -142,7 +142,7 @@ Hooks.once("ready", async function() {
   }
   let needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION));
   if (needMigration && game.user.isGM) {
-    await migrations.migrateWorld();
+    // await migrations.migrateWorld();
   }
 
   game.actors.entities.forEach(obj => { updateChanges.call(obj, { sourceOnly: true }); });
@@ -186,14 +186,30 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 
-Hooks.on("updateOwnedItem", (actor, _, changedData) => {
+Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
+  if (!(actor instanceof Actor)) return;
+  if (userId !== game.user._id) return;
+
+  const item = actor.getOwnedItem(changedData._id);
+  if (!item) return;
+
+  // On level change
+  if (item.type === "class" && getProperty(changedData, "data.level") != null) {
+      const curLevel = item.data.data.level;
+      const newLevel = getProperty(changedData, "data.level")
+      item._onLevelChange(curLevel, newLevel);
+  }
+});
+Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (!(actor instanceof Actor)) return;
   // if (!actor.hasPerm(game.user, "OWNER")) return;
   // actor.refresh();
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
-  if (!item.hasPerm(game.user, "OWNER")) return;
+  if (userId !== game.user._id) return;
+
+  // Update item resources
   actor.updateItemResources(item);
 });
 Hooks.on("updateToken", (scene, sceneId, data) => {
@@ -221,17 +237,40 @@ Hooks.on("preCreateOwnedItem", (actor, item) => {
   }
 });
 
-Hooks.on("createOwnedItem", async (actor, itemData) => {
+Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
   if (!(actor instanceof Actor)) return;
-  if (!actor.hasPerm(game.user, "OWNER")) return actor.refresh();
+  if (userId !== game.user._id) return;
 
   const item = actor.items.find(o => o._id === itemData._id);
+  if (!item) return;
+
+  // Create class
+  if (item.type === "class") {
+    item._onLevelChange(0, item.data.data.level);
+  }
+
   // Refresh item
   await item.update({});
-  await actor.refresh();
 });
-Hooks.on("deleteOwnedItem", (actor, ...args) => {
+
+Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
   if (!(actor instanceof Actor)) return;
+  if (userId !== game.user._id) return;
+
+  const item = actor.items.find(o => o._id === itemData._id);
+  if (!item) return;
+
+  // Effectively lose all levels
+  if (item.type === "class") {
+    item._onLevelChange(item.data.data.level, -1);
+  }
+});
+
+Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
+  if (!(actor instanceof Actor)) return;
+  if (userId !== game.user._id) return;
+
+  // Refresh actor
   actor.refresh();
 });
 

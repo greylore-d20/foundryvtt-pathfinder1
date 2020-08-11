@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.73.3
+
+### Bug Fixes
+
+- Experience values were occasionally stored as strings, resulting in unexpected behavior
+
+### Changelog
+
+- Reduced amount of actor updates in some cases, resulting in improved performance
+- Improved spellbook accessability, especially in regards to the 'All' tab
+
 ## 0.73.2
 
 ### Bug Fixes

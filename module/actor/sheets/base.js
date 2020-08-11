@@ -1682,7 +1682,7 @@ export class ActorSheetPF extends ActorSheet {
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
 
-    // Iterate over data
+    // Change relative values
     const relativeKeys = [
       "data.currency.pp",
       "data.currency.gp",

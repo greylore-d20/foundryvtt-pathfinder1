@@ -645,6 +645,12 @@ export class ActorPF extends Actor {
 
     const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
     if (resetExp) data["data.details.xp.value"] = minExp;
+
+    // Make sure experience ends as a number
+    if (typeof data["data.details.xp.value"] === "string") {
+      const xpValue = parseInt(data["data.details.xp.value"]);
+      if (!Number.isNaN(xpValue)) data["data.details.xp.value"] = xpValue;
+    }
   }
 
   async _onCreate(data, options, userId, context) {

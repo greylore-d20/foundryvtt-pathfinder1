@@ -1,5 +1,6 @@
 import { ItemPF } from "./item/entity.js";
 import { ExperienceConfig } from "./config/experience.js";
+import { createTag } from "./lib.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -172,6 +173,7 @@ export const migrateItemData = function(item) {
   _migrateItemChanges(item, updateData);
   _migrateTemplateSize(item, updateData);
   _migrateEquipmentSize(item, updateData);
+  _migrateTags(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -621,6 +623,15 @@ const _migrateEquipmentSize = function(ent, updateData) {
   const size = getProperty(ent.data, "data.size");
   if (!size) {
     updateData["data.size"] = "med";
+  }
+};
+
+const _migrateTags = function(ent, updateData) {
+  if (!["class"].includes(ent.type)) return;
+
+  const tag = getProperty(ent.data, "data.tag");
+  if (!tag && ent.data.name) {
+    updateData["data.tag"] = createTag(ent.data.name);
   }
 };
 

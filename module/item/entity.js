@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, alterRoll, linkData, isMinimumCoreVersion, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
+import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
@@ -488,6 +488,12 @@ export class ItemPF extends Item {
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
+
+    // Initialize tag
+    if (this.type === "class" && !this.data.data.tag && !data["data.tag"]) {
+      const name = data["name"] || this.name;
+      data["data.tag"] = createTag(name);
+    }
 
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"]) {

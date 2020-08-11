@@ -1592,13 +1592,8 @@ export class ActorPF extends Actor {
     // Set class data
     result.classes = {};
     this.data.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
-      let tag = createTag(cls.name);
-      let count = 1;
-      while (this.data.items.filter(obj => { return obj.type === "class" && obj.data.tag === tag && obj !== cls; }).length > 0) {
-        count++;
-        tag = createTag(cls.name) + count.toString();
-      }
-      cls.data.tag = tag;
+      const tag = cls.data.tag;
+      if (!tag) return;
 
       let healthConfig = game.settings.get("pf1", "healthConfig");
       healthConfig = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;

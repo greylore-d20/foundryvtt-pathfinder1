@@ -10,6 +10,7 @@
 
 - Reduced amount of actor updates in some cases, resulting in improved performance
 - Improved spellbook accessability, especially in regards to the 'All' tab
+- Added customizable class tag
 
 ## 0.73.2
 

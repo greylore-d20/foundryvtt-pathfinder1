@@ -1052,6 +1052,11 @@ PF1.contextNoteTargets = {
     "wisChecks": "PF1.BuffTarWisChecks",
     "chaChecks": "PF1.BuffTarChaChecks",
   },
+  "spell": {
+    "_label": "PF1.BuffTarSpells",
+    "concentration": "PF1.Concentration",
+    "cl": "PF1.CasterLevel",
+  },
   "misc": {
     "_label": "PF1.MiscShort",
     "ac": "PF1.ACNormal",

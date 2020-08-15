@@ -1120,6 +1120,22 @@ export class ItemPF extends Item {
 
         const properties = this.getChatData(null, rollData).properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
+        
+        // Add CL notes
+        if (this.data.type === "spell" && this.actor) {
+          const clNotes = this.actor.getContextNotes(`spell.cl.${this.data.data.spellbook}`)
+          .reduce((cur, o) => {
+            cur.push(...o.notes);
+            return cur;
+          }, []).filter(o => o.length);
+
+          if (clNotes.length) {
+            props.push({
+              header: game.i18n.localize("PF1.CLNotes"),
+              value: clNotes,
+            });
+          }
+        }
 
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
@@ -1185,6 +1201,7 @@ export class ItemPF extends Item {
 
           metadata.rolls.attacks[a] = attackRolls;
         }
+
         setProperty(chatData, "flags.pf1.metadata", metadata);
         // Create message
         await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);

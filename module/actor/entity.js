@@ -1396,6 +1396,38 @@ export class ActorPF extends Actor {
       return result;
     }
 
+    if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
+      const spellbookKey = RegExp.$1;
+      for (let note of result) {
+        note.notes = note.notes.filter(o => {
+          return o.target === "spell" && o.subTarget === "concentration";
+        }).map(o => { return o.text; });
+      }
+
+      const spellbookNotes = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.concentrationNotes`);
+      if (spellbookNotes.length) {
+        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+      }
+
+      return result;
+    }
+
+    if (context.match(/^spell\.cl\.([a-z]+)$/)) {
+      const spellbookKey = RegExp.$1;
+      for (let note of result) {
+        note.notes = note.notes.filter(o => {
+          return o.target === "spell" && o.subTarget === "cl";
+        }).map(o => { return o.text; });
+      }
+
+      const spellbookNotes = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
+      if (spellbookNotes.length) {
+        result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+      }
+
+      return result;
+    }
+
     return [];
   }
 

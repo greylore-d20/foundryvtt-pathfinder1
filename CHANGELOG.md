@@ -13,6 +13,7 @@
 - Improved spellbook accessability, especially in regards to the 'All' tab
 - Added customizable class tag
 - Added a new item link type for classes, which automatically adds class abilities at certain levels
+- Added Caster Level and Concentration context notes
 
 ## 0.73.2
 

@@ -816,17 +816,10 @@ export class ActorSheetPF extends ActorSheet {
     rollData.cl = spellbook.cl.total;
 
     // Add contextual concentration string
-    let notes = [];
-    if (spellbook.concentrationNotes.length > 0) {
-      if (!isMinimumCoreVersion("0.5.2")) {
-        let noteStr = DicePF.messageRoll({
-          data: rollData,
-          msgStr: spellbook.concentrationNotes
-        });
-        notes.push(...noteStr.split(/[\n\r]+/));
-      }
-      else notes.push(...spellbook.concentrationNotes.split(/[\n\r]+/));
-    }
+    const notes = this.actor.getContextNotes(`spell.concentration.${spellbookKey}`).reduce((cur, o) => {
+      cur.push(...o.notes);
+      return cur;
+    }, []).filter(o => o.length);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -857,17 +850,10 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = duplicate(this.actor.data.data);
 
     // Add contextual caster level string
-    let notes = [];
-    if (spellbook.clNotes.length > 0) {
-      if (!isMinimumCoreVersion("0.5.2")) {
-        let noteStr = DicePF.messageRoll({
-          data: rollData,
-          msgStr: spellbook.clNotes
-        });
-        notes.push(...noteStr.split(/[\n\r]+/));
-      }
-      else notes.push(...spellbook.clNotes.split(/[\n\r]+/));
-    }
+    const notes = this.actor.getContextNotes(`spell.cl.${spellbookKey}`).reduce((cur, o) => {
+      cur.push(...o.notes);
+      return cur;
+    }, []).filter(o => o.length);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });

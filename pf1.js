@@ -142,7 +142,7 @@ Hooks.once("ready", async function() {
   }
   let needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION));
   if (needMigration && game.user.isGM) {
-    // await migrations.migrateWorld();
+    await migrations.migrateWorld();
   }
 
   game.actors.entities.forEach(obj => { updateChanges.call(obj, { sourceOnly: true }); });

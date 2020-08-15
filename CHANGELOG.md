@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.73.4 (Hotfix)
+
+### Bug Fixes
+
+- Re-enabled system migration
+
 ## 0.73.3
 
 ### Bug Fixes

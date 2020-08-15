@@ -44,6 +44,7 @@ export class ActorRestDialog extends BaseEntitySheet {
       }
 
       updateData["data.attributes.hp.value"] = Math.min(actorData.attributes.hp.value + heal.hp, actorData.attributes.hp.max);
+      updateData["data.attributes.hp.nonlethal"] = Math.max(0, (actorData.attributes.hp.nonlethal || 0) - heal.hp);
       for (let [key, abl] of Object.entries(actorData.abilities)) {
         let dmg = Math.abs(abl.damage);
         updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);

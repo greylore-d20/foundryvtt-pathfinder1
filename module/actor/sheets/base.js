@@ -1728,6 +1728,7 @@ export class ActorSheetPF extends ActorSheet {
       "data.attributes.wounds.value",
     ];
     for (let [k, v] of Object.entries(formData)) {
+      if (typeof v !== "string") continue;
       // Add or subtract values
       if (relativeKeys.includes(k)) {
         const originalValue = getProperty(this.actor.data, k);

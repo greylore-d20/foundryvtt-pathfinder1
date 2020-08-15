@@ -44,16 +44,15 @@
           </div>
           <h4 class="attribute-name box-title">{{ localize "PF1.Health" }}</h4>
           <div class="attribute-value multiple">
-            <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}"
-            data-dtype="Number" placeholder="10"/>
+            <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10"/>
             <span class="sep"> / </span>
             <div class="attribute">{{data.attributes.hp.max}}</div>
           </div>
           <footer class="attribute-footer">
             <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{localize "PF1.TempShort"}}"
-            value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}" data-dtype="Number"/>
+            value="{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}"/>
             <input name="data.attributes.hp.nonlethal" type="text" class="temphp" placeholder="{{localize "PF1.Nonlethal"}}"
-            value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}" data-dtype="Number"/>
+            value="{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}"/>
             <input name="data.attributes.hp.base" type="text" value="{{#if data.attributes.hp.base}}{{data.attributes.hp.base}}{{/if}}"
                                                               data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
           </footer>

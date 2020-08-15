@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Experience values were occasionally stored as strings, resulting in unexpected behavior
+- Entering values in fields on the NPC Lite sheet didn't do anything
 
 ### Changelog
 

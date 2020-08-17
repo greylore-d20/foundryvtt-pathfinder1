@@ -1431,6 +1431,23 @@ export class ActorPF extends Actor {
     return [];
   }
 
+  /**
+   * Returns a list of already parsed context notes.
+   * @param {string} context - The context to draw notes from.
+   * @returns {string[]} The resulting notes, already parsed.
+   */
+  getContextNotesParsed(context) {
+    const noteObjects = this.getContextNotes(context);
+
+    return noteObjects.reduce((cur, o) => {
+      for (let note of o.notes) {
+        cur.push(TextEditor.enrichHTML(note, { rollData: o.item.getRollData() }));
+      }
+
+      return cur;
+    }, []);
+  }
+
   async createEmbeddedEntity(embeddedName, createData, options={}) {
     let noArray = false;
     if (!(createData instanceof Array)) {

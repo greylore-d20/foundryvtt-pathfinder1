@@ -163,12 +163,7 @@ export class ChatAttack {
 
     let notes = [];
     if (this.item != null && this.item.actor != null) {
-      notes = this.item.actor.getContextNotes("attacks.attack").reduce((arr, o) => {
-        for (let n of o.notes) {
-          arr.push(...n.split(/[\n\r]+/));
-        }
-        return arr;
-      }, []);
+      notes.push(...this.item.actor.getContextNotesParsed("attacks.attack"));
     }
     if (this.item != null && this.item.data.data.attackNotes) {
       notes.push(...this.item.data.data.attackNotes.split(/[\n\r]+/));

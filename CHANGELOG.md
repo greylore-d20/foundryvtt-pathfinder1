@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Actor stats were no longer immediately updated with item changes
+- Context notes from buffs didn't take `@item.level` into consideration for every type of note
 
 ## 0.73.4 (Hotfix)
 

@@ -816,10 +816,7 @@ export class ActorSheetPF extends ActorSheet {
     rollData.cl = spellbook.cl.total;
 
     // Add contextual concentration string
-    const notes = this.actor.getContextNotes(`spell.concentration.${spellbookKey}`).reduce((cur, o) => {
-      cur.push(...o.notes);
-      return cur;
-    }, []).filter(o => o.length);
+    const notes = this.actor.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -850,10 +847,7 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = duplicate(this.actor.data.data);
 
     // Add contextual caster level string
-    const notes = this.actor.getContextNotes(`spell.cl.${spellbookKey}`).reduce((cur, o) => {
-      cur.push(...o.notes);
-      return cur;
-    }, []).filter(o => o.length);
+    const notes = this.actor.getContextNotesParsed(`spell.cl.${spellbookKey}`);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });

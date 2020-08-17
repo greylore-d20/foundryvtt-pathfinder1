@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.73.5
+
+### Bug Fixes
+
+- Actor stats were no longer immediately updated with item changes
+
 ## 0.73.4 (Hotfix)
 
 ### Bug Fixes

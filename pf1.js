@@ -187,8 +187,8 @@ Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
   if (userId !== game.user._id) return;
+  if (!(actor instanceof Actor)) return;
 
   const item = actor.getOwnedItem(changedData._id);
   if (!item) return;
@@ -201,18 +201,21 @@ Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) =
   }
 });
 Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
+  if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
-  // if (!actor.hasPerm(game.user, "OWNER")) return;
-  // actor.refresh();
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
-  if (userId !== game.user._id) return;
+
+  // Refresh actor
+  actor.refresh();
 
   // Update item resources
   actor.updateItemResources(item);
 });
-Hooks.on("updateToken", (scene, sceneId, data) => {
+Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
+  if (userId !== game.user._id) return;
+
   const actor = game.actors.tokens[data._id];
   if (actor != null && hasProperty(data, "actorData.items")) {
     if (!actor.hasPerm(game.user, "OWNER")) return;
@@ -227,7 +230,8 @@ Hooks.on("updateToken", (scene, sceneId, data) => {
 });
 
 // Create race on actor
-Hooks.on("preCreateOwnedItem", (actor, item) => {
+Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
+  if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
   if (actor.race == null) return;
 
@@ -238,8 +242,8 @@ Hooks.on("preCreateOwnedItem", (actor, item) => {
 });
 
 Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
   if (userId !== game.user._id) return;
+  if (!(actor instanceof Actor)) return;
 
   const item = actor.items.find(o => o._id === itemData._id);
   if (!item) return;
@@ -254,8 +258,8 @@ Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
 });
 
 Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
   if (userId !== game.user._id) return;
+  if (!(actor instanceof Actor)) return;
 
   const item = actor.items.find(o => o._id === itemData._id);
   if (!item) return;
@@ -267,8 +271,8 @@ Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
 });
 
 Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
   if (userId !== game.user._id) return;
+  if (!(actor instanceof Actor)) return;
 
   // Refresh actor
   actor.refresh();

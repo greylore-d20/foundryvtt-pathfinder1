@@ -6,6 +6,7 @@
 
 - Actor stats were no longer immediately updated with item changes
 - Context notes from buffs didn't take `@item.level` into consideration for every type of note
+- AC labels for armor and shields didn't take enhancement bonuses into consideration
 
 ## 0.73.4 (Hotfix)
 

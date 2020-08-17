@@ -397,7 +397,8 @@ export class ItemPF extends Item {
       labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
 
       // AC labels
-      labels.armor = data.armor.value ? `${data.armor.value} AC` : "";
+      const ac = (data.armor.value || 0) + (data.armor.enh || 0);
+      labels.armor = ac > 0 ? `${ac} AC` : "";
       if (data.armor.dex === "") data.armor.dex = null;
       else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {
         data.armor.dex = parseInt(data.armor.dex);

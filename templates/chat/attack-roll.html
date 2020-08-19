@@ -4,7 +4,7 @@
   </header>
 
   <div class="card-content">
-    {{{item.data.description.value}}}
+    {{{data.description.value}}}
   </div>
 
   {{#each attacks as |atk|}}
@@ -106,7 +106,7 @@
     <label>{{prop.header}}</label>
     <div class="flexrow">
       {{#each prop.value as |v|}}
-      <span class="tag">{{v}}</span>
+      <span class="tag">{{{v}}}</span>
       {{/each}}
     </div>
   </div>

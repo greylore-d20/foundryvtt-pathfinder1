@@ -638,21 +638,19 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   getChatData(htmlOptions, rollData=null) {
-    const data = this.data.data;
+    const data = duplicate(this.data.data);
     const labels = this.labels;
 
     if (!rollData) rollData = this.getRollData();
 
-    htmlOptions = mergeObject(htmlOptions || {}, {
-      rollData: rollData,
-    });
+    htmlOptions = mergeObject(htmlOptions || {}, rollData);
 
     // Rich text description
     if (this.showUnidentifiedData) {
-      data.description.value = TextEditor.enrichHTML(data.description.unidentified, htmlOptions);
+      data.description.value = TextEditor.enrichHTML(data.description.unidentified, { rollData: htmlOptions });
     }
     else {
-      data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+      data.description.value = TextEditor.enrichHTML(data.description.value, { rollData: htmlOptions });
     }
 
     // General equipment properties
@@ -1117,16 +1115,13 @@ export class ItemPF extends Item {
         let extraText = "";
         if (chatTemplateData.attacks.length > 0) extraText = chatTemplateData.attacks[0].attackNotesHTML;
 
-        const properties = this.getChatData(null, rollData).properties;
+        const itemChatData = this.getChatData(null, rollData);
+        const properties = itemChatData.properties;
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
         
         // Add CL notes
         if (this.data.type === "spell" && this.actor) {
-          const clNotes = this.actor.getContextNotes(`spell.cl.${this.data.data.spellbook}`)
-          .reduce((cur, o) => {
-            cur.push(...o.notes);
-            return cur;
-          }, []).filter(o => o.length);
+          const clNotes = this.actor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
 
           if (clNotes.length) {
             props.push({
@@ -1142,6 +1137,7 @@ export class ItemPF extends Item {
 
         const templateData = mergeObject(chatTemplateData, {
           extraText: extraText,
+          data: itemChatData,
           hasExtraText: extraText.length > 0,
           properties: props,
           hasProperties: props.length > 0,

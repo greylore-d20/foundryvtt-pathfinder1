@@ -8,6 +8,7 @@
 - Context notes from buffs didn't take `@item.level` into consideration for every type of note
 - AC labels for armor and shields didn't take enhancement bonuses into consideration
 - Item data wasn't taken into consideration in inline rolls on item descriptions when shown to chat
+- Enhancement bonuses were still shown on unidentified armor for players
 
 ### Changelog
 

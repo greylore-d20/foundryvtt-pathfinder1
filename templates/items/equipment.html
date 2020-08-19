@@ -144,16 +144,18 @@
       </div>
 
       {{!-- Enhancement Bonus --}}
+      {{#unless showUnidentifiedData}}
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
           <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
         </div>
       </div>
+      {{/unless}}
       {{/if}}
 
-      {{#unless showUnidentifiedData}}
       {{!-- Dexterity Modifier --}}
+      {{#unless showUnidentifiedData}}
       <div class="form-group">
         <label>{{localize "PF1.MaxDexterityModifier"}}</label>
         <div class="form-fields">

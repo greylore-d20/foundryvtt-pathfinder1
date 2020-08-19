@@ -62,6 +62,14 @@
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
           value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
         </div>
+
+        {{#if spellbook.orig.spellPoints.useSystem}}
+        <div class="flexrow spell-points">
+          <h3>{{localize "PF1.SpellPoints"}}</h3>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.maxFormula"
+          value="{{spellbook.orig.spellPoints.maxFormula}}" placeholder="{{localize "PF1.MaxFormula"}}" title="{{localize "PF1.MaxFormula"}}"/>
+        </div>
+        {{/if}}
       </div>
       
       <div class="flexcol caster-preferences">
@@ -76,6 +84,10 @@
         <label class="checkbox">
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.arcaneSpellFailure"
           {{checked spellbook.orig.arcaneSpellFailure}}/> {{localize "PF1.ArcaneSpellFailure"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.useSystem"
+          {{checked spellbook.orig.spellPoints.useSystem}}/> {{localize "PF1.UseSpellPoints"}}
         </label>
       </div>
     </div>
@@ -100,6 +112,27 @@
 </nav>
 
 <section class="spells_{{spellbookIndex}}-body">
+  <div class="spell-points-current flexrow">
+    {{#if spellbook.orig.spellPoints.useSystem}}
+    <h3>{{localize "PF1.SpellPoints"}}</h3>
+    <div class="tooltip value">
+      <span class="tooltipcontent">
+        {{localize "PF1.SpellPointsCurrent"}}
+      </span>
+      <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.value"
+      value="{{spellbook.orig.spellPoints.value}}" placeholder="0" data-dtype="Number" />
+    </div>
+    <span class="sep"> / </span>
+    <div class="tooltip max">
+      <span class="tooltipcontent">
+        {{localize "PF1.SpellPointsMax"}}
+      </span>
+      <input disabled type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.max"
+      value="{{spellbook.orig.spellPoints.max}}" placeholder="0" data-dtype="Number" />
+    </div>
+    {{/if}}
+  </div>
+
   {{#each spellbook.data as |section sid|}}
   <div class="tab inventory-group flexcol" data-group="spells_{{../spellbookIndex}}" data-tab="spells_{{../spellbookIndex}}_{{sid}}">
     <ol class="inventory-list sub-scroll scroll-spells_{{../spellbookIndex}}">
@@ -108,6 +141,7 @@
           <h3>{{section.name}}</h3>
         </div>
         
+        {{#unless ../spellbook.orig.spellPoints.useSystem}}
         <div class="spell-uses config">
           {{#if section.usesSlots}}
           <a class="config-icon config-control" for="spellSlots"><i class="fas fa-cog"></i></a>
@@ -132,6 +166,7 @@
           <span class="spell-max">{{{section.slots}}}</span>
           {{/if}}
         </div>
+        {{/unless}}
         
         <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
 
@@ -158,6 +193,7 @@
             <h4>{{item.name}}</h4>
           </div>
           
+          {{#unless ../../spellbook.orig.spellPoints.useSystem}}
           <div class="spell-uses flexrow">
             {{#unless item.data.atWill}}
             {{#unless ../../spellbook.orig.spontaneous}}
@@ -184,6 +220,7 @@
             {{localize "PF1.SpellPrepAtWill"}}
             {{/unless}}
           </div>
+          {{/unless}}
           
           <div class="item-detail item-actions">
             <div class="item-attack tooltip">
@@ -221,6 +258,7 @@
           <h3>{{section.name}}</h3>
         </div>
         
+        {{#unless ../spellbook.orig.spellPoints.useSystem}}
         <div class="spell-uses config">
           {{#if section.usesSlots}}
           <a class="config-icon config-control" for="spellSlots"><i class="fas fa-cog"></i></a>
@@ -245,6 +283,7 @@
           <span class="spell-max">{{{section.slots}}}</span>
           {{/if}}
         </div>
+        {{/unless}}
         
         <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
 
@@ -271,6 +310,7 @@
             <h4>{{item.name}}</h4>
           </div>
           
+          {{#unless ../../spellbook.orig.spellPoints.useSystem}}
           <div class="spell-uses flexrow">
             {{#unless item.data.atWill}}
             {{#unless ../../spellbook.orig.spontaneous}}
@@ -297,6 +337,7 @@
             {{localize "PF1.SpellPrepAtWill"}}
             {{/unless}}
           </div>
+          {{/unless}}
           
           <div class="item-detail item-actions">
             <div class="item-attack tooltip">

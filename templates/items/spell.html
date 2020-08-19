@@ -216,13 +216,19 @@
       </div>
       {{/unless}}
 
+      {{!-- Spell Points --}}
+      <div class="spell-points form-group">
+        <div class="form-fields">
+          <label>{{localize "PF1.SpellPointsCost"}}</label>
+          <input type="text" name="data.spellPoints.cost" value="{{data.spellPoints.cost}}" placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}" />
+        </div>
+      </div>
+
       {{!-- Caster Level Offset --}}
       <div class="form-group">
         <div class="form-fields">
           <label>{{localize "PF1.CasterLevelOffset"}}</label>
-          <div class="form-fields">
-            <input type="text" name="data.clOffset" value="{{data.clOffset}}" data-dtype="Number"/>
-          </div>
+          <input type="text" name="data.clOffset" value="{{data.clOffset}}" data-dtype="Number"/>
         </div>
       </div>
 
@@ -230,9 +236,7 @@
       <div class="form-group">
         <div class="form-fields">
           <label>{{localize "PF1.SpellLevelOffset"}}</label>
-          <div class="form-fields">
-            <input type="text" name="data.slOffset" value="{{data.slOffset}}" data-dtype="Number"/>
-          </div>
+          <input type="text" name="data.slOffset" value="{{data.slOffset}}" data-dtype="Number"/>
         </div>
       </div>
 

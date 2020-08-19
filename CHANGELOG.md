@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.73.6
+
+### Changelog
+
+- Added support for spell points
+
 ## 0.73.5
 
 ### Bug Fixes

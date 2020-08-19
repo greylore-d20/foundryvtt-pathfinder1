@@ -197,28 +197,6 @@ export class ActorPF extends Actor {
       data.attributes.sr.total = 0;
     }
 
-    // Set spellbook info
-    for (let spellbook of Object.values(data.attributes.spells.spellbooks)) {
-      // Set CL
-      spellbook.cl.total = 0;
-      if (spellbook.cl.formula.length > 0) {
-        let roll = new Roll(spellbook.cl.formula, this.getRollData()).roll();
-        spellbook.cl.total += roll.total;
-      }
-      if (actorData.type === "npc") spellbook.cl.total += spellbook.cl.base;
-      if (spellbook.class === "_hd") {
-        spellbook.cl.total += data.attributes.hd.total;
-      }
-      else if (spellbook.class !== "" && rollData.classes[spellbook.class] != null) {
-        spellbook.cl.total += rollData.classes[spellbook.class].level;
-      }
-      // Add spell slots
-      spellbook.spells = spellbook.spells || {};
-      for (let a = 0; a < 10; a++) {
-        spellbook.spells[`spell${a}`] = spellbook.spells[`spell${a}`] || { value: 0, max: 0, base: null };
-      }
-    }
-
     // Set labels
     this.labels = {};
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
@@ -724,12 +702,7 @@ export class ActorPF extends Actor {
     if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() <= 0) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
 
     // Invoke the Item roll
-    if (item.hasAction) return item.useAttack({ev: ev, skipDialog: skipDialog});
-    item.addSpellUses(-1);
-
-    const chatData = {};
-    if (item.data.data.soundEffect) chatData.sound = item.data.data.soundEffect;
-    return item.roll(chatData);
+    return item.useAttack({ev: ev, skipDialog: skipDialog});
   }
 
   async createAttackFromWeapon(item) {

@@ -174,6 +174,7 @@ export const migrateItemData = function(item) {
   _migrateTemplateSize(item, updateData);
   _migrateEquipmentSize(item, updateData);
   _migrateTags(item, updateData);
+  _migrateSpellCosts(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -632,6 +633,15 @@ const _migrateTags = function(ent, updateData) {
   const tag = getProperty(ent.data, "data.tag");
   if (!tag && ent.data.name) {
     updateData["data.tag"] = createTag(ent.data.name);
+  }
+};
+
+const _migrateSpellCosts = function(ent, updateData) {
+  if (ent.type !== "spell") return;
+
+  const spellPointCost = getProperty(ent.data, "data.spellPoints.cost");
+  if (spellPointCost == null) {
+    updateData["data.spellPoints.cost"] = "1 + @sl";
   }
 };
 

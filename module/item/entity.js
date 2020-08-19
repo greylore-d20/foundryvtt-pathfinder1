@@ -86,7 +86,10 @@ export class ItemPF extends Item {
   }
 
   get chargeCost() {
-    if (this.type === "spell") return 1;
+    if (this.type === "spell") {
+      if (this.useSpellPoints()) return this.getSpellPointCost();
+      return 1;
+    }
     
     const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
@@ -931,6 +934,16 @@ export class ItemPF extends Item {
         }
       }
 
+      // Deduct charge
+      if (this.autoDeductCharges) {
+        const cost = this.useSpellPoints() ? this.getSpellPointCost(rollData) : this.chargeCost;
+        if (cost > this.getSpellUses()) {
+          ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
+          return;
+        }
+        this.addCharges(-cost);
+      }
+
       // Prepare the chat message data
       let chatTemplateData = {
         name: this.name,
@@ -1056,11 +1069,6 @@ export class ItemPF extends Item {
           }
         }
       }
-
-      // Deduct charge
-      if (this.autoDeductCharges) {
-        this.addCharges(-this.chargeCost);
-      }
       
       // Set chat data
       let chatData = {
@@ -1075,7 +1083,6 @@ export class ItemPF extends Item {
 
       // Send spell info
       const hasAction = this.hasAttack || this.hasDamage || this.hasEffect;
-      if (this.data.type === "spell" && !hasAction) await this.roll({ rollMode: rollMode }, {addDC: hasAction ? false : true});
 
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {
@@ -1472,22 +1479,6 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   /**
-   * Adjust a cantrip damage formula to scale it for higher level characters and monsters
-   * @private
-   */
-  _scaleCantripDamage(parts, level, scale) {
-    const add = Math.floor((level + 1) / 6);
-    if ( add === 0 ) return;
-    if ( scale && (scale !== parts[0]) ) {
-      parts[0] = parts[0] + " + " + scale.replace(new RegExp(Roll.diceRgx, "g"), (match, nd, d) => `${add}d${d}`);
-    } else {
-      parts[0] = parts[0].replace(new RegExp(Roll.diceRgx, "g"), (match, nd, d) => `${parseInt(nd)+add}d${d}`);
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * Use a consumable item
    */
   async useConsumable(options={}) {
@@ -1838,35 +1829,60 @@ export class ItemPF extends Item {
     return targets;
   }
 
+  useSpellPoints() {
+    if (!this.actor) return false;
+    if (this.data.type !== "spell") return false;
+
+    const spellbookKey = this.data.data.spellbook;
+    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
+    return getProperty(spellbook, "spellPoints.useSystem") || false;
+  }
+
+  getSpellPointCost(rollData=null) {
+    if (!rollData) rollData = this.getRollData();
+
+    const roll = new Roll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData).roll();
+    return roll.total;
+  }
+
   async addSpellUses(value, data=null) {
     if (!this.actor) return;
     if (this.data.data.atWill) return;
-    if (this.data.data.level === 0) return;
 
     const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
-    const newCharges = isSpontaneous
-      ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
-      : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);
 
-    if (!isSpontaneous) {
-      const key = "data.preparation.preparedAmount";
-      if (data == null) {
-        data = {};
-        data[key] = newCharges;
-        return this.update(data);
-      }
-      else {
-        data[key] = newCharges;
-      }
+    if (this.useSpellPoints()) {
+      const curUses = this.getSpellUses();
+      const updateData = {};
+      updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
+      return this.actor.update(updateData);
     }
     else {
-      const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
-      const actorUpdateData = {};
-      actorUpdateData[key] = newCharges;
-      return this.actor.update(actorUpdateData);
+      if (this.data.data.level === 0) return;
+      const newCharges = isSpontaneous
+        ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
+        : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);
+
+      if (!isSpontaneous) {
+        const key = "data.preparation.preparedAmount";
+        if (data == null) {
+          data = {};
+          data[key] = newCharges;
+          return this.update(data);
+        }
+        else {
+          data[key] = newCharges;
+        }
+      }
+      else {
+        const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
+        const actorUpdateData = {};
+        actorUpdateData[key] = newCharges;
+        return this.actor.update(actorUpdateData);
+      }
     }
 
     return null;
@@ -1879,15 +1895,21 @@ export class ItemPF extends Item {
     const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
-    
-    if (isSpontaneous) {
-      if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
-        return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
+
+    if (this.useSpellPoints()) {
+      return getProperty(spellbook, "spellPoints.value");
+    }
+    else {  
+      if (isSpontaneous) {
+        if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
+          return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
+        }
+      }
+      else {
+        return getProperty(this.data, "data.preparation.preparedAmount") || 0;
       }
     }
-    else {
-      return getProperty(this.data, "data.preparation.preparedAmount") || 0;
-    }
+    
     return 0;
   }
 

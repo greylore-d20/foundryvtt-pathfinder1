@@ -650,6 +650,10 @@ export class ActorSheetPF extends ActorSheet {
     .on("change", this._setSpellbookUses.bind(this))
     .on("wheel", this._setSpellbookUses.bind(this));
 
+    html.find(".spell-points-current .value input[type='text']").off("change")
+    .on("change", this._setSpellPoints.bind(this))
+    .on("wheel", this._setSpellPoints.bind(this));
+
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
     html.find(".spellcasting-cl .rollable").click(this._onRollCL.bind(this));
@@ -799,6 +803,22 @@ export class ActorSheetPF extends ActorSheet {
     else this._updateItems();
   }
   _setSpellbookUses(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+
+    this._mouseWheelAdd(event.originalEvent, el);
+    const value = Number(el.value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._onSubmit(event); });
+      }
+    }
+    else this._onSubmit(event);
+  }
+
+  _setSpellPoints(event) {
     event.preventDefault();
     const el = event.currentTarget;
 

@@ -295,11 +295,31 @@ export const updateChanges = async function({data=null}={}) {
       linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
     }
   }
-  // Reset spell slots
+  // Reset spell slots and spell points
   for (let spellbookKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
-    const spellbookAbilityKey = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.ability`);
+    const spellbook = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}`);
+    const spellbookAbilityKey = spellbook.ability;
     const spellbookAbilityMod = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.mod`);
 
+    // Set CL
+    {
+      const formula = getProperty(spellbook, "cl.formula") || "0";
+      const rollData = this.getRollData(srcData1.data);
+      let total = 0;
+      total += new Roll(formula, rollData).roll().total;
+      if (this.data.type === "npc") {
+        total += (getProperty(spellbook, "cl.base") || 0);
+      }
+      if (spellbook.class === "_hd") {
+        total += (getProperty(srcData1, "data.attributes.hd.total"));
+      }
+      else if (spellbook.class && rollData.classes[spellbook.class]) {
+        total += rollData.classes[spellbook.class].level;
+      }
+      linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`, total);
+    }
+
+    // Spell slots
     for (let a = 0; a < 10; a++) {
       let base = parseInt(getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`));
       if (Number.isNaN(base)) {
@@ -315,6 +335,16 @@ export const updateChanges = async function({data=null}={}) {
           linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
         }
       }
+    }
+
+    // Spell points
+    {
+      const formula = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
+      const rollData = this.getRollData(srcData1.data);
+      rollData.cl = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
+      rollData.ablMod = spellbookAbilityMod;
+      const roll = new Roll(formula, rollData).roll();
+      linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
     }
   }
 

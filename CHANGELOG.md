@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Some spells were no longer rendering
+- Fix tooltip for spontaneous spellbooks
 
 ### Changelog
 

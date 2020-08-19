@@ -149,7 +149,11 @@
             value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
           <div class="tooltip">
             <span class="tooltipcontent">
+              {{#unless ../spellbook.orig.spontaneous}}
               {{localize "PF1.LeftToPrepare"}}
+              {{else}}
+              {{localize "PF1.CastsLeft"}}
+              {{/unless}}
             </span>
             <input type="text" class="spell-level-uses select-on-click" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
           </div>
@@ -266,7 +270,11 @@
             value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
           <div class="tooltip">
             <span class="tooltipcontent">
+              {{#unless ../spellbook.orig.spontaneous}}
               {{localize "PF1.LeftToPrepare"}}
+              {{else}}
+              {{localize "PF1.CastsLeft"}}
+              {{/unless}}
             </span>
             <input type="text" class="spell-level-uses select-on-click" value="{{section.uses}}" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" placeholder="0" data-dtype="Number" />
           </div>

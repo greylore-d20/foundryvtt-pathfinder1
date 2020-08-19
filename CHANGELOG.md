@@ -2,6 +2,10 @@
 
 ## 0.73.6
 
+### Bug Fixes
+
+- Some spells were no longer rendering
+
 ### Changelog
 
 - Added support for spell points

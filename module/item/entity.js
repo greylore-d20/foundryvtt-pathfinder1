@@ -1778,6 +1778,7 @@ export class ItemPF extends Item {
 
   getSpellComponents(srcData) {
     if (!srcData) srcData = duplicate(this.data);
+    const reSplit = CONFIG.PF1.re.traitSeparator;
       
     let components = [];
     for (let [key, value] of Object.entries(getProperty(srcData, "data.components"))) {

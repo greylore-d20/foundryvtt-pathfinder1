@@ -577,9 +577,8 @@ export class ActorPF extends Actor {
     }
 
     if (Object.keys(diff).length) {
-      return super.update(diff, options);
+      await super.update(diff, options);
     }
-    return false;
   }
 
   _onUpdate(data, options, userId, context) {

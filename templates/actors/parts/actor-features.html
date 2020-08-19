@@ -53,8 +53,11 @@
 
           {{#if section.hasActions}}
           <div class="item-detail item-actions">
-            <div class="item-attack">
+            <div class="item-attack tooltip">
               {{#if item.hasAction}}
+              <span class="tooltipcontent">
+                {{localize "PF1.UseFeat"}}
+              </span>
               <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
               {{/if}}
             </div>

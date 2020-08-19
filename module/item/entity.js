@@ -344,9 +344,7 @@ export class ItemPF extends Item {
     if ( itemData.type === "spell" ) {
       labels.level = C.spellLevels[data.level];
       labels.school = C.spellSchools[data.school];
-      labels.components = Object.entries(data.components).map(c => {
-        c[1] === true ? c[0].titleCase().slice(0,1) : null
-      }).filterJoin(",");
+      labels.components = this.getSpellComponents().map(o => o[0]).join(" ");
     }
 
     // Feat Items
@@ -640,7 +638,7 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   getChatData(htmlOptions, rollData=null) {
-    const data = duplicate(this.data.data);
+    const data = this.data.data;
     const labels = this.labels;
 
     if (!rollData) rollData = this.getRollData();
@@ -1736,37 +1734,7 @@ export class ItemPF extends Item {
     }
 
     // Set components label
-    let components = [];
-    for (let [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
-      if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
-      else if (key === "verbal" && value) components.push("V");
-      else if (key === "somatic" && value) components.push("S");
-      else if (key === "material" && value) components.push("M");
-      else if (key === "focus" && value) components.push("F");
-    }
-    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
-    const df = getProperty(srcData, "data.components.divineFocus");
-    // Sort components
-    const componentsOrder = ["V", "S", "M", "F", "DF"];
-    components.sort((a, b) => {
-      let index = [componentsOrder.indexOf(a), components.indexOf(b)];
-      if (index[0] === -1 && index[1] === -1) return 0;
-      if (index[0] === -1 && index[1] >= 0) return 1;
-      if (index[0] >= 0 && index[1] === -1) return -1;
-      return index[0] - index[1];
-    });
-    components = components.map(o => {
-      if (o === "M") {
-        if (df === 2) o = "M/DF";
-        if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
-      }
-      if (o === "F") {
-        if (df === 3) o = "F/DF";
-        if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
-      }
-      return o;
-    });
-    if (components.length > 0) label.components = components.join(", ");
+    label.components = this.getSpellComponents(srcData).join(", ");
 
     // Set duration label
     {
@@ -1819,6 +1787,42 @@ export class ItemPF extends Item {
     }
 
     linkData(srcData, updateData, "data.description.value", await renderTemplate("systems/pf1/templates/internal/spell-description.html", data));
+  }
+
+  getSpellComponents(srcData) {
+    if (!srcData) srcData = duplicate(this.data);
+      
+    let components = [];
+    for (let [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
+      if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
+      else if (key === "verbal" && value) components.push("V");
+      else if (key === "somatic" && value) components.push("S");
+      else if (key === "material" && value) components.push("M");
+      else if (key === "focus" && value) components.push("F");
+    }
+    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
+    const df = getProperty(srcData, "data.components.divineFocus");
+    // Sort components
+    const componentsOrder = ["V", "S", "M", "F", "DF"];
+    components.sort((a, b) => {
+      let index = [componentsOrder.indexOf(a), components.indexOf(b)];
+      if (index[0] === -1 && index[1] === -1) return 0;
+      if (index[0] === -1 && index[1] >= 0) return 1;
+      if (index[0] >= 0 && index[1] === -1) return -1;
+      return index[0] - index[1];
+    });
+    components = components.map(o => {
+      if (o === "M") {
+        if (df === 2) o = "M/DF";
+        if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
+      }
+      if (o === "F") {
+        if (df === 3) o = "F/DF";
+        if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
+      }
+      return o;
+    });
+    return components;
   }
 
   /* -------------------------------------------- */

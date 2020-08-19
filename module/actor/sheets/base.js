@@ -49,6 +49,11 @@ export class ActorSheetPF extends ActorSheet {
      * Track hidden elements of the sheet.
      */
     this._hiddenElems = {};
+
+    /**
+     * Whether a submit has been queued in any way.
+     */
+    this._submitQueued = false;
   }
 
   get currentPrimaryTab() {
@@ -641,6 +646,10 @@ export class ActorSheetPF extends ActorSheet {
     .on("change", this._setMaxSpellUses.bind(this))
     .on("wheel", this._setMaxSpellUses.bind(this));
 
+    html.find(".spell-level-uses").off("change")
+    .on("change", this._setSpellbookUses.bind(this))
+    .on("wheel", this._setSpellbookUses.bind(this));
+
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
     html.find(".spellcasting-cl .rollable").click(this._onRollCL.bind(this));
@@ -761,6 +770,14 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(el.value);
     this.setItemUpdate(item._id, "data.preparation.preparedAmount", value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._updateItems(); });
+      }
+    }
+    else this._updateItems();
   }
   _setMaxSpellUses(event) {
     event.preventDefault();
@@ -772,6 +789,29 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(el.value);
     this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._updateItems(); });
+      }
+    }
+    else this._updateItems();
+  }
+  _setSpellbookUses(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+
+    this._mouseWheelAdd(event.originalEvent, el);
+    const value = Number(el.value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._onSubmit(event); });
+      }
+    }
+    else this._onSubmit(event);
   }
 
   _setBuffLevel(event) {
@@ -784,6 +824,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(el.value);
     this.setItemUpdate(item._id, "data.level", value);
+    this._updateItems();
   }
 
   _hideShowElement(event) {
@@ -869,9 +910,8 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     const value = $(event.currentTarget).prop("checked");
-    const updateData = {};
-    updateData["data.active"] = value;
-    if (item.hasPerm(game.user, "OWNER")) item.update(updateData);
+    this.setItemUpdate(item._id, "data.active", value);
+    this._updateItems();
   }
 
   /* -------------------------------------------- */
@@ -1053,7 +1093,8 @@ export class ActorSheetPF extends ActorSheet {
 
     const curQuantity = getProperty(item.data, "data.quantity") || 0;
     const newQuantity = Math.max(0, curQuantity + add);
-    item.update({ "data.quantity": newQuantity });
+    this.setItemUpdate(item._id, "data.quantity", newQuantity);
+    this._updateItems();
   }
 
   async _quickEquipItem(event) {
@@ -1062,7 +1103,8 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     if (hasProperty(item.data, "data.equipped")) {
-      item.update({ "data.equipped": !item.data.data.equipped });
+      this.setItemUpdate(item._id, "data.equipped", !item.data.data.equipped);
+      this._updateItems();
     }
   }
 
@@ -1474,7 +1516,6 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     obj[key] = value;
-    this._updateItems();
   }
 
   async _render(...args) {
@@ -1488,6 +1529,8 @@ export class ActorSheetPF extends ActorSheet {
 
   async _onSubmit(event, {updateData=null, preventClose=false}={}) {
     event.preventDefault();
+
+    this._submitQueued = false;
 
     // Update items
     await this._updateItems();
@@ -1509,7 +1552,7 @@ export class ActorSheetPF extends ActorSheet {
       if (item.hasPerm(game.user, "OWNER")) promises.push(item.update(data));
     }
 
-    await Promise.all(promises);
+    return Promise.all(promises);
   }
 
   /**
@@ -1727,7 +1770,7 @@ export class ActorSheetPF extends ActorSheet {
         else formData[k] = originalValue;
       }
     }
-
+    
     return super._updateObject(event, formData);
   }
 }

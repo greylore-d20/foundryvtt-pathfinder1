@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.0
+
+### Bug Fixes
+
+- Using spell points, spells with no cost were still unuseable with an empty spell pool
+
 ## 0.73.6 (Hotfix)
 
 ### Bug Fixes

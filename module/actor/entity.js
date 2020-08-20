@@ -699,7 +699,7 @@ export class ActorPF extends Actor {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
 
-    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() <= 0) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
+    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() < item.chargeCost) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
 
     // Invoke the Item roll
     return item.useAttack({ev: ev, skipDialog: skipDialog});

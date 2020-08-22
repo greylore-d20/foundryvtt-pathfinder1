@@ -19,6 +19,7 @@ People and credits are listed in no particular order.
 ## holyplankton
 
 - Added most class abilities to their compendium
+- Linked class abilities to classes
 
 ## Alexdandre Nizoux
 
@@ -91,3 +92,7 @@ People and credits are listed in no particular order.
 ## John Shetler
 
 - Fixed a mistake in the Fractional Base Bonuses optional ruleset
+
+## JusticeNoon
+
+- Fixed spell capitalization

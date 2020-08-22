@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.74.0
+## 0.73.7
 
 ### Bug Fixes
 
@@ -10,6 +10,11 @@
 - Charged features threw an error on use
 - Changing charges on an item (except spells) from an actor sheet didn't update the item in question
 - Concentration and Caster Level notes from actor sheets caused an error
+- Fixed spell capitalization to what they are on Archives of Nethys, due to the efforts of Noon (many thanks!)
+
+### Changelog
+
+- Linked class abilities to classes, due to the efforts of holyplankton (many thanks!)
 
 ## 0.73.6 (Hotfix)
 

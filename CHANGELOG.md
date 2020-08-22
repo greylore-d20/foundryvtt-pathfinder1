@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Using spell points, spells with no cost were still unuseable with an empty spell pool
+- Critical confirmation bonuses applied on following attack rolls
 
 ## 0.73.6 (Hotfix)
 

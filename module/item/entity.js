@@ -964,15 +964,15 @@ export class ItemPF extends Item {
           let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
 
           // Add attack roll
-          await attack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+          await attack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts)});
 
           // Add damage
           if (this.hasDamage) {
-            await attack.addDamage({extraParts: damageExtraParts, critical: false});
+            await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
 
             // Add critical hit damage
             if (attack.hasCritConfirm) {
-              await attack.addDamage({extraParts: damageExtraParts, critical: true});
+              await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: true});
             }
           }
 
@@ -987,15 +987,15 @@ export class ItemPF extends Item {
           
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
             let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
-            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: attackExtraParts});
+            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts)});
 
             // Add damage
             if (this.hasDamage) {
-              await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: false});
+              await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
   
               // Add critical hit damage
               if (rapidShotAttack.hasCritConfirm) {
-                await rapidShotAttack.addDamage({extraParts: damageExtraParts, critical: true});
+                await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: true});
               }
             }
   
@@ -1010,7 +1010,7 @@ export class ItemPF extends Item {
       else if (this.hasDamage) {
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
         // Add damage
-        await attack.addDamage({extraParts: damageExtraParts, critical: false});
+        await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
 
         // Add attack notes
         attack.addAttackNotes();

@@ -9,6 +9,7 @@
 - Creating an actor caused an error
 - Charged features threw an error on use
 - Changing charges on an item (except spells) from an actor sheet didn't update the item in question
+- Concentration and Caster Level notes from actor sheets caused an error
 
 ## 0.73.6 (Hotfix)
 

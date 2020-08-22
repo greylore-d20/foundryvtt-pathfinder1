@@ -1413,7 +1413,7 @@ export class ActorPF extends Actor {
 
     return noteObjects.reduce((cur, o) => {
       for (let note of o.notes) {
-        cur.push(TextEditor.enrichHTML(note, { rollData: o.item.getRollData() }));
+        cur.push(TextEditor.enrichHTML(note, { rollData: o.item != null ? o.item.getRollData() : this.getRollData() }));
       }
 
       return cur;

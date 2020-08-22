@@ -762,6 +762,14 @@ export class ActorSheetPF extends ActorSheet {
 
     const value = Number(el.value);
     this.setItemUpdate(item._id, "data.uses.value", value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._updateItems(); });
+      }
+    }
+    else this._updateItems();
   }
 
   _setSpellUses(event) {

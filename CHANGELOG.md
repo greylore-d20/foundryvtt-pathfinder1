@@ -8,6 +8,7 @@
 - Critical confirmation bonuses applied on following attack rolls
 - Creating an actor caused an error
 - Charged features threw an error on use
+- Changing charges on an item (except spells) from an actor sheet didn't update the item in question
 
 ## 0.73.6 (Hotfix)
 

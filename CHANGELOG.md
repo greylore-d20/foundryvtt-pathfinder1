@@ -7,6 +7,7 @@
 - Using spell points, spells with no cost were still unuseable with an empty spell pool
 - Critical confirmation bonuses applied on following attack rolls
 - Creating an actor caused an error
+- Charged features threw an error on use
 
 ## 0.73.6 (Hotfix)
 

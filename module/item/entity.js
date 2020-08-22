@@ -936,8 +936,13 @@ export class ItemPF extends Item {
 
       // Deduct charge
       if (this.autoDeductCharges) {
-        const cost = this.useSpellPoints() ? this.getSpellPointCost(rollData) : this.chargeCost;
-        if (cost > this.getSpellUses()) {
+        let cost = this.chargeCost;
+        let uses = this.charges;
+        if (this.data.type === "spell" && this.useSpellPoints()) {
+          cost = this.getSpellPointCost(rollData);
+          uses = this.getSpellUses();
+        }
+        if (cost > uses) {
           ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
           return;
         }

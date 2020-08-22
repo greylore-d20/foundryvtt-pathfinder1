@@ -330,9 +330,9 @@ export class ActorSheetPF extends ActorSheet {
         canPrepare: (data.actor.type === "character"),
         label: CONFIG.PF1.spellLevels[a],
         spells: [],
-        uses: book.spells["spell"+a].value || 0,
-        baseSlots: book.spells["spell"+a].base,
-        slots: book.spells["spell"+a].max || 0,
+        uses: getProperty(book, `spells.spell${a}.value`) || 0,
+        baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
+        slots: getProperty(book, `spells.spell${a}.max`) || 0,
         dataset: { type: "spell", level: a, spellbook: bookKey },
         name: game.i18n.localize(`PF1.SpellLevel${a}`),
       };

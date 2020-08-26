@@ -130,6 +130,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorSpellbookDCFormula(actor, updateData);
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
+  _migrateCMBAbility(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -655,6 +656,13 @@ const _migrateActorCR = function(ent, updateData) {
   else if (cr == null) {
     updateData["data.details.cr.base"] = 1;
     updateData["data.details.cr.total"] = 1;
+  }
+};
+
+const _migrateCMBAbility = function(ent, updateData) {
+  const cmbAbl = getProperty(ent.data, "data.attributes.cmbAbility");
+  if (cmbAbl == null) {
+    updateData["data.attributes.cmbAbility"] = "str";
   }
 };
 

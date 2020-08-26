@@ -137,6 +137,18 @@
             </li>
           </ul>
 
+          <div class="form-group">
+            <label>{{localize "PF1.CMBAbility"}}</label>
+            <select name="data.attributes.cmbAbility">
+              {{#select data.attributes.cmbAbility}}
+              <option value=""></option>
+              {{#each config.abilities as |v k|}}
+              <option value="{{k}}">{{v}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+
           <textarea name="data.attributes.cmbNotes" placeholder="{{localize "PF1.CMBAbbr"}} {{localize "PF1.Notes"}}">{{data.attributes.cmbNotes}}</textarea>
         </div>
 

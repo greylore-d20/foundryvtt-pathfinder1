@@ -786,11 +786,14 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
       raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.BAB")},
     });
-    // Strength to CMB
-    changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
-      source: {name: CONFIG.PF1.abilities["str"]},
-    });
+    // Ability to CMB
+    const abl = getProperty(data, "data.attributes.cmbAbility");
+    if (abl) {
+      changes.push({
+        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+    }
     // Energy Drain to CMB
     changes.push({
       raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),

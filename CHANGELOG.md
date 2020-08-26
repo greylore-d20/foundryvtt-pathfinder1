@@ -7,6 +7,10 @@
 - NPC classes were missing
 - Update actor on adding items
 
+### Changelog
+
+- Added ability to change CMB ability
+
 ## 0.73.7
 
 ### Bug Fixes

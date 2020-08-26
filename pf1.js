@@ -255,6 +255,8 @@ Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
 
   // Refresh item
   await item.update({});
+  // Refresh actor
+  await actor.update({});
 });
 
 Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {

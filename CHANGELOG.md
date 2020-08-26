@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.73.8
+
+### Bug Fixes
+
+- NPC classes were missing
+- Update actor on adding items
+
 ## 0.73.7
 
 ### Bug Fixes

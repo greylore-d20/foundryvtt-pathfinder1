@@ -7,6 +7,7 @@
 - NPC classes were missing
 - Update actor on adding items
 - Fixed spell durations to make them more universally consistent
+- Weight on items could not be set back to 0 (#159)
 
 ### Changelog
 

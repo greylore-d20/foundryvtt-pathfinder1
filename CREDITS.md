@@ -95,4 +95,4 @@ People and credits are listed in no particular order.
 
 ## JusticeNoon
 
-- Fixed spell capitalization
+- Was here

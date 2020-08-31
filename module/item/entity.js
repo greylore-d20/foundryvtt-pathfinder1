@@ -498,7 +498,7 @@ export class ItemPF extends Item {
     }
 
     // Update weight according metric system (lb vs kg)
-    if (data["data.weightConverted"]) {
+    if (data["data.weightConverted"] != null) {
       data["data.weight"] = convertWeightBack(data["data.weightConverted"])
     }
     

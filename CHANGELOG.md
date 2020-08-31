@@ -6,6 +6,7 @@
 
 - NPC classes were missing
 - Update actor on adding items
+- Fixed spell durations to make them more universally consistent
 
 ### Changelog
 

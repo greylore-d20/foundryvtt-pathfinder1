@@ -879,6 +879,7 @@ export class ItemPF extends Item {
         rollMode = game.settings.get("core", "rollMode");
       // Get form data
       if (form) {
+        rollData.d20 = form.find('[name="d20"]').val();
         rollData.attackBonus = form.find('[name="attack-bonus"]').val();
         if (rollData.attackBonus) attackExtraParts.push("@attackBonus");
         rollData.damageBonus = form.find('[name="damage-bonus"]').val();
@@ -1092,8 +1093,8 @@ export class ItemPF extends Item {
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {
         let dice3dData = attacks.reduce((obj, a) => {
-          if (a.attack.roll != null)      obj.results.push(a.attack.roll.parts[0].total);
-          if (a.critConfirm.roll != null) obj.results.push(a.critConfirm.roll.parts[0].total);
+            if (a.attack.roll?.parts[0]?.rolls != null)      a.attack.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
+            if (a.critConfirm.roll?.parts[0]?.rolls != null) a.critConfirm.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
           return obj;
         }, {
           formula: "",
@@ -1341,8 +1342,9 @@ export class ItemPF extends Item {
       rollData.bonus = bonus;
       parts.push("@bonus");
     }
+    if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";
 
-    let roll = new Roll(["1d20"].concat(parts).join("+"), rollData).roll();
+    let roll = new Roll([rollData.d20].concat(parts).join("+"), rollData).roll();
     return roll;
   }
 

@@ -8,10 +8,13 @@
 - Update actor on adding items
 - Fixed spell durations to make them more universally consistent
 - Weight on items could not be set back to 0 (#159)
+- Unchained Monks didn't have the AC Bonus class feature associated
+- Unchained Monks used an incorrect Fast Movement class feature
 
 ### Changelog
 
 - Added ability to change CMB ability
+- Added field to change the base dice used for attack rolls in attack roll dialogs
 
 ## 0.73.7
 

@@ -14,7 +14,7 @@
 ### Changelog
 
 - Added ability to change CMB ability
-- Added field to change the base dice used for attack rolls in attack roll dialogs
+- Added field to change the base dice used for attack rolls in attack roll dialogs, due to the efforts of Ethaks (many thanks!)
 - Added a checkbox to enable a buff from the buff's sheet
 
 ## 0.73.7

@@ -96,3 +96,7 @@ People and credits are listed in no particular order.
 ## JusticeNoon
 
 - Was here
+
+## Ethaks
+
+- Added base dice selector to attack roll dialogs

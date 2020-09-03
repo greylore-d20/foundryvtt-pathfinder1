@@ -220,6 +220,7 @@ export const updateChanges = async function({data=null}={}) {
       change.source.value = change.raw.value;
     }
     catch (e) {
+      if (!change.source.item) console.log(change, this.name);
       ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name, this.name));
     }
     _parseChange.call(this, change, changeData[changeTarget], flags);

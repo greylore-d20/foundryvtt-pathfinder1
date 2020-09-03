@@ -22,6 +22,11 @@
           <span class="tooltipcontent">@item.level : {{data.level}}</span>
           <input type="text" name="data.level" value="{{#if data.level}}{{data.level}}{{/if}}" placeholder="{{localize "PF1.Level"}}"/>
         </li>
+        <li>
+          <label>
+            <input type="checkbox" name="data.active" {{checked data.active}}> {{localize "PF1.Active"}}
+          </label>
+        </li>
       </ul>
     </div>
   </header>

@@ -635,6 +635,8 @@ export class ActorPF extends Actor {
       await updateChanges.call(this);
     }
 
+    if (data.type === "character") data.token.actorLink = true;
+
     super._onCreate(data, options, userId, context);
   }
 

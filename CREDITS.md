@@ -100,3 +100,4 @@ People and credits are listed in no particular order.
 ## Ethaks
 
 - Added base dice selector to attack roll dialogs
+- Did some bug fixing

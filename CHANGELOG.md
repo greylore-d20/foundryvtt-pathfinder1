@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.74.0
+
+### Bug Fixes
+
+- Creating attacks from weapons on unlinked tokens caused a glitch where the item window wouldn't close (fixed by Ethaks (many thanks!))
+- Bardic Knowledge used an incorrect formula (fixed by Ethaks (many thanks!))
+
+### Changelog
+
+- Added a label to attack chat cards saying it's a power attack, due to the efforts of Ethaks (many thanks!)
+- Actors of the Character type now have their tokens linked by default, due to the efforts of Ethaks (many thanks!)
+
 ## 0.73.8
 
 ### Bug Fixes

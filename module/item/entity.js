@@ -1130,6 +1130,11 @@ export class ItemPF extends Item {
 
         const itemChatData = this.getChatData(null, rollData);
         const properties = itemChatData.properties;
+        // Add info for Power Attack to melee, Deadly Aim to ranged attacks
+        if (attackExtraParts.includes("@powerAttackPenalty")) {
+          if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
+          if (this.data.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
+        }
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
         
         // Add CL notes

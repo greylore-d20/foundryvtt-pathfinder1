@@ -784,12 +784,14 @@ export class ActorPF extends Actor {
     const itemData = await this.createOwnedItem(expandObject(attackData));
 
     // Create link
-    const link = {
-      id: itemData._id,
-      dataType: "data",
-    };
-    const links = [...(getProperty(item.data, "data.links.children") || []), link];
-    await item.update({"data.links.children": links});
+    if (itemData.type === "attack") { // check for correct itemData, Foundry #3419
+      const link = {
+        id: itemData._id,
+        dataType: "data",
+      };
+      const links = [...(getProperty(item.data, "data.links.children") || []), link];
+      await item.update({"data.links.children": links});
+    }
 
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
   }

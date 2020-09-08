@@ -41,6 +41,13 @@ export class CompendiumBrowser extends Application {
      * @property
      */
     this.lazyAdd = 20;
+
+    /**
+     * A list of packs used, for filtering purposes.
+     * @type {Compendium{}}
+     * @property
+     */
+    this.packs = {};
   }
 
   static get defaultOptions() {
@@ -163,7 +170,6 @@ export class CompendiumBrowser extends Application {
       return;
     }
 
-    // const items = await p.getContent();
     let items = (await SocketInterface.dispatch("modifyCompendium", {
       type: p.collection,
       action: "get",
@@ -177,6 +183,7 @@ export class CompendiumBrowser extends Application {
 
     for (let i of items) {
       if (!this._filterItems(i)) continue;
+      this.packs[p.collection] = p;
       this.items.push(this._mapEntry(p, i));
     }
     this._onProgress(progress);
@@ -213,6 +220,7 @@ export class CompendiumBrowser extends Application {
     }
 
     // Gather filter data
+    this._fetchGeneralFilters();
     switch (this.type) {
       case "spells":
         this._fetchSpellFilters();
@@ -438,6 +446,7 @@ export class CompendiumBrowser extends Application {
         type: item.type,
         img: item.img,
         data: item.data,
+        pack: pack.collection,
       },
     };
 
@@ -476,8 +485,21 @@ export class CompendiumBrowser extends Application {
     this.render(false);
   }
 
-  _fetchSpellFilters() {
+  _fetchGeneralFilters() {
     this.filters = [
+      {
+        path: "pack",
+        label: game.i18n.localize("PF1.Compendium"),
+        items: naturalSort(Object.entries(this.packs).reduce((cur, o) => {
+          cur.push({ key: o[0], name: o[1].metadata.label });
+          return cur;
+        }, []), "name"),
+      },
+    ];
+  }
+
+  _fetchSpellFilters() {
+    this.filters.push(...[
       {
         path: "data.school",
         label: game.i18n.localize("PF1.SpellSchool"),
@@ -550,11 +572,11 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []),
       },
-    ];
+    ]);
   }
 
   _fetchItemFilters() {
-    this.filters = [
+    this.filters.push(...[
       {
         path: "type",
         label: game.i18n.localize("PF1.Type"),
@@ -644,11 +666,11 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []),
       },
-    ];
+    ]);
   }
 
   _fetchBestiaryFilters() {
-    this.filters = [
+    this.filters.push(...[
       {
         path: "data.details.cr.total",
         label: "CR",
@@ -673,11 +695,11 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []), "name"),
       },
-    ];
+    ]);
   }
 
   _fetchFeatFilters() {
-    this.filters = [
+    this.filters.push(...[
       {
         path: "data.featType",
         label: game.i18n.localize("PF1.Type"),
@@ -702,11 +724,11 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []), "name"),
       },
-    ];
+    ]);
   }
 
   _fetchClassFilters() {
-    this.filters = [
+    this.filters.push(...[
       {
         path: "data.classType",
         label: game.i18n.localize("PF1.ClassType"),
@@ -763,11 +785,11 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []),
       },
-    ];
+    ]);
   }
 
   _fetchRaceFilters() {
-    this.filters = [
+    this.filters.push(...[
       {
         path: "data.creatureType",
         label: game.i18n.localize("PF1.CreatureType"),
@@ -784,7 +806,7 @@ export class CompendiumBrowser extends Application {
           return cur;
         }, []), "name"),
       },
-    ];
+    ]);
   }
 
   async _render(...args) {

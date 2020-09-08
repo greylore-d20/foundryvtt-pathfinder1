@@ -17,6 +17,7 @@
 - Actor health and token bars can now use the '--' operator to set to a negative value (e.g. '--8' would set the attribute to -8, rather than subtracting 8 from the current value)
 - Add Dice So Nice integration for damage rolls
 - Add broken condition for equipment, weapons and attacks
+- Add compendium filter to compendium browsers
 
 ## 0.73.8
 

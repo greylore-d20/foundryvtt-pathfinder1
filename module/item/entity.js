@@ -1092,6 +1092,8 @@ export class ItemPF extends Item {
 
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {
+
+        // Roll attack die
         let dice3dData = attacks.reduce((obj, a) => {
             if (a.attack.roll?.parts[0]?.rolls != null)      a.attack.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
             if (a.critConfirm.roll?.parts[0]?.rolls != null) a.critConfirm.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
@@ -1119,6 +1121,46 @@ export class ItemPF extends Item {
           }
           await game.dice3d.show(dice3dData);
         }
+
+        // Roll damage die
+        for (let atk of attacks) {
+          dice3dData = {
+            formula: "",
+            results: [],
+            whisper: [],
+            blind: false,
+          };
+          for (let rolls of [atk.damage.rolls, atk.critDamage.rolls]) {
+            if (!rolls) continue;
+            for (let r of rolls) {
+              for (let d of r.roll.dice) {
+                let formula = `${d.rolls.length}d${d.faces}`;
+                dice3dData.formula = (dice3dData.formula.length ? `${dice3dData.formula} + ${formula}` : formula);
+                for (let r2 of d.rolls) {
+                  dice3dData.results.push(r2.roll);
+                }
+              }
+            }
+          }
+
+          if (dice3dData.results.length) {
+            // Handle different roll modes
+            switch (rollMode) {
+              case "gmroll":
+                dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+                break;
+              case "selfroll":
+                dice3dData.whisper = [game.user._id];
+                break;
+              case "blindroll":
+                dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+                dice3dData.blind = true;
+                break;
+            }
+            await game.dice3d.show(dice3dData);
+          }
+        }
+
       }
       
       // Post message

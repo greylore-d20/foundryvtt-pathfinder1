@@ -13,6 +13,7 @@
 - Added a label to attack chat cards saying it's a power attack, due to the efforts of Ethaks (many thanks!)
 - Actors of the Character type now have their tokens linked by default, due to the efforts of Ethaks (many thanks!)
 - Actor health and token bars can now use the '--' operator to set to a negative value (e.g. '--8' would set the attribute to -8, rather than subtracting 8 from the current value)
+- Add Dice So Nice integration for damage rolls
 
 ## 0.73.8
 

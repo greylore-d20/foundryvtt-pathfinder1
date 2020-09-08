@@ -1783,11 +1783,16 @@ export class ActorSheetPF extends ActorSheet {
       // Add or subtract values
       if (relativeKeys.includes(k)) {
         const originalValue = getProperty(this.actor.data, k);
-        if (v.match(/(\+|-)([0-9]+)/)) {
+        if (v.match(/(\+|--?)([0-9]+)/)) {
           const operator = RegExp.$1;
           let value = parseInt(RegExp.$2);
-          if (operator === "-") value = -value;
-          formData[k] = originalValue + value;
+          if (operator === "--") {
+            formData[k] = -value;
+          }
+          else {
+            if (operator === "-") value = -value;
+            formData[k] = originalValue + value;
+          }
         }
         else if (v.match(/([0-9]+)/)) {
           formData[k] = parseInt(v);

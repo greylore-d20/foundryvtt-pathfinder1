@@ -88,25 +88,46 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
   // Determine new bar value
   let input = event.currentTarget,
       strVal = input.value.trim(),
-      isDelta = strVal.startsWith("+") || strVal.startsWith("-"),
-      value = Number(strVal);
-  if ( !Number.isFinite(value) ) return;
+      operator,
+      value,
+      isDelta = false;
+  if (strVal.match(/(\+|--?)([0-9]+)/)) {
+    operator = RegExp.$1;
+    value = parseFloat(RegExp.$2);
+    isDelta = ["-", "+"].includes(operator);
+  }
+  else if (strVal.match(/([0-9]+)/)) {
+    value = parseFloat(RegExp.$1);
+  }
+  else return;
+  
+  let bar = input.dataset.bar;
 
   // For attribute bar values, update the associated Actor
-  let bar = input.dataset.bar;
   if ( bar ) {
     const actor = this.object.actor;
     const data = this.object.getBarAttribute(bar);
     const current = getProperty(actor.data.data, data.attribute);
     const updateData = {};
-    let dt = value;
-    if (data.attribute === "attributes.hp" && actor.data.data.attributes.hp.temp > 0 && isDelta && value < 0) {
-      dt = Math.min(0, actor.data.data.attributes.hp.temp + value);
-      updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp + value);
-      value = Math.min(0, value - dt);
+
+    // Set to specified negative value
+    if (operator === "--") {
+      updateData[`data.${data.attribute}.value`] = -value;
     }
-    if ( isDelta ) value = Math.clamped(current.min || 0, current.value + dt, current.max);
-    updateData[`data.${data.attribute}.value`] = value;
+
+    // Add relative value
+    else {
+      let dt = value;
+      if (data.attribute === "attributes.hp" && actor.data.data.attributes.hp.temp > 0 && operator === "-") {
+        dt = Math.min(0, actor.data.data.attributes.hp.temp - value);
+        updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp - value);
+        value = Math.min(0, value - dt);
+      }
+      else if (operator === "-") value = Math.clamped(current.min || 0, current.value - dt, current.max);
+      else if (operator === "+") value = Math.clamped(current.min || 0, current.value + dt, current.max);
+      updateData[`data.${data.attribute}.value`] = value;
+    }
+
     actor.update(updateData);
   }
 

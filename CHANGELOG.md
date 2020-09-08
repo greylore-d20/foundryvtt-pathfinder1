@@ -18,6 +18,7 @@
 - Add Dice So Nice integration for damage rolls
 - Add broken condition for equipment, weapons and attacks
 - Add compendium filter to compendium browsers
+- Remove the possibility of critically hitting for attacks with a critical multiplier of 1
 
 ## 0.73.8
 

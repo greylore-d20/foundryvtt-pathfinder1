@@ -7,6 +7,7 @@
 - Creating attacks from weapons on unlinked tokens caused a glitch where the item window wouldn't close (fixed by Ethaks (many thanks!))
 - Bardic Knowledge used an incorrect formula (fixed by Ethaks (many thanks!))
 - Changing anything on an actor sheet while their current hit points were negative caused the negative hit points to accumulate
+- Changing all speeds with a change item didn't work
 
 ### Changelog
 

@@ -1430,7 +1430,7 @@ const getSortChangePriority = function() {
       "str", "dex", "con", "int", "wis", "cha",
       "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", ...skillTargets,
       "allChecks", "strChecks", "dexChecks", "conChecks", "intChecks", "wisChecks", "chaChecks",
-      "allSpeeds", "landSpeed", "climbSpeed", "swimSpeed", "burrowSpeed", "flySpeed",
+      "landSpeed", "climbSpeed", "swimSpeed", "burrowSpeed", "flySpeed", "allSpeeds",
       "ac", "aac", "sac", "nac",
       "attack", "mattack", "rattack",
       "damage", "wdamage", "sdamage",

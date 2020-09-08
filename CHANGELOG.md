@@ -8,6 +8,7 @@
 - Bardic Knowledge used an incorrect formula (fixed by Ethaks (many thanks!))
 - Changing anything on an actor sheet while their current hit points were negative caused the negative hit points to accumulate
 - Changing all speeds with a change item didn't work
+- Deleting items that were linked to another item didn't remove links
 
 ### Changelog
 
@@ -15,6 +16,7 @@
 - Actors of the Character type now have their tokens linked by default, due to the efforts of Ethaks (many thanks!)
 - Actor health and token bars can now use the '--' operator to set to a negative value (e.g. '--8' would set the attribute to -8, rather than subtracting 8 from the current value)
 - Add Dice So Nice integration for damage rolls
+- Add broken condition for equipment, weapons and attacks
 
 ## 0.73.8
 

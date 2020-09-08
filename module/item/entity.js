@@ -1483,6 +1483,11 @@ export class ItemPF extends Item {
       parts = parts.concat(this.data.data.damage.nonCritParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" }; }));
     }
 
+    // Add broken penalty
+    if (this.data.data.broken) {
+      parts[0].extra.push("-2");
+    }
+
     // Determine ability score modifier
     let abl = this.data.data.ability.damage;
     if (typeof abl === "string" && abl !== "") {
@@ -2209,7 +2214,9 @@ export class ItemPF extends Item {
    * @param {String} id - The id of the item to remove links to.
    */
   async removeItemLink(id) {
-    for (let items of Object.values(getProperty(this.data, "data.links"))) {
+    const updateData = {};
+    for (let [k, linkItems] of Object.entries(getProperty(this.data, "data.links"))) {
+      let items = duplicate(linkItems);
       for (let a = 0; a < items.length; a++) {
         let item = items[a];
         if (item.id === id) {
@@ -2217,6 +2224,14 @@ export class ItemPF extends Item {
           a--;
         }
       }
+
+      if (linkItems.length > items.length) {
+        updateData[`data.links.${k}`] = items;
+      }
+    }
+    
+    if (Object.keys(updateData).length) {
+      return this.update(updateData);
     }
   }
 

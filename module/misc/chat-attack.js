@@ -49,6 +49,7 @@ export class ChatAttack {
   }
 
   get critRange() {
+    if (this.item.data.data.broken) return 1;
     return getProperty(this.item, "data.data.ability.critRange") || 20;
   }
 
@@ -131,6 +132,11 @@ export class ChatAttack {
       extraParts.push("@critConfirmBonus");
     }
 
+    // Add broken penalty
+    if (this.item.data.data.broken && !critical) {
+      extraParts.push("-2");
+    }
+
     // Roll attack
     let roll = this.item.rollAttack({data: this.rollData, bonus: bonus, extraParts: extraParts, primaryAttack: this.primaryAttack });
     data.roll = roll;
@@ -151,6 +157,7 @@ export class ChatAttack {
     if (!critical && d20.total >= this.critRange) {
       this.hasCritConfirm    = true;
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
+      if (this.item.data.data.broken) this.rollData.critMult = 1;
 
       await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true});
     }
@@ -188,12 +195,12 @@ export class ChatAttack {
     }
     // Add normal damage to critical damage
     else if (critical) {
-      const normalParts = this.damage.parts;//.filter(p => p.type === "normal");
+      const normalParts = this.damage.parts;
       data.parts.push(...normalParts);
     }
     
-    // Roll damages
-    const repeatCount = critical ? Math.max(1, this.rollData.item.ability.critMult - 1) : 1;
+    // Roll damage
+    const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
       const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical});

@@ -549,6 +549,9 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
     if (obj.data.masterwork === true && (["armor", "shield"].includes(obj.data.equipmentType))) {
       itemACP = Math.max(0, itemACP - 1);
     }
+    if (obj.data.broken) {
+      itemACP *= 2;
+    }
     
     linkData(data, updateData, "data.attributes.acp.gear", updateData["data.attributes.acp.gear"] + itemACP);
     if(obj.data.armor.dex != null) {
@@ -868,8 +871,10 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     if (item.data.equipmentType === "shield") armorTarget = "sac";
     // Push base armor
     if (item.data.armor.value) {
+      let ac = item.data.armor.value;
+      if (item.data.broken) ac = Math.floor(ac / 2);
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: item.data.armor.value.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
+        raw: mergeObject(ItemPF.defaultChange, { formula: ac.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
         source: {
           type: item.type,
           name: item.name

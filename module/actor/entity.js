@@ -741,6 +741,7 @@ export class ActorPF extends Actor {
     attackData["data.activation.type"] = "attack";
     attackData["data.duration.units"] = "inst";
     attackData["data.range.units"] = "melee";
+    attackData["data.broken"] = item.data.data.broken;
     attackData["img"] = item.data.img;
 
     // Add additional attacks

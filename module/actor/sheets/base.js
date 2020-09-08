@@ -534,6 +534,9 @@ export class ActorSheetPF extends ActorSheet {
     /*  Abilities, Skills, Defenses and Traits
     /* -------------------------------------------- */
 
+    // Submit hit points
+    html.find('input[name="data.attributes.hp.value"]').keypress(this._onSubmitElement.bind(this));
+
     // Ability Checks
     html.find('.ability-name').click(this._onRollAbilityTest.bind(this));
 
@@ -1270,6 +1273,21 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
+  _onSubmitElement(event) {
+    if (event.key === "Enter") {
+      const elem = event.currentTarget;
+      if (elem.name) {
+        const attr = getProperty(this.actor.data, elem.name);
+        if (typeof attr === "number" && attr === parseFloat(elem.value)) {
+          this._onSubmit(event);
+        }
+        else if (typeof attr === "string" && attr === elem.value) {
+          this._onSubmit(event);
+        }
+      }
+    }
+  }
+
   /**
    * Handle rolling an Ability check, either a test or a saving throw
    * @param {Event} event   The originating click event
@@ -1782,7 +1800,14 @@ export class ActorSheetPF extends ActorSheet {
       if (typeof v !== "string") continue;
       // Add or subtract values
       if (relativeKeys.includes(k)) {
+        const activeElem = document.activeElement;
+        const elem = this.element.find(`*[name="${k}"]`);
         const originalValue = getProperty(this.actor.data, k);
+        if (activeElem !== elem[0]) {
+          formData[k] = originalValue;
+          continue;
+        }
+
         if (v.match(/(\+|--?)([0-9]+)/)) {
           const operator = RegExp.$1;
           let value = parseInt(RegExp.$2);

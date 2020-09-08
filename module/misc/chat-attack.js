@@ -49,7 +49,7 @@ export class ChatAttack {
   }
 
   get critRange() {
-    if (this.item.data.data.broken) return 1;
+    if (this.item.data.data.broken) return 20;
     return getProperty(this.item, "data.data.ability.critRange") || 20;
   }
 

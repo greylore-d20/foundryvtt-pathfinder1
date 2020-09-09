@@ -143,7 +143,7 @@ export class ActorPF extends Actor {
         return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
       });
     }
-    return this.isPC;
+    return this.hasPlayerOwner;
   }
 
   /**
@@ -674,7 +674,7 @@ export class ActorPF extends Actor {
     let t = itemData.type;
     let initial = {};
     // Assume NPCs are always proficient with weapons and always have spells prepared
-    if ( !this.isPC ) {
+    if ( !this.hasPlayerOwner ) {
       if ( t === "weapon" ) initial["data.proficient"] = true;
       if ( ["weapon", "equipment"].includes(t) ) initial["data.equipped"] = true;
     }
@@ -1622,7 +1622,7 @@ export class ActorPF extends Actor {
       if (!tag) return;
 
       let healthConfig = game.settings.get("pf1", "healthConfig");
-      healthConfig = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+      healthConfig = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : this.hasPlayerOwner ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
       const classType = cls.data.classType || "base";
       result.classes[tag] = {
         level: cls.data.level,

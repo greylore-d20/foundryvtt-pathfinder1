@@ -207,6 +207,9 @@ Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
 
+  // Merge changed data into item data immediately, to avoid update lag
+  item.data = mergeObject(item.data, changedData);
+
   // Refresh actor
   actor.refresh();
 

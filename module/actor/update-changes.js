@@ -11,7 +11,7 @@ export const updateChanges = async function({data=null}={}) {
     else cur.push(i.data);
     return cur;
   }, []);
-  const changeObjects = srcData1.items.filter(obj => { return obj.data.changes != null; }).filter(obj => {
+  const changeObjects = srcData1.items.filter(obj => { return (obj.data.changes instanceof Array) && obj.data.changes.length; }).filter(obj => {
     if (obj.type === "buff") return obj.data.active;
     if (obj.type === "equipment" || obj.type === "weapon") return obj.data.equipped;
     return true;
@@ -220,7 +220,7 @@ export const updateChanges = async function({data=null}={}) {
       change.source.value = change.raw.value;
     }
     catch (e) {
-      ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.item.name, this.name));
+      ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
     }
     _parseChange.call(this, change, changeData[changeTarget], flags);
 
@@ -857,8 +857,9 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   }
   // Natural armor
   {
+    const ac = getProperty(data, "data.attributes.naturalAC") || 0;
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.naturalAC", target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
+      raw: mergeObject(ItemPF.defaultChange, { formula: ac.toString(), target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
       source: {
         name: game.i18n.localize("PF1.BuffTarACNatural"),
       }

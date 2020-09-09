@@ -78,11 +78,6 @@ Token.prototype.getBarAttribute = function(barName, {alternative=null}={}) {
 };
 
 TokenHUD.prototype._onAttributeUpdate = function(event) {
-  // Filter keydown events for Enter
-  if ( event.type === "keydown" ) {
-    if (event.keyCode === KEYS.ENTER) this.clear();
-    return;
-  }
   event.preventDefault();
 
   // Determine new bar value
@@ -105,7 +100,8 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
 
   // For attribute bar values, update the associated Actor
   if ( bar ) {
-    const actor = this.object.actor;
+    const actor = this.object?.actor;
+    if (!actor) return;
     const data = this.object.getBarAttribute(bar);
     const current = getProperty(actor.data.data, data.attribute);
     const updateData = {};

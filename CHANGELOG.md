@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.74.1 (Initial FoundryVTT 0.7.2 support)
+
 ## 0.74.0
 
 ### Bug Fixes

@@ -108,7 +108,7 @@
   {{#each spellbook.data as |section sid|}}
   <a class="item" data-tab="spells_{{../spellbookIndex}}_{{sid}}">{{section.label}}</a>
   {{/each}}
-  <a class="item" data-tab="spells_{{../spellbookIndex}}_all">{{localize "PF1.All"}}</a>
+  <a class="item" data-tab="spells_{{spellbookIndex}}_all">{{localize "PF1.All"}}</a>
 </nav>
 
 <section class="spells_{{spellbookIndex}}-body">
@@ -254,8 +254,8 @@
     </ol>
   </div>
   {{/each}}
-  <div class="tab inventory-group flexcol" data-group="spells_{{../spellbookIndex}}" data-tab="spells_{{../spellbookIndex}}_all">
-    <ol class="inventory-list sub-scroll scroll-spells_{{../spellbookIndex}}">
+  <div class="tab inventory-group flexcol" data-group="spells_{{spellbookIndex}}" data-tab="spells_{{spellbookIndex}}_all">
+    <ol class="inventory-list sub-scroll scroll-spells_{{spellbookIndex}}">
       {{#each spellbook.data as |section sid|}}
       <li class="flexrow inventory-header spellbook-header">
         <div class="item-name flexrow">

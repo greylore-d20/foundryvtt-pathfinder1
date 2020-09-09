@@ -1095,8 +1095,8 @@ export class ItemPF extends Item {
 
         // Roll attack die
         let dice3dData = attacks.reduce((obj, a) => {
-            if (a.attack.roll?.parts[0]?.rolls != null)      a.attack.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
-            if (a.critConfirm.roll?.parts[0]?.rolls != null) a.critConfirm.roll.parts[0].rolls.forEach((r) => { obj.results.push(r.roll) });
+            if (a.attack.roll?.terms[0]?.results != null)      a.attack.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
+            if (a.critConfirm.roll?.terms[0]?.results != null) a.critConfirm.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
           return obj;
         }, {
           formula: "",
@@ -1134,9 +1134,9 @@ export class ItemPF extends Item {
             if (!rolls) continue;
             for (let r of rolls) {
               for (let d of r.roll.dice) {
-                let formula = `${d.rolls.length}d${d.faces}`;
+                let formula = `${d.results.length}d${d.faces}`;
                 dice3dData.formula = (dice3dData.formula.length ? `${dice3dData.formula} + ${formula}` : formula);
-                for (let r2 of d.rolls) {
+                for (let r2 of d.results) {
                   dice3dData.results.push(r2.roll);
                 }
               }
@@ -1385,13 +1385,13 @@ export class ItemPF extends Item {
     // Add secondary natural attack penalty
     if (primaryAttack === false) parts.push("-5");
     // Add bonus
-    if (bonus != null) {
+    if (bonus) {
       rollData.bonus = bonus;
       parts.push("@bonus");
     }
     if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";
 
-    let roll = new Roll([rollData.d20].concat(parts).join("+"), rollData).roll();
+    let roll = new Roll([rollData.d20, ...parts].join("+"), rollData).roll();
     return roll;
   }
 

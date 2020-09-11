@@ -799,6 +799,41 @@ export class ActorPF extends Actor {
 
   /* -------------------------------------------- */
 
+  getSkillInfo(skillId) {
+    let skl, sklName, parentSkill, isCustom = false;
+    const skillParts = skillId.split("."),
+      isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
+    if (isSubSkill) {
+      skillId = skillParts[0];
+      skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
+      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
+      parentSkill = this.getSkillInfo(skillId);
+    }
+    else {
+      skl = this.data.data.skills[skillId];
+      if (skl.name != null) {
+        sklName = skl.name;
+        isCustom = true;
+      }
+      else sklName = CONFIG.PF1.skills[skillId];
+    }
+
+    const result = {
+      id: skillId,
+      name: sklName,
+      isCustom: isCustom,
+      rt: skl.rt,
+      rank: skl.rank,
+      bonus: skl.mod,
+    };
+
+    if (parentSkill) {
+      result.parentSkill = parentSkill;
+    }
+
+    return result;
+  }
+
   /**
    * Roll a Skill Check
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
@@ -891,17 +926,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note
-            });
-          }
-          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
     // Add grapple note
@@ -916,6 +941,59 @@ export class ActorPF extends Actor {
       parts: ["@mod"],
       data: {mod: this.data.data.attributes.cmb.total},
       title: game.i18n.localize("PF1.CMB"),
+      speaker: ChatMessage.getSpeaker({actor: this}),
+      takeTwenty: false,
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+    });
+  }
+
+  rollCL(spellbookKey) {
+
+    const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
+    const rollData = this.getRollData();
+    rollData.cl = spellbook.cl.total;
+
+    // Add contextual caster level string
+    const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
+
+    let props = [];
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
+    return DicePF.d20Roll({
+      event: event,
+      parts: [`@cl`],
+      data: rollData,
+      title: game.i18n.localize("PF1.CasterLevelCheck"),
+      speaker: ChatMessage.getSpeaker({actor: this}),
+      takeTwenty: false,
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+    });
+  }
+
+  rollConcentration(spellbookKey) {
+
+    const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
+    const rollData = this.getRollData();
+    rollData.cl = spellbook.cl.total;
+    rollData.mod = this.data.data.abilities[spellbook.ability].mod;
+    rollData.concentrationBonus = spellbook.concentration;
+
+    // Add contextual concentration string
+    const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
+
+    let props = [];
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
+
+    let formulaRoll = 0;
+    if (spellbook.concentrationFormula.length) formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
+    rollData.formulaBonus = formulaRoll;
+
+    return DicePF.d20Roll({
+      event: event,
+      parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
+      data: rollData,
+      title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",

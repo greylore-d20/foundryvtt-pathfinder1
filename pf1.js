@@ -55,7 +55,9 @@ Hooks.once("init", async function() {
     ItemPF,
     migrations,
     rollItemMacro,
+    rollSkillMacro,
     rollDefenses,
+    rollActorAttributeMacro,
     CompendiumDirectoryPF,
     rollPreProcess: {
       sizeRoll: sizeDie,
@@ -287,9 +289,24 @@ Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
 
+// Create macro from item
 Hooks.on("hotbarDrop", (bar, data, slot) => {
-  if ( data.type !== "Item" ) return;
+  if ( data.type !== "Item" ) return true;
   createItemMacro(data.data, slot);
+  return false;
+});
+
+// Create macro from skill
+Hooks.on("hotbarDrop", (bar, data, slot) => {
+  if (data.type !== "skill") return true;
+  createSkillMacro(data.skill, data.actor, slot);
+  return false;
+});
+
+// Create macro to roll miscellaneous attribute from an actor
+Hooks.on("hotbarDrop", (bar, data, slot) => {
+  if (!["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type)) return true;
+  createMiscActorMacro(data.type, data.actor, slot, data.altType);
   return false;
 });
 
@@ -320,6 +337,90 @@ async function createItemMacro(item, slot) {
   game.user.assignHotbarMacro(macro, slot);
 }
 
+async function createSkillMacro(skillId, actorId, slot) {
+  const actor = getActorFromId(actorId);
+  if (!actor) return;
+  
+  const skillInfo = actor.getSkillInfo(skillId);
+  const command = `game.pf1.rollSkillMacro("${actorId}", "${skillId}");`;
+  const name = game.i18n.localize("PF1.RollSkillMacroName").format(actor.name, skillInfo.name);
+  let macro = game.macros.entities.find(m => (m.name === name) && (m.command === command));
+  if (!macro) {
+    macro = await Macro.create({
+      name: name,
+      type: "script",
+      img: "systems/pf1/icons/items/inventory/dice.jpg",
+      command: command,
+      flags: {"pf1.skillMacro": true},
+    }, {displaySheet: false});
+  }
+
+  game.user.assignHotbarMacro(macro, slot);
+}
+
+async function createMiscActorMacro(type, actorId, slot, altType=null) {
+  const actor = getActorFromId(actorId);
+  if (!actor) return;
+
+  let altTypeLabel = "";
+  switch (altType) {
+    case "primary":
+      altTypeLabel = "Primary";
+      break;
+    case "secondary":
+      altTypeLabel = "Secondary";
+      break;
+    case "tertiary":
+      altTypeLabel = "Tertiary";
+      break;
+    case "spelllike":
+      altTypeLabel = "Spell-like";
+      break;
+  }
+
+  const command = altType
+    ? `game.pf1.rollActorAttributeMacro("${actorId}", "${type}", "${altType}");`
+    : `game.pf1.rollActorAttributeMacro("${actorId}", "${type}");`;
+  let name, img;
+  switch (type) {
+    case "defenses":
+      name = game.i18n.localize("PF1.RollDefensesMacroName").format(actor.name);
+      img = "systems/pf1/icons/items/armor/shield-light-metal.png";
+      break;
+    case "cmb":
+      name = game.i18n.localize("PF1.RollCMBMacroName").format(actor.name);
+      img = "systems/pf1/icons/feats/improved-grapple.jpg";
+      break;
+    case "cl":
+      name = game.i18n.localize("PF1.RollCLMacroName").format(actor.name, altTypeLabel);
+      img = "systems/pf1/icons/spells/wind-grasp-eerie-3.jpg";
+      break;
+    case "concentration":
+      name = game.i18n.localize("PF1.RollConcentrationMacroName").format(actor.name, altTypeLabel);
+      img = "systems/pf1/icons/skills/light_01.jpg";
+      break;
+    case "bab":
+      name = game.i18n.localize("PF1.RollBABMacroName").format(actor.name);
+      img = "systems/pf1/icons/skills/yellow_08.jpg";
+      break;
+  }
+
+  if (!name) return;
+
+  let macro = game.macros.entities.find(o => (o.name === name) && (o.command === command));
+  if (!macro) {
+    macro = await Macro.create({
+      name: name,
+      type: "script",
+      img: img,
+      command: command,
+      flags: {"pf1.miscMacro": true},
+    }, {displaySheet: false});
+  }
+
+  game.user.assignHotbarMacro(macro, slot);
+}
+
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
@@ -344,6 +445,13 @@ function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
   return item.roll();
 }
 
+function rollSkillMacro(actorId, skillId) {
+  const actor = getActorFromId(actorId);
+  if (!actor) return ui.notifications.error(game.i18n.localize("PF1.ErrorActorNotFound").format(actorId));
+
+  return actor.rollSkill(skillId, {skipDialog: getSkipActionPrompt()});
+}
+
 /**
  * Show an actor's defenses.
  */
@@ -352,6 +460,29 @@ function rollDefenses({actorName=null, actorId=null}={}) {
   if (!actor) return ui.notifications.warn("No applicable actor found");
 
   return actor.rollDefenses();
+};
+
+function rollActorAttributeMacro(actorId, type, altType=null) {
+  const actor = getActorFromId(actorId);
+  if (!actor) return ui.notifications.error("PF1.ErrorActorNotFound").format(actorId);
+
+  switch (type) {
+    case "defenses":
+      actor.rollDefenses();
+      break;
+    case "cmb":
+      actor.rollCMB();
+      break;
+    case "cl":
+      actor.rollCL(altType);
+      break;
+    case "concentration":
+      actor.rollConcentration(altType);
+      break;
+    case "bab":
+      actor.rollBAB();
+      break;
+  }
 };
 
 // Create Handlebars helpers

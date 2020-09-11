@@ -505,11 +505,51 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item .item-name h4').click(event => this._onItemSummary(event));
 
     // Item Dragging
-    let handler = ev => this._onDragItemStart(ev);
+    let handler = ev => this._onDragStart(ev);
     html.find('li.item').each((i, li) => {
       if ( li.classList.contains("inventory-header") ) return;
       li.setAttribute("draggable", true);
       li.addEventListener("dragstart", handler, false);
+    });
+
+    // Skill dragging
+    html.find("li.skill[data-skill]").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragSkillStart(ev), false);
+    });
+    html.find("li.sub-skill[data-skill]").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragSkillStart(ev), false);
+    });
+
+    // CMB dragging
+    html.find("li.attribute.cmb").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragMiscStart(ev, "cmb"), false);
+    });
+
+    // Defenses dragging
+    html.find("li.generic-defenses").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragMiscStart(ev, "defenses"), false);
+    });
+
+    // Concentration dragging
+    html.find(".spellcasting-concentration").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragMiscStart(ev, "concentration"), false);
+    });
+
+    // Caster Level dragging
+    html.find(".spellcasting-cl").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragMiscStart(ev, "cl"), false);
+    });
+
+    // Base Attack Bonus dragging
+    html.find("li.attribute.bab").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragMiscStart(ev, "bab"), false);
     });
 
     // Everything below here is only needed if the sheet is editable
@@ -700,6 +740,60 @@ export class ActorSheetPF extends ActorSheet {
     elem.find(".tooltip:hover .tooltipcontent").css("left", `${x}px`).css("top", `${y}px`);
   }
 
+  _onDragSkillStart(event) {
+    const elem = event.currentTarget;
+    let skillElem = elem.closest(".sub-skill");
+    let mainSkill = null;
+    let subSkill = null;
+    let isSubSkill = true;
+    if (!skillElem) {
+      skillElem = elem.closest(".skill");
+      isSubSkill = false;
+    }
+    if (!skillElem) return;
+
+    if (isSubSkill) {
+      mainSkill = skillElem.dataset.mainSkill;
+      subSkill = skillElem.dataset.skill;
+    }
+    else {
+      mainSkill = skillElem.dataset.skill;
+    }
+
+    const result = {
+      type: "skill",
+      actor: this.actor._id,
+      skill: subSkill ? `${mainSkill}.subSkills.${subSkill}` : mainSkill,
+    };
+    if (this.actor.isToken) {
+      result.sceneId = canvas.scene._id;
+      result.tokenId = this.actor.token._id;
+    }
+
+    event.dataTransfer.setData("text/plain", JSON.stringify(result));
+  }
+
+  _onDragMiscStart(event, type) {
+    const result = {
+      type: type,
+      actor: this.actor._id,
+    };
+    if (this.actor.isToken) {
+      result.sceneId = canvas.scene._id;
+      result.tokenId = this.actor.token._id;
+    }
+    
+    switch (type) {
+      case "concentration":
+      case "cl":
+        const elem = event.currentTarget.closest(".tab.spellbook-group");
+        result.altType = elem.dataset.tab;
+        break;
+    }
+
+    event.dataTransfer.setData("text/plain", JSON.stringify(result));
+  }
+
   /**
    * Initialize Item list filters by activating the set of filters which are currently applied
    * @private
@@ -883,56 +977,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookKey];
-    const rollData = this.actor.getRollData();
-    rollData.cl = spellbook.cl.total;
-
-    // Add contextual concentration string
-    const notes = this.actor.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
-
-    let props = [];
-    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    let formulaRoll = 0;
-    if (spellbook.concentrationFormula.length) formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
-    return DicePF.d20Roll({
-      event: event,
-      parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
-      data: {
-        cl: spellbook.cl.total,
-        mod: this.actor.data.data.abilities[spellbook.ability].mod,
-        concentrationBonus: spellbook.concentration,
-        formulaBonus: formulaRoll,
-      },
-      title: game.i18n.localize("PF1.ConcentrationCheck"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
-    });
+    this.actor.rollConcentration(spellbookKey);
   }
 
   _onRollCL(event) {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    const spellbook = this.actor.data.data.attributes.spells.spellbooks[spellbookKey];
-    const rollData = duplicate(this.actor.data.data);
-
-    // Add contextual caster level string
-    const notes = this.actor.getContextNotesParsed(`spell.cl.${spellbookKey}`);
-
-    let props = [];
-    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    return DicePF.d20Roll({
-      event: event,
-      parts: [`@cl`],
-      data: { cl: spellbook.cl.total },
-      title: game.i18n.localize("PF1.CasterLevelCheck"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
-    });
+    this.actor.rollCL(spellbookKey);
   }
 
   _setItemActive(event) {

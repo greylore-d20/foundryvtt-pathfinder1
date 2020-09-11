@@ -1877,7 +1877,7 @@ export class ActorSheetPF extends ActorSheet {
         else if (v === "") {
           formData[k] = 0;
         }
-        else formData[k] = originalValue;
+        else formData[k] = value;
       }
     }
     

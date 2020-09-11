@@ -126,14 +126,23 @@ export class ItemPF extends Item {
     if (!rollData) rollData = this.getRollData();
     const data = this.data.data;
 
+    let result = 10;
+
     if (this.type === "spell") {
       const spellbook = this.spellbook;
       if (spellbook != null) {
-        return new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+        try {
+          result = new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+        }
+        catch (e) {}
       }
     }
-    const dcFormula = getProperty(data, "save.dc") || "";
-    return new Roll(dcFormula.length > 0 ? data.save.dc : "0", rollData).roll().total;
+    const dcFormula = getProperty(data, "save.dc") || "0";
+    try {
+      result = new Roll(dcFormula, rollData).roll().total;
+    }
+    catch (e) {}
+    return result;
   }
 
   /**

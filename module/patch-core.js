@@ -41,7 +41,7 @@ export function PatchCore() {
   };
 
   // Patch Roll._replaceData
-  if (!isMinimumCoreVersion("0.7.0")) {
+  if (!isMinimumCoreVersion("0.7.2")) {
     const Roll__replaceData = Roll.prototype._replaceData;
     Roll.prototype._replaceData = function(formula) {
       let result = Roll__replaceData.call(this, formula);

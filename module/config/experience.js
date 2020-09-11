@@ -64,21 +64,6 @@ export class ExperienceConfig extends FormApplication {
 
   _updateApplicationSettings() {
 
-    // Acquire and validate Form Data
-    // const form = this.element.find("form").first()[0];
-    // const FD = this._getFormData(form);
-    // const dtypes = FD._dtypes;
-
-    // // Construct update data object by casting form data
-    // let formData = Array.from(FD).reduce((obj, [k, v]) => {
-    //   let dt = dtypes[k];
-    //   if ( dt === "Number" ) obj[k] = v !== "" ? Number(v) : null;
-    //   else if ( dt === "Boolean" ) obj[k] = v === "true";
-    //   else if ( dt === "Radio" ) obj[k] = JSON.parse(v);
-    //   else obj[k] = v;
-    //   return obj;
-    // }, {});
-
     const formData = this._getSubmitData();
 
     // Update settings and re-render

@@ -2,6 +2,10 @@
 
 ## 0.74.1 (Initial FoundryVTT 0.7.2 support)
 
+### Changelog
+
+- Default to not having a custom tag for classes
+
 ## 0.74.0
 
 ### Bug Fixes

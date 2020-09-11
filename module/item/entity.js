@@ -492,8 +492,9 @@ export class ItemPF extends Item {
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
     // Initialize tag
-    if (this.type === "class" && !this.data.data.tag && !data["data.tag"]) {
-      const name = data["name"] || this.name;
+    if (this.type === "class" && !srcData.data.useCustomTag) {
+      const name = srcData.name;
+      console.log(name);
       data["data.tag"] = createTag(name);
     }
 

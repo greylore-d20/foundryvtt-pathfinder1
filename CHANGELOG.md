@@ -2,6 +2,10 @@
 
 ## 0.74.1 (Initial FoundryVTT 0.7.2 support)
 
+### Bug Fixes
+
+- Added safeguard to avoid an infinite loop in the formula for charges on a charged item
+
 ### Changelog
 
 - Default to not having a custom tag for classes

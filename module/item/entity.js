@@ -1,4 +1,4 @@
-import { DicePF } from "../dice.js";
+import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
@@ -563,10 +563,14 @@ export class ItemPF extends Item {
     const rollData = this.getRollData();
 
     if (hasProperty(srcData, "data.uses.maxFormula")) {
-      if (getProperty(srcData, "data.uses.maxFormula") !== "") {
-        let roll = new Roll(getProperty(srcData, "data.uses.maxFormula"), rollData).roll();
+      const maxFormula = getProperty(srcData, "data.uses.maxFormula");
+      if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
+        let roll = new Roll(maxFormula, rollData).roll();
         if (doLinkData) linkData(srcData, data, "data.uses.max", roll.total);
         else data["data.uses.max"] = roll.total;
+      }
+      else if (formulaHasDice(maxFormula)) {
+        ui.notifications.warn(game.i18n.localize("PF1.WarningNoDiceAllowedInFormula").format(game.i18n.localize("PF1.ChargePlural"), this.name));
       }
     }
   }

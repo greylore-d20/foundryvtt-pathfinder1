@@ -60,7 +60,7 @@ export class ItemPF extends Item {
   }
 
   get isSingleUse() {
-    return getProperty(this.data, "data.uses.per") === "single";
+    return getProperty(this.data, "data.uses.per") === "single" || !hasProperty(this.data, "data.uses.per");
   }
 
   get isCharged() {
@@ -80,8 +80,8 @@ export class ItemPF extends Item {
     if (link) return link.charges;
 
     // Get own charges
-    if (getProperty(this.data, "data.uses.per") === "single") return getProperty(this.data, "data.quantity");
     if (this.type === "spell") return this.getSpellUses();
+    if (this.isSingleUse) return getProperty(this.data, "data.quantity");
     return getProperty(this.data, "data.uses.value") || 0;
   }
 
@@ -882,6 +882,17 @@ export class ItemPF extends Item {
       return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
     }
 
+    // Check ammunition links
+    let ammoLinks = [];
+    if (this.type === "attack") {
+      ammoLinks = await this.getLinkedItems("ammunition", true);
+      for (let l of ammoLinks) {
+        if (l.item.charges <= 0) {
+          return ui.notifications.warn(game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name));
+        }
+      }
+    }
+
     const rollData = this.getRollData();
 
     let rolled = false;
@@ -977,8 +988,30 @@ export class ItemPF extends Item {
         return cur;
       }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
+
+      const subtractAmmo = function() {
+        let promises = [];
+        for (let l of ammoLinks) {
+          promises.push(l.item.addCharges(-1));
+        }
+        return Promise.all(promises);
+      };
+
       if (this.hasAttack) {
-        for (let a = 0; a < allAttacks.length; a++) {
+        let noAmmo = false;
+        for (let a = 0; a < allAttacks.length && !noAmmo; a++) {
+          // Check ammunition partway through
+          for (let l of ammoLinks) {
+            if (l.item.charges <= 0) {
+              ui.notifications.warn(game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name));
+              noAmmo = true;
+            }
+          }
+          if (noAmmo) break;
+
+          // Subtract ammunition
+          await subtractAmmo();
+
           let atk = allAttacks[a];
           // Create attack object
           let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
@@ -1028,6 +1061,8 @@ export class ItemPF extends Item {
       }
       // Add damage only
       else if (this.hasDamage) {
+        await subtractAmmo();
+
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
         // Add damage
         await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
@@ -1043,6 +1078,8 @@ export class ItemPF extends Item {
       }
       // Add effect notes only
       else if (this.hasEffect) {
+        await subtractAmmo();
+
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
 
         // Add attack notes
@@ -1053,6 +1090,9 @@ export class ItemPF extends Item {
         
         // Add to list
         attacks.push(attack);
+      }
+      if (ammoLinks.length) {
+        attacks.forEach(atk => atk.addAmmunitionCards());
       }
       chatTemplateData.attacks = attacks.map(o => o.finalize());
 
@@ -1678,10 +1718,9 @@ export class ItemPF extends Item {
     const item = actor.getOwnedItem(card.dataset.itemId);
 
     // Perform action
-    await this._onChatCardAction(action, {button: button, item: item});
-
-    // Re-enable the button
-    button.disabled = false;
+    if (!(await this._onChatCardAction(action, {button: button, item: item}))) {
+      button.disabled = false;
+    }
   }
 
   static async _onChatCardAction(action, {button=null, item=null}={}) {
@@ -1695,6 +1734,50 @@ export class ItemPF extends Item {
       const value = button.dataset.value;
       if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value));
     }
+    // Recover ammunition
+    else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {
+      if (!item) return;
+
+      const ammoLinks = await item.getLinkedItems("ammunition", true);
+      let recovered = false;
+      let failed = false;
+      let promises = [];
+
+      for (let l of ammoLinks) {
+        let chance = 100;
+        if (action === "recoverAmmo") {
+          chance = l.linkData.recoverChance;
+        }
+
+        if (chance >= Math.random() * 100) {
+          recovered = true;
+          promises.push(l.item.addCharges(1));
+        }
+        else {
+          failed = true;
+        }
+      }
+
+      // Disable button
+      if (button) {
+        button.disabled = true;
+        if (recovered && !failed) {
+          button.style.backgroundColor = "#00AA00";
+        }
+        else if (!recovered && failed) {
+          button.style.backgroundColor = "#AA0000";
+        }
+        else if (recovered && failed) {
+          button.style.backgroundColor = "#0000AA";
+        }
+      }
+
+      await Promise.all(promises);
+
+      return true;
+    }
+
+    return false;
   }
 
   /* -------------------------------------------- */
@@ -2197,13 +2280,13 @@ export class ItemPF extends Item {
     }
   }
 
-  async getLinkedItems(type) {
+  async getLinkedItems(type, extraData=false) {
     const items = getProperty(this.data, `data.links.${type}`);
     if (!items) return [];
 
     let result = [];
     for (let l of items) {
-      let item = await this.getLinkItem(l);
+      let item = await this.getLinkItem(l, extraData);
       if (item) result.push(item);
     }
 
@@ -2249,24 +2332,31 @@ export class ItemPF extends Item {
     }
   }
 
-  async getLinkItem(l) {
+  async getLinkItem(l, extraData=false) {
     const id = l.id.split(".");
+    let item;
 
     // Compendium entry
     if (l.dataType === "compendium") {
       const pack = game.packs.get(id.slice(0, 2).join("."));
-      return await pack.getEntity(id[2]);
+      item = await pack.getEntity(id[2]);
     }
     // World entry
     else if (l.dataType === "world") {
-      return game.items.get(id[1]);
+      item = game.items.get(id[1]);
     }
     // Same actor's item
     else if (this.actor != null && this.actor.items != null) {
-      return this.actor.items.find(o => o._id === id[0]);
+      item = this.actor.items.find(o => o._id === id[0]);
     }
 
-    return null;
+    
+    // Package extra data
+    if (extraData) {
+      item = { item: item, linkData: l };
+    }
+
+    return item;
   }
 
   async updateLinkItems() {

@@ -278,6 +278,22 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
+    // Add ammunition links
+    if (this.item.type === "attack") {
+      data.links.list.push({
+        id: "ammunition",
+        label: game.i18n.localize("PF1.LinkTypeAmmunition"),
+        help: game.i18n.localize("PF1.LinkHelpAmmunition"),
+        fields: {
+          recoverChance: {
+            type: "Number",
+            label: game.i18n.localize("PF1.RecoverChancePercentage"),
+          },
+        },
+        items: [],
+      });
+    }
+
     // Post process data
     for (let l of data.links.list) {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
@@ -681,7 +697,7 @@ export class ItemSheetPF extends ItemSheet {
     const links = getProperty(this.item.data, `data.links.${linkType}`) || [];
     if (links.filter(o => o.id === itemLink).length) return false;
 
-    if (["children", "charges"].includes(linkType) && sameActor) return true;
+    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
 
     if (linkType === "classAssociations" && dataType === "compendium") return true;
 
@@ -708,6 +724,10 @@ export class ItemSheetPF extends ItemSheet {
 
     if (linkType === "classAssociations") {
       result.level = 1;
+    }
+
+    if (linkType === "ammunition") {
+      result.recoverChance = 50;
     }
 
     return result;

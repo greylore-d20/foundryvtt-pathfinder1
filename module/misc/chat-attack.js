@@ -290,6 +290,12 @@ export class ChatAttack {
     this.setEffectNotesHTML();
   }
 
+  addAmmunitionCards() {
+    this.cards.recoverAmmo = { label: game.i18n.localize("PF1.RecoverAmmunition"), items: [] };
+    this.cards.recoverAmmo.items.push({ label: game.i18n.localize("PF1.Recover"), action: "recoverAmmo" });
+    this.cards.recoverAmmo.items.push({ label: game.i18n.localize("PF1.ForceRecover"), action: "forceRecoverAmmo" });
+  }
+
   finalize() {
     this.hasCards = Object.keys(this.cards).length > 0;
 

@@ -1852,13 +1852,7 @@ export class ActorSheetPF extends ActorSheet {
       if (typeof v !== "string") continue;
       // Add or subtract values
       if (relativeKeys.includes(k)) {
-        const activeElem = document.activeElement;
-        const elem = this.element.find(`*[name="${k}"]`);
         const originalValue = getProperty(this.actor.data, k);
-        if (activeElem !== elem[0]) {
-          formData[k] = originalValue;
-          continue;
-        }
 
         if (v.match(/(\+|--?)([0-9]+)/)) {
           const operator = RegExp.$1;
@@ -1871,7 +1865,7 @@ export class ActorSheetPF extends ActorSheet {
             formData[k] = originalValue + value;
           }
         }
-        else if (v.match(/([0-9]+)/)) {
+        else if (v.match(/^[0-9]+$/)) {
           formData[k] = parseInt(v);
         }
         else if (v === "") {

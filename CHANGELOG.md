@@ -5,7 +5,7 @@
 ### Bug Fixes
 
 - Added safeguard to avoid an infinite loop in the formula for charges on a charged item
-- Certain fields like currency fields didn't accept a number-only value
+- Certain fields like currency fields didn't accept a number-only value, and didn't apply by clicking on something else
 
 ### Changelog
 

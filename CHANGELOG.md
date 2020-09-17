@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Error with attack rolls while Dice So Nice is enabled on Foundry 0.6.6
+- Use isPC in Foundry 0.6.6
 
 ### Changelog
 

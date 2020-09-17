@@ -26,6 +26,7 @@ import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { updateChanges } from "./module/actor/update-changes.js";
 import { SemanticVersion } from "./module/semver.js";
+import { runUnitTests } from "./module/unit-tests.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -64,6 +65,7 @@ Hooks.once("init", async function() {
       roll: normalDie,
     },
     migrateWorld: migrations.migrateWorld,
+    runUnitTests,
   };
 
   // Record Configuration Values

@@ -3,6 +3,7 @@
 ## 0.74.3 (Hotfix)
 
 - Attacks without ammo didn't work
+- DC showed as 0 on spell attack cards
 
 ## 0.74.2 (Hotfix)
 

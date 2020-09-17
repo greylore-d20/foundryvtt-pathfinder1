@@ -136,6 +136,7 @@ export class ItemPF extends Item {
         }
         catch (e) {}
       }
+      return result;
     }
     const dcFormula = getProperty(data, "save.dc") || "0";
     try {

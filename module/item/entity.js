@@ -1005,7 +1005,7 @@ export class ItemPF extends Item {
 
       if (this.hasAttack) {
         ammoCost = Math.min(minAmmo, allAttacks.length);
-        for (let a = 0; a < Math.min(minAmmo, allAttacks.length); a++) {
+        for (let a = 0; (ammoLinks.length && a < Math.min(minAmmo, allAttacks.length)) || (!ammoLinks.length && a < allAttacks.length); a++) {
 
           let atk = allAttacks[a];
           // Create attack object

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.74.3 (Hotfix)
+
+- Attacks without ammo didn't work
+
 ## 0.74.2 (Hotfix)
 
 ### Bug Fixes

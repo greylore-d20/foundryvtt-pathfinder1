@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.74.2 (Hotfix)
+
+### Bug Fixes
+
+- Error with attack rolls while Dice So Nice is enabled on Foundry 0.6.6
+
+### Changelog
+
+- Sped up attacks using ammo
+
 ## 0.74.1 (Initial FoundryVTT 0.7.2 support)
 
 ### Bug Fixes

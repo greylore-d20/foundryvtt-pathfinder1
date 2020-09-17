@@ -1,6 +1,6 @@
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
+import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, isMinimumCoreVersion } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
@@ -883,10 +883,13 @@ export class ItemPF extends Item {
     }
 
     // Check ammunition links
-    let ammoLinks = [];
+    let ammoLinks = [], minAmmo;
     if (this.type === "attack") {
       ammoLinks = await this.getLinkedItems("ammunition", true);
       for (let l of ammoLinks) {
+        if (minAmmo == null) minAmmo = l.item.charges;
+        else minAmmo = Math.min(minAmmo, l.item.charges);
+
         if (l.item.charges <= 0) {
           return ui.notifications.warn(game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name));
         }
@@ -989,28 +992,20 @@ export class ItemPF extends Item {
       }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
 
-      const subtractAmmo = function() {
+      const subtractAmmo = function(value) {
+        if (!ammoLinks.length) return;
+        if (value == null) value = -1;
         let promises = [];
         for (let l of ammoLinks) {
-          promises.push(l.item.addCharges(-1));
+          promises.push(l.item.addCharges(value));
         }
         return Promise.all(promises);
       };
+      let ammoCost = 0;
 
       if (this.hasAttack) {
-        let noAmmo = false;
-        for (let a = 0; a < allAttacks.length && !noAmmo; a++) {
-          // Check ammunition partway through
-          for (let l of ammoLinks) {
-            if (l.item.charges <= 0) {
-              ui.notifications.warn(game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name));
-              noAmmo = true;
-            }
-          }
-          if (noAmmo) break;
-
-          // Subtract ammunition
-          await subtractAmmo();
+        ammoCost = Math.min(minAmmo, allAttacks.length);
+        for (let a = 0; a < Math.min(minAmmo, allAttacks.length); a++) {
 
           let atk = allAttacks[a];
           // Create attack object
@@ -1061,7 +1056,7 @@ export class ItemPF extends Item {
       }
       // Add damage only
       else if (this.hasDamage) {
-        await subtractAmmo();
+        ammoCost = 1;
 
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
         // Add damage
@@ -1078,8 +1073,6 @@ export class ItemPF extends Item {
       }
       // Add effect notes only
       else if (this.hasEffect) {
-        await subtractAmmo();
-
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
 
         // Add attack notes
@@ -1149,8 +1142,14 @@ export class ItemPF extends Item {
 
         // Roll attack die
         let dice3dData = attacks.reduce((obj, a) => {
+          if (isMinimumCoreVersion("0.7.2")) {
             if (a.attack.roll?.terms[0]?.results != null)      a.attack.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
             if (a.critConfirm.roll?.terms[0]?.results != null) a.critConfirm.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
+          }
+          else {
+            if (a.attack.roll?.parts[0]?.results != null)      a.attack.roll.parts[0].results.forEach((r) => { obj.results.push(r.roll) });
+            if (a.critConfirm.roll?.parts[0]?.results != null) a.critConfirm.roll.parts[0].results.forEach((r) => { obj.results.push(r.roll) });
+          }
           return obj;
         }, {
           formula: "",
@@ -1319,6 +1318,9 @@ export class ItemPF extends Item {
       else {
         this.roll();
       }
+
+      // Subtract ammunition
+      await subtractAmmo(-ammoCost);
     };
 
     // Handle fast-forwarding

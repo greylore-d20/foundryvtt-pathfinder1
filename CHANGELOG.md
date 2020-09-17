@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.74.4 (Hotfix)
+
+- Certain rolls (like skill rolls) didn't work in 0.6.6
+
 ## 0.74.3 (Hotfix)
 
 ### Bug Fixes

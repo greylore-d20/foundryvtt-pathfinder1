@@ -117,7 +117,8 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
       if (data.attribute === "attributes.hp" && actor.data.data.attributes.hp.temp > 0 && operator === "-") {
         dt = Math.min(0, actor.data.data.attributes.hp.temp - value);
         updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp - value);
-        value = Math.min(0, value - dt);
+        console.log(actor.data.data.attributes.hp.value, value, dt);
+        value = actor.data.data.attributes.hp.value + dt;
       }
       else if (operator === "-") value = Math.clamped(current.min || 0, current.value - dt, current.max);
       else if (operator === "+") value = Math.clamped(current.min || 0, current.value + dt, current.max);

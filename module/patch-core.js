@@ -62,9 +62,15 @@ export function PatchCore() {
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
   Combat.prototype.rollInitiative = _rollInitiative;
   window.getTemplate = PF1_getTemplate;
+
+  // Import low-light vision code
+  if (isMinimumCoreVersion("0.7.2")) {
+    import("./low-light-vision.js");
+  }
+  else {
+    import("./low-light-vision-0.6.6.js");
+  }
 }
 
-import "./low-light-vision.js";
-import "./measure.js";
 import { isMinimumCoreVersion } from "./lib.js";
-
+import "./measure.js";

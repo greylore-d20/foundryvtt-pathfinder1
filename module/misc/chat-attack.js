@@ -1,3 +1,5 @@
+import { isMinimumCoreVersion } from "../lib.js";
+
 export class ChatAttack {
   constructor(item, {label="", rollData={}, primaryAttack=true}={}) {
     this._baseRollData = rollData;
@@ -140,7 +142,7 @@ export class ChatAttack {
     // Roll attack
     let roll = this.item.rollAttack({data: this.rollData, bonus: bonus, extraParts: extraParts, primaryAttack: this.primaryAttack });
     data.roll = roll;
-    let d20 = roll.results[0];
+    let d20 = isMinimumCoreVersion("0.7.2") ? roll.results[0] : roll.parts[0];
     let critType = 0;
     if ((d20.total >= this.critRange && !critical) || (d20.total === 20 && critical)) critType = 1;
     else if (d20.total === 1) critType = 2;

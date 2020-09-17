@@ -10,6 +10,7 @@
 
 ### Changelog
 
+- Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
 - Default to not having a custom tag for classes
 - Added the ability to drag and drop skills, bab, cmb, defenses, concentration and caster level from an actor's sheet to the macro hotbar to quickly create a macro for it
 - Added a new link type for attacks: ammunition

@@ -101,3 +101,7 @@ People and credits are listed in no particular order.
 
 - Added base dice selector to attack roll dialogs
 - Did some bug fixing
+
+## Nico Weichbrodt
+
+- Added to the German translation

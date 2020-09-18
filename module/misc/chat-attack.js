@@ -142,10 +142,10 @@ export class ChatAttack {
     // Roll attack
     let roll = this.item.rollAttack({data: this.rollData, bonus: bonus, extraParts: extraParts, primaryAttack: this.primaryAttack });
     data.roll = roll;
-    let d20 = isMinimumCoreVersion("0.7.2") ? roll.results[0] : roll.parts[0];
+    let d20 = isMinimumCoreVersion("0.7.2") ? roll.results[0] : roll.parts[0].total;
     let critType = 0;
-    if ((d20.total >= this.critRange && !critical) || (d20.total === 20 && critical)) critType = 1;
-    else if (d20.total === 1) critType = 2;
+    if ((d20 >= this.critRange && !critical) || (d20 === 20 && critical)) critType = 1;
+    else if (d20 === 1) critType = 2;
 
     // Add tooltip
     let tooltip   = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
@@ -156,7 +156,7 @@ export class ChatAttack {
     data.isFumble = critType === 2;
 
     // Add crit confirm
-    if (!critical && d20.total >= this.critRange && this.rollData.item.ability.critMult > 1) {
+    if (!critical && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
       this.hasCritConfirm    = true;
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
       if (this.item.data.data.broken) this.rollData.critMult = 1;

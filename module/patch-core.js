@@ -1,9 +1,10 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { _preProcessDiceFormula } from "./dice.js";
+import "./misc/vision-permission.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
-export function PatchCore() {
+export async function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
   async function PF1_getTemplate(path) {
     if ( !_templateCache.hasOwnProperty(path) ) {
@@ -65,10 +66,15 @@ export function PatchCore() {
 
   // Import low-light vision code
   if (isMinimumCoreVersion("0.7.2")) {
-    import("./low-light-vision.js");
+    await import("./low-light-vision.js");
   }
   else {
-    import("./low-light-vision-0.6.6.js");
+    await import("./low-light-vision-0.6.6.js");
+  }
+
+  // Force render canvas for players
+  if (!game.user.isGM && canvas) {
+    canvas.draw();
   }
 }
 

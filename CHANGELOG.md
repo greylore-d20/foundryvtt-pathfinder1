@@ -9,6 +9,7 @@
 ### Changelog
 
 - Improved Dice So Nice roll order on attacks, due to the efforts of Ethaks (many thanks!)
+- Added the option to share token vision between players, independent of normal actor permissions
 
 ## 0.74.4 (Hotfix)
 

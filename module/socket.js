@@ -13,6 +13,9 @@ export function initializeSocket() {
         // Clean item links
         parentItem._cleanLink(link, linkType);
         break;
+      case "redrawCanvas":
+        canvas.draw();
+        break;
     }
   });
 }

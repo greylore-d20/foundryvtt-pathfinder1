@@ -561,8 +561,10 @@ export class ActorPF extends Actor {
   }
 
   _onUpdate(data, options, userId, context) {
-    if (hasProperty(data, "data.attributes.vision.lowLight") || hasProperty(data, "data.attributes.vision.darkvision")) {
-      canvas.sight.initializeTokens();
+    for (let k of Object.keys(data)) {
+      if (k.startsWith("data.attributes.vision")) {
+        canvas.sight.initializeTokens();
+      }
     }
 
     for (let i of this.items.values()) {

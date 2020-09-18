@@ -1,5 +1,5 @@
 import { TokenConfigPF } from "./token-config.js";
-
+import { hasTokenVision } from "./misc/vision-permission.js";
 
 // Patch Token's sheet template
 Object.defineProperties(Token.prototype, {
@@ -152,10 +152,11 @@ SightLayer.prototype.updateToken = function(token, {defer=false, deleted=false, 
   if ( token.data.hidden && !game.user.isGM ) return;
 
   // Vision is displayed if the token is controlled, or if it is observed by a player with no tokens controlled
-  let displayVision = token._controlled;
-  if ( !displayVision && !game.user.isGM && !canvas.tokens.controlled.length ) {
-    displayVision = token.actor && token.actor.hasPerm(game.user, "OBSERVER");
-  }
+  let displayVision = this._isTokenVisionSource(token);
+  // let displayVision = token._controlled;
+  // if ( !displayVision && !game.user.isGM && !canvas.tokens.controlled.length ) {
+    // displayVision = token.actor && hasTokenVision(token);
+  // }
 
   // Take no action for Tokens which are invisible or Tokens that have no sight or light
   const globalLight = canvas.scene.data.globalLight;

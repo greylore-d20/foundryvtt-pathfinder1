@@ -192,6 +192,22 @@ export const registerSystemSettings = function() {
     type: Boolean,
   });
 
+  game.settings.register("pf1", "sharedVisionMode", {
+    name: "SETTINGS.pf1SharedVisionModeN",
+    hint: "SETTINGS.pf1SharedVisionModeH",
+    scope: "world",
+    config: true,
+    default: "0",
+    type: String,
+    choices: {
+      "0": "SETTINGS.pf1SharedVisionWithoutSelection",
+      "1": "SETTINGS.pf1SharedVisionWithSelection",
+    },
+    onChange: () => {
+      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
+    },
+  });
+
   /**
    * Set coin weight
    */

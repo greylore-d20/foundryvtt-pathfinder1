@@ -1,9 +1,10 @@
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, isMinimumCoreVersion } from "../lib.js";
+import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
+import { SemanticVersion } from "../semver.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -1140,83 +1141,60 @@ export class ItemPF extends Item {
 
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {
-
-        // Roll attack die
-        let dice3dData = attacks.reduce((obj, a) => {
-          if (isMinimumCoreVersion("0.7.2")) {
-            if (a.attack.roll?.terms[0]?.results != null)      a.attack.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
-            if (a.critConfirm.roll?.terms[0]?.results != null) a.critConfirm.roll.terms[0].results.forEach((r) => { obj.results.push(r.roll) });
-          }
-          else {
-            if (a.attack.roll?.parts[0]?.results != null)      a.attack.roll.parts[0].results.forEach((r) => { obj.results.push(r.roll) });
-            if (a.critConfirm.roll?.parts[0]?.results != null) a.critConfirm.roll.parts[0].results.forEach((r) => { obj.results.push(r.roll) });
-          }
-          return obj;
-        }, {
-          formula: "",
-          results: [],
-          whisper: [],
-          blind: false,
-        });
-        if (dice3dData.results.length) {
-          dice3dData.formula = `${dice3dData.results.length}d20`;
-          // Handle different roll modes
+        // Use try to make sure a chat card is rendered even if DsN fails
+        try {
+          // Define common visibility options for whole attack
+          let whisper,
+            blind = false;
           switch (rollMode) {
             case "gmroll":
-              dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
               break;
             case "selfroll":
-              dice3dData.whisper = [game.user._id];
+              whisper = [game.user._id];
               break;
             case "blindroll":
-              dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
-              dice3dData.blind = true;
+              whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              blind = true;
               break;
-          }
-          await game.dice3d.show(dice3dData);
-        }
-
-        // Roll damage die
-        for (let atk of attacks) {
-          dice3dData = {
-            formula: "",
-            results: [],
-            whisper: [],
-            blind: false,
           };
-          for (let rolls of [atk.damage.rolls, atk.critDamage.rolls]) {
-            if (!rolls) continue;
-            for (let r of rolls) {
-              for (let d of r.roll.dice) {
-                let formula = `${d.results.length}d${d.faces}`;
-                dice3dData.formula = (dice3dData.formula.length ? `${dice3dData.formula} + ${formula}` : formula);
-                for (let r2 of d.results) {
-                  dice3dData.results.push(r2.roll);
-                }
+
+          // Define showRoll to be version independent
+          const showRoll = async rollDice => {
+            // Check for DsN v3, which uses DicePool instead of [Roll]
+            if (
+              SemanticVersion.fromString(
+                game.modules.get("dice-so-nice").data.version
+              ).isHigherThan(SemanticVersion.fromString("2.9.0"))
+            ) {
+              rollDice = new DicePool({ rolls: rollDice });
+            }
+            await game.dice3d.showForRoll(rollDice, game.user, true, whisper, blind);
+          };
+
+          // Iterate over every single attack
+          for (let atk of attacks) {
+            let rolls = [];
+            if (atk.attack.roll) rolls.push(atk.attack.roll);
+            for (let dmgRoll of atk.damage.rolls) {
+              if (dmgRoll?.roll) rolls.push(dmgRoll.roll);
+            }
+            // Visually roll an attack's attack roll + its damage roll
+            await showRoll(rolls);
+            if (atk.hasCritConfirm) {
+              rolls = [atk.critConfirm.roll];
+              for (let critDmgRoll of atk.critDamage.rolls) {
+                if (critDmgRoll?.roll) rolls.push(critDmgRoll.roll);
               }
+              // Visually roll an attack's crit confirm + crit damage roll
+              await showRoll(rolls);
             }
           }
-
-          if (dice3dData.results.length) {
-            // Handle different roll modes
-            switch (rollMode) {
-              case "gmroll":
-                dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
-                break;
-              case "selfroll":
-                dice3dData.whisper = [game.user._id];
-                break;
-              case "blindroll":
-                dice3dData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
-                dice3dData.blind = true;
-                break;
-            }
-            await game.dice3d.show(dice3dData);
-          }
+        } catch(e) {
+          console.error(e);
         }
-
       }
-      
+
       // Post message
       if (hasAction) {
         // Get extra text and properties

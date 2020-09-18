@@ -1,6 +1,18 @@
 # Changelog
 
+## 0.74.5
+
+### Bug Fixes
+
+- Fixed Dice So Nice integration, due to the efforts of Ethaks (many thanks!)
+
+### Changelog
+
+- Improved Dice So Nice roll order on attacks, due to the efforts of Ethaks (many thanks!)
+
 ## 0.74.4 (Hotfix)
+
+### Bug Fixes
 
 - Certain rolls (like skill rolls) didn't work in Foundry 0.6.6
 

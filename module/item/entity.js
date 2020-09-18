@@ -1175,7 +1175,7 @@ export class ItemPF extends Item {
           // Iterate over every single attack
           for (let atk of attacks) {
             let rolls = [];
-            rolls.push(atk.attack.roll);
+            if (atk.attack.roll) rolls.push(atk.attack.roll);
             for (let dmgRoll of atk.damage.rolls) {
               if (dmgRoll?.roll) rolls.push(dmgRoll.roll);
             }
@@ -1191,7 +1191,7 @@ export class ItemPF extends Item {
             }
           }
         } catch(e) {
-          console.log(e);
+          console.error(e);
         }
       }
 

@@ -380,6 +380,18 @@ PF1.encumbranceMultipliers = {
 
 /* -------------------------------------------- */
 
+PF1.itemTypes = {
+  "equipment": "PF1.ItemTypeEquipment",
+  "weapon": "PF1.ItemTypeWeapon",
+  "loot": "PF1.ItemTypeLoot",
+  "consumable": "PF1.ItemTypeConsumable",
+  "class": "PF1.ItemTypeClass",
+  "buff": "PF1.ItemTypeBuff",
+  "spell": "PF1.ItemTypeSpell",
+  "feat": "PF1.ItemTypeFeat",
+  "attack": "PF1.ItemTypeAttack"
+};
+
 /**
  * Classification types for item action types
  * @type {Object}

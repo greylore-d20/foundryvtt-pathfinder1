@@ -65,7 +65,7 @@ export class ItemSheetPF extends ItemSheet {
     data.config = CONFIG.PF1;
 
     // Item Type, Status, and Details
-    data.itemType = data.item.type.titleCase();
+    data.itemType = this._getItemType(data.item);
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
@@ -317,6 +317,18 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Get the text item type which is shown in the top-right corner of the sheet
+   * @return {string}
+   * @private
+   */
+  _getItemType(item) {
+    let typeKeys = Object.keys(CONFIG.PF1.itemTypes);
+    let itemType = item.type;
+    if (!typeKeys.includes(itemType)) itemType = typeKeys[0];
+    return game.i18n.localize(CONFIG.PF1.itemTypes[itemType]);
+  }
 
   /**
    * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet

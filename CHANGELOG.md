@@ -6,12 +6,14 @@
 
 - Fixed Dice So Nice integration, due to the efforts of Ethaks (many thanks!)
 - Fixed critical hit and fumble recognition in Foundry 0.7.2, due to the efforts of Ethaks (many thanks!)
+- Fixed various Class Abilities, due to the efforts of Nico Weichbrodt (many thanks!)
 - Cantrips couldn't be used without having spell uses
 
 ### Changelog
 
 - Improved Dice So Nice roll order on attacks, due to the efforts of Ethaks (many thanks!)
 - Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
+- Added more translatable strings, due to the efforts of Nico Weichbrodt (many thanks!)
 - Added the option to share token vision between players, independent of normal actor permissions
 
 ## 0.74.4 (Hotfix)

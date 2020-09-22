@@ -582,17 +582,17 @@ PF1.bonusModifiers = {
 
 // Damage Types
 PF1.damageTypes = {
-  "bludgeoning": "Bludgeoning",
-  "piercing": "Piercing",
-  "slashing": "Slashing",
-  "cold": "Cold",
-  "fire": "Fire",
-  "electric": "Electricity",
-  "sonic": "Sonic",
-  "acid": "Acid",
-  "force": "Force",
-  "negative": "Negative",
-  "positive": "Positive",
+  "bludgeoning": "PF1.DamageTypeBludgeoning",
+  "piercing": "PF1.DamageTypePiercing",
+  "slashing": "PF1.DamageTypeSlashing",
+  "cold": "PF1.DamageTypeCold",
+  "fire": "PF1.DamageTypeFire",
+  "electric": "PF1.DamageTypeElectricity",
+  "sonic": "PF1.DamageTypeSonic",
+  "acid": "PF1.DamageTypeAcid",
+  "force": "PF1.DamageTypeForce",
+  "negative": "PF1.DamageTypeNegative",
+  "positive": "PF1.DamageTypePositive",
 };
 
 /* -------------------------------------------- */

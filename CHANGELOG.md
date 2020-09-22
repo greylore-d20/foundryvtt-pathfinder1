@@ -6,6 +6,7 @@
 
 - Fixed Dice So Nice integration, due to the efforts of Ethaks (many thanks!)
 - Fixed critical hit and fumble recognition in Foundry 0.7.2, due to the efforts of Ethaks (many thanks!)
+- Cantrips couldn't be used without having spell uses
 
 ### Changelog
 

@@ -89,6 +89,7 @@ export class ItemPF extends Item {
   get chargeCost() {
     if (this.type === "spell") {
       if (this.useSpellPoints()) return this.getSpellPointCost();
+      if (this.spellLevel === 0) return 0;
       return 1;
     }
     

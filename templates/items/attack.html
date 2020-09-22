@@ -44,9 +44,11 @@
           <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{localize "PF1.Proficient"}}
         </label>
 
+        {{#unless isNaturalAttack}}
         <label class="checkbox">
           <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
+        {{/unless}}
 
         {{#if isNaturalAttack}}
         <label class="checkbox">
@@ -60,9 +62,11 @@
         </label>
         {{/if}}
 
+        {{#unless isNaturalAttack}}
         <label class="checkbox">
           <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
         </label>
+        {{/unless}}
       </div>
 
       <div class="form-group">

@@ -65,6 +65,7 @@ export class ItemPF extends Item {
   }
 
   get isCharged() {
+    if (this.type === "spell" && this.maxCharges > 0 && this.chargeCost > 0) return true;
     if (this.type === "consumable" && getProperty(this.data, "data.uses.per") === "single") return true;
     return ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
   }
@@ -84,6 +85,17 @@ export class ItemPF extends Item {
     if (this.type === "spell") return this.getSpellUses();
     if (this.isSingleUse) return getProperty(this.data, "data.quantity");
     return getProperty(this.data, "data.uses.value") || 0;
+  }
+
+  get maxCharges() {
+    // Get linked charges
+    const link = getProperty(this, "links.charges");
+    if (link) return link.maxCharges;
+
+    // Get own charges
+    if (this.type === "spell") return this.getSpellUses(true);
+    if (this.isSingleUse) return getProperty(this.data, "data.quantity");
+    return getProperty(this.data, "data.uses.max") || 0;
   }
 
   get chargeCost() {
@@ -756,6 +768,11 @@ export class ItemPF extends Item {
       }
     }
 
+    // Add charges
+    if (this.isCharged) {
+      props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+    }
+
     // Filter properties and return
     data.properties = props.filter(p => !!p);
     return data;
@@ -966,21 +983,6 @@ export class ItemPF extends Item {
         }
       }
 
-      // Deduct charge
-      if (this.autoDeductCharges) {
-        let cost = this.chargeCost;
-        let uses = this.charges;
-        if (this.data.type === "spell" && this.useSpellPoints()) {
-          cost = this.getSpellPointCost(rollData);
-          uses = this.getSpellUses();
-        }
-        if (cost > uses) {
-          ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
-          return;
-        }
-        this.addCharges(-cost);
-      }
-
       // Prepare the chat message data
       let chatTemplateData = {
         name: this.name,
@@ -1124,6 +1126,21 @@ export class ItemPF extends Item {
             return;
           }
         }
+      }
+
+      // Deduct charge
+      if (this.autoDeductCharges) {
+        let cost = this.chargeCost;
+        let uses = this.charges;
+        if (this.data.type === "spell" && this.useSpellPoints()) {
+          cost = this.getSpellPointCost(rollData);
+          uses = this.getSpellUses();
+        }
+        if (cost > uses) {
+          ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
+          return;
+        }
+        await this.addCharges(-cost);
       }
       
       // Set chat data
@@ -2027,7 +2044,7 @@ export class ItemPF extends Item {
     return null;
   }
 
-  getSpellUses() {
+  getSpellUses(max=false) {
     if (!this.actor) return 0;
     if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
 
@@ -2036,15 +2053,18 @@ export class ItemPF extends Item {
       spellLevel = getProperty(this.data, "data.level");
 
     if (this.useSpellPoints()) {
+      if (max) return getProperty(spellbook, "spellPoints.max");
       return getProperty(spellbook, "spellPoints.value");
     }
     else {  
       if (isSpontaneous) {
         if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
+          if (max) return getProperty(spellbook, `spells.spell${spellLevel}.max`) || 0;
           return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
         }
       }
       else {
+        if (max) return getProperty(this.data, "data.preparation.maxAmount") || 0;
         return getProperty(this.data, "data.preparation.preparedAmount") || 0;
       }
     }

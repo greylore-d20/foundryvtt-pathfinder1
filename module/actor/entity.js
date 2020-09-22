@@ -88,25 +88,25 @@ export class ActorPF extends Actor {
 
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
-    if (type === "size") result = "Size";
+    if (type === "size") result = game.i18n.localize("PF1.SourceInfoSize");
     if (type === "buff") {
-      result = "Buffs";
-      if (subtype === "temp") result = "Temporary Buffs";
-      if (subtype === "perm") result = "Permanent Buffs";
-      if (subtype === "item") result = "Item Buffs";
-      if (subtype === "misc") result = "Misc Buffs";
+      result = game.i18n.localize("PF1.SourceInfoBuffs");
+      if (subtype === "temp") result = game.i18n.localize("PF1.SourceInfoTemporaryBuffs");
+      if (subtype === "perm") result = game.i18n.localize("PF1.SourceInfoPermanentBuffs");
+      if (subtype === "item") result = game.i18n.localize("PF1.SourceInfoItemBuffs");
+      if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscBuffs");
     }
-    if (type === "equipment") result = "Equipment";
-    if (type === "weapon") result = "Weapons";
+    if (type === "equipment") result = game.i18n.localize("PF1.SourceInfoEquipment");
+    if (type === "weapon") result = game.i18n.localize("PF1.SourceInfoWeapons");
     if (type === "feat") {
-      result = "Feats";
-      if (subtype === "classFeat") result = "Class Features";
-      if (subtype === "trait") result = "Traits";
-      if (subtype === "racial") result = "Racial Traits";
-      if (subtype === "misc") result = "Misc Features";
+      result = game.i18n.localize("PF1.SourceInfoFeats");
+      if (subtype === "classFeat") result = game.i18n.localize("PF1.SourceInfoClassFeatures");
+      if (subtype === "trait") result = game.i18n.localize("PF1.SourceInfoTraits");
+      if (subtype === "racial") result = game.i18n.localize("PF1.SourceInfoRacialTraits");
+      if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscFeatures");
     }
     if (type === "race") {
-      result = "Race";
+      result = game.i18n.localize("PF1.SourceInfoRace");
     }
 
     if (!name || name.length === 0) return result;

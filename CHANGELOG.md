@@ -14,6 +14,7 @@
 - Improved Dice So Nice roll order on attacks, due to the efforts of Ethaks (many thanks!)
 - Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
 - Added more translatable strings, due to the efforts of Nico Weichbrodt (many thanks!)
+- Added Spanish translation, due to the efforts of Wharomaru Zhamal (many thanks!)
 - Added the option to share token vision between players, independent of normal actor permissions
 
 ## 0.74.4 (Hotfix)

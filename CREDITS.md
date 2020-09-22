@@ -105,3 +105,7 @@ People and credits are listed in no particular order.
 ## Nico Weichbrodt
 
 - Added to the German translation
+
+## Wharomaru Zhamal
+
+- Created the Spanish translation

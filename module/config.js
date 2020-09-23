@@ -829,6 +829,13 @@ PF1.weaponTypes = {
   }
 };
 
+// Weapon hold types
+PF1.weaponHoldTypes = {
+  "normal": "PF1.WeaponHoldTypeNormal",
+  "2h": "PF1.WeaponHoldTypeTwoHanded",
+  "oh": "PF1.WeaponHoldTypeOffhand",
+};
+
 
 /* -------------------------------------------- */
 

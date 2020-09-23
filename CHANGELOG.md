@@ -17,6 +17,7 @@
 - Added Spanish translation, due to the efforts of Wharomaru Zhamal (many thanks!)
 - Added the option to share token vision between players, independent of normal actor permissions
 - Add a note to attacks for charged items telling how many charges are left after the attack
+- Added a new option to weapon attacks to tell how it's held, which interacts with power attacks
 
 ## 0.74.4 (Hotfix)
 

@@ -933,14 +933,6 @@ export class ItemPF extends Item {
         rollData.damageBonus = form.find('[name="damage-bonus"]').val();
         if (rollData.damageBonus) damageExtraParts.push("@damageBonus");
         rollMode = form.find('[name="rollMode"]').val();
-
-        // Power Attack
-        if (form.find('[name="power-attack"]').prop("checked")) {
-          rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
-          damageExtraParts.push("floor(@powerAttackBonus * max(0.5, min(1.5, @ablMult)))");
-          rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
-          attackExtraParts.push("@powerAttackPenalty");
-        }
         
         // Point-Blank Shot
         if (form.find('[name="point-blank-shot"]').prop("checked")) {
@@ -969,6 +961,22 @@ export class ItemPF extends Item {
         html = form.find('[name="damage-ability-multiplier"]');
         if (html.length > 0) {
           rollData.item.ability.damageMult = parseFloat(html.val());
+        }
+
+        // Power Attack
+        if (form.find('[name="power-attack"]').prop("checked")) {
+          rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
+          if (getProperty(this.data, "data.attackType") === "natural") {
+            if (primaryAttack && rollData.item.ability.damageMult >= 1.5) rollData.powerAttackBonus *= 1.5;
+            else if (!primaryAttack) rollData.powerAttackBonus *= 0.5;
+          }
+          else {
+            if (getProperty(this.data, "data.held") === "2h") rollData.powerAttackBonus *= 1.5;
+            else if (getProperty(this.data, "data.held") === "oh") rollData.powerAttackBonus *= 0.5;
+          }
+          damageExtraParts.push("@powerAttackBonus");
+          rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
+          attackExtraParts.push("@powerAttackPenalty");
         }
 
         // Caster level offset

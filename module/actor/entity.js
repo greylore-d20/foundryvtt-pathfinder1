@@ -844,7 +844,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options={event: null, skipDialog: false}) {
+  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     let skl, sklName;

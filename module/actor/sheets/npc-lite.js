@@ -19,7 +19,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
     return "systems/pf1/templates/actors/npc-sheet-lite.html";
   }
 
-  static get name() {
-    return game.i18n.localize("PF1.ActorSheetPFNPCLite");
-  }
+  // static get name() {
+  //   return game.i18n.localize("PF1.ActorSheetPFNPCLite");
+  // }
 }

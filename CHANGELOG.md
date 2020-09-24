@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Creating attacks from two-handed weapons didn't set the attack's held type to be two-handed
+- Non-default NPC sheets were sometimes returning to default due to a race condition
 
 ### Changelog
 

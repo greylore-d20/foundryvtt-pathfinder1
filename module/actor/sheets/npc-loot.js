@@ -19,9 +19,9 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return "systems/pf1/templates/actors/npc-sheet-loot.html";
   }
 
-  static get name() {
-    return game.i18n.localize("PF1.ActorSheetPFNPCLoot");
-  }
+  // static get name() {
+  //   return game.i18n.localize("PF1.ActorSheetPFNPCLoot");
+  // }
 
   get currentPrimaryTab() {
     return "inventory";

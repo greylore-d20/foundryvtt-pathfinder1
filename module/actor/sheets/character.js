@@ -20,9 +20,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     });
   }
 
-  static get name() {
-    return game.i18n.localize("PF1.ActorSheetPFCharacter");
-  }
+  // static get name() {
+  //   return game.i18n.localize("PF1.ActorSheetPFCharacter");
+  // }
 
   /* -------------------------------------------- */
   /*  Rendering                                   */

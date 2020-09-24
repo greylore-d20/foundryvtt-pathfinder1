@@ -33,9 +33,9 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     return "systems/pf1/templates/actors/npc-sheet.html";
   }
 
-  static get name() {
-    return game.i18n.localize("PF1.ActorSheetPFNPC");
-  }
+  // static get name() {
+  //   return game.i18n.localize("PF1.ActorSheetPFNPC");
+  // }
 
   /* -------------------------------------------- */
 

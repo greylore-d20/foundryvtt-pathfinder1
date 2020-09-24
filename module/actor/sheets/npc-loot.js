@@ -35,7 +35,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
     // Get total value
     const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
-    const sellValue = this.calculateSellItemValue() + this.actor.mergeCurrency();
+    const sellValue = this.calculateSellItemValue();
     data.totalValue = {
       gp: Math.max(0, Math.floor(gpValue)),
       sp: Math.max(0, Math.floor(gpValue*10 - Math.floor(gpValue)*10)),

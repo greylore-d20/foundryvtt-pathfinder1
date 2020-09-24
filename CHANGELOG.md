@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.6
+
+### Changelog
+
+- Loot sheets now show a total sell value without the added currencies
+
 ## 0.74.5
 
 ### Bug Fixes

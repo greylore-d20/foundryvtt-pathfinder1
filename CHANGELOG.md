@@ -10,6 +10,7 @@
 ### Changelog
 
 - Loot sheets now show a total sell value without the added currencies
+- Added button to give item from inventory to another (owned) actor
 
 ## 0.74.5
 

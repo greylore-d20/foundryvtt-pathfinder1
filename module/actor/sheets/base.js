@@ -8,6 +8,7 @@ import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { ItemPF } from "../../item/entity.js";
+import { dialogGetActor } from "../../dialog.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -640,6 +641,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item-create').click(ev => this._onItemCreate(ev));
     html.find('.item-edit').click(this._onItemEdit.bind(this));
     html.find('.item-delete').click(this._onItemDelete.bind(this));
+    html.find(".item-give").click(this._onItemGive.bind(this));
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));
@@ -1322,6 +1324,23 @@ export class ActorSheetPF extends ActorSheet {
         },
         no: () => button.disabled = false
       });
+    }
+  }
+
+  async _onItemGive(event) {
+    event.preventDefault();
+
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.find(o => o._id === itemId);
+
+    const actors = game.actors.entities.filter(o => o.hasPerm(game.user, ENTITY_PERMISSIONS.OWNER) && o !== this.actor);
+    const actor = await dialogGetActor(`Give item to actor`, actors);
+
+    if (actor) {
+      const itemData = flattenObject(item.data);
+      delete itemData["_id"];
+      await actor.createOwnedItem(itemData);
+      await this.actor.deleteOwnedItem(item._id);
     }
   }
 

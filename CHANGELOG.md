@@ -2,6 +2,10 @@
 
 ## 0.74.6
 
+### Bug Fixes
+
+- Creating attacks from two-handed weapons didn't set the attack's held type to be two-handed
+
 ### Changelog
 
 - Loot sheets now show a total sell value without the added currencies

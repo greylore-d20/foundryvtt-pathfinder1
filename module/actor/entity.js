@@ -730,7 +730,10 @@ export class ActorPF extends Actor {
     else attackData["data.ability.attack"] = "dex";
     if (isMelee) {
       attackData["data.ability.damage"] = "str";
-      if (item.data.data.weaponSubtype === "2h" && isMelee) attackData["data.ability.damageMult"] = 1.5;
+      if (item.data.data.weaponSubtype === "2h" && isMelee) {
+        attackData["data.ability.damageMult"] = 1.5;
+        attackData["data.held"] = "2h";
+      }
     }
 
     // Add misc things

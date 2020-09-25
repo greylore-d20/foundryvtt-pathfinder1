@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.74.7
+
+### Bug Fixes
+
+- Giving items to another owned actor did not work in 0.6.6 if not done as GM
+
+# Changelog
+
 ## 0.74.6
 
 ### Bug Fixes

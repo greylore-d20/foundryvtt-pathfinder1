@@ -1333,7 +1333,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.find(o => o._id === itemId);
 
-    const actors = game.actors.entities.filter(o => o.hasPerm(game.user, ENTITY_PERMISSIONS.OWNER) && o !== this.actor);
+    const actors = game.actors.entities.filter(o => o.hasPerm(game.user, "OWNER") && o !== this.actor);
     const actor = await dialogGetActor(`Give item to actor`, actors);
 
     if (actor) {

@@ -134,7 +134,7 @@
           <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
             {{#if item.isCharged}}
             <input type="text" class="select-on-click" data-wheel-step="1" value="{{item.data.uses.value}}" data-dtype="Number"/>
-            <span class="sep"> of </span>
+            <span class="sep"> {{localize "PF1.ChargesSeperator"}} </span>
             <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>
             <span class="tooltipcontent">
               @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>

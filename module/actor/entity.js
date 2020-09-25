@@ -1669,17 +1669,17 @@ export class ActorPF extends Actor {
       buttons: {
         potion: {
           icon: '<i class="fas fa-prescription-bottle"></i>',
-          label: "Potion",
+          label: game.i18n.localize("PF1.CreateItemPotion"),
           callback: () => this.createConsumableSpell(itemData, "potion"),
         },
         scroll: {
           icon: '<i class="fas fa-scroll"></i>',
-          label: "Scroll",
+          label: game.i18n.localize("PF1.CreateItemScroll"),
           callback: () => this.createConsumableSpell(itemData, "scroll"),
         },
         wand: {
           icon: '<i class="fas fa-magic"></i>',
-          label: "Wand",
+          label: game.i18n.localize("PF1.CreateItemWand"),
           callback: () => this.createConsumableSpell(itemData, "wand"),
         },
       },

@@ -949,6 +949,22 @@ PF1.conditions = {
   "stunned": "PF1.CondStunned",
 };
 
+PF1.conditionTextures = {
+  "blind": "systems/pf1/icons/conditions/blind.png",
+  "dazzled": "systems/pf1/icons/conditions/dazzled.png",
+  "deaf": "systems/pf1/icons/conditions/deaf.png",
+  "entangled": "systems/pf1/icons/conditions/entangled.png",
+  "fatigued": "systems/pf1/icons/conditions/fatigued.png",
+  "exhausted": "systems/pf1/icons/conditions/exhausted.png",
+  "grappled": "systems/pf1/icons/conditions/grappled.png",
+  "helpless": "systems/pf1/icons/conditions/helpless.png",
+  "paralyzed": "systems/pf1/icons/conditions/paralyzed.png",
+  "pinned": "systems/pf1/icons/conditions/pinned.png",
+  "fear": "systems/pf1/icons/conditions/fear.png",
+  "sickened": "systems/pf1/icons/conditions/sickened.png",
+  "stunned": "systems/pf1/icons/conditions/stunned.png",
+};
+
 PF1.buffTypes = {
   "temp": "PF1.Temporary",
   "perm": "PF1.Permanent",

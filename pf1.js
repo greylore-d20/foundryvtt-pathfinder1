@@ -204,12 +204,31 @@ Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) =
       item._onLevelChange(curLevel, newLevel);
   }
 });
-Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
+Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
+
+  // Update token buff effect images
+  const isLinkedToken = getProperty(actor.data, "token.actorLink");
+  if (isLinkedToken) {
+    let promises = [];
+    const isActive = item.data.data.active || changedData["data.active"];
+
+    if (item.data.type === "buff" && isActive && changedData["img"]) {
+      const tokens = actor.getActiveTokens();
+      for (const token of tokens) {
+        const fx = token.data.effects || [];
+        if (fx.indexOf(item.data.img) !== -1) fx.splice(fx.indexOf(item.data.img), 1);
+        if (fx.indexOf(changedData["img"]) === -1) fx.push(changedData["img"]);
+        promises.push(token.update({effects: fx}, {diff: false}));
+      }
+    }
+
+    await Promise.all(promises);
+  }
 
   // Merge changed data into item data immediately, to avoid update lag
   item.data = mergeObject(item.data, changedData);
@@ -279,9 +298,22 @@ Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
   }
 });
 
-Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
+Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
+
+  // Remove token effects for deleted buff
+  const isLinkedToken = getProperty(actor.data, "token.actorLink");
+  if (isLinkedToken) {
+    let promises = [];
+    if (itemData.type === "buff" && itemData.data.active) {
+      const tokens = actor.getActiveTokens();
+      for (const token of tokens) {
+        promises.push(token.toggleEffect(itemData.img));
+      }
+    }
+    await Promise.all(promises);
+  }
 
   // Refresh actor
   actor.refresh();

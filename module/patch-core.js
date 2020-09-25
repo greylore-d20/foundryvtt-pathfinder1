@@ -1,6 +1,8 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
+import { ActorPF } from "./actor/entity.js";
+import { updateChanges } from "./actor/update-changes.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -58,6 +60,78 @@ export async function PatchCore() {
       return terms;
     };
   }
+
+  // Patch ActorTokenHelpers.update
+  const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
+  ActorTokenHelpers.prototype.update = async function(data, options={}) {
+    // Update changes
+    let diff = data;
+    if (options.updateChanges !== false) {
+      const updateObj = await updateChanges.call(this, { data: data });
+      if (updateObj.diff.items) delete updateObj.diff.items;
+      diff = mergeObject(diff, updateObj.diff);
+    }
+
+    if (Object.keys(diff).length) {
+      await ActorTokenHelpers_update.call(this, diff, options);
+    }
+    await this.toggleConditionStatusIcons();
+  };
+  // Patch ActorTokenHelpers.createEmbeddedEntity
+  const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
+  ActorTokenHelpers.prototype.createEmbeddedEntity = async function(...args) {
+    await ActorTokenHelpers_createEmbeddedEntity.call(this, ...args);
+
+    return ActorPF.prototype.update.call(this, {});
+  };
+  // Patch ActorTokenHelpers.updateEmbeddedEntity
+  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
+  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function(embeddedName, data, options={}) {
+    const itemData = duplicate(this.items.find(o => o._id === data._id)?.data);
+
+    await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
+
+    // Update token buff effect images
+    if (itemData) {
+      let promises = [];
+      const isActive = itemData.data.active || data["data.active"];
+
+      if (itemData.type === "buff" && isActive && data["img"]) {
+        const tokens = this.getActiveTokens();
+        for (const token of tokens) {
+          const fx = token.data.effects || [];
+          if (fx.indexOf(itemData.img) !== -1) fx.splice(fx.indexOf(itemData.img), 1);
+          if (fx.indexOf(data["img"]) === -1) fx.push(data["img"]);
+          promises.push(token.update({effects: fx}, {diff: false}));
+        }
+      }
+
+      await Promise.all(promises);
+    }
+
+    return ActorPF.prototype.update.call(this, {});
+  };
+  // Patch ActorTokenHelpers.deleteEmbeddedEntity
+  const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
+  ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function(embeddedName, id, options={}) {
+    const item = this.items.find(o => o._id === id);
+
+    await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, id, options);
+
+    // Remove token effects for deleted buff
+    if (item) {
+      let promises = [];
+      if (item.type === "buff" && item.data.data.active) {
+        const tokens = this.getActiveTokens();
+        for (const token of tokens) {
+          promises.push(token.toggleEffect(item.data.img));
+        }
+      }
+      await Promise.all(promises);
+    }
+
+    return ActorPF.prototype.update.call(this, {});
+  };
 
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;

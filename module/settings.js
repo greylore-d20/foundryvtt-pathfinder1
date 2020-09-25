@@ -225,6 +225,26 @@ export const registerSystemSettings = function() {
   });
 
   /**
+   * Hide token conditions
+   */
+  game.settings.register("pf1", "hideTokenConditions", {
+    name: "SETTINGS.pf1HideTokenConditionsN",
+    hint: "SETTINGS.pf1HideTokenConditionsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      let promises = [];
+      const actors = [...Array.from(game.actors.entities.filter(o => getProperty(o.data, "token.actorLink"))), ...Object.values(game.actors.tokens)];
+      for (let actor of actors) {
+        promises.push(actor.toggleConditionStatusIcons());
+      }
+      return Promise.all(promises);
+    },
+  });
+
+  /**
    * Skip action dialog prompts
    */
   game.settings.register("pf1", "skipActionDialogs", {

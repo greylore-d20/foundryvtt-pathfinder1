@@ -6,11 +6,13 @@
 
 - Creating attacks from two-handed weapons didn't set the attack's held type to be two-handed
 - Non-default NPC sheets were sometimes returning to default due to a race condition
+- Changes to unlinked tokens' actor data did nothing
 
 ### Changelog
 
 - Loot sheets now show a total sell value without the added currencies
 - Added button to give item from inventory to another (owned) actor
+- Buffs and conditions are now shown as icons on tokens (unless turned off by a world setting)
 
 ## 0.74.5
 

@@ -558,6 +558,7 @@ export class ActorPF extends Actor {
     if (Object.keys(diff).length) {
       await super.update(diff, options);
     }
+    await this.toggleConditionStatusIcons();
   }
 
   _onUpdate(data, options, userId, context) {
@@ -1794,5 +1795,54 @@ export class ActorPF extends Actor {
         color2: ItemPF.getTypeColor(o.type, 1),
       };
     });
+  }
+
+  async toggleConditionStatusIcons() {
+    const isLinkedToken = getProperty(this.data, "token.actorLink");
+    const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter(o => o != null);
+
+    if (!tokens.length) return;
+
+    // Determine buff textures
+    const buffs = this.items.filter(o => o.type === "buff");
+    let buffTextures = buffs.reduce((cur, o) => {
+      const img = o.data.img;
+      if (o.data.data.active && !o.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions")) cur[img] = true;
+      else if (cur[img] == null) cur[img] = false;
+      return cur;
+    }, {});
+
+    // Determine condition textures
+    let conditionTextures = Object.entries(CONFIG.PF1.conditionTextures).reduce((cur, o) => {
+      if (this.data.data.attributes.conditions[o[0]]) cur[o[1]] = true;
+      else if (!this.data.data.attributes.conditions[o[0]] && cur[o[1]] == null) cur[o[1]] = false;
+      return cur;
+    }, {});
+    for (let [k, v] of Object.entries(conditionTextures)) {
+      if (v === true) {
+        if (!buffTextures[k] && !game.settings.get("pf1", "hideTokenConditions")) buffTextures[k] = v;
+      }
+      else if (v === false) {
+        if (buffTextures[k] == null) buffTextures[k] = v;
+      }
+    }
+    
+    // Update token(s)
+    let promises = [];
+    for (let token of tokens) {
+      const fx = token.data.effects;
+      for (let [img, active] of Object.entries(buffTextures)) {
+        const idx = fx.findIndex(e => e === img);
+        if (idx === -1 && active === true) {
+          fx.push(img);
+        }
+        else if (idx !== -1 && active === false) {
+          fx.splice(idx, 1);
+        }
+      }
+      promises.push(token.update({effects: fx}, {diff: false}));
+    }
+
+    return Promise.all(promises);
   }
 }

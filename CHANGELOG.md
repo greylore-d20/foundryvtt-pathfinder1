@@ -13,6 +13,7 @@
 - Loot sheets now show a total sell value without the added currencies
 - Added button to give item from inventory to another (owned) actor
 - Buffs and conditions are now shown as icons on tokens (unless turned off by a world setting)
+- Added conditions to actors without mechanical benefits
 
 ## 0.74.5
 

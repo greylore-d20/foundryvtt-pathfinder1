@@ -764,11 +764,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   if (hpAbility !== "") {
     changes.push({
       raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`, target: "misc", subTarget: "mhp", modifier: "base" }, {inplace: false}),
-      source: {name: "Constitution"}
+      source: {name: game.i18n.localize("PF1.AbilityCon")}
     });
     changes.push({
       raw: mergeObject(ItemPF.defaultChange, { formula: `2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, target: "misc", subTarget: "wounds", modifier: "base" }, {inplace: false}),
-      source: {name: "Constitution"}
+      source: {name: game.i18n.localize("PF1.AbilityCon")}
     });
   }
 
@@ -778,7 +778,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     if (!base) base = 0;
     changes.push({
       raw: mergeObject(ItemPF.defaultChange, { formula: base.toString(), target: "speed", subTarget: `${k}Speed`, modifier: "base", operator: "set", priority: 1000 }, {inplace: false}),
-      source: {name: "Base"},
+      source: {name: game.i18n.localize("PF1.Base")},
     });
   }
 

@@ -934,7 +934,9 @@ PF1.conditionTypes = {
 };
 
 PF1.conditions = {
+  "bleed": "PF1.CondBleed",
   "blind": "PF1.CondBlind",
+  "confused": "PF1.CondConfused",
   "dazzled": "PF1.CondDazzled",
   "deaf": "PF1.CondDeaf",
   "entangled": "PF1.CondEntangled",
@@ -942,15 +944,21 @@ PF1.conditions = {
   "exhausted": "PF1.CondExhausted",
   "grappled": "PF1.CondGrappled",
   "helpless": "PF1.CondHelpless",
+  "incorporeal": "PF1.CondIncorporeal",
+  "invisible": "PF1.CondInvisible",
   "paralyzed": "PF1.CondParalyzed",
   "pinned": "PF1.CondPinned",
+  "prone": "PF1.CondProne",
   "fear": "PF1.CondFear",
   "sickened": "PF1.CondSickened",
+  "staggered": "PF1.CondStaggered",
   "stunned": "PF1.CondStunned",
 };
 
 PF1.conditionTextures = {
+  "bleed": "systems/pf1/icons/conditions/bleed.png",
   "blind": "systems/pf1/icons/conditions/blind.png",
+  "confused": "systems/pf1/icons/conditions/confused.png",
   "dazzled": "systems/pf1/icons/conditions/dazzled.png",
   "deaf": "systems/pf1/icons/conditions/deaf.png",
   "entangled": "systems/pf1/icons/conditions/entangled.png",
@@ -958,10 +966,14 @@ PF1.conditionTextures = {
   "exhausted": "systems/pf1/icons/conditions/exhausted.png",
   "grappled": "systems/pf1/icons/conditions/grappled.png",
   "helpless": "systems/pf1/icons/conditions/helpless.png",
+  "incorporeal": "systems/pf1/icons/conditions/incorporeal.png",
+  "invisible": "systems/pf1/icons/conditions/invisible.png",
   "paralyzed": "systems/pf1/icons/conditions/paralyzed.png",
   "pinned": "systems/pf1/icons/conditions/pinned.png",
+  "prone": "systems/pf1/icons/conditions/prone.png",
   "fear": "systems/pf1/icons/conditions/fear.png",
   "sickened": "systems/pf1/icons/conditions/sickened.png",
+  "staggered": "systems/pf1/icons/conditions/staggered.png",
   "stunned": "systems/pf1/icons/conditions/stunned.png",
 };
 

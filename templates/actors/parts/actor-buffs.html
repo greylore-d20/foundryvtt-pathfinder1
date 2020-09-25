@@ -10,10 +10,10 @@
 
 <section class="buffs-body">
   <div class="tab flexrow" data-group="buffs" data-tab="conditions">
-    {{#each data.attributes.conditions as |value con|}}
+    {{#each config.conditions as |value con|}}
     <div class="condition">
       <label class="checkbox">
-        <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked value}}/>
+        <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked (lookup ../data.attributes.conditions con)}}/>
         <span>{{lookup ../config.conditions con}}</span>
       </label>
     </div>

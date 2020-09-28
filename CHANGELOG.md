@@ -9,6 +9,7 @@
 ### Changelog
 
 - Hovering over a skill now shows whether it's boosted by being a class skill or ability score, due to the efforts of Nico Weichbrodt (many thanks!)
+- Hovering over a skill now shows whether it's being penalized by armor check penalty (if any, and if applicable)
 - Added changes to modify ACP and Max Dex Bonus granted/limited by armor and shields
 
 ## 0.74.6

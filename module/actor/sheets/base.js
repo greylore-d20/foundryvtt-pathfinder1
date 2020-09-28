@@ -136,6 +136,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update skill labels
+    const acp = getProperty(this.actor.data, "data.attributes.acp.total");
     for ( let [s, skl] of Object.entries(data.actor.data.skills)) {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
@@ -144,6 +145,9 @@ export class ActorSheetPF extends ActorSheet {
         skl.sourceDetails.push({ "name": game.i18n.localize("PF1.SkillRankPlural"), "value": skl.rank });
         if (skl.cs) {
           skl.sourceDetails.push({ "name": game.i18n.localize("PF1.CSTooltip"), "value": 3 });
+        }
+        if (skl.acp && acp > 0) {
+          skl.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
         }
       }
       skl.sourceDetails.push({ "name": CONFIG.PF1.abilities[skl.ability], "value": data.actor.data.abilities[skl.ability].mod });

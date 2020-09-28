@@ -2099,7 +2099,7 @@ export class ItemPF extends Item {
 
     // Set name
     if (type === "wand") {
-      data.name = `Wand of ${origData.name}`;
+      data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
       data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750;
       data.data.hardness = 5;
@@ -2107,7 +2107,7 @@ export class ItemPF extends Item {
       data.data.hp.value = 5;
     }
     else if (type === "potion") {
-      data.name = `Potion of ${origData.name}`;
+      data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
       data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50;
       data.data.hardness = 1;
@@ -2115,7 +2115,7 @@ export class ItemPF extends Item {
       data.data.hp.value = 1;
     }
     else if (type === "scroll") {
-      data.name = `Scroll of ${origData.name}`;
+      data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
       data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25;
       data.data.hardness = 0;

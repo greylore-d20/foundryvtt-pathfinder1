@@ -8,9 +8,13 @@
 
 ### Changelog
 
+- Added Chinese localization, due to the efforts of bnp800 (many thanks!)
 - Hovering over a skill now shows whether it's boosted by being a class skill or ability score, due to the efforts of Nico Weichbrodt (many thanks!)
+- Added more languages, due to the efforts of Nico Weichbrodt (many thanks!)
 - Hovering over a skill now shows whether it's being penalized by armor check penalty (if any, and if applicable)
 - Added changes to modify ACP and Max Dex Bonus granted/limited by armor and shields
+- Improved the macros 'Roll Skill' and 'Roll Saving Throw' so they don't produce an abundance of roll sounds
+- Improved the macro 'Roll Skill' so it doesn't need to have a label for custom skills
 
 ## 0.74.6
 

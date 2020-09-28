@@ -813,12 +813,14 @@ export class ActorPF extends Actor {
       isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
     if (isSubSkill) {
       skillId = skillParts[0];
+      if (!this.data.data.skills[skillId].subSkills[skillParts[2]]) return null;
       skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
       parentSkill = this.getSkillInfo(skillId);
     }
     else {
       skl = this.data.data.skills[skillId];
+      if (!skl) return null;
       if (skl.name != null) {
         sklName = skl.name;
         isCustom = true;
@@ -848,7 +850,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null}) {
+  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null, noSound: false}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     let skl, sklName;
@@ -894,6 +896,7 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   }
 
@@ -905,11 +908,11 @@ export class ActorPF extends Actor {
    * @param {String} abilityId     The ability id (e.g. "str")
    * @param {Object} options      Options which configure how ability tests or saving throws are rolled
    */
-  rollAbility(abilityId, options={}) {
+  rollAbility(abilityId, options={noSound: false}) {
     this.rollAbilityTest(abilityId, options);
   }
 
-  rollBAB(options={}) {
+  rollBAB(options={noSound: false}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     return DicePF.d20Roll({
@@ -918,11 +921,12 @@ export class ActorPF extends Actor {
       data: {mod: this.data.data.attributes.bab.total},
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
-      takeTwenty: false
+      takeTwenty: false,
+      noSound: options.noSound,
     });
   }
 
-  rollCMB(options={}) {
+  rollCMB(options={noSound: false}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
@@ -952,11 +956,12 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   }
 
-  rollCL(spellbookKey) {
+  rollCL(spellbookKey, options={noSound: false}) {
 
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
@@ -975,11 +980,12 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   }
 
-  rollConcentration(spellbookKey) {
+  rollConcentration(spellbookKey, options={noSound: false}) {
 
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
@@ -1005,7 +1011,8 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({actor: this}),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   }
 
@@ -1151,7 +1158,7 @@ export class ActorPF extends Actor {
    * @param {String} abilityId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    */
-  rollAbilityTest(abilityId, options={}) {
+  rollAbilityTest(abilityId, options={noSound: false}) {
     if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Add contextual notes
@@ -1188,7 +1195,8 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props }
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
     });
   }
 

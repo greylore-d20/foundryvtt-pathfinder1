@@ -54,7 +54,7 @@
       </select>
       <select class="change-target" name="data.changes.{{a}}.target">
         {{#select (lookup this "target") }}
-        <option value="">{{localize "PF1.None"}}</option>
+        <option value=""></option>
         {{#each ../changes.targets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}

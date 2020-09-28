@@ -1060,6 +1060,10 @@ PF1.buffTargets = {
     "mhp": "PF1.HitPoints",
     "wounds": "PF1.Wounds",
     "vigor": "PF1.Vigor",
+    "acpA": "PF1.ACPArmor",
+    "acpS": "PF1.ACPShield",
+    "mDexA": "PF1.MaxDexArmor",
+    "mDexS": "PF1.MaxDexShield",
   },
 };
 

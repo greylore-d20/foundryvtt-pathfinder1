@@ -542,24 +542,11 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 
   // Reset ACP and Max Dex bonus
   linkData(data, updateData, "data.attributes.acp.gear", 0);
+  linkData(data, updateData, "data.attributes.acp.armorBonus", 0);
+  linkData(data, updateData, "data.attributes.acp.shieldBonus", 0);
   linkData(data, updateData, "data.attributes.maxDexBonus", null);
-  items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(obj => {
-    let itemACP = Math.abs(obj.data.armor.acp);
-    if (obj.data.masterwork === true && (["armor", "shield"].includes(obj.data.equipmentType))) {
-      itemACP = Math.max(0, itemACP - 1);
-    }
-    if (obj.data.broken) {
-      itemACP *= 2;
-    }
-    
-    linkData(data, updateData, "data.attributes.acp.gear", updateData["data.attributes.acp.gear"] + itemACP);
-    if(obj.data.armor.dex != null) {
-      if (updateData["data.attributes.maxDexBonus"] == null) linkData(data, updateData, "data.attributes.maxDexBonus", Math.abs(obj.data.armor.dex));
-      else {
-        linkData(data, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"], Math.abs(obj.data.armor.dex)));
-      }
-    }
-  });
+  linkData(data, updateData, "data.attributes.mDex.armorBonus", 0);
+  linkData(data, updateData, "data.attributes.mDex.shieldBonus", 0);
 
   // Reset specific skill bonuses
   for (let sklKey of getChangeFlat.call(this, "skills", "", this.data.data)) {
@@ -622,6 +609,61 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, forceModUpdate=false}={}) {
   const prevMods = { total: {}, base: {} };
   const modDiffs = { total: {}, base: {} };
+
+  // Apply ACP and Max Dexterity Bonus
+  {
+    let armorACP = null;
+    let shieldACP = null;
+    let armorMDex = null;
+    let shieldMDex = null;
+    data.items.filter(obj => { return obj.type === "equipment" && obj.data.equipped; }).forEach(obj => {
+      let itemACP = Math.abs(obj.data.armor.acp);
+      if (obj.data.masterwork === true && (["armor", "shield"].includes(obj.data.equipmentType))) {
+        itemACP = Math.max(0, itemACP - 1);
+      }
+
+      switch (obj.data.equipmentType) {
+        case "armor":
+          itemACP = Math.max(0, itemACP + updateData["data.attributes.acp.armorBonus"]);
+          break;
+        case "shield":
+          itemACP = Math.max(0, itemACP + updateData["data.attributes.acp.shieldBonus"]);
+          break;
+      }
+
+      if (obj.data.broken) {
+        itemACP *= 2;
+      }
+
+      switch (obj.data.equipmentType) {
+        case "armor":
+          armorACP = Math.max(armorACP == null ? -999 : armorACP, itemACP);
+          break;
+        case "shield":
+          shieldACP = Math.max(shieldACP == null ? -999 : shieldACP, itemACP);
+          break;
+      }
+      
+      if(obj.data.armor.dex != null) {
+        switch (obj.data.equipmentType) {
+          case "armor":
+            armorMDex = Math.min(obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"]);
+            break;
+          case "shield":
+            shieldMDex = Math.min(obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"]);
+            break;
+        }
+      }
+    });
+    linkData(data, updateData, "data.attributes.acp.gear", (armorACP == null ? 0 : armorACP) + (shieldACP == null ? 0 : shieldACP));
+    if (armorMDex != null || shieldMDex != null) {
+      linkData(data, updateData, "data.attributes.maxDexBonus",
+        Math.min(
+          (armorMDex == null ? 999 : armorMDex), (shieldMDex == null ? 999 : shieldMDex)
+        )
+      );
+    }
+  }
 
   // Reset ability modifiers
   const abilities = Object.keys(getProperty(data, "data.abilities") || {});
@@ -1311,6 +1353,14 @@ export const getChangeFlat = function(changeTarget, changeType, curData) {
       return ["data.attributes.cmd.total", "data.attributes.cmd.flatFootedTotal"];
     case "init":
       return "data.attributes.init.total";
+    case "acpA":
+      return "data.attributes.acp.armorBonus";
+    case "acpS":
+      return "data.attributes.acp.shieldBonus";
+    case "mDexA":
+      return "data.attributes.mDex.armorBonus";
+    case "mDexS":
+      return "data.attributes.mDex.shieldBonus";
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
@@ -1430,9 +1480,9 @@ const _blacklistChangeData = function(data, changeTarget) {
 const getSortChangePriority = function() {
   const skillTargets = this._skillTargets;
   return { targets: [
-    "ability", "misc", "ac", "attack", "damage", "savingThrows", "skills", "skill"
+    "misc", "ability", "ac", "attack", "damage", "savingThrows", "skills", "skill"
   ], types: [
-      "str", "dex", "con", "int", "wis", "cha",
+      "acpA", "acpS", "mDexA", "mDexS", "str", "dex", "con", "int", "wis", "cha",
       "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", ...skillTargets,
       "allChecks", "strChecks", "dexChecks", "conChecks", "intChecks", "wisChecks", "chaChecks",
       "landSpeed", "climbSpeed", "swimSpeed", "burrowSpeed", "flySpeed", "allSpeeds",
@@ -1440,7 +1490,7 @@ const getSortChangePriority = function() {
       "attack", "mattack", "rattack",
       "damage", "wdamage", "sdamage",
       "allSavingThrows", "fort", "ref", "will",
-      "cmb", "cmd", "init", "mhp", "wounds", "vigor"
+      "cmb", "cmd", "init", "mhp", "wounds", "vigor",
   ], modifiers: [
     "untyped", "untypedPerm", "base", "enh", "dodge", "inherent", "deflection",
     "morale", "luck", "sacred", "insight", "resist", "profane",

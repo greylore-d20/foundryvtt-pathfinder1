@@ -6,7 +6,10 @@
 
 - Giving items to another owned actor did not work in 0.6.6 if not done as GM
 
-# Changelog
+### Changelog
+
+- Hovering over a skill now shows whether it's boosted by being a class skill or ability score, due to the efforts of Nico Weichbrodt (many thanks!)
+- Added changes to modify ACP and Max Dex Bonus granted/limited by armor and shields
 
 ## 0.74.6
 

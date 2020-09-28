@@ -139,14 +139,31 @@ export class ActorSheetPF extends ActorSheet {
     for ( let [s, skl] of Object.entries(data.actor.data.skills)) {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
-      skl.sourceDetails = (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) ? data.sourceDetails.data.skills[s].changeBonus : [];
+      skl.sourceDetails = [];
+      if (skl.rank > 0) {
+        skl.sourceDetails.push({ "name": game.i18n.localize("PF1.SkillRankPlural"), "value": skl.rank });
+        if (skl.cs) {
+          skl.sourceDetails.push({ "name": game.i18n.localize("PF1.CSTooltip"), "value": 3 });
+        }
+      }
+      skl.sourceDetails.push({ "name": CONFIG.PF1.abilities[skl.ability], "value": data.actor.data.abilities[skl.ability].mod });
+      if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) {
+        skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.data.skills[s].changeBonus);
+      }
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-          if (data.sourceDetails == null) continue;
-          if (data.sourceDetails.data.skills[s] == null) continue;
-          if (data.sourceDetails.data.skills[s].subSkills == null) continue;
-          skl2.sourceDetails = data.sourceDetails.data.skills[s].subSkills[s2] != null ? data.sourceDetails.data.skills[s].subSkills[s2].changeBonus : [];
+          skl2.sourceDetails = [];
+          if (skl2.rank > 0) {
+            skl2.sourceDetails.push({ "name": game.i18n.localize("PF1.SkillRankPlural"), "value": skl2.rank });
+            if (skl2.cs) {
+              skl2.sourceDetails.push({ "name": game.i18n.localize("PF1.CSTooltip"), "value": 3 });
+            }
+          }
+          skl2.sourceDetails.push({ "name": CONFIG.PF1.abilities[skl2.ability], "value": data.actor.data.abilities[skl2.ability].mod });
+          if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null && data.sourceDetails.data.skills[s].subSkills != null && data.sourceDetails.data.skills[s].subSkills[s2] != null) {
+            skl2.sourceDetails = skl2.sourceDetails.concat(data.sourceDetails.data.skills[s].subSkills[s2].changeBonus);
+          }
           skl2.untrained = skl2.rt === true && skl2.rank <= 0;
         }
       }

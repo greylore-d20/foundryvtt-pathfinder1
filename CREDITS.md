@@ -105,7 +105,13 @@ People and credits are listed in no particular order.
 ## Nico Weichbrodt
 
 - Added to the German translation
+- Made class skill and ability score bonuses a visible source on skills
+- Added minor features
 
 ## Wharomaru Zhamal
 
 - Created the Spanish translation
+
+## bnp800
+
+- Added Chinese translation

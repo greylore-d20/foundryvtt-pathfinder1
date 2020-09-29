@@ -17,6 +17,7 @@
 - Improved the macro 'Roll Skill' so it doesn't need to have a label for custom skills
 - Increased font sizes at a lot of places
 - Items and skills lists on actor sheets now show hover feedback
+- Removed the notes next to skills on an actor's skill page to clear up space (and they were redundant with change items)
 
 ## 0.74.6
 

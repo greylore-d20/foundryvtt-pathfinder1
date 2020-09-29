@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.8
+
+### Bug Fixes
+
+- Scenes without either Token Vision or Fog Exploration ticked made tokens invisible for players
+
 ## 0.74.7
 
 ### Bug Fixes

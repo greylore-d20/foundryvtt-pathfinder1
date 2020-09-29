@@ -145,11 +145,6 @@ export async function PatchCore() {
   else {
     await import("./low-light-vision-0.6.6.js");
   }
-
-  // Force render canvas for players
-  if (!game.user.isGM && canvas) {
-    canvas.draw();
-  }
 }
 
 import { isMinimumCoreVersion } from "./lib.js";

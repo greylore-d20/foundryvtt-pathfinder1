@@ -341,19 +341,21 @@ export class ItemPF extends Item {
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
 
       // Equipped label
+      const checkYes = '<i class="fas fa-check"></i>';
+      const checkNo = '<i class="fas fa-times"></i>';
       labels.equipped = "";
-      if (itemData.data.equipped === true) labels.equipped = game.i18n.localize("PF1.Yes");
-      else labels.equipped = game.i18n.localize("PF1.No");
+      if (itemData.data.equipped === true) labels.equipped = checkYes;
+      else labels.equipped = checkNo;
 
       // Carried label
       labels.carried = "";
-      if (itemData.data.carried === true) labels.carried = game.i18n.localize("PF1.Yes");
-      else labels.carried = game.i18n.localize("PF1.No");
+      if (itemData.data.carried === true) labels.carried = checkYes;
+      else labels.carried = checkNo;
 
       // Identified label
       labels.identified = "";
-      if (itemData.data.identified === true) labels.identified = game.i18n.localize("PF1.YesShort");
-      else labels.identified = game.i18n.localize("PF1.NoShort");
+      if (itemData.data.identified === true) labels.identified = checkYes;
+      else labels.identified = checkNo;
 
       // Slot label
       if (itemData.data.slot) {

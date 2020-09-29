@@ -10,6 +10,7 @@
 ### Changelog
 
 - Add icons as headers for actors' inventories, features and spell lists
+- Turn 'yes' and 'no' labels on actors' inventories for identified, carried and equipped statuses of items to icons
 
 ## 0.74.7
 

@@ -1416,10 +1416,6 @@ export class ActorPF extends Actor {
         }).map(o => { return o.text; });
       }
 
-      if (skill.notes != null && skill.notes !== "") {
-        result.push({ notes: [skill.notes], item: null });
-      }
-
       return result;
     }
 

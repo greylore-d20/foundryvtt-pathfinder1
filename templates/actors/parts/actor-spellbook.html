@@ -1,5 +1,5 @@
 <div class="inventory-filters spellbook-filters">
-  <div class="flexrow spellcasting-misc">
+  <div class="flexrow spellcasting-misc pf1-sheet-group">
     <div class="spellcasting-concentration flexrow">
       <div class="rollable image-d20"></div>
       <label><h3>{{localize "PF1.Concentration"}}</h3></label>
@@ -19,13 +19,13 @@
     <i class="fas {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}fa-arrow-circle-down{{else}}fa-arrow-circle-up{{/if}}"></i>
   </a>
   <div class="hide spellbook-info_{{spellbookIndex}} {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}hidden{{/if}}">
-    <div class="flexrow spellcasting-notes">
+    <div class="flexrow spellcasting-notes pf1-sheet-group">
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>
     </div>
     
     <div class="flexrow">
-      <div class="flexcol">
+      <div class="flexcol pf1-sheet-group">
         <div class="form-group spellcasting-class tooltip">
           <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
           <label><h3>{{localize "PF1.SpellcastingClass"}}</h3></label>
@@ -72,7 +72,7 @@
         {{/if}}
       </div>
       
-      <div class="flexcol caster-preferences">
+      <div class="flexcol caster-preferences pf1-sheet-group">
         <label class="checkbox">
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevels"
           {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
@@ -93,7 +93,7 @@
     </div>
   </div>
   
-  <div class="flexrow spell-range">
+  <div class="flexrow spell-range pf1-sheet-group">
     <label><h3>{{localize "PF1.DistClose"}}</h3></label>
     <input type="text" value="{{spellbook.orig.range.close}}" disabled />
     <label><h3>{{localize "PF1.DistMedium"}}</h3></label>

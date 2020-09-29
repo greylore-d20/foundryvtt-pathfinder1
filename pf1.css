@@ -60,6 +60,15 @@
 .strikethrough-text {
   text-decoration: line-through;
 }
+.pf1-sheet-group {
+  padding: 2px;
+  margin: 2px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 2px;
+}
+.pf1-sheet-group:hover {
+  border-color: #666;
+}
 /* ----------------------------------------- */
 /*  All PF1 Apps                           */
 /* ----------------------------------------- */
@@ -225,7 +234,7 @@
   display: inline-block;
   margin: 0 2px 0 0;
   padding: 0 3px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 16px;
   border: 1px solid #999;
   border-radius: 3px;
@@ -761,7 +770,7 @@
 }
 .pf1.sheet.actor .tab.details .details-header .race-container .item-controls a {
   flex: 0 0 16px;
-  font-size: 10px;
+  font-size: 16px;
   text-align: center;
   color: #666;
 }
@@ -992,7 +1001,7 @@
   margin-top: -1px;
   line-height: 18px;
   font-family: "Signika", "Palatino Linotype", serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 .pf1.sheet.actor .defenses .attributes {
   flex: 0;
@@ -1009,7 +1018,7 @@
 .pf1.sheet.actor .defenses .defense-notes label h3 {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
   font-size: 20px;
-  font-size: 18px;
+  font-size: 22px;
 }
 .pf1.sheet.actor .defenses .defense-notes {
   margin-top: 5px;
@@ -1038,6 +1047,9 @@
   border-radius: 3px;
   /* Hide modifier box on hover */
 }
+.pf1.sheet.actor .ability-scores .ability .ability-score {
+  font-size: 20px;
+}
 .pf1.sheet.actor .ability-scores .ability input.ability-total {
   height: 30px;
   width: 50px;
@@ -1053,6 +1065,7 @@
 .pf1.sheet.actor .ability-scores .ability .ability-modifiers input[type="text"].ability-base {
   flex: 0 0 32px;
   height: 32px;
+  font-size: 20px;
   border-top: 2px groove #eeede0;
 }
 .pf1.sheet.actor .ability-scores .ability .ability-modifiers span.ability-mod {
@@ -1077,17 +1090,20 @@
 .pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-damage {
   flex: 1;
   height: 24px;
+  font-size: 20px;
   border-bottom: 2px groove #eeede0;
   border-right: 2px groove #eeede0;
 }
 .pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-penalty {
   flex: 1;
   height: 24px;
+  font-size: 20px;
   border-bottom: 2px groove #eeede0;
 }
 .pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-drain {
   flex: 1;
   height: 24px;
+  font-size: 20px;
   border-bottom: 2px groove #eeede0;
   border-left: 2px groove #eeede0;
 }
@@ -1119,6 +1135,10 @@
 .pf1.sheet.actor ul.skills-list li.sub-skill:nth-child(2n+1) {
   background-color: rgba(210, 210, 210, 0.3);
 }
+.pf1.sheet.actor ul.skills-list li.skill:hover,
+.pf1.sheet.actor ul.skills-list li.sub-skill:hover {
+  background-color: rgba(64, 64, 192, 0.3);
+}
 .pf1.sheet.actor ul.skills-list li.skill .skill-name.untrained,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name.untrained {
   color: rgba(0, 0, 0, 0.6);
@@ -1132,18 +1152,20 @@
   display: flex;
   flex: 180px;
   margin: 0;
-  font-size: 11px;
-  align-items: center;
+  font-size: 14px;
+  align-items: start;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name .untrained-label,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .untrained-label {
   vertical-align: super;
-  font-size: 8px;
+  font-size: 14px;
   flex: 0;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name .rollable,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .rollable {
   display: inline-block;
+  flex: 0 0 16px;
+  margin-right: 2px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name .rollable img,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .rollable img {
@@ -1157,6 +1179,8 @@
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name input[type="text"] {
   display: inline-block;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name input[type="text"],
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name input[type="text"] {
@@ -1177,31 +1201,21 @@
 }
 .pf1.sheet.actor ul.skills-list li.skill .checkbox,
 .pf1.sheet.actor ul.skills-list li.sub-skill .checkbox {
-  flex: 1 0 48px;
+  flex: 0 0 64px;
+  font-size: 14px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-ability,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-ability {
-  flex: 1 0 48px;
+  flex: 0 0 48px;
   margin: 0 2px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-mod,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-mod {
-  flex: 1 0 20px;
-}
-.pf1.sheet.actor ul.skills-list li.skill .skill-notes,
-.pf1.sheet.actor ul.skills-list li.sub-skill .skill-notes {
-  flex: 1 0 160px;
-  min-height: unset;
+  flex: 0 0 20px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-rank,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-rank {
-  flex: 1 0 48px;
-}
-.pf1.sheet.actor ul.skills-list li.skill .skill-passive,
-.pf1.sheet.actor ul.skills-list li.sub-skill .skill-passive {
-  flex: 1 0 26px;
-  text-align: center;
-  color: #7a7971;
+  flex: 0 0 48px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-controls,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-controls {
@@ -1247,7 +1261,7 @@
 }
 .pf1.sheet.actor .counters .counter span.sep {
   margin: 0 -2px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .pf1.sheet.actor .condition {
   flex: 0;
@@ -1264,7 +1278,7 @@
   white-space: nowrap;
 }
 .pf1.sheet.actor .condition label span {
-  font-size: 12px;
+  font-size: 14px;
 }
 .pf1.sheet.actor .traits {
   overflow-x: hidden;
@@ -1280,7 +1294,7 @@
   flex: 0 0 16px;
   padding: 2px 0;
   color: #999;
-  font-size: 10px;
+  font-size: 14px;
 }
 .pf1.sheet.actor .traits .configure-flags {
   flex: 1;
@@ -1340,7 +1354,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 12px;
   text-align: right;
   color: #EEE;
@@ -1416,7 +1430,7 @@
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
   font-size: 20px;
   color: #4b4a44;
-  font-size: 18px;
+  font-size: 22px;
   margin: 0;
 }
 .pf1.sheet.actor .inventory-filters.spellbook-filters {
@@ -1426,7 +1440,7 @@
   list-style: none;
   margin: 4px 0 8px;
   padding: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 .pf1.sheet.actor .inventory-filters .currency h3 {
   flex: 0 0 160px;
@@ -1482,6 +1496,9 @@
 .pf1.sheet.actor .inventory-list .item:nth-child(2n+1) {
   background-color: rgba(210, 210, 210, 0.3);
 }
+.pf1.sheet.actor .inventory-list .item:hover {
+  background-color: rgba(64, 64, 192, 0.3);
+}
 .pf1.sheet.actor .inventory-list .item .item-name {
   cursor: pointer;
   white-space: nowrap;
@@ -1508,7 +1525,7 @@
 .pf1.sheet.actor .inventory-list .item .item-recharge {
   flex: 0 0 80px;
   text-align: right;
-  font-size: 11px;
+  font-size: 14px;
   color: #7a7971;
 }
 .pf1.sheet.actor .inventory-list .item .item-actions > div a {
@@ -1532,7 +1549,7 @@
 .pf1.sheet.actor .inventory-list .inventory-header h3 {
   margin: 0;
   padding-left: 5px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
 }
 .pf1.sheet.actor .inventory-list .inventory-header .item-controls {
@@ -1544,7 +1561,7 @@
 .pf1.sheet.actor .inventory-list .item-detail {
   height: 24px;
   flex: 0 0 80px;
-  font-size: 11px;
+  font-size: 14px;
   color: #7a7971;
   text-align: center;
   border-right: 1px solid #c9c7b8;
@@ -1573,7 +1590,7 @@
   flex: 4;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-actions {
-  flex: 0 0 50px;
+  flex: 0 0 56px;
   padding: 0 1px 0 1px;
   justify-content: center;
 }
@@ -1581,7 +1598,7 @@
   flex: 0 0 16px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-slot {
-  flex: 0 0 54px;
+  flex: 0 0 64px;
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-usage {
@@ -1609,7 +1626,7 @@
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-equipped {
-  flex: 0 0 50px;
+  flex: 0 0 60px;
   padding: 0 1px 0 1px;
 }
 .pf1.sheet.actor .inventory-list .item-detail.item-uses {
@@ -1675,13 +1692,13 @@
 }
 .pf1.sheet.actor .inventory-list .item-controls a {
   flex: 0 0 16px;
-  font-size: 10px;
+  font-size: 14px;
   text-align: center;
   color: #666;
 }
 .pf1.sheet.actor .inventory-list .item-summary {
   flex: 0 0 100%;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
   padding: 0.25em 0.5em;
   border-top: 1px solid #c9c7b8;
@@ -1689,29 +1706,34 @@
 .pf1.sheet.actor section.feats-body .feats-group .item-detail.item-type {
   flex: 0 0 40px;
 }
-.pf1.sheet.actor .spell-points-current h3 {
+.pf1.sheet.actor .spellbook-group label {
+  margin: 0;
+}
+.pf1.sheet.actor .spellbook-group .spell-points-current h3 {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
   font-size: 20px;
-  font-size: 18px;
+  font-size: 22px;
   flex: 0 0 160px;
 }
-.pf1.sheet.actor .spell-points-current .value,
-.pf1.sheet.actor .spell-points-current .max {
+.pf1.sheet.actor .spellbook-group .spell-points-current .value,
+.pf1.sheet.actor .spellbook-group .spell-points-current .max {
   display: flex;
   flex: 0 0 32px;
   text-align: center;
 }
-.pf1.sheet.actor .spell-points-current .sep {
+.pf1.sheet.actor .spellbook-group .spell-points-current .sep {
   flex: 0;
 }
-.pf1.sheet.actor .spell-uses {
+.pf1.sheet.actor .spellbook-group .spell-uses {
   border-left: 1px solid #c9c7b8;
 }
-.pf1.sheet.actor .spell-slots,
-.pf1.sheet.actor .spell-comps,
-.pf1.sheet.actor .spell-uses {
-  flex: 0 0 72px;
-  font-size: 12px;
+.pf1.sheet.actor .spellbook-group .spell-slots,
+.pf1.sheet.actor .spellbook-group .spell-comps,
+.pf1.sheet.actor .spellbook-group .spell-uses {
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 0 0 80px;
+  font-size: 14px;
   text-align: center;
   color: #7a7971;
   border-right: 1px solid #c9c7b8;
@@ -1719,9 +1741,9 @@
   align-items: center;
   justify-content: center;
 }
-.pf1.sheet.actor .spell-slots input[type="number"],
-.pf1.sheet.actor .spell-comps input[type="number"],
-.pf1.sheet.actor .spell-uses input[type="number"] {
+.pf1.sheet.actor .spellbook-group .spell-slots input[type="number"],
+.pf1.sheet.actor .spellbook-group .spell-comps input[type="number"],
+.pf1.sheet.actor .spellbook-group .spell-uses input[type="number"] {
   width: calc(100% - 2px);
   min-width: 40px;
   height: 24px;
@@ -1736,64 +1758,70 @@
   -ms-user-select: text;
   user-select: text;
 }
-.pf1.sheet.actor .spell-slots input[type="text"].base,
-.pf1.sheet.actor .spell-comps input[type="text"].base,
-.pf1.sheet.actor .spell-uses input[type="text"].base,
-.pf1.sheet.actor .spell-slots input[type="number"].base,
-.pf1.sheet.actor .spell-comps input[type="number"].base,
-.pf1.sheet.actor .spell-uses input[type="number"].base {
+.pf1.sheet.actor .spellbook-group .spell-slots input[type="text"].base,
+.pf1.sheet.actor .spellbook-group .spell-comps input[type="text"].base,
+.pf1.sheet.actor .spellbook-group .spell-uses input[type="text"].base,
+.pf1.sheet.actor .spellbook-group .spell-slots input[type="number"].base,
+.pf1.sheet.actor .spellbook-group .spell-comps input[type="number"].base,
+.pf1.sheet.actor .spellbook-group .spell-uses input[type="number"].base {
   flex: 1;
 }
-.pf1.sheet.actor .spell-slots input,
-.pf1.sheet.actor .spell-comps input,
-.pf1.sheet.actor .spell-uses input,
-.pf1.sheet.actor .spell-slots span.sep,
-.pf1.sheet.actor .spell-comps span.sep,
-.pf1.sheet.actor .spell-uses span.sep {
+.pf1.sheet.actor .spellbook-group .spell-slots input,
+.pf1.sheet.actor .spellbook-group .spell-comps input,
+.pf1.sheet.actor .spellbook-group .spell-uses input,
+.pf1.sheet.actor .spellbook-group .spell-slots span.sep,
+.pf1.sheet.actor .spellbook-group .spell-comps span.sep,
+.pf1.sheet.actor .spellbook-group .spell-uses span.sep {
   text-align: center;
 }
-.pf1.sheet.actor .spell-slots span.sep,
-.pf1.sheet.actor .spell-comps span.sep,
-.pf1.sheet.actor .spell-uses span.sep {
+.pf1.sheet.actor .spellbook-group .spell-slots span.sep,
+.pf1.sheet.actor .spellbook-group .spell-comps span.sep,
+.pf1.sheet.actor .spellbook-group .spell-uses span.sep {
   flex: 0 0 8px;
 }
-.pf1.sheet.actor .spell-uses input {
+.pf1.sheet.actor .spellbook-group .spell-uses input {
   flex: 0 0 24px;
 }
-.pf1.sheet.actor .spell-school {
+.pf1.sheet.actor .spellbook-group .spell-school {
+  white-space: nowrap;
+  overflow: hidden;
   flex: 0 0 96px;
-  font-size: 12px;
+  font-size: 14px;
   color: #7a7971;
   text-align: center;
   border-right: 1px solid #c9c7b8;
 }
-.pf1.sheet.actor .spell-activation {
-  flex: 0 0 112px;
-  font-size: 12px;
+.pf1.sheet.actor .spellbook-group .spell-activation {
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 0 0 120px;
+  font-size: 14px;
   color: #7a7971;
   text-align: center;
   border-right: 1px solid #c9c7b8;
 }
-.pf1.sheet.actor .spell-components {
-  flex: 0 0 72px;
-  font-size: 12px;
+.pf1.sheet.actor .spellbook-group .spell-components {
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 0 0 80px;
+  font-size: 14px;
   color: #7a7971;
   text-align: center;
   border-right: 1px solid #c9c7b8;
 }
-.pf1.sheet.actor .spellbook-empty .item-controls {
+.pf1.sheet.actor .spellbook-group .spellbook-empty .item-controls {
   flex: 1;
 }
-.pf1.sheet.actor .spell-failure input[type="text"] {
+.pf1.sheet.actor .spellbook-group .spell-failure input[type="text"] {
   flex: 1;
 }
-.pf1.sheet.actor .spell-range label {
+.pf1.sheet.actor .spellbook-group .spell-range label {
   flex: 1 1 48px;
   text-align: right;
   margin-right: 8px;
   white-space: nowrap;
 }
-.pf1.sheet.actor .spell-range input[type="text"] {
+.pf1.sheet.actor .spellbook-group .spell-range input[type="text"] {
   flex: 1 1 48px;
 }
 .pf1.sheet.actor .rollable.image-d20 {
@@ -2269,7 +2297,7 @@
   display: inline-block;
   margin: 0 2px 0 0;
   padding: 1px 3px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 16px;
   border: 1px solid #999;
   border-radius: 3px;
@@ -2324,6 +2352,7 @@
   font-size: 14px;
 }
 #chat-log .message div.defense table {
+  font-size: 14px;
   width: 100%;
   table-layout: fixed;
 }

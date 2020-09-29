@@ -15,6 +15,8 @@
 - Added changes to modify ACP and Max Dex Bonus granted/limited by armor and shields
 - Improved the macros 'Roll Skill' and 'Roll Saving Throw' so they don't produce an abundance of roll sounds
 - Improved the macro 'Roll Skill' so it doesn't need to have a label for custom skills
+- Increased font sizes at a lot of places
+- Items and skills lists on actor sheets now show hover feedback
 
 ## 0.74.6
 

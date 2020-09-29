@@ -131,7 +131,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
   _migrateCMBAbility(actor, updateData);
-  _migrateSkillNotes(actor, updateData);
+  // _migrateSkillNotes(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -667,14 +667,14 @@ const _migrateCMBAbility = function(ent, updateData) {
   }
 };
 
-const _migrateSkillNotes = function(ent, updateData) {
-  for (let [k, s] of Object.entries(ent.data.data.skills)) {
-    if (hasProperty(s, "notes")) updateData[`data.skills.${k}.-=notes`] = null;
-    for (let [k2, s2] of Object.entries(s.subSkills || {})) {
-      updateData[`data.skills.${k}.subSkills.${k2}.-=notes`] = null;
-    }
-  }
-};
+// const _migrateSkillNotes = function(ent, updateData) {
+  // for (let [k, s] of Object.entries(getProperty(ent.data, "data.skills") || {})) {
+    // if (hasProperty(s, "notes")) updateData[`data.skills.${k}.-=notes`] = null;
+    // for (let [k2, s2] of Object.entries(s.subSkills || {})) {
+      // if (hasProperty(s2, "notes")) updateData[`data.skills.${k}.subSkills.${k2}.-=notes`] = null;
+    // }
+  // }
+// };
 
 /* -------------------------------------------- */
 

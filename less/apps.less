@@ -469,13 +469,21 @@
 
   // Clickable SVG icons
   a > .icon {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .icon {
+    border: none;
     display: inline-block;
 
     width: 16px;
     height: 16px;
 
-    &:hover {
-      opacity: 0.5;
+    &.large {
+      width: 24px;
+      height: 24px;
     }
   }
 }

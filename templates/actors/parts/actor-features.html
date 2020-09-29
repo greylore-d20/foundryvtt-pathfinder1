@@ -13,17 +13,17 @@
         <h3 class="item-name flexrow"></h3>
 
         {{#unless section.isClass}}
-        <div class="item-detail item-type"><span>{{localize "PF1.Type"}}</span></div>
+        <div class="item-detail item-type"><img class="icon large" src="systems/pf1/icons/actions/magic-palm.svg" title="{{localize "PF1.Type"}}"></div>
         {{/unless}}
 
         {{#if section.hasActions}}
-        <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
-        <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
-        <div class="item-detail item-usage"><span>{{localize "PF1.Usage"}}</span></div>
+        <div class="item-detail item-actions"><img class="icon large" src="systems/pf1/icons/actions/gears.svg" title="{{localize "PF1.ActionPlural"}}"></div>
+        <div class="item-detail item-uses"><img class="icon large" src="systems/pf1/icons/actions/battery-pack.svg" title="{{localize "PF1.ChargePlural"}}"></div>
+        <div class="item-detail item-usage"><img class="icon large" src="systems/pf1/icons/actions/hand.svg" title="{{localize "PF1.Usage"}}"></div>
         {{/if}}
 
         {{#if section.isClass}}
-        <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
+        <div class="item-detail item-feat-level"><img class="icon large" src="systems/pf1/icons/actions/upgrade.svg" title="{{localize "PF1.Level"}}"></div>
         {{/if}}
 
         {{#if ../owner}}
@@ -66,7 +66,7 @@
           <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
             {{#if item.isCharged}}
             <input type="text" class="select-on-click" value="{{item.data.uses.value}}" data-dtype="Number"/>
-            <span class="sep"> {{localize "PF1.ChargesSeperator"}} </span>
+            <span class="sep"> / </span>
             <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>
             <span class="tooltipcontent">
               @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>

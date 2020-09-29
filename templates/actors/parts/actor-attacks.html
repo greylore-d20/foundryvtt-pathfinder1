@@ -12,11 +12,11 @@
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>
 
-        {{#if section.showTypes}}<div class="item-detail item-type"><span>{{localize "PF1.Type"}}</span></div>{{/if}}
+        {{#if section.showTypes}}<div class="item-detail item-type"><img class="icon large" src="systems/pf1/icons/actions/magic-palm.svg" title="{{localize "PF1.Type"}}"></div>{{/if}}
         
-        <div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>
+        <div class="item-detail item-actions"><img class="icon large" src="systems/pf1/icons/actions/gears.svg" title="{{localize "PF1.ActionPlural"}}"></div>
         
-        <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
+        <div class="item-detail item-uses"><img class="icon large" src="systems/pf1/icons/actions/battery-pack.svg" title="{{localize "PF1.ChargePlural"}}"></div>
         
         {{#if ../owner}}
         <div class="item-controls">
@@ -59,7 +59,7 @@
           <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
             {{#if item.isCharged}}
             <input type="text" class="select-on-click" value="{{item.data.uses.value}}" data-dtype="Number"/>
-            <span class="sep"> {{localize "PF1.ChargesSeperator"}} </span>
+            <span class="sep"> / </span>
             <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>
             <span class="tooltipcontent">
               @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>

@@ -7,6 +7,10 @@
 - Scenes without either Token Vision or Fog Exploration ticked made tokens invisible for players
 - ACP wasn't shown as a source of a skill decrease if the actor didn't have at least one rank in the skill
 
+### Changelog
+
+- Add icons as headers for actors' inventories, features and spell lists
+
 ## 0.74.7
 
 ### Bug Fixes

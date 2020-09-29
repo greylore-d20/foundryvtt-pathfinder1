@@ -4,13 +4,32 @@ None of the people on this list necessarily endorse me. See the respective licen
 
 People and credits are listed in no particular order.
 
-## Lorc ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
+## Lorc's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
 - [Heart Inside](https://game-icons.net/1x1/lorc/heart-inside.html)
 - [Punch Blast](https://game-icons.net/1x1/lorc/punch-blast.html)
 - [Brain](https://game-icons.net/1x1/lorc/brain.html)
 - [Divert](https://game-icons.net/1x1/lorc/divert.html)
 - [Magic Swirl](https://game-icons.net/1x1/lorc/magic-swirl.html)
+- [Magic Palm](https://game-icons.net/1x1/lorc/magic-palm.html)
+- [Hand](https://game-icons.net/1x1/lorc/hand.html)
+- [Battle Gear](https://game-icons.net/1x1/lorc/battle-gear.html)
+- [Quill and Ink](https://game-icons.net/1x1/lorc/quill-ink.html)
+- [Gears](https://game-icons.net/1x1/lorc/gears.html)
+
+## Delapouite's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
+
+- [Expense](https://game-icons.net/1x1/delapouite/expense.html)
+- [Spellbook](https://game-icons.net/1x1/delapouite/spell-book.html)
+- [Upgrade](https://game-icons.net/1x1/delapouite/upgrade.html)
+- [Plug](https://game-icons.net/1x1/delapouite/plug.html)
+- [Wheelbarrow](https://game-icons.net/1x1/delapouite/wheelbarrow.html)
+- [Weight](https://game-icons.net/1x1/delapouite/weight.html)
+- [Coins](https://game-icons.net/1x1/delapouite/coins.html)
+
+## sbed's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
+
+- [Battery Pack](https://game-icons.net/1x1/sbed/battery-pack.html)
 
 ## Simone Ricciardi
 

@@ -1102,7 +1102,7 @@
       font-size: 14px;
       color: @colorTan;
       text-align: center;
-      border-right: 1px solid @colorFaint;
+      border-right: 1px solid @colorBeige;
       overflow: hidden;
       white-space: nowrap;
       .flexrow();
@@ -1110,7 +1110,7 @@
       align-items: center;
 
       &.item-actions {
-        flex: 0 0 56px;
+        flex: 0 0 32px;
         padding: 0 1px 0 1px;
         justify-content: center;
 
@@ -1125,12 +1125,12 @@
       }
 
       &.item-usage {
-        flex: 0 0 96px;
+        flex: 0 0 120px;
         padding: 0 1px 0 1px;
       }
 
       &.item-type {
-        flex: 0 0 96px;
+        flex: 0 0 120px;
         padding: 0 1px 0 1px;
       }
 
@@ -1140,7 +1140,7 @@
       }
 
       &.item-weight {
-        flex: 0 0 50px;
+        flex: 0 0 56px;
         padding: 0 1px 0 1px;
       }
 
@@ -1150,12 +1150,12 @@
       }
 
       &.item-carried {
-        flex: 0 0 50px;
+        flex: 0 0 32px;
         padding: 0 1px 0 1px;
       }
 
       &.item-equipped {
-        flex: 0 0 60px;
+        flex: 0 0 32px;
         padding: 0 1px 0 1px;
       }
 
@@ -1164,7 +1164,7 @@
         padding: 0 1px 0 1px;
       }
 
-      &:nth-child(2) { border-left: 1px solid @colorFaint; }
+      &:nth-child(2) { border-left: 1px solid @colorBeige; }
       &:last-child { border-right: none; }
     }
 
@@ -1266,20 +1266,15 @@
       }
     }
 
-    .spell-uses {
-      border-left: 1px solid @colorFaint;
-    }
-
     .spell-slots,
     .spell-comps,
     .spell-uses {
       white-space: nowrap;
       overflow: hidden;
-      flex: 0 0 80px;
+      flex: 0 0 96px;
       font-size: 14px;
       text-align: center;
       color: @colorTan;
-      border-right: 1px solid @colorFaint;
       display: flex;
       align-items: center;
       justify-content: center;

@@ -40,21 +40,21 @@
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow"></h3>
 
-        {{#if section.hasSlots}}<div class="item-detail item-slot"><span>{{localize "PF1.Slot"}}</span></div>{{/if}}
-        {{#if section.hasActions}}<div class="item-detail item-actions"><span>{{localize "PF1.ActionPlural"}}</span></div>{{/if}}
+        {{#if section.hasSlots}}<div class="item-detail item-slot"><img class="icon large" src="systems/pf1/icons/actions/plug.svg" title="{{localize "PF1.Slot"}}"></div>{{/if}}
+        {{#if section.hasActions}}<div class="item-detail item-actions"><img class="icon large" src="systems/pf1/icons/actions/gears.svg" title="{{localize "PF1.ActionPlural"}}"></div>{{/if}}
 
         {{#if section.showValue}}
-        <div class="item-detail item-value"><span>{{localize "PF1.Value"}}</span></div>
+        <div class="item-detail item-value"><img class="icon large" src="systems/pf1/icons/actions/coins.svg" title="{{localize "PF1.Value"}}"></div>
         {{/if}}
-        <div class="item-detail item-weight"><span>{{localize "PF1.ItemWeight"}}</span></div>
+        <div class="item-detail item-weight"><span><img class="icon large" src="systems/pf1/icons/actions/weight.svg" title="{{localize "PF1.ItemWeight"}}"></div>
         {{#if ../isGM}}
-        <div class="item-detail item-identified"><span>{{localize "PF1.IdentifiedShort"}}</span></div>
+        <div class="item-detail item-identified"><img class="icon large" src="systems/pf1/icons/actions/quill-ink.svg" title="{{localize "PF1.Identified"}}"></div>
         {{/if}}
-        <div class="item-detail item-carried"><span>{{localize "PF1.Carried"}}</span></div>
+        <div class="item-detail item-carried"><img class="icon large" src="systems/pf1/icons/actions/wheelbarrow.svg" title="{{localize "PF1.Carried"}}"></div>
         {{#if section.canEquip}}
-        <div class="item-detail item-equipped"><span>{{localize "PF1.Equipped"}}</span></div>
+        <div class="item-detail item-equipped"><img class="icon large" src="systems/pf1/icons/actions/battle-gear.svg" title="{{localize "PF1.Equipped"}}"></div>
         {{/if}}
-        <div class="item-detail item-uses"><span>{{localize "PF1.ChargePlural"}}</span></div>
+        <div class="item-detail item-uses"><img class="icon large" src="systems/pf1/icons/actions/battery-pack.svg" title="{{localize "PF1.ChargePlural"}}"></div>
 
         {{#if ../owner}}
         <div class="item-controls">
@@ -134,7 +134,7 @@
           <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
             {{#if item.isCharged}}
             <input type="text" class="select-on-click" data-wheel-step="1" value="{{item.data.uses.value}}" data-dtype="Number"/>
-            <span class="sep"> {{localize "PF1.ChargesSeperator"}} </span>
+            <span class="sep"> / </span>
             <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>
             <span class="tooltipcontent">
               @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>

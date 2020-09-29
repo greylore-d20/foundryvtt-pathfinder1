@@ -141,19 +141,30 @@ export class ActorSheetPF extends ActorSheet {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
+
+      // Add skill rank source
       if (skl.rank > 0) {
         skl.sourceDetails.push({ "name": game.i18n.localize("PF1.SkillRankPlural"), "value": skl.rank });
+
+        // Add class skill bonus source
         if (skl.cs) {
           skl.sourceDetails.push({ "name": game.i18n.localize("PF1.CSTooltip"), "value": 3 });
         }
-        if (skl.acp && acp > 0) {
-          skl.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
-        }
       }
+
+      // Add ACP source
+      if (skl.acp && acp > 0) {
+        skl.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
+      }
+
+      // Add ability modifier source
       skl.sourceDetails.push({ "name": CONFIG.PF1.abilities[skl.ability], "value": data.actor.data.abilities[skl.ability].mod });
+
+      // Add misc skill bonus source
       if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) {
         skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.data.skills[s].changeBonus);
       }
+
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (let [s2, skl2] of Object.entries(skl.subSkills)) {

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Scenes without either Token Vision or Fog Exploration ticked made tokens invisible for players
+- ACP wasn't shown as a source of a skill decrease if the actor didn't have at least one rank in the skill
 
 ## 0.74.7
 

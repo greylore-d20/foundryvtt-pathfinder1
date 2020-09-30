@@ -136,7 +136,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
-  const NEEDS_MIGRATION_VERSION = "0.74.7";
+  const NEEDS_MIGRATION_VERSION = "0.74.8";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -342,6 +342,14 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (!["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type)) return true;
   createMiscActorMacro(data.type, data.actor, slot, data.altType);
   return false;
+});
+
+// Render TokenConfig
+Hooks.on("renderTokenConfig", async (app, html) => {
+  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.html", {
+    object: duplicate(app.object.data),
+  });
+  html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
 });
 
 /**

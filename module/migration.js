@@ -131,6 +131,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
   _migrateCMBAbility(actor, updateData);
+  _migrateActorTokenVision(actor, updateData);
   // _migrateSkillNotes(actor, updateData);
 
   if ( !actor.items ) return updateData;
@@ -193,11 +194,14 @@ export const migrateItemData = function(item) {
 export const migrateSceneData = async function(scene) {
   const result = { tokens: duplicate(scene.tokens) };
   for (let t of result.tokens) {
+    const token = new Token(t);
+
+    migrateTokenVision(token, t);
+
     if (!t.actorId || t.actorLink || !t.actorData.data) {
       t.actorData = {};
       continue;
     }
-    const token = new Token(t);
     if (!token.actor) {
       t.actorId = null;
       t.actordata = {};
@@ -667,6 +671,15 @@ const _migrateCMBAbility = function(ent, updateData) {
   }
 };
 
+const _migrateActorTokenVision = function(ent, updateData) {
+  const vision = getProperty(ent.data, "data.attributes.vision");
+  if (!vision) return;
+
+  updateData["data.attributes.-=vision"] = null;
+  updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
+  updateData["token.brightSight"] = vision.darkvision;
+};
+
 // const _migrateSkillNotes = function(ent, updateData) {
   // for (let [k, s] of Object.entries(getProperty(ent.data, "data.skills") || {})) {
     // if (hasProperty(s, "notes")) updateData[`data.skills.${k}.-=notes`] = null;
@@ -675,6 +688,15 @@ const _migrateCMBAbility = function(ent, updateData) {
     // }
   // }
 // };
+
+/* -------------------------------------------- */
+
+const migrateTokenVision = function(token, updateData) {
+  if (!token.actor) return;
+ 
+  setProperty(updateData, "flags.pf1.lowLightVision", getProperty(token.actor.data, "token.flags.pf1.lowLightVision"));
+  setProperty(updateData, "brightSight", getProperty(token.actor.data, "token.flags.pf1.darkvision"));
+};
 
 /* -------------------------------------------- */
 

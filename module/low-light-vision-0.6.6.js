@@ -1,38 +1,15 @@
-import { TokenConfigPF } from "./token-config.js";
 import { hasTokenVision } from "./misc/vision-permission.js";
 
 // Patch Token's sheet template
 Object.defineProperties(Token.prototype, {
-  sheet: {
-    get() {
-      if (!this._sheet) this._sheet = new TokenConfigPF(this);
-      return this._sheet;
-    }
-  },
   actorVision: {
     get() {
-      return this.actor.data.data.attributes.vision || {};
+      return {
+        lowLight: getProperty(this.data, "flags.pf1.lowLightVision"),
+      };
     }
   }
 });
-
-const Token_update = Token.prototype.update;
-Token.prototype.update = async function(data, options={}) {
-  const updateData = {};
-
-  if (data.visionLL != null) {
-    updateData["data.attributes.vision.lowLight"] = data.visionLL;
-  }
-  if (data.darkvision != null) {
-    updateData["data.attributes.vision.darkvision"] = data.darkvision;
-  }
-
-  if (Object.keys(updateData).length) {
-    await this.actor.update(updateData);
-  }
-
-  return Token_update.call(this, data, options);
-};
 
 SightLayer.prototype.hasLowLight = function() {
   const relevantTokens = canvas.tokens.placeables.filter(o => {
@@ -46,20 +23,6 @@ SightLayer.prototype.hasLowLight = function() {
     return lowLightTokens.filter(o => o._controlled).length > 0;
   }
   return (!relevantTokens.filter(o => o._controlled).length && lowLightTokens.length) || lowLightTokens.filter(o => o._controlled).length > 0;
-};
-
-SightLayer.prototype.hasDarkvision = function() {
-  const relevantTokens = canvas.tokens.placeables.filter(o => {
-    return o.actor && o.actor.hasPerm(game.user, "OBSERVER");
-  });
-  const darkvisionTokens = relevantTokens.filter(o => o.getDarkvisionRadius() > 0);
-  if (game.user.isGM) {
-    return darkvisionTokens.filter(o => o._controlled).length > 0;
-  }
-  if (game.settings.get("pf1", "lowLightVisionMode")) {
-    return darkvisionTokens.filter(o => o._controlled).length > 0;
-  }
-  return (!relevantTokens.filter(o => o._controlled).length && darkvisionTokens.length) || darkvisionTokens.filter(o => o._controlled).length > 0;
 };
 
 const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
@@ -111,31 +74,6 @@ SightLayer.prototype.initializeTokens = function(options) {
   if (!defer) this.update();
 };
 
-Token.prototype.getDarkvisionRadius = function() {
-  return this.getLightRadius(getProperty(this, "actor.data.data.attributes.vision.darkvision") || 0);
-};
-
-Token.prototype.getDarkvisionSight = function() {
-  const radius = this.getDarkvisionRadius();
-  if (!radius) return null;
-
-  const walls = canvas.walls.blockVision;
-  const globalLight = canvas.scene.data.globalLight;
-  const maxR = globalLight ? Math.max(canvas.dimensions.width, canvas.dimensions.height) : null;
-  let [cullMult, cullMin, cullMax] = canvas.sight._cull;
-  if (globalLight) cullMin = maxR;
-
-  return canvas.sight.constructor.computeSight(this.getSightOrigin(), radius, {
-    angle: this.data.angle,
-    cullMult: cullMult,
-    cullMin: cullMin,
-    cullMax: cullMax,
-    density: 6,
-    rotation: this.data.rotation,
-    walls: walls,
-  });
-};
-
 const SightLayer_update = SightLayer.prototype.update;
 SightLayer.prototype.update = function() {
   SightLayer_update.call(this);
@@ -178,9 +116,8 @@ SightLayer.prototype.updateToken = function(token, {defer=false, deleted=false, 
     // Compute vision polygons
     let dim = globalLight ? 0 : token.getLightRadius(token.data.dimSight);
     const bright = globalLight ? maxR : token.getLightRadius(token.data.brightSight);
-    const darkvision = this.hasDarkvision() ? token.getDarkvisionRadius() : 0;
-    if ((dim === 0) && (bright === 0) && (darkvision === 0)) dim = canvas.dimensions.size * 0.6;
-    const radius = Math.max(Math.abs(dim), Math.abs(bright), Math.abs(darkvision));
+    if ((dim === 0) && (bright === 0)) dim = canvas.dimensions.size * 0.6;
+    const radius = Math.max(Math.abs(dim), Math.abs(bright));
     const {los, fov} = this.constructor.computeSight(center, radius, {
       angle: token.data.sightAngle,
       cullMult: cullMult,
@@ -198,14 +135,14 @@ SightLayer.prototype.updateToken = function(token, {defer=false, deleted=false, 
       los: los,
       fov: fov,
       dim: dim,
-      bright: Math.max(bright, darkvision),
+      bright: bright,
       color: "#ffffff",
       alpha: 1,
     });
     this.sources.vision.set(sourceId, source);
 
     // Update fog exploration for the token position
-    this.updateFog(center.x, center.y, Math.max(dim, bright, darkvision), token.data.sightAngle !== 360, forceUpdateFog);
+    this.updateFog(center.x, center.y, Math.max(dim, bright), token.data.sightAngle !== 360, forceUpdateFog);
   }
 
   // Prepare light sources
@@ -267,24 +204,5 @@ LightingLayer.prototype.update = function(alpha=null) {
     if ( s.darknessThreshold <= this._darkness ) {
       c.lights.beginFill(s.color, s.alpha).drawPolygon(s.fov).endFill();
     }
-  }
-
-  if (canvas.sight.hasDarkvision) {
-    this.updateDarkvision();
-  }
-};
-
-LightingLayer.prototype.updateDarkvision = function() {
-  const c = this.lighting;
-
-  // Draw token darkvision
-  const vision = canvas.sight.sources.vision;
-  for (let k of vision.keys()) {
-    const t = canvas.tokens.placeables.find(o => `Token.${o.id}` === k);
-    if (!t) continue;
-    const sight = t.getDarkvisionSight();
-    if (!sight) continue;
-    const fov = sight.fov;
-    c.lights.beginFill(0xFFFFFF, 1).drawPolygon(fov).endFill();
   }
 };

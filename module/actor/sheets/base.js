@@ -2,7 +2,6 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
-import { TokenConfigPF } from "../../token-config.js";
 import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
@@ -1623,20 +1622,6 @@ export class ActorSheetPF extends ActorSheet {
       choices: CONFIG.PF1[a.dataset.options]
     };
     new ActorTraitSelector(this.actor, options).render(true)
-  }
-
-  _onConfigureToken(event) {
-    event.preventDefault();
-
-    // Determine the Token for which to configure
-    const token = this.token || new Token(this.actor.data.token);
-
-    // Render the Token Config application
-    new TokenConfigPF(token, {
-      left: Math.max(this.position.left - 560 - 10, 10),
-      top: this.position.top,
-      configureDefault: !this.token
-    }).render(true);
   }
 
   async saveMCEContent(updateData=null) {

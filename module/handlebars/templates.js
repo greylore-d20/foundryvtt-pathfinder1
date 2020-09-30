@@ -31,9 +31,6 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/items/parts/item-links.html",
     "systems/pf1/templates/items/parts/links/item-template.html",
 
-    // Misc
-    "systems/pf1/templates/misc/token-config.html",
-
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.html",
     "systems/pf1/templates/apps/links.html",
@@ -48,6 +45,7 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/internal/spell-description.html",
     "systems/pf1/templates/internal/consumable-description.html",
     "systems/pf1/templates/internal/damage-tooltip.html",
+    "systems/pf1/templates/internal/token-config_vision.html",
   ];
 
   // Load the template parts

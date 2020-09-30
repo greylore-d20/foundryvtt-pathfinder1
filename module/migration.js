@@ -695,7 +695,7 @@ const migrateTokenVision = function(token, updateData) {
   if (!token.actor) return;
  
   setProperty(updateData, "flags.pf1.lowLightVision", getProperty(token.actor.data, "token.flags.pf1.lowLightVision"));
-  setProperty(updateData, "brightSight", getProperty(token.actor.data, "token.flags.pf1.darkvision"));
+  setProperty(updateData, "brightSight", getProperty(token.actor.data, "token.brightSight"));
 };
 
 /* -------------------------------------------- */

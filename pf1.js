@@ -125,7 +125,7 @@ Hooks.once("setup", function() {
     "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
     "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
     "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes", "measureUnits", "measureUnitsShort",
-    "languages", "damageTypes", "weaponHoldTypes", "auraStrengths",
+    "languages", "damageTypes", "weaponHoldTypes", "auraStrengths", "conditionalTargets",
   ];
 
   const doLocalize = function(obj) {

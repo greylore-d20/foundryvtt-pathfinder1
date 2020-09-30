@@ -991,6 +991,20 @@ PF1.buffTypes = {
   "misc": "PF1.Misc",
 };
 
+// Static conditional modifier targets
+PF1.conditionalTargets = {
+  "attack": {
+    "_label": "PF1.AttackRollPlural",
+    "allAttack": "PF1.All",
+    "rapidShotAttack": "PF1.RapidShot",
+  },
+  "damage": {
+    "_label": "PF1.Damage",
+    "allDamage": "PF1.All",
+    "rapidShotDamage": "PF1.RapidShot",
+  },
+}
+
 PF1.buffTargets = {
   "ac": {
     "_label": "PF1.BuffTarAC",

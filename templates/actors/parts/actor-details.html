@@ -199,7 +199,10 @@
   </li>
   
   <li class="attribute speed">
-    <div class="attribute-speed">
+    <div class="attribute-speed tooltip">
+      <div class="tooltipcontent">
+        @attributes.speed.land.total : {{data.attributes.speed.land.total}}
+      </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedLand" }}</h4>
       <div class="attribute-value">
         <div class="attribute">{{#if data.attributes.speed.land.total}}{{labels.speed.land}}{{/if}}</div>
@@ -210,7 +213,11 @@
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
     </div>
-    <div class="attribute-speed">
+
+    <div class="attribute-speed tooltip">
+      <div class="tooltipcontent">
+        @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
+      </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedClimb" }}</h4>
       <div class="attribute-value">
         <div class="attribute">{{#if data.attributes.speed.climb.total}}{{labels.speed.climb}}{{/if}}</div>
@@ -221,7 +228,11 @@
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
     </div>
-    <div class="attribute-speed">
+
+    <div class="attribute-speed tooltip">
+      <div class="tooltipcontent">
+        @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
+      </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedSwim" }}</h4>
       <div class="attribute-value">
         <div class="attribute">{{#if data.attributes.speed.swim.total}}{{labels.speed.swim}}{{/if}}</div>
@@ -232,7 +243,11 @@
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
     </div>
-    <div class="attribute-speed">
+
+    <div class="attribute-speed tooltip">
+      <div class="tooltipcontent">
+        @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
+      </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedBurrow" }}</h4>
       <div class="attribute-value">
         <div class="attribute">{{#if data.attributes.speed.burrow.total}}{{labels.speed.burrow}}{{/if}}</div>
@@ -243,7 +258,12 @@
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
     </div>
-    <div class="attribute-speed">
+
+    <div class="attribute-speed tooltip">
+      <div class="tooltipcontent">
+        @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
+        @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
+      </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedFly" }}</h4>
       <div class="attribute-value">
         <div class="attribute">{{#if data.attributes.speed.fly.total}}{{labels.speed.fly}}{{/if}}</div>
@@ -254,6 +274,7 @@
         data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
       </footer>
     </div>
+
     <div class="attribute-speed">
       <h4 class="attribute-name box-title">{{ localize "PF1.FlyManeuverabilityShort" }}</h4>
       <select name="data.attributes.speed.fly.maneuverability">

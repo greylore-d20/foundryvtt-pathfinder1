@@ -677,7 +677,7 @@ const _migrateActorTokenVision = function(ent, updateData) {
 
   updateData["data.attributes.-=vision"] = null;
   updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
-  updateData["token.brightSight"] = vision.darkvision;
+  if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision;
 };
 
 // const _migrateSkillNotes = function(ent, updateData) {

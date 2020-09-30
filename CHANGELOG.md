@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.9
+
+### Bug Fixes
+
+- Experience settings didn't submit in Foundry 0.6.6
+
 ## 0.74.8
 
 ### Bug Fixes

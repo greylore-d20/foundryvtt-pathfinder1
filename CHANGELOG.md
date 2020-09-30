@@ -6,6 +6,10 @@
 
 - Experience settings didn't submit in Foundry 0.6.6
 
+### Changelog
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.74.8
 
 ### Bug Fixes

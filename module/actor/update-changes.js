@@ -1479,9 +1479,7 @@ const _blacklistChangeData = function(data, changeTarget) {
 
 const getSortChangePriority = function() {
   const skillTargets = this._skillTargets;
-  return { targets: [
-    "misc", "ability", "ac", "attack", "damage", "savingThrows", "skills", "skill"
-  ], types: [
+  return { types: [
       "acpA", "acpS", "mDexA", "mDexS", "str", "dex", "con", "int", "wis", "cha",
       "skills", "strSkills", "dexSkills", "conSkills", "intSkills", "wisSkills", "chaSkills", ...skillTargets,
       "allChecks", "strChecks", "dexChecks", "conChecks", "intChecks", "wisChecks", "chaChecks",
@@ -1501,8 +1499,6 @@ const getSortChangePriority = function() {
 
 const _sortChanges = function(a, b) {
   const priority = getSortChangePriority.call(this);
-  const targetA = priority.targets.indexOf(a.raw.target);
-  const targetB = priority.targets.indexOf(b.raw.target);
   const typeA = priority.types.indexOf(a.raw.subTarget);
   const typeB = priority.types.indexOf(b.raw.subTarget);
   const modA = priority.modifiers.indexOf(a.raw.modifier);
@@ -1512,7 +1508,7 @@ const _sortChanges = function(a, b) {
   prioA = (prioA || 0) + 1000;
   prioB = (prioB || 0) + 1000;
 
-  return targetA - targetB || typeA - typeB || prioB - prioA || modA - modB;
+  return typeA - typeB || prioB - prioA || modA - modB;
 }
 
 const _parseChange = function(change, changeData, flags) {

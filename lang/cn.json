@@ -34,9 +34,15 @@
   "SETTINGS.pf1MeasureStyleL": "是否使用开拓者的测量样式代替FVTT的默认样式。",
   "SETTINGS.pf1LowLightVisionModeN": "昏暗视觉需要选择指示物",
   "SETTINGS.pf1LowLightVisionModeH": "勾选时，玩家若没有点选指示物无法获得任何指示物的昏暗视觉",
-  "SETTINGS.pf1PreloadCompendiumsN": "预加载合集",
-  "SETTINGS.pf1PreloadCompendiumsH": "是否在读取页面时预加载数据合集",
-  
+  "SETTINGS.pf1CoinWeightN":"货币重量除数",
+  "SETTINGS.pf1CoinWeightH":"多少枚货币具有1磅重量",
+  "SETTINGS.pf1SharedVisionModeN":"共享视野模式",
+  "SETTINGS.pf1SharedVisionModeH":"如何处理玩家间的共享视野",
+  "SETTINGS.pf1SharedVisionWithoutSelection":"不包含选中的token",
+  "SETTINGS.pf1SharedVisionWithSelection":"总是",
+  "SETTINGS.pf1HideTokenConditionsN":"隐藏状态图标",
+  "SETTINGS.pf1HideTokenConditionsH":"从token上隐藏增益和状态图标",
+
   "SETTINGS.pf1HealthConfigName": "设置生命值",
   "SETTINGS.pf1HealthConfigLabel": "设置生命值",
   "SETTINGS.pf1HealthConfigHint": "设置角色的生命值计算方式",
@@ -56,15 +62,15 @@
   "SETTINGS.pf1HealthConfigWoundsAndVigorPCHint":  "对PC适用'负伤与活力'可选规则。",
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCName": "负伤与活力（NPC）",
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint": "对NPC适用'负伤与活力'可选规则。",
-  
   "SETTINGS.pf1SkipActionDialogsN":"忽略行动提示框",
-  "SETTINGS.pf1SkipActionDialogsH":"忽略行动提示框(例如攻击/豁免时的提示框)除非你按住shift键点击它", 
-   "SETTINGS.pf1UnitsN": "单位制",
+  "SETTINGS.pf1SkipActionDialogsH":"忽略行动提示框(例如攻击/豁免时的提示框)除非你按住shift键点击它",
+
+  "SETTINGS.pf1UnitsN": "单位制",
   "SETTINGS.pf1UnitsL": "游戏世界中使用的单位制",
-  
+
   "TOKEN.VisionLowLight": "昏暗视觉",
   "TOKEN.VisionDarkvision": "黑暗视觉",
-  
+
   "PF1.ExperienceConfigName":"设置经验",
   "PF1.ExperienceConfigLabel":"设置经验",
   "PF1.ExperienceConfigHint":"设置升级经验.",
@@ -73,29 +79,51 @@
   "PF1.XPTrackFast":"快速",
   "PF1.XPTrackCustomFormula":"自定义(公式)",
   "PF1.XPTrackCustomFormulaHint":"e.g.'@level*1000'",
-  "PF1.Apply":"应用","PF1.ApplyHalf":"减半", 
+
+  "PF1.Apply":"应用",
+  "PF1.ApplyHalf":"减半",
   "PF1.ApplyDamage": "应用伤害",
   "PF1.ApplyCriticalDamage": "应用重击伤害",
   "PF1.ApplyHealing": "应用治疗",
   "PF1.ApplyCriticalHealing": "应用重击治疗",
-  
+
   "PF1.RollsForInitiative": "{0} 投掷先攻!",
-  
+
   "PF1.FlagsInstructions": "设置人物特质以符合PF1系统。",
   "PF1.FlagsTitle": "设置特质",
   "PF1.FlagsSave": "更新特质",
-  
+
+  "PF1.AbilityDamage":"属性伤害",
+  "PF1.AbilityDrain":"属性吸取",
+
+  "PF1.PointBuyCalculator": "购点计算器",
+  "PF1.PointBuyCalculatorWarning": "购点计算器会覆盖角色基础属性",
+  "PF1.PointBuyCalculatorSpent": "花费点数",
+  "PF1.PointBuyCalculatorCampaignType": "战役类型",
+  "PF1.PointBuyCalculatorPoints": "购点",
+  "PF1.PointBuyCalculatorLowFantasy": "简单战役",
+  "PF1.PointBuyCalculatorStandardFantasy": "普通战役",
+  "PF1.PointBuyCalculatorHighFantasy": "困难战役",
+  "PF1.PointBuyCalculatorEpicFantasy": "传奇战役",
+
   "PF1.CreateItem": "创建物品",
   "PF1.EditItem": "编辑物品",
+  "PF1.DuplicateItem":"复制物品",
   "PF1.Delete Item": "删除物品",
-  
-  "PF1.LinkOptionsTitle": "关联选项",
-  "PF1.LinkType": "关联类型",
-  "PF1.LinkSetMinLevel": "设置最低等级",
-  "PF1.LinkMinLevelLabel": "最低等级: {0}",
-  
-  "PF1.Link_minLevel": "最低等级",
-  
+
+  "PF1.LinkTypeChildren":"孩子",
+  "PF1.LinkTypeCharges":"充能",
+  "PF1.LinkTypeClassAssociations":"职业关联",
+  "PF1.LinkTypeAmmunition":"弹药",
+
+  "PF1.LinkHelpChildren":"关联的孩子物品会随其父母一起被删除",
+  "PF1.LinkHelpCharges": "如此关联的物品会共享充能，将所有物品关联至一个主物品上",
+  "PF1.LinkHelpClassAssociations": "如此关联的物品会在到达相应的等级职业时自动添加至角色",
+  "PF1.LinkHelpAmmunition": "如此关联的物品会在每一次攻击后自动消耗一发",
+
+  "PF1.HelpSellMultiplierN":"贩卖比率",
+  "PF1.HelpSellMultiplier": "非交易品出售时的价格比率，默认为0.5。交易品总以原价出售.",
+
   "PF1.AbilityStr": "力量",
   "PF1.AbilityDex": "敏捷",
   "PF1.AbilityCon": "体质",
@@ -126,7 +154,7 @@
   "PF1.WeaponHoldTypeNormal": "正常",
   "PF1.WeaponHoldTypeTwoHanded": "双手",
   "PF1.WeaponHoldTypeOffhand": "副手",
-  
+
   "PF1.CondBleed":"流血",
   "PF1.CondBlind": "目盲",
   "PF1.CondConfused":"困惑",
@@ -192,15 +220,15 @@
   "PF1.AlignmentLE": "守序邪恶",
   "PF1.AlignmentNE": "中立邪恶",
   "PF1.AlignmentCE": "混乱邪恶",
-  "PF1.AlignmentShortLG": "守善",
-  "PF1.AlignmentShortNG": "中善",
-  "PF1.AlignmentShortCG": "混善",
-  "PF1.AlignmentShortLN": "守中",
-  "PF1.AlignmentShortTN": "中立",
-  "PF1.AlignmentShortCN": "混中",
-  "PF1.AlignmentShortLE": "守邪",
-  "PF1.AlignmentShortNE": "中邪",
-  "PF1.AlignmentShortCE": "混邪",
+  "PF1.AlignmentShortLG": "LG",
+  "PF1.AlignmentShortNG": "NG",
+  "PF1.AlignmentShortCG": "CG",
+  "PF1.AlignmentShortLN": "LN",
+  "PF1.AlignmentShortTN": "TN",
+  "PF1.AlignmentShortCN": "CN",
+  "PF1.AlignmentShortLE": "LE",
+  "PF1.AlignmentShortNE": "NE",
+  "PF1.AlignmentShortCE": "CE",
 
   "PF1.ChatReqMats": "需要材料",
   "PF1.ChatOtherFormula": "其他公式",
@@ -220,7 +248,7 @@
   "PF1.DistLong": "远距",
   "PF1.DistFt": "英尺",
   "PF1.DistMi": "英里",
- 
+
   "PF1.DistM":"米",
   "PF1.DistKM":"千米",
   "PF1.DistFtShort":"尺",
@@ -238,7 +266,7 @@
   "PF1.ItemContainerWeightless": "无重量内容",
   "PF1.ItemContainerTotalValue":"总价值:{0}GP,{1}SP,{2}CP",
   "PF1.ItemContainerSellValue":"出售价:{0}GP,{1}SP,{2}CP",
-  
+
   "PF1.LootTypeGear": "装备",
   "PF1.LootTypeAmmo": "弹药",
   "PF1.LootTypeTradeGoods": "交易品",
@@ -364,9 +392,9 @@
   "PF1.MeasureTemplateCircle": "圆形",
   "PF1.MeasureTemplateRay": "射线",
   "PF1.MeasureTemplateRectangle":"矩形",
-  
+
   "PF1.LoadingCompendiumBrowser":"LoadingCompendiumBrowser...",
-  
+
   "PF1.ItemTypeWeapon": "武器",
   "PF1.ItemTypeEquipment": "装备",
   "PF1.ItemTypeLoot": "战利品",
@@ -398,7 +426,7 @@
   "PF1.WeaponPropSunder": "破损",
   "PF1.WeaponPropThrown": "投掷",
   "PF1.WeaponPropTrip": "绊摔",
-  
+
   "PF1.WeaponSubtype": "武器子类",
   "PF1.WeaponPropLight": "轻型",
   "PF1.WeaponPropOneHanded": "单手",
@@ -407,7 +435,7 @@
 
   "PF1.EquipTypeShield": "盾牌",
   "PF1.EquipTypeArmor": "护甲",
-  
+
   "PF1.EquipTypeLight": "轻型护甲",
   "PF1.EquipTypeMedium": "中型护甲",
   "PF1.EquipTypeHeavy": "重型护甲",
@@ -568,32 +596,35 @@
   "PF1.ContextNotes": "备注",
   "PF1.ACNotes": "AC备注",
   "PF1.SaveNotes": "豁免备注",
-  "PF1.CLNotes":"施法者等级备注", 
+  "PF1.CLNotes":"施法者等级备注",
   "PF1.NonApplicable": "N/A",
 
   "PF1.SkillTypeAdventure": "冒险技能",
   "PF1.SkillTypeBackground": "背景技能",
 
   "PF1.ACP": "减",
-  "PF1.ACPTooltip": "技能检定减值",
+  "PF1.ACPLong": "防具检定减值",
+  "PF1.ACPTooltip": "防具检定减值",
   "PF1.CS": "本",
   "PF1.CSTooltip": "本职技能",
   "PF1.RT": "训",
   "PF1.RTTooltip": "需受训",
-  "PF1.SkillModTooltip":"技能调整值",  
-  
+  "PF1.SkillModTooltip":"技能调整值",
+
   "PF1.BrowseSpells": "浏览法术",
   "PF1.BrowseItems": "浏览物品",
   "PF1.BrowseBestiary": "浏览怪物",
   "PF1.BrowseFeats": "浏览特性",
   "PF1.BrowseClasses":"浏览职业",
   "PF1.BrowseRaces":"浏览种族",
-  
+
   "PF1.LanguageAboleth": "底栖魔鱼语",
   "PF1.LanguageAbyssal": "深渊语",
   "PF1.LanguageAklo": "邪灵语",
+  "PF1.LanguageAncientOsiriani":"古奥斯利昂语",
   "PF1.LanguageAquan": "水族语",
   "PF1.LanguageAuran": "风族语",
+  "PF1.LanguageAzlanti":"阿兹兰特语",
   "PF1.LanguageBoggard": "沼蜍语",
   "PF1.LanguageCelestial": "天界语",
   "PF1.LanguageCommon": "通用语",
@@ -612,14 +643,19 @@
   "PF1.LanguageGrippli": "树蛙人语",
   "PF1.LanguageHalfling": "半身人语",
   "PF1.LanguageIgnan": "火族语",
+  "PF1.LanguageJistka":"吉斯塔克语",
   "PF1.LanguageInfernal": "炼狱语",
   "PF1.LanguageNecril": "亡者语",
   "PF1.LanguageOrc": "兽人语",
+  "PF1.LanguageOrvian":"奥乌语",
   "PF1.LanguageProtean": "幻蛇语",
   "PF1.LanguageSphinx": "斯芬克斯语",
   "PF1.LanguageSylvan": "木族语",
+  "PF1.LanguageTaldane":"塔尔多语",
+  "PF1.LanguageTekritanin":"泰克立坦语",
   "PF1.LanguageTengu": "天狗语",
   "PF1.LanguageTerran": "土族语",
+  "PF1.LanguageThassilonian":"瑟西隆语",
   "PF1.LanguageTreant": "树人语",
   "PF1.LanguageUndercommon": "地底通用语",
   "PF1.LanguageVegepygmy": "孢子人语",
@@ -633,7 +669,7 @@
   "PF1.LanguageTien": "天州语",
   "PF1.LanguageVarisian": "瓦瑞西安语",
   "PF1.LanguageVudrani": "乌荼罗语",
-  
+
   "PF1.CreatureTypeAberration": "异怪",
   "PF1.CreatureTypeAnimal": "动物",
   "PF1.CreatureTypeConstruct": "构装体",
@@ -652,7 +688,7 @@
   "PF1.RestoreHealth": "恢复生命值",
   "PF1.RestoreDailyUses": "恢复每日充能",
   "PF1.LongTermCare": "长期护理",
-  
+
   "PF1.BonusModifierUntyped": "无名",
   "PF1.BonusModifierUntypedPerm": "无名 (恒定)",
   "PF1.BonusModifierBase": "基础",
@@ -673,21 +709,21 @@
   "PF1.BonusModifierCircumstance": "环境",
   "PF1.BonusModifierAlchemical": "炼金",
   "PF1.BonusModifierPenalty": "减值",
-  
+
   "PF1.AbilityTypeExtraordinary":"特异能力",
   "PF1.AbilityTypeSupernatural":"超自然能力",
   "PF1.AbilityTypeSpell-Like":"类法术能力",
   "PF1.AbilityTypeShortExtraordinary":"Ex",
   "PF1.AbilityTypeShortSupernatural":"Su",
   "PF1.AbilityTypeShortSpell-Like":"Sp",
-  
+
   "PF1.RollSkillMacroName":"{0}:投{1}",
   "PF1.RollDefensesMacroName":"{0}:显示防御",
   "PF1.RollCMBMacroName":"{0}:投CMB",
   "PF1.RollCLMacroName":"{0}:投CL({1})",
   "PF1.RollConcentrationMacroName":"{0}:投专注({1})",
   "PF1.RollBABMacroName":"{0}:投BAB",
-  
+
   "PF1.DamageTypeBludgeoning":"钝击",
   "PF1.DamageTypePiercing":"穿刺",
   "PF1.DamageTypeSlashing":"挥砍",
@@ -699,7 +735,7 @@
   "PF1.DamageTypeForce":"力场",
   "PF1.DamageTypeNegative":"负能量",
   "PF1.DamageTypePositive":"正能量",
-  
+
   "PF1.SourceInfoSize":"体型",
   "PF1.SourceInfoBuffs":"增益",
   "PF1.SourceInfoTemporaryBuffs":"临时增益",
@@ -714,7 +750,15 @@
   "PF1.SourceInfoRacialTraits":"种族特性",
   "PF1.SourceInfoMiscFeatures":"杂项特性",
   "PF1.SourceInfoRace":"种族",
-  
+
+  "PF1.CreateItemForSpell": "从 {0} 创建物品",
+  "PF1.CreateItemWand":"魔杖",
+  "PF1.CreateItemScroll":"卷轴",
+  "PF1.CreateItemPotion":"药水",
+  "PF1.CreateItemWandOf":"{0}魔杖",
+  "PF1.CreateItemScrollOf":"{0}卷轴",
+  "PF1.CreateItemPotionOf":"{0}药水",
+
   "PF1.Action": "动作",
   "PF1.All": "全部",
   "PF1.Attack": "攻击",
@@ -904,7 +948,7 @@
   "PF1.SubDomain": "子领域",
   "PF1.CastingTime":"施法时间",
   "PF1.Components":"材料",
-  
+
   "PF1.ElementalSchool": "元素学派",
   "PF1.Bloodline": "血统",
   "PF1.ConcentrationCheck": "专注检定",
@@ -1036,7 +1080,7 @@
   "PF1.AttackWithSpell": "施放法术：{0}",
   "PF1.AttackWithFeat": "使用能力：{0}",
   "PF1.ShowInQuickbar": "在快捷栏显示",
-  "PF1.Tags": "标签",
+  "PF1.Tag": "标签",
   "PF1.Tags":"标签",
   "PF1.Refresh": "刷新",
   "PF1.AttackDetails": "攻击详情",
@@ -1050,7 +1094,6 @@
   "PF1.Regeneration": "再生",
   "PF1.FastHealing": "快速治疗",
   "PF1.Links": "关联",
-  "PF1.CreateItemForSpell": "从 {0} 创建物品",
   "PF1.Confirm": "确认",
   "PF1.CROffset": "挑战等级补偿",
   "PF1.RapidShot": "快速射击",
@@ -1075,7 +1118,7 @@
   "PF1.BonusFeatFormula": "奖励专长公式",
   "PF1.Advanced":"高级",
   "PF1.LeftToPrepare":"剩余准备数量",
-  "PF1.SpellsTotalEachDay":"每日法术总量（包括领域和学派法术）",
+  "PF1.SpellsTotalEachDay":"每日法术总量（不包括领域和学派法术）",
   "PF1.UseItem":"使用物品",
   "PF1.UseSpell":"使用法术",
   "PF1.UseFeat":"使用特性",
@@ -1099,15 +1142,8 @@
   "PF1.Held":"持握",
   "PF1.GiveItem":"给予物品",
   "PF1.HideFromToken":"对token隐藏",
-  
-  "PF1.PointBuyCalculator": "购点计算器",
-  "PF1.PointBuyCalculatorWarning": "购点计算器会覆盖角色基础属性",
-  "PF1.PointBuyCalculatorSpent": "花费点数",
-  "PF1.PointBuyCalculatorCampaignType": "战役类型",
-  "PF1.PointBuyCalculatorPoints": "购点",
-  "PF1.PointBuyCalculatorLowFantasy": "简单战役",
-  "PF1.PointBuyCalculatorStandardFantasy": "普通战役",
-  "PF1.PointBuyCalculatorHighFantasy": "困难战役",
-  "PF1.PointBuyCalculatorEpicFantasy": "传奇战役"
-
+  "PF1.ACPArmor":"防具检定减值（护甲）",
+  "PF1.ACPShield":"防具检定减值（盾牌）",
+  "PF1.MaxDexArmor":"最大敏捷修正（护甲）",
+  "PF1.MaxDexShield":"最大敏捷修正（盾牌）"
 }

@@ -10,9 +10,9 @@
 
 ### Changelog
 
+- Update to be compatible with Foundry 0.7.3
 - Add icons as headers for actors' inventories, features and spell lists
 - Turn 'yes' and 'no' labels on actors' inventories for identified, carried and equipped statuses of items to icons
-- Update to be compatible with Foundry 0.7.3
 - Added a tooltip for speed, showing variables to use in roll formulas
 
 ## 0.74.7

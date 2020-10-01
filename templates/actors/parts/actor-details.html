@@ -202,6 +202,10 @@
     <div class="attribute-speed tooltip">
       <div class="tooltipcontent">
         @attributes.speed.land.total : {{data.attributes.speed.land.total}}
+        {{#if sourceDetails.data.attributes.speed.land.total.length}}
+          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{/if}}
       </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedLand" }}</h4>
       <div class="attribute-value">
@@ -217,6 +221,10 @@
     <div class="attribute-speed tooltip">
       <div class="tooltipcontent">
         @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
+        {{#if sourceDetails.data.attributes.speed.climb.total.length}}
+          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{/if}}
       </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedClimb" }}</h4>
       <div class="attribute-value">
@@ -232,6 +240,10 @@
     <div class="attribute-speed tooltip">
       <div class="tooltipcontent">
         @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
+        {{#if sourceDetails.data.attributes.speed.swim.total.length}}
+          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{/if}}
       </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedSwim" }}</h4>
       <div class="attribute-value">
@@ -247,6 +259,10 @@
     <div class="attribute-speed tooltip">
       <div class="tooltipcontent">
         @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
+        {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
+          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{/if}}
       </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedBurrow" }}</h4>
       <div class="attribute-value">
@@ -263,6 +279,10 @@
       <div class="tooltipcontent">
         @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
         @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
+        {{#if sourceDetails.data.attributes.speed.fly.total.length}}
+          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{/if}}
       </div>
       <h4 class="attribute-name box-title">{{ localize "PF1.SpeedFly" }}</h4>
       <div class="attribute-value">

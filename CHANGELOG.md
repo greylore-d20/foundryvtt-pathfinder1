@@ -12,6 +12,7 @@
 - Added new variables for formulas: `@armor.type` and `@shield.type`, which change depending on the highest level of armor or shield equipped
   - Hover over an actor's AC to see this info
 - Hovering over the encumbrance bar in an actor's inventory now shows a tooltip with information on the variable `@attributes.encumbrance.level` for use in formulas
+- Hovering over a speed type on an actor's sheet now shows what sources it's all from
 
 ## 0.74.8
 

@@ -9,57 +9,64 @@
 
   {{#each attacks as |atk|}}
   <div class="chat-attack">
-    <div class="flexrow">
-      {{#if atk.hasAttack}}
-      <div class="dice-roll attack-roll">
-        {{#if atk.attack.flavor}}
-        <div class="dice-flavor">{{atk.attack.flavor}}</div>
-        {{/if}}
-        <div class="dice-result">
-          <h4 class="dice-total{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}">{{atk.attack.total}}</h4>
-          {{{atk.attack.tooltip}}}
-        </div>
-      </div>
-      {{#if atk.hasCritConfirm}}
-      <div class="dice-roll crit-confirm-roll">
-        {{#if atk.critConfirm.flavor}}
-        <div class="dice-flavor">{{atk.critConfirm.flavor}}</div>
-        {{/if}}
-        <div class="dice-result">
-          <h4 class="dice-total{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.cfirConfirm.isFumble}} failure{{/if}}">{{atk.critConfirm.total}}</h4>
-          {{{atk.critConfirm.tooltip}}}
-        </div>
-      </div>
-      {{/if}}{{/if}}
+    {{#if atk.hasAttack}}
+    <div class="flexrow attack-row">
+      <h1>{{atk.attack.flavor}}</h1>
+      <a class="inline-roll inline-result{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
+      title="{{atk.attack.roll.formula}}" data-roll="{{atk.attack.rollJSON}}">
+      <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
+      </a>
     </div>
-
-    {{#if atk.hasAttack}}{{#if atk.hasDamage}}
-    <hr>
+    
+    {{#if atk.hasCritConfirm}}
+    <div class="flexrow">
+      <h3>{{atk.critConfirm.flavor}}</h3>
+      <a class="inline-roll inline-result{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.critConfirm.isFumble}} failure{{/if}}"
+      title="{{atk.critConfirm.roll.formula}}" data-roll="{{atk.critConfirm.rollJSON}}">
+      <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
+      </a>
+    </div>
     {{/if}}{{/if}}
 
-    <div class="flexrow">
-      {{#if atk.hasDamage}}
-      <div class="dice-roll damage-roll">
-        {{#if atk.damage.flavor}}
-        <div class="dice-flavor">{{atk.damage.flavor}}</div>
-        {{/if}}
-        <div class="dice-result">
-          <h4 class="dice-total">{{atk.damage.total}}</h4>
-          {{{atk.damage.tooltip}}}
-        </div>
-      </div>
-      {{#if atk.hasCritConfirm}}
-      <div class="dice-roll crit-damage-roll">
-        {{#if atk.critDamage.flavor}}
-        <div class="dice-flavor">{{atk.critDamage.flavor}}</div>
-        {{/if}}
-        <div class="dice-result">
-          <h4 class="dice-total">{{atk.critDamage.total}}</h4>
-          {{{atk.critDamage.tooltip}}}
-        </div>
-      </div>
-      {{/if}}{{/if}}
+    {{#if atk.hasDamage}}
+    <div class="flexrow damage-row">
+      <h2>{{atk.damage.flavor}}</h2>
+      <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+        {{atk.damage.total}}
+      </a>
     </div>
+
+    {{#each atk.damage.parts as |part|}}
+    {{#each part.rolls as |roll|}}
+    <div class="flexrow">
+      <span>{{part.damageType}}</span>
+      <a class="inline-roll inline-result" title="{{roll.roll.formula}}" data-roll="{{roll.json}}">
+        <i class="fas fa-dice-d20"></i> {{roll.roll.total}}
+      </a>
+    </div>
+    {{/each}}
+    {{/each}}
+
+    {{#if atk.hasCritConfirm}}
+    <div class="flexrow damage-row">
+      <h2>{{atk.critDamage.flavor}}</h2>
+      <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+        {{atk.critDamage.total}}
+      </a>
+    </div>
+    {{/if}}
+
+    {{#each atk.critDamage.parts as |part|}}
+    {{#each part.rolls as |roll|}}
+    <div class="flexrow">
+      <span>{{part.damageType}}</span>
+      <a class="inline-roll inline-result" title="{{roll.roll.formula}}" data-roll="{{roll.json}}">
+        <i class="fas fa-dice-d20"></i> {{roll.roll.total}}
+      </a>
+    </div>
+    {{/each}}
+    {{/each}}
+    {{/if}}
 
     {{#if atk.hasCards}}
     <hr>

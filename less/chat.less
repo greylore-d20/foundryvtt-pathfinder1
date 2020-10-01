@@ -100,14 +100,44 @@
       }
     }
   }
+
+  .attack-row, .damage-row {
+    align-items: center;
+
+    h1 {
+      margin-bottom: 4px;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    h2 {
+      font-size: 1em;
+      margin-bottom: 4px;
+      margin-top: 4px;
+    }
+  }
+
+  .inline-roll, .fake-inline-roll {
+    flex: 0;
+    height: 100%;
+
+    .dice-tooltip {
+      z-index: 1;
+    }
+  
+    &.success {
+      background-color: rgb(96, 192, 96);
+    }
+  
+    &.failure {
+      background-color: rgb(192, 96, 96);
+    }
+  }
 }
 
 #chat-log .message {
   .chat-attack {
-    padding: 4px;
     margin-bottom: 2px;
-    border: 1px solid #999;
-    border-radius: 3px;
 
     .dice-roll {
       width: 50%;
@@ -237,8 +267,8 @@
 
   .damage-type {
     font-size: 14px;
-    flex: 0 0 96px;
-    max-width: 64px;
+    flex: 0 0 50%;
+    max-width: 50%;
     overflow: hidden;
     text-align: left;
     margin-left: 4px;

@@ -269,6 +269,14 @@
 .pf1 .help-icon {
   flex: 0;
 }
+.pf1 .fake-inline-roll {
+  background: #DDD;
+  padding: 1px 4px;
+  border: 1px solid #4b4a44;
+  border-radius: 2px;
+  white-space: nowrap;
+  word-break: break-all;
+}
 /* ----------------------------------------- */
 /*  Trait Selectors Specifically             */
 /* ----------------------------------------- */
@@ -2270,11 +2278,41 @@
   border-right: none;
   padding-right: 0;
 }
+.pf1.chat-card .attack-row,
+.pf1.chat-card .damage-row {
+  align-items: center;
+}
+.pf1.chat-card .attack-row h1,
+.pf1.chat-card .damage-row h1 {
+  margin-bottom: 4px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.pf1.chat-card .attack-row h2,
+.pf1.chat-card .damage-row h2 {
+  font-size: 1em;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+.pf1.chat-card .inline-roll,
+.pf1.chat-card .fake-inline-roll {
+  flex: 0;
+  height: 100%;
+}
+.pf1.chat-card .inline-roll .dice-tooltip,
+.pf1.chat-card .fake-inline-roll .dice-tooltip {
+  z-index: 1;
+}
+.pf1.chat-card .inline-roll.success,
+.pf1.chat-card .fake-inline-roll.success {
+  background-color: #60c060;
+}
+.pf1.chat-card .inline-roll.failure,
+.pf1.chat-card .fake-inline-roll.failure {
+  background-color: #c06060;
+}
 #chat-log .message .chat-attack {
-  padding: 4px;
   margin-bottom: 2px;
-  border: 1px solid #999;
-  border-radius: 3px;
 }
 #chat-log .message .chat-attack .dice-roll {
   width: 50%;
@@ -2380,8 +2418,8 @@
 }
 .damage-tooltip .damage-type {
   font-size: 14px;
-  flex: 0 0 96px;
-  max-width: 64px;
+  flex: 0 0 50%;
+  max-width: 50%;
   overflow: hidden;
   text-align: left;
   margin-left: 4px;

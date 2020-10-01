@@ -169,6 +169,21 @@ export const registerSystemSettings = function() {
   });
 
   /**
+   * Option to hide chat buttons
+   */
+  game.settings.register("pf1", "hideChatButtons", {
+    name: "SETTINGS.pf1HideChatButtonsN",
+    hint: "SETTINGS.pf1HideChatButtonsH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      ui.chat.render();
+    },
+  });
+
+  /**
    * Option to change measure style
    */
   game.settings.register("pf1", "measureStyle", {

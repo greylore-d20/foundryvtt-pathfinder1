@@ -9,7 +9,6 @@ export class ChatAttack {
 
     this.attack = {
       flavor: "",
-      tooltip: "",
       total: 0,
       isCrit: false,
       isFumble: false,
@@ -17,7 +16,6 @@ export class ChatAttack {
     };
     this.critConfirm = {
       flavor: "",
-      tooltip: "",
       total: 0,
       isCrit: false,
       isFumble: false,
@@ -148,12 +146,11 @@ export class ChatAttack {
     else if (d20 === 1) critType = 2;
 
     // Add tooltip
-    let tooltip   = $(await roll.getTooltip()).prepend(`<div class="dice-formula">${roll.formula}</div>`)[0].outerHTML;
     data.flavor   = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
-    data.tooltip  = tooltip;
     data.total    = roll.total;
     data.isCrit   = critType === 1;
     data.isFumble = critType === 2;
+    data.rollJSON = escape(JSON.stringify(roll));
 
     // Add crit confirm
     if (!critical && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
@@ -195,11 +192,6 @@ export class ChatAttack {
     if (!critical) {
       rollData.critMult = 1;
     }
-    // Add normal damage to critical damage
-    else if (critical) {
-      const normalParts = this.damage.parts;
-      data.parts.push(...normalParts);
-    }
     
     // Roll damage
     const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;
@@ -239,10 +231,17 @@ export class ChatAttack {
     if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing")         : game.i18n.localize("PF1.Damage");
     else           flavor = this.item.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
 
-    // Add card
-    const totalDamage = data.parts.reduce((cur, p) => {
+    // Determine total damage
+    let totalDamage = data.parts.reduce((cur, p) => {
       return cur + p.amount;
     }, 0);
+    if (critical) {
+      totalDamage = this.damage.parts.reduce((cur, p) => {
+        return cur + p.amount;
+      }, totalDamage);
+    }
+
+    // Add card
     if (critical) {
       if (!this.cards.critical) this.cards.critical = { label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"), items: [] };
       if (this.item.isHealing) {
@@ -315,7 +314,12 @@ export class DamagePart {
     
     if (rolls != null) {
       if (!(rolls instanceof Array)) rolls = [rolls];
-      this.rolls = rolls;
+      this.rolls = rolls.map(o => {
+        return {
+          roll: o,
+          json: escape(JSON.stringify(o)),
+        };
+      });
     }
   }
 }

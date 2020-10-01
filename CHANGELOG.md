@@ -9,6 +9,7 @@
 ### Changelog
 
 - Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+- Attack chat cards got a big style overhaul, hopefully making it easier to read
 - Added new variables for formulas: `@armor.type` and `@shield.type`, which change depending on the highest level of armor or shield equipped
   - Hover over an actor's AC to see this info
 - Hovering over the encumbrance bar in an actor's inventory now shows a tooltip with information on the variable `@attributes.encumbrance.level` for use in formulas

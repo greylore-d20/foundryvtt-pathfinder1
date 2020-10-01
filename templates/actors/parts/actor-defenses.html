@@ -18,7 +18,9 @@
   {{#each data.attributes.ac as |ac id|}}
   <li class="attribute armor-class tooltip" data-armorclass="{{id}}">
     <div class="tooltipcontent">
-      @attributes.ac.{{id}}.total : {{ac.total}}
+      @attributes.ac.{{id}}.total : {{ac.total}}<br/>
+      @armor.type : {{../rollData.armor.type}}<br/>
+      @shield.type : {{../rollData.shield.type}}
 
       {{#if ac.sourceDetails.length}}
       <br/><br/>{{localize "PF1.FromSources"}}:<br/>

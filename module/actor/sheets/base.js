@@ -91,6 +91,7 @@ export class ActorSheetPF extends ActorSheet {
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
     };
     const rollData = this.actor.getRollData();
+    data.rollData = rollData;
 
     // The Actor and its Items
     data.actor = duplicate(this.actor.data);

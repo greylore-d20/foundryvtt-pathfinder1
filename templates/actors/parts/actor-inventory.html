@@ -164,7 +164,11 @@
 
 <hr>
 {{#unless isLootSheet}}
-<div class="flexcol tab-footer">
+<div class="flexcol tab-footer tooltip">
+  <div class="tooltipcontent">
+    @attributes.encumbrance.level : {{data.attributes.encumbrance.level}}
+  </div>
+
   <div class="form-group carry-bonus">
     <label>{{localize "PF1.BonusCarryStrength"}}</label>
     <input type="text" name="data.abilities.str.carryBonus" value="{{data.abilities.str.carryBonus}}" data-dtype="Number" placeholder="0"/>

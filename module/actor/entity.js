@@ -1740,6 +1740,31 @@ export class ActorPF extends Actor {
       }
     });
 
+    // Add more info for formulas
+    if (this.items) {
+      result.armor = { type: 0, };
+      result.shield = { type: 0, };
+
+      // Determine equipped armor type
+      const armor = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped);
+      for (let o of armor) {
+        const subtype = o.data.data.equipmentSubtype;
+        if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
+        else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
+        else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
+      }
+
+      // Determine equipped shield type
+      const shields = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped);
+      for (let o of shields) {
+        const subtype = o.data.data.equipmentSubtype;
+        if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
+        else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
+        else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;
+        else if (subtype === "towerShield" && result.shield.type < 4) result.shield.type = 4;
+      }
+    }
+
     return result;
   }
 

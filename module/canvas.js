@@ -130,4 +130,7 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
 
   // Otherwise update the Token
   else this.object.update({[input.name]: value});
+
+  // Clear the HUD
+  this.clear();
 };

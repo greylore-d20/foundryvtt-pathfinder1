@@ -14,6 +14,7 @@
   - Hover over an actor's AC to see this info
 - Hovering over the encumbrance bar in an actor's inventory now shows a tooltip with information on the variable `@attributes.encumbrance.level` for use in formulas
 - Hovering over a speed type on an actor's sheet now shows what sources it's all from
+- Improved the style of list header icons (such as those from an actor's inventory tab)
 
 ## 0.74.8
 

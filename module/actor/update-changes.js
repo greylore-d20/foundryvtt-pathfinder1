@@ -286,15 +286,33 @@ export const updateChanges = async function({data=null}={}) {
   }
 
   // Reduce final speed under certain circumstances
-  let armorItems = srcData1.items.filter(o => o.type === "equipment");
-  if ((updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) ||
-  (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "mediumArmor" && o.data.equipped).length && !flags.mediumArmorFullSpeed) ||
-  (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "heavyArmor" && o.data.equipped).length && !flags.heavyArmorFullSpeed)) {
-    for (let speedKey of Object.keys(srcData1.data.attributes.speed)) {
-      let value = updateData[`data.attributes.speed.${speedKey}.total`];
-      linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
+  {
+    let armorItems = srcData1.items.filter(o => o.type === "equipment");
+    let reducedSpeed = false;
+    let sInfo = { name: "", value: "Reduced Movement Speed" };
+    if (updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) {
+      reducedSpeed = true;
+      sInfo.name = game.i18n.localize("PF1.Encumbrance");
+    }
+    if (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "mediumArmor" && o.data.equipped).length && !flags.mediumArmorFullSpeed) {
+      reducedSpeed = true;
+      sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
+    }
+    if (armorItems.filter(o => getProperty(o.data, "equipmentSubtype") === "heavyArmor" && o.data.equipped).length && !flags.heavyArmorFullSpeed) {
+      reducedSpeed = true;
+      sInfo.name = game.i18n.localize("PF1.EquipTypeHeavy");
+    }
+    if (reducedSpeed) {
+      for (let speedKey of Object.keys(srcData1.data.attributes.speed)) {
+        let value = updateData[`data.attributes.speed.${speedKey}.total`];
+        linkData(srcData1, updateData, `data.attributes.speed.${speedKey}.total`, ActorPF.getReducedMovementSpeed(value));
+        if (value > 0) {
+          sourceInfo[`data.attributes.speed.${speedKey}.total`].negative.push(sInfo);
+        }
+      }
     }
   }
+
   // Reset spell slots and spell points
   for (let spellbookKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
     const spellbook = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}`);

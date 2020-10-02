@@ -271,7 +271,7 @@
 }
 .pf1 .fake-inline-roll {
   background: #DDD;
-  padding: 1px 4px;
+  padding: 1px 4px 0px 4px;
   border: 1px solid #4b4a44;
   border-radius: 2px;
   white-space: nowrap;
@@ -2283,7 +2283,11 @@
 }
 .pf1.chat-card .attack-row,
 .pf1.chat-card .damage-row {
-  align-items: center;
+  align-items: baseline;
+}
+.pf1.chat-card .attack-row a.inline-result,
+.pf1.chat-card .damage-row a.inline-result {
+  border-radius: 2px 2px 2px 0px;
 }
 .pf1.chat-card .attack-row h1,
 .pf1.chat-card .damage-row h1 {

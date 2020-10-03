@@ -79,7 +79,7 @@ export const addChatCardTitleGradient = function(app, html, data) {
   else titleText.css("color", "white");
 };
 
-export const applyAccessabilitySettings = function(app, html, data, conf) {
+export const applyAccessibilitySettings = function(app, html, data, conf) {
   const fontSize = conf.fontSize || 0;
 
   // Enlarge font sizes

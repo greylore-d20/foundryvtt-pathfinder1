@@ -1,8 +1,6 @@
-import { isMinimumCoreVersion } from "../lib.js";
-
-export class AccessabilityConfig extends FormApplication {
+export class AccessibilityConfig extends FormApplication {
   constructor(object, options) {
-    super(object || AccessabilityConfig.defaultSettings, options);
+    super(object || AccessibilityConfig.defaultSettings, options);
 
     this._init = false;
   }
@@ -12,7 +10,7 @@ export class AccessabilityConfig extends FormApplication {
     const data = {};
 
     if (!this._init) {
-      const settings = await game.settings.get("pf1", "accessabilityConfig");
+      const settings = await game.settings.get("pf1", "accessibilityConfig");
       this._settings = mergeObject(this.constructor.defaultSettings, settings);
       this._init = true;
     }
@@ -24,9 +22,9 @@ export class AccessabilityConfig extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      title:  game.i18n.localize("PF1.AccessabilityConfigName"),
-      id: 'accessability-config',
-      template: "systems/pf1/templates/settings/accessability.html",
+      title:  game.i18n.localize("PF1.AccessibilityConfigName"),
+      id: 'accessibility-config',
+      template: "systems/pf1/templates/settings/accessibility.html",
       width: 560,
       height: "auto",
     });
@@ -58,7 +56,7 @@ export class AccessabilityConfig extends FormApplication {
   async _updateObject(event, formData) {
     const settings = expandObject(formData);
     // Some mild sanitation for the numeric values.
-    await game.settings.set("pf1", "accessabilityConfig", settings);
-    ui.notifications.info("Updated Pathfinder accessability configuration.");
+    await game.settings.set("pf1", "accessibilityConfig", settings);
+    ui.notifications.info("Updated Pathfinder accessibility configuration.");
   }
 }

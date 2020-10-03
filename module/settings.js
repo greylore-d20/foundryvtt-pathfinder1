@@ -1,6 +1,6 @@
 import { HealthConfig } from "./config/health.js";
 import { ExperienceConfig } from "./config/experience.js";
-import { AccessabilityConfig } from "./config/accessability.js";
+import { AccessibilityConfig } from "./config/accessibility.js";
 
 export const registerSystemSettings = function() {
   /**
@@ -60,19 +60,19 @@ export const registerSystemSettings = function() {
     }
   });
 
-  // Accessability configuration
-  game.settings.registerMenu("pf1", "accessabilityConfig", {
-    name: "PF1.AccessabilityConfigName",
-    label: "PF1.AccessabilityConfigLabel",
-    hint: "PF1.AccessabilityConfigHint",
+  // Accessibility configuration
+  game.settings.registerMenu("pf1", "accessibilityConfig", {
+    name: "PF1.AccessibilityConfigName",
+    label: "PF1.AccessibilityConfigLabel",
+    hint: "PF1.AccessibilityConfigHint",
     restricted: false,
     icon: "fas fa-wheelchair",
-    type: AccessabilityConfig,
+    type: AccessibilityConfig,
   });
-  game.settings.register("pf1", "accessabilityConfig", {
-    name: "PF1.AccessabilityConfigName",
+  game.settings.register("pf1", "accessibilityConfig", {
+    name: "PF1.AccessibilityConfigName",
     scope: "client",
-    default: AccessabilityConfig.defaultSettings,
+    default: AccessibilityConfig.defaultSettings,
     type: Object,
     config: false,
     onChange: () => {

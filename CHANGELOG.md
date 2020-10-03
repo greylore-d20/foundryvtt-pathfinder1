@@ -4,7 +4,8 @@
 
 ### Changelog
 
-- Added accessability settings, on a per-client basis
+- Update the French translation, due to the efforts of rectulo (many thanks!)
+- Added accessibility settings, on a per-client basis
 
 ## 0.74.9
 

@@ -1142,6 +1142,7 @@
 .pf1.sheet.actor ul.skills-list li.sub-skill {
   height: 28px;
   padding: 3px 0;
+  align-items: end;
   background-color: rgba(170, 170, 170, 0.3);
 }
 .pf1.sheet.actor ul.skills-list li.skill:nth-child(2n+1),
@@ -1225,10 +1226,16 @@
 .pf1.sheet.actor ul.skills-list li.skill .skill-mod,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-mod {
   flex: 0 0 28px;
+  font-weight: bold;
+  margin: -1px 22px 0px 0px;
+  text-align: center;
+  border: 1px dotted #111;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-rank,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-rank {
   flex: 0 0 48px;
+  border-bottom: 1px solid #111;
+  margin-right: 12px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-controls,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-controls {

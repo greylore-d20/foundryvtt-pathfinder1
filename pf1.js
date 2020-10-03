@@ -183,6 +183,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Optionally hide chat buttons
   if (game.settings.get("pf1", "hideChatButtons")) html.find(".card-buttons").hide();
 
+  // Apply accessability settings to chat message
+  chat.applyAccessabilitySettings(app, html, data, game.settings.get("pf1", "accessabilityConfig"));
+
   // Alter chat card title color
   chat.addChatCardTitleGradient(app, html, data);
 

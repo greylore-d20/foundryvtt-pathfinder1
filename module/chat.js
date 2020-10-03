@@ -78,3 +78,27 @@ export const addChatCardTitleGradient = function(app, html, data) {
   if (Color(item.typeColor).isLight()) titleText.css("color", "black");
   else titleText.css("color", "white");
 };
+
+export const applyAccessabilitySettings = function(app, html, data, conf) {
+  const fontSize = conf.fontSize || 0;
+
+  // Enlarge font sizes
+  if (fontSize > 0) {
+    // Enlarge attack roll numbers
+    {
+      const size = 12 + (fontSize * 4);
+      html.find(".inline-roll, .fake-inline-roll").css("font-size", `${size}px`);
+    }
+
+    // Enlarge attack labels
+    {
+      const size = 1.5 + (fontSize * 0.3);
+      html.find(".attack-row h1").css("font-size", `${size}em`);
+    }
+    // Enlarge damage labels
+    {
+      const size = 1 + (fontSize * 0.3);
+      html.find(".damage-row h2").css("font-size", `${size}em`);
+    }
+  }
+};

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.10
+
+### Changelog
+
+- Added accessability settings, on a per-client basis
+
 ## 0.74.9
 
 ### Bug Fixes

@@ -816,10 +816,10 @@ export class ItemPF extends Item {
     props.push(
       CONFIG.PF1.consumableTypes[data.consumableType]
     );
-    if (["day", "week", "charges"].includes(data.uses.per)) {
-      props.push(data.uses.value + "/" + data.uses.max + " Charges");
-    }
-    else props.push(CONFIG.PF1.limitedUsePeriods[data.uses.per]);
+    // if (["day", "week", "charges"].includes(data.uses.per)) {
+      // props.push(data.uses.value + "/" + data.uses.max + " Charges");
+    // }
+    // else props.push(CONFIG.PF1.limitedUsePeriods[data.uses.per]);
     data.hasCharges = data.uses.value >= 0;
   }
 

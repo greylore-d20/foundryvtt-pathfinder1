@@ -2,6 +2,10 @@
 
 ## 0.74.10
 
+### Bug Fixes
+
+- Some consumable items showed remaining charges twice in the chat card
+
 ### Changelog
 
 - Update the French translation, due to the efforts of rectulo (many thanks!)

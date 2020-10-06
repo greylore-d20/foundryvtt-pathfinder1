@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Some consumable items showed remaining charges twice in the chat card
+- CL & Concentration notes were gaining spaces on every reload
 
 ### Changelog
 

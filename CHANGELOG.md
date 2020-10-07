@@ -6,12 +6,17 @@
 
 - Some consumable items showed remaining charges twice in the chat card
 - CL & Concentration notes were gaining spaces on every reload
+- Lay on Hands uses per day formula was incorrectly using the actor's hit die, instead of its paladin levels (fixed by Nico Weichbrodt (many thanks!))
 
 ### Changelog
 
-- Update the French translation, due to the efforts of rectulo (many thanks!)
-- Added accessibility settings, on a per-client basis
 - Show changelog of new updates since last run to user
+- Added accessibility settings, on a per-client basis
+
+### Localization
+
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+- Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
 
 ## 0.74.9
 

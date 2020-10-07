@@ -520,7 +520,6 @@ export class ItemPF extends Item {
     // Initialize tag
     if (this.type === "class" && !srcData.data.useCustomTag) {
       const name = srcData.name;
-      console.log(name);
       data["data.tag"] = createTag(name);
     }
 

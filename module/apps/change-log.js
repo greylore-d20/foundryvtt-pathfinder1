@@ -3,7 +3,7 @@ import { SemanticVersion } from "../semver.js";
 
 export class ChangeLogWindow extends FormApplication {
   constructor(lastVersion) {
-    super();
+    super({}, {});
     
     this.lastVersion = lastVersion;
   }

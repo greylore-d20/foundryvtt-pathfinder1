@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.74.11
+
+### Changelog
+
+- Add a notes page to loot sheets.
+
 ## 0.74.10
 
 ### Bug Fixes

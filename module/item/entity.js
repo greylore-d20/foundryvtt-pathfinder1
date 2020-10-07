@@ -132,6 +132,23 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  get auraStrength() {
+    const cl = getProperty(this.data, "data.cl") || 0;
+    if (cl < 1) {
+      return 0;
+    }
+    else if (cl < 6) {
+      return 1;
+    }
+    else if (cl < 12) {
+      return 2;
+    }
+    else if (cl < 21) {
+      return 3;
+    }
+    return 4;
+  }
+
   /**
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.
@@ -1691,6 +1708,14 @@ export class ItemPF extends Item {
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
 
+    // Get aura strength
+    {
+      const aura = getProperty(this.data, "data.aura.school");
+      if (typeof aura === "string" && aura.length > 0) {
+        result.item.auraStrength = this.auraStrength;
+      }
+    }
+
     return result;
   }
 
@@ -2147,7 +2172,7 @@ export class ItemPF extends Item {
     data.data.actionType = origData.data.actionType;
     for (let d of getProperty(origData, "data.damage.parts")) {
       d[0] = d[0].replace(/@sl/g, slcl[0]);
-      d[0] = d[0].replace(/@cl/g, slcl[1]);
+      d[0] = d[0].replace(/@cl/g, "@item.cl");
       data.data.damage.parts.push(d);
     }
 
@@ -2160,44 +2185,10 @@ export class ItemPF extends Item {
     data.data.effectNotes = origData.data.effectNotes;
     data.data.attackBonus = origData.data.attackBonus;
     data.data.critConfirmBonus = origData.data.critConfirmBonus;
+    data.data.aura.school = origData.data.school;
 
-    // Determine aura power
-    let auraPower = "faint";
-    for (let a of CONFIG.PF1.magicAuraByLevel.item) {
-      if (a.level <= slcl[1]) auraPower = a.power;
-    }
-    // Determine caster level label
-    let clLabel;
-    switch (slcl[1]) {
-      case 1:
-        clLabel = "1st";
-        break;
-      case 2:
-        clLabel = "2nd";
-        break;
-      case 3:
-        clLabel = "3rd";
-        break;
-      default:
-        clLabel = `${slcl[1]}th`;
-        break;
-    }
-    // Determine spell level label
-    let slLabel;
-    switch (slcl[0]) {
-      case 1:
-        slLabel = "1st";
-        break;
-      case 2:
-        slLabel = "2nd";
-        break;
-      case 3:
-        slLabel = "3rd";
-        break;
-      default:
-        slLabel = `${slcl[1]}th`;
-        break;
-    }
+    // Set Caster Level
+    data.data.cl = slcl[1];
 
     // Set description
     data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {
@@ -2206,12 +2197,8 @@ export class ItemPF extends Item {
       isWand: type === "wand",
       isPotion: type === "potion",
       isScroll: type === "scroll",
-      auraPower: auraPower,
-      aura: (CONFIG.PF1.spellSchools[origData.data.school] || "").toLowerCase(),
       sl: slcl[0],
       cl: slcl[1],
-      slLabel: slLabel,
-      clLabel: clLabel,
       config: CONFIG.PF1,
     });
 

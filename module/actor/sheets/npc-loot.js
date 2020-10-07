@@ -28,7 +28,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   }
 
   async getData() {
-    const data = super.getData();
+    const data = await super.getData();
 
     data.isLootSheet = true;
     data.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");

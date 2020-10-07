@@ -159,13 +159,17 @@
   text-align: left;
 }
 .pf1 .form-group label {
-  flex: 2;
+  flex: 0 0 200px;
   color: #4b4a44;
   font-weight: bold;
   white-space: nowrap;
 }
 .pf1 .form-group label.checkbox {
   flex: 0;
+}
+.pf1 .form-group label.aura-strength {
+  text-align: right;
+  margin-right: 4px;
 }
 .pf1 .form-group span {
   flex: 0 0 1px;
@@ -1866,6 +1870,16 @@
   margin: 4px 0 4px 0;
   flex: 0;
 }
+.pf1.sheet.actor .actor-notes .primary-content {
+  flex: 1 0 320px;
+}
+.pf1.sheet.actor table td.center {
+  text-align: center;
+}
+.pf1.sheet.actor table td img {
+  vertical-align: middle;
+  margin-right: 2px;
+}
 .locked img.sheet-profile {
   max-height: 360px;
   max-width: 240px;
@@ -1934,6 +1948,7 @@
 }
 .pf1.sheet.item .primary-body .item-properties .form-group label {
   line-height: 20px;
+  flex: 0;
 }
 .pf1.sheet.item .primary-body .item-properties .form-group input {
   text-align: right;

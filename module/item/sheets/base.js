@@ -50,6 +50,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   async getData() {
     const data = super.getData();
+    const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
     // Include sub-items
@@ -76,6 +77,19 @@ export class ItemSheetPF extends ItemSheet {
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
+    if (rollData.item.auraStrength != null) {
+      const auraStrength = rollData.item.auraStrength;
+      data.auraStrength = auraStrength;
+
+      if (CONFIG.PF1.auraStrengths[auraStrength] != null) {
+        const auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
+        data.auraStrength_name = auraStrength_name;
+
+        data.labels.identify = game.i18n.localize("PF1.IdentifyDCNumber").format(15 + rollData.item.cl);
+        // const auraSchool = CONFIG.PF1.spellSchools[rollData.item.aura.school];
+        // data.labels.aura = `${auraStrength_name} ${auraSchool}`;
+      }
+    }
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {

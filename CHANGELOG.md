@@ -12,6 +12,8 @@
 
 - Show changelog of new updates since last run to user
 - Added accessibility settings, on a per-client basis
+- Added adjustable Aura and Caster Level values to items
+- A table of magic items is now shown on the bottom of actors' notes tabs
 
 ### Localization
 

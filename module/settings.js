@@ -13,6 +13,23 @@ export const registerSystemSettings = function() {
     type: String,
     default: "0.0.0"
   });
+  /**
+   * Track when the last changelog was shown
+   */
+  game.settings.register("pf1", "changelogVersion", {
+    name: "Changelog Version",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.74.9",
+  });
+  game.settings.register("pf1", "dontShowChangelog", {
+    name: "Don't Automatically Show Changelog",
+    scope: "client",
+    config: false,
+    type: Boolean,
+    default: false,
+  });
 
   // Health configuration
   game.settings.registerMenu("pf1",

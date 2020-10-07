@@ -11,6 +11,7 @@
 
 - Update the French translation, due to the efforts of rectulo (many thanks!)
 - Added accessibility settings, on a per-client basis
+- Show changelog of new updates since last run to user
 
 ## 0.74.9
 

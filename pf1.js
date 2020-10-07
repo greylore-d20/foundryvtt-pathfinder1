@@ -27,6 +27,7 @@ import { initializeSocket } from "./module/socket.js";
 import { updateChanges } from "./module/actor/update-changes.js";
 import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
+import { ChangeLogWindow } from "./module/apps/change-log.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -136,6 +137,7 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function() {
+  // Migrate data
   const NEEDS_MIGRATION_VERSION = "0.74.8";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
@@ -149,6 +151,20 @@ Hooks.once("ready", async function() {
     await migrations.migrateWorld();
   }
 
+  // Show changelog
+  if (!game.settings.get("pf1", "dontShowChangelog")) {
+    const v = game.settings.get("pf1", "changelogVersion") || "0.0.1";
+    const changelogVersion = SemanticVersion.fromString(v);
+    const curVersion = SemanticVersion.fromString(game.system.data.version);
+    
+    if (curVersion.isHigherThan(changelogVersion)) {
+      const app = new ChangeLogWindow(changelogVersion);
+      app.render(true);
+      game.settings.set("pf1", "changelogVersion", curVersion.toString());
+    }
+  }
+
+  // Refresh actors on startup
   game.actors.entities.forEach(obj => { updateChanges.call(obj, { sourceOnly: true }); });
   
   Hooks.on('renderTokenHUD', (app, html, data) => { TokenQuickActions.addTop3Attacks(app, html, data) });
@@ -356,6 +372,18 @@ Hooks.on("renderTokenConfig", async (app, html) => {
     object: duplicate(app.object.data),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
+});
+
+// Render Sidebar
+Hooks.on("renderSidebarTab", (app, html) => {
+  // Add changelog button
+  if (app instanceof Settings) {
+    let button = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
+    html.find("#game-details").append(button);
+    button.click(() => {
+      new ChangeLogWindow().render(true);
+    });
+  }
 });
 
 /**

@@ -110,6 +110,10 @@
       color: @colorOlive;
       font-weight: bold;
       white-space: nowrap;
+
+      &.checkbox {
+        flex: 0;
+      }
     }
     span {
       flex: 0 0 1px;
@@ -142,7 +146,6 @@
       flex: 0 0 100%;
     }
     label.checkbox {
-      flex: auto;
       text-align: left;
     }
 
@@ -702,5 +705,15 @@
 
   &:hover {
     border-color: #3030ff;
+  }
+}
+
+/* ----------------------------------------- */
+/* Changelog
+/* ----------------------------------------- */
+.pf1.changelog {
+  .content {
+    overflow-y: auto;
+    max-height: 640px;
   }
 }

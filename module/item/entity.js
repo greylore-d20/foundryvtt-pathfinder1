@@ -2253,9 +2253,11 @@ export class ItemPF extends Item {
 
         const itemData = duplicate(item.data);
         delete itemData._id;
-        const newItem = await this.actor.createOwnedItem(itemData);
+        const newItemData = await this.actor.createOwnedItem(itemData);
+        const newItem = this.actor.items.find(o => o._id === newItemData._id);
 
-        await this.setFlag("pf1", `links.classAssociations.${newItem._id}`, co.level);
+        await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
+        await this.createItemLink("children", "data", newItem, newItem._id);
       }
     }
 
@@ -2276,6 +2278,97 @@ export class ItemPF extends Item {
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
     }
+  }
+
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * @returns {boolean} Whether a link to the item is possible here.
+   */
+  canCreateItemLink(linkType, dataType, targetItem, itemLink) {
+    const actor = this.actor;
+    const sameActor = actor && targetItem.actor && targetItem.actor._id === actor._id;
+
+    // Don't create link to self
+    const itemId = itemLink.split(".").slice(-1)[0];
+    if (itemId === this._id) return false;
+
+    // Don't create existing links
+    const links = getProperty(this.data, `data.links.${linkType}`) || [];
+    if (links.filter(o => o.id === itemLink).length) return false;
+
+    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
+
+    if (linkType === "classAssociations" && dataType === "compendium") return true;
+
+    return false;
+  }
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * @returns {Array} An array to insert into this item's link data.
+   */
+  generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
+
+    const result = {
+      id: itemLink,
+      dataType: dataType,
+      name: targetItem.name,
+      img: targetItem.data.img,
+      hiddenLinks: {},
+    };
+
+    if (linkType === "classAssociations") {
+      result.level = 1;
+    }
+
+    if (linkType === "ammunition") {
+      result.recoverChance = 50;
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a link to another item.
+   * @param {string} linkType - The type of link.
+   * e.g. "children", "charges", "classAssociations" or "ammunition".
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * e.g. "world.NExqvEMCMbDuDxv5" (world item), "pf1.feats.NExqvEMCMbDuDxv5" (compendium item) or
+   * "NExqvEMCMbDuDxv5" (item on same actor)
+   * @returns {Boolean} Whether a link was created.
+   */
+  async createItemLink(linkType, dataType, targetItem, itemLink) {
+
+    if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
+      const updateData = {};
+      let _links = duplicate(getProperty(this.data, `data.links.${linkType}`) || []);
+      const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
+      _links.push(link);
+      updateData[`data.links.${linkType}`] = _links;
+
+      // Call link creation hook
+      await this.update(updateData);
+      Hooks.call("createItemLink", this, link, linkType);
+
+      /**
+       * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
+       * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
+       */
+      window.setTimeout(() => { if (this.actor) this.actor.sheet.render(); }, 50);
+
+      return true;
+    }
+
+    return false;
   }
 
   async getLinkedItems(type, extraData=false) {

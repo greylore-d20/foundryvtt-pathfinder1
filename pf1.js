@@ -307,19 +307,6 @@ Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
   await actor.update({});
 });
 
-Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
-  if (userId !== game.user._id) return;
-  if (!(actor instanceof Actor)) return;
-
-  const item = actor.items.find(o => o._id === itemData._id);
-  if (!item) return;
-
-  // Effectively lose all levels
-  if (item.type === "class") {
-    item._onLevelChange(item.data.data.level, -1);
-  }
-});
-
 Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;

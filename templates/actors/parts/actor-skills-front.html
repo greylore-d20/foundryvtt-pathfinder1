@@ -1,6 +1,6 @@
 {{!-- Skill Rank Info --}}
-{{#unless useBGSkills}}
 <div class="flexcol skill-rank">
+  {{#unless useBGSkills}}
   <ol class="form-group">
     <li class="flexrow skill-rank-formula">
       <label>{{localize "PF1.SkillBonusRankFormula"}}</label>
@@ -9,10 +9,16 @@
   </ol>
   <ol class="form-group">
     <li class="flexrow skill-rank-info">
-      <label>{{localize "PF1.SkillRankPlural"}}</label>
-      <input type="text" disabled value="{{skillRanks.allowed}}"/>
-      <label>{{localize "PF1.Used"}}</label>
-      <input type="text" disabled value="{{skillRanks.used}}"/>
+      <table>
+        <tr>
+          <th>{{localize "PF1.SkillRankPlural"}}</th>
+          <th>{{localize "PF1.Used"}}</th>
+        </tr>
+        <tr>
+          <td class="center">{{skillRanks.allowed}}</td>
+          <td class="center">{{skillRanks.used}}</td>
+        </tr>
+      </table>
     </li>
   </ol>
 </div>
@@ -26,16 +32,22 @@
   </ol>
   <ol class="form-group">
     <li class="flexrow skill-rank-info">
-      <label>{{localize "PF1.SkillRankPlural"}}</label>
-      <input type="text" disabled value="{{skillRanks.allowed}}"/>
-      <label>{{localize "PF1.Used"}}</label>
-      <input type="text" disabled value="{{skillRanks.used}}"/>
-      <label>{{localize "PF1.AdventureRanksToBG"}}</label>
-      <input type="text" disabled value="{{skillRanks.sentToBG}}"/>
-      <label>{{localize "PF1.BGSkillRanks"}}</label>
-      <input type="text" disabled value="{{skillRanks.bgAllowed}}"/>
-      <label>{{localize "PF1.BGUsed"}}</label>
-      <input type="text" disabled value="{{skillRanks.bgUsed}}"/>
+      <table>
+        <tr>
+          <th>{{localize "PF1.SkillRankPlural"}}</th>
+          <th>{{localize "PF1.Used"}}</th>
+          <th>{{localize "PF1.AdventureRanksToBG"}}</th>
+          <th>{{localize "PF1.BGSkillRanks"}}</th>
+          <th>{{localize "PF1.BGUsed"}}</th>
+        </tr>
+        <tr>
+          <td class="center">{{skillRanks.allowed}}</td>
+          <td class="center">{{skillRanks.used}}</td>
+          <td class="center">{{skillRanks.sentToBG}}</td>
+          <td class="center">{{skillRanks.bgAllowed}}</td>
+          <td class="center">{{skillRanks.bgUsed}}</td>
+        </tr>
+      </table>
     </li>
   </ol>
 </div>

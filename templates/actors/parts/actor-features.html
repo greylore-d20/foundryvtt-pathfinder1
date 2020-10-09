@@ -105,16 +105,20 @@
         <label>{{localize "PF1.BonusFeatFormula"}}</label>
         <input type="text" name="data.details.bonusFeatFormula" value="{{../data.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />
       </div>
-      <div class="flexrow form-group">
-        <label>{{localize "PF1.Feats"}}</label>
-        <input type="text" disabled value="{{../featCount.value}}" />
-        <label>{{localize "PF1.ByLevel"}}</label>
-        <input type="text" disabled value="{{../featCount.byLevel}}" />
-        <label>{{localize "PF1.ByBonus"}}</label>
-        <input type="text" disabled value="{{../featCount.byFormula}}" />
-        <label>{{localize "PF1.Total"}}</label>
-        <input type="text" disabled value="{{../featCount.total}}" />
-      </div>
+      <table>
+        <tr>
+          <th>{{localize "PF1.Feats"}}</th>
+          <th>{{localize "PF1.ByLevel"}}</th>
+          <th>{{localize "PF1.ByBonus"}}</th>
+          <th>{{localize "PF1.Total"}}</th>
+        </tr>
+        <tr>
+          <td class="center">{{../featCount.value}}</td>
+          <td class="center">{{../featCount.byLevel}}</td>
+          <td class="center">{{../featCount.byFormula}}</td>
+          <td class="center">{{../featCount.total}}</td>
+        </tr>
+      </table>
     </div>
     {{/if}}
   </div>

@@ -10,6 +10,7 @@
 ### Changelog
 
 - Add a notes page to loot sheets.
+- Improved formatting of the feat count tracker located at the bottom of an actor's feat tab
 
 ## 0.74.10
 

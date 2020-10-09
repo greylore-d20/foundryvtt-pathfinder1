@@ -77,6 +77,9 @@ export class ItemPF extends Item {
   }
 
   get charges() {
+    // No actor? No charges!
+    if (!this.actor) return 0;
+
     // Get linked charges
     const link = getProperty(this, "links.charges");
     if (link) return link.charges;
@@ -88,6 +91,9 @@ export class ItemPF extends Item {
   }
 
   get maxCharges() {
+    // No actor? No charges!
+    if (!this.actor) return 0;
+
     // Get linked charges
     const link = getProperty(this, "links.charges");
     if (link) return link.maxCharges;
@@ -154,6 +160,9 @@ export class ItemPF extends Item {
    * @returns {Number} The Difficulty Class for this item.
    */
   getDC(rollData=null) {
+    // No actor? No DC!
+    if (!this.actor) return 0;
+
     if (!rollData) rollData = this.getRollData();
     const data = this.data.data;
 
@@ -597,6 +606,9 @@ export class ItemPF extends Item {
   }
 
   _updateMaxUses(data, {srcData=null}={}) {
+    // No actor? No charges!
+    if (!this.actor) return;
+
     let doLinkData = true;
     if (srcData == null) {
       srcData = this.data;

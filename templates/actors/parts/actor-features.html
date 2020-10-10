@@ -106,18 +106,22 @@
         <input type="text" name="data.details.bonusFeatFormula" value="{{../data.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />
       </div>
       <table>
-        <tr>
-          <th>{{localize "PF1.Feats"}}</th>
-          <th>{{localize "PF1.ByLevel"}}</th>
-          <th>{{localize "PF1.ByBonus"}}</th>
-          <th>{{localize "PF1.Total"}}</th>
-        </tr>
-        <tr>
-          <td class="center">{{../featCount.value}}</td>
-          <td class="center">{{../featCount.byLevel}}</td>
-          <td class="center">{{../featCount.byFormula}}</td>
-          <td class="center">{{../featCount.total}}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{localize "PF1.Feats"}}</th>
+            <th>{{localize "PF1.ByLevel"}}</th>
+            <th>{{localize "PF1.ByBonus"}}</th>
+            <th>{{localize "PF1.Total"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="center">{{../featCount.value}}</td>
+            <td class="center">{{../featCount.byLevel}}</td>
+            <td class="center">{{../featCount.byFormula}}</td>
+            <td class="center">{{../featCount.total}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     {{/if}}

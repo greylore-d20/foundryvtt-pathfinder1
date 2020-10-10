@@ -17,7 +17,7 @@
   }
 
   /* ----------------------------------------- */
-  /*  Details Tab                              */
+  /*  Summary Tab                              */
   /* ----------------------------------------- */
 
   .tab.summary {
@@ -176,6 +176,7 @@
 
     .hd-level {
       flex: 0 0 256px;
+      overflow-x: hidden;
 
       table {
         margin: 0 0 4px 8px;
@@ -288,6 +289,15 @@
     }
   }
 
+  .tab.inventory,
+  .tab.feats {
+    height: 100%;
+
+    .tab.feats-group {
+      height: 100%;
+    }
+  }
+
   .alignment {
     color: black;
   }
@@ -307,9 +317,11 @@
   }
 
   .attributes {
+
     input[type="text"] {
       height: 24px;
     }
+
     input.temphp {
       width: 48%;
     }
@@ -355,9 +367,28 @@
 
   ul.attributes {
     list-style: none;
-    margin: 8px 0 0;
+    margin: 0;
     padding: 0;
     flex: 0;
+
+    h3 {
+      margin: 0;
+    }
+
+    li.natural-armor, li.generic-defenses {
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      flex: 0.5;
+
+      h3 {
+        flex: 0;
+        margin: 0 8px;
+      }
+
+      input[type="text"] {
+        flex: 0 0 32px;
+      }
+    }
 
     li.attribute.health {
       height: 100%;
@@ -1381,6 +1412,12 @@
     }
   }
 
+  a.rollable {
+    span {
+      margin: 0 2px;
+    }
+  }
+
   .rollable.image-d20 {
     flex: 0 0 24px;
     display: inline-block;
@@ -1413,15 +1450,8 @@
   }
 
   table {
-    th {
-      text-align: center;
-    }
 
     td {
-      &.center {
-        text-align: center;
-      }
-
       img {
         vertical-align: middle;
         margin-right: 2px;

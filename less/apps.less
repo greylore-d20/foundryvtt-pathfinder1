@@ -244,6 +244,10 @@
     white-space: nowrap;
     word-break: break-all;
   }
+
+  ol, ul {
+    padding-inline-start: 0;
+  }
 }
 
 /* ----------------------------------------- */
@@ -277,7 +281,6 @@
     }
 
     .tab {
-      height: 100%;
       overflow-y: auto;
       align-content: flex-start;
     }
@@ -673,14 +676,6 @@
       &.ability-value {
         flex: 0 0 32px;
         padding: 0 1px 0 1px;
-      }
-    }
-  }
-
-  table {
-    tr {
-      td {
-        text-align: center;
       }
     }
   }

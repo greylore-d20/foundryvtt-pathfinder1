@@ -283,6 +283,10 @@
   white-space: nowrap;
   word-break: break-all;
 }
+.pf1 ol,
+.pf1 ul {
+  padding-inline-start: 0;
+}
 /* ----------------------------------------- */
 /*  Trait Selectors Specifically             */
 /* ----------------------------------------- */
@@ -327,7 +331,6 @@
   overflow: hidden;
 }
 .pf1.sheet .window-content .tab {
-  height: 100%;
   overflow-y: auto;
   align-content: flex-start;
 }
@@ -620,9 +623,6 @@
   flex: 0 0 32px;
   padding: 0 1px 0 1px;
 }
-.pf1.pointbuy-calculator table tr td {
-  text-align: center;
-}
 .dialog-get-actor {
   border-color: rgba(0, 0, 0, 0);
   border-width: 1px;
@@ -657,7 +657,7 @@
   /*  Sheet Header                             */
   /* ----------------------------------------- */
   /* ----------------------------------------- */
-  /*  Details Tab                              */
+  /*  Summary Tab                              */
   /* ----------------------------------------- */
   /* ----------------------------------------- */
   /*  General Styles                           */
@@ -838,6 +838,7 @@
 }
 .pf1.sheet.actor .tab.summary .hd-level {
   flex: 0 0 256px;
+  overflow-x: hidden;
 }
 .pf1.sheet.actor .tab.summary .hd-level table {
   margin: 0 0 4px 8px;
@@ -923,6 +924,14 @@
 .pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li .icon-label {
   visibility: hidden;
 }
+.pf1.sheet.actor .tab.inventory,
+.pf1.sheet.actor .tab.feats {
+  height: 100%;
+}
+.pf1.sheet.actor .tab.inventory .tab.feats-group,
+.pf1.sheet.actor .tab.feats .tab.feats-group {
+  height: 100%;
+}
 .pf1.sheet.actor .alignment {
   color: black;
 }
@@ -962,9 +971,27 @@
 }
 .pf1.sheet.actor ul.attributes {
   list-style: none;
-  margin: 8px 0 0;
+  margin: 0;
   padding: 0;
   flex: 0;
+}
+.pf1.sheet.actor ul.attributes h3 {
+  margin: 0;
+}
+.pf1.sheet.actor ul.attributes li.natural-armor,
+.pf1.sheet.actor ul.attributes li.generic-defenses {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  flex: 0.5;
+}
+.pf1.sheet.actor ul.attributes li.natural-armor h3,
+.pf1.sheet.actor ul.attributes li.generic-defenses h3 {
+  flex: 0;
+  margin: 0 8px;
+}
+.pf1.sheet.actor ul.attributes li.natural-armor input[type="text"],
+.pf1.sheet.actor ul.attributes li.generic-defenses input[type="text"] {
+  flex: 0 0 32px;
 }
 .pf1.sheet.actor ul.attributes li.attribute.health {
   height: 100%;
@@ -1850,6 +1877,9 @@
 .pf1.sheet.actor .spellbook-group .spell-range input[type="text"] {
   flex: 1 1 48px;
 }
+.pf1.sheet.actor a.rollable span {
+  margin: 0 2px;
+}
 .pf1.sheet.actor .rollable.image-d20 {
   flex: 0 0 24px;
   display: inline-block;
@@ -1866,12 +1896,6 @@
 }
 .pf1.sheet.actor .actor-notes .primary-content {
   flex: 1 0 320px;
-}
-.pf1.sheet.actor table th {
-  text-align: center;
-}
-.pf1.sheet.actor table td.center {
-  text-align: center;
 }
 .pf1.sheet.actor table td img {
   vertical-align: middle;
@@ -2713,6 +2737,10 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
   font-weight: bold;
   font-size: 12px;
   color: white;
+}
+.pf1 table tr td:not(.nocenter),
+.pf1 table tr th:not(.nocenter) {
+  text-align: center;
 }
 #token-hud .col.actions {
   height: calc(100% + 150px);

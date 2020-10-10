@@ -11,12 +11,12 @@
   </tr>
   {{#each items as |item|}}
   <tr class="item" data-item-id="{{item._id}}">
-    <td><img src="{{item.img}}" width="24" height="24">{{item.name}}{{#if item.quantity}} (x{{item.quantity}}){{/if}}</td>
-    <td class="center">{{{item.school}}}</td>
-    <td class="center">{{item.cl}}</td>
+    <td class="nocenter"><img src="{{item.img}}" width="24" height="24">{{item.name}}{{#if item.quantity}} (x{{item.quantity}}){{/if}}</td>
+    <td>{{{item.school}}}</td>
+    <td>{{item.cl}}</td>
     {{#if ../isGM}}
-    <td class="center">{{item.identifyDC}}</td>
-    <td class="center">
+    <td>{{item.identifyDC}}</td>
+    <td>
       <a class="item-control item-identify">
         {{#if item.identified}}
         <i class="fas fa-check"></i>

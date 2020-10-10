@@ -7,16 +7,20 @@
     {{#if ac}}
     <div class="defense ac">
       <table>
-        <tr>
-          <th>{{localize "PF1.ACNormal"}}</th>
-          <th>{{localize "PF1.ACTouch"}}</th>
-          <th>{{localize "PF1.ACFlatFooted"}}</th>
-        </tr>
-        <tr>
-          <td>{{ac.normal}}</td>
-          <td>{{ac.touch}}</td>
-          <td>{{ac.flatFooted}}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{localize "PF1.ACNormal"}}</th>
+            <th>{{localize "PF1.ACTouch"}}</th>
+            <th>{{localize "PF1.ACFlatFooted"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ac.normal}}</td>
+            <td>{{ac.touch}}</td>
+            <td>{{ac.flatFooted}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -35,14 +39,18 @@
     {{#if cmd}}
     <div class="defense cmd">
       <table>
-        <tr>
-          <th>{{localize "PF1.CMDAbbr"}}</th>
-          <th>{{localize "PF1.CMDFlatFooted"}}</th>
-        </tr>
-        <tr>
-          <td>{{cmd.normal}}</td>
-          <td>{{cmd.flatFooted}}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{localize "PF1.CMDAbbr"}}</th>
+            <th>{{localize "PF1.CMDFlatFooted"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{cmd.normal}}</td>
+            <td>{{cmd.flatFooted}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -61,12 +69,16 @@
     {{#if misc.sr}}
     <div class="defense misc">
       <table>
-        <tr>
-          <th>{{localize "PF1.SpellResistance"}}</th>
-        </tr>
-        <tr>
-          <td>{{misc.sr}}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{localize "PF1.SpellResistance"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{misc.sr}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -107,14 +119,18 @@
     {{#if regen}}
     <div class="defense regen">
       <table>
-        <tr>
-          <th>{{localize "PF1.Regeneration"}}</th>
-          <th>{{localize "PF1.FastHealing"}}</th>
-        </tr>
-        <tr>
-          <td>{{#if regen.regen}}{{regen.regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
-          <td>{{#if regen.fastHealing}}{{regen.fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{localize "PF1.Regeneration"}}</th>
+            <th>{{localize "PF1.FastHealing"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{#if regen.regen}}{{regen.regen}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
+            <td>{{#if regen.fastHealing}}{{regen.fastHealing}}{{else}}{{localize "PF1.NonApplicable"}}{{/if}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     {{/if}}

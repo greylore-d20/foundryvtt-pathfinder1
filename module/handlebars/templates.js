@@ -18,6 +18,7 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/actors/parts/actor-skills-front.html",
     "systems/pf1/templates/actors/parts/actor-skills.html",
     "systems/pf1/templates/actors/parts/actor-defenses.html",
+    "systems/pf1/templates/actors/parts/actor-defenses_tables.html",
     "systems/pf1/templates/actors/parts/actor-buffs.html",
     "systems/pf1/templates/actors/parts/actor-attacks.html",
 

@@ -93,13 +93,23 @@
     </div>
   </div>
   
-  <div class="flexrow spell-range pf1-sheet-group">
-    <label><h3>{{localize "PF1.DistClose"}}</h3></label>
-    <input type="text" value="{{spellbook.orig.range.close}}" disabled />
-    <label><h3>{{localize "PF1.DistMedium"}}</h3></label>
-    <input type="text" value="{{spellbook.orig.range.medium}}" disabled />
-    <label><h3>{{localize "PF1.DistLong"}}</h3></label>
-    <input type="text" value="{{spellbook.orig.range.long}}" disabled />
+  <div class="flexrow spell-range">
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "PF1.DistClose"}}</th>
+          <th>{{localize "PF1.DistMedium"}}</th>
+          <th>{{localize "PF1.DistLong"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{spellbook.orig.range.close}}</td>
+          <td>{{spellbook.orig.range.medium}}</td>
+          <td>{{spellbook.orig.range.long}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

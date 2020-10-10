@@ -1,0 +1,109 @@
+<table>
+    <thead>
+        <tr>
+            {{#each data.attributes.ac as |ac id|}}
+            <th>
+                {{ac.label}}
+            </th>
+            {{/each}}
+            <th>
+                {{localize "PF1.CMDAbbr"}}
+            </th>
+            <th>
+                {{localize "PF1.CMDFFAbbr"}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#each data.attributes.ac as |ac id|}}
+            <td class="tooltip">
+                <div class="tooltipcontent">
+                @attributes.ac.{{id}}.total : {{ac.total}}<br/>
+                @armor.type : {{../rollData.armor.type}}<br/>
+                @shield.type : {{../rollData.shield.type}}
+            
+                {{#if ac.sourceDetails.length}}
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                {{#each ac.sourceDetails as |src|}}
+                {{src.name}}: {{src.value}}<br/>
+                {{/each}}
+                {{/if}}
+                </div>
+
+                {{ac.total}}
+            </td>
+            {{/each}}
+            <td class="tooltip">
+                <div class="tooltipcontent">
+                @attributes.cmd.total : {{data.attributes.cmd.total}}
+            
+                {{#if sourceDetails.data.attributes.cmd.total.length}}
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                {{#each sourceDetails.data.attributes.cmd.total as |src|}}
+                {{src.name}}: {{src.value}}<br/>
+                {{/each}}
+                {{/if}}
+                </div>
+
+                {{data.attributes.cmd.total}}
+            </td>
+            <td class="tooltip">
+                <div class="tooltipcontent">
+                @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
+            
+                {{#if sourceDetails.data.attributes.cmd.flatFootedTotal.length}}
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                {{#each sourceDetails.data.attributes.cmd.flatFootedTotal as |src|}}
+                {{src.name}}: {{src.value}}<br/>
+                {{/each}}
+                {{/if}}
+                </div>
+
+                {{data.attributes.cmd.flatFootedTotal}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            {{#each data.attributes.savingThrows as |savingThrow id|}}
+            <th class="saving-throw" data-savingthrow="{{id}}">
+                <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
+            </th>
+            {{/each}}
+            <th colspan="2">
+                {{localize "PF1.SpellResistance"}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#each data.attributes.savingThrows as |savingThrow id|}}
+            <td class="tooltip">
+                <div class="tooltipcontent">
+                @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
+            
+                {{#if savingThrow.sourceDetails.length}}
+                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                {{#each savingThrow.sourceDetails as |src|}}
+                {{src.name}}: {{src.value}}<br/>
+                {{/each}}
+                {{/if}}
+                </div>
+
+                {{savingThrow.total}}
+            </td>
+            {{/each}}
+            <td class="tooltip" colspan="2">
+                <div class="tooltipcontent">
+                @attributes.sr.total : {{data.attributes.sr.total}}
+                </div>
+
+                {{data.attributes.sr.total}}
+            </td>
+        </tr>
+    </tbody>
+</table>

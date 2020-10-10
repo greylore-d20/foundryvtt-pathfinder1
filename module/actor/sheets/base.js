@@ -653,16 +653,16 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.ability-name').click(this._onRollAbilityTest.bind(this));
 
     // BAB Check
-    html.find(".attribute.bab .attribute-name").click(this._onRollBAB.bind(this));
+    html.find(".attribute.bab .rollable").click(this._onRollBAB.bind(this));
 
     // CMB Check
-    html.find(".attribute.cmb .attribute-name").click(this._onRollCMB.bind(this));
+    html.find(".attribute.cmb .rollable").click(this._onRollCMB.bind(this));
 
     // Initiative Check
-    html.find(".attribute.initiative .attribute-name").click(this._onRollInitiative.bind(this));
+    html.find(".attribute.initiative .rollable").click(this._onRollInitiative.bind(this));
 
     // Saving Throw
-    html.find(".attribute.saving-throw .attribute-name").click(this._onRollSavingThrow.bind(this));
+    html.find(".saving-throw .rollable").click(this._onRollSavingThrow.bind(this));
 
     // Add arbitrary skill
     html.find(".skill.arbitrary .skill-create").click(ev => this._onArbitrarySkillCreate(ev));

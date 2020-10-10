@@ -1,4 +1,4 @@
-<div class="flexrow details-header">
+<div class="flexrow summary-header">
   <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
   
   <div class="flexcol">
@@ -8,56 +8,76 @@
       </h1>
       
       {{#if isCharacter}}
-      <div class="hd-level">
-        <div class="charlevel">
-          <div class="level {{#if disableExperience}}noxp{{/if}} tooltip">
-            <span class="tooltipcontent">
-              @attributes.hd.total : {{data.attributes.hd.total}}
-            </span>
-            {{localize "PF1.Level"}} {{data.details.level.value}}
-          </div>
-          {{#unless disableExperience}}
-          <div class="experience">
-            <input class="select-on-click" name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
-            placeholder="0"/>
-            <span class="max"> / {{data.details.xp.max}}</span>
-          </div>
-          <div class="xpbar">
-            <span class="bar" style="width: {{data.details.xp.pct}}%"></span>
-          </div>
-          {{/unless}}
-        </div>
-      </div>
-      {{else}}
-      <div class="hd-level tooltip flexcol">
+      <div class="hd-level character tooltip">
         <span class="tooltipcontent">
           @attributes.hd.total : {{data.attributes.hd.total}}
         </span>
-        <div class="hd flexrow">
-          <label>HD</label>
-          <input disabled type="text" value="{{data.attributes.hd.total}}" placeholder="1" data-dtype="Number" />
+
+        <table>
+          <tr>
+            <th>{{localize "PF1.Level"}}</th>
+            {{#unless disableExperience}}
+            <th>{{localize "PF1.Experience"}}</th>
+            {{/unless}}
+          </tr>
+          <tr>
+            <td>
+              {{data.details.level.value}}
+            </td>
+            {{#unless disableExperience}}
+            <td>
+              <div class="flexrow experience">
+                <input class="select-on-click" name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
+                placeholder="0"/>
+                <span class="separator"> / </span>
+                <span class="max">{{data.details.xp.max}}</span>
+              </div>
+            </td>
+            {{/unless}}
+          </tr>
+        </table>
+
+        {{#unless disableExperience}}
+        <div class="xpbar">
+          <span class="bar" style="width: {{data.details.xp.pct}}%"></span>
         </div>
-        
-        <div class="charlevel tooltip">
-          <div class="tooltipcontent">
-            @details.cr.base : {{data.details.cr.base}}<br/>
-            @details.cr.total : {{data.details.cr.total}}
-          </div>
-          <div class="level config">
-            <a class="config-icon config-control" for="cr"><i class="fas fa-cog"></i></a>
-            <label>CR</label>
-            <input disabled for="data.details.cr" type="text" value="{{labels.cr}}" placeholder="1"/>
-          </div>
-          <div class="experience">
-            <span>{{data.details.xp.value}} XP</span>
-          </div>
-        </div>
+        {{/unless}}
+      </div>
+      {{else}}
+      <div class="hd-level npc tooltip flexrow">
+        <table>
+          <tr>
+            <th>{{localize "PF1.HitDieShort"}}</th>
+            <th>{{localize "PF1.ChallengeRatingShort"}}</th>
+            <th>{{localize "PF1.Experience"}}</th>
+          </tr>
+          <tr>
+            <td>
+              {{data.attributes.hd.total}}
+            </td>
+            <td>
+              <div class="config flexrow">
+                <a class="config-icon config-control" for="cr"><i class="fas fa-cog"></i></a>
+                <input disabled for="data.details.cr" type="text" value="{{labels.cr}}" placeholder="1"/>
+              </div>
+            </td>
+            <td>
+              {{data.details.xp.value}}
+            </td>
+          </tr>
+        </table>
+
+        <span class="tooltipcontent">
+          @attributes.hd.total : {{data.attributes.hd.total}}<br/>
+          @details.cr.base : {{data.details.cr.base}}<br/>
+          @details.cr.total : {{data.details.cr.total}}
+        </span>
       </div>
       {{/if}}
     </div>
     
     {{!-- Character Summary --}}
-    <div class="summary flexrow">
+    <div class="character-summary flexrow">
       <div>
         <input type="text" name="data.details.gender" value="{{data.details.gender}}" placeholder="{{localize "PF1.Gender"}}" title="{{localize "PF1.Gender"}}"/>
       </div>

@@ -16,63 +16,15 @@
     flex: 0;
   }
 
-  .charlevel {
-    flex: 0;
-    height: 60px;
-    margin: 0;
-    padding: 2px;
-    text-align: right;
-
-    .level {
-      width: 100%;
-      height: 20px;
-      font-size: 16px;
-      line-height: 20px;
-
-      label {
-        font-size: 24px;
-        text-align: right;
-      }
-
-      input {
-        width: 48px;
-        font-size: 24px;
-        text-align: center;
-      }
-
-      // If the Experience Bar is disabled
-      &.noxp {
-        margin-top: 10px;
-        > label {
-          font-size: 32px;
-        }
-        > input {
-          font-size: 32px;
-          flex: 0 0 40px;
-          height: 44px;
-        }
-      }
-
-    }
-
-    .experience {
-      width: 100%;
-      height: 20px;
-      padding-right: 5px;
-      font-size: 16px;
-      color: @colorOlive;
-    }
-  }
-
   /* ----------------------------------------- */
   /*  Details Tab                              */
   /* ----------------------------------------- */
 
-  .tab.details {
+  .tab.summary {
     height: 100%;
     border-left: @borderGroove;
 
-    .details-header {
+    .summary-header {
       flex: 0;
       padding-bottom: 4px;
       margin-bottom: 8px;
@@ -84,11 +36,12 @@
         h1.charname {
           input {
             height: 32px;
+            padding: 0;
           }
         }
       }
 
-      .summary {
+      .character-summary {
         flex: 0;
 
         & > div {
@@ -222,23 +175,68 @@
     }
 
     .hd-level {
-      flex: 0 0 200px;
+      flex: 0 0 256px;
 
-      .hd {
-        flex: 0;
-        justify-content: flex-end;
-        align-items: center;
+      table {
+        margin: 0 0 4px 8px;
 
-        > label {
-          font-size: 24px;
-          text-align: right;
-          flex: 0;
+        &:hover {
+          a.config-icon {
+            color: @colorBeige;
+          }
         }
 
-        > input {
-          flex: 0 0 28px;
-          font-size: 24px;
-          height: 28px;
+        tr {
+          td {
+            padding: 0;
+            text-align: center;
+          }
+
+          a.config-icon {
+            flex: 0 0 16px;
+            width: 16px;
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0);
+
+            &:hover  {
+              color: @colorDark;
+            }
+          }
+
+          input[type="text"] {
+            flex: 1 0 32px;
+            height: auto;
+          }
+
+          div.experience {
+            input[type="text"], .max {
+              padding: 0;
+              flex: 1;
+              text-align: center;
+            }
+
+            .separator {
+              flex: 0;
+            }
+          }
+        }
+      }
+
+      .xpbar {
+        width: 100%;
+        height: 12px;
+        font-size: 16px;
+        color: @colorOlive;
+        background: @colorTan;
+        border: 1px solid @colorDark;
+        border-radius: 4px;
+
+        span.bar {
+          background: #63FF00;
+          border: 1px solid #D0FFB2;
+          border-radius: 2px;
+          height: 10px;
+          display: block;
         }
       }
     }

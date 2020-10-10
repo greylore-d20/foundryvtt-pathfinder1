@@ -710,97 +710,58 @@
 .pf1.sheet.actor .tab-footer {
   flex: 0;
 }
-.pf1.sheet.actor .charlevel {
-  flex: 0;
-  height: 60px;
-  margin: 0;
-  padding: 2px;
-  text-align: right;
-}
-.pf1.sheet.actor .charlevel .level {
-  width: 100%;
-  height: 20px;
-  font-size: 16px;
-  line-height: 20px;
-}
-.pf1.sheet.actor .charlevel .level label {
-  font-size: 24px;
-  text-align: right;
-}
-.pf1.sheet.actor .charlevel .level input {
-  width: 48px;
-  font-size: 24px;
-  text-align: center;
-}
-.pf1.sheet.actor .charlevel .level.noxp {
-  margin-top: 10px;
-}
-.pf1.sheet.actor .charlevel .level.noxp > label {
-  font-size: 32px;
-}
-.pf1.sheet.actor .charlevel .level.noxp > input {
-  font-size: 32px;
-  flex: 0 0 40px;
-  height: 44px;
-}
-.pf1.sheet.actor .charlevel .experience {
-  width: 100%;
-  height: 20px;
-  padding-right: 5px;
-  font-size: 16px;
-  color: #4b4a44;
-}
-.pf1.sheet.actor .tab.details {
+.pf1.sheet.actor .tab.summary {
   height: 100%;
   border-left: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.details .details-header {
+.pf1.sheet.actor .tab.summary .summary-header {
   flex: 0;
   padding-bottom: 4px;
   margin-bottom: 8px;
   border-bottom: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.details .details-header .name-xp {
+.pf1.sheet.actor .tab.summary .summary-header .name-xp {
   flex: 0;
 }
-.pf1.sheet.actor .tab.details .details-header .name-xp h1.charname input {
+.pf1.sheet.actor .tab.summary .summary-header .name-xp h1.charname input {
   height: 32px;
+  padding: 0;
 }
-.pf1.sheet.actor .tab.details .details-header .summary {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary {
   flex: 0;
 }
-.pf1.sheet.actor .tab.details .details-header .summary > div {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div {
   flex: 0 0 33%;
   height: 32px;
   line-height: 28px;
   border-right: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.details .details-header .summary > div:nth-last-child(1),
-.pf1.sheet.actor .tab.details .details-header .summary > div:nth-last-child(2),
-.pf1.sheet.actor .tab.details .details-header .summary > div:nth-last-child(3) {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(1),
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(2),
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(3) {
   border-bottom: none;
 }
-.pf1.sheet.actor .tab.details .details-header .summary > div:nth-child(3n+0) {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-child(3n+0) {
   border-right: none;
 }
-.pf1.sheet.actor .tab.details .details-header .summary > div.alignment {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div.alignment {
   padding: 1px 3px;
 }
-.pf1.sheet.actor .tab.details .details-header .race-container {
+.pf1.sheet.actor .tab.summary .summary-header .race-container {
   flex: 1;
   margin: 3px 0;
 }
-.pf1.sheet.actor .tab.details .details-header .race-container .item-controls {
+.pf1.sheet.actor .tab.summary .summary-header .race-container .item-controls {
   align-items: flex-start;
 }
-.pf1.sheet.actor .tab.details .details-header .race-container .item-controls a {
+.pf1.sheet.actor .tab.summary .summary-header .race-container .item-controls a {
   flex: 0 0 16px;
   font-size: 16px;
   text-align: center;
   color: #666;
 }
-.pf1.sheet.actor .tab.details .details-header .race-container .race {
+.pf1.sheet.actor .tab.summary .summary-header .race-container .race {
   flex: 0 0 64px;
   background-size: contain;
   line-height: 64px;
@@ -809,21 +770,21 @@
   margin-right: 4px;
   height: 64px;
 }
-.pf1.sheet.actor .tab.details .details-header .race-container .race.rollable:hover {
+.pf1.sheet.actor .tab.summary .summary-header .race-container .race.rollable:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
-.pf1.sheet.actor .tab.details .details-header .hp-ability {
+.pf1.sheet.actor .tab.summary .summary-header .hp-ability {
   flex: 1;
   justify-content: flex-end;
 }
-.pf1.sheet.actor .tab.details .details-header .hp-ability > label {
+.pf1.sheet.actor .tab.summary .summary-header .hp-ability > label {
   flex: 0;
   margin-right: 4px;
 }
-.pf1.sheet.actor .tab.details .details-header .hp-ability > select {
+.pf1.sheet.actor .tab.summary .summary-header .hp-ability > select {
   flex: 0 0 96px;
 }
-.pf1.sheet.actor .tab.details .attributes > .attribute {
+.pf1.sheet.actor .tab.summary .attributes > .attribute {
   margin: 0;
   border-left: none;
   border-bottom: none;
@@ -832,29 +793,29 @@
   border-radius: 0;
   height: auto;
 }
-.pf1.sheet.actor .tab.details .attribute.speed {
+.pf1.sheet.actor .tab.summary .attribute.speed {
   flex: 1.5;
   display: flex;
   flex-wrap: wrap;
   align-items: start;
 }
-.pf1.sheet.actor .tab.details .attribute.speed .attribute-speed {
+.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed {
   flex: 0 0 33%;
   max-width: 33%;
 }
-.pf1.sheet.actor .tab.details .attribute.speed .attribute-speed select {
+.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed select {
   width: 100%;
 }
-.pf1.sheet.actor .tab.details .attribute.speed .attribute-speed h4 {
+.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed h4 {
   white-space: nowrap;
   overflow: hidden;
 }
-.pf1.sheet.actor .tab.details .attribute.speed .attribute-speed input[type="text"] {
+.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed input[type="text"] {
   height: 16px;
   margin: 0;
   padding: 0;
 }
-.pf1.sheet.actor .tab.details img.profile {
+.pf1.sheet.actor .tab.summary img.profile {
   flex: 0 0 200px;
   width: 200px;
   height: 200px;
@@ -863,49 +824,82 @@
   border: none;
   border-right: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.details .misc-header-items {
+.pf1.sheet.actor .tab.summary .misc-header-items {
   flex: 0;
 }
-.pf1.sheet.actor .tab.details .misc-header-items > * {
+.pf1.sheet.actor .tab.summary .misc-header-items > * {
   margin-right: 8px;
 }
-.pf1.sheet.actor .tab.details .misc-header-items .actor-quick-actions button {
+.pf1.sheet.actor .tab.summary .misc-header-items .actor-quick-actions button {
   min-height: 24px;
   width: calc(50% - 6px);
   height: calc(50% - 6px);
   line-height: 50%;
 }
-.pf1.sheet.actor .tab.details .hd-level {
-  flex: 0 0 200px;
+.pf1.sheet.actor .tab.summary .hd-level {
+  flex: 0 0 256px;
 }
-.pf1.sheet.actor .tab.details .hd-level .hd {
+.pf1.sheet.actor .tab.summary .hd-level table {
+  margin: 0 0 4px 8px;
+}
+.pf1.sheet.actor .tab.summary .hd-level table:hover a.config-icon {
+  color: #b5b3a4;
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr td {
+  padding: 0;
+  text-align: center;
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr a.config-icon {
+  flex: 0 0 16px;
+  width: 16px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0);
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr a.config-icon:hover {
+  color: #191813;
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr input[type="text"] {
+  flex: 1 0 32px;
+  height: auto;
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr div.experience input[type="text"],
+.pf1.sheet.actor .tab.summary .hd-level table tr div.experience .max {
+  padding: 0;
+  flex: 1;
+  text-align: center;
+}
+.pf1.sheet.actor .tab.summary .hd-level table tr div.experience .separator {
   flex: 0;
-  justify-content: flex-end;
-  align-items: center;
 }
-.pf1.sheet.actor .tab.details .hd-level .hd > label {
-  font-size: 24px;
-  text-align: right;
-  flex: 0;
+.pf1.sheet.actor .tab.summary .hd-level .xpbar {
+  width: 100%;
+  height: 12px;
+  font-size: 16px;
+  color: #4b4a44;
+  background: #7a7971;
+  border: 1px solid #191813;
+  border-radius: 4px;
 }
-.pf1.sheet.actor .tab.details .hd-level .hd > input {
-  flex: 0 0 28px;
-  font-size: 24px;
-  height: 28px;
+.pf1.sheet.actor .tab.summary .hd-level .xpbar span.bar {
+  background: #63FF00;
+  border: 1px solid #D0FFB2;
+  border-radius: 2px;
+  height: 10px;
+  display: block;
 }
-.pf1.sheet.actor .tab.details .attributes {
+.pf1.sheet.actor .tab.summary .attributes {
   border-bottom: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info ul.attributes {
+.pf1.sheet.actor .tab.summary .tab.quick-info ul.attributes {
   margin: 2px 0;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions {
   display: flex;
   flex-direction: row;
   padding: 0;
   margin: 0;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions li {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li {
   cursor: pointer;
   flex: 0 0 52px;
   border-width: 2px;
@@ -915,18 +909,18 @@
   margin: 2px;
   overflow: hidden;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions li:hover {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li:hover {
   filter: brightness(150%);
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions li:hover .icon-label {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li:hover .icon-label {
   visibility: initial;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions li img {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li img {
   border: none;
   width: 48px;
   height: 48px;
 }
-.pf1.sheet.actor .tab.details .tab.quick-info .quick-actions li .icon-label {
+.pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions li .icon-label {
   visibility: hidden;
 }
 .pf1.sheet.actor .alignment {

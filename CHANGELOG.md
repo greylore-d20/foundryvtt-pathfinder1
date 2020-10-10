@@ -12,6 +12,8 @@
 - Add a notes page to loot sheets.
 - Improved formatting of the feat count tracker located at the bottom of an actor's feat tab
 - Improved formatting of the skill rank tracker located on the top of an actor's skills tab
+- Improved formatting of character experience and NPC CR
+- Renamed the 'Details' tab on actor sheets to 'Summary'
 
 ## 0.74.10
 

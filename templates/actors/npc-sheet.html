@@ -2,7 +2,7 @@
 
     {{!-- NPC Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
-      <a class="item active" data-tab="details">{{ localize "PF1.Details" }}</a>
+      <a class="item active" data-tab="summary">{{ localize "PF1.Summary" }}</a>
       <a class="item" data-tab="attributes">{{ localize "PF1.Attributes" }}</a>
       <a class="item" data-tab="defenses">{{ localize "PF1.Defenses" }}</a>
       <a class="item" data-tab="attacks">{{ localize "PF1.Attacks" }}</a>
@@ -19,9 +19,9 @@
     <section class="primary-body">
 
       {{!-- Details --}}
-      <div class="tab details flexcol" data-group="primary" data-tab="details">
-        <div class="header-details flexcol">
-          {{> "systems/pf1/templates/actors/parts/actor-details.html"}}
+      <div class="tab summary flexcol" data-group="primary" data-tab="summary">
+        <div class="header-summary flexcol">
+          {{> "systems/pf1/templates/actors/parts/actor-summary.html"}}
         </div>
       </div>
 

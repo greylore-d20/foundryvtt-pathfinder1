@@ -42,8 +42,8 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
   /**
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
    */
-  getData() {
-    const data = super.getData();
+  async getData() {
+    const data = await super.getData();
     const xpSettings = game.settings.get("pf1", "experienceConfig");
 
     // Experience Tracking

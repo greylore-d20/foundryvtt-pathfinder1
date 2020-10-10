@@ -106,10 +106,19 @@
     }
     
     label {
-      flex: 2;
+      flex: 0 0 200px;
       color: @colorOlive;
       font-weight: bold;
       white-space: nowrap;
+
+      &.checkbox {
+        flex: 0;
+      }
+
+      &.aura-strength {
+        text-align: right;
+        margin-right: 4px;
+      }
     }
     span {
       flex: 0 0 1px;
@@ -142,7 +151,6 @@
       flex: 0 0 100%;
     }
     label.checkbox {
-      flex: auto;
       text-align: left;
     }
 
@@ -702,5 +710,15 @@
 
   &:hover {
     border-color: #3030ff;
+  }
+}
+
+/* ----------------------------------------- */
+/* Changelog
+/* ----------------------------------------- */
+.pf1.changelog {
+  .content {
+    overflow-y: auto;
+    max-height: 640px;
   }
 }

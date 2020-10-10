@@ -49,7 +49,8 @@ export class ItemSheetPF extends ItemSheet {
    * Start with the base item data and extending with additional properties for rendering.
    */
   async getData() {
-    const data = super.getData();
+    const data = await super.getData();
+    const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
     // Include sub-items
@@ -76,6 +77,19 @@ export class ItemSheetPF extends ItemSheet {
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
+    if (rollData.item.auraStrength != null) {
+      const auraStrength = rollData.item.auraStrength;
+      data.auraStrength = auraStrength;
+
+      if (CONFIG.PF1.auraStrengths[auraStrength] != null) {
+        const auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
+        data.auraStrength_name = auraStrength_name;
+
+        data.labels.identify = game.i18n.localize("PF1.IdentifyDCNumber").format(15 + rollData.item.cl);
+        // const auraSchool = CONFIG.PF1.spellSchools[rollData.item.aura.school];
+        // data.labels.aura = `${auraStrength_name} ${auraSchool}`;
+      }
+    }
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {
@@ -641,7 +655,7 @@ export class ItemSheetPF extends ItemSheet {
       return false;
     }
 
-    let itemData = {};
+    let targetItem;
     let dataType = "";
     let itemLink = "";
 
@@ -651,42 +665,28 @@ export class ItemSheetPF extends ItemSheet {
       const pack = game.packs.find(p => p.collection === data.pack);
       const packItem = await pack.getEntity(data.id);
       if (packItem != null) {
-        itemData = packItem.data;
+        targetItem = packItem;
         itemLink = `${pack.collection}.${packItem._id}`;
       }
     }
 
-    // Case 2 - Data explicitly provided
+    // Case 2 - Data explicitly provided; check same actor for item
     else if (data.data) {
       dataType = "data";
-      itemData = data.data;
-      itemLink = itemData._id;
+      if (this.item && this.item.actor) {
+        targetItem = this.item.actor.items.find(o => o._id === data.data._id);
+      }
+      itemLink = data.data._id;
     }
 
     // Case 3 - Import from World entity
     else {
       dataType = "world";
-      itemData = game.items.get(data.id).data;
+      targetItem = game.items.get(data.id);
       itemLink = `world.${data.id}`;
     }
 
-    if (this.canCreateLink(linkType, dataType, itemData, itemLink, data)) {
-      const updateData = {};
-      let _links = duplicate(getProperty(this.item.data, `data.links.${linkType}`) || []);
-      const link = this.generateInitialLinkData(linkType, dataType, itemData, itemLink);
-      _links.push(link);
-      updateData[`data.links.${linkType}`] = _links;
-
-      // Call link creation hook
-      await this.item.update(updateData);
-      Hooks.call("createItemLink", this.item, link, linkType);
-
-      /**
-       * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
-       * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
-       */
-      window.setTimeout(() => { if (this.item.actor) this.item.actor.sheet.render(); }, 50);
-    }
+    await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
   }
 
   /**

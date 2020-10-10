@@ -795,6 +795,13 @@ PF1.magicAuraByLevel = {
   ],
 };
 
+PF1.auraStrengths = {
+  "1": "PF1.AuraStrength_Faint",
+  "2": "PF1.AuraStrength_Moderate",
+  "3": "PF1.AuraStrength_Strong",
+  "4": "PF1.AuraStrength_Overwhelming",
+};
+
 /* -------------------------------------------- */
 
 /* -------------------------------------------- */

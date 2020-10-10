@@ -7,8 +7,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
    * Define default rendering options for the NPC sheet
    * @return {Object}
    */
-	static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc", "loot"],
       width: 560,
       height: 420,
@@ -28,7 +28,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   }
 
   async getData() {
-    const data = super.getData();
+    const data = await super.getData();
 
     data.isLootSheet = true;
     data.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");
@@ -85,7 +85,9 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
   createTabs(html) {
     const tabGroups = {
-      "inventory": {},
+      "primary": {
+        "inventory": {},
+      }
     };
     createTabs.call(this, html, tabGroups);
   }

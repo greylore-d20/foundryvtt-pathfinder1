@@ -73,7 +73,7 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
    */
-  getData() {
+  async getData() {
     // Basic data
     let isOwner = this.entity.owner;
     const data = {
@@ -293,6 +293,45 @@ export class ActorSheetPF extends ActorSheet {
     // Determine hidden elements
     this._prepareHiddenElements();
     data.hiddenElems = this._hiddenElems;
+
+    // Create a table of magic items
+    {
+      const magicItems = this.actor.items.filter(o => {
+        if (o.showUnidentifiedData) return false;
+        if (!o.data.data.carried) return false;
+
+        const school = getProperty(o.data, "data.aura.school");
+        const cl = getProperty(o.data, "data.cl");
+        return (typeof school === "string" && school.length > 0)
+        && (typeof cl === "number" && cl > 0);
+      }).map(o => {
+        const data = {};
+
+        data.name = o.name;
+        data.img = o.img;
+        data._id = o._id;
+        data.cl = getProperty(o.data, "data.cl");
+        data.school = getProperty(o.data, "data.aura.school");
+        if (CONFIG.PF1.spellSchools[data.school] != null) {
+          data.school = CONFIG.PF1.spellSchools[data.school];
+        }
+        data.school = `${CONFIG.PF1.auraStrengths[o.auraStrength]} <b>${data.school}</b>`;
+        data.identifyDC = 15 + data.cl;
+        {
+          const quantity = getProperty(o.data, "data.quantity") || 0;
+          if (quantity > 1) data.quantity = quantity;
+        }
+        data.identified = getProperty(o.data, "data.identified") === true;
+
+        return data;
+      });
+      if (magicItems.length > 0) {
+        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.html", {
+          items: magicItems,
+          isGM: game.user.isGM,
+        });
+      }
+    }
 
     // Return data to the sheet
     return data

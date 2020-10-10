@@ -22,6 +22,10 @@ export class SemanticVersion {
     return null;
   }
 
+  toString() {
+    return `${this.major}.${this.minor}.${this.patch}`;
+  }
+
   isHigherThan(otherVersion) {
     if (this.major > otherVersion.major) return true;
     if (this.major === otherVersion.major && this.minor > otherVersion.minor) return true;

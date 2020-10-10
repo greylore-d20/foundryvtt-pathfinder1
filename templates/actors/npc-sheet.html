@@ -194,7 +194,15 @@
 
       {{!-- Notes Tab --}}
       <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">
-        {{roll-editor content=data.details.notes.value target="data.details.notes.value" button=true owner=owner editable=editable}}
+        <div class="primary-content">
+          {{roll-editor content=data.details.notes.value target="data.details.notes.value" button=true owner=owner editable=editable}}
+        </div>
+
+        {{#if table_magicItems}}
+        <div>
+          {{{table_magicItems}}}
+        </div>
+        {{/if}}
       </div>
     </section>
   </form>

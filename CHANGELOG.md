@@ -1,16 +1,37 @@
 # Changelog
 
+## 0.74.11
+
+### Bug Fixes
+
+- Class features added to a character due to gaining levels in a class now get added as linked children to that class, so they get deleted properly when you delete the class (note: items previously added in this way are not affected)
+- Some items with DCs or charges showed warnings when viewed if they didn't have an associated actor
+
+### Changelog
+
+- Add a notes page to loot sheets.
+- Improved formatting of the feat count tracker located at the bottom of an actor's feat tab
+- Improved formatting of the skill rank tracker located on the top of an actor's skills tab
+
 ## 0.74.10
 
 ### Bug Fixes
 
 - Some consumable items showed remaining charges twice in the chat card
 - CL & Concentration notes were gaining spaces on every reload
+- Lay on Hands uses per day formula was incorrectly using the actor's hit die, instead of its paladin levels (fixed by Nico Weichbrodt (many thanks!))
 
 ### Changelog
 
-- Update the French translation, due to the efforts of rectulo (many thanks!)
+- Show changelog of new updates since last run to user
 - Added accessibility settings, on a per-client basis
+- Added adjustable Aura and Caster Level values to items
+- A table of magic items is now shown on the bottom of actors' notes tabs
+
+### Localization
+
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+- Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
 
 ## 0.74.9
 

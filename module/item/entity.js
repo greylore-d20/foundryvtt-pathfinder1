@@ -77,6 +77,9 @@ export class ItemPF extends Item {
   }
 
   get charges() {
+    // No actor? No charges!
+    if (!this.actor) return 0;
+
     // Get linked charges
     const link = getProperty(this, "links.charges");
     if (link) return link.charges;
@@ -88,6 +91,9 @@ export class ItemPF extends Item {
   }
 
   get maxCharges() {
+    // No actor? No charges!
+    if (!this.actor) return 0;
+
     // Get linked charges
     const link = getProperty(this, "links.charges");
     if (link) return link.maxCharges;
@@ -132,11 +138,31 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  get auraStrength() {
+    const cl = getProperty(this.data, "data.cl") || 0;
+    if (cl < 1) {
+      return 0;
+    }
+    else if (cl < 6) {
+      return 1;
+    }
+    else if (cl < 12) {
+      return 2;
+    }
+    else if (cl < 21) {
+      return 3;
+    }
+    return 4;
+  }
+
   /**
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.
    */
   getDC(rollData=null) {
+    // No actor? No DC!
+    if (!this.actor) return 0;
+
     if (!rollData) rollData = this.getRollData();
     const data = this.data.data;
 
@@ -520,7 +546,6 @@ export class ItemPF extends Item {
     // Initialize tag
     if (this.type === "class" && !srcData.data.useCustomTag) {
       const name = srcData.name;
-      console.log(name);
       data["data.tag"] = createTag(name);
     }
 
@@ -581,6 +606,9 @@ export class ItemPF extends Item {
   }
 
   _updateMaxUses(data, {srcData=null}={}) {
+    // No actor? No charges!
+    if (!this.actor) return;
+
     let doLinkData = true;
     if (srcData == null) {
       srcData = this.data;
@@ -1692,6 +1720,14 @@ export class ItemPF extends Item {
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
 
+    // Get aura strength
+    {
+      const aura = getProperty(this.data, "data.aura.school");
+      if (typeof aura === "string" && aura.length > 0) {
+        result.item.auraStrength = this.auraStrength;
+      }
+    }
+
     return result;
   }
 
@@ -2148,7 +2184,7 @@ export class ItemPF extends Item {
     data.data.actionType = origData.data.actionType;
     for (let d of getProperty(origData, "data.damage.parts")) {
       d[0] = d[0].replace(/@sl/g, slcl[0]);
-      d[0] = d[0].replace(/@cl/g, slcl[1]);
+      d[0] = d[0].replace(/@cl/g, "@item.cl");
       data.data.damage.parts.push(d);
     }
 
@@ -2161,44 +2197,10 @@ export class ItemPF extends Item {
     data.data.effectNotes = origData.data.effectNotes;
     data.data.attackBonus = origData.data.attackBonus;
     data.data.critConfirmBonus = origData.data.critConfirmBonus;
+    data.data.aura.school = origData.data.school;
 
-    // Determine aura power
-    let auraPower = "faint";
-    for (let a of CONFIG.PF1.magicAuraByLevel.item) {
-      if (a.level <= slcl[1]) auraPower = a.power;
-    }
-    // Determine caster level label
-    let clLabel;
-    switch (slcl[1]) {
-      case 1:
-        clLabel = "1st";
-        break;
-      case 2:
-        clLabel = "2nd";
-        break;
-      case 3:
-        clLabel = "3rd";
-        break;
-      default:
-        clLabel = `${slcl[1]}th`;
-        break;
-    }
-    // Determine spell level label
-    let slLabel;
-    switch (slcl[0]) {
-      case 1:
-        slLabel = "1st";
-        break;
-      case 2:
-        slLabel = "2nd";
-        break;
-      case 3:
-        slLabel = "3rd";
-        break;
-      default:
-        slLabel = `${slcl[1]}th`;
-        break;
-    }
+    // Set Caster Level
+    data.data.cl = slcl[1];
 
     // Set description
     data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {
@@ -2207,12 +2209,8 @@ export class ItemPF extends Item {
       isWand: type === "wand",
       isPotion: type === "potion",
       isScroll: type === "scroll",
-      auraPower: auraPower,
-      aura: (CONFIG.PF1.spellSchools[origData.data.school] || "").toLowerCase(),
       sl: slcl[0],
       cl: slcl[1],
-      slLabel: slLabel,
-      clLabel: clLabel,
       config: CONFIG.PF1,
     });
 
@@ -2267,9 +2265,11 @@ export class ItemPF extends Item {
 
         const itemData = duplicate(item.data);
         delete itemData._id;
-        const newItem = await this.actor.createOwnedItem(itemData);
+        const newItemData = await this.actor.createOwnedItem(itemData);
+        const newItem = this.actor.items.find(o => o._id === newItemData._id);
 
-        await this.setFlag("pf1", `links.classAssociations.${newItem._id}`, co.level);
+        await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
+        await this.createItemLink("children", "data", newItem, newItem._id);
       }
     }
 
@@ -2290,6 +2290,97 @@ export class ItemPF extends Item {
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
     }
+  }
+
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * @returns {boolean} Whether a link to the item is possible here.
+   */
+  canCreateItemLink(linkType, dataType, targetItem, itemLink) {
+    const actor = this.actor;
+    const sameActor = actor && targetItem.actor && targetItem.actor._id === actor._id;
+
+    // Don't create link to self
+    const itemId = itemLink.split(".").slice(-1)[0];
+    if (itemId === this._id) return false;
+
+    // Don't create existing links
+    const links = getProperty(this.data, `data.links.${linkType}`) || [];
+    if (links.filter(o => o.id === itemLink).length) return false;
+
+    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
+
+    if (linkType === "classAssociations" && dataType === "compendium") return true;
+
+    return false;
+  }
+
+  /**
+   * @param {string} linkType - The type of link.
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * @returns {Array} An array to insert into this item's link data.
+   */
+  generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
+
+    const result = {
+      id: itemLink,
+      dataType: dataType,
+      name: targetItem.name,
+      img: targetItem.data.img,
+      hiddenLinks: {},
+    };
+
+    if (linkType === "classAssociations") {
+      result.level = 1;
+    }
+
+    if (linkType === "ammunition") {
+      result.recoverChance = 50;
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a link to another item.
+   * @param {string} linkType - The type of link.
+   * e.g. "children", "charges", "classAssociations" or "ammunition".
+   * @param {string} dataType - Either "compendium", "data" or "world".
+   * @param {Object} targetItem - The target item to link to.
+   * @param {string} itemLink - The link identifier for the item.
+   * e.g. "world.NExqvEMCMbDuDxv5" (world item), "pf1.feats.NExqvEMCMbDuDxv5" (compendium item) or
+   * "NExqvEMCMbDuDxv5" (item on same actor)
+   * @returns {Boolean} Whether a link was created.
+   */
+  async createItemLink(linkType, dataType, targetItem, itemLink) {
+
+    if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
+      const updateData = {};
+      let _links = duplicate(getProperty(this.data, `data.links.${linkType}`) || []);
+      const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
+      _links.push(link);
+      updateData[`data.links.${linkType}`] = _links;
+
+      // Call link creation hook
+      await this.update(updateData);
+      Hooks.call("createItemLink", this, link, linkType);
+
+      /**
+       * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
+       * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
+       */
+      window.setTimeout(() => { if (this.actor) this.actor.sheet.render(); }, 50);
+
+      return true;
+    }
+
+    return false;
   }
 
   async getLinkedItems(type, extraData=false) {

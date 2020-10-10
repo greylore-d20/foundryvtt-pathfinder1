@@ -18,7 +18,7 @@ export const registerSystemSettings = function() {
    */
   game.settings.register("pf1", "changelogVersion", {
     name: "Changelog Version",
-    scope: "world",
+    scope: "client",
     config: false,
     type: String,
     default: "0.74.9",

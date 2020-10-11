@@ -9,64 +9,123 @@
 
   {{#each attacks as |atk|}}
   <div class="chat-attack">
-    {{#if atk.hasAttack}}
-    <div class="flexrow attack-row">
-      <h1>{{atk.attack.flavor}}</h1>
-      <a class="inline-roll inline-result{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
-      title="{{atk.attack.roll.formula}}" data-roll="{{atk.attack.rollJSON}}">
-      <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
-      </a>
-    </div>
-    
-    {{#if atk.hasCritConfirm}}
-    <div class="flexrow">
-      <h3>{{atk.critConfirm.flavor}}</h3>
-      <a class="inline-roll inline-result{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.critConfirm.isFumble}} failure{{/if}}"
-      title="{{atk.critConfirm.roll.formula}}" data-roll="{{atk.critConfirm.rollJSON}}">
-      <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
-      </a>
-    </div>
-    {{/if}}{{/if}}
+    <table>
+      <thead>
+        {{#if atk.hasAttack}}
+        <tr>
+          <th {{#if atk.hasCritConfirm}}colspan="4"{{else}}colspan="2"{{/if}}>
+            {{atk.attack.flavor}}
+          </th>
+        </tr>
+        {{#if atk.hasCritConfirm}}
+        <tr>
+          <th colspan="2">{{atk.attack.flavor}}</th>
+          <th colspan="2">{{atk.critConfirm.flavor}}</th>
+        </tr>
+        {{/if}}
+        {{else}}
+        <tr>
+          <th colspan="2">{{atk.damage.flavor}}</th>
+        </tr>
+        {{/if}}
+      </thead>
 
-    {{#if atk.hasDamage}}
-    <div class="flexrow damage-row">
-      <h2>{{atk.damage.flavor}}</h2>
-      <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
-        {{atk.damage.total}}
-      </a>
-    </div>
+      <tbody>
+        {{#if atk.hasAttack}}
+        <tr>
+          <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}}>
+            <a class="inline-roll inline-result{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
+            title="{{atk.attack.roll.formula}}" data-roll="{{atk.attack.rollJSON}}">
+            <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
+            </a>
+          </td>
+          {{#if atk.hasCritConfirm}}
+          <td colspan="2">
+            <a class="inline-roll inline-result{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.critConfirm.isFumble}} failure{{/if}}"
+            title="{{atk.critConfirm.roll.formula}}" data-roll="{{atk.critConfirm.rollJSON}}">
+            <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
+            </a>
+          </td>
+          {{/if}}
+        </tr>
+        
+        {{#if atk.hasDamage}}
+        <tr>
+          <th colspan="2">{{atk.damage.flavor}}</th>
+          {{#if atk.hasCritConfirm}}
+          <th colspan="2">{{atk.critDamage.flavor}}</th>
+          {{/if}}
+        </tr>
+        <tr>
+          <td>
+            <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+              {{atk.damage.total}}
+            </a>
+          </td>
+          <td>
+            <b>{{localize "PF1.Total"}}</b>
+          </td>
+          {{#if atk.hasCritConfirm}}
+          <td>
+            <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+              {{atk.critDamage.total}}
+            </a>
+          </td>
+          <td>
+            <b>{{localize "PF1.Total"}}</b>
+          </td>
+          {{/if}}
+        </tr>
 
-    {{#each atk.damage.parts as |part|}}
-    {{#each part.rolls as |roll|}}
-    <div class="flexrow">
-      <span>{{part.damageType}}</span>
-      <a class="inline-roll inline-result" title="{{roll.roll.formula}}" data-roll="{{roll.json}}">
-        <i class="fas fa-dice-d20"></i> {{roll.roll.total}}
-      </a>
-    </div>
-    {{/each}}
-    {{/each}}
+        {{!-- Damage parts in an attack --}}
+        {{#each atk.damage.parts as |part a|}}
+        <tr>
+          <td>
+            <a class="inline-roll inline-result" title="{{part.rolls.0.roll.formula}}" data-roll="{{part.rolls.0.json}}">
+              <i class="fas fa-dice-d20"></i> {{part.rolls.0.roll.total}}
+            </a>
+          </td>
+          <td>{{part.damageType}}</td>
+          {{#if atk.hasCritConfirm}}
+          {{#with (lookup atk.critDamage.parts a)}}
+          <td>
+            <a class="inline-roll inline-result" title="{{rolls.0.roll.formula}}" data-roll="{{rolls.0.json}}">
+              <i class="fas fa-dice-d20"></i> {{rolls.0.roll.total}}
+            </a>
+          </td>
+          <td>{{damageType}}</td>
+          {{/with}}
+          {{/if}}
+        </tr>
+        {{/each}}
+        {{/if}}
 
-    {{#if atk.hasCritConfirm}}
-    <div class="flexrow damage-row">
-      <h2>{{atk.critDamage.flavor}}</h2>
-      <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
-        {{atk.critDamage.total}}
-      </a>
-    </div>
-    {{/if}}
+        {{else}}
 
-    {{#each atk.critDamage.parts as |part|}}
-    {{#each part.rolls as |roll|}}
-    <div class="flexrow">
-      <span>{{part.damageType}}</span>
-      <a class="inline-roll inline-result" title="{{roll.roll.formula}}" data-roll="{{roll.json}}">
-        <i class="fas fa-dice-d20"></i> {{roll.roll.total}}
-      </a>
-    </div>
-    {{/each}}
-    {{/each}}
-    {{/if}}
+        {{!-- Damage parts without an attack roll --}}
+        {{#each atk.damage.parts as |part a|}}
+        <tr>
+          <td>
+            <a class="inline-roll inline-result" title="{{part.roll.roll.formula}}" data-roll="{{part.roll.json}}">
+              <i class="fas fa-dice-d20"></i> {{part.roll.roll.total}}
+            </a>
+          </td>
+          <td>{{part.damageType}}</td>
+          {{#if atk.hasCritConfirm}}
+          {{#with (lookup atk.critConfirm.parts @a) as |part|}}
+          <td>
+            <a class="inline-roll inline-result" title="{{part.roll.roll.formula}}" data-roll="{{part.roll.json}}">
+              <i class="fas fa-dice-d20"></i> {{part.roll.roll.total}}
+            </a>
+          </td>
+          <td>{{part.damageType}}</td>
+          {{/with}}
+          {{/if}}
+        </tr>
+        {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
 
     {{#if atk.hasCards}}
     <hr>

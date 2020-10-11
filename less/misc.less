@@ -79,10 +79,22 @@ form {
       }
     }
 
+    tbody {
+      th {
+        background: rgba(127, 127, 127, 0.5);
+        color: white;
+        text-shadow: 1px 1px black;
+      }
+    }
+
     tr {
       td:not(.nocenter), th:not(.nocenter) {
         text-align: center;
       }
+    }
+
+    td:not(:last-child), th:not(:last-child) {
+      border-right: 1px solid black;
     }
   }
 }

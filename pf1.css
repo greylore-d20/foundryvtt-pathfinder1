@@ -2359,6 +2359,9 @@
 }
 .pf1.chat-card .fake-inline-roll {
   padding: 1px 4px 0 4px;
+  color: black;
+  text-shadow: none;
+  font-weight: normal;
 }
 .pf1.chat-card .inline-roll,
 .pf1.chat-card .fake-inline-roll {
@@ -2743,9 +2746,18 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
 .pf1 table thead .icon {
   background-color: white;
 }
+.pf1 table tbody th {
+  background: rgba(127, 127, 127, 0.5);
+  color: white;
+  text-shadow: 1px 1px black;
+}
 .pf1 table tr td:not(.nocenter),
 .pf1 table tr th:not(.nocenter) {
   text-align: center;
+}
+.pf1 table td:not(:last-child),
+.pf1 table th:not(:last-child) {
+  border-right: 1px solid black;
 }
 #token-hud .col.actions {
   height: calc(100% + 150px);

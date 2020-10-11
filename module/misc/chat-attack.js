@@ -39,6 +39,7 @@ export class ChatAttack {
       parts: [],
     };
     this.hasDamage = false;
+    this.damageRows = 0;
 
     this.notesOnly = true;
 
@@ -303,6 +304,18 @@ export class ChatAttack {
 
   finalize() {
     this.hasCards = Object.keys(this.cards).length > 0;
+
+    // Determine damage rows for chat cards
+    this.damageRows = [];
+    for (let a = 0; a < Math.max(this.damage.parts.length, this.critDamage.parts.length); a++) {
+      this.damageRows.push({ normal: null, crit: null });
+    }
+    for (let a = 0; a < this.damage.parts.length; a++) {
+      this.damageRows[a].normal = this.damage.parts[a];
+    }
+    for (let a = 0; a < this.critDamage.parts.length; a++) {
+      this.damageRows[a].crit = this.critDamage.parts[a];
+    }
 
     return this;
   }

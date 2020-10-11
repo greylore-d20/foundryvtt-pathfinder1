@@ -9,6 +9,7 @@
 
   {{#each attacks as |atk|}}
   <div class="chat-attack">
+    {{#unless atk.notesOnly}}
     <table>
       <thead>
         {{#if atk.hasAttack}}
@@ -106,26 +107,17 @@
         {{#each atk.damage.parts as |part a|}}
         <tr>
           <td>
-            <a class="inline-roll inline-result" title="{{part.roll.roll.formula}}" data-roll="{{part.roll.json}}">
-              <i class="fas fa-dice-d20"></i> {{part.roll.roll.total}}
+            <a class="inline-roll inline-result" title="{{part.rolls.0.roll.formula}}" data-roll="{{part.rolls.0.json}}">
+              <i class="fas fa-dice-d20"></i> {{part.rolls.0.roll.total}}
             </a>
           </td>
           <td>{{part.damageType}}</td>
-          {{#if atk.hasCritConfirm}}
-          {{#with (lookup atk.critConfirm.parts @a) as |part|}}
-          <td>
-            <a class="inline-roll inline-result" title="{{part.roll.roll.formula}}" data-roll="{{part.roll.json}}">
-              <i class="fas fa-dice-d20"></i> {{part.roll.roll.total}}
-            </a>
-          </td>
-          <td>{{part.damageType}}</td>
-          {{/with}}
-          {{/if}}
         </tr>
         {{/each}}
         {{/if}}
       </tbody>
     </table>
+    {{/unless}}
 
     {{#if atk.hasCards}}
     <hr>

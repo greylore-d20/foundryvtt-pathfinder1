@@ -40,6 +40,8 @@ export class ChatAttack {
     };
     this.hasDamage = false;
 
+    this.notesOnly = true;
+
     this.cards           = {};
     this.hasCards        = false;
     this.attackNotes     = [];
@@ -126,6 +128,7 @@ export class ChatAttack {
     if (!this.item) return;
 
     this.hasAttack = true;
+    this.notesOnly = false;
     let data = this.attack;
     if (critical === true) {
       data = this.critConfirm;
@@ -183,6 +186,7 @@ export class ChatAttack {
     if (!this.item) return;
 
     this.hasDamage = true;
+    this.notesOnly = false;
     let data = this.damage;
     if (critical === true) data = this.critDamage;
 

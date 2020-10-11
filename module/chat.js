@@ -90,15 +90,15 @@ export const applyAccessibilitySettings = function(app, html, data, conf) {
       html.find(".inline-roll, .fake-inline-roll").css("font-size", `${size}px`);
     }
 
-    // Enlarge attack labels
-    {
-      const size = 1.5 + (fontSize * 0.3);
-      html.find(".attack-row h1").css("font-size", `${size}em`);
-    }
-    // Enlarge damage labels
+    // Enlarge attack headers
     {
       const size = 1 + (fontSize * 0.3);
-      html.find(".damage-row h2").css("font-size", `${size}em`);
+      html.find(".chat-attack th").css("font-size", `${size}em`);
+    }
+    // Enlarge attack labels
+    {
+      const size = 0.7 + (fontSize * 0.3);
+      html.find(".chat-attack td").css("font-size", `${size}em`);
     }
   }
 };

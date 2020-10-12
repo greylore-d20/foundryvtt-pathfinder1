@@ -1105,9 +1105,6 @@ export class ItemPF extends Item {
         // Add damage
         await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
 
-        // Add attack notes
-        attack.addAttackNotes();
-
         // Add effect notes
         attack.addEffectNotes();
 
@@ -1118,12 +1115,9 @@ export class ItemPF extends Item {
       else if (this.hasEffect) {
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
 
-        // Add attack notes
-        attack.addAttackNotes();
-
         // Add effect notes
         attack.addEffectNotes();
-        
+
         // Add to list
         attacks.push(attack);
       }

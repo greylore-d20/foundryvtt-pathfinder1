@@ -321,20 +321,45 @@ export const updateChanges = async function({data=null}={}) {
 
     // Set CL
     {
+      const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
+      sourceInfo[key] = sourceInfo[key] || { positive: [], negative: [] };
       const formula = getProperty(spellbook, "cl.formula") || "0";
       const rollData = this.getRollData(srcData1.data);
       let total = 0;
-      total += new Roll(formula, rollData).roll().total;
+
+      // Add NPC base
       if (this.data.type === "npc") {
-        total += (getProperty(spellbook, "cl.base") || 0);
+        const value = (getProperty(spellbook, "cl.base") || 0);
+        total += value;
+        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
       }
+      // Add HD
       if (spellbook.class === "_hd") {
-        total += (getProperty(srcData1, "data.attributes.hd.total"));
+        const value = (getProperty(srcData1, "data.attributes.hd.total"));
+        total += value;
+        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
       }
+      // Add class levels
       else if (spellbook.class && rollData.classes[spellbook.class]) {
-        total += rollData.classes[spellbook.class].level;
+        const value = rollData.classes[spellbook.class].level;
+        total += value;
+        sourceInfo[key].positive.push({ name: rollData.classes[spellbook.class].name, value: value });
       }
-      linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`, total);
+      // Add from bonus formula
+      const clBonus = new Roll(formula, rollData).roll().total;
+      total += clBonus;
+      if (clBonus > 0) {
+        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
+      }
+      else if (clBonus < 0) {
+        sourceInfo[key].negative.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
+      }
+      // Subtract energy drain
+      if (rollData.attributes.energyDrain) {
+        total = Math.max(0, total - rollData.attributes.energyDrain);
+        sourceInfo[key].negative.push({ name: game.i18n.localize("PF1.CondTypeEnergyDrain"), value: -Math.abs(rollData.attributes.energyDrain) });
+      }
+      linkData(srcData1, updateData, key, total);
     }
 
     // Spell slots

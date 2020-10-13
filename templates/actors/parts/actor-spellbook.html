@@ -27,7 +27,16 @@
     <div class="flexrow">
       <div class="flexcol pf1-sheet-group">
         <div class="form-group spellcasting-class tooltip">
-          <span class="tooltipcontent">@cl : {{spellbook.orig.cl.total}}</span>
+          <div class="tooltipcontent">
+            @cl : {{spellbook.orig.cl.total}}
+
+            {{#with (lookup sourceDetails.data.attributes.spells.spellbooks spellbookIndex)}}
+            {{#if cl.total.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each cl.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+            {{/with}}
+          </div>
           <label><h3>{{localize "PF1.SpellcastingClass"}}</h3></label>
           <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.class" data-dtype="String">
             {{#select spellbook.orig.class}}

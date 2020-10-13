@@ -6,6 +6,7 @@
 
 - Class features added to a character due to gaining levels in a class now get added as linked children to that class, so they get deleted properly when you delete the class (note: items previously added in this way are not affected)
 - Some items with DCs or charges showed warnings when viewed if they didn't have an associated actor
+- Caster level wasn't affected by negative levels
 
 ### Changelog
 

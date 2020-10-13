@@ -4,7 +4,6 @@
 
 ### Bug Fixes
 
-- Class features added to a character due to gaining levels in a class now get added as linked children to that class, so they get deleted properly when you delete the class (note: items previously added in this way are not affected)
 - Some items with DCs or charges showed warnings when viewed if they didn't have an associated actor
 - Caster level wasn't affected by negative levels
 
@@ -17,6 +16,12 @@
 - Improved formatting of character experience and NPC CR
 - Renamed the 'Details' tab on actor sheets to 'Summary'
 - Revamped attack chat card styles
+- Class features added to a character due to gaining levels in a class now get added as linked children to that class, so they get deleted properly when you delete the class (note: items previously added in this way are not affected)
+
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
 
 ## 0.74.10
 

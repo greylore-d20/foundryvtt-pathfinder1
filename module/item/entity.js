@@ -1055,7 +1055,7 @@ export class ItemPF extends Item {
         rollMode: rollMode,
       };
 
-      // Conditional defaults
+      // Conditional defaults for fast-forwarding
       if (conditionals === undefined) {
         conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
           if (con.default) arr.push(i);
@@ -1083,9 +1083,10 @@ export class ItemPF extends Item {
       let ammoCost = 0;
 
 
-      // Add Conditionals to rollData
+      // Create conditionalParts from all enabled conditional modifiers
       let conditionalPartsCommon = {};
 
+      // Helper to get localized name from CONFIG.PF1 objects
       const localizeType = (target, type) => {
         console.log(this);
         let result = this.getConditionalModifierTypes(target);
@@ -1096,18 +1097,18 @@ export class ItemPF extends Item {
         let conditionalData = {};
         for(const i of conditionals) {
           const conditional = this.data.data.conditionals[i];
-          const tag = createTag(conditional.name);
           for (const [i, modifier] of conditional.modifiers.entries()) {
             // Adds a formulas result to rollData to allow referencing it
-            // TODO: added on a whim, is this necessary?
+            // In try-block to avoid stalling due to malformed modifier
             try {
-              const modString = [tag, i].join(".");
-              conditionalData[modString] = new Roll(modifier.formula, rollData).roll().total;
+              conditionalData[[createTag(conditional.name), i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
             } catch (e) {
               console.error(`Rolling ${conditional.name} caused an error: ${e}`);
             }
 
+            // Create a key string for the formula array
             const partString = `${modifier.target}.${modifier.subTarget}.${modifier.critical}`;
+            // Add formula in correct format for attacks or damage
             conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
               (modifier.target === "attack") ? modifier.formula :
               (modifier.target === "damage" && Object.keys(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
@@ -1115,6 +1116,7 @@ export class ItemPF extends Item {
             ];
           }
         }
+        // Expand data into rollData to enable referencing in formulae
         rollData.conditionals = expandObject(conditionalData, 5);
       }
 
@@ -1124,7 +1126,7 @@ export class ItemPF extends Item {
 
           let atk = allAttacks[a];
 
-          // Combine conditional modifiers for attack a
+          // Combine conditional modifiers for attack a attack and damage
           const conditionalParts = {
             "attack.normal": [...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
             "attack.crit": [...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
@@ -1160,7 +1162,7 @@ export class ItemPF extends Item {
 
           // Create attack for Rapid Shot
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
-            // Combine conditional modifiers for Rapid Shot attack
+            // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
               "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
               "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
@@ -1195,7 +1197,7 @@ export class ItemPF extends Item {
       else if (this.hasDamage) {
         ammoCost = 1;
 
-        // Concat conditional modifiers
+        // Set conditional modifiers
         const conditionalParts = {
           "damage.normal": conditionalPartsCommon["damage.allDamage.normal"] ?? []
         };
@@ -1365,7 +1367,7 @@ export class ItemPF extends Item {
           });
         }
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
-        
+
         // Add CL notes
         if (this.data.type === "spell" && this.actor) {
           const clNotes = this.actor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);

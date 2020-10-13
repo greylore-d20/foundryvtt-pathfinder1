@@ -1,19 +1,6 @@
 import { CompendiumBrowser } from "../apps/compendium-browser.js";
 
 export class CompendiumDirectoryPF extends CompendiumDirectory {
-  constructor(...args) {
-    super(...args);
-
-    this.compendiums = {
-      spells: new CompendiumBrowser({ type: "spells", entityType: "Item" }),
-      items: new CompendiumBrowser({ type: "items", entityType: "Item" }),
-      bestiary: new CompendiumBrowser({ type: "bestiary", entityType: "Actor" }),
-      feats: new CompendiumBrowser({ type: "feats", entityType: "Item" }),
-      classes: new CompendiumBrowser({ type: "classes", entityType: "Item" }),
-      races: new CompendiumBrowser({ type: "races", entityType: "Item" }),
-    };
-  }
-
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/sidebar/compendium.html",
@@ -34,6 +21,6 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
   _onBrowseCompendium(event, type) {
     event.preventDefault();
 
-    this.compendiums[type]._render(true);
+    game.pf1.compendiums[type]._render(true);
   }
 }

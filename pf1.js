@@ -18,6 +18,7 @@ import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
+import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
@@ -67,6 +68,14 @@ Hooks.once("init", async function() {
     },
     migrateWorld: migrations.migrateWorld,
     runUnitTests,
+    compendiums: {
+      spells: new CompendiumBrowser({ type: "spells", entityType: "Item" }),
+      items: new CompendiumBrowser({ type: "items", entityType: "Item" }),
+      bestiary: new CompendiumBrowser({ type: "bestiary", entityType: "Actor" }),
+      feats: new CompendiumBrowser({ type: "feats", entityType: "Item" }),
+      classes: new CompendiumBrowser({ type: "classes", entityType: "Item" }),
+      races: new CompendiumBrowser({ type: "races", entityType: "Item" }),
+    },
   };
 
   // Record Configuration Values

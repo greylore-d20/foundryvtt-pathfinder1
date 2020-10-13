@@ -341,6 +341,13 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
+    // Prepare (interactive) labels
+    {
+      data.labels.firstClass = game.i18n.localize("PF1.Info_FirstClass").format(
+        `<a data-action="compendium_class">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
+      ).replace(/[\n\r]+/, "<br>");
+    }
+
     // Return data to the sheet
     return data
   }
@@ -791,6 +798,15 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
+
+    /* -------------------------------------------- */
+    /*  Links
+    /* -------------------------------------------- */
+
+    html.find('a[data-action="compendium_class"]').click(event => {
+      event.preventDefault();
+      game.pf1.compendiums["classes"].render(true);
+    });
   }
 
   createTabs(html) {

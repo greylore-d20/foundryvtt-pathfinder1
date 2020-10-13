@@ -591,6 +591,9 @@ export class ActorSheetPF extends ActorSheet {
     // Item summaries
     html.find('.item .item-name h4').click(event => this._onItemSummary(event));
 
+    // Click to change text input
+    html.find('*[data-action="input-text"]').click(event => this._onInputText(event));
+
     // Item Dragging
     let handler = ev => this._onDragStart(ev);
     html.find('li.item').each((i, li) => {
@@ -1133,6 +1136,22 @@ export class ActorSheetPF extends ActorSheet {
       div.slideDown(200);
     }
     li.toggleClass("expanded");
+  }
+
+  /**
+   * Makes a disabled text input editable, and focus it.
+   * @private
+   */
+  _onInputText(event) {
+    event.preventDefault();
+    const elem = this.element.find(event.currentTarget.dataset.for);
+
+    elem.removeAttr("disabled")
+    elem.attr("name", event.currentTarget.dataset.attrName);
+    elem.attr("value", getProperty(this.actor.data, event.currentTarget.dataset.attrName));
+    elem.select();
+
+    elem.focusout(event => this._onSubmit(event));
   }
 
   /* -------------------------------------------- */

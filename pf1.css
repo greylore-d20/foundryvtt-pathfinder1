@@ -747,11 +747,6 @@
   border-right: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(1),
-.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(2),
-.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-last-child(3) {
-  border-bottom: none;
-}
 .pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-child(3n+0) {
   border-right: none;
 }
@@ -766,19 +761,20 @@
   align-items: flex-start;
 }
 .pf1.sheet.actor .tab.summary .summary-header .race-container .item-controls a {
-  flex: 0 0 16px;
-  font-size: 16px;
+  flex: 0 0 12px;
+  font-size: 12px;
   text-align: center;
   color: #666;
 }
 .pf1.sheet.actor .tab.summary .summary-header .race-container .race {
-  flex: 0 0 64px;
+  flex: 0 0 32px;
   background-size: contain;
-  line-height: 64px;
+  line-height: 32px;
   text-align: center;
   vertical-align: baseline;
   margin-right: 4px;
-  height: 64px;
+  height: 32px;
+  color: #7a7971;
 }
 .pf1.sheet.actor .tab.summary .summary-header .race-container .race.rollable:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
@@ -803,32 +799,10 @@
   border-radius: 0;
   height: auto;
 }
-.pf1.sheet.actor .tab.summary .attribute.speed {
-  flex: 1.5;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: start;
-}
-.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed {
-  flex: 0 0 33%;
-  max-width: 33%;
-}
-.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed select {
-  width: 100%;
-}
-.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed h4 {
-  white-space: nowrap;
-  overflow: hidden;
-}
-.pf1.sheet.actor .tab.summary .attribute.speed .attribute-speed input[type="text"] {
-  height: 16px;
-  margin: 0;
-  padding: 0;
-}
 .pf1.sheet.actor .tab.summary img.profile {
-  flex: 0 0 200px;
-  width: 200px;
-  height: 200px;
+  flex: 0 0 160px;
+  width: 160px;
+  height: 160px;
   padding: 0 3px;
   object-fit: contain;
   border: none;
@@ -845,6 +819,16 @@
   width: calc(50% - 6px);
   height: calc(50% - 6px);
   line-height: 50%;
+}
+.pf1.sheet.actor .tab.summary table.speed-table td:hover a,
+.pf1.sheet.actor .tab.summary table.speed-table th:hover a {
+  opacity: 1;
+}
+.pf1.sheet.actor .tab.summary table.speed-table a {
+  opacity: 0;
+}
+.pf1.sheet.actor .tab.summary table.speed-table a:hover {
+  text-shadow: 0 0 10px red;
 }
 .pf1.sheet.actor .tab.summary .hd-level {
   flex: 0 0 256px;

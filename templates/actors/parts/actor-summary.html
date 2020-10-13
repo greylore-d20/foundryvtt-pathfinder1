@@ -228,8 +228,92 @@
     {{/if}}
   </li>
   
-  <li class="attribute speed">
-    <div class="attribute-speed tooltip">
+  <li>
+    <table class="speed-table">
+      <thead>
+        <tr>
+          <th colspan="5">{{localize "PF1.Speed"}}</th>
+          <th rowspan="2">{{localize "PF1.FlyManeuverability"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "PF1.SpeedLand_Short"}}</th>
+          <th>{{localize "PF1.SpeedClimb_Short"}}</th>
+          <th>{{localize "PF1.SpeedSwim_Short"}}</th>
+          <th>{{localize "PF1.SpeedBurrow_Short"}}</th>
+          <th>{{localize "PF1.SpeedFly_Short"}}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <td class="tooltip" data-action="input-text" data-for=".land-speed-input" data-attr-name="data.attributes.speed.land.base">
+          <div class="tooltipcontent">
+            @attributes.speed.land.total : {{data.attributes.speed.land.total}}
+            {{#if sourceDetails.data.attributes.speed.land.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </div>
+
+          <input disabled type="text" class="speed land-speed-input" {{#if data.attributes.speed.land.total}}value="{{data.attributes.speed.land.total}}"{{/if}} data-dtype="Number"/>
+        </td>
+        <td class="tooltip" data-action="input-text" data-for=".climb-speed-input" data-attr-name="data.attributes.speed.climb.base">
+          <div class="tooltipcontent">
+            @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
+            {{#if sourceDetails.data.attributes.speed.climb.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </div>
+
+          <input disabled type="text" class="speed climb-speed-input" {{#if data.attributes.speed.climb.total}}value="{{data.attributes.speed.climb.total}}"{{/if}} data-dtype="Number"/>
+        </td>
+        <td class="tooltip" data-action="input-text" data-for=".swim-speed-input" data-attr-name="data.attributes.speed.swim.base">
+          <div class="tooltipcontent">
+            @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
+            {{#if sourceDetails.data.attributes.speed.swim.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </div>
+
+          <input disabled type="text" class="speed swim-speed-input" {{#if data.attributes.speed.swim.total}}value="{{data.attributes.speed.swim.total}}"{{/if}} data-dtype="Number"/>
+        </td>
+        <td class="tooltip" data-action="input-text" data-for=".burrow-speed-input" data-attr-name="data.attributes.speed.burrow.base">
+          <div class="tooltipcontent">
+            @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
+            {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </div>
+
+          <input disabled type="text" class="speed burrow-speed-input" {{#if data.attributes.speed.burrow.total}}value="{{data.attributes.speed.burrow.total}}"{{/if}} data-dtype="Number"/>
+        </td>
+        <td class="tooltip" data-action="input-text" data-for=".fly-speed-input" data-attr-name="data.attributes.speed.fly.base">
+          <div class="tooltipcontent">
+            @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
+            @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
+            {{#if sourceDetails.data.attributes.speed.fly.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </div>
+
+          <input disabled" type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
+        </td>
+        <td>
+          <select name="data.attributes.speed.fly.maneuverability">
+            {{#select data.attributes.speed.fly.maneuverability}}
+            {{#each config.flyManeuverabilities as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+      </tbody>
+    </table>
+
+    {{!-- <div class="attribute-speed tooltip">
       <div class="tooltipcontent">
         @attributes.speed.land.total : {{data.attributes.speed.land.total}}
         {{#if sourceDetails.data.attributes.speed.land.total.length}}
@@ -334,7 +418,7 @@
         {{/each}}
         {{/select}}
       </select>
-    </div>
+    </div> --}}
   </li>
 </ul>
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.0
+
+### Changelog
+
+- Hide Attack Notes from items without an attack action
+
 ## 0.74.11
 
 ### Bug Fixes

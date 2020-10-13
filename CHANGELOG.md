@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Buffs replacing an armor bonus did not disable the enhancement armor bonus of the armor they just replaced
+- Hit points, wounds and vigor weren't limited by their maximum values
 
 ### Changelog
 

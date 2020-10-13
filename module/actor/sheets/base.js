@@ -1970,6 +1970,11 @@ export class ActorSheetPF extends ActorSheet {
       // Add or subtract values
       if (relativeKeys.includes(k)) {
         const originalValue = getProperty(this.actor.data, k);
+        let max = null;
+        const maxKey = k.replace(/\.value$/, ".max");
+        if (maxKey !== k) {
+          max = getProperty(this.actor.data, maxKey);
+        }
 
         if (v.match(/(\+|--?)([0-9]+)/)) {
           const operator = RegExp.$1;
@@ -1980,10 +1985,12 @@ export class ActorSheetPF extends ActorSheet {
           else {
             if (operator === "-") value = -value;
             formData[k] = originalValue + value;
+            if (max) formData[k] = Math.min(formData[k], max);
           }
         }
         else if (v.match(/^[0-9]+$/)) {
           formData[k] = parseInt(v);
+          if (max) formData[k] = Math.min(formData[k], max);
         }
         else if (v === "") {
           formData[k] = 0;

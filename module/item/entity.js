@@ -567,15 +567,6 @@ export class ItemPF extends Item {
       data["data.tag"] = createTag(name);
     }
 
-    if (this.type === "attack") {
-      if (srcData.data.conditionals) {
-        //if (!Array.isArray(srcData.data.conditionals)) data["data.conditionals"] = Object.values(srcData.data.conditionals);
-        //for (const [i,attackChange] of Object.values(srcData.data.conditionals).entries()) {
-        //  if (attackChange.name && attackChange.name !== "") data["data.conditionals"][i].tag = createTag(attackChange.name);
-        //}
-      }
-    }
-
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"] != null) {
       data["data.weight"] = convertWeightBack(data["data.weightConverted"])
@@ -1042,7 +1033,7 @@ export class ItemPF extends Item {
         if (html.length > 0) {
           conditionals = html.map( function() {
             if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
-          }).get(); //TODO: .get necessary?
+          }).get();
         }
 
         // Caster level offset
@@ -1117,8 +1108,7 @@ export class ItemPF extends Item {
             }
 
             const partString = `${modifier.target}.${modifier.subTarget}.${modifier.critical}`;
-            if (!conditionalPartsCommon[partString]) conditionalPartsCommon[partString] = [];
-            conditionalPartsCommon[partString] = [...conditionalPartsCommon[partString],
+            conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
               (modifier.target === "attack") ? modifier.formula :
               (modifier.target === "damage" && Object.keys(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
               [modifier.formula, localizeType(modifier.target, modifier.type, false)]
@@ -1172,11 +1162,11 @@ export class ItemPF extends Item {
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
             // Combine conditional modifiers for Rapid Shot attack
             const conditionalParts = {
-              "attack.normal": [...(conditionalPartsCommon[`attack.attack.rapid.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
-              "attack.crit": [...(conditionalPartsCommon[`attack.attack.rapid.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
-              "damage.normal": [...(conditionalPartsCommon[`damage.attack.rapid.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
-              "damage.crit": [...(conditionalPartsCommon[`damage.attack.rapid.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
-              "damage.nonCrit": [...(conditionalPartsCommon[`damage.attack.rapid.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
+              "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
+              "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
+              "damage.normal": [...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
+              "damage.crit": [...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
+              "damage.nonCrit": [...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
             };
 
             // Create attack object, then add attack roll

@@ -1169,17 +1169,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note
-            });
-          }
-          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
       }
     }
 
@@ -1187,10 +1177,19 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
     const label = CONFIG.PF1.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
+
+    let formula = `@abilities.${abilityId}.mod`;
+    if (abl.checkMod) {
+      formula += ` + @abilities.${abilityId}.checkMod`;
+    }
+    if (this.data.data.attributes.energyDrain) {
+      formula += " - @attributes.energyDrain";
+    }
+
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod + @checkMod - @energyDrain"],
-      data: {mod: abl.mod, checkMod: abl.checkMod, energyDrain: this.data.data.attributes.energyDrain},
+      parts: [formula],
+      data: rollData,
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",

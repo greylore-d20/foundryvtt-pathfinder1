@@ -2,6 +2,10 @@
 
 ## 0.75.0
 
+### Bug Fixes
+
+- Buffs replacing an armor bonus did not disable the enhancement armor bonus of the armor they just replaced
+
 ### Changelog
 
 - Hide Attack Notes from items without an attack action

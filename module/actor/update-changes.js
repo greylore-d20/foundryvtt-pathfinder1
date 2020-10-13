@@ -200,52 +200,78 @@ export const updateChanges = async function({data=null}={}) {
   updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
   _addDynamicData.call(this, { updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
 
-  // Parse change formulas
-  allChanges.forEach((change, a) => {
-    const formula = change.raw.formula || "";
-    if (formula === "") return;
-    const changeTarget = change.raw.subTarget;
-    if (changeData[changeTarget] == null) return;
-    const rollData = this.getRollData(srcData1.data);
+  {
+    const highestArmorEnhBonus = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped)
+    .reduce((cur, o) => {
+      return Math.max(cur, o.data.data.armor.enh);
+    }, 0);
+    const highestShieldEnhBonus = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped)
+    .reduce((cur, o) => {
+      return Math.max(cur, o.data.data.armor.enh);
+    }, 0);
 
-    rollData.item = {};
-    if (change.source.item != null) {
-      rollData.item = change.source.item.data;
-    }
+    // Parse change formulas
+    allChanges.forEach((change, a) => {
+      const formula = change.raw.formula || "";
+      if (formula === "") return;
+      const changeTarget = change.raw.subTarget;
+      if (changeData[changeTarget] == null) return;
+      const rollData = this.getRollData(srcData1.data);
 
-    const roll = new Roll(formula, rollData);
-
-    try {
-      change.raw.value = roll.roll().total;
-      change.source.value = change.raw.value;
-    }
-    catch (e) {
-      ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
-    }
-    _parseChange.call(this, change, changeData[changeTarget], flags);
-
-    temp.push(changeData[changeTarget]);
-
-    // Set change
-    if (change.raw.operator === "set") {
-      _applySetChanges(updateData, srcData1, [change]);
-      // Set source info
-      let flats = getChangeFlat(change.raw.subTarget, change.raw.modifier, srcData1.data);
-      if (!(flats instanceof Array)) flats = [flats];
-      flats.forEach(f => {
-        sourceInfo[f] = sourceInfo[f] || { positive: [], negative: [] };
-        sourceInfo[f].positive.push(change.source);
-      });
-    }
-    // Add change
-    else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
-      if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
-        const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
-        _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags });
-        temp = [];
+      rollData.item = {};
+      if (change.source.item != null) {
+        rollData.item = change.source.item.data;
       }
-    }
-  });
+
+      // Execute formula
+      const roll = new Roll(formula, rollData);
+
+      // Process result
+      let value = 0;
+      try {
+        value = roll.roll().total;
+
+        if (change.raw.target === "ac" && change.raw.modifier === "enh") {
+          if (change.raw.subTarget === "aac") {
+            value = Math.max(0, value - highestArmorEnhBonus);
+          }
+          else if (change.raw.subTarget === "sac") {
+            value = Math.max(0, value - highestShieldEnhBonus);
+          }
+        }
+      }
+      catch (e) {
+        ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
+      }
+
+      // Set value
+      change.raw.value = value;
+      change.source.value = change.raw.value;
+      _parseChange.call(this, change, changeData[changeTarget], flags);
+
+      temp.push(changeData[changeTarget]);
+
+      // Set change
+      if (change.raw.operator === "set") {
+        _applySetChanges(updateData, srcData1, [change]);
+        // Set source info
+        let flats = getChangeFlat(change.raw.subTarget, change.raw.modifier, srcData1.data);
+        if (!(flats instanceof Array)) flats = [flats];
+        flats.forEach(f => {
+          sourceInfo[f] = sourceInfo[f] || { positive: [], negative: [] };
+          sourceInfo[f].positive.push(change.source);
+        });
+      }
+      // Add change
+      else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
+        if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
+          const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
+          _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags });
+          temp = [];
+        }
+      }
+    });
+  }
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
@@ -958,18 +984,9 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     if (item.data.armor.value) {
       let ac = item.data.armor.value;
       if (item.data.broken) ac = Math.floor(ac / 2);
+      ac += item.data.armor.enh;
       changes.push({
         raw: mergeObject(ItemPF.defaultChange, { formula: ac.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
-        source: {
-          type: item.type,
-          name: item.name
-        }
-      });
-    }
-    // Push enhancement bonus to armor
-    if (item.data.armor.enh) {
-      changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: item.data.armor.enh.toString(), target: "ac", subTarget: armorTarget, modifier: "enh" }, {inplace: false}),
         source: {
           type: item.type,
           name: item.name

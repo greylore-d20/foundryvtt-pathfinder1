@@ -8,7 +8,7 @@
 
 ### Changelog
 
-- Hide Attack Notes from items without an attack action
+- Hide Attack Notes from items without an attack action, due to the efforts of Ethaks (many thanks!)
 - Improve help messages for setting a character's first class
 
 ## 0.74.11

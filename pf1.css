@@ -726,8 +726,6 @@
 }
 .pf1.sheet.actor .tab.summary .summary-header {
   flex: 0;
-  padding-bottom: 4px;
-  margin-bottom: 8px;
   border-bottom: 2px groove #eeede0;
 }
 .pf1.sheet.actor .tab.summary .summary-header .name-xp {
@@ -820,16 +818,6 @@
   height: calc(50% - 6px);
   line-height: 50%;
 }
-.pf1.sheet.actor .tab.summary table.speed-table td:hover a,
-.pf1.sheet.actor .tab.summary table.speed-table th:hover a {
-  opacity: 1;
-}
-.pf1.sheet.actor .tab.summary table.speed-table a {
-  opacity: 0;
-}
-.pf1.sheet.actor .tab.summary table.speed-table a:hover {
-  text-shadow: 0 0 10px red;
-}
 .pf1.sheet.actor .tab.summary .hd-level {
   flex: 0 0 256px;
   overflow-x: hidden;
@@ -884,6 +872,13 @@
 }
 .pf1.sheet.actor .tab.summary .attributes {
   border-bottom: 2px groove #eeede0;
+}
+.pf1.sheet.actor .tab.summary .attributes li {
+  padding: 0;
+  border-top: 2px groove #eeede0;
+}
+.pf1.sheet.actor .tab.summary .attributes li:not(:last-child) {
+  border-right: 2px groove #eeede0;
 }
 .pf1.sheet.actor .tab.summary .tab.quick-info ul.attributes {
   margin: 2px 0;
@@ -947,6 +942,9 @@
 .pf1.sheet.actor .attributes .traits {
   overflow-y: scroll;
   height: 100%;
+}
+.pf1.sheet.actor .attributes table {
+  margin: 0;
 }
 .pf1.sheet.actor ul.attributes.misc-base .attribute-footer input,
 .pf1.sheet.actor ul.attributes.misc-defenses .attribute-footer input {
@@ -2744,6 +2742,9 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
   font-weight: bold;
   font-size: 12px;
   color: white;
+}
+.pf1 table {
+  margin: 4px 0;
 }
 .pf1 table thead .icon {
   background-color: white;

@@ -25,8 +25,6 @@
 
     .summary-header {
       flex: 0;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
       border-bottom: @borderGroove;
 
       .name-xp {
@@ -143,22 +141,6 @@
       }
     }
 
-    table.speed-table {
-      td:hover, th:hover {
-        a {
-          opacity: 1;
-        }
-      }
-
-      a {
-        opacity: 0;
-
-        &:hover {
-          text-shadow: 0 0 10px red;
-        }
-      }
-    }
-
     .hd-level {
       flex: 0 0 256px;
       overflow-x: hidden;
@@ -229,6 +211,15 @@
 
     .attributes {
       border-bottom: @borderGroove;
+
+      li {
+        padding: 0;
+        border-top: @borderGroove;
+
+        &:not(:last-child) {
+          border-right: @borderGroove;
+        }
+      }
     }
 
     .tab.quick-info {
@@ -328,6 +319,10 @@
     .traits {
       overflow-y: scroll;
       height: 100%;
+    }
+
+    table {
+      margin: 0;
     }
   }
 

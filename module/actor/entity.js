@@ -183,21 +183,6 @@ export class ActorPF extends Actor {
     data.attributes.mods = data.attributes.mods || {};
     data.attributes.mods.skills = data.attributes.mods.skills || {};
 
-    // Set spell resistance
-    if (typeof data.attributes.sr.formula === "string" && data.attributes.sr.formula.length) {
-      try {
-        let roll = new Roll(data.attributes.sr.formula, this.getRollData()).roll();
-        data.attributes.sr.total = roll.total;
-      }
-      catch (e) {
-        console.error(`Could not calculate SR for actor ${this.name} with the following formula: '${data.attributes.sr.formula}'`);
-        data.attributes.sr.total = 0;
-      }
-    }
-    else {
-      data.attributes.sr.total = 0;
-    }
-
     // Set labels
     this.labels = {};
     this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
@@ -315,6 +300,7 @@ export class ActorPF extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
+    if (!hasProperty(actorData, "data.details.level.value")) return;
     const data = actorData.data;
 
     // Experience bar
@@ -330,6 +316,8 @@ export class ActorPF extends Actor {
    * Prepare NPC type specific data
    */
   _prepareNPCData(data) {
+    if (!hasProperty(data, "data.details.cr.total")) return;
+
     // Kill Experience
     try {
       const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
@@ -557,7 +545,7 @@ export class ActorPF extends Actor {
     }
 
     if (Object.keys(diff).length) {
-      await super.update(diff, options);
+      await super.update(diff, mergeObject(options, { diff: true }));
     }
     await this.toggleConditionStatusIcons();
   }

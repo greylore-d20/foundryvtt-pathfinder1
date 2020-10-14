@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.1 (Hotfix)
+
+### Bug Fixes
+
+- Character type actors glitched out after trying to change their permissions
+
 ## 0.75.0
 
 ### Bug Fixes

@@ -461,6 +461,8 @@ export const updateChanges = async function({data=null}={}) {
 
   this._setSourceDetails(mergeObject(this.data, srcData1, { inplace: false }), sourceInfo, flags);
 
+  _updateSimpleAttributes(this.data, srcData1);
+
   const diffData = diffObject(this.data, srcData1);
 
   // Apply changes
@@ -1639,5 +1641,28 @@ const _applySetChanges = function(updateData, data, changes) {
       totalValue += v;
     }
     linkData(data, updateData, attrKey, totalValue);
+  }
+};
+
+const _updateSimpleAttributes = function(updateData, data) {
+  // Update Spell Resistance
+  {
+    const formula = updateData["data.attributes.sr.formula"] || "";
+    if (formula.length > 0) {
+      try {
+        let roll = new Roll(formula, this.getRollData()).roll();
+        linkData(data, updateData, "data.attributes.sr.total", roll.total);
+      }
+      catch (e) {
+        ui.notifications.error(game.i18n.localize("PF1.ErrorActorFormula").format(
+          game.i18n.localize("PF1.SpellResistance"),
+          this.name,
+        ));
+        linkData(data, updateData, "data.attributes.sr.total", 0);
+      }
+    }
+    else {
+      linkData(data, updateData, "data.attributes.sr.total", 0);
+    }
   }
 };

@@ -459,9 +459,9 @@ export const updateChanges = async function({data=null}={}) {
     }
   }
 
-  this._setSourceDetails(mergeObject(this.data, srcData1, { inplace: false }), sourceInfo, flags);
+  _updateSimpleAttributes.call(this, updateData, srcData1);
 
-  _updateSimpleAttributes(this.data, srcData1);
+  this._setSourceDetails(mergeObject(this.data, srcData1, { inplace: false }), sourceInfo, flags);
 
   const diffData = diffObject(this.data, srcData1);
 

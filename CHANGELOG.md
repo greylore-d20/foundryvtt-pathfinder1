@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - NPCs always showed an experience value of 10, regardless of CR
+- Spell Resistance wasn't working
 
 ## 0.75.1 (Hotfix)
 

@@ -8,6 +8,7 @@ import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { ItemPF } from "../../item/entity.js";
 import { dialogGetActor } from "../../dialog.js";
+import { applyAccessibilitySettings } from "../../chat.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -1478,7 +1479,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onRollAbilityTest(event) {
     event.preventDefault();
-    let ability = event.currentTarget.parentElement.dataset.ability;
+    let ability = event.currentTarget.closest(".ability").dataset.ability;
     this.actor.rollAbility(ability, {event: event});
   }
 
@@ -1739,7 +1740,12 @@ export class ActorSheetPF extends ActorSheet {
     focus = focus.length ? focus[0] : null;
     if (focus && focus.name.match(/^data\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
 
-    return super._render(...args);
+    const result = await super._render(...args);
+
+    // Apply accessibility settings
+    applyAccessibilitySettings(this, this.element, {}, game.settings.get("pf1", "accessibilityConfig"));
+
+    return result;
   }
 
   async _onSubmit(event, {updateData=null, preventClose=false}={}) {
@@ -1934,6 +1940,7 @@ export class ActorSheetPF extends ActorSheet {
         const name = el.dataset.name;
         let value;
         if (el.nodeName === "INPUT") value = el.value;
+        else if (el.nodeName === "SELECT") value = el.options[el.selectedIndex].value;
 
         if (el.dataset.dtype === "Number") value = Number(value);
         else if (el.dataset.dtype === "Boolean") value = Boolean(value);

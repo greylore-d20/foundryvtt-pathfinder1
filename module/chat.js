@@ -84,6 +84,12 @@ export const applyAccessibilitySettings = function(app, html, data, conf) {
 
   // Enlarge font sizes
   if (fontSize > 0) {
+    // Enlarge table font sizes
+    {
+      const size = 10 + (fontSize * 4);
+      html.find("table").css("font-size", `${size}px`);
+    }
+
     // Enlarge attack roll numbers
     {
       const size = 12 + (fontSize * 4);

@@ -70,19 +70,7 @@
     <thead>
         <tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <th class="saving-throw" data-savingthrow="{{id}}">
-                <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
-            </th>
-            {{/each}}
-            <th colspan="2">
-                {{localize "PF1.SpellResistance"}}
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <td class="tooltip">
+            <th class="saving-throw tooltip" data-savingthrow="{{id}}" colspan="2">
                 <div class="tooltipcontent">
                 @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
             
@@ -94,16 +82,41 @@
                 {{/if}}
                 </div>
 
-                {{savingThrow.total}}
-            </td>
+                <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
+            </th>
             {{/each}}
-            <td class="tooltip" colspan="2">
+            <th rowspan="2" class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.sr.total : {{data.attributes.sr.total}}
                 </div>
+                
+                {{localize "PF1.SpellResistance"}}
+            </th>
+        </tr>
 
-                {{data.attributes.sr.total}}
+        <tr>
+            {{#each data.attributes.savingThrows as |savingThrow id|}}
+            <th>{{localize "PF1.Value"}}</th>
+            <th>{{localize "PF1.Ability"}}</th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            {{#each data.attributes.savingThrows as |savingThrow id|}}
+            <td>{{savingThrow.total}}</td>
+            <td>
+                <select data-name="data.attributes.savingThrows.{{id}}.ability">
+                    {{#select savingThrow.ability}}
+                    {{#each ../config.abilities as |abl a|}}
+                    <option value="{{a}}">{{abl}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
             </td>
+            {{/each}}
+            <td>{{data.attributes.sr.total}}</td>
         </tr>
     </tbody>
 </table>

@@ -20,6 +20,7 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/actors/parts/actor-combat.html",
     "systems/pf1/templates/actors/parts/actor-defenses_tables.html",
     "systems/pf1/templates/actors/parts/actor-buffs.html",
+    "systems/pf1/templates/actors/parts/actor-attributes.html",
 
     // Item Sheet Partials
     "systems/pf1/templates/items/parts/item-action.html",

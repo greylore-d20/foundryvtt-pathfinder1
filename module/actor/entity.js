@@ -1454,10 +1454,6 @@ export class ActorPF extends Actor {
         }).map(o => { return o.text; });
       }
 
-      if (miscKey === "cmb" && this.data.data.attributes.cmbNotes != null && this.data.data.attributes.cmbNotes !== "") {
-        result.push({ notes: [this.data.data.attributes.cmbNotes], item: null });
-      }
-
       return result;
     }
 

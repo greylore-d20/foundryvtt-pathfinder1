@@ -1064,82 +1064,7 @@
 }
 .pf1.sheet.actor .ability-scores {
   flex: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
-}
-.pf1.sheet.actor .ability-scores .ability {
-  height: 94px;
-  margin: 0 2px;
-  text-align: center;
-  border: 2px groove #eeede0;
-  border-radius: 3px;
-  /* Hide modifier box on hover */
-}
-.pf1.sheet.actor .ability-scores .ability .ability-score {
-  font-size: 20px;
-}
-.pf1.sheet.actor .ability-scores .ability input.ability-total {
-  height: 30px;
-  width: 50px;
-  margin: 0 auto;
-  line-height: 32px;
-  font-size: 24px;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers {
-  height: 24px;
-  margin: -12px 0 0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers span.ability-mod,
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers input[type="text"].ability-base {
-  flex: 0 0 32px;
-  height: 32px;
-  font-size: 20px;
-  border-top: 2px groove #eeede0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers span.ability-mod {
-  border-right: 2px groove #eeede0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers div.ability-center {
-  height: 0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-modifiers input[type="text"].ability-base {
-  border-left: 2px groove #eeede0;
-  border-bottom: 0;
-  border-right: 0;
-  border-radius: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  padding: 0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-header {
-  height: 24px;
-  margin: 0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-damage {
-  flex: 1;
-  height: 24px;
-  font-size: 20px;
-  border-bottom: 2px groove #eeede0;
-  border-right: 2px groove #eeede0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-penalty {
-  flex: 1;
-  height: 24px;
-  font-size: 20px;
-  border-bottom: 2px groove #eeede0;
-}
-.pf1.sheet.actor .ability-scores .ability .ability-header input[type="text"].ability-drain {
-  flex: 1;
-  height: 24px;
-  font-size: 20px;
-  border-bottom: 2px groove #eeede0;
-  border-left: 2px groove #eeede0;
-}
-.pf1.sheet.actor .ability-scores .ability input.ability-total:hover + .ability-modifiers {
-  visibility: hidden;
+  margin-bottom: 4px;
 }
 .pf1.sheet.actor .bottom {
   overflow-y: auto;
@@ -1898,6 +1823,13 @@
 }
 .pf1.sheet.actor .actor-notes .primary-content {
   flex: 1 0 320px;
+}
+.pf1.sheet.actor table {
+  table-layout: fixed;
+  overflow: hidden;
+}
+.pf1.sheet.actor table.ability-table input[type="text"] {
+  height: 20px;
 }
 .pf1.sheet.actor table td img {
   vertical-align: middle;
@@ -2761,6 +2693,21 @@ form .form-group.stacked label.checkbox input[type="checkbox"] {
 .pf1 table td:not(:last-child),
 .pf1 table th:not(:last-child) {
   border-right: 1px solid black;
+}
+.pf1 table.magic-items-table .name {
+  width: auto;
+}
+.pf1 table.magic-items-table .aura {
+  width: 20%;
+}
+.pf1 table.magic-items-table .cl {
+  width: 15%;
+}
+.pf1 table.magic-items-table .identify-dc {
+  width: 15%;
+}
+.pf1 table.magic-items-table .identify {
+  width: 40px;
 }
 #token-hud .col.actions {
   height: calc(100% + 150px);

@@ -13,6 +13,7 @@
 - Improve help messages for setting a character's first class
 - Improve movement speed list styling
 - Improve health styling on actor sheets
+- Improve ability score styling
 
 ## 0.74.11
 

@@ -278,7 +278,7 @@
       <thead>
         <tr>
           <th colspan="5">{{localize "PF1.Speed"}}</th>
-          <th rowspan="2">{{localize "PF1.FlyManeuverability"}}</th>
+          <th rowspan="2">{{localize "PF1.FlyManeuverabilityShort"}}</th>
         </tr>
         <tr>
           <th>{{localize "PF1.SpeedLand_Short"}}</th>
@@ -344,7 +344,7 @@
             {{/if}}
           </div>
 
-          <input disabled" type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
+          <input disabled type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td>
           <select name="data.attributes.speed.fly.maneuverability">
@@ -487,20 +487,26 @@
       <table>
         <thead>
           <tr>
-            <th class="attribute bab" data-attribute="bab">
+            <th class="attribute bab" data-attribute="bab" rowspan="2" colspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
             </th>
-            <th class="attribute cmb" data-attribute="cmb">
+            <th class="attribute cmb" data-attribute="cmb" colspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
             </th>
-            <th class="attribute initiative" data-attribute="initiative">
+            <th class="attribute initiative" data-attribute="initiative" rowspan="2" colspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
             </th>
           </tr>
+
+          <tr>
+            <th>{{localize "PF1.Value"}}</th>
+            <th>{{localize "PF1.Ability"}}</th>
+          </tr>
         </thead>
+
         <tbody>
           <tr>
-            <td class="tooltip">
+            <td class="tooltip" colspan="2">
               <span class="tooltipcontent">
                 @attributes.bab.total : {{data.attributes.bab.total}}
                 {{#if sourceDetails.data.attributes.bab.total.length}}
@@ -511,6 +517,7 @@
 
               {{data.attributes.bab.total}}
             </td>
+
             <td class="tooltip">
               <span class="tooltipcontent">
                 @attributes.cmb.total : {{data.attributes.cmb.total}}
@@ -522,7 +529,18 @@
 
               {{data.attributes.cmb.total}}
             </td>
-            <td class="tooltip">
+            <td>
+              <select name="data.attributes.cmbAbility">
+                {{#select data.attributes.cmbAbility}}
+                <option value=""></option>
+                {{#each config.abilities as |v k|}}
+                <option value="{{k}}">{{v}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </td>
+
+            <td class="tooltip" colspan="2">
               <span class="tooltipcontent">
                 @attributes.init.total : {{data.attributes.init.total}}
                 {{#if sourceDetails.data.attributes.init.total.length}}

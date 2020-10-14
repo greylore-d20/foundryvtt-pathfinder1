@@ -1,0 +1,121 @@
+{{!-- Ability Scores --}}
+<div class="ability-scores">
+    <table class="ability-table">
+        <thead>
+            <tr>
+                <th>{{localize "PF1.Ability"}}</th>
+                <th>{{localize "PF1.Total"}}</th>
+                <th>{{localize "PF1.Modifier"}}</th>
+                <th>{{localize "PF1.Damage"}}</th>
+                <th>{{localize "PF1.Drain"}}</th>
+                <th>{{localize "PF1.Penalty"}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each data.abilities as |ability id|}}
+            <tr class="ability" data-ability="{{id}}">
+                {{!-- Ability name --}}
+                <th class="tooltip">
+                    <span class="tooltipcontent">
+                        @abilities.{{id}}.total : {{ability.total}}<br/>
+                        @abilities.{{id}}.value : {{ability.value}}<br/>
+                        @abilities.{{id}}.mod : {{ability.mod}}<br/>
+                        @abilities.{{id}}.damage : {{ability.damage}}<br/>
+                        @abilities.{{id}}.drain : {{ability.drain}}<br/>
+                        @abilities.{{id}}.penalty : {{ability.penalty}}<br/>
+                        @abilities.{{id}}.base : {{ability.base}}<br/>
+                        @abilities.{{id}}.baseMod : {{ability.baseMod}}
+                        
+                        {{#if ability.sourceDetails.length}}
+                        <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                        {{#each ability.sourceDetails as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                        {{/if}}
+                    </span>
+
+                    <a class="ability-name rollable">
+                        <i class="fas fa-dice"></i>
+                        {{ability.label}}
+                    </a>
+                </th>
+
+                {{!-- Total --}}
+                <td data-action="input-text" data-for=".ability-{{id}}-total-input" data-attr-name="data.abilities.{{id}}.value">
+                  <input disabled class="ability-{{id}}-total-input" type="text" value="{{ability.total}}" data-dtype="Number"/>
+                </td>
+
+                {{!-- Modifier --}}
+                <td>{{numberFormat ability.mod decimals=0 sign=true}}</td>
+
+                {{!-- Damage --}}
+                <td data-action="input-text" data-for=".ability-{{id}}-damage-input" data-attr-name="data.abilities.{{id}}.damage">
+                  <input disabled class="ability-{{id}}-damage-input" type="text"
+                    {{#if ability.damage}}value="{{ability.damage}}"{{/if}} data-dtype="Number"/>
+                </td>
+
+                {{!-- Drain --}}
+                <td data-action="input-text" data-for=".ability-{{id}}-drain-input" data-attr-name="data.abilities.{{id}}.drain">
+                  <input disabled class="ability-{{id}}-drain-input" type="text"
+                    {{#if ability.drain}}value="{{ability.drain}}"{{/if}} data-dtype="Number"/>
+                </td>
+
+                {{!-- Penalty --}}
+                <td data-action="input-text" data-for=".ability-{{id}}-penalty-input" data-attr-name="data.abilities.{{id}}.userPenalty">
+                  <input disabled class="ability-{{id}}-penalty-input" type="text"
+                    {{#if ability.userPenalty}}value="{{ability.userPenalty}}"{{/if}} data-dtype="Number"/>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- <ul class="ability-scores flexrow">
+    {{#each data.abilities as |ability id|}}
+    <li class="ability" data-ability="{{id}}">
+        <div class="ability-header flexrow">
+            <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text" title="{{localize "PF1.Damage"}}"
+            value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DMG"}}"/>
+            <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text" title="{{localize "PF1.Penalty"}}"
+            value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.PNL"}}"/>
+            <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text" title="{{localize "PF1.Drain"}}"
+            value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DRN"}}"/>
+        </div>
+        <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
+        <span class="ability-score tooltip">
+            {{numberFormat ability.total decimals=0 sign=false}}
+        </span>
+        <div class="ability-modifiers flexrow">
+            <span class="ability-mod">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+            <div class="ability-center"></div>
+            <input class="ability-base" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="10"/>
+        </div>
+    </li>
+    {{/each}}
+</ul> --}}
+
+{{!-- Misc --}}
+<div class="attributes-traits flexrow">
+    <div class="flexcol attributes-root">
+        <ul class="attributes misc-base2 flexrow">
+            <li class="attribute acp" data-attribute="acp">
+                <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
+                <div class="attribute-value tooltip">
+                    <span>{{data.attributes.acp.total}}</span>
+                    <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
+                </div>
+            </li>
+            
+            <li class="attribute maxdex" data-attribute="maxdex">
+                <h4 class="attribute-name box-title">{{localize "PF1.MaxDexShort"}}</h4>
+                <div class="attribute-value tooltip">
+                    <span>{{data.attributes.maxDexBonus}}</span>
+                    <span class="tooltipcontent">@attributes.maxDexBonus : {{data.attributes.maxDexBonus}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    {{!-- Traits --}}
+    {{> "systems/pf1/templates/actors/parts/actor-traits.html"}}
+</div>

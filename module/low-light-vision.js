@@ -25,14 +25,14 @@ SightLayer.prototype.hasLowLight = function() {
   return (!relevantTokens.filter(o => o._controlled).length && lowLightTokens.length) || lowLightTokens.filter(o => o._controlled).length > 0;
 };
 
-const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
-Object.defineProperty(AmbientLight.prototype, "dimRadius", {
-  get: function() {
-    let result = AmbientLight__get__dimRadius.call(this);
-    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
-    return result;
-  }
-});
+// const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
+// Object.defineProperty(AmbientLight.prototype, "dimRadius", {
+//   get: function() {
+//     let result = AmbientLight__get__dimRadius.call(this);
+//     if (canvas.sight.hasLowLight() && result > 0) result *= 2;
+//     return result;
+//   }
+// });
 
 // const AmbientLight__get__brightRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "brightRadius").get;
 // Object.defineProperty(AmbientLight.prototype, "brightRadius", {
@@ -43,23 +43,23 @@ Object.defineProperty(AmbientLight.prototype, "dimRadius", {
   // }
 // });
 
-const Token__get__dimLightRadius = Object.getOwnPropertyDescriptor(Token.prototype, "dimLightRadius").get;
-Object.defineProperty(Token.prototype, "dimLightRadius", {
-  get: function() {
-    let result = Token__get__dimLightRadius.call(this);
-    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
-    return result;
-  }
-});
+// const Token__get__dimLightRadius = Object.getOwnPropertyDescriptor(Token.prototype, "dimLightRadius").get;
+// Object.defineProperty(Token.prototype, "dimLightRadius", {
+//   get: function() {
+//     let result = Token__get__dimLightRadius.call(this);
+//     if (canvas.sight.hasLowLight() && result > 0) result *= 2;
+//     return result;
+//   }
+// });
 
-const Token__get__brightRadius = Object.getOwnPropertyDescriptor(Token.prototype, "brightRadius").get;
-Object.defineProperty(Token.prototype, "brightLightRadius", {
-  get: function() {
-    let result = Token__get__brightRadius.call(this);
-    if (canvas.sight.hasLowLight() && result > 0) result *= 2;
-    return result;
-  }
-});
+// const Token__get__brightRadius = Object.getOwnPropertyDescriptor(Token.prototype, "brightRadius").get;
+// Object.defineProperty(Token.prototype, "brightLightRadius", {
+//   get: function() {
+//     let result = Token__get__brightRadius.call(this);
+//     if (canvas.sight.hasLowLight() && result > 0) result *= 2;
+//     return result;
+//   }
+// });
 
 const SightLayer_initializeTokens = SightLayer.prototype.initializeTokens;
 SightLayer.prototype.initializeTokens = function(options) {

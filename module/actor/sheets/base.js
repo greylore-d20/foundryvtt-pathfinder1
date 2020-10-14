@@ -1154,10 +1154,19 @@ export class ActorSheetPF extends ActorSheet {
 
     elem.removeAttr("disabled")
     elem.attr("name", event.currentTarget.dataset.attrName);
-    elem.attr("value", getProperty(this.actor.data, event.currentTarget.dataset.attrName));
+    let value = getProperty(this.actor.data, event.currentTarget.dataset.attrName);
+    elem.attr("value", value);
     elem.select();
 
-    elem.focusout(event => this._onSubmit(event));
+    elem.focusout(event => {
+      if (typeof value === "number") value = value.toString();
+      if (value !== elem.attr("value")) {
+        this._onSubmit(event);
+      }
+      else {
+        this.render();
+      }
+    });
   }
 
   /* -------------------------------------------- */
@@ -1740,6 +1749,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _render(...args) {
+    
     // Trick to avoid error on elements with changing name
     let focus = this.element.find(":focus");
     focus = focus.length ? focus[0] : null;
@@ -1753,7 +1763,7 @@ export class ActorSheetPF extends ActorSheet {
     return result;
   }
 
-  async _onSubmit(event, {updateData=null, preventClose=false}={}) {
+  async _onSubmit(event, {updateData=null, preventClose=false, preventRender=false}={}) {
     event.preventDefault();
 
     this._submitQueued = false;
@@ -1761,7 +1771,7 @@ export class ActorSheetPF extends ActorSheet {
     // Update items
     await this._updateItems();
 
-    return super._onSubmit(event, {updateData, preventClose});
+    return super._onSubmit(event, {updateData, preventClose, preventRender});
   }
 
   async _updateItems() {

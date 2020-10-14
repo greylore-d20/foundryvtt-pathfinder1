@@ -1589,19 +1589,19 @@ const _parseChange = function(change, changeData, flags) {
   if (["add", "+"].includes(changeOperator) || !changeOperator) {
     // Add value
     if (changeValue > 0) {
-      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) changeData[changeType].positive.value += changeValue;
+      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) changeData[changeType].positive.value += changeValue;
       else {
         changeData[changeType].positive.value = Math.max(changeData[changeType].positive.value, changeValue);
       }
     }
     else {
-      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) changeData[changeType].negative.value += changeValue;
+      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) changeData[changeType].negative.value += changeValue;
       else changeData[changeType].negative.value = Math.min(changeData[changeType].negative.value, changeValue);
     }
 
     // Add positive source
     if (changeValue > 0) {
-      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) {
+      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) {
         changeData[changeType].positive.sources.push(change.source);
       }
       else if (prevValue.positive < changeValue) {
@@ -1610,7 +1610,7 @@ const _parseChange = function(change, changeData, flags) {
     }
     // Add negative source
     else {
-      if (["untyped", "untypedPerm", "dodge", "penalty"].includes(changeType)) {
+      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) {
         changeData[changeType].negative.sources.push(change.source);
       }
       else if (prevValue.negative > changeValue) {

@@ -316,8 +316,7 @@ export class ActorPF extends Actor {
    * Prepare NPC type specific data
    */
   _prepareNPCData(data) {
-    if (!hasProperty(data, "data.details.cr.total")) return;
-
+    
     // Kill Experience
     try {
       const crTotal = getProperty(this.data, "data.details.cr.total") || 1;

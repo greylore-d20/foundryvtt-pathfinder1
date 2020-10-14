@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.2
+
+### Bug Fixes
+
+- NPCs always showed an experience value of 10, regardless of CR
+
 ## 0.75.1 (Hotfix)
 
 ### Bug Fixes

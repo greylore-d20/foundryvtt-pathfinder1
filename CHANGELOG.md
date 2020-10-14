@@ -6,6 +6,10 @@
 
 - Character type actors glitched out after trying to change their permissions
 
+### Changelog
+
+- Add button to open the race compendium browser from an actor sheet if it has no race
+
 ## 0.75.0
 
 ### Bug Fixes

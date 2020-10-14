@@ -811,6 +811,11 @@ export class ActorSheetPF extends ActorSheet {
       event.preventDefault();
       game.pf1.compendiums["classes"].render(true);
     });
+
+    html.find('a[data-action="compendium_race"]').click(event => {
+      event.preventDefault();
+      game.pf1.compendiums["races"].render(true);
+    });
   }
 
   createTabs(html) {

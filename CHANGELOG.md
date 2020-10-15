@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.3
+
+### Changelog
+
+- Modesto Condensed Bold font switched to small-caps variant to improve readability and match original Nodesto
+
 ## 0.75.2
 
 ### Bug Fixes

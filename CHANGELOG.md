@@ -6,6 +6,7 @@
 
 - NPCs always showed an experience value of 10, regardless of CR
 - Spell Resistance wasn't working
+- Actor sheets didn't update until a page refresh on Foundry 0.6.6
 
 ## 0.75.1 (Hotfix)
 

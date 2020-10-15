@@ -273,6 +273,8 @@ export const updateChanges = async function({data=null}={}) {
     });
   }
 
+  _updateSimpleAttributes.call(this, updateData, srcData1);
+
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
   switch (srcData1.data.attributes.encumbrance.level) {
@@ -458,8 +460,6 @@ export const updateChanges = async function({data=null}={}) {
       }
     }
   }
-
-  _updateSimpleAttributes.call(this, updateData, srcData1);
 
   this._setSourceDetails(mergeObject(this.data, srcData1, { inplace: false }), sourceInfo, flags);
 

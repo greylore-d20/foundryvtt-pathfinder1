@@ -137,9 +137,10 @@ export class ChatAttack {
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
     }
-
-    // Add conditional attack bonus
-    if(conditionalParts["attack.normal"]?.length) extraParts.push(...conditionalParts["attack.normal"]);
+    else {
+      // Add conditional attack bonus
+      if(conditionalParts["attack.normal"]?.length) extraParts.push(...conditionalParts["attack.normal"]);
+    }
 
     // Add broken penalty
     if (this.item.data.data.broken && !critical) {

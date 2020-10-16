@@ -6,6 +6,7 @@
 
 - Modesto Condensed Bold font switched to small-caps variant to improve readability and match original Nodesto
 - Outfits in the item compendium are not Equipment type items of the Clothing subtype
+- Added a journal compendium for Core skills
 
 ## 0.75.2
 

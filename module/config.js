@@ -739,6 +739,44 @@ PF1.skills = {
   "umd": "PF1.SkillUMD"
 };
 
+PF1.skillCompendiumEntries = {
+  "acr": "pf1.skills.HPsdXjjRtKNGFGRc",
+  "apr": "pf1.skills.W5GT9F3euC4aG9zP",
+  "blf": "pf1.skills.pAB2PYkZO3lsmeaC",
+  "clm": "pf1.skills.xvua9V5Zggkc77Gt",
+  "crf": "pf1.skills.L6LEhHRrn53cMuhE",
+  "dip": "pf1.skills.OtfbHJhIQsNzmiTN",
+  "dev": "pf1.skills.CCy1fajKKU3K02iQ",
+  "dis": "pf1.skills.lP3L1RXi9q4ha9Gu",
+  "esc": "pf1.skills.AOQsMtvLY4V3wFEL",
+  "fly": "pf1.skills.rR877UB1xVd3Z7z1",
+  "han": "pf1.skills.fXauAodbOBHBi7Mj",
+  "hea": "pf1.skills.RtBGttkocvTbySjd",
+  "int": "pf1.skills.ImjhcPmm02QSCbPg",
+  "kar": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kdu": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "ken": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kge": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "khi": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "klo": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kna": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kno": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kpl": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "kre": "pf1.skills.ki0QvL0K7u4YuK0O",
+  "lin": "pf1.skills.QXIYXqy6ivNHrDrW",
+  "per": "pf1.skills.YYmmxDgp0g3ltSUG",
+  "prf": "pf1.skills.HhV5UmaRLTjtB3Xh",
+  "pro": "pf1.skills.O7Utk8xKbHYDP7Ot",
+  "rid": "pf1.skills.mKO8Q4uMiqpMySOZ",
+  "sen": "pf1.skills.R8HGxGCKayOl15AO",
+  "slt": "pf1.skills.zK0CbvpYLZhTN5Wn",
+  "spl": "pf1.skills.uLZI2uWz0uB8UgBc",
+  "ste": "pf1.skills.T6nefKotIb5vKE9h",
+  "sur": "pf1.skills.TXrxgrB2sQjppZFY",
+  "swm": "pf1.skills.weCPHUuXi9sF5r4E",
+  "umd": "pf1.skills.WR5lekzyLT6T2CFH",
+};
+
 PF1.arbitrarySkills = [
   "art", "crf", "lor", "prf", "pro"
 ];

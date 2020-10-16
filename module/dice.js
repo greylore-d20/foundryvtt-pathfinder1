@@ -33,7 +33,7 @@ export class DicePF {
    */
   static async d20Roll({event, parts, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
                   fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
-                  staticRoll=null, noSound=false }) {
+                  staticRoll=null, noSound=false, compendiumEntry=null }) {
     // Handle input arguments
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
@@ -77,6 +77,8 @@ export class DicePF {
             total: roll.total,
             isCrit: d20.total >= critical,
             isFumble: d20.total <= fumble,
+            flavor: flavor,
+            compendiumEntry: compendiumEntry,
           }, chatTemplateData || {});
 
           // Create chat data
@@ -104,7 +106,7 @@ export class DicePF {
 
           // Send message
           rolled = true;
-          chatData = mergeObject(roll.toMessage({flavor}, { create: false }), chatData);
+          chatData = mergeObject(roll.toMessage({}, { create: false }), chatData);
 
           await ChatMessagePF.create(chatData);
         }

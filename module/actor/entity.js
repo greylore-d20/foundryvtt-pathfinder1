@@ -15,7 +15,7 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on('click', 'button[data-action]', this._onChatCardButtonAction.bind(this));
+    html.on('click', 'button[data-action], a[data-action]', this._onChatCardButtonAction.bind(this));
   }
 
   static async _onChatCardButtonAction(event) {
@@ -40,6 +40,16 @@ export class ActorPF extends Actor {
         a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt(), });
         noSound = true;
       }
+    }
+    // Show compendium entry
+    else if (action === "open-compendium-entry") {
+      const entryKey = button.dataset.compendiumEntry;
+      const parts = entryKey.split(".");
+      const packKey = parts.slice(0, 2).join(".");
+      const entryId = parts.slice(-1)[0];
+      const pack = game.packs.get(packKey);
+      const entry = await pack.getEntity(entryId);
+      entry.sheet.render(true);
     }
   }
 
@@ -883,6 +893,7 @@ export class ActorPF extends Actor {
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
+      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
     });
   }
 

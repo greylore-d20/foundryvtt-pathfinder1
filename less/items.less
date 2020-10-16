@@ -250,7 +250,7 @@
   /*  Item Actions                             */
   /* ----------------------------------------- */
 
-  h4.damage-header, h4.change-header, h4.context-notes-header, h4.attack-header {
+  h4.damage-header, h4.change-header, h4.context-notes-header, h4.attack-header, h4.conditional-header {
     margin: 0;
     padding: 0;
     font-weight: bold;
@@ -281,13 +281,16 @@
   }
 
   .changes,
-  .context-notes {
+  .context-notes,
+  .conditionals {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: block;
 
     .change,
-    .context-note {
+    .context-note,
+    .conditional {
       flex: 0 0 100%;
       padding: 0;
       input {
@@ -310,10 +313,22 @@
       .change-operator {
         flex: 0 0 24px;
       }
+      .conditional-default {
+        flex: 0 0 18px;
+      }
+      .conditional-modifier {
+        display: flex;
+      }
     }
   }
 
-  .damage-control, .crit-damage-control, .attack-control, .change-control, .context-note-control {
+  .conditionals {
+    .form-group {
+      padding-left: 28px;
+    }
+  }
+
+  .damage-control, .crit-damage-control, .attack-control, .change-control, .context-note-control, .conditional-control {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;

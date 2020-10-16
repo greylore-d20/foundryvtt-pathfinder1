@@ -37,6 +37,18 @@
     {{/if}}{{/if}}
   </div>
 
+  {{!-- Conditionals --}}
+  {{#if item.conditionals}}
+  <div class="form-group stacked">
+    <label>{{localize "PF1.Conditionals"}}</label>
+    {{#each item.conditionals as |conditional a|}}
+    <label class="checkbox">
+      <input type="checkbox" name="conditional.{{a}}" class="conditional" {{checked this.default}}> {{lookup this "name"}}
+    </label>
+    {{/each}}
+  </div>
+  {{/if}}
+
   {{#if hasDamage}}{{#if hasDamageAbility}}
   <div class="form-group select">
     <label>{{localize "PF1.DamageAbility"}}</label>

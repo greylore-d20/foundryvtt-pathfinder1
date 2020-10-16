@@ -1,0 +1,69 @@
+{{!-- Conditionals --}}
+<h4 class="conditional-header">
+  {{localize "PF1.Conditionals"}}
+  <a class="conditional-control add-conditional"><i class="fas fa-plus"></i></a>
+</h4>
+<ol class="conditionals form-group">
+  {{#each data.conditionals as |conditional a|}}
+  <li class="conditional flexcolumn" data-conditional="{{a}}"><div class="conditional flexrow" data-conditional="{{a}}">
+      <input class="conditional-default" type="checkbox" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
+      <input class="conditional-name" type="text" name="data.conditionals.{{a}}.name" value="{{lookup this "name"}}"
+      placeholder="{{localize "PF1.Name"}}" title="{{localize "PF1.Name"}}"/>
+      <a class="conditional-control add-conditional-modifier"><i class="fas fa-plus"></i></a>
+      <a class="conditional-control delete-conditional"><i class="fas fa-minus"></i></a>
+    </div>
+    <ol class="conditionals form-group">
+      {{#each this.modifiers as |modifier m|}}
+      <li class="conditional-modifier flexrow" data-conditional="{{a}}" data-modifier="{{m}}">
+        <input class="conditional-formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
+        placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
+        <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target">
+          {{#select (lookup this "target") }}
+          <option value="">{{localize "PF1.None"}}</option>
+          {{#each targets as |target type|}}
+          <option value="{{type}}">{{target}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+        <select class="conditional-sub-target" name="data.conditionals.{{a}}.{{m}}.subTarget">
+          {{#select (lookup this "subTarget") }}
+          {{#if (lookup this "target") }}
+          {{#each subTargets as |target type|}}
+          <option value="{{type}}">{{target}}</option>
+          {{/each}}
+          {{else}}
+          <option value=""></option>
+          {{/if}}
+          {{/select}}
+        </select>
+        <select class="conditional-type" name="data.conditionals.{{a}}.{{m}}.type">
+          {{#select (lookup this "type") }}
+          {{#if (lookup this "target") }}
+          {{#each conditionalModifierTypes as |modifierType mt|}}
+          <option value="{{mt}}">{{modifierType}}</option>
+          {{/each}}
+          {{else}}
+          <option value=""></option>
+          {{/if}}
+          {{/select}}
+        </select>
+        <select class="conditional-critical" name="data.conditionals.{{a}}.{{m}}.critical">
+          {{#select (lookup this "critical") }}
+          {{#if (lookup this "target")}}
+          {{#each conditionalCritical as |critical c|}}
+          <option value="{{c}}">{{localize critical}}</option>
+          {{/each}}
+          {{else}}
+          <option value=""></option>
+          {{/if}}
+          {{/select}}
+        </select>
+        {{#if ../modifiers.length}}
+        <a class="conditional-control delete-conditional-modifier"><i class="fas fa-minus"></i></a>{{/if}}
+      </li>
+      {{/each}}
+    </ol>
+  </li>
+  {{/each}}
+</ol>
+</div>

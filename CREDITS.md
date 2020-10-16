@@ -120,6 +120,7 @@ People and credits are listed in no particular order.
 
 - Added base dice selector to attack roll dialogs
 - Did some bug fixing
+- Added conditional attack modifiers
 
 ## Nico Weichbrodt
 

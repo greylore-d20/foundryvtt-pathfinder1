@@ -5,6 +5,7 @@
 ### Changelog
 
 - Modesto Condensed Bold font switched to small-caps variant to improve readability and match original Nodesto
+- Outfits in the item compendium are not Equipment type items of the Clothing subtype
 
 ## 0.75.2
 

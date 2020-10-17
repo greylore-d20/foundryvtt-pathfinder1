@@ -9,6 +9,7 @@
 - Added a journal compendium for Core skills
 - Skill roll chat cards now have a button to open the associated compendium entry
 - Add conditional modifiers to attack type items, due to the efforts of Ethaks (many thanks!)
+- Changed display of tags in basic item chat cards to look the same as those from action cards
 
 ## 0.75.2
 

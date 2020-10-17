@@ -31,8 +31,15 @@
     <p><strong>{{ localize "PF1.ChatReqMats" }}.</strong> {{data.materials.value}}</p>
     {{/if}}
 
-    {{#each data.properties}}
-    <span>{{{this}}}</span>
-    {{/each}}
+    {{#if data.properties.length}}
+    <div class="flexcol property-group gm-sensitive">
+      <label>{{localize "PF1.Tags"}}</label>
+      <div class="flexrow">
+        {{#each data.properties}}
+        <span class="tag">{{{this}}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
   </footer>
 </div>

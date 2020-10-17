@@ -32,21 +32,21 @@ export const registerHandlebarsHelpers = function() {
       }
     }
     const rollData = item != null ? item.getRollData() : (actor != null ? actor.getRollData() : {});
+
     // Create editor
-    let target = options.hash['target'],
-        content = options.hash['content'] || "",
-        button = Boolean(options.hash['button']),
-        owner = Boolean(options.hash['owner']),
-        editable = Boolean(options.hash['editable']);
+    const target = options.hash['target'];
     if ( !target ) throw new Error("You must define the name of a target field.");
 
     // Enrich the content
-    content = TextEditor.enrichHTML(content, {secrets: owner, entities: true, rollData: rollData});
+    const owner = Boolean(options.hash['owner']);
+    const content = TextEditor.enrichHTML(options.hash['content'] || "", {secrets: owner, entities: true, rollData: rollData});
 
     // Construct the HTML
     let editor = $(`<div class="editor"><div class="editor-content" data-edit="${target}">${content}</div></div>`);
 
     // Append edit button
+    const button = Boolean(options.hash['button']);
+    const editable = Boolean(options.hash['editable']);
     if ( button && editable ) editor.append($('<a class="editor-edit"><i class="fas fa-edit"></i></a>'));
     return new Handlebars.SafeString(editor[0].outerHTML);
   });

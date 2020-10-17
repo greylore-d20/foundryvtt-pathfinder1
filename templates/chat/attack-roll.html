@@ -26,7 +26,12 @@
         {{/if}}
         {{else}}
         <tr>
-          <th colspan="2">{{atk.damage.flavor}}</th>
+          <th colspan="2">
+            {{atk.damage.flavor}}
+            <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+              {{atk.damage.total}}
+            </a>
+          </th>
         </tr>
         {{/if}}
       </thead>
@@ -49,32 +54,22 @@
           </td>
           {{/if}}
         </tr>
-        
+ 
         {{#if atk.hasDamage}}
         <tr>
-          <th colspan="2">{{atk.damage.flavor}}</th>
-          {{#if atk.hasCritConfirm}}
-          <th colspan="2">{{atk.critDamage.flavor}}</th>
-          {{/if}}
-        </tr>
-        <tr>
-          <td>
+          <th colspan="2">
+            {{atk.damage.flavor}}
             <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
-          </td>
-          <td>
-            <b>{{localize "PF1.Total"}}</b>
-          </td>
+          </th>
           {{#if atk.hasCritConfirm}}
-          <td>
+          <th colspan="2">
+            {{atk.critDamage.flavor}}
             <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
               {{atk.critDamage.total}}
             </a>
-          </td>
-          <td>
-            <b>{{localize "PF1.Total"}}</b>
-          </td>
+          </th>
           {{/if}}
         </tr>
 

@@ -261,6 +261,24 @@ export class ItemPF extends Item {
     };
   }
 
+  static get defaultConditional() {
+    return {
+      default: false,
+      name: "",
+      modifiers: [],
+    };
+  }
+
+  static get defaultConditionalModifier() {
+    return {
+      formula: "",
+      target: "",
+      subTarget: "",
+      type: "",
+      critical: "",
+    };
+  }
+
   static get defaultContextNote() {
     return {
       text: "",
@@ -954,7 +972,8 @@ export class ItemPF extends Item {
         damageExtraParts = [],
         primaryAttack = true,
         useMeasureTemplate = false,
-        rollMode = game.settings.get("core", "rollMode");
+        rollMode = game.settings.get("core", "rollMode"),
+        conditionals;
       // Get form data
       if (form) {
         rollData.d20 = form.find('[name="d20"]').val();
@@ -1009,6 +1028,14 @@ export class ItemPF extends Item {
           attackExtraParts.push("@powerAttackPenalty");
         }
 
+        // Conditionals
+        html = form.find(".conditional");
+        if (html.length > 0) {
+          conditionals = html.map( function() {
+            if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
+          }).get();
+        }
+
         // Caster level offset
         html = form.find('[name="cl-offset"]');
         if (html.length > 0) {
@@ -1028,6 +1055,15 @@ export class ItemPF extends Item {
         rollMode: rollMode,
       };
 
+      // Conditional defaults for fast-forwarding
+      if (conditionals === undefined) {
+        conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
+          if (con.default) arr.push(i);
+          return arr;
+        }, []);
+      }
+
+
       // Create attacks
       const allAttacks = fullAttack ? this.data.data.attackParts.reduce((cur, r) => {
         cur.push({ bonus: r[0], label: r[1] });
@@ -1046,24 +1082,72 @@ export class ItemPF extends Item {
       };
       let ammoCost = 0;
 
+
+      // Create conditionalParts from all enabled conditional modifiers
+      let conditionalPartsCommon = {};
+
+      // Helper to get localized name from CONFIG.PF1 objects
+      const localizeType = (target, type) => {
+        console.log(this);
+        let result = this.getConditionalModifierTypes(target);
+        return game.i18n.localize(result[type]) || type;
+      };
+
+      if(conditionals) {
+        let conditionalData = {};
+        for(const i of conditionals) {
+          const conditional = this.data.data.conditionals[i];
+          for (const [i, modifier] of conditional.modifiers.entries()) {
+            // Adds a formulas result to rollData to allow referencing it
+            // In try-block to avoid stalling due to malformed modifier
+            try {
+              conditionalData[[createTag(conditional.name), i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
+            } catch (e) {
+              console.error(`Rolling ${conditional.name} caused an error: ${e}`);
+            }
+
+            // Create a key string for the formula array
+            const partString = `${modifier.target}.${modifier.subTarget}.${modifier.critical}`;
+            // Add formula in correct format for attacks or damage
+            conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
+              (modifier.target === "attack") ? modifier.formula :
+              (modifier.target === "damage" && Object.keys(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
+              [modifier.formula, localizeType(modifier.target, modifier.type, false)]
+            ];
+          }
+        }
+        // Expand data into rollData to enable referencing in formulae
+        rollData.conditionals = expandObject(conditionalData, 5);
+      }
+
       if (this.hasAttack) {
         ammoCost = Math.min(minAmmo, allAttacks.length);
         for (let a = 0; (ammoLinks.length && a < Math.min(minAmmo, allAttacks.length)) || (!ammoLinks.length && a < allAttacks.length); a++) {
 
           let atk = allAttacks[a];
+
+          // Combine conditional modifiers for attack a attack and damage
+          const conditionalParts = {
+            "attack.normal": [...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
+            "attack.crit": [...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
+            "damage.normal": [...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
+            "damage.crit": [...(conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
+            "damage.nonCrit": [...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
+          };
+
           // Create attack object
           let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
 
           // Add attack roll
-          await attack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts)});
+          await attack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts});
 
           // Add damage
           if (this.hasDamage) {
-            await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
+            await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
 
             // Add critical hit damage
             if (attack.hasCritConfirm) {
-              await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: true});
+              await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: true, conditionalParts});
             }
           }
 
@@ -1075,24 +1159,36 @@ export class ItemPF extends Item {
 
           // Add to list
           attacks.push(attack);
-          
+
+          // Create attack for Rapid Shot
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
+            // Combine conditional modifiers for Rapid Shot attack and damage
+            const conditionalParts = {
+              "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
+              "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
+              "damage.normal": [...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
+              "damage.crit": [...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
+              "damage.nonCrit": [...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
+            };
+
+            // Create attack object, then add attack roll
             let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
-            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts)});
+            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts});
 
             // Add damage
             if (this.hasDamage) {
-              await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
-  
+
+              await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
+
               // Add critical hit damage
               if (rapidShotAttack.hasCritConfirm) {
-                await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: true});
+                await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: true, conditionalParts});
               }
             }
-  
+
             // Add effect notes
             rapidShotAttack.addEffectNotes();
-            
+
             attacks.push(rapidShotAttack);
           }
         }
@@ -1101,9 +1197,14 @@ export class ItemPF extends Item {
       else if (this.hasDamage) {
         ammoCost = 1;
 
+        // Set conditional modifiers
+        const conditionalParts = {
+          "damage.normal": conditionalPartsCommon["damage.allDamage.normal"] ?? []
+        };
+
         let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
         // Add damage
-        await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false});
+        await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
 
         // Add effect notes
         attack.addEffectNotes();
@@ -1259,8 +1360,14 @@ export class ItemPF extends Item {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
           if (this.data.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
         }
+        // Add conditionals info
+        if (conditionals?.length) {
+          conditionals.forEach(c => {
+            properties.push(this.data.data.conditionals[c].name);
+          });
+        }
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
-        
+
         // Add CL notes
         if (this.data.type === "spell" && this.actor) {
           const clNotes = this.actor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
@@ -1550,7 +1657,7 @@ export class ItemPF extends Item {
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({data=null, critical=false, extraParts=[]}={}) {
+  rollDamage({data=null, critical=false, extraParts=[], conditionalParts={}}={}) {
     const rollData = mergeObject(this.getRollData(), data || {});
 
     if (!this.hasDamage) {
@@ -1559,13 +1666,32 @@ export class ItemPF extends Item {
 
     // Define Roll parts
     let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "normal" }; });
+    // Add conditionals damage
+    conditionalParts["damage.normal"]?.forEach((p) => {
+      const [base, damageType, isExtra] = p;
+      (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "normal"});
+    });
     // Add critical damage parts
-    if (critical === true && getProperty(this.data, "data.damage.critParts") != null) {
-      parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "crit" }; }));
+    if (critical === true) {
+      if (getProperty(this.data, "data.damage.critParts") != null) {
+        parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "crit" }; }));
+      }
+      // Add conditional critical damage parts
+      conditionalParts["damage.crit"]?.forEach((p) => {
+        const [base, damageType, isExtra] = p;
+        (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "crit"});
+      });
     }
     // Add non-critical damage parts
-    if (critical === false && getProperty(this.data, "data.damage.nonCritParts") != null) {
-      parts = parts.concat(this.data.data.damage.nonCritParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" }; }));
+    if (critical === false) {
+      if (getProperty(this.data, "data.damage.nonCritParts") != null) {
+        parts = parts.concat(this.data.data.damage.nonCritParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" }; }));
+      }
+      // Add conditional non-critical damage parts
+      conditionalParts["damage.nonCrit"]?.forEach((p) => {
+        const [base, damageType, isExtra] = p;
+        (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "nonCrit"});
+      });
     }
 
     // Add broken penalty
@@ -2516,6 +2642,95 @@ export class ItemPF extends Item {
       }
     }
 
+    return result;
+  }
+
+/**
+ * Generates a list of targets this modifier can have.
+ * @param {ItemPF} item - The item for which the modifier is to be created.
+ * @returns {Object.<string, string>} A list of targets
+ */
+  getConditionalTargets() {
+    let result = {}
+    if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
+    if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
+    return result;
+    }
+
+/**
+  * Generates lists of conditional subtargets this attack can have.
+  * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
+  * @returns {Object.<string, string>} A list of conditionals
+  */
+  getConditionalSubTargets(target) {
+    let result = {};
+    // Add static targets
+    if (hasProperty(CONFIG.PF1.conditionalTargets, target)) {
+      for (let [k, v] of Object.entries(CONFIG.PF1.conditionalTargets[target])) {
+        if (!k.startsWith("_")) result[k] = v;
+      }
+    }
+    // Add specific attacks
+    if (this.hasAttack) {
+      result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+    } else {
+      delete result["rapidShotDamage"];
+    }
+    if (this.hasMultiAttack) {
+      for (let [k,v] of Object.entries(this.data.data.attackParts)) {
+        result[`attack.${Number(k)+1}`] = v[1];
+      }
+    }
+    return result;
+  }
+
+/* Generates lists of conditional modifier bonus types applicable to a formula.
+  * @param {string} target - The target key as defined in CONFIG.PF1.conditionTargets.
+  * @returns {Object.<string, string>} A list of bonus types.
+  * */
+  getConditionalModifierTypes(target) {
+    let result = {};
+    if (target === "damage") {
+      // Add damage types from CONFIG.PF1.damageTypes
+      for (let [k, v] of Object.entries(CONFIG.PF1.damageTypes)) {
+        result[k] = v;
+      }
+    }
+    if (["attack", "damage"].includes(target)) {
+      // Add bonusModifiers from CONFIG.PF1.bonusModifiers
+        for (let [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
+          // @TODO: Why do damage types get translated when looping their object?
+          // To have an object of uniform pairs, translate here. Why? Dirty.
+            result[k] = game.i18n.localize(v);
+        }
+    }
+    return result;
+  }
+
+/* Generates a list of critical applications for a given formula target.
+  * @param {string} target - The target key as defined in CONFIG.PF1.conditionalTargets.
+  * @returns {Object.<string, string>} A list of critical applications.
+  * */
+  getConditionalCritical(target) {
+    let result = {};
+    // Attack bonuses can only apply as critical confirm bonus
+    if (target === "attack") {
+      result = {...result,
+        "normal": "PF1.Normal",
+        "crit": "PF1.CriticalConfirmBonus",
+      };
+    }
+    // Damage bonuses can be multiplied or not
+    if (target === "damage") {
+      result = {...result,
+        "normal": "PF1.Normal"};
+      if (this.hasAttack) {
+        result = {...result,
+          "crit": "PF1.CritDamageBonusFormula",
+          "nonCrit": "PF1.NonCritDamageBonusFormula",
+        };
+    }
+    }
     return result;
   }
 

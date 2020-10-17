@@ -125,7 +125,7 @@ export class ChatAttack {
     this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${inner}</div></div>`;
   }
 
-  async addAttack({bonus=null, extraParts=[], critical=false}={}) {
+  async addAttack({bonus=null, extraParts=[], critical=false, conditionalParts={}}={}) {
     if (!this.item) return;
 
     this.hasAttack = true;
@@ -134,6 +134,12 @@ export class ChatAttack {
     if (critical === true) {
       data = this.critConfirm;
       extraParts.push("@critConfirmBonus");
+      // Add conditionals for critical confirmation
+      if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
+    }
+    else {
+      // Add conditional attack bonus
+      if(conditionalParts["attack.normal"]?.length) extraParts.push(...conditionalParts["attack.normal"]);
     }
 
     // Add broken penalty
@@ -162,7 +168,7 @@ export class ChatAttack {
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
       if (this.item.data.data.broken) this.rollData.critMult = 1;
 
-      await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true});
+      await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true, conditionalParts});
     }
 
     if (this.attackNotes === "") this.addAttackNotes();
@@ -183,7 +189,7 @@ export class ChatAttack {
     this.setAttackNotesHTML();
   }
 
-  async addDamage({extraParts=[], critical=false}={}) {
+  async addDamage({extraParts=[], critical=false, conditionalParts={}}={}) {
     if (!this.item) return;
 
     this.hasDamage = true;
@@ -202,7 +208,7 @@ export class ChatAttack {
     const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical});
+      const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical, conditionalParts});
       data.rolls = rolls;
       // Add damage parts
       for (let roll of rolls) {

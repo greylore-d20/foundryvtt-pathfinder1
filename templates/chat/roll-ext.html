@@ -1,8 +1,20 @@
+{{#if flavor}}
+<span class="flavor-text">
+  {{#if compendiumEntry}}
+  <a title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-action="open-compendium-entry" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+  {{/if}}
+  {{flavor}}
+</span>
+{{/if}}
+
+{{#unless flavor}}
+{{#if compendiumEntry}}
+<a title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-action="open-compendium-entry" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+{{/if}}
+{{/unless}}
+
 {{#if formula}}
 <div class="dice-roll">
-  {{#if flavor}}
-  <div class="dice-flavor">{{flavor}}</div>
-  {{/if}}
   <div class="dice-result">
       <div class="dice-formula">{{formula}}</div>
       {{{tooltip}}}

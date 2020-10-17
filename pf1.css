@@ -8,7 +8,8 @@
 }
 .nodesto {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-variant: small-caps;
 }
 /* ----------------------------------------- */
 /*  Sheet Styles                             */
@@ -231,8 +232,9 @@
   margin: 0 0 0.25em 0;
   padding: 0 2px;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
-  font-size: 24px;
+  font-size: 22px;
+  font-variant: small-caps;
+  font-size: 26px;
   border-top: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
 }
@@ -372,7 +374,8 @@
   flex: 0 0 100px;
   border-bottom: 2px groove #eeede0;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-variant: small-caps;
   align-items: center;
   /* Character Name */
   /* Profile Image */
@@ -388,6 +391,7 @@
 .pf1.sheet .sheet-header h1 input {
   height: 50px;
   font-size: 36px;
+  font-variant-caps: small-caps;
 }
 .pf1.sheet .sheet-header img.profile {
   flex: 0 0 100px;
@@ -425,7 +429,8 @@
 .pf1.sheet .sheet-navigation {
   flex: 0 0 30px;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-variant: small-caps;
   margin: 4px 0;
   background: rgba(155, 155, 155, 0.3);
   border: 1px solid rgba(0, 0, 0, 0);
@@ -449,7 +454,7 @@
   border-bottom: 2px groove #eeede0;
 }
 .pf1.sheet .sheet-navigation.subtabs {
-  font-size: 16px;
+  font-size: 18px;
 }
 .pf1.sheet .primary-body {
   flex: 1;
@@ -933,7 +938,7 @@
 .pf1.sheet.actor h4.box-title {
   line-height: 16px;
   margin: 4px 8px 2px;
-  font-size: 18px;
+  font-size: 20px;
   border-bottom: 1px solid #b5b3a4;
 }
 .pf1.sheet.actor section {
@@ -987,7 +992,8 @@
   border: 2px groove #eeede0;
   border-radius: 4px;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-variant: small-caps;
   text-align: center;
 }
 .pf1.sheet.actor ul.attributes li.attribute .attribute-name {
@@ -1048,8 +1054,9 @@
 .pf1.sheet.actor .defenses .defense-rolls label h3,
 .pf1.sheet.actor .defenses .defense-notes label h3 {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
   font-size: 22px;
+  font-variant: small-caps;
+  font-size: 24px;
 }
 .pf1.sheet.actor .defenses .defense-notes {
   margin-top: 5px;
@@ -1204,8 +1211,9 @@
   flex: auto;
   margin: 0;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
-  font-size: 14px;
+  font-size: 22px;
+  font-variant: small-caps;
+  font-size: 16px;
 }
 .pf1.sheet.actor .counters .counter .counter-value {
   flex: 0 0 50px;
@@ -1405,9 +1413,10 @@
 .pf1.sheet.actor .inventory-filters h3,
 .pf1.sheet.actor .inventory-filters .filter-title {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
-  color: #4b4a44;
   font-size: 22px;
+  font-variant: small-caps;
+  color: #4b4a44;
+  font-size: 24px;
   margin: 0;
 }
 .pf1.sheet.actor .inventory-filters.spellbook-filters {
@@ -1695,7 +1704,7 @@
 }
 .pf1.sheet.actor .spellbook-group .spell-points-current h3 {
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-variant: small-caps;
   font-size: 22px;
   flex: 0 0 160px;
 }
@@ -2065,7 +2074,8 @@
 .pf1.sheet.item h4.damage-header,
 .pf1.sheet.item h4.change-header,
 .pf1.sheet.item h4.context-notes-header,
-.pf1.sheet.item h4.attack-header {
+.pf1.sheet.item h4.attack-header,
+.pf1.sheet.item h4.conditional-header {
   margin: 0;
   padding: 0;
   font-weight: bold;
@@ -2105,56 +2115,114 @@
   flex: 1;
 }
 .pf1.sheet.item .changes,
-.pf1.sheet.item .context-notes {
+.pf1.sheet.item .context-notes,
+.pf1.sheet.item .conditionals {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: block;
 }
 .pf1.sheet.item .changes .change,
 .pf1.sheet.item .context-notes .change,
+.pf1.sheet.item .conditionals .change,
 .pf1.sheet.item .changes .context-note,
-.pf1.sheet.item .context-notes .context-note {
+.pf1.sheet.item .context-notes .context-note,
+.pf1.sheet.item .conditionals .context-note,
+.pf1.sheet.item .changes .conditional,
+.pf1.sheet.item .context-notes .conditional,
+.pf1.sheet.item .conditionals .conditional {
   flex: 0 0 100%;
   padding: 0;
 }
 .pf1.sheet.item .changes .change input,
 .pf1.sheet.item .context-notes .change input,
+.pf1.sheet.item .conditionals .change input,
 .pf1.sheet.item .changes .context-note input,
-.pf1.sheet.item .context-notes .context-note input {
+.pf1.sheet.item .context-notes .context-note input,
+.pf1.sheet.item .conditionals .context-note input,
+.pf1.sheet.item .changes .conditional input,
+.pf1.sheet.item .context-notes .conditional input,
+.pf1.sheet.item .conditionals .conditional input {
   flex: 3;
 }
 .pf1.sheet.item .changes .change select,
 .pf1.sheet.item .context-notes .change select,
+.pf1.sheet.item .conditionals .change select,
 .pf1.sheet.item .changes .context-note select,
-.pf1.sheet.item .context-notes .context-note select {
+.pf1.sheet.item .context-notes .context-note select,
+.pf1.sheet.item .conditionals .context-note select,
+.pf1.sheet.item .changes .conditional select,
+.pf1.sheet.item .context-notes .conditional select,
+.pf1.sheet.item .conditionals .conditional select {
   flex: 0 0 80px;
   width: 80px;
   margin-left: 5px;
 }
 .pf1.sheet.item .changes .change select.change-sub-target,
 .pf1.sheet.item .context-notes .change select.change-sub-target,
+.pf1.sheet.item .conditionals .change select.change-sub-target,
 .pf1.sheet.item .changes .context-note select.change-sub-target,
-.pf1.sheet.item .context-notes .context-note select.change-sub-target {
+.pf1.sheet.item .context-notes .context-note select.change-sub-target,
+.pf1.sheet.item .conditionals .context-note select.change-sub-target,
+.pf1.sheet.item .changes .conditional select.change-sub-target,
+.pf1.sheet.item .context-notes .conditional select.change-sub-target,
+.pf1.sheet.item .conditionals .conditional select.change-sub-target {
   flex: 0 0 128px;
   width: 128px;
 }
 .pf1.sheet.item .changes .change .change-priority,
 .pf1.sheet.item .context-notes .change .change-priority,
+.pf1.sheet.item .conditionals .change .change-priority,
 .pf1.sheet.item .changes .context-note .change-priority,
-.pf1.sheet.item .context-notes .context-note .change-priority {
+.pf1.sheet.item .context-notes .context-note .change-priority,
+.pf1.sheet.item .conditionals .context-note .change-priority,
+.pf1.sheet.item .changes .conditional .change-priority,
+.pf1.sheet.item .context-notes .conditional .change-priority,
+.pf1.sheet.item .conditionals .conditional .change-priority {
   flex: 0 0 24px;
 }
 .pf1.sheet.item .changes .change .change-operator,
 .pf1.sheet.item .context-notes .change .change-operator,
+.pf1.sheet.item .conditionals .change .change-operator,
 .pf1.sheet.item .changes .context-note .change-operator,
-.pf1.sheet.item .context-notes .context-note .change-operator {
+.pf1.sheet.item .context-notes .context-note .change-operator,
+.pf1.sheet.item .conditionals .context-note .change-operator,
+.pf1.sheet.item .changes .conditional .change-operator,
+.pf1.sheet.item .context-notes .conditional .change-operator,
+.pf1.sheet.item .conditionals .conditional .change-operator {
   flex: 0 0 24px;
+}
+.pf1.sheet.item .changes .change .conditional-default,
+.pf1.sheet.item .context-notes .change .conditional-default,
+.pf1.sheet.item .conditionals .change .conditional-default,
+.pf1.sheet.item .changes .context-note .conditional-default,
+.pf1.sheet.item .context-notes .context-note .conditional-default,
+.pf1.sheet.item .conditionals .context-note .conditional-default,
+.pf1.sheet.item .changes .conditional .conditional-default,
+.pf1.sheet.item .context-notes .conditional .conditional-default,
+.pf1.sheet.item .conditionals .conditional .conditional-default {
+  flex: 0 0 18px;
+}
+.pf1.sheet.item .changes .change .conditional-modifier,
+.pf1.sheet.item .context-notes .change .conditional-modifier,
+.pf1.sheet.item .conditionals .change .conditional-modifier,
+.pf1.sheet.item .changes .context-note .conditional-modifier,
+.pf1.sheet.item .context-notes .context-note .conditional-modifier,
+.pf1.sheet.item .conditionals .context-note .conditional-modifier,
+.pf1.sheet.item .changes .conditional .conditional-modifier,
+.pf1.sheet.item .context-notes .conditional .conditional-modifier,
+.pf1.sheet.item .conditionals .conditional .conditional-modifier {
+  display: flex;
+}
+.pf1.sheet.item .conditionals .form-group {
+  padding-left: 28px;
 }
 .pf1.sheet.item .damage-control,
 .pf1.sheet.item .crit-damage-control,
 .pf1.sheet.item .attack-control,
 .pf1.sheet.item .change-control,
-.pf1.sheet.item .context-note-control {
+.pf1.sheet.item .context-note-control,
+.pf1.sheet.item .conditional-control {
   width: 18px;
   flex: 0 0 18px;
   line-height: 24px;
@@ -2204,7 +2272,8 @@
   margin: 0;
   line-height: 28px;
   font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-variant: small-caps;
   color: #4b4a44;
 }
 .pf1.chat-card .card-content {

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.75.3
+
+### Changelog
+
+- Modesto Condensed Bold font switched to small-caps variant to improve readability and match original Nodesto
+- Outfits in the item compendium are now Equipment type items of the Clothing subtype
+- Added a journal compendium for Core skills
+- Skill roll chat cards now have a button to open the associated compendium entry
+- Add conditional modifiers to attack type items, due to the efforts of Ethaks (many thanks!)
+
 ## 0.75.2
 
 ### Bug Fixes

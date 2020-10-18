@@ -6,7 +6,7 @@
 <ol class="conditionals form-group">
   {{#each data.conditionals as |conditional a|}}
   <li class="conditional flexcolumn" data-conditional="{{a}}"><div class="conditional flexrow" data-conditional="{{a}}">
-      <input class="conditional-default" type="checkbox" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
+      <input class="conditional-default" type="checkbox" title="{{localize "PF1.Default"}}" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
       <input class="conditional-name" type="text" name="data.conditionals.{{a}}.name" value="{{lookup this "name"}}"
       placeholder="{{localize "PF1.Name"}}" title="{{localize "PF1.Name"}}"/>
       <a class="conditional-control add-conditional-modifier"><i class="fas fa-plus"></i></a>

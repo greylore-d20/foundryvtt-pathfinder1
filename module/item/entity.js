@@ -1098,7 +1098,8 @@ export class ItemPF extends Item {
         for(const i of conditionals) {
           const conditional = this.data.data.conditionals[i];
           for (const [i, modifier] of conditional.modifiers.entries()) {
-            // Adds a formulas result to rollData to allow referencing it
+            // Adds a formula's result to rollData to allow referencing it.
+            // Due to being its own roll, this will only correctly work for static formulae.
             // In try-block to avoid stalling due to malformed modifier
             try {
               conditionalData[[createTag(conditional.name), i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
@@ -1128,11 +1129,11 @@ export class ItemPF extends Item {
 
           // Combine conditional modifiers for attack a attack and damage
           const conditionalParts = {
-            "attack.normal": [...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
-            "attack.crit": [...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
-            "damage.normal": [...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
-            "damage.crit": [...(conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
-            "damage.nonCrit": [...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
+            "attack.normal": [...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],    //`
+            "attack.crit": [...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],          //`
+            "damage.normal": [...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],    //`
+            "damage.crit": [...(conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],          //`
+            "damage.nonCrit": [...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])], //`
           };
 
           // Create attack object
@@ -1164,12 +1165,12 @@ export class ItemPF extends Item {
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
             // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
-              "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],
-              "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],
-              "damage.normal": [...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],
-              "damage.crit": [...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],
-              "damage.nonCrit": [...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],
-            };
+              "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],      //`
+              "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],            //`
+              "damage.normal": [...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],      //`
+              "damage.crit": [...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],            //`
+              "damage.nonCrit": [...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],   //`
+            }; //`
 
             // Create attack object, then add attack roll
             let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});

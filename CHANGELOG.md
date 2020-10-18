@@ -2,6 +2,10 @@
 
 ## 0.75.3
 
+### Bug Fixes
+
+- Updating actor permissions led to unexpected results
+
 ### Changelog
 
 - Modesto Condensed Bold font switched to small-caps variant to improve readability and match original Nodesto

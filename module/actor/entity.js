@@ -554,7 +554,7 @@ export class ActorPF extends Actor {
     }
 
     if (Object.keys(diff).length) {
-      await super.update(diff, mergeObject(options, { diff: true }));
+      await super.update(diff, mergeObject(options, { recursive: true }));
     }
     await this.toggleConditionStatusIcons();
   }

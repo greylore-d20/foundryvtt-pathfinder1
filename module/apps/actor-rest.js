@@ -30,6 +30,15 @@ export class ActorRestDialog extends BaseEntitySheet {
     const actor = this.object;
     const actorData = actor.data.data;
 
+    const restOptions = {
+      restoreHealth: formData["restoreHealth"],
+      longTermCare: formData["longTermCare"],
+      restoreDailyUses: formData["restoreDailyUses"],
+    };
+
+    const proceed = await Hooks.call("actorRest", actor, restOptions);
+    if (!proceed) return;
+
     const updateData = {};
     // Restore health and ability damage
     if (formData["restoreHealth"] === true) {

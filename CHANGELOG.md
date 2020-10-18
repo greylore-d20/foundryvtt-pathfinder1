@@ -15,12 +15,16 @@
 - Add conditional modifiers to attack type items, due to the efforts of Ethaks (many thanks!)
 - Changed display of tags in basic item chat cards to look the same as those from action cards
 - Compendium browsers now remember their filters for the session
-- Implemented a tooltip for the conditional modifiers default checkbox, due to the efforts of Ethaks (many thanks!)
 
 ### Localization
 
 - Updated the French localization, due to the efforts of rectulo (many thanks!)
 - Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
+### API
+
+- Added the hook event `actorRest`, which is called when an actor uses the Rest option on its sheet
+  - Returning `false` from within a function assigned to this hook will prevent the (default) benefits from resting
 
 ## 0.75.2
 

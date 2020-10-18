@@ -16,6 +16,11 @@
 - Changed display of tags in basic item chat cards to look the same as those from action cards
 - Compendium browsers now remember their filters for the session
 
+### Localization
+
+- Updated the French localization, due to the efforts of rectulo (many thanks!)
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.75.2
 
 ### Bug Fixes

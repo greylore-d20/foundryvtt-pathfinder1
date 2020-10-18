@@ -810,13 +810,11 @@ export class CompendiumBrowser extends Application {
   }
 
   async _render(...args) {
-    // benchmarkFunction(async function(...args) {
-    //   await Application.prototype._render.call(this, ...args);
     await super._render(...args);
 
     this.filterQuery = /.*/;
     this.element.find(".filter-content").css("display", "none");
-    // }.bind(this), ...args);
+    this._filterResults();
   }
 
   activateListeners(html) {
@@ -914,13 +912,24 @@ export class CompendiumBrowser extends Application {
     const key = input.name;
     const value = input.checked;
 
+    const filter = this._data.data.filters.find(o => o.path === path);
+    if (filter) {
+      if (!filter.active) filter.active = {};
+    }
+
     if (value) {
       let index = this.activeFilters[path].indexOf(key);
-      if (index < 0) this.activeFilters[path].push(key);
+      if (index < 0) {
+        this.activeFilters[path].push(key);
+        filter.active[key] = true;
+      }
     }
     else {
       let index = this.activeFilters[path].indexOf(key);
-      if (index >= 0) this.activeFilters[path].splice(index, 1);
+      if (index >= 0) {
+        this.activeFilters[path].splice(index, 1);
+        if (filter.active[key] != null) delete filter.active[key];
+      }
     }
 
     this._filterResults();

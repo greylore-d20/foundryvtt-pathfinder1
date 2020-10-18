@@ -12,7 +12,7 @@
         <div class="filter-content">
           {{#each filter.items as |i|}}
           <div class="checkbox">
-            <input type="checkbox" name="{{i.key}}" id="{{filter.path}}_{{i.key}}" />
+            <input type="checkbox" name="{{i.key}}" id="{{filter.path}}_{{i.key}}" {{checked (lookup filter.active i.key)}} />
             <label type="checkbox" for="{{filter.path}}_{{i.key}}">
               {{i.name}}
             </label>

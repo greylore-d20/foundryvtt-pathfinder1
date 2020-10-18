@@ -15,6 +15,7 @@
 - Add conditional modifiers to attack type items, due to the efforts of Ethaks (many thanks!)
 - Changed display of tags in basic item chat cards to look the same as those from action cards
 - Compendium browsers now remember their filters for the session
+- Implemented a tooltip for the conditional modifiers default checkbox, due to the efforts of Ethaks (many thanks!)
 
 ### Localization
 

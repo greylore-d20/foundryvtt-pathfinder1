@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.5
+
+### Changelog
+
+- Attack roll dialogs now show an additional field to determine how the weapon is held
+
 ## 0.75.4
 
 ### Bug Fixes

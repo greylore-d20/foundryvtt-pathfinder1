@@ -63,6 +63,21 @@
   </div>
   {{/if}}{{/if}}
 
+  {{#if isAttack}}
+  {{#unless isNaturalAttack}}
+  <div class="form-group select">
+    <label>{{localize "PF1.Held"}}</label>
+    <select name="held">
+      {{#select data.held}}
+      {{#each config.weaponHoldTypes as |name type|}}
+      <option value="{{type}}">{{name}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  {{/unless}}
+  {{/if}}
+
   {{#if isSpell}}
   <div class="form-group">
     <label>{{localize "PF1.CasterLevelOffset"}}</label>

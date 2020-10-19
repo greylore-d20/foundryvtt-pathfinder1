@@ -1012,6 +1012,12 @@ export class ItemPF extends Item {
           rollData.item.ability.damageMult = parseFloat(html.val());
         }
 
+        // Held type
+        html = form.find('[name="held"]');
+        if (html.length > 0) {
+          setProperty(rollData, "item.held", html.val());
+        }
+
         // Power Attack
         if (form.find('[name="power-attack"]').prop("checked")) {
           rollData.powerAttackBonus = (1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4)) * 2;
@@ -1020,8 +1026,8 @@ export class ItemPF extends Item {
             else if (!primaryAttack) rollData.powerAttackBonus *= 0.5;
           }
           else {
-            if (getProperty(this.data, "data.held") === "2h") rollData.powerAttackBonus *= 1.5;
-            else if (getProperty(this.data, "data.held") === "oh") rollData.powerAttackBonus *= 0.5;
+            if (getProperty(rollData, "item.held") === "2h") rollData.powerAttackBonus *= 1.5;
+            else if (getProperty(rollData, "item.held") === "oh") rollData.powerAttackBonus *= 0.5;
           }
           damageExtraParts.push("@powerAttackBonus");
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
@@ -1469,6 +1475,7 @@ export class ItemPF extends Item {
     let dialogData = {
       data: rollData,
       item: this.data.data,
+      config: CONFIG.PF1,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.hasAttack,
@@ -1476,6 +1483,7 @@ export class ItemPF extends Item {
       hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
       isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
       isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
+      isAttack: this.type === "attack",
       isSpell: this.type === "spell",
       hasTemplate: this.hasTemplate,
     };

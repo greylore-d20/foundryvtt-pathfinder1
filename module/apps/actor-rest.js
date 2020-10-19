@@ -34,26 +34,28 @@ export class ActorRestDialog extends BaseEntitySheet {
       restoreHealth: formData["restoreHealth"],
       longTermCare: formData["longTermCare"],
       restoreDailyUses: formData["restoreDailyUses"],
+      hours: formData["hours"],
     };
 
     const proceed = await Hooks.call("actorRest", actor, restOptions);
-    if (!proceed) return;
+    if (proceed === false) return;
 
     const updateData = {};
     // Restore health and ability damage
-    if (formData["restoreHealth"] === true) {
+    if (restOptions["restoreHealth"] === true) {
       const hd = actorData.attributes.hd.total;
       let heal = {
         hp: hd,
         abl: 1,
+        nonlethal: restOptions.hours,
       };
-      if (formData["longTermCare"] === true) {
+      if (restOptions["longTermCare"] === true) {
         heal.hp *= 2;
         heal.abl *= 2;
       }
 
       updateData["data.attributes.hp.value"] = Math.min(actorData.attributes.hp.value + heal.hp, actorData.attributes.hp.max);
-      updateData["data.attributes.hp.nonlethal"] = Math.max(0, (actorData.attributes.hp.nonlethal || 0) - heal.hp);
+      updateData["data.attributes.hp.nonlethal"] = Math.max(0, (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal);
       for (let [key, abl] of Object.entries(actorData.abilities)) {
         let dmg = Math.abs(abl.damage);
         updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
@@ -62,7 +64,7 @@ export class ActorRestDialog extends BaseEntitySheet {
 
     let itemPromises = [];
     // Restore daily uses of spells, feats, etc.
-    if (formData["restoreDailyUses"] === true) {
+    if (restOptions["restoreDailyUses"] === true) {
       for (let item of actor.items) {
         const itemData = item.data.data;
 

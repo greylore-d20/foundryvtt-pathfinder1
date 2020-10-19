@@ -2,9 +2,15 @@
 
 ## 0.75.4
 
+### Bug Fixes
+
+- The rest option didn't work anymore
+- The rest option healed an incorrect amount of nonlethal damage
+
 ### Changelog
 
 - Brought the old attack chat card style back as a world option
+- The rest option now has an extra selector for the amount of hours you want to rest
 
 ## 0.75.3
 

@@ -1449,7 +1449,9 @@ export class ItemPF extends Item {
 
         setProperty(chatData, "flags.pf1.metadata", metadata);
         // Create message
-        await createCustomChatMessage("systems/pf1/templates/chat/attack-roll.html", templateData, chatData);
+        const t = game.settings.get("pf1", "attackChatCardTemplate");
+        console.log(t);
+        await createCustomChatMessage(t, templateData, chatData);
       }
       // Post chat card even without action
       else {

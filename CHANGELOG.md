@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.4
+
+### Changelog
+
+- Brought the old attack chat card style back as a world option
+
 ## 0.75.3
 
 ### Bug Fixes

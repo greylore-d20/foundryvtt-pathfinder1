@@ -308,6 +308,22 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Attack chat card template
+   */
+  game.settings.register("pf1", "attackChatCardTemplate", {
+    name: "SETTINGS.pf1AttackChatCardTemplateN",
+    hint: "SETTINGS.pf1AttackChatCardTemplateH",
+    scope: "world",
+    config: true,
+    default: "systems/pf1/templates/chat/attack-roll.html",
+    type: String,
+    choices: {
+      "systems/pf1/templates/chat/attack-roll.html": "PF1.Primary",
+      "systems/pf1/templates/chat/attack-roll2.html": "PF1.Alternate",
+    },
+  });
 };
 
 export const getSkipActionPrompt = function() {

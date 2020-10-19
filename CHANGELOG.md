@@ -5,6 +5,7 @@
 ### Changelog
 
 - Attack roll dialogs now show an additional field to determine how the weapon is held
+- Compendium filter selections are now saved between sessions
 
 ## 0.75.4
 

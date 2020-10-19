@@ -242,10 +242,28 @@ export class CompendiumBrowser extends Application {
         break;
     }
 
+    // Create an empty active filters object
     this.activeFilters = this.filters.reduce((cur, f) => {
       cur[f.path] = [];
       return cur;
     }, {});
+
+    // Merge active filters object with stored settings
+    const filterSettings = getProperty(game.settings.get("pf1", "compendiumFilters") || {}, `${this.type}.activeFilters`) || {};
+    for (let [k, v] of Object.entries(filterSettings)) {
+      if (!this.activeFilters[k]) continue;
+      this.activeFilters[k] = v;
+    }
+
+    // Apply active filters to template
+    for (let k of Object.keys(this.activeFilters)) {
+      const filter = this.filters.find(o => o.path === k);
+      if (!filter) continue;
+      for (let k2 of this.activeFilters[k]) {
+        filter.active = filter.active || {};
+        filter.active[k2] = true;
+      }
+    }
   }
 
   _filterItems(item) {
@@ -813,7 +831,16 @@ export class CompendiumBrowser extends Application {
     await super._render(...args);
 
     this.filterQuery = /.*/;
-    this.element.find(".filter-content").css("display", "none");
+    {
+      const elems = this.element.find(".filter-content");
+      for (const e of elems) {
+        const pE = e.closest(".filter");
+        const path = pE.dataset.path;
+        if (this.activeFilters[path].length === 0) {
+          $(e).css("display", "none");
+        }
+      }
+    }
     this._filterResults();
   }
 
@@ -930,6 +957,13 @@ export class CompendiumBrowser extends Application {
         this.activeFilters[path].splice(index, 1);
         if (filter.active[key] != null) delete filter.active[key];
       }
+    }
+
+    // Save filter settings
+    {
+      const settings = game.settings.get("pf1", "compendiumFilters");
+      setProperty(settings, `${this.type}.activeFilters`, this.activeFilters);
+      game.settings.set("pf1", "compendiumFilters", settings);
     }
 
     this._filterResults();

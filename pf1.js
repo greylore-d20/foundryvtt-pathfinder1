@@ -6,7 +6,7 @@
 
 // Import Modules
 import { PF1 } from "./module/config.js";
-import { registerSystemSettings, getSkipActionPrompt } from "./module/settings.js";
+import { registerSystemSettings, registerClientSettings, getSkipActionPrompt } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { measureDistances } from "./module/canvas.js";
@@ -50,6 +50,9 @@ if (!String.prototype.format) {
 
 Hooks.once("init", async function() {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
+
+  // Register client settings
+  registerClientSettings();
 
   // Create a PF1 namespace within the game global
   game.pf1 = {

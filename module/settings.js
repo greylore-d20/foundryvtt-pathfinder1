@@ -1,6 +1,7 @@
 import { HealthConfig } from "./config/health.js";
 import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
+import { CompendiumBrowser } from "./apps/compendium-browser.js";
 
 export const registerSystemSettings = function() {
   /**
@@ -323,6 +324,20 @@ export const registerSystemSettings = function() {
       "systems/pf1/templates/chat/attack-roll.html": "PF1.Primary",
       "systems/pf1/templates/chat/attack-roll2.html": "PF1.Alternate",
     },
+  });
+};
+
+export const registerClientSettings = function() {
+  /**
+   * Compendium filters
+   */
+  game.settings.register("pf1", "compendiumFilters", {
+    name: "Compendium Filters",
+    hint: "Stores compendium filters",
+    scope: "client",
+    config: false,
+    default: {},
+    type: Object,
   });
 };
 

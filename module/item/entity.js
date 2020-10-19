@@ -168,11 +168,14 @@ export class ItemPF extends Item {
 
     let result = 10;
 
+    // Get conditional save DC bonus
+    const dcBonus = rollData["dcBonus"] ?? 0;
+
     if (this.type === "spell") {
       const spellbook = this.spellbook;
       if (spellbook != null) {
         try {
-          result = new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total;
+          result = new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total + dcBonus;
         }
         catch (e) {}
       }
@@ -180,7 +183,7 @@ export class ItemPF extends Item {
     }
     const dcFormula = getProperty(data, "save.dc") || "0";
     try {
-      result = new Roll(dcFormula, rollData).roll().total;
+      result = new Roll(dcFormula, rollData).roll().total + dcBonus;
     }
     catch (e) {}
     return result;
@@ -1109,14 +1112,15 @@ export class ItemPF extends Item {
             try {
               conditionalData[[createTag(conditional.name), i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
             } catch (e) {
-              console.error(`Rolling ${conditional.name} caused an error: ${e}`);
+              ui.notifications.warn(`Rolling conditional formula nº ${Number(i) + 1} of conditional ${conditional.name} caused an error.`);
+              console.error(e);
             }
 
             // Create a key string for the formula array
-            const partString = `${modifier.target}.${modifier.subTarget}.${modifier.critical}`;
+            const partString = `${modifier.target}.${modifier.subTarget}${modifier.critical ? "." + modifier.critical : ""}`;
             // Add formula in correct format for attacks or damage
             conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
-              (modifier.target === "attack") ? modifier.formula :
+              (modifier.target === "attack" || modifier.target === "spell") ? modifier.formula :
               (modifier.target === "damage" && Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
               [modifier.formula, localizeType(modifier.target, modifier.type, false)]
             ];
@@ -1124,6 +1128,24 @@ export class ItemPF extends Item {
         }
         // Expand data into rollData to enable referencing in formulae
         rollData.conditionals = expandObject(conditionalData, 5);
+
+        // Add conditional bonus to CL
+        if (conditionalPartsCommon["spell.cl"] != null) {
+          try {
+            rollData.cl += new Roll(conditionalPartsCommon["spell.cl"]?.join("+"), rollData).roll().total;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        // Add conditional DC bonus to rollData
+        if (conditionalPartsCommon["spell.dc"] != null) {
+          try {
+            rollData.dcBonus = new Roll(conditionalPartsCommon["spell.dc"]?.join("+"), rollData).roll().total;
+          } catch(e) {
+            console.error(e);
+          }
+        }
       }
 
       if (this.hasAttack) {
@@ -2664,6 +2686,7 @@ export class ItemPF extends Item {
     let result = {}
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
+    if (this.type === "spell") result["spell"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.spell._label);
     return result;
     }
 
@@ -2700,9 +2723,14 @@ export class ItemPF extends Item {
   * */
   getConditionalModifierTypes(target) {
     let result = {};
-    if (target === "attack") {
+    if (target === "attack" || target === "damage") {
       // Add bonusModifiers from CONFIG.PF1.bonusModifiers
       for (let [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
+        result[k] = v;
+      }
+    }
+    if (target === "damage") {
+      for (let [k, v] of Object.entries(CONFIG.PF1.damageTypes)) {
         result[k] = v;
       }
     }

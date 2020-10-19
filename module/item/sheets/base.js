@@ -533,7 +533,7 @@ export class ItemSheetPF extends ItemSheet {
         if (["subTarget", "critical"].includes(k) || (k === "type" && target === "attack")) {
           const target = (conditionals.find(o => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
           const val = entry[1];
-          if (typeof target === "string" && val) {
+          if (typeof target === "string") {
             let keys;
             switch (k) {
               case "subTarget":

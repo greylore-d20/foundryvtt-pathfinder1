@@ -11,6 +11,7 @@
 
 - Brought the old attack chat card style back as a world option
 - The rest option now has an extra selector for the amount of hours you want to rest
+- Made conditional modifiers which target damage have a text field for damage type
 
 ## 0.75.3
 

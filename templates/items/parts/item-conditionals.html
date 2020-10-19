@@ -17,6 +17,7 @@
       <li class="conditional-modifier flexrow" data-conditional="{{a}}" data-modifier="{{m}}">
         <input class="conditional-formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
         placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
+
         <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target">
           {{#select (lookup this "target") }}
           <option value="">{{localize "PF1.None"}}</option>
@@ -25,6 +26,7 @@
           {{/each}}
           {{/select}}
         </select>
+
         <select class="conditional-sub-target" name="data.conditionals.{{a}}.{{m}}.subTarget">
           {{#select (lookup this "subTarget") }}
           {{#if (lookup this "target") }}
@@ -36,6 +38,8 @@
           {{/if}}
           {{/select}}
         </select>
+
+        {{#if modifier.isAttack}}
         <select class="conditional-type" name="data.conditionals.{{a}}.{{m}}.type">
           {{#select (lookup this "type") }}
           {{#if (lookup this "target") }}
@@ -47,6 +51,10 @@
           {{/if}}
           {{/select}}
         </select>
+        {{else}}
+        <input type="text" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}" />
+        {{/if}}
+
         <select class="conditional-critical" name="data.conditionals.{{a}}.{{m}}.critical">
           {{#select (lookup this "critical") }}
           {{#if (lookup this "target")}}

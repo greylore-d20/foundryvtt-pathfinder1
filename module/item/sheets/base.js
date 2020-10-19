@@ -244,6 +244,7 @@ export class ItemSheetPF extends ItemSheet {
           modifier.subTargets = this.item.getConditionalSubTargets(modifier.target);
           modifier.conditionalModifierTypes = this.item.getConditionalModifierTypes(modifier.target)
           modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
+          modifier.isAttack = modifier.target === "attack";
         }
       }
     }
@@ -523,10 +524,11 @@ export class ItemSheetPF extends ItemSheet {
       let [i, j, k] = entry[0].split(".").slice(2);
       if ( !arr[i] ) arr[i] = ItemPF.defaultConditional;
       if (k) {
+        const target = formData[`data.conditionals.${i}.${j}.target`];
         if ( !arr[i].modifiers[j] ) arr[i].modifiers[j] = ItemPF.defaultConditionalModifier;
         arr[i].modifiers[j][k] = entry[1];
         // Target dependent keys
-        if (["subTarget", "type", "critical"].includes(k)) {
+        if (["subTarget", "critical"].includes(k) || (k === "type" && target === "attack")) {
           const target = (conditionals.find(o => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
           const val = entry[1];
           if (typeof target === "string" && val) {

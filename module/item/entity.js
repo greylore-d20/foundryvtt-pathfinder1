@@ -1088,7 +1088,6 @@ export class ItemPF extends Item {
 
       // Helper to get localized name from CONFIG.PF1 objects
       const localizeType = (target, type) => {
-        console.log(this);
         let result = this.getConditionalModifierTypes(target);
         return game.i18n.localize(result[type]) || type;
       };
@@ -2693,19 +2692,11 @@ export class ItemPF extends Item {
   * */
   getConditionalModifierTypes(target) {
     let result = {};
-    if (target === "damage") {
-      // Add damage types from CONFIG.PF1.damageTypes
-      for (let [k, v] of Object.entries(CONFIG.PF1.damageTypes)) {
+    if (target === "attack") {
+      // Add bonusModifiers from CONFIG.PF1.bonusModifiers
+      for (let [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
         result[k] = v;
       }
-    }
-    if (["attack", "damage"].includes(target)) {
-      // Add bonusModifiers from CONFIG.PF1.bonusModifiers
-        for (let [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
-          // @TODO: Why do damage types get translated when looping their object?
-          // To have an object of uniform pairs, translate here. Why? Dirty.
-            result[k] = game.i18n.localize(v);
-        }
     }
     return result;
   }

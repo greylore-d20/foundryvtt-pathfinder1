@@ -192,6 +192,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare class specific stuff
     if (data.item.type === "class") {
+      data.isMythicPath = data.data.classType === "mythic";
+
       for (let [a, s] of Object.entries(data.data.savingThrows)) {
         s.label = CONFIG.PF1.savingThrows[a];
       }

@@ -20,7 +20,7 @@
         </li>
         <li class="tooltip">
           <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{data.level}}</span>
-          <input type="text" name="data.level" value="{{data.level}}" placeholder="{{localize "PF1.Level"}}" data-dtype="Number"/>
+          <input type="text" name="data.level" value="{{data.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number"/>
         </li>
       </ul>
     </div>

@@ -1111,7 +1111,7 @@ export class ItemPF extends Item {
             // Add formula in correct format for attacks or damage
             conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
               (modifier.target === "attack") ? modifier.formula :
-              (modifier.target === "damage" && Object.keys(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
+              (modifier.target === "damage" && Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
               [modifier.formula, localizeType(modifier.target, modifier.type, false)]
             ];
           }

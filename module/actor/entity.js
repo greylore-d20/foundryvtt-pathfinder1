@@ -414,15 +414,8 @@ export class ActorPF extends Actor {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
-  /**
-   * Extend the default update method to enhance data before submission.
-   * See the parent Entity.update method for full details.
-   *
-   * @param {Object} data     The data with which to update the Actor
-   * @param {Object} options  Additional options which customize the update workflow
-   * @return {Promise}        A Promise which resolves to the updated Entity
-   */
-  async update(data, options={}) {
+  preUpdate(data) {
+    data = flattenObject(data);
     // Fix skill ranks after TinyMCE edit
     let expandedData = expandObject(data);
     if (expandedData.data != null && expandedData.data.skills != null) {
@@ -466,6 +459,7 @@ export class ActorPF extends Actor {
     }
 
     // Apply changes in Actor size to Token width/height
+    console.log(data, this.isToken, this.token);
     if ( data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"] ) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
       let tokens = this.isToken ? [this.token] : [];
@@ -540,6 +534,18 @@ export class ActorPF extends Actor {
     }
 
     this._updateExp(data);
+  }
+
+  /**
+   * Extend the default update method to enhance data before submission.
+   * See the parent Entity.update method for full details.
+   *
+   * @param {Object} data     The data with which to update the Actor
+   * @param {Object} options  Additional options which customize the update workflow
+   * @return {Promise}        A Promise which resolves to the updated Entity
+   */
+  async update(data, options={}) {
+    this.preUpdate(data);
 
     // Update changes
     let diff = data;

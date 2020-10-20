@@ -2,6 +2,10 @@
 
 ## 0.75.5
 
+### Bug Fixes
+
+- Unlinked tokens didn't change size with actor properties in Foundry 0.7.x
+
 ### Changelog
 
 - Attack roll dialogs now show an additional field to determine how the weapon is held

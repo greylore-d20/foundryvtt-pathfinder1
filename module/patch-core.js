@@ -64,6 +64,11 @@ export async function PatchCore() {
   // Patch ActorTokenHelpers.update
   const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
   ActorTokenHelpers.prototype.update = async function(data, options={}) {
+    // Pre update
+    if (isMinimumCoreVersion("0.7.4")) {
+      this.preUpdate(data);
+    }
+
     // Update changes
     let diff = data;
     if (options.updateChanges !== false) {

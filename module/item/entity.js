@@ -1105,14 +1105,15 @@ export class ItemPF extends Item {
         let conditionalData = {};
         for(const i of conditionals) {
           const conditional = this.data.data.conditionals[i];
+          const tag = createTag(conditional.name);
           for (const [i, modifier] of conditional.modifiers.entries()) {
             // Adds a formula's result to rollData to allow referencing it.
             // Due to being its own roll, this will only correctly work for static formulae.
             // In try-block to avoid stalling due to malformed modifier
             try {
-              conditionalData[[createTag(conditional.name), i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
+              conditionalData[[tag, i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
             } catch (e) {
-              ui.notifications.warn(`Rolling conditional formula nº ${Number(i) + 1} of conditional ${conditional.name} caused an error.`);
+              ui.notifications.warn(game.i18n.format("PF1.WarningConditionalRoll", {number: i+1, name: conditional.name}));
               console.error(e);
             }
 
@@ -1132,7 +1133,7 @@ export class ItemPF extends Item {
         // Add conditional bonus to CL
         if (conditionalPartsCommon["spell.cl"] != null) {
           try {
-            rollData.cl += new Roll(conditionalPartsCommon["spell.cl"]?.join("+"), rollData).roll().total;
+            rollData.cl += new Roll(conditionalPartsCommon["spell.cl"].join("+"), rollData).roll().total;
           } catch (e) {
             console.error(e);
           }
@@ -1141,7 +1142,7 @@ export class ItemPF extends Item {
         // Add conditional DC bonus to rollData
         if (conditionalPartsCommon["spell.dc"] != null) {
           try {
-            rollData.dcBonus = new Roll(conditionalPartsCommon["spell.dc"]?.join("+"), rollData).roll().total;
+            rollData.dcBonus = new Roll(conditionalPartsCommon["spell.dc"].join("+"), rollData).roll().total;
           } catch(e) {
             console.error(e);
           }

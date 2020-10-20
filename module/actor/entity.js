@@ -533,6 +533,8 @@ export class ActorPF extends Actor {
     }
 
     this._updateExp(data);
+
+    return expandObject(data);
   }
 
   /**
@@ -544,7 +546,7 @@ export class ActorPF extends Actor {
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options={}) {
-    this.preUpdate(data);
+    data = this.preUpdate(data);
 
     // Update changes
     let diff = data;
@@ -586,7 +588,6 @@ export class ActorPF extends Actor {
   /**
    * Makes sure experience values are correct in update data.
    * @param {Object} data - The update data, as per ActorPF.update()
-   * @returns {Boolean} Whether to force an update or not.
    */
   _updateExp(data) {
     const classes = this.items.filter(o => o.type === "class" && o.data.data.classType !== "mythic");

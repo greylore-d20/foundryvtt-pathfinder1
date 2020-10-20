@@ -891,6 +891,8 @@ PF1.weaponHoldTypes = {
 PF1.weaponProperties = {
   "blc": "PF1.WeaponPropBlocking",
   "brc": "PF1.WeaponPropBrace",
+  "dea": "PF1.WeaponPropDeadly",
+  "dst": "PF1.WeaponPropDistracting",
   "dbl": "PF1.WeaponPropDouble",
   "dis": "PF1.WeaponPropDisarm",
   "fin": "PF1.WeaponPropFinesse",

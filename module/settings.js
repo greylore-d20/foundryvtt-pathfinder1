@@ -339,6 +339,18 @@ export const registerClientSettings = function() {
     default: {},
     type: Object,
   });
+
+  /**
+   * Compendium items
+   */
+  game.settings.register("pf1", "compendiumItems", {
+    name: "Compendium Items",
+    hint: "Cache compendium entries",
+    scope: "client",
+    config: false,
+    defualt: {},
+    type: Object,
+  });
 };
 
 export const getSkipActionPrompt = function() {

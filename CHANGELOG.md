@@ -11,6 +11,8 @@
 - Attack roll dialogs now show an additional field to determine how the weapon is held
 - Compendium filter selections are now saved between sessions
 - Added the Deadly and Distracting weapon properties
+- Compendium Browsers now cache their results, resulting in much faster opening times even in different sessions (except for the first time)
+  - Press the Refresh button below the filter list to force an update
 
 ## 0.75.4
 

@@ -48,6 +48,17 @@ export class CompendiumBrowser extends Application {
      * @property
      */
     this.packs = {};
+
+    /**
+     * Load cached items
+     */
+    {
+      this._savedItems = [];
+      const settings = game.settings.get("pf1", "compendiumItems");
+      if (settings[this.type]) {
+        this._savedItems = settings[this.type];
+      }
+    }
   }
 
   static get defaultOptions() {
@@ -102,9 +113,10 @@ export class CompendiumBrowser extends Application {
         this._data.promise = promise;
       }
 
-      promise.then(() => {
+      promise.then(async () => {
         this._data.loaded = true;
         this._data.promise = null;
+        await this.saveEntries();
         resolve(this._data.data);
       });
     });
@@ -192,31 +204,41 @@ export class CompendiumBrowser extends Application {
   async _fetchMetadata() {
     this.items = [];
 
-    // Initialize progress bar
-    let packs = [];
-    const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
-    for (let p of game.packs.values()) {
-      if (p.entity === this.entityType) {
-        progress.total++;
-        packs.push(p);
+    if (this._savedItems.length === 0) {
+      // Initialize progress bar
+      let packs = [];
+      const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
+      for (let p of game.packs.values()) {
+        if (p.entity === this.entityType) {
+          progress.total++;
+          packs.push(p);
+        }
+      }
+      this._data.progress = progress;
+      this._onProgress(progress);
+
+      // Load compendiums
+      let promises = [];
+      for (let p of packs) {
+        promises.push(this.loadCompendium(p));
+      }
+      await Promise.all(promises);
+
+      // Sort items
+      this.items = naturalSort(this.items, "name");
+
+      // Return if no appropriate items were found
+      if (this.items.length === 0) {
+        return;
       }
     }
-    this._data.progress = progress;
-    this._onProgress(progress);
-
-    // Load compendiums
-    let promises = [];
-    for (let p of packs) {
-      promises.push(this.loadCompendium(p));
-    }
-    await Promise.all(promises);
-
-    // Sort items
-    this.items = naturalSort(this.items, "name");
-
-    // Return if no appropriate items were found
-    if (this.items.length === 0) {
-      return;
+    else {
+      for (let i of this._savedItems) {
+        const p = game.packs.get(i.collection);
+        this.items.push(this._mapEntry(p, i.item));
+        this.packs[i.collection] = p;
+      }
+      this._savedItems = [];
     }
 
     // Gather filter data
@@ -317,13 +339,22 @@ export class CompendiumBrowser extends Application {
       if (cr && !this.extraFilters["data.details.cr.total"][cr]) this.extraFilters["data.details.cr.total"][cr] = true;
     }
     // Get creature (sub)type
-    const race = item.items.filter(o => o.type === "race")[0];
-    if (race != null) {
-      result.item.creatureType = race.data.creatureType;
-      result.item.subTypes = race.data.subTypes.map(o => {
-        this.extraFilters.subTypes[o[0]] = true;
-        return o[0];
+    if (item.items) {
+      const race = item.items.filter(o => o.type === "race")[0];
+      if (race != null) {
+        result.item.creatureType = race.data.creatureType;
+        result.item.subTypes = race.data.subTypes.map(o => {
+          this.extraFilters.subTypes[o[0]] = true;
+          return o[0];
+        });
+      }
+    }
+    else {
+      item.subTypes.forEach(o => {
+        this.extraFilters.subTypes[o] = true;
       });
+      result.item.creatureType = item.creatureType;
+      result.item.subTypes = item.subTypes;
     }
   }
 
@@ -1050,5 +1081,85 @@ export class CompendiumBrowser extends Application {
     }
 
     return true;
+  }
+
+  getSaveEntries() {
+    let result = [];
+
+    let propKeys = [
+      "_id", "name", "img",
+    ];
+
+    switch (this.type) {
+      case "spells":
+        propKeys.push(
+          "data.learnedAt.class", "data.learnedAt.domain", "data.learnedAt.subDomain",
+          "data.learnedAt.elementalSchool", "data.learnedAt.bloodline",
+          "data.school", "data.subschool", "data.types",
+        );
+        break;
+      case "items":
+        propKeys.push(
+          "type", "data.properties", "data.weaponType", "data.weaponSubtype",
+          "data.equipmentType", "data.equipmentSubtype", "data.slot",
+          "data.consumableType", "data.subType",
+        );
+        break;
+      case "feats":
+        propKeys.push(
+          "data.featType", "data.associations.classes", "data.tags",
+        );
+        break;
+      case "bestiary":
+        propKeys.push(
+          "data.details.cr.total",
+        );
+        break;
+      case "classes":
+        propKeys.push(
+          "data.classType", "data.bab", "data.hd", "data.skillsPerLevel",
+          "data.savingThrows.fort.value", "data.savingThrows.ref.value", "data.savingThrows.will.value",
+        );
+        break;
+      case "races":
+        propKeys.push(
+          "data.creatureType", "data.subTypes",
+        );
+        break;
+    }
+
+    for (let i of this.items) {
+      let resultObj = {
+        collection: i.collection,
+        item: {},
+      };
+
+      // Copy parsed properties
+      for (let k of Object.keys(i.item)) {
+        if (k !== "data") {
+          resultObj.item[k] = i.item[k];
+        }
+      }
+
+      // Copy specific data properties
+      for (let k of propKeys) {
+        if (hasProperty(i.item, k)) {
+          setProperty(resultObj, `item.${k}`, getProperty(i.item, k));
+        }
+      }
+
+      result.push(resultObj);
+    }
+
+    return result;
+  }
+
+  saveEntries() {
+    const entries = this.getSaveEntries();
+
+    const settings = game.settings.get("pf1", "compendiumItems") || {};
+    settings[this.type] = entries;
+
+    return game.settings.set("pf1", "compendiumItems", settings);
   }
 }

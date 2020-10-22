@@ -1412,6 +1412,7 @@ export const getChangeFlat = function(changeTarget, changeType, curData) {
     case "cmb":
       return "data.attributes.cmb.total";
     case "cmd":
+      if (changeType === "dodge") return "data.attributes.cmd.total";
       return ["data.attributes.cmd.total", "data.attributes.cmd.flatFootedTotal"];
     case "init":
       return "data.attributes.init.total";

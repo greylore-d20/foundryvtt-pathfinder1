@@ -6,6 +6,7 @@
 
 - Unlinked tokens didn't change size with actor properties in Foundry 0.7.x
 - Dodge bonuses to CMD were applied to flat-footed CMD as well
+- Actor notes and biographies were erased with every change
 
 ### Changelog
 

@@ -35,14 +35,6 @@ export async function PatchCore() {
     });
   }
 
-  // Patch FormApplication
-  FormApplication.prototype.saveMCEContent = async function(updateData=null) {};
-
-  FormApplication.prototype.close = async function(options={}) {
-    await this.saveMCEContent();
-    return FormApplication_close.call(this, options);
-  };
-
   // Patch Roll._replaceData
   if (!isMinimumCoreVersion("0.7.2")) {
     const Roll__replaceData = Roll.prototype._replaceData;

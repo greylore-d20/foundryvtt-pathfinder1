@@ -1722,22 +1722,6 @@ export class ActorSheetPF extends ActorSheet {
     new ActorTraitSelector(this.actor, options).render(true)
   }
 
-  async saveMCEContent(updateData=null) {
-    let manualUpdate = false;
-    if (updateData == null) {
-      manualUpdate = true;
-      updateData = {};
-    }
-
-    for (const [key, editor] of Object.entries(this.editors)) {
-      if (editor.mce == null) continue;
-
-      updateData[key] = editor.mce.getContent();
-    }
-
-    if (manualUpdate && Object.keys(updateData).length > 0) await this.actor.update(updateData);
-  }
-
   setItemUpdate(id, key, value) {
     let obj = this._itemUpdates.filter(o => { return o._id === id; })[0];
     if (obj == null) {
@@ -1768,10 +1752,10 @@ export class ActorSheetPF extends ActorSheet {
 
     this._submitQueued = false;
 
+    await super._onSubmit(event, {updateData, preventClose, preventRender});
+
     // Update items
     await this._updateItems();
-
-    return super._onSubmit(event, {updateData, preventClose, preventRender});
   }
 
   async _updateItems() {

@@ -416,38 +416,6 @@ export class ActorPF extends Actor {
 
   preUpdate(data) {
     data = flattenObject(data);
-    // Fix skill ranks after TinyMCE edit
-    let expandedData = expandObject(data);
-    if (expandedData.data != null && expandedData.data.skills != null) {
-      for (let [s, skl] of Object.entries(expandedData.data.skills)) {
-        let curSkl = this.data.data.skills[s];
-        if (skl == null) continue;
-        if (typeof skl.rank !== "number") skl.rank = 0;
-        if (skl.subSkills != null) {
-          for (let skl2 of Object.values(skl.subSkills)) {
-            if (skl2 == null) continue;
-            if (typeof skl2.rank !== "number") skl2.rank = 0;
-          }
-        }
-
-        // Rename custom skills
-        if (curSkl != null && curSkl.custom && skl.name != null) {
-          let tag = createTag(skl.name || "skill");
-          let count = 1;
-          const skillData = getProperty(this.data, `data.skills.${tag}`) || {};
-          while (this.data.data.skills[tag] != null && this.data.data.skills[tag] != curSkl) {
-            count++;
-            tag = createTag(skillData.name || "skill") + count.toString();
-          }
-
-          if (s !== tag) {
-            expandedData.data.skills[tag] = mergeObject(curSkl, skl);
-            expandedData.data.skills[s] = null;
-          }
-        }
-      }
-      data = flattenObject(expandedData);
-    }
 
     // Make certain variables absolute
     const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {

@@ -19,6 +19,10 @@
 - Compendium Browsers now cache their results, resulting in much faster opening times even in different sessions (except for the first time)
   - Press the Refresh button below the filter list to force an update
 
+### Localization
+
+- Update the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
+
 ## 0.75.4
 
 ### Bug Fixes

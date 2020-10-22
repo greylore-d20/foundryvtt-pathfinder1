@@ -6,12 +6,13 @@
 
 - Unlinked tokens didn't change size with actor properties in Foundry 0.7.x
 - Dodge bonuses to CMD were applied to flat-footed CMD as well
-  - This is a quick and dirty, temporary fix which just removes flat-footed CMD from getting any dodge bonuses
-  - Since Foundry 0.7.5 is in the stable channels, I'm planning on redoing the whole changes system to make use of Foundry's active effects system in (hopefully) the next system update
+  - This is a quick and dirty, temporary fix which just prevents flat-footed CMD from getting any dodge bonuses
+  - Now that Foundry 0.7.5 is in the stable channels, I'm planning on redoing the whole changes system to make use of Foundry's active effects system in (hopefully) the next system update
 - Actor notes and biographies were erased with every change
 
 ### Changelog
 
+- Added conditional modifiers for spells, due to the efforts of Ethaks (many thanks!)
 - Attack roll dialogs now show an additional field to determine how the weapon is held
 - Compendium filter selections are now saved between sessions
 - Added the Deadly and Distracting weapon properties

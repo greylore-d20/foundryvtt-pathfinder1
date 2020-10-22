@@ -105,7 +105,7 @@
     <tbody>
         <tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <td>{{savingThrow.total}}</td>
+            <td>{{numberFormat savingThrow.total decimals=0 sign=true}}</td>
             <td>
                 <select data-name="data.attributes.savingThrows.{{id}}.ability">
                     {{#select savingThrow.ability}}

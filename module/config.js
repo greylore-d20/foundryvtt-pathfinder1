@@ -2,7 +2,7 @@
 export const PF1 = {};
 
 PF1.re = {
-  "traitSeparator": /\s*[,;]\s*/g,
+  "traitSeparator": /\s*[;]\s*/g,
 };
 
 

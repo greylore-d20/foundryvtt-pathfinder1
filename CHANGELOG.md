@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.6
+
+### Changelog
+
+- Custom trait separators (such as that found in the Languages field) now only separate by a semicolon (;), and no longer by a comma
+
 ## 0.75.5
 
 ### Bug Fixes

@@ -29,6 +29,7 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="conditionals">{{localize "PF1.Conditionals"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
   </nav>
 
@@ -71,7 +72,7 @@
           {{/select}}
         </select>
       </div>
-      
+
       <div class="form-group stacked">
         <label>{{localize "PF1.LearnedAt"}}</label>
 
@@ -260,6 +261,11 @@
       <h3 class="form-header">{{localize "PF1.Description"}}</h3>
 
       {{roll-editor content=shortDescription target="data.shortDescription" button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Conditionals Tab --}}
+    <div class="tab details" data-group="primary" data-tab="conditionals">
+      {{> "systems/pf1/templates/items/parts/item-conditionals.html"}}
     </div>
 
     <div class="tab flexcol" data-group="primary" data-tab="links">

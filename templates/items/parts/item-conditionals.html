@@ -51,10 +51,18 @@
           {{/if}}
           {{/select}}
         </select>
-        {{else}}
-        <input type="text" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}" />
         {{/if}}
 
+        {{#if modifier.isDamage}}
+        <input type="text" list="types" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}"/>
+          <datalist id="types">
+            {{#each conditionalModifierTypes as |modifierType mt|}}
+            <option value="{{modifierType}}">
+            {{/each}}
+          </datalist>
+        {{/if}}
+
+        {{#if (or modifier.isAttack modifier.isDamage)}}
         <select class="conditional-critical" name="data.conditionals.{{a}}.{{m}}.critical">
           {{#select (lookup this "critical") }}
           {{#if (lookup this "target")}}
@@ -66,6 +74,7 @@
           {{/if}}
           {{/select}}
         </select>
+        {{/if}}
         {{#if ../modifiers.length}}
         <a class="conditional-control delete-conditional-modifier"><i class="fas fa-minus"></i></a>{{/if}}
       </li>

@@ -247,6 +247,8 @@ export class ItemSheetPF extends ItemSheet {
           modifier.conditionalModifierTypes = this.item.getConditionalModifierTypes(modifier.target)
           modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
           modifier.isAttack = modifier.target === "attack";
+          modifier.isDamage = modifier.target === "damage";
+          modifier.isSpell = modifier.target === "spell";
         }
       }
     }
@@ -530,7 +532,7 @@ export class ItemSheetPF extends ItemSheet {
         if ( !arr[i].modifiers[j] ) arr[i].modifiers[j] = ItemPF.defaultConditionalModifier;
         arr[i].modifiers[j][k] = entry[1];
         // Target dependent keys
-        if (["subTarget", "critical"].includes(k) || (k === "type" && target === "attack")) {
+        if (["subTarget", "critical", "type"].includes(k)) {
           const target = (conditionals.find(o => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
           const val = entry[1];
           if (typeof target === "string") {
@@ -546,7 +548,8 @@ export class ItemSheetPF extends ItemSheet {
                 keys = Object.keys(this.item.getConditionalCritical(target));
                 break;
             }
-            if (!keys.includes(val)) arr[i].modifiers[j][k] = keys[0];
+            // Reset subTarget, non-damage type, and critical if necessary
+            if (!keys.includes(val) && (target !== "damage" && k !== "type")) arr[i].modifiers[j][k] = keys[0];
           }
         }
       } else {

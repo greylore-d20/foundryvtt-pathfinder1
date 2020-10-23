@@ -1,6 +1,7 @@
 import { ItemPF } from "./item/entity.js";
 import { ExperienceConfig } from "./config/experience.js";
 import { createTag } from "./lib.js";
+import { ItemChange } from "./item/components/change.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -592,10 +593,18 @@ const _migrateItemChanges = function(ent, updateData) {
     let newChanges = [];
     for (let c of changes) {
       if (c instanceof Array) {
-        newChanges.push(mergeObject(ItemPF.defaultChange, { formula: c[0], target: c[1], subTarget: c[2], modifier: c[3], value: c[4] }, {inplace: false}));
+        const nc = ItemChange.create({
+          formula: c[0],
+          target: c[1],
+          subTarget: c[2],
+          modifier: c[3],
+          value: c[4],
+        }, null);
+        newChanges.push(nc.data);
       }
       else {
-        newChanges.push(c);
+        const nc = ItemChange.create(c, null);
+        newChanges.push(nc.data);
       }
     }
     updateData["data.changes"] = newChanges;

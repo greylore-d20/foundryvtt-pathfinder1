@@ -39,31 +39,31 @@
     <a class="change-control add-change"><i class="fas fa-plus"></i></a>
   </h4>
   <ol class="changes form-group">
-    {{#each data.changes as |change a|}}
-    <li class="change flexrow" data-change="{{a}}">
-      <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this "formula"}}"
+    {{#each changes as |change a|}}
+    <li class="change flexrow" data-change="{{change.data._id}}">
+      <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this.data "formula"}}"
                                                                                   placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
-      <input class="change-priority" type="text" name="data.changes.{{a}}.priority" value="{{lookup this "priority"}}"
+      <input class="change-priority" type="text" name="data.changes.{{a}}.priority" value="{{lookup this.data "priority"}}"
                                                                                     placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
 
       <select class="change-operator" name="data.changes.{{a}}.operator">
-        {{#select (lookup this "operator") }}
+        {{#select (lookup this.data "operator") }}
         <option value="add">+</option>
         <option value="set">=</option>
         {{/select}}
       </select>
       <select class="change-target" name="data.changes.{{a}}.target">
-        {{#select (lookup this "target") }}
+        {{#select (lookup this.data "target") }}
         <option value=""></option>
-        {{#each ../changes.targets as |target type|}}
+        {{#each ../changeGlobals.targets as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
         {{/select}}
       </select>
       <select class="change-sub-target" name="data.changes.{{a}}.subTarget">
-        {{#select (lookup this "subTarget") }}
-        {{#if (lookup this "target") }}
-        {{#each subTargets as |target type|}}
+        {{#select (lookup this.data "subTarget") }}
+        {{#if (lookup this.data "target") }}
+        {{#each (lookup this "subTargets") as |target type|}}
         <option value="{{type}}">{{target}}</option>
         {{/each}}
         {{else}}
@@ -72,8 +72,8 @@
         {{/select}}
       </select>
       <select class="change-modifier" name="data.changes.{{a}}.modifier">
-        {{#select (lookup this "modifier") }}
-        {{#each ../changes.modifiers as |name type|}}
+        {{#select (lookup this.data "modifier") }}
+        {{#each ../changeGlobals.modifiers as |name type|}}
         <option value="{{type}}">{{localize name}}</option>
         {{/each}}
         {{/select}}

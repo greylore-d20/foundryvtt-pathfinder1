@@ -5,6 +5,7 @@ import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
 import { SemanticVersion } from "../semver.js";
+import { ItemChange } from "./components/change.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -536,6 +537,10 @@ export class ItemPF extends Item {
     this.labels = labels;
 
     this.prepareLinks();
+
+    if (this.data.data.changes) {
+      this.changes = this._prepareChanges(this.data.data.changes);
+    }
   }
 
   prepareLinks() {
@@ -554,8 +559,39 @@ export class ItemPF extends Item {
     }
   }
 
+  _prepareChanges(changes) {
+    const prior = this.changes;
+    const collection = new Collection();
+    for (let c of changes) {
+      let change = null;
+      if (prior && prior.has(c._id)) {
+        change = prior.get(c._id);
+        change.data = c;
+        change.prepareData();
+      }
+      else change = ItemChange.create(c, this);
+      collection.set(c._id || change.data._id, change);
+    }
+    return collection;
+  }
+
   async update(data, options={}) {
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+
+    // Make sure changes remains an array
+    if (Object.keys(data).filter(e => e.startsWith("data.changes.")).length > 0) {
+      let subData = Object.entries(data).filter(e => e[0].startsWith("data.changes.") && !e[0].includes("-="));
+      let arr = duplicate(this.data.data.changes || []);
+      subData.forEach(entry => {
+        let subKey = entry[0].split(".").slice(2);
+        let i = subKey[0];
+        let subKey2 = subKey.slice(1).join(".");
+        if ( !arr[i] ) arr[i] = {};
+        arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+        delete data[entry[0]];
+      });
+      data["data.changes"] = arr;
+    }
 
     // Update name
     if (data["data.identifiedName"]) data["name"] = data["data.identifiedName"];
@@ -2803,5 +2839,10 @@ export class ItemPF extends Item {
     }
 
     return result;
+  }
+
+  async addChange() {
+    const change = new ItemChange();
+    this.changes.push(change);
   }
 }

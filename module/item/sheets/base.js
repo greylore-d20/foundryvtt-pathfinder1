@@ -1,6 +1,7 @@
 import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
+import { ItemChange } from "../components/change.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -227,14 +228,24 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for items with changes
-    if (data.item.data.changes) {
-      data.changes = { targets: {}, modifiers: CONFIG.PF1.bonusModifiers };
+    if (this.item.changes) {
+      data.changeGlobals = {
+        targets: {},
+        modifiers: CONFIG.PF1.bonusModifiers,
+      };
       for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets)) {
-        if (typeof v === "object") data.changes.targets[k] = v._label;
+        if (typeof v === "object") data.changeGlobals.targets[k] = v._label;
       }
-      data.item.data.changes.forEach(item => {
-        item.subTargets = this.item.getChangeSubTargets(item.target);
-      });
+
+      data.changes = data.item.data.changes.reduce((cur, o) => {
+        const itemChange = this.item.changes.get(o._id);
+        const obj = { data: o };
+
+        obj.subTargets = this.item.getChangeSubTargets(itemChange.target);
+
+        cur.push(obj);
+        return cur;
+      }, []);
     }
 
     // Prepare stuff for attacks with conditionals
@@ -500,27 +511,27 @@ export class ItemSheetPF extends ItemSheet {
     }, []);
 
     // Handle change array
-    let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
-    formData["data.changes"] = change.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
-      arr[i][j] = entry[1];
-      // Reset subtarget (if necessary)
-      if (j === "subTarget") {
-        const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
-        const subTarget = entry[1];
-        if (typeof target === "string") {
-          const keys = Object.keys(this.item.getChangeSubTargets(target));
-          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-        }
-      }
-      // Limit priority
-      if (j === "priority") {
-        const prio = Math.max(-1000, Math.min(1000, entry[1]));
-        arr[i][j] = prio;
-      }
-      return arr;
-    }, []);
+    // let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
+    // formData["data.changes"] = change.reduce((arr, entry) => {
+      // let [i, j] = entry[0].split(".").slice(2);
+      // if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
+      // arr[i][j] = entry[1];
+      // // Reset subtarget (if necessary)
+      // if (j === "subTarget") {
+        // const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
+        // const subTarget = entry[1];
+        // if (typeof target === "string") {
+          // const keys = Object.keys(this.item.getChangeSubTargets(target));
+          // if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+        // }
+      // }
+      // // Limit priority
+      // if (j === "priority") {
+        // const prio = Math.max(-1000, Math.min(1000, entry[1]));
+        // arr[i][j] = prio;
+      // }
+      // return arr;
+    // }, []);
 
     // Handle conditionals array
     let conditionals = Object.entries(formData).filter(e => e[0].startsWith("data.conditionals"));
@@ -870,7 +881,8 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("add-change")) {
       await this._onSubmit(event);  // Submit any unsaved changes
       const changes = this.item.data.data.changes || [];
-      return this.item.update({"data.changes": changes.concat([ItemPF.defaultChange])});
+      const change = ItemChange.create({}, null);
+      return this.item.update({"data.changes": changes.concat(change.data)});
     }
 
     // Remove a change
@@ -878,7 +890,8 @@ export class ItemSheetPF extends ItemSheet {
       await this._onSubmit(event);  // Submit any unsaved changes
       const li = a.closest(".change");
       const changes = duplicate(this.item.data.data.changes);
-      changes.splice(Number(li.dataset.change), 1);
+      const change = changes.find(o => o._id === li.dataset.change);
+      changes.splice(changes.indexOf(change), 1);
       return this.item.update({"data.changes": changes});
     }
   }

@@ -6,6 +6,10 @@
 
 - Custom trait separators (such as that found in the Languages field) now only separate by a semicolon (;), and no longer by a comma
 
+### API
+
+- Redid the inner workings of changes slightly, allowing them to be valid classes
+
 ## 0.75.5
 
 ### Bug Fixes

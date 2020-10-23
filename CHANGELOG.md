@@ -10,6 +10,10 @@
 
 - Custom trait separators (such as that found in the Languages field) now only separate by a semicolon (;), and no longer by a comma
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ### API
 
 - Redid the inner workings of changes slightly, allowing them to be valid classes

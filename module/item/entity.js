@@ -580,14 +580,31 @@ export class ItemPF extends Item {
 
     // Make sure changes remains an array
     if (Object.keys(data).filter(e => e.startsWith("data.changes.")).length > 0) {
-      let subData = Object.entries(data).filter(e => e[0].startsWith("data.changes.") && !e[0].includes("-="));
+      let subData = Object.entries(data).filter(e => e[0].startsWith("data.changes."));
       let arr = duplicate(this.data.data.changes || []);
       subData.forEach(entry => {
         let subKey = entry[0].split(".").slice(2);
         let i = subKey[0];
         let subKey2 = subKey.slice(1).join(".");
         if ( !arr[i] ) arr[i] = {};
-        arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+        
+        // Remove property
+        if (subKey[subKey.length-1].startsWith("-=")) {
+          const obj = flattenObject(arr[i]);
+          subKey[subKey.length-1] = subKey[subKey.length-1].slice(2);
+          const deleteKeys = Object.keys(obj).filter(o => o.startsWith(subKey.slice(1).join(".")));
+          for (let k of deleteKeys) {
+            if (obj.hasOwnProperty(k)) {
+              delete obj[k];
+            }
+          }
+          arr[i] = expandObject(obj);
+        }
+        // Add or change property
+        else {
+          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+        }
+
         delete data[entry[0]];
       });
       data["data.changes"] = arr;

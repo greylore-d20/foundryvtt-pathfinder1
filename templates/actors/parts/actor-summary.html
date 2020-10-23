@@ -67,7 +67,7 @@
                 {{data.attributes.hd.total}}
               </td>
               <td data-action="input-text" data-for=".cr-input" data-attr-name="data.details.cr.base">
-                <input disabled class="cr-input" type="text" value="{{labels.cr}}"/>
+                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
               </td>
               <td>
                 {{data.details.xp.value}}
@@ -189,17 +189,17 @@
       <tbody>
         <tr>
           <td data-action="input-text" data-for=".hp-current-input" data-attr-name="data.attributes.hp.value">
-            <input disabled class="hp-current-input" name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="0"/>
+            <input readonly class="hp-current-input" name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="0"/>
           </td>
           <td>
             <input disabled type="text" value="{{data.attributes.hp.max}}" placeholder="0"/>
           </td>
           <td data-action="input-text" data-for=".hp-temp-input" data-attr-name="data.attributes.hp.temp">
-            <input disabled class="hp-temp-input" name="data.attributes.hp.temp" type="text"
+            <input readonly class="hp-temp-input" name="data.attributes.hp.temp" type="text"
               {{#if data.attributes.hp.temp}}value="{{data.attributes.hp.temp}}"{{/if}}/>
           </td>
           <td data-action="input-text" data-for=".hp-nonlethal-input" data-attr-name="data.attributes.hp.nonlethal">
-            <input disabled class="hp-nonlethal-input" name="data.attributes.hp.nonlethal" type="text"
+            <input readonly class="hp-nonlethal-input" name="data.attributes.hp.nonlethal" type="text"
               {{#if data.attributes.hp.nonlethal}}value="{{data.attributes.hp.nonlethal}}"{{/if}}/>
           </td>
         </tr>
@@ -253,17 +253,17 @@
       <tbody>
         <tr>
           <td data-action="input-text" data-for=".vigor-current-input" data-attr-name="data.attributes.vigor.value">
-            <input disabled class="vigor-current-input" name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}"/>
+            <input readonly class="vigor-current-input" name="data.attributes.vigor.value" type="text" value="{{data.attributes.vigor.value}}"/>
           </td>
           <td>
             <input disabled class="vigor-max-input" name="data.attributes.vigor.max" type="text" value="{{data.attributes.vigor.max}}"/>
           </td>
           <td data-action="input-text" data-for=".vigor-temp-input" data-attr-name="data.attributes.vigor.temp">
-            <input disabled class="vigor-temp-input" name="data.attributes.vigor.temp" type="text"
+            <input readonly class="vigor-temp-input" name="data.attributes.vigor.temp" type="text"
               {{#if data.attributes.vigor.temp}}value="{{data.attributes.vigor.temp}}"{{/if}}/>
           </td>
           <td data-action="input-text" data-for=".wounds-current-input" data-attr-name="data.attributes.wounds.value">
-            <input disabled class="wounds-current-input" name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}"/>
+            <input readonly class="wounds-current-input" name="data.attributes.wounds.value" type="text" value="{{data.attributes.wounds.value}}"/>
           </td>
           <td>
             <input disabled class="wounds-max-input" name="data.attributes.wounds.max" type="text" value="{{data.attributes.wounds.max}}"/>
@@ -300,7 +300,7 @@
             {{/if}}
           </div>
 
-          <input disabled type="text" class="speed land-speed-input" {{#if data.attributes.speed.land.total}}value="{{data.attributes.speed.land.total}}"{{/if}} data-dtype="Number"/>
+          <input readonly type="text" class="speed land-speed-input" {{#if data.attributes.speed.land.total}}value="{{data.attributes.speed.land.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td class="tooltip" data-action="input-text" data-for=".climb-speed-input" data-attr-name="data.attributes.speed.climb.base">
           <div class="tooltipcontent">
@@ -311,7 +311,7 @@
             {{/if}}
           </div>
 
-          <input disabled type="text" class="speed climb-speed-input" {{#if data.attributes.speed.climb.total}}value="{{data.attributes.speed.climb.total}}"{{/if}} data-dtype="Number"/>
+          <input readonly type="text" class="speed climb-speed-input" {{#if data.attributes.speed.climb.total}}value="{{data.attributes.speed.climb.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td class="tooltip" data-action="input-text" data-for=".swim-speed-input" data-attr-name="data.attributes.speed.swim.base">
           <div class="tooltipcontent">
@@ -322,7 +322,7 @@
             {{/if}}
           </div>
 
-          <input disabled type="text" class="speed swim-speed-input" {{#if data.attributes.speed.swim.total}}value="{{data.attributes.speed.swim.total}}"{{/if}} data-dtype="Number"/>
+          <input readonly type="text" class="speed swim-speed-input" {{#if data.attributes.speed.swim.total}}value="{{data.attributes.speed.swim.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td class="tooltip" data-action="input-text" data-for=".burrow-speed-input" data-attr-name="data.attributes.speed.burrow.base">
           <div class="tooltipcontent">
@@ -333,7 +333,7 @@
             {{/if}}
           </div>
 
-          <input disabled type="text" class="speed burrow-speed-input" {{#if data.attributes.speed.burrow.total}}value="{{data.attributes.speed.burrow.total}}"{{/if}} data-dtype="Number"/>
+          <input readonly type="text" class="speed burrow-speed-input" {{#if data.attributes.speed.burrow.total}}value="{{data.attributes.speed.burrow.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td class="tooltip" data-action="input-text" data-for=".fly-speed-input" data-attr-name="data.attributes.speed.fly.base">
           <div class="tooltipcontent">
@@ -345,7 +345,7 @@
             {{/if}}
           </div>
 
-          <input disabled type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
+          <input readonly type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td>
           <select name="data.attributes.speed.fly.maneuverability">

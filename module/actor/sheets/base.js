@@ -1145,14 +1145,14 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /**
-   * Makes a disabled text input editable, and focus it.
+   * Makes a readonly text input editable, and focus it.
    * @private
    */
   _onInputText(event) {
     event.preventDefault();
     const elem = this.element.find(event.currentTarget.dataset.for);
 
-    elem.removeAttr("disabled")
+    elem.removeAttr("readonly")
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.actor.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);

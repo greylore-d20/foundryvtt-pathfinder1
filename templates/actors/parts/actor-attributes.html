@@ -41,7 +41,7 @@
 
                 {{!-- Total --}}
                 <td data-action="input-text" data-for=".ability-{{id}}-total-input" data-attr-name="data.abilities.{{id}}.value">
-                  <input disabled class="ability-{{id}}-total-input" type="text" value="{{ability.total}}" data-dtype="Number"/>
+                  <input readonly class="ability-{{id}}-total-input" type="text" value="{{ability.total}}" data-dtype="Number"/>
                 </td>
 
                 {{!-- Modifier --}}
@@ -49,19 +49,19 @@
 
                 {{!-- Damage --}}
                 <td data-action="input-text" data-for=".ability-{{id}}-damage-input" data-attr-name="data.abilities.{{id}}.damage">
-                  <input disabled class="ability-{{id}}-damage-input" type="text"
+                  <input readonly class="ability-{{id}}-damage-input" type="text"
                     {{#if ability.damage}}value="{{ability.damage}}"{{/if}} data-dtype="Number"/>
                 </td>
 
                 {{!-- Drain --}}
                 <td data-action="input-text" data-for=".ability-{{id}}-drain-input" data-attr-name="data.abilities.{{id}}.drain">
-                  <input disabled class="ability-{{id}}-drain-input" type="text"
+                  <input readonly class="ability-{{id}}-drain-input" type="text"
                     {{#if ability.drain}}value="{{ability.drain}}"{{/if}} data-dtype="Number"/>
                 </td>
 
                 {{!-- Penalty --}}
                 <td data-action="input-text" data-for=".ability-{{id}}-penalty-input" data-attr-name="data.abilities.{{id}}.userPenalty">
-                  <input disabled class="ability-{{id}}-penalty-input" type="text"
+                  <input readonly class="ability-{{id}}-penalty-input" type="text"
                     {{#if ability.userPenalty}}value="{{ability.userPenalty}}"{{/if}} data-dtype="Number"/>
                 </td>
             </tr>

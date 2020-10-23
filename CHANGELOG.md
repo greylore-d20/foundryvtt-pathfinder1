@@ -2,6 +2,10 @@
 
 ## 0.75.6
 
+### Bug Fixes
+
+- Certain text fields couldn't be changed on Firefox
+
 ### Changelog
 
 - Custom trait separators (such as that found in the Languages field) now only separate by a semicolon (;), and no longer by a comma

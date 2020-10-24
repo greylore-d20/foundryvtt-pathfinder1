@@ -78,6 +78,11 @@
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.maxFormula"
           value="{{spellbook.orig.spellPoints.maxFormula}}" placeholder="{{localize "PF1.MaxFormula"}}" title="{{localize "PF1.MaxFormula"}}"/>
         </div>
+        <div class="flexrow spell-points-rest">
+          <h3>└ {{localize "PF1.RestoredOnRest"}}</h3>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.restoreFormula"
+          value="{{spellbook.orig.spellPoints.restoreFormula}}" placeholder="{{localize "PF1.SpellPointsMax"}}" title="{{localize "PF1.Formula"}}"/>
+        </div>
         {{/if}}
       </div>
       

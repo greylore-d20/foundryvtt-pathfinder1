@@ -6,6 +6,10 @@
 
 - Fix typos in class abilities compendium
 
+### Changelog
+
+- Spell Points are now restored on rest according to the spellbook's formula, or fully restored if none such is entered
+
 ## 0.75.6
 
 ### Bug Fixes

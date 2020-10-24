@@ -86,12 +86,26 @@ export class ActorRestDialog extends BaseEntitySheet {
         }
       }
 
-      // Restore spontaneous spellbooks
       for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+        // Restore spontaneous spellbooks
         if (spellbook.spontaneous) {
           for (let sl of Object.keys(CONFIG.PF1.spellLevels)) {
             updateData[`data.attributes.spells.spellbooks.${key}.spells.spell${sl}.value`] = getProperty(actorData, `attributes.spells.spellbooks.${key}.spells.spell${sl}.max`);
           }
+        }
+        // Restore spellbooks using spell points
+        if (spellbook.spellPoints.useSystem) {
+          // Try to roll restoreFormula, fall back to restoring max spell points
+          let restorePoints = spellbook.spellPoints.max;
+          if (spellbook.spellPoints.restoreFormula) {
+            try {
+              const restoreRoll = new Roll(spellbook.spellPoints.restoreFormula, actor.getRollData()).roll().total;
+              restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll, spellbook.spellPoints.max);
+            } catch (e) {
+              console.error(e);
+            }
+          }
+          updateData[`data.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;
         }
       }
     }

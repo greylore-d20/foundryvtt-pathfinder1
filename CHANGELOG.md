@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.7
+
+### Bug Fixes
+
+- Fix typos in class abilities compendium
+
 ## 0.75.6
 
 ### Bug Fixes

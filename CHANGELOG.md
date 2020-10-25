@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fix typos in class abilities compendium
+- Weapon held options on attack roll dialogs defaulted to 'Normal'
 
 ## 0.75.6
 

@@ -68,7 +68,7 @@
   <div class="form-group select">
     <label>{{localize "PF1.Held"}}</label>
     <select name="held">
-      {{#select data.held}}
+      {{#select data.item.held}}
       {{#each config.weaponHoldTypes as |name type|}}
       <option value="{{type}}">{{name}}</option>
       {{/each}}

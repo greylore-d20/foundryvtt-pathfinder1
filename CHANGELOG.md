@@ -8,6 +8,10 @@
 - Weapon held options on attack roll dialogs defaulted to 'Normal'
 - Compendium items with changes couldn't be edited, even after assigning them to an actor
 
+### Changelog
+
+- Spell Points are now restored on rest according to the spellbook's formula, or fully restored if none such is entered
+
 ## 0.75.6
 
 ### Bug Fixes

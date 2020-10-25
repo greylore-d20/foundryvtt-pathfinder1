@@ -6,6 +6,7 @@
 
 - Fix typos in class abilities compendium
 - Weapon held options on attack roll dialogs defaulted to 'Normal'
+- Compendium items with changes couldn't be edited, even after assigning them to an actor
 
 ## 0.75.6
 

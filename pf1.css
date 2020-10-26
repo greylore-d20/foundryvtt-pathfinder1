@@ -2130,10 +2130,7 @@
 .pf1.sheet.item .conditionals .change,
 .pf1.sheet.item .changes .context-note,
 .pf1.sheet.item .context-notes .context-note,
-.pf1.sheet.item .conditionals .context-note,
-.pf1.sheet.item .changes .conditional,
-.pf1.sheet.item .context-notes .conditional,
-.pf1.sheet.item .conditionals .conditional {
+.pf1.sheet.item .conditionals .context-note {
   flex: 0 0 100%;
   padding: 0;
 }
@@ -2142,10 +2139,7 @@
 .pf1.sheet.item .conditionals .change input,
 .pf1.sheet.item .changes .context-note input,
 .pf1.sheet.item .context-notes .context-note input,
-.pf1.sheet.item .conditionals .context-note input,
-.pf1.sheet.item .changes .conditional input,
-.pf1.sheet.item .context-notes .conditional input,
-.pf1.sheet.item .conditionals .conditional input {
+.pf1.sheet.item .conditionals .context-note input {
   flex: 3;
 }
 .pf1.sheet.item .changes .change select,
@@ -2153,10 +2147,7 @@
 .pf1.sheet.item .conditionals .change select,
 .pf1.sheet.item .changes .context-note select,
 .pf1.sheet.item .context-notes .context-note select,
-.pf1.sheet.item .conditionals .context-note select,
-.pf1.sheet.item .changes .conditional select,
-.pf1.sheet.item .context-notes .conditional select,
-.pf1.sheet.item .conditionals .conditional select {
+.pf1.sheet.item .conditionals .context-note select {
   flex: 0 0 80px;
   width: 80px;
   margin-left: 5px;
@@ -2166,10 +2157,7 @@
 .pf1.sheet.item .conditionals .change select.change-sub-target,
 .pf1.sheet.item .changes .context-note select.change-sub-target,
 .pf1.sheet.item .context-notes .context-note select.change-sub-target,
-.pf1.sheet.item .conditionals .context-note select.change-sub-target,
-.pf1.sheet.item .changes .conditional select.change-sub-target,
-.pf1.sheet.item .context-notes .conditional select.change-sub-target,
-.pf1.sheet.item .conditionals .conditional select.change-sub-target {
+.pf1.sheet.item .conditionals .context-note select.change-sub-target {
   flex: 0 0 128px;
   width: 128px;
 }
@@ -2178,10 +2166,7 @@
 .pf1.sheet.item .conditionals .change .change-priority,
 .pf1.sheet.item .changes .context-note .change-priority,
 .pf1.sheet.item .context-notes .context-note .change-priority,
-.pf1.sheet.item .conditionals .context-note .change-priority,
-.pf1.sheet.item .changes .conditional .change-priority,
-.pf1.sheet.item .context-notes .conditional .change-priority,
-.pf1.sheet.item .conditionals .conditional .change-priority {
+.pf1.sheet.item .conditionals .context-note .change-priority {
   flex: 0 0 24px;
 }
 .pf1.sheet.item .changes .change .change-operator,
@@ -2189,10 +2174,7 @@
 .pf1.sheet.item .conditionals .change .change-operator,
 .pf1.sheet.item .changes .context-note .change-operator,
 .pf1.sheet.item .context-notes .context-note .change-operator,
-.pf1.sheet.item .conditionals .context-note .change-operator,
-.pf1.sheet.item .changes .conditional .change-operator,
-.pf1.sheet.item .context-notes .conditional .change-operator,
-.pf1.sheet.item .conditionals .conditional .change-operator {
+.pf1.sheet.item .conditionals .context-note .change-operator {
   flex: 0 0 24px;
 }
 .pf1.sheet.item .changes .change .conditional-default,
@@ -2200,10 +2182,7 @@
 .pf1.sheet.item .conditionals .change .conditional-default,
 .pf1.sheet.item .changes .context-note .conditional-default,
 .pf1.sheet.item .context-notes .context-note .conditional-default,
-.pf1.sheet.item .conditionals .context-note .conditional-default,
-.pf1.sheet.item .changes .conditional .conditional-default,
-.pf1.sheet.item .context-notes .conditional .conditional-default,
-.pf1.sheet.item .conditionals .conditional .conditional-default {
+.pf1.sheet.item .conditionals .context-note .conditional-default {
   flex: 0 0 18px;
 }
 .pf1.sheet.item .changes .change .conditional-modifier,
@@ -2211,24 +2190,35 @@
 .pf1.sheet.item .conditionals .change .conditional-modifier,
 .pf1.sheet.item .changes .context-note .conditional-modifier,
 .pf1.sheet.item .context-notes .context-note .conditional-modifier,
-.pf1.sheet.item .conditionals .context-note .conditional-modifier,
-.pf1.sheet.item .changes .conditional .conditional-modifier,
-.pf1.sheet.item .context-notes .conditional .conditional-modifier,
-.pf1.sheet.item .conditionals .conditional .conditional-modifier {
+.pf1.sheet.item .conditionals .context-note .conditional-modifier {
   display: flex;
 }
 .pf1.sheet.item .conditionals select {
-  max-width: 100px;
+  max-width: max-content;
+  min-width: 80px;
+  flex: 1;
+  margin-left: 5px;
+}
+.pf1.sheet.item .conditionals .conditional-formula {
+  min-width: 140px;
+}
+.pf1.sheet.item .conditionals .conditional-damage-type {
+  max-width: 200px;
 }
 .pf1.sheet.item .conditionals .form-group {
   padding-left: 28px;
+}
+.pf1.sheet.item .conditionals .conditional-add {
+  flex: 0 0 auto;
+  line-height: 24px;
+  color: #7a7971;
 }
 .pf1.sheet.item .damage-control,
 .pf1.sheet.item .crit-damage-control,
 .pf1.sheet.item .attack-control,
 .pf1.sheet.item .change-control,
 .pf1.sheet.item .context-note-control,
-.pf1.sheet.item .conditional-control {
+.pf1.sheet.item .conditional-remove {
   width: 18px;
   flex: 0 0 18px;
   line-height: 24px;

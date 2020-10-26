@@ -289,8 +289,7 @@
     display: block;
 
     .change,
-    .context-note,
-    .conditional {
+    .context-note {
       flex: 0 0 100%;
       padding: 0;
       input {
@@ -324,14 +323,28 @@
 
   .conditionals {
     select {
-      max-width: 100px;
+      max-width: max-content;
+      min-width: 80px;
+      flex: 1;
+      margin-left: 5px;
+    }
+    .conditional-formula {
+      min-width: 140px;
+    }
+    .conditional-damage-type {
+      max-width: 200px;
     }
     .form-group {
       padding-left: 28px;
     }
+    .conditional-add {
+      flex: 0 0 auto;
+      line-height: 24px;
+      color: @colorTan
+    }
   }
 
-  .damage-control, .crit-damage-control, .attack-control, .change-control, .context-note-control, .conditional-control {
+  .damage-control, .crit-damage-control, .attack-control, .change-control, .context-note-control, .conditional-remove {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;

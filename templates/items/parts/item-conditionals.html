@@ -1,7 +1,6 @@
 {{!-- Conditionals --}}
 <h4 class="conditional-header">
   {{localize "PF1.Conditionals"}}
-  <a class="conditional-control add-conditional"><i class="fas fa-plus"></i></a>
 </h4>
 <ol class="conditionals form-group">
   {{#each data.conditionals as |conditional a|}}
@@ -9,8 +8,7 @@
       <input class="conditional-default" type="checkbox" title="{{localize "PF1.Default"}}" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
       <input class="conditional-name" type="text" name="data.conditionals.{{a}}.name" value="{{lookup this "name"}}"
       placeholder="{{localize "PF1.Name"}}" title="{{localize "PF1.Name"}}"/>
-      <a class="conditional-control add-conditional-modifier"><i class="fas fa-plus"></i></a>
-      <a class="conditional-control delete-conditional"><i class="fas fa-minus"></i></a>
+      <a class="conditional-remove conditional-control delete-conditional"><i class="fas fa-trash"></i></a>
     </div>
     <ol class="conditionals form-group">
       {{#each this.modifiers as |modifier m|}}
@@ -54,7 +52,7 @@
         {{/if}}
 
         {{#if modifier.isDamage}}
-        <input type="text" list="types" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}"/>
+        <input class="conditional-damage-type" type="text" list="types" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}"/>
           <datalist id="types">
             {{#each conditionalModifierTypes as |modifierType mt|}}
             <option value="{{modifierType}}">
@@ -76,11 +74,13 @@
         </select>
         {{/if}}
         {{#if ../modifiers.length}}
-        <a class="conditional-control delete-conditional-modifier"><i class="fas fa-minus"></i></a>{{/if}}
+        <a class="conditional-remove conditional-control delete-conditional-modifier"><i class="fas fa-trash"></i></a>{{/if}}
       </li>
       {{/each}}
+      <li class="flexrow"><a class="conditional-control conditional-add add-conditional-modifier"><i class="fas fa-plus"></i> {{localize "PF1.AddEffect"}}</a></li>
     </ol>
   </li>
   {{/each}}
+  <li class="flexrow"><a class="conditional-control conditional-add add-conditional"><i class="fas fa-plus"></i> {{localize "PF1.AddConditional"}}</a></li>
 </ol>
 </div>

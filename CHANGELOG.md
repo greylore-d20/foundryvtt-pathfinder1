@@ -11,6 +11,7 @@
 ### Changelog
 
 - Spell Points are now restored on rest according to the spellbook's formula, or fully restored if none such is entered
+- Slightly changed the look of the conditional modifiers configuration
 
 ## 0.75.6
 

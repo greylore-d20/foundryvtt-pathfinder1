@@ -345,7 +345,7 @@ export class ItemPF extends Item {
    * @type {boolean}
    */
   get hasSave() {
-    return !!(this.data.data.save && this.data.data.save.ability);
+    return !!(this.data.data.save && this.data.data.save.type);
   }
 
   /**
@@ -1174,7 +1174,7 @@ export class ItemPF extends Item {
             const partString = `${modifier.target}.${modifier.subTarget}${modifier.critical ? "." + modifier.critical : ""}`;
             // Add formula in correct format for attacks or damage
             conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
-              (modifier.target === "attack" || modifier.target === "spell") ? modifier.formula :
+              (modifier.target === "attack" || modifier.target === "effect") ? modifier.formula :
               (modifier.target === "damage" && Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
               [modifier.formula, localizeType(modifier.target, modifier.type, false)]
             ];
@@ -1184,18 +1184,18 @@ export class ItemPF extends Item {
         rollData.conditionals = expandObject(conditionalData, 5);
 
         // Add conditional bonus to CL
-        if (conditionalPartsCommon["spell.cl"] != null) {
+        if (conditionalPartsCommon["effect.cl"] != null) {
           try {
-            rollData.cl += new Roll(conditionalPartsCommon["spell.cl"].join("+"), rollData).roll().total;
+            rollData.cl += new Roll(conditionalPartsCommon["effect.cl"].join("+"), rollData).roll().total;
           } catch (e) {
             console.error(e);
           }
         }
 
         // Add conditional DC bonus to rollData
-        if (conditionalPartsCommon["spell.dc"] != null) {
+        if (conditionalPartsCommon["effect.dc"] != null) {
           try {
-            rollData.dcBonus = new Roll(conditionalPartsCommon["spell.dc"].join("+"), rollData).roll().total;
+            rollData.dcBonus = new Roll(conditionalPartsCommon["effect.dc"].join("+"), rollData).roll().total;
           } catch(e) {
             console.error(e);
           }
@@ -2740,7 +2740,7 @@ export class ItemPF extends Item {
     let result = {}
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
-    if (this.type === "spell") result["spell"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.spell._label);
+    if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     return result;
     }
 
@@ -2757,16 +2757,24 @@ export class ItemPF extends Item {
         if (!k.startsWith("_")) result[k] = v;
       }
     }
-    // Add specific attacks
-    if (this.hasAttack) {
-      result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
-    } else {
-      delete result["rapidShotDamage"];
-    }
-    if (this.hasMultiAttack) {
-      for (let [k,v] of Object.entries(this.data.data.attackParts)) {
-        result[`attack.${Number(k)+1}`] = v[1];
+    // Add subtargets depending on attacks
+    if (["attack", "damage"].includes(target)) {
+      // Add specific attacks
+      if (this.hasAttack) {
+        result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+      } else {
+        delete result["rapidShotDamage"];
       }
+      if (this.hasMultiAttack) {
+        for (let [k,v] of Object.entries(this.data.data.attackParts)) {
+          result[`attack.${Number(k)+1}`] = v[1];
+        }
+      }
+    }
+    // Add subtargets affecting effects
+    if (target === "effect") {
+      if (this.data.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevel");
+      if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
     }
     return result;
   }

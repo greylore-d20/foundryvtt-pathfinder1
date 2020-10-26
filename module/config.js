@@ -1043,10 +1043,8 @@ PF1.conditionalTargets = {
     "allDamage": "PF1.All",
     "rapidShotDamage": "PF1.RapidShot",
   },
-  "spell": {
-    "_label": "PF1.BuffTarSpells",
-    "cl": "PF1.CasterLevel",
-    "dc": "PF1.DC"
+  "effect": {
+    "_label": "PF1.Effects",
   },
 }
 

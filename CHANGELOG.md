@@ -13,7 +13,7 @@
 
 - Spell Points are now restored on rest according to the spellbook's formula, or fully restored if none such is entered
 - Slightly changed the look of the conditional modifiers configuration
-- Added buttons to open the skill compendium from the skills tab
+- Added buttons to open the skill compendium from the skills tab / tweaked skill styles
 
 ## 0.75.6
 

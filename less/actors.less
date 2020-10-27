@@ -530,10 +530,6 @@
         }
       }
 
-      .skill-name:hover .compendium-entry {
-        visibility: visible;
-      }
-
       .skill-name {
         display: flex;
         flex: 180px;
@@ -559,17 +555,27 @@
           }
         }
 
-        .compendium-entry {
-          visibility: hidden;
-          flex: 0 0 24px;
-          margin-left: 5px;
-        }
-
         h4, input[type="text"] {
           display: inline-block;
           margin: 0;
           white-space: nowrap;
           overflow: hidden;
+        }
+
+        .compendium-entry > h4 {
+          border-bottom: 1px #111 dotted;
+        }
+
+        .compendium-entry:hover .compendium-icon {
+          visibility: visible;
+        }
+
+        .compendium-icon {
+          visibility: hidden;
+          flex: 0 0 24px;
+          margin-left: 5px;
+          position: relative;
+          top: -4px;
         }
 
         input[type="text"] {

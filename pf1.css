@@ -1118,10 +1118,6 @@
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name.untrained .rollable img {
   opacity: 60%;
 }
-.pf1.sheet.actor ul.skills-list li.skill .skill-name:hover .compendium-entry,
-.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name:hover .compendium-entry {
-  visibility: visible;
-}
 .pf1.sheet.actor ul.skills-list li.skill .skill-name,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name {
   display: flex;
@@ -1148,12 +1144,6 @@
   height: 24px;
   border: unset;
 }
-.pf1.sheet.actor ul.skills-list li.skill .skill-name .compendium-entry,
-.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .compendium-entry {
-  visibility: hidden;
-  flex: 0 0 24px;
-  margin-left: 5px;
-}
 .pf1.sheet.actor ul.skills-list li.skill .skill-name h4,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name h4,
 .pf1.sheet.actor ul.skills-list li.skill .skill-name input[type="text"],
@@ -1162,6 +1152,22 @@
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
+}
+.pf1.sheet.actor ul.skills-list li.skill .skill-name .compendium-entry > h4,
+.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .compendium-entry > h4 {
+  border-bottom: 1px #111 dotted;
+}
+.pf1.sheet.actor ul.skills-list li.skill .skill-name .compendium-entry:hover .compendium-icon,
+.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .compendium-entry:hover .compendium-icon {
+  visibility: visible;
+}
+.pf1.sheet.actor ul.skills-list li.skill .skill-name .compendium-icon,
+.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .compendium-icon {
+  visibility: hidden;
+  flex: 0 0 24px;
+  margin-left: 5px;
+  position: relative;
+  top: -4px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name input[type="text"],
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name input[type="text"] {

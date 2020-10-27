@@ -607,11 +607,11 @@ export class ActorPF extends Actor {
   }
 
   async _onCreate(data, options, userId, context) {
+    if (data.type === "character") this.update({'token.actorLink': true}, {updateChanges: false});
+	
     if (userId === game.user._id) {
       await updateChanges.call(this);
     }
-
-    if (data.type === "character") data.token.actorLink = true;
 
     super._onCreate(data, options, userId, context);
   }

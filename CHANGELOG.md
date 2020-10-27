@@ -7,6 +7,7 @@
 - Fix typos in class abilities compendium
 - Weapon held options on attack roll dialogs defaulted to 'Normal'
 - Compendium items with changes couldn't be edited, even after assigning them to an actor
+- New "Character" Actors did not fully have their Token actorLink set as default
 
 ### Changelog
 

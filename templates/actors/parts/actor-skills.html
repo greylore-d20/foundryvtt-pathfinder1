@@ -8,6 +8,9 @@
         <i class="fas fa-plus"></i>
       </a>
       <h4>{{skill.label}}</h4>
+      {{#if compendiumEntry}}
+        <a class="compendium-entry" title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+      {{/if}}
     </div>
   </li>
   {{#each skill.subSkills as |subSkill b|}}
@@ -71,6 +74,9 @@
       <input type="text" name="data.skills.{{s}}.name" value="{{skill.name}}" placeholder="{{localize "PF1.Name"}}"/>
       {{else}}
       <h4>{{skill.label}}</h4>
+      {{#if compendiumEntry}}
+        <a class="compendium-entry" title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+      {{/if}}
       {{/if}}
     </div>
     <input type="text" disabled class="skill-mod" value="{{numberFormat skill.mod decimals=0 sign=true}}" title="{{localize "PF1.SkillModTooltip"}}">

@@ -142,6 +142,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
+      skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? null;
 
       // Add skill rank source
       if (skl.rank > 0) {
@@ -701,6 +702,9 @@ export class ActorSheetPF extends ActorSheet {
     // Roll Skill Checks
     html.find(".skill > .skill-name > .rollable").click(this._onRollSkillCheck.bind(this));
     html.find(".sub-skill > .skill-name > .rollable").click(this._onRollSubSkillCheck.bind(this));
+
+    // Open skill compendium entry
+    html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
 
     // Trait Selector
     html.find('.trait-selector').click(this._onTraitSelector.bind(this));
@@ -1684,6 +1688,21 @@ export class ActorSheetPF extends ActorSheet {
     const mainSkill = event.currentTarget.parentElement.parentElement.dataset.mainSkill;
     const skill = event.currentTarget.parentElement.parentElement.dataset.skill;
     this.actor.rollSkill(`${mainSkill}.subSkills.${skill}`, {event: event, skipDialog: getSkipActionPrompt()});
+  }
+
+  /**
+   * Handle opening a skill's compendium entry
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async _onOpenCompendiumEntry(event) {
+    const entryKey = event.currentTarget.dataset.compendiumEntry;
+    const parts = entryKey.split(".");
+    const packKey = parts.slice(0, 2).join(".");
+    const entryId = parts.slice(-1)[0];
+    const pack = game.packs.get(packKey);
+    const entry = await pack.getEntity(entryId);
+    entry.sheet.render(true);
   }
 
   /* -------------------------------------------- */

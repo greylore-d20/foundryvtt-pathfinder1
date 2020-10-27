@@ -1118,6 +1118,10 @@
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name.untrained .rollable img {
   opacity: 60%;
 }
+.pf1.sheet.actor ul.skills-list li.skill .skill-name:hover .compendium-entry,
+.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name:hover .compendium-entry {
+  visibility: visible;
+}
 .pf1.sheet.actor ul.skills-list li.skill .skill-name,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name {
   display: flex;
@@ -1143,6 +1147,12 @@
   width: 24px;
   height: 24px;
   border: unset;
+}
+.pf1.sheet.actor ul.skills-list li.skill .skill-name .compendium-entry,
+.pf1.sheet.actor ul.skills-list li.sub-skill .skill-name .compendium-entry {
+  visibility: hidden;
+  flex: 0 0 24px;
+  margin-left: 5px;
 }
 .pf1.sheet.actor ul.skills-list li.skill .skill-name h4,
 .pf1.sheet.actor ul.skills-list li.sub-skill .skill-name h4,

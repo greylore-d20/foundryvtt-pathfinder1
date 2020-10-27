@@ -530,6 +530,10 @@
         }
       }
 
+      .skill-name:hover .compendium-entry {
+        visibility: visible;
+      }
+
       .skill-name {
         display: flex;
         flex: 180px;
@@ -553,6 +557,12 @@
             height: 24px;
             border: unset;
           }
+        }
+
+        .compendium-entry {
+          visibility: hidden;
+          flex: 0 0 24px;
+          margin-left: 5px;
         }
 
         h4, input[type="text"] {

@@ -7,6 +7,7 @@
 - Fix typos in class abilities compendium
 - Weapon held options on attack roll dialogs defaulted to 'Normal'
 - Compendium items with changes couldn't be edited, even after assigning them to an actor
+- New "Character" Actors did not fully have their Token actorLink set as default
 
 ### Changelog
 
@@ -16,6 +17,7 @@
 - Added container type items
 - Updated the macro to create loot sheets from tokens filter out items with no quantity and to add containers
   - This will require a re-import of the macro
+- Added buttons to open the skill compendium from the skills tab / tweaked skill styles
 
 ## 0.75.6
 

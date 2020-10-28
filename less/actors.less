@@ -510,7 +510,7 @@
     li.skill, li.sub-skill {
       height: 28px;
       padding: 3px 0;
-	  align-items: end;
+      align-items: end;
 
       background-color: rgba(170, 170, 170, 0.3);
       &:nth-child(2n+1) {
@@ -527,11 +527,11 @@
           img {
             opacity: 60%;
           }
+		  
+		  img:hover {
+		  animation: 0;
+		  }
         }
-      }
-
-      .skill-name:hover .compendium-entry {
-        visibility: visible;
       }
 
       .skill-name {
@@ -557,12 +557,12 @@
             height: 24px;
             border: unset;
           }
-        }
-
-        .compendium-entry {
-          visibility: hidden;
-          flex: 0 0 24px;
-          margin-left: 5px;
+          
+          img:hover {
+            animation: dice-spin 250ms cubic-bezier(0.600, -0.280, 0.735, 0.045) 1 forwards;
+			transform-origin: 50% 40%;
+			filter: @filterAuburn;
+          }
         }
 
         h4, input[type="text"] {
@@ -570,6 +570,22 @@
           margin: 0;
           white-space: nowrap;
           overflow: hidden;
+        }
+
+        .compendium-entry > h4 {
+          border-bottom: 1px #111 dotted;
+        }
+
+        .compendium-entry:hover .compendium-icon {
+          visibility: visible;
+        }
+
+        .compendium-icon {
+          visibility: hidden;
+          flex: 0 0 24px;
+          margin-left: 5px;
+          position: relative;
+          top: -4px;
         }
 
         input[type="text"] {
@@ -602,16 +618,16 @@
 
       .skill-mod {
         flex: 0 0 28px;
-		font-weight: bold;
-		margin: -1px 22px 0px 0px;
-		text-align: center;
-		border: 1px dotted #111;
+        font-weight: bold;
+        margin: -1px 22px 0px 0px;
+        text-align: center;
+        border: 1px dotted #111;
       }
 
       .skill-rank {
         flex: 0 0 48px;
-		border-bottom: 1px solid #111;
-		margin-right: 12px;
+        border-bottom: @borderGroove;
+        margin-right: 12px;
       }
 
       .skill-controls {

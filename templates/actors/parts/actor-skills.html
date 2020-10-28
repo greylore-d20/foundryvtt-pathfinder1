@@ -7,9 +7,12 @@
       <a class="skill-control skill-create" title="Add Skill">
         <i class="fas fa-plus"></i>
       </a>
-      <h4>{{skill.label}}</h4>
       {{#if compendiumEntry}}
-        <a class="compendium-entry" title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+      <a class="compendium-entry" data-compendium-entry="{{compendiumEntry}}">
+        <h4>{{skill.label}}</h4><i class="fas fa-book compendium-icon"></i>
+      </a>
+      {{else}}
+      <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
   </li>
@@ -73,9 +76,12 @@
       {{#if skill.custom}}
       <input type="text" name="data.skills.{{s}}.name" value="{{skill.name}}" placeholder="{{localize "PF1.Name"}}"/>
       {{else}}
-      <h4>{{skill.label}}</h4>
       {{#if compendiumEntry}}
-        <a class="compendium-entry" title="{{localize "PF1.OpenAssociatedCompendiumEntry"}}" data-compendium-entry="{{compendiumEntry}}"><i class="fas fa-book"></i></a>
+      <a class="compendium-entry" data-compendium-entry="{{compendiumEntry}}">
+        <h4>{{skill.label}}</h4><i class="fas fa-book compendium-icon"></i>
+      </a>
+      {{else}}
+      <h4>{{skill.label}}</h4>
       {{/if}}
       {{/if}}
     </div>

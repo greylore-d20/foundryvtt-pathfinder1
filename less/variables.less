@@ -30,6 +30,7 @@
 @colorLink: #7E78DC;
 @borderGroove: 2px groove #eeede0;
 @sheetBackground: url("ui/parchment.jpg") repeat;
+@filterAuburn: invert(15%) sepia(40%) saturate(6317%) hue-rotate(348deg) brightness(94%) contrast(82%);
 
 /* ----------------------------------------- */
 /*  Flexbox                                  */
@@ -79,4 +80,12 @@
   &:hover {
     border-color: #666;
   }
+}
+
+/* ----------------------------------------- */
+/*  Animation                                */
+/* ----------------------------------------- */
+
+@keyframes dice-spin {
+  100% {transform: rotate(1turn);}
 }

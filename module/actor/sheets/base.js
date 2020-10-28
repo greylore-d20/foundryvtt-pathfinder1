@@ -2,7 +2,7 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
-import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight } from "../../lib.js";
+import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight, createConsumableSpellDialog } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
@@ -1337,7 +1337,7 @@ export class ActorSheetPF extends ActorSheet {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      ui.notifications.error("You are not allowed to identify items");
+      ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
       return;
     }
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
@@ -1548,6 +1548,7 @@ export class ActorSheetPF extends ActorSheet {
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" } },
       tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"), "sub-type": "tradeGoods" } },
+      container: { label: game.i18n.localize("PF1.InventoryContainers"), canCreate: true, hasActions: false, items: [], dataset: { type: "container" } },
       all: { label: game.i18n.localize("PF1.All"), canCreate: false, initial: true, hasActions: true, items: [], canEquip: true, dataset: {} },
     };
 
@@ -1593,7 +1594,7 @@ export class ActorSheetPF extends ActorSheet {
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
       i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
-      i.units = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")
+      i.units = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
       inventory.all.items.push(i);
@@ -1884,7 +1885,6 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * @override
    */
-
   _getSortSiblings(source) {
     return this.actor.items.filter(i => {
       if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);
@@ -1892,9 +1892,11 @@ export class ActorSheetPF extends ActorSheet {
     });
   }
 
-  async importItem(itemData, dataType) {
+  async importItem(itemData) {
     if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
-      return this.actor._createConsumableSpellDialog(itemData);
+      let resultData = await createConsumableSpellDialog(itemData);
+      if (resultData) return this.actor.createEmbeddedEntity("OwnedItem", resultData);
+      else return false;
     }
 
     if (itemData._id) delete itemData._id;

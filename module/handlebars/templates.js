@@ -31,8 +31,8 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/items/parts/item-template.html",
     "systems/pf1/templates/items/parts/item-links.html",
     "systems/pf1/templates/items/parts/item-aura.html",
-    "systems/pf1/templates/items/parts/links/item-template.html",
     "systems/pf1/templates/items/parts/item-conditionals.html",
+    "systems/pf1/templates/items/parts/item-contents.html",
 
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.html",

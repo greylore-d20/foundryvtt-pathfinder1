@@ -165,7 +165,6 @@ export class ActorPF extends Actor {
 
     const actorData = this.data;
     const data = actorData.data;
-    const rollData = this.getRollData();
 
     // Prepare Character data
     if ( actorData.type === "character" ) this._prepareCharacterData(actorData);
@@ -1630,38 +1629,6 @@ export class ActorPF extends Actor {
       delete data._id;
       return this.createOwnedItem(data);
     });
-  }
-
-  _createConsumableSpellDialog(itemData) {
-    new Dialog({
-      title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
-      content: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
-      buttons: {
-        potion: {
-          icon: '<i class="fas fa-prescription-bottle"></i>',
-          label: game.i18n.localize("PF1.CreateItemPotion"),
-          callback: () => this.createConsumableSpell(itemData, "potion"),
-        },
-        scroll: {
-          icon: '<i class="fas fa-scroll"></i>',
-          label: game.i18n.localize("PF1.CreateItemScroll"),
-          callback: () => this.createConsumableSpell(itemData, "scroll"),
-        },
-        wand: {
-          icon: '<i class="fas fa-magic"></i>',
-          label: game.i18n.localize("PF1.CreateItemWand"),
-          callback: () => this.createConsumableSpell(itemData, "wand"),
-        },
-      },
-      default: "potion",
-    }).render(true);
-  }
-
-  async createConsumableSpell(itemData, type) {
-    let data = await ItemPF.toConsumable(itemData, type);
-
-    if (data._id) delete data._id;
-    this.createEmbeddedEntity("OwnedItem", data);
   }
 
   getRollData(data=null) {

@@ -284,6 +284,247 @@
     }
   }
 
+  .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 5px;
+    overflow-y: auto;
+
+    &.flexcol {
+      height: 100%;
+    }
+
+    // Inventory Item
+    .item {
+      line-height: 24px;
+      padding: 0 2px; // to align with the header border
+      border-bottom: 1px solid @colorFaint;
+      &:last-child { border-bottom: none; }
+
+      background-color: rgba(155, 155, 155, 0.3);
+      &:nth-child(2n+1) {
+        background-color: rgba(210, 210, 210, 0.3);
+      }
+      &:hover {
+        background-color: rgba(64, 64, 192, 0.3);
+      }
+
+      // Item Header Name
+      .item-name {
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+
+        .item-image {
+          flex: 0 0 24px;
+          background-size: 24px;
+          margin-right: 5px;
+        }
+
+        h4 {
+          margin: 0;
+          min-width: 0;
+        }
+
+        .item-image:hover {
+          background-image: url("/icons/svg/d20-black.svg") !important;
+        }
+      }
+
+      input[type="checkbox"] {
+        height: 12px;
+      }
+
+      // Item Dropdown Properties
+      .item-properties {
+        margin-top: 3px;
+      }
+
+      // Charged
+      .item-recharge {
+        flex: 0 0 80px;
+        text-align: right;
+        font-size: 14px;
+        color: @colorTan;
+      }
+
+      .item-actions {
+        > div {
+
+          a {
+            display: flex;
+            flex: 0 0 16px;
+            padding: 0;
+            margin-right: 1px;
+            height: 16px;
+            &:last-child { margin-right: 0; }
+          }
+        }
+      }
+    }
+
+    // Inventory Header
+    .inventory-header {
+      margin: 2px 0;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.05);
+      border: @borderGroove;
+      font-weight: bold;
+      line-height: 24px;
+      flex: 0 0 24px;
+
+      h3 {
+        margin: 0;
+        padding-left: 5px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .item-controls {
+        justify-content: flex-start;
+
+        a.item-create {
+          flex: 0 0 100%;
+        }
+      }
+    }
+
+    // Item Detail Sections
+    .item-detail {
+      height: 24px;
+      flex: 0 0 80px;
+      font-size: 14px;
+      color: @colorTan;
+      text-align: center;
+      border-right: 1px solid @colorBeige;
+      overflow: hidden;
+      white-space: nowrap;
+      .flexrow();
+      justify-content: flex-end;
+      align-items: center;
+
+      .icon {
+        background-color: @colorTan;
+      }
+
+      &.item-actions {
+        flex: 0 0 32px;
+        padding: 0 1px 0 1px;
+        justify-content: center;
+
+        & > div {
+          flex: 0 0 16px;
+        }
+      }
+
+      &.item-slot {
+        flex: 0 0 64px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-usage {
+        flex: 0 0 120px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-type {
+        flex: 0 0 120px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-value {
+        flex: 0 0 72px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-weight {
+        flex: 0 0 56px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-identified {
+        flex: 0 0 32px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-carried {
+        flex: 0 0 32px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-equipped {
+        flex: 0 0 32px;
+        padding: 0 1px 0 1px;
+      }
+
+      &.item-uses {
+        flex: 0 0 64px;
+        padding: 0 1px 0 1px;
+      }
+
+      &:nth-child(2) { border-left: 1px solid @colorBeige; }
+      &:last-child { border-right: none; }
+    }
+
+    a.item-control {
+      height: 100%;
+
+      &.item-toggle-data {
+        color: rgba(75, 75, 75, 0.3);
+
+        &.enabled {
+          color: rgba(75, 75, 75, 1);
+        }
+      }
+    }
+
+    .item-level {
+      flex: 0 0 40px;
+      border-right: 1px solid @colorFaint;
+    }
+
+    .item-feat-level {
+      flex: 0 0 60px;
+      border-right: 1px solid @colorFaint;
+    }
+
+    .item-active {
+      flex: 0 0 60px;
+      border-right: 1px solid @colorFaint;
+    }
+
+    .item-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    // Item Control Buttons
+    .item-controls {
+      flex: 0 0 96px;
+      .flexrow();
+      overflow-x: hidden;
+      white-space: nowrap;
+      justify-content: center;
+
+      a {
+        flex: 0 0 16px;
+        font-size: 14px;
+        text-align: center;
+        color: #666;
+      }
+    }
+
+    // Item Dropdown Summary
+    .item-summary {
+      flex: 0 0 100%;
+      font-size: 14px;
+      line-height: 16px;
+      padding: 0.25em 0.5em;
+      border-top: 1px solid @colorFaint;
+    }
+  }
+
   /* ----------------------------------------- */
   /*  Element Styles                           */
   /* ----------------------------------------- */
@@ -517,6 +758,33 @@
       a {
         color: @colorLink;
       }
+    }
+  }
+
+  .currency {
+    list-style: none;
+    margin: 4px 0 8px;
+    padding: 0;
+    font-size: 14px;
+
+    h3 {
+      flex: 0 0 160px;
+    }
+    label {
+      flex: 0;
+      margin-left: 8px;
+      text-align: right;
+      line-height: 20px;
+      color: @colorTan;
+    }
+    input[type="text"] {
+      flex: 1;
+      text-align: center;
+      margin-left: 8px;
+      border-bottom: @borderGroove;
+    }
+    .convert-currency {
+      flex: 0;
     }
   }
 }

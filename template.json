@@ -813,7 +813,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "loot", "class", "spell", "feat", "buff", "attack", "race"],
+    "types": ["weapon", "equipment", "consumable", "loot", "class", "spell", "feat", "buff", "attack", "race", "container"],
     "templates": {
       "changes": {
         "changes": [],
@@ -924,6 +924,19 @@
       "links": {
         "links": {
           "children": []
+        }
+      },
+      "inventory": {
+        "inventoryItems": [],
+        "maxWeight": null,
+        "weightReduction": 0,
+        "baseWeight": 0,
+        "sellMultiplier": 0.5,
+        "currency": {
+          "pp": 0,
+          "gp": 0,
+          "sp": 0,
+          "cp": 0
         }
       }
     },
@@ -1102,6 +1115,13 @@
       "templates": ["itemDescription", "changes", "contextNotes", "links"],
       "creatureType": "humanoid",
       "subTypes": []
+    },
+    "container": {
+      "templates": ["itemDescription", "physicalItem", "inventory"],
+      "basePrice": 0,
+      "unidentified": {
+        "basePrice": 0
+      }
     }
   }
 }

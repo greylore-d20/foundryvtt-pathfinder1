@@ -13,6 +13,9 @@
 - Spell Points are now restored on rest according to the spellbook's formula, or fully restored if none such is entered
 - Slightly changed the look of the conditional modifiers configuration
 - Added buttons to open the skill compendium from the skills tab
+- Added container type items
+- Updated the macro to create loot sheets from tokens filter out items with no quantity and to add containers
+  - This will require a re-import of the macro
 
 ## 0.75.6
 

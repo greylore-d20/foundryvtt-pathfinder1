@@ -29,12 +29,16 @@ export class ItemPF extends Item {
   }
 
   static isInventoryItem(type) {
-    return ["weapon", "equipment", "consumable", "loot"].includes(type);
+    return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
   }
 
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */
+
+  get isOwned() {
+    return super.isOwned || this.parentItem != null;
+  }
 
   /**
    * Does the Item implement an attack roll as part of its usage
@@ -79,7 +83,7 @@ export class ItemPF extends Item {
 
   get charges() {
     // No actor? No charges!
-    if (!this.actor) return 0;
+    if (!this.parentActor) return 0;
 
     // Get linked charges
     const link = getProperty(this, "links.charges");
@@ -93,7 +97,7 @@ export class ItemPF extends Item {
 
   get maxCharges() {
     // No actor? No charges!
-    if (!this.actor) return 0;
+    if (!this.parentActor) return 0;
 
     // Get linked charges
     const link = getProperty(this, "links.charges");
@@ -120,10 +124,10 @@ export class ItemPF extends Item {
 
   get spellbook() {
     if (this.type !== "spell") return null;
-    if (this.actor == null)    return null;
+    if (this.parentActor == null)    return null;
     
     const spellbookIndex = this.data.data.spellbook;
-    return this.actor.data.data.attributes.spells.spellbooks[spellbookIndex];
+    return this.parentActor.data.data.attributes.spells.spellbooks[spellbookIndex];
   }
 
   get casterLevel() {
@@ -156,13 +160,37 @@ export class ItemPF extends Item {
     return 4;
   }
 
+  get parentActor() {
+    if (this.actor) return this.actor;
+
+    let actor = null;
+    let p = this.parentItem;
+    while (!actor && p) {
+      actor = p.actor;
+      p = p.parentItem;
+    }
+    return actor;
+  }
+
+  get limited() {
+    if (this.parentItem) return this.parentItem.limited;
+    return super.limited;
+  }
+
+  hasPerm(user, permission, exact=false) {
+    // Return true if the object is contained by another object
+    if (this.parentItem) return true;
+
+    return super.hasPerm(user, permission, exact);
+  }
+
   /**
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.
    */
   getDC(rollData=null) {
     // No actor? No DC!
-    if (!this.actor) return 0;
+    if (!this.parentActor) return 0;
 
     if (!rollData) rollData = this.getRollData();
     const data = this.data.data;
@@ -538,8 +566,12 @@ export class ItemPF extends Item {
 
     this.prepareLinks();
 
-    if (this.data.data.changes) {
+    if (this.data.data.changes instanceof Array) {
       this.changes = this._prepareChanges(this.data.data.changes);
+    }
+
+    if (this.data.data.inventoryItems instanceof Array) {
+      this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
   }
 
@@ -571,6 +603,26 @@ export class ItemPF extends Item {
       }
       else change = ItemChange.create(c, this);
       collection.set(c._id || change.data._id, change);
+    }
+    return collection;
+  }
+
+  _prepareInventory(inventory) {
+    const prior = this.items;
+    const collection = new Collection();
+    for (let o of inventory) {
+      let item = null;
+      if (prior && prior.has(o._id)) {
+        item = prior.get(o._id);
+        item.data = o;
+        item.prepareData();
+      }
+      else {
+        item = new CONFIG.Item.entityClass(o);
+        item.parentItem = this;
+      }
+      // else item = ItemPF.create(o, this);
+      collection.set(o._id || item.data._id, item);
     }
     return collection;
   }
@@ -607,7 +659,60 @@ export class ItemPF extends Item {
 
         delete data[entry[0]];
       });
-      data["data.changes"] = arr;
+      linkData(srcData, data, "data.changes", arr);
+    }
+
+    // Make sure inventory contents remains an array
+    if (Object.keys(data).filter(e => e.startsWith("data.inventoryItems.")).length > 0) {
+      let subData = Object.entries(data).filter(e => e[0].startsWith("data.inventoryItems."));
+      let arr = duplicate(this.data.data.inventoryItems || []);
+      subData.forEach(entry => {
+        let subKey = entry[0].split(".").slice(2);
+        let i = subKey[0];
+        let subKey2 = subKey.slice(1).join(".");
+        if ( !arr[i] ) arr[i] = {};
+        
+        // Remove property
+        if (subKey[subKey.length-1].startsWith("-=")) {
+          const obj = flattenObject(arr[i]);
+          subKey[subKey.length-1] = subKey[subKey.length-1].slice(2);
+          const deleteKeys = Object.keys(obj).filter(o => o.startsWith(subKey.slice(1).join(".")));
+          for (let k of deleteKeys) {
+            if (obj.hasOwnProperty(k)) {
+              delete obj[k];
+            }
+          }
+          arr[i] = expandObject(obj);
+        }
+        // Add or item property
+        else {
+          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+        }
+
+        delete data[entry[0]];
+      });
+      linkData(srcData, data, "data.inventoryItems", arr);
+    }
+
+    // Update weight from base weight
+    if (srcData.data.baseWeight !== undefined) {
+      const baseWeight = srcData.data.baseWeight || 0;
+      const weightReduction = Math.max(0, 1 - ((srcData.data.weightReduction || 0) / 100));
+
+      let contentsWeight = (srcData.data.inventoryItems || []).reduce((cur, i) => {
+        return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
+      }, 0);
+      contentsWeight += this._calculateCoinWeight(srcData);
+      contentsWeight = Math.round((contentsWeight * weightReduction) * 10) / 10;
+
+      linkData(srcData, data, "data.weight", baseWeight + contentsWeight);
+    }
+    // Update price from base price
+    if (data["data.basePrice"] != null) {
+      linkData(srcData, data, "data.price", (getProperty(srcData, "data.basePrice") || 0));
+    }
+    if (data["data.unidentified.basePrice"] != null) {
+      linkData(srcData, data, "data.unidentified.price", (getProperty(srcData, "data.unidentified.basePrice") || 0));
     }
 
     // Update name
@@ -625,7 +730,7 @@ export class ItemPF extends Item {
 
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"] != null) {
-      data["data.weight"] = convertWeightBack(data["data.weightConverted"])
+      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
     }
     
     // Set weapon subtype
@@ -672,16 +777,55 @@ export class ItemPF extends Item {
       }
     }
 
-    const diff = diffObject(flattenObject(this.data), data);
+    let diff = diffObject(flattenObject(this.data), data);
     if (Object.keys(diff).length) {
-      return super.update(diff, options);
+      if (this.parentItem == null) {
+        return super.update(diff, options);
+      }
+      else {
+        // Determine item index to update in parent
+        const parentInventory = this.parentItem.data.data.inventoryItems || [];
+        const parentItem = parentInventory.find(o => o._id === this._id);
+        const idx = parentInventory.indexOf(parentItem);
+
+        if (idx >= 0) {
+          // Replace keys to suit parent item
+          for (let [k, v] of Object.entries(diff)) {
+            delete diff[k];
+            diff[`data.inventoryItems.${idx}.${k}`] = v;
+          }
+
+          // Set parent weight
+          const contentsWeight = parentInventory.reduce((cur, i) => {
+            if (i._id === this._id) return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
+            return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
+          }, 0);
+          diff["data.weight"] = (getProperty(this.parentItem.data, "data.baseWeight") || 0) + contentsWeight;
+
+          // Update parent item
+          await this.parentItem.update(diff);
+          return this.render();
+        }
+      }
     }
     return false;
   }
 
+  _updateContentsWeight(data, {srcData=null}={}) {
+    if (!srcData) srcData = duplicate(this.data);
+
+    let result = (getProperty(srcData, "data.baseWeight") || 0);
+    
+    result += this.items.reduce((cur, i) => {
+      return cur + (getProperty(i, "data.weight") || 0);
+    }, 0);
+
+    linkData(srcData, data, "data.weight", result);
+  }
+
   _updateMaxUses(data, {srcData=null}={}) {
     // No actor? No charges!
-    if (!this.actor) return;
+    if (!this.parentActor) return;
 
     let doLinkData = true;
     if (srcData == null) {
@@ -710,15 +854,15 @@ export class ItemPF extends Item {
    * @return {Promise}
    */
   async roll(altChatData={}, {addDC=true}={}) {
-    const actor = this.actor;
+    const actor = this.parentActor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     // Basic template rendering data
-    const token = this.actor.token;
+    const token = this.parentActor.token;
     const saveType = getProperty(this.data, "data.save.type");
     const saveDC = this.getDC();
     const templateData = {
-      actor: this.actor,
+      actor: this.parentActor,
       tokenId: token ? `${token.scene._id}.${token.id}` : null,
       item: this.data,
       data: this.getChatData(),
@@ -741,11 +885,11 @@ export class ItemPF extends Item {
     };
 
     // Roll spell failure chance
-    if (templateData.isSpell && this.actor != null && this.actor.spellFailure > 0) {
-      const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+    if (templateData.isSpell && this.parentActor != null && this.parentActor.spellFailure > 0) {
+      const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
         templateData.spellFailure = new Roll("1d100").roll().total;
-        templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+        templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
 
@@ -757,7 +901,7 @@ export class ItemPF extends Item {
     const chatData = mergeObject({
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
     }, altChatData);
 
     // Toggle default roll mode
@@ -933,7 +1077,7 @@ export class ItemPF extends Item {
    * @private
    */
   _spellChatData(data, labels, props) {
-    const ad = this.actor.data.data;
+    const ad = this.parentActor.data.data;
 
     // Spell saving throw text
     // const abl = data.ability || ad.attributes.spellcasting || "int";
@@ -953,7 +1097,7 @@ export class ItemPF extends Item {
    * Prepare chat card data for items of the "Feat" type
    */
   _featChatData(data, labels, props) {
-    const ad = this.actor.data.data;
+    const ad = this.parentActor.data.data;
 
     // Spell saving throw text
     // const abl = data.ability || ad.attributes.spellcasting || "str";
@@ -972,7 +1116,7 @@ export class ItemPF extends Item {
 
   async use({ev=null, skipDialog=false}) {
     if (this.type === "spell") {
-      return this.actor.useSpell(this, ev, {skipDialog: skipDialog});
+      return this.parentActor.useSpell(this, ev, {skipDialog: skipDialog});
     }
     else if (this.hasAction) {
       return this.useAttack({ev: ev, skipDialog: skipDialog});
@@ -994,7 +1138,7 @@ export class ItemPF extends Item {
 
   async useAttack({ev=null, skipDialog=false}={}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
-    const actor = this.actor;
+    const actor = this.parentActor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
 
     const itemQuantity = getProperty(this.data, "data.quantity");
@@ -1334,10 +1478,10 @@ export class ItemPF extends Item {
         // Create template
         template = AbilityTemplate.fromData(templateOptions);
         if (template) {
-          if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.minimize();
+          if (getProperty(this, "actor.sheet.rendered")) this.parentActor.sheet.minimize();
           template = await template.drawPreview(ev);
           if (!template) {
-            if (getProperty(this, "actor.sheet.rendered")) this.actor.sheet.maximize();
+            if (getProperty(this, "actor.sheet.rendered")) this.parentActor.sheet.maximize();
             return;
           }
         }
@@ -1360,7 +1504,7 @@ export class ItemPF extends Item {
       
       // Set chat data
       let chatData = {
-        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        speaker: ChatMessage.getSpeaker({actor: this.parentActor}),
         rollMode: rollMode,
         sound: CONFIG.sounds.dice,
         "flags.pf1.noRollRender": true,
@@ -1451,8 +1595,8 @@ export class ItemPF extends Item {
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
         // Add CL notes
-        if (this.data.type === "spell" && this.actor) {
-          const clNotes = this.actor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
+        if (this.data.type === "spell" && this.parentActor) {
+          const clNotes = this.parentActor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
 
           if (clNotes.length) {
             props.push({
@@ -1473,7 +1617,7 @@ export class ItemPF extends Item {
           properties: props,
           hasProperties: props.length > 0,
           item: this.data,
-          actor: this.actor.data,
+          actor: this.parentActor.data,
           save: {
             hasSave: typeof save === "string" && save.length > 0,
             dc: saveDC,
@@ -1482,11 +1626,11 @@ export class ItemPF extends Item {
           },
         }, { inplace: false });
         // Spell failure
-        if (this.type === "spell" && this.actor != null && this.actor.spellFailure > 0) {
-          const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+        if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {
+          const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
           if (spellbook && spellbook.arcaneSpellFailure) {
             templateData.spellFailure = new Roll("1d100").roll().total;
-            templateData.spellFailureSuccess = templateData.spellFailure > this.actor.spellFailure;
+            templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }
         // Add metadata
@@ -1693,7 +1837,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Create effect string
-    let effectNotes = this.actor.getContextNotes("attacks.effect").reduce((cur, o) => {
+    let effectNotes = this.parentActor.getContextNotes("attacks.effect").reduce((cur, o) => {
       o.notes.reduce((cur2, n) => {
         cur2.push(...n.split(/[\n\r]+/));
         return cur2;
@@ -1727,13 +1871,13 @@ export class ItemPF extends Item {
     }
 
     // Define Roll Data
-    const rollData = this.actor.getRollData();
+    const rollData = this.parentActor.getRollData();
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
     const roll = new Roll(itemData.formula, rollData).roll();
     return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      speaker: ChatMessage.getSpeaker({actor: this.parentActor}),
       flavor: itemData.chatFlavor || title,
       rollMode: game.settings.get("core", "rollMode")
     });
@@ -1857,7 +2001,7 @@ export class ItemPF extends Item {
     // Submit the roll to chat
     if (effectStr === "") {
       new Roll(parts.join("+")).toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name)
       });
     }
@@ -1881,7 +2025,7 @@ export class ItemPF extends Item {
         type: CONST.CHAT_MESSAGE_TYPES.CHAT,
         rollMode: game.settings.get("core", "rollMode"),
         sound: CONFIG.sounds.dice,
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
         rollMode: game.settings.get("core", "rollMode"),
         roll: roll,
@@ -1911,14 +2055,14 @@ export class ItemPF extends Item {
    * @returns {Object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const result = this.actor != null ? this.actor.getRollData() : {};
+    const result = this.parentActor != null ? this.parentActor.getRollData() : {};
     result.item = duplicate(this.data.data);
 
-    if (this.type === "spell" && this.actor != null) {
+    if (this.type === "spell" && this.parentActor != null) {
       const spellbook = this.spellbook;
       const spellAbility = spellbook.ability;
       let ablMod = "";
-      if (spellAbility !== "") ablMod = getProperty(this.actor.data, `data.abilities.${spellAbility}.mod`);
+      if (spellAbility !== "") ablMod = getProperty(this.parentActor.data, `data.abilities.${spellAbility}.mod`);
 
       result.cl = this.casterLevel || 0;
       result.sl = this.spellLevel  || 0;
@@ -2238,11 +2382,11 @@ export class ItemPF extends Item {
   }
 
   useSpellPoints() {
-    if (!this.actor) return false;
+    if (!this.parentActor) return false;
     if (this.data.type !== "spell") return false;
 
     const spellbookKey = this.data.data.spellbook;
-    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
+    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
     return getProperty(spellbook, "spellPoints.useSystem") || false;
   }
 
@@ -2254,10 +2398,10 @@ export class ItemPF extends Item {
   }
 
   async addSpellUses(value, data=null) {
-    if (!this.actor) return;
+    if (!this.parentActor) return;
     if (this.data.data.atWill) return;
 
-    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
@@ -2266,7 +2410,7 @@ export class ItemPF extends Item {
       const curUses = this.getSpellUses();
       const updateData = {};
       updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
-      return this.actor.update(updateData);
+      return this.parentActor.update(updateData);
     }
     else {
       if (this.data.data.level === 0) return;
@@ -2289,7 +2433,7 @@ export class ItemPF extends Item {
         const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
-        return this.actor.update(actorUpdateData);
+        return this.parentActor.update(actorUpdateData);
       }
     }
 
@@ -2297,10 +2441,10 @@ export class ItemPF extends Item {
   }
 
   getSpellUses(max=false) {
-    if (!this.actor) return 0;
+    if (!this.parentActor) return 0;
     if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
 
-    const spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
 
@@ -2454,7 +2598,7 @@ export class ItemPF extends Item {
 
   async _onLevelChange(curLevel, newLevel) {
 
-    if (!this.actor) return;
+    if (!this.parentActor) return;
 
     // Add items associated to this class
     if (newLevel > curLevel) {
@@ -2471,8 +2615,8 @@ export class ItemPF extends Item {
 
         const itemData = duplicate(item.data);
         delete itemData._id;
-        const newItemData = await this.actor.createOwnedItem(itemData);
-        const newItem = this.actor.items.find(o => o._id === newItemData._id);
+        const newItemData = await this.parentActor.createOwnedItem(itemData);
+        const newItem = this.parentActor.items.find(o => o._id === newItemData._id);
 
         await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
         await this.createItemLink("children", "data", newItem, newItem._id);
@@ -2483,14 +2627,14 @@ export class ItemPF extends Item {
     if (newLevel < curLevel) {
       let associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
       for (let [id, level] of Object.entries(associations)) {
-        const item = this.actor.items.find(o => o._id === id);
+        const item = this.parentActor.items.find(o => o._id === id);
         if (!item) {
           delete associations[id];
           continue;
         }
 
         if (level > newLevel) {
-          await this.actor.deleteOwnedItem(id);
+          await this.parentActor.deleteOwnedItem(id);
           delete associations[id];
         }
       }
@@ -2507,7 +2651,7 @@ export class ItemPF extends Item {
    * @returns {boolean} Whether a link to the item is possible here.
    */
   canCreateItemLink(linkType, dataType, targetItem, itemLink) {
-    const actor = this.actor;
+    const actor = this.parentActor;
     const sameActor = actor && targetItem.actor && targetItem.actor._id === actor._id;
 
     // Don't create link to self
@@ -2581,7 +2725,7 @@ export class ItemPF extends Item {
        * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
        * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
        */
-      window.setTimeout(() => { if (this.actor) this.actor.sheet.render(); }, 50);
+      window.setTimeout(() => { if (this.parentActor) this.parentActor.sheet.render(); }, 50);
 
       return true;
     }
@@ -2621,7 +2765,7 @@ export class ItemPF extends Item {
    */
   async removeItemLink(id) {
     const updateData = {};
-    for (let [k, linkItems] of Object.entries(getProperty(this.data, "data.links"))) {
+    for (let [k, linkItems] of Object.entries(getProperty(this.data, "data.links") || {})) {
       let items = duplicate(linkItems);
       for (let a = 0; a < items.length; a++) {
         let item = items[a];
@@ -2655,8 +2799,8 @@ export class ItemPF extends Item {
       item = game.items.get(id[1]);
     }
     // Same actor's item
-    else if (this.actor != null && this.actor.items != null) {
-      item = this.actor.items.find(o => o._id === id[0]);
+    else if (this.parentActor != null && this.parentActor.items != null) {
+      item = this.parentActor.items.find(o => o._id === id[0]);
     }
 
     
@@ -2683,9 +2827,9 @@ export class ItemPF extends Item {
   }
 
   _cleanLink(oldLink, linkType) {
-    if (!this.actor) return;
+    if (!this.parentActor) return;
 
-    const otherItem = this.actor.items.find(o => o._id === oldLink.id);
+    const otherItem = this.parentActor.items.find(o => o._id === oldLink.id);
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }
@@ -2701,13 +2845,13 @@ export class ItemPF extends Item {
     let result = {};
     // Add specific skills
     if (target === "skill") {
-      if (this.actor == null) {
+      if (this.parentActor == null) {
         for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
       }
       else {
-        const actorSkills = this.actor.data.data.skills;
+        const actorSkills = this.parentActor.data.data.skills;
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -2836,13 +2980,13 @@ export class ItemPF extends Item {
     let result = {};
     // Add specific skills
     if (target === "skill") {
-      if (this.actor == null) {
+      if (this.parentActor == null) {
         for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
       }
       else {
-        const actorSkills = this.actor.data.data.skills;
+        const actorSkills = this.parentActor.data.data.skills;
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -2869,5 +3013,220 @@ export class ItemPF extends Item {
   async addChange() {
     const change = new ItemChange();
     this.changes.push(change);
+  }
+
+  async createContainerContent(data, options={raw: false}) {
+    let embeddedName = "ContainerContent";
+    const user = game.user;
+    const itemOptions = {temporary: false, renderSheet: false};
+
+    // Iterate over data to create
+    data = data instanceof Array ? data : [data];
+    if ( !(itemOptions.temporary || itemOptions.noHook) ) {
+      for (let d of data) {
+        const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user._id);
+        if (allowed === false) {
+          console.debug(`${vtt} | ${embeddedName} creation prevented by preCreate hook`);
+          return null;
+        }
+      }
+    }
+
+    // Trigger the Socket workflow
+    let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
+    const items = data.map(o => {
+      if (!options.raw) {
+        let template = duplicate(game.system.template.Item[o.type]);
+        if (template.templates instanceof Array) {
+          template.templates.forEach(t => {
+            template = mergeObject(template, game.system.template.Item.templates[t]);
+          });
+        }
+        delete template.templates;
+
+        o.data = mergeObject(template, o.data || {});
+      }
+
+      if (!o._id) o._id = randomID(16);
+      return o;
+    });
+    inventory.push(...items);
+    
+    // Filter items with duplicate _id
+    {
+      let ids = [];
+      inventory = inventory.filter(i => {
+        if (ids.includes(i._id)) return false;
+        ids.push(i._id);
+        return true;
+      });
+    }
+
+    await this.update({ "data.inventoryItems": inventory });
+  }
+
+  getContainerContent(itemId) {
+    return this.items.get(itemId);
+  }
+
+  async deleteContainerContent(data) {
+    let embeddedName = "ContainerContent";
+    const user = game.user;
+    const options = { noHook: false };
+
+    // Iterate over data to create
+    data = data instanceof Array ? data : [data];
+    const ids = new Set(data);
+
+    // Iterate over elements of the collection
+    const inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []).filter(d => {
+      if ( !ids.has(d._id) ) return true;
+
+      // Call pre-update hooks to ensure the update is allowed to proceed
+      if ( !options.noHook ) {
+        const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user._id);
+        if (allowed === false) {
+          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
+          return true;
+        }
+      }
+
+      // Remove entity from collection
+      return false;
+    }, []);
+
+    // Trigger the Socket workflow
+    await this.update({ "data.inventoryItems": inventory });
+  }
+
+  async updateContainerContents(data) {
+    let embeddedName = "ContainerContent";
+    const user = game.user;
+    const options = {diff: true};
+
+    // Structure the update data
+    const pending = new Map();
+    data = data instanceof Array ? data : [data];
+    for ( let d of data ) {
+      if ( !d._id ) throw new Error("You must provide an id for every Embedded Entity in an update operation");
+      pending.set(d._id, d);
+    }
+
+    // Difference each update against existing data
+    const updates = this.items.reduce((arr, d) => {
+      if ( !pending.has(d._id) ) return arr;
+      let update = pending.get(d._id);
+
+      // Diff the update against current data
+      if ( options.diff ) {
+        update = diffObject(d, expandObject(update));
+        if ( isObjectEmpty(update) ) return arr;
+        update["_id"] = d._id;
+      }
+
+      // Call pre-update hooks to ensure the update is allowed to proceed
+      if ( !options.noHook ) {
+        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user._id);
+        if (allowed === false) {
+          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
+          return arr;
+        }
+      }
+
+      // Stage the update
+      arr.push(update);
+      return arr;
+    }, []);
+    if ( !updates.length ) return [];
+    let inventory = duplicate(this.data.data.inventoryItems).map(o => {
+      for (let u of updates) {
+        if (u._id === o._id) return mergeObject(o, u);
+      }
+      return o;
+    });
+    
+    // Filter items with duplicate _id
+    {
+      let ids = [];
+      inventory = inventory.filter(i => {
+        if (ids.includes(i._id)) return false;
+        ids.push(i._id);
+        return true;
+      });
+    }
+
+    await this.update({ "data.inventoryItems": inventory });
+  }
+
+  /**
+   * @returns {number} The total amount of currency this item contains, in gold pieces
+   */
+  getTotalCurrency() {
+    const currencies = getProperty(this.data, "data.currency");
+    if (!currencies) return 0;
+    return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
+  }
+
+  getValue({recursive=true, sellValue=0.5}={}) {
+    // Add item's contained currencies
+    let result = this.getTotalCurrency();
+
+    // Add item's price
+    result += (getProperty(this.data, "data.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
+    if (this.showUnidentifiedData) result += (getProperty(this.data, "data.unidentified.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
+
+    // Modify sell value
+    if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;
+
+    if (!this.items || !recursive) return result;
+
+    // Add item's content items' values
+    this.items.forEach(i => { result += i.getValue({ recursive: recursive, sellValue: sellValue }); });
+
+    return result;
+  }
+
+  /**
+   * Converts currencies of the given category to the given currency type
+   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   */
+  convertCurrency(type="pp") {
+
+    const totalValue = this.getTotalCurrency();
+    let values = [0, 0, 0, 0];
+    switch (type) {
+      case "pp":
+        values[0] = Math.floor(totalValue / 10);
+        values[1] = Math.max(0, Math.floor(totalValue) - (values[0] * 10));
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[0] * 100) - (values[1] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[0] * 1000) - (values[1] * 100) - (values[2] * 10));
+        break;
+      case "gp":
+        values[1] = Math.floor(totalValue);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[1] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[1] * 100) - (values[2] * 10));
+        break;
+      case "sp":
+        values[2] = Math.floor(totalValue * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[2] * 10));
+        break;
+      case "cp":
+        values[3] = Math.floor(totalValue * 100);
+        break;
+    }
+
+    const updateData = {};
+    updateData[`data.currency.pp`] = values[0];
+    updateData[`data.currency.gp`] = values[1];
+    updateData[`data.currency.sp`] = values[2];
+    updateData[`data.currency.cp`] = values[3];
+    return this.update(updateData);
+  }
+
+  _calculateCoinWeight(data) {
+    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
+    return Object.values(getProperty(data, "data.currency") || {}).reduce((cur, amount) => {
+      return cur + amount;
+    }, 0) / coinWeightDivisor;
   }
 }

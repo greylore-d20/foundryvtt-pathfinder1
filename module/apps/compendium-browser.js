@@ -1,4 +1,5 @@
 import { CR, naturalSort } from "../lib.js";
+import { ItemPF } from "../item/entity.js";
 
 export class CompendiumBrowser extends Application {
   constructor(...args) {
@@ -290,7 +291,7 @@ export class CompendiumBrowser extends Application {
 
   _filterItems(item) {
     if (this.type === "spells" && item.type !== "spell") return false;
-    if (this.type === "items" && !["weapon", "equipment", "loot", "consumable"].includes(item.type)) return false;
+    if (this.type === "items" && !ItemPF.isInventoryItem(item.type)) return false;
     if (this.type === "feats" && item.type !== "feat") return false;
     if (this.type === "classes" && item.type !== "class") return false;
     if (this.type === "races" && item.type !== "race") return false;

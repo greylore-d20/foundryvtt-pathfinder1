@@ -64,23 +64,17 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
   calculateTotalItemValue() {
     const items = this.actor.items.filter(o => o.data.data.price != null);
-    return Math.floor(items.reduce((cur, i) => {
-      if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity);
-      return cur + (i.data.data.price * i.data.data.quantity);
-    }, 0) * 100) / 100;
+    return items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: 1 });
+    }, 0);
   }
 
   calculateSellItemValue() {
     const items = this.actor.items.filter(o => o.data.data.price != null);
     const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
-    return Math.floor(items.reduce((cur, i) => {
-      if (i.data.type === "loot" && i.data.data.subType === "tradeGoods") {
-        if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity);
-        return cur + (i.data.data.price * i.data.data.quantity);
-      }
-      if (i.data.data.identified === false) return cur + (i.data.data.unidentified.price * i.data.data.quantity) * sellMultiplier;
-      return cur + (i.data.data.price * i.data.data.quantity) * sellMultiplier;
-    }, 0) * 100) / 100;
+    return items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: sellMultiplier });
+    }, 0);
   }
 
   createTabs(html) {

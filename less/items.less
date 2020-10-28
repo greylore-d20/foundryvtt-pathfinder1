@@ -222,20 +222,6 @@
       padding: 0;
     }
 
-    // Item Control Buttons
-    .item-controls {
-      flex: 0 0 44px;
-      .flexrow();
-      justify-content: flex-end;
-
-      a {
-        flex: 0 0 22px;
-        font-size: 10px;
-        text-align: center;
-        color: #666;
-      }
-    }
-
     // Item Dropdown Summary
     .item-summary {
       flex: 0 0 100%;
@@ -389,5 +375,13 @@
       flex: 1;
       height: 100%;
     }
+  }
+
+  section.inventory-body {
+    overflow-y: auto;
+  }
+
+  footer {
+    flex: 0;
   }
 }

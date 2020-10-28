@@ -42,6 +42,17 @@ export class ItemSheetPF extends ItemSheet {
     const path = "systems/pf1/templates/items/";
     return `${path}/${this.item.data.type}.html`;
   }
+  
+  get actor() {
+    let actor = this.item.actor;
+    let p = this.parentItem;
+    while (!actor && p) {
+      actor = p.actor;
+      p = p.parentItem;
+    }
+
+    return actor;
+  }
 
   /* -------------------------------------------- */
 
@@ -74,6 +85,7 @@ export class ItemSheetPF extends ItemSheet {
     data.isPhysical = data.item.data.hasOwnProperty("quantity");
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
+    data.parentOwned = this.actor != null;
     data.owner = this.item.hasPerm(game.user, "OWNER");
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
@@ -180,8 +192,8 @@ export class ItemSheetPF extends ItemSheet {
       data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous : false;
       data.isAtWill = data.item.data.atWill;
       data.spellbooks = {};
-      if (this.item.actor) {
-        data.spellbooks = duplicate(this.item.actor.data.data.attributes.spells.spellbooks);
+      if (this.actor) {
+        data.spellbooks = duplicate(this.actor.data.data.attributes.spells.spellbooks);
       }
 
       // Enrich description
@@ -211,14 +223,14 @@ export class ItemSheetPF extends ItemSheet {
       } else data.healthConfig = {auto: false};
 
       // Add skill list
-      if (!this.item.actor) {
+      if (!this.actor) {
         data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
           cur[o[0]] = { name: o[1], classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
           return cur;
         }, {});
       }
       else {
-        data.skills = Object.entries(this.item.actor.data.data.skills).reduce((cur, o) => {
+        data.skills = Object.entries(this.actor.data.data.skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
           cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
@@ -604,6 +616,47 @@ export class ItemSheetPF extends ItemSheet {
       setProperty(formData[`data.links.${linkType}`][index], subPath, value);
     }
 
+    // Change relative values
+    const relativeKeys = [
+      "data.currency.pp",
+      "data.currency.gp",
+      "data.currency.sp",
+      "data.currency.cp",
+    ];
+    for (let [k, v] of Object.entries(formData)) {
+      if (typeof v !== "string") continue;
+      // Add or subtract values
+      if (relativeKeys.includes(k)) {
+        const originalValue = getProperty(this.item.data, k);
+        let max = null;
+        const maxKey = k.replace(/\.value$/, ".max");
+        if (maxKey !== k) {
+          max = getProperty(this.item.data, maxKey);
+        }
+
+        if (v.match(/(\+|--?)([0-9]+)/)) {
+          const operator = RegExp.$1;
+          let value = parseInt(RegExp.$2);
+          if (operator === "--") {
+            formData[k] = -value;
+          }
+          else {
+            if (operator === "-") value = -value;
+            formData[k] = originalValue + value;
+            if (max) formData[k] = Math.min(formData[k], max);
+          }
+        }
+        else if (v.match(/^[0-9]+$/)) {
+          formData[k] = parseInt(v);
+          if (max) formData[k] = Math.min(formData[k], max);
+        }
+        else if (v === "") {
+          formData[k] = 0;
+        }
+        else formData[k] = value;
+      }
+    }
+
     // Update the Item
     return super._updateObject(event, formData);
   }
@@ -667,6 +720,12 @@ export class ItemSheetPF extends ItemSheet {
 
     // Handle alternative file picker
     html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
+
+    // Click to change text input
+    html.find('*[data-action="input-text"]').click(event => this._onInputText(event));
+
+    // Select the whole text on click
+    html.find(".select-on-click").click(this._selectOnClick.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -1007,6 +1066,31 @@ export class ItemSheetPF extends ItemSheet {
     fp.browse(current);
   }
 
+  /**
+   * Makes a readonly text input editable, and focus it.
+   * @private
+   */
+  _onInputText(event) {
+    event.preventDefault();
+    const elem = this.element.find(event.currentTarget.dataset.for);
+
+    elem.removeAttr("readonly")
+    elem.attr("name", event.currentTarget.dataset.attrName);
+    let value = getProperty(this.item.data, event.currentTarget.dataset.attrName);
+    elem.attr("value", value);
+    elem.select();
+
+    elem.focusout(event => {
+      if (typeof value === "number") value = value.toString();
+      if (value !== elem.attr("value")) {
+        this._onSubmit(event);
+      }
+      else {
+        this.render();
+      }
+    });
+  }
+
   async _createAttack(event) {
     if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
 
@@ -1025,5 +1109,11 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
     new EntrySelector(this.item, options).render(true);
+  }
+
+  _selectOnClick(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+    el.select();
   }
 }

@@ -1,5 +1,6 @@
 import { ListTabs} from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
+import { ItemPF } from "./item/entity.js";
 
 /**
 * Creates a tag from a string.
@@ -485,4 +486,41 @@ export const naturalSort = function(arr, propertyKey="") {
     const propB = propertyKey ? getProperty(b, propertyKey) : b;
     return new Intl.Collator(game.settings.get("core", "language"), { numeric: true }).compare(propA, propB);
   });
+};
+
+export const createConsumableSpellDialog = function(itemData) {
+  return new Promise(resolve => {
+    new Dialog({
+      title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
+      content: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
+      buttons: {
+        potion: {
+          icon: '<i class="fas fa-prescription-bottle"></i>',
+          label: game.i18n.localize("PF1.CreateItemPotion"),
+          callback: () => resolve(createConsumableSpell(itemData, "potion")),
+        },
+        scroll: {
+          icon: '<i class="fas fa-scroll"></i>',
+          label: game.i18n.localize("PF1.CreateItemScroll"),
+          callback: () => resolve(createConsumableSpell(itemData, "scroll")),
+        },
+        wand: {
+          icon: '<i class="fas fa-magic"></i>',
+          label: game.i18n.localize("PF1.CreateItemWand"),
+          callback: () => resolve(createConsumableSpell(itemData, "wand")),
+        },
+      },
+      close: () => {
+        resolve(false);
+      },
+      default: "potion",
+    }).render(true);
+  });
+};
+
+export const createConsumableSpell = async function(itemData, type) {
+  let data = await ItemPF.toConsumable(itemData, type);
+
+  if (data._id) delete data._id;
+  return data;
 };

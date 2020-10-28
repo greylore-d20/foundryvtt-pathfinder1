@@ -19,6 +19,10 @@
   - This will require a re-import of the macro
 - Added buttons to open the skill compendium from the skills tab / tweaked skill styles
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.75.6
 
 ### Bug Fixes

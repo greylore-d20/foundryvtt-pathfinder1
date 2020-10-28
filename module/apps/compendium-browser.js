@@ -1,5 +1,15 @@
 import { CR, naturalSort } from "../lib.js";
 import { ItemPF } from "../item/entity.js";
+import { SemanticVersion } from "../semver.js";
+
+const NEED_NEW_VERSION = {
+  spells: "0.75.6",
+  items: "0.75.7",
+  bestiary: "0.75.6",
+  feats: "0.75.6",
+  classes: "0.75.6",
+  races: "0.75.6",
+};
 
 export class CompendiumBrowser extends Application {
   constructor(...args) {
@@ -55,9 +65,17 @@ export class CompendiumBrowser extends Application {
      */
     {
       this._savedItems = [];
-      const settings = game.settings.get("pf1", "compendiumItems");
-      if (settings[this.type]) {
-        this._savedItems = settings[this.type];
+      const cacheVersions = game.settings.get("pf1", "compendiumSaveVersions");
+      const thisVersion = SemanticVersion.fromString(cacheVersions[this.type] || "0.0.1");
+      const needVersion = SemanticVersion.fromString(NEED_NEW_VERSION[this.type]);
+      if (needVersion.isHigherThan(thisVersion)) {
+        game.settings.set("pf1", "compendiumSaveVersions", mergeObject(cacheVersions, { [this.type]: needVersion.toString() }));
+      }
+      else {
+        const settings = game.settings.get("pf1", "compendiumItems");
+        if (settings[this.type]) {
+          this._savedItems = settings[this.type];
+        }
       }
     }
   }

@@ -348,8 +348,27 @@ export const registerClientSettings = function() {
     hint: "Cache compendium entries",
     scope: "client",
     config: false,
-    defualt: {},
+    default: {},
     type: Object,
+  });
+
+  /**
+   * Compendium save versions
+   */
+  game.settings.register("pf1", "compendiumSaveVersions", {
+    name: "Compendium Save Versions",
+    hint: "Versions of compendium caches",
+    scope: "client",
+    config: false,
+    default: {
+      spells: "0.75.6",
+      items: "0.75.6",
+      bestiary: "0.75.6",
+      feats: "0.75.6",
+      classes: "0.75.6",
+      races: "0.75.6",
+    },
+    type: Object
   });
 };
 

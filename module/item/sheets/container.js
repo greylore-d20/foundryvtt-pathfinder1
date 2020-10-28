@@ -244,6 +244,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Convert currency
     html.find("a.convert-currency").click(this._convertCurrency.bind(this));
+
+    // Item Rolling
+    html.find('.item .item-image').click(event => this._onItemRoll(event));
   }
 
   _onItemCreate(event) {
@@ -558,5 +561,18 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);
       return (i.data.type === source.data.type) && (i.data._id !== source.data._id);
     });
+  }
+
+  /**
+   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   * @private
+   */
+  _onItemRoll(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.item.getContainerContent(itemId);
+
+    if (item == null) return;
+    return item.roll();
   }
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.8
+
+### Changelog
+
+- Added charge and spell point cost to list of conditional modifier effects
+
 ## 0.75.7
 
 ### Bug Fixes

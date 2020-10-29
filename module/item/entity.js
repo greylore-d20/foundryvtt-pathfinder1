@@ -1018,7 +1018,12 @@ export class ItemPF extends Item {
 
     // Add charges
     if (this.isCharged) {
-      props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+      if (this.type === "spell" && this.useSpellPoints()){
+        props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
+      }
+      else {
+        props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+      }
     }
 
     // Filter properties and return
@@ -1318,7 +1323,7 @@ export class ItemPF extends Item {
             const partString = `${modifier.target}.${modifier.subTarget}${modifier.critical ? "." + modifier.critical : ""}`;
             // Add formula in correct format for attacks or damage
             conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
-              (modifier.target === "attack" || modifier.target === "effect") ? modifier.formula :
+              (["attack", "effect", "charges"].includes(modifier.target)) ? modifier.formula :
               (modifier.target === "damage" && Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
               [modifier.formula, localizeType(modifier.target, modifier.type, false)]
             ];
@@ -1341,6 +1346,24 @@ export class ItemPF extends Item {
           try {
             rollData.dcBonus = new Roll(conditionalPartsCommon["effect.dc"].join("+"), rollData).roll().total;
           } catch(e) {
+            console.error(e);
+          }
+        }
+
+        // Add conditional charge cost
+        if (conditionalPartsCommon["charges.charges"] != null) {
+          try {
+            rollData.chargeCostBonus = new Roll(conditionalPartsCommon["charges.charges"].join("+"), rollData).roll().total;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        // Add conditional spell point cost
+        if (conditionalPartsCommon["charges.spellPoints"] != null) {
+          try {
+            rollData.spellPointCostBonus = new Roll(conditionalPartsCommon["charges.spellPoints"].join("+"), rollData).roll().total;
+          } catch (e) {
             console.error(e);
           }
         }
@@ -1488,11 +1511,12 @@ export class ItemPF extends Item {
       }
 
       // Deduct charge
+      let cost;
       if (this.autoDeductCharges) {
-        let cost = this.chargeCost;
+        cost = this.chargeCost + (rollData["chargeCostBonus"] ?? 0);
         let uses = this.charges;
         if (this.data.type === "spell" && this.useSpellPoints()) {
-          cost = this.getSpellPointCost(rollData);
+          cost = this.getSpellPointCost(rollData) + (rollData["spellPointCostBonus"] ?? 0);
           uses = this.getSpellUses();
         }
         if (cost > uses) {
@@ -1581,6 +1605,15 @@ export class ItemPF extends Item {
 
         const itemChatData = this.getChatData(null, rollData);
         const properties = itemChatData.properties;
+        // Add actual cost
+        if (cost) {
+          if (this.data.type === "spell" && this.useSpellPoints()){
+            properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
+          }
+          else {
+            properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);
+          }
+        }
         // Add info for Power Attack to melee, Deadly Aim to ranged attacks
         if (attackExtraParts.includes("@powerAttackPenalty")) {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
@@ -2885,6 +2918,7 @@ export class ItemPF extends Item {
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
     if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
+    if (this.autoDeductCharges) result["charges"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.charges._label);
     return result;
     }
 
@@ -2919,6 +2953,10 @@ export class ItemPF extends Item {
     if (target === "effect") {
       if (this.data.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevel");
       if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
+    }
+    if (target === "charges") {
+      if (this.type === "spell" && this.useSpellPoints()) result["spellPoints"] = game.i18n.localize("PF1.SpellPoints");
+      else if (this.isCharged) result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
     return result;
   }

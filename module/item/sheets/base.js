@@ -123,6 +123,7 @@ export class ItemSheetPF extends ItemSheet {
     // Action Details
     data.hasAttackRoll = this.item.hasAttack;
     data.isHealing = data.item.data.actionType === "heal";
+    data.isCombatManeuver = ["mcman", "rcman"].includes(data.item.data.actionType);
 
     data.isCharged = false;
     if (data.item.data.uses != null) {

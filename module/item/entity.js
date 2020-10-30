@@ -44,7 +44,7 @@ export class ItemPF extends Item {
    * @type {boolean}
    */
   get hasAttack() {
-    return ["mwak", "rwak", "msak", "rsak"].includes(this.data.data.actionType);
+    return ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(this.data.data.actionType);
   }
 
   get hasMultiAttack() {
@@ -1970,8 +1970,6 @@ export class ItemPF extends Item {
     }
     // Add bonus parts
     parts = parts.concat(extraParts);
-    // Add size bonus
-    if (rollData.sizeBonus !== 0) parts.push("@sizeBonus");
     // Add attack bonus
     if (itemData.attackBonus !== "") {
       let attackBonus = new Roll(itemData.attackBonus, rollData).roll().total;
@@ -1979,26 +1977,39 @@ export class ItemPF extends Item {
       parts.push("@item.attackBonus");
     }
 
+    // Special handling for combat maneuvers
+    if (["mcman", "rcman"].includes(itemData.actionType)) {
+      // Add CMB without general ability
+      // This already includes BAB, size, energy drain
+      rollData.attributes.cmb.total -= rollData.abilities[rollData.attributes.cmbAbility]?.mod ?? 0;
+      if (rollData.attributes.cmb.total) parts.push("@attributes.cmb.total");
+    } else {
+      // Handle regular attacks
+
+      // Add size bonus
+      if (rollData.sizeBonus !== 0) parts.push("@sizeBonus");
+      // Add BAB
+      if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
+        parts.push("@attributes.bab.total");
+      }
+      // Subtract energy drain
+      if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
+        parts.push("- max(0, abs(@attributes.energyDrain))");
+      }
+    }
     // Add certain attack bonuses
     if (rollData.attributes.attack.general !== 0) {
       parts.push("@attributes.attack.general");
     }
-    if (["mwak", "msak"].includes(itemData.actionType) && rollData.attributes.attack.melee !== 0) {
+    if (["mwak", "msak", "mcman"].includes(itemData.actionType) && rollData.attributes.attack.melee !== 0) {
       parts.push("@attributes.attack.melee");
-    } else if (["rwak", "rsak"].includes(itemData.actionType) && rollData.attributes.attack.ranged !== 0) {
+    } else if (["rwak", "rsak", "rcman"].includes(itemData.actionType) && rollData.attributes.attack.ranged !== 0) {
       parts.push("@attributes.attack.ranged");
     }
-    // Add BAB
-    if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
-      parts.push("@attributes.bab.total");
-    }
+
     // Add item's enhancement bonus
     if (rollData.item.enh !== 0 && rollData.item.enh != null) {
       parts.push("@item.enh");
-    }
-    // Subtract energy drain
-    if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
-      parts.push("- max(0, abs(@attributes.energyDrain))");
     }
     // Add proficiency penalty
     if (this.data.type === "attack" && !itemData.proficient) {

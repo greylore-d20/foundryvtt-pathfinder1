@@ -16,6 +16,7 @@
 
 - Apply Damage dialog accepts math instead of just pure numbers
 - Attacks with the "Broken" state now have a chat card indicator
+- Added melee and ranged combat maneuvers to available action types (#155)
 
 ### Localization
 

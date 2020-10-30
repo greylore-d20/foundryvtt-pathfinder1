@@ -158,9 +158,10 @@ export class ChatAttack {
       primaryAttack: this.primaryAttack,
     });
     data.roll = roll;
-    let d20 = isMinimumCoreVersion("0.7.2") ? roll.results[0] : roll.parts[0].total;
+    let d20 = roll.results[0];
     let critType = 0;
-    if ((d20 >= this.critRange && !critical) || (d20 === 20 && critical)) critType = 1;
+    const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
+    if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
     else if (d20 === 1) critType = 2;
 
     // Add tooltip
@@ -171,7 +172,7 @@ export class ChatAttack {
     data.rollJSON = escape(JSON.stringify(roll));
 
     // Add crit confirm
-    if (!critical && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
+    if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
       this.hasCritConfirm = true;
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
       if (this.item.data.data.broken) this.rollData.critMult = 1;

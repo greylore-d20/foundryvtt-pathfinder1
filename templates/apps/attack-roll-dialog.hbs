@@ -17,9 +17,9 @@
   {{/if}}
 
   {{!-- Flags --}}
+  {{#if (or hasAttack hasDamage)}}
   <div class="form-group stacked">
     <label>{{localize "PF1.Misc"}}</label>
-    {{#if hasAttack}}{{#if hasDamage}}
     <label class="checkbox">
       <input type="checkbox" name="power-attack"/> {{localize "PF1.PowerAttack"}}/{{localize "PF1.DeadlyAim"}}
     </label>
@@ -34,8 +34,8 @@
       <input type="checkbox" {{checked item.primaryAttack}} name="primary-attack"/> {{localize "PF1.PrimaryAttack"}}
     </label>
     {{/if}}
-    {{/if}}{{/if}}
   </div>
+  {{/if}}
 
   {{!-- Conditionals --}}
   {{#if item.conditionals}}

@@ -452,6 +452,8 @@ PF1.itemActionTypes = {
   rwak: "PF1.ActionRWAK",
   msak: "PF1.ActionMSAK",
   rsak: "PF1.ActionRSAK",
+  mcman: "PF1.ActionMCMan",
+  rcman: "PF1.ActionRCMan",
   spellsave: "PF1.ActionSpellSave",
   save: "PF1.ActionSave",
   heal: "PF1.ActionHeal",

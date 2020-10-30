@@ -30,6 +30,7 @@
   </div>
 </div>
 
+{{#unless isCombatManeuver}}
 <div class="form-group">
   <label>{{localize "PF1.CriticalThreatRange"}}</label>
   <div class="form-fields">
@@ -49,6 +50,7 @@
     <input type="text" name="data.critConfirmBonus" value="{{data.critConfirmBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
   </div>
 </div>
+{{/unless}}
 
 {{!-- Attack Ability --}}
 <div class="form-group select">
@@ -115,7 +117,7 @@
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
-    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> 
+    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i>
         {{#unless isHealing}}{{localize "PF1.AddDamage"}}{{else}}{{localize "PF1.AddHealing"}}{{/unless}}
       </a></li>
   </ol>
@@ -123,6 +125,7 @@
 
 <hr>
 
+{{#unless isCombatManeuver}}
 {{!-- Critical Damage Bonus Formula --}}
 <div class="damage" data-key="data.damage.critParts">
   <h4 class="damage-header">
@@ -160,6 +163,7 @@
 </div>
 
 <hr>
+{{/unless}}
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">

@@ -1046,8 +1046,8 @@ PF1.conditionalTargets = {
   "effect": {
     "_label": "PF1.Effects",
   },
-  "charges": {
-    "_label": "PF1.ChargePlural",
+  "misc": {
+    "_label": "PF1.MiscShort",
   },
 }
 

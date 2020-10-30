@@ -1332,7 +1332,7 @@ export class ItemPF extends Item {
               conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
                 (Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type))
                   ? [modifier.formula, modifier.type, true]
-                  : [modifier.formula, localizeType(modifier.target, modifier.type, false)]
+                  : [modifier.formula, localizeType(modifier.target, modifier.type), false]
               ];
             }
           }

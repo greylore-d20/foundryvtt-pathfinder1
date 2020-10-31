@@ -10,6 +10,7 @@
 
 - Added charge and spell point cost to list of conditional modifier effects
 - Right clicking item names will now bring up the Item's Sheet
+- Add buttons to open appropriate compendiums to the features, items and spells parts of actor sheets
 
 ## 0.75.7
 

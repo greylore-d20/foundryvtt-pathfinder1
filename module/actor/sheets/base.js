@@ -346,7 +346,7 @@ export class ActorSheetPF extends ActorSheet {
     // Prepare (interactive) labels
     {
       data.labels.firstClass = game.i18n.localize("PF1.Info_FirstClass").format(
-        `<a data-action="compendium_class">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
+        `<a data-action="compendium" data-action-target="classes">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
       ).replace(/[\n\r]+/, "<br>");
     }
 
@@ -814,15 +814,7 @@ export class ActorSheetPF extends ActorSheet {
     /*  Links
     /* -------------------------------------------- */
 
-    html.find('a[data-action="compendium_class"]').click(event => {
-      event.preventDefault();
-      game.pf1.compendiums["classes"].render(true);
-    });
-
-    html.find('a[data-action="compendium_race"]').click(event => {
-      event.preventDefault();
-      game.pf1.compendiums["races"].render(true);
-    });
+    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
   }
 
   createTabs(html) {
@@ -1084,6 +1076,14 @@ export class ActorSheetPF extends ActorSheet {
 
       this._hiddenElems[a.dataset.for] = true;
     }
+  }
+
+  _onOpenCompendium(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const target = a.dataset.actionTarget;
+
+    game.pf1.compendiums[target].render(true);
   }
 
   _onRollConcentration(event) {

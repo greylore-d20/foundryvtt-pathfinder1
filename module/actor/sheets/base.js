@@ -736,6 +736,9 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item-edit').click(this._onItemEdit.bind(this));
     html.find('.item-delete').click(this._onItemDelete.bind(this));
     html.find(".item-give").click(this._onItemGive.bind(this));
+	
+	// Quick edit item
+	html.find('.item .item-name h4').contextmenu(this._onItemEdit.bind(this));
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));

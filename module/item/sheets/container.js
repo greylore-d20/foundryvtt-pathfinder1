@@ -222,6 +222,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Item summaries
     html.find('.item .item-name h4').click(event => this._onItemSummary(event));
+	
+	// Quick edit item
+	html.find('.item .item-name h4').contextmenu(this._onItemEdit.bind(this));
 
     // Quick (un)identify item
     html.find("a.item-control.item-identify").click(ev => { this._quickIdentifyItem(ev); });

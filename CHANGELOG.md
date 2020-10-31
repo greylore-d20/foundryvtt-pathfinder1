@@ -9,6 +9,7 @@
 ### Changelog
 
 - Added charge and spell point cost to list of conditional modifier effects
+- Right clicking item names will now bring up the Item's Sheet
 
 ## 0.75.7
 

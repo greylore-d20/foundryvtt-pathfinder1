@@ -2,6 +2,10 @@
 
 ## 0.75.8
 
+### Bug Fixes
+
+- Migrate bestiary compendiums so items with Changes can be opened (#278)
+
 ### Changelog
 
 - Added charge and spell point cost to list of conditional modifier effects

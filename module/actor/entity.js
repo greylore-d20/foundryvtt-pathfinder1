@@ -316,7 +316,7 @@ export class ActorPF extends Actor {
     let prior = this.getLevelExp(data.details.level.value - 1 || 0),
       max = this.getLevelExp(data.details.level.value || 1);
 
-    data.details.xp.pct = ((Math.max(prior, Math.min(max, data.details.xp.value)) - prior) / (max - prior)) * 100;
+    data.details.xp.pct = (((Math.max(prior, Math.min(max, data.details.xp.value)) - prior) / (max - prior)) * 100) || 0;
   }
 
   /* -------------------------------------------- */
@@ -513,6 +513,13 @@ export class ActorPF extends Actor {
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options={}) {
+
+    // Avoid reular update flow for explicitly non-recursive update calls
+    if (getProperty(options, "recursive") === false) {
+      await super.update(data, options);
+      return;
+    }
+
     data = this.preUpdate(data);
 
     // Update changes

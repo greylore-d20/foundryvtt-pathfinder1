@@ -2332,13 +2332,8 @@
   padding: 0;
 }
 .pf1.chat-card .card-footer span {
-  border-right: 2px groove #FFF;
-  padding: 0 5px 0 0;
+  padding: 0 2px;
   font-size: 10px;
-}
-.pf1.chat-card .card-footer span:last-child {
-  border-right: none;
-  padding-right: 0;
 }
 .pf1.chat-card .attack-row,
 .pf1.chat-card .damage-row {
@@ -2385,28 +2380,28 @@
 .pf1.chat-card .fake-inline-roll.failure {
   background-color: #c06060;
 }
-#chat-log .message .chat-attack {
+.message .chat-attack {
   margin-bottom: 2px;
 }
-#chat-log .message .chat-attack .dice-roll {
+.message .chat-attack .dice-roll {
   width: 50%;
   overflow: hidden;
 }
-#chat-log .message .chat-attack .dice-roll .dice-flavor {
+.message .chat-attack .dice-roll .dice-flavor {
   color: #4C6D9F;
   font-size: 11px;
   text-align: center;
   white-space: nowrap;
 }
-#chat-log .message .chat-attack .dice-roll .dice-total {
+.message .chat-attack .dice-roll .dice-total {
   font-size: 16px;
   line-height: 20px;
 }
-#chat-log .message .property-group {
+.message .property-group {
   flex: 0 0 24px;
   /* Tags */
 }
-#chat-log .message .property-group .tag {
+.message .property-group .tag {
   display: inline-block;
   margin: 0 2px 1px 0;
   padding: 1px 3px;
@@ -2417,30 +2412,30 @@
   background: rgba(0, 0, 0, 0.05);
   flex: 0 1 auto;
 }
-#chat-log .message .property-group input[type="text"] {
+.message .property-group input[type="text"] {
   height: 24px;
   margin: 2px;
 }
-#chat-log .message .property-group label {
+.message .property-group label {
   flex: 2;
   color: #4b4a44;
   font-weight: bold;
 }
-#chat-log .message .extra-text {
+.message .extra-text {
   margin-top: 8px;
   flex: 0 0 100%;
   white-space: pre-wrap;
 }
-#chat-log .message .extra-text label {
+.message .extra-text label {
   flex: 2;
   color: #4b4a44;
   font-weight: bold;
 }
-#chat-log .message .extra-effect:not(:last-child),
-#chat-log .message .extra-misc:not(:last-child) {
+.message .extra-effect:not(:last-child),
+.message .extra-misc:not(:last-child) {
   margin-bottom: 5px;
 }
-#chat-log .message .extra-effect {
+.message .extra-effect {
   position: relative;
   margin: 0;
   line-height: 20px;
@@ -2450,7 +2445,7 @@
   border-radius: 3px;
   box-shadow: 0 0 2px #FFF inset;
 }
-#chat-log .message .extra-misc {
+.message .extra-misc {
   position: relative;
   margin: 0;
   line-height: 20px;
@@ -2460,17 +2455,17 @@
   border-radius: 3px;
   box-shadow: 0 0 2px #FFF inset;
 }
-#chat-log .message .extra-roll-label {
+.message .extra-roll-label {
   font-weight: bold;
   font-size: 14px;
 }
-#chat-log .message div.defense table {
+.message div.defense table {
   font-size: 14px;
   width: 100%;
   table-layout: fixed;
 }
-#chat-log .message div.defense table td,
-#chat-log .message div.defense table th {
+.message div.defense table td,
+.message div.defense table th {
   text-align: center;
 }
 .chat-card.defense-card .saving-throws {

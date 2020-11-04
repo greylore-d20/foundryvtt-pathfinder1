@@ -902,6 +902,11 @@ export class ItemPF extends Item {
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+      flags: {
+        core: {
+          canPopout: true,
+        },
+      },
     }, altChatData);
 
     // Toggle default roll mode
@@ -1698,9 +1703,9 @@ export class ItemPF extends Item {
         }
 
         setProperty(chatData, "flags.pf1.metadata", metadata);
+        setProperty(chatData, "flags.core.canPopout", true);
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
-        console.log(t);
         await createCustomChatMessage(t, templateData, chatData);
       }
       // Post chat card even without action
@@ -2213,6 +2218,12 @@ export class ItemPF extends Item {
     const card = header.closest(".chat-card");
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
+
+    // Update chat popout size
+    const popout = header.closest(".chat-popout");
+    if (popout) {
+      popout.style.height = "auto";
+    }
   }
 
   /**

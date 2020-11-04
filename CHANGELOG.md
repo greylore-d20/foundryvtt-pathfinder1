@@ -17,6 +17,11 @@
 - Attack and item chat cards now show the combat round they were shown, if in combat
 - Add containers to list of targets for the 'Give Item' action on actor sheets
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+- Updated the French localization, due to the efforts of rectulo (many thanks!)
+
 ## 0.75.7
 
 ### Bug Fixes

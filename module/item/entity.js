@@ -882,7 +882,21 @@ export class ItemPF extends Item {
         type: saveType,
         label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
       },
+      hasExtraProperties: false,
+      extraProperties: [],
     };
+
+    // Add combat info
+    if (game.combat) {
+      let combatProps = [];
+      // Add round info
+      combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+
+      if (combatProps.length > 0) {
+        templateData.extraProperties.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+        templateData.hasExtraProperties = true;
+      }
+    }
 
     // Roll spell failure chance
     if (templateData.isSpell && this.parentActor != null && this.parentActor.spellFailure > 0) {
@@ -1624,6 +1638,17 @@ export class ItemPF extends Item {
         }
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
+        // Add combat info
+        if (game.combat) {
+          let combatProps = [];
+          // Add round info
+          combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+
+          if (combatProps.length > 0) {
+            props.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+          }
+        }
+
         // Add CL notes
         if (this.data.type === "spell" && this.parentActor) {
           const clNotes = this.parentActor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
@@ -1655,6 +1680,7 @@ export class ItemPF extends Item {
             label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
           },
         }, { inplace: false });
+
         // Spell failure
         if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {
           const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);

@@ -29,8 +29,13 @@ export const dialogGetActor = function(title="", actors=[]) {
     let cancelled = true;
 
     let content = "";
-    actors.forEach(actor => {
-      content += `<div class="dialog-get-actor flexrow" data-actor-id="${actor._id}"><img src="${actor.data.img}"><h2>${actor.name}</h2></div>`;
+    actors.forEach(target => {
+      if (target instanceof Actor) {
+        content += `<div class="dialog-get-actor flexrow" data-actor-id="${target._id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+      }
+      else if (target instanceof Item) {
+        content += `<div class="dialog-get-actor flexrow" data-item-id="${target._id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+      }
     });
 
     const dialog = new Dialog({
@@ -50,8 +55,15 @@ export const dialogGetActor = function(title="", actors=[]) {
       html.find(".dialog-get-actor").click(event => {
         const elem = event.currentTarget;
         const actorId = elem.dataset.actorId;
-        const actor = game.actors.entities.find(o => o._id === actorId);
-        resolve(actor);
+        if (actorId) {
+          resolve({ type: "actor", "id": actorId });
+        }
+        else {
+          const itemId = elem.dataset.itemId;
+          if (itemId) {
+            resolve({ type: "item", id: itemId });
+          }
+        }
         this.close();
       });
     };

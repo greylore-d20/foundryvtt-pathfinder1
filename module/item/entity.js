@@ -882,7 +882,21 @@ export class ItemPF extends Item {
         type: saveType,
         label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
       },
+      hasExtraProperties: false,
+      extraProperties: [],
     };
+
+    // Add combat info
+    if (game.combat) {
+      let combatProps = [];
+      // Add round info
+      combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+
+      if (combatProps.length > 0) {
+        templateData.extraProperties.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+        templateData.hasExtraProperties = true;
+      }
+    }
 
     // Roll spell failure chance
     if (templateData.isSpell && this.parentActor != null && this.parentActor.spellFailure > 0) {
@@ -902,6 +916,11 @@ export class ItemPF extends Item {
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+      flags: {
+        core: {
+          canPopout: true,
+        },
+      },
     }, altChatData);
 
     // Toggle default roll mode
@@ -1317,54 +1336,42 @@ export class ItemPF extends Item {
             } catch (e) {
               ui.notifications.warn(game.i18n.format("PF1.WarningConditionalRoll", {number: i+1, name: conditional.name}));
               console.error(e);
+              // Skip modifier to avoid multiple errors from one non-evaluating entry
+              continue;
             }
 
             // Create a key string for the formula array
             const partString = `${modifier.target}.${modifier.subTarget}${modifier.critical ? "." + modifier.critical : ""}`;
-            // Add formula in correct format for attacks or damage
-            conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
-              (["attack", "effect", "charges"].includes(modifier.target)) ? modifier.formula :
-              (modifier.target === "damage" && Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)) ? [modifier.formula, modifier.type, true] :
-              [modifier.formula, localizeType(modifier.target, modifier.type, false)]
-            ];
+            // Add formula in simple format
+            if (["attack", "effect", "misc"].includes(modifier.target)) {
+              conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []), modifier.formula];
+            }
+            // Add formula as array for damage
+            else if (modifier.target === "damage") {
+              conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
+                (Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type))
+                  ? [modifier.formula, modifier.type, true]
+                  : [modifier.formula, localizeType(modifier.target, modifier.type), false]
+              ];
+            }
           }
         }
         // Expand data into rollData to enable referencing in formulae
         rollData.conditionals = expandObject(conditionalData, 5);
 
-        // Add conditional bonus to CL
-        if (conditionalPartsCommon["effect.cl"] != null) {
-          try {
-            rollData.cl += new Roll(conditionalPartsCommon["effect.cl"].join("+"), rollData).roll().total;
-          } catch (e) {
-            console.error(e);
-          }
-        }
-
-        // Add conditional DC bonus to rollData
-        if (conditionalPartsCommon["effect.dc"] != null) {
-          try {
-            rollData.dcBonus = new Roll(conditionalPartsCommon["effect.dc"].join("+"), rollData).roll().total;
-          } catch(e) {
-            console.error(e);
-          }
-        }
-
-        // Add conditional charge cost
-        if (conditionalPartsCommon["charges.charges"] != null) {
-          try {
-            rollData.chargeCostBonus = new Roll(conditionalPartsCommon["charges.charges"].join("+"), rollData).roll().total;
-          } catch (e) {
-            console.error(e);
-          }
-        }
-
-        // Add conditional spell point cost
-        if (conditionalPartsCommon["charges.spellPoints"] != null) {
-          try {
-            rollData.spellPointCostBonus = new Roll(conditionalPartsCommon["charges.spellPoints"].join("+"), rollData).roll().total;
-          } catch (e) {
-            console.error(e);
+        // Add specific pre-rolled rollData entries
+        for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
+          if (conditionalPartsCommon[target] != null) {
+            try {
+              const roll = new Roll(conditionalPartsCommon[target].join("+"), rollData).roll().total;
+              switch (target) {
+                case "effect.cl": rollData.cl += roll; break;
+                case "effect.dc": rollData.dcBonus = roll; break;
+                case "misc.charges": rollData.chargeCostBonus = roll; break;
+              }
+            } catch (e) {
+              console.error(e);
+            }
           }
         }
       }
@@ -1513,19 +1520,23 @@ export class ItemPF extends Item {
       // Deduct charge
       let cost;
       if (this.autoDeductCharges) {
-        cost = this.chargeCost + (rollData["chargeCostBonus"] ?? 0);
+        cost = this.chargeCost;
         let uses = this.charges;
         if (this.data.type === "spell" && this.useSpellPoints()) {
-          cost = this.getSpellPointCost(rollData) + (rollData["spellPointCostBonus"] ?? 0);
+          cost = this.getSpellPointCost(rollData);
           uses = this.getSpellUses();
         }
+        // Add charge cost from conditional modifiers
+        cost += rollData["chargeCostBonus"] ?? 0;
+
+        // Cancel usage on insufficient charges
         if (cost > uses) {
           ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
           return;
         }
         await this.addCharges(-cost);
       }
-      
+
       // Set chat data
       let chatData = {
         speaker: ChatMessage.getSpeaker({actor: this.parentActor}),
@@ -1627,6 +1638,17 @@ export class ItemPF extends Item {
         }
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
+        // Add combat info
+        if (game.combat) {
+          let combatProps = [];
+          // Add round info
+          combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+
+          if (combatProps.length > 0) {
+            props.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+          }
+        }
+
         // Add CL notes
         if (this.data.type === "spell" && this.parentActor) {
           const clNotes = this.parentActor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
@@ -1658,6 +1680,7 @@ export class ItemPF extends Item {
             label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
           },
         }, { inplace: false });
+
         // Spell failure
         if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {
           const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
@@ -1706,9 +1729,9 @@ export class ItemPF extends Item {
         }
 
         setProperty(chatData, "flags.pf1.metadata", metadata);
+        setProperty(chatData, "flags.core.canPopout", true);
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
-        console.log(t);
         await createCustomChatMessage(t, templateData, chatData);
       }
       // Post chat card even without action
@@ -2221,6 +2244,12 @@ export class ItemPF extends Item {
     const card = header.closest(".chat-card");
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
+
+    // Update chat popout size
+    const popout = header.closest(".chat-popout");
+    if (popout) {
+      popout.style.height = "auto";
+    }
   }
 
   /**
@@ -2918,7 +2947,10 @@ export class ItemPF extends Item {
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
     if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
-    if (this.autoDeductCharges) result["charges"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.charges._label);
+    // Only add Misc target if subTargets are available
+    if (this.isCharged) {
+      result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
+    }
     return result;
     }
 
@@ -2954,8 +2986,10 @@ export class ItemPF extends Item {
       if (this.data.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevel");
       if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
     }
-    if (target === "charges") {
-      if (this.type === "spell" && this.useSpellPoints()) result["spellPoints"] = game.i18n.localize("PF1.SpellPoints");
+    // Add misc subtargets
+    if (target === "misc") {
+      // Add charges subTarget with specific label
+      if (this.type === "spell" && this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
       else if (this.isCharged) result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
     return result;

@@ -346,7 +346,7 @@ export class ActorSheetPF extends ActorSheet {
     // Prepare (interactive) labels
     {
       data.labels.firstClass = game.i18n.localize("PF1.Info_FirstClass").format(
-        `<a data-action="compendium_class">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
+        `<a data-action="compendium" data-action-target="classes" title="${game.i18n.localize("PF1.OpenCompendium")}">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
       ).replace(/[\n\r]+/, "<br>");
     }
 
@@ -736,6 +736,9 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item-edit').click(this._onItemEdit.bind(this));
     html.find('.item-delete').click(this._onItemDelete.bind(this));
     html.find(".item-give").click(this._onItemGive.bind(this));
+	
+	// Quick edit item
+	html.find('.item .item-name h4').contextmenu(this._onItemEdit.bind(this));
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));
@@ -811,15 +814,7 @@ export class ActorSheetPF extends ActorSheet {
     /*  Links
     /* -------------------------------------------- */
 
-    html.find('a[data-action="compendium_class"]').click(event => {
-      event.preventDefault();
-      game.pf1.compendiums["classes"].render(true);
-    });
-
-    html.find('a[data-action="compendium_race"]').click(event => {
-      event.preventDefault();
-      game.pf1.compendiums["races"].render(true);
-    });
+    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
   }
 
   createTabs(html) {
@@ -1081,6 +1076,14 @@ export class ActorSheetPF extends ActorSheet {
 
       this._hiddenElems[a.dataset.for] = true;
     }
+  }
+
+  _onOpenCompendium(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const target = a.dataset.actionTarget;
+
+    game.pf1.compendiums[target].render(true);
   }
 
   _onRollConcentration(event) {
@@ -1464,13 +1467,31 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.find(o => o._id === itemId);
 
-    const actors = game.actors.entities.filter(o => o.hasPerm(game.user, "OWNER") && o !== this.actor);
-    const actor = await dialogGetActor(`Give item to actor`, actors);
+    const targets = game.actors.entities.filter(o => o.hasPerm(game.user, "OWNER") && o !== this.actor);
+    targets.push(...this.actor.items.filter(o => o.type === "container"));
+    targets.push(...game.items.entities.filter(o => o.hasPerm(game.user, "OWNER") && o.type === "container"));
+    const targetData = await dialogGetActor(`Give item to actor`, targets);
 
-    if (actor) {
-      const itemData = flattenObject(item.data);
-      delete itemData["_id"];
-      await actor.createOwnedItem(itemData);
+    if (!targetData) return;
+    let target;
+    if (targetData.type === "actor") {
+      target = game.actors.entities.find(o => o._id === targetData.id);
+    }
+    else if (targetData.type === "item") {
+      target = this.actor.items.find(o => o._id === targetData.id);
+      if (!target) {
+        target = game.items.entities.find(o => o._id === targetData.id);
+      }
+    }
+
+    if (target) {
+      const itemData = item.data;
+      if (target instanceof Actor) {
+        await target.createOwnedItem(itemData);
+      }
+      else if (target instanceof Item) {
+        await target.createContainerContent(itemData);
+      }
       await this.actor.deleteOwnedItem(item._id);
     }
   }

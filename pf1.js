@@ -223,8 +223,20 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   html.find(".tooltip").on("mousemove", ev => handleChatTooltips(ev));
 });
 
+Hooks.on("renderChatPopout", (app, html, data) => {
+
+  // Optionally collapse the content
+  if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
+
+  // Optionally hide chat buttons
+  if (game.settings.get("pf1", "hideChatButtons")) html.find(".card-buttons").hide();
+});
+
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
+
+Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
+Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;

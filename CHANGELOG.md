@@ -2,9 +2,20 @@
 
 ## 0.75.8
 
+### Bug Fixes
+
+- Migrate bestiary compendiums so items with Changes can be opened (#278)
+- Players weren't able to see or edit a container's currency and weight reduction
+
 ### Changelog
 
 - Added charge and spell point cost to list of conditional modifier effects
+- Right clicking item names will now bring up the Item's Sheet
+- Add buttons to open appropriate compendiums to the features, items and spells parts of actor sheets
+- Add Chat Popout functionality for attack and item chat cards
+- Attack chat cards now show the attack's icon
+- Attack and item chat cards now show the combat round they were shown, if in combat
+- Add containers to list of targets for the 'Give Item' action on actor sheets
 
 ## 0.75.7
 

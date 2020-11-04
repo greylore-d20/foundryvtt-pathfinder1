@@ -50,6 +50,7 @@
           <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
         </label>
       </div>
+      {{/if}}
 
       <div class="form-group">
         <label>{{localize "PF1.ItemContainerWeightReduction"}} %</label>
@@ -68,7 +69,6 @@
           {{/each}}
         </ol>
       </div>
-      {{/if}}
 
       {{> "systems/pf1/templates/items/parts/item-contents.html" sections=inventory}}
 

@@ -207,9 +207,10 @@
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+            <i class="fas fa-plus"></i>
           </a>
           {{/if}}
+          <a data-action="compendium" data-action-target="spells" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
         </div>
       </li>
       
@@ -329,9 +330,10 @@
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+            <i class="fas fa-plus"></i>
           </a>
           {{/if}}
+          <a data-action="compendium" data-action-target="spells" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
         </div>
       </li>
       

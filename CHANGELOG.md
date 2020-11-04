@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Migrate bestiary compendiums so items with Changes can be opened (#278)
+- Players weren't able to see or edit a container's currency and weight reduction
 
 ### Changelog
 

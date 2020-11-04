@@ -1467,13 +1467,31 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.find(o => o._id === itemId);
 
-    const actors = game.actors.entities.filter(o => o.hasPerm(game.user, "OWNER") && o !== this.actor);
-    const actor = await dialogGetActor(`Give item to actor`, actors);
+    const targets = game.actors.entities.filter(o => o.hasPerm(game.user, "OWNER") && o !== this.actor);
+    targets.push(...this.actor.items.filter(o => o.type === "container"));
+    targets.push(...game.items.entities.filter(o => o.hasPerm(game.user, "OWNER") && o.type === "container"));
+    const targetData = await dialogGetActor(`Give item to actor`, targets);
 
-    if (actor) {
-      const itemData = flattenObject(item.data);
-      delete itemData["_id"];
-      await actor.createOwnedItem(itemData);
+    if (!targetData) return;
+    let target;
+    if (targetData.type === "actor") {
+      target = game.actors.entities.find(o => o._id === targetData.id);
+    }
+    else if (targetData.type === "item") {
+      target = this.actor.items.find(o => o._id === targetData.id);
+      if (!target) {
+        target = game.items.entities.find(o => o._id === targetData.id);
+      }
+    }
+
+    if (target) {
+      const itemData = item.data;
+      if (target instanceof Actor) {
+        await target.createOwnedItem(itemData);
+      }
+      else if (target instanceof Item) {
+        await target.createContainerContent(itemData);
+      }
       await this.actor.deleteOwnedItem(item._id);
     }
   }

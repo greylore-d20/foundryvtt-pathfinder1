@@ -12,6 +12,7 @@
 - Right clicking item names will now bring up the Item's Sheet
 - Add buttons to open appropriate compendiums to the features, items and spells parts of actor sheets
 - Add Chat Popout functionality for attack and item chat cards
+- Attack chat cards now show the attack's icon
 
 ## 0.75.7
 

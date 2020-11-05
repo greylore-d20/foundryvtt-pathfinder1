@@ -68,54 +68,39 @@
             {{/each}}
         </tbody>
     </table>
+
+    <table>
+        <thead>
+            <th class="tooltip">
+                {{localize "PF1.ACP"}}
+                <div class="tooltipcontent">
+                    @attributes.acp.total : {{data.attributes.acp.total}}
+
+                    {{#if sourceDetails.data.attributes.acp.total.length}}
+                    <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                    {{#each sourceDetails.data.attributes.acp.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                    {{/if}}
+                </div>
+            </th>
+            <th class="tooltip">
+                {{localize "PF1.MaxDexShort"}}
+                <div class="tooltipcontent">
+                    @attributes.maxDexBonus : {{data.attributes.maxDexBonus}}
+
+                    {{#if sourceDetails.data.attributes.maxDexBonus.length}}
+                    <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                    {{#each sourceDetails.data.attributes.maxDexBonus as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                    {{/if}}
+                </div>
+            </th>
+        </thead>
+
+        <tbody>
+            <td>{{data.attributes.acp.total}}</td>
+            <td>{{data.attributes.maxDexBonus}}</td>
+        </tbody>
+    </table>
 </div>
 
-{{!-- <ul class="ability-scores flexrow">
-    {{#each data.abilities as |ability id|}}
-    <li class="ability" data-ability="{{id}}">
-        <div class="ability-header flexrow">
-            <input class="ability-damage" name="data.abilities.{{id}}.damage" type="text" title="{{localize "PF1.Damage"}}"
-            value="{{#if ability.damage}}{{ability.damage}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DMG"}}"/>
-            <input class="ability-penalty" name="data.abilities.{{id}}.userPenalty" type="text" title="{{localize "PF1.Penalty"}}"
-            value="{{#if ability.userPenalty}}{{ability.userPenalty}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.PNL"}}"/>
-            <input class="ability-drain" name="data.abilities.{{id}}.drain" type="text" title="{{localize "PF1.Drain"}}"
-            value="{{#if ability.drain}}{{ability.drain}}{{/if}}" data-dtype="Number" placeholder="{{localize "PF1.DRN"}}"/>
-        </div>
-        <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
-        <span class="ability-score tooltip">
-            {{numberFormat ability.total decimals=0 sign=false}}
-        </span>
-        <div class="ability-modifiers flexrow">
-            <span class="ability-mod">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            <div class="ability-center"></div>
-            <input class="ability-base" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="10"/>
-        </div>
-    </li>
-    {{/each}}
-</ul> --}}
-
-{{!-- Misc --}}
-<div class="attributes-traits flexrow">
-    <div class="flexcol attributes-root">
-        <ul class="attributes misc-base2 flexrow">
-            <li class="attribute acp" data-attribute="acp">
-                <h4 class="attribute-name box-title">{{localize "PF1.ACP"}}</h4>
-                <div class="attribute-value tooltip">
-                    <span>{{data.attributes.acp.total}}</span>
-                    <span class="tooltipcontent">@attributes.acp.total : {{data.attributes.acp.total}}</span>
-                </div>
-            </li>
-            
-            <li class="attribute maxdex" data-attribute="maxdex">
-                <h4 class="attribute-name box-title">{{localize "PF1.MaxDexShort"}}</h4>
-                <div class="attribute-value tooltip">
-                    <span>{{data.attributes.maxDexBonus}}</span>
-                    <span class="tooltipcontent">@attributes.maxDexBonus : {{data.attributes.maxDexBonus}}</span>
-                </div>
-            </li>
-        </ul>
-    </div>
-    
-    {{!-- Traits --}}
-    {{> "systems/pf1/templates/actors/parts/actor-traits.html"}}
-</div>
+{{!-- Traits --}}
+{{> "systems/pf1/templates/actors/parts/actor-traits.html"}}

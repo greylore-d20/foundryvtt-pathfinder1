@@ -277,6 +277,9 @@ export const updateChanges = async function({data=null}={}) {
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
+  for (let k of ["data.attributes.acp.total", "data.attributes.maxDexBonus"]) {
+    sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
+  }
   switch (srcData1.data.attributes.encumbrance.level) {
     case 0:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
@@ -284,10 +287,14 @@ export const updateChanges = async function({data=null}={}) {
     case 1:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
       linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
+      sourceInfo["data.attributes.acp.total"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
+      sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
       break;
     case 2:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
       linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
+      sourceInfo["data.attributes.acp.total"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 6 });
+      sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 1 });
       break;
   }
   linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
@@ -317,7 +324,7 @@ export const updateChanges = async function({data=null}={}) {
   {
     let armorItems = srcData1.items.filter(o => o.type === "equipment");
     let reducedSpeed = false;
-    let sInfo = { name: "", value: "Reduced Movement Speed" };
+    let sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
     if (updateData["data.attributes.encumbrance.level"] >= 1 && !flags.noEncumbrance) {
       reducedSpeed = true;
       sInfo.name = game.i18n.localize("PF1.Encumbrance");
@@ -339,6 +346,14 @@ export const updateChanges = async function({data=null}={}) {
         }
       }
     }
+
+    // Add ACP and Maximum Dexterity Bonus source info
+    armorItems.forEach(o => {
+      const acp = getProperty(o, "data.armor.acp");
+      const dex = getProperty(o, "data.armor.dex");
+      if (acp) sourceInfo["data.attributes.acp.total"].negative.push({ name: o.name, value: Math.abs(acp) });
+      if (dex) sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: o.name, value: Math.abs(dex) });
+    });
   }
 
   // Reset spell slots and spell points
@@ -718,10 +733,14 @@ const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, 
       if(obj.data.armor.dex != null) {
         switch (obj.data.equipmentType) {
           case "armor":
-            armorMDex = Math.min(obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"]);
+            if (obj.data.armor.dex) {
+              armorMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"]);
+            }
             break;
           case "shield":
-            shieldMDex = Math.min(obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"]);
+            if (obj.data.armor.dex) {
+              shieldMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"]);
+            }
             break;
         }
       }

@@ -17,6 +17,7 @@
 - Attack chat cards now show the attack's icon
 - Attack and item chat cards now show the combat round they were shown, if in combat
 - Add containers to list of targets for the 'Give Item' action on actor sheets
+- Add source information to Armor Check Penalties and Maximum Dexterity Bonus
 
 ### Localization
 

@@ -6,6 +6,10 @@
 
 - Bestiary browser failed to load if non-system actor compendiums were present (#320)
 
+### Changelog
+
+- Added Changes and Context Notes to items of type "Loot", subtype "Gear", and enabled equipping those items (#310)
+
 ## 0.75.8
 
 ### Bug Fixes

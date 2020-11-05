@@ -14,6 +14,7 @@ export const updateChanges = async function({data=null}={}) {
   const changeObjects = srcData1.items.filter(obj => { return (obj.data.changes instanceof Array) && obj.data.changes.length; }).filter(obj => {
     if (obj.type === "buff") return obj.data.active;
     if (obj.type === "equipment" || obj.type === "weapon") return obj.data.equipped;
+    if (obj.type === "loot" && obj.data.subType === "gear") return obj.data.equipped;
     return true;
   });
 

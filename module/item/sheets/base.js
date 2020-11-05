@@ -409,7 +409,9 @@ export class ItemSheetPF extends ItemSheet {
       }
       else return "";
     }
-    else if ( ["weapon", "equipment"].includes(item.type) ) return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+    else if ( ["weapon", "equipment"].includes(item.type) || (item.type === "loot" && item.data.subType === "gear") ) {
+      return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+    }
   }
 
   /* -------------------------------------------- */

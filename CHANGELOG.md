@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.9
+
+### Bug Fixes
+
+- Bestiary browser failed to load if non-system actor compendiums were present (#320)
+
 ## 0.75.8
 
 ### Bug Fixes

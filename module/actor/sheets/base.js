@@ -55,6 +55,11 @@ export class ActorSheetPF extends ActorSheet {
      * Whether a submit has been queued in any way.
      */
     this._submitQueued = false;
+
+    /**
+     * Whether inner part of this sheet has been rendered already.
+     */
+    this._renderedInner = false;
   }
 
   get currentPrimaryTab() {
@@ -1159,21 +1164,35 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const elem = this.element.find(event.currentTarget.dataset.for);
 
-    elem.removeAttr("readonly")
+    const [prevName, prevValue] = [elem.attr("name"), elem.attr("value")];
+    elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.actor.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
     elem.select();
 
-    elem.focusout(event => {
+    const handler = event => {
+      elem[0].removeEventListener("focusout", handler);
+      elem[0].removeEventListener("click", handler);
       if (typeof value === "number") value = value.toString();
       if (value !== elem.attr("value")) {
         this._onSubmit(event);
       }
       else {
-        this.render();
+        window.getSelection().removeAllRanges();
+        if (prevName) {
+          elem.attr("name", prevName);
+        }
+        else {
+          elem.removeAttr("name");
+        }
+        elem.attr("value", prevValue);
+        elem.prop("readonly", true);
       }
-    });
+    };
+
+    elem[0].addEventListener("focusout", handler);
+    elem[0].addEventListener("click", handler);
   }
 
   /* -------------------------------------------- */
@@ -2048,5 +2067,13 @@ export class ActorSheetPF extends ActorSheet {
     }
     
     return super._updateObject(event, formData);
+  }
+
+  async _renderInner(data, options) {
+    let t1 = new Date();
+    const result = await super._renderInner(data, options);
+    let t2 = new Date();
+    console.trace(t2 - t1);
+    return result;
   }
 }

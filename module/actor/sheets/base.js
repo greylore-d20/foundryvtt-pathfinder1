@@ -1586,7 +1586,7 @@ export class ActorSheetPF extends ActorSheet {
       weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "weapon" } },
       equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: true, items: [], canEquip: true, dataset: { type: "equipment" }, hasSlots: true },
       consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], canEquip: false, dataset: { type: "consumable" } },
-      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" } },
+      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" } },
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" } },
       tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"), "sub-type": "tradeGoods" } },

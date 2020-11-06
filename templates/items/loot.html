@@ -45,6 +45,9 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item active" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    {{#unless showUnidentifiedData}}
+    <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
+    {{/unless}}
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
   </nav>
 
@@ -75,6 +78,15 @@
       </label>
       {{/if}}
     </div>
+
+    {{!-- Changes Tab --}}
+    {{#unless showUnidentifiedData}}
+    <div class="tab flexcol" data-group="primary" data-tab="changes">
+      {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+
+      {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+    </div>
+    {{/unless}}
 
     <div class="tab flexcol" data-group="primary" data-tab="links">
       {{> "systems/pf1/templates/items/parts/item-links.html"}}

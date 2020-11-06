@@ -2,8 +2,13 @@
 
 ## 0.75.9
 
+### Bug Fixes
+
+- Bestiary browser failed to load if non-system actor compendiums were present (#320)
+
 ### Changelog
 
+- Added Changes and Context Notes to items of type "Loot", subtype "Gear", and enabled equipping those items (#310)
 - Introduces a tab on actor sheets for settings
   - Made spellbooks selectable on the settings tab
 

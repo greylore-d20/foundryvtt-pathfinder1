@@ -5,7 +5,7 @@ import { SemanticVersion } from "../semver.js";
 const NEED_NEW_VERSION = {
   spells: "0.75.6",
   items: "0.75.7",
-  bestiary: "0.75.6",
+  bestiary: "0.75.9",
   feats: "0.75.6",
   classes: "0.75.6",
   races: "0.75.6",
@@ -196,7 +196,8 @@ export class CompendiumBrowser extends Application {
   async loadCompendium(p) {
     const progress = this._data.progress;
 
-    if (p.private && !game.user.isGM) {
+    if (p.private && !game.user.isGM || p.metadata.system != "pf1") {
+      if (p.metadata.system != "pf1") console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
       this._onProgress(progress);
       return;
     }

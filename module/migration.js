@@ -160,7 +160,7 @@ export const migrateActorData = async function(actor) {
  */
 export const migrateItemData = function(item) {
   const updateData = {};
-  
+
   _migrateItemSpellUses(item, updateData);
   _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
@@ -179,6 +179,7 @@ export const migrateItemData = function(item) {
   _migrateEquipmentSize(item, updateData);
   _migrateTags(item, updateData);
   _migrateSpellCosts(item, updateData);
+  _migrateLootEquip(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -659,6 +660,12 @@ const _migrateSpellCosts = function(ent, updateData) {
     updateData["data.spellPoints.cost"] = "1 + @sl";
   }
 };
+
+const _migrateLootEquip = function(ent, updateData) {
+  if (ent.type === "loot" && !hasProperty(ent.data, "equipped")) {
+    updateData["data.equipped"] = false;
+  }
+}
 
 const _migrateActorCR = function(ent, updateData) {
   // Migrate base CR

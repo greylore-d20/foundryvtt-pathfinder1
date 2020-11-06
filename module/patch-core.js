@@ -56,9 +56,15 @@ export async function PatchCore() {
   // Patch ActorTokenHelpers.update
   const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
   ActorTokenHelpers.prototype.update = async function(data, options={}) {
+
+    // Avoid regular update flow for explicitly non-recursive update calls
+    if (getProperty(options, "recursive") === false) {
+      return ActorTokenHelpers_update.call(this, data, options);
+    }
+
     // Pre update
     if (isMinimumCoreVersion("0.7.4")) {
-      this.preUpdate(data);
+      data = this.preUpdate(data);
     }
 
     // Update changes
@@ -69,10 +75,14 @@ export async function PatchCore() {
       diff = mergeObject(diff, updateObj.diff);
     }
 
+    // console.log(this.name, diff);
     if (Object.keys(diff).length) {
-      await ActorTokenHelpers_update.call(this, diff, options);
+      await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
     }
-    await this.toggleConditionStatusIcons();
+    const promises = [];
+    if (this.sheet) promises.push(this.sheet.render());
+    promises.push(this.toggleConditionStatusIcons());
+    await Promise.all(promises);
   };
   // Patch ActorTokenHelpers.createEmbeddedEntity
   const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;

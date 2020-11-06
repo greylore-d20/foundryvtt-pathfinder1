@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.75.9
+
+### Changelog
+
+- Introduces a tab on actor sheets for settings
+  - Made spellbooks selectable on the settings tab
+
 ## 0.75.8
 
 ### Bug Fixes

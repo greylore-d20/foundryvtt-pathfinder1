@@ -416,6 +416,27 @@ export class ActorPF extends Actor {
   preUpdate(data) {
     data = flattenObject(data);
 
+    // Apply settings
+    // Set used spellbook flags
+    {
+      const re = new RegExp(/^spellbook-([a-zA-Z]+)-inuse$/);
+      const sbData = Object.entries(data).filter(o => {
+        const result = o[0].match(re);
+        if (result) delete data[o[0]];
+        return result;
+      })
+      .map(o => {
+        return { spellbook: o[0].replace(re, "$1"), inUse: o[1] === true };
+      });
+
+      const usedSpellbooks = getProperty(data, "data.attributes.spells.usedSpellbooks") || getProperty(this.data, "data.attributes.spells.usedSpellbooks") || [];
+      for (let o of sbData) {
+        if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
+        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook)) usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
+      }
+      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+    }
+
     // Make certain variables absolute
     const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {
       arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
@@ -514,10 +535,9 @@ export class ActorPF extends Actor {
    */
   async update(data, options={}) {
 
-    // Avoid reular update flow for explicitly non-recursive update calls
+    // Avoid regular update flow for explicitly non-recursive update calls
     if (getProperty(options, "recursive") === false) {
-      await super.update(data, options);
-      return;
+      return super.update(data, options);
     }
 
     data = this.preUpdate(data);

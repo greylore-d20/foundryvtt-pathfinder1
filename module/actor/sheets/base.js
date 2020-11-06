@@ -95,6 +95,7 @@ export class ActorSheetPF extends ActorSheet {
       spellFailure: this.entity.spellFailure,
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
+      usesAnySpellbook: (getProperty(this.actor.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
     };
     const rollData = this.actor.getRollData();
     data.rollData = rollData;
@@ -200,13 +201,14 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update spellbook info
-    for (let spellbook of Object.values(data.actor.data.attributes.spells.spellbooks)) {
+    for (let [sk, spellbook] of Object.entries(data.actor.data.attributes.spells.spellbooks)) {
       const cl = spellbook.cl.total;
       spellbook.range = {
         close: 25 + 5 * Math.floor(cl / 2),
         medium: 100 + 10 * cl,
         long: 400 + 40 * cl
       };
+      spellbook.inUse = (getProperty(data.actor.data, "attributes.spells.usedSpellbooks") || []).includes(sk);
     }
 
     // Control items
@@ -1987,7 +1989,7 @@ export class ActorSheetPF extends ActorSheet {
     el.value = value + amount * increase;
   }
 
-  async _updateObject(event, formData) {
+  _updateObject(event, formData) {
     // Translate CR
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
@@ -2069,11 +2071,11 @@ export class ActorSheetPF extends ActorSheet {
     return super._updateObject(event, formData);
   }
 
-  async _renderInner(data, options) {
-    let t1 = new Date();
-    const result = await super._renderInner(data, options);
-    let t2 = new Date();
-    console.trace(t2 - t1);
-    return result;
-  }
+  // async _renderInner(data, options) {
+    // let t1 = new Date();
+    // const result = await super._renderInner(data, options);
+    // let t2 = new Date();
+    // console.trace(t2 - t1);
+    // return result;
+  // }
 }

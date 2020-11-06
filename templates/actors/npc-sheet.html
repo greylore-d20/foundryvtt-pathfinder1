@@ -9,9 +9,10 @@
       <a class="item" data-tab="feats">{{ localize "PF1.Features" }}</a>
       <a class="item" data-tab="skills">{{ localize "PF1.Skills" }}</a>
       <a class="item" data-tab="buffs">{{ localize "PF1.Buffs" }}</a>
-      <a class="item" data-tab="spellbook">{{ localize "PF1.Spells" }}</a>
+      {{#if usesAnySpellbook}}<a class="item" data-tab="spellbook">{{ localize "PF1.Spells" }}</a>{{/if}}
       <a class="item" data-tab="biography">{{ localize "PF1.Biography" }}</a>
       <a class="item" data-tab="notes">{{ localize "PF1.Notes" }}</a>
+      <a class="item" data-tab="settings">{{ localize "PF1.Settings" }}</a>
     </nav>
 
     {{!-- NPC Sheet Body --}}
@@ -54,9 +55,11 @@
       </div>
 
       {{!-- Spellbook Tab --}}
+      {{#if usesAnySpellbook}}
       <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
         {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.html"}}
       </div>
+      {{/if}}
 
       {{!-- Biography Tab --}}
       <div class="tab biography flexcol" data-group="primary" data-tab="biography">
@@ -74,6 +77,11 @@
           {{{table_magicItems}}}
         </div>
         {{/if}}
+      </div>
+
+      {{!-- Settings Tab --}}
+      <div class="tab settings flexcol" data-group="primary" data-tab="settings">
+        {{> "systems/pf1/templates/actors/parts/actor-settings.html"}}
       </div>
     </section>
   </form>

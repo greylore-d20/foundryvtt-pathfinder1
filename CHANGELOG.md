@@ -6,6 +6,7 @@
 
 - Bestiary browser failed to load if non-system actor compendiums were present (#320)
 - Armor Check Penalty and Maximum Dexterity Bonus source info didn't take masterwork and changes into account (#317)
+- Default status overlay icons transferred over to the main actor when toggled for unlinked tokens (#319)
 
 ### Changelog
 

@@ -75,7 +75,6 @@ export async function PatchCore() {
       diff = mergeObject(diff, updateObj.diff);
     }
 
-    // console.log(this.name, diff);
     if (Object.keys(diff).length) {
       await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
     }
@@ -83,13 +82,6 @@ export async function PatchCore() {
     if (this.sheet) promises.push(this.sheet.render());
     promises.push(this.toggleConditionStatusIcons());
     await Promise.all(promises);
-  };
-  // Patch ActorTokenHelpers.createEmbeddedEntity
-  const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
-  ActorTokenHelpers.prototype.createEmbeddedEntity = async function(...args) {
-    await ActorTokenHelpers_createEmbeddedEntity.call(this, ...args);
-
-    return ActorPF.prototype.update.call(this, {});
   };
   // Patch ActorTokenHelpers.updateEmbeddedEntity
   const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;

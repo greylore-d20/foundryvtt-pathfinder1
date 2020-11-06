@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Bestiary browser failed to load if non-system actor compendiums were present (#320)
+- Armor Check Penalty and Maximum Dexterity Bonus source info didn't take masterwork and changes into account (#317)
 
 ### Changelog
 

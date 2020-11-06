@@ -116,35 +116,35 @@ export const updateChanges = async function({data=null}={}) {
             sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
             sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
             targets = [
-              sourceInfo["data.attributes.ac.normal.total"].negative,
-              sourceInfo["data.attributes.ac.touch.total"].negative,
-              sourceInfo["data.attributes.cmd.total"].negative
+              getSourceInfo(sourceInfo, "data.attributes.ac.normal.total").negative,
+              getSourceInfo(sourceInfo, "data.attributes.ac.touch.total").negative,
+              getSourceInfo(sourceInfo, "data.attributes.cmd.total").negative,
             ];
             value = "Lose Dex to AC";
             break;
           case "noDex":
             sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
-            targets = [sourceInfo["data.abilities.dex.total"].negative];
+            targets = [getSourceInfo(sourceInfo, "data.abilities.dex.total").negative];
             value = "0 Dex";
             break;
           case "noStr":
             sourceInfo["data.abilities.str.total"] = sourceInfo["data.abilities.str.total"] || { positive: [], negative: [] };
-            targets = [sourceInfo["data.abilities.str.total"].negative];
+            targets = [getSourceInfo(sourceInfo, "data.abilities.str.total").negative];
             value = "0 Str";
             break;
           case "oneInt":
             sourceInfo["data.abilities.int.total"] = sourceInfo["data.abilities.int.total"] || { positive: [], negative: [] };
-            targets = [sourceInfo["data.abilities.int.total"].negative];
+            targets = [getSourceInfo(sourceInfo, "data.abilities.int.total").negative];
             value = "1 Int";
             break;
           case "oneWis":
             sourceInfo["data.abilities.wis.total"] = sourceInfo["data.abilities.wis.total"] || { positive: [], negative: [] };
-            targets = [sourceInfo["data.abilities.wis.total"].negative];
+            targets = [getSourceInfo(sourceInfo, "data.abilities.wis.total").negative];
             value = "1 Wis";
             break;
           case "oneCha":
             sourceInfo["data.abilities.cha.total"] = sourceInfo["data.abilities.cha.total"] || { positive: [], negative: [] };
-            targets = [sourceInfo["data.abilities.cha.total"].negative];
+            targets = [getSourceInfo(sourceInfo, "data.abilities.cha.total").negative];
             value = "1 Cha";
             break;
         }
@@ -199,7 +199,7 @@ export const updateChanges = async function({data=null}={}) {
   let temp = [];
   const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
   updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
-  _addDynamicData.call(this, { updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags });
+  _addDynamicData.call(this, { updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags, sourceInfo: sourceInfo });
 
   {
     const highestArmorEnhBonus = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped)
@@ -259,15 +259,14 @@ export const updateChanges = async function({data=null}={}) {
         let flats = getChangeFlat(change.raw.subTarget, change.raw.modifier, srcData1.data);
         if (!(flats instanceof Array)) flats = [flats];
         flats.forEach(f => {
-          sourceInfo[f] = sourceInfo[f] || { positive: [], negative: [] };
-          sourceInfo[f].positive.push(change.source);
+          getSourceInfo(sourceInfo, f).positive.push(change.source);
         });
       }
       // Add change
       else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
         if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
           const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
-          _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags });
+          _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags, sourceInfo: sourceInfo });
           temp = [];
         }
       }
@@ -278,9 +277,6 @@ export const updateChanges = async function({data=null}={}) {
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
-  for (let k of ["data.attributes.acp.total", "data.attributes.maxDexBonus"]) {
-    sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
-  }
   switch (srcData1.data.attributes.encumbrance.level) {
     case 0:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 0);
@@ -288,14 +284,14 @@ export const updateChanges = async function({data=null}={}) {
     case 1:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 3);
       linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3));
-      sourceInfo["data.attributes.acp.total"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
-      sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
+      getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
+      getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 3 });
       break;
     case 2:
       linkData(srcData1, updateData, "data.attributes.acp.encumbrance", 6);
       linkData(srcData1, updateData, "data.attributes.maxDexBonus", Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1));
-      sourceInfo["data.attributes.acp.total"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 6 });
-      sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 1 });
+      getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 6 });
+      getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.push({ name: game.i18n.localize("PF1.Encumbrance"), value: 1 });
       break;
   }
   linkData(srcData1, updateData, "data.attributes.acp.total", Math.max(updateData["data.attributes.acp.gear"], updateData["data.attributes.acp.encumbrance"]));
@@ -347,14 +343,6 @@ export const updateChanges = async function({data=null}={}) {
         }
       }
     }
-
-    // Add ACP and Maximum Dexterity Bonus source info
-    armorItems.forEach(o => {
-      const acp = getProperty(o, "data.armor.acp");
-      const dex = getProperty(o, "data.armor.dex");
-      if (acp) sourceInfo["data.attributes.acp.total"].negative.push({ name: o.name, value: Math.abs(acp) });
-      if (dex) sourceInfo["data.attributes.maxDexBonus"].negative.push({ name: o.name, value: Math.abs(dex) });
-    });
   }
 
   // Reset spell slots and spell points
@@ -366,7 +354,6 @@ export const updateChanges = async function({data=null}={}) {
     // Set CL
     {
       const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
-      sourceInfo[key] = sourceInfo[key] || { positive: [], negative: [] };
       const formula = getProperty(spellbook, "cl.formula") || "0";
       const rollData = this.getRollData(srcData1.data);
       let total = 0;
@@ -375,33 +362,33 @@ export const updateChanges = async function({data=null}={}) {
       if (this.data.type === "npc") {
         const value = (getProperty(spellbook, "cl.base") || 0);
         total += value;
-        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
+        getSourceInfo(sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
       }
       // Add HD
       if (spellbook.class === "_hd") {
         const value = (getProperty(srcData1, "data.attributes.hd.total"));
         total += value;
-        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
+        getSourceInfo(sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
       }
       // Add class levels
       else if (spellbook.class && rollData.classes[spellbook.class]) {
         const value = rollData.classes[spellbook.class].level;
         total += value;
-        sourceInfo[key].positive.push({ name: rollData.classes[spellbook.class].name, value: value });
+        getSourceInfo(sourceInfo, key).positive.push({ name: rollData.classes[spellbook.class].name, value: value });
       }
       // Add from bonus formula
       const clBonus = new Roll(formula, rollData).roll().total;
       total += clBonus;
       if (clBonus > 0) {
-        sourceInfo[key].positive.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
+        getSourceInfo(sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
       }
       else if (clBonus < 0) {
-        sourceInfo[key].negative.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
+        getSourceInfo(sourceInfo, key).negative.push({ name: game.i18n.localize("PF1.CasterLevelBonusFormula"), value: clBonus });
       }
       // Subtract energy drain
       if (rollData.attributes.energyDrain) {
         total = Math.max(0, total - rollData.attributes.energyDrain);
-        sourceInfo[key].negative.push({ name: game.i18n.localize("PF1.CondTypeEnergyDrain"), value: -Math.abs(rollData.attributes.energyDrain) });
+        getSourceInfo(sourceInfo, key).negative.push({ name: game.i18n.localize("PF1.CondTypeEnergyDrain"), value: -Math.abs(rollData.attributes.energyDrain) });
       }
       linkData(srcData1, updateData, key, total);
     }
@@ -470,9 +457,8 @@ export const updateChanges = async function({data=null}={}) {
 
       // Add sources
       for (let ebt of Object.values(customBuffTargets)) {
-        sourceInfo[ebt] = sourceInfo[ebt] || { positive: [], negative: [] };
-        if (values.positive.value > 0) sourceInfo[ebt].positive.push(...values.positive.sources);
-        if (values.negative.value < 0) sourceInfo[ebt].negative.push(...values.negative.sources);
+        if (values.positive.value > 0) getSourceInfo(sourceInfo, ebt).positive.push(...values.positive.sources);
+        if (values.negative.value < 0) getSourceInfo(sourceInfo, ebt).negative.push(...values.negative.sources);
       }
     }
   }
@@ -603,8 +589,7 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 
         const v = updateData[k];
         if (v !== 0) {
-          sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
-          sourceInfo[k].positive.push({ name: game.i18n.localize("PF1.Base"), value: updateData[k] });
+          getSourceInfo(sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: updateData[k] });
         }
       }
       else {
@@ -616,8 +601,7 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
             const v = Math.floor(new Roll(formula, {level: obj.data.level}).roll().total);
 
             if (v !== 0) {
-              sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
-              sourceInfo[k].positive.push({ name: getProperty(obj, "name"), value: v });
+              getSourceInfo(sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
             }
 
             return cur + v;
@@ -654,8 +638,7 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 
       const v = updateData[k];
       if (v !== 0) {
-        sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
-        sourceInfo[k].positive.push({ name: game.i18n.localize("PF1.Base"), value: v });
+        getSourceInfo(sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: v });
       }
     }
     else {
@@ -664,8 +647,7 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
         const v = new Roll(formula, {level: obj.data.level}).roll().total;
 
         if (v !== 0) {
-          sourceInfo[k] = sourceInfo[k] || { positive: [], negative: [] };
-          sourceInfo[k].positive.push({ name: getProperty(obj, "name"), value: v });
+          getSourceInfo(sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
         }
 
         return cur + v;
@@ -693,7 +675,7 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
   }
 };
 
-const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, forceModUpdate=false}={}) {
+const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, forceModUpdate=false, sourceInfo=null}={}) {
   const prevMods = { total: {}, base: {} };
   const modDiffs = { total: {}, base: {} };
 
@@ -722,6 +704,14 @@ const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, 
         itemACP *= 2;
       }
 
+      if (itemACP && sourceInfo) {
+        const sInfo = getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.find(o => o.name === obj.name);
+        if (sInfo) sInfo.value = itemACP;
+        else {
+          getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.push({ name: obj.name, value: itemACP });
+        }
+      }
+
       switch (obj.data.equipmentType) {
         case "armor":
           armorACP = Math.max(armorACP == null ? -999 : armorACP, itemACP);
@@ -736,11 +726,25 @@ const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, 
           case "armor":
             if (obj.data.armor.dex) {
               armorMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"]);
+              if (armorMDex && sourceInfo) {
+                const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(o => o.name === obj.name);
+                if (sInfo) sInfo.value = armorMDex;
+                else {
+                  getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.push({ name: obj.name, value: armorMDex });
+                }
+              }
             }
             break;
           case "shield":
             if (obj.data.armor.dex) {
               shieldMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"]);
+              if (shieldMDex && sourceInfo) {
+                const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(o => o.name === obj.name);
+                if (sInfo) sInfo.value = shieldMDex;
+                else {
+                  getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.push({ name: obj.name, value: shieldMDex });
+                }
+              }
             }
             break;
         }
@@ -1102,14 +1106,10 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
           source: { name: game.i18n.localize("PF1.CondBlind") }
         });
         flags["loseDexToAC"] = true;
-        sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.cmd.flatFootedTotal"] = sourceInfo["data.attributes.cmd.flatFootedTotal"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
-        sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
-        sourceInfo["data.attributes.cmd.total"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
-        sourceInfo["data.attributes.cmd.flatFootedTotal"].negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.ac.normal.total").negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.ac.touch.total").negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.cmd.total").negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.cmd.flatFootedTotal").negative.push({ name: game.i18n.localize("PF1.CondBlind"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
         break;
       case "dazzled":
         changes.push({
@@ -1149,25 +1149,19 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
         break;
       case "helpless":
         flags["noDex"] = true;
-        sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
-        sourceInfo["data.abilities.dex.total"].negative.push({ name: game.i18n.localize("PF1.CondHelpless"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
+        getSourceInfo(sourceInfo, "data.abilities.dex.total").negative.push({ name: game.i18n.localize("PF1.CondHelpless"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
         break;
       case "paralyzed":
         flags["noDex"] = true;
         flags["noStr"] = true;
-        sourceInfo["data.abilities.dex.total"] = sourceInfo["data.abilities.dex.total"] || { positive: [], negative: [] };
-        sourceInfo["data.abilities.dex.total"].negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
-        sourceInfo["data.abilities.str.total"] = sourceInfo["data.abilities.str.total"] || { positive: [], negative: [] };
-        sourceInfo["data.abilities.str.total"].negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoStr") });
+        getSourceInfo(sourceInfo, "data.abilities.dex.total").negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoDex") });
+        getSourceInfo(sourceInfo, "data.abilities.str.total").negative.push({ name: game.i18n.localize("PF1.CondParalyzed"), value: game.i18n.localize("PF1.ChangeFlagNoStr") });
         break;
       case "pinned":
         flags["loseDexToAC"] = true;
-        sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
-        sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
-        sourceInfo["data.attributes.cmd.total"].negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.ac.normal.total").negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.ac.touch.total").negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
+        getSourceInfo(sourceInfo, "data.attributes.cmd.total").negative.push({ name: game.i18n.localize("PF1.CondPinned"), value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC") });
         break;
       case "fear":
         changes.push({
@@ -1215,12 +1209,9 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
           source: { name: game.i18n.localize("PF1.CondStunned") }
         });
         flags["loseDexToAC"] = true;
-        sourceInfo["data.attributes.ac.normal.total"] = sourceInfo["data.attributes.ac.normal.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.touch.total"] = sourceInfo["data.attributes.ac.touch.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.cmd.total"] = sourceInfo["data.attributes.cmd.total"] || { positive: [], negative: [] };
-        sourceInfo["data.attributes.ac.normal.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
-        sourceInfo["data.attributes.ac.touch.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
-        sourceInfo["data.attributes.cmd.total"].negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+        getSourceInfo(sourceInfo, "data.attributes.ac.normal.total").negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+        getSourceInfo(sourceInfo, "data.attributes.ac.touch.total").negative.push({ name: "Stunned", value: "Lose Dex to AC" });
+        getSourceInfo(sourceInfo, "data.attributes.cmd.total").negative.push({ name: "Stunned", value: "Lose Dex to AC" });
         break;
     }
   }
@@ -1686,4 +1677,11 @@ const _updateSimpleAttributes = function(updateData, data) {
       linkData(data, updateData, "data.attributes.sr.total", 0);
     }
   }
+};
+
+const getSourceInfo = function(obj, key) {
+  if (!obj[key]) {
+    obj[key] = { negative: [], positive: [] };
+  }
+  return obj[key];
 };

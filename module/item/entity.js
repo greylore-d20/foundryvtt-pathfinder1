@@ -2948,7 +2948,7 @@ export class ItemPF extends Item {
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
     if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
-    if (this.isCharged) {
+    if (Object.keys(this.getConditionalSubTargets("misc")).length > 0) {
       result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
     }
     return result;

@@ -59,8 +59,12 @@ export class ItemPF extends Item {
     );
   }
 
+  get hasSound() {
+    return !!this.data.data.soundEffect;
+  }
+
   get hasAction() {
-    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasTemplate;
+    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasSave || this.hasTemplate || this.hasSound;
   }
 
   get isSingleUse() {
@@ -363,7 +367,7 @@ export class ItemPF extends Item {
    * @type {boolean}
    */
   get hasSave() {
-    return !!(this.data.data.save && this.data.data.save.type);
+    return !!this.data.data.save?.type;
   }
 
   /**
@@ -1602,7 +1606,7 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
       // Add effect notes only
-      else if (this.hasEffect) {
+      else if (this.hasEffect || this.hasSave) {
         let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
 
         // Add effect notes
@@ -1683,9 +1687,6 @@ export class ItemPF extends Item {
       // Set attack sound
       if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
 
-      // Send spell info
-      const hasAction = this.hasAttack || this.hasDamage || this.hasEffect;
-
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {
         // Use try to make sure a chat card is rendered even if DsN fails
@@ -1743,7 +1744,7 @@ export class ItemPF extends Item {
       }
 
       // Post message
-      if (hasAction) {
+      if (this.hasAction) {
         // Get extra text and properties
         let props = [];
         let extraText = "";

@@ -159,6 +159,12 @@
       <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}" data-tags="{{item.tags}}">{{../save.label}}</button>
       {{/if}}
     </div>
+    {{else}}
+    <div class="card-button-group flexcol">
+      {{#if ../save.hasSave}}
+      <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}">{{../save.label}}</button>
+    </div>
+      {{/if}}
     {{/if}}
 
     {{{atk.effectNotesHTML}}}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.75.10
+
+### Bug Fixes
+
+- Fix actor sheets not being rendered due to missing template files
+- Fix Conditional Modifier category Misc being incorrectly hidden
+- Fix Context Notes not being shown for subskills
+
 ## 0.75.9
 
 ### Bug Fixes

@@ -8,6 +8,11 @@
 - Fix Conditional Modifier category Misc being incorrectly hidden
 - Fix Context Notes not being shown for subskills
 - Fix total spells per day tooltip overflowing (#323)
+- Patch core foundry bugs (Core#4052/ Core#4043)
+
+### Changelog
+
+- Add compatibility with FoundryVTT 0.7.6
 
 ## 0.75.9
 

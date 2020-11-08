@@ -43,6 +43,7 @@ export async function PatchCore() {
   };
 
   //Remove after 0.7.7
+  if (isMinimumCoreVersion("0.7.6")) {
   const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;
   Roll.prototype._splitDiceTerms = function(formula) {
 
@@ -80,6 +81,7 @@ export async function PatchCore() {
     }, []);
     return terms;
   };
+  }
   
   
   // Patch ActorTokenHelpers.update

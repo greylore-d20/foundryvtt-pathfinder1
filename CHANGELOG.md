@@ -7,6 +7,7 @@
 - Fix actor sheets not being rendered due to missing template files
 - Fix Conditional Modifier category Misc being incorrectly hidden
 - Fix Context Notes not being shown for subskills
+- Fix total spells per day tooltip overflowing (#323)
 
 ## 0.75.9
 

@@ -230,7 +230,8 @@ export const updateChanges = async function({data=null}={}) {
       // Process result
       let value = 0;
       try {
-        value = roll.roll().total;
+        if (roll.formula == 'null') 
+          value = roll.roll().total;
 
         if (change.raw.target === "ac" && change.raw.modifier === "enh") {
           if (change.raw.subTarget === "aac") {

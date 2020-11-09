@@ -1152,7 +1152,7 @@ export class ItemPF extends Item {
         return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
       }
       if (this.autoDeductCharges) {
-        this.addCharges(-this.chargeCost);
+        await this.addCharges(-this.chargeCost);
       }
     }
     const chatData = {};

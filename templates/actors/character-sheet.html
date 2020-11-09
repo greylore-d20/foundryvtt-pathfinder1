@@ -57,16 +57,16 @@
     </div>
 
     {{!-- Spellbook Tab --}}
+    {{#if usesAnySpellbook}}
     <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
       {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.html"}}
     </div>
+    {{/if}}
 
     {{!-- Biography Tab --}}
-    {{#if usesAnySpellbook}}
     <div class="tab biography flexcol" data-group="primary" data-tab="biography">
       {{roll-editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
     </div>
-    {{/if}}
 
     {{!-- Notes Tab --}}
     <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">

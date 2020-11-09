@@ -1,6 +1,7 @@
 import { linkData } from "../lib.js";
 import { ActorPF } from "./entity.js";
 import { ItemPF } from "../item/entity.js";
+import { ItemChange } from "../item/components/change.js";
 
 export const updateChanges = async function({data=null}={}) {
   let updateData = {};
@@ -855,11 +856,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
 
   const push_health = (value, source) => {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "mhp", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: value.toString(), target: "misc", subTarget: "mhp", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: source.name, subtype: source.name.toString()}
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: value.toString(), target: "misc", subTarget: "vigor", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: source.name, subtype: source.name.toString()}
     });
   };
@@ -900,11 +901,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   if (hpAbility == null) hpAbility = "con";
   if (hpAbility !== "") {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`, target: "misc", subTarget: "mhp", modifier: "base" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`, target: "misc", subTarget: "mhp", modifier: "base" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.AbilityCon")}
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, target: "misc", subTarget: "wounds", modifier: "base" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: `2 * (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`, target: "misc", subTarget: "wounds", modifier: "base" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.AbilityCon")}
     });
   }
@@ -914,7 +915,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     let base = s.base;
     if (!base) base = 0;
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: base.toString(), target: "speed", subTarget: `${k}Speed`, modifier: "base", operator: "set", priority: 1000 }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: base.toString(), target: "speed", subTarget: `${k}Speed`, modifier: "base", operator: "set", priority: 1000 }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.Base")},
     });
   }
@@ -923,36 +924,36 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   {
     // BAB to CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.BAB")},
     });
     // Ability to CMB
     const abl = getProperty(data, "data.attributes.cmbAbility");
     if (abl) {
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
+        raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
         source: {name: CONFIG.PF1.abilities[abl]},
       });
     }
     // Energy Drain to CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmb", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
     });
 
     // BAB to CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "@attributes.bab.total", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.BAB")},
     });
     // Strength to CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "@abilities.str.mod", target: "misc", subTarget: "cmd", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities["str"]},
     });
     // Energy Drain to CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-@attributes.energyDrain", target: "misc", subTarget: "cmd", modifier: "untyped" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
     });
   }
@@ -960,7 +961,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   // Add Dexterity Modifier to Initiative
   {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untypedPerm", priority: -100 }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untypedPerm", priority: -100 }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities["dex"]},
     });
   }
@@ -971,24 +972,24 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     // Ability Mod to Fortitude
     abl = getProperty(data, "data.attributes.savingThrows.fort.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Ability Mod to Reflex
     abl = getProperty(data, "data.attributes.savingThrows.ref.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Ability Mod to Will
     abl = getProperty(data, "data.attributes.savingThrows.will.ability");
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untypedPerm" }, {inplace: false}),
       source: {name: CONFIG.PF1.abilities[abl]},
     });
     // Energy Drain
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-@attributes.energyDrain", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-@attributes.energyDrain", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
       source: {name: game.i18n.localize("PF1.CondTypeEnergyDrain")},
     });
   }
@@ -996,7 +997,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   {
     const ac = getProperty(data, "data.attributes.naturalAC") || 0;
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: ac.toString(), target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: ac.toString(), target: "ac", subTarget: "nac", modifier: "base" }, {inplace: false}),
       source: {
         name: game.i18n.localize("PF1.BuffTarACNatural"),
       }
@@ -1012,7 +1013,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
       if (item.data.broken) ac = Math.floor(ac / 2);
       ac += item.data.armor.enh;
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: ac.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
+        raw: mergeObject(ItemChange.defaultData, { formula: ac.toString(), target: "ac", subTarget: armorTarget, modifier: "base" }, {inplace: false}),
         source: {
           type: item.type,
           name: item.name
@@ -1027,7 +1028,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
   if (flyValue !== 0) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: flyValue.toString(), target: "skill", subTarget: "skill.fly", modifier: "untypedPerm" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: flyValue.toString(), target: "skill", subTarget: "skill.fly", modifier: "untypedPerm" }, {inplace: false}),
       source: {
         name: game.i18n.localize("PF1.FlyManeuverability"),
       },
@@ -1039,7 +1040,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     const swimSpeed = getProperty(data, "data.attributes.speed.swim.total") || 0;
     if (climbSpeed > 0) {
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: "8", target: "skill", subTarget: "skill.clm", modifier: "racial" }, {inplace: false}),
+        raw: mergeObject(ItemChange.defaultData, { formula: "8", target: "skill", subTarget: "skill.clm", modifier: "racial" }, {inplace: false}),
         source: {
           name: game.i18n.localize("PF1.SpeedClimb"),
         },
@@ -1047,7 +1048,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     }
     if (swimSpeed > 0) {
       changes.push({
-        raw: mergeObject(ItemPF.defaultChange, { formula: "8", target: "skill", subTarget: "skill.swm", modifier: "racial" }, {inplace: false}),
+        raw: mergeObject(ItemChange.defaultData, { formula: "8", target: "skill", subTarget: "skill.swm", modifier: "racial" }, {inplace: false}),
         source: {
           name: game.i18n.localize("PF1.SpeedSwim"),
         },
@@ -1060,35 +1061,35 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   if (sizeKey !== "med") {
     // AC
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeMods[sizeKey].toString(), target: "ac", subTarget: "ac", modifier: "size" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: CONFIG.PF1.sizeMods[sizeKey].toString(), target: "ac", subTarget: "ac", modifier: "size" }, {inplace: false}),
       source: {
         type: "size"
       }
     });
     // Stealth skill
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeStealthMods[sizeKey].toString(), target: "skill", subTarget: "skill.ste", modifier: "size" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: CONFIG.PF1.sizeStealthMods[sizeKey].toString(), target: "skill", subTarget: "skill.ste", modifier: "size" }, {inplace: false}),
       source: {
         type: "size"
       }
     });
     // Fly skill
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeFlyMods[sizeKey].toString(), target: "skill", subTarget: "skill.fly", modifier: "size" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: CONFIG.PF1.sizeFlyMods[sizeKey].toString(), target: "skill", subTarget: "skill.fly", modifier: "size" }, {inplace: false}),
       source: {
         type: "size"
       }
     });
     // CMB
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmb", modifier: "size" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmb", modifier: "size" }, {inplace: false}),
       source: {
         type: "size"
       }
     });
     // CMD
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmd", modifier: "size" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(), target: "misc", subTarget: "cmd", modifier: "size" }, {inplace: false}),
       source: {
         type: "size"
       }
@@ -1102,7 +1103,7 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     switch (con) {
       case "blind":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondBlind") }
         });
         flags["loseDexToAC"] = true;
@@ -1113,37 +1114,37 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
         break;
       case "dazzled":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-1", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-1", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondDazzled") }
         });
         break;
       case "deaf":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "misc", subTarget: "init", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-4", target: "misc", subTarget: "init", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondDeaf") }
         });
         break;
       case "entangled":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondEntangled") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondEntangled") }
         });
         break;
       case "grappled":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-4", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondGrappled") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondGrappled") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "misc", subTarget: "cmb", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "misc", subTarget: "cmb", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondGrappled") }
         });
         break;
@@ -1165,47 +1166,47 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
         break;
       case "fear":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondFear") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondFear") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondFear") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondFear") }
         });
         break;
       case "sickened":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "attack", subTarget: "attack", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondSickened") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "damage", subTarget: "wdamage", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "damage", subTarget: "wdamage", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondSickened") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondSickened") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "skills", subTarget: "skills", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondSickened") }
         });
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "abilityChecks", subTarget: "allChecks", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondSickened") }
         });
         break;
       case "stunned":
         changes.push({
-          raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
+          raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "ac", subTarget: "ac", modifier: "penalty" }, {inplace: false}),
           source: { name: game.i18n.localize("PF1.CondStunned") }
         });
         flags["loseDexToAC"] = true;
@@ -1219,21 +1220,21 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   // Handle fatigue and exhaustion so that they don't stack
   if (data.data.attributes.conditions.exhausted) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-6", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-6", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondExhausted") }
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-6", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-6", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondExhausted") }
     });
   }
   else if (data.data.attributes.conditions.fatigued) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "ability", subTarget: "str", modifier: "penalty" }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondFatigued") }
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-2", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-2", target: "ability", subTarget: "dex", modifier: "penalty" }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondFatigued") }
     });
   }
@@ -1241,11 +1242,11 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   // Apply level drain to hit points
   if (!Number.isNaN(data.data.attributes.energyDrain) && data.data.attributes.energyDrain > 0) {
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "mhp", modifier: "untyped", priority: -750 }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "mhp", modifier: "untyped", priority: -750 }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
     });
     changes.push({
-      raw: mergeObject(ItemPF.defaultChange, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "vigor", modifier: "untyped", priority: -750 }, {inplace: false}),
+      raw: mergeObject(ItemChange.defaultData, { formula: "-(@attributes.energyDrain * 5)", target: "misc", subTarget: "vigor", modifier: "untyped", priority: -750 }, {inplace: false}),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") }
     });
   }

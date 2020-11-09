@@ -281,18 +281,6 @@ export class ItemPF extends Item {
     return this.constructor.getTypeColor(this.type, 1);
   }
 
-  static get defaultChange() {
-    return {
-      formula: "",
-      operator: "add",
-      target: "",
-      subTarget: "",
-      modifier: "",
-      priority: 0,
-      value: 0,
-    };
-  }
-
   static get defaultConditional() {
     return {
       default: false,

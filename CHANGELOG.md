@@ -8,7 +8,7 @@
 - Fix Conditional Modifier category Misc being incorrectly hidden
 - Fix Context Notes not being shown for subskills
 - Fix total spells per day tooltip overflowing (#323)
-- Patch core foundry bugs (Core#4052/ Core#4043)
+- Patch core foundry bug (Core#4043)
 - Fix Biography being unviewable without spellcasting classes set (#322)
 - Item chat cards without an attack showed an incorrect amount of charges (#332)
 

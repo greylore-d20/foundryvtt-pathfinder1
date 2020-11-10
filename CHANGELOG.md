@@ -11,6 +11,7 @@
 - Prepared spellbooks now refresh spell slots on rest (#137)
 - Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots on rest
 - Added a numeric field for spell material component costs
+- Conditional Modifiers can now be copied via Drag and Drop
 
 ### Localization
 

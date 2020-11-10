@@ -728,6 +728,15 @@ export class ItemSheetPF extends ItemSheet {
 
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
+
+    // Conditional Dragging
+    html.find("li.conditional").each((i, li) => {
+      li.setAttribute("draggable", true);
+      li.addEventListener("dragstart", ev => this._onDragConditionalStart(ev), false);
+    });
+
+    // Conditional Dropping
+    html.find('div[data-tab="conditionals"]').on("drop", this._onConditionalDrop.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -816,6 +825,49 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
+  }
+
+  _onDragConditionalStart(event) {
+    const elem = event.currentTarget;
+    const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
+    event.dataTransfer.setData('text/plain', JSON.stringify(conditional));
+  }
+
+  async _onConditionalDrop(event) {
+    event.preventDefault();
+
+    let data;
+    try {
+      data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      // Surface-level check for conditional
+      if (!(data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers))) return;
+    } catch (e) {
+      return false;
+    }
+
+    const item = this.object;
+    // Check targets and other fields for valid values, reset if necessary
+    for (let modifier of data.modifiers) {
+      if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
+      let keys;
+      for (let [k, v] of Object.entries(modifier)) {
+        switch (k) {
+          case "subTarget":
+            keys = Object.keys(item.getConditionalSubTargets(modifier.target));
+            break;
+          case "type":
+            keys = Object.keys(item.getConditionalModifierTypes(modifier.target));
+            break;
+          case "critical":
+            keys = Object.keys(item.getConditionalCritical(modifier.target));
+            break;
+        }
+        if (!keys?.includes(v)) v = keys?.[0] ?? "";
+      }
+    }
+
+    const conditionals = item.data.data.conditionals || [];
+    await this.object.update({"data.conditionals": conditionals.concat([data])});
   }
 
   /**

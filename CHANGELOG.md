@@ -15,6 +15,8 @@
 ### Localization
 
 - Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+- Updated the Italian localization, due to the efforts of Marco (many thanks!)
 
 ## 0.75.10
 

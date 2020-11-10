@@ -2,6 +2,10 @@
 
 ## 0.75.11
 
+### Bug Fixes
+
+- Items with the same name buggily shared charges (#136)
+
 ### Localization
 
 - Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)

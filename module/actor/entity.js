@@ -642,7 +642,7 @@ export class ActorPF extends Actor {
     super._onCreate(data, options, userId, context);
   }
 
-  updateItemResources(item) {
+  async updateItemResources(item) {
     if (!(item instanceof Item)) return;
     if (!this.hasPerm(game.user, "OWNER")) return;
 
@@ -650,21 +650,29 @@ export class ActorPF extends Actor {
       const itemTag = createTag(item.data.name);
       let curUses = item.data.data.uses;
 
-      if (this.data.data.resources == null) this.data.data.resources = {};
-      if (this.data.data.resources[itemTag] == null) this.data.data.resources[itemTag] = { value: 0, max: 1, _id: "" };
+      const res = getProperty(this.data, `data.resources.${itemTag}`);
+      if (!res || (res && !res._id)) {
+        const updateData = {
+          [`data.resources.${itemTag}.value`]: curUses.value,
+          [`data.resources.${itemTag}.max`]: curUses.max,
+          [`data.resources.${itemTag}._id`]: item._id,
+        };
+        return this.update(updateData);
+      }
 
-      const updateData = {};
-      if (this.data.data.resources[itemTag].value !== curUses.value) {
-        updateData[`data.resources.${itemTag}.value`] = curUses.value;
+      else if (res._id === item._id) {
+        const updateData = {};
+        if (this.data.data.resources[itemTag].value !== curUses.value) {
+          updateData[`data.resources.${itemTag}.value`] = curUses.value;
+        }
+        if (this.data.data.resources[itemTag].max !== curUses.max) {
+          updateData[`data.resources.${itemTag}.max`] = curUses.max;
+        }
+        if (Object.keys(updateData).length > 0) return this.update(updateData);
       }
-      if (this.data.data.resources[itemTag].max !== curUses.max) {
-        updateData[`data.resources.${itemTag}.max`] = curUses.max;
-      }
-      if (this.data.data.resources[itemTag]._id !== item._id ) {
-        updateData[`data.resources.${itemTag}._id`] = item._id;
-      }
-      if (Object.keys(updateData).length > 0) this.update(updateData);
     }
+
+    return false;
   }
 
   /* -------------------------------------------- */

@@ -63,8 +63,17 @@ export class ActorRestDialog extends BaseEntitySheet {
     }
 
     let itemPromises = [];
+    let spellbookUses = {};
     // Restore daily uses of spells, feats, etc.
     if (restOptions["restoreDailyUses"] === true) {
+      // Update spellbooks
+      for (let [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
+        for (let a = 0; a < 10; a++) {
+          updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] = getProperty(sb, `spells.spell${a}.max`) || 0;
+        }
+      }
+
+      // Update charged items
       for (let item of actor.items) {
         const itemData = item.data.data;
 
@@ -77,22 +86,23 @@ export class ActorRestDialog extends BaseEntitySheet {
         else if (item.type === "spell") {
           const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
             isSpontaneous = spellbook.spontaneous;
-          if (!isSpontaneous && itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-            const itemUpdateData = {
-              "data.preparation.preparedAmount": itemData.preparation.maxAmount,
-            };
-            itemPromises.push(item.update(itemUpdateData));
+          if (!isSpontaneous) {
+            if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
+              const itemUpdateData = {
+                "data.preparation.preparedAmount": itemData.preparation.maxAmount,
+              };
+              itemPromises.push(item.update(itemUpdateData));
+            }
+            if (!getProperty(item.data, "data.domain")) {
+              let sbUses = updateData[`data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`] || 0;
+              sbUses -= itemData.preparation.maxAmount;
+              updateData[`data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`] = sbUses;
+            }
           }
         }
       }
 
       for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
-        // Restore spontaneous spellbooks
-        if (spellbook.spontaneous) {
-          for (let sl of Object.keys(CONFIG.PF1.spellLevels)) {
-            updateData[`data.attributes.spells.spellbooks.${key}.spells.spell${sl}.value`] = getProperty(actorData, `attributes.spells.spellbooks.${key}.spells.spell${sl}.max`);
-          }
-        }
         // Restore spellbooks using spell points
         if (spellbook.spellPoints.useSystem) {
           // Try to roll restoreFormula, fall back to restoring max spell points

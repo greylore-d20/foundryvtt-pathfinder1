@@ -6,6 +6,11 @@
 
 - Items with the same name buggily shared charges (#136)
 
+### Changelog
+
+- Prepared spellbooks now refresh spell slots on rest (#137)
+- Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots on rest
+
 ### Localization
 
 - Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)

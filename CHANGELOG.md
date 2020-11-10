@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.11
+
+### Localization
+
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+
 ## 0.75.10
 
 ### Bug Fixes

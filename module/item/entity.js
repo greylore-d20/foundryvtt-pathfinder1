@@ -2531,6 +2531,7 @@ export class ItemPF extends Item {
     };
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
+    const materialPrice = getProperty(origData, "data.materials.gpValue") || 0;
 
     // Set consumable type
     data.data.consumableType = type;
@@ -2539,7 +2540,7 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750 + (materialPrice * 50);
       data.data.hardness = 5;
       data.data.hp.max = 5;
       data.data.hp.value = 5;
@@ -2547,7 +2548,7 @@ export class ItemPF extends Item {
     else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
       data.data.hardness = 1;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
@@ -2555,7 +2556,7 @@ export class ItemPF extends Item {
     else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
       data.data.hardness = 0;
       data.data.hp.max = 1;
       data.data.hp.value = 1;

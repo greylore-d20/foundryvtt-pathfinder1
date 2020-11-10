@@ -176,9 +176,18 @@
 
       {{!-- Material Components --}}
       {{#if data.components.material}}
-      <div class="form-group stacked">
-        <label>{{localize "PF1.SpellcastingMaterials"}}</label>
-        <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
+      <h3>{{localize "PF1.SpellcastingMaterials"}}</h3>
+      <div class="form-group">
+        <div class="form-fields">
+          <label>{{localize "PF1.Description"}}</label>
+          <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-fields">
+          <label>{{localize "PF1.Value"}}</label>
+          <input type="text" data-dtype="Number" name="data.materials.gpValue" value="{{data.materials.gpValue}}"/>
+        </div>
       </div>
       {{/if}}
 

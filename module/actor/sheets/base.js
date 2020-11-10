@@ -55,6 +55,11 @@ export class ActorSheetPF extends ActorSheet {
      * Whether a submit has been queued in any way.
      */
     this._submitQueued = false;
+
+    /**
+     * Whether inner part of this sheet has been rendered already.
+     */
+    this._renderedInner = false;
   }
 
   get currentPrimaryTab() {
@@ -90,6 +95,7 @@ export class ActorSheetPF extends ActorSheet {
       spellFailure: this.entity.spellFailure,
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
+      usesAnySpellbook: (getProperty(this.actor.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
     };
     const rollData = this.actor.getRollData();
     data.rollData = rollData;
@@ -195,13 +201,14 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update spellbook info
-    for (let spellbook of Object.values(data.actor.data.attributes.spells.spellbooks)) {
+    for (let [sk, spellbook] of Object.entries(data.actor.data.attributes.spells.spellbooks)) {
       const cl = spellbook.cl.total;
       spellbook.range = {
         close: 25 + 5 * Math.floor(cl / 2),
         medium: 100 + 10 * cl,
         long: 400 + 40 * cl
       };
+      spellbook.inUse = (getProperty(data.actor.data, "attributes.spells.usedSpellbooks") || []).includes(sk);
     }
 
     // Control items
@@ -1159,21 +1166,35 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const elem = this.element.find(event.currentTarget.dataset.for);
 
-    elem.removeAttr("readonly")
+    const [prevName, prevValue] = [elem.attr("name"), elem.attr("value")];
+    elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.actor.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
     elem.select();
 
-    elem.focusout(event => {
+    const handler = event => {
+      elem[0].removeEventListener("focusout", handler);
+      elem[0].removeEventListener("click", handler);
       if (typeof value === "number") value = value.toString();
       if (value !== elem.attr("value")) {
         this._onSubmit(event);
       }
       else {
-        this.render();
+        window.getSelection().removeAllRanges();
+        if (prevName) {
+          elem.attr("name", prevName);
+        }
+        else {
+          elem.removeAttr("name");
+        }
+        elem.attr("value", prevValue);
+        elem.prop("readonly", true);
       }
-    });
+    };
+
+    elem[0].addEventListener("focusout", handler);
+    elem[0].addEventListener("click", handler);
   }
 
   /* -------------------------------------------- */
@@ -1565,7 +1586,7 @@ export class ActorSheetPF extends ActorSheet {
       weapon: { label: game.i18n.localize("PF1.InventoryWeapons"), canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "weapon" } },
       equipment: { label: game.i18n.localize("PF1.InventoryArmorEquipment"), canCreate: true, hasActions: true, items: [], canEquip: true, dataset: { type: "equipment" }, hasSlots: true },
       consumable: { label: game.i18n.localize("PF1.InventoryConsumables"), canCreate: true, hasActions: true, items: [], canEquip: false, dataset: { type: "consumable" } },
-      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" } },
+      gear: { label: CONFIG.PF1.lootTypes["gear"], canCreate: true, hasActions: false, items: [], canEquip: true, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" } },
       ammo: { label: CONFIG.PF1.lootTypes["ammo"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" } },
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" } },
       tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"), "sub-type": "tradeGoods" } },
@@ -1968,7 +1989,7 @@ export class ActorSheetPF extends ActorSheet {
     el.value = value + amount * increase;
   }
 
-  async _updateObject(event, formData) {
+  _updateObject(event, formData) {
     // Translate CR
     const cr = formData["data.details.cr.base"];
     if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
@@ -2049,4 +2070,12 @@ export class ActorSheetPF extends ActorSheet {
     
     return super._updateObject(event, formData);
   }
+
+  // async _renderInner(data, options) {
+    // let t1 = new Date();
+    // const result = await super._renderInner(data, options);
+    // let t2 = new Date();
+    // console.trace(t2 - t1);
+    // return result;
+  // }
 }

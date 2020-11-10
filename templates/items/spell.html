@@ -128,6 +128,10 @@
           <input type="checkbox" name="data.atWill" {{checked data.atWill}}/> {{localize "PF1.SpellPrepAtWill"}}
         </label>
 
+        <label class="checkbox" title="{{localize "PF1.HelpDomainSpell"}}">
+          <input type="checkbox" name="data.domain" {{checked data.domain}}/> {{localize "PF1.Domain"}}/{{localize "PF1.School"}}
+        </label>
+
         {{#if owner}}
         <label class="checkbox">
           <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
@@ -172,9 +176,18 @@
 
       {{!-- Material Components --}}
       {{#if data.components.material}}
-      <div class="form-group stacked">
-        <label>{{localize "PF1.SpellcastingMaterials"}}</label>
-        <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
+      <h3>{{localize "PF1.SpellcastingMaterials"}}</h3>
+      <div class="form-group">
+        <div class="form-fields">
+          <label>{{localize "PF1.Description"}}</label>
+          <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-fields">
+          <label>{{localize "PF1.Value"}}</label>
+          <input type="text" data-dtype="Number" name="data.materials.gpValue" value="{{data.materials.gpValue}}"/>
+        </div>
       </div>
       {{/if}}
 

@@ -251,10 +251,7 @@
             "stunned": false
           },
           "spells": {
-            "concentration": {
-              "bonus": 0,
-              "context": ""
-            },
+            "usedSpellbooks": [],
             "spellbooks": {
               "primary": {
                 "name": "Primary",
@@ -1014,8 +1011,9 @@
       }
     },
     "loot": {
-      "templates": ["itemDescription", "physicalItem", "links"],
-      "subType": "misc"
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
+      "subType": "misc",
+      "equipped": true
     },
     "spell": {
       "templates": ["itemDescription", "activatedEffect", "action", "links"],
@@ -1043,7 +1041,8 @@
       "castTime": "",
       "materials": {
         "value": "",
-        "focus": ""
+        "focus": "",
+        "gpValue": 0
       },
       "spellbook": "primary",
       "preparation": {
@@ -1061,7 +1060,8 @@
       "showInQuickbar": false,
       "spellPoints": {
         "cost": "1 + @sl"
-      }
+      },
+      "domain": false
     },
     "weapon": {
       "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],

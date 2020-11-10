@@ -133,7 +133,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorCR(actor, updateData);
   _migrateCMBAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
-  // _migrateSkillNotes(actor, updateData);
+  _migrateActorSpellbookUsage(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -160,7 +160,7 @@ export const migrateActorData = async function(actor) {
  */
 export const migrateItemData = function(item) {
   const updateData = {};
-  
+
   _migrateItemSpellUses(item, updateData);
   _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
@@ -179,6 +179,7 @@ export const migrateItemData = function(item) {
   _migrateEquipmentSize(item, updateData);
   _migrateTags(item, updateData);
   _migrateSpellCosts(item, updateData);
+  _migrateLootEquip(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -660,6 +661,12 @@ const _migrateSpellCosts = function(ent, updateData) {
   }
 };
 
+const _migrateLootEquip = function(ent, updateData) {
+  if (ent.type === "loot" && !hasProperty(ent.data, "equipped")) {
+    updateData["data.equipped"] = false;
+  }
+}
+
 const _migrateActorCR = function(ent, updateData) {
   // Migrate base CR
   const cr = getProperty(ent.data, "data.details.cr");
@@ -689,14 +696,21 @@ const _migrateActorTokenVision = function(ent, updateData) {
   if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision;
 };
 
-// const _migrateSkillNotes = function(ent, updateData) {
-  // for (let [k, s] of Object.entries(getProperty(ent.data, "data.skills") || {})) {
-    // if (hasProperty(s, "notes")) updateData[`data.skills.${k}.-=notes`] = null;
-    // for (let [k2, s2] of Object.entries(s.subSkills || {})) {
-      // if (hasProperty(s2, "notes")) updateData[`data.skills.${k}.subSkills.${k2}.-=notes`] = null;
-    // }
-  // }
-// };
+const _migrateActorSpellbookUsage = function(ent, updateData) {
+  const spellbookUsage = getProperty(ent.data, "data.attributes.spells.usedSpellbooks");
+
+  if (spellbookUsage == null) {
+    let usedSpellbooks = [];
+    const spells = ent.items.filter(o => o.type === "spell");
+    for (let o of spells) {
+      const sb = o.data.data.spellbook;
+      if (sb && !usedSpellbooks.includes(sb)) {
+        usedSpellbooks.push(sb);
+      }
+    }
+    updateData["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+  }
+};
 
 /* -------------------------------------------- */
 

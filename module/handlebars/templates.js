@@ -21,6 +21,7 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/pf1/templates/actors/parts/actor-defenses_tables.html",
     "systems/pf1/templates/actors/parts/actor-buffs.html",
     "systems/pf1/templates/actors/parts/actor-attributes.html",
+    "systems/pf1/templates/actors/parts/actor-settings.html",
 
     // Item Sheet Partials
     "systems/pf1/templates/items/parts/item-action.html",
@@ -36,8 +37,8 @@ export const preloadHandlebarsTemplates = async function() {
 
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.html",
-    "systems/pf1/templates/apps/links.html",
-    "systems/pf1/templates/apps/link-options.html",
+    //"systems/pf1/templates/apps/links.html",
+    //"systems/pf1/templates/apps/link-options.html",
     "systems/pf1/templates/apps/vision-permission.html",
 
     // Chat

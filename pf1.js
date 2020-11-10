@@ -152,7 +152,7 @@ Hooks.once("setup", function() {
  */
 Hooks.once("ready", async function() {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.75.6";
+  const NEEDS_MIGRATION_VERSION = "0.75.9";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -279,13 +279,15 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
   }
 
   // Merge changed data into item data immediately, to avoid update lag
-  item.data = mergeObject(item.data, changedData);
+  // item.data = mergeObject(item.data, changedData);
 
-  // Refresh actor
-  actor.refresh();
+  {
+    // Update item resources
+    const result = await actor.updateItemResources(item);
 
-  // Update item resources
-  actor.updateItemResources(item);
+    // Refresh actor
+    if (!result) await actor.refresh();
+  }
 });
 Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
   if (userId !== game.user._id) return;

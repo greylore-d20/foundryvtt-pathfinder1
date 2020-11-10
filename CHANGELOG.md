@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.75.11
+
+### Bug Fixes
+
+- Items with the same name buggily shared charges (#136)
+
+### Changelog
+
+- Prepared spellbooks now refresh spell slots on rest (#137)
+- Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots on rest
+- Added a numeric field for spell material component costs
+
+### Localization
+
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+
+## 0.75.10
+
+### Bug Fixes
+
+- Fix actor sheets not being rendered due to missing template files
+- Fix Conditional Modifier category Misc being incorrectly hidden
+- Fix Context Notes not being shown for subskills
+- Fix total spells per day tooltip overflowing (#323)
+- Patch core foundry bug (Core#4043)
+- Fix Biography being unviewable without spellcasting classes set (#322)
+- Item chat cards without an attack showed an incorrect amount of charges (#332)
+
+### Changelog
+
+- Add compatibility with FoundryVTT 0.7.6
+
+## 0.75.9
+
+### Bug Fixes
+
+- Bestiary browser failed to load if non-system actor compendiums were present (#320)
+- Armor Check Penalty and Maximum Dexterity Bonus source info didn't take masterwork and changes into account (#317)
+- Default status overlay icons transferred over to the main actor when toggled for unlinked tokens (#319)
+
+### Changelog
+
+- Added Changes and Context Notes to items of type "Loot", subtype "Gear", and enabled equipping those items (#310)
+- Introduces a tab on actor sheets for settings
+  - Made spellbooks selectable on the settings tab
+
 ## 0.75.8
 
 ### Bug Fixes

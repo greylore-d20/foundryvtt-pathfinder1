@@ -416,6 +416,27 @@ export class ActorPF extends Actor {
   preUpdate(data) {
     data = flattenObject(data);
 
+    // Apply settings
+    // Set used spellbook flags
+    {
+      const re = new RegExp(/^spellbook-([a-zA-Z]+)-inuse$/);
+      const sbData = Object.entries(data).filter(o => {
+        const result = o[0].match(re);
+        if (result) delete data[o[0]];
+        return result;
+      })
+      .map(o => {
+        return { spellbook: o[0].replace(re, "$1"), inUse: o[1] === true };
+      });
+
+      const usedSpellbooks = getProperty(data, "data.attributes.spells.usedSpellbooks") || getProperty(this.data, "data.attributes.spells.usedSpellbooks") || [];
+      for (let o of sbData) {
+        if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
+        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook)) usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
+      }
+      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+    }
+
     // Make certain variables absolute
     const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {
       arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
@@ -514,10 +535,9 @@ export class ActorPF extends Actor {
    */
   async update(data, options={}) {
 
-    // Avoid reular update flow for explicitly non-recursive update calls
+    // Avoid regular update flow for explicitly non-recursive update calls
     if (getProperty(options, "recursive") === false) {
-      await super.update(data, options);
-      return;
+      return super.update(data, options);
     }
 
     data = this.preUpdate(data);
@@ -622,7 +642,7 @@ export class ActorPF extends Actor {
     super._onCreate(data, options, userId, context);
   }
 
-  updateItemResources(item) {
+  async updateItemResources(item) {
     if (!(item instanceof Item)) return;
     if (!this.hasPerm(game.user, "OWNER")) return;
 
@@ -630,21 +650,29 @@ export class ActorPF extends Actor {
       const itemTag = createTag(item.data.name);
       let curUses = item.data.data.uses;
 
-      if (this.data.data.resources == null) this.data.data.resources = {};
-      if (this.data.data.resources[itemTag] == null) this.data.data.resources[itemTag] = { value: 0, max: 1, _id: "" };
+      const res = getProperty(this.data, `data.resources.${itemTag}`);
+      if (!res || (res && !res._id)) {
+        const updateData = {
+          [`data.resources.${itemTag}.value`]: curUses.value,
+          [`data.resources.${itemTag}.max`]: curUses.max,
+          [`data.resources.${itemTag}._id`]: item._id,
+        };
+        return this.update(updateData);
+      }
 
-      const updateData = {};
-      if (this.data.data.resources[itemTag].value !== curUses.value) {
-        updateData[`data.resources.${itemTag}.value`] = curUses.value;
+      else if (res._id === item._id) {
+        const updateData = {};
+        if (this.data.data.resources[itemTag].value !== curUses.value) {
+          updateData[`data.resources.${itemTag}.value`] = curUses.value;
+        }
+        if (this.data.data.resources[itemTag].max !== curUses.max) {
+          updateData[`data.resources.${itemTag}.max`] = curUses.max;
+        }
+        if (Object.keys(updateData).length > 0) return this.update(updateData);
       }
-      if (this.data.data.resources[itemTag].max !== curUses.max) {
-        updateData[`data.resources.${itemTag}.max`] = curUses.max;
-      }
-      if (this.data.data.resources[itemTag]._id !== item._id ) {
-        updateData[`data.resources.${itemTag}._id`] = item._id;
-      }
-      if (Object.keys(updateData).length > 0) this.update(updateData);
     }
+
+    return false;
   }
 
   /* -------------------------------------------- */
@@ -1388,7 +1416,12 @@ export class ActorPF extends Actor {
       const ability = skill.ability;
       for (let note of result) {
         note.notes = note.notes.filter(o => {
-          return (o.target === "skill" && o.subTarget === context) || (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"));
+          return (
+            (o.target === "skill" &&
+              // Check for skill.context or skill.xyz.subSkills.context
+              (o.subTarget === context || o.subTarget.split(".")?.[3] === context.split(".")?.[1])) ||
+            (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"))
+          );
         }).map(o => { return o.text; });
       }
 

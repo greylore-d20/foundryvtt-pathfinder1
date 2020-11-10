@@ -281,18 +281,6 @@ export class ItemPF extends Item {
     return this.constructor.getTypeColor(this.type, 1);
   }
 
-  static get defaultChange() {
-    return {
-      formula: "",
-      operator: "add",
-      target: "",
-      subTarget: "",
-      modifier: "",
-      priority: 0,
-      value: 0,
-    };
-  }
-
   static get defaultConditional() {
     return {
       default: false,
@@ -1152,7 +1140,7 @@ export class ItemPF extends Item {
         return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
       }
       if (this.autoDeductCharges) {
-        this.addCharges(-this.chargeCost);
+        await this.addCharges(-this.chargeCost);
       }
     }
     const chatData = {};
@@ -2543,6 +2531,7 @@ export class ItemPF extends Item {
     };
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
+    const materialPrice = getProperty(origData, "data.materials.gpValue") || 0;
 
     // Set consumable type
     data.data.consumableType = type;
@@ -2551,7 +2540,7 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750 + (materialPrice * 50);
       data.data.hardness = 5;
       data.data.hp.max = 5;
       data.data.hp.value = 5;
@@ -2559,7 +2548,7 @@ export class ItemPF extends Item {
     else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
       data.data.hardness = 1;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
@@ -2567,7 +2556,7 @@ export class ItemPF extends Item {
     else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25;
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
       data.data.hardness = 0;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
@@ -2948,7 +2937,7 @@ export class ItemPF extends Item {
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
     if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
-    if (this.isCharged) {
+    if (Object.keys(this.getConditionalSubTargets("misc")).length > 0) {
       result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
     }
     return result;

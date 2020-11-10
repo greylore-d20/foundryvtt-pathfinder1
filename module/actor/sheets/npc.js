@@ -64,18 +64,6 @@ export class ActorSheetPFNPC extends ActorSheetPF {
   /*  Object Updates                              */
   /* -------------------------------------------- */
 
-  /**
-   * This method is called upon form submission after form data is validated
-   * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
-   * @private
-   */
-  async _updateObject(event, formData) {
-
-    // Parent ActorSheet update steps
-    super._updateObject(event, formData);
-  }
-
   /* -------------------------------------------- */
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
@@ -84,7 +72,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
-	activateListeners(html) {
+  activateListeners(html) {
     super.activateListeners(html);
 
     // Rollable Health Formula

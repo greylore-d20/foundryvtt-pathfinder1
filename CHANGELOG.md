@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.75.12
+
+### Changelog
+
+- Added a formula to spellbooks to determine a bonus to their casting ability score in regards to their bonus spell slots
+
 ## 0.75.11
 
 ### Bug Fixes

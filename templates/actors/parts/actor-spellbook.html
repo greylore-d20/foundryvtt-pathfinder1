@@ -71,6 +71,12 @@
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
           value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
         </div>
+        
+        <div class="flexrow spell-slot-ability-bonus">
+          <label><h3>{{localize "PF1.SpellSlotAbilityBonus"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellSlotAbilityBonusFormula"
+                             value="{{spellbook.orig.spellSlotAbilityBonusFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+        </div>
 
         {{#if spellbook.orig.spellPoints.useSystem}}
         <div class="flexrow spell-points">

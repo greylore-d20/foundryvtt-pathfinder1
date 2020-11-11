@@ -13,6 +13,7 @@
 - Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots
 - Added a numeric field for spell material component costs
 - Conditional Modifiers can now be copied via Drag and Drop
+- Added a sum of the inventory value to actor sheets (#224)
 
 ### Localization
 

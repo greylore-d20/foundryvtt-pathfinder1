@@ -119,6 +119,17 @@ export class ActorSheetPF extends ActorSheet {
     data.labels = this.actor.labels || {};
     data.filters = this._filters;
 
+    // Add inventory value
+    {
+      const gpValue = this.calculateTotalItemValue();
+      const totalValue = {
+        gp: Math.max(0, Math.floor(gpValue)),
+        sp: Math.max(0, Math.floor(gpValue*10 - Math.floor(gpValue)*10)),
+        cp: Math.max(0, Math.floor(Math.floor(gpValue*100 - Math.floor(gpValue)*100) - (Math.floor(gpValue*10 - Math.floor(gpValue)*10)*10))),
+      };
+      data.labels.totalValue = game.i18n.localize("PF1.ItemContainerTotalItemValue").format(totalValue.gp, totalValue.sp, totalValue.cp);
+    }
+
     // Hit point sources
     if (this.actor.sourceDetails != null) data.sourceDetails = expandObject(this.actor.sourceDetails);
     else data.sourceDetails = null;
@@ -2071,11 +2082,18 @@ export class ActorSheetPF extends ActorSheet {
     return super._updateObject(event, formData);
   }
 
-  // async _renderInner(data, options) {
-    // let t1 = new Date();
-    // const result = await super._renderInner(data, options);
-    // let t2 = new Date();
-    // console.trace(t2 - t1);
-    // return result;
-  // }
+  calculateTotalItemValue() {
+    const items = this.actor.items.filter(o => o.data.data.price != null);
+    return items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: 1 });
+    }, 0);
+  }
+
+  calculateSellItemValue() {
+    const items = this.actor.items.filter(o => o.data.data.price != null);
+    const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
+    return items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: sellMultiplier });
+    }, 0);
+  }
 }

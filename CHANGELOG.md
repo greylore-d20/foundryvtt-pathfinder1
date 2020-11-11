@@ -6,6 +6,7 @@
 
 - Fixed an issue with spell level offsets and spell slot calculations
 - Fix prototype tokens not saving (#336)
+- Fix owned items not reacting to changes immediately (#335)
 
 ### Changelog
 

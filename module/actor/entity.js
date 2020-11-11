@@ -558,6 +558,16 @@ export class ActorPF extends Actor {
       await super.update(diff, mergeObject(options, { recursive: true }));
     }
     await this.toggleConditionStatusIcons();
+    await this.refreshItems();
+  }
+
+  async refreshItems() {
+    const items = Array.from(this.items);
+    const updates = items.map(o => o.update({}, { skipUpdate: true }));
+    const values = (await Promise.all(updates)).filter(o => Object.keys(o).length > 1);
+    if (values.length > 0) {
+      return this.updateOwnedItem(values);
+    }
   }
 
   _onUpdate(data, options, userId, context) {

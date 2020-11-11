@@ -804,7 +804,7 @@ export class ItemPF extends Item {
     }
 
     let diff = diffObject(flattenObject(this.data), data);
-    if (Object.keys(diff).length) {
+    if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
         return super.update(diff, options);
       }
@@ -833,6 +833,10 @@ export class ItemPF extends Item {
           return this.render();
         }
       }
+    }
+    else if(options.skipUpdate) {
+      diff["_id"] = this._id;
+      return diff;
     }
     return false;
   }

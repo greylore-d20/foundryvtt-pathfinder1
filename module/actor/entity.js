@@ -415,7 +415,6 @@ export class ActorPF extends Actor {
 
   preUpdate(data) {
     data = flattenObject(data);
-    const fullData = mergeObject(this.data, expandObject(data));
 
     // Apply settings
     // Set used spellbook flags

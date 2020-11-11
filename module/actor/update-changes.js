@@ -350,7 +350,7 @@ export const updateChanges = async function({data=null}={}) {
   for (let spellbookKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
     const spellbook = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}`);
     const spellbookAbilityKey = spellbook.ability;
-    let spellbookAbilityScore = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.value`);
+    let spellbookAbilityScore = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.total`);
     const rollData = this.getRollData(srcData1.data);
 
     // Add spell slots based on ability bonus slot formula
@@ -436,7 +436,7 @@ export const updateChanges = async function({data=null}={}) {
         const sb = i.spellbook;
         if (!sb || (sb && sb.spontaneous)) continue;
         const sbKey = i.data.data.spellbook;
-        const a = i.spellLevel;
+        const a = i.data.data.level;
         let uses = getProperty(slots, `${sbKey}.${a}`);
         uses -= i.maxCharges;
         setProperty(slots, `${sbKey}.${a}`, uses)

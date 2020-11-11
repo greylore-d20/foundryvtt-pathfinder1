@@ -2,6 +2,10 @@
 
 ## 0.75.12
 
+### Bug Fixes
+
+- Fixed an issue with spell level offsets and spell slot calculations
+
 ### Changelog
 
 - Added a formula to spellbooks to determine a bonus to their casting ability score in regards to their bonus spell slots

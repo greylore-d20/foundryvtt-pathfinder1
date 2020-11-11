@@ -12,6 +12,10 @@
 - Added a formula to spellbooks to determine a bonus to their casting ability score in regards to their bonus spell slots
 - Added initial support for the Unchained Action Economy optional ruleset (#130)
 
+### API
+
+- Implement ChatMessagePF#itemSource to retrieve message's linked item
+
 ## 0.75.11
 
 ### Bug Fixes

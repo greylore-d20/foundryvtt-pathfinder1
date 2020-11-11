@@ -773,7 +773,6 @@ export class ItemPF extends Item {
         charges = getProperty(srcData, "data.uses.value") || 0;
         maxCharges = getProperty(srcData, "data.uses.max") || 0;
       }
-      console.log(charges, maxCharges);
 
       if (target === "value" && charges > maxCharges) maxCharges = charges;
       else if (target === "max" && maxCharges < charges) charges = maxCharges;

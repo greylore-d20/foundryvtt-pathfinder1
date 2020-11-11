@@ -208,6 +208,26 @@ PF1.abilityActivationTypesPlurals = {
   "hour": "PF1.ActivationTypeHourPlural",
 };
 
+PF1.abilityActivationTypes_unchained = {
+  "passive": "PF1.ActivationTypePassive",
+  "free": "PF1.ActivationTypeFree",
+  "reaction": "PF1.ActivationTypeReaction",
+  "action": "PF1.ActivationTypeAction",
+  "minute": "PF1.ActivationTypeMinute",
+  "hour": "PF1.ActivationTypeHour",
+  "special": "PF1.ActivationTypeSpecial",
+};
+
+PF1.abilityActivationTypesPlurals_unchained = {
+  "passive": "PF1.ActivationTypePassive",
+  "free": "PF1.ActivationTypeFreePlural",
+  "reaction": "PF1.ActivationTypeReactionPlural",
+  "action": "PF1.ActivationTypeActionPlural",
+  "minute": "PF1.ActivationTypeMinutePlural",
+  "hour": "PF1.ActivationTypeHourPlural",
+  "special": "PF1.ActivationTypeSpecial",
+};
+
 PF1.divineFocus = {
   "0": "",
   "1": "PF1.SpellComponentDivineFocusAlone",

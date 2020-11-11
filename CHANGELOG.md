@@ -9,6 +9,7 @@
 ### Changelog
 
 - Added a formula to spellbooks to determine a bonus to their casting ability score in regards to their bonus spell slots
+- Added initial support for the Unchained Action Economy optional ruleset (#130)
 
 ## 0.75.11
 

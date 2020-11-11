@@ -90,6 +90,9 @@ export class ItemSheetPF extends ItemSheet {
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
+    data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+    data.hasActivationType = (game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.unchainedAction.activation.type"))
+      || (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;

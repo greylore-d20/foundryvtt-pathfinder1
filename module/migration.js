@@ -180,6 +180,7 @@ export const migrateItemData = function(item) {
   _migrateTags(item, updateData);
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
+  _migrateUnchainedActionEconomy(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -665,7 +666,38 @@ const _migrateLootEquip = function(ent, updateData) {
   if (ent.type === "loot" && !hasProperty(ent.data, "equipped")) {
     updateData["data.equipped"] = false;
   }
-}
+};
+
+const _migrateUnchainedActionEconomy = function(ent, updateData) {
+
+  // Determine existing data
+  const curAction = getProperty(ent.data, "data.activation");
+  const unchainedAction = getProperty(ent.data, "data.unchainedAction.activation");
+  if (!curAction || (curAction && !curAction.type)) return;
+  if (unchainedAction && unchainedAction.type) return;
+
+  // Create unchained action economy data
+  if (CONFIG.PF1.abilityActivationTypes_unchained[curAction.type] != null) {
+    updateData["data.unchainedAction.activation.cost"] = curAction.cost;
+    updateData["data.unchainedAction.activation.type"] = curAction.type;
+  }
+  if (["swift", "attack"].includes(curAction.type)) {
+    updateData["data.unchainedAction.activation.cost"] = 1;
+    updateData["data.unchainedAction.activation.type"] = "action";
+  }
+  if (curAction.type === "standard") {
+    updateData["data.unchainedAction.activation.cost"] = 2;
+    updateData["data.unchainedAction.activation.type"] = "action";
+  }
+  if (curAction.type === "full" || curAction.type === "round") {
+    updateData["data.unchainedAction.activation.cost"] = 3 * (curAction.cost || 1);
+    updateData["data.unchainedAction.activation.type"] = "action";
+  }
+  if (curAction.type === "immediate") {
+    updateData["data.unchainedAction.activation.type"] = "reaction";
+    updateData["data.unchainedAction.activation.cost"] = 1;
+  }
+};
 
 const _migrateActorCR = function(ent, updateData) {
   // Migrate base CR

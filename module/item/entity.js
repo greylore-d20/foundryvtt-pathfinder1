@@ -501,9 +501,17 @@ export class ItemPF extends Item {
     // Activated Items
     if ( data.hasOwnProperty("activation") ) {
 
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
+
       // Ability Activation Label
-      let act = data.activation || {};
-      if (act) labels.activation = [["minute", "hour"].includes(act.type) ? act.cost.toString() : "", C.abilityActivationTypes[act.type]].filterJoin(" ");
+      let act = game.settings.get("pf1", "unchainedActionEconomy") ? (getProperty(data, "unchainedAction.activation") || {}) : (getProperty(data, "activation") || {});
+      if (act && act.cost > 1 && activationTypesPlural[act.type] != null) {
+        labels.activation = [act.cost.toString(), activationTypesPlural[act.type]].filterJoin(" ");
+      }
+      else if (act) {
+        labels.activation = [(["minute", "hour", "action"].includes(act.type) && act.cost) ? act.cost.toString() : "", activationTypes[act.type]].filterJoin(" ");
+      }
 
       // Target Label
       let tgt = data.target || {};
@@ -1019,7 +1027,7 @@ export class ItemPF extends Item {
       if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
-      if ( data.hasOwnProperty("activation") ) {
+      if (data.hasOwnProperty("activation")) {
         props.push(
           labels.target,
           labels.activation,
@@ -2336,16 +2344,19 @@ export class ItemPF extends Item {
     }).sort().join(", ");
 
     // Set casting time label
-    if (getProperty(srcData, "data.activation")) {
-      const activationCost = getProperty(srcData, "data.activation.cost");
-      const activationType = getProperty(srcData, "data.activation.type");
+    const act = game.settings.get("pf1", "unchainedActionEconomy") ? getProperty(srcData, "data.unchainedAction.activation") : getProperty(srcData, "data.activation");
+    if (act != null) {
+      const activationCost = act.cost;
+      const activationType = act.type;
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
 
       if (activationType) {
-        if (CONFIG.PF1.abilityActivationTypesPlurals[activationType] != null) {
-          if (activationCost === 1) label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
-          else label.castingTime = `${CONFIG.PF1.abilityActivationTypesPlurals[activationType]}`;
+        if (activationTypesPlurals[activationType] != null) {
+          if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
+          else label.castingTime = `${activationTypesPlurals[activationType]}`;
         }
-        else label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
+        else label.castingTime = `${activationTypes[activationType]}`;
       }
       if (!Number.isNaN(activationCost) && label.castingTime != null) label.castingTime = `${activationCost} ${label.castingTime}`;
       if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();

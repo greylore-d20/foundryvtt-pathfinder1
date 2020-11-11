@@ -704,8 +704,8 @@ export class ItemPF extends Item {
     }
 
     // Update name
-    if (data["data.identifiedName"]) data["name"] = data["data.identifiedName"];
-    else if (data["name"]) data["data.identifiedName"] = data["name"];
+    if (data["data.identifiedName"]) linkData(srcData, data, "name", data["data.identifiedName"]);
+    else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
@@ -713,7 +713,7 @@ export class ItemPF extends Item {
     // Initialize tag
     if (this.type === "class" && !srcData.data.useCustomTag) {
       const name = srcData.name;
-      data["data.tag"] = createTag(name);
+      linkData(srcData, data, "data.tag", createTag(name));
     }
 
     // Update weight according metric system (lb vs kg)
@@ -728,7 +728,7 @@ export class ItemPF extends Item {
       const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
         .filter(o => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        data["data.weaponSubtype"] = keys[0];
+        linkData(srcData, data, "data.weaponSubtype", keys[0]);
       }
     }
 
@@ -740,14 +740,14 @@ export class ItemPF extends Item {
       let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
         .filter(o => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        data["data.equipmentSubtype"] = keys[0];
+        linkData(srcData, data, "data.equipmentSubtype", keys[0]);
       }
 
       // Set slot
       const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
       keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
       if (!slot || !keys.includes(slot)) {
-        data["data.slot"] = keys[0];
+        linkData(srcData, data, "data.slot", keys[0]);
       }
     }
 
@@ -756,6 +756,37 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses(data, {srcData: srcData});
+
+    // Make sure charges doesn't exceed max charges, and vice versa
+    {
+      let charges = 0;
+      let maxCharges = 0;
+      let target = "value";
+
+      if (this.type === "spell") {
+        if (data["data.preparation.maxAmount"] != null) target = "max";
+        charges = getProperty(srcData, "data.preparation.preparedAmount");
+        maxCharges = getProperty(srcData, "data.preparation.maxAmount");
+      }
+      else {
+        if (data["data.uses.max"] != null) target = "max";
+        charges = getProperty(srcData, "data.uses.value") || 0;
+        maxCharges = getProperty(srcData, "data.uses.max") || 0;
+      }
+      console.log(charges, maxCharges);
+
+      if (target === "value" && charges > maxCharges) maxCharges = charges;
+      else if (target === "max" && maxCharges < charges) charges = maxCharges;
+
+      if (this.type === "spell") {
+        linkData(srcData, data, "data.preparation.preparedAmount", charges);
+        linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+      }
+      else {
+        linkData(srcData, data, "data.uses.value", charges);
+        linkData(srcData, data, "data.uses.max", maxCharges);
+      }
+    }
 
     // Update charges for linked items
     if (data["data.uses.value"] != null) {

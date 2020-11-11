@@ -613,6 +613,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Click to change text input
     html.find('*[data-action="input-text"]').click(event => this._onInputText(event));
+    html.find('*[data-action="input-text"].wheel-change').on("wheel", event => this._onInputText(event.originalEvent));
 
     // Item Dragging
     let handler = ev => this._onDragStart(ev);
@@ -805,10 +806,6 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-list .spell-uses input[data-type='max']").off("change")
     .on("change", this._setMaxSpellUses.bind(this))
     .on("wheel", this._setMaxSpellUses.bind(this));
-
-    html.find(".spell-level-uses").off("change")
-    .on("change", this._setSpellbookUses.bind(this))
-    .on("wheel", this._setSpellbookUses.bind(this));
 
     html.find(".spell-points-current .value input[type='text']").off("change")
     .on("change", this._setSpellPoints.bind(this))
@@ -1175,36 +1172,41 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onInputText(event) {
     event.preventDefault();
-    const elem = this.element.find(event.currentTarget.dataset.for);
+    const forStr = event.currentTarget.dataset.for;
+    let elem;
+    if (forStr.match(/CHILD-([0-9]+)/)) {
+      const n = parseInt(RegExp.$1);
+      elem = $(event.currentTarget.children[n]);
+    }
+    else {
+      elem = this.element.find(event.currentTarget.dataset.for);
+    }
+    if (!elem || (elem && elem.attr("disabled"))) return;
 
     const [prevName, prevValue] = [elem.attr("name"), elem.attr("value")];
     elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.actor.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
-    elem.select();
+
+    const wheelEvent = (event && event instanceof WheelEvent);
+    if (wheelEvent) {
+      this._mouseWheelAdd(event, elem[0]);
+    }
+    else {
+      elem.select();
+    }
 
     const handler = event => {
-      elem[0].removeEventListener("focusout", handler);
+      if (wheelEvent) elem[0].removeEventListener("mouseout", handler);
+      else elem[0].addEventListener("focusout", handler);
       elem[0].removeEventListener("click", handler);
-      if (typeof value === "number") value = value.toString();
-      if (value !== elem.attr("value")) {
-        this._onSubmit(event);
-      }
-      else {
-        window.getSelection().removeAllRanges();
-        if (prevName) {
-          elem.attr("name", prevName);
-        }
-        else {
-          elem.removeAttr("name");
-        }
-        elem.attr("value", prevValue);
-        elem.prop("readonly", true);
-      }
+
+      this._onSubmit(event);
     };
 
-    elem[0].addEventListener("focusout", handler);
+    if (wheelEvent) elem[0].addEventListener("mouseout", handler);
+    else elem[0].addEventListener("focusout", handler);
     elem[0].addEventListener("click", handler);
   }
 
@@ -2045,6 +2047,7 @@ export class ActorSheetPF extends ActorSheet {
       "data.attributes.vigor.temp",
       "data.attributes.wounds.value",
     ];
+
     for (let [k, v] of Object.entries(formData)) {
       if (typeof v !== "string") continue;
       // Add or subtract values

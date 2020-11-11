@@ -521,30 +521,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // Update spellbook slots
-    {
-      const slots = {};
-      for (let [sbKey, sb] of Object.entries(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
-        for (let a = 0; a < 10; a++) {
-          setProperty(slots, `${sbKey}.${a}`, getProperty(fullData, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0);
-        }
-      }
-      const spells = this.items.filter(o => {
-        return o.type === "spell" && !getProperty(o.data, "data.domain");
-      });
-
-      for (let i of spells) {
-        const sb = i.spellbook;
-        if (!sb || (sb && sb.spontaneous)) continue;
-        const sbKey = i.data.data.spellbook;
-        const a = i.spellLevel;
-        let uses = getProperty(slots, `${sbKey}.${a}`);
-        uses -= i.maxCharges;
-        setProperty(slots, `${sbKey}.${a}`, uses)
-        data[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] = uses;
-      }
-    }
-
     this._updateExp(data);
 
     return expandObject(data);

@@ -412,6 +412,30 @@ export const updateChanges = async function({data=null}={}) {
       }
     }
 
+    // Update spellbook slots
+    {
+      const slots = {};
+      for (let sbKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
+        for (let a = 0; a < 10; a++) {
+          setProperty(slots, `${sbKey}.${a}`, getProperty(srcData1, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0);
+        }
+      }
+      const spells = this.items.filter(o => {
+        return o.type === "spell" && !getProperty(o.data, "data.domain");
+      });
+
+      for (let i of spells) {
+        const sb = i.spellbook;
+        if (!sb || (sb && sb.spontaneous)) continue;
+        const sbKey = i.data.data.spellbook;
+        const a = i.spellLevel;
+        let uses = getProperty(slots, `${sbKey}.${a}`);
+        uses -= i.maxCharges;
+        setProperty(slots, `${sbKey}.${a}`, uses)
+        linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
+      }
+    }
+
     // Spell points
     {
       const formula = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";

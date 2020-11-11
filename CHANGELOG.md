@@ -8,7 +8,7 @@
 
 ### Changelog
 
-- Updating charges or maximum charges on an item such as a spell will update the other value of the two as well, depending on what changed
+- Updating charges or maximum charges on a spell will update the other value of the two as well, depending on what changed
 - Spell slots of prepared spellbooks are now updated in real time (#137)
 - Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots
 - Added a numeric field for spell material component costs

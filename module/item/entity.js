@@ -1857,7 +1857,7 @@ export class ItemPF extends Item {
     // Add attack bonus
     if (itemData.attackBonus !== "") {
       let attackBonus = new Roll(itemData.attackBonus, rollData).roll().total;
-      rollData.item.attackBonus = attackBonus.toString();
+      rollData.item.attackBonus = attackBonus;
       parts.push("@item.attackBonus");
     }
 
@@ -1894,7 +1894,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false) parts.push("-5");
     // Add bonus
     if (bonus) {
-      rollData.bonus = bonus;
+      rollData.bonus = new Roll(bonus, rollData).roll().total;
       parts.push("@bonus");
     }
     if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";

@@ -426,10 +426,13 @@ export class ActorPF extends Actor {
         return result;
       })
       .map(o => {
-        return { spellbook: o[0].replace(re, "$1"), inUse: o[1] === true };
+        return { spellbook: o[0].replace(re, "$1"), inUse: o[1] };
       });
 
-      const usedSpellbooks = getProperty(data, "data.attributes.spells.usedSpellbooks") || getProperty(this.data, "data.attributes.spells.usedSpellbooks") || [];
+      let usedSpellbooks = [];
+      if (data["data.attributes.spells.usedSpellbooks"]) usedSpellbooks = duplicate(data["data.attributes.spells.usedSpellbooks"]);
+      else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks")) usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
+      
       for (let o of sbData) {
         if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
         else if (o.inUse === false && usedSpellbooks.includes(o.spellbook)) usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
@@ -522,7 +525,7 @@ export class ActorPF extends Actor {
 
     this._updateExp(data);
 
-    return expandObject(data);
+    return data;
   }
 
   /**
@@ -536,11 +539,11 @@ export class ActorPF extends Actor {
   async update(data, options={}) {
 
     // Avoid regular update flow for explicitly non-recursive update calls
-    if (getProperty(options, "recursive") === false) {
+    if (options.recursive === false) {
       return super.update(data, options);
     }
 
-    data = this.preUpdate(data);
+    data = expandObject(this.preUpdate(data));
 
     // Update changes
     let diff = data;
@@ -554,11 +557,14 @@ export class ActorPF extends Actor {
       diff.token = diffObject(this.data.token, data.token);
     }
 
-    if (Object.keys(diff).length) {
-      await super.update(diff, mergeObject(options, { recursive: true }));
+    if (options.skipUpdate !== true) {
+      if (Object.keys(diff).length) {
+        await super.update(diff, mergeObject(options, { recursive: true }));
+      }
+      await this.toggleConditionStatusIcons();
+      await this.refreshItems();
     }
-    await this.toggleConditionStatusIcons();
-    await this.refreshItems();
+    return diff;
   }
 
   async refreshItems() {

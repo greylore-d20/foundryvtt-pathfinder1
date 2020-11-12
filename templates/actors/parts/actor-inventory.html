@@ -178,7 +178,10 @@
                                                                 data-dtype="Number" placeholder="1"/>
   </div>
   {{#with encumbrance}}
-  <span class="carry-label">{{carryLabel}}</span>
+  <div class="flexrow">
+    <span class="tag">{{carryLabel}}</span>
+    <span class="tag">{{../labels.totalValue}}</span>
+  </div>
   <div class="flexrow">
     <div class="encumbrance {{#if encumbered.light}}encumbered{{/if}}">
       <span class="encumbrance-bar" style="width:{{pct.light}}%"></span>

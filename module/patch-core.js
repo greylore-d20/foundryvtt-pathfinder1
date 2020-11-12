@@ -90,56 +90,16 @@ export async function PatchCore() {
 
     // Avoid regular update flow for explicitly non-recursive update calls
     if (getProperty(options, "recursive") === false) {
+      console.log("wrong!");
       return ActorTokenHelpers_update.call(this, data, options);
     }
 
-    // Pre update
-    if (isMinimumCoreVersion("0.7.4")) {
-      data = this.preUpdate(data);
-    }
-
-    // Update changes
-    let diff = data;
-    if (options.updateChanges !== false) {
-      const updateObj = await updateChanges.call(this, { data: data });
-      if (updateObj.diff.items) delete updateObj.diff.items;
-      diff = mergeObject(diff, updateObj.diff);
-    }
-
+    const diff = await ActorPF.prototype.update.call(this, data, mergeObject(options, { recursive: true, skipUpdate: true }));
     if (Object.keys(diff).length) {
       await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
+      await this.toggleConditionStatusIcons();
+      await this.refreshItems();
     }
-    const promises = [];
-    if (this.sheet) promises.push(this.sheet.render());
-    promises.push(this.toggleConditionStatusIcons());
-    await Promise.all(promises);
-  };
-  // Patch ActorTokenHelpers.updateEmbeddedEntity
-  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
-  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function(embeddedName, data, options={}) {
-    const itemData = duplicate(this.items.find(o => o._id === data._id)?.data);
-
-    await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
-
-    // Update token buff effect images
-    if (itemData) {
-      let promises = [];
-      const isActive = itemData.data.active || data["data.active"];
-
-      if (itemData.type === "buff" && isActive && data["img"]) {
-        const tokens = this.getActiveTokens();
-        for (const token of tokens) {
-          const fx = token.data.effects || [];
-          if (fx.indexOf(itemData.img) !== -1) fx.splice(fx.indexOf(itemData.img), 1);
-          if (fx.indexOf(data["img"]) === -1) fx.push(data["img"]);
-          promises.push(token.update({effects: fx}, {diff: false}));
-        }
-      }
-
-      await Promise.all(promises);
-    }
-
-    return ActorPF.prototype.update.call(this, {});
   };
   // Patch ActorTokenHelpers.deleteEmbeddedEntity
   const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
@@ -160,7 +120,7 @@ export async function PatchCore() {
       await Promise.all(promises);
     }
 
-    return ActorPF.prototype.update.call(this, {});
+    // return ActorPF.prototype.update.call(this, {});
   };
 
   // Patch, patch, patch

@@ -130,7 +130,7 @@ Hooks.once("setup", function() {
     "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
     "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
     "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes", "measureUnits", "measureUnitsShort",
-    "languages", "damageTypes", "weaponHoldTypes", "auraStrengths", "conditionalTargets", "bonusModifiers",
+    "languages", "damageTypes", "weaponHoldTypes", "auraStrengths", "conditionalTargets", "bonusModifiers", "abilityActivationTypes_unchained", "abilityActivationTypesPlurals_unchained",
   ];
 
   const doLocalize = function(obj) {
@@ -152,7 +152,7 @@ Hooks.once("setup", function() {
  */
 Hooks.once("ready", async function() {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.75.9";
+  const NEEDS_MIGRATION_VERSION = "0.75.12";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";

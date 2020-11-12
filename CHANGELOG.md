@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.75.12
+
+### Bug Fixes
+
+- Fixed an issue with spell level offsets and spell slot calculations
+- Fix prototype tokens not saving (#336)
+- Fix owned items not reacting to changes immediately (#335)
+- Fix extra attack field not accepting rollData attributes (#337)
+- Fixed inability to add spellbooks to unlinked tokens (#331)
+- Fixed negative hit points doubling on actor update calls
+
+### Changelog
+
+- Added a formula to spellbooks to determine a bonus to their casting ability score in regards to their bonus spell slots
+- Added initial support for the Unchained Action Economy optional ruleset (#130)
+
+### API
+
+- Implement ChatMessagePF#itemSource to retrieve message's linked item
+
 ## 0.75.11
 
 ### Bug Fixes
@@ -8,13 +28,18 @@
 
 ### Changelog
 
-- Prepared spellbooks now refresh spell slots on rest (#137)
-- Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots on rest
+- Updating charges or maximum charges on a spell will update the other value of the two as well, depending on what changed
+- Spell slots of prepared spellbooks are now updated in real time (#137)
+- Added an option to mark a spell as a domain or school bonus spell, which will not cost any spell slots
 - Added a numeric field for spell material component costs
+- Conditional Modifiers can now be copied via Drag and Drop
+- Added a sum of the inventory value to actor sheets (#224)
 
 ### Localization
 
 - Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+- Updated the Italian localization, due to the efforts of Marco (many thanks!)
 
 ## 0.75.10
 

@@ -501,9 +501,17 @@ export class ItemPF extends Item {
     // Activated Items
     if ( data.hasOwnProperty("activation") ) {
 
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
+
       // Ability Activation Label
-      let act = data.activation || {};
-      if (act) labels.activation = [["minute", "hour"].includes(act.type) ? act.cost.toString() : "", C.abilityActivationTypes[act.type]].filterJoin(" ");
+      let act = game.settings.get("pf1", "unchainedActionEconomy") ? (getProperty(data, "unchainedAction.activation") || {}) : (getProperty(data, "activation") || {});
+      if (act && act.cost > 1 && activationTypesPlural[act.type] != null) {
+        labels.activation = [act.cost.toString(), activationTypesPlural[act.type]].filterJoin(" ");
+      }
+      else if (act) {
+        labels.activation = [(["minute", "hour", "action"].includes(act.type) && act.cost) ? act.cost.toString() : "", activationTypes[act.type]].filterJoin(" ");
+      }
 
       // Target Label
       let tgt = data.target || {};
@@ -704,8 +712,8 @@ export class ItemPF extends Item {
     }
 
     // Update name
-    if (data["data.identifiedName"]) data["name"] = data["data.identifiedName"];
-    else if (data["name"]) data["data.identifiedName"] = data["name"];
+    if (data["data.identifiedName"]) linkData(srcData, data, "name", data["data.identifiedName"]);
+    else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
@@ -713,7 +721,7 @@ export class ItemPF extends Item {
     // Initialize tag
     if (this.type === "class" && !srcData.data.useCustomTag) {
       const name = srcData.name;
-      data["data.tag"] = createTag(name);
+      linkData(srcData, data, "data.tag", createTag(name));
     }
 
     // Update weight according metric system (lb vs kg)
@@ -728,7 +736,7 @@ export class ItemPF extends Item {
       const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
         .filter(o => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        data["data.weaponSubtype"] = keys[0];
+        linkData(srcData, data, "data.weaponSubtype", keys[0]);
       }
     }
 
@@ -740,14 +748,14 @@ export class ItemPF extends Item {
       let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
         .filter(o => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        data["data.equipmentSubtype"] = keys[0];
+        linkData(srcData, data, "data.equipmentSubtype", keys[0]);
       }
 
       // Set slot
       const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
       keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
       if (!slot || !keys.includes(slot)) {
-        data["data.slot"] = keys[0];
+        linkData(srcData, data, "data.slot", keys[0]);
       }
     }
 
@@ -756,6 +764,36 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses(data, {srcData: srcData});
+
+    // Make sure charges doesn't exceed max charges, and vice versa
+    {
+      let charges = 0;
+      let maxCharges = 0;
+      let target = "value";
+
+      if (this.type === "spell") {
+        if (data["data.preparation.maxAmount"] != null) target = "max";
+        charges = getProperty(srcData, "data.preparation.preparedAmount");
+        maxCharges = getProperty(srcData, "data.preparation.maxAmount");
+      }
+      else {
+        if (data["data.uses.max"] != null) target = "max";
+        charges = getProperty(srcData, "data.uses.value") || 0;
+        maxCharges = getProperty(srcData, "data.uses.max") || 0;
+      }
+
+      if (target === "value" && charges > maxCharges) maxCharges = charges;
+      else if (target === "max" && maxCharges < charges) charges = maxCharges;
+
+      if (this.type === "spell") {
+        linkData(srcData, data, "data.preparation.preparedAmount", charges);
+        linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+      }
+      else {
+        linkData(srcData, data, "data.uses.value", charges);
+        linkData(srcData, data, "data.uses.max", maxCharges);
+      }
+    }
 
     // Update charges for linked items
     if (data["data.uses.value"] != null) {
@@ -766,7 +804,7 @@ export class ItemPF extends Item {
     }
 
     let diff = diffObject(flattenObject(this.data), data);
-    if (Object.keys(diff).length) {
+    if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
         return super.update(diff, options);
       }
@@ -795,6 +833,10 @@ export class ItemPF extends Item {
           return this.render();
         }
       }
+    }
+    else if(options.skipUpdate) {
+      diff["_id"] = this._id;
+      return diff;
     }
     return false;
   }
@@ -989,7 +1031,7 @@ export class ItemPF extends Item {
       if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
-      if ( data.hasOwnProperty("activation") ) {
+      if (data.hasOwnProperty("activation")) {
         props.push(
           labels.target,
           labels.activation,
@@ -1815,7 +1857,7 @@ export class ItemPF extends Item {
     // Add attack bonus
     if (itemData.attackBonus !== "") {
       let attackBonus = new Roll(itemData.attackBonus, rollData).roll().total;
-      rollData.item.attackBonus = attackBonus.toString();
+      rollData.item.attackBonus = attackBonus;
       parts.push("@item.attackBonus");
     }
 
@@ -1852,7 +1894,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false) parts.push("-5");
     // Add bonus
     if (bonus) {
-      rollData.bonus = bonus;
+      rollData.bonus = new Roll(bonus, rollData).roll().total;
       parts.push("@bonus");
     }
     if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";
@@ -2306,16 +2348,19 @@ export class ItemPF extends Item {
     }).sort().join(", ");
 
     // Set casting time label
-    if (getProperty(srcData, "data.activation")) {
-      const activationCost = getProperty(srcData, "data.activation.cost");
-      const activationType = getProperty(srcData, "data.activation.type");
+    const act = game.settings.get("pf1", "unchainedActionEconomy") ? getProperty(srcData, "data.unchainedAction.activation") : getProperty(srcData, "data.activation");
+    if (act != null) {
+      const activationCost = act.cost;
+      const activationType = act.type;
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
 
       if (activationType) {
-        if (CONFIG.PF1.abilityActivationTypesPlurals[activationType] != null) {
-          if (activationCost === 1) label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
-          else label.castingTime = `${CONFIG.PF1.abilityActivationTypesPlurals[activationType]}`;
+        if (activationTypesPlurals[activationType] != null) {
+          if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
+          else label.castingTime = `${activationTypesPlurals[activationType]}`;
         }
-        else label.castingTime = `${CONFIG.PF1.abilityActivationTypes[activationType]}`;
+        else label.castingTime = `${activationTypes[activationType]}`;
       }
       if (!Number.isNaN(activationCost) && label.castingTime != null) label.castingTime = `${activationCost} ${label.castingTime}`;
       if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();

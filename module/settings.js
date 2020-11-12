@@ -325,6 +325,26 @@ export const registerSystemSettings = function() {
       "systems/pf1/templates/chat/attack-roll2.html": "PF1.Alternate",
     },
   });
+
+  /**
+   * Unchained action economy
+   */
+  game.settings.register("pf1", "unchainedActionEconomy", {
+    name: "SETTINGS.pf1UnchainedActionEconomyN",
+    hint: "SETTINGS.pf1UnchainedActionEconomyH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      let promises = [];
+      const actors = [...Array.from(game.actors.entities.filter(o => getProperty(o.data, "token.actorLink"))), ...Object.values(game.actors.tokens)];
+      for (let actor of actors) {
+        promises.push(actor.toggleConditionStatusIcons());
+      }
+      return Promise.all(promises);
+    },
+  });
 };
 
 export const registerClientSettings = function() {

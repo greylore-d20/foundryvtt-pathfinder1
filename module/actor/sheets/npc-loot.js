@@ -62,21 +62,6 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return data;
   }
 
-  calculateTotalItemValue() {
-    const items = this.actor.items.filter(o => o.data.data.price != null);
-    return items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: 1 });
-    }, 0);
-  }
-
-  calculateSellItemValue() {
-    const items = this.actor.items.filter(o => o.data.data.price != null);
-    const sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier") || 0.5;
-    return items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: sellMultiplier });
-    }, 0);
-  }
-
   createTabs(html) {
     const tabGroups = {
       "primary": {

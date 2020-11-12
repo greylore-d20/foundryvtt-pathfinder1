@@ -350,13 +350,21 @@ export const updateChanges = async function({data=null}={}) {
   for (let spellbookKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
     const spellbook = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}`);
     const spellbookAbilityKey = spellbook.ability;
-    const spellbookAbilityMod = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.mod`);
+    let spellbookAbilityScore = getProperty(srcData1, `data.abilities.${spellbookAbilityKey}.total`);
+    const rollData = this.getRollData(srcData1.data);
+
+    // Add spell slots based on ability bonus slot formula
+    {
+      const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
+      spellbookAbilityScore += new Roll(formula, rollData).roll().total;
+    }
+
+    const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
 
     // Set CL
     {
       const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
       const formula = getProperty(spellbook, "cl.formula") || "0";
-      const rollData = this.getRollData(srcData1.data);
       let total = 0;
 
       // Add NPC base
@@ -402,13 +410,37 @@ export const updateChanges = async function({data=null}={}) {
         linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
       }
       else {
-        const value = (typeof spellbookAbilityMod === "number") ? (base + ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a)) : base;
         if (getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`)) {
+          const value = (typeof spellbookAbilityMod === "number") ? (base + ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a)) : base;
           linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, value);
         }
         else {
           linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
         }
+      }
+    }
+
+    // Update spellbook slots
+    {
+      const slots = {};
+      for (let sbKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
+        for (let a = 0; a < 10; a++) {
+          setProperty(slots, `${sbKey}.${a}`, getProperty(srcData1, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0);
+        }
+      }
+      const spells = this.items.filter(o => {
+        return o.type === "spell" && !getProperty(o.data, "data.domain");
+      });
+
+      for (let i of spells) {
+        const sb = i.spellbook;
+        if (!sb || (sb && sb.spontaneous)) continue;
+        const sbKey = i.data.data.spellbook;
+        const a = i.data.data.level;
+        let uses = getProperty(slots, `${sbKey}.${a}`);
+        uses -= i.maxCharges;
+        setProperty(slots, `${sbKey}.${a}`, uses)
+        linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
       }
     }
 

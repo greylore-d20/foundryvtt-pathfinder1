@@ -71,6 +71,12 @@
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
           value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
         </div>
+        
+        <div class="flexrow spell-slot-ability-bonus">
+          <label><h3>{{localize "PF1.SpellSlotAbilityBonus"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellSlotAbilityBonusFormula"
+                             value="{{spellbook.orig.spellSlotAbilityBonusFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+        </div>
 
         {{#if spellbook.orig.spellPoints.useSystem}}
         <div class="flexrow spell-points">
@@ -166,12 +172,11 @@
         </div>
         
         {{#unless ../spellbook.orig.spellPoints.useSystem}}
-        <div class="item-detail spell-uses config">
+        <div class="item-detail spell-uses">
           {{#if section.usesSlots}}
-          <a class="config-icon config-control" for="spellSlots"><i class="fas fa-edit"></i></a>
-          <input class="base submit-on-blur" type="text" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
-            value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
-          <div class="tooltip">
+          <div class="tooltip {{#if ../spellbook.orig.spontaneous}}wheel-change{{/if}}" data-action="input-text" data-for="CHILD-0" data-attr-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value">
+            <input {{#unless ../spellbook.orig.spontaneous}}disabled{{/unless}} type="text" class="spell-level-uses"
+              value="{{section.uses}}" placeholder="0" data-dtype="Number" />
             <span class="tooltipcontent">
               {{#unless ../spellbook.orig.spontaneous}}
               {{localize "PF1.LeftToPrepare"}}
@@ -179,14 +184,13 @@
               {{localize "PF1.CastsLeft"}}
               {{/unless}}
             </span>
-            <input type="text" class="spell-level-uses select-on-click" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
           </div>
           <span class="sep"> / </span>
-          <div class="tooltip">
+          <div class="tooltip" data-action="input-text" data-for="CHILD-0" data-attr-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">
+            <input readonly class="max-spell-level-uses base" type="text" value="{{section.slots}}" placeholder="{{localize "PF1.Base"}}" />
             <span class="tooltipcontent">
               {{localize "PF1.SpellsTotalEachDay"}}
             </span>
-            <input type="text" class="max-spell-level-uses select-on-click" disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
           </div>
           {{ else }}
           <span class="spell-slots">{{{section.uses}}}</span>
@@ -225,8 +229,14 @@
           {{#unless ../../spellbook.orig.spellPoints.useSystem}}
           <div class="item-detail spell-uses flexrow">
             {{#unless item.data.atWill}}
+            {{!-- Domain Marker --}}
+            <div>
+              {{#if item.data.domain}}
+              <i class="fas fa-hand-sparkles" title="{{localize "PF1.Domain"}}/{{localize "PF1.School"}}"></i>
+              {{/if}}
+            </div>
+
             {{#unless ../../spellbook.orig.spontaneous}}
-            <i class="fas fa-edit" style="opacity: 0"></i>
             <div class="tooltip">
               <span class="tooltipcontent">
                 {{localize "PF1.Prepared"}}
@@ -289,12 +299,11 @@
         </div>
         
         {{#unless ../spellbook.orig.spellPoints.useSystem}}
-        <div class="item-detail spell-uses config">
+        <div class="item-detail spell-uses">
           {{#if section.usesSlots}}
-          <a class="config-icon config-control" for="spellSlots"><i class="fas fa-edit"></i></a>
-          <input class="base submit-on-blur" type="text" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base"
-            value="{{section.baseSlots}}" placeholder="Base" data-dtype="Number" style="display: none" />
-          <div class="tooltip">
+          <div class="tooltip {{#if ../spellbook.orig.spontaneous}}wheel-change{{/if}}" data-action="input-text" data-for="CHILD-0" data-attr-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value">
+            <input {{#unless ../spellbook.orig.spontaneous}}disabled{{/unless}} type="text" class="spell-level-uses"
+              value="{{section.uses}}" placeholder="0" data-dtype="Number" />
             <span class="tooltipcontent">
               {{#unless ../spellbook.orig.spontaneous}}
               {{localize "PF1.LeftToPrepare"}}
@@ -302,14 +311,13 @@
               {{localize "PF1.CastsLeft"}}
               {{/unless}}
             </span>
-            <input type="text" class="spell-level-uses select-on-click" value="{{section.uses}}" data-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value" placeholder="0" data-dtype="Number" />
           </div>
           <span class="sep"> / </span>
-          <div class="tooltip">
+          <div class="tooltip" data-action="input-text" data-for="CHILD-0" data-attr-name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">
+            <input readonly class="max-spell-level-uses base" type="text" value="{{section.slots}}" placeholder="{{localize "PF1.Base"}}" />
             <span class="tooltipcontent">
               {{localize "PF1.SpellsTotalEachDay"}}
             </span>
-            <input type="text" class="max-spell-level-uses"disabled value="{{section.slots}}" placeholder="0" data-dtype="Number" />
           </div>
           {{ else }}
           <span class="spell-slots">{{{section.uses}}}</span>

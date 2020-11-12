@@ -9,6 +9,7 @@
 - Fix owned items not reacting to changes immediately (#335)
 - Fix extra attack field not accepting rollData attributes (#337)
 - Fixed inability to add spellbooks to unlinked tokens (#331)
+- Fixed negative hit points doubling on actor update calls
 
 ### Changelog
 

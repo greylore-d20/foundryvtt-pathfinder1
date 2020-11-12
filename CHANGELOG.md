@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.75.13
+
+### Bug Fixes
+
+- Global illumination was incorrectly drawn for currently selected token (#340)
+- Global illumination threshold was not respected (#340)
+
 ## 0.75.12
 
 ### Bug Fixes

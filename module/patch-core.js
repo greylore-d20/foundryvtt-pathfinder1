@@ -128,13 +128,7 @@ export async function PatchCore() {
   Combat.prototype.rollInitiative = _rollInitiative;
   window.getTemplate = PF1_getTemplate;
 
-  // Import low-light vision code
-  if (isMinimumCoreVersion("0.7.2")) {
-    await import("./low-light-vision.js");
-  }
-  else {
-    await import("./low-light-vision-0.6.6.js");
-  }
+  await import("./low-light-vision.js");
 }
 
 import { isMinimumCoreVersion } from "./lib.js";

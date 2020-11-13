@@ -37,7 +37,6 @@ export async function PatchCore() {
 
   const Roll__identifyTerms = Roll.prototype._identifyTerms;
   Roll.prototype._identifyTerms = function(formula) {
-    console.log(formula);
     formula = _preProcessDiceFormula(formula, this.data);
     const terms = Roll__identifyTerms.call(this, formula);
     return terms;

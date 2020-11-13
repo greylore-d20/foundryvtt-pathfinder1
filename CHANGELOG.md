@@ -7,6 +7,10 @@
 - Global illumination was incorrectly drawn for currently selected token (#340)
 - Global illumination threshold was not respected (#340)
 
+### Changelog
+
+- Support for Foundry 0.7.7
+
 ## 0.75.12
 
 ### Bug Fixes

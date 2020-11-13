@@ -37,15 +37,14 @@ export async function PatchCore() {
 
   const Roll__identifyTerms = Roll.prototype._identifyTerms;
   Roll.prototype._identifyTerms = function(formula) {
+    console.log(formula);
     formula = _preProcessDiceFormula(formula, this.data);
     const terms = Roll__identifyTerms.call(this, formula);
     return terms;
   };
 
   //Remove after 0.7.7
-  if (isMinimumCoreVersion("0.7.7")) {
-  }
-  else if (isMinimumCoreVersion("0.7.6")) {
+  if (isMinimumCoreVersion("0.7.6") && !isMinimumCoreVersion("0.7.7")) {
     const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;
     Roll.prototype._splitDiceTerms = function(formula) {
 

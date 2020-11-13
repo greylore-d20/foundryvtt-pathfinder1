@@ -11,6 +11,10 @@
 
 - Support for Foundry 0.7.7
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.75.12
 
 ### Bug Fixes

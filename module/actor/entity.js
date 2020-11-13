@@ -725,17 +725,29 @@ export class ActorPF extends Actor {
    * @param {MouseEvent} ev The click event
    */
   async useSpell(item, ev, {skipDialog=false}={}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
     if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
 
-    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() < item.chargeCost) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoSpellsLeft"));
+    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() < item.chargeCost) {
+      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     // Invoke the Item roll
     return item.useAttack({ev: ev, skipDialog: skipDialog});
   }
 
   async createAttackFromWeapon(item) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     if (item.data.type !== "weapon") throw new Error("Wrong Item type");
 
@@ -871,7 +883,11 @@ export class ActorPF extends Actor {
    * @param {Object} options      Options which configure how the skill check is rolled
    */
   rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null, noSound: false}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     let skl, sklName;
     const skillParts = skillId.split("."),
@@ -934,7 +950,11 @@ export class ActorPF extends Actor {
   }
 
   rollBAB(options={noSound: false}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     return DicePF.d20Roll({
       event: options.event,
@@ -948,7 +968,11 @@ export class ActorPF extends Actor {
   }
 
   rollCMB(options={noSound: false}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     // Add contextual notes
     let notes = [];
@@ -1088,7 +1112,11 @@ export class ActorPF extends Actor {
   }
 
   async rollInitiative() {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     let formula = _getInitiativeFormula(this);
     let overrideRollMode = null,
@@ -1126,7 +1154,11 @@ export class ActorPF extends Actor {
   }
 
   rollSavingThrow(savingThrowId, options={ event: null, noSound: false, skipPrompt: true }) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     // Add contextual notes
     let notes = [];
@@ -1180,7 +1212,11 @@ export class ActorPF extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options={noSound: false}) {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     // Add contextual notes
     let notes = [];
@@ -1224,7 +1260,11 @@ export class ActorPF extends Actor {
    * Show defenses in chat
    */
   async rollDefenses() {
-    if (!this.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
     let rollData = this.getRollData();
 
     // Add contextual AC notes
@@ -1368,7 +1408,9 @@ export class ActorPF extends Actor {
           tmp = parseInt(hp.temp) || 0,
           dt = value > 0 ? Math.min(tmp, value) : 0;
       if (!a.hasPerm(game.user, "OWNER")) {
-        ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+        const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+        console.warn(msg);
+        ui.notifications.warn(msg);
         continue;
       }
       promises.push(t.actor.update({

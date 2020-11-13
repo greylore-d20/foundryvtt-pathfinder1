@@ -2,8 +2,9 @@ export const runUnitTests = async function() {
   const actorName = "Testy";
   const actor = game.actors.entities.find(o => o.name === actorName);
   if (!actor) {
-    ui.notifications.error(`Could not find actor by name ${actorName}`);
-    return;
+    const msg = game.i18n.localize("PF1.ErrorCouldNotFindActorByName").format(actorName);
+    console.error(msg);
+    return ui.notifications.error(msg);
   }
 
   console.log("Running unit tests...");

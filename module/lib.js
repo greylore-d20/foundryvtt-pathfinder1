@@ -248,7 +248,9 @@ export const sizeDie = function(origCount, origSides, targetSize="M", crit=1) {
     // formula = `${count * crit}d${sides}${RegExp.$3}`;
   // }
   if (index === -1) {
-    ui.notifications.warn(game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula));
+    const msg = game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula);
+    console.warn(msg);
+    ui.notifications.warn(msg);
   }
   
   return formula;

@@ -306,7 +306,9 @@ export class ActorSheetPF extends ActorSheet {
           : 0;
       }
       catch (e) {
-        ui.notifications.error(game.i18n.localize("PF1.ErrorActorFormula").format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name));
+        const msg = game.i18n.localize("PF1.ErrorActorFormula").format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name);
+        console.error(msg);
+        ui.notifications.error(msg);
         data.featCount.byFormula = 0;
       }
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
@@ -1374,8 +1376,9 @@ export class ActorSheetPF extends ActorSheet {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
-      return;
+      const msg = game.i18n.localize("PF1.ErrorCantIdentify");
+      console.error(msg);
+      return ui.notifications.error(msg);
     }
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.actor.getOwnedItem(itemId);

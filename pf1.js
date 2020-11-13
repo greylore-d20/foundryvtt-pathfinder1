@@ -521,13 +521,21 @@ async function createMiscActorMacro(type, actorId, slot, altType=null) {
  */
 function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
   let actor = getActorFromId(actorId);
-  if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+  if (actor && !actor.hasPerm(game.user, "OWNER")) {
+    const msg = game.i18n.localize("PF1.ErrorNoActorPermission");l
+    console.warn(msg);
+    return ui.notifications.warn(msg);
+  }
   const item = actor ? actor.items.find(i => {
     if (itemId != null && i._id !== itemId) return false;
     if (itemType != null && i.type !== itemType) return false;
     return i.name === itemName;
   }) : null;
-  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+  if (!item) {
+    const msg = game.i18n.localize("PF1.WarningNoItemOnActor").format(actor.name, itemName);
+    console.warn(msg);
+    return ui.notifications.warn(msg);
+  }
 
   // Trigger the item roll
   if (!game.keyboard.isDown("Control")) {
@@ -538,7 +546,11 @@ function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
 
 function rollSkillMacro(actorId, skillId) {
   const actor = getActorFromId(actorId);
-  if (!actor) return ui.notifications.error(game.i18n.localize("PF1.ErrorActorNotFound").format(actorId));
+  if (!actor) {
+    const msg = game.i18n.localize("PF1.ErrorActorNotFound").format(actorId);
+    console.warn(msg);
+    return ui.notifications.error(msg);
+  }
 
   return actor.rollSkill(skillId, {skipDialog: getSkipActionPrompt()});
 }
@@ -548,14 +560,22 @@ function rollSkillMacro(actorId, skillId) {
  */
 function rollDefenses({actorName=null, actorId=null}={}) {
   const actor = ActorPF.getActiveActor({actorName: actorName, actorId: actorId});
-  if (!actor) return ui.notifications.warn("No applicable actor found");
+  if (!actor) {
+    const msg = game.i18n.localize("PF1.ErrorNoApplicableActorFoundForAction").format(game.i18n.localize("PF1.Action_RollDefenses"));
+    console.warn(msg);
+    return ui.notifications.warn(msg);
+  }
 
   return actor.rollDefenses();
 };
 
 function rollActorAttributeMacro(actorId, type, altType=null) {
   const actor = getActorFromId(actorId);
-  if (!actor) return ui.notifications.error("PF1.ErrorActorNotFound").format(actorId);
+  if (!actor) {
+    const msg = game.i18n.localize("PF1.ErrorActorNotFound").format(actorId);
+    console.error(msg);
+    return ui.notifications.error(msg);
+  }
 
   switch (type) {
     case "defenses":

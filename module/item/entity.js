@@ -872,7 +872,9 @@ export class ItemPF extends Item {
         else data["data.uses.max"] = roll.total;
       }
       else if (formulaHasDice(maxFormula)) {
-        ui.notifications.warn(game.i18n.localize("PF1.WarningNoDiceAllowedInFormula").format(game.i18n.localize("PF1.ChargePlural"), this.name));
+        const msg = game.i18n.localize("PF1.WarningNoDiceAllowedInFormula").format(game.i18n.localize("PF1.ChargePlural"), this.name);
+        console.warn(msg);
+        ui.notifications.warn(msg);
       }
     }
   }
@@ -885,7 +887,11 @@ export class ItemPF extends Item {
    */
   async roll(altChatData={}, {addDC=true}={}) {
     const actor = this.parentActor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (actor && !actor.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     // Basic template rendering data
     const token = this.parentActor.token;
@@ -1178,8 +1184,14 @@ export class ItemPF extends Item {
 
     if (this.isCharged) {
       if (this.charges < this.chargeCost) {
-        if (this.isSingleUse) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
-        return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
+        if (this.isSingleUse) {
+          const msg = game.i18n.localize("PF1.ErrorNoQuantity");
+          console.warn(msg);
+          return ui.notifications.warn(msg);
+        }
+        const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+        console.warn(msg);
+        return ui.notifications.warn(msg);
       }
       if (this.autoDeductCharges) {
         await this.addCharges(-this.chargeCost);
@@ -1193,15 +1205,23 @@ export class ItemPF extends Item {
   async useAttack({ev=null, skipDialog=false}={}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.parentActor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
+    if (actor && !actor.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     const itemQuantity = getProperty(this.data, "data.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
-      return ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+      const msg = game.i18n.localize("PF1.ErrorNoQuantity");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
     }
 
     if (this.isCharged && this.charges < this.chargeCost) {
-      return ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
+      const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
     }
 
     // Check ammunition links
@@ -1213,7 +1233,9 @@ export class ItemPF extends Item {
         else minAmmo = Math.min(minAmmo, l.item.charges);
 
         if (l.item.charges <= 0) {
-          return ui.notifications.warn(game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name));
+          const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
+          console.warn(msg);
+          return ui.notifications.warn(msg);
         }
       }
     }
@@ -1364,8 +1386,9 @@ export class ItemPF extends Item {
             try {
               conditionalData[[tag, i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
             } catch (e) {
-              ui.notifications.warn(game.i18n.format("PF1.WarningConditionalRoll", {number: i+1, name: conditional.name}));
-              console.error(e);
+              const msg = game.i18n.format("PF1.WarningConditionalRoll", {number: i+1, name: conditional.name});
+              console.warn(msg);
+              ui.notifications.warn(msg);
               // Skip modifier to avoid multiple errors from one non-evaluating entry
               continue;
             }
@@ -1561,7 +1584,9 @@ export class ItemPF extends Item {
 
         // Cancel usage on insufficient charges
         if (cost > uses) {
-          ui.notifications.warn(game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name));
+          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+          console.warn(msg);
+          ui.notifications.warn(msg);
           return;
         }
         await this.addCharges(-cost);

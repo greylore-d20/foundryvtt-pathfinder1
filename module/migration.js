@@ -8,7 +8,11 @@ import { ItemChange } from "./item/components/change.js";
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function() {
-  if (!game.user.isGM) return ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
+  if (!game.user.isGM) {
+    const msg = game.i18n.localize("PF1.ErrorUnauthorizedAction");
+    console.error(msg);
+    return ui.notifications.error(msg);
+  }
   ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
 
   await _migrateWorldSettings();

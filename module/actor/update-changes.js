@@ -243,7 +243,9 @@ export const updateChanges = async function({data=null}={}) {
         }
       }
       catch (e) {
-        ui.notifications.error(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
+        const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
+        console.error(msg);
+        ui.notifications.error(msg);
       }
 
       // Set value
@@ -1699,10 +1701,12 @@ const _updateSimpleAttributes = function(updateData, data) {
         linkData(data, updateData, "data.attributes.sr.total", roll.total);
       }
       catch (e) {
-        ui.notifications.error(game.i18n.localize("PF1.ErrorActorFormula").format(
+        const msg = game.i18n.localize("PF1.ErrorActorFormula").format(
           game.i18n.localize("PF1.SpellResistance"),
           this.name,
-        ));
+        );
+        console.error(msg);
+        ui.notifications.error(msg);
         linkData(data, updateData, "data.attributes.sr.total", 0);
       }
     }

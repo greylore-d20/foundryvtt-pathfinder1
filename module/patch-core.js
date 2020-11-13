@@ -43,44 +43,46 @@ export async function PatchCore() {
   };
 
   //Remove after 0.7.7
-  if (isMinimumCoreVersion("0.7.6")) {
-  const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;
-  Roll.prototype._splitDiceTerms = function(formula) {
+  if (isMinimumCoreVersion("0.7.7")) {
+  }
+  else if (isMinimumCoreVersion("0.7.6")) {
+    const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;
+    Roll.prototype._splitDiceTerms = function(formula) {
 
-    // Split on arithmetic terms and operators
-    const operators = this.constructor.ARITHMETIC.concat(["(", ")"]);
-    const arith = new RegExp(operators.map(o => "\\"+o).join("|"), "g");
-    const split = formula.replace(arith, ";$&;").split(";");
+      // Split on arithmetic terms and operators
+      const operators = this.constructor.ARITHMETIC.concat(["(", ")"]);
+      const arith = new RegExp(operators.map(o => "\\"+o).join("|"), "g");
+      const split = formula.replace(arith, ";$&;").split(";");
 
-    // Strip whitespace-only terms
-    let terms = split.reduce((arr, term) => {
-      term = term.trim();
-      if ( term === "" ) return arr;
-      arr.push(term);
-      return arr;
-    }, []);
-
-    // Categorize remaining non-whitespace terms
-    terms = terms.reduce((arr, term, i, split) => {
-
-      // Arithmetic terms
-      if ( this.constructor.ARITHMETIC.includes(term) ) {
-        if ( (term !== "-" && !arr.length) || (i === (split.length - 1)) ) return arr; // Ignore leading or trailing arithmetic
+      // Strip whitespace-only terms
+      let terms = split.reduce((arr, term) => {
+        term = term.trim();
+        if ( term === "" ) return arr;
         arr.push(term);
-      }
+        return arr;
+      }, []);
 
-      // Numeric terms
-      else if ( Number.isNumeric(term) ) arr.push(Number(term));
+      // Categorize remaining non-whitespace terms
+      terms = terms.reduce((arr, term, i, split) => {
 
-      // Dice terms
-      else {
-        const die = DiceTerm.fromExpression(term);
-        arr.push(die || term);
-      }
-      return arr;
-    }, []);
-    return terms;
-  };
+        // Arithmetic terms
+        if ( this.constructor.ARITHMETIC.includes(term) ) {
+          if ( (term !== "-" && !arr.length) || (i === (split.length - 1)) ) return arr; // Ignore leading or trailing arithmetic
+          arr.push(term);
+        }
+
+        // Numeric terms
+        else if ( Number.isNumeric(term) ) arr.push(Number(term));
+
+        // Dice terms
+        else {
+          const die = DiceTerm.fromExpression(term);
+          arr.push(die || term);
+        }
+        return arr;
+      }, []);
+      return terms;
+    };
   }
   
   
@@ -90,7 +92,6 @@ export async function PatchCore() {
 
     // Avoid regular update flow for explicitly non-recursive update calls
     if (getProperty(options, "recursive") === false) {
-      console.log("wrong!");
       return ActorTokenHelpers_update.call(this, data, options);
     }
 

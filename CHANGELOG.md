@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.75.14
-
-### Bug Fixes
-
-- Conditional Modifiers on spells were deleted when migrating data (#342)
-
 ## 0.75.13
 
 ### Bug Fixes

@@ -1,4 +1,4 @@
-// Namespace D&D5e Configuration Values
+// Namespace PF1 Configuration Values
 export const PF1 = {};
 
 PF1.re = {

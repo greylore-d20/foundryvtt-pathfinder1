@@ -1204,7 +1204,13 @@ export class ActorSheetPF extends ActorSheet {
       else elem[0].addEventListener("focusout", handler);
       elem[0].removeEventListener("click", handler);
 
-      this._onSubmit(event);
+      if ((typeof value === "string" && value !== elem[0].value) ||
+        (typeof value === "number" && value !== parseInt(elem[0].value))) {
+        this._onSubmit(event);
+      }
+      else {
+        this.render();
+      }
     };
 
     if (wheelEvent) elem[0].addEventListener("mouseout", handler);

@@ -111,10 +111,8 @@
 
   <div class="form-group">
     <label>{{localize "PF1.LevelDrain"}}</label>
-    <label class="checkbox">
-      <input type="text" name="data.attributes.energyDrain" value="{{#if data.attributes.energyDrain}}{{data.attributes.energyDrain}}{{/if}}"
-                                                            placeholder="0" data-dtype="Number" />
-    </label>
+    <input class="select-on-click" type="text" name="data.attributes.energyDrain" value="{{data.attributes.energyDrain}}"
+                                                          placeholder="0" data-dtype="Number" />
   </div>
 
   {{!-- Point Buy Calculator --}}

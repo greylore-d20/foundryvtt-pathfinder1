@@ -138,6 +138,7 @@ export const migrateActorData = async function(actor) {
   _migrateCMBAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData);
+  _migrateActorNullValues(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -745,6 +746,23 @@ const _migrateActorSpellbookUsage = function(ent, updateData) {
       }
     }
     updateData["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+  }
+};
+
+const _migrateActorNullValues = function(ent, updateData) {
+  // Prepare test data
+  const entries = { "data.attributes.energyDrain": getProperty(ent.data, "data.attributes.energyDrain") };
+  for (let [k, a] of Object.entries(getProperty(ent.data, "data.abilities") || {})) {
+    entries[`data.abilities.${k}.damage`] = a.damage;
+    entries[`data.abilities.${k}.drain`] = a.drain;
+    entries[`data.abilities.${k}.penalty`] = a.penalty;
+  }
+
+  // Set null values to 0
+  for (let [k, v] of Object.entries(entries)) {
+    if (v === null) {
+      updateData[k] = 0;
+    }
   }
 };
 

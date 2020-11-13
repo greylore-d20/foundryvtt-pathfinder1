@@ -10,6 +10,7 @@
 ### Changelog
 
 - Support for Foundry 0.7.7
+- Moved the tooltip anchors for AC and CMD to their headers, to be consistent with other tooltips
 
 ### Localization
 

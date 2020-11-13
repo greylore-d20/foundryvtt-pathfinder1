@@ -2,22 +2,7 @@
     <thead>
         <tr>
             {{#each data.attributes.ac as |ac id|}}
-            <th>
-                {{ac.label}}
-            </th>
-            {{/each}}
-            <th>
-                {{localize "PF1.CMDAbbr"}}
-            </th>
-            <th>
-                {{localize "PF1.CMDFFAbbr"}}
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            {{#each data.attributes.ac as |ac id|}}
-            <td class="tooltip">
+            <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.ac.{{id}}.total : {{ac.total}}<br/>
                 @armor.type : {{../rollData.armor.type}}<br/>
@@ -31,10 +16,10 @@
                 {{/if}}
                 </div>
 
-                {{ac.total}}
-            </td>
+                {{ac.label}}
+            </th>
             {{/each}}
-            <td class="tooltip">
+            <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.cmd.total : {{data.attributes.cmd.total}}
             
@@ -46,9 +31,9 @@
                 {{/if}}
                 </div>
 
-                {{data.attributes.cmd.total}}
-            </td>
-            <td class="tooltip">
+                {{localize "PF1.CMDAbbr"}}
+            </th>
+            <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
             
@@ -59,7 +44,22 @@
                 {{/each}}
                 {{/if}}
                 </div>
-
+                
+                {{localize "PF1.CMDFFAbbr"}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#each data.attributes.ac as |ac id|}}
+            <td>
+                {{ac.total}}
+            </td>
+            {{/each}}
+            <td>
+                {{data.attributes.cmd.total}}
+            </td>
+            <td>
                 {{data.attributes.cmd.flatFootedTotal}}
             </td>
         </tr>

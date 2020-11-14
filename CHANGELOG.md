@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.0
+
+### Bug Fixes
+
+- At-will spells caused an incorrect calculation of available spell slots
+
 ## 0.75.13
 
 ### Bug Fixes

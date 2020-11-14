@@ -440,7 +440,9 @@ export const updateChanges = async function({data=null}={}) {
         const sbKey = i.data.data.spellbook;
         const a = i.data.data.level;
         let uses = getProperty(slots, `${sbKey}.${a}`);
-        uses -= i.maxCharges;
+        if (Number.isFinite(i.maxCharges)) {
+          uses -= i.maxCharges;
+        }
         setProperty(slots, `${sbKey}.${a}`, uses)
         linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
       }

@@ -86,12 +86,13 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
       operator,
       value,
       isDelta = false;
-  if (strVal.match(/(\+|--?)([0-9.]+)/)) {
+  if (strVal.match(/(=?[+-]-?)([0-9.]+)/)) {
     operator = RegExp.$1;
     value = parseFloat(RegExp.$2);
     isDelta = ["-", "+"].includes(operator);
+    operator = operator?.replace('=','');
   }
-  else if (strVal.match(/([0-9.]+)/)) {
+  else if (strVal.match(/=?([0-9.]+)/)) {
     value = parseFloat(RegExp.$1);
   }
   else return;
@@ -99,6 +100,7 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
   let bar = input.dataset.bar;
 
   // For attribute bar values, update the associated Actor
+  // TODO: Switch to Actor#modifyTokenAttribute
   if ( bar ) {
     const actor = this.object?.actor;
     if (!actor) return;
@@ -107,7 +109,7 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
     const updateData = {};
 
     // Set to specified negative value
-    if (operator === "--") {
+    if (operator === "--" || (!isDelta && operator == "-")) {
       updateData[`data.${data.attribute}.value`] = -value;
     }
 
@@ -130,7 +132,7 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
 
   // Otherwise update the Token
   else {
-    if (operator === "--")
+    if (operator === "--" || (!isDelta && operator == "-"))
       value = -value;
     else if (isDelta) {
       const current = getProperty(this.object.data, input.name);

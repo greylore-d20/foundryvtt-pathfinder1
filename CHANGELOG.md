@@ -11,6 +11,7 @@
 ### Changelog
 
 - Elevation now allows floating point numbers
+- Elevation and Token attribute bars now also accept "=-" to set absolute negative values (core feature parity)
 
 ## 0.75.13
 

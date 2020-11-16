@@ -5,6 +5,11 @@
 ### Bug Fixes
 
 - At-will spells caused an incorrect calculation of available spell slots
+- Token elevation couldn't be set to negative values or use relative math (#354)
+
+### Changelog
+
+- Elevation now allows floating point numbers
 
 ## 0.75.13
 

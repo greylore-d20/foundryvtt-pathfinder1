@@ -86,12 +86,12 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
       operator,
       value,
       isDelta = false;
-  if (strVal.match(/(\+|--?)([0-9]+)/)) {
+  if (strVal.match(/(\+|--?)([0-9.]+)/)) {
     operator = RegExp.$1;
     value = parseFloat(RegExp.$2);
     isDelta = ["-", "+"].includes(operator);
   }
-  else if (strVal.match(/([0-9]+)/)) {
+  else if (strVal.match(/([0-9.]+)/)) {
     value = parseFloat(RegExp.$1);
   }
   else return;
@@ -129,7 +129,16 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
   }
 
   // Otherwise update the Token
-  else this.object.update({[input.name]: value});
+  else {
+    if (operator === "--")
+      value = -value;
+    else if (isDelta) {
+      const current = getProperty(this.object.data, input.name);
+      if (operator === "-") value = current - value;
+      else if (operator === "+") value = current + value;
+    }
+    this.object.update({[input.name]: value});
+  }
 
   // Clear the HUD
   this.clear();

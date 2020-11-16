@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+- Conditional Modifiers on spells were deleted when migrating data (#342) 
 - At-will spells caused an incorrect calculation of available spell slots
 - Token elevation couldn't be set to negative values or use relative math (#354)
 

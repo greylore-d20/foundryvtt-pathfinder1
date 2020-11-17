@@ -17,6 +17,11 @@
 - Added speed decrease formulas to the Slow buff
 - Armor values are no longer hidden for non-armor equipment types (#350)
 
+### Localization
+
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.75.13
 
 ### Bug Fixes

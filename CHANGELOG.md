@@ -17,6 +17,8 @@
 - Elevation and Token attribute bars now also accept "=-" to set absolute negative values (core feature parity)
 - Added speed decrease formulas to the Slow buff
 - Armor values are no longer hidden for non-armor equipment types (#350)
+- Added a checkbox for toggling static size on token configurations (#345)
+  - When enabled, token sizes will no longer change when its actor changes size
 
 ### Localization
 

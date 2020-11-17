@@ -383,10 +383,17 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 
 // Render TokenConfig
 Hooks.on("renderTokenConfig", async (app, html) => {
+  // Add vision inputs
   let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.html", {
     object: duplicate(app.object.data),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
+
+  // Add static size checkbox
+  newHTML = `<div class="form-group"><label>${game.i18n.localize("PF1.StaticSize")}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
+  if (getProperty(app.object.data, "flags.pf1.staticSize")) newHTML += " checked";
+  newHTML += "/></div>";
+  html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
 });
 
 // Render Sidebar

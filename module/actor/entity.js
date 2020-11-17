@@ -456,6 +456,7 @@ export class ActorPF extends Actor {
       if (this.data.token.actorLink) {
         tokens = this.getActiveTokens();
       }
+      tokens = tokens.filter(o => !getProperty(o.data, "flags.pf1.staticSize"));
       tokens.forEach(o => {
         o.update({ width: size.w, height: size.h, scale: size.scale });
       });

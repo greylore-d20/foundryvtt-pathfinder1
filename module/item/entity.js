@@ -3303,8 +3303,8 @@ export class ItemPF extends Item {
     let result = this.getTotalCurrency();
 
     // Add item's price
-    result += (getProperty(this.data, "data.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
     if (this.showUnidentifiedData) result += (getProperty(this.data, "data.unidentified.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
+    else result += (getProperty(this.data, "data.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
 
     // Modify sell value
     if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;

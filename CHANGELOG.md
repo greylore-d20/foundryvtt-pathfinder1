@@ -8,6 +8,7 @@
 - At-will spells caused an incorrect calculation of available spell slots
 - Token elevation couldn't be set to negative values or use relative math (#354)
 - The Haste buff had an incorrect formula for its speed increases (#348)
+- Loot sheets showed identified prices for unidentified items from a player's perspective
 
 ### Changelog
 

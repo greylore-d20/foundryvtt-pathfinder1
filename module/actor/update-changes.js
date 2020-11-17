@@ -230,7 +230,7 @@ export const updateChanges = async function({data=null}={}) {
         const roll = new Roll(formula, rollData);
 
         // Process result
-        let value = 0;
+        var value = 0;
 
         value = roll.roll().total;
 

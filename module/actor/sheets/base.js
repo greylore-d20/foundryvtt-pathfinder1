@@ -2083,10 +2083,10 @@ export class ActorSheetPF extends ActorSheet {
           max = getProperty(this.actor.data, maxKey);
         }
 
-        if (v.match(/(\+|--?)([0-9]+)/)) {
+        if (v.match(/(\+|[=-]?-)([0-9]+)/)) {
           const operator = RegExp.$1;
           let value = parseInt(RegExp.$2);
-          if (operator === "--") {
+          if (operator === "--" || operator === "=-") {
             formData[k] = -value;
           }
           else {

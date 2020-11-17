@@ -55,6 +55,7 @@ export async function PatchCore() {
     });
   };
 
+  //Override null values not being treated as 0 for Roll#total
   const Roll__safeEval = Roll.prototype._safeEval;
   Roll.prototype._safeEval = function(expression) {
     const src = 'with (sandbox) { return ' + expression + '}';

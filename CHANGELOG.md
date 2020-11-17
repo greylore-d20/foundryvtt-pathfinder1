@@ -5,6 +5,7 @@
 ### Changelog
 
 - Allow unsetting associated abilities for saving throws
+- Null values are allowed in rollData again (Core#4134)
 
 ## 0.76.0
 

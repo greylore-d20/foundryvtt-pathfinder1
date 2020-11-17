@@ -1201,20 +1201,35 @@ export class ActorSheetPF extends ActorSheet {
 
     const handler = event => {
       if (wheelEvent) elem[0].removeEventListener("mouseout", handler);
-      else elem[0].addEventListener("focusout", handler);
+      else {
+        elem[0].removeEventListener("focusout", handler);
+        elem[0].removeEventListener("keydown", keyHandler);
+      }
       elem[0].removeEventListener("click", handler);
 
-      if ((typeof value === "string" && value !== elem[0].value) ||
-        (typeof value === "number" && value !== parseInt(elem[0].value))) {
+      if (changed) {
         this._onSubmit(event);
       }
       else {
         this.render();
       }
     };
+    const keyHandler = event => {
+      if (event.key === "Enter") {
+        changed = true;
+        handler.call(this, event);
+      }
+    };
 
-    if (wheelEvent) elem[0].addEventListener("mouseout", handler);
-    else elem[0].addEventListener("focusout", handler);
+    let changed = false;
+    if (wheelEvent) {
+      elem[0].addEventListener("mouseout", handler);
+      changed = true;
+    }
+    else {
+      elem[0].addEventListener("focusout", handler);
+      elem[0].addEventListener("keydown", keyHandler);
+    }
     elem[0].addEventListener("click", handler);
   }
 

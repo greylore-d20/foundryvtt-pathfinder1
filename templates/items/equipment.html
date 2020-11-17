@@ -129,17 +129,14 @@
           <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
-        {{#if showArmorData}}
         <label class="checkbox">
           <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
-        {{/if}}
         <label class="checkbox">
           <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
         </label>
       </div>
 
-      {{#if showArmorData}}
       {{!-- Armor Class --}}
       <div class="form-group">
         <label>{{localize "PF1.ArmorClass"}}</label>
@@ -157,7 +154,6 @@
         </div>
       </div>
       {{/unless}}
-      {{/if}}
 
       {{!-- Dexterity Modifier --}}
       {{#unless showUnidentifiedData}}

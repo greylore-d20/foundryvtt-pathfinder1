@@ -15,6 +15,7 @@
 - Elevation now allows floating point numbers
 - Elevation and Token attribute bars now also accept "=-" to set absolute negative values (core feature parity)
 - Added speed decrease formulas to the Slow buff
+- Armor values are no longer hidden for non-armor equipment types (#350)
 
 ## 0.75.13
 

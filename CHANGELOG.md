@@ -6,6 +6,7 @@
 
 - Allow unsetting associated abilities for saving throws
 - Null values are allowed in rollData again (Core#4134)
+- Allow using the `=-` operator on certain actor attributes (such as hit points) to set it to a negative value
 
 ## 0.76.0
 

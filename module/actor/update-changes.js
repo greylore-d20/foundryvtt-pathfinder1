@@ -224,13 +224,14 @@ export const updateChanges = async function({data=null}={}) {
       if (change.source.item != null) {
         rollData.item = change.source.item.data;
       }
-
-      // Execute formula
-      const roll = new Roll(formula, rollData);
-
-      // Process result
-      let value = 0;
+      
       try {
+        // Execute formula
+        const roll = new Roll(formula, rollData);
+
+        // Process result
+        let value = 0;
+
         value = roll.roll().total;
 
         if (change.raw.target === "ac" && change.raw.modifier === "enh") {

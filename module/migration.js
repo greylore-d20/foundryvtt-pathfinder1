@@ -52,7 +52,7 @@ export const migrateWorld = async function() {
 
   // Migrate World Compendium Packs
   const packs = game.packs.filter(p => {
-    return (["world", "pf1"].includes(p.metadata.package)) && ["Actor", "Item", "Scene"].includes(p.metadata.entity) && !p.locked;
+    return ((["world", "pf1"].includes(p.metadata.package)) || p.metadata.system === "pf1") && ["Actor", "Item", "Scene"].includes(p.metadata.entity) && !p.locked;
   });
   for ( let p of packs ) {
     await migrateCompendium(p);

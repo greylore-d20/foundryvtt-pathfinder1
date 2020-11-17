@@ -7,11 +7,13 @@
 - Conditional Modifiers on spells were deleted when migrating data (#342) 
 - At-will spells caused an incorrect calculation of available spell slots
 - Token elevation couldn't be set to negative values or use relative math (#354)
+- The Haste buff had an incorrect formula for its speed increases (#348)
 
 ### Changelog
 
 - Elevation now allows floating point numbers
 - Elevation and Token attribute bars now also accept "=-" to set absolute negative values (core feature parity)
+- Added speed decrease formulas to the Slow buff
 
 ## 0.75.13
 

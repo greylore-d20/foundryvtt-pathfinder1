@@ -48,12 +48,20 @@ export async function PatchCore() {
     let dataRgx = new RegExp(/@([a-z.0-9_\-]+)/gi);
     return formula.replace(dataRgx, (match, term) => {
       let value = getProperty(data, term);
-      if ( (value ?? null) !== null ) return String(value).trim();
-      if ( warn && value !== null) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", {match}));
+      if ( value !== undefined ) return String(value).trim();
+      if ( warn ) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", {match}));
       if ( missing !== undefined ) return String(missing);
       else return match;
     });
-  }
+  };
+
+  const Roll__safeEval = Roll.prototype._safeEval;
+  Roll.prototype._safeEval = function(expression) {
+    const src = 'with (sandbox) { return ' + expression + '}';
+    const evl = new Function('sandbox', src);
+    const evld = evl(this.constructor.MATH_PROXY);
+    return evld === null ? 0 : evld
+  };
 
   //Remove after 0.7.7
   if (isMinimumCoreVersion("0.7.6") && !isMinimumCoreVersion("0.7.7")) {

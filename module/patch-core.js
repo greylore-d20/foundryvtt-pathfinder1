@@ -42,6 +42,19 @@ export async function PatchCore() {
     return terms;
   };
 
+  //Override null values throwing warnings
+  const Roll_replaceFormulaData = Roll.replaceFormulaData;
+  Roll.replaceFormulaData = function(formula, data, {missing, warn=false}={}) {
+    let dataRgx = new RegExp(/@([a-z.0-9_\-]+)/gi);
+    return formula.replace(dataRgx, (match, term) => {
+      let value = getProperty(data, term);
+      if ( (value ?? null) !== null ) return String(value).trim();
+      if ( warn && value !== null) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", {match}));
+      if ( missing !== undefined ) return String(missing);
+      else return match;
+    });
+  }
+
   //Remove after 0.7.7
   if (isMinimumCoreVersion("0.7.6") && !isMinimumCoreVersion("0.7.7")) {
     const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;

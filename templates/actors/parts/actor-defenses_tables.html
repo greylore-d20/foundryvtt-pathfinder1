@@ -109,6 +109,7 @@
             <td>
                 <select data-name="data.attributes.savingThrows.{{id}}.ability">
                     {{#select savingThrow.ability}}
+                    <option value=""></option>
                     {{#each ../config.abilities as |abl a|}}
                     <option value="{{a}}">{{abl}}</option>
                     {{/each}}

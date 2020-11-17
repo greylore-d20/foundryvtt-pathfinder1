@@ -607,44 +607,42 @@ const _resetData = function(updateData, data, flags, sourceInfo) {
 
   // Reset saving throws
   for (let a of Object.keys(data1.attributes.savingThrows)) {
-    {
-      const k = `data.attributes.savingThrows.${a}.total`;
-      if (useFractionalBaseBonuses) {
-        let highStart = false;
-        linkData(data, updateData, k,
-          Math.floor(classes.reduce((cur, obj) => {
-            const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
-            if (saveScale === "high"){
-              const acc = highStart ? 0 : 2;
-              highStart = true;
-              return cur + obj.data.level / 2 + acc;
-            }
-            if (saveScale === "low") return cur + obj.data.level / 3;
-            return cur;
-          }, 0))
-        );
+    const k = `data.attributes.savingThrows.${a}.total`;
+    if (useFractionalBaseBonuses) {
+      let highStart = false;
+      linkData(data, updateData, k,
+        Math.floor(classes.reduce((cur, obj) => {
+          const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
+          if (saveScale === "high") {
+            const acc = highStart ? 0 : 2;
+            highStart = true;
+            return cur + obj.data.level / 2 + acc;
+          }
+          if (saveScale === "low") return cur + obj.data.level / 3;
+          return cur;
+        }, 0))
+      );
 
-        const v = updateData[k];
-        if (v !== 0) {
-          getSourceInfo(sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: updateData[k] });
-        }
+      const v = updateData[k];
+      if (v !== 0) {
+        getSourceInfo(sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: updateData[k] });
       }
-      else {
-        linkData(data, updateData, k,
-          classes.reduce((cur, obj) => {
-            const classType = getProperty(obj.data, "classType") || "base";
-            let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
-            if (formula == null) formula = "0";
-            const v = Math.floor(new Roll(formula, {level: obj.data.level}).roll().total);
+    }
+    else {
+      linkData(data, updateData, k,
+        classes.reduce((cur, obj) => {
+          const classType = getProperty(obj.data, "classType") || "base";
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
+          if (formula == null) formula = "0";
+          const v = Math.floor(new Roll(formula, {level: obj.data.level}).roll().total);
 
-            if (v !== 0) {
-              getSourceInfo(sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
-            }
+          if (v !== 0) {
+            getSourceInfo(sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
+          }
 
-            return cur + v;
-          }, 0)
-        );
-      }
+          return cur + v;
+        }, 0)
+      );
     }
   }
 
@@ -1007,22 +1005,28 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
     let abl;
     // Ability Mod to Fortitude
     abl = getProperty(data, "data.attributes.savingThrows.fort.ability");
-    changes.push({
-      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untypedPerm" }, {inplace: false}),
-      source: {name: CONFIG.PF1.abilities[abl]},
-    });
+    if (abl) {
+      changes.push({
+        raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "fort", modifier: "untypedPerm" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+    }
     // Ability Mod to Reflex
     abl = getProperty(data, "data.attributes.savingThrows.ref.ability");
-    changes.push({
-      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untypedPerm" }, {inplace: false}),
-      source: {name: CONFIG.PF1.abilities[abl]},
-    });
+    if (abl) {
+      changes.push({
+        raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "ref", modifier: "untypedPerm" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+    }
     // Ability Mod to Will
     abl = getProperty(data, "data.attributes.savingThrows.will.ability");
-    changes.push({
-      raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untypedPerm" }, {inplace: false}),
-      source: {name: CONFIG.PF1.abilities[abl]},
-    });
+    if (abl) {
+      changes.push({
+        raw: mergeObject(ItemChange.defaultData, { formula: `@abilities.${abl}.mod`, target: "savingThrows", subTarget: "will", modifier: "untypedPerm" }, {inplace: false}),
+        source: {name: CONFIG.PF1.abilities[abl]},
+      });
+    }
     // Energy Drain
     changes.push({
       raw: mergeObject(ItemChange.defaultData, { formula: "-@attributes.energyDrain", target: "savingThrows", subTarget: "allSavingThrows", modifier: "penalty" }, {inplace: false}),

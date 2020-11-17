@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.1
+
+### Changelog
+
+- Allow unsetting associated abilities for saving throws
+
 ## 0.76.0
 
 ### Bug Fixes

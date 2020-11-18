@@ -21,7 +21,7 @@ export const updateChanges = async function({data=null}={}) {
 
   // Track previous values
   const prevValues = {
-    mhp: this.data.data.attributes.hp.max,
+    mhp: getProperty(this.data, "data.attributes.hp.max") || 0,
     wounds: getProperty(this.data, "data.attributes.wounds.max") || 0,
     vigor: getProperty(this.data, "data.attributes.vigor.max") || 0,
   };
@@ -1624,7 +1624,7 @@ const _sortChanges = function(a, b) {
   prioA = (prioA || 0) + 1000;
   prioB = (prioB || 0) + 1000;
 
-  return typeA - typeB || prioB - prioA || modA - modB;
+  return prioB - prioA || typeA - typeB || modA - modB;
 }
 
 const _parseChange = function(change, changeData, flags) {

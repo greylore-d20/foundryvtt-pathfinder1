@@ -9,6 +9,7 @@
 - Allow using the `=-` operator on certain actor attributes (such as hit points) to set it to a negative value
 - Added a help browser (WIP) (#277)
 - Overhauled HP and Initiative styles on NPC Lite sheets
+- Change priorities now take precedence over change target, in terms of when they are processed (fixes #309)
 
 ## 0.76.0
 

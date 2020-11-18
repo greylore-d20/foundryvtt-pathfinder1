@@ -1207,6 +1207,11 @@ export class ActorSheetPF extends ActorSheet {
       }
       elem[0].removeEventListener("click", handler);
 
+      if ((typeof value === "string" && value !== elem[0].value) ||
+        (typeof value === "number" && value !== parseInt(elem[0].value))) {
+        changed = true;
+      }
+
       if (changed) {
         this._onSubmit(event);
       }

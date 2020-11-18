@@ -8,6 +8,7 @@
 - Null values are allowed in rollData again (Core#4134)
 - Allow using the `=-` operator on certain actor attributes (such as hit points) to set it to a negative value
 - Added a help browser (WIP) (#277)
+- Overhauled HP and Initiative styles on NPC Lite sheets
 
 ## 0.76.0
 

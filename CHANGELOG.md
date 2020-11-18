@@ -10,6 +10,7 @@
 - Added a help browser (WIP) (#277)
 - Overhauled HP and Initiative styles on NPC Lite sheets
 - Change priorities now take precedence over change target, in terms of when they are processed (fixes #309)
+- Improved domain/school spell slots by adding a field for specifying allowed domain slots per spell level (#339)
 
 ## 0.76.0
 

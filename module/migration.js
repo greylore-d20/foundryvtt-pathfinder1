@@ -139,6 +139,7 @@ export const migrateActorData = async function(actor) {
   _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
+  _migrateActorSpellbookDomainSlots(actor, updateData);
 
   if ( !actor.items ) return updateData;
 
@@ -738,6 +739,7 @@ const _migrateActorSpellbookUsage = function(ent, updateData) {
 
   if (spellbookUsage == null) {
     let usedSpellbooks = [];
+    if (!ent.items) return;
     const spells = ent.items.filter(o => o.type === "spell");
     for (let o of spells) {
       const sb = o.data.data.spellbook;
@@ -763,6 +765,16 @@ const _migrateActorNullValues = function(ent, updateData) {
     if (v === null) {
       updateData[k] = 0;
     }
+  }
+};
+
+const _migrateActorSpellbookDomainSlots = function(ent, updateData) {
+  const spellbooks = getProperty(ent.data, "data.attributes.spells.spellbooks") || {};
+
+  for (let [k, b] of Object.entries(spellbooks)) {
+    if (b.domainSlotValue !== undefined) continue;
+    const key = `data.attributes.spells.spellbooks.${k}.domainSlotValue`;
+    updateData[key] = 1;
   }
 };
 

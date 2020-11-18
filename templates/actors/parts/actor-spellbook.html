@@ -78,6 +78,12 @@
                              value="{{spellbook.orig.spellSlotAbilityBonusFormula}}" placeholder="{{localize "PF1.Formula"}}" />
         </div>
 
+        <div class="flexrow domain-slot-value">
+          <label><h3>{{localize "PF1.DomainSlotValue"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.domainSlotValue"
+            value="{{spellbook.orig.domainSlotValue}}" title="{{localize "PF1.DomainSlotValueDesc"}}" placeholder="0" data-dtype="Number" />
+        </div>
+
         {{#if spellbook.orig.spellPoints.useSystem}}
         <div class="flexrow spell-points">
           <h3>{{localize "PF1.SpellPoints"}}</h3>

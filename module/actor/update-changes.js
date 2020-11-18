@@ -428,23 +428,34 @@ export const updateChanges = async function({data=null}={}) {
       const slots = {};
       for (let sbKey of Object.keys(getProperty(srcData1, "data.attributes.spells.spellbooks"))) {
         for (let a = 0; a < 10; a++) {
-          setProperty(slots, `${sbKey}.${a}`, getProperty(srcData1, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0);
+          setProperty(slots, `${sbKey}.${a}.value`, getProperty(srcData1, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0);
+          setProperty(slots, `${sbKey}.${a}.domainSlots`, getProperty(srcData1, `data.attributes.spells.spellbooks.${sbKey}.domainSlotValue`) || 0);
         }
       }
-      const spells = this.items.filter(o => {
-        return o.type === "spell" && !getProperty(o.data, "data.domain");
-      });
+      const spells = this.items.filter(o => o.type === "spell");
 
       for (let i of spells) {
         const sb = i.spellbook;
         if (!sb || (sb && sb.spontaneous)) continue;
         const sbKey = i.data.data.spellbook;
+        const isDomain = getProperty(i.data, "data.domain") === true;
         const a = i.data.data.level;
-        let uses = getProperty(slots, `${sbKey}.${a}`);
+        let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`);
+        let uses = getProperty(slots, `${sbKey}.${a}.value`);
         if (Number.isFinite(i.maxCharges)) {
-          uses -= i.maxCharges;
+          let subtract = { domain: 0, uses: 0 };
+          if (isDomain) {
+            subtract.domain = Math.min(i.maxCharges, dSlots);
+            subtract.uses = i.maxCharges - subtract.domain;
+          }
+          else {
+            subtract.uses = i.maxCharges;
+          }
+          dSlots -= subtract.domain;
+          uses -= subtract.uses;
         }
-        setProperty(slots, `${sbKey}.${a}`, uses)
+        setProperty(slots, `${sbKey}.${a}.value`, uses)
+        setProperty(slots, `${sbKey}.${a}.domainSlots`, dSlots);
         linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
       }
     }

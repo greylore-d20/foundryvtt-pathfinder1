@@ -1239,6 +1239,7 @@
 
   "PF1.Help": {
     "Label": "Help",
+    "WIP": "This section is currently a Work In Progress (WIP).",
     "Desc": "This is a reference sheet and information panel on various topics of the Pathfinder 1e system for Foundry Virtual Tabletop.",
     "Desc2": "You can select topics on the left, whose contents will appear on the right. On the top of this window are navigational tools.",
     "Img": {
@@ -1265,20 +1266,69 @@
             "Label": "Variables",
             "Desc": "Below you will find an (incomplete) list of variables you can use within your formulas.",
             "Header": {
-              "0": "Variable",
-              "1": "Description"
+              "Name": "Variable",
+              "Description": "Description"
             },
             "AbilityScoreTotal": {
-              "Label": "@abilities.X.total",
               "Desc": "The total value of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
             },
             "AbilityScoreMod": {
-              "Label": "@abilities.X.mod",
               "Desc": "The modifier of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
             },
             "HitDie": {
-              "Label": "@attributes.hd.total",
               "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            }
+          },
+          "Functions": {
+            "Label": "Functions",
+            "Desc": "The following are functions you can use within formulas, and examples on how to use them.",
+            "Header": {
+              "Name": "Function",
+              "Description": "Description",
+              "Examples": "Examples",
+              "Example": "Example"
+            },
+            "Max": {
+              "Desc": "Returns the highest of the given numbers.",
+              "Examples": {
+                "0": "Returns the either the actor's Strength modifier or the actor's Dexterity modifier, whichever is higher."
+              }
+            },
+            "Min": {
+              "Desc": "Returns the lowest of the given numbers.",
+              "Examples": {
+                "0": "Returns the either the actor's Hit Die total or the number 10, whichever is lower."
+              }
+            },
+            "Floor": {
+              "Desc": "Rounds the given number down to the lowest integer.",
+              "Examples": {
+                "0": "Returns half of the actor's Hit Die total, rounded down."
+              }
+            },
+            "Ceil": {
+              "Desc": "Rounds the given number down to the highest integer.",
+              "Examples": {
+                "0": "Returns half of the actor's Hit Die total, rounded up."
+              }
+            },
+            "Round": {
+              "Desc": "Rounds the given number to the nearest integer.",
+              "Examples": {
+                "0": "Returns one third of the actor's Hit Die total, rounded to the nearest whole number."
+              }
+            },
+            "SquareRoot": {
+              "Desc": "Returns the positive square root of the given number.",
+              "Examples": {
+                "0": "Returns 4."
+              }
+            },
+            "Power": {
+              "Desc": "Returns x to the power of y.",
+              "Examples": {
+                "0": "Returns 64."
+              }
             }
           }
         }
@@ -1404,7 +1454,7 @@
             },
             "Priority": {
               "Label": "Priority",
-              "Desc": "The priority of this change. Changes with lower value priorities will be processed later."
+              "Desc": "The priority of this change. Changes with lower priorities will be processed later."
             },
             "Target": {
               "Label": "Target",
@@ -1417,6 +1467,22 @@
             "Modifier": {
               "Label": "Modifier",
               "Desc": "The modifier of this change."
+            }
+          },
+          "ContextNotes": {
+            "Label": "Context Notes",
+            "Desc": "This a list of contextual notes, which are shown in appropriate situations. From left to right:",
+            "Description": {
+              "Label": "Description",
+              "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
+            },
+            "Target": {
+              "Label": "Target",
+              "Desc": "A general category of the attribute to alter."
+            },
+            "SubTarget": {
+              "Label": "Sub-Target",
+              "Desc": "The specific attribute to alter with this change."
             }
           }
         }

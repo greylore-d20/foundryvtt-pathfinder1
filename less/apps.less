@@ -998,3 +998,56 @@
     max-height: 640px;
   }
 }
+
+/* ----------------------------------------- */
+/* Help Browser
+/* ----------------------------------------- */
+.pf1.help-browser {
+  section.window-content {
+    padding: 0;
+
+    .top-bar {
+      padding: 6px;
+      flex: 0 0 24px;
+      border-bottom: @borderGroove;
+  
+      > * {
+        margin-right: 8px;
+      }
+  
+      i {
+        font-size: 24px;
+      }
+      i.gray {
+        color: gray;
+      }
+    }
+  
+    .content, nav {
+      a {
+        color: #ff6400;
+        text-decoration: underline;
+      }
+    }
+  
+    .primary {
+      height: calc(100% - 32px);
+    }
+  
+    nav {
+      flex: 0 0 200px;
+      border-right: @borderGroove;
+      height: 100%;
+      overflow: auto;
+    }
+  
+    .content {
+      height: 100%;
+      overflow: auto;
+
+      code {
+        background-color: #ddd;
+      }
+    }
+  }
+}

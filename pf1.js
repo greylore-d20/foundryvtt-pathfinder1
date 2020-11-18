@@ -30,6 +30,7 @@ import { updateChanges } from "./module/actor/update-changes.js";
 import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
+import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
@@ -398,12 +399,19 @@ Hooks.on("renderTokenConfig", async (app, html) => {
 
 // Render Sidebar
 Hooks.on("renderSidebarTab", (app, html) => {
-  // Add changelog button
   if (app instanceof Settings) {
+    // Add changelog button
     let button = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
     html.find("#game-details").append(button);
     button.click(() => {
       new ChangeLogWindow().render(true);
+    });
+
+    // Add help button
+    button = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
+    html.find("#game-details").append(button);
+    button.click(() => {
+      new PF1_HelpBrowser().openURL("systems/pf1/help/index.html");
     });
   }
 });

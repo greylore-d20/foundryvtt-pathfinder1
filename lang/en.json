@@ -1235,5 +1235,192 @@
   "PF1.Settings": "Settings",
   "PF1.SpellbookUsage": "Spellbook Usage",
   "PF1.SpellSlotAbilityBonus": "Spell Slot Ability Bonus",
-  "PF1.StaticSize": "Static Size"
+  "PF1.StaticSize": "Static Size",
+
+  "PF1.Help": {
+    "Label": "Help",
+    "Desc": "This is a reference sheet and information panel on various topics of the Pathfinder 1e system for Foundry Virtual Tabletop.",
+    "Desc2": "You can select topics on the left, whose contents will appear on the right. On the top of this window are navigational tools.",
+    "Img": {
+      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
+      "Items.Equipment": "systems/pf1/help/img/en/equipment-details.jpg",
+      "Items.Description": "systems/pf1/help/img/en/item-description.jpg",
+      "Items.Changes": "systems/pf1/help/img/en/item-changes.jpg"
+    },
+    "Nav": {
+      "Home": "Home",
+      "Actors": "Actors",
+      "Items": "Items",
+      "ItemTypes": "Item Types",
+      "Concepts": "Concepts",
+      "Special": "Special"
+    },
+    "Content": {
+      "Special": {
+        "Formulas": {
+          "Label": "Formulas",
+          "Desc": "Formulas are an important aspect in the Pathfinder 1e system. They can be as simple as a single numerical value, or as complex as single lines of code. They play a great role in item changes.",
+          "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
+          "Variables": {
+            "Label": "Variables",
+            "Desc": "Below you will find an (incomplete) list of variables you can use within your formulas.",
+            "Header": {
+              "0": "Variable",
+              "1": "Description"
+            },
+            "AbilityScoreTotal": {
+              "Label": "@abilities.X.total",
+              "Desc": "The total value of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
+            },
+            "AbilityScoreMod": {
+              "Label": "@abilities.X.mod",
+              "Desc": "The modifier of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
+            },
+            "HitDie": {
+              "Label": "@attributes.hd.total",
+              "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            }
+          }
+        }
+      },
+      "Items": {
+        "ItemTypes.Physical": "Physical Item Types",
+        "ItemTypes.Other": "Other Item Types",
+        "Generic": {
+          "EnhancementBonus": "Enhancement Bonus",
+          "EnhancementBonusDesc": "The item's enhancement bonus, as per the Core rules",
+          "Masterwork": "Masterwork",
+          "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
+          "Broken": "Broken",
+          "BrokenDesc": "Whether the item is broken, as per the Core rules",
+          "EquipmentStatus": "Equipment Status",
+          "Equipped": "Equipped",
+          "EquippedDesc": "Whether the item is currently equipped, and transfers its changes to its actor (if any)",
+          "Identified": "Identified (GM only)",
+          "IdentifiedDesc": "Whether the item is currently identified, and shows its identified information to players",
+          "Size": "Size",
+          "SizeDesc": "The item's size, similar to a character's size"
+        },
+        "Weapons": {
+          "Label": "Weapons",
+          "Desc": "Weapons are meant to represent physical weapons that a character can hold.",
+          "Category": "Category",
+          "CategoryDesc": "The weapon's category (simple, martial, exotic or misc)",
+          "Type": "Type",
+          "TypeDesc": "The weapon's type (light, one-handed, two-handed or ranged)",
+          "Size": "Weapon Size",
+          "SizeDesc": "The weapon's size, similar to a character's size",
+          "Properties": "Weapon Properties",
+          "PropertiesDesc": "The weapon's properties, as per the Core rules (does nothing mechanically)",
+          "BonusAttackFormula": "Bonus Attack Formula",
+          "BonusAttackFormulaDesc": "The weapon's attack bonus formula. Some examples:",
+          "BonusAttackFormulaExamples": {
+            "0": "Will incur a penalty to the attack roll of -2 if the wielder's Strength modifier is lower than 3"
+          },
+          "BaseWeaponDamage": "Base Weapon Damage",
+          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)",
+          "BonusDamageFormula": "Bonus Damage Formula",
+          "BonusDamageFormulaDesc": "The bonus damage the weapon deals. Some examples:",
+          "BonusDamageFormulaExamples": {
+            "0": "Will add either 4 or the wielder's Stregth modifier to the damage roll, whichever is lower"
+          },
+          "BaseWeaponCritical": "Base Weapon Critical",
+          "BaseWeaponCriticalDesc": "The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied"
+        },
+        "Equipment": {
+          "Label": "Equipment",
+          "Desc": "Equipment represents all non-weapon equippable items, including armor, shields, rings and wondrous items.",
+          "Category": "Category",
+          "CategoryDesc": "The armor's category (whether it's armor, a shield, or something else)",
+          "Type": "Type",
+          "TypeDesc": "Armor or Shield size type, or other item type (clothing, wondrous item, etc.)",
+          "Slot": "Slot",
+          "SlotDesc": "What slot this item is for (only shows up for items other than armor or shields)",
+          "Status": "Equipment Status",
+          "StatusDesc": "Status flags of this particular item"
+        },
+        "Consumables": {
+          "Label": "Consumables",
+          "Desc": "Consumables represent physical items with limited uses, such as potions or wands."
+        },
+        "Containers": {
+          "Label": "Containers",
+          "Desc": "Containers are items which can contain other items."
+        },
+        "Loot": {
+          "Label": "Loot",
+          "Desc": "Loot items are all types of physical items that don't fit in other major categories, such as trade goods and ammunition."
+        },
+        "Description": {
+          "Label": "Description",
+          "Name": "Name",
+          "NameDesc": "The name of the item, if identified.",
+          "UnidentifiedName": "Unidentified Name",
+          "UnidentifiedNameDesc": "The name of the item, if unidentified. Shows the identified name for players if left empty.",
+          "Description": "Description",
+          "DescriptionDesc": "The description to show, if identified.",
+          "UnidentifiedDescription": "Unidentified Description",
+          "UnidentifiedDescriptionDesc":  "The description to show to players, if unidentified.",
+          "Price": "Price",
+          "PriceDesc": "The price of the item, in gold pieces, if identified",
+          "UnidentifiedPrice": "Unidentified Price",
+          "UnidentifiedPriceDesc": "The price of the item, in gold pieces, if unidentified."
+        },
+        "Changes": {
+          "Label": "Changes",
+          "Flags": {
+            "Label": "Flags",
+            "LoseDexToAC": {
+              "Label": "Lose Dex to AC",
+              "Desc": "While an item with this change is active, a character loses his Dexterity bonuses to Armor Class."
+            },
+            "SetAbility": {
+              "Label": "X Ability",
+              "Desc": "Sets the appropriate ability to the flag's specified value. This might be removed in a later version, since the same can be accomplished with the '=' operator (see below)."
+            },
+            "DwarfLikeEncumbrance": {
+              "Label": "Dwarf-like Encumbrance",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by being in a medium or heavy load."
+            },
+            "FullSpeedMediumArmor": {
+              "Label": "Full Speed in Medium Armor",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing medium armor."
+            },
+            "FullSpeedHeavyArmor": {
+              "Label": "Full Speed in Heavy Armor",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing heavy armor."
+            }
+          },
+          "Changes": {
+            "Label": "Changes",
+            "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
+            "Formula": {
+              "Label": "Formula",
+              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See <a href=\"systems/pf1/help/special/formulas.html\">this page</a> for more details."
+            },
+            "Operator": {
+              "Label": "Operator",
+              "Desc": "The operator is either '+' (relative) or '=' (absolute). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula."
+            },
+            "Priority": {
+              "Label": "Priority",
+              "Desc": "The priority of this change. Changes with lower value priorities will be processed later."
+            },
+            "Target": {
+              "Label": "Target",
+              "Desc": "A general category of the attribute to alter."
+            },
+            "SubTarget": {
+              "Label": "Sub-Target",
+              "Desc": "The specific attribute to alter with this change."
+            },
+            "Modifier": {
+              "Label": "Modifier",
+              "Desc": "The modifier of this change."
+            }
+          }
+        }
+      }
+    }
+  }
 }

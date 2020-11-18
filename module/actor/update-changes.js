@@ -331,7 +331,8 @@ export const updateChanges = async function ({ data = null } = {}) {
             }
           }
         } catch (e) {
-          const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
+          const msg =
+            change.raw.error ?? game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
           console.error(msg, formula);
           ui.notifications.error(msg);
         }
@@ -379,8 +380,6 @@ export const updateChanges = async function ({ data = null } = {}) {
       }
     });
   }
-
-  _updateSimpleAttributes.call(this, updateData, srcData1);
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
@@ -1012,6 +1011,9 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
       linkData(data, updateData, `data.skills.${k}.subSkills.${k2}.cs`, isClassSkill);
     }
   }
+
+  // Reset Spell Resistance
+  linkData(data, updateData, "data.attributes.sr.total", 0);
 };
 
 const _addDynamicData = function ({
@@ -1560,6 +1562,27 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         { inplace: false }
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
+    });
+  }
+  // Spell Resistance
+  {
+    const sr = getProperty(data, "data.attributes.sr.formula") || 0;
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        {
+          formula: sr.toString(),
+          target: "misc",
+          subTarget: "spellResist",
+          modifier: "base",
+          priority: 1000,
+          error: game.i18n
+            .localize("PF1.ErrorActorFormula")
+            .format(game.i18n.localize("PF1.SpellResistance"), this.name),
+        },
+        { inplace: false }
+      ),
+      source: { name: `${game.i18n.localize("PF1.SpellResistance")} (${game.i18n.localize("PF1.Base")})` },
     });
   }
   // Natural armor
@@ -2235,6 +2258,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData) {
       return "data.attributes.mDex.armorBonus";
     case "mDexS":
       return "data.attributes.mDex.shieldBonus";
+    case "spellResist":
+      return "data.attributes.sr.total";
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
@@ -2514,28 +2539,6 @@ const _applySetChanges = function (updateData, data, changes) {
       totalValue += v;
     }
     linkData(data, updateData, attrKey, totalValue);
-  }
-};
-
-const _updateSimpleAttributes = function (updateData, data) {
-  // Update Spell Resistance
-  {
-    const formula = updateData["data.attributes.sr.formula"] || "";
-    if (formula.length > 0) {
-      try {
-        let roll = new Roll(formula, this.getRollData()).roll();
-        linkData(data, updateData, "data.attributes.sr.total", roll.total);
-      } catch (e) {
-        const msg = game.i18n
-          .localize("PF1.ErrorActorFormula")
-          .format(game.i18n.localize("PF1.SpellResistance"), this.name);
-        console.error(msg, formula);
-        ui.notifications.error(msg);
-        linkData(data, updateData, "data.attributes.sr.total", 0);
-      }
-    } else {
-      linkData(data, updateData, "data.attributes.sr.total", 0);
-    }
   }
 };
 

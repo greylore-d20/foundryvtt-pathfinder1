@@ -1188,6 +1188,7 @@ PF1.buffTargets = {
     acpS: "PF1.ACPShield",
     mDexA: "PF1.MaxDexArmor",
     mDexS: "PF1.MaxDexShield",
+    spellResist: "PF1.SpellResistance",
   },
 };
 

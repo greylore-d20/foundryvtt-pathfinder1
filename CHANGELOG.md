@@ -8,7 +8,6 @@
 - Attacks and Consumables could sometimes not be linked to a charge pool (#432)
 - Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
 - Quick token actions for Items without images caused visual glitches
-- Fix Wyvaran racial dex bonus
 - API calls for dice rolls properly return and resolve to their result(s)
 - Removes items from containers when dragged out to same actor (prevents duplication) (thanks mkahvi!)
 
@@ -25,6 +24,9 @@
 - Added confirmation dialog for when unsaved TinyMCE changes are about to be lost (#286)
 - Made spellcasting configuration button a little clearer (thanks mkahvi!) (#454)
 - Move ability score configuration to settings tab (thanks mkahvi!)
+- Added "Spell Resistance" as a "Misc" Change subtarget
+  - The SR formula entered in the combat tab will now be used as a "Base" type value
+
 ## 0.76.11
 
 ### Bug Fixes

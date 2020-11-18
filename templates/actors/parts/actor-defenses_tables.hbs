@@ -7,7 +7,7 @@
                 @attributes.ac.{{id}}.total : {{ac.total}}<br/>
                 @armor.type : {{../rollData.armor.type}}<br/>
                 @shield.type : {{../rollData.shield.type}}
-            
+
                 {{#if ac.sourceDetails.length}}
                 <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each ac.sourceDetails as |src|}}
@@ -22,7 +22,7 @@
             <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.cmd.total : {{data.attributes.cmd.total}}
-            
+
                 {{#if sourceDetails.data.attributes.cmd.total.length}}
                 <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.cmd.total as |src|}}
@@ -36,7 +36,7 @@
             <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.cmd.flatFootedTotal : {{data.attributes.cmd.flatFootedTotal}}
-            
+
                 {{#if sourceDetails.data.attributes.cmd.flatFootedTotal.length}}
                 <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.data.attributes.cmd.flatFootedTotal as |src|}}
@@ -44,7 +44,7 @@
                 {{/each}}
                 {{/if}}
                 </div>
-                
+
                 {{localize "PF1.CMDFFAbbr"}}
             </th>
         </tr>
@@ -73,7 +73,7 @@
             <th class="saving-throw tooltip" data-savingthrow="{{id}}">
                 <div class="tooltipcontent">
                 @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
-            
+
                 {{#if savingThrow.sourceDetails.length}}
                 <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each savingThrow.sourceDetails as |src|}}
@@ -88,8 +88,15 @@
             <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.sr.total : {{data.attributes.sr.total}}
+
+                {{#if sourceDetails.data.attributes.sr.total.length}}
+                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                  {{#each sourceDetails.data.attributes.sr.total as |src|}}
+                    {{src.name}}: {{src.value}}<br/>
+                  {{/each}}
+                {{/if}}
                 </div>
-                
+
                 {{localize "PF1.SpellResistance"}}
             </th>
         </tr>

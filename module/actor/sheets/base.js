@@ -1511,9 +1511,10 @@ export class ActorSheetPF extends ActorSheet {
     else {
       button.disabled = true;
 
+      const item = this.actor.items.find(o => o._id === li.dataset.itemId);
       const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteItem"),
+        title: game.i18n.localize("PF1.DeleteItemTitle").format(item.name),
         content: msg,
         yes: () => {
           this.actor.deleteOwnedItem(li.dataset.itemId);

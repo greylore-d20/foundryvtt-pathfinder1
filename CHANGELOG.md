@@ -6,6 +6,10 @@
 
 - Fixed an issue with stacking changes multiplying in some cases (#360)
 
+### Changelog
+
+- Show the item's name in its deletion confirmation dialog title (#363)
+
 ## 0.76.1
 
 ### Changelog

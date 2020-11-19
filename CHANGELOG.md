@@ -9,6 +9,7 @@
 ### Changelog
 
 - Show the item's name in its deletion confirmation dialog title (#363)
+- Added an attacks section to the NPC Lite sheet
 
 ## 0.76.1
 

@@ -197,7 +197,6 @@ export const updateChanges = async function({data=null}={}) {
   allChanges = allChanges.sort(_sortChanges.bind(this));
 
   // Parse changes
-  let temp = [];
   const origData = mergeObject(this.data, data != null ? expandObject(data) : {}, { inplace: false });
   updateData = flattenObject({ data: mergeObject(origData.data, expandObject(updateData).data, { inplace: false }) });
   _addDynamicData.call(this, { updateData: updateData, data: srcData1, forceModUpdate: true, flags: flags, sourceInfo: sourceInfo });
@@ -213,6 +212,7 @@ export const updateChanges = async function({data=null}={}) {
     }, 0);
 
     // Parse change formulas
+    const highestBonus = {};
     allChanges.forEach((change, a) => {
       const formula = change.raw.formula || "";
       if (formula === "") return;
@@ -254,8 +254,6 @@ export const updateChanges = async function({data=null}={}) {
       change.source.value = change.raw.value;
       _parseChange.call(this, change, changeData[changeTarget], flags);
 
-      temp.push(changeData[changeTarget]);
-
       // Set change
       if (change.raw.operator === "set") {
         _applySetChanges(updateData, srcData1, [change]);
@@ -268,11 +266,8 @@ export const updateChanges = async function({data=null}={}) {
       }
       // Add change
       else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
-        if (allChanges.length <= a+1 || allChanges[a+1].raw.subTarget !== changeTarget) {
-          const newData = _applyChanges.call(this, changeTarget, temp, srcData1);
-          _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: newData, flags: flags, sourceInfo: sourceInfo });
-          temp = [];
-        }
+        const addData = _applyChanges.call(this, highestBonus, change, rollData);
+        if (addData) _addDynamicData.call(this, { updateData: updateData, data: srcData1, changes: addData, flags: flags, sourceInfo: sourceInfo });
       }
     });
   }
@@ -471,6 +466,17 @@ export const updateChanges = async function({data=null}={}) {
     }
   }
 
+  // Apply health rounding
+  for (let k of ["data.attributes.hp.max", "data.attributes.wounds.max", "data.attributes.vigor.max"]) {
+    let value = getProperty(srcData1, k);
+    const healthConfig = game.settings.get("pf1", "healthConfig")
+    const continuous = {discrete: false, continuous: true}[healthConfig.continuity]
+    if (continuous) {
+      const round = {up: Math.ceil, nearest: Math.round, down: Math.floor}[healthConfig.rounding]
+      linkData(srcData1, updateData, k, round(value));
+    }
+  }
+
   // Add current hit points
   if (updateData["data.attributes.hp.max"]) {
     const hpDiff = updateData["data.attributes.hp.max"] - prevValues.mhp;
@@ -525,48 +531,51 @@ export const updateChanges = async function({data=null}={}) {
   return { data: {}, diff: {} };
 };
 
-const _applyChanges = function(buffTarget, changeData, rollData) {
-  let consolidatedChanges = {};
-  let changes = {};
-  for (let change of changeData) {
-    if (!change) continue;
-    for (let b of Object.keys(change)) {
-      changes[b] = { positive: 0, negative: 0 };
+const _applyChanges = function(highestBonus, change, rollData) {
+
+  // Return with no result if no change is needed
+  const changeValue = change.raw.value;
+  if (changeValue === 0) return null;
+
+  // Gather data
+  const result = {};
+  const subTarget = change.raw.subTarget;
+  const changeMod = change.raw.modifier;
+  let resultValue = 0;
+
+  if (!highestBonus[subTarget]) highestBonus[subTarget] = {};
+  if (!highestBonus[subTarget][changeMod]) highestBonus[subTarget][changeMod] = { positive: 0, negative: 0 };
+
+  // Positive value
+  if (changeValue > 0) {
+    let prevValue = highestBonus[subTarget][changeMod].positive;
+    if (isStackingModifier(changeMod)) {
+      highestBonus[subTarget][changeMod].positive += changeValue;
     }
-    for (let [changeType, data] of Object.entries(change)) {
-      // Add positive value
-      if (data.positive.value !== 0) {
-        changes[changeType].positive += data.positive.value;
-      }
-      // Add negative value
-      if (data.negative.value !== 0) {
-          changes[changeType].negative += data.negative.value;
-      }
+    else {
+      highestBonus[subTarget][changeMod].positive = Math.max(changeValue, prevValue);
     }
+    resultValue = highestBonus[subTarget][changeMod].positive - prevValue;
+  }
+  // Negative value
+  else {
+    let prevValue = highestBonus[subTarget][changeMod].negative;
+    if (isStackingModifier(changeMod)) {
+      highestBonus[subTarget][changeMod].negative += changeValue;
+    }
+    else {
+      highestBonus[subTarget][changeMod].negative = Math.min(changeValue, prevValue);
+    }
+    resultValue = highestBonus[subTarget][changeMod].negative - prevValue;
   }
 
-  for (let [changeTarget, value] of Object.entries(changes)) {
-    if (value.positive !== 0 || value.negative !== 0) {
-      let flatTargets = getChangeFlat.call(this, buffTarget, changeTarget, rollData.data);
-      if (flatTargets == null) continue;
-
-      if (!(flatTargets instanceof Array)) flatTargets = [flatTargets];
-      for (let target of flatTargets) {
-        consolidatedChanges[target] = (consolidatedChanges[target] || 0) + value.positive + value.negative;
-
-         // Apply final rounding of health, if required.
-        if (["data.attributes.hp.max", "data.attributes.wounds.max", "data.attributes.vigor.max"].includes(target)) {
-          const healthConfig = game.settings.get("pf1", "healthConfig")
-          const continuous = {discrete: false, continuous: true}[healthConfig.continuity]
-          if (continuous) {
-            const round = {up: Math.ceil, nearest: Math.round, down: Math.floor}[healthConfig.rounding]
-            consolidatedChanges[target] = round(consolidatedChanges[target])
-          }
-        }
-      }
-    }
+  let targets = getChangeFlat.call(this, subTarget, changeMod, rollData.data);
+  if (!(targets instanceof Array)) targets = [targets];
+  for (let t of targets) {
+    result[t] = resultValue;
   }
-  return consolidatedChanges;
+
+  return result;
 };
 
 const _resetData = function(updateData, data, flags, sourceInfo) {
@@ -854,7 +863,7 @@ const _addDynamicData = function({updateData={}, data={}, changes={}, flags={}, 
 
   // Apply changes
   for (let [changeTarget, value] of Object.entries(changes)) {
-    linkData(data, updateData, changeTarget, (updateData[changeTarget] || 0) + value);
+    linkData(data, updateData, changeTarget, updateData[changeTarget] + value);
   }
 };
 
@@ -1308,6 +1317,10 @@ export const isPermanentModifier = function(modifier) {
   return ["untypedPerm", "racial", "base", "inherent", "trait"].includes(modifier);
 };
 
+export const isStackingModifier = function(modifier) {
+  return ["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(modifier);
+};
+
 export const getChangeFlat = function(changeTarget, changeType, curData) {
   if (curData == null) curData = this.data.data;
   let result = [];
@@ -1656,19 +1669,19 @@ const _parseChange = function(change, changeData, flags) {
   if (["add", "+"].includes(changeOperator) || !changeOperator) {
     // Add value
     if (changeValue > 0) {
-      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) changeData[changeType].positive.value += changeValue;
+      if (isStackingModifier(changeType)) changeData[changeType].positive.value += changeValue;
       else {
         changeData[changeType].positive.value = Math.max(changeData[changeType].positive.value, changeValue);
       }
     }
     else {
-      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) changeData[changeType].negative.value += changeValue;
+      if (isStackingModifier(changeType)) changeData[changeType].negative.value += changeValue;
       else changeData[changeType].negative.value = Math.min(changeData[changeType].negative.value, changeValue);
     }
 
     // Add positive source
     if (changeValue > 0) {
-      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) {
+      if (isStackingModifier(changeType)) {
         changeData[changeType].positive.sources.push(change.source);
       }
       else if (prevValue.positive < changeValue) {
@@ -1677,7 +1690,7 @@ const _parseChange = function(change, changeData, flags) {
     }
     // Add negative source
     else {
-      if (["untyped", "untypedPerm", "dodge", "penalty", "racial", "circumstance"].includes(changeType)) {
+      if (isStackingModifier(changeType)) {
         changeData[changeType].negative.sources.push(change.source);
       }
       else if (prevValue.negative > changeValue) {

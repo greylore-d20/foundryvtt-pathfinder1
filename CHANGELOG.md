@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.2
+
+### Bug Fixes (Hotfix)
+
+- Fixed an issue with stacking changes multiplying in some cases (#360)
+
 ## 0.76.1
 
 ### Changelog

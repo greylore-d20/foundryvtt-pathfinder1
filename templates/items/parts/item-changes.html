@@ -43,7 +43,7 @@
     <li class="change flexrow" data-change="{{change.data._id}}">
       <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this.data "formula"}}"
                                                                                   placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
-      <input class="change-priority" type="text" name="data.changes.{{a}}.priority" value="{{lookup this.data "priority"}}"
+      <input class="change-priority" type="text" data-dtype="Number" name="data.changes.{{a}}.priority" value="{{lookup this.data "priority"}}"
                                                                                     placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
 
       <select class="change-operator" name="data.changes.{{a}}.operator">

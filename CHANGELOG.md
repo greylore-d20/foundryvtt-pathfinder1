@@ -2,6 +2,10 @@
 
 ## 0.76.3
 
+### Bug Fixes
+
+- Fix Bardic Knowledge (SKA) not existing
+
 ### Changelog
 
 - d20 alternative can now be passed into Actor#rollX and Item#useAttack API (eg "2d20kh")

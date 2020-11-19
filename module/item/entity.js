@@ -1202,7 +1202,7 @@ export class ItemPF extends Item {
     this.roll();
   }
 
-  async useAttack({ev=null, skipDialog=false}={}) {
+  async useAttack({ev=null, skipDialog=false, dice="1d20"}={}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.parentActor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) {
@@ -1241,6 +1241,7 @@ export class ItemPF extends Item {
     }
 
     const rollData = this.getRollData();
+    rollData.d20 = dice !== "1d20" ? dice : "";
 
     let rolled = false;
     const _roll = async function(fullAttack, form) {
@@ -1922,7 +1923,7 @@ export class ItemPF extends Item {
       rollData.bonus = new Roll(bonus, rollData).roll().total;
       parts.push("@bonus");
     }
-    if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";
+    if ( (rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
     let roll = new Roll([rollData.d20, ...parts].join("+"), rollData).roll();
     return roll;

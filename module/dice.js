@@ -15,6 +15,7 @@ export class DicePF {
    *
    * @param {Event} event           The triggering event which initiated the roll
    * @param {Array} parts           The dice roll component parts, excluding the initial d20
+   * @param {String} dice           The initial d20
    * @param {Actor} actor           The Actor making the d20 roll
    * @param {Object} data           Actor or item data against which to parse the roll
    * @param {String} template       The HTML template used to render the roll dialog
@@ -31,7 +32,7 @@ export class DicePF {
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
    * @param {Boolean} autoRender    Whether to automatically render the chat messages
    */
-  static async d20Roll({event, parts, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
+  static async d20Roll({event, parts, dice, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
                   fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
                   staticRoll=null, noSound=false, compendiumEntry=null }) {
     // Handle input arguments
@@ -123,7 +124,7 @@ export class DicePF {
     };
 
     // Modify the roll and handle fast-forwarding
-    parts = ["1d20"].concat(parts);
+    parts = [dice].concat(parts);
     if (fastForward === true) return _roll(parts, staticRoll);
     else parts = parts.concat(["@bonus"]);
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.3
+
+### Changelog
+
+- d20 alternative can now be passed into Actor#rollX and Item#useAttack API (eg "2d20kh")
+
 ## 0.76.2
 
 ### Bug Fixes (Hotfix)

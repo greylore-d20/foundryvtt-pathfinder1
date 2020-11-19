@@ -883,7 +883,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null, noSound: false}) {
+  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20"}) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -928,6 +928,7 @@ export class ActorPF extends Actor {
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
       parts: ["@mod"],
+      dice: options.dice,
       data: {mod: skl.mod},
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({actor: this}),
@@ -946,11 +947,11 @@ export class ActorPF extends Actor {
    * @param {String} abilityId     The ability id (e.g. "str")
    * @param {Object} options      Options which configure how ability tests or saving throws are rolled
    */
-  rollAbility(abilityId, options={noSound: false}) {
+  rollAbility(abilityId, options={noSound: false, dice: "1d20"}) {
     this.rollAbilityTest(abilityId, options);
   }
 
-  rollBAB(options={noSound: false}) {
+  rollBAB(options={noSound: false, dice: "1d20"}) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -960,6 +961,7 @@ export class ActorPF extends Actor {
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod"],
+      dice: options.dice,
       data: {mod: this.data.data.attributes.bab.total},
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
@@ -968,7 +970,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollCMB(options={noSound: false}) {
+  rollCMB(options={noSound: false, dice: "1d20"}) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -997,6 +999,7 @@ export class ActorPF extends Actor {
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod"],
+      dice: options.dice,
       data: {mod: this.data.data.attributes.cmb.total},
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({actor: this}),
@@ -1007,7 +1010,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollCL(spellbookKey, options={noSound: false}) {
+  rollCL(spellbookKey, options={noSound: false, dice: "1d20"}) {
 
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
@@ -1031,7 +1034,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollConcentration(spellbookKey, options={noSound: false}) {
+  rollConcentration(spellbookKey, options={noSound: false, dice: "1d20"}) {
 
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
@@ -1052,6 +1055,7 @@ export class ActorPF extends Actor {
     return DicePF.d20Roll({
       event: event,
       parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
+      dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({actor: this}),
@@ -1154,7 +1158,7 @@ export class ActorPF extends Actor {
     roll.toMessage(messageData, {rollMode});
   }
 
-  rollSavingThrow(savingThrowId, options={ event: null, noSound: false, skipPrompt: true }) {
+  rollSavingThrow(savingThrowId, options={ event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -1192,6 +1196,7 @@ export class ActorPF extends Actor {
     return DicePF.d20Roll({
       event: options.event,
       parts: ["@mod"],
+      dice: options.dice,
       situational: true,
       data: { mod: savingThrow.total },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
@@ -1212,7 +1217,7 @@ export class ActorPF extends Actor {
    * @param {String} abilityId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    */
-  rollAbilityTest(abilityId, options={noSound: false}) {
+  rollAbilityTest(abilityId, options={noSound: false, dice: "1d20"}) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -1248,6 +1253,7 @@ export class ActorPF extends Actor {
     return DicePF.d20Roll({
       event: options.event,
       parts: [formula],
+      dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({actor: this}),

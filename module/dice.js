@@ -32,7 +32,7 @@ export class DicePF {
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
    * @param {Boolean} autoRender    Whether to automatically render the chat messages
    */
-  static async d20Roll({event, parts, dice, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
+  static async d20Roll({event, parts, dice="1d20", data, template, title, speaker, flavor, takeTwenty=true, situational=true,
                   fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
                   staticRoll=null, noSound=false, compendiumEntry=null }) {
     // Handle input arguments

@@ -7,7 +7,7 @@ export class ItemChange {
 
     return result;
   }
-  
+
   static get defaultData() {
     return {
       _id: randomID(8),
@@ -46,12 +46,11 @@ export class ItemChange {
     return this.data.value;
   }
 
-  prepareData() {
-  }
+  prepareData() {}
 
-  async update(data, options={}) {
+  async update(data, options = {}) {
     if (this.parent != null) {
-      const rawChange = this.parent.data.data.changes.find(o => o._id === this._id);
+      const rawChange = this.parent.data.data.changes.find((o) => o._id === this._id);
       const idx = this.parent.data.data.changes.indexOf(rawChange);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {

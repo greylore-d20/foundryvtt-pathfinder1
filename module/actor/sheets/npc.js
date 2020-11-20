@@ -7,16 +7,15 @@ import { CR } from "../../lib.js";
  * @type {ActorSheetPF}
  */
 export class ActorSheetPFNPC extends ActorSheetPF {
-
   /**
    * Define default rendering options for the NPC sheet
    * @return {Object}
    */
-	static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc"],
       width: 800,
-      height: 840
+      height: 840,
     });
   }
 
@@ -29,7 +28,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * @type {String}
    */
   get template() {
-    if ( !game.user.isGM && this.actor.limited ) return "systems/pf1/templates/actors/limited-sheet.html";
+    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.html";
     return "systems/pf1/templates/actors/npc-sheet.html";
   }
 
@@ -48,12 +47,10 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     // Challenge Rating
     try {
       data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr.total"));
-    }
-    catch (e) {
+    } catch (e) {
       try {
         data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr"));
-      }
-      catch (e) {
+      } catch (e) {
         data.labels.cr = CR.fromNumber(1);
       }
     }
@@ -79,8 +76,9 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     html.find(".health .rollable").click(this._onRollHealthFormula.bind(this));
 
     // Adjust CR
-    html.find("span.text-box.cr-input")
-    .on("click", event => { this._onSpanTextInput(event, this._adjustCR.bind(this)); });
+    html.find("span.text-box.cr-input").on("click", (event) => {
+      this._onSpanTextInput(event, this._adjustCR.bind(this));
+    });
   }
 
   /* -------------------------------------------- */
@@ -98,10 +96,11 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
       if (!this._submitQueued) {
-        $(el).one("mouseleave", event => { this._onSubmit(event); });
+        $(el).one("mouseleave", (event) => {
+          this._onSubmit(event);
+        });
       }
-    }
-    else this._onSubmit(event);
+    } else this._onSubmit(event);
   }
 
   /**
@@ -112,9 +111,9 @@ export class ActorSheetPFNPC extends ActorSheetPF {
   _onRollHealthFormula(event) {
     event.preventDefault();
     const formula = this.actor.data.data.attributes.hp.formula;
-    if ( !formula ) return;
+    if (!formula) return;
     const hp = new Roll(formula).roll().total;
-    AudioHelper.play({src: CONFIG.sounds.dice});
-    this.actor.update({"data.attributes.hp.value": hp, "data.attributes.hp.max": hp});
+    AudioHelper.play({ src: CONFIG.sounds.dice });
+    this.actor.update({ "data.attributes.hp.value": hp, "data.attributes.hp.max": hp });
   }
 }

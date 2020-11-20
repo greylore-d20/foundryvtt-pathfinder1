@@ -69,9 +69,12 @@ export class CompendiumBrowser extends Application {
       const thisVersion = SemanticVersion.fromString(cacheVersions[this.type] || "0.0.1");
       const needVersion = SemanticVersion.fromString(NEED_NEW_VERSION[this.type]);
       if (needVersion.isHigherThan(thisVersion)) {
-        game.settings.set("pf1", "compendiumSaveVersions", mergeObject(cacheVersions, { [this.type]: needVersion.toString() }));
-      }
-      else {
+        game.settings.set(
+          "pf1",
+          "compendiumSaveVersions",
+          mergeObject(cacheVersions, { [this.type]: needVersion.toString() })
+        );
+      } else {
         const settings = game.settings.get("pf1", "compendiumItems");
         if (settings[this.type]) {
           this._savedItems = settings[this.type];
@@ -93,7 +96,7 @@ export class CompendiumBrowser extends Application {
 
   _initLazyLoad() {
     const rootElem = this.element.find(".directory-list");
-    const elems = rootElem.find('.directory-item');
+    const elems = rootElem.find(".directory-item");
     this.lazyIndex = Math.min(this.lazyStart, elems.length);
     elems.slice(this.lazyIndex).hide();
 
@@ -125,7 +128,7 @@ export class CompendiumBrowser extends Application {
   }
 
   loadData() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let promise = this._data.promise;
       if (promise == null) {
         promise = this._gatherData();
@@ -189,28 +192,31 @@ export class CompendiumBrowser extends Application {
 
   _onProgress(progress) {
     progress.loaded++;
-    progress.pct = Math.round(progress.loaded * 10 / progress.total) * 10;
+    progress.pct = Math.round((progress.loaded * 10) / progress.total) * 10;
     SceneNavigation._onLoadProgress(progress.message, progress.pct);
   }
 
   async loadCompendium(p) {
     const progress = this._data.progress;
 
-    if (p.private && !game.user.isGM || p.metadata.system != "pf1") {
-      if (p.metadata.system != "pf1") console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
+    if ((p.private && !game.user.isGM) || p.metadata.system != "pf1") {
+      if (p.metadata.system != "pf1")
+        console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
       this._onProgress(progress);
       return;
     }
 
-    let items = (await SocketInterface.dispatch("modifyCompendium", {
-      type: p.collection,
-      action: "get",
-      data: {},
-      options: { returnType: "content" },
-    })).result;
+    let items = (
+      await SocketInterface.dispatch("modifyCompendium", {
+        type: p.collection,
+        action: "get",
+        data: {},
+        options: { returnType: "content" },
+      })
+    ).result;
 
-    if(p.translated) {
-      items = items.map(item => p.translate(item));
+    if (p.translated) {
+      items = items.map((item) => p.translate(item));
     }
 
     for (let i of items) {
@@ -251,8 +257,7 @@ export class CompendiumBrowser extends Application {
       if (this.items.length === 0) {
         return;
       }
-    }
-    else {
+    } else {
       for (let i of this._savedItems) {
         const p = game.packs.get(i.collection);
         this.items.push(this._mapEntry(p, i.item));
@@ -291,7 +296,8 @@ export class CompendiumBrowser extends Application {
     }, {});
 
     // Merge active filters object with stored settings
-    const filterSettings = getProperty(game.settings.get("pf1", "compendiumFilters") || {}, `${this.type}.activeFilters`) || {};
+    const filterSettings =
+      getProperty(game.settings.get("pf1", "compendiumFilters") || {}, `${this.type}.activeFilters`) || {};
     for (let [k, v] of Object.entries(filterSettings)) {
       if (!this.activeFilters[k]) continue;
       this.activeFilters[k] = v;
@@ -299,7 +305,7 @@ export class CompendiumBrowser extends Application {
 
     // Apply active filters to template
     for (let k of Object.keys(this.activeFilters)) {
-      const filter = this.filters.find(o => o.path === k);
+      const filter = this.filters.find((o) => o.path === k);
       if (!filter) continue;
       for (let k2 of this.activeFilters[k]) {
         filter.active = filter.active || {};
@@ -321,11 +327,10 @@ export class CompendiumBrowser extends Application {
   /*  Mapping Functions                    */
   /* ------------------------------------- */
   _mapFeats(result, item) {
-
     this.extraFilters = this.extraFilters || {
-      "tags": {},
-      "associations": {
-        "class": {},
+      tags: {},
+      associations: {
+        class: {},
       },
     };
 
@@ -336,19 +341,21 @@ export class CompendiumBrowser extends Application {
     }, []);
 
     result.item.assocations = {
-      "class": (item.data.featType === "classFeat" ? (getProperty(item.data, "associations.classes") || []) : []).reduce((cur, o) => {
-        this.extraFilters.associations.class[o[0]] = true;
-        cur.push(o[0]);
-        return cur;
-      }, []),
+      class: (item.data.featType === "classFeat" ? getProperty(item.data, "associations.classes") || [] : []).reduce(
+        (cur, o) => {
+          this.extraFilters.associations.class[o[0]] = true;
+          cur.push(o[0]);
+          return cur;
+        },
+        []
+      ),
     };
   }
 
   _mapBestiary(result, item) {
-
     this.extraFilters = this.extraFilters || {
       "data.details.cr.total": {},
-      "subTypes": {},
+      subTypes: {},
     };
     result.item.creatureType = "";
     result.item.subTypes = [];
@@ -360,17 +367,16 @@ export class CompendiumBrowser extends Application {
     }
     // Get creature (sub)type
     if (item.items) {
-      const race = item.items.filter(o => o.type === "race")[0];
+      const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
         result.item.creatureType = race.data.creatureType;
-        result.item.subTypes = race.data.subTypes.map(o => {
+        result.item.subTypes = race.data.subTypes.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });
       }
-    }
-    else {
-      item.subTypes.forEach(o => {
+    } else {
+      item.subTypes.forEach((o) => {
         this.extraFilters.subTypes[o] = true;
       });
       result.item.creatureType = item.creatureType;
@@ -388,7 +394,6 @@ export class CompendiumBrowser extends Application {
   }
 
   _mapSpells(result, item) {
-    
     this.extraFilters = this.extraFilters || {
       "learnedAt.class": [],
       "learnedAt.domain": [],
@@ -396,53 +401,53 @@ export class CompendiumBrowser extends Application {
       "learnedAt.elementalSchool": [],
       "learnedAt.bloodline": [],
       "data.subschool": [],
-      "spellTypes": [],
+      spellTypes: [],
     };
 
     result.item.allSpellLevels = [];
 
     // Add class/domain/etc filters
     result.item.learnedAt = {
-      "class": (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
+      class: (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.class"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      "domain": (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
+      domain: (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.domain"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      "subDomain": (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
+      subDomain: (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.subDomain"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      "elementalSchool": (getProperty(item, "data.learnedAt.elementalSchool") || []).reduce((cur, o) => {
+      elementalSchool: (getProperty(item, "data.learnedAt.elementalSchool") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.elementalSchool"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      "bloodline": (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
+      bloodline: (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.bloodline"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      "spellLevel": {
-        "class": (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
+      spellLevel: {
+        class: (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
-        "domain": (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
+        domain: (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
-        "subDomain": (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
+        subDomain: (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
@@ -450,7 +455,7 @@ export class CompendiumBrowser extends Application {
         //   cur[o[0]] = o[1];
         //   return cur;
         // }, {}),
-        "bloodline": (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
+        bloodline: (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
@@ -473,7 +478,6 @@ export class CompendiumBrowser extends Application {
   }
 
   _mapClasses(result, item) {
-
     this.extraFilters = this.extraFilters || {
       "data.hd": {},
       "data.skillsPerLevel": {},
@@ -492,21 +496,19 @@ export class CompendiumBrowser extends Application {
   }
 
   _mapRaces(result, item) {
-
     this.extraFilters = this.extraFilters || {
-      "subTypes": {},
+      subTypes: {},
     };
     result.item.subTypes = [];
 
     // Get subtypes
-    result.item.subTypes = item.data.subTypes.map(o => {
+    result.item.subTypes = item.data.subTypes.map((o) => {
       this.extraFilters.subTypes[o[0]] = true;
       return o[0];
     });
   }
 
   _mapEntry(pack, item) {
-
     const result = {
       collection: pack.collection,
       item: {
@@ -559,323 +561,392 @@ export class CompendiumBrowser extends Application {
       {
         path: "pack",
         label: game.i18n.localize("PF1.Compendium"),
-        items: naturalSort(Object.entries(this.packs).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1].metadata.label });
-          return cur;
-        }, []), "name"),
+        items: naturalSort(
+          Object.entries(this.packs).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1].metadata.label });
+            return cur;
+          }, []),
+          "name"
+        ),
       },
     ];
   }
 
   _fetchSpellFilters() {
-    this.filters.push(...[
-      {
-        path: "data.school",
-        label: game.i18n.localize("PF1.SpellSchool"),
-        items: naturalSort(Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "data.subschool",
-        label: game.i18n.localize("PF1.SubSchool"),
-        items: naturalSort(Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "spellTypes",
-        label: game.i18n.localize("PF1.TypePlural"),
-        items: naturalSort(Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "learnedAt.class",
-        label: game.i18n.localize("PF1.ClassPlural"),
-        items: naturalSort(Object.keys(this.extraFilters["learnedAt.class"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "learnedAt.domain",
-        label: game.i18n.localize("PF1.Domain"),
-        items: naturalSort(Object.keys(this.extraFilters["learnedAt.domain"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "learnedAt.subDomain",
-        label: game.i18n.localize("PF1.SubDomain"),
-        items: naturalSort(Object.keys(this.extraFilters["learnedAt.subDomain"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      // {
-      //   path: "learnedAt.elementalSchool",
-      //   label: game.i18n.localize("PF1.ElementalSchool"),
-      //   items: this.extraFilters["learnedAt.elementalSchool"].reduce((cur, o) => {
-      //     cur.push({ key: o, name: o });
-      //     return cur;
-      //   }, []),
-      // },
-      {
-        path: "learnedAt.bloodline",
-        label: game.i18n.localize("PF1.Bloodline"),
-        items: naturalSort(Object.keys(this.extraFilters["learnedAt.bloodline"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "_spellLevel",
-        label: game.i18n.localize("PF1.SpellLevel"),
-        items: Object.entries(CONFIG.PF1.spellLevels).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "data.school",
+          label: game.i18n.localize("PF1.SpellSchool"),
+          items: naturalSort(
+            Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
+              cur.push({ key: o[0], name: o[1] });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "data.subschool",
+          label: game.i18n.localize("PF1.SubSchool"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "spellTypes",
+          label: game.i18n.localize("PF1.TypePlural"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "learnedAt.class",
+          label: game.i18n.localize("PF1.ClassPlural"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["learnedAt.class"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "learnedAt.domain",
+          label: game.i18n.localize("PF1.Domain"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["learnedAt.domain"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "learnedAt.subDomain",
+          label: game.i18n.localize("PF1.SubDomain"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["learnedAt.subDomain"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        // {
+        //   path: "learnedAt.elementalSchool",
+        //   label: game.i18n.localize("PF1.ElementalSchool"),
+        //   items: this.extraFilters["learnedAt.elementalSchool"].reduce((cur, o) => {
+        //     cur.push({ key: o, name: o });
+        //     return cur;
+        //   }, []),
+        // },
+        {
+          path: "learnedAt.bloodline",
+          label: game.i18n.localize("PF1.Bloodline"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["learnedAt.bloodline"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "_spellLevel",
+          label: game.i18n.localize("PF1.SpellLevel"),
+          items: Object.entries(CONFIG.PF1.spellLevels).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+      ]
+    );
   }
 
   _fetchItemFilters() {
-    this.filters.push(...[
-      {
-        path: "type",
-        label: game.i18n.localize("PF1.Type"),
-        items: [
-          { key: "weapon", name: game.i18n.localize("PF1.ItemTypeWeapon") },
-          { key: "equipment", name: game.i18n.localize("PF1.ItemTypeEquipment") },
-          { key: "consumable", name: game.i18n.localize("PF1.ItemTypeConsumable") },
-          { key: "loot", name: game.i18n.localize("PF1.Misc") },
-        ],
-      },
-      {
-        path: "data.weaponType",
-        label: game.i18n.localize("PF1.WeaponType"),
-        items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1]._label });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.weaponSubtype",
-        label: game.i18n.localize("PF1.WeaponSubtype"),
-        items: Object.values(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
-          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
-            if (!cur.filter(a => a.key === i[0]).length) {
-              arr.push({ key: i[0], name: i[1] });
-            }
-            return arr;
-          }, [])));
-          return cur;
-        }, []),
-      },
-      {
-        path: "weaponProps",
-        label: game.i18n.localize("PF1.WeaponProperties"),
-        items: Object.entries(CONFIG.PF1.weaponProperties).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.equipmentType",
-        label: game.i18n.localize("PF1.EquipmentType"),
-        items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1]._label });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.equipmentSubtype",
-        label: game.i18n.localize("PF1.EquipmentSubtype"),
-        items: Object.values(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
-          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
-            if (!cur.filter(a => a.key === i[0]).length) {
-              arr.push({ key: i[0], name: i[1] });
-            }
-            return arr;
-          }, [])));
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.slot",
-        label: game.i18n.localize("PF1.Slot"),
-        items: Object.values(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
-          cur = cur.concat((Object.entries(o).filter(i => !i[0].startsWith("_")).reduce((arr, i) => {
-            if (!cur.filter(a => a.key === i[0]).length) {
-              arr.push({ key: i[0], name: i[1] });
-            }
-            return arr;
-          }, [])));
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.consumableType",
-        label: game.i18n.localize("PF1.ConsumableType"),
-        items: Object.entries(CONFIG.PF1.consumableTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.subType",
-        label: game.i18n.localize("PF1.Misc"),
-        items: Object.entries(CONFIG.PF1.lootTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "type",
+          label: game.i18n.localize("PF1.Type"),
+          items: [
+            { key: "weapon", name: game.i18n.localize("PF1.ItemTypeWeapon") },
+            { key: "equipment", name: game.i18n.localize("PF1.ItemTypeEquipment") },
+            { key: "consumable", name: game.i18n.localize("PF1.ItemTypeConsumable") },
+            { key: "loot", name: game.i18n.localize("PF1.Misc") },
+          ],
+        },
+        {
+          path: "data.weaponType",
+          label: game.i18n.localize("PF1.WeaponType"),
+          items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1]._label });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.weaponSubtype",
+          label: game.i18n.localize("PF1.WeaponSubtype"),
+          items: Object.values(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
+            cur = cur.concat(
+              Object.entries(o)
+                .filter((i) => !i[0].startsWith("_"))
+                .reduce((arr, i) => {
+                  if (!cur.filter((a) => a.key === i[0]).length) {
+                    arr.push({ key: i[0], name: i[1] });
+                  }
+                  return arr;
+                }, [])
+            );
+            return cur;
+          }, []),
+        },
+        {
+          path: "weaponProps",
+          label: game.i18n.localize("PF1.WeaponProperties"),
+          items: Object.entries(CONFIG.PF1.weaponProperties).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.equipmentType",
+          label: game.i18n.localize("PF1.EquipmentType"),
+          items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1]._label });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.equipmentSubtype",
+          label: game.i18n.localize("PF1.EquipmentSubtype"),
+          items: Object.values(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
+            cur = cur.concat(
+              Object.entries(o)
+                .filter((i) => !i[0].startsWith("_"))
+                .reduce((arr, i) => {
+                  if (!cur.filter((a) => a.key === i[0]).length) {
+                    arr.push({ key: i[0], name: i[1] });
+                  }
+                  return arr;
+                }, [])
+            );
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.slot",
+          label: game.i18n.localize("PF1.Slot"),
+          items: Object.values(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
+            cur = cur.concat(
+              Object.entries(o)
+                .filter((i) => !i[0].startsWith("_"))
+                .reduce((arr, i) => {
+                  if (!cur.filter((a) => a.key === i[0]).length) {
+                    arr.push({ key: i[0], name: i[1] });
+                  }
+                  return arr;
+                }, [])
+            );
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.consumableType",
+          label: game.i18n.localize("PF1.ConsumableType"),
+          items: Object.entries(CONFIG.PF1.consumableTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.subType",
+          label: game.i18n.localize("PF1.Misc"),
+          items: Object.entries(CONFIG.PF1.lootTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+      ]
+    );
   }
 
   _fetchBestiaryFilters() {
-    this.filters.push(...[
-      {
-        path: "data.details.cr.total",
-        label: "CR",
-        items: naturalSort(Object.keys(this.extraFilters["data.details.cr.total"]).reduce((cur, o) => {
-          cur.push({ key: o, name: CR.fromNumber(o) });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "creatureType",
-        label: game.i18n.localize("PF1.CreatureType"),
-        items: naturalSort(Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "subTypes",
-        label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: naturalSort(Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "data.details.cr.total",
+          label: "CR",
+          items: naturalSort(
+            Object.keys(this.extraFilters["data.details.cr.total"]).reduce((cur, o) => {
+              cur.push({ key: o, name: CR.fromNumber(o) });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "creatureType",
+          label: game.i18n.localize("PF1.CreatureType"),
+          items: naturalSort(
+            Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+              cur.push({ key: o[0], name: o[1] });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "subTypes",
+          label: game.i18n.localize("PF1.RaceSubtypePlural"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+      ]
+    );
   }
 
   _fetchFeatFilters() {
-    this.filters.push(...[
-      {
-        path: "data.featType",
-        label: game.i18n.localize("PF1.Type"),
-        items: Object.entries(CONFIG.PF1.featTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "tags",
-        label: game.i18n.localize("PF1.Tags"),
-        items: naturalSort(Object.keys(this.extraFilters.tags).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "assocations.class",
-        label: game.i18n.localize("PF1.ClassPlural"),
-        items: naturalSort(Object.keys(this.extraFilters.associations["class"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "data.featType",
+          label: game.i18n.localize("PF1.Type"),
+          items: Object.entries(CONFIG.PF1.featTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "tags",
+          label: game.i18n.localize("PF1.Tags"),
+          items: naturalSort(
+            Object.keys(this.extraFilters.tags).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "assocations.class",
+          label: game.i18n.localize("PF1.ClassPlural"),
+          items: naturalSort(
+            Object.keys(this.extraFilters.associations["class"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+      ]
+    );
   }
 
   _fetchClassFilters() {
-    this.filters.push(...[
-      {
-        path: "data.classType",
-        label: game.i18n.localize("PF1.ClassType"),
-        items: Object.entries(CONFIG.PF1.classTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.hd",
-        label: game.i18n.localize("PF1.HitDie"),
-        items: Object.keys(this.extraFilters["data.hd"]).reduce((cur, o) => {
-          cur.push({ key: o.toString(), name: o.toString() });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.bab",
-        label: game.i18n.localize("PF1.BAB"),
-        items: Object.entries(CONFIG.PF1.classBAB).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.skillsPerLevel",
-        label: game.i18n.localize("PF1.SkillsPerLevel"),
-        items: Object.keys(this.extraFilters["data.skillsPerLevel"]).reduce((cur, o) => {
-          cur.push({ key: o.toString(), name: o.toString() });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.savingThrows.fort.value",
-        label: game.i18n.localize("PF1.SavingThrowFort"),
-        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.savingThrows.ref.value",
-        label: game.i18n.localize("PF1.SavingThrowRef"),
-        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-      {
-        path: "data.savingThrows.will.value",
-        label: game.i18n.localize("PF1.SavingThrowWill"),
-        items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "data.classType",
+          label: game.i18n.localize("PF1.ClassType"),
+          items: Object.entries(CONFIG.PF1.classTypes).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.hd",
+          label: game.i18n.localize("PF1.HitDie"),
+          items: Object.keys(this.extraFilters["data.hd"]).reduce((cur, o) => {
+            cur.push({ key: o.toString(), name: o.toString() });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.bab",
+          label: game.i18n.localize("PF1.BAB"),
+          items: Object.entries(CONFIG.PF1.classBAB).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.skillsPerLevel",
+          label: game.i18n.localize("PF1.SkillsPerLevel"),
+          items: Object.keys(this.extraFilters["data.skillsPerLevel"]).reduce((cur, o) => {
+            cur.push({ key: o.toString(), name: o.toString() });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.savingThrows.fort.value",
+          label: game.i18n.localize("PF1.SavingThrowFort"),
+          items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.savingThrows.ref.value",
+          label: game.i18n.localize("PF1.SavingThrowRef"),
+          items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+        {
+          path: "data.savingThrows.will.value",
+          label: game.i18n.localize("PF1.SavingThrowWill"),
+          items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
+            cur.push({ key: o[0], name: o[1] });
+            return cur;
+          }, []),
+        },
+      ]
+    );
   }
 
   _fetchRaceFilters() {
-    this.filters.push(...[
-      {
-        path: "data.creatureType",
-        label: game.i18n.localize("PF1.CreatureType"),
-        items: naturalSort(Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
-          cur.push({ key: o[0], name: o[1] });
-          return cur;
-        }, []), "name"),
-      },
-      {
-        path: "subTypes",
-        label: game.i18n.localize("PF1.RaceSubtypePlural"),
-        items: naturalSort(Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
-          cur.push({ key: o, name: o });
-          return cur;
-        }, []), "name"),
-      },
-    ]);
+    this.filters.push(
+      ...[
+        {
+          path: "data.creatureType",
+          label: game.i18n.localize("PF1.CreatureType"),
+          items: naturalSort(
+            Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
+              cur.push({ key: o[0], name: o[1] });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+        {
+          path: "subTypes",
+          label: game.i18n.localize("PF1.RaceSubtypePlural"),
+          items: naturalSort(
+            Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
+              cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+      ]
+    );
   }
 
   async _render(...args) {
@@ -899,25 +970,25 @@ export class CompendiumBrowser extends Application {
     super.activateListeners(html);
 
     // Open sheets
-    html.find('.entry-name').click(ev => {
+    html.find(".entry-name").click((ev) => {
       let li = ev.currentTarget.parentElement;
       this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
     });
 
     // Make compendium items draggable
-    html.find('.directory-item').each((i, li) => {
+    html.find(".directory-item").each((i, li) => {
       li.setAttribute("draggable", true);
-      li.addEventListener('dragstart', this._onDragStart, false);
+      li.addEventListener("dragstart", this._onDragStart, false);
     });
 
     html.find('input[name="search"]').keyup(this._onFilterResults.bind(this));
 
     html.find('.filter input[type="checkbox"]').change(this._onActivateBooleanFilter.bind(this));
 
-    html.find('.filter h3').click(this._toggleFilterVisibility.bind(this));
+    html.find(".filter h3").click(this._toggleFilterVisibility.bind(this));
 
     html.find("button.refresh").click(this.refresh.bind(this));
-    
+
     // Lazy load
     this._initLazyLoad();
   }
@@ -927,7 +998,7 @@ export class CompendiumBrowser extends Application {
    * @private
    */
   async _onEntry(collectionKey, entryId) {
-    const pack = game.packs.find(o => o.collection === collectionKey);
+    const pack = game.packs.find((o) => o.collection === collectionKey);
     const entity = await pack.getEntity(entryId);
     entity.sheet.render(true);
   }
@@ -938,8 +1009,8 @@ export class CompendiumBrowser extends Application {
    */
   _onDragStart(event) {
     const li = this,
-          packName = li.getAttribute("data-collection"),
-          pack = game.packs.find(p => p.collection === packName);
+      packName = li.getAttribute("data-collection"),
+      pack = game.packs.find((p) => p.collection === packName);
 
     // Get the pack
     if (!pack) {
@@ -948,11 +1019,14 @@ export class CompendiumBrowser extends Application {
     }
 
     // Set the transfer data
-    event.dataTransfer.setData("text/plain", JSON.stringify({
-      type: pack.entity,
-      pack: pack.collection,
-      id: li.getAttribute("data-entry-id")
-    }));
+    event.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({
+        type: pack.entity,
+        pack: pack.collection,
+        id: li.getAttribute("data-entry-id"),
+      })
+    );
   }
 
   _toggleFilterVisibility(event) {
@@ -969,7 +1043,7 @@ export class CompendiumBrowser extends Application {
     let input = event.currentTarget;
 
     // Define filtering function
-    let filter = query => {
+    let filter = (query) => {
       this.filterQuery = query;
       this._filterResults();
     };
@@ -990,7 +1064,7 @@ export class CompendiumBrowser extends Application {
     const key = input.name;
     const value = input.checked;
 
-    const filter = this._data.data.filters.find(o => o.path === path);
+    const filter = this._data.data.filters.find((o) => o.path === path);
     if (filter) {
       if (!filter.active) filter.active = {};
     }
@@ -1001,8 +1075,7 @@ export class CompendiumBrowser extends Application {
         this.activeFilters[path].push(key);
         filter.active[key] = true;
       }
-    }
-    else {
+    } else {
       let index = this.activeFilters[path].indexOf(key);
       if (index >= 0) {
         this.activeFilters[path].splice(index, 1);
@@ -1035,10 +1108,11 @@ export class CompendiumBrowser extends Application {
         }
         // Set item count
         itemCount++;
-      }
-      else $(li).hide();
+      } else $(li).hide();
     });
-    this.element.find('span[data-type="filterItemCount"]').text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
+    this.element
+      .find('span[data-type="filterItemCount"]')
+      .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
 
     // Scroll up a bit to prevent a lot of 'lazy' loading at once
     const rootElem = this.element[0].querySelector(".directory-list");
@@ -1091,10 +1165,10 @@ export class CompendiumBrowser extends Application {
       const prop = getProperty(item, path);
       if (prop == null) return false;
       if (typeof prop === "number") {
-        filter = filter.map(o => parseFloat(o)).filter(o => !isNaN(o));
+        filter = filter.map((o) => parseFloat(o)).filter((o) => !isNaN(o));
       }
       if (prop instanceof Array) {
-        if (!filter.every(o => prop.includes(o))) return false;
+        if (!filter.every((o) => prop.includes(o))) return false;
         continue;
       }
       if (!filter.includes(prop)) return false;
@@ -1106,45 +1180,53 @@ export class CompendiumBrowser extends Application {
   getSaveEntries() {
     let result = [];
 
-    let propKeys = [
-      "_id", "name", "img",
-    ];
+    let propKeys = ["_id", "name", "img"];
 
     switch (this.type) {
       case "spells":
         propKeys.push(
-          "data.learnedAt.class", "data.learnedAt.domain", "data.learnedAt.subDomain",
-          "data.learnedAt.elementalSchool", "data.learnedAt.bloodline",
-          "data.school", "data.subschool", "data.types",
+          "data.learnedAt.class",
+          "data.learnedAt.domain",
+          "data.learnedAt.subDomain",
+          "data.learnedAt.elementalSchool",
+          "data.learnedAt.bloodline",
+          "data.school",
+          "data.subschool",
+          "data.types"
         );
         break;
       case "items":
         propKeys.push(
-          "type", "data.properties", "data.weaponType", "data.weaponSubtype",
-          "data.equipmentType", "data.equipmentSubtype", "data.slot",
-          "data.consumableType", "data.subType",
+          "type",
+          "data.properties",
+          "data.weaponType",
+          "data.weaponSubtype",
+          "data.equipmentType",
+          "data.equipmentSubtype",
+          "data.slot",
+          "data.consumableType",
+          "data.subType"
         );
         break;
       case "feats":
-        propKeys.push(
-          "data.featType", "data.associations.classes", "data.tags",
-        );
+        propKeys.push("data.featType", "data.associations.classes", "data.tags");
         break;
       case "bestiary":
-        propKeys.push(
-          "data.details.cr.total",
-        );
+        propKeys.push("data.details.cr.total");
         break;
       case "classes":
         propKeys.push(
-          "data.classType", "data.bab", "data.hd", "data.skillsPerLevel",
-          "data.savingThrows.fort.value", "data.savingThrows.ref.value", "data.savingThrows.will.value",
+          "data.classType",
+          "data.bab",
+          "data.hd",
+          "data.skillsPerLevel",
+          "data.savingThrows.fort.value",
+          "data.savingThrows.ref.value",
+          "data.savingThrows.will.value"
         );
         break;
       case "races":
-        propKeys.push(
-          "data.creatureType", "data.subTypes",
-        );
+        propKeys.push("data.creatureType", "data.subTypes");
         break;
     }
 

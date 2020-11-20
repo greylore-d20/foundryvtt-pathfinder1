@@ -1,5 +1,5 @@
 export class Widget_ItemPicker {
-  constructor(callback, {items, columns=3}={}) {
+  constructor(callback, { items, columns = 3 } = {}) {
     /**
      * @property
      * The HTML element that represents this widget.
@@ -50,7 +50,7 @@ export class Widget_ItemPicker {
       itemElem.css("flex", `0 0 calc(${widthRate}% - 4px)`);
       rowElem.append(itemElem);
     }
-    
+
     // Replace parent element
     if (!(parentElem instanceof jQuery)) parentElem = $(parentElem);
     rootElem.css("position", "absolute");

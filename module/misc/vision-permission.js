@@ -19,7 +19,9 @@ export class VisionPermissionSheet extends FormApplication {
   }
 
   get title() {
-    return (this.token && !this.token.data.actorLink) ? `Vision Permissions: [Token] ${this.object.name}` : `Vision Permissions: ${this.object.name}`;
+    return this.token && !this.token.data.actorLink
+      ? `Vision Permissions: [Token] ${this.object.name}`
+      : `Vision Permissions: ${this.object.name}`;
   }
   get isLinkedToken() {
     return this.token ? this.token.data.actorLink : false;
@@ -37,12 +39,9 @@ export class VisionPermissionSheet extends FormApplication {
 
     data.defaultLevels = [
       { level: "no", name: game.i18n.localize("PF1.No") },
-      { level: "yes", name: game.i18n.localize("PF1.Yes") }
+      { level: "yes", name: game.i18n.localize("PF1.Yes") },
     ];
-    data.levels = [
-      { level: "default", name: game.i18n.localize("PF1.Default") },
-      ...data.defaultLevels
-    ];
+    data.levels = [{ level: "default", name: game.i18n.localize("PF1.Default") }, ...data.defaultLevels];
     if (data.default == null) data.default = "no";
 
     data.users = game.users.reduce((cur, o) => {
@@ -61,10 +60,10 @@ export class VisionPermissionSheet extends FormApplication {
   }
 }
 
-export const hasTokenVision = function(token) {
+export const hasTokenVision = function (token) {
   if (!token.actor) return false;
   if (token.actor.hasPerm(game.user, "OWNER")) return true;
-  
+
   const visionFlag = token.actor.getFlag("pf1", "visionPermission");
   if (!visionFlag || !visionFlag.users[game.user._id]) return false;
   if (visionFlag.users[game.user._id].level === "yes") return true;
@@ -81,23 +80,22 @@ Object.defineProperty(Actor.prototype, "visionPermissionSheet", {
 });
 
 const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;
-ActorDirectory.prototype._getEntryContextOptions = function() {
+ActorDirectory.prototype._getEntryContextOptions = function () {
   return ActorDirectory__getEntryContextOptions.call(this).concat([
     {
       name: "PF1.Vision",
       icon: '<i class="fas fa-eye"></i>',
-      condition: li => {
+      condition: (li) => {
         return game.user.isGM;
       },
-      callback: li => {
+      callback: (li) => {
         const entity = this.constructor.collection.get(li.data("entityId"));
         if (entity) {
           const sheet = entity.visionPermissionSheet;
           if (sheet.rendered) {
             if (sheet._minimized) sheet.maximize();
             else sheet.close();
-          }
-          else sheet.render(true);
+          } else sheet.render(true);
         }
       },
     },
@@ -105,23 +103,23 @@ ActorDirectory.prototype._getEntryContextOptions = function() {
 };
 
 // const SightLayer__isTokenVisionSource = SightLayer.prototype._isTokenVisionSource;
-SightLayer.prototype._isTokenVisionSource = function(token) {
-  if ( !this.tokenVision || !token.hasSight ) return false;
+SightLayer.prototype._isTokenVisionSource = function (token) {
+  if (!this.tokenVision || !token.hasSight) return false;
 
   // Only display hidden tokens for the GM
   const isGM = game.user.isGM;
   if (token.data.hidden && !isGM) return false;
 
   // Always display controlled tokens which have vision
-  if ( token._controlled ) return true;
+  if (token._controlled) return true;
 
   // Otherwise vision is ignored for GM users
-  if ( isGM ) return false;
+  if (isGM) return false;
 
   // If a non-GM user controls no other tokens with sight, display sight anyways
   const canObserve = token.actor && hasTokenVision(token);
-  if ( !canObserve ) return false;
-  const others = canvas.tokens.controlled.filter(t => !t.data.hidden && t.hasSight);
+  if (!canObserve) return false;
+  const others = canvas.tokens.controlled.filter((t) => !t.data.hidden && t.hasSight);
   return !others.length || game.settings.get("pf1", "sharedVisionMode") === "1";
 };
 

@@ -17,8 +17,7 @@ export class ItemSheetPF extends ItemSheet {
      * Track the set of item filters which are applied
      * @type {Set}
      */
-    this._filters = {
-    };
+    this._filters = {};
 
     this.items = [];
   }
@@ -29,10 +28,7 @@ export class ItemSheetPF extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       width: 580,
       classes: ["pf1", "sheet", "item"],
-      scrollY: [
-        ".tab.details",
-        ".buff-flags",
-      ],
+      scrollY: [".tab.details", ".buff-flags"],
     });
   }
 
@@ -46,7 +42,7 @@ export class ItemSheetPF extends ItemSheet {
     const path = "systems/pf1/templates/items/";
     return `${path}/${this.item.data.type}.html`;
   }
-  
+
   get actor() {
     let actor = this.item.actor;
     let p = this.parentItem;
@@ -72,7 +68,7 @@ export class ItemSheetPF extends ItemSheet {
     // Include sub-items
     data.items = [];
     if (this.item.items != null) {
-      data.items = this.item.items.map(i => {
+      data.items = this.item.items.map((i) => {
         i.data.labels = i.labels;
         return i.data;
       });
@@ -86,7 +82,7 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = data.item.data.hasOwnProperty("quantity");
+    data.isPhysical = Object.prototype.hasOwnProperty.call(data.item.data, "quantity");
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
@@ -95,8 +91,10 @@ export class ItemSheetPF extends ItemSheet {
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.hasActivationType = (game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.unchainedAction.activation.type"))
-      || (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.activation.type"));
+    data.hasActivationType =
+      (game.settings.get("pf1", "unchainedActionEconomy") &&
+        getProperty(data.item, "data.unchainedAction.activation.type")) ||
+      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;
@@ -113,9 +111,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {
-      data.itemName = getProperty(this.item.data, "data.unidentified.name") || getProperty(this.item.data, "data.identifiedName") || this.item.name;
-    }
-    else {
+      data.itemName =
+        getProperty(this.item.data, "data.unidentified.name") ||
+        getProperty(this.item.data, "data.identifiedName") ||
+        this.item.name;
+    } else {
       data.itemName = getProperty(this.item.data, "data.identifiedName") || this.item.name;
     }
 
@@ -131,7 +131,7 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
     }
     if (data.item.data.duration != null) {
-      data.canInputDuration = !(["", "inst", "perm", "seeText"].includes(data.item.data.duration.units));
+      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.duration.units);
     }
 
     // Prepare feat specific stuff
@@ -142,7 +142,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = (data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true);
+      data.isRanged = data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true;
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
@@ -206,7 +206,9 @@ export class ItemSheetPF extends ItemSheet {
       // Enrich description
       data.description = TextEditor.enrichHTML(data.data.description.value, { rollData: this.item.getRollData() });
       if (data.data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, { rollData: this.item.getRollData() });
+        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
+          rollData: this.item.getRollData(),
+        });
       }
     }
 
@@ -225,9 +227,13 @@ export class ItemSheetPF extends ItemSheet {
       data.isRacialHD = data.data.classType === "racial";
 
       if (this.actor != null) {
-        let healthConfig  = game.settings.get("pf1", "healthConfig");
-        data.healthConfig =  data.isRacialHD ? healthConfig.hitdice.Racial : this.actor.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
-      } else data.healthConfig = {auto: false};
+        let healthConfig = game.settings.get("pf1", "healthConfig");
+        data.healthConfig = data.isRacialHD
+          ? healthConfig.hitdice.Racial
+          : this.actor.data.type === "character"
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
+      } else data.healthConfig = { auto: false };
 
       // Add skill list
       if (!this.actor) {
@@ -235,8 +241,7 @@ export class ItemSheetPF extends ItemSheet {
           cur[o[0]] = { name: o[1], classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
           return cur;
         }, {});
-      }
-      else {
+      } else {
         data.skills = Object.entries(this.actor.data.data.skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
@@ -274,7 +279,7 @@ export class ItemSheetPF extends ItemSheet {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.item.getConditionalTargets();
           modifier.subTargets = this.item.getConditionalSubTargets(modifier.target);
-          modifier.conditionalModifierTypes = this.item.getConditionalModifierTypes(modifier.target)
+          modifier.conditionalModifierTypes = this.item.getConditionalModifierTypes(modifier.target);
           modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
           modifier.isAttack = modifier.target === "attack";
           modifier.isDamage = modifier.target === "damage";
@@ -289,7 +294,7 @@ export class ItemSheetPF extends ItemSheet {
       for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets)) {
         if (typeof v === "object") data.contextNotes.targets[k] = v._label;
       }
-      data.item.data.contextNotes.forEach(item => {
+      data.item.data.contextNotes.forEach((item) => {
         item.subNotes = this.item.getContextNoteSubTargets(item.target);
       });
     }
@@ -301,7 +306,6 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareLinks(data) {
-
     data.links = {
       list: [],
     };
@@ -398,25 +402,21 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _getItemStatus(item) {
-    if ( item.type === "spell" ) {
+    if (item.type === "spell") {
       const spellbook = this.item.spellbook;
       if (item.data.preparation.mode === "prepared") {
         if (item.data.preparation.preparedAmount > 0) {
           if (spellbook != null && spellbook.spontaneous) {
             return game.i18n.localize("PF1.SpellPrepPrepared");
-          }
-          else {
+          } else {
             return game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount);
           }
         }
         return game.i18n.localize("PF1.Unprepared");
-      }
-      else if (item.data.preparation.mode) {
+      } else if (item.data.preparation.mode) {
         return item.data.preparation.mode.titleCase();
-      }
-      else return "";
-    }
-    else if ( ["weapon", "equipment"].includes(item.type) || (item.type === "loot" && item.data.subType === "gear") ) {
+      } else return "";
+    } else if (["weapon", "equipment"].includes(item.type) || (item.type === "loot" && item.data.subType === "gear")) {
       return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
     }
   }
@@ -432,56 +432,46 @@ export class ItemSheetPF extends ItemSheet {
     const props = [];
     const labels = this.item.labels;
 
-    if ( item.type === "weapon" ) {
-      props.push(...Object.entries(item.data.properties)
-        .filter(e => e[1] === true)
-        .map(e => CONFIG.PF1.weaponProperties[e[0]]));
-    }
-
-    else if ( item.type === "spell" ) {
+    if (item.type === "weapon") {
       props.push(
-        labels.components,
-        labels.materials
-      )
-    }
-
-    else if ( item.type === "equipment" ) {
+        ...Object.entries(item.data.properties)
+          .filter((e) => e[1] === true)
+          .map((e) => CONFIG.PF1.weaponProperties[e[0]])
+      );
+    } else if (item.type === "spell") {
+      props.push(labels.components, labels.materials);
+    } else if (item.type === "equipment") {
       props.push(CONFIG.PF1.equipmentTypes[item.data.armor.type]);
       props.push(labels.armor);
-    }
-
-    else if ( item.type === "feat" ) {
+    } else if (item.type === "feat") {
       props.push(labels.featType);
     }
 
     // Action type
-    if ( item.data.actionType ) {
+    if (item.data.actionType) {
       props.push(CONFIG.PF1.itemActionTypes[item.data.actionType]);
     }
 
     // Action usage
-    if ( (item.type !== "weapon") && item.data.activation && !isObjectEmpty(item.data.activation) ) {
-      props.push(
-        labels.activation,
-        labels.range,
-        labels.target,
-        labels.duration
-      )
+    if (item.type !== "weapon" && item.data.activation && !isObjectEmpty(item.data.activation)) {
+      props.push(labels.activation, labels.range, labels.target, labels.duration);
     }
 
     // Tags
     if (getProperty(item, "data.tags") != null) {
-      props.push(...getProperty(item, "data.tags").map(o => {
-        return o[0];
-      }));
+      props.push(
+        ...getProperty(item, "data.tags").map((o) => {
+          return o[0];
+        })
+      );
     }
 
-    return props.filter(p => !!p);
+    return props.filter((p) => !!p);
   }
 
   /* -------------------------------------------- */
 
-  setPosition(position={}) {
+  setPosition(position = {}) {
     // if ( this._sheetTab === "details" ) position.height = "auto";
     return super.setPosition(position);
   }
@@ -496,37 +486,37 @@ export class ItemSheetPF extends ItemSheet {
    */
   async _updateObject(event, formData) {
     // Handle Damage Array
-    let damage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.parts"));
+    let damage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.parts"));
     formData["data.damage.parts"] = damage.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(3);
-      if ( !arr[i] ) arr[i] = [];
+      if (!arr[i]) arr[i] = [];
       arr[i][j] = entry[1];
       return arr;
     }, []);
 
     // Handle Critical Damage Array
-    let critDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.critParts"));
+    let critDamage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.critParts"));
     formData["data.damage.critParts"] = critDamage.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(3);
-      if ( !arr[i] ) arr[i] = [];
+      if (!arr[i]) arr[i] = [];
       arr[i][j] = entry[1];
       return arr;
     }, []);
 
     // Handle Non-critical Damage Array
-    let nonCritDamage = Object.entries(formData).filter(e => e[0].startsWith("data.damage.nonCritParts"));
+    let nonCritDamage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.nonCritParts"));
     formData["data.damage.nonCritParts"] = nonCritDamage.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(3);
-      if ( !arr[i] ) arr[i] = [];
+      if (!arr[i]) arr[i] = [];
       arr[i][j] = entry[1];
       return arr;
     }, []);
 
     // Handle Attack Array
-    let attacks = Object.entries(formData).filter(e => e[0].startsWith("data.attackParts"));
+    let attacks = Object.entries(formData).filter((e) => e[0].startsWith("data.attackParts"));
     formData["data.attackParts"] = attacks.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = [];
+      if (!arr[i]) arr[i] = [];
       arr[i][j] = entry[1];
       return arr;
     }, []);
@@ -534,38 +524,38 @@ export class ItemSheetPF extends ItemSheet {
     // Handle change array
     // let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
     // formData["data.changes"] = change.reduce((arr, entry) => {
-      // let [i, j] = entry[0].split(".").slice(2);
-      // if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
-      // arr[i][j] = entry[1];
-      // // Reset subtarget (if necessary)
-      // if (j === "subTarget") {
-        // const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
-        // const subTarget = entry[1];
-        // if (typeof target === "string") {
-          // const keys = Object.keys(this.item.getChangeSubTargets(target));
-          // if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-        // }
-      // }
-      // // Limit priority
-      // if (j === "priority") {
-        // const prio = Math.max(-1000, Math.min(1000, entry[1]));
-        // arr[i][j] = prio;
-      // }
-      // return arr;
+    // let [i, j] = entry[0].split(".").slice(2);
+    // if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
+    // arr[i][j] = entry[1];
+    // // Reset subtarget (if necessary)
+    // if (j === "subTarget") {
+    // const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
+    // const subTarget = entry[1];
+    // if (typeof target === "string") {
+    // const keys = Object.keys(this.item.getChangeSubTargets(target));
+    // if (!keys.includes(subTarget)) arr[i][j] = keys[0];
+    // }
+    // }
+    // // Limit priority
+    // if (j === "priority") {
+    // const prio = Math.max(-1000, Math.min(1000, entry[1]));
+    // arr[i][j] = prio;
+    // }
+    // return arr;
     // }, []);
 
     // Handle conditionals array
-    let conditionals = Object.entries(formData).filter(e => e[0].startsWith("data.conditionals"));
+    let conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
     formData["data.conditionals"] = conditionals.reduce((arr, entry) => {
       let [i, j, k] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = ItemPF.defaultConditional;
+      if (!arr[i]) arr[i] = ItemPF.defaultConditional;
       if (k) {
         const target = formData[`data.conditionals.${i}.${j}.target`];
-        if ( !arr[i].modifiers[j] ) arr[i].modifiers[j] = ItemPF.defaultConditionalModifier;
+        if (!arr[i].modifiers[j]) arr[i].modifiers[j] = ItemPF.defaultConditionalModifier;
         arr[i].modifiers[j][k] = entry[1];
         // Target dependent keys
         if (["subTarget", "critical", "type"].includes(k)) {
-          const target = (conditionals.find(o => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
+          const target = (conditionals.find((o) => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
           const val = entry[1];
           if (typeof target === "string") {
             let keys;
@@ -581,7 +571,7 @@ export class ItemSheetPF extends ItemSheet {
                 break;
             }
             // Reset subTarget, non-damage type, and critical if necessary
-            if (!keys.includes(val) && (target !== "damage" && k !== "type")) arr[i].modifiers[j][k] = keys[0];
+            if (!keys.includes(val) && target !== "damage" && k !== "type") arr[i].modifiers[j][k] = keys[0];
           }
         }
       } else {
@@ -591,14 +581,14 @@ export class ItemSheetPF extends ItemSheet {
     }, []);
 
     // Handle notes array
-    let note = Object.entries(formData).filter(e => e[0].startsWith("data.contextNotes"));
+    let note = Object.entries(formData).filter((e) => e[0].startsWith("data.contextNotes"));
     formData["data.contextNotes"] = note.reduce((arr, entry) => {
       let [i, j] = entry[0].split(".").slice(2);
-      if ( !arr[i] ) arr[i] = {};
+      if (!arr[i]) arr[i] = {};
       arr[i][j] = entry[1];
       // Reset subtarget (if necessary)
       if (j === "subTarget") {
-        const target = (note.find(o => o[0] === `data.contextNotes.${i}.target`) || [])[1];
+        const target = (note.find((o) => o[0] === `data.contextNotes.${i}.target`) || [])[1];
         const subTarget = entry[1];
         if (typeof target === "string") {
           const keys = Object.keys(this.item.getContextNoteSubTargets(target));
@@ -610,7 +600,7 @@ export class ItemSheetPF extends ItemSheet {
     }, []);
 
     // Handle links arrays
-    let links = Object.entries(formData).filter(e => e[0].startsWith("data.links"));
+    let links = Object.entries(formData).filter((e) => e[0].startsWith("data.links"));
     for (let e of links) {
       const path = e[0].split(".");
       const linkType = path[2];
@@ -620,18 +610,14 @@ export class ItemSheetPF extends ItemSheet {
 
       delete formData[e[0]];
 
-      if (!formData[`data.links.${linkType}`]) formData[`data.links.${linkType}`] = duplicate(getProperty(this.item.data, `data.links.${linkType}`));
+      if (!formData[`data.links.${linkType}`])
+        formData[`data.links.${linkType}`] = duplicate(getProperty(this.item.data, `data.links.${linkType}`));
 
       setProperty(formData[`data.links.${linkType}`][index], subPath, value);
     }
 
     // Change relative values
-    const relativeKeys = [
-      "data.currency.pp",
-      "data.currency.gp",
-      "data.currency.sp",
-      "data.currency.cp",
-    ];
+    const relativeKeys = ["data.currency.pp", "data.currency.gp", "data.currency.sp", "data.currency.cp"];
     for (let [k, v] of Object.entries(formData)) {
       if (typeof v !== "string") continue;
       // Add or subtract values
@@ -648,21 +634,17 @@ export class ItemSheetPF extends ItemSheet {
           let value = parseInt(RegExp.$2);
           if (operator === "--") {
             formData[k] = -value;
-          }
-          else {
+          } else {
             if (operator === "-") value = -value;
             formData[k] = originalValue + value;
             if (max) formData[k] = Math.min(formData[k], max);
           }
-        }
-        else if (v.match(/^[0-9]+$/)) {
+        } else if (v.match(/^[0-9]+$/)) {
           formData[k] = parseInt(v);
           if (max) formData[k] = Math.min(formData[k], max);
-        }
-        else if (v === "") {
+        } else if (v === "") {
           formData[k] = 0;
-        }
-        else formData[k] = value;
+        } else formData[k] = value; // @TODO: definition?
       }
     }
 
@@ -680,15 +662,15 @@ export class ItemSheetPF extends ItemSheet {
 
     // Activate tabs
     const tabGroups = {
-      "primary": {
-        "description": {},
-        "links": {},
+      primary: {
+        description: {},
+        links: {},
       },
     };
     this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
 
     // Tooltips
-    html.mousemove(ev => this._moveTooltips(ev));
+    html.mousemove((ev) => this._moveTooltips(ev));
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -731,7 +713,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
 
     // Click to change text input
-    html.find('*[data-action="input-text"]').click(event => this._onInputText(event));
+    html.find('*[data-action="input-text"]').click((event) => this._onInputText(event));
 
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
@@ -739,7 +721,7 @@ export class ItemSheetPF extends ItemSheet {
     // Conditional Dragging
     html.find("li.conditional").each((i, li) => {
       li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", ev => this._onDragConditionalStart(ev), false);
+      li.addEventListener("dragstart", (ev) => this._onDragConditionalStart(ev), false);
     });
 
     // Conditional Dropping
@@ -757,14 +739,14 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onTextAreaDrop(event) {
     event.preventDefault();
-	  const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-    if ( !data ) return;
-    
+    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+    if (!data) return;
+
     const elem = event.currentTarget;
     let link;
 
-	  // Case 1 - Entity from Compendium Pack
-    if ( data.pack ) {
+    // Case 1 - Entity from Compendium Pack
+    if (data.pack) {
       const pack = game.packs.get(data.pack);
       if (!pack) return;
       const entity = await pack.getEntity(data.id);
@@ -774,10 +756,10 @@ export class ItemSheetPF extends ItemSheet {
     // Case 2 - Entity from World
     else {
       const config = CONFIG[data.type];
-      if ( !config ) return false;
+      if (!config) return false;
       const entity = config.collection.instance.get(data.id);
-      if ( !entity ) return false;
-      link = `@${data.type}[${entity._id}]{${entity.name}}`
+      if (!entity) return false;
+      link = `@${data.type}[${entity._id}]{${entity.name}}`;
     }
 
     // Insert link
@@ -790,11 +772,11 @@ export class ItemSheetPF extends ItemSheet {
   async _onLinksDrop(event) {
     const elem = event.currentTarget;
     const linkType = elem.dataset.tab;
-    
+
     // Try to extract the data
     let data;
     try {
-      data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
       if (data.type !== "Item") return;
     } catch (err) {
       return false;
@@ -807,7 +789,7 @@ export class ItemSheetPF extends ItemSheet {
     // Case 1 - Import from a Compendium pack
     if (data.pack) {
       dataType = "compendium";
-      const pack = game.packs.find(p => p.collection === data.pack);
+      const pack = game.packs.find((p) => p.collection === data.pack);
       const packItem = await pack.getEntity(data.id);
       if (packItem != null) {
         targetItem = packItem;
@@ -819,7 +801,7 @@ export class ItemSheetPF extends ItemSheet {
     else if (data.data) {
       dataType = "data";
       if (this.item && this.item.actor) {
-        targetItem = this.item.actor.items.find(o => o._id === data.data._id);
+        targetItem = this.item.actor.items.find((o) => o._id === data.data._id);
       }
       itemLink = data.data._id;
     }
@@ -837,7 +819,7 @@ export class ItemSheetPF extends ItemSheet {
   _onDragConditionalStart(event) {
     const elem = event.currentTarget;
     const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
-    event.dataTransfer.setData('text/plain', JSON.stringify(conditional));
+    event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
   }
 
   async _onConditionalDrop(event) {
@@ -845,7 +827,7 @@ export class ItemSheetPF extends ItemSheet {
 
     let data;
     try {
-      data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
       // Surface-level check for conditional
       if (!(data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers))) return;
     } catch (e) {
@@ -874,7 +856,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     const conditionals = item.data.data.conditionals || [];
-    await this.object.update({"data.conditionals": conditionals.concat([data])});
+    await this.object.update({ "data.conditionals": conditionals.concat([data]) });
   }
 
   /**
@@ -885,7 +867,7 @@ export class ItemSheetPF extends ItemSheet {
    * @param {Object} [data] - The raw data from a drop event.
    * @returns {boolean} Whether a link to the item is possible here.
    */
-  canCreateLink(linkType, dataType, itemData, itemLink, data=null) {
+  canCreateLink(linkType, dataType, itemData, itemLink, data = null) {
     const actor = this.item.actor;
     const sameActor = actor != null && data != null && data.actorId === actor._id;
 
@@ -895,7 +877,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Don't create existing links
     const links = getProperty(this.item.data, `data.links.${linkType}`) || [];
-    if (links.filter(o => o.id === itemLink).length) return false;
+    if (links.filter((o) => o.id === itemLink).length) return false;
 
     if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
 
@@ -912,8 +894,7 @@ export class ItemSheetPF extends ItemSheet {
    * @param {Object} [data] - The raw data from a drop event.
    * @returns {Array} An array to insert into this item's link data.
    */
-  generateInitialLinkData(linkType, dataType, itemData, itemLink, data=null) {
-
+  generateInitialLinkData(linkType, dataType, itemData, itemLink, data = null) {
     const result = {
       id: itemLink,
       dataType: dataType,
@@ -948,12 +929,12 @@ export class ItemSheetPF extends ItemSheet {
     const k3 = k.split(".").slice(-1).join(".");
 
     // Add new damage component
-    if ( a.classList.contains("add-damage") ) {
+    if (a.classList.contains("add-damage")) {
       // Get initial data
       const initialData = ["", ""];
 
       // Add data
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const damage = getProperty(this.item.data, k2);
       const updateData = {};
       updateData[k] = getProperty(damage, k3).concat([initialData]);
@@ -961,8 +942,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Remove a damage component
-    if ( a.classList.contains("delete-damage") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+    if (a.classList.contains("delete-damage")) {
+      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".damage-part");
       const damage = duplicate(getProperty(this.item.data, k2));
       getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
@@ -977,19 +958,19 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
 
     // Add new attack component
-    if ( a.classList.contains("add-attack") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+    if (a.classList.contains("add-attack")) {
+      await this._onSubmit(event); // Submit any unsaved changes
       const attackParts = this.item.data.data.attackParts;
-      return this.item.update({"data.attackParts": attackParts.concat([["", ""]])});
+      return this.item.update({ "data.attackParts": attackParts.concat([["", ""]]) });
     }
 
     // Remove an attack component
-    if ( a.classList.contains("delete-attack") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+    if (a.classList.contains("delete-attack")) {
+      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".attack-part");
       const attackParts = duplicate(this.item.data.data.attackParts);
       attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this.item.update({"data.attackParts": attackParts});
+      return this.item.update({ "data.attackParts": attackParts });
     }
   }
 
@@ -999,20 +980,20 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new change
     if (a.classList.contains("add-change")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const changes = this.item.data.data.changes || [];
       const change = ItemChange.create({}, null);
-      return this.item.update({"data.changes": changes.concat(change.data)});
+      return this.item.update({ "data.changes": changes.concat(change.data) });
     }
 
     // Remove a change
     if (a.classList.contains("delete-change")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".change");
       const changes = duplicate(this.item.data.data.changes);
-      const change = changes.find(o => o._id === li.dataset.change);
+      const change = changes.find((o) => o._id === li.dataset.change);
       changes.splice(changes.indexOf(change), 1);
-      return this.item.update({"data.changes": changes});
+      return this.item.update({ "data.changes": changes });
     }
   }
 
@@ -1022,18 +1003,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const conditionals = this.item.data.data.conditionals || [];
-      return this.item.update({"data.conditionals": conditionals.concat([ItemPF.defaultConditional])});
+      return this.item.update({ "data.conditionals": conditionals.concat([ItemPF.defaultConditional]) });
     }
 
     // Remove a conditional
     if (a.classList.contains("delete-conditional")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".conditional");
       const conditionals = duplicate(this.item.data.data.conditionals);
       conditionals.splice(Number(li.dataset.conditional), 1);
-      return this.item.update({"data.conditionals": conditionals});
+      return this.item.update({ "data.conditionals": conditionals });
     }
 
     // Add a new conditional modifier
@@ -1043,7 +1024,7 @@ export class ItemSheetPF extends ItemSheet {
       const conditionals = this.item.data.data.conditionals;
       conditionals[Number(li.dataset.conditional)].modifiers.push(ItemPF.defaultConditionalModifier);
       // duplicate object to ensure update
-      return this.item.update({"data.conditionals": duplicate(conditionals)});
+      return this.item.update({ "data.conditionals": duplicate(conditionals) });
     }
 
     // Remove a conditional modifier
@@ -1052,7 +1033,7 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".conditional-modifier");
       const conditionals = duplicate(this.item.data.data.conditionals);
       conditionals[Number(li.dataset.conditional)].modifiers.splice(Number(li.dataset.modifier), 1);
-      return this.item.update({"data.conditionals": conditionals});
+      return this.item.update({ "data.conditionals": conditionals });
     }
   }
 
@@ -1062,18 +1043,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const contextNotes = this.item.data.data.contextNotes || [];
-      return this.item.update({"data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote])});
+      return this.item.update({ "data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote]) });
     }
 
     // Remove a note
     if (a.classList.contains("delete-note")) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".context-note");
       const contextNotes = duplicate(this.item.data.data.contextNotes);
       contextNotes.splice(Number(li.dataset.note), 1);
-      return this.item.update({"data.contextNotes": contextNotes});
+      return this.item.update({ "data.contextNotes": contextNotes });
     }
   }
 
@@ -1087,8 +1068,8 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
       let links = duplicate(getProperty(this.item.data, `data.links.${group.dataset.tab}`) || []);
-      const link = links.find(o => o.id === li.dataset.link);
-      links = links.filter(o => o !== link);
+      const link = links.find((o) => o.id === li.dataset.link);
+      links = links.filter((o) => o !== link);
 
       const updateData = {};
       updateData[`data.links.${group.dataset.tab}`] = links;
@@ -1100,7 +1081,13 @@ export class ItemSheetPF extends ItemSheet {
 
       // Clean link
       this.item._cleanLink(link, group.dataset.tab);
-      game.socket.emit("system.pf1", { eventType: "cleanItemLink", actorUUID: this.item.actor.uuid, itemUUID: this.item.uuid, link: link, linkType: group.dataset.tab });
+      game.socket.emit("system.pf1", {
+        eventType: "cleanItemLink",
+        actorUUID: this.item.actor.uuid,
+        itemUUID: this.item.uuid,
+        link: link,
+        linkType: group.dataset.tab,
+      });
     }
   }
 
@@ -1115,7 +1102,7 @@ export class ItemSheetPF extends ItemSheet {
     const fp = new FilePicker({
       type: button.dataset.type,
       current: current,
-      callback: path => {
+      callback: (path) => {
         targetField.value = path;
         if (this.options.submitOnChange) {
           this._onSubmit(event);
@@ -1135,18 +1122,17 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const elem = this.element.find(event.currentTarget.dataset.for);
 
-    elem.removeAttr("readonly")
+    elem.removeAttr("readonly");
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.item.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
     elem.select();
 
-    elem.focusout(event => {
+    elem.focusout((event) => {
       if (typeof value === "number") value = value.toString();
       if (value !== elem.attr("value")) {
         this._onSubmit(event);
-      }
-      else {
+      } else {
         this.render();
       }
     });

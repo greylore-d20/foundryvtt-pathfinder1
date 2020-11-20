@@ -77,9 +77,32 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Rollable Health Formula
     html.find(".health .rollable").click(this._onRollHealthFormula.bind(this));
+
+    // Adjust CR
+    html.find("span.text-box.cr-input")
+    .on("click", event => { this._onSpanTextInput(event, this._adjustCR.bind(this)); });
   }
 
   /* -------------------------------------------- */
+
+  _adjustCR(event) {
+    event.preventDefault();
+    const el = event.currentTarget;
+
+    const value = CR.fromString(el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText);
+    const name = el.getAttribute("name");
+    if (name) {
+      this._pendingUpdates[name] = value;
+    }
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._onSubmit(event); });
+      }
+    }
+    else this._onSubmit(event);
+  }
 
   /**
    * Handle rolling NPC health values using the provided formula

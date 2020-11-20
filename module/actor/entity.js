@@ -1738,7 +1738,8 @@ export class ActorPF extends Actor {
 
   getRollData(data=null) {
     if (data == null) data = this.data.data;
-    let result = duplicate(data);
+    let result = data;
+    result.item = undefined;
 
     // Set size index
     result.size = Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4;

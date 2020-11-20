@@ -681,7 +681,7 @@ export class ItemSheetPF extends ItemSheet {
         "links": {},
       },
     };
-    createTabs.call(this, html, tabGroups);
+    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
 
     // Tooltips
     html.mousemove(ev => this._moveTooltips(ev));

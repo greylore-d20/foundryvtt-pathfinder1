@@ -2,7 +2,7 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
 import { ActorSheetFlags } from "../../apps/actor-flags.js";
 import { DicePF } from "../../dice.js";
-import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight, createConsumableSpellDialog } from "../../lib.js";
+import { createTag, createTabs, isMinimumCoreVersion, CR, convertWeight, createConsumableSpellDialog, adjustNumberByStringCommand } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
@@ -35,31 +35,63 @@ export class ActorSheetPF extends ActorSheet {
      */
     this._filters = {
       inventory: new Set(),
-      spellbook: new Set(),
+      "spellbook-primary": new Set(),
+      "spellbook-secondary": new Set(),
+      "spellbook-tertiary": new Set(),
+      "spellbook-spelllike": new Set(),
       features: new Set(),
-      buffs: new Set()
+      buffs: new Set(),
+      attacks: new Set(),
     };
 
     /**
      * Track item updates from the actor sheet.
+     * @property
+     * @private
      * @type {Object[]}
      */
     this._itemUpdates = [];
 
     /**
      * Track hidden elements of the sheet.
+     * @property
      */
     this._hiddenElems = {};
 
     /**
      * Whether a submit has been queued in any way.
+     * @property
      */
     this._submitQueued = false;
 
     /**
      * Whether inner part of this sheet has been rendered already.
+     * @property
      */
     this._renderedInner = false;
+
+    /**
+     * A dictionary of additional queued updates, to be added on top of the form's data (and cleared afterwards).
+     * @property
+     * @private
+     */
+    this._pendingUpdates = {};
+  }
+
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      scrollY: [
+        ".inventory-body .inventory-list",
+        ".combat-attacks",
+        ".spells_primary-body .inventory-list",
+        ".spells_secondary-body .inventory-list",
+        ".spells_tertiary-body .inventory-list",
+        ".spells_spelllike-body .inventory-list",
+        ".buffs-body .inventory-list",
+        ".skillset-body .skills-list.adventure",
+        ".skillset-body .skills-list.background",
+      ],
+    });
   }
 
   get currentPrimaryTab() {
@@ -489,6 +521,8 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _filterItems(items, filters) {
+    const hasTypeFilter = Array.from(filters).filter(s => s.startsWith("type-")).length > 0;
+
     return items.filter(item => {
       const data = item.data;
 
@@ -513,6 +547,27 @@ export class ActorSheetPF extends ActorSheet {
       // Whether active
       if (filters.has("active")) {
         if (!data.active) return false;
+      }
+
+      if (item.type === "feat") {
+        if (hasTypeFilter && !filters.has(`type-${data.featType}`)) return false;
+      }
+
+      if (ItemPF.isInventoryItem(item.type)) {
+        if (hasTypeFilter && item.type !== "loot" && !filters.has(`type-${item.type}`)) return false;
+        else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${data.subType}`)) return false;
+      }
+
+      if (item.type === "spell") {
+        if (hasTypeFilter && !filters.has(`type-${data.level}`)) return false;
+      }
+
+      if (item.type === "buff") {
+        if (hasTypeFilter && !filters.has(`type-${data.buffType}`)) return false;
+      }
+
+      if (item.type === "attack") {
+        if (hasTypeFilter && !filters.has(`type-${data.attackType}`)) return false;
       }
 
       return true;
@@ -604,6 +659,9 @@ export class ActorSheetPF extends ActorSheet {
     html.off("change");
     // Add alternative change handler
     html.find("input,select,textarea").on("change", this._onChangeInput.bind(this));
+
+    // Add general text box (span) handler
+    html.find("span.text-box.direct").on("click", event => { this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this)); });
 
     // Activate Item Filters
     const filterLists = html.find(".filter-list");
@@ -705,6 +763,10 @@ export class ActorSheetPF extends ActorSheet {
     // Saving Throw
     html.find(".saving-throw .rollable").click(this._onRollSavingThrow.bind(this));
 
+    // Adjust skill rank
+    html.find("span.text-box.skill-rank")
+    .on("click", event => { this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this)); });
+
     // Add arbitrary skill
     html.find(".skill.arbitrary .skill-create").click(ev => this._onArbitrarySkillCreate(ev));
 
@@ -758,8 +820,8 @@ export class ActorSheetPF extends ActorSheet {
     html.find('.item-delete').click(this._onItemDelete.bind(this));
     html.find(".item-give").click(this._onItemGive.bind(this));
 	
-	// Quick edit item
-	html.find('.item .item-name h4').contextmenu(this._onItemEdit.bind(this));
+    // Quick edit item
+    html.find('.item .item-name h4').contextmenu(this._onItemEdit.bind(this));
 
     // Item Rolling
     html.find('.item .item-image').click(event => this._onItemRoll(event));
@@ -790,28 +852,48 @@ export class ActorSheetPF extends ActorSheet {
     // Convert currency
     html.find("a.convert-currency").click(this._convertCurrency.bind(this));
 
+    // Set item charges
+    html.find(".inventory-body .item-uses span.text-box.value")
+    .on("wheel", this._setFeatUses.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setFeatUses.bind(this)); });
+
+    // Set attack charges
+    html.find(".attacks-body .item-uses span.text-box.value")
+    .on("wheel", this._setFeatUses.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setFeatUses.bind(this)); });
+
     /* -------------------------------------------- */
     /*  Feats
     /* -------------------------------------------- */
 
-    html.find(".item-detail.item-uses input[type='text']:not(:disabled)").off("change")
-    .change(this._setFeatUses.bind(this))
-    .on("wheel", this._setFeatUses.bind(this));
+    html.find(".feats-body .item-uses span.text-box.value")
+    .on("wheel", this._setFeatUses.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setFeatUses.bind(this)); });
 
     /* -------------------------------------------- */
     /*  Spells
     /* -------------------------------------------- */
 
-    html.find(".item-list .spell-uses input[data-type='amount']").off("change")
-    .on("change", this._setSpellUses.bind(this))
-    .on("wheel", this._setSpellUses.bind(this));
-    html.find(".item-list .spell-uses input[data-type='max']").off("change")
-    .on("change", this._setMaxSpellUses.bind(this))
-    .on("wheel", this._setMaxSpellUses.bind(this));
+    // Set specific spell's (max) uses
+    html.find(".item-list .spell-uses span.text-box[data-type='amount']")
+    .on("wheel", this._setSpellUses.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setSpellUses.bind(this)); });
+    html.find(".item-list .spell-uses span.text-box[data-type='max']")
+    .on("wheel", this._setMaxSpellUses.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setMaxSpellUses.bind(this)); });
 
-    html.find(".spell-points-current .value input[type='text']").off("change")
-    .on("change", this._setSpellPoints.bind(this))
-    .on("wheel", this._setSpellPoints.bind(this));
+    // Set spell level uses for spontaneous spellbooks
+    html.find(".spell-uses .spell-slots.spontaneous span.text-box")
+    .on("wheel", this._adjustActorPropertyBySpan.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this)); });
+    // Set base amount of spell uses for a given spell level
+    html.find(".spell-uses .spell-max span.text-box")
+    .on("click", event => {  this._onSpanTextInput(event, this._onSubmit.bind(this));  });
+
+    // Set spell point amount
+    html.find(".spell-points-current .value span.text-box")
+    .on("wheel", this._adjustActorPropertyBySpan.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this)); });
 
     html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
 
@@ -823,7 +905,10 @@ export class ActorSheetPF extends ActorSheet {
 
     html.find(".item-detail.item-active input[type='checkbox']").off("change").on("change", this._setItemActive.bind(this));
 
-    html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
+    html.find(".item-detail.item-level span.text-box")
+    .on("wheel", this._setBuffLevel.bind(this))
+    .on("click", event => { this._onSpanTextInput(event, this._setBuffLevel.bind(this)); });
+    // html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
 
@@ -834,26 +919,86 @@ export class ActorSheetPF extends ActorSheet {
     html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
   }
 
+  activateElementListeners(el) {
+    console.log(el, el.classList);
+  }
+
   createTabs(html) {
     const tabGroups = {
       "primary": {
         "subdetails": {},
-        "inventory": {},
-        "feats": {},
         "skillset": {},
-        "buffs": {},
-        "attacks": {},
         "spellbooks": {},
       },
     };
-    // Add spellbooks to tabGroups
-    for (let a of Object.keys(this.actor.data.data.attributes.spells.spellbooks)) {
-      tabGroups["primary"]["spellbooks"][`spells_${a}`] = {};
-    }
-    createTabs.call(this, html, tabGroups);
+    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
   }
 
   /* -------------------------------------------- */
+
+  _onSpanTextInput(event, callback=null) {
+    const el = event.currentTarget;
+    const parent = el.parentElement;
+
+    // Replace span element with an input (text) element
+    const newEl = document.createElement(`INPUT`);
+    newEl.type = "text";
+    if (el.dataset?.dtype) newEl.dataset.dtype = el.dataset.dtype;
+
+    // Set value of new input element
+    let prevValue = el.innerText;
+    if (el.classList.contains("placeholder")) prevValue = "";
+
+    const name = el.getAttribute("name");
+    let maxValue;
+    if (name) {
+      newEl.setAttribute("name", name);
+      prevValue = getProperty(this.actor.data, name);
+      if (prevValue && typeof prevValue !== "string") prevValue = prevValue.toString();
+
+      if (name.endsWith(".value")) {
+        const maxName = name.replace(/\.value$/, ".max");
+        maxValue = getProperty(this.actor.data, maxName);
+      }
+    }
+    newEl.value = prevValue;
+
+    // Toggle classes
+    const forbiddenClasses = ["placeholder", "direct", "allow-relative"];
+    for (let cls of el.classList) {
+      if (!forbiddenClasses.includes(cls)) newEl.classList.add(cls);
+    }
+
+    // Replace span with input element
+    const allowRelative = el.classList.contains("allow-relative");
+    parent.replaceChild(newEl, el);
+    let changed = false;
+    if (callback) {
+      newEl.addEventListener("change", (...args) => {
+        changed = true;
+        if (allowRelative) {
+          let number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+          newEl.value = number;
+        }
+
+        if (newEl.value === prevValue) {
+          this._render();
+        }
+        else {
+          callback.call(this, ...args);
+        }
+      });
+    }
+    newEl.addEventListener("focusout", event => {
+      if (!changed) {
+        this._render();
+      }
+    });
+
+    // Select text inside new element
+    newEl.focus();
+    newEl.select();
+  }
 
   _moveTooltips(event) {
     const elem = $(event.currentTarget);
@@ -961,13 +1106,21 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _mouseWheelAdd(event, el) {
+    const isInput = el.tagName.toUpperCase() === "INPUT";
+
     if (event && event instanceof WheelEvent) {
-      const value = parseFloat(el.value);
+      const value = (isInput ? parseFloat(el.value) : parseFloat(el.innerText)) || 0;
       if (Number.isNaN(value)) return;
   
       const increase = -Math.sign(event.deltaY);
       const amount = parseFloat(el.dataset.wheelStep) || 1;
-      el.value = value + amount * increase;
+
+      if (isInput) {
+        el.value = value + amount * increase;
+      }
+      else {
+        el.innerText = (value + amount * increase).toString();
+      }
     }
   }
 
@@ -979,7 +1132,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event.originalEvent, el);
 
-    const value = Number(el.value);
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item._id, "data.uses.value", value);
 
     // Update on lose focus
@@ -999,7 +1152,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event.originalEvent, el);
 
-    const value = Number(el.value);
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item._id, "data.preparation.preparedAmount", value);
 
     // Update on lose focus
@@ -1018,7 +1171,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event.originalEvent, el);
 
-    const value = Number(el.value);
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
 
     // Update on lose focus
@@ -1029,28 +1182,17 @@ export class ActorSheetPF extends ActorSheet {
     }
     else this._updateItems();
   }
-  _setSpellbookUses(event) {
+
+  _adjustActorPropertyBySpan(event) {
     event.preventDefault();
     const el = event.currentTarget;
 
     this._mouseWheelAdd(event.originalEvent, el);
-    const value = Number(el.value);
-
-    // Update on lose focus
-    if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", event => { this._onSubmit(event); });
-      }
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const name = el.getAttribute("name");
+    if (name) {
+      this._pendingUpdates[name] = value;
     }
-    else this._onSubmit(event);
-  }
-
-  _setSpellPoints(event) {
-    event.preventDefault();
-    const el = event.currentTarget;
-
-    this._mouseWheelAdd(event.originalEvent, el);
-    const value = Number(el.value);
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
@@ -1068,10 +1210,19 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     this._mouseWheelAdd(event.originalEvent, el);
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const name = el.getAttribute("name");
+    if (name) {
+      this._pendingUpdates[name] = value;
+    }
 
-    const value = Number(el.value);
     this.setItemUpdate(item._id, "data.level", value);
-    this._updateItems();
+    if (event.originalEvent instanceof MouseEvent) {
+      if (!this._submitQueued) {
+        $(el).one("mouseleave", event => { this._updateItems(); });
+      }
+    }
+    else this._updateItems();
   }
 
   _hideShowElement(event) {
@@ -1634,7 +1785,6 @@ export class ActorSheetPF extends ActorSheet {
       misc: { label: CONFIG.PF1.lootTypes["misc"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" } },
       tradeGoods: { label: CONFIG.PF1.lootTypes["tradeGoods"], canCreate: true, hasActions: false, items: [], canEquip: false, dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"), "sub-type": "tradeGoods" } },
       container: { label: game.i18n.localize("PF1.InventoryContainers"), canCreate: true, hasActions: false, items: [], dataset: { type: "container" } },
-      all: { label: game.i18n.localize("PF1.All"), canCreate: false, initial: true, hasActions: true, items: [], canEquip: true, dataset: {} },
     };
 
     // Partition items by category
@@ -1658,14 +1808,14 @@ export class ActorSheetPF extends ActorSheet {
 
     // Apply active item filters
     items = this._filterItems(items, this._filters.inventory);
-    spells = this._filterItems(spells, this._filters.spellbook);
     feats = this._filterItems(feats, this._filters.features);
 
     // Organize Spellbook
     let spellbookData = {};
     const spellbooks = data.actor.data.attributes.spells.spellbooks;
     for (let [a, spellbook] of Object.entries(spellbooks)) {
-      const spellbookSpells = spells.filter(obj => { return obj.data.spellbook === a; });
+      let spellbookSpells = spells.filter(obj => { return obj.data.spellbook === a; });
+      spellbookSpells = this._filterItems(spells, getProperty(this._filters, `spellbook-${a}`));
       spellbookData[a] = {
         data: this._prepareSpellbook(data, spellbookSpells, a),
         prepared: spellbookSpells.filter(obj => { return obj.data.preparation.mode === "prepared" && obj.data.preparation.prepared; }).length,
@@ -1682,7 +1832,6 @@ export class ActorSheetPF extends ActorSheet {
       i.units = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
-      inventory.all.items.push(i);
     }
 
     // Organize Features
@@ -1694,7 +1843,6 @@ export class ActorSheetPF extends ActorSheet {
       racial: { label: game.i18n.localize("PF1.RacialTraitPlural"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeRacial"), "feat-type": "racial" } },
       misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, hasActions: true, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.Misc"), "feat-type": "misc" } },
       template: { label: game.i18n.localize("PF1.TemplatePlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTemplate"), "feat-type": "template" } },
-      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, hasActions: true, dataset: { type: "feat" } },
     };
 
     for (let f of feats) {
@@ -1708,7 +1856,6 @@ export class ActorSheetPF extends ActorSheet {
         f.abilityTypeShort = "";
       }
       features[k].items.push(f);
-      features.all.items.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
 
@@ -1720,17 +1867,16 @@ export class ActorSheetPF extends ActorSheet {
       perm: { label: game.i18n.localize("PF1.Permanent"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "perm" } },
       item: { label: game.i18n.localize("PF1.Item"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "item" } },
       misc: { label: game.i18n.localize("PF1.Misc"), items: [], hasActions: false, dataset: { type: "buff", "buff-type": "misc" } },
-      all: { label: game.i18n.localize("PF1.All"), items: [], hasActions: false, dataset: { type: "buff" } },
     };
 
     for (let b of buffs) {
       let s = b.data.buffType;
       if (!buffSections[s]) continue;
       buffSections[s].items.push(b);
-      buffSections.all.items.push(b);
     }
 
     // Attacks
+    attacks = this._filterItems(attacks, this._filters.attacks);
     const attackSections = {
       weapon: { label: game.i18n.localize("PF1.AttackTypeWeaponPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "weapon" } },
       natural: { label: game.i18n.localize("PF1.AttackTypeNaturalPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "natural" } },
@@ -1738,20 +1884,18 @@ export class ActorSheetPF extends ActorSheet {
       racialAbility: { label: game.i18n.localize("PF1.AttackTypeRacialPlural"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "racialAbility" } },
       item: { label: game.i18n.localize("PF1.Items"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "item" } },
       misc: { label: game.i18n.localize("PF1.Misc"), items: [], canCreate: true, initial: false, showTypes: false, dataset: { type: "attack", "attack-type": "misc" } },
-      all: { label: game.i18n.localize("PF1.All"), items: [], canCreate: false, initial: true, showTypes: true, dataset: { type: "attack" } },
     };
 
     for (let a of attacks) {
       let s = a.data.attackType;
       if (!attackSections[s]) continue;
       attackSections[s].items.push(a);
-      attackSections.all.items.push(a);
     }
 
     // Assign and return
-    data.inventory = Object.values(inventory);
+    data.inventory = inventory;
     data.spellbookData = spellbookData;
-    data.features = Object.values(features);
+    data.features = features;
     data.buffs = buffSections;
     data.attacks = attackSections;
     data.classes = classes;
@@ -1845,6 +1989,9 @@ export class ActorSheetPF extends ActorSheet {
     if (focus && focus.name.match(/^data\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
 
     const result = await super._render(...args);
+
+    // Create placeholders
+    this._createPlaceholders(this.element);
 
     // Apply accessibility settings
     applyAccessibilitySettings(this, this.element, {}, game.settings.get("pf1", "accessibilityConfig"));
@@ -2060,57 +2207,11 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
-    // Change relative values
-    const relativeKeys = [
-      "data.currency.pp",
-      "data.currency.gp",
-      "data.currency.sp",
-      "data.currency.cp",
-      "data.altCurrency.pp",
-      "data.altCurrency.gp",
-      "data.altCurrency.sp",
-      "data.altCurrency.cp",
-      "data.attributes.hp.value",
-      "data.attributes.hp.temp",
-      "data.attributes.hp.nonlethal",
-      "data.attributes.vigor.value",
-      "data.attributes.vigor.temp",
-      "data.attributes.wounds.value",
-    ];
-
-    for (let [k, v] of Object.entries(formData)) {
-      if (typeof v !== "string") continue;
-      // Add or subtract values
-      if (relativeKeys.includes(k)) {
-        const originalValue = getProperty(this.actor.data, k);
-        let max = null;
-        const maxKey = k.replace(/\.value$/, ".max");
-        if (maxKey !== k) {
-          max = getProperty(this.actor.data, maxKey);
-        }
-
-        if (v.match(/(\+|[=-]?-)([0-9]+)/)) {
-          const operator = RegExp.$1;
-          let value = parseInt(RegExp.$2);
-          if (operator === "--" || operator === "=-") {
-            formData[k] = -value;
-          }
-          else {
-            if (operator === "-") value = -value;
-            formData[k] = originalValue + value;
-            if (max) formData[k] = Math.min(formData[k], max);
-          }
-        }
-        else if (v.match(/^[0-9]+$/)) {
-          formData[k] = parseInt(v);
-          if (max) formData[k] = Math.min(formData[k], max);
-        }
-        else if (v === "") {
-          formData[k] = 0;
-        }
-        else formData[k] = value;
-      }
+    // Add pending updates
+    for (let [k, v] of Object.entries(this._pendingUpdates)) {
+      formData[k] = v;
     }
+    this._pendingUpdates = {};
     
     return super._updateObject(event, formData);
   }
@@ -2128,5 +2229,15 @@ export class ActorSheetPF extends ActorSheet {
     return items.reduce((cur, i) => {
       return cur + i.getValue({ sellValue: sellMultiplier });
     }, 0);
+  }
+
+  _createPlaceholders(html) {
+    const elems = html.find("span[data-placeholder]");
+    for (let el of elems) {
+      if (!el.innerText) {
+        el.classList.add("placeholder");
+        el.innerText = el.dataset.placeholder;
+      }
+    }
   }
 }

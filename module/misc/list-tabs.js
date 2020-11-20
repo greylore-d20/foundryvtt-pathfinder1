@@ -18,7 +18,7 @@ export class ListTabs {
     if (!this._list) return;
 
     // Set first active tab
-    if (!this._list.querySelector("option.active")) {
+    if (!this._list.querySelector("option.active") && !this.active) {
       const option = this._list.options[0];
       option.classList.toggle("active", true);
       this.active = option.dataset.tab;
@@ -37,6 +37,7 @@ export class ListTabs {
   }
 
   activate(tabName, {triggerCallback=false}={}) {
+    // console.trace(tabName);
 
     // Validate the requested tab name
     const items = this._nav.querySelectorAll("select.tabs option");

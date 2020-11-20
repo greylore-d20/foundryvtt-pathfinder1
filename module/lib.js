@@ -34,7 +34,7 @@ export const alterRoll = function(str, add, multiply) {
 /**
 * Creates tabs for a sheet object
 */
-export const createTabs = function(html, tabGroups) {
+export const createTabs = function(html, tabGroups, existingTabs=null) {
   // Create recursive activation/callback function
   const _recursiveActivate = function(rtabs, tabName=null) {
     if (tabName == null) this._initialTab[rtabs.group] = rtabs.active;
@@ -43,76 +43,70 @@ export const createTabs = function(html, tabGroups) {
       this._initialTab[rtabs.group] = tabName;
     }
     
-    // Scroll to previous position
-    let scrollElems = html.find(`.scroll-${rtabs.group}`);
-    if (scrollElems.length === 0) scrollElems = html.find(`.tab[data-group="${rtabs.group}"]`);
-    for (let o of scrollElems) {
-      const scrollIndex = o.dataset.scrollIndex || rtabs.group;
-      o.scrollTop = this._scrollTab[scrollIndex];
-    }
-    
     // Recursively activate tabs
     for (let subTab of rtabs.subTabs) {
       _recursiveActivate.call(this, subTab, subTab.active);
     }
   };
+
+  // Recursively bind tabs
+  const _recursiveBind = function(rtabs) {
+    rtabs.bind(html[0]);
+    for (let subTab of rtabs.subTabs) {
+      _recursiveBind.call(this, subTab);
+    }
+  };
   
   // Create all tabs
-  const _func = function(group, children) {
+  const _func = function(group, children, tabs=null) {
     if (html.find(`nav[data-group="${group}"]`).length === 0) return null;
     
     if (this._initialTab == null) this._initialTab = {};
-    if (this._scrollTab == null) this._scrollTab = {};
     
     const subHtml = html.find(`.${group}-body > div[data-group="${group}"]`);
     const activeSubHtml = subHtml.filter(".active");
     const initial = this._initialTab[group] !== undefined ? this._initialTab[group] : (activeSubHtml.length > 0 ? activeSubHtml[0].dataset.tab : "");
     
     // Set up data for scroll position and active tab
-    if (this._scrollTab[group] === undefined) this._scrollTab[group] = 0;
     if (this._initialTab[group] === undefined) this._initialTab[group] = initial;
-    
-    // Set up scrolling callback
-    let scrollElems = html.find(`.scroll-${group}`);
-    if (scrollElems.length === 0) scrollElems = html.find(`.tab[data-group="${group}"]`);
-    scrollElems.scroll(ev => {
-      const scrollIndex = ev.currentTarget.dataset.scrollIndex || group;
-      this._scrollTab[scrollIndex] = ev.currentTarget.scrollTop;
-    });
     
     // Determine tab type
     const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
     if (!tabsElem) return;
     let type = tabsElem.dataset.tabsType;
-    let cls = isMinimumCoreVersion("0.7.0") ? Tabs : TabsV2;
+    let cls = TabsV2;
     if (type === "list") {
       cls = ListTabs;
     }
     
     // Create tabs object
-    const tabs = new cls({
-      navSelector: `.tabs[data-group="${group}"]`,
-      contentSelector: `.${group}-body`,
-      callback: (_, tabs) => {
-        _recursiveActivate.call(this, tabs);
-      },
-    });
-    
-    // Recursively create tabs
-    tabs.group = group;
-    tabs.subTabs = [];
-    for (let [childKey, subChildren] of Object.entries(children)) {
-      const newTabs = _func.call(this, childKey, subChildren);
-      if (newTabs != null) tabs.subTabs.push(newTabs);
+    if (!tabs) {
+      tabs = new cls({
+        navSelector: `.tabs[data-group="${group}"]`,
+        contentSelector: `.${group}-body`,
+        callback: (_, tabs) => {
+          _recursiveActivate.call(this, tabs);
+        },
+      });
+      
+      // Recursively create tabs
+      tabs.group = group;
+      tabs.subTabs = [];
+      for (let [childKey, subChildren] of Object.entries(children)) {
+        const childTabs = _func.call(this, childKey, subChildren);
+        if (childTabs != null) {
+          tabs.subTabs.push(childTabs);
+          childTabs.parent = tabs;
+        }
+      }
     }
     
-    tabs.bind(html[0]);
-    _recursiveActivate.call(this, tabs, this._initialTab[group]);
+    _recursiveBind.call(this, tabs);
     return tabs;
   };
   
   for (const groupKey of Object.keys(tabGroups)) {
-    _func.call(this, groupKey, tabGroups[groupKey]);
+    return _func.call(this, groupKey, tabGroups[groupKey], existingTabs);
   }
 };
 
@@ -525,4 +519,33 @@ export const createConsumableSpell = async function(itemData, type) {
 
   if (data._id) delete data._id;
   return data;
+};
+
+export const adjustNumberByStringCommand = function(initialValue, cmdStr, maxValue=null) {
+
+  let result = initialValue;
+
+  if (cmdStr.match(/(\+|[=-]?-)([0-9]+)/)) {
+    const operator = RegExp.$1;
+    let value = parseInt(RegExp.$2);
+    if (operator === "--" || operator === "=-") {
+      result = -value;
+    }
+    else {
+      if (operator === "-") value = -value;
+      result = initialValue + value;
+      if (maxValue) result = Math.min(result, maxValue);
+    }
+  }
+  else if (cmdStr.match(/^[0-9]+$/)) {
+    result = parseInt(cmdStr);
+    if (maxValue) result = Math.min(result, maxValue);
+  }
+  else if (cmdStr === "") {
+    result = 0;
+  }
+  else result = parseFloat(cmdStr);
+
+  if (Number.isNaN(result)) result = initialValue;
+  return result;
 };

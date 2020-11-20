@@ -1,17 +1,21 @@
 {{!-- Attacks Header --}}
 <div class="combat-attacks">
-  <nav class="sheet-navigation tabs subtabs attacks" data-group="attacks">
-    {{#each sections as |section sid|}}
-    <a class="item" data-tab="{{sid}}">{{section.label}}</a>
-    {{/each}}
-  </nav>
+
+  {{!-- Attack Filters --}}
+  <div class="inventory-filters flexrow">  
+    <ul class="filter-list flexrow" data-filter="attacks">
+      {{#each sections as |section sid|}}
+      <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+      {{/each}}
+    </ul>
+  </div>
 
   <section class="attacks-body">
     {{#each sections as |section sid|}}
-    <div class="tab inventory-group flexcol {{#if section.initial}}active{{/if}}" data-group="attacks" data-tab="{{sid}}">
-      <ol class="inventory-list sub-scroll scroll-attacks">
+    <div class="inventory-group flexcol">
+      <ol class="inventory-list">
         <li class="inventory-header flexrow">
-          <h3 class="item-name flexrow"></h3>
+          <h3 class="item-name flexrow">{{section.label}}</h3>
 
           {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" title="{{localize "PF1.Type"}}"></i></div>{{/if}}
           
@@ -59,9 +63,9 @@
             
             <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
               {{#if item.isCharged}}
-              <input type="text" class="select-on-click" value="{{item.data.uses.value}}" data-dtype="Number"/>
+              <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.data.uses.value}}</span>
               <span class="sep"> / </span>
-              <input type="text" value="{{item.data.uses.max}}" disabled data-dtype="Number"/>
+              <span class="text-box">{{item.data.uses.max}}</span>
               <span class="tooltipcontent">
                 @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>
                 @resources.{{item.tag}}.max : {{item.data.uses.max}}
@@ -97,7 +101,7 @@
     {{!-- Natural Armor --}}
     <li class="natural-armor flexrow">
       <h3>{{localize "PF1.BuffTarACNatural"}}</h3>
-      <input class="select-on-click" type="text" name="data.attributes.naturalAC" value="{{data.attributes.naturalAC}}" placeholder="0" data-dtype="Number"/>
+      <span class="text-box direct" name="data.attributes.naturalAC" data-dtype="Number">{{data.attributes.naturalAC}}</span>
     </li>
 
     <li class="flexrow">

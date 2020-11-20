@@ -29,6 +29,10 @@ export class ItemSheetPF extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       width: 580,
       classes: ["pf1", "sheet", "item"],
+      scrollY: [
+        ".tab.details",
+        ".buff-flags",
+      ],
     });
   }
 

@@ -20,6 +20,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     return mergeObject(super.defaultOptions, {
       width: 800,
       classes: ["pf1", "sheet", "item"],
+      scrollY: [
+        "section.inventory-body",
+      ],
     });
   }
 

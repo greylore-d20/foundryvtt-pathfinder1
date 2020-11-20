@@ -10,7 +10,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc", "loot"],
-      width: 560,
+      width: 620,
       height: 420,
     });
   }
@@ -53,7 +53,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     data.labels.sellValue = game.i18n.localize("PF1.ItemContainerSellValue").format(data.sellValue.gp, data.sellValue.sp, data.sellValue.cp);
 
     // Alter inventory columns
-    for (let inv of data.inventory) {
+    for (let inv of Object.values(data.inventory)) {
       inv.hasActions = false;
       inv.canEquip = false;
       inv.showValue = true;

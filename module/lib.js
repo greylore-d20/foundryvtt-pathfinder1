@@ -37,6 +37,8 @@ export const alterRoll = function(str, add, multiply) {
 export const createTabs = function(html, tabGroups, existingTabs=null) {
   // Create recursive activation/callback function
   const _recursiveActivate = function(rtabs, tabName=null) {
+    if (rtabs.__dormant) return;
+
     if (tabName == null) this._initialTab[rtabs.group] = rtabs.active;
     else {
       rtabs.activate(tabName);
@@ -52,6 +54,10 @@ export const createTabs = function(html, tabGroups, existingTabs=null) {
   // Recursively bind tabs
   const _recursiveBind = function(rtabs) {
     rtabs.bind(html[0]);
+    
+    if (html.find(`nav[data-group="${rtabs.group}"]`).length > 0) rtabs.__dormant = false;
+    else rtabs.__dormant = true;
+
     for (let subTab of rtabs.subTabs) {
       _recursiveBind.call(this, subTab);
     }
@@ -59,7 +65,8 @@ export const createTabs = function(html, tabGroups, existingTabs=null) {
   
   // Create all tabs
   const _func = function(group, children, tabs=null) {
-    if (html.find(`nav[data-group="${group}"]`).length === 0) return null;
+    let dormant = false;
+    if (html.find(`nav[data-group="${group}"]`).length === 0) dormant = true;
     
     if (this._initialTab == null) this._initialTab = {};
     
@@ -72,11 +79,12 @@ export const createTabs = function(html, tabGroups, existingTabs=null) {
     
     // Determine tab type
     const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
-    if (!tabsElem) return;
-    let type = tabsElem.dataset.tabsType;
     let cls = TabsV2;
-    if (type === "list") {
-      cls = ListTabs;
+    if (tabsElem) {
+      let type = tabsElem.dataset.tabsType;
+      if (type === "list") {
+        cls = ListTabs;
+      }
     }
     
     // Create tabs object
@@ -88,6 +96,7 @@ export const createTabs = function(html, tabGroups, existingTabs=null) {
           _recursiveActivate.call(this, tabs);
         },
       });
+      tabs.__dormant = dormant;
       
       // Recursively create tabs
       tabs.group = group;

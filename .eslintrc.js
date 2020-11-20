@@ -458,5 +458,7 @@ module.exports = {
     game: "readonly",
     vtt: "readonly",
     ENTITY_PERMISSIONS: "readonly",
+    DEFAULT_TOKEN: "readonly",
+    DiceTerm: "readonly",
   },
 };

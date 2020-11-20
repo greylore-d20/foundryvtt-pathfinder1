@@ -1097,24 +1097,18 @@ const _addDefaultChanges = function(data, changes, flags, sourceInfo) {
   }
   // Add swim and climb skill bonuses based on having speeds for them
   {
-    const climbSpeed = getProperty(data, "data.attributes.speed.climb.total") || 0;
-    const swimSpeed = getProperty(data, "data.attributes.speed.swim.total") || 0;
-    if (climbSpeed > 0) {
-      changes.push({
-        raw: mergeObject(ItemChange.defaultData, { formula: "8", target: "skill", subTarget: "skill.clm", modifier: "racial" }, {inplace: false}),
-        source: {
-          name: game.i18n.localize("PF1.SpeedClimb"),
-        },
-      });
-    }
-    if (swimSpeed > 0) {
-      changes.push({
-        raw: mergeObject(ItemChange.defaultData, { formula: "8", target: "skill", subTarget: "skill.swm", modifier: "racial" }, {inplace: false}),
-        source: {
-          name: game.i18n.localize("PF1.SpeedSwim"),
-        },
-      });
-    }
+    changes.push({
+      raw: mergeObject(ItemChange.defaultData, { formula: "@attributes.speed.climb.total > 0 ? 8 : 0", target: "skill", subTarget: "skill.clm", modifier: "racial" }, {inplace: false}),
+      source: {
+        name: game.i18n.localize("PF1.SpeedClimb"),
+      },
+    });
+    changes.push({
+      raw: mergeObject(ItemChange.defaultData, { formula: "@attributes.speed.swim.total > 0 ? 8 : 0", target: "skill", subTarget: "skill.swm", modifier: "racial" }, {inplace: false}),
+      source: {
+        name: game.i18n.localize("PF1.SpeedSwim"),
+      },
+    });
   }
 
   // Add size bonuses to various attributes

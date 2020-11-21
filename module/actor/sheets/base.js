@@ -528,8 +528,11 @@ export class ActorSheetPF extends ActorSheet {
       };
     }
     spells.forEach((spell) => {
-      const lvl = spell.data.level || 0;
-      spellbook[lvl].items.push(spell);
+      const spellBookKey = getProperty(spell, "data.spellbook");
+      if (spellBookKey === bookKey) {
+        const lvl = spell.data.level || 0;
+        spellbook[lvl].items.push(spell);
+      }
     });
 
     return spellbook;

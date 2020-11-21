@@ -2,6 +2,10 @@
 
 ## 0.76.4
 
+### Bug Fixes
+
+- Fixed spellbooks showing spells for every spellbook
+
 ### Changelog
 
 - Added the possibility of switching type filters, rather than adding them, by shift-clicking them (#370)

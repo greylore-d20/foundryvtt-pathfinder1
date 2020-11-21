@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.4
+
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.76.3
 
 ### Bug Fixes

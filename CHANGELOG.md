@@ -5,6 +5,7 @@
 ### Changelog
 
 - Added the possibility of switching type filters, rather than adding them, by shift-clicking them (#370)
+- Improve visibility of attributes (#369)
 
 ### Localization
 

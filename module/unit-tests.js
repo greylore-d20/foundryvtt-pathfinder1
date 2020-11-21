@@ -1,6 +1,6 @@
-export const runUnitTests = async function() {
+export const runUnitTests = async function () {
   const actorName = "Testy";
-  const actor = game.actors.entities.find(o => o.name === actorName);
+  const actor = game.actors.entities.find((o) => o.name === actorName);
   if (!actor) {
     const msg = game.i18n.localize("PF1.ErrorCouldNotFindActorByName").format(actorName);
     console.error(msg);
@@ -15,8 +15,8 @@ export const runUnitTests = async function() {
   tests.push(...(await runMiscActorTests(actor)));
 
   // Finish unit tests
-  const successes = tests.filter(o => !o.failure);
-  const failures = tests.filter(o => o.failure);
+  const successes = tests.filter((o) => !o.failure);
+  const failures = tests.filter((o) => o.failure);
   console.log(`Unit tests done. ${successes.length}/${tests.length} succeeded.`);
   if (failures.length) {
     console.log("Failures:", failures);
@@ -43,7 +43,7 @@ class UnitTestResult {
   }
 }
 
-const runSkillTests = async function(actor) {
+const runSkillTests = async function (actor) {
   let result = [];
 
   // Run base skill
@@ -52,8 +52,7 @@ const runSkillTests = async function(actor) {
     try {
       await actor.rollSkill("acr", { skipDialog: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -65,8 +64,7 @@ const runSkillTests = async function(actor) {
     try {
       await actor.rollSkill("prf.subSkills.prf1", { skipDialog: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -78,8 +76,7 @@ const runSkillTests = async function(actor) {
     try {
       await actor.rollSkill("test", { skipDialog: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -88,18 +85,17 @@ const runSkillTests = async function(actor) {
   return result;
 };
 
-const runAttackTests = async function(actor) {
+const runAttackTests = async function (actor) {
   let result = [];
 
   // Run Longsword attack
   {
     let test = new UnitTestResult("Longsword attack");
     try {
-      const item = actor.items.find(o => o.name === "Longsword" && o.type === "attack");
+      const item = actor.items.find((o) => o.name === "Longsword" && o.type === "attack");
       item.useAttack({ skipDialog: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -109,11 +105,10 @@ const runAttackTests = async function(actor) {
   {
     let test = new UnitTestResult("Fireball spell");
     try {
-      const item = actor.items.find(o => o.name === "Fireball" && o.type === "spell");
+      const item = actor.items.find((o) => o.name === "Fireball" && o.type === "spell");
       item.useAttack({ skipDialog: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -122,7 +117,7 @@ const runAttackTests = async function(actor) {
   return result;
 };
 
-const runMiscActorTests = async function(actor) {
+const runMiscActorTests = async function (actor) {
   let result = [];
 
   // Run BAB test
@@ -131,8 +126,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollBAB();
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -144,8 +138,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollCMB();
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -157,8 +150,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollSavingThrow("fort", { skipPrompt: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -170,8 +162,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollSavingThrow("ref", { skipPrompt: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -183,8 +174,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollSavingThrow("will", { skipPrompt: true });
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);
@@ -196,8 +186,7 @@ const runMiscActorTests = async function(actor) {
     try {
       await actor.rollInitiative();
       test.succeed();
-    }
-    catch (e) {
+    } catch (e) {
       test.fail(e);
     }
     result.push(test);

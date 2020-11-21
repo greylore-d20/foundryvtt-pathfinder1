@@ -4,24 +4,32 @@ import { Color } from "./lib/color/color.js";
 
 /* -------------------------------------------- */
 
-export const createCustomChatMessage = async function(chatTemplate, chatTemplateData={}, chatData={}, {rolls=[]}={}) {
+export const createCustomChatMessage = async function (
+  chatTemplate,
+  chatTemplateData = {},
+  chatData = {},
+  { rolls = [] } = {}
+) {
   let rollMode = game.settings.get("core", "rollMode");
-  chatData = mergeObject({
-    rollMode: rollMode,
-    user: game.user._id,
-    type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-  }, chatData);
+  chatData = mergeObject(
+    {
+      rollMode: rollMode,
+      user: game.user._id,
+      type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+    },
+    chatData
+  );
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
   // Handle different roll modes
   switch (chatData.rollMode) {
     case "gmroll":
-      chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+      chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
       break;
     case "selfroll":
       chatData["whisper"] = [game.user._id];
       break;
     case "blindroll":
-      chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+      chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
       chatData["blind"] = true;
       break;
   }
@@ -38,10 +46,10 @@ export const createCustomChatMessage = async function(chatTemplate, chatTemplate
   return ChatMessagePF.create(chatData);
 };
 
-export const hideRollInfo = function(app, html, data) {
+export const hideRollInfo = function (app, html, data) {
   const whisper = app.data.whisper || [];
   const isBlind = whisper.length && app.data.blind;
-  const isVisible = whisper.length ? (whisper.includes(game.user._id) || (app.isAuthor && !isBlind)) : true;
+  const isVisible = whisper.length ? whisper.includes(game.user._id) || (app.isAuthor && !isBlind) : true;
   if (!isVisible) {
     html.find(".dice-formula").text("???");
     html.find(".dice-total").text("?");
@@ -51,18 +59,19 @@ export const hideRollInfo = function(app, html, data) {
   }
 };
 
-export const hideGMSensitiveInfo = function(app, html, data) {
+export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.user.isGM) return;
 
   let speaker = app.data.speaker,
-    actor = speaker != null ? (speaker.token ? game.actors.tokens[speaker.token] : game.actors.get(speaker.actor)) : null;
+    actor =
+      speaker != null ? (speaker.token ? game.actors.tokens[speaker.token] : game.actors.get(speaker.actor)) : null;
   if (!actor || (actor && actor.hasPerm(game.user, "LIMITED"))) return;
 
   // Hide info
   html.find(".gm-sensitive").remove();
 };
 
-export const addChatCardTitleGradient = function(app, html, data) {
+export const addChatCardTitleGradient = function (app, html, data) {
   const card = html.find(".chat-card")[0];
   if (!card) return;
   const actor = ItemPF._getChatCardActor(card);
@@ -79,31 +88,31 @@ export const addChatCardTitleGradient = function(app, html, data) {
   else titleText.css("color", "white");
 };
 
-export const applyAccessibilitySettings = function(app, html, data, conf) {
+export const applyAccessibilitySettings = function (app, html, data, conf) {
   const fontSize = conf.fontSize || 0;
 
   // Enlarge font sizes
   if (fontSize > 0) {
     // Enlarge table font sizes
     {
-      const size = 10 + (fontSize * 4);
+      const size = 10 + fontSize * 4;
       html.find("table").css("font-size", `${size}px`);
     }
 
     // Enlarge attack roll numbers
     {
-      const size = 12 + (fontSize * 4);
+      const size = 12 + fontSize * 4;
       html.find(".inline-roll, .fake-inline-roll").css("font-size", `${size}px`);
     }
 
     // Enlarge attack headers
     {
-      const size = 1 + (fontSize * 0.3);
+      const size = 1 + fontSize * 0.3;
       html.find(".chat-attack th").css("font-size", `${size}em`);
     }
     // Enlarge attack labels
     {
-      const size = 0.7 + (fontSize * 0.3);
+      const size = 0.7 + fontSize * 0.3;
       html.find(".chat-attack td").css("font-size", `${size}em`);
     }
   }

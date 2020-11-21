@@ -35,7 +35,7 @@ export class EntrySelector extends FormApplication {
   }
 
   getData() {
-    const entries = this.entries.map(o => {
+    const entries = this.entries.map((o) => {
       return o.map((o2, a) => {
         return [o2, this.dtypes[a]];
       });
@@ -57,7 +57,7 @@ export class EntrySelector extends FormApplication {
 
   async _updateObject(event, formData) {
     const updateData = {};
-    
+
     updateData[this.attribute] = this.entries;
 
     return this.object.update(updateData);
@@ -98,8 +98,7 @@ export class EntrySelector extends FormApplication {
       let v = parseFloat(value);
       if (isNaN(v)) v = 0;
       this.entries[index][index2] = Math.floor(v * 100) / 100;
-    }
-    else this.entries[index][index2] = value;
+    } else this.entries[index][index2] = value;
   }
 
   async _submitAndClose(event) {

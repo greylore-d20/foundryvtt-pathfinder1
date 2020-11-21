@@ -27,8 +27,8 @@ export class ExperienceConfig extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      title:  game.i18n.localize("PF1.ExperienceConfigName"),
-      id: 'experience-config',
+      title: game.i18n.localize("PF1.ExperienceConfigName"),
+      id: "experience-config",
       template: "systems/pf1/templates/settings/experience.html",
       width: 560,
       height: "auto",
@@ -65,21 +65,19 @@ export class ExperienceConfig extends FormApplication {
   }
 
   _updateApplicationSettings() {
-
     let formData;
     if (isMinimumCoreVersion("0.7.2")) {
       formData = this._getSubmitData();
-    }
-    else {
+    } else {
       const FD = this._getFormData(this.form);
       const dtypes = FD._dtypes;
 
       // Construct update data object by casting form data
       formData = Array.from(FD).reduce((obj, [k, v]) => {
         let dt = dtypes[k];
-        if ( dt === "Number" ) obj[k] = v !== "" ? Number(v) : null;
-        else if ( dt === "Boolean" ) obj[k] = v === "true";
-        else if ( dt === "Radio" ) obj[k] = JSON.parse(v);
+        if (dt === "Number") obj[k] = v !== "" ? Number(v) : null;
+        else if (dt === "Boolean") obj[k] = v === "true";
+        else if (dt === "Radio") obj[k] = JSON.parse(v);
         else obj[k] = v;
         return obj;
       }, {});

@@ -1,5 +1,4 @@
 export class PointBuyCalculator extends FormApplication {
-
   constructor(...args) {
     super(...args);
 
@@ -58,12 +57,11 @@ export class PointBuyCalculator extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
     const ablKey = a.closest(".item").dataset.ability;
-    const abl = this.abilities.find(o => o.key === ablKey);
+    const abl = this.abilities.find((o) => o.key === ablKey);
 
     if (a.classList.contains("add")) {
       abl.value = Math.min(18, abl.value + 1);
-    }
-    else if (a.classList.contains("subtract")) {
+    } else if (a.classList.contains("subtract")) {
       abl.value = Math.max(7, abl.value - 1);
     }
     this.render();

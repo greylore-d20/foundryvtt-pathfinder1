@@ -72,6 +72,31 @@ form {
   color: white;
 }
 
+span.text-box {
+  display: inline-block;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  color: black;
+  min-width: 20px;
+  width: calc(100% - 2px);
+  padding: 1px 3px;
+  cursor: text;
+  min-height: 20px;
+
+  &.readonly {
+    cursor: initial;
+  }
+  &:hover {
+    box-shadow: 0 0 8px red;
+    border-color: black;
+  }
+}
+
+input.text-box {
+  text-align: center;
+}
+
 .pf1 {
   table {
     margin: 4px 0;

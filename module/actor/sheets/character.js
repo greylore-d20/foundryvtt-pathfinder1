@@ -1,22 +1,20 @@
 import { ActorSheetPF } from "./base.js";
 
-
 /**
  * An Actor sheet for player character type actors in the PF system.
  * Extends the base ActorSheetPF class.
  * @type {ActorSheetPF}
  */
 export class ActorSheetPFCharacter extends ActorSheetPF {
-
   /**
    * Define default rendering options for the NPC sheet
    * @return {Object}
    */
-	static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "character"],
       width: 800,
-      height: 840
+      height: 840,
     });
   }
 
@@ -33,7 +31,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
    * @type {String}
    */
   get template() {
-    if ( !game.user.isGM && this.actor.limited ) return "systems/pf1/templates/actors/limited-sheet.html";
+    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.html";
     return "systems/pf1/templates/actors/character-sheet.html";
   }
 
@@ -49,7 +47,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     // Experience Tracking
     data["disableExperience"] = xpSettings.disableExperienceTracking;
 
-    data.hasClasses = this.actor.items.filter(o => o.type === "class").length > 0;
+    data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
 
     // Return data for rendering
     return data;
@@ -63,15 +61,15 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
-	activateListeners(html) {
+  activateListeners(html) {
     super.activateListeners(html);
-    if ( !this.options.editable ) return;
+    if (!this.options.editable) return;
 
     // Inventory Functions
     html.find(".currency-convert").click(this._onConvertCurrency.bind(this));
 
     // Spell Preparation
-    html.find('.toggle-prepared').click(this._onPrepareItem.bind(this));
+    html.find(".toggle-prepared").click(this._onPrepareItem.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -85,7 +83,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
-    return item.update({"data.preparation.prepared": !item.data.data.preparation.prepared});
+    return item.update({ "data.preparation.prepared": !item.data.data.preparation.prepared });
   }
 
   /* -------------------------------------------- */
@@ -94,15 +92,15 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     event.preventDefault();
     const curr = duplicate(this.actor.data.data.currency);
     const convert = {
-      cp: {into: "sp", each: 10},
-      sp: {into: "gp", each: 10 },
-      gp: {into: "pp", each: 10 }
+      cp: { into: "sp", each: 10 },
+      sp: { into: "gp", each: 10 },
+      gp: { into: "pp", each: 10 },
     };
-    for ( let [c, t] of Object.entries(convert) ) {
+    for (let [c, t] of Object.entries(convert)) {
       let change = Math.floor(curr[c] / t.each);
-      curr[c] -= (change * t.each);
+      curr[c] -= change * t.each;
       curr[t.into] += change;
     }
-    return this.actor.update({"data.currency": curr});
+    return this.actor.update({ "data.currency": curr });
   }
 }

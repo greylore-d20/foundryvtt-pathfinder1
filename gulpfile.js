@@ -1,5 +1,5 @@
-const gulp = require('gulp');
-const less = require('gulp-less');
+const gulp = require("gulp");
+const less = require("gulp-less");
 const spawn = require("child_process").spawn;
 const fse = require("fs-extra");
 
@@ -10,23 +10,24 @@ const fse = require("fs-extra");
 const PF1_LESS = ["less/*.less"];
 const PF1_MODULE = ["module/**/*.js", "webpack.config.js", "pf1.js"];
 function compileLESS() {
-  return gulp.src("less/pf1.less")
-    .pipe(less())
-    .pipe(gulp.dest("./"))
+  return gulp.src("less/pf1.less").pipe(less()).pipe(gulp.dest("./"));
 }
 function compileJS() {
-  return new Promise(resolve => {
-    let proc = spawn("npm", ["run", "build:release"], {shell: true});
+  return new Promise((resolve) => {
+    let proc = spawn("npm", ["run", "build:release"], { shell: true });
 
-    proc.on("close", () => { resolve(); });
+    proc.on("close", () => {
+      resolve();
+    });
   });
 }
 async function cleanDist() {
   try {
     await fse.remove("./dist");
     await fse.mkdirp("./dist");
+  } catch (e) {
+    console.error(e);
   }
-  catch (e) {}
 }
 const css = gulp.series(compileLESS);
 const js = gulp.series(cleanDist, compileJS);

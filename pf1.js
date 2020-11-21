@@ -30,17 +30,15 @@ import { updateChanges } from "./module/actor/update-changes.js";
 import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
+import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 
 // Add String.format
 if (!String.prototype.format) {
-  String.prototype.format = function(...args) {
-    return this.replace(/{(\d+)}/g, function(match, number) { 
-      return args[number] != null
-        ? args[number]
-        : match
-      ;
+  String.prototype.format = function (...args) {
+    return this.replace(/{(\d+)}/g, function (match, number) {
+      return args[number] != null ? args[number] : match;
     });
   };
 }
@@ -49,7 +47,7 @@ if (!String.prototype.format) {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 
-Hooks.once("init", async function() {
+Hooks.once("init", async function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Register client settings
@@ -106,12 +104,14 @@ Hooks.once("init", async function() {
   Actors.registerSheet("PF1", ActorSheetPFNPCLite, { types: ["npc"], makeDefault: false });
   Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { types: ["npc"], makeDefault: false });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("PF1", ItemSheetPF, { types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"], makeDefault: true });
+  Items.registerSheet("PF1", ItemSheetPF, {
+    types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"],
+    makeDefault: true,
+  });
   Items.registerSheet("PF1", ItemSheetPF_Container, { types: ["container"], makeDefault: true });
 
   initializeSocket();
 });
-
 
 /* -------------------------------------------- */
 /*  Foundry VTT Setup                           */
@@ -120,27 +120,75 @@ Hooks.once("init", async function() {
 /**
  * This function runs after game data has been requested and loaded from the servers, so entities exist
  */
-Hooks.once("setup", function() {
-
+Hooks.once("setup", function () {
   // Localize CONFIG objects once up-front
   const toLocalize = [
-    "abilities", "abilitiesShort", "alignments", "currencies", "distanceUnits", "itemActionTypes", "senses", "skills", "targetTypes",
-    "timePeriods", "savingThrows", "ac", "acValueLabels", "featTypes", "conditions", "lootTypes", "flyManeuverabilities", "abilityTypes",
-    "spellPreparationModes", "weaponTypes", "weaponProperties", "spellComponents", "spellSchools", "spellLevels", "conditionTypes",
-    "favouredClassBonuses", "armorProficiencies", "weaponProficiencies", "actorSizes", "abilityActivationTypes", "abilityActivationTypesPlurals",
-    "limitedUsePeriods", "equipmentTypes", "equipmentSlots", "consumableTypes", "attackTypes", "buffTypes", "buffTargets", "contextNoteTargets",
-    "healingTypes", "divineFocus", "classSavingThrows", "classBAB", "classTypes", "measureTemplateTypes", "creatureTypes", "measureUnits", "measureUnitsShort",
-    "languages", "damageTypes", "weaponHoldTypes", "auraStrengths", "conditionalTargets", "bonusModifiers", "abilityActivationTypes_unchained", "abilityActivationTypesPlurals_unchained",
+    "abilities",
+    "abilitiesShort",
+    "alignments",
+    "currencies",
+    "distanceUnits",
+    "itemActionTypes",
+    "senses",
+    "skills",
+    "targetTypes",
+    "timePeriods",
+    "savingThrows",
+    "ac",
+    "acValueLabels",
+    "featTypes",
+    "conditions",
+    "lootTypes",
+    "flyManeuverabilities",
+    "abilityTypes",
+    "spellPreparationModes",
+    "weaponTypes",
+    "weaponProperties",
+    "spellComponents",
+    "spellSchools",
+    "spellLevels",
+    "conditionTypes",
+    "favouredClassBonuses",
+    "armorProficiencies",
+    "weaponProficiencies",
+    "actorSizes",
+    "abilityActivationTypes",
+    "abilityActivationTypesPlurals",
+    "limitedUsePeriods",
+    "equipmentTypes",
+    "equipmentSlots",
+    "consumableTypes",
+    "attackTypes",
+    "buffTypes",
+    "buffTargets",
+    "contextNoteTargets",
+    "healingTypes",
+    "divineFocus",
+    "classSavingThrows",
+    "classBAB",
+    "classTypes",
+    "measureTemplateTypes",
+    "creatureTypes",
+    "measureUnits",
+    "measureUnitsShort",
+    "languages",
+    "damageTypes",
+    "weaponHoldTypes",
+    "auraStrengths",
+    "conditionalTargets",
+    "bonusModifiers",
+    "abilityActivationTypes_unchained",
+    "abilityActivationTypesPlurals_unchained",
   ];
 
-  const doLocalize = function(obj) {
+  const doLocalize = function (obj) {
     return Object.entries(obj).reduce((obj, e) => {
       if (typeof e[1] === "string") obj[e[0]] = game.i18n.localize(e[1]);
       else if (typeof e[1] === "object") obj[e[0]] = doLocalize(e[1]);
       return obj;
     }, {});
   };
-  for ( let o of toLocalize ) {
+  for (let o of toLocalize) {
     CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o]);
   }
 });
@@ -150,17 +198,21 @@ Hooks.once("setup", function() {
 /**
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
-Hooks.once("ready", async function() {
+Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.75.13";
+  const NEEDS_MIGRATION_VERSION = "0.76.1";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
-  }
-  else if (typeof PREVIOUS_MIGRATION_VERSION === "string" && PREVIOUS_MIGRATION_VERSION.match(/^([0-9]+)\.([0-9]+)$/)) {
+  } else if (
+    typeof PREVIOUS_MIGRATION_VERSION === "string" &&
+    PREVIOUS_MIGRATION_VERSION.match(/^([0-9]+)\.([0-9]+)$/)
+  ) {
     PREVIOUS_MIGRATION_VERSION = `${PREVIOUS_MIGRATION_VERSION}.0`;
   }
-  let needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION));
+  let needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(
+    SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
+  );
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
   }
@@ -170,7 +222,7 @@ Hooks.once("ready", async function() {
     const v = game.settings.get("pf1", "changelogVersion") || "0.0.1";
     const changelogVersion = SemanticVersion.fromString(v);
     const curVersion = SemanticVersion.fromString(game.system.data.version);
-    
+
     if (curVersion.isHigherThan(changelogVersion)) {
       const app = new ChangeLogWindow(changelogVersion);
       app.render(true);
@@ -179,22 +231,24 @@ Hooks.once("ready", async function() {
   }
 
   // Refresh actors on startup
-  game.actors.entities.forEach(obj => { updateChanges.call(obj, { sourceOnly: true }); });
-  
-  Hooks.on('renderTokenHUD', (app, html, data) => { TokenQuickActions.addTop3Attacks(app, html, data) });
+  game.actors.entities.forEach((obj) => {
+    updateChanges.call(obj, { sourceOnly: true });
+  });
+
+  Hooks.on("renderTokenHUD", (app, html, data) => {
+    TokenQuickActions.addTop3Attacks(app, html, data);
+  });
 });
 
 /* -------------------------------------------- */
 /*  Canvas Initialization                       */
 /* -------------------------------------------- */
 
-Hooks.on("canvasInit", function() {
-
+Hooks.on("canvasInit", function () {
   // Extend Diagonal Measurement
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
-
 
 /* -------------------------------------------- */
 /*  Other Hooks                                 */
@@ -220,11 +274,10 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   chat.addChatCardTitleGradient(app, html, data);
 
   // Handle chat tooltips
-  html.find(".tooltip").on("mousemove", ev => handleChatTooltips(ev));
+  html.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
 });
 
 Hooks.on("renderChatPopout", (app, html, data) => {
-
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
 
@@ -247,9 +300,9 @@ Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) =
 
   // On level change
   if (item.type === "class" && getProperty(changedData, "data.level") != null) {
-      const curLevel = item.data.data.level;
-      const newLevel = getProperty(changedData, "data.level")
-      item._onLevelChange(curLevel, newLevel);
+    const curLevel = item.data.data.level;
+    const newLevel = getProperty(changedData, "data.level");
+    item._onLevelChange(curLevel, newLevel);
   }
 });
 Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
@@ -271,7 +324,7 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
         const fx = token.data.effects || [];
         if (fx.indexOf(item.data.img) !== -1) fx.splice(fx.indexOf(item.data.img), 1);
         if (fx.indexOf(changedData["img"]) === -1) fx.push(changedData["img"]);
-        promises.push(token.update({effects: fx}, {diff: false}));
+        promises.push(token.update({ effects: fx }, { diff: false }));
       }
     }
 
@@ -321,7 +374,7 @@ Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
-  const item = actor.items.find(o => o._id === itemData._id);
+  const item = actor.items.find((o) => o._id === itemData._id);
   if (!item) return;
 
   // Create class
@@ -352,6 +405,20 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
     await Promise.all(promises);
   }
 
+  // Remove links
+  const itemLinks = getProperty(itemData, "data.links");
+  if (itemLinks) {
+    for (let [linkType, links] of Object.entries(itemLinks)) {
+      for (let link of links) {
+        const item = actor.items.find((o) => o._id === link.id);
+        let otherItemLinks = item.links;
+        if (otherItemLinks[linkType]) {
+          delete otherItemLinks[linkType];
+        }
+      }
+    }
+  }
+
   // Refresh actor
   actor.refresh();
 });
@@ -362,7 +429,7 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
 
 // Create macro from item
 Hooks.on("hotbarDrop", (bar, data, slot) => {
-  if ( data.type !== "Item" ) return true;
+  if (data.type !== "Item") return true;
   createItemMacro(data.data, slot);
   return false;
 });
@@ -390,7 +457,9 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
 
   // Add static size checkbox
-  newHTML = `<div class="form-group"><label>${game.i18n.localize("PF1.StaticSize")}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
+  newHTML = `<div class="form-group"><label>${game.i18n.localize(
+    "PF1.StaticSize"
+  )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
   if (getProperty(app.object.data, "flags.pf1.staticSize")) newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
@@ -398,12 +467,19 @@ Hooks.on("renderTokenConfig", async (app, html) => {
 
 // Render Sidebar
 Hooks.on("renderSidebarTab", (app, html) => {
-  // Add changelog button
   if (app instanceof Settings) {
+    // Add changelog button
     let button = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
     html.find("#game-details").append(button);
     button.click(() => {
       new ChangeLogWindow().render(true);
+    });
+
+    // Add help button
+    button = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
+    html.find("#game-details").append(button);
+    button.click(() => {
+      new PF1_HelpBrowser().openURL("systems/pf1/help/index.html");
     });
   }
 });
@@ -417,20 +493,24 @@ Hooks.on("renderSidebarTab", (app, html) => {
  */
 async function createItemMacro(item, slot) {
   const actor = getItemOwner(item);
-  const command = `game.pf1.rollItemMacro("${item.name}", {\n` +
-  `  itemId: "${item._id}",\n` +
-  `  itemType: "${item.type}",\n` +
-  (actor != null ? `  actorId: "${actor._id}",\n` : "") +
-  `});`;
-  let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
-  if ( !macro ) {
-    macro = await Macro.create({
-      name: item.name,
-      type: "script",
-      img: item.img,
-      command: command,
-      flags: {"pf1.itemMacro": true}
-    }, {displaySheet: false});
+  const command =
+    `game.pf1.rollItemMacro("${item.name}", {\n` +
+    `  itemId: "${item._id}",\n` +
+    `  itemType: "${item.type}",\n` +
+    (actor != null ? `  actorId: "${actor._id}",\n` : "") +
+    `});`;
+  let macro = game.macros.entities.find((m) => m.name === item.name && m.command === command);
+  if (!macro) {
+    macro = await Macro.create(
+      {
+        name: item.name,
+        type: "script",
+        img: item.img,
+        command: command,
+        flags: { "pf1.itemMacro": true },
+      },
+      { displaySheet: false }
+    );
   }
   game.user.assignHotbarMacro(macro, slot);
 }
@@ -438,25 +518,28 @@ async function createItemMacro(item, slot) {
 async function createSkillMacro(skillId, actorId, slot) {
   const actor = getActorFromId(actorId);
   if (!actor) return;
-  
+
   const skillInfo = actor.getSkillInfo(skillId);
   const command = `game.pf1.rollSkillMacro("${actorId}", "${skillId}");`;
   const name = game.i18n.localize("PF1.RollSkillMacroName").format(actor.name, skillInfo.name);
-  let macro = game.macros.entities.find(m => (m.name === name) && (m.command === command));
+  let macro = game.macros.entities.find((m) => m.name === name && m.command === command);
   if (!macro) {
-    macro = await Macro.create({
-      name: name,
-      type: "script",
-      img: "systems/pf1/icons/items/inventory/dice.jpg",
-      command: command,
-      flags: {"pf1.skillMacro": true},
-    }, {displaySheet: false});
+    macro = await Macro.create(
+      {
+        name: name,
+        type: "script",
+        img: "systems/pf1/icons/items/inventory/dice.jpg",
+        command: command,
+        flags: { "pf1.skillMacro": true },
+      },
+      { displaySheet: false }
+    );
   }
 
   game.user.assignHotbarMacro(macro, slot);
 }
 
-async function createMiscActorMacro(type, actorId, slot, altType=null) {
+async function createMiscActorMacro(type, actorId, slot, altType = null) {
   const actor = getActorFromId(actorId);
   if (!actor) return;
 
@@ -505,15 +588,18 @@ async function createMiscActorMacro(type, actorId, slot, altType=null) {
 
   if (!name) return;
 
-  let macro = game.macros.entities.find(o => (o.name === name) && (o.command === command));
+  let macro = game.macros.entities.find((o) => o.name === name && o.command === command);
   if (!macro) {
-    macro = await Macro.create({
-      name: name,
-      type: "script",
-      img: img,
-      command: command,
-      flags: {"pf1.miscMacro": true},
-    }, {displaySheet: false});
+    macro = await Macro.create(
+      {
+        name: name,
+        type: "script",
+        img: img,
+        command: command,
+        flags: { "pf1.miscMacro": true },
+      },
+      { displaySheet: false }
+    );
   }
 
   game.user.assignHotbarMacro(macro, slot);
@@ -526,18 +612,20 @@ async function createMiscActorMacro(type, actorId, slot, altType=null) {
  * @param {object} [options={}]
  * @return {Promise}
  */
-function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
+function rollItemMacro(itemName, { itemId, itemType, actorId } = {}) {
   let actor = getActorFromId(actorId);
   if (actor && !actor.hasPerm(game.user, "OWNER")) {
-    const msg = game.i18n.localize("PF1.ErrorNoActorPermission");l
+    const msg = game.i18n.localize("PF1.ErrorNoActorPermission");
     console.warn(msg);
     return ui.notifications.warn(msg);
   }
-  const item = actor ? actor.items.find(i => {
-    if (itemId != null && i._id !== itemId) return false;
-    if (itemType != null && i.type !== itemType) return false;
-    return i.name === itemName;
-  }) : null;
+  const item = actor
+    ? actor.items.find((i) => {
+        if (itemId != null && i._id !== itemId) return false;
+        if (itemType != null && i.type !== itemType) return false;
+        return i.name === itemName;
+      })
+    : null;
   if (!item) {
     const msg = game.i18n.localize("PF1.WarningNoItemOnActor").format(actor.name, itemName);
     console.warn(msg);
@@ -546,7 +634,7 @@ function rollItemMacro(itemName, {itemId, itemType, actorId}={}) {
 
   // Trigger the item roll
   if (!game.keyboard.isDown("Control")) {
-    return item.use({skipDialog: getSkipActionPrompt()});
+    return item.use({ skipDialog: getSkipActionPrompt() });
   }
   return item.roll();
 }
@@ -559,24 +647,26 @@ function rollSkillMacro(actorId, skillId) {
     return ui.notifications.error(msg);
   }
 
-  return actor.rollSkill(skillId, {skipDialog: getSkipActionPrompt()});
+  return actor.rollSkill(skillId, { skipDialog: getSkipActionPrompt() });
 }
 
 /**
  * Show an actor's defenses.
  */
-function rollDefenses({actorName=null, actorId=null}={}) {
-  const actor = ActorPF.getActiveActor({actorName: actorName, actorId: actorId});
+function rollDefenses({ actorName = null, actorId = null } = {}) {
+  const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
-    const msg = game.i18n.localize("PF1.ErrorNoApplicableActorFoundForAction").format(game.i18n.localize("PF1.Action_RollDefenses"));
+    const msg = game.i18n
+      .localize("PF1.ErrorNoApplicableActorFoundForAction")
+      .format(game.i18n.localize("PF1.Action_RollDefenses"));
     console.warn(msg);
     return ui.notifications.warn(msg);
   }
 
   return actor.rollDefenses();
-};
+}
 
-function rollActorAttributeMacro(actorId, type, altType=null) {
+function rollActorAttributeMacro(actorId, type, altType = null) {
   const actor = getActorFromId(actorId);
   if (!actor) {
     const msg = game.i18n.localize("PF1.ErrorActorNotFound").format(actorId);
@@ -601,10 +691,10 @@ function rollActorAttributeMacro(actorId, type, altType=null) {
       actor.rollBAB();
       break;
   }
-};
+}
 
 // Handle chat tooltips
-const handleChatTooltips = function(event) {
+const handleChatTooltips = function (event) {
   const elem = $(event.currentTarget);
   const rect = event.currentTarget.getBoundingClientRect();
   // const x = event.pageX;
@@ -614,8 +704,6 @@ const handleChatTooltips = function(event) {
   const w = rect.width;
   elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
 };
-
-
 
 // Export objects for being a library
 

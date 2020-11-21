@@ -3,15 +3,15 @@
  * @type {FormApplication}
  */
 export class ActorTraitSelector extends FormApplication {
-	static get defaultOptions() {
-	  const options = super.defaultOptions;
-	  options.id = "trait-selector";
-	  options.classes = ["pf1", "trait-selector"];
-	  options.title = "Actor Trait Selection";
-	  options.template = "systems/pf1/templates/apps/trait-selector.html";
+  static get defaultOptions() {
+    const options = super.defaultOptions;
+    options.id = "trait-selector";
+    options.classes = ["pf1", "trait-selector"];
+    options.title = "Actor Trait Selection";
+    options.template = "systems/pf1/templates/apps/trait-selector.html";
     options.width = 320;
     options.height = "auto";
-	  return options;
+    return options;
   }
 
   /* -------------------------------------------- */
@@ -21,7 +21,7 @@ export class ActorTraitSelector extends FormApplication {
    * @type {String}
    */
   get attribute() {
-	  return this.options.name;
+    return this.options.name;
   }
 
   /* -------------------------------------------- */
@@ -31,24 +31,23 @@ export class ActorTraitSelector extends FormApplication {
    * @type {Object}
    */
   getData() {
-
     // Get current values
     let attr = getProperty(this.object.data, this.attribute);
 
-	  // Populate choices
+    // Populate choices
     const choices = duplicate(this.options.choices);
-    for ( let [k, v] of Object.entries(choices) ) {
+    for (let [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,
-        chosen: attr.value.includes(k)
-      }
+        chosen: attr.value.includes(k),
+      };
     }
 
     // Return data
-	  return {
-	    choices: choices,
-      custom: attr.custom
-    }
+    return {
+      choices: choices,
+      custom: attr.custom,
+    };
   }
 
   /* -------------------------------------------- */
@@ -59,12 +58,12 @@ export class ActorTraitSelector extends FormApplication {
    */
   _updateObject(event, formData) {
     const choices = [];
-    for ( let [k, v] of Object.entries(formData) ) {
-      if ( (k !== "custom") && v ) choices.push(k);
+    for (let [k, v] of Object.entries(formData)) {
+      if (k !== "custom" && v) choices.push(k);
     }
     this.object.update({
       [`${this.attribute}.value`]: choices,
-      [`${this.attribute}.custom`]: formData.custom
+      [`${this.attribute}.custom`]: formData.custom,
     });
   }
 }

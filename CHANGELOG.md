@@ -1,10 +1,43 @@
 # Changelog
 
+## 0.76.3
+
+### Bug Fixes
+
+- Fix Bardic Knowledge (SKA) not existing
+- Adding and removing swim and climb speeds did not update racial skill bonuses immediately
+- Changed low-light vision to no longer affect Token Dim/Bright vision [commonly darkvision] (#365)
+- Added a safeguard when creating charge type item links to prevent linking to an item that has charge links of its own
+- Items with links should no longer cause issues for the linked items when deleted
+
+### Changelog
+
+- d20 alternative can now be passed into Actor#rollX and Item#useAttack API (eg "2d20kh")
+- Improve actor sheet rendering performance
+- Traits on the attributes page on actor sheets have improved visibility on the interface
+
+## 0.76.2
+
+### Bug Fixes (Hotfix)
+
+- Fixed an issue with stacking changes multiplying in some cases (#360)
+
+### Changelog
+
+- Show the item's name in its deletion confirmation dialog title (#363)
+- Added an attacks section to the NPC Lite sheet
+
 ## 0.76.1
 
 ### Changelog
 
 - Allow unsetting associated abilities for saving throws
+- Null values are allowed in rollData again (Core#4134)
+- Allow using the `=-` operator on certain actor attributes (such as hit points) to set it to a negative value
+- Added a help browser (WIP) (#277)
+- Overhauled HP and Initiative styles on NPC Lite sheets
+- Change priorities now take precedence over change target, in terms of when they are processed (fixes #309)
+- Improved domain/school spell slots by adding a field for specifying allowed domain slots per spell level (#339)
 
 ## 0.76.0
 

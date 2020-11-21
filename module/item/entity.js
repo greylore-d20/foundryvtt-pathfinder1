@@ -11,7 +11,6 @@ import { ItemChange } from "./components/change.js";
  * Override and extend the basic :class:`Item` implementation
  */
 export class ItemPF extends Item {
-
   constructor(...args) {
     super(...args);
 
@@ -55,14 +54,13 @@ export class ItemPF extends Item {
   get hasTemplate() {
     const v = getProperty(this.data, "data.measureTemplate.type");
     const s = getProperty(this.data, "data.measureTemplate.size");
-    return (typeof v === "string" && v !== "") && ((typeof s === "string" && s.length > 0) || (typeof s === "number" && s > 0));
+    return (
+      typeof v === "string" && v !== "" && ((typeof s === "string" && s.length > 0) || (typeof s === "number" && s > 0))
+    );
   }
 
   get hasAction() {
-    return this.hasAttack
-    || this.hasDamage
-    || this.hasEffect
-    || this.hasTemplate;
+    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasTemplate;
   }
 
   get isSingleUse() {
@@ -78,7 +76,7 @@ export class ItemPF extends Item {
   get autoDeductCharges() {
     return this.type === "spell"
       ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
-      : (this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true);
+      : this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true;
   }
 
   get charges() {
@@ -115,7 +113,7 @@ export class ItemPF extends Item {
       if (this.spellLevel === 0) return 0;
       return 1;
     }
-    
+
     const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
     const cost = new Roll(formula, this.getRollData()).roll().total;
@@ -124,8 +122,8 @@ export class ItemPF extends Item {
 
   get spellbook() {
     if (this.type !== "spell") return null;
-    if (this.parentActor == null)    return null;
-    
+    if (this.parentActor == null) return null;
+
     const spellbookIndex = this.data.data.spellbook;
     return this.parentActor.data.data.attributes.spells.spellbooks[spellbookIndex];
   }
@@ -147,14 +145,11 @@ export class ItemPF extends Item {
     const cl = getProperty(this.data, "data.cl") || 0;
     if (cl < 1) {
       return 0;
-    }
-    else if (cl < 6) {
+    } else if (cl < 6) {
       return 1;
-    }
-    else if (cl < 12) {
+    } else if (cl < 12) {
       return 2;
-    }
-    else if (cl < 21) {
+    } else if (cl < 21) {
       return 3;
     }
     return 4;
@@ -177,7 +172,7 @@ export class ItemPF extends Item {
     return super.limited;
   }
 
-  hasPerm(user, permission, exact=false) {
+  hasPerm(user, permission, exact = false) {
     // Return true if the object is contained by another object
     if (this.parentItem) return true;
 
@@ -188,7 +183,7 @@ export class ItemPF extends Item {
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.
    */
-  getDC(rollData=null) {
+  getDC(rollData = null) {
     // No actor? No DC!
     if (!this.parentActor) return 0;
 
@@ -204,17 +199,22 @@ export class ItemPF extends Item {
       const spellbook = this.spellbook;
       if (spellbook != null) {
         try {
-          result = new Roll(spellbook.baseDCFormula, rollData).roll().total + new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total + dcBonus;
+          result =
+            new Roll(spellbook.baseDCFormula, rollData).roll().total +
+            new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
+            dcBonus;
+        } catch (e) {
+          console.error(e);
         }
-        catch (e) {}
       }
       return result;
     }
     const dcFormula = getProperty(data, "save.dc") || "0";
     try {
       result = new Roll(dcFormula, rollData).roll().total + dcBonus;
+    } catch (e) {
+      console.error(e);
     }
-    catch (e) {}
     return result;
   }
 
@@ -244,7 +244,8 @@ export class ItemPF extends Item {
             return "#E5E5E5";
           case "buff":
             return "#FDF767";
-          default: return "#FFFFFF";
+          default:
+            return "#FFFFFF";
         }
       case 1:
         switch (type) {
@@ -319,15 +320,16 @@ export class ItemPF extends Item {
     if (link) return link.addCharges(value);
 
     // Add own charges
-    if ( getProperty(this.data, "data.uses.per") === "single"
-      && getProperty(this.data, "data.quantity") == null) return;
+    if (getProperty(this.data, "data.uses.per") === "single" && getProperty(this.data, "data.quantity") == null) return;
 
     if (this.type === "spell") return this.addSpellUses(value);
 
-    let prevValue = this.isSingleUse ? getProperty(this.data, "data.quantity") : getProperty(this.data, "data.uses.value");
+    let prevValue = this.isSingleUse
+      ? getProperty(this.data, "data.quantity")
+      : getProperty(this.data, "data.uses.value");
 
-    if (this.isSingleUse) await this.update({ "data.quantity"  : prevValue + value });
-    else                  await this.update({ "data.uses.value": prevValue + value });
+    if (this.isSingleUse) await this.update({ "data.quantity": prevValue + value });
+    else await this.update({ "data.uses.value": prevValue + value });
   }
 
   /* -------------------------------------------- */
@@ -347,7 +349,7 @@ export class ItemPF extends Item {
    * @return {boolean}
    */
   get isHealing() {
-    return (this.data.data.actionType === "heal") && this.data.data.damage.parts.length;
+    return this.data.data.actionType === "heal" && this.data.data.damage.parts.length;
   }
 
   get hasEffect() {
@@ -369,7 +371,7 @@ export class ItemPF extends Item {
    * @type {boolean}
    */
   get showUnidentifiedData() {
-    return (!game.user.isGM && getProperty(this.data, "data.identified") === false);
+    return !game.user.isGM && getProperty(this.data, "data.identified") === false;
   }
 
   /* -------------------------------------------- */
@@ -395,10 +397,11 @@ export class ItemPF extends Item {
       if (!hasProperty(this.data, "data.unidentified.price")) setProperty(this.data, "data.unidentified.price", 0);
 
       // Convert weight according metric system (lb vs kg)
-      itemData.data.weightConverted = convertWeight(itemData.data.weight)
-      itemData.data.weightUnits = game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs")
-      itemData.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase()
-      
+      itemData.data.weightConverted = convertWeight(itemData.data.weight);
+      itemData.data.weightUnits =
+        game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+      itemData.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
+
       // Set basic data
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
@@ -428,27 +431,27 @@ export class ItemPF extends Item {
         if (equipmentType != null) {
           const equipmentSlot = getProperty(this.data, "data.slot") || null;
           labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType][equipmentSlot];
-        }
-        else labels.slot = null;
+        } else labels.slot = null;
       }
     }
 
     // Spell Level,  School, and Components
-    if ( itemData.type === "spell" ) {
+    if (itemData.type === "spell") {
       labels.level = C.spellLevels[data.level];
       labels.school = C.spellSchools[data.school];
-      labels.components = this.getSpellComponents().map(o => o[0]).join(" ");
+      labels.components = this.getSpellComponents()
+        .map((o) => o[0])
+        .join(" ");
     }
 
     // Feat Items
-    else if ( itemData.type === "feat" ) {
+    else if (itemData.type === "feat") {
       labels.featType = C.featTypes[data.featType];
 
       // Ability type
       if (data.abilityType && data.abilityType !== "none") {
         labels.abilityType = C.abilityTypes[data.abilityType].short;
-      }
-      else if (labels.abilityType) {
+      } else if (labels.abilityType) {
         delete labels.abilityType;
       }
     }
@@ -466,7 +469,7 @@ export class ItemPF extends Item {
       if (!typeKeys.includes(wType)) wType = typeKeys[0];
 
       let wSubtype = getProperty(this.data, "data.weaponSubtype");
-      let subtypeKeys = Object.keys(C.weaponTypes[wType]).filter(o => !o.startsWith("_"));
+      let subtypeKeys = Object.keys(C.weaponTypes[wType]).filter((o) => !o.startsWith("_"));
       if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
 
       labels.weaponType = C.weaponTypes[wType]._label;
@@ -481,7 +484,7 @@ export class ItemPF extends Item {
       if (!typeKeys.includes(eType)) eType = typeKeys[0];
 
       let eSubtype = getProperty(this.data, "data.equipmentSubtype");
-      let subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter(o => !o.startsWith("_"));
+      let subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
       if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
       labels.equipmentType = C.equipmentTypes[eType]._label;
@@ -499,18 +502,25 @@ export class ItemPF extends Item {
     }
 
     // Activated Items
-    if ( data.hasOwnProperty("activation") ) {
-
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
+    if (Object.prototype.hasOwnProperty.call(data, "activation")) {
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypes_unchained
+        : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
+        : CONFIG.PF1.abilityActivationTypesPlurals;
 
       // Ability Activation Label
-      let act = game.settings.get("pf1", "unchainedActionEconomy") ? (getProperty(data, "unchainedAction.activation") || {}) : (getProperty(data, "activation") || {});
+      let act = game.settings.get("pf1", "unchainedActionEconomy")
+        ? getProperty(data, "unchainedAction.activation") || {}
+        : getProperty(data, "activation") || {};
       if (act && act.cost > 1 && activationTypesPlural[act.type] != null) {
         labels.activation = [act.cost.toString(), activationTypesPlural[act.type]].filterJoin(" ");
-      }
-      else if (act) {
-        labels.activation = [(["minute", "hour", "action"].includes(act.type) && act.cost) ? act.cost.toString() : "", activationTypes[act.type]].filterJoin(" ");
+      } else if (act) {
+        labels.activation = [
+          ["minute", "hour", "action"].includes(act.type) && act.cost ? act.cost.toString() : "",
+          activationTypes[act.type],
+        ].filterJoin(" ");
       }
 
       // Target Label
@@ -539,7 +549,7 @@ export class ItemPF extends Item {
     }
 
     // Item Actions
-    if ( data.hasOwnProperty("actionType") ) {
+    if (Object.prototype.hasOwnProperty.call(data, "actionType")) {
       // Save DC
       let save = data.save || {};
       if (save.type) {
@@ -548,9 +558,12 @@ export class ItemPF extends Item {
 
       // Damage
       let dam = data.damage || {};
-      if ( dam.parts ) {
-        labels.damage = dam.parts.map(d => d[0]).join(" + ").replace(/\+ -/g, "- ");
-        labels.damageTypes = dam.parts.map(d => d[1]).join(", ");
+      if (dam.parts) {
+        labels.damage = dam.parts
+          .map((d) => d[0])
+          .join(" + ")
+          .replace(/\+ -/g, "- ");
+        labels.damageTypes = dam.parts.map((d) => d[1]).join(", ");
       }
 
       // Add attack parts
@@ -575,14 +588,15 @@ export class ItemPF extends Item {
     if (!this.links) return;
 
     for (let [k, i] of Object.entries(this.links)) {
-      switch(k) {
-        case "charges":
+      switch (k) {
+        case "charges": {
           const uses = i.data.data.uses;
           for (let [k, v] of Object.entries(uses)) {
             if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
             this.data.data.uses[k] = v;
           }
           break;
+        }
       }
     }
   }
@@ -596,8 +610,7 @@ export class ItemPF extends Item {
         change = prior.get(c._id);
         change.data = c;
         change.prepareData();
-      }
-      else change = ItemChange.create(c, this);
+      } else change = ItemChange.create(c, this);
       collection.set(c._id || change.data._id, change);
     }
     return collection;
@@ -612,8 +625,7 @@ export class ItemPF extends Item {
         item = prior.get(o._id);
         item.data = o;
         item.prepareData();
-      }
-      else {
+      } else {
         item = new CONFIG.Item.entityClass(o);
         item.parentItem = this;
       }
@@ -623,26 +635,26 @@ export class ItemPF extends Item {
     return collection;
   }
 
-  async update(data, options={}) {
+  async update(data, options = {}) {
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
 
     // Make sure changes remains an array
-    if (Object.keys(data).filter(e => e.startsWith("data.changes.")).length > 0) {
-      let subData = Object.entries(data).filter(e => e[0].startsWith("data.changes."));
+    if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
+      let subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
       let arr = duplicate(this.data.data.changes || []);
-      subData.forEach(entry => {
+      subData.forEach((entry) => {
         let subKey = entry[0].split(".").slice(2);
         let i = subKey[0];
         let subKey2 = subKey.slice(1).join(".");
-        if ( !arr[i] ) arr[i] = {};
-        
+        if (!arr[i]) arr[i] = {};
+
         // Remove property
-        if (subKey[subKey.length-1].startsWith("-=")) {
+        if (subKey[subKey.length - 1].startsWith("-=")) {
           const obj = flattenObject(arr[i]);
-          subKey[subKey.length-1] = subKey[subKey.length-1].slice(2);
-          const deleteKeys = Object.keys(obj).filter(o => o.startsWith(subKey.slice(1).join(".")));
+          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
+          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
           for (let k of deleteKeys) {
-            if (obj.hasOwnProperty(k)) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
               delete obj[k];
             }
           }
@@ -659,22 +671,22 @@ export class ItemPF extends Item {
     }
 
     // Make sure inventory contents remains an array
-    if (Object.keys(data).filter(e => e.startsWith("data.inventoryItems.")).length > 0) {
-      let subData = Object.entries(data).filter(e => e[0].startsWith("data.inventoryItems."));
+    if (Object.keys(data).filter((e) => e.startsWith("data.inventoryItems.")).length > 0) {
+      let subData = Object.entries(data).filter((e) => e[0].startsWith("data.inventoryItems."));
       let arr = duplicate(this.data.data.inventoryItems || []);
-      subData.forEach(entry => {
+      subData.forEach((entry) => {
         let subKey = entry[0].split(".").slice(2);
         let i = subKey[0];
         let subKey2 = subKey.slice(1).join(".");
-        if ( !arr[i] ) arr[i] = {};
-        
+        if (!arr[i]) arr[i] = {};
+
         // Remove property
-        if (subKey[subKey.length-1].startsWith("-=")) {
+        if (subKey[subKey.length - 1].startsWith("-=")) {
           const obj = flattenObject(arr[i]);
-          subKey[subKey.length-1] = subKey[subKey.length-1].slice(2);
-          const deleteKeys = Object.keys(obj).filter(o => o.startsWith(subKey.slice(1).join(".")));
+          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
+          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
           for (let k of deleteKeys) {
-            if (obj.hasOwnProperty(k)) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
               delete obj[k];
             }
           }
@@ -693,22 +705,22 @@ export class ItemPF extends Item {
     // Update weight from base weight
     if (srcData.data.baseWeight !== undefined) {
       const baseWeight = srcData.data.baseWeight || 0;
-      const weightReduction = Math.max(0, 1 - ((srcData.data.weightReduction || 0) / 100));
+      const weightReduction = Math.max(0, 1 - (srcData.data.weightReduction || 0) / 100);
 
       let contentsWeight = (srcData.data.inventoryItems || []).reduce((cur, i) => {
         return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
       }, 0);
       contentsWeight += this._calculateCoinWeight(srcData);
-      contentsWeight = Math.round((contentsWeight * weightReduction) * 10) / 10;
+      contentsWeight = Math.round(contentsWeight * weightReduction * 10) / 10;
 
       linkData(srcData, data, "data.weight", baseWeight + contentsWeight);
     }
     // Update price from base price
     if (data["data.basePrice"] != null) {
-      linkData(srcData, data, "data.price", (getProperty(srcData, "data.basePrice") || 0));
+      linkData(srcData, data, "data.price", getProperty(srcData, "data.basePrice") || 0);
     }
     if (data["data.unidentified.basePrice"] != null) {
-      linkData(srcData, data, "data.unidentified.price", (getProperty(srcData, "data.unidentified.basePrice") || 0));
+      linkData(srcData, data, "data.unidentified.price", getProperty(srcData, "data.unidentified.basePrice") || 0);
     }
 
     // Update name
@@ -728,25 +740,26 @@ export class ItemPF extends Item {
     if (data["data.weightConverted"] != null) {
       linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
     }
-    
+
     // Set weapon subtype
     if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
       const type = data["data.weaponType"];
       const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
-      const keys = Object.keys(CONFIG.PF1.weaponTypes[type])
-        .filter(o => !o.startsWith("_"));
+      const keys = Object.keys(CONFIG.PF1.weaponTypes[type]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
         linkData(srcData, data, "data.weaponSubtype", keys[0]);
       }
     }
 
     // Set equipment subtype and slot
-    if (data["data.equipmentType"] != null && data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")) {
+    if (
+      data["data.equipmentType"] != null &&
+      data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")
+    ) {
       // Set subtype
       const type = data["data.equipmentType"];
       const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
-      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type])
-        .filter(o => !o.startsWith("_"));
+      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
         linkData(srcData, data, "data.equipmentSubtype", keys[0]);
       }
@@ -763,7 +776,7 @@ export class ItemPF extends Item {
     this._prevData["level"] = getProperty(this.data, "data.level");
 
     // Update maximum uses
-    this._updateMaxUses(data, {srcData: srcData});
+    this._updateMaxUses(data, { srcData: srcData });
 
     // Make sure charges doesn't exceed max charges, and vice versa
     {
@@ -775,8 +788,7 @@ export class ItemPF extends Item {
         if (data["data.preparation.maxAmount"] != null) target = "max";
         charges = getProperty(srcData, "data.preparation.preparedAmount");
         maxCharges = getProperty(srcData, "data.preparation.maxAmount");
-      }
-      else {
+      } else {
         if (data["data.uses.max"] != null) target = "max";
         charges = getProperty(srcData, "data.uses.value") || 0;
         maxCharges = getProperty(srcData, "data.uses.max") || 0;
@@ -788,8 +800,7 @@ export class ItemPF extends Item {
       if (this.type === "spell") {
         linkData(srcData, data, "data.preparation.preparedAmount", charges);
         linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
-      }
-      else {
+      } else {
         linkData(srcData, data, "data.uses.value", charges);
         linkData(srcData, data, "data.uses.max", maxCharges);
       }
@@ -799,7 +810,7 @@ export class ItemPF extends Item {
     if (data["data.uses.value"] != null) {
       const link = getProperty(this, "links.charges");
       if (link && getProperty(link, "links.charges") == null) {
-        await link.update({"data.uses.value": data["data.uses.value"]});
+        await link.update({ "data.uses.value": data["data.uses.value"] });
       }
     }
 
@@ -807,11 +818,10 @@ export class ItemPF extends Item {
     if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
         return super.update(diff, options);
-      }
-      else {
+      } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
-        const parentItem = parentInventory.find(o => o._id === this._id);
+        const parentItem = parentInventory.find((o) => o._id === this._id);
         const idx = parentInventory.indexOf(parentItem);
 
         if (idx >= 0) {
@@ -823,7 +833,8 @@ export class ItemPF extends Item {
 
           // Set parent weight
           const contentsWeight = parentInventory.reduce((cur, i) => {
-            if (i._id === this._id) return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
+            if (i._id === this._id)
+              return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
             return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
           }, 0);
           diff["data.weight"] = (getProperty(this.parentItem.data, "data.baseWeight") || 0) + contentsWeight;
@@ -833,19 +844,18 @@ export class ItemPF extends Item {
           return this.render();
         }
       }
-    }
-    else if(options.skipUpdate) {
+    } else if (options.skipUpdate) {
       diff["_id"] = this._id;
       return diff;
     }
     return false;
   }
 
-  _updateContentsWeight(data, {srcData=null}={}) {
+  _updateContentsWeight(data, { srcData = null } = {}) {
     if (!srcData) srcData = duplicate(this.data);
 
-    let result = (getProperty(srcData, "data.baseWeight") || 0);
-    
+    let result = getProperty(srcData, "data.baseWeight") || 0;
+
     result += this.items.reduce((cur, i) => {
       return cur + (getProperty(i, "data.weight") || 0);
     }, 0);
@@ -853,7 +863,7 @@ export class ItemPF extends Item {
     linkData(srcData, data, "data.weight", result);
   }
 
-  _updateMaxUses(data, {srcData=null}={}) {
+  _updateMaxUses(data, { srcData = null } = {}) {
     // No actor? No charges!
     if (!this.parentActor) return;
 
@@ -870,9 +880,10 @@ export class ItemPF extends Item {
         let roll = new Roll(maxFormula, rollData).roll();
         if (doLinkData) linkData(srcData, data, "data.uses.max", roll.total);
         else data["data.uses.max"] = roll.total;
-      }
-      else if (formulaHasDice(maxFormula)) {
-        const msg = game.i18n.localize("PF1.WarningNoDiceAllowedInFormula").format(game.i18n.localize("PF1.ChargePlural"), this.name);
+      } else if (formulaHasDice(maxFormula)) {
+        const msg = game.i18n
+          .localize("PF1.WarningNoDiceAllowedInFormula")
+          .format(game.i18n.localize("PF1.ChargePlural"), this.name);
         console.warn(msg);
         ui.notifications.warn(msg);
       }
@@ -885,7 +896,7 @@ export class ItemPF extends Item {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-  async roll(altChatData={}, {addDC=true}={}) {
+  async roll(altChatData = {}, { addDC = true } = {}) {
     const actor = this.parentActor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
@@ -916,7 +927,9 @@ export class ItemPF extends Item {
         hasSave: addDC === true && typeof saveType === "string" && saveType.length > 0,
         dc: saveDC,
         type: saveType,
-        label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
+        label: game.i18n
+          .localize("PF1.SavingThrowButtonLabel")
+          .format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
       },
       hasExtraProperties: false,
       extraProperties: [],
@@ -936,7 +949,10 @@ export class ItemPF extends Item {
 
     // Roll spell failure chance
     if (templateData.isSpell && this.parentActor != null && this.parentActor.spellFailure > 0) {
-      const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+      const spellbook = getProperty(
+        this.parentActor.data,
+        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+      );
       if (spellbook && spellbook.arcaneSpellFailure) {
         templateData.spellFailure = new Roll("1d100").roll().total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
@@ -948,21 +964,24 @@ export class ItemPF extends Item {
     const template = `systems/pf1/templates/chat/${templateType}-card.html`;
 
     // Basic chat message data
-    const chatData = mergeObject({
-      user: game.user._id,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
-      flags: {
-        core: {
-          canPopout: true,
+    const chatData = mergeObject(
+      {
+        user: game.user._id,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+        flags: {
+          core: {
+            canPopout: true,
+          },
         },
       },
-    }, altChatData);
+      altChatData
+    );
 
     // Toggle default roll mode
     let rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
-    if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-    if ( rollMode === "blindroll" ) chatData["blind"] = true;
+    if (["gmroll", "blindroll"].includes(rollMode)) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
+    if (rollMode === "blindroll") chatData["blind"] = true;
 
     // Create the chat message
     return createCustomChatMessage(template, templateData, chatData);
@@ -972,7 +991,7 @@ export class ItemPF extends Item {
   /*  Chat Cards																	*/
   /* -------------------------------------------- */
 
-  getChatData(htmlOptions, rollData=null) {
+  getChatData(htmlOptions, rollData = null) {
     const data = duplicate(this.data.data);
     const labels = this.labels;
 
@@ -983,17 +1002,14 @@ export class ItemPF extends Item {
     // Rich text description
     if (this.showUnidentifiedData) {
       data.description.value = TextEditor.enrichHTML(data.description.unidentified, { rollData: htmlOptions });
-    }
-    else {
+    } else {
       data.description.value = TextEditor.enrichHTML(data.description.value, { rollData: htmlOptions });
     }
 
     // General equipment properties
     const props = [];
-    if ( data.hasOwnProperty("equipped") && ["weapon", "equipment"].includes(this.data.type) ) {
-      props.push(
-        data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"),
-      );
+    if (Object.prototype.hasOwnProperty.call(data, "equipped") && ["weapon", "equipment"].includes(this.data.type)) {
+      props.push(data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
     }
 
     if (!this.showUnidentifiedData) {
@@ -1016,13 +1032,21 @@ export class ItemPF extends Item {
             break;
           case "ft":
           case "mi":
-            rangeValue = convertDistance(new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total, data.range.units);
+            rangeValue = convertDistance(
+              new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total,
+              data.range.units
+            );
             break;
           case "spec":
-            rangeValue = convertDistance(new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total);
+            rangeValue = convertDistance(
+              new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total
+            );
             break;
         }
-        dynamicLabels.range = rangeValue[0] > 0 ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue[0]} ${CONFIG.PF1.measureUnits[rangeValue[1]]}`) : null;
+        dynamicLabels.range =
+          rangeValue[0] > 0
+            ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue[0]} ${CONFIG.PF1.measureUnits[rangeValue[1]]}`)
+            : null;
       }
       // Duration
       if (data.duration != null) {
@@ -1037,17 +1061,12 @@ export class ItemPF extends Item {
       if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
-      if (data.hasOwnProperty("activation")) {
-        props.push(
-          labels.target,
-          labels.activation,
-          dynamicLabels.range,
-          dynamicLabels.duration
-        );
+      if (Object.prototype.hasOwnProperty.call(data, "activation")) {
+        props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
 
       // Add save DC
-      if (data.hasOwnProperty("actionType") && getProperty(data, "save.description")) {
+      if (Object.prototype.hasOwnProperty.call(data, "actionType") && getProperty(data, "save.description")) {
         let saveDC = this.getDC(rollData);
         let saveDesc = data.save.description;
         if (saveDC > 0 && saveDesc) {
@@ -1073,16 +1092,15 @@ export class ItemPF extends Item {
 
     // Add charges
     if (this.isCharged) {
-      if (this.type === "spell" && this.useSpellPoints()){
+      if (this.type === "spell" && this.useSpellPoints()) {
         props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
-      }
-      else {
+      } else {
         props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
       }
     }
 
     // Filter properties and return
-    data.properties = props.filter(p => !!p);
+    data.properties = props.filter((p) => !!p);
     return data;
   }
 
@@ -1093,10 +1111,7 @@ export class ItemPF extends Item {
    * @private
    */
   _equipmentChatData(data, labels, props) {
-    props.push(
-      CONFIG.PF1.equipmentTypes[data.equipmentType][data.equipmentSubtype],
-      labels.armor || null,
-    );
+    props.push(CONFIG.PF1.equipmentTypes[data.equipmentType][data.equipmentSubtype], labels.armor || null);
   }
 
   /* -------------------------------------------- */
@@ -1108,7 +1123,7 @@ export class ItemPF extends Item {
   _weaponChatData(data, labels, props) {
     props.push(
       CONFIG.PF1.weaponTypes[data.weaponType]._label,
-      CONFIG.PF1.weaponTypes[data.weaponType][data.weaponSubtype],
+      CONFIG.PF1.weaponTypes[data.weaponType][data.weaponSubtype]
     );
   }
 
@@ -1119,11 +1134,9 @@ export class ItemPF extends Item {
    * @private
    */
   _consumableChatData(data, labels, props) {
-    props.push(
-      CONFIG.PF1.consumableTypes[data.consumableType]
-    );
+    props.push(CONFIG.PF1.consumableTypes[data.consumableType]);
     // if (["day", "week", "charges"].includes(data.uses.per)) {
-      // props.push(data.uses.value + "/" + data.uses.max + " Charges");
+    // props.push(data.uses.value + "/" + data.uses.max + " Charges");
     // }
     // else props.push(CONFIG.PF1.limitedUsePeriods[data.uses.per]);
     data.hasCharges = data.uses.value >= 0;
@@ -1145,10 +1158,7 @@ export class ItemPF extends Item {
     // labels.save = `DC ${data.save.dc} ${CONFIG.PF1.abilities[data.save.ability]}`;
 
     // Spell properties
-    props.push(
-      labels.level,
-      labels.components,
-    );
+    props.push(labels.level, labels.components);
   }
 
   /* -------------------------------------------- */
@@ -1165,21 +1175,18 @@ export class ItemPF extends Item {
     // labels.save = `DC ${data.save.dc} ${CONFIG.PF1.abilities[data.save.ability]}`;
 
     // Feat properties
-    props.push(
-      CONFIG.PF1.featTypes[data.featType]
-    );
+    props.push(CONFIG.PF1.featTypes[data.featType]);
   }
 
   /* -------------------------------------------- */
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ev=null, skipDialog=false}) {
+  async use({ ev = null, skipDialog = false }) {
     if (this.type === "spell") {
-      return this.parentActor.useSpell(this, ev, {skipDialog: skipDialog});
-    }
-    else if (this.hasAction) {
-      return this.useAttack({ev: ev, skipDialog: skipDialog});
+      return this.parentActor.useSpell(this, ev, { skipDialog: skipDialog });
+    } else if (this.hasAction) {
+      return this.useAttack({ ev: ev, skipDialog: skipDialog });
     }
 
     if (this.isCharged) {
@@ -1202,7 +1209,7 @@ export class ItemPF extends Item {
     this.roll();
   }
 
-  async useAttack({ev=null, skipDialog=false}={}) {
+  async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.parentActor;
     if (actor && !actor.hasPerm(game.user, "OWNER")) {
@@ -1225,7 +1232,8 @@ export class ItemPF extends Item {
     }
 
     // Check ammunition links
-    let ammoLinks = [], minAmmo;
+    let ammoLinks = [],
+      minAmmo;
     if (this.type === "attack") {
       ammoLinks = await this.getLinkedItems("ammunition", true);
       for (let l of ammoLinks) {
@@ -1241,9 +1249,10 @@ export class ItemPF extends Item {
     }
 
     const rollData = this.getRollData();
+    rollData.d20 = dice !== "1d20" ? dice : "";
 
     let rolled = false;
-    const _roll = async function(fullAttack, form) {
+    const _roll = async function (fullAttack, form) {
       let attackExtraParts = [],
         damageExtraParts = [],
         primaryAttack = true,
@@ -1258,20 +1267,20 @@ export class ItemPF extends Item {
         rollData.damageBonus = form.find('[name="damage-bonus"]').val();
         if (rollData.damageBonus) damageExtraParts.push("@damageBonus");
         rollMode = form.find('[name="rollMode"]').val();
-        
+
         // Point-Blank Shot
         if (form.find('[name="point-blank-shot"]').prop("checked")) {
           rollData.pointBlankBonus = 1;
           attackExtraParts.push("@pointBlankBonus");
           damageExtraParts.push("@pointBlankBonus");
         }
-        
+
         // Rapid Shot
         if (form.find('[name="rapid-shot"]').prop("checked")) {
           rollData.rapidShotPenalty = -2;
           attackExtraParts.push("@rapidShotPenalty");
         }
-        
+
         // Primary Attack (for natural attacks)
         let html = form.find('[name="primary-attack"]');
         if (typeof html.prop("checked") === "boolean") {
@@ -1300,8 +1309,7 @@ export class ItemPF extends Item {
           if (getProperty(this.data, "data.attackType") === "natural") {
             if (primaryAttack && rollData.item.ability.damageMult >= 1.5) rollData.powerAttackBonus *= 1.5;
             else if (!primaryAttack) rollData.powerAttackBonus *= 0.5;
-          }
-          else {
+          } else {
             if (getProperty(rollData, "item.held") === "2h") rollData.powerAttackBonus *= 1.5;
             else if (getProperty(rollData, "item.held") === "oh") rollData.powerAttackBonus *= 0.5;
           }
@@ -1313,9 +1321,11 @@ export class ItemPF extends Item {
         // Conditionals
         html = form.find(".conditional");
         if (html.length > 0) {
-          conditionals = html.map( function() {
-            if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
-          }).get();
+          conditionals = html
+            .map(function () {
+              if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
+            })
+            .get();
         }
 
         // Caster level offset
@@ -1345,15 +1355,19 @@ export class ItemPF extends Item {
         }, []);
       }
 
-
       // Create attacks
-      const allAttacks = fullAttack ? this.data.data.attackParts.reduce((cur, r) => {
-        cur.push({ bonus: r[0], label: r[1] });
-        return cur;
-      }, [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]) : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
+      const allAttacks = fullAttack
+        ? this.data.data.attackParts.reduce(
+            (cur, r) => {
+              cur.push({ bonus: r[0], label: r[1] });
+              return cur;
+            },
+            [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]
+          )
+        : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
 
-      const subtractAmmo = function(value) {
+      const subtractAmmo = function (value) {
         if (!ammoLinks.length) return;
         if (value == null) value = -1;
         let promises = [];
@@ -1364,7 +1378,6 @@ export class ItemPF extends Item {
       };
       let ammoCost = 0;
 
-
       // Create conditionalParts from all enabled conditional modifiers
       let conditionalPartsCommon = {};
 
@@ -1374,9 +1387,9 @@ export class ItemPF extends Item {
         return game.i18n.localize(result[type]) || type;
       };
 
-      if(conditionals) {
+      if (conditionals) {
         let conditionalData = {};
-        for(const i of conditionals) {
+        for (const i of conditionals) {
           const conditional = this.data.data.conditionals[i];
           const tag = createTag(conditional.name);
           for (const [i, modifier] of conditional.modifiers.entries()) {
@@ -1386,7 +1399,7 @@ export class ItemPF extends Item {
             try {
               conditionalData[[tag, i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
             } catch (e) {
-              const msg = game.i18n.format("PF1.WarningConditionalRoll", {number: i+1, name: conditional.name});
+              const msg = game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name });
               console.warn(msg);
               ui.notifications.warn(msg);
               // Skip modifier to avoid multiple errors from one non-evaluating entry
@@ -1394,17 +1407,20 @@ export class ItemPF extends Item {
             }
 
             // Create a key string for the formula array
-            const partString = `${modifier.target}.${modifier.subTarget}${modifier.critical ? "." + modifier.critical : ""}`;
+            const partString = `${modifier.target}.${modifier.subTarget}${
+              modifier.critical ? "." + modifier.critical : ""
+            }`;
             // Add formula in simple format
             if (["attack", "effect", "misc"].includes(modifier.target)) {
               conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []), modifier.formula];
             }
             // Add formula as array for damage
             else if (modifier.target === "damage") {
-              conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []),
-                (Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type))
+              conditionalPartsCommon[partString] = [
+                ...(conditionalPartsCommon[partString] ?? []),
+                Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)
                   ? [modifier.formula, modifier.type, true]
-                  : [modifier.formula, localizeType(modifier.target, modifier.type), false]
+                  : [modifier.formula, localizeType(modifier.target, modifier.type), false],
               ];
             }
           }
@@ -1418,9 +1434,15 @@ export class ItemPF extends Item {
             try {
               const roll = new Roll(conditionalPartsCommon[target].join("+"), rollData).roll().total;
               switch (target) {
-                case "effect.cl": rollData.cl += roll; break;
-                case "effect.dc": rollData.dcBonus = roll; break;
-                case "misc.charges": rollData.chargeCostBonus = roll; break;
+                case "effect.cl":
+                  rollData.cl += roll;
+                  break;
+                case "effect.dc":
+                  rollData.dcBonus = roll;
+                  break;
+                case "misc.charges":
+                  rollData.chargeCostBonus = roll;
+                  break;
               }
             } catch (e) {
               console.error(e);
@@ -1431,32 +1453,51 @@ export class ItemPF extends Item {
 
       if (this.hasAttack) {
         ammoCost = Math.min(minAmmo, allAttacks.length);
-        for (let a = 0; (ammoLinks.length && a < Math.min(minAmmo, allAttacks.length)) || (!ammoLinks.length && a < allAttacks.length); a++) {
-
+        for (
+          let a = 0;
+          (ammoLinks.length && a < Math.min(minAmmo, allAttacks.length)) ||
+          (!ammoLinks.length && a < allAttacks.length);
+          a++
+        ) {
           let atk = allAttacks[a];
 
           // Combine conditional modifiers for attack a attack and damage
           const conditionalParts = {
-            "attack.normal": [...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],    //`
-            "attack.crit": [...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],          //`
-            "damage.normal": [...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],    //`
-            "damage.crit": [...(conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],          //`
-            "damage.nonCrit": [...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])], //`
+            "attack.normal": [
+              ...(conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []),
+              ...(conditionalPartsCommon["attack.allAttack.normal"] ?? []),
+            ], //`
+            "attack.crit": [
+              ...(conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []),
+              ...(conditionalPartsCommon["attack.allAttack.crit"] ?? []),
+            ], //`
+            "damage.normal": [
+              ...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []),
+              ...(conditionalPartsCommon["damage.allDamage.normal"] ?? []),
+            ], //`
+            "damage.crit": [
+              ...(conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []),
+              ...(conditionalPartsCommon["damage.allDamage.crit"] ?? []),
+            ], //`
+            "damage.nonCrit": [
+              ...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []),
+              ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
+            ], //`
           };
 
           // Create attack object
-          let attack = new ChatAttack(this, {label: atk.label, rollData: rollData, primaryAttack: primaryAttack});
+          let attack = new ChatAttack(this, { label: atk.label, rollData: rollData, primaryAttack: primaryAttack });
 
           // Add attack roll
-          await attack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts});
+          await attack.addAttack({ bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts });
 
           // Add damage
           if (this.hasDamage) {
-            await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
+            await attack.addDamage({ extraParts: duplicate(damageExtraParts), critical: false, conditionalParts });
 
             // Add critical hit damage
             if (attack.hasCritConfirm) {
-              await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: true, conditionalParts});
+              await attack.addDamage({ extraParts: duplicate(damageExtraParts), critical: true, conditionalParts });
             }
           }
 
@@ -1473,25 +1514,55 @@ export class ItemPF extends Item {
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
             // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
-              "attack.normal": [...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []), ...(conditionalPartsCommon["attack.allAttack.normal"] ?? [])],      //`
-              "attack.crit": [...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []), ...(conditionalPartsCommon["attack.allAttack.crit"] ?? [])],            //`
-              "damage.normal": [...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []), ...(conditionalPartsCommon["damage.allDamage.normal"] ?? [])],      //`
-              "damage.crit": [...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.crit"] ?? [])],            //`
-              "damage.nonCrit": [...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []), ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? [])],   //`
+              "attack.normal": [
+                ...(conditionalPartsCommon[`attack.rapidShotAttack.normal`] ?? []),
+                ...(conditionalPartsCommon["attack.allAttack.normal"] ?? []),
+              ], //`
+              "attack.crit": [
+                ...(conditionalPartsCommon[`attack.rapidShotAttack.crit`] ?? []),
+                ...(conditionalPartsCommon["attack.allAttack.crit"] ?? []),
+              ], //`
+              "damage.normal": [
+                ...(conditionalPartsCommon[`damage.rapidShotDamage.normal`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.normal"] ?? []),
+              ], //`
+              "damage.crit": [
+                ...(conditionalPartsCommon[`damage.rapidShotDamage.crit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.crit"] ?? []),
+              ], //`
+              "damage.nonCrit": [
+                ...(conditionalPartsCommon[`damage.rapidShotDamage.nonCrit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
+              ], //`
             }; //`
 
             // Create attack object, then add attack roll
-            let rapidShotAttack = new ChatAttack(this, {label: game.i18n.localize("PF1.RapidShot"), rollData: rollData, primaryAttack: primaryAttack});
-            await rapidShotAttack.addAttack({bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts});
+            let rapidShotAttack = new ChatAttack(this, {
+              label: game.i18n.localize("PF1.RapidShot"),
+              rollData: rollData,
+              primaryAttack: primaryAttack,
+            });
+            await rapidShotAttack.addAttack({
+              bonus: atk.bonus,
+              extraParts: duplicate(attackExtraParts),
+              conditionalParts,
+            });
 
             // Add damage
             if (this.hasDamage) {
-
-              await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
+              await rapidShotAttack.addDamage({
+                extraParts: duplicate(damageExtraParts),
+                critical: false,
+                conditionalParts,
+              });
 
               // Add critical hit damage
               if (rapidShotAttack.hasCritConfirm) {
-                await rapidShotAttack.addDamage({extraParts: duplicate(damageExtraParts), critical: true, conditionalParts});
+                await rapidShotAttack.addDamage({
+                  extraParts: duplicate(damageExtraParts),
+                  critical: true,
+                  conditionalParts,
+                });
               }
             }
 
@@ -1508,12 +1579,12 @@ export class ItemPF extends Item {
 
         // Set conditional modifiers
         const conditionalParts = {
-          "damage.normal": conditionalPartsCommon["damage.allDamage.normal"] ?? []
+          "damage.normal": conditionalPartsCommon["damage.allDamage.normal"] ?? [],
         };
 
-        let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
+        let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
         // Add damage
-        await attack.addDamage({extraParts: duplicate(damageExtraParts), critical: false, conditionalParts});
+        await attack.addDamage({ extraParts: duplicate(damageExtraParts), critical: false, conditionalParts });
 
         // Add effect notes
         attack.addEffectNotes();
@@ -1523,7 +1594,7 @@ export class ItemPF extends Item {
       }
       // Add effect notes only
       else if (this.hasEffect) {
-        let attack = new ChatAttack(this, {rollData: rollData, primaryAttack: primaryAttack});
+        let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
 
         // Add effect notes
         attack.addEffectNotes();
@@ -1532,9 +1603,9 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
       if (ammoLinks.length) {
-        attacks.forEach(atk => atk.addAmmunitionCards());
+        attacks.forEach((atk) => atk.addAmmunitionCards());
       }
-      chatTemplateData.attacks = attacks.map(o => o.finalize());
+      chatTemplateData.attacks = attacks.map((o) => o.finalize());
 
       // Prompt measure template
       let template;
@@ -1594,7 +1665,7 @@ export class ItemPF extends Item {
 
       // Set chat data
       let chatData = {
-        speaker: ChatMessage.getSpeaker({actor: this.parentActor}),
+        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         rollMode: rollMode,
         sound: CONFIG.sounds.dice,
         "flags.pf1.noRollRender": true,
@@ -1615,24 +1686,24 @@ export class ItemPF extends Item {
             blind = false;
           switch (rollMode) {
             case "gmroll":
-              whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              whisper = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
               break;
             case "selfroll":
               whisper = [game.user._id];
               break;
             case "blindroll":
-              whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              whisper = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
               blind = true;
               break;
-          };
+          }
 
           // Define showRoll to be version independent
-          const showRoll = async rollDice => {
+          const showRoll = async (rollDice) => {
             // Check for DsN v3, which uses DicePool instead of [Roll]
             if (
-              SemanticVersion.fromString(
-                game.modules.get("dice-so-nice").data.version
-              ).isHigherThan(SemanticVersion.fromString("2.9.0"))
+              SemanticVersion.fromString(game.modules.get("dice-so-nice").data.version).isHigherThan(
+                SemanticVersion.fromString("2.9.0")
+              )
             ) {
               rollDice = new DicePool({ rolls: rollDice });
             }
@@ -1657,7 +1728,7 @@ export class ItemPF extends Item {
               await showRoll(rolls);
             }
           }
-        } catch(e) {
+        } catch (e) {
           console.error(e);
         }
       }
@@ -1673,10 +1744,9 @@ export class ItemPF extends Item {
         const properties = itemChatData.properties;
         // Add actual cost
         if (cost) {
-          if (this.data.type === "spell" && this.useSpellPoints()){
+          if (this.data.type === "spell" && this.useSpellPoints()) {
             properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
-          }
-          else {
+          } else {
             properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);
           }
         }
@@ -1687,7 +1757,7 @@ export class ItemPF extends Item {
         }
         // Add conditionals info
         if (conditionals?.length) {
-          conditionals.forEach(c => {
+          conditionals.forEach((c) => {
             properties.push(this.data.data.conditionals[c].name);
           });
         }
@@ -1720,25 +1790,34 @@ export class ItemPF extends Item {
         const save = getProperty(this.data, "data.save.type");
         const saveDC = this.getDC(rollData);
 
-        const templateData = mergeObject(chatTemplateData, {
-          extraText: extraText,
-          data: itemChatData,
-          hasExtraText: extraText.length > 0,
-          properties: props,
-          hasProperties: props.length > 0,
-          item: this.data,
-          actor: this.parentActor.data,
-          save: {
-            hasSave: typeof save === "string" && save.length > 0,
-            dc: saveDC,
-            type: save,
-            label: game.i18n.localize("PF1.SavingThrowButtonLabel").format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
+        const templateData = mergeObject(
+          chatTemplateData,
+          {
+            extraText: extraText,
+            data: itemChatData,
+            hasExtraText: extraText.length > 0,
+            properties: props,
+            hasProperties: props.length > 0,
+            item: this.data,
+            actor: this.parentActor.data,
+            save: {
+              hasSave: typeof save === "string" && save.length > 0,
+              dc: saveDC,
+              type: save,
+              label: game.i18n
+                .localize("PF1.SavingThrowButtonLabel")
+                .format(CONFIG.PF1.savingThrows[save], saveDC.toString()),
+            },
           },
-        }, { inplace: false });
+          { inplace: false }
+        );
 
         // Spell failure
         if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {
-          const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+          const spellbook = getProperty(
+            this.parentActor.data,
+            `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+          );
           if (spellbook && spellbook.arcaneSpellFailure) {
             templateData.spellFailure = new Roll("1d100").roll().total;
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
@@ -1826,31 +1905,30 @@ export class ItemPF extends Item {
       if (this.type !== "spell") {
         buttons.normal = {
           label: game.i18n.localize("PF1.SingleAttack"),
-          callback: html => roll = _roll.call(this, false, html)
+          callback: (html) => (roll = _roll.call(this, false, html)),
         };
       }
       if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
         buttons.multi = {
           label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
-          callback: html => roll = _roll.call(this, true, html)
+          callback: (html) => (roll = _roll.call(this, true, html)),
         };
       }
-    }
-    else {
+    } else {
       buttons.normal = {
         label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
-        callback: html => roll = _roll.call(this, false, html)
+        callback: (html) => (roll = _roll.call(this, false, html)),
       };
     }
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       new Dialog({
         title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
         content: html,
         buttons: buttons,
         default: buttons.multi != null ? "multi" : "normal",
-        close: html => {
+        close: (html) => {
           resolve(rolled ? roll : false);
-        }
+        },
       }).render(true);
     });
   }
@@ -1859,7 +1937,7 @@ export class ItemPF extends Item {
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
    */
-  rollAttack({data=null, extraParts=[], bonus=null, primaryAttack=true}={}) {
+  rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
     const itemData = this.data.data;
     const rollData = mergeObject(this.getRollData(), data || {});
 
@@ -1874,7 +1952,9 @@ export class ItemPF extends Item {
     // Define Roll parts
     let parts = [];
     // Add ability modifier
-    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) parts.push(`@abilities.${abl}.mod`);
+    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
+      parts.push(`@abilities.${abl}.mod`);
+    }
     // Add bonus parts
     parts = parts.concat(extraParts);
     // Add size bonus
@@ -1892,8 +1972,7 @@ export class ItemPF extends Item {
     }
     if (["mwak", "msak"].includes(itemData.actionType) && rollData.attributes.attack.melee !== 0) {
       parts.push("@attributes.attack.melee");
-    }
-    else if (["rwak", "rsak"].includes(itemData.actionType) && rollData.attributes.attack.ranged !== 0) {
+    } else if (["rwak", "rsak"].includes(itemData.actionType) && rollData.attributes.attack.ranged !== 0) {
       parts.push("@attributes.attack.ranged");
     }
     // Add BAB
@@ -1909,7 +1988,9 @@ export class ItemPF extends Item {
       parts.push("- max(0, abs(@attributes.energyDrain))");
     }
     // Add proficiency penalty
-    if ((this.data.type === "attack") && !itemData.proficient) { parts.push("@item.proficiencyPenalty"); }
+    if (this.data.type === "attack" && !itemData.proficient) {
+      parts.push("@item.proficiencyPenalty");
+    }
     // Add masterwork bonus
     if (this.data.type === "attack" && itemData.masterwork === true && itemData.enh < 1) {
       rollData.item.masterworkBonus = 1;
@@ -1922,7 +2003,7 @@ export class ItemPF extends Item {
       rollData.bonus = new Roll(bonus, rollData).roll().total;
       parts.push("@bonus");
     }
-    if (rollData.d20 == null || rollData.d20 === "") rollData.d20 = "1d20";
+    if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
     let roll = new Roll([rollData.d20, ...parts].join("+"), rollData).roll();
     return roll;
@@ -1933,7 +2014,7 @@ export class ItemPF extends Item {
   /**
    * Only roll the item's effect.
    */
-  rollEffect({critical=false, primaryAttack=true}={}) {
+  rollEffect({ critical = false, primaryAttack = true } = {}) {
     const rollData = this.getRollData();
 
     if (!this.hasEffect) {
@@ -1949,12 +2030,14 @@ export class ItemPF extends Item {
 
     // Create effect string
     let effectNotes = this.parentActor.getContextNotes("attacks.effect").reduce((cur, o) => {
-      o.notes.reduce((cur2, n) => {
-        cur2.push(...n.split(/[\n\r]+/));
-        return cur2;
-      }, []).forEach(n => {
-        cur.push(n);
-      });
+      o.notes
+        .reduce((cur2, n) => {
+          cur2.push(...n.split(/[\n\r]+/));
+          return cur2;
+        }, [])
+        .forEach((n) => {
+          cur.push(n);
+        });
       return cur;
     }, []);
     effectNotes.push(...(this.data.data.effectNotes || "").split(/[\n\r]+/));
@@ -1968,16 +2051,18 @@ export class ItemPF extends Item {
     if (effectContent.length === 0) return "";
 
     const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData });
-    return `<div class="flexcol property-group"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${inner}</div></div>`;
+    return `<div class="flexcol property-group"><label>${game.i18n.localize(
+      "PF1.EffectNotes"
+    )}</label><div class="flexrow">${inner}</div></div>`;
   }
 
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
    */
-  async rollFormula(options={}) {
+  async rollFormula(options = {}) {
     const itemData = this.data.data;
-    if ( !itemData.formula ) {
+    if (!itemData.formula) {
       throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
     }
 
@@ -1988,9 +2073,9 @@ export class ItemPF extends Item {
 
     const roll = new Roll(itemData.formula, rollData).roll();
     return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({actor: this.parentActor}),
+      speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
       flavor: itemData.chatFlavor || title,
-      rollMode: game.settings.get("core", "rollMode")
+      rollMode: game.settings.get("core", "rollMode"),
     });
   }
 
@@ -1998,7 +2083,7 @@ export class ItemPF extends Item {
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({data=null, critical=false, extraParts=[], conditionalParts={}}={}) {
+  rollDamage({ data = null, critical = false, extraParts = [], conditionalParts = {} } = {}) {
     const rollData = mergeObject(this.getRollData(), data || {});
 
     if (!this.hasDamage) {
@@ -2006,32 +2091,42 @@ export class ItemPF extends Item {
     }
 
     // Define Roll parts
-    let parts = this.data.data.damage.parts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "normal" }; });
+    let parts = this.data.data.damage.parts.map((p) => {
+      return { base: p[0], extra: [], damageType: p[1], type: "normal" };
+    });
     // Add conditionals damage
     conditionalParts["damage.normal"]?.forEach((p) => {
       const [base, damageType, isExtra] = p;
-      (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "normal"});
+      isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "normal" });
     });
     // Add critical damage parts
     if (critical === true) {
       if (getProperty(this.data, "data.damage.critParts") != null) {
-        parts = parts.concat(this.data.data.damage.critParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "crit" }; }));
+        parts = parts.concat(
+          this.data.data.damage.critParts.map((p) => {
+            return { base: p[0], extra: [], damageType: p[1], type: "crit" };
+          })
+        );
       }
       // Add conditional critical damage parts
       conditionalParts["damage.crit"]?.forEach((p) => {
         const [base, damageType, isExtra] = p;
-        (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "crit"});
+        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "crit" });
       });
     }
     // Add non-critical damage parts
     if (critical === false) {
       if (getProperty(this.data, "data.damage.nonCritParts") != null) {
-        parts = parts.concat(this.data.data.damage.nonCritParts.map(p => { return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" }; }));
+        parts = parts.concat(
+          this.data.data.damage.nonCritParts.map((p) => {
+            return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" };
+          })
+        );
       }
       // Add conditional non-critical damage parts
       conditionalParts["damage.nonCrit"]?.forEach((p) => {
         const [base, damageType, isExtra] = p;
-        (isExtra) ? parts[0].extra.push(base) : parts.push({base, extra: [], damageType, type: "nonCrit"});
+        isExtra ? parts[0].extra.push(base) : parts.push({ base, extra: [], damageType, type: "nonCrit" });
       });
     }
 
@@ -2064,8 +2159,10 @@ export class ItemPF extends Item {
     if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(this.data.data.actionType)) {
       if (critical === true) parts[0].extra.push("@attributes.damage.weapon");
       else parts[0].extra.push("@attributes.damage.weapon");
-    }
-    else if (rollData.attributes.damage.spell !== 0 && ["msak", "rsak", "spellsave"].includes(this.data.data.actionType)) {
+    } else if (
+      rollData.attributes.damage.spell !== 0 &&
+      ["msak", "rsak", "spellsave"].includes(this.data.data.actionType)
+    ) {
       if (critical === true) parts[0].extra.push("@attributes.damage.spell");
       else parts[0].extra.push("@attributes.damage.spell");
     }
@@ -2092,7 +2189,7 @@ export class ItemPF extends Item {
   /**
    * Use a consumable item
    */
-  async useConsumable(options={}) {
+  async useConsumable(options = {}) {
     let itemData = this.data.data;
     let parts = itemData.damage.parts;
     const data = this.getRollData();
@@ -2102,33 +2199,35 @@ export class ItemPF extends Item {
     if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
       effectStr = DicePF.messageRoll({
         data: data,
-        msgStr: itemData.effectNotes
+        msgStr: itemData.effectNotes,
       });
     }
 
-    parts = parts.map(obj => {
+    parts = parts.map((obj) => {
       return obj[0];
     });
     // Submit the roll to chat
     if (effectStr === "") {
       new Roll(parts.join("+")).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
-        flavor: game.i18n.localize("PF1.UsesItem").format(this.name)
+        flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
-    }
-    else {
+    } else {
       const chatTemplate = "systems/pf1/templates/chat/roll-ext.html";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
       let roll = new Roll(parts.join("+"), data).roll();
 
       // Create roll template data
-      const rollData = mergeObject({
-        user: game.user._id,
-        formula: roll.formula,
-        tooltip: await roll.getTooltip(),
-        total: roll.total,
-      }, chatTemplateData || {});
+      const rollData = mergeObject(
+        {
+          user: game.user._id,
+          formula: roll.formula,
+          tooltip: await roll.getTooltip(),
+          total: roll.total,
+        },
+        chatTemplateData || {}
+      );
 
       // Create chat data
       let chatData = {
@@ -2138,20 +2237,19 @@ export class ItemPF extends Item {
         sound: CONFIG.sounds.dice,
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
-        rollMode: game.settings.get("core", "rollMode"),
         roll: roll,
         content: await renderTemplate(chatTemplate, rollData),
       };
       // Handle different roll modes
       switch (chatData.rollMode) {
         case "gmroll":
-          chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
           break;
         case "selfroll":
           chatData["whisper"] = [game.user._id];
           break;
         case "blindroll":
-          chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
           chatData["blind"] = true;
       }
 
@@ -2176,7 +2274,7 @@ export class ItemPF extends Item {
       if (spellAbility !== "") ablMod = getProperty(this.parentActor.data, `data.abilities.${spellAbility}.mod`);
 
       result.cl = this.casterLevel || 0;
-      result.sl = this.spellLevel  || 0;
+      result.sl = this.spellLevel || 0;
       result.ablMod = ablMod;
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
@@ -2195,8 +2293,8 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on('click', '.card-buttons button', this._onChatCardButton.bind(this));
-    html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
+    html.on("click", ".card-buttons button", this._onChatCardButton.bind(this));
+    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -2209,32 +2307,32 @@ export class ItemPF extends Item {
     button.disabled = true;
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
-    const message =  game.messages.get(messageId);
+    const message = game.messages.get(messageId);
     const action = button.dataset.action;
 
     // Validate permission to proceed with the roll
     let isTargetted = ["save", "applyDamage"].includes(action);
-    if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
+    if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
     // Get the Actor from a synthetic Token
     const actor = this._getChatCardActor(card);
-    if ( !actor ) return;
+    if (!actor) return;
 
     // Get the Item
     const item = actor.getOwnedItem(card.dataset.itemId);
 
     // Perform action
-    if (!(await this._onChatCardAction(action, {button: button, item: item}))) {
+    if (!(await this._onChatCardAction(action, { button: button, item: item }))) {
       button.disabled = false;
     }
   }
 
-  static async _onChatCardAction(action, {button=null, item=null}={}) {
+  static async _onChatCardAction(action, { button = null, item = null } = {}) {
     // Get card targets
     // const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
     // Consumable usage
-    if (action === "consume") await item.useConsumable({event});
+    if (action === "consume") await item.useConsumable({ event });
     // Apply damage
     else if (action === "applyDamage") {
       const value = button.dataset.value;
@@ -2258,8 +2356,7 @@ export class ItemPF extends Item {
         if (chance >= Math.random() * 100) {
           recovered = true;
           promises.push(l.item.addCharges(1));
-        }
-        else {
+        } else {
           failed = true;
         }
       }
@@ -2269,11 +2366,9 @@ export class ItemPF extends Item {
         button.disabled = true;
         if (recovered && !failed) {
           button.style.backgroundColor = "#00AA00";
-        }
-        else if (!recovered && failed) {
+        } else if (!recovered && failed) {
           button.style.backgroundColor = "#AA0000";
-        }
-        else if (recovered && failed) {
+        } else if (recovered && failed) {
           button.style.backgroundColor = "#0000AA";
         }
       }
@@ -2314,7 +2409,6 @@ export class ItemPF extends Item {
    * @private
    */
   static _getChatCardActor(card) {
-
     // Case 1 - a synthetic actor from a Token
     const tokenKey = card.dataset.tokenId;
     if (tokenKey) {
@@ -2341,7 +2435,7 @@ export class ItemPF extends Item {
 
     const label = {
       school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
-      subschool: (getProperty(srcData, "data.subschool") || ""),
+      subschool: getProperty(srcData, "data.subschool") || "",
       types: "",
     };
     const data = {
@@ -2356,38 +2450,59 @@ export class ItemPF extends Item {
     }
     // Set information about when the spell is learned
     data.learnedAt = {};
-    data.learnedAt.class = (getProperty(srcData, "data.learnedAt.class") || []).map(o => {
-      return `${o[0]} ${o[1]}`;
-    }).sort().join(", ");
-    data.learnedAt.domain = (getProperty(srcData, "data.learnedAt.domain") || []).map(o => {
-      return `${o[0]} ${o[1]}`;
-    }).sort().join(", ");
-    data.learnedAt.subDomain = (getProperty(srcData, "data.learnedAt.subDomain") || []).map(o => {
-      return `${o[0]} ${o[1]}`;
-    }).sort().join(", ");
-    data.learnedAt.elementalSchool = (getProperty(srcData, "data.learnedAt.elementalSchool") || []).map(o => {
-      return `${o[0]} ${o[1]}`;
-    }).sort().join(", ");
-    data.learnedAt.bloodline = (getProperty(srcData, "data.learnedAt.bloodline") || []).map(o => {
-      return `${o[0]} ${o[1]}`;
-    }).sort().join(", ");
+    data.learnedAt.class = (getProperty(srcData, "data.learnedAt.class") || [])
+      .map((o) => {
+        return `${o[0]} ${o[1]}`;
+      })
+      .sort()
+      .join(", ");
+    data.learnedAt.domain = (getProperty(srcData, "data.learnedAt.domain") || [])
+      .map((o) => {
+        return `${o[0]} ${o[1]}`;
+      })
+      .sort()
+      .join(", ");
+    data.learnedAt.subDomain = (getProperty(srcData, "data.learnedAt.subDomain") || [])
+      .map((o) => {
+        return `${o[0]} ${o[1]}`;
+      })
+      .sort()
+      .join(", ");
+    data.learnedAt.elementalSchool = (getProperty(srcData, "data.learnedAt.elementalSchool") || [])
+      .map((o) => {
+        return `${o[0]} ${o[1]}`;
+      })
+      .sort()
+      .join(", ");
+    data.learnedAt.bloodline = (getProperty(srcData, "data.learnedAt.bloodline") || [])
+      .map((o) => {
+        return `${o[0]} ${o[1]}`;
+      })
+      .sort()
+      .join(", ");
 
     // Set casting time label
-    const act = game.settings.get("pf1", "unchainedActionEconomy") ? getProperty(srcData, "data.unchainedAction.activation") : getProperty(srcData, "data.activation");
+    const act = game.settings.get("pf1", "unchainedActionEconomy")
+      ? getProperty(srcData, "data.unchainedAction.activation")
+      : getProperty(srcData, "data.activation");
     if (act != null) {
       const activationCost = act.cost;
       const activationType = act.type;
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypes_unchained : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy") ? CONFIG.PF1.abilityActivationTypesPlurals_unchained : CONFIG.PF1.abilityActivationTypesPlurals;
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypes_unchained
+        : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
+        : CONFIG.PF1.abilityActivationTypesPlurals;
 
       if (activationType) {
         if (activationTypesPlurals[activationType] != null) {
           if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
           else label.castingTime = `${activationTypesPlurals[activationType]}`;
-        }
-        else label.castingTime = `${activationTypes[activationType]}`;
+        } else label.castingTime = `${activationTypes[activationType]}`;
       }
-      if (!Number.isNaN(activationCost) && label.castingTime != null) label.castingTime = `${activationCost} ${label.castingTime}`;
+      if (!Number.isNaN(activationCost) && label.castingTime != null)
+        label.castingTime = `${activationCost} ${label.castingTime}`;
       if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();
     }
 
@@ -2444,13 +2559,18 @@ export class ItemPF extends Item {
       if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
     }
 
-    linkData(srcData, updateData, "data.description.value", await renderTemplate("systems/pf1/templates/internal/spell-description.html", data));
+    linkData(
+      srcData,
+      updateData,
+      "data.description.value",
+      await renderTemplate("systems/pf1/templates/internal/spell-description.html", data)
+    );
   }
 
   getSpellComponents(srcData) {
     if (!srcData) srcData = duplicate(this.data);
     const reSplit = CONFIG.PF1.re.traitSeparator;
-      
+
     let components = [];
     for (let [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
       if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
@@ -2470,7 +2590,7 @@ export class ItemPF extends Item {
       if (index[0] >= 0 && index[1] === -1) return -1;
       return index[0] - index[1];
     });
-    components = components.map(o => {
+    components = components.map((o) => {
       if (o === "M") {
         if (df === 2) o = "M/DF";
         if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
@@ -2495,9 +2615,9 @@ export class ItemPF extends Item {
   static _getChatCardTargets(card) {
     const character = game.user.character;
     const controlled = canvas.tokens.controlled;
-    const targets = controlled.reduce((arr, t) => t.actor ? arr.concat([t.actor]) : arr, []);
-    if ( character && (controlled.length === 0) ) targets.push(character);
-    if ( !targets.length ) throw new Error(`You must designate a specific Token as the roll target`);
+    const targets = controlled.reduce((arr, t) => (t.actor ? arr.concat([t.actor]) : arr), []);
+    if (character && controlled.length === 0) targets.push(character);
+    if (!targets.length) throw new Error(`You must designate a specific Token as the roll target`);
     return targets;
   }
 
@@ -2510,18 +2630,21 @@ export class ItemPF extends Item {
     return getProperty(spellbook, "spellPoints.useSystem") || false;
   }
 
-  getSpellPointCost(rollData=null) {
+  getSpellPointCost(rollData = null) {
     if (!rollData) rollData = this.getRollData();
 
     const roll = new Roll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData).roll();
     return roll.total;
   }
 
-  async addSpellUses(value, data=null) {
+  async addSpellUses(value, data = null) {
     if (!this.parentActor) return;
     if (this.data.data.atWill) return;
 
-    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = getProperty(
+        this.parentActor.data,
+        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+      ),
       isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
@@ -2531,8 +2654,7 @@ export class ItemPF extends Item {
       const updateData = {};
       updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
       return this.parentActor.update(updateData);
-    }
-    else {
+    } else {
       if (this.data.data.level === 0) return;
       const newCharges = isSpontaneous
         ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
@@ -2544,12 +2666,10 @@ export class ItemPF extends Item {
           data = {};
           data[key] = newCharges;
           return this.update(data);
-        }
-        else {
+        } else {
           data[key] = newCharges;
         }
-      }
-      else {
+      } else {
         const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
@@ -2560,31 +2680,32 @@ export class ItemPF extends Item {
     return null;
   }
 
-  getSpellUses(max=false) {
+  getSpellUses(max = false) {
     if (!this.parentActor) return 0;
     if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
 
-    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = getProperty(
+        this.parentActor.data,
+        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+      ),
       isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
 
     if (this.useSpellPoints()) {
       if (max) return getProperty(spellbook, "spellPoints.max");
       return getProperty(spellbook, "spellPoints.value");
-    }
-    else {  
+    } else {
       if (isSpontaneous) {
         if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
           if (max) return getProperty(spellbook, `spells.spell${spellLevel}.max`) || 0;
           return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
         }
-      }
-      else {
+      } else {
         if (max) return getProperty(this.data, "data.preparation.maxAmount") || 0;
         return getProperty(this.data, "data.preparation.preparedAmount") || 0;
       }
     }
-    
+
     return 0;
   }
 
@@ -2610,20 +2731,18 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750 + (materialPrice * 50);
+      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice * 50;
       data.data.hardness = 5;
       data.data.hp.max = 5;
       data.data.hp.value = 5;
-    }
-    else if (type === "potion") {
+    } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
       data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
       data.data.hardness = 1;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
-    }
-    else if (type === "scroll") {
+    } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
       data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
@@ -2635,11 +2754,10 @@ export class ItemPF extends Item {
     // Set charges
     if (type === "wand") {
       data.data.uses.maxFormula = "50";
-      data.data.uses.value      = 50;
-      data.data.uses.max        = 50;
-      data.data.uses.per        = "charges";
-    }
-    else {
+      data.data.uses.value = 50;
+      data.data.uses.max = 50;
+      data.data.uses.per = "charges";
+    } else {
       data.data.uses.per = "single";
     }
 
@@ -2701,16 +2819,14 @@ export class ItemPF extends Item {
     let result = [9, 20];
     for (let o of learnedAt) {
       result[0] = Math.min(result[0], o[1]);
-      
+
       const tc = CONFIG.PF1.classCasterType[o[0]] || "high";
       if (tc === "high") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, (o[1] - 1)) * 2);
-      }
-      else if (tc === "med") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, (o[1] - 1)) * 3);
-      }
-      else if (tc === "low") {
-        result[1] = Math.min(result[1], 4 + Math.max(0, (o[1] - 1)) * 3);
+        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 2);
+      } else if (tc === "med") {
+        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
+      } else if (tc === "low") {
+        result[1] = Math.min(result[1], 4 + Math.max(0, o[1] - 1) * 3);
       }
     }
 
@@ -2718,7 +2834,6 @@ export class ItemPF extends Item {
   }
 
   async _onLevelChange(curLevel, newLevel) {
-
     if (!this.parentActor) return;
 
     // Add items associated to this class
@@ -2737,7 +2852,7 @@ export class ItemPF extends Item {
         const itemData = duplicate(item.data);
         delete itemData._id;
         const newItemData = await this.parentActor.createOwnedItem(itemData);
-        const newItem = this.parentActor.items.find(o => o._id === newItemData._id);
+        const newItem = this.parentActor.items.find((o) => o._id === newItemData._id);
 
         await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
         await this.createItemLink("children", "data", newItem, newItem._id);
@@ -2748,7 +2863,7 @@ export class ItemPF extends Item {
     if (newLevel < curLevel) {
       let associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
       for (let [id, level] of Object.entries(associations)) {
-        const item = this.parentActor.items.find(o => o._id === id);
+        const item = this.parentActor.items.find((o) => o._id === id);
         if (!item) {
           delete associations[id];
           continue;
@@ -2762,7 +2877,6 @@ export class ItemPF extends Item {
       await this.setFlag("pf1", "links.classAssociations", associations);
     }
   }
-
 
   /**
    * @param {string} linkType - The type of link.
@@ -2781,9 +2895,18 @@ export class ItemPF extends Item {
 
     // Don't create existing links
     const links = getProperty(this.data, `data.links.${linkType}`) || [];
-    if (links.filter(o => o.id === itemLink).length) return false;
+    if (links.filter((o) => o.id === itemLink).length) return false;
 
-    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
+    const targetLinks = getProperty(targetItem.data, `data.links.${linkType}`);
+    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
+      if (linkType === "charges" && targetLinks.length > 0) {
+        ui.notifications.warn(
+          game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)
+        );
+        return false;
+      }
+      return true;
+    }
 
     if (linkType === "classAssociations" && dataType === "compendium") return true;
 
@@ -2798,7 +2921,6 @@ export class ItemPF extends Item {
    * @returns {Array} An array to insert into this item's link data.
    */
   generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
-
     const result = {
       id: itemLink,
       dataType: dataType,
@@ -2830,7 +2952,6 @@ export class ItemPF extends Item {
    * @returns {Boolean} Whether a link was created.
    */
   async createItemLink(linkType, dataType, targetItem, itemLink) {
-
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
       const updateData = {};
       let _links = duplicate(getProperty(this.data, `data.links.${linkType}`) || []);
@@ -2846,7 +2967,9 @@ export class ItemPF extends Item {
        * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
        * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
        */
-      window.setTimeout(() => { if (this.parentActor) this.parentActor.sheet.render(); }, 50);
+      window.setTimeout(() => {
+        if (this.parentActor) this.parentActor.sheet.render();
+      }, 50);
 
       return true;
     }
@@ -2854,7 +2977,7 @@ export class ItemPF extends Item {
     return false;
   }
 
-  async getLinkedItems(type, extraData=false) {
+  async getLinkedItems(type, extraData = false) {
     const items = getProperty(this.data, `data.links.${type}`);
     if (!items) return [];
 
@@ -2900,13 +3023,13 @@ export class ItemPF extends Item {
         updateData[`data.links.${k}`] = items;
       }
     }
-    
+
     if (Object.keys(updateData).length) {
       return this.update(updateData);
     }
   }
 
-  async getLinkItem(l, extraData=false) {
+  async getLinkItem(l, extraData = false) {
     const id = l.id.split(".");
     let item;
 
@@ -2921,10 +3044,9 @@ export class ItemPF extends Item {
     }
     // Same actor's item
     else if (this.parentActor != null && this.parentActor.items != null) {
-      item = this.parentActor.items.find(o => o._id === id[0]);
+      item = this.parentActor.items.find((o) => o._id === id[0]);
     }
 
-    
     // Package extra data
     if (extraData) {
       item = { item: item, linkData: l };
@@ -2934,9 +3056,8 @@ export class ItemPF extends Item {
   }
 
   async updateLinkItems() {
-
     // Update link items
-    const linkGroups = (getProperty(this.data, "data.links") || {});
+    const linkGroups = getProperty(this.data, "data.links") || {};
     for (let links of Object.values(linkGroups)) {
       for (let l of links) {
         const i = await this.getLinkItem(l);
@@ -2950,7 +3071,7 @@ export class ItemPF extends Item {
   _cleanLink(oldLink, linkType) {
     if (!this.parentActor) return;
 
-    const otherItem = this.parentActor.items.find(o => o._id === oldLink.id);
+    const otherItem = this.parentActor.items.find((o) => o._id === oldLink.id);
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }
@@ -2962,7 +3083,6 @@ export class ItemPF extends Item {
    * @returns {Object.<string, string>} A list of changes
    */
   getChangeSubTargets(target) {
-
     let result = {};
     // Add specific skills
     if (target === "skill") {
@@ -2970,15 +3090,13 @@ export class ItemPF extends Item {
         for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
-      }
-      else {
+      } else {
         const actorSkills = this.parentActor.data.data.skills;
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
             else result[`skill.${s}`] = CONFIG.PF1.skills[s];
-          }
-          else {
+          } else {
             for (let [s2, skl2] of Object.entries(skl.subSkills)) {
               result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
             }
@@ -2996,28 +3114,29 @@ export class ItemPF extends Item {
     return result;
   }
 
-/**
- * Generates a list of targets this modifier can have.
- * @param {ItemPF} item - The item for which the modifier is to be created.
- * @returns {Object.<string, string>} A list of targets
- */
+  /**
+   * Generates a list of targets this modifier can have.
+   * @param {ItemPF} item - The item for which the modifier is to be created.
+   * @returns {Object.<string, string>} A list of targets
+   */
   getConditionalTargets() {
-    let result = {}
+    let result = {};
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
-    if (this.type === "spell" || this.hasSave) result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
+    if (this.type === "spell" || this.hasSave)
+      result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
     if (Object.keys(this.getConditionalSubTargets("misc")).length > 0) {
       result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
     }
     return result;
-    }
+  }
 
-/**
-  * Generates lists of conditional subtargets this attack can have.
-  * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
-  * @returns {Object.<string, string>} A list of conditionals
-  */
+  /**
+   * Generates lists of conditional subtargets this attack can have.
+   * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
+   * @returns {Object.<string, string>} A list of conditionals
+   */
   getConditionalSubTargets(target) {
     let result = {};
     // Add static targets
@@ -3035,8 +3154,8 @@ export class ItemPF extends Item {
         delete result["rapidShotDamage"];
       }
       if (this.hasMultiAttack) {
-        for (let [k,v] of Object.entries(this.data.data.attackParts)) {
-          result[`attack.${Number(k)+1}`] = v[1];
+        for (let [k, v] of Object.entries(this.data.data.attackParts)) {
+          result[`attack.${Number(k) + 1}`] = v[1];
         }
       }
     }
@@ -3054,10 +3173,10 @@ export class ItemPF extends Item {
     return result;
   }
 
-/* Generates lists of conditional modifier bonus types applicable to a formula.
-  * @param {string} target - The target key as defined in CONFIG.PF1.conditionTargets.
-  * @returns {Object.<string, string>} A list of bonus types.
-  * */
+  /* Generates lists of conditional modifier bonus types applicable to a formula.
+   * @param {string} target - The target key as defined in CONFIG.PF1.conditionTargets.
+   * @returns {Object.<string, string>} A list of bonus types.
+   * */
   getConditionalModifierTypes(target) {
     let result = {};
     if (target === "attack" || target === "damage") {
@@ -3074,29 +3193,22 @@ export class ItemPF extends Item {
     return result;
   }
 
-/* Generates a list of critical applications for a given formula target.
-  * @param {string} target - The target key as defined in CONFIG.PF1.conditionalTargets.
-  * @returns {Object.<string, string>} A list of critical applications.
-  * */
+  /* Generates a list of critical applications for a given formula target.
+   * @param {string} target - The target key as defined in CONFIG.PF1.conditionalTargets.
+   * @returns {Object.<string, string>} A list of critical applications.
+   * */
   getConditionalCritical(target) {
     let result = {};
     // Attack bonuses can only apply as critical confirm bonus
     if (target === "attack") {
-      result = {...result,
-        "normal": "PF1.Normal",
-        "crit": "PF1.CriticalConfirmBonus",
-      };
+      result = { ...result, normal: "PF1.Normal", crit: "PF1.CriticalConfirmBonus" };
     }
     // Damage bonuses can be multiplied or not
     if (target === "damage") {
-      result = {...result,
-        "normal": "PF1.Normal"};
+      result = { ...result, normal: "PF1.Normal" };
       if (this.hasAttack) {
-        result = {...result,
-          "crit": "PF1.CritDamageBonusFormula",
-          "nonCrit": "PF1.NonCritDamageBonusFormula",
-        };
-    }
+        result = { ...result, crit: "PF1.CritDamageBonusFormula", nonCrit: "PF1.NonCritDamageBonusFormula" };
+      }
     }
     return result;
   }
@@ -3107,7 +3219,6 @@ export class ItemPF extends Item {
    * @returns {Object.<string, string>} A list of changes
    */
   getContextNoteSubTargets(target) {
-
     let result = {};
     // Add specific skills
     if (target === "skill") {
@@ -3115,15 +3226,13 @@ export class ItemPF extends Item {
         for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
-      }
-      else {
+      } else {
         const actorSkills = this.parentActor.data.data.skills;
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
             else result[`skill.${s}`] = CONFIG.PF1.skills[s];
-          }
-          else {
+          } else {
             for (let [s2, skl2] of Object.entries(skl.subSkills)) {
               result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
             }
@@ -3146,14 +3255,14 @@ export class ItemPF extends Item {
     this.changes.push(change);
   }
 
-  async createContainerContent(data, options={raw: false}) {
+  async createContainerContent(data, options = { raw: false }) {
     let embeddedName = "ContainerContent";
     const user = game.user;
-    const itemOptions = {temporary: false, renderSheet: false};
+    const itemOptions = { temporary: false, renderSheet: false };
 
     // Iterate over data to create
     data = data instanceof Array ? data : [data];
-    if ( !(itemOptions.temporary || itemOptions.noHook) ) {
+    if (!(itemOptions.temporary || itemOptions.noHook)) {
       for (let d of data) {
         const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user._id);
         if (allowed === false) {
@@ -3165,11 +3274,11 @@ export class ItemPF extends Item {
 
     // Trigger the Socket workflow
     let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
-    const items = data.map(o => {
+    const items = data.map((o) => {
       if (!options.raw) {
         let template = duplicate(game.system.template.Item[o.type]);
         if (template.templates instanceof Array) {
-          template.templates.forEach(t => {
+          template.templates.forEach((t) => {
             template = mergeObject(template, game.system.template.Item.templates[t]);
           });
         }
@@ -3182,11 +3291,11 @@ export class ItemPF extends Item {
       return o;
     });
     inventory.push(...items);
-    
+
     // Filter items with duplicate _id
     {
       let ids = [];
-      inventory = inventory.filter(i => {
+      inventory = inventory.filter((i) => {
         if (ids.includes(i._id)) return false;
         ids.push(i._id);
         return true;
@@ -3210,11 +3319,11 @@ export class ItemPF extends Item {
     const ids = new Set(data);
 
     // Iterate over elements of the collection
-    const inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []).filter(d => {
-      if ( !ids.has(d._id) ) return true;
+    const inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []).filter((d) => {
+      if (!ids.has(d._id)) return true;
 
       // Call pre-update hooks to ensure the update is allowed to proceed
-      if ( !options.noHook ) {
+      if (!options.noHook) {
         const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user._id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
@@ -3233,30 +3342,30 @@ export class ItemPF extends Item {
   async updateContainerContents(data) {
     let embeddedName = "ContainerContent";
     const user = game.user;
-    const options = {diff: true};
+    const options = { diff: true };
 
     // Structure the update data
     const pending = new Map();
     data = data instanceof Array ? data : [data];
-    for ( let d of data ) {
-      if ( !d._id ) throw new Error("You must provide an id for every Embedded Entity in an update operation");
+    for (let d of data) {
+      if (!d._id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
       pending.set(d._id, d);
     }
 
     // Difference each update against existing data
     const updates = this.items.reduce((arr, d) => {
-      if ( !pending.has(d._id) ) return arr;
+      if (!pending.has(d._id)) return arr;
       let update = pending.get(d._id);
 
       // Diff the update against current data
-      if ( options.diff ) {
+      if (options.diff) {
         update = diffObject(d, expandObject(update));
-        if ( isObjectEmpty(update) ) return arr;
+        if (isObjectEmpty(update)) return arr;
         update["_id"] = d._id;
       }
 
       // Call pre-update hooks to ensure the update is allowed to proceed
-      if ( !options.noHook ) {
+      if (!options.noHook) {
         const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user._id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
@@ -3268,18 +3377,18 @@ export class ItemPF extends Item {
       arr.push(update);
       return arr;
     }, []);
-    if ( !updates.length ) return [];
-    let inventory = duplicate(this.data.data.inventoryItems).map(o => {
+    if (!updates.length) return [];
+    let inventory = duplicate(this.data.data.inventoryItems).map((o) => {
       for (let u of updates) {
         if (u._id === o._id) return mergeObject(o, u);
       }
       return o;
     });
-    
+
     // Filter items with duplicate _id
     {
       let ids = [];
-      inventory = inventory.filter(i => {
+      inventory = inventory.filter((i) => {
         if (ids.includes(i._id)) return false;
         ids.push(i._id);
         return true;
@@ -3298,12 +3407,14 @@ export class ItemPF extends Item {
     return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
   }
 
-  getValue({recursive=true, sellValue=0.5}={}) {
+  getValue({ recursive = true, sellValue = 0.5 } = {}) {
     // Add item's contained currencies
     let result = this.getTotalCurrency();
 
     // Add item's price
-    if (this.showUnidentifiedData) result += (getProperty(this.data, "data.unidentified.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
+    if (this.showUnidentifiedData)
+      result +=
+        (getProperty(this.data, "data.unidentified.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
     else result += (getProperty(this.data, "data.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
 
     // Modify sell value
@@ -3312,7 +3423,9 @@ export class ItemPF extends Item {
     if (!this.items || !recursive) return result;
 
     // Add item's content items' values
-    this.items.forEach(i => { result += i.getValue({ recursive: recursive, sellValue: sellValue }); });
+    this.items.forEach((i) => {
+      result += i.getValue({ recursive: recursive, sellValue: sellValue });
+    });
 
     return result;
   }
@@ -3321,25 +3434,24 @@ export class ItemPF extends Item {
    * Converts currencies of the given category to the given currency type
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
-  convertCurrency(type="pp") {
-
+  convertCurrency(type = "pp") {
     const totalValue = this.getTotalCurrency();
     let values = [0, 0, 0, 0];
     switch (type) {
       case "pp":
         values[0] = Math.floor(totalValue / 10);
-        values[1] = Math.max(0, Math.floor(totalValue) - (values[0] * 10));
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[0] * 100) - (values[1] * 10));
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[0] * 1000) - (values[1] * 100) - (values[2] * 10));
+        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
         break;
       case "gp":
         values[1] = Math.floor(totalValue);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[1] * 10));
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[1] * 100) - (values[2] * 10));
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
         break;
       case "sp":
         values[2] = Math.floor(totalValue * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[2] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
         break;
       case "cp":
         values[3] = Math.floor(totalValue * 100);
@@ -3356,8 +3468,10 @@ export class ItemPF extends Item {
 
   _calculateCoinWeight(data) {
     const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
-    return Object.values(getProperty(data, "data.currency") || {}).reduce((cur, amount) => {
-      return cur + amount;
-    }, 0) / coinWeightDivisor;
+    return (
+      Object.values(getProperty(data, "data.currency") || {}).reduce((cur, amount) => {
+        return cur + amount;
+      }, 0) / coinWeightDivisor
+    );
   }
 }

@@ -42,7 +42,7 @@ export class LinkOptions extends FormApplication {
    * @property {number} [max]            - A maximum value for numbers.
    * @property {string} title            - The title for the dialog.
    * @property {string|number} [initial] - The initial value.
-   * 
+   *
    * @param {object} e           - The edge connecting two nodes.
    * @param {string} defaultType - The default type if `e` has no type yet.
    * @returns {CommandOptions} The resulting options.

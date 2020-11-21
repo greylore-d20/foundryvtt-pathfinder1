@@ -177,7 +177,7 @@
           }
 
           div.experience {
-            input[type="text"], .max {
+            input[type="text"], span.text-box, .max {
               padding: 0;
               flex: 1;
               text-align: center;
@@ -307,7 +307,7 @@
   }
 
   // Sections
-  section {
+  .primary-body section {
     overflow-y: hidden;
   }
 
@@ -319,6 +319,18 @@
     .traits {
       overflow-y: scroll;
       height: 100%;
+
+      > * {
+        flex: 0 0 24px;
+
+        background-color: rgba(170, 170, 170, 0.3);
+        &:nth-child(even) {
+          background-color: rgba(210, 210, 210, 0.3);
+        }
+        &:hover {
+          background-color: rgba(64, 64, 192, 0.3);
+        }
+      }
     }
 
     table {
@@ -346,89 +358,10 @@
       margin: 0;
     }
 
-    li.natural-armor, li.generic-defenses {
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      flex: 0.5;
-
-      h3 {
-        flex: 0;
-        margin: 0 8px;
-      }
-
-      input[type="text"] {
-        flex: 0 0 32px;
-      }
-    }
-
-    li.attribute.health {
-      height: 100%;
-      border-bottom: none;
-    }
-
-    li.attribute {
-      height: 80px;
-      margin: 0 5px;
-      border: @borderGroove;
-      border-radius: 4px;
-      .nodesto();
-      text-align: center;
-
-      .attribute-name {
-        flex: 0 0 18px;
-      }
-
-      .attribute-speed {
-        .attribute {
-          white-space: nowrap;
-          overflow: hidden;
-          text-align: center;
-        }
-      }
-
-      &.health {
-        div.attribute {
-          max-width: 33%;
-        }
-      }
-
-      .attribute-value {
-        height: 28px;
-        line-height: 20px;
-
-        input {
-          display: inline;
-          max-width: 80%;
-          margin: 0;
-          font-size: 24px;
-        }
-
-        div.attribute {
-          display: inline-block;
-          min-width: 24px;
-          font-size: 24px;
-          width: calc(100% - 2px);
-        }
-
-        span.sep {
-          display: inline;
-          position: relative;
-          top: 2px;
-          font-size: 28px;
-          color: @colorTan;
-        }
-
-        &.multiple {
-          input { max-width: 33%; }
-        }
-      }
-
-      .attribute-footer {
-        flex: 0 0 18px;
-        margin-top: -1px;
-        line-height: 18px;
-        font-family: "Signika", "Palatino Linotype", serif;
-        font-size: 14px;
+    table {
+      span.text-box, input[type="text"] {
+        height: 20px;
+        padding: 1px 3px;
       }
     }
   }
@@ -513,7 +446,7 @@
       align-items: end;
 
       background-color: rgba(170, 170, 170, 0.3);
-      &:nth-child(2n+1) {
+      &:nth-child(even) {
         background-color: rgba(210, 210, 210, 0.3);
       }
       &:hover {
@@ -588,12 +521,6 @@
           top: -4px;
         }
 
-        input[type="text"] {
-          height: 24px;
-          width: initial;
-          padding: 0;
-        }
-
         .skill-control {
           display: flex;
           align-items: center;
@@ -618,10 +545,12 @@
 
       .skill-mod {
         flex: 0 0 28px;
+        line-height: 22px;
         font-weight: bold;
         margin: -1px 22px 0px 0px;
         text-align: center;
         border: 1px dotted #111;
+        cursor: initial;
       }
 
       .skill-rank {
@@ -632,6 +561,10 @@
 
       .skill-controls {
         flex: 0 0 24px;
+      }
+
+      input[type="text"] {
+        height: auto;
       }
     }
 
@@ -723,7 +656,7 @@
     margin: 0 5px;
 
     .form-group, .form-group-stacked {
-      margin: 0 0 4px 0;
+      margin: 0;
       justify-content: space-between;
     }
 
@@ -860,7 +793,8 @@
   .tab.inventory,
   .tab.spellbook,
   .tab.attributes,
-  .tab.combat {
+  .tab.combat,
+  .tab.buffs {
     overflow-y: hidden;
 
     label.checkbox {
@@ -873,11 +807,26 @@
       }
     }
 
+    .buffs-conditions {
+      flex: 0;
+    }
+
     .combat-attacks {
       flex: 1 1 320px;
       border-bottom: 2px solid @colorDark;
       margin-bottom: 4px;
       overflow-y: scroll;
+    }
+
+    .inventory-group {
+      height: 100%;
+    }
+    
+    .inventory-body {
+      .inventory-list {
+        height: 100%;
+        overflow-y: scroll;
+      }
     }
   }
 
@@ -933,6 +882,8 @@
   /* ----------------------------------------- */
 
   section.feats-body {
+    overflow-y: scroll;
+
     .feats-group {
       .item-detail.item-type {
         flex: 0 0 40px;
@@ -950,6 +901,8 @@
     }
 
     .spell-points-current {
+      flex: 0;
+
       h3 {
         .nodesto();
         font-size: 22px;
@@ -967,7 +920,6 @@
       }
     }
 
-    .spell-slots,
     .spell-comps,
     .spell-uses {
       white-space: nowrap;

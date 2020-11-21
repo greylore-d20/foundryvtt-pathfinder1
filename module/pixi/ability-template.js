@@ -3,7 +3,6 @@
  * @extends {MeasuredTemplate}
  */
 export class AbilityTemplate extends MeasuredTemplate {
-
   /**
    * A factory method to create an AbilityTemplate instance using provided data
    * @param {string} type -             The type of template ("cone", "circle", "rect" or "ray")
@@ -74,17 +73,17 @@ export class AbilityTemplate extends MeasuredTemplate {
    * @returns {Promise<boolean>} Returns true if placed, or false if cancelled
    */
   activatePreviewListeners(initialLayer) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const handlers = {};
       let moveTime = 0;
 
       const pfStyle = game.settings.get("pf1", "measureStyle") === true;
 
       // Update placement (mouse-move)
-      handlers.mm = event => {
+      handlers.mm = (event) => {
         event.stopPropagation();
         let now = Date.now(); // Apply a 20ms throttle
-        if ( now - moveTime <= 20 ) return;
+        if (now - moveTime <= 20) return;
         const center = event.data.getLocalPosition(this.layer);
         let pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
         this.data.x = pos.x;
@@ -95,7 +94,7 @@ export class AbilityTemplate extends MeasuredTemplate {
       };
 
       // Cancel the workflow (right-click)
-      handlers.rc = (event, canResolve=true) => {
+      handlers.rc = (event, canResolve = true) => {
         this.layer.preview.removeChildren();
         canvas.stage.off("mousemove", handlers.mm);
         canvas.stage.off("mousedown", handlers.lc);
@@ -111,7 +110,7 @@ export class AbilityTemplate extends MeasuredTemplate {
       };
 
       // Confirm the workflow (left-click)
-      handlers.lc = async event => {
+      handlers.lc = async (event) => {
         handlers.rc(event, false);
 
         // Confirm final snapped position
@@ -125,34 +124,30 @@ export class AbilityTemplate extends MeasuredTemplate {
       };
 
       // Rotate the template by 3 degree increments (mouse-wheel)
-      handlers.mw = event => {
+      handlers.mw = (event) => {
         if (event.ctrlKey) event.preventDefault(); // Avoid zooming the browser window
         event.stopPropagation();
         let delta, snap;
         if (event.ctrlKey) {
           if (this.data.t === "rect") {
-            delta = Math.sqrt(canvas.dimensions.distance*canvas.dimensions.distance);
-          }
-          else {
+            delta = Math.sqrt(canvas.dimensions.distance * canvas.dimensions.distance);
+          } else {
             delta = canvas.dimensions.distance;
           }
-          this.data.distance += (delta * -Math.sign(event.deltaY));
-        }
-        else {
+          this.data.distance += delta * -Math.sign(event.deltaY);
+        } else {
           if (pfStyle && this.data.t === "cone") {
             delta = 90;
             snap = event.shiftKey ? delta : 45;
-          }
-          else {
+          } else {
             delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
             snap = event.shiftKey ? delta : 5;
           }
           if (this.data.t === "rect") {
             snap = Math.sqrt(Math.pow(5, 2) + Math.pow(5, 2));
-            this.data.distance += (snap * -Math.sign(event.deltaY));
-          }
-          else {
-            this.data.direction += (snap * Math.sign(event.deltaY));
+            this.data.distance += snap * -Math.sign(event.deltaY);
+          } else {
+            this.data.direction += snap * Math.sign(event.deltaY);
           }
         }
         this.refresh();

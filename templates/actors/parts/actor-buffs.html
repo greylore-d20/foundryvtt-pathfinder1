@@ -1,30 +1,31 @@
 {{!-- Buffs --}}
-
-{{!-- Buff Navigation --}}
-<nav class="sheet-navigation tabs subtabs buffs" data-group="buffs">
-  <a class="item" data-tab="conditions">{{localize "PF1.ConditionPlural"}}</a>
-  {{#each sections as |section sid|}}
-  <a class="item" data-tab="{{sid}}">{{section.label}}</a>
+<div class="flexrow buffs-conditions">
+  {{#each config.conditions as |value con|}}
+  <div class="condition">
+    <label class="checkbox">
+      <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked (lookup ../data.attributes.conditions con)}}/>
+      <span>{{lookup ../config.conditions con}}</span>
+    </label>
+  </div>
   {{/each}}
-</nav>
+</div>
+
+<hr>
+<div class="inventory-filters flexrow">  
+  <ul class="filter-list flexrow" data-filter="buffs">
+    {{#each sections as |section sid|}}
+    <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+    {{/each}}
+  </ul>
+</div>
 
 <section class="buffs-body">
-  <div class="tab flexrow" data-group="buffs" data-tab="conditions">
-    {{#each config.conditions as |value con|}}
-    <div class="condition">
-      <label class="checkbox">
-        <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked (lookup ../data.attributes.conditions con)}}/>
-        <span>{{lookup ../config.conditions con}}</span>
-      </label>
-    </div>
-    {{/each}}
-  </div>
-
-  {{#each sections as |section sid|}}
-  <div class="tab inventory-group flexcol" data-group="buffs" data-tab="{{sid}}">
-    <ol class="inventory-list sub-scroll scroll-buffs">
+  <div class="inventory-group flexcol">
+    <ol class="inventory-list">
+      {{#each sections as |section sid|}}
+      {{#unless section._hidden}}
       <li class="inventory-header flexrow">
-        <h3 class="item-name flexrow"></h3>
+        <h3 class="item-name flexrow">{{section.label}}</h3>
 
         <div class="item-detail item-level">
           <span>{{localize "PF1.Level"}}</span>
@@ -52,7 +53,7 @@
           </div>
 
           <div class="item-detail item-level">
-            <input type="text" value="{{#if item.data.level}}{{item.data.level}}{{/if}}" data-dtype="Number"/>
+            <span class="text-box" data-dtype="Number">{{#if item.data.level}}{{item.data.level}}{{/if}}</span>
           </div>
 
           <div class="item-detail item-active">
@@ -69,7 +70,8 @@
         </li>
         {{/each}}
       </ol>
+      {{/unless}}
+      {{/each}}
     </ol>
   </div>
-  {{/each}}
 </section>

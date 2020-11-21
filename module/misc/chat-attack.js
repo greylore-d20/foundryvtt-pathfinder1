@@ -1,7 +1,7 @@
 import { isMinimumCoreVersion } from "../lib.js";
 
 export class ChatAttack {
-  constructor(item, {label="", rollData={}, primaryAttack=true}={}) {
+  constructor(item, { label = "", rollData = {}, primaryAttack = true } = {}) {
     this._baseRollData = rollData;
     this.primaryAttack = primaryAttack;
     this.setItem(item);
@@ -32,9 +32,9 @@ export class ChatAttack {
       parts: [],
     };
     this.critDamage = {
-      flavor : "",
+      flavor: "",
       tooltip: "",
-      total  : 0,
+      total: 0,
       rolls: [],
       parts: [],
     };
@@ -43,10 +43,10 @@ export class ChatAttack {
 
     this.notesOnly = true;
 
-    this.cards           = {};
-    this.hasCards        = false;
-    this.attackNotes     = [];
-    this.effectNotes     = [];
+    this.cards = {};
+    this.hasCards = false;
+    this.attackNotes = [];
+    this.effectNotes = [];
     this.attackNotesHTML = "";
     this.effectNotesHTML = "";
   }
@@ -106,7 +106,9 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.attackNotesHTML =  `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize("PF1.AttackNotes")}</label><div class="flexrow">${inner}</div></div>`;
+    this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize(
+      "PF1.AttackNotes"
+    )}</label><div class="flexrow">${inner}</div></div>`;
   }
 
   setEffectNotesHTML() {
@@ -122,10 +124,12 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize("PF1.EffectNotes")}</label><div class="flexrow">${inner}</div></div>`;
+    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize(
+      "PF1.EffectNotes"
+    )}</label><div class="flexrow">${inner}</div></div>`;
   }
 
-  async addAttack({bonus=null, extraParts=[], critical=false, conditionalParts={}}={}) {
+  async addAttack({ bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
     if (!this.item) return;
 
     this.hasAttack = true;
@@ -136,10 +140,9 @@ export class ChatAttack {
       extraParts.push("@critConfirmBonus");
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
-    }
-    else {
+    } else {
       // Add conditional attack bonus
-      if(conditionalParts["attack.normal"]?.length) extraParts.push(...conditionalParts["attack.normal"]);
+      if (conditionalParts["attack.normal"]?.length) extraParts.push(...conditionalParts["attack.normal"]);
     }
 
     // Add broken penalty
@@ -148,7 +151,12 @@ export class ChatAttack {
     }
 
     // Roll attack
-    let roll = this.item.rollAttack({data: this.rollData, bonus: bonus, extraParts: extraParts, primaryAttack: this.primaryAttack });
+    let roll = this.item.rollAttack({
+      data: this.rollData,
+      bonus: bonus,
+      extraParts: extraParts,
+      primaryAttack: this.primaryAttack,
+    });
     data.roll = roll;
     let d20 = isMinimumCoreVersion("0.7.2") ? roll.results[0] : roll.parts[0].total;
     let critType = 0;
@@ -156,19 +164,19 @@ export class ChatAttack {
     else if (d20 === 1) critType = 2;
 
     // Add tooltip
-    data.flavor   = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
-    data.total    = roll.total;
-    data.isCrit   = critType === 1;
+    data.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+    data.total = roll.total;
+    data.isCrit = critType === 1;
     data.isFumble = critType === 2;
     data.rollJSON = escape(JSON.stringify(roll));
 
     // Add crit confirm
     if (!critical && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
-      this.hasCritConfirm    = true;
+      this.hasCritConfirm = true;
       this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
       if (this.item.data.data.broken) this.rollData.critMult = 1;
 
-      await this.addAttack({bonus: bonus, extraParts: extraParts, critical: true, conditionalParts});
+      await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
     }
 
     if (this.attackNotes === "") this.addAttackNotes();
@@ -189,7 +197,7 @@ export class ChatAttack {
     this.setAttackNotesHTML();
   }
 
-  async addDamage({extraParts=[], critical=false, conditionalParts={}}={}) {
+  async addDamage({ extraParts = [], critical = false, conditionalParts = {} } = {}) {
     if (!this.item) return;
 
     this.hasDamage = true;
@@ -203,12 +211,18 @@ export class ChatAttack {
     if (!critical) {
       rollData.critMult = 1;
     }
-    
+
     // Roll damage
     const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      const rolls = this.item.rollDamage({data: rollData, extraParts: extraParts, primaryAttack: this.primaryAttack, critical: critical, conditionalParts});
+      const rolls = this.item.rollDamage({
+        data: rollData,
+        extraParts: extraParts,
+        primaryAttack: this.primaryAttack,
+        critical: critical,
+        conditionalParts,
+      });
       data.rolls = rolls;
       // Add damage parts
       for (let roll of rolls) {
@@ -222,8 +236,7 @@ export class ChatAttack {
     let consolidatedParts = data.parts.reduce((cur, o) => {
       if (!cur[o.damageType]) {
         cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.rolls.slice(), critical ? "critical" : o.type);
-      }
-      else {
+      } else {
         cur[o.damageType].amount += o.amount;
         cur[o.damageType].rolls.push(...o.rolls);
       }
@@ -239,8 +252,11 @@ export class ChatAttack {
 
     // Add normal data
     let flavor;
-    if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing")         : game.i18n.localize("PF1.Damage");
-    else           flavor = this.item.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+    if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+    else
+      flavor = this.item.isHealing
+        ? game.i18n.localize("PF1.HealingCritical")
+        : game.i18n.localize("PF1.DamageCritical");
 
     // Determine total damage
     let totalDamage = data.parts.reduce((cur, p) => {
@@ -254,25 +270,62 @@ export class ChatAttack {
 
     // Add card
     if (critical) {
-      if (!this.cards.critical) this.cards.critical = { label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"), items: [] };
+      if (!this.cards.critical)
+        this.cards.critical = {
+          label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"),
+          items: [],
+        };
       if (this.item.isHealing) {
-        this.cards.critical.items.push({ label: game.i18n.localize("PF1.Apply"), value: -totalDamage, action: "applyDamage", });
-        this.cards.critical.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: -Math.floor(totalDamage / 2), action: "applyDamage", });
+        this.cards.critical.items.push({
+          label: game.i18n.localize("PF1.Apply"),
+          value: -totalDamage,
+          action: "applyDamage",
+        });
+        this.cards.critical.items.push({
+          label: game.i18n.localize("PF1.ApplyHalf"),
+          value: -Math.floor(totalDamage / 2),
+          action: "applyDamage",
+        });
+      } else {
+        this.cards.critical.items.push({
+          label: game.i18n.localize("PF1.Apply"),
+          value: totalDamage,
+          action: "applyDamage",
+        });
+        this.cards.critical.items.push({
+          label: game.i18n.localize("PF1.ApplyHalf"),
+          value: Math.floor(totalDamage / 2),
+          action: "applyDamage",
+        });
       }
-      else {
-        this.cards.critical.items.push({ label: game.i18n.localize("PF1.Apply"), value: totalDamage, action: "applyDamage", });
-        this.cards.critical.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: Math.floor(totalDamage / 2), action: "applyDamage", });
-      }
-    }
-    else {
-      if (!this.cards.damage)  this.cards.damage = { label: game.i18n.localize(this.item.isHealing ? "PF1.Healing" : "PF1.Damage"), items: [] };
+    } else {
+      if (!this.cards.damage)
+        this.cards.damage = {
+          label: game.i18n.localize(this.item.isHealing ? "PF1.Healing" : "PF1.Damage"),
+          items: [],
+        };
       if (this.item.isHealing) {
-        this.cards.damage.items.push({ label: game.i18n.localize("PF1.Apply"), value: -totalDamage, action: "applyDamage", });
-        this.cards.damage.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: -Math.floor(totalDamage / 2), action: "applyDamage", });
-      }
-      else {
-        this.cards.damage.items.push({ label: game.i18n.localize("PF1.Apply"), value: totalDamage, action: "applyDamage", });
-        this.cards.damage.items.push({ label: game.i18n.localize("PF1.ApplyHalf"), value: Math.floor(totalDamage / 2), action: "applyDamage", });
+        this.cards.damage.items.push({
+          label: game.i18n.localize("PF1.Apply"),
+          value: -totalDamage,
+          action: "applyDamage",
+        });
+        this.cards.damage.items.push({
+          label: game.i18n.localize("PF1.ApplyHalf"),
+          value: -Math.floor(totalDamage / 2),
+          action: "applyDamage",
+        });
+      } else {
+        this.cards.damage.items.push({
+          label: game.i18n.localize("PF1.Apply"),
+          value: totalDamage,
+          action: "applyDamage",
+        });
+        this.cards.damage.items.push({
+          label: game.i18n.localize("PF1.ApplyHalf"),
+          value: Math.floor(totalDamage / 2),
+          action: "applyDamage",
+        });
       }
     }
 
@@ -328,16 +381,16 @@ export class ChatAttack {
 }
 
 export class DamagePart {
-  constructor(amount, damageType, rolls, type="normal") {
+  constructor(amount, damageType, rolls, type = "normal") {
     this.amount = amount;
     this.damageType = damageType;
     if (!this.damageType) this.damageType = "Untyped";
     this.type = type;
     this.rolls = [];
-    
+
     if (rolls != null) {
       if (!(rolls instanceof Array)) rolls = [rolls];
-      this.rolls = rolls.map(o => {
+      this.rolls = rolls.map((o) => {
         return {
           roll: o,
           json: escape(JSON.stringify(o)),

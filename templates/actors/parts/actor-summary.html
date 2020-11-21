@@ -32,10 +32,9 @@
               {{#unless disableExperience}}
               <td>
                 <div class="flexrow experience">
-                  <input class="select-on-click" name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
-                  placeholder="0"/>
+                  <span class="text-box direct allow-relative" name="data.details.xp.value" data-dtype="Number">{{data.details.xp.value}}</span>
                   <span class="separator"> / </span>
-                  <span class="max">{{data.details.xp.max}}</span>
+                  <span class="text-box max readonly">{{data.details.xp.max}}</span>
                 </div>
               </td>
               {{/unless}}
@@ -66,8 +65,8 @@
               <td>
                 {{data.attributes.hd.total}}
               </td>
-              <td data-action="input-text" data-for=".cr-input" data-attr-name="data.details.cr.base">
-                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
+              <td>
+                <span class="text-box cr-input" name="data.details.cr.base">{{labels.cr}}</span>
               </td>
               <td>
                 {{data.details.xp.value}}
@@ -188,19 +187,17 @@
 
       <tbody>
         <tr>
-          <td data-action="input-text" data-for=".hp-current-input" data-attr-name="data.attributes.hp.value">
-            <input readonly class="hp-current-input" type="text" value="{{data.attributes.hp.value}}" placeholder="0"/>
+          <td>
+            <span class="text-box direct allow-relative hp-current-input" name="data.attributes.hp.value" data-dtype="Number">{{data.attributes.hp.value}}</span>
           </td>
           <td>
-            <input disabled type="text" value="{{data.attributes.hp.max}}" placeholder="0"/>
+            <span class="text-box readonly">{{data.attributes.hp.max}}</span>
           </td>
-          <td data-action="input-text" data-for=".hp-temp-input" data-attr-name="data.attributes.hp.temp">
-            <input readonly class="hp-temp-input" type="text"
-              {{#if data.attributes.hp.temp}}value="{{data.attributes.hp.temp}}"{{/if}}/>
+          <td>
+            <span class="text-box direct allow-relative hp-temp-input" name="data.attributes.hp.temp" data-dtype="Number">{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}</span>
           </td>
-          <td data-action="input-text" data-for=".hp-nonlethal-input" data-attr-name="data.attributes.hp.nonlethal">
-            <input readonly class="hp-nonlethal-input" type="text"
-              {{#if data.attributes.hp.nonlethal}}value="{{data.attributes.hp.nonlethal}}"{{/if}}/>
+          <td>
+            <span class="text-box direct allow-relative hp-nonlethal-input" name="data.attributes.hp.nonlethal" data-dtype="Number">{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}</span>
           </td>
         </tr>
       </tbody>
@@ -252,21 +249,26 @@
 
       <tbody>
         <tr>
-          <td data-action="input-text" data-for=".vigor-current-input" data-attr-name="data.attributes.vigor.value">
-            <input readonly class="vigor-current-input" type="text" value="{{data.attributes.vigor.value}}"/>
+          <td>
+            <span class="text-box direct allow-relative vigor-current-input" name="data.attributes.vigor.value" data-dtype="Number">
+              {{data.attributes.vigor.value}}
+            </span>
           </td>
           <td>
-            <input disabled class="vigor-max-input" name="data.attributes.vigor.max" type="text" value="{{data.attributes.vigor.max}}"/>
-          </td>
-          <td data-action="input-text" data-for=".vigor-temp-input" data-attr-name="data.attributes.vigor.temp">
-            <input readonly class="vigor-temp-input" type="text"
-              {{#if data.attributes.vigor.temp}}value="{{data.attributes.vigor.temp}}"{{/if}}/>
-          </td>
-          <td data-action="input-text" data-for=".wounds-current-input" data-attr-name="data.attributes.wounds.value">
-            <input readonly class="wounds-current-input" type="text" value="{{data.attributes.wounds.value}}"/>
+            <span class="text-box readonly">{{data.attributes.vigor.max}}</span>
           </td>
           <td>
-            <input disabled class="wounds-max-input" name="data.attributes.wounds.max" type="text" value="{{data.attributes.wounds.max}}"/>
+            <span class="text-box direct allow-relative vigor-temp-input" name="data.attributes.vigor.temp" data-dtype="Number">
+              {{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}
+            </span>
+          </td>
+          <td>
+            <span class="text-box direct allow-relative wounds-current-input" name="data.attributes.wounds.value" data-dtype="Number">
+              {{data.attributes.wounds.value}}
+            </span>
+          </td>
+          <td>
+            <span class="text-box readonly">{{data.attributes.wounds.max}}</span>
           </td>
         </tr>
       </tbody>
@@ -291,7 +293,11 @@
       </thead>
 
       <tbody>
-        <td class="tooltip" data-action="input-text" data-for=".land-speed-input" data-attr-name="data.attributes.speed.land.base">
+        <td class="tooltip">
+          <span class="text-box direct speed" name="data.attributes.speed.land.base" data-dtype="Number">
+            {{#if data.attributes.speed.land.total}}{{data.attributes.speed.land.total}}{{/if}}
+          </span>
+
           <div class="tooltipcontent">
             @attributes.speed.land.total : {{data.attributes.speed.land.total}}
             {{#if sourceDetails.data.attributes.speed.land.total.length}}
@@ -299,10 +305,12 @@
               {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </div>
-
-          <input readonly type="text" class="speed land-speed-input" {{#if data.attributes.speed.land.total}}value="{{data.attributes.speed.land.total}}"{{/if}} data-dtype="Number"/>
         </td>
-        <td class="tooltip" data-action="input-text" data-for=".climb-speed-input" data-attr-name="data.attributes.speed.climb.base">
+        <td class="tooltip">
+          <span class="text-box direct speed" name="data.attributes.speed.climb.base" data-dtype="Number">
+            {{#if data.attributes.speed.climb.total}}{{data.attributes.speed.climb.total}}{{/if}}
+          </span>
+
           <div class="tooltipcontent">
             @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
             {{#if sourceDetails.data.attributes.speed.climb.total.length}}
@@ -310,10 +318,12 @@
               {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </div>
-
-          <input readonly type="text" class="speed climb-speed-input" {{#if data.attributes.speed.climb.total}}value="{{data.attributes.speed.climb.total}}"{{/if}} data-dtype="Number"/>
         </td>
-        <td class="tooltip" data-action="input-text" data-for=".swim-speed-input" data-attr-name="data.attributes.speed.swim.base">
+        <td class="tooltip">
+          <span class="text-box direct speed" name="data.attributes.speed.swim.base" data-dtype="Number">
+            {{#if data.attributes.speed.swim.total}}{{data.attributes.speed.swim.total}}{{/if}}
+          </span>
+
           <div class="tooltipcontent">
             @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
             {{#if sourceDetails.data.attributes.speed.swim.total.length}}
@@ -321,10 +331,12 @@
               {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </div>
-
-          <input readonly type="text" class="speed swim-speed-input" {{#if data.attributes.speed.swim.total}}value="{{data.attributes.speed.swim.total}}"{{/if}} data-dtype="Number"/>
         </td>
-        <td class="tooltip" data-action="input-text" data-for=".burrow-speed-input" data-attr-name="data.attributes.speed.burrow.base">
+        <td class="tooltip">
+          <span class="text-box direct speed" name="data.attributes.speed.burrow.base" data-dtype="Number">
+            {{#if data.attributes.speed.burrow.total}}{{data.attributes.speed.burrow.total}}{{/if}}
+          </span>
+
           <div class="tooltipcontent">
             @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
             {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
@@ -332,10 +344,12 @@
               {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </div>
-
-          <input readonly type="text" class="speed burrow-speed-input" {{#if data.attributes.speed.burrow.total}}value="{{data.attributes.speed.burrow.total}}"{{/if}} data-dtype="Number"/>
         </td>
-        <td class="tooltip" data-action="input-text" data-for=".fly-speed-input" data-attr-name="data.attributes.speed.fly.base">
+        <td class="tooltip">
+          <span class="text-box direct speed" name="data.attributes.speed.fly.base" data-dtype="Number">
+            {{#if data.attributes.speed.fly.total}}{{data.attributes.speed.fly.total}}{{/if}}
+          </span>
+
           <div class="tooltipcontent">
             @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
             @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
@@ -344,8 +358,6 @@
               {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </div>
-
-          <input readonly type="text" class="speed fly-speed-input" {{#if data.attributes.speed.fly.total}}value="{{data.attributes.speed.fly.total}}"{{/if}} data-dtype="Number"/>
         </td>
         <td>
           <select name="data.attributes.speed.fly.maneuverability">
@@ -358,113 +370,6 @@
         </td>
       </tbody>
     </table>
-
-    {{!-- <div class="attribute-speed tooltip">
-      <div class="tooltipcontent">
-        @attributes.speed.land.total : {{data.attributes.speed.land.total}}
-        {{#if sourceDetails.data.attributes.speed.land.total.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
-      </div>
-      <h4 class="attribute-name box-title">{{ localize "PF1.SpeedLand" }}</h4>
-      <div class="attribute-value">
-        <div class="attribute">{{#if data.attributes.speed.land.total}}{{labels.speed.land}}{{/if}}</div>
-      </div>
-      <footer class="attribute-footer">
-        <input class="select-on-click" name="data.attributes.speed.land.base" type="text"
-        value="{{#if data.attributes.speed.land.base}}{{data.attributes.speed.land.base}}{{/if}}"
-        data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
-      </footer>
-    </div>
-
-    <div class="attribute-speed tooltip">
-      <div class="tooltipcontent">
-        @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
-        {{#if sourceDetails.data.attributes.speed.climb.total.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
-      </div>
-      <h4 class="attribute-name box-title">{{ localize "PF1.SpeedClimb" }}</h4>
-      <div class="attribute-value">
-        <div class="attribute">{{#if data.attributes.speed.climb.total}}{{labels.speed.climb}}{{/if}}</div>
-      </div>
-      <footer class="attribute-footer">
-        <input class="select-on-click" name="data.attributes.speed.climb.base" type="text"
-        value="{{#if data.attributes.speed.climb.base}}{{data.attributes.speed.climb.base}}{{/if}}"
-        data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
-      </footer>
-    </div>
-
-    <div class="attribute-speed tooltip">
-      <div class="tooltipcontent">
-        @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
-        {{#if sourceDetails.data.attributes.speed.swim.total.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
-      </div>
-      <h4 class="attribute-name box-title">{{ localize "PF1.SpeedSwim" }}</h4>
-      <div class="attribute-value">
-        <div class="attribute">{{#if data.attributes.speed.swim.total}}{{labels.speed.swim}}{{/if}}</div>
-      </div>
-      <footer class="attribute-footer">
-        <input class="select-on-click" name="data.attributes.speed.swim.base" type="text"
-        value="{{#if data.attributes.speed.swim.base}}{{data.attributes.speed.swim.base}}{{/if}}"
-        data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
-      </footer>
-    </div>
-
-    <div class="attribute-speed tooltip">
-      <div class="tooltipcontent">
-        @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
-        {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
-      </div>
-      <h4 class="attribute-name box-title">{{ localize "PF1.SpeedBurrow" }}</h4>
-      <div class="attribute-value">
-        <div class="attribute">{{#if data.attributes.speed.burrow.total}}{{labels.speed.burrow}}{{/if}}</div>
-      </div>
-      <footer class="attribute-footer">
-        <input class="select-on-click" name="data.attributes.speed.burrow.base" type="text"
-        value="{{#if data.attributes.speed.burrow.base}}{{data.attributes.speed.burrow.base}}{{/if}}"
-        data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
-      </footer>
-    </div>
-
-    <div class="attribute-speed tooltip">
-      <div class="tooltipcontent">
-        @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
-        @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
-        {{#if sourceDetails.data.attributes.speed.fly.total.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
-      </div>
-      <h4 class="attribute-name box-title">{{ localize "PF1.SpeedFly" }}</h4>
-      <div class="attribute-value">
-        <div class="attribute">{{#if data.attributes.speed.fly.total}}{{labels.speed.fly}}{{/if}}</div>
-      </div>
-      <footer class="attribute-footer">
-        <input class="select-on-click" name="data.attributes.speed.fly.base" type="text"
-        value="{{#if data.attributes.speed.fly.base}}{{data.attributes.speed.fly.base}}{{/if}}"
-        data-dtype="Number" placeholder="{{localize "PF1.Base"}}"/>
-      </footer>
-    </div>
-
-    <div class="attribute-speed">
-      <h4 class="attribute-name box-title">{{ localize "PF1.FlyManeuverabilityShort" }}</h4>
-      <select name="data.attributes.speed.fly.maneuverability">
-        {{#select data.attributes.speed.fly.maneuverability}}
-        {{#each config.flyManeuverabilities as |name type|}}
-        <option value="{{type}}">{{name}}</option>
-        {{/each}}
-        {{/select}}
-      </select>
-    </div> --}}
   </li>
 </ul>
 

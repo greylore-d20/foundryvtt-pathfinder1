@@ -21,9 +21,9 @@ export class SidebarPF extends Sidebar {
   }
 
   activateExtraListeners(html) {
-    html.find(".compendium-footer .compendium.spells").click(e => this._onBrowseCompendium(e, "spells"));
-    html.find(".compendium-footer .compendium.items").click(e => this._onBrowseCompendium(e, "items"));
-    html.find(".compendium-footer .compendium.bestiary").click(e => this._onBrowseCompendium(e, "bestiary"));
+    html.find(".compendium-footer .compendium.spells").click((e) => this._onBrowseCompendium(e, "spells"));
+    html.find(".compendium-footer .compendium.items").click((e) => this._onBrowseCompendium(e, "items"));
+    html.find(".compendium-footer .compendium.bestiary").click((e) => this._onBrowseCompendium(e, "bestiary"));
   }
 
   _onBrowseCompendium(event, type) {

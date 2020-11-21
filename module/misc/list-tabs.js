@@ -1,5 +1,5 @@
 export class ListTabs {
-  constructor({navSelector, contentSelector, initial, callback}={}) {
+  constructor({ navSelector, contentSelector, initial, callback } = {}) {
     this.active = initial;
     this.callback = callback;
     this._navSelector = navSelector;
@@ -10,7 +10,6 @@ export class ListTabs {
   }
 
   bind(html) {
-
     // Identify navigation element
     this._nav = html.querySelector(this._navSelector);
     if (!this._nav) return;
@@ -18,7 +17,7 @@ export class ListTabs {
     if (!this._list) return;
 
     // Set first active tab
-    if (!this._list.querySelector("option.active")) {
+    if (!this._list.querySelector("option.active") && !this.active) {
       const option = this._list.options[0];
       option.classList.toggle("active", true);
       this.active = option.dataset.tab;
@@ -36,12 +35,13 @@ export class ListTabs {
     this._list.addEventListener("change", this._onClickNav.bind(this));
   }
 
-  activate(tabName, {triggerCallback=false}={}) {
+  activate(tabName, { triggerCallback = false } = {}) {
+    // console.trace(tabName);
 
     // Validate the requested tab name
     const items = this._nav.querySelectorAll("select.tabs option");
     if (!items.length) return;
-    const valid = Array.from(items).some(i => i.dataset.tab === tabName);
+    const valid = Array.from(items).some((i) => i.dataset.tab === tabName);
     if (!valid) tabName = items[0].dataset.tab;
 
     // Change active tab
@@ -72,6 +72,6 @@ export class ListTabs {
     const a = event.currentTarget;
     const option = a.options[a.selectedIndex];
     const tabName = option.dataset.tab;
-    if (tabName !== this.active) this.activate(tabName, {triggerCallback: true});
+    if (tabName !== this.active) this.activate(tabName, { triggerCallback: true });
   }
 }

@@ -1,12 +1,11 @@
 import { ChatMessagePF } from "./sidebar/chat-message.js";
 import { isMinimumCoreVersion } from "./lib.js";
 
-export const formulaHasDice = function(formula) {
-  return formula.match(/[0-9\)][dD]/) || formula.match(/[dD][0-9\(]/);
+export const formulaHasDice = function (formula) {
+  return formula.match(/[0-9)][dD]/) || formula.match(/[dD][0-9(]/);
 };
 
 export class DicePF {
-
   /**
    * A standardized helper function for managing core 5e "d20 rolls"
    *
@@ -15,6 +14,7 @@ export class DicePF {
    *
    * @param {Event} event           The triggering event which initiated the roll
    * @param {Array} parts           The dice roll component parts, excluding the initial d20
+   * @param {String} dice           The initial d20
    * @param {Actor} actor           The Actor making the d20 roll
    * @param {Object} data           Actor or item data against which to parse the roll
    * @param {String} template       The HTML template used to render the roll dialog
@@ -31,9 +31,29 @@ export class DicePF {
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
    * @param {Boolean} autoRender    Whether to automatically render the chat messages
    */
-  static async d20Roll({event, parts, data, template, title, speaker, flavor, takeTwenty=true, situational=true,
-                  fastForward=true, critical=20, fumble=1, onClose, dialogOptions, extraRolls=[], chatTemplate, chatTemplateData,
-                  staticRoll=null, noSound=false, compendiumEntry=null }) {
+  static async d20Roll({
+    event,
+    parts,
+    dice = "1d20",
+    data,
+    template,
+    title,
+    speaker,
+    flavor,
+    takeTwenty = true,
+    situational = true,
+    fastForward = true,
+    critical = 20,
+    fumble = 1,
+    onClose,
+    dialogOptions,
+    extraRolls = [],
+    chatTemplate,
+    chatTemplateData,
+    staticRoll = null,
+    noSound = false,
+    compendiumEntry = null,
+  }) {
     // Handle input arguments
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
@@ -52,7 +72,7 @@ export class DicePF {
 
         // Extra roll specifics
         if (a >= 1) {
-          let extraRoll = extraRolls[a-1];
+          let extraRoll = extraRolls[a - 1];
           curParts.push(extraRoll.bonus);
           flavor += ` <div class="extra-roll-label">${extraRoll.label}</div>`;
         }
@@ -70,22 +90,25 @@ export class DicePF {
         if (chatTemplate) {
           // Create roll template data
           const d20 = isMinimumCoreVersion("0.7.2") ? roll.terms[0] : roll.parts[0];
-          const rollData = mergeObject({
-            user: game.user._id,
-            formula: roll.formula,
-            tooltip: await roll.getTooltip(),
-            total: roll.total,
-            isCrit: d20.total >= critical,
-            isFumble: d20.total <= fumble,
-            flavor: flavor,
-            compendiumEntry: compendiumEntry,
-          }, chatTemplateData || {});
+          const rollData = mergeObject(
+            {
+              user: game.user._id,
+              formula: roll.formula,
+              tooltip: await roll.getTooltip(),
+              total: roll.total,
+              isCrit: d20.total >= critical,
+              isFumble: d20.total <= fumble,
+              flavor: flavor,
+              compendiumEntry: compendiumEntry,
+            },
+            chatTemplateData || {}
+          );
 
           // Create chat data
           let chatData = {
             user: game.user._id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            sound: noSound ? null : (a === 0 ? CONFIG.sounds.dice : null),
+            sound: noSound ? null : a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             content: await renderTemplate(chatTemplate, rollData),
             "flags.pf1.noRollRender": true,
@@ -93,13 +116,13 @@ export class DicePF {
           // Handle different roll modes
           switch (rollMode) {
             case "gmroll":
-              chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
               break;
             case "selfroll":
               chatData["whisper"] = [game.user._id];
               break;
             case "blindroll":
-              chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+              chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
               chatData["blind"] = true;
               break;
           }
@@ -109,21 +132,20 @@ export class DicePF {
           chatData = mergeObject(roll.toMessage({}, { create: false }), chatData);
 
           await ChatMessagePF.create(chatData);
-        }
-        else {
+        } else {
           rolled = true;
           await roll.toMessage({
             speaker: speaker,
             flavor: flavor,
             rollMode: rollMode,
-            sound: a === 0 ? CONFIG.sounds.dice : null
+            sound: a === 0 ? CONFIG.sounds.dice : null,
           });
         }
       }
     };
 
     // Modify the roll and handle fast-forwarding
-    parts = ["1d20"].concat(parts);
+    parts = [dice].concat(parts);
     if (fastForward === true) return _roll(parts, staticRoll);
     else parts = parts.concat(["@bonus"]);
 
@@ -133,37 +155,40 @@ export class DicePF {
       formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
-      rollModes: CONFIG.Dice.rollModes
+      rollModes: CONFIG.Dice.rollModes,
     };
     const html = await renderTemplate(template, dialogData);
 
     let roll;
-    return new Promise(resolve => {
-      new Dialog({
-        title: title,
-        content: html,
-        buttons: {
-          normal: {
-            label: "Normal",
-            callback: html => roll = _roll(parts, staticRoll != null ? staticRoll : -1, html)
+    return new Promise((resolve) => {
+      new Dialog(
+        {
+          title: title,
+          content: html,
+          buttons: {
+            normal: {
+              label: "Normal",
+              callback: (html) => (roll = _roll(parts, staticRoll != null ? staticRoll : -1, html)),
+            },
+            takeTen: {
+              label: "Take 10",
+              condition: takeTwenty,
+              callback: (html) => (roll = _roll(parts, 10, html)),
+            },
+            takeTwenty: {
+              label: "Take 20",
+              condition: takeTwenty,
+              callback: (html) => (roll = _roll(parts, 20, html)),
+            },
           },
-          takeTen: {
-            label: "Take 10",
-            condition: takeTwenty,
-            callback: html => roll = _roll(parts, 10, html)
+          default: "normal",
+          close: (html) => {
+            if (onClose) onClose(html, parts, data);
+            resolve(rolled ? roll : false);
           },
-          takeTwenty: {
-            label: "Take 20",
-            condition: takeTwenty,
-            callback: html => roll = _roll(parts, 20, html)
-          }
         },
-        default: "normal",
-        close: html => {
-          if ( onClose ) onClose(html, parts, data);
-          resolve(rolled ? roll : false);
-        }
-      }, dialogOptions).render(true);
+        dialogOptions
+      ).render(true);
     });
   }
 
@@ -187,8 +212,22 @@ export class DicePF {
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
    * @param {Object} dialogOptions  Modal dialog options
    */
-  static async damageRoll({event={}, parts, actor, data, template, title, speaker, flavor, critical=true, onClose, dialogOptions,
-      chatTemplate, chatTemplateData, noSound=false }) {
+  static async damageRoll({
+    event = {},
+    parts,
+    actor,
+    data,
+    template,
+    title,
+    speaker,
+    flavor,
+    critical = true,
+    onClose,
+    dialogOptions,
+    chatTemplate,
+    chatTemplateData,
+    noSound = false,
+  }) {
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");
     let rolled = false;
@@ -207,7 +246,7 @@ export class DicePF {
       }
 
       let roll = new Roll(parts.join("+"), data);
-      if ( crit === true ) {
+      if (crit === true) {
         let mult = data.item.ability.critMult || 2;
 
         // Update first damage part
@@ -220,18 +259,20 @@ export class DicePF {
       // Convert the roll to a chat message
       if (chatTemplate) {
         // Create roll template data
-        const rollData = mergeObject({
-          user: game.user._id,
-          formula: roll.formula,
-          tooltip: await roll.getTooltip(),
-          total: roll.total,
-        }, chatTemplateData || {});
+        const rollData = mergeObject(
+          {
+            user: game.user._id,
+            formula: roll.formula,
+            tooltip: await roll.getTooltip(),
+            total: roll.total,
+          },
+          chatTemplateData || {}
+        );
 
         // Create chat data
         let chatData = {
           user: game.user._id,
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-          rollMode: game.settings.get("core", "rollMode"),
           sound: noSound ? null : CONFIG.sounds.dice,
           speaker: speaker,
           flavor: flavor,
@@ -243,26 +284,25 @@ export class DicePF {
         // Handle different roll modes
         switch (chatData.rollMode) {
           case "gmroll":
-            chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+            chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
             break;
           case "selfroll":
             chatData["whisper"] = [game.user._id];
             break;
           case "blindroll":
-            chatData["whisper"] = game.users.entities.filter(u => u.isGM).map(u => u._id);
+            chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
             chatData["blind"] = true;
         }
 
         // Send message
         rolled = true;
         ChatMessagePF.create(chatData);
-      }
-      else {
+      } else {
         rolled = true;
         roll.toMessage({
           speaker: speaker,
           flavor: flavor,
-          rollMode: rollMode
+          rollMode: rollMode,
         });
       }
 
@@ -280,72 +320,73 @@ export class DicePF {
       formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
-      rollModes: CONFIG.Dice.rollModes
+      rollModes: CONFIG.Dice.rollModes,
     };
     const html = await renderTemplate(template, dialogData);
 
     // Render modal dialog
     let roll;
-    return new Promise(resolve => {
-      new Dialog({
-        title: title,
-        content: html,
-        buttons: {
-          normal: {
-            label: critical ? "Normal" : "Roll",
-            callback: html => roll = _roll(false, html)
+    return new Promise((resolve) => {
+      new Dialog(
+        {
+          title: title,
+          content: html,
+          buttons: {
+            normal: {
+              label: critical ? "Normal" : "Roll",
+              callback: (html) => (roll = _roll(false, html)),
+            },
+            critical: {
+              condition: critical,
+              label: "Critical Hit",
+              callback: (html) => (roll = _roll(true, html)),
+            },
           },
-          critical: {
-            condition: critical,
-            label: "Critical Hit",
-            callback: html => roll = _roll(true, html)
+          default: "normal",
+          close: (html) => {
+            if (onClose) onClose(html, parts, data);
+            resolve(rolled ? roll : false);
           },
         },
-        default: "normal",
-        close: html => {
-          if (onClose) onClose(html, parts, data);
-          resolve(rolled ? roll : false);
-        }
-      }, dialogOptions).render(true);
+        dialogOptions
+      ).render(true);
     });
   }
 
-  static messageRoll({data, msgStr}) {
+  static messageRoll({ data, msgStr }) {
     let re = /\[\[(.+)\]\]/g;
     return msgStr.replace(re, (_, p1) => {
       const roll = new Roll(p1, data).roll();
       return roll.total.toString();
     });
-
-    return msgStr;
   }
 }
 
-export const _preProcessDiceFormula = function(formula, data={}) {
-
+export const _preProcessDiceFormula = function (formula, data = {}) {
   // Replace parentheses with semicolons to use for splitting
-  let toSplit = formula.replace(/([A-z]+)?\(/g, (match, prefix) => {
-    return (prefix in game.pf1.rollPreProcess || prefix in Math) ? `;${prefix};(;` : ";(;";
-  }).replace(/\)/g, ";);");
+  let toSplit = formula
+    .replace(/([A-z]+)?\(/g, (match, prefix) => {
+      return prefix in game.pf1.rollPreProcess || prefix in Math ? `;${prefix};(;` : ";(;";
+    })
+    .replace(/\)/g, ";);");
   let terms = toSplit.split(";");
 
   // Match parenthetical groups
   let nOpen = 0,
     nOpenPreProcess = [];
   terms = terms.reduce((arr, t) => {
-
     // Handle cases where the prior term is a math function
-    const beginPreProcessFn = (t[0] === "(") && (arr[arr.length-1] in game.pf1.rollPreProcess);
-    if (beginPreProcessFn) nOpenPreProcess.push([arr.length-1, nOpen]);
-    const beginMathFn = (t[0] === "(") && (arr[arr.length-1] in Math);
-    if (beginMathFn && nOpenPreProcess.length > 0) nOpenPreProcess.push([arr.length-1, nOpen]);
+    const beginPreProcessFn = t[0] === "(" && arr[arr.length - 1] in game.pf1.rollPreProcess;
+    if (beginPreProcessFn) nOpenPreProcess.push([arr.length - 1, nOpen]);
+    const beginMathFn = t[0] === "(" && arr[arr.length - 1] in Math;
+    if (beginMathFn && nOpenPreProcess.length > 0) nOpenPreProcess.push([arr.length - 1, nOpen]);
 
     // Add terms to the array
     arr.push(t);
 
     // Increment the number of open parentheses
-    if ( t === "(" ) nOpen++;
-    if ( (nOpen > 0) && (t === ")") ) {
+    if (t === "(") nOpen++;
+    if (nOpen > 0 && t === ")") {
       nOpen--;
       for (let a = 0; a < nOpenPreProcess.length; a++) {
         let obj = nOpenPreProcess[a];
@@ -354,16 +395,19 @@ export const _preProcessDiceFormula = function(formula, data={}) {
           const sliceLen = arr.length - obj[0];
           let fnData = arr.splice(obj[0], sliceLen),
             fn = fnData[0];
-          let fnParams = fnData.slice(2, -1).reduce((cur, s) => {
+          let fnParams = fnData
+            .slice(2, -1)
+            .reduce((cur, s) => {
               cur.push(...s.split(/\s*,\s*/));
               return cur;
-            }, []).map(o => {
+            }, [])
+            .map((o) => {
               return new Roll(o, data).roll().total;
-            }).filter(o => o !== "" && o != null);
+            })
+            .filter((o) => o !== "" && o != null);
           if (fn in Math) {
             arr.push(Math[fn](...fnParams).toString());
-          }
-          else {
+          } else {
             arr.push(game.pf1.rollPreProcess[fn](...fnParams).toString());
           }
 
@@ -374,6 +418,6 @@ export const _preProcessDiceFormula = function(formula, data={}) {
     }
     return arr;
   }, []);
-  
+
   return terms.join("");
 };

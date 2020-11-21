@@ -6,7 +6,7 @@ export class ActorRestDialog extends BaseEntitySheet {
       classes: ["pf1", "actor-rest"],
       template: "systems/pf1/templates/apps/actor-rest.html",
       width: 500,
-      closeOnSubmit: true
+      closeOnSubmit: true,
     });
   }
 
@@ -17,7 +17,7 @@ export class ActorRestDialog extends BaseEntitySheet {
    * @type {String}
    */
   get title() {
-    return `${game.i18n.localize('PF1.Rest')}: ${this.object.name}`;
+    return `${game.i18n.localize("PF1.Rest")}: ${this.object.name}`;
   }
 
   /* -------------------------------------------- */
@@ -54,8 +54,14 @@ export class ActorRestDialog extends BaseEntitySheet {
         heal.abl *= 2;
       }
 
-      updateData["data.attributes.hp.value"] = Math.min(actorData.attributes.hp.value + heal.hp, actorData.attributes.hp.max);
-      updateData["data.attributes.hp.nonlethal"] = Math.max(0, (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal);
+      updateData["data.attributes.hp.value"] = Math.min(
+        actorData.attributes.hp.value + heal.hp,
+        actorData.attributes.hp.max
+      );
+      updateData["data.attributes.hp.nonlethal"] = Math.max(
+        0,
+        (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal
+      );
       for (let [key, abl] of Object.entries(actorData.abilities)) {
         let dmg = Math.abs(abl.damage);
         updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
@@ -69,7 +75,8 @@ export class ActorRestDialog extends BaseEntitySheet {
       // Update spellbooks
       for (let [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
         for (let a = 0; a < 10; a++) {
-          updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] = getProperty(sb, `spells.spell${a}.max`) || 0;
+          updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] =
+            getProperty(sb, `spells.spell${a}.max`) || 0;
         }
       }
 
@@ -82,8 +89,7 @@ export class ActorRestDialog extends BaseEntitySheet {
             "data.uses.value": itemData.uses.max,
           };
           itemPromises.push(item.update(itemUpdateData));
-        }
-        else if (item.type === "spell") {
+        } else if (item.type === "spell") {
           const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
             isSpontaneous = spellbook.spontaneous;
           if (!isSpontaneous) {
@@ -94,9 +100,14 @@ export class ActorRestDialog extends BaseEntitySheet {
               itemPromises.push(item.update(itemUpdateData));
             }
             if (!getProperty(item.data, "data.domain")) {
-              let sbUses = updateData[`data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`] || 0;
+              let sbUses =
+                updateData[
+                  `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+                ] || 0;
               sbUses -= itemData.preparation.maxAmount;
-              updateData[`data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`] = sbUses;
+              updateData[
+                `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+              ] = sbUses;
             }
           }
         }

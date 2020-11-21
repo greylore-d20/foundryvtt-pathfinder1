@@ -2244,13 +2244,14 @@ export class ActorSheetPF extends ActorSheet {
     const li = event.currentTarget;
     const set = this._filters[li.parentElement.dataset.filter];
     const filter = li.dataset.filter;
+    const typeFilterCount = this._typeFilterCount(set);
 
     const tabLikeFilters = game.settings.get("pf1", "invertSectionFilterShiftBehaviour")
       ? !event.shiftKey
       : event.shiftKey;
     if (tabLikeFilters) {
       for (let f of Array.from(set)) {
-        if (f.startsWith("type-") && f !== filter) {
+        if (f.startsWith("type-") && (f !== filter || typeFilterCount > 1)) {
           set.delete(f);
         }
       }

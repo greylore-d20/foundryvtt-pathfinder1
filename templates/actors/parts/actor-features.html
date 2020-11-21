@@ -8,6 +8,7 @@
 
 <section class="feats-body">
   {{#each sections as |section sid|}}
+  {{#unless section._hidden}}
   <div class="feats-group flexcol">
     <ol class="inventory-list sub-scroll scroll-feats">
       <li class="inventory-header flexrow">
@@ -100,6 +101,7 @@
       </ol>
     </ol>
   </div>
+  {{/unless}}
   {{/each}}
 </section>
 

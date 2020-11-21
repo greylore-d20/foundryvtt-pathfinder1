@@ -23,6 +23,7 @@
   <div class="inventory-group flexcol">
     <ol class="inventory-list">
       {{#each sections as |section sid|}}
+      {{#unless section._hidden}}
       <li class="inventory-header flexrow">
         <h3 class="item-name flexrow">{{section.label}}</h3>
 
@@ -69,6 +70,7 @@
         </li>
         {{/each}}
       </ol>
+      {{/unless}}
       {{/each}}
     </ol>
   </div>

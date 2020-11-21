@@ -371,6 +371,18 @@ export const registerSystemSettings = function () {
       return Promise.all(promises);
     },
   });
+
+  /**
+   * Invert filter Shift-clicking
+   */
+  game.settings.register("pf1", "invertSectionFilterShiftBehaviour", {
+    name: "SETTINGS.pf1InvertSectionFilterBehaviourN",
+    hint: "SETTINGS.pf1InvertSectionFilterBehaviourH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };
 
 export const registerClientSettings = function () {

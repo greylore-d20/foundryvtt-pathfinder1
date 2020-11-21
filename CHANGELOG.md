@@ -2,6 +2,10 @@
 
 ## 0.76.4
 
+### Changelog
+
+- Added the possibility of switching type filters, rather than adding them, by shift-clicking them (#370)
+
 ### Localization
 
 - Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)

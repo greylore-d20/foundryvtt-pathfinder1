@@ -2233,9 +2233,22 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onToggleFilter(event) {
     event.preventDefault();
+
     const li = event.currentTarget;
     const set = this._filters[li.parentElement.dataset.filter];
     const filter = li.dataset.filter;
+
+    const tabLikeFilters = game.settings.get("pf1", "invertSectionFilterShiftBehaviour")
+      ? !event.shiftKey
+      : event.shiftKey;
+    if (tabLikeFilters) {
+      for (let f of Array.from(set)) {
+        if (f.startsWith("type-") && f !== filter) {
+          set.delete(f);
+        }
+      }
+    }
+
     if (set.has(filter)) set.delete(filter);
     else set.add(filter);
     this.render();

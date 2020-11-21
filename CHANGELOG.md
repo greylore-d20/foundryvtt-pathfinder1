@@ -11,6 +11,7 @@
 - Added the possibility of switching type filters, rather than adding them, by shift-clicking them (#370)
 - Improve visibility of attributes (#369)
 - Replaced the inventory icon to show the equipment slot
+- Show item sections even when the section is empty, if it's the only section filtered for (#371)
 
 ### Localization
 

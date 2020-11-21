@@ -563,12 +563,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /**
-   * Determine whether an Entity type filter is active for the given set of filters.
-   * @return {Boolean}
+   * Returns the amount of type filters currently active.
+   * @return {Number}
    * @private
    */
-  _hasTypeFilter(filters) {
-    return Array.from(filters).filter((s) => s.startsWith("type-")).length > 0;
+  _typeFilterCount(filters) {
+    return Array.from(filters).filter((s) => s.startsWith("type-")).length;
   }
 
   /* -------------------------------------------- */
@@ -579,7 +579,7 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _filterItems(items, filters) {
-    const hasTypeFilter = Array.from(filters).filter((s) => s.startsWith("type-")).length > 0;
+    const hasTypeFilter = this._typeFilterCount(filters) > 0;
 
     return items.filter((item) => {
       const data = item.data;
@@ -2177,8 +2177,12 @@ export class ActorSheetPF extends ActorSheet {
 
       for (let section of sections) {
         for (let [k, s] of Object.entries(section.section)) {
-          if (this._hasTypeFilter(this._filters[section.key]) && s.items.length === 0) {
+          const typeFilterCount = this._typeFilterCount(this._filters[section.key]);
+          if (typeFilterCount > 0 && s.items.length === 0) {
             s._hidden = true;
+          }
+          if (typeFilterCount === 1 && this._filters[section.key].has(`type-${k}`)) {
+            s._hidden = false;
           }
         }
       }

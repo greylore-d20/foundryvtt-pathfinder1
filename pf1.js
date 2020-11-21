@@ -405,6 +405,20 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
     await Promise.all(promises);
   }
 
+  // Remove links
+  const itemLinks = getProperty(itemData, "data.links");
+  if (itemLinks) {
+    for (let [linkType, links] of Object.entries(itemLinks)) {
+      for (let link of links) {
+        const item = actor.items.find((o) => o._id === link.id);
+        let otherItemLinks = item.links;
+        if (otherItemLinks[linkType]) {
+          delete otherItemLinks[linkType];
+        }
+      }
+    }
+  }
+
   // Refresh actor
   actor.refresh();
 });

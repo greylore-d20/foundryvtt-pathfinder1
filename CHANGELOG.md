@@ -8,6 +8,7 @@
 - Adding and removing swim and climb speeds did not update racial skill bonuses immediately
 - Changed low-light vision to no longer affect Token Dim/Bright vision [commonly darkvision] (#365)
 - Added a safeguard when creating charge type item links to prevent linking to an item that has charge links of its own
+- Items with links should no longer cause issues for the linked items when deleted
 
 ### Changelog
 

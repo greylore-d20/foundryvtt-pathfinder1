@@ -4,7 +4,7 @@ import { SemanticVersion } from "../semver.js";
 export class ChangeLogWindow extends FormApplication {
   constructor(lastVersion) {
     super({}, {});
-    
+
     this.lastVersion = lastVersion;
   }
 
@@ -32,7 +32,7 @@ export class ChangeLogWindow extends FormApplication {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "systems/pf1/CHANGELOG.md");
 
-    let promise = new Promise(resolve => {
+    let promise = new Promise((resolve) => {
       xhr.onload = () => {
         if (xhr.status === 200) {
           data.changelog = this._processChangelog(xhr.response);

@@ -66,8 +66,7 @@ export class LinksApp extends FormApplication {
       return {
         id: id,
       };
-    }
-    else if (o instanceof Item) {
+    } else if (o instanceof Item) {
       let id = o === this.object ? "this" : o._id;
       return {
         id: id,
@@ -83,8 +82,8 @@ export class LinksApp extends FormApplication {
         style: {
           "background-fit": "contain",
           "background-color": "#666",
-          "width": 100,
-          "height": 100,
+          width: 100,
+          height: 100,
           "border-width": 4,
         },
       },
@@ -99,9 +98,9 @@ export class LinksApp extends FormApplication {
         selector: ".eh-handle",
         style: {
           "background-color": "red",
-          "width": 12,
-          "height": 12,
-          "shape": "ellipse",
+          width: 12,
+          height: 12,
+          shape: "ellipse",
           "overlay-opacity": 0,
           "border-width": 12,
           "border-opacity": 0,
@@ -113,7 +112,7 @@ export class LinksApp extends FormApplication {
   async fetchData() {
     // Get links
     this.links = JSON.parse(getProperty(this.object.data, this.attribute) || "[]");
-    
+
     // Update links if outdated
     for (let a = 0; a < this.links.length; a++) {
       let n = this.links[a];
@@ -162,11 +161,10 @@ export class LinksApp extends FormApplication {
     const result = this.toJSON();
     updateData[this.attribute] = result;
 
-    this.object.update(updateData); 
+    this.object.update(updateData);
   }
 
   async activateListeners(html) {
-
     await this.fetchData();
 
     // Initialize cytoscape
@@ -183,7 +181,9 @@ export class LinksApp extends FormApplication {
     this.cy.one("resize", this._onCytoscapeResize.bind(this));
 
     // Cytoscape update
-    this.cy.on("add", ev => { this._updateItemInfo(); });
+    this.cy.on("add", (ev) => {
+      this._updateItemInfo();
+    });
 
     // Add initial node
     if (this.cy.nodes().length === 0) {
@@ -301,8 +301,7 @@ export class LinksApp extends FormApplication {
       const item = await this.getItem(n.id());
       if (item != null) {
         this._setNodeInfo(n, item);
-      }
-      else if (n.classes().includes("save")) {
+      } else if (n.classes().includes("save")) {
         this.cy.remove(n);
       }
     }
@@ -358,13 +357,13 @@ export class LinksApp extends FormApplication {
     }
     // Return item from associated actor
     else if (arr.length === 1 && this.actor != null) {
-      return this.actor.items.find(o => o._id === arr[0]);
+      return this.actor.items.find((o) => o._id === arr[0]);
     }
     // Get world entity
     else if (arr.length === 2) {
       // Return world actor
       if (arr[0] === "Actor") {
-        return game.actors.entities.find(o => o._id === arr[1]);
+        return game.actors.entities.find((o) => o._id === arr[1]);
       }
     }
     // Get compendium entry
@@ -402,8 +401,7 @@ export class LinksApp extends FormApplication {
   cxtCommands(n) {
     if (n.isEdge()) {
       return this.getEdgeCommands(n);
-    }
-    else if (n.isNode()) {
+    } else if (n.isNode()) {
       return this.getNodeCommands(n);
     }
 
@@ -420,7 +418,7 @@ export class LinksApp extends FormApplication {
     result.push({
       fillColor: "red",
       content: '<span class="fas fa-trash"></span>',
-      select: n => {
+      select: (n) => {
         cy.remove(n);
       },
     });
@@ -437,7 +435,7 @@ export class LinksApp extends FormApplication {
     result.push({
       fillColor: "red",
       content: '<span class="fas fa-trash"></span>',
-      select: e => {
+      select: (e) => {
         cy.remove(e);
       },
     });
@@ -445,7 +443,7 @@ export class LinksApp extends FormApplication {
     // Set value
     result.push({
       content: "Edit",
-      select: e => {
+      select: (e) => {
         this.editLink(e);
       },
     });
@@ -533,8 +531,7 @@ export class LinksApp extends FormApplication {
     let result = [];
 
     // Minimum level
-    if (item[0] instanceof Item && item[0].type === "class" &&
-      item[1] instanceof Item && item[1].type === "feat") {
+    if (item[0] instanceof Item && item[0].type === "class" && item[1] instanceof Item && item[1].type === "feat") {
       result.push("minLevel");
     }
 

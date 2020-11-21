@@ -2,8 +2,8 @@
  * Measure the distance between two pixel coordinates
  * See BaseGrid.measureDistance for more details
  */
-export const measureDistances = function(segments, options={}) {
-  if ( !options.gridSpaces ) return BaseGrid.prototype.measureDistances.call(this, segments, options);
+export const measureDistances = function (segments, options = {}) {
+  if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
   // Track the total number of diagonals
   let nDiagonal = 0;
@@ -11,7 +11,7 @@ export const measureDistances = function(segments, options={}) {
   const d = canvas.dimensions;
 
   // Iterate over measured segments
-  return segments.map(s => {
+  return segments.map((s) => {
     let r = s.ray;
 
     // Determine the total distance traveled
@@ -26,7 +26,7 @@ export const measureDistances = function(segments, options={}) {
     // Alternative DMG Movement
     if (rule === "5105") {
       let nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-      let spaces = (nd10 * 2) + (nd - nd10) + ns;
+      let spaces = nd10 * 2 + (nd - nd10) + ns;
       return spaces * canvas.dimensions.distance;
     }
 
@@ -35,21 +35,21 @@ export const measureDistances = function(segments, options={}) {
   });
 };
 
-export const measureDistance = function(p0, p1, {gridSpaces=true}={}) {
-  if ( !gridSpaces ) return BaseGrid.prototype.measureDistance.bind(this)(p0, p1, {gridSpaces});
+export const measureDistance = function (p0, p1, { gridSpaces = true } = {}) {
+  if (!gridSpaces) return BaseGrid.prototype.measureDistance.bind(this)(p0, p1, { gridSpaces });
   let gs = canvas.dimensions.size,
-      ray = new Ray(p0, p1),
-      nx = Math.abs(Math.ceil(ray.dx / gs)),
-      ny = Math.abs(Math.ceil(ray.dy / gs));
+    ray = new Ray(p0, p1),
+    nx = Math.abs(Math.ceil(ray.dx / gs)),
+    ny = Math.abs(Math.ceil(ray.dy / gs));
 
   // Get the number of straight and diagonal moves
   let nDiagonal = Math.min(nx, ny),
-      nStraight = Math.abs(ny - nx);
+    nStraight = Math.abs(ny - nx);
 
   // Alternative DMG Movement
-  if ( this.parent.diagonalRule === "5105" ) {
+  if (this.parent.diagonalRule === "5105") {
     let nd10 = Math.floor(nDiagonal / 2);
-    let spaces = (nd10 * 2) + (nDiagonal - nd10) + nStraight;
+    let spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
     return spaces * canvas.dimensions.distance;
   }
 
@@ -64,10 +64,10 @@ export const measureDistance = function(p0, p1, {gridSpaces=true}={}) {
  * TODO: This should probably be replaced with a formal Token class extension
  */
 const _TokenGetBarAttribute = Token.prototype.getBarAttribute;
-Token.prototype.getBarAttribute = function(barName, {alternative=null}={}) {
+Token.prototype.getBarAttribute = function (barName, { alternative = null } = {}) {
   let data;
   try {
-    data = _TokenGetBarAttribute.call(this, barName, {alternative: alternative});
+    data = _TokenGetBarAttribute.call(this, barName, { alternative: alternative });
   } catch (e) {
     data = null;
   }
@@ -77,31 +77,29 @@ Token.prototype.getBarAttribute = function(barName, {alternative=null}={}) {
   return data;
 };
 
-TokenHUD.prototype._onAttributeUpdate = function(event) {
+TokenHUD.prototype._onAttributeUpdate = function (event) {
   event.preventDefault();
 
   // Determine new bar value
   let input = event.currentTarget,
-      strVal = input.value.trim(),
-      operator,
-      value,
-      isDelta = false;
+    strVal = input.value.trim(),
+    operator,
+    value,
+    isDelta = false;
   if (strVal.match(/(=?[+-]-?)([0-9.]+)/)) {
     operator = RegExp.$1;
     value = parseFloat(RegExp.$2);
     isDelta = ["-", "+"].includes(operator);
-    operator = operator?.replace('=','');
-  }
-  else if (strVal.match(/=?([0-9.]+)/)) {
+    operator = operator?.replace("=", "");
+  } else if (strVal.match(/=?([0-9.]+)/)) {
     value = parseFloat(RegExp.$1);
-  }
-  else return;
-  
+  } else return;
+
   let bar = input.dataset.bar;
 
   // For attribute bar values, update the associated Actor
   // TODO: Switch to Actor#modifyTokenAttribute
-  if ( bar ) {
+  if (bar) {
     const actor = this.object?.actor;
     if (!actor) return;
     const data = this.object.getBarAttribute(bar);
@@ -121,8 +119,7 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
         updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp - value);
         console.log(actor.data.data.attributes.hp.value, value, dt);
         value = actor.data.data.attributes.hp.value + dt;
-      }
-      else if (operator === "-") value = Math.clamped(current.min || 0, current.value - dt, current.max);
+      } else if (operator === "-") value = Math.clamped(current.min || 0, current.value - dt, current.max);
       else if (operator === "+") value = Math.clamped(current.min || 0, current.value + dt, current.max);
       updateData[`data.${data.attribute}.value`] = value;
     }
@@ -132,14 +129,13 @@ TokenHUD.prototype._onAttributeUpdate = function(event) {
 
   // Otherwise update the Token
   else {
-    if (operator === "--" || (!isDelta && operator == "-"))
-      value = -value;
+    if (operator === "--" || (!isDelta && operator == "-")) value = -value;
     else if (isDelta) {
       const current = getProperty(this.object.data, input.name);
       if (operator === "-") value = current - value;
       else if (operator === "+") value = current + value;
     }
-    this.object.update({[input.name]: value});
+    this.object.update({ [input.name]: value });
   }
 
   // Clear the HUD

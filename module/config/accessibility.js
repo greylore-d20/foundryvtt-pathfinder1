@@ -22,8 +22,8 @@ export class AccessibilityConfig extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      title:  game.i18n.localize("PF1.AccessibilityConfigName"),
-      id: 'accessibility-config',
+      title: game.i18n.localize("PF1.AccessibilityConfigName"),
+      id: "accessibility-config",
       template: "systems/pf1/templates/settings/accessibility.html",
       width: 560,
       height: "auto",

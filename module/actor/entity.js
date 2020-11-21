@@ -11,11 +11,10 @@ import { updateChanges, getChangeFlat } from "./update-changes.js";
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
 export class ActorPF extends Actor {
-
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on('click', 'button[data-action], a[data-action]', this._onChatCardButtonAction.bind(this));
+    html.on("click", "button[data-action], a[data-action]", this._onChatCardButtonAction.bind(this));
   }
 
   static async _onChatCardButtonAction(event) {
@@ -30,14 +29,13 @@ export class ActorPF extends Actor {
     if (action === "defense-save") {
       const actor = ItemPF._getChatCardActor(card);
       const saveId = button.dataset.save;
-      if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt(), });
-    }
-    else if (action === "save") {
+      if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt() });
+    } else if (action === "save") {
       const actors = ActorPF.getSelectedActors();
       const saveId = button.dataset.type;
       let noSound = false;
       for (let a of actors) {
-        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt(), });
+        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt() });
         noSound = true;
       }
     }
@@ -53,9 +51,9 @@ export class ActorPF extends Actor {
     }
   }
 
-  static getActiveActor({actorName=null, actorId=null}={}) {
+  static getActiveActor({ actorName = null, actorId = null } = {}) {
     const speaker = ChatMessage.getSpeaker();
-    let actor = game.actors.entities.filter(o => {
+    let actor = game.actors.entities.filter((o) => {
       if (!actorName && !actorId) return false;
       if (actorName && o.name !== actorName) return false;
       if (actorId && o._id !== actorId) return false;
@@ -81,15 +79,19 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   get spellFailure() {
-    return this.items.filter(o => { return o.type === "equipment" && o.data.data.equipped === true; }).reduce((cur, o) => {
-      if (typeof o.data.data.spellFailure === "number") return cur + o.data.data.spellFailure;
-      return cur;
-    }, 0);
+    return this.items
+      .filter((o) => {
+        return o.type === "equipment" && o.data.data.equipped === true;
+      })
+      .reduce((cur, o) => {
+        if (typeof o.data.data.spellFailure === "number") return cur + o.data.data.spellFailure;
+        return cur;
+      }, 0);
   }
 
   get race() {
     if (this.items == null) return null;
-    return this.items.filter(o => o.type === "race")[0];
+    return this.items.filter((o) => o.type === "race")[0];
   }
 
   get typeColor() {
@@ -139,16 +141,15 @@ export class ActorPF extends Actor {
         for (let subSklKey of Object.keys(skl.subSkills)) {
           subSkills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
         }
-      }
-      else skills.push(`skill.${sklKey}`);
+      } else skills.push(`skill.${sklKey}`);
     }
     return [...skills, ...subSkills];
   }
 
   _dataIsPC(data) {
     if (data.permission != null) {
-      const nonGM = game.users.entities.filter(u => !u.isGM);
-      return nonGM.some(u => {
+      const nonGM = game.users.entities.filter((u) => !u.isGM);
+      return nonGM.some((u) => {
         if (data.permission["default"] >= CONST.ENTITY_PERMISSIONS["OWNER"]) return true;
         return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
       });
@@ -167,8 +168,8 @@ export class ActorPF extends Actor {
     const data = actorData.data;
 
     // Prepare Character data
-    if ( actorData.type === "character" ) this._prepareCharacterData(actorData);
-    else if ( actorData.type === "npc" ) this._prepareNPCData(data);
+    if (actorData.type === "character") this._prepareCharacterData(actorData);
+    else if (actorData.type === "npc") this._prepareNPCData(data);
 
     // Create arbitrary skill slots
     for (let skillId of CONFIG.PF1.arbitrarySkills) {
@@ -194,7 +195,8 @@ export class ActorPF extends Actor {
 
     // Set labels
     this.labels = {};
-    this.labels.race = this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
+    this.labels.race =
+      this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
     this.labels.alignment = CONFIG.PF1.alignments[this.data.data.details.alignment];
 
     // Set speed labels
@@ -240,7 +242,6 @@ export class ActorPF extends Actor {
     // Add additional source arrays not covered by changes
     sourceDetails["data.attributes.bab.total"] = [];
 
-
     // Add base values to certain bonuses
     sourceDetails["data.attributes.ac.normal.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["data.attributes.ac.touch.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
@@ -251,10 +252,16 @@ export class ActorPF extends Actor {
       sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
       // Add ability penalty, damage and drain
       if (abl.damage != null && abl.damage !== 0) {
-        sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.AbilityDamage"), value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)` });
+        sourceDetails[`data.abilities.${a}.total`].push({
+          name: game.i18n.localize("PF1.AbilityDamage"),
+          value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)`,
+        });
       }
       if (abl.drain != null && abl.drain !== 0) {
-        sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.AbilityDrain"), value: -Math.abs(abl.drain) });
+        sourceDetails[`data.abilities.${a}.total`].push({
+          name: game.i18n.localize("PF1.AbilityDrain"),
+          value: -Math.abs(abl.drain),
+        });
       }
     }
 
@@ -271,11 +278,31 @@ export class ActorPF extends Actor {
         normal: maxDex != null ? Math.min(maxDex, dex) : dex,
         ff: Math.min(0, dex),
       };
-      if (ac.normal  !== 0) sourceDetails["data.attributes.ac.normal.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.normal });
-      if (ac.touch   !== 0) sourceDetails["data.attributes.ac.touch.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.touch });
-      if (ac.ff      !== 0) sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: ac.ff });
-      if (cmd.normal !== 0) sourceDetails["data.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: cmd.normal });
-      if (cmd.ff     !== 0) sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.AbilityDex"), value: cmd.ff });
+      if (ac.normal !== 0)
+        sourceDetails["data.attributes.ac.normal.total"].push({
+          name: game.i18n.localize("PF1.AbilityDex"),
+          value: ac.normal,
+        });
+      if (ac.touch !== 0)
+        sourceDetails["data.attributes.ac.touch.total"].push({
+          name: game.i18n.localize("PF1.AbilityDex"),
+          value: ac.touch,
+        });
+      if (ac.ff !== 0)
+        sourceDetails["data.attributes.ac.flatFooted.total"].push({
+          name: game.i18n.localize("PF1.AbilityDex"),
+          value: ac.ff,
+        });
+      if (cmd.normal !== 0)
+        sourceDetails["data.attributes.cmd.total"].push({
+          name: game.i18n.localize("PF1.AbilityDex"),
+          value: cmd.normal,
+        });
+      if (cmd.ff !== 0)
+        sourceDetails["data.attributes.cmd.flatFootedTotal"].push({
+          name: game.i18n.localize("PF1.AbilityDex"),
+          value: cmd.ff,
+        });
     }
 
     // Add extra data
@@ -316,7 +343,7 @@ export class ActorPF extends Actor {
     let prior = this.getLevelExp(data.details.level.value - 1 || 0),
       max = this.getLevelExp(data.details.level.value || 1);
 
-    data.details.xp.pct = (((Math.max(prior, Math.min(max, data.details.xp.value)) - prior) / (max - prior)) * 100) || 0;
+    data.details.xp.pct = ((Math.max(prior, Math.min(max, data.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
   }
 
   /* -------------------------------------------- */
@@ -325,13 +352,11 @@ export class ActorPF extends Actor {
    * Prepare NPC type specific data
    */
   _prepareNPCData(data) {
-    
     // Kill Experience
     try {
       const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
       data.details.xp.value = this.getCRExp(crTotal);
-    }
-    catch (e) {
+    } catch (e) {
       data.details.xp.value = this.getCRExp(1);
     }
   }
@@ -343,9 +368,9 @@ export class ActorPF extends Actor {
    */
   static getReducedMovementSpeed(value) {
     const incr = 5;
-    
+
     if (value <= 0) return value;
-    if (value < 2*incr) return incr;
+    if (value < 2 * incr) return incr;
     value = Math.floor(value / incr) * incr;
 
     let result = 0,
@@ -368,7 +393,7 @@ export class ActorPF extends Actor {
   static getSpellSlotIncrease(mod, level) {
     if (level === 0) return 0;
     if (mod <= 0) return 0;
-    return Math.max(0, Math.ceil(((mod + 1) - level) / 4));
+    return Math.max(0, Math.ceil((mod + 1 - level) / 4));
   }
 
   /**
@@ -389,7 +414,7 @@ export class ActorPF extends Actor {
     if (expConfig.custom.formula.length > 0) {
       for (let a = 0; a < level; a++) {
         const rollData = this.getRollData();
-        rollData.level = a+1;
+        rollData.level = a + 1;
         const roll = new Roll(expConfig.custom.formula, rollData).roll();
         totalXP += roll.total;
       }
@@ -420,44 +445,53 @@ export class ActorPF extends Actor {
     // Set used spellbook flags
     {
       const re = new RegExp(/^spellbook-([a-zA-Z]+)-inuse$/);
-      const sbData = Object.entries(data).filter(o => {
-        const result = o[0].match(re);
-        if (result) delete data[o[0]];
-        return result;
-      })
-      .map(o => {
-        return { spellbook: o[0].replace(re, "$1"), inUse: o[1] };
-      });
+      const sbData = Object.entries(data)
+        .filter((o) => {
+          const result = o[0].match(re);
+          if (result) delete data[o[0]];
+          return result;
+        })
+        .map((o) => {
+          return { spellbook: o[0].replace(re, "$1"), inUse: o[1] };
+        });
 
       let usedSpellbooks = [];
-      if (data["data.attributes.spells.usedSpellbooks"]) usedSpellbooks = duplicate(data["data.attributes.spells.usedSpellbooks"]);
-      else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks")) usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
-      
+      if (data["data.attributes.spells.usedSpellbooks"])
+        usedSpellbooks = duplicate(data["data.attributes.spells.usedSpellbooks"]);
+      else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks"))
+        usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
+
       for (let o of sbData) {
         if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
-        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook)) usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
+        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
+          usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
       }
       data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
     }
 
     // Make certain variables absolute
-    const _absoluteKeys = Object.keys(this.data.data.abilities).reduce((arr, abl) => {
-      arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
-      return arr;
-    }, []).concat("data.attributes.energyDrain").filter(k => { return data[k] != null; });
+    const _absoluteKeys = Object.keys(this.data.data.abilities)
+      .reduce((arr, abl) => {
+        arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
+        return arr;
+      }, [])
+      .concat("data.attributes.energyDrain")
+      .filter((k) => {
+        return data[k] != null;
+      });
     for (const k of _absoluteKeys) {
       data[k] = Math.abs(data[k]);
     }
 
     // Apply changes in Actor size to Token width/height
-    if ( data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"] ) {
+    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
       let tokens = this.isToken ? [this.token] : [];
       if (this.data.token.actorLink) {
         tokens = this.getActiveTokens();
       }
-      tokens = tokens.filter(o => !getProperty(o.data, "flags.pf1.staticSize"));
-      tokens.forEach(o => {
+      tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
+      tokens.forEach((o) => {
         o.update({ width: size.w, height: size.h, scale: size.scale });
       });
       if (!this.isToken) {
@@ -504,8 +538,8 @@ export class ActorPF extends Actor {
       // Remove resource from token bars
       if (item == null) {
         const tokens = this.getActiveTokens();
-        tokens.forEach(token => {
-          ["bar1", "bar2"].forEach(b => {
+        tokens.forEach((token) => {
+          ["bar1", "bar2"].forEach((b) => {
             const barAttr = token.getBarAttribute(b);
             if (barAttr == null) {
               return;
@@ -537,8 +571,7 @@ export class ActorPF extends Actor {
    * @param {Object} options  Additional options which customize the update workflow
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
-  async update(data, options={}) {
-
+  async update(data, options = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
     if (options.recursive === false) {
       return super.update(data, options);
@@ -570,8 +603,8 @@ export class ActorPF extends Actor {
 
   async refreshItems() {
     const items = Array.from(this.items);
-    const updates = items.map(o => o.update({}, { skipUpdate: true }));
-    const values = (await Promise.all(updates)).filter(o => Object.keys(o).length > 1);
+    const updates = items.map((o) => o.update({}, { skipUpdate: true }));
+    const values = (await Promise.all(updates)).filter((o) => Object.keys(o).length > 1);
     if (values.length > 0) {
       return this.updateOwnedItem(values);
     }
@@ -601,7 +634,7 @@ export class ActorPF extends Actor {
    * @param {Object} data - The update data, as per ActorPF.update()
    */
   _updateExp(data) {
-    const classes = this.items.filter(o => o.type === "class" && o.data.data.classType !== "mythic");
+    const classes = this.items.filter((o) => o.type === "class" && o.data.data.classType !== "mythic");
     const level = classes.reduce((cur, o) => {
       return cur + o.data.data.level;
     }, 0);
@@ -618,14 +651,11 @@ export class ActorPF extends Actor {
     if (typeof newExp === "string") {
       if (newExp.match(/^\+([0-9]+)$/)) {
         newExp = this.data.data.details.xp.value + parseInt(RegExp.$1);
-      }
-      else if (newExp.match(/^-([0-9]+)$/)) {
+      } else if (newExp.match(/^-([0-9]+)$/)) {
         newExp = this.data.data.details.xp.value - parseInt(RegExp.$1);
-      }
-      else if (newExp === "") {
+      } else if (newExp === "") {
         resetExp = true;
-      }
-      else {
+      } else {
         newExp = parseInt(newExp);
         if (Number.isNaN(newExp)) newExp = this.data.data.details.xp.value;
       }
@@ -650,8 +680,8 @@ export class ActorPF extends Actor {
   }
 
   async _onCreate(data, options, userId, context) {
-    if (data.type === "character") this.update({'token.actorLink': true}, {updateChanges: false});
-	
+    if (data.type === "character") this.update({ "token.actorLink": true }, { updateChanges: false });
+
     if (userId === game.user._id) {
       await updateChanges.call(this);
     }
@@ -675,9 +705,7 @@ export class ActorPF extends Actor {
           [`data.resources.${itemTag}._id`]: item._id,
         };
         return this.update(updateData);
-      }
-
-      else if (res._id === item._id) {
+      } else if (res._id === item._id) {
         const updateData = {};
         if (this.data.data.resources[itemTag].value !== curUses.value) {
           updateData[`data.resources.${itemTag}.value`] = curUses.value;
@@ -703,10 +731,10 @@ export class ActorPF extends Actor {
     // Assume NPCs are always proficient with weapons and always have spells prepared
     const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
     if (!hasPlayerOwner) {
-      if ( t === "weapon" ) initial["data.proficient"] = true;
-      if ( ["weapon", "equipment"].includes(t) ) initial["data.equipped"] = true;
+      if (t === "weapon") initial["data.proficient"] = true;
+      if (["weapon", "equipment"].includes(t)) initial["data.equipped"] = true;
     }
-    if ( t === "spell" ) {
+    if (t === "spell") {
       if (this.sheet != null && this.sheet._spellbookTab != null) {
         initial["data.spellbook"] = this.sheet._spellbookTab;
       }
@@ -725,13 +753,13 @@ export class ActorPF extends Actor {
    * @param {ItemPF} item   The spell being cast by the actor
    * @param {MouseEvent} ev The click event
    */
-  async useSpell(item, ev, {skipDialog=false}={}) {
+  async useSpell(item, ev, { skipDialog = false } = {}) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
-    if ( item.data.type !== "spell" ) throw new Error("Wrong Item type");
+    if (item.data.type !== "spell") throw new Error("Wrong Item type");
 
     if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() < item.chargeCost) {
       const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
@@ -740,7 +768,7 @@ export class ActorPF extends Actor {
     }
 
     // Invoke the Item roll
-    return item.useAttack({ev: ev, skipDialog: skipDialog});
+    return item.useAttack({ ev: ev, skipDialog: skipDialog });
   }
 
   async createAttackFromWeapon(item) {
@@ -790,7 +818,7 @@ export class ActorPF extends Actor {
     // Add additional attacks
     let extraAttacks = [];
     for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
-      extraAttacks = extraAttacks.concat([[`-${a}`, `${game.i18n.localize("PF1.Attack")} ${Math.floor((a+5) / 5)}`]]);
+      extraAttacks = extraAttacks.concat([[`-${a}`, `${game.i18n.localize("PF1.Attack")} ${Math.floor((a + 5) / 5)}`]]);
     }
     if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
 
@@ -828,8 +856,9 @@ export class ActorPF extends Actor {
     const itemData = await this.createOwnedItem(expandObject(attackData));
 
     // Create link
-    if (itemData.type === "attack") { // check for correct itemData, Foundry #3419
-      const newItem = this.items.find(o => o._id === itemData._id);
+    if (itemData.type === "attack") {
+      // check for correct itemData, Foundry #3419
+      const newItem = this.items.find((o) => o._id === itemData._id);
       if (newItem) {
         await item.createItemLink("children", "data", newItem, itemData._id);
       }
@@ -841,7 +870,10 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {
-    let skl, sklName, parentSkill, isCustom = false;
+    let skl,
+      sklName,
+      parentSkill,
+      isCustom = false;
     const skillParts = skillId.split("."),
       isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
     if (isSubSkill) {
@@ -850,15 +882,13 @@ export class ActorPF extends Actor {
       skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
       parentSkill = this.getSkillInfo(skillId);
-    }
-    else {
+    } else {
       skl = this.data.data.skills[skillId];
       if (!skl) return null;
       if (skl.name != null) {
         sklName = skl.name;
         isCustom = true;
-      }
-      else sklName = CONFIG.PF1.skills[skillId];
+      } else sklName = CONFIG.PF1.skills[skillId];
     }
 
     const result = {
@@ -883,7 +913,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {Object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options={event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20"}) {
+  rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -897,8 +927,7 @@ export class ActorPF extends Actor {
       skillId = skillParts[0];
       skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
-    }
-    else {
+    } else {
       skl = this.data.data.skills[skillId];
       if (skl.name != null) sklName = skl.name;
       else sklName = CONFIG.PF1.skills[skillId];
@@ -913,7 +942,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
     // Add untrained note
@@ -929,9 +958,9 @@ export class ActorPF extends Actor {
       staticRoll: options.staticRoll,
       parts: ["@mod"],
       dice: options.dice,
-      data: {mod: skl.mod},
+      data: { mod: skl.mod },
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
@@ -947,11 +976,11 @@ export class ActorPF extends Actor {
    * @param {String} abilityId     The ability id (e.g. "str")
    * @param {Object} options      Options which configure how ability tests or saving throws are rolled
    */
-  rollAbility(abilityId, options={noSound: false, dice: "1d20"}) {
+  rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
     this.rollAbilityTest(abilityId, options);
   }
 
-  rollBAB(options={noSound: false, dice: "1d20"}) {
+  rollBAB(options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -962,15 +991,15 @@ export class ActorPF extends Actor {
       event: options.event,
       parts: ["@mod"],
       dice: options.dice,
-      data: {mod: this.data.data.attributes.bab.total},
+      data: { mod: this.data.data.attributes.bab.total },
       title: game.i18n.localize("PF1.BAB"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       noSound: options.noSound,
     });
   }
 
-  rollCMB(options={noSound: false, dice: "1d20"}) {
+  rollCMB(options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -986,7 +1015,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
     // Add grapple note
@@ -1000,9 +1029,9 @@ export class ActorPF extends Actor {
       event: options.event,
       parts: ["@mod"],
       dice: options.dice,
-      data: {mod: this.data.data.attributes.cmb.total},
+      data: { mod: this.data.data.attributes.cmb.total },
       title: game.i18n.localize("PF1.CMB"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
@@ -1010,8 +1039,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollCL(spellbookKey, options={noSound: false, dice: "1d20"}) {
-
+  rollCL(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
     rollData.cl = spellbook.cl.total;
@@ -1026,7 +1054,7 @@ export class ActorPF extends Actor {
       parts: [`@cl`],
       data: rollData,
       title: game.i18n.localize("PF1.CasterLevelCheck"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
@@ -1034,8 +1062,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollConcentration(spellbookKey, options={noSound: false, dice: "1d20"}) {
-
+  rollConcentration(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = this.getRollData();
     rollData.cl = spellbook.cl.total;
@@ -1049,7 +1076,8 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     let formulaRoll = 0;
-    if (spellbook.concentrationFormula.length) formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
+    if (spellbook.concentrationFormula.length)
+      formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
@@ -1058,7 +1086,7 @@ export class ActorPF extends Actor {
       dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.ConcentrationCheck"),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
@@ -1084,8 +1112,10 @@ export class ActorPF extends Actor {
     // Damage vulnerabilities
     if (data.traits.dv.value.length || data.traits.dv.custom.length) {
       const value = [].concat(
-        data.traits.dv.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
-        data.traits.dv.custom.length > 0 ? data.traits.dv.custom.split(";") : [],
+        data.traits.dv.value.map((obj) => {
+          return CONFIG.PF1.damageTypes[obj];
+        }),
+        data.traits.dv.custom.length > 0 ? data.traits.dv.custom.split(";") : []
       );
       headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
     }
@@ -1094,13 +1124,21 @@ export class ActorPF extends Actor {
       headers.push({ header: game.i18n.localize("PF1.ConRes"), value: data.traits.cres.split(reSplit) });
     }
     // Immunities
-    if (data.traits.di.value.length || data.traits.di.custom.length ||
-      data.traits.ci.value.length || data.traits.ci.custom.length) {
+    if (
+      data.traits.di.value.length ||
+      data.traits.di.custom.length ||
+      data.traits.ci.value.length ||
+      data.traits.ci.custom.length
+    ) {
       const value = [].concat(
-        data.traits.di.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
+        data.traits.di.value.map((obj) => {
+          return CONFIG.PF1.damageTypes[obj];
+        }),
         data.traits.di.custom.length > 0 ? data.traits.di.custom.split(";") : [],
-        data.traits.ci.value.map(obj => { return CONFIG.PF1.conditionTypes[obj]; }),
-        data.traits.ci.custom.length > 0 ? data.traits.ci.custom.split(";") : [],
+        data.traits.ci.value.map((obj) => {
+          return CONFIG.PF1.conditionTypes[obj];
+        }),
+        data.traits.ci.custom.length > 0 ? data.traits.ci.custom.split(";") : []
       );
       headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
@@ -1155,10 +1193,10 @@ export class ActorPF extends Actor {
       },
       flavor: game.i18n.localize("PF1.RollsForInitiative").format(this.token ? this.token.name : this.name),
     };
-    roll.toMessage(messageData, {rollMode});
+    roll.toMessage(messageData, { rollMode });
   }
 
-  rollSavingThrow(savingThrowId, options={ event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
+  rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -1179,12 +1217,11 @@ export class ActorPF extends Actor {
           if (note.length > 0) {
             noteStr = DicePF.messageRoll({
               data: rollData,
-              msgStr: note
+              msgStr: note,
             });
           }
           if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        } else notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1200,14 +1237,14 @@ export class ActorPF extends Actor {
       situational: true,
       data: { mod: savingThrow.total },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       fastForward: options.skipPrompt !== false ? true : false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
-  };
+  }
 
   /* -------------------------------------------- */
 
@@ -1217,7 +1254,7 @@ export class ActorPF extends Actor {
    * @param {String} abilityId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    */
-  rollAbilityTest(abilityId, options={noSound: false, dice: "1d20"}) {
+  rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -1233,7 +1270,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1256,7 +1293,7 @@ export class ActorPF extends Actor {
       dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.AbilityTest").format(label),
-      speaker: ChatMessage.getSpeaker({actor: this}),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
@@ -1283,7 +1320,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        acNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        acNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1301,12 +1338,11 @@ export class ActorPF extends Actor {
           if (note.length > 0) {
             noteStr = DicePF.messageRoll({
               data: rollData,
-              msgStr: note
+              msgStr: note,
             });
           }
-          if (noteStr.length > 0) cmdDotes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else cmdNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+          if (noteStr.length > 0) cmdNotes.push(...noteStr.split(/[\n\r]+/));
+        } else cmdNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1324,12 +1360,11 @@ export class ActorPF extends Actor {
           if (note.length > 0) {
             noteStr = DicePF.messageRoll({
               data: rollData,
-              msgStr: note
+              msgStr: note,
             });
           }
           if (noteStr.length > 0) srNotes.push(...noteStr.split(/[\n\r]+/));
-        }
-        else srNotes.push(...note.split(/[\n\r]+/).map(o => TextEditor.enrichHTML(o, {rollData: rollData})));
+        } else srNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1348,18 +1383,22 @@ export class ActorPF extends Actor {
     // Damage Immunity
     if (this.data.data.traits.di.value.length || this.data.data.traits.di.custom.length) {
       const values = [
-        ...this.data.data.traits.di.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
-        ...this.data.data.traits.di.custom.length > 0 ? this.data.data.traits.di.custom.split(reSplit) : [],
+        ...this.data.data.traits.di.value.map((obj) => {
+          return CONFIG.PF1.damageTypes[obj];
+        }),
+        ...(this.data.data.traits.di.custom.length > 0 ? this.data.data.traits.di.custom.split(reSplit) : []),
       ];
-      energyResistance.push(...values.map(o => game.i18n.localize("PF1.ImmuneTo").format(o)));
+      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.ImmuneTo").format(o)));
     }
     // Damage Vulnerability
     if (this.data.data.traits.dv.value.length || this.data.data.traits.dv.custom.length) {
       const values = [
-        ...this.data.data.traits.dv.value.map(obj => { return CONFIG.PF1.damageTypes[obj]; }),
-        ...this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : [],
+        ...this.data.data.traits.dv.value.map((obj) => {
+          return CONFIG.PF1.damageTypes[obj];
+        }),
+        ...(this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : []),
       ];
-      energyResistance.push(...values.map(o => game.i18n.localize("PF1.VulnerableTo").format(o)));
+      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.VulnerableTo").format(o)));
     }
 
     // Create message
@@ -1411,19 +1450,21 @@ export class ActorPF extends Actor {
     const promises = [];
     for (let t of canvas.tokens.controlled) {
       let a = t.actor,
-          hp = a.data.data.attributes.hp,
-          tmp = parseInt(hp.temp) || 0,
-          dt = value > 0 ? Math.min(tmp, value) : 0;
+        hp = a.data.data.attributes.hp,
+        tmp = parseInt(hp.temp) || 0,
+        dt = value > 0 ? Math.min(tmp, value) : 0;
       if (!a.hasPerm(game.user, "OWNER")) {
         const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
         console.warn(msg);
         ui.notifications.warn(msg);
         continue;
       }
-      promises.push(t.actor.update({
-        "data.attributes.hp.temp": tmp - dt,
-        "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max)
-      }));
+      promises.push(
+        t.actor.update({
+          "data.attributes.hp.temp": tmp - dt,
+          "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
+        })
+      );
     }
     return Promise.all(promises);
   }
@@ -1443,7 +1484,9 @@ export class ActorPF extends Actor {
   get allNotes() {
     let result = [];
 
-    const noteItems = this.items.filter(o => { return o.data.data.contextNotes != null; });
+    const noteItems = this.items.filter((o) => {
+      return o.data.data.contextNotes != null;
+    });
 
     for (let o of noteItems) {
       if (o.type === "buff" && !o.data.data.active) continue;
@@ -1466,9 +1509,13 @@ export class ActorPF extends Actor {
     if (context.match(/^attacks\.(.+)/)) {
       const key = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return (o.target === "attacks" && o.subTarget === key);
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "attacks" && o.subTarget === key;
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       return result;
@@ -1480,14 +1527,18 @@ export class ActorPF extends Actor {
       const skill = this.getSkill(skillKey);
       const ability = skill.ability;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return (
-            (o.target === "skill" &&
-              // Check for skill.context or skill.xyz.subSkills.context
-              (o.subTarget === context || o.subTarget.split(".")?.[3] === context.split(".")?.[1])) ||
-            (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"))
-          );
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return (
+              (o.target === "skill" &&
+                // Check for skill.context or skill.xyz.subSkills.context
+                (o.subTarget === context || o.subTarget.split(".")?.[3] === context.split(".")?.[1])) ||
+              (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"))
+            );
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       return result;
@@ -1497,9 +1548,13 @@ export class ActorPF extends Actor {
     if (context.match(/^savingThrow\.(.+)/)) {
       const saveKey = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return o.target === "savingThrows" && (o.subTarget === saveKey || o.subTarget === "allSavingThrows");
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "savingThrows" && (o.subTarget === saveKey || o.subTarget === "allSavingThrows");
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       if (this.data.data.attributes.saveNotes != null && this.data.data.attributes.saveNotes !== "") {
@@ -1513,9 +1568,13 @@ export class ActorPF extends Actor {
     if (context.match(/^abilityChecks\.(.+)/)) {
       const ablKey = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return o.target === "abilityChecks" && (o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks");
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "abilityChecks" && (o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks");
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       return result;
@@ -1525,9 +1584,13 @@ export class ActorPF extends Actor {
     if (context.match(/^misc\.(.+)/)) {
       const miscKey = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return o.target === "misc" && o.subTarget === miscKey;
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "misc" && o.subTarget === miscKey;
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       return result;
@@ -1536,12 +1599,19 @@ export class ActorPF extends Actor {
     if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return o.target === "spell" && o.subTarget === "concentration";
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "spell" && o.subTarget === "concentration";
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
-      const spellbookNotes = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.concentrationNotes`);
+      const spellbookNotes = getProperty(
+        this.data,
+        `data.attributes.spells.spellbooks.${spellbookKey}.concentrationNotes`
+      );
       if (spellbookNotes.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
@@ -1552,9 +1622,13 @@ export class ActorPF extends Actor {
     if (context.match(/^spell\.cl\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
       for (let note of result) {
-        note.notes = note.notes.filter(o => {
-          return o.target === "spell" && o.subTarget === "cl";
-        }).map(o => { return o.text; });
+        note.notes = note.notes
+          .filter((o) => {
+            return o.target === "spell" && o.subTarget === "cl";
+          })
+          .map((o) => {
+            return o.text;
+          });
       }
 
       const spellbookNotes = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
@@ -1585,7 +1659,7 @@ export class ActorPF extends Actor {
     }, []);
   }
 
-  async createEmbeddedEntity(embeddedName, createData, options={}) {
+  async createEmbeddedEntity(embeddedName, createData, options = {}) {
     let noArray = false;
     if (!(createData instanceof Array)) {
       createData = [createData];
@@ -1599,7 +1673,7 @@ export class ActorPF extends Actor {
       }
     }
 
-    return super.createEmbeddedEntity(embeddedName, (noArray ? createData[0] : createData), options);
+    return super.createEmbeddedEntity(embeddedName, noArray ? createData[0] : createData, options);
   }
 
   _computeEncumbrance(updateData, srcData) {
@@ -1624,9 +1698,11 @@ export class ActorPF extends Actor {
 
   _calculateCoinWeight(data) {
     const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
-    return Object.values(data.data.currency).reduce((cur, amount) => {
-      return cur + amount;
-    }, 0) / coinWeightDivisor;
+    return (
+      Object.values(data.data.currency).reduce((cur, amount) => {
+        return cur + amount;
+      }, 0) / coinWeightDivisor
+    );
   }
 
   getCarryCapacity(srcData) {
@@ -1640,24 +1716,26 @@ export class ActorPF extends Actor {
 
     let heavy = Math.floor(table[carryStr] * carryMultiplier);
     if (carryStr >= table.length) {
-      heavy = Math.floor(table[table.length-1] * (1 + (0.3 * (carryStr - (table.length-1)))));
+      heavy = Math.floor(table[table.length - 1] * (1 + 0.3 * (carryStr - (table.length - 1))));
     }
     // Convert to world unit system
     heavy = convertWeight(heavy);
-      
+
     return {
       light: Math.floor(heavy / 3),
-      medium: Math.floor(heavy / 3 * 2),
+      medium: Math.floor((heavy / 3) * 2),
       heavy: heavy,
     };
   }
 
   getCarriedWeight(srcData) {
     // Determine carried weight
-    const physicalItems = srcData.items.filter(o => { return o.data.weight != null; });
+    const physicalItems = srcData.items.filter((o) => {
+      return o.data.weight != null;
+    });
     const weight = physicalItems.reduce((cur, o) => {
       if (!o.data.carried) return cur;
-      return cur + (o.data.weight * o.data.quantity);
+      return cur + o.data.weight * o.data.quantity;
     }, this._calculateCoinWeight(srcData));
 
     return convertWeight(weight);
@@ -1670,7 +1748,7 @@ export class ActorPF extends Actor {
     return this.getTotalCurrency("currency") + this.getTotalCurrency("altCurrency");
   }
 
-  getTotalCurrency(category="currency") {
+  getTotalCurrency(category = "currency") {
     const currencies = getProperty(this.data.data, category);
     return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
   }
@@ -1680,25 +1758,25 @@ export class ActorPF extends Actor {
    * @param {string} category - Either 'currency' or 'altCurrency'.
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
-  convertCurrency(category="currency", type="pp") {
-
-    const totalValue = category === "currency" ? this.getTotalCurrency("currency") : this.getTotalCurrency("altCurrency");
+  convertCurrency(category = "currency", type = "pp") {
+    const totalValue =
+      category === "currency" ? this.getTotalCurrency("currency") : this.getTotalCurrency("altCurrency");
     let values = [0, 0, 0, 0];
     switch (type) {
       case "pp":
         values[0] = Math.floor(totalValue / 10);
-        values[1] = Math.max(0, Math.floor(totalValue) - (values[0] * 10));
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[0] * 100) - (values[1] * 10));
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[0] * 1000) - (values[1] * 100) - (values[2] * 10));
+        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
         break;
       case "gp":
         values[1] = Math.floor(totalValue);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - (values[1] * 10));
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[1] * 100) - (values[2] * 10));
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
         break;
       case "sp":
         values[2] = Math.floor(totalValue * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - (values[2] * 10));
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
         break;
       case "cp":
         values[3] = Math.floor(totalValue * 100);
@@ -1721,10 +1799,10 @@ export class ActorPF extends Actor {
    * @param entryId {String}        The ID of the compendium entry to import
    */
   importItemFromCollection(collection, entryId) {
-    const pack = game.packs.find(p => p.collection === collection);
+    const pack = game.packs.find((p) => p.collection === collection);
     if (pack.metadata.entity !== "Item") return;
 
-    return pack.getEntity(entryId).then(ent => {
+    return pack.getEntity(entryId).then((ent) => {
       console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
 
       let data = duplicate(ent.data);
@@ -1736,55 +1814,66 @@ export class ActorPF extends Actor {
     });
   }
 
-  getRollData(data=null) {
+  getRollData(data = null) {
     if (data == null) data = this.data.data;
     let result = duplicate(data);
 
     // Set size index
     result.size = Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(data, "traits.size")) - 4;
-    
+
     // Set class data
     result.classes = {};
-    this.data.items.filter(obj => { return obj.type === "class"; }).forEach(cls => {
-      const tag = cls.data.tag;
-      if (!tag) return;
+    this.data.items
+      .filter((obj) => {
+        return obj.type === "class";
+      })
+      .forEach((cls) => {
+        const tag = cls.data.tag;
+        if (!tag) return;
 
-      let healthConfig = game.settings.get("pf1", "healthConfig");
-      const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
-      healthConfig = cls.data.classType === "racial" ? healthConfig.hitdice.Racial : hasPlayerOwner ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
-      const classType = cls.data.classType || "base";
-      result.classes[tag] = {
-        level: cls.data.level,
-        name: cls.name,
-        hd: cls.data.hd,
-        bab: cls.data.bab,
-        hp: healthConfig.auto,
-        savingThrows: {
-          fort: 0,
-          ref: 0,
-          will: 0,
-        },
-        fc: {
-          hp: classType === "base" ? cls.data.fc.hp.value : 0,
-          skill: classType === "base" ? cls.data.fc.skill.value : 0,
-          alt: classType === "base" ? cls.data.fc.alt.value : 0,
-        },
-      };
+        let healthConfig = game.settings.get("pf1", "healthConfig");
+        const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
+        healthConfig =
+          cls.data.classType === "racial"
+            ? healthConfig.hitdice.Racial
+            : hasPlayerOwner
+            ? healthConfig.hitdice.PC
+            : healthConfig.hitdice.NPC;
+        const classType = cls.data.classType || "base";
+        result.classes[tag] = {
+          level: cls.data.level,
+          name: cls.name,
+          hd: cls.data.hd,
+          bab: cls.data.bab,
+          hp: healthConfig.auto,
+          savingThrows: {
+            fort: 0,
+            ref: 0,
+            will: 0,
+          },
+          fc: {
+            hp: classType === "base" ? cls.data.fc.hp.value : 0,
+            skill: classType === "base" ? cls.data.fc.skill.value : 0,
+            alt: classType === "base" ? cls.data.fc.alt.value : 0,
+          },
+        };
 
-      for (let k of Object.keys(result.classes[tag].savingThrows)) {
-        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
-        if (formula == null) formula = "0";
-        result.classes[tag].savingThrows[k] = new Roll(formula, {level: cls.data.level}).roll().total;
-      }
-    });
+        for (let k of Object.keys(result.classes[tag].savingThrows)) {
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
+          if (formula == null) formula = "0";
+          result.classes[tag].savingThrows[k] = new Roll(formula, { level: cls.data.level }).roll().total;
+        }
+      });
 
     // Add more info for formulas
     if (this.items) {
-      result.armor = { type: 0, };
-      result.shield = { type: 0, };
+      result.armor = { type: 0 };
+      result.shield = { type: 0 };
 
       // Determine equipped armor type
-      const armor = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped);
+      const armor = this.items.filter(
+        (o) => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
+      );
       for (let o of armor) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
@@ -1793,7 +1882,9 @@ export class ActorPF extends Actor {
       }
 
       // Determine equipped shield type
-      const shields = this.items.filter(o => o.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped);
+      const shields = this.items.filter(
+        (o) => o.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
+      );
       for (let o of shields) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
@@ -1806,7 +1897,7 @@ export class ActorPF extends Actor {
     return result;
   }
 
-  getCR(data=null) {
+  getCR(data = null) {
     if (this.data.type !== "npc") return 0;
     if (data == null) data = this.data.data;
 
@@ -1814,21 +1905,22 @@ export class ActorPF extends Actor {
     if (this.items == null) return base;
 
     // Gather CR from templates
-    const templates = this.items.filter(o => o.type === "feat" && o.data.data.featType === "template");
+    const templates = this.items.filter((o) => o.type === "feat" && o.data.data.featType === "template");
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
-      if (typeof crOffset === "string" && crOffset.length) cur += new Roll(crOffset, this.getRollData(data)).roll().total;
+      if (typeof crOffset === "string" && crOffset.length)
+        cur += new Roll(crOffset, this.getRollData(data)).roll().total;
       return cur;
     }, base);
   }
 
-  async deleteEmbeddedEntity(embeddedName, data, options={}) {
+  async deleteEmbeddedEntity(embeddedName, data, options = {}) {
     if (embeddedName === "OwnedItem") {
       if (!(data instanceof Array)) data = [data];
 
       // Add children to list of items to be deleted
-      const _addChildren = async function(id) {
-        const item = this.items.find(o => o._id === id);
+      const _addChildren = async function (id) {
+        const item = this.items.find((o) => o._id === id);
         const children = await item.getLinkedItems("children");
         for (let child of children) {
           if (!data.includes(child._id)) {
@@ -1836,7 +1928,7 @@ export class ActorPF extends Actor {
             await _addChildren.call(this, child._id);
           }
         }
-      }
+      };
       for (let id of data) {
         await _addChildren.call(this, id);
       }
@@ -1853,28 +1945,36 @@ export class ActorPF extends Actor {
   }
 
   getQuickActions() {
-    return this.data.items.filter(o => (o.type === "attack" || o.type === "spell" || o.type === "feat") && getProperty(o, "data.showInQuickbar") === true).sort((a, b) => {
-      return a.data.sort - b.data.sort;
-    }).map(o => {
-      return {
-        item: o,
-        color1: ItemPF.getTypeColor(o.type, 0),
-        color2: ItemPF.getTypeColor(o.type, 1),
-      };
-    });
+    return this.data.items
+      .filter(
+        (o) =>
+          (o.type === "attack" || o.type === "spell" || o.type === "feat") &&
+          getProperty(o, "data.showInQuickbar") === true
+      )
+      .sort((a, b) => {
+        return a.data.sort - b.data.sort;
+      })
+      .map((o) => {
+        return {
+          item: o,
+          color1: ItemPF.getTypeColor(o.type, 0),
+          color2: ItemPF.getTypeColor(o.type, 1),
+        };
+      });
   }
 
   async toggleConditionStatusIcons() {
     const isLinkedToken = getProperty(this.data, "token.actorLink");
-    const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter(o => o != null);
+    const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
 
     if (!tokens.length) return;
 
     // Determine buff textures
-    const buffs = this.items.filter(o => o.type === "buff");
+    const buffs = this.items.filter((o) => o.type === "buff");
     let buffTextures = buffs.reduce((cur, o) => {
       const img = o.data.img;
-      if (o.data.data.active && !o.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions")) cur[img] = true;
+      if (o.data.data.active && !o.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"))
+        cur[img] = true;
       else if (cur[img] == null) cur[img] = false;
       return cur;
     }, {});
@@ -1888,26 +1988,24 @@ export class ActorPF extends Actor {
     for (let [k, v] of Object.entries(conditionTextures)) {
       if (v === true) {
         if (!buffTextures[k] && !game.settings.get("pf1", "hideTokenConditions")) buffTextures[k] = v;
-      }
-      else if (v === false) {
+      } else if (v === false) {
         if (buffTextures[k] == null) buffTextures[k] = v;
       }
     }
-    
+
     // Update token(s)
     let promises = [];
     for (let token of tokens) {
       const fx = token.data.effects;
       for (let [img, active] of Object.entries(buffTextures)) {
-        const idx = fx.findIndex(e => e === img);
+        const idx = fx.findIndex((e) => e === img);
         if (idx === -1 && active === true) {
           fx.push(img);
-        }
-        else if (idx !== -1 && active === false) {
+        } else if (idx !== -1 && active === false) {
           fx.splice(idx, 1);
         }
       }
-      promises.push(token.update({effects: fx}, {diff: false}));
+      promises.push(token.update({ effects: fx }, { diff: false }));
     }
 
     return Promise.all(promises);

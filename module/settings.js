@@ -3,7 +3,7 @@ import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
 import { CompendiumBrowser } from "./apps/compendium-browser.js";
 
-export const registerSystemSettings = function() {
+export const registerSystemSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
    */
@@ -12,7 +12,7 @@ export const registerSystemSettings = function() {
     scope: "world",
     config: false,
     type: String,
-    default: "0.0.0"
+    default: "0.0.0",
   });
   /**
    * Track when the last changelog was shown
@@ -33,16 +33,14 @@ export const registerSystemSettings = function() {
   });
 
   // Health configuration
-  game.settings.registerMenu("pf1",
-    "healthConfig", {
-      name: "SETTINGS.pf1HealthConfigName",
-      label: "SETTINGS.pf1HealthConfigLabel",
-      hint: "SETTINGS.pf1HealthConfigHint",
-      icon: "fas fa-heartbeat",
-      type: HealthConfig,
-      restricted: true
-    }
-  );
+  game.settings.registerMenu("pf1", "healthConfig", {
+    name: "SETTINGS.pf1HealthConfigName",
+    label: "SETTINGS.pf1HealthConfigLabel",
+    hint: "SETTINGS.pf1HealthConfigHint",
+    icon: "fas fa-heartbeat",
+    type: HealthConfig,
+    restricted: true,
+  });
   game.settings.register("pf1", "healthConfig", {
     name: "SETTINGS.pf1HealthConfigName",
     scope: "world",
@@ -50,22 +48,24 @@ export const registerSystemSettings = function() {
     type: Object,
     config: false,
     onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
-    }
+      game.actors.entities.forEach((o) => {
+        o.update({});
+      });
+      Object.values(game.actors.tokens).forEach((o) => {
+        o.update({});
+      });
+    },
   });
 
   // Experience configuration
-  game.settings.registerMenu("pf1",
-    "experienceConfig", {
-      name: "PF1.ExperienceConfigName",
-      label: "PF1.ExperienceConfigLabel",
-      hint: "PF1.ExperienceConfigHint",
-      icon: "fas fa-book",
-      type: ExperienceConfig,
-      restricted: true,
-    }
-  );
+  game.settings.registerMenu("pf1", "experienceConfig", {
+    name: "PF1.ExperienceConfigName",
+    label: "PF1.ExperienceConfigLabel",
+    hint: "PF1.ExperienceConfigHint",
+    icon: "fas fa-book",
+    type: ExperienceConfig,
+    restricted: true,
+  });
   game.settings.register("pf1", "experienceConfig", {
     name: "PF1.ExperienceConfigName",
     scope: "world",
@@ -73,9 +73,13 @@ export const registerSystemSettings = function() {
     type: Object,
     config: false,
     onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
-    }
+      game.actors.entities.forEach((o) => {
+        o.update({});
+      });
+      Object.values(game.actors.tokens).forEach((o) => {
+        o.update({});
+      });
+    },
   });
 
   // Accessibility configuration
@@ -109,10 +113,10 @@ export const registerSystemSettings = function() {
     default: "5105",
     type: String,
     choices: {
-      "555": "SETTINGS.pf1DiagPHB",
-      "5105": "SETTINGS.pf1DiagDMG"
+      555: "SETTINGS.pf1DiagPHB",
+      5105: "SETTINGS.pf1DiagDMG",
     },
-    onChange: rule => canvas.grid.diagonalRule = rule
+    onChange: (rule) => (canvas.grid.diagonalRule = rule),
   });
 
   /**
@@ -127,15 +131,17 @@ export const registerSystemSettings = function() {
     default: "",
     type: String,
     onChange: () => {
-      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
-        return o.data.type === "character";
-      }).forEach(o => {
-        o.update({});
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
+      [...game.actors.entities, ...Object.values(game.actors.tokens)]
+        .filter((o) => {
+          return o.data.type === "character";
+        })
+        .forEach((o) => {
+          o.update({});
+          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        });
     },
   });
-  
+
   /**
    * System of Units
    */
@@ -147,16 +153,18 @@ export const registerSystemSettings = function() {
     default: "imperial",
     type: String,
     choices: {
-      "imperial": "Imperial (feet, lbs)",
-      "metric": "Metric (meters, kg)"
+      imperial: "Imperial (feet, lbs)",
+      metric: "Metric (meters, kg)",
     },
     onChange: () => {
-      [...game.actors.entities, ...Object.values(game.actors.tokens)].filter(o => {
-        return o.data.type === "character";
-      }).forEach(o => {
-        o.update({});
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
+      [...game.actors.entities, ...Object.values(game.actors.tokens)]
+        .filter((o) => {
+          return o.data.type === "character";
+        })
+        .forEach((o) => {
+          o.update({});
+          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        });
     },
   });
 
@@ -171,8 +179,12 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
     onChange: () => {
-      game.actors.entities.forEach(o => { if (o.sheet && o.sheet.rendered) o.sheet.render(true); });
-      Object.values(game.actors.tokens).forEach(o => { if (o.sheet && o.sheet.rendered) o.sheet.render(true); });
+      game.actors.entities.forEach((o) => {
+        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
+      });
+      Object.values(game.actors.tokens).forEach((o) => {
+        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
+      });
     },
   });
 
@@ -187,8 +199,12 @@ export const registerSystemSettings = function() {
     default: false,
     type: Boolean,
     onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+      game.actors.entities.forEach((o) => {
+        o.update({});
+      });
+      Object.values(game.actors.tokens).forEach((o) => {
+        o.update({});
+      });
     },
   });
 
@@ -204,7 +220,7 @@ export const registerSystemSettings = function() {
     type: Boolean,
     onChange: () => {
       ui.chat.render();
-    }
+    },
   });
 
   /**
@@ -254,8 +270,8 @@ export const registerSystemSettings = function() {
     default: "0",
     type: String,
     choices: {
-      "0": "SETTINGS.pf1SharedVisionWithoutSelection",
-      "1": "SETTINGS.pf1SharedVisionWithSelection",
+      0: "SETTINGS.pf1SharedVisionWithoutSelection",
+      1: "SETTINGS.pf1SharedVisionWithSelection",
     },
     onChange: () => {
       game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
@@ -273,8 +289,12 @@ export const registerSystemSettings = function() {
     default: 50,
     type: Number,
     onChange: () => {
-      game.actors.entities.forEach(o => { o.update({}); });
-      Object.values(game.actors.tokens).forEach(o => { o.update({}); });
+      game.actors.entities.forEach((o) => {
+        o.update({});
+      });
+      Object.values(game.actors.tokens).forEach((o) => {
+        o.update({});
+      });
     },
   });
 
@@ -290,7 +310,10 @@ export const registerSystemSettings = function() {
     type: Boolean,
     onChange: () => {
       let promises = [];
-      const actors = [...Array.from(game.actors.entities.filter(o => getProperty(o.data, "token.actorLink"))), ...Object.values(game.actors.tokens)];
+      const actors = [
+        ...Array.from(game.actors.entities.filter((o) => getProperty(o.data, "token.actorLink"))),
+        ...Object.values(game.actors.tokens),
+      ];
       for (let actor of actors) {
         promises.push(actor.toggleConditionStatusIcons());
       }
@@ -338,7 +361,10 @@ export const registerSystemSettings = function() {
     type: Boolean,
     onChange: () => {
       let promises = [];
-      const actors = [...Array.from(game.actors.entities.filter(o => getProperty(o.data, "token.actorLink"))), ...Object.values(game.actors.tokens)];
+      const actors = [
+        ...Array.from(game.actors.entities.filter((o) => getProperty(o.data, "token.actorLink"))),
+        ...Object.values(game.actors.tokens),
+      ];
       for (let actor of actors) {
         promises.push(actor.toggleConditionStatusIcons());
       }
@@ -347,7 +373,7 @@ export const registerSystemSettings = function() {
   });
 };
 
-export const registerClientSettings = function() {
+export const registerClientSettings = function () {
   /**
    * Compendium filters
    */
@@ -388,11 +414,13 @@ export const registerClientSettings = function() {
       classes: "0.75.6",
       races: "0.75.6",
     },
-    type: Object
+    type: Object,
   });
 };
 
-export const getSkipActionPrompt = function() {
-  return (game.settings.get("pf1", "skipActionDialogs") && !game.keyboard.isDown("Shift")) ||
-  (!game.settings.get("pf1", "skipActionDialogs") && game.keyboard.isDown("Shift"));
+export const getSkipActionPrompt = function () {
+  return (
+    (game.settings.get("pf1", "skipActionDialogs") && !game.keyboard.isDown("Shift")) ||
+    (!game.settings.get("pf1", "skipActionDialogs") && game.keyboard.isDown("Shift"))
+  );
 };

@@ -2090,6 +2090,7 @@ const _blacklistChangeData = function (data, changeTarget) {
       result.abilities.str = null;
       result.skills = null;
       result.attributes.savingThrows = null;
+      break;
     case "con":
       result.abilities.con = null;
       result.attributes.hp = null;

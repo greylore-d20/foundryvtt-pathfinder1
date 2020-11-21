@@ -563,7 +563,7 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _hasTypeFilter(filters) {
-    return Array.from(filters).filter(s => s.startsWith("type-")).length > 0;
+    return Array.from(filters).filter((s) => s.startsWith("type-")).length > 0;
   }
 
   /* -------------------------------------------- */

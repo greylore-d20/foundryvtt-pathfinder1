@@ -90,6 +90,7 @@ export class ActorSheetPF extends ActorSheet {
         ".buffs-body .inventory-list",
         ".skillset-body .skills-list.adventure",
         ".skillset-body .skills-list.background",
+        ".feats-body",
       ],
     });
   }

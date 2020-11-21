@@ -810,9 +810,11 @@
       height: 100%;
     }
     
-    .inventory-list {
-      height: 100%;
-      overflow-y: scroll;
+    .inventory-body {
+      .inventory-list {
+        height: 100%;
+        overflow-y: scroll;
+      }
     }
   }
 
@@ -868,6 +870,8 @@
   /* ----------------------------------------- */
 
   section.feats-body {
+    overflow-y: scroll;
+
     .feats-group {
       .item-detail.item-type {
         flex: 0 0 40px;

@@ -1212,16 +1212,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note,
-            });
-          }
-          if (noteStr.length > 0) notes.push(...noteStr.split(/[\n\r]+/));
-        } else notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
+        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1333,16 +1324,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note,
-            });
-          }
-          if (noteStr.length > 0) cmdNotes.push(...noteStr.split(/[\n\r]+/));
-        } else cmdNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
+        cmdNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 
@@ -1355,16 +1337,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (let note of noteObj.notes) {
-        if (!isMinimumCoreVersion("0.5.2")) {
-          let noteStr = "";
-          if (note.length > 0) {
-            noteStr = DicePF.messageRoll({
-              data: rollData,
-              msgStr: note,
-            });
-          }
-          if (noteStr.length > 0) srNotes.push(...noteStr.split(/[\n\r]+/));
-        } else srNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
+        srNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
 

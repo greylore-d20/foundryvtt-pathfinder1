@@ -176,10 +176,9 @@
 
   <div class="form-group carry-bonus">
     <label>{{localize "PF1.BonusCarryStrength"}}</label>
-    <input type="text" name="data.abilities.str.carryBonus" value="{{data.abilities.str.carryBonus}}" data-dtype="Number" placeholder="0"/>
+    <span class="text-box direct" name="data.abilities.str.carryBonus" data-dtype="Number" data-placeholder="0">{{data.abilities.str.carryBonus}}</span>
     <label>{{localize "PF1.Multiplier"}}</label>
-    <input type="text" name="data.abilities.str.carryMultiplier" value="{{data.abilities.str.carryMultiplier}}"
-                                                                data-dtype="Number" placeholder="1"/>
+    <span class="text-box direct" name="data.abilities.str.carryMultiplier" data-dtype="Number" data-placeholder="1">{{data.abilities.str.carryMultiplier}}</span>
   </div>
   {{#with encumbrance}}
   <div class="flexrow">
@@ -188,26 +187,35 @@
   </div>
   <div class="flexrow">
     <div class="encumbrance {{#if encumbered.light}}encumbered{{/if}}">
-      <span class="encumbrance-bar" style="width:{{pct.light}}%"></span>
+      {{#if pct.light}}<span class="encumbrance-bar" style="width:{{pct.light}}%"></span>{{/if}}
       <span class="encumbrance-label">{{localize "PF1.CarryLightLoad"}} ({{light}})</span>
     </div>
     <div class="encumbrance {{#if encumbered.medium}}encumbered{{/if}}">
-      <span class="encumbrance-bar" style="width:{{pct.medium}}%"></span>
+      {{#if pct.medium}}<span class="encumbrance-bar" style="width:{{pct.medium}}%"></span>{{/if}}
       <span class="encumbrance-label">{{localize "PF1.CarryMediumLoad"}} ({{medium}})</span>
     </div>
     <div class="encumbrance {{#if encumbered.heavy}}encumbered{{/if}}">
-      <span class="encumbrance-bar" style="width:{{pct.heavy}}%"></span>
+      {{#if pct.heavy}}<span class="encumbrance-bar" style="width:{{pct.heavy}}%"></span>{{/if}}
       <span class="encumbrance-label">{{localize "PF1.CarryHeavyLoad"}} ({{heavy}})</span>
     </div>
   </div>
-  <div class="form-group">
-    <label>{{localize "PF1.CarryAboveHead"}}</label>
-    <input type="text" disabled value="{{aboveHead}}" placeholder="{{localize "PF1.CarryAboveHead"}}" />
-    <label>{{localize "PF1.CarryOffGround"}}</label>
-    <input type="text" disabled value="{{offGround}}" placeholder="{{localize "PF1.CarryOffGround"}}" />
-    <label>{{localize "PF1.CarryDragPush"}}</label>
-    <input type="text" disabled value="{{dragPush}}" placeholder="{{localize "PF1.CarryDragPush"}}" />
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "PF1.CarryAboveHead"}}</th>
+        <th>{{localize "PF1.CarryOffGround"}}</th>
+        <th>{{localize "PF1.CarryDragPush"}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>{{aboveHead}}</td>
+        <td>{{offGround}}</td>
+        <td>{{dragPush}}</td>
+      </tr>
+    </tbody>
+  </table>
 {{/with}}
 </div>
 {{else}}

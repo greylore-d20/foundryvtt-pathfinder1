@@ -2897,7 +2897,16 @@ export class ItemPF extends Item {
     const links = getProperty(this.data, `data.links.${linkType}`) || [];
     if (links.filter((o) => o.id === itemLink).length) return false;
 
-    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
+    const targetLinks = getProperty(targetItem.data, `data.links.${linkType}`);
+    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
+      if (linkType === "charges" && targetLinks.length > 0) {
+        ui.notifications.warn(
+          game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)
+        );
+        return false;
+      }
+      return true;
+    }
 
     if (linkType === "classAssociations" && dataType === "compendium") return true;
 

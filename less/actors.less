@@ -319,6 +319,18 @@
     .traits {
       overflow-y: scroll;
       height: 100%;
+
+      > * {
+        flex: 0 0 24px;
+
+        background-color: rgba(170, 170, 170, 0.3);
+        &:nth-child(even) {
+          background-color: rgba(210, 210, 210, 0.3);
+        }
+        &:hover {
+          background-color: rgba(64, 64, 192, 0.3);
+        }
+      }
     }
 
     table {
@@ -434,7 +446,7 @@
       align-items: end;
 
       background-color: rgba(170, 170, 170, 0.3);
-      &:nth-child(2n+1) {
+      &:nth-child(even) {
         background-color: rgba(210, 210, 210, 0.3);
       }
       &:hover {
@@ -644,7 +656,7 @@
     margin: 0 5px;
 
     .form-group, .form-group-stacked {
-      margin: 0 0 4px 0;
+      margin: 0;
       justify-content: space-between;
     }
 

@@ -91,6 +91,7 @@ export class ActorSheetPF extends ActorSheet {
         ".skillset-body .skills-list.adventure",
         ".skillset-body .skills-list.background",
         ".feats-body",
+        ".traits",
       ],
     });
   }

@@ -1266,6 +1266,16 @@
   overflow-y: scroll;
   height: 100%;
 }
+.pf1.sheet.actor .attributes .traits > * {
+  flex: 0 0 24px;
+  background-color: rgba(170, 170, 170, 0.3);
+}
+.pf1.sheet.actor .attributes .traits > *:nth-child(even) {
+  background-color: rgba(210, 210, 210, 0.3);
+}
+.pf1.sheet.actor .attributes .traits > *:hover {
+  background-color: rgba(64, 64, 192, 0.3);
+}
 .pf1.sheet.actor .attributes table {
   margin: 0;
 }
@@ -1349,8 +1359,8 @@
   align-items: end;
   background-color: rgba(170, 170, 170, 0.3);
 }
-.pf1.sheet.actor ul.skills-list li.skill:nth-child(2n+1),
-.pf1.sheet.actor ul.skills-list li.sub-skill:nth-child(2n+1) {
+.pf1.sheet.actor ul.skills-list li.skill:nth-child(even),
+.pf1.sheet.actor ul.skills-list li.sub-skill:nth-child(even) {
   background-color: rgba(210, 210, 210, 0.3);
 }
 .pf1.sheet.actor ul.skills-list li.skill:hover,
@@ -1538,7 +1548,7 @@
 }
 .pf1.sheet.actor .traits .form-group,
 .pf1.sheet.actor .traits .form-group-stacked {
-  margin: 0 0 4px 0;
+  margin: 0;
   justify-content: space-between;
 }
 .pf1.sheet.actor .traits .trait-selector {

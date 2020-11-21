@@ -12,6 +12,7 @@
 
 - d20 alternative can now be passed into Actor#rollX and Item#useAttack API (eg "2d20kh")
 - Improve actor sheet rendering performance
+- Traits on the attributes page on actor sheets have improved visibility on the interface
 
 ## 0.76.2
 

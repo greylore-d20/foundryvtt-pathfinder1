@@ -12,6 +12,7 @@
 
   <section class="attacks-body">
     {{#each sections as |section sid|}}
+    {{#unless section._hidden}}
     <div class="inventory-group flexcol">
       <ol class="inventory-list">
         <li class="inventory-header flexrow">
@@ -85,6 +86,7 @@
         </ol>
       </ol>
     </div>
+    {{/unless}}
     {{/each}}
   </section>
 </div>

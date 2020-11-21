@@ -173,6 +173,7 @@
   <div class="inventory-group flexcol">
     <ol class="inventory-list">
       {{#each spellbook.data as |section sid|}}
+      {{#unless section._hidden}}
       <li class="flexrow inventory-header spellbook-header">
         <div class="item-name flexrow">
           <h3>{{section.name}}</h3>
@@ -227,7 +228,7 @@
       </li>
       
       <ol class="item-list">
-        {{#each section.spells as |item i|}}
+        {{#each section.items as |item i|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style="background-image: url({{item.img}})"></div>
@@ -295,6 +296,7 @@
         </li>
         {{/each}}
       </ol>
+      {{/unless}}
       {{/each}}
     </ol>
   </div>

@@ -470,7 +470,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: owner === true,
         canPrepare: (data.actor.type === "character"),
         label: CONFIG.PF1.spellLevels[a],
-        spells: [],
+        items: [],
         uses: getProperty(book, `spells.spell${a}.value`) || 0,
         baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
         slots: getProperty(book, `spells.spell${a}.max`) || 0,
@@ -480,12 +480,9 @@ export class ActorSheetPF extends ActorSheet {
     }
     spells.forEach(spell => {
       const lvl = spell.data.level || 0;
-      spellbook[lvl].spells.push(spell);
+      spellbook[lvl].items.push(spell);
     });
 
-    // Sort the spellbook by section order
-    spellbook = Object.values(spellbook);
-    spellbook.sort((a, b) => a.level - b.level);
     return spellbook;
   }
 
@@ -511,6 +508,15 @@ export class ActorSheetPF extends ActorSheet {
     })
 
     return result;
+  }
+
+  /**
+   * Determine whether an Entity type filter is active for the given set of filters.
+   * @return {Boolean}
+   * @private
+   */
+  _hasTypeFilter(filters) {
+    return Array.from(filters).filter(s => s.startsWith("type-")).length > 0;
   }
 
   /* -------------------------------------------- */
@@ -1890,6 +1896,27 @@ export class ActorSheetPF extends ActorSheet {
       let s = a.data.attackType;
       if (!attackSections[s]) continue;
       attackSections[s].items.push(a);
+    }
+
+    // Apply type filters
+    {
+      let sections = [
+        { key: "inventory", section: inventory },
+        { key: "features", section: features },
+        { key: "buffs", section: buffSections },
+        { key: "attacks", section: attackSections },
+      ];
+      for (let [k, sb] of Object.entries(spellbookData)) {
+        sections.push({ key: `spellbook-${k}`, section: sb.data });
+      }
+
+      for (let section of sections) {
+        for (let [k, s] of Object.entries(section.section)) {
+          if (this._hasTypeFilter(this._filters[section.key]) && s.items.length === 0) {
+            s._hidden = true;
+          }
+        }
+      }
     }
 
     // Assign and return

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.5
+
+### Bug Fixes
+
+- Resting healed too little nonlethal damage
+
 ## 0.76.4 (Hotfix)
 
 ### Bug Fixes
@@ -60,7 +66,7 @@
 
 ### Bug Fixes
 
-- Conditional Modifiers on spells were deleted when migrating data (#342) 
+- Conditional Modifiers on spells were deleted when migrating data (#342)
 - At-will spells caused an incorrect calculation of available spell slots
 - Token elevation couldn't be set to negative values or use relative math (#354)
 - The Haste buff had an incorrect formula for its speed increases (#348)
@@ -604,7 +610,7 @@
 - Chat metadata used an incorrect measure template ID
 - Entering a non-working formula for bonus feats caused the character sheet to not open anymore
 - Some item properties were still visible while unidentified which should have been invisible
-  
+
 ### Changelog
 
 - Added sample macro for creating a loot sheet from one or more tokens
@@ -650,7 +656,7 @@
 
 - TinyMCE editors were showing 2 scrollbars, depending on the content
 - Added backwards compatibility with old changes
-  
+
 ### Changelog
 
 - Improved visibility of tabs

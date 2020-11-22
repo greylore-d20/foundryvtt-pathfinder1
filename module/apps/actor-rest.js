@@ -47,7 +47,7 @@ export class ActorRestDialog extends BaseEntitySheet {
       let heal = {
         hp: hd,
         abl: 1,
-        nonlethal: restOptions.hours,
+        nonlethal: restOptions.hours * hd,
       };
       if (restOptions["longTermCare"] === true) {
         heal.hp *= 2;

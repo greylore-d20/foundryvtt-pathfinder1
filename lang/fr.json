@@ -51,7 +51,10 @@
     "ActionSave": "Jet de protection",
     "ActionSpellSave": "Jet de protection (Sort)",
     "ActionType": "Type d’action",
+    "Action_RollDefenses": "Lancer les défenses",
     "ActivationCost": "Coût d’activation",
+    "ActivationTypeAction": "Action",
+    "ActivationTypeActionPlural": "Actions",
     "ActivationTypeAttack": "Action d'attaque",
     "ActivationTypeAttackPlural": "Actions d’attaque",
     "ActivationTypeFree": "Action gratuite",
@@ -67,6 +70,8 @@
     "ActivationTypeMove": "Action de mouvement",
     "ActivationTypeMovePlural": "Actions de mouvement",
     "ActivationTypePassive": "Passive",
+    "ActivationTypeReaction": "Réaction",
+    "ActivationTypeReactionPlural": "Réactions",
     "ActivationTypeRound": "Round",
     "ActivationTypeRoundPlural": "Round",
     "ActivationTypeSpecial": "Spécial",
@@ -89,8 +94,8 @@
     "ActorSizeSmall": "Petite",
     "ActorSizeTiny": "Très petite",
     "Add": "Ajouter",
-    "AddConditional": "Ajout conditionnel",
-    "AddEffect": "Ajout d'effet",
+    "AddConditional": "Ajouter une conditionn",
+    "AddEffect": "Ajouter un effet",
     "Advanced": "Avancé",
     "AdventureRanksToBG": "rangs d’aventure de Background",
     "Age": "Âge",
@@ -289,6 +294,8 @@
     "ClassTypeRacial": "Classe de race",
     "Classes": "Classes",
     "Combat": "Combat",
+    "CombatInfo_Header": "Combat",
+    "CombatInfo_Round": "Round {0}",
     "Compendium": "Compendium",
     "Compendium_Class": "Compendium de classe",
     "Components": "Composants",
@@ -424,6 +431,7 @@
     "Deity": "Divinité",
     "DeleteItem": "Effacer l’objet",
     "DeleteItemConfirmation": "êtes vous certain de vouloir effacer cet objet ?",
+    "DeleteItemTitle": "Effacer objet : {0}",
     "Description": "Description",
     "Details": "Détails",
     "Disabled": "Désactivé",
@@ -442,6 +450,8 @@
     "DistPersonal": "Personnel",
     "DistTouch": "Contact",
     "Domain": "Domaine",
+    "DomainSlotValue": "Valeur emplacement de domaine",
+    "DomainSlotValueDesc": "Combien d'emplacements libres de domaine/d'école pour un niveau de sort",
     "DontShowAgain": "Ne plus montrer",
     "Drain": "Drain",
     "DuplicateItem": "Dupliquer l'objet",
@@ -491,10 +501,13 @@
     "ErrorActorFormula": "Erreur de formule de type {0} sur acteur {1}",
     "ErrorActorNotFound": "Acteur avec ID {0} pas trouvé",
     "ErrorCantIdentify": "Vous n'êtes pas autorisé à identifier les objets",
+    "ErrorCouldNotFindActorByName": "Ne peut pas trouver l'acteur par nom '{0}'",
     "ErrorInsufficientCharges": "Il n'y a plus suffisamment de charges dans {0}",
     "ErrorItemFormula": "Il y a une erreur de formule dans l’objet {0} sur l’acteur {1}",
     "ErrorItemNoOwner": "Cet objet n’a pas de possesseur",
     "ErrorNoActorPermission": "Vous n’avez pas la permission de contrôler cet acteur",
+    "ErrorNoActorPermissionAlt": "Vous n'avez pas la permission de contrôler l'acteur '{0}'",
+    "ErrorNoApplicableActorFoundForAction": "Pas d'acteur applicable pour l'action '{0}'",
     "ErrorNoCharges": "Il n'y a plus de capacité dans {0}",
     "ErrorNoFormula": "{0} n’est pas une formule de lancer de dé!",
     "ErrorNoQuantity": "Vous n'avez plus d'élément de ce type",
@@ -551,6 +564,263 @@
     "HealthFormula": "Formule de Santé",
     "Height": "Taille",
     "Held": "Tenu",
+    "Help": {
+      "Content": {
+        "Items": {
+          "Changes": {
+            "Changes": {
+              "Desc": "C'est une liste de changements qui affectent l'acteur possédant l'objet directement. de gauche à droite :",
+              "Formula": {
+                "Desc": "La formule par laquelle affecter ce changement particulier. La manière dont cela altère l'attribut d'un acteur dépend de l'opérateur (vois après). Voir <a href=\"systems/pf1/help/special/formulas.html\">cette page</a> pour plus de détails.",
+                "Label": "Formule"
+              },
+              "Label": "Changements",
+              "Modifier": {
+                "Desc": "Le modificateur de ce changement",
+                "Label": "Modificateur"
+              },
+              "Operator": {
+                "Desc": "L'opérateur est soit  '+' (relatif) ou '=' (absolu). Les valeurs relatives <i>ajoutent</i> à un attribut, alors que les valeurs absolues <i>fixent</i> l'attribut au résultat de la formule.",
+                "Label": "Opérateur"
+              },
+              "Priority": {
+                "Desc": "La priorité de ce changement. Les changements avec de moindres propriétés seront effectués plus tard",
+                "Label": "Priorité"
+              },
+              "SubTarget": {
+                "Desc": "L'attribut spécifique à altérer avec ce changement.",
+                "Label": "Sous-cible"
+              },
+              "Target": {
+                "Desc": "Une catégorie dénérale d'attribut à modifier.",
+                "Label": "Cible"
+              }
+            },
+            "ContextNotes": {
+              "Desc": "C'est une liste de notes contextuelles qui sont montrées dans les situations appropriées. De gauche à droite :",
+              "Description": {
+                "Desc": "La description à montrer dans les situations appropriées. Chaque nouvelle ligne ajoute une nouvelle description à la même cible. Vous pouvez utiliser les styles de jets utilisables dans Foundry dans celles-ci.",
+                "Label": "Description"
+              },
+              "Label": "Notes de contexte",
+              "SubTarget": {
+                "Desc": "L'attribut spécifique à altérer avec ce changement.",
+                "Label": "Sous-cible"
+              },
+              "Target": {
+                "Desc": "Une catégorie générale de l'attribut à altérer",
+                "Label": "Cible"
+              }
+            },
+            "Flags": {
+              "DwarfLikeEncumbrance": {
+                "Desc": "Lorsqu'un objet avec ce changement est actif, son acteur ne sera pas ralenti en portant une charge moyenne ou lourde.",
+                "Label": "Encombrement propre aux nains"
+              },
+              "FullSpeedHeavyArmor": {
+                "Desc": "Lorsqu'un objet avec ce changement est actif, son acteur ne sera pas ralenti en portant une armure lourde.",
+                "Label": "Vitesse en Armure lourde"
+              },
+              "FullSpeedMediumArmor": {
+                "Desc": "Lorsqu'un objet avec ce changement est actif, son acteur ne sera pas ralenti en portant une armure moyenne.",
+                "Label": "Vitesse avec une Armure moyenne"
+              },
+              "Label": "Étiquettes",
+              "LoseDexToAC": {
+                "Desc": "Lorsqu'un objet avec ce changement est actif, un personnage perd son bonus de Dextérité à la Classe d'Armure",
+                "Label": "Perte de la Dex à la CA"
+              },
+              "SetAbility": {
+                "Desc": "Fixe la Caractéristique appropriée à la valeur spécifié de l'étiquette. Cela pourrait être retiré dans une version ultérieure car cela peut être obtenu avec l'opérateur '=' (voir ci-dessous)",
+                "Label": "X Caractéristique"
+              }
+            },
+            "Label": "Changements"
+          },
+          "Consumables": {
+            "Desc": "Les consommables représentent des objets physiques avec une utilisation limitée, tels que potions et baguettes",
+            "Label": "Consommables"
+          },
+          "Containers": {
+            "Desc": "Les conteneurs sont des objets qui peuvent en contenir d'autres",
+            "Label": "Conteneurs"
+          },
+          "Description": {
+            "Description": "Description",
+            "DescriptionDesc": "La description à montrer une fois l'objet identifié",
+            "Label": "Description",
+            "Name": "Nom",
+            "NameDesc": "Le nom de l'objet, si identifié",
+            "Price": "Prix",
+            "PriceDesc": "Le prix de l'objet, en pièces d'or, une fois identifié",
+            "UnidentifiedDescription": "Description avant identification",
+            "UnidentifiedDescriptionDesc": "La description à montrer aux joueurs avant l'identification",
+            "UnidentifiedName": "Nom avant identification",
+            "UnidentifiedNameDesc": "Le nom de l'objet tant qu'il n'est pas identifié. Montre le nom identifié aux joueurs si laissé vide",
+            "UnidentifiedPrice": "Prix non identifié",
+            "UnidentifiedPriceDesc": "Le prix de l'objet en pièces d'or, s'il n'est pas identifié"
+          },
+          "Equipment": {
+            "Category": "Catégorie",
+            "CategoryDesc": "La catégorie d'armure (armure, bouclier ou autre chose)",
+            "Desc": "L'équipement représente tous les objets autres que les armes équipables, incluant armures, boucliers et objets merveilleux",
+            "Label": "Équipement",
+            "Slot": "Emplacement",
+            "SlotDesc": "Quel emplacement cet objet occupe (seulement pour les objets autres que les armures ou les boucliers)",
+            "Status": "Statut de l'équipement",
+            "StatusDesc": "Les étiquettes de statut de cet objet particulier",
+            "Type": "Type",
+            "TypeDesc": "la taille de l'armure ou du bouclier ou un autre type d'objet (vêtement, objet merveilleux...)"
+          },
+          "Generic": {
+            "Broken": "Brisé",
+            "BrokenDesc": "Si l'objet est brisé comme dans les règles de base",
+            "EnhancementBonus": "Bonus d'amélioration",
+            "EnhancementBonusDesc": "Le bonus d'améliotation de l'objet, selon les règles de base",
+            "EquipmentStatus": "Statut de l'équipement",
+            "Equipped": "Équipé",
+            "EquippedDesc": "Si l'objet est actuellement équipé et transfère ses modifications à son acteur (s'il y en a)",
+            "Identified": "Identifié (MJ seulement)",
+            "IdentifiedDesc": "Si l'objet est actuellement identifié et montre les informations identifiées aux joueurs",
+            "Masterwork": "de maître",
+            "MasterworkDesc": "si l'objet est de maître, selon les règles",
+            "Size": "Taille",
+            "SizeDesc": "La taille de l'objet, similaire à la taille du personnage"
+          },
+          "ItemTypes": {
+            "Other": "Autres types d'objets",
+            "Physical": "Types d'objets physiques"
+          },
+          "Loot": {
+            "Desc": "Les objets de butin sont toutes sortes d'objets physiques qui ne rentrent pas dans les autres catégories majeures, comme des munitions et des biens de consommation courante",
+            "Label": "Butin"
+          },
+          "Weapons": {
+            "BaseWeaponCritical": "Critique de base de l'arme",
+            "BaseWeaponCriticalDesc": "Le premier champ indique le plus bas résultat du d20 de l'attaque qui est un coup critique et le second indique le montant par lequel les dégâts sont multipliés",
+            "BaseWeaponDamage": "Dégâts de base de l'arme",
+            "BaseWeaponDamageDesc": "Le premier champ indique le dé de dégâts qu'une arme de taille moyenne inflige et le second celui du type de dégâts infligés (Contondant, Tranchant, Perforant)",
+            "BonusAttackFormula": "Formule de bonus d'attaque",
+            "BonusAttackFormulaDesc": "La formule des bonus d'attaque de l'arme. Quelques exemples",
+            "BonusAttackFormulaExamples": {
+              "0": "Va impliquer une pénalité au jet d'attaque de -2 si le modificateur de  Force est inférieur à 3"
+            },
+            "BonusDamageFormula": "Formule de bonus aux dégâts",
+            "BonusDamageFormulaDesc": "Le bonus de dégâts que l'arme inflige. Quelques exemples",
+            "BonusDamageFormulaExamples": {
+              "0": "Va jouter soit 4 ou le modificateur de force aux jet de dégâts, celui qui est le plus faible"
+            },
+            "Category": "Catégorie",
+            "CategoryDesc": "La catégorie de l'arme (simple, de guerre, exotique ou divers)",
+            "Desc": "Les armes sont censées représenter les armes physiques qu'un personnage peut tenir",
+            "Label": "Armes",
+            "Properties": "Propriétés d'arme",
+            "PropertiesDesc": "Les propriétés d'arme, comme avec les règles de base (ne fait rien mécaniquement)",
+            "Size": "Taille de l'arme",
+            "SizeDesc": "La ttaille de l'arme, similaire à la taille du personnage",
+            "Type": "Type",
+            "TypeDesc": "Le type d'arme (léger, à une main, à deux mains ou à distance)"
+          }
+        },
+        "Special": {
+          "Formulas": {
+            "Desc": "Les formules sont un aspect important de Pathfinder 1e. Elles peuvent être aussi simples qu'une unique valeur numérique ou aussi compliquées que des lignes de code uniques. Ils jouent un grand rôle dans les changements d'objet.",
+            "Desc2": "Pour une référence rapide, vous pouvez aussi trouver beaucoup d'informations dans les outils d'aide sur les feuilles d'acteur.",
+            "Functions": {
+              "Ceil": {
+                "Desc": "Arrondi le nombre donné au nombre entier supérieur",
+                "Examples": {
+                  "0": "Donne la moitié des Dés de vie de l'acteur, arrondi au supérieur"
+                }
+              },
+              "Desc": "Les suivantes sont les fonctions que vous pouvez utiliser dans les formules et les exemples de comment les utiliser",
+              "Floor": {
+                "Desc": "Arrnodi le nombre donné au nombre entier inférieur",
+                "Examples": {
+                  "0": "Donne la moitié des Dés de vie de l'acteur, arrondi à l'inférieur"
+                }
+              },
+              "Header": {
+                "Description": "Description",
+                "Example": "Exemple",
+                "Examples": "Exemples",
+                "Name": "Fonction"
+              },
+              "Label": "Fonctions",
+              "Max": {
+                "Desc": "Donne le plus haut des nombres donnés.",
+                "Examples": {
+                  "0": "Donne soit le modificateur de Force de l'acteur ou le modificateur de Dextérité de l'acteur, celui qui est le plus haut."
+                }
+              },
+              "Min": {
+                "Desc": "Donne le plus bas des nombres donnés.",
+                "Examples": {
+                  "0": "Donne soit le nombre de Dés de vie de l'acteur soit le nombre 10, celui qui est le plus bas"
+                }
+              },
+              "Power": {
+                "Desc": "Donne x au pouvoir de y",
+                "Examples": {
+                  "0": "Donne 64"
+                }
+              },
+              "Round": {
+                "Desc": "Arrondi le nombre donné vers le plus proche.",
+                "Examples": {
+                  "0": "Donne un tiers du nombre de Dés de Vie total de l'acteur, arrondi au nombre entier le plus proche"
+                }
+              },
+              "SquareRoot": {
+                "Desc": "Donne la racine carrée positive du nombre donné",
+                "Examples": {
+                  "0": "Donne 4."
+                }
+              }
+            },
+            "Label": "Formules",
+            "Variables": {
+              "AbilityScoreMod": {
+                "Desc": "Le modificateur d'un score de caractéritique. Remplacez X avec une des valeurs suivantes: 'str' pour 'for', 'dex', 'con', 'int', 'wis' pour 'sag', 'cha'."
+              },
+              "AbilityScoreTotal": {
+                "Desc": "La valeur totale d'un score de caractéristique. Remplacez X avec une des valeurs suivantes : 'str' pour 'for', 'dex', 'con', 'int', 'wis' pour 'sag', 'cha'."
+              },
+              "Desc": "Ci/dessous vous allez trouver un liste (incomplète) de variables que vous pouvez utiliser dans vos formules",
+              "Header": {
+                "Description": "Description",
+                "Name": "Variable"
+              },
+              "HitDie": {
+                "Desc": "Le total de Dés de vie que l'acteur possède. C'est une combinaison de niveaux de classes et de niveaux raciaux et cela exclut les rangs mythiques."
+              },
+              "Label": "Variables"
+            }
+          }
+        }
+      },
+      "Desc": "C'est une feuille de référence et un panneau d'information sur des sujets variés du système Pathfinder 1e pour Foundry VTT.",
+      "Desc2": "Vous pouvez choisir des sujets sur la gauche dont le contenu apparaîtra à droite. En haut de cette fenêtre se trouvent les outils de navigation.",
+      "Img": {
+        "Items": {
+          "Changes": "systems/pf1/help/img/en/item-description.jpg",
+          "Description": "systems/pf1/help/img/en/item-description.jpg",
+          "Equipment": "systems/pf1/help/img/en/equipment-details.jpg",
+          "Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
+        }
+      },
+      "Label": "Aide",
+      "Nav": {
+        "Actors": "Acteurs",
+        "Concepts": "Concepts",
+        "Home": "Foyer",
+        "ItemTypes": "Types d'objet",
+        "Items": "Objets",
+        "Special": "Spécial"
+      },
+      "WIP": "Cette partie est actuellement en travaux (WIP)."
+    },
+    "HelpDomainSpell": "Ce sort ne va pas vous coûter d'emplacement de sort pour le récupérer lors du repos.",
     "HelpSellMultiplier": "Le taux de vente des objets. Les produits de consommation courante sont revendus à leur prix total.",
     "HelpSellMultiplierN": "Taux de Vente",
     "HideFromToken": "Caché du jeton",
@@ -562,7 +832,7 @@
     "Identified": "Identifié",
     "IdentifiedShort": "Id.",
     "IdentifyDC": "DD Identification",
-    "IdentifyDCNumber": "DD indentification {0}",
+    "IdentifyDCNumber": "DD identification {0}",
     "ImmuneTo": "Immunisé contre le/la{0}",
     "ImmunityPlural": "Immunités",
     "InfoShort": "Info",
@@ -584,7 +854,7 @@
     "ItemContainerCapacityType": "Type de contenance",
     "ItemContainerCapacityWeight": "Poids",
     "ItemContainerContents": "Contenu",
-    "ItemContainerContentsSellValue": "Valeur à la revente du contenu",
+    "ItemContainerContentsSellValue": "Valeur à la vente du contenu",
     "ItemContainerContentsValue": "Valeur du contenu",
     "ItemContainerContentsWeight": "Poids du contenu",
     "ItemContainerDetails": "Détails du contenant",
@@ -592,6 +862,7 @@
     "ItemContainerProperties": "Propriétés du contenant",
     "ItemContainerSellValue": "Valeur de vente : {0} PO, {1} PA, {2} PC",
     "ItemContainerTakeContents": "Prendre du conteneur",
+    "ItemContainerTotalItemValue": "Valeur totale de l'objet : {0} PO, {1} PA, {2} PC",
     "ItemContainerTotalValue": "Valeur total : {0} PO, {1} PA, {2} PC",
     "ItemContainerWeightReduction": "Réduction de poids",
     "ItemName": "Nom de l’objet",
@@ -723,6 +994,7 @@
     "Notes": "Notes",
     "NotificationCreatedAttack": "Attaque créée pour {0}",
     "OpenAssociatedCompendiumEntry": "Ouvre le compendium associé à l'entrée",
+    "OpenCompendium": "Ouvrir le compendium",
     "Other": "Autre",
     "OtherFormula": "Autre formule",
     "OverrideColor": "Changer couleur",
@@ -769,6 +1041,7 @@
     "Recover": "Récupère",
     "RecoverAmmunition": "Récupère des munitions",
     "RecoverChancePercentage": "% chance de Récupèration",
+    "ReducedMovementSpeed": "Vitesse de Mouvement réduite",
     "Refresh": "Rafraîchir",
     "Regeneration": "Régénération",
     "Requirements": "Conditions",
@@ -778,7 +1051,7 @@
     "Rest": "Se reposer",
     "RestoreDailyUses": "Récup. usage quotidien",
     "RestoreHealth": "Récup. vie",
-    "RestoredOnRest": "Récupéré par repos",
+    "RestoredOnRest": "Récupéré lors du repos",
     "RollBABMacroName": "{0}: lance Bonus de base à l'attaque",
     "RollCLMacroName": "{0}: lance Niveau de lanceur ({1})",
     "RollCMBMacroName": "{0}: Lance Bonus de Manœuvre de Combat",
@@ -806,6 +1079,7 @@
     "SenseTS": "Sens des vibrations",
     "Senses": "Sens",
     "SetTo": "Réglé à {0}",
+    "Settings": "Réglages",
     "ShowInQuickbar": "Afficher dans raccourcis",
     "SingleAttack": "Attaque simple",
     "SituationalBonus": "Bonus de circonstance",
@@ -938,13 +1212,16 @@
     "SpellSchoolNecromancy": "Nécromancie",
     "SpellSchoolTransmutation": "Transmutation",
     "SpellSchoolUniversal": "Universelle",
+    "SpellSlotAbilityBonus": "Emplacement supplémentaire en bonus de Caractéritique",
     "SpellTypesExample": "ex :acide, mal",
+    "SpellbookUsage": "Usage du grimoire",
     "SpellcastingAbility": "Caractéristique pour les sorts",
     "SpellcastingClass": "Classe utilisant la magie",
     "SpellcastingFocus": "Focalisateur",
     "SpellcastingMaterials": "Composantes matérielles",
     "Spells": "Sorts",
     "SpellsTotalEachDay": "Total de sorts par jour (excluant les sorts libres comme les sorts de domaines ou d'école)",
+    "StaticSize": "Taille statique",
     "SubDomain": "Sous-domaine",
     "SubSchool": "Branche",
     "SubSchoolExample": "ex : convocation, coercition",
@@ -1014,9 +1291,11 @@
     "Vigor": "Vigueur",
     "Vision": "Vision",
     "VulnerableTo": "Vulnérable au/à {0}",
-    "WarningConditionalRoll": "LAncer formule conditionnelle № {number} de {name} conditionnel a provoqué une erreur",
+    "WarningCannotCreateChargeLink": "Ne pouvez pas créer un lien de type de Charge entre {0} et {1}, car {1} possède son propre lien de type de charge",
+    "WarningConditionalRoll": "Lancer le jet de formule conditionnel № {number} de la condition {name} a provoqué une erreur",
     "WarningInsufficientAmmunition": "Vous n'avez pas suffisamment de munitions de type {0}",
     "WarningNoDiceAllowedInFormula": "Aucun lancer de dé n'est permis dans la formule '{0}' pour {1}",
+    "WarningNoItemOnActor": "L'acteur {0} n'a pas l'objet {1}",
     "WarningNoSizeDie": "Incapable de déterminer le type de dé pour {0}, utilisation de {1} par défaut",
     "WeaponDamage": "Dégâts de l’arme",
     "WeaponHoldTypeNormal": "Normal",
@@ -1028,7 +1307,7 @@
     "WeaponPropBrace": "réception",
     "WeaponPropDeadly": "Mortelle",
     "WeaponPropDisarm": "désarmement",
-    "WeaponPropDistracting": "Diversion",
+    "WeaponPropDistracting": "Distrayante",
     "WeaponPropDouble": "double",
     "WeaponPropFinesse": "finesse",
     "WeaponPropFragile": "fragile",
@@ -1068,8 +1347,8 @@
   },
   "Pathfinder 1": "Pathfinder 1",
   "SETTINGS": {
-    "pf1AttackChatCardTemplateH": "Choisissez le style des cartes des types d'attaques sur le chat",
-    "pf1AttackChatCardTemplateN": "Style des cartes d'attaques sur le chat",
+    "pf1AttackChatCardTemplateH": "Choisissez le style de type de carte de type d'attaque du chat",
+    "pf1AttackChatCardTemplateN": "style de type de carte de type d'attaque du chat",
     "pf1AutoCollapseCardL": "Faire disparaître automatiquement les descriptions des cartes objets dans le salon textuel",
     "pf1AutoCollapseCardN": "Faire disparaître les cartes objets dans le salon textuel",
     "pf1BackgroundSkillsH": "Utiliser les règles optionnelles de compétences de background",
@@ -1111,6 +1390,8 @@
     "pf1HideTokenConditionsN": "Cacher la condition des jetons",
     "pf1InitTBL": "Appliquer le score brut de la Caractéristique pour départager l'égalité d'Initiative",
     "pf1InitTBN": "Départager l'Initiative en cas d'égalité",
+    "pf1InvertSectionFilterBehaviourH": "shift clic Inverse le comportement sur le type de filtre dans la partie (item)",
+    "pf1InvertSectionFilterBehaviourN": "Inverse le comportement du filtre de l'inventaire",
     "pf1LowLightVisionModeH": "Lorsque la case est cochée, les joueurs qui n'ont pas de jeton sélectionné ne bénéficieront pas de la 'vision nocturne' de leurs jetons",
     "pf1LowLightVisionModeN": "La vision nocturne nécessite d'être sélectionnée",
     "pf1MeasureStyleL": "Ou utiliser le système de mesure de Pathfinder au lieu du système par défaut de FoundryVTT",
@@ -1127,6 +1408,8 @@
     "pf1SharedVisionWithoutSelection": "Sans les jetons sélectionnés",
     "pf1SkipActionDialogsH": "Passe les rappels d'actions (comme ceux des attaques et des jets de sauvegarde) à moins s'utiliser Shift+Clic",
     "pf1SkipActionDialogsN": "Passe les rappels d'actions",
+    "pf1UnchainedActionEconomyH": "Soit d'utiliser l'évconomie d'action des règles optionnelles Unchained.",
+    "pf1UnchainedActionEconomyN": "Économie d'action Unchained",
     "pf1UnitsL": "Systèmes d'unité utilisé dans ce monde",
     "pf1UnitsN": "Système d'unités"
   },

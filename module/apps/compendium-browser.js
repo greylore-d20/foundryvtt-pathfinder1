@@ -85,7 +85,7 @@ export class CompendiumBrowser extends Application {
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/apps/compendium-browser.html",
+      template: "systems/pf1/templates/apps/compendium-browser.hbs",
       classes: ["pf1", "app"],
       width: 720,
       height: window.innerHeight - 60,

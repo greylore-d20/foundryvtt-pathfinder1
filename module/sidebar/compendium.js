@@ -3,7 +3,7 @@ import { CompendiumBrowser } from "../apps/compendium-browser.js";
 export class CompendiumDirectoryPF extends CompendiumDirectory {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/sidebar/compendium.html",
+      template: "systems/pf1/templates/sidebar/compendium.hbs",
     });
   }
 

@@ -961,7 +961,7 @@ export class ActorPF extends Actor {
       data: { mod: skl.mod },
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
       compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
@@ -1033,7 +1033,7 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
@@ -1056,7 +1056,7 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
@@ -1088,7 +1088,7 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
@@ -1231,7 +1231,7 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       fastForward: options.skipPrompt !== false ? true : false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
@@ -1285,7 +1285,7 @@ export class ActorPF extends Actor {
       data: rollData,
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.html",
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       noSound: options.noSound,
     });
@@ -1405,7 +1405,7 @@ export class ActorPF extends Actor {
         fastHealing: d.traits.fastHealing,
       };
     }
-    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.html", data, {
+    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
       speaker: ChatMessage.getSpeaker({ actor: this }),
     });
   }

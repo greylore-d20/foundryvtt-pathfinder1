@@ -150,7 +150,7 @@ export class DicePF {
     else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog
-    template = template || "systems/pf1/templates/chat/roll-dialog.html";
+    template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
     let dialogData = {
       formula: parts.join(" + "),
       data: data,
@@ -315,7 +315,7 @@ export class DicePF {
     else parts = parts.concat(["@bonus"]);
 
     // Construct dialog data
-    template = template || "systems/pf1/templates/chat/roll-dialog.html";
+    template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
     let dialogData = {
       formula: parts.join(" + "),
       data: data,

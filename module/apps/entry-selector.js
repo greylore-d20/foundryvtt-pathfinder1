@@ -10,7 +10,7 @@ export class EntrySelector extends FormApplication {
       id: "entry-selector",
       classes: ["pf1", "entry"],
       title: "Entry Selector",
-      template: "systems/pf1/templates/apps/entry-selector.html",
+      template: "systems/pf1/templates/apps/entry-selector.hbs",
       width: 320,
       height: "auto",
       closeOnSubmit: false,

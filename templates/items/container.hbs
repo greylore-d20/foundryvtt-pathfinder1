@@ -37,7 +37,7 @@
   <section class="primary-body">
 
     {{!-- Description Tab --}}
-    {{> "systems/pf1/templates/items/parts/item-description.html"}}
+    {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
 
     {{!-- Contents Tab --}}
     <div class="tab active flexcol" data-group="primary" data-tab="contents">
@@ -70,7 +70,7 @@
         </ol>
       </div>
 
-      {{> "systems/pf1/templates/items/parts/item-contents.html" sections=inventory}}
+      {{> "systems/pf1/templates/items/parts/item-contents.hbs" sections=inventory}}
 
       <footer>
         <table>

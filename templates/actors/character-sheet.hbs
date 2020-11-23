@@ -23,43 +23,43 @@
     {{!-- Details --}}
     <div class="tab summary flexcol" data-group="primary" data-tab="summary">
       <div class="header-summary flexcol">
-        {{> "systems/pf1/templates/actors/parts/actor-summary.html"}}
+        {{> "systems/pf1/templates/actors/parts/actor-summary.hbs"}}
       </div>
     </div>
 
     <div class="tab attributes flexcol" data-group="primary" data-tab="attributes">
-      {{> "systems/pf1/templates/actors/parts/actor-attributes.html"}}
+      {{> "systems/pf1/templates/actors/parts/actor-attributes.hbs"}}
     </div>
 
     {{!-- Combat Tab --}}
     <div class="tab combat flexcol" data-group="primary" data-tab="combat">
-      {{> "systems/pf1/templates/actors/parts/actor-combat.html" sections=attacks}}
+      {{> "systems/pf1/templates/actors/parts/actor-combat.hbs" sections=attacks}}
     </div>
 
     {{!-- Inventory Tab --}}
     <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
-      {{> "systems/pf1/templates/actors/parts/actor-inventory.html" sections=inventory}}
+      {{> "systems/pf1/templates/actors/parts/actor-inventory.hbs" sections=inventory}}
     </div>
 
     {{!-- Features Tab --}}
     <div class="tab feats flexcol" data-group="primary" data-tab="feats">
-      {{> "systems/pf1/templates/actors/parts/actor-features.html" sections=features}}
+      {{> "systems/pf1/templates/actors/parts/actor-features.hbs" sections=features}}
     </div>
 
     {{!-- Skills Tab --}}
     <div class="tab skills flexcol" data-group="primary" data-tab="skills">
-      {{> "systems/pf1/templates/actors/parts/actor-skills-front.html"}}
+      {{> "systems/pf1/templates/actors/parts/actor-skills-front.hbs"}}
     </div>
 
     {{!-- Buffs Tab --}}
     <div class="tab buffs flexcol" data-group="primary" data-tab="buffs">
-      {{> "systems/pf1/templates/actors/parts/actor-buffs.html" sections=buffs}}
+      {{> "systems/pf1/templates/actors/parts/actor-buffs.hbs" sections=buffs}}
     </div>
 
     {{!-- Spellbook Tab --}}
     {{#if usesAnySpellbook}}
     <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-      {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.html"}}
+      {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.hbs"}}
     </div>
     {{/if}}
 
@@ -83,7 +83,7 @@
 
     {{!-- Settings Tab --}}
     <div class="tab settings flexcol" data-group="primary" data-tab="settings">
-      {{> "systems/pf1/templates/actors/parts/actor-settings.html"}}
+      {{> "systems/pf1/templates/actors/parts/actor-settings.hbs"}}
     </div>
   </section>
 </form>

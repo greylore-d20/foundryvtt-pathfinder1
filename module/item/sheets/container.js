@@ -28,7 +28,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    * @return {string}
    */
   get template() {
-    return "systems/pf1/templates/items/container.html";
+    return "systems/pf1/templates/items/container.hbs";
   }
 
   /* -------------------------------------------- */

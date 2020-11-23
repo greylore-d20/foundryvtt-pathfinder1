@@ -9,7 +9,7 @@ export class VisionPermissionSheet extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["sheet", "vision-permission"],
-      template: "systems/pf1/templates/apps/vision-permission.html",
+      template: "systems/pf1/templates/apps/vision-permission.hbs",
       width: 300,
       height: "auto",
       closeOnSubmit: true,

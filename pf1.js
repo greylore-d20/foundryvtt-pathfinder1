@@ -6,7 +6,12 @@
 
 // Import Modules
 import { PF1 } from "./module/config.js";
-import { registerSystemSettings, registerClientSettings, getSkipActionPrompt } from "./module/settings.js";
+import {
+  registerSystemSettings,
+  registerClientSettings,
+  getSkipActionPrompt,
+  migrateSystemSettings,
+} from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { measureDistances } from "./module/canvas.js";
@@ -216,6 +221,9 @@ Hooks.once("ready", async function () {
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
   }
+
+  // Migrate system settings
+  await migrateSystemSettings();
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {
@@ -451,7 +459,7 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 // Render TokenConfig
 Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
-  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.html", {
+  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {
     object: duplicate(app.object.data),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
@@ -479,7 +487,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
     button = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
     html.find("#game-details").append(button);
     button.click(() => {
-      new PF1_HelpBrowser().openURL("systems/pf1/help/index.html");
+      new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs");
     });
   }
 });

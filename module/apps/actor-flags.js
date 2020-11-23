@@ -4,7 +4,7 @@ export class ActorSheetFlags extends BaseEntitySheet {
     return mergeObject(options, {
       id: "actor-flags",
       classes: ["pf1"],
-      template: "systems/pf1/templates/apps/actor-flags.html",
+      template: "systems/pf1/templates/apps/actor-flags.hbs",
       width: 500,
       closeOnSubmit: true,
     });

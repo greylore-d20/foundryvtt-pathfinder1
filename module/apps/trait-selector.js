@@ -8,7 +8,7 @@ export class ActorTraitSelector extends FormApplication {
     options.id = "trait-selector";
     options.classes = ["pf1", "trait-selector"];
     options.title = "Actor Trait Selection";
-    options.template = "systems/pf1/templates/apps/trait-selector.html";
+    options.template = "systems/pf1/templates/apps/trait-selector.hbs";
     options.width = 320;
     options.height = "auto";
     return options;

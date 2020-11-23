@@ -7,46 +7,46 @@ export const preloadHandlebarsTemplates = async function () {
   // Define template paths to load
   const templatePaths = [
     // Actor Sheet Partials
-    "systems/pf1/templates/actors/parts/actor-summary.html",
-    "systems/pf1/templates/actors/parts/actor-traits.html",
-    "systems/pf1/templates/actors/parts/actor-inventory.html",
-    "systems/pf1/templates/actors/parts/actor-features.html",
-    "systems/pf1/templates/actors/parts/actor-spellbook-front.html",
-    "systems/pf1/templates/actors/parts/actor-spellbook.html",
-    "systems/pf1/templates/actors/parts/actor-skills-front.html",
-    "systems/pf1/templates/actors/parts/actor-skills.html",
-    "systems/pf1/templates/actors/parts/actor-combat.html",
-    "systems/pf1/templates/actors/parts/actor-defenses_tables.html",
-    "systems/pf1/templates/actors/parts/actor-buffs.html",
-    "systems/pf1/templates/actors/parts/actor-attributes.html",
-    "systems/pf1/templates/actors/parts/actor-settings.html",
+    "systems/pf1/templates/actors/parts/actor-summary.hbs",
+    "systems/pf1/templates/actors/parts/actor-traits.hbs",
+    "systems/pf1/templates/actors/parts/actor-inventory.hbs",
+    "systems/pf1/templates/actors/parts/actor-features.hbs",
+    "systems/pf1/templates/actors/parts/actor-spellbook-front.hbs",
+    "systems/pf1/templates/actors/parts/actor-spellbook.hbs",
+    "systems/pf1/templates/actors/parts/actor-skills-front.hbs",
+    "systems/pf1/templates/actors/parts/actor-skills.hbs",
+    "systems/pf1/templates/actors/parts/actor-combat.hbs",
+    "systems/pf1/templates/actors/parts/actor-defenses_tables.hbs",
+    "systems/pf1/templates/actors/parts/actor-buffs.hbs",
+    "systems/pf1/templates/actors/parts/actor-attributes.hbs",
+    "systems/pf1/templates/actors/parts/actor-settings.hbs",
 
     // Item Sheet Partials
-    "systems/pf1/templates/items/parts/item-action.html",
-    "systems/pf1/templates/items/parts/item-activation.html",
-    "systems/pf1/templates/items/parts/item-description.html",
-    "systems/pf1/templates/items/parts/item-changes.html",
-    "systems/pf1/templates/items/parts/item-notes.html",
-    "systems/pf1/templates/items/parts/item-template.html",
-    "systems/pf1/templates/items/parts/item-links.html",
-    "systems/pf1/templates/items/parts/item-aura.html",
-    "systems/pf1/templates/items/parts/item-conditionals.html",
-    "systems/pf1/templates/items/parts/item-contents.html",
+    "systems/pf1/templates/items/parts/item-action.hbs",
+    "systems/pf1/templates/items/parts/item-activation.hbs",
+    "systems/pf1/templates/items/parts/item-description.hbs",
+    "systems/pf1/templates/items/parts/item-changes.hbs",
+    "systems/pf1/templates/items/parts/item-notes.hbs",
+    "systems/pf1/templates/items/parts/item-template.hbs",
+    "systems/pf1/templates/items/parts/item-links.hbs",
+    "systems/pf1/templates/items/parts/item-aura.hbs",
+    "systems/pf1/templates/items/parts/item-conditionals.hbs",
+    "systems/pf1/templates/items/parts/item-contents.hbs",
 
     // Apps
-    "systems/pf1/templates/apps/attack-roll-dialog.html",
-    "systems/pf1/templates/apps/vision-permission.html",
-    "systems/pf1/templates/apps/help-browser.html",
+    "systems/pf1/templates/apps/attack-roll-dialog.hbs",
+    "systems/pf1/templates/apps/vision-permission.hbs",
+    "systems/pf1/templates/apps/help-browser.hbs",
 
     // Chat
-    "systems/pf1/templates/chat/roll-ext.html",
-    "systems/pf1/templates/chat/defenses.html",
+    "systems/pf1/templates/chat/roll-ext.hbs",
+    "systems/pf1/templates/chat/defenses.hbs",
 
     // Internal Rendering Partials
-    "systems/pf1/templates/internal/spell-description.html",
-    "systems/pf1/templates/internal/consumable-description.html",
-    "systems/pf1/templates/internal/damage-tooltip.html",
-    "systems/pf1/templates/internal/token-config_vision.html",
+    "systems/pf1/templates/internal/spell-description.hbs",
+    "systems/pf1/templates/internal/consumable-description.hbs",
+    "systems/pf1/templates/internal/damage-tooltip.hbs",
+    "systems/pf1/templates/internal/token-config_vision.hbs",
   ];
 
   // Load the template parts

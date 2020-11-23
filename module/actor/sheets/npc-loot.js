@@ -15,7 +15,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   }
 
   get template() {
-    return "systems/pf1/templates/actors/npc-sheet-loot.html";
+    return "systems/pf1/templates/actors/npc-sheet-loot.hbs";
   }
 
   get currentPrimaryTab() {

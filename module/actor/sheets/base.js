@@ -432,7 +432,7 @@ export class ActorSheetPF extends ActorSheet {
           return data;
         });
       if (magicItems.length > 0) {
-        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.html", {
+        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.hbs", {
           items: magicItems,
           isGM: game.user.isGM,
         });

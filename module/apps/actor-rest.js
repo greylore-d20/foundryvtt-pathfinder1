@@ -4,7 +4,7 @@ export class ActorRestDialog extends BaseEntitySheet {
     return mergeObject(options, {
       id: "actor-flags",
       classes: ["pf1", "actor-rest"],
-      template: "systems/pf1/templates/apps/actor-rest.html",
+      template: "systems/pf1/templates/apps/actor-rest.hbs",
       width: 500,
       closeOnSubmit: true,
     });

@@ -40,7 +40,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   get template() {
     const path = "systems/pf1/templates/items/";
-    return `${path}/${this.item.data.type}.html`;
+    return `${path}/${this.item.data.type}.hbs`;
   }
 
   get actor() {

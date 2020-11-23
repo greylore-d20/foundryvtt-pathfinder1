@@ -24,7 +24,7 @@ export class AccessibilityConfig extends FormApplication {
     return mergeObject(super.defaultOptions, {
       title: game.i18n.localize("PF1.AccessibilityConfigName"),
       id: "accessibility-config",
-      template: "systems/pf1/templates/settings/accessibility.html",
+      template: "systems/pf1/templates/settings/accessibility.hbs",
       width: 560,
       height: "auto",
     });

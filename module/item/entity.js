@@ -961,7 +961,7 @@ export class ItemPF extends Item {
 
     // Render the chat card template
     const templateType = ["consumable"].includes(this.data.type) ? this.data.type : "item";
-    const template = `systems/pf1/templates/chat/${templateType}-card.html`;
+    const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
 
     // Basic chat message data
     const chatData = mergeObject(
@@ -1881,7 +1881,7 @@ export class ItemPF extends Item {
     if (skipDialog) return _roll.call(this, true);
 
     // Render modal dialog
-    let template = "systems/pf1/templates/apps/attack-roll-dialog.html";
+    let template = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
     let dialogData = {
       data: rollData,
       item: this.data.data,
@@ -2213,7 +2213,7 @@ export class ItemPF extends Item {
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
     } else {
-      const chatTemplate = "systems/pf1/templates/chat/roll-ext.html";
+      const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
       let roll = new Roll(parts.join("+"), data).roll();
@@ -2563,7 +2563,7 @@ export class ItemPF extends Item {
       srcData,
       updateData,
       "data.description.value",
-      await renderTemplate("systems/pf1/templates/internal/spell-description.html", data)
+      await renderTemplate("systems/pf1/templates/internal/spell-description.hbs", data)
     );
   }
 
@@ -2792,7 +2792,7 @@ export class ItemPF extends Item {
     data.data.cl = slcl[1];
 
     // Set description
-    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {
+    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
       origData: origData,
       data: data,
       isWand: type === "wand",

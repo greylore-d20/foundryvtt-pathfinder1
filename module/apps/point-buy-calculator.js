@@ -17,7 +17,7 @@ export class PointBuyCalculator extends FormApplication {
       id: "pointbuy-calculator",
       classes: ["pf1", "pointbuy-calculator"],
       title: "Point Buy Calculator",
-      template: "systems/pf1/templates/apps/pointbuy-calculator.html",
+      template: "systems/pf1/templates/apps/pointbuy-calculator.hbs",
       width: 320,
       height: "auto",
       closeOnSubmit: false,

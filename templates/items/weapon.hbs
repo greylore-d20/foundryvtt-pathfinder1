@@ -58,11 +58,11 @@
   <section class="primary-body">
 
     {{!-- Description Tab --}}
-    {{> "systems/pf1/templates/items/parts/item-description.html"}}
+    {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
-      {{> "systems/pf1/templates/items/parts/item-aura.html"}}
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       <h3 class="form-header">Weapon Details</h3>
 
@@ -195,14 +195,14 @@
     {{!-- Changes Tab --}}
     {{#unless showUnidentifiedData}}
     <div class="tab flexcol" data-group="primary" data-tab="changes">
-      {{> "systems/pf1/templates/items/parts/item-changes.html"}}
+      {{> "systems/pf1/templates/items/parts/item-changes.hbs"}}
 
-      {{> "systems/pf1/templates/items/parts/item-notes.html"}}
+      {{> "systems/pf1/templates/items/parts/item-notes.hbs"}}
     </div>
     {{/unless}}
 
     <div class="tab flexcol" data-group="primary" data-tab="links">
-      {{> "systems/pf1/templates/items/parts/item-links.html"}}
+      {{> "systems/pf1/templates/items/parts/item-links.hbs"}}
     </div>
   </section>
 </form>

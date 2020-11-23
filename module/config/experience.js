@@ -29,7 +29,7 @@ export class ExperienceConfig extends FormApplication {
     return mergeObject(super.defaultOptions, {
       title: game.i18n.localize("PF1.ExperienceConfigName"),
       id: "experience-config",
-      template: "systems/pf1/templates/settings/experience.html",
+      template: "systems/pf1/templates/settings/experience.hbs",
       width: 560,
       height: "auto",
     });

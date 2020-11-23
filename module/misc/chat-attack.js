@@ -245,7 +245,7 @@ export class ChatAttack {
 
     // Add tooltip
     for (let p of Object.values(consolidatedParts)) {
-      tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.html", {
+      tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.hbs", {
         part: p,
       });
     }

@@ -7,6 +7,11 @@
 - Resting healed too little nonlethal damage
 - NPC Loot sheets reset to the inventory tab with every update
 
+### Localization
+
+- Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+
 ## 0.76.4 (Hotfix)
 
 ### Bug Fixes

@@ -38,6 +38,7 @@ import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
+import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -299,6 +300,10 @@ Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
+Hooks.on("renderLightConfig", (app, html) => {
+  RenderLightConfig_LowLightVision(app, html);
+});
+
 Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
@@ -471,6 +476,9 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   if (getProperty(app.object.data, "flags.pf1.staticSize")) newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
+
+  // Add disable low-light vision checkbox
+  RenderTokenConfig_LowLightVision(app, html);
 });
 
 // Render Sidebar

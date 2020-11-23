@@ -9,6 +9,12 @@ Object.defineProperties(Token.prototype, {
   },
 });
 
+Object.defineProperty(Token.prototype, "disableLowLight", {
+  get: function () {
+    return getProperty(this.data, "flags.pf1.disableLowLight") === true;
+  },
+});
+
 SightLayer.prototype.hasLowLight = function () {
   const relevantTokens = canvas.tokens.placeables.filter((o) => {
     return o.actor && o.actor.hasPerm(game.user, "OBSERVER");
@@ -29,7 +35,7 @@ SightLayer.prototype.hasLowLight = function () {
 const Token__getLightRadius = Token.prototype.getLightRadius;
 Token.prototype.getLightRadius = function (units) {
   const radius = Token__getLightRadius.call(this, units);
-  if (canvas.sight.hasLowLight()) {
+  if (canvas.sight.hasLowLight() && !this.disableLowLight) {
     return radius * 2;
   }
   return radius;
@@ -104,11 +110,17 @@ Token.prototype.updateSource = function ({ defer = false, deleted = false, noUpd
   }
 };
 
+Object.defineProperty(AmbientLight.prototype, "disableLowLight", {
+  get: function () {
+    return getProperty(this.data, "flags.pf1.disableLowLight") === true;
+  },
+});
+
 const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
 Object.defineProperty(AmbientLight.prototype, "dimRadius", {
   get: function () {
     let result = AmbientLight__get__dimRadius.call(this);
-    if (canvas.sight.hasLowLight()) return result * 2;
+    if (canvas.sight.hasLowLight() && !this.disableLowLight) return result * 2;
     return result;
   },
 });
@@ -117,7 +129,48 @@ const AmbientLight__get__brightRadius = Object.getOwnPropertyDescriptor(AmbientL
 Object.defineProperty(AmbientLight.prototype, "brightRadius", {
   get: function () {
     let result = AmbientLight__get__brightRadius.call(this);
-    if (canvas.sight.hasLowLight()) return result * 2;
+    if (canvas.sight.hasLowLight() && !this.disableLowLight) return result * 2;
     return result;
   },
 });
+
+export const RenderLightConfig_LowLightVision = function (app, html) {
+  const obj = app.object;
+
+  // Create checkbox HTML element
+  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize(
+    "PF1.DisableLightLowLightVision"
+  )}</label><div class="form-group">`;
+  checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
+  if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  checkboxStr += "/></div></div>";
+  const checkbox = $(checkboxStr);
+
+  // Insert new checkbox
+  checkbox.insertBefore(html.find('button[type="submit"]'));
+};
+
+export const RenderTokenConfig_LowLightVision = function (app, html) {
+  const obj = app.object;
+
+  // Create checkbox HTML element
+  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize(
+    "PF1.DisableLightLowLightVision"
+  )}</label><div class="form-group">`;
+  checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
+  if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  checkboxStr += "/></div></div>";
+  const checkbox = $(checkboxStr);
+
+  // Insert new checkbox
+  html.find('.tab[data-tab="vision"]').append(checkbox);
+};
+
+const Token__onUpdate = Token.prototype._onUpdate;
+Token.prototype._onUpdate = async function (data, options, ...args) {
+  await Token__onUpdate.call(this, data, options, ...args);
+
+  if (hasProperty(data, "flags.pf1.disableLowLight") || hasProperty(data, "flags.pf1.lowLightVision")) {
+    canvas.initializeSources();
+  }
+};

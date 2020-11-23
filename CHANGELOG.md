@@ -10,6 +10,7 @@
 ### Changelog
 
 - Added a spell slot cost to spells (#343)
+- Added a checkbox to ambient light and token configurations to disable low-light vision for that light source (#368)
 
 ### Localization
 

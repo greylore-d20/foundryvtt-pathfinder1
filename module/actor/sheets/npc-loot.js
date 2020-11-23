@@ -18,10 +18,6 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return "systems/pf1/templates/actors/npc-sheet-loot.html";
   }
 
-  // static get name() {
-  //   return game.i18n.localize("PF1.ActorSheetPFNPCLoot");
-  // }
-
   get currentPrimaryTab() {
     return "inventory";
   }
@@ -83,6 +79,6 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
         inventory: {},
       },
     };
-    createTabs.call(this, html, tabGroups);
+    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
   }
 }

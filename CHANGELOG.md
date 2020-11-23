@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Resting healed too little nonlethal damage
+- NPC Loot sheets reset to the inventory tab with every update
 
 ## 0.76.4 (Hotfix)
 

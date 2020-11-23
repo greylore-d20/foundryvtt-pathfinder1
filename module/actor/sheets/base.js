@@ -100,6 +100,8 @@ export class ActorSheetPF extends ActorSheet {
         ".skillset-body .skills-list.background",
         ".feats-body",
         ".traits",
+        ".actor-notes",
+        ".editor-content[data-edit='data.details.biography.value']",
       ],
     });
   }

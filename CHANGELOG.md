@@ -6,11 +6,13 @@
 
 - Resting healed too little nonlethal damage
 - NPC Loot sheets reset to the inventory tab with every update
+- Brought the "Extra Attacks" header into line (#307)
 
 ### Changelog
 
 - Added a spell slot cost to spells (#343)
 - Added a checkbox to ambient light and token configurations to disable low-light vision for that light source (#368)
+- Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formula (#306, #373)
 
 ### Localization
 

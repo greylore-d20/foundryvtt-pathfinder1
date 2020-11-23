@@ -1283,6 +1283,27 @@
             },
             "HitDie": {
               "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            },
+            "EncumbranceLevel": {
+              "Desc": "The current encumbrance level of the actor.",
+              "0": "<code>0</code>: Light Load",
+              "1": "<code>1</code>: Medium Load",
+              "2": "<code>2</code>: Heavy Load"
+            },
+            "ArmorType": {
+              "Desc": "The type of armor the actor is wearing.",
+              "0": "<code>0</code>: No Armor",
+              "1": "<code>1</code>: Light Armor",
+              "2": "<code>2</code>: Medium Armor",
+              "3": "<code>3</code>: Heavy Armor"
+            },
+            "ShieldType": {
+              "Desc": "The type of shield the actor is holding.",
+              "0": "<code>0</code>: No Shield",
+              "1": "<code>1</code>: Miscellaneous Shield (such as a buckler)",
+              "2": "<code>2</code>: Light Shield",
+              "3": "<code>3</code>: Heavy Shield",
+              "4": "<code>4</code>: Tower Shield"
             }
           },
           "Functions": {
@@ -1378,7 +1399,7 @@
           "BonusDamageFormula": "Bonus Damage Formula",
           "BonusDamageFormulaDesc": "The bonus damage the weapon deals. Some examples:",
           "BonusDamageFormulaExamples": {
-            "0": "Will add either 4 or the wielder's Stregth modifier to the damage roll, whichever is lower"
+            "0": "Will add either 4 or the wielder's Strength modifier to the damage roll, whichever is lower"
           },
           "BaseWeaponCritical": "Base Weapon Critical",
           "BaseWeaponCriticalDesc": "The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied"
@@ -1452,7 +1473,7 @@
             "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
             "Formula": {
               "Label": "Formula",
-              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See <a href=\"systems/pf1/help/special/formulas.html\">this page</a> for more details."
+              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See {tagOpen}this page{tagClose} for more details."
             },
             "Operator": {
               "Label": "Operator",

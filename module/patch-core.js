@@ -143,6 +143,16 @@ export async function PatchCore() {
     // return ActorPF.prototype.update.call(this, {});
   };
 
+  // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
+  if (Object.keys(Actor.collection.tokens).length > 0) {
+    Object.keys(Actor.collection.tokens).forEach((tokenId) => {
+      let actor = Actor.collection.tokens[tokenId];
+      for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {
+        actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
+      }
+    });
+  }
+
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
   Combat.prototype.rollInitiative = _rollInitiative;

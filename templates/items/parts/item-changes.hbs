@@ -36,23 +36,20 @@
   {{!-- Changes --}}
   <h4 class="change-header">
     {{localize "PF1.Changes"}}
-    <a class="change-control add-change"><i class="fas fa-plus"></i></a>
   </h4>
   <ol class="changes form-group">
     {{#each changes as |change a|}}
     <li class="change flexrow" data-change="{{change.data._id}}">
-      <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this.data "formula"}}"
-                                                                                  placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
-      <input class="change-priority" type="text" data-dtype="Number" name="data.changes.{{a}}.priority" value="{{lookup this.data "priority"}}"
-                                                                                    placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
-
       <select class="change-operator" name="data.changes.{{a}}.operator">
         {{#select (lookup this.data "operator") }}
         <option value="add">+</option>
         <option value="set">=</option>
         {{/select}}
       </select>
-      <select class="change-target" name="data.changes.{{a}}.target">
+      <input class="change-formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this.data "formula"}}"
+                                                                                  placeholder="{{localize "PF1.Formula"}}"
+                                                                                  required/>
+      <select class="change-target" name="data.changes.{{a}}.target" required>
         {{#select (lookup this.data "target") }}
         <option value=""></option>
         {{#each ../changeGlobals.targets as |target type|}}
@@ -78,8 +75,11 @@
         {{/each}}
         {{/select}}
       </select>
-      <a class="change-control delete-change"><i class="fas fa-minus"></i></a>
+      <input class="change-priority" type="text" data-dtype="Number" name="data.changes.{{a}}.priority" value="{{lookup this.data "priority"}}"
+                                                                                    placeholder="{{localize "PF1.Priority"}}" title="{{localize "PF1.Priority"}}" />
+      <a class="change-control delete-change"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
+    <li class="change flexrow"><a class="change-control add-change"><i class="fas fa-plus"></i> {{localize "PF1.AddChange"}}</a></li>
   </ol>
 </div>

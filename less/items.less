@@ -277,19 +277,32 @@
     .change,
     .context-note {
       flex: 0 0 100%;
-      padding: 0;
+      padding: 1px;
       input {
         flex: 3;
+        border: 1px solid @colorTan;
+        background: rgba(0, 0, 0, 0.05);
+        margin-left: 5px;
+        height: 24px;
+      }
+      input[type="text"]:invalid {
+        border: 2px solid @colorRust;
+        background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
       }
       select {
         flex: 0 0 80px;
         width: 80px;
         margin-left: 5px;
+        background: rgba(0, 0, 0, 0.05);
 
         &.change-sub-target {
           flex: 0 0 128px;
           width: 128px;
         }
+      }
+      select:invalid {
+        border: 2px solid @colorRust;
+        background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% rgba(0, 0, 0, 0.05);
       }
 
       .change-priority {
@@ -308,35 +321,61 @@
   }
 
   .conditionals {
+    .conditional,
+    .conditional-modifier {
+      padding: 1px;
+    }
     select {
       max-width: max-content;
       min-width: 80px;
       flex: 1;
       margin-left: 5px;
+      border: 1px solid @colorTan;
+      background: rgba(0, 0, 0, 0.05);
     }
+    select:invalid {
+      border: 2px solid @colorRust;
+      background: url(icons/misc/hazard-sign.svg) no-repeat 80% 50% rgba(0, 0, 0, 0.05);
+    }
+    input[type="text"] {
+      height: 24px;
+      margin-left: 5px;
+      border: 1px solid @colorTan;
+      background: rgba(0, 0, 0, 0.05);
+    }
+    input[type="text"]:invalid {
+      border: 2px solid @colorRust;
+      background: url(icons/misc/hazard-sign.svg) no-repeat 100% 50% rgba(0, 0, 0, 0.05);
+    }
+    .conditional-name,
     .conditional-formula {
       min-width: 140px;
     }
     .conditional-damage-type {
+      min-width: 90px;
       max-width: 200px;
     }
     .form-group {
-      padding-left: 28px;
-    }
-    .conditional-add {
-      flex: 0 0 auto;
-      line-height: 24px;
-      color: @colorTan
+      padding-left: 30px;
     }
   }
 
-  .damage-control, .crit-damage-control, .attack-control, .change-control, .context-note-control, .conditional-remove {
+  .damage-control, .crit-damage-control, .attack-control, .delete-change, .delete-note, .conditional-remove {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;
     float: right;
     text-align: right;
     color: @colorTan;
+  }
+
+  .add-change,
+  .add-note,
+  .conditional-add {
+    flex: 0 0 auto;
+    line-height: 24px;
+    color: @colorTan;
+    margin-left: 10px;
   }
 
   .recharge {

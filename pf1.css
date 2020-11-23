@@ -2171,7 +2171,7 @@
 .pf1.sheet.item .context-notes .context-note,
 .pf1.sheet.item .conditionals .context-note {
   flex: 0 0 100%;
-  padding: 0;
+  padding: 1px;
 }
 .pf1.sheet.item .changes .change input,
 .pf1.sheet.item .context-notes .change input,
@@ -2180,6 +2180,19 @@
 .pf1.sheet.item .context-notes .context-note input,
 .pf1.sheet.item .conditionals .context-note input {
   flex: 3;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+  margin-left: 5px;
+  height: 24px;
+}
+.pf1.sheet.item .changes .change input[type="text"]:invalid,
+.pf1.sheet.item .context-notes .change input[type="text"]:invalid,
+.pf1.sheet.item .conditionals .change input[type="text"]:invalid,
+.pf1.sheet.item .changes .context-note input[type="text"]:invalid,
+.pf1.sheet.item .context-notes .context-note input[type="text"]:invalid,
+.pf1.sheet.item .conditionals .context-note input[type="text"]:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
 }
 .pf1.sheet.item .changes .change select,
 .pf1.sheet.item .context-notes .change select,
@@ -2190,6 +2203,7 @@
   flex: 0 0 80px;
   width: 80px;
   margin-left: 5px;
+  background: rgba(0, 0, 0, 0.05);
 }
 .pf1.sheet.item .changes .change select.change-sub-target,
 .pf1.sheet.item .context-notes .change select.change-sub-target,
@@ -2199,6 +2213,15 @@
 .pf1.sheet.item .conditionals .context-note select.change-sub-target {
   flex: 0 0 128px;
   width: 128px;
+}
+.pf1.sheet.item .changes .change select:invalid,
+.pf1.sheet.item .context-notes .change select:invalid,
+.pf1.sheet.item .conditionals .change select:invalid,
+.pf1.sheet.item .changes .context-note select:invalid,
+.pf1.sheet.item .context-notes .context-note select:invalid,
+.pf1.sheet.item .conditionals .context-note select:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% rgba(0, 0, 0, 0.05);
 }
 .pf1.sheet.item .changes .change .change-priority,
 .pf1.sheet.item .context-notes .change .change-priority,
@@ -2232,31 +2255,48 @@
 .pf1.sheet.item .conditionals .context-note .conditional-modifier {
   display: flex;
 }
+.pf1.sheet.item .conditionals .conditional,
+.pf1.sheet.item .conditionals .conditional-modifier {
+  padding: 1px;
+}
 .pf1.sheet.item .conditionals select {
   max-width: max-content;
   min-width: 80px;
   flex: 1;
   margin-left: 5px;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
 }
+.pf1.sheet.item .conditionals select:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 80% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals input[type="text"] {
+  height: 24px;
+  margin-left: 5px;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals input[type="text"]:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 100% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals .conditional-name,
 .pf1.sheet.item .conditionals .conditional-formula {
   min-width: 140px;
 }
 .pf1.sheet.item .conditionals .conditional-damage-type {
+  min-width: 90px;
   max-width: 200px;
 }
 .pf1.sheet.item .conditionals .form-group {
-  padding-left: 28px;
-}
-.pf1.sheet.item .conditionals .conditional-add {
-  flex: 0 0 auto;
-  line-height: 24px;
-  color: #7a7971;
+  padding-left: 30px;
 }
 .pf1.sheet.item .damage-control,
 .pf1.sheet.item .crit-damage-control,
 .pf1.sheet.item .attack-control,
-.pf1.sheet.item .change-control,
-.pf1.sheet.item .context-note-control,
+.pf1.sheet.item .delete-change,
+.pf1.sheet.item .delete-note,
 .pf1.sheet.item .conditional-remove {
   width: 18px;
   flex: 0 0 18px;
@@ -2264,6 +2304,14 @@
   float: right;
   text-align: right;
   color: #7a7971;
+}
+.pf1.sheet.item .add-change,
+.pf1.sheet.item .add-note,
+.pf1.sheet.item .conditional-add {
+  flex: 0 0 auto;
+  line-height: 24px;
+  color: #7a7971;
+  margin-left: 10px;
 }
 .pf1.sheet.item .recharge span {
   line-height: 24px;

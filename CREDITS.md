@@ -16,6 +16,7 @@ People and credits are listed in no particular order.
 - [Battle Gear](https://game-icons.net/1x1/lorc/battle-gear.html)
 - [Quill and Ink](https://game-icons.net/1x1/lorc/quill-ink.html)
 - [Gears](https://game-icons.net/1x1/lorc/gears.html)
+- [Hazard Sign](https://game-icons.net/1x1/lorc/hazard-sign.html)
 
 ## Delapouite's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 

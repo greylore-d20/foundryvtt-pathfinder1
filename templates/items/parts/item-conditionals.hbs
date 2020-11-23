@@ -7,18 +7,18 @@
   <li class="conditional flexcolumn" data-conditional="{{a}}"><div class="conditional flexrow" data-conditional="{{a}}">
       <input class="conditional-default" type="checkbox" title="{{localize "PF1.Default"}}" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
       <input class="conditional-name" type="text" name="data.conditionals.{{a}}.name" value="{{lookup this "name"}}"
-      placeholder="{{localize "PF1.Name"}}" title="{{localize "PF1.Name"}}"/>
+      placeholder="{{localize "PF1.Name"}}"/>
       <a class="conditional-remove conditional-control delete-conditional"><i class="fas fa-trash"></i></a>
     </div>
     <ol class="conditionals form-group">
       {{#each this.modifiers as |modifier m|}}
       <li class="conditional-modifier flexrow" data-conditional="{{a}}" data-modifier="{{m}}">
         <input class="conditional-formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
-        placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}"/>
+        placeholder="{{localize "PF1.Formula"}}" required/>
 
-        <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target">
+        <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target" required>
           {{#select (lookup this "target") }}
-          <option value="">{{localize "PF1.None"}}</option>
+          <option value=""></option>
           {{#each targets as |target type|}}
           <option value="{{type}}">{{target}}</option>
           {{/each}}
@@ -81,6 +81,6 @@
     </ol>
   </li>
   {{/each}}
-  <li class="flexrow"><a class="conditional-control conditional-add add-conditional"><i class="fas fa-plus"></i> {{localize "PF1.AddConditional"}}</a></li>
+  <li class="conditional flexrow"><a class="conditional-control conditional-add add-conditional"><i class="fas fa-plus"></i> {{localize "PF1.AddConditional"}}</a></li>
 </ol>
 </div>

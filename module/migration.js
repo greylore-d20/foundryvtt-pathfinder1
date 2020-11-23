@@ -688,6 +688,11 @@ const _migrateSpellCosts = function (ent, updateData) {
   if (spellPointCost == null) {
     updateData["data.spellPoints.cost"] = "1 + @sl";
   }
+
+  const slotCost = getProperty(ent.data, "data.slotCost");
+  if (slotCost == null) {
+    updateData["data.slotCost"] = 1;
+  }
 };
 
 const _migrateLootEquip = function (ent, updateData) {

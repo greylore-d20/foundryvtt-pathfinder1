@@ -557,15 +557,16 @@ export const updateChanges = async function ({ data = null } = {}) {
         const sbKey = i.data.data.spellbook;
         const isDomain = getProperty(i.data, "data.domain") === true;
         const a = i.data.data.level;
+        const slotCost = i.data.data.slotCost || 1;
         let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`);
         let uses = getProperty(slots, `${sbKey}.${a}.value`);
         if (Number.isFinite(i.maxCharges)) {
           let subtract = { domain: 0, uses: 0 };
           if (isDomain) {
             subtract.domain = Math.min(i.maxCharges, dSlots);
-            subtract.uses = i.maxCharges - subtract.domain;
+            subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
           } else {
-            subtract.uses = i.maxCharges;
+            subtract.uses = i.maxCharges * slotCost;
           }
           dSlots -= subtract.domain;
           uses -= subtract.uses;

@@ -7,6 +7,10 @@
 - Resting healed too little nonlethal damage
 - NPC Loot sheets reset to the inventory tab with every update
 
+### Changelog
+
+- Added a spell slot cost to spells (#343)
+
 ### Localization
 
 - Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)

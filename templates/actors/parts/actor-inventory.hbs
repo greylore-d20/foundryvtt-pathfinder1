@@ -169,7 +169,7 @@
 
 <hr>
 {{#unless isLootSheet}}
-<div class="flexcol tab-footer tooltip">
+<div class="flexrow tab-footer tooltip">
   <div class="tooltipcontent">
     @attributes.encumbrance.level : {{data.attributes.encumbrance.level}}
   </div>
@@ -181,7 +181,7 @@
     <span class="text-box direct" name="data.abilities.str.carryMultiplier" data-dtype="Number" data-placeholder="1">{{data.abilities.str.carryMultiplier}}</span>
   </div>
   {{#with encumbrance}}
-  <div class="flexrow">
+  <div class="flexrow inventory-tags">
     <span class="tag">{{carryLabel}}</span>
     <span class="tag">{{../labels.totalValue}}</span>
   </div>

@@ -11,6 +11,7 @@
 - The Advanced (Rebuild) creature template gave bonuses to ability scores when they were too low
 - Compendium browser could fail to load if saved results were no longer accesible (#380)
 - Armor/Equipment lost their action configuration when dragged/saved (#381)
+- Inventory footer overflowed the sheet on the native Foundry app (#384)
 
 ### Changelog
 

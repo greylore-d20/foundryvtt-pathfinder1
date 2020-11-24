@@ -8,6 +8,7 @@
 - NPC Loot sheets reset to the inventory tab with every update
 - Brought the "Extra Attacks" header into line (#307)
 - Items with only change flags but no variable changes were not taken into account
+- The Advanced (Rebuild) creature template gave bonuses to ability scores when they were too low
 
 ### Changelog
 

@@ -3468,6 +3468,7 @@ export class ItemPF extends Item {
 
   _calculateCoinWeight(data) {
     const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
+    if (!coinWeightDivisor) return 0;
     return (
       Object.values(getProperty(data, "data.currency") || {}).reduce((cur, amount) => {
         return cur + amount;

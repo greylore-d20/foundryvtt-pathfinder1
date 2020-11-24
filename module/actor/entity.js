@@ -605,6 +605,7 @@ export class ActorPF extends Actor {
     const items = Array.from(this.items);
     const updates = items.map((o) => o.update({}, { skipUpdate: true }));
     const values = (await Promise.all(updates)).filter((o) => Object.keys(o).length > 1);
+
     if (values.length > 0) {
       return this.updateOwnedItem(values);
     }

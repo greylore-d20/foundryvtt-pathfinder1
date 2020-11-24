@@ -14,7 +14,10 @@ export const updateChanges = async function ({ data = null } = {}) {
   }, []);
   const changeObjects = srcData1.items
     .filter((obj) => {
-      return obj.data.changes instanceof Array && obj.data.changes.length;
+      return (
+        (obj.data.changes instanceof Array && obj.data.changes.length) ||
+        (obj.data.changeFlags && Object.values(obj.data.changeFlags).filter((o) => o === true).length)
+      );
     })
     .filter((obj) => {
       if (obj.type === "buff") return obj.data.active;

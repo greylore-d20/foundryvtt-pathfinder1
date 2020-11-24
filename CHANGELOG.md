@@ -7,6 +7,7 @@
 - Resting healed too little nonlethal damage
 - NPC Loot sheets reset to the inventory tab with every update
 - Brought the "Extra Attacks" header into line (#307)
+- Items with only change flags but no variable changes were not taken into account
 
 ### Changelog
 

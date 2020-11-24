@@ -12,12 +12,13 @@
 - Compendium browser could fail to load if saved results were no longer accesible (#380)
 - Armor/Equipment lost their action configuration when dragged/saved (#381)
 - Inventory footer overflowed the sheet on the native Foundry app (#384)
+- Biographies of actors with limited permissions were non-scrollable (#382)
 
 ### Changelog
 
 - Added a spell slot cost to spells (#343)
 - Added a checkbox to ambient light and token configurations to disable low-light vision for that light source (#368)
-- Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formula (#306, #373)
+- Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formulas (#306, #373)
 
 ### Localization
 

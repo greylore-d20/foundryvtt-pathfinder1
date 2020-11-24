@@ -582,23 +582,26 @@
   border-top: 1px solid #c9c7b8;
 }
 .pf1.sheet input[type="text"],
-.pf1.sheet input[type="number"],
-.pf1.sheet textarea {
+.pf1.sheet input[type="number"] {
   background: none;
   border: 1px solid transparent;
 }
 .pf1.sheet input[type="text"]:hover,
 .pf1.sheet input[type="number"]:hover,
-.pf1.sheet textarea:hover,
 .pf1.sheet input[type="text"]:focus,
-.pf1.sheet input[type="number"]:focus,
-.pf1.sheet textarea:focus {
+.pf1.sheet input[type="number"]:focus {
   border: 1px solid #111;
 }
 .pf1.sheet textarea {
   font-family: sans-serif;
   padding: 1px 5px;
   resize: none;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+.pf1.sheet textarea:hover {
+  border: 1px solid #111;
 }
 .pf1.sheet select {
   flex: 1;

@@ -10,6 +10,7 @@
 - Items with only change flags but no variable changes were not taken into account
 - The Advanced (Rebuild) creature template gave bonuses to ability scores when they were too low
 - Compendium browser could fail to load if saved results were no longer accesible (#380)
+- Armor/Equipment lost their action configuration when dragged/saved (#381)
 
 ### Changelog
 

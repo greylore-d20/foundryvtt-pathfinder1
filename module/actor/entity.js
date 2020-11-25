@@ -1868,6 +1868,17 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Add spellbook info
+    for (let [k, spellbook] of Object.entries(getProperty(result, "attributes.spells.spellbooks"))) {
+      setProperty(result, `spells.${k}`, spellbook);
+      const cl = spellbook.cl.total;
+      spellbook.range = {
+        close: 25 + 5 * Math.floor(cl / 2),
+        medium: 100 + 10 * cl,
+        long: 400 + 40 * cl,
+      };
+    }
+
     return result;
   }
 

@@ -245,7 +245,7 @@ export class ActorSheetPF extends ActorSheet {
 
       // Subtract energy drain
       {
-        const energyDrain = getProperty(this.actor.data, "data.attributes.energyDrain");
+        const energyDrain = getProperty(data.data, "data.attributes.energyDrain");
         if (energyDrain) {
           skl.sourceDetails.push({
             name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -282,14 +282,13 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update spellbook info
-    for (let [sk, spellbook] of Object.entries(data.actor.data.attributes.spells.spellbooks)) {
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: 25 + 5 * Math.floor(cl / 2),
-        medium: 100 + 10 * cl,
-        long: 400 + 40 * cl,
-      };
-      spellbook.inUse = (getProperty(data.actor.data, "attributes.spells.usedSpellbooks") || []).includes(sk);
+    for (let [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
+      spellbook.range = getProperty(rollData, `spells.${k}.range`);
+      setProperty(
+        data.data,
+        `attributes.spells.spellbooks.${k}.inUse`,
+        (getProperty(data.data, "attributes.spells.usedSpellbooks") || []).includes(k)
+      );
     }
 
     // Control items

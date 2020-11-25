@@ -28,7 +28,8 @@
       <div class="flexcol pf1-sheet-group">
         <div class="form-group spellcasting-class tooltip">
           <div class="tooltipcontent">
-            @cl : {{spellbook.orig.cl.total}}
+            @cl : {{spellbook.orig.cl.total}}<br>
+            @spells.{{spellbookIndex}}.cl.total : {{spellbook.orig.cl.total}}
 
             {{#with (lookup sourceDetails.data.attributes.spells.spellbooks spellbookIndex)}}
             {{#if cl.total.length}}
@@ -123,9 +124,27 @@
     <table>
       <thead>
         <tr>
-          <th>{{localize "PF1.DistClose"}}</th>
-          <th>{{localize "PF1.DistMedium"}}</th>
-          <th>{{localize "PF1.DistLong"}}</th>
+          <th class="tooltip">
+            {{localize "PF1.DistClose"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.close : {{spellbook.orig.range.close}}
+            </div>
+          </th>
+          <th class="tooltip">
+            {{localize "PF1.DistMedium"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.medium : {{spellbook.orig.range.medium}}
+            </div>
+          </th>
+          <th class="tooltip">
+            {{localize "PF1.DistLong"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.long : {{spellbook.orig.range.long}}
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -153,16 +172,22 @@
   <h3>{{localize "PF1.SpellPoints"}}</h3>
   <div class="tooltip value">
     <span class="tooltipcontent">
-      {{localize "PF1.SpellPointsCurrent"}}
+      {{localize "PF1.SpellPointsCurrent"}}<br><br>
+
+      @spells.{{spellbookIndex}}.spellPoints.value : {{spellbook.orig.spellPoints.value}}
     </span>
+
     <span class="text-box" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.value"
     data-dtype="Number">{{spellbook.orig.spellPoints.value}}</span>
   </div>
   <span class="sep"> / </span>
   <div class="tooltip max">
     <span class="tooltipcontent">
-      {{localize "PF1.SpellPointsMax"}}
+      {{localize "PF1.SpellPointsMax"}}<br><br>
+
+      @spells.{{spellbookIndex}}.spellPoints.max : {{spellbook.orig.spellPoints.max}}
     </span>
+
     <span class="text-box">{{spellbook.orig.spellPoints.max}}</span>
   </div>
   {{/if}}

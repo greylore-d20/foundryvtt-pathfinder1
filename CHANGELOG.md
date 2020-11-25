@@ -22,6 +22,8 @@
 - Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formulas (#306, #373)
 - Added NPC type classes
 - Added background skills for NPCs (#377)
+- Added quicker roll data for spellbook variables (#375)
+  - See tooltips on a spellbook for more info
 
 ### Localization
 

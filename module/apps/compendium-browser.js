@@ -7,7 +7,7 @@ const NEED_NEW_VERSION = {
   items: "0.75.7",
   bestiary: "0.75.9",
   feats: "0.76.3",
-  classes: "0.76.3",
+  classes: "0.76.5",
   races: "0.75.6",
 };
 

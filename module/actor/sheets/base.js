@@ -136,7 +136,7 @@ export class ActorSheetPF extends ActorSheet {
       isCharacter: this.entity.data.type === "character",
       hasRace: false,
       config: CONFIG.PF1,
-      useBGSkills: this.entity.data.type === "character" && game.settings.get("pf1", "allowBackgroundSkills"),
+      useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.entity.spellFailure,
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
@@ -342,7 +342,8 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.data.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills) skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType))
+          skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
       });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
       try {

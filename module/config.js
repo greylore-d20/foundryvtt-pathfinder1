@@ -55,6 +55,7 @@ PF1.savingThrows = {
 PF1.classTypes = {
   base: "PF1.ClassTypeBase",
   prestige: "PF1.ClassTypePrestige",
+  npc: "PF1.ClassTypeNPC",
   racial: "PF1.ClassTypeRacial",
   mythic: "PF1.ClassTypeMythic",
 };
@@ -84,6 +85,10 @@ PF1.classSavingThrowFormulas = {
   prestige: {
     low: "floor((1 + @level) / 3)",
     high: "floor((1 + @level) / 2)",
+  },
+  npc: {
+    low: "floor(@level / 3)",
+    high: "2 + floor(@level / 2)",
   },
   racial: {
     low: "floor(@level / 3)",

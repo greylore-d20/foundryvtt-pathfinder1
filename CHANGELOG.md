@@ -20,6 +20,8 @@
 - Added a spell slot cost to spells (#343)
 - Added a checkbox to ambient light and token configurations to disable low-light vision for that light source (#368)
 - Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formulas (#306, #373)
+- Added NPC type classes
+- Added background skills for NPCs (#377)
 
 ### Localization
 

@@ -115,7 +115,9 @@
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
-    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> {{localize "PF1.AddDamage"}}</a></li>
+    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> 
+        {{#unless isHealing}}{{localize "PF1.AddDamage"}}{{else}}{{localize "PF1.AddHealing"}}{{/unless}}
+      </a></li>
   </ol>
 </div>
 

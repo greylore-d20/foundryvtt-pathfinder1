@@ -299,6 +299,14 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
+    // Add distance units
+    data.distanceUnits = duplicate(CONFIG.PF1.distanceUnits);
+    if (this.item.type !== "spell") {
+      for (let d of ["close", "medium", "long"]) {
+        delete data.distanceUnits[d];
+      }
+    }
+
     // Add links
     await this._prepareLinks(data);
 

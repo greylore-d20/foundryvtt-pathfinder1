@@ -24,6 +24,7 @@
 - Added background skills for NPCs (#377)
 - Added quicker roll data for spellbook variables (#375)
   - See tooltips on a spellbook for more info
+- Removed Close, Medium and Long ranges for non-spell items
 
 ### Localization
 

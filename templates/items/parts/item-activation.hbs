@@ -44,7 +44,7 @@
     <select name="data.range.units">
       {{#select data.range.units}}
       <option value=""></option>
-      {{#each config.distanceUnits as |name key|}}
+      {{#each distanceUnits as |name key|}}
       <option value="{{key}}">{{name}}</option>
       {{/each}}
       {{/select}}

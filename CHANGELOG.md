@@ -9,11 +9,11 @@
 - Brought the "Extra Attacks" header into line (#307)
 - Items with only change flags but no variable changes were not taken into account
 - The Advanced (Rebuild) creature template gave bonuses to ability scores when they were too low
-- Compendium browser could fail to load if saved results were no longer accesible (#380)
+- Compendium browser could fail to load if saved results were no longer accessible (#380)
 - Armor/Equipment lost their action configuration when dragged/saved (#381)
 - Inventory footer overflowed the sheet on the native Foundry app (#384)
 - Biographies of actors with limited permissions were non-scrollable (#382)
-- Infinite loop in containers when coin weight divisor wass set to 0 (#383)
+- Infinite loop in containers when coin weight divisor was set to 0 (#383)
 
 ### Changelog
 

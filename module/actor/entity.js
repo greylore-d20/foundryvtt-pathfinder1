@@ -846,6 +846,11 @@ export class ActorPF extends Actor {
       if (bonusFormula != null && bonusFormula.length) attackData["data.attackBonus"] = bonusFormula;
     }
 
+    // Set reach
+    if (isMelee && getProperty(item.data, "data.properties.rch") === true) {
+      attackData["data.range.units"] = "reach";
+    }
+
     // Add range
     if (!isMelee && getProperty(item.data, "data.weaponData.range") != null) {
       attackData["data.range.units"] = "ft";

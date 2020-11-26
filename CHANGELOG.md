@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Added another edgecase to mysterious TokenHelpers foundry bug workaround (Core#???)
+- Display of biographies of actors with limited permissions could get cut off (#382)
 
 ## 0.76.5
 

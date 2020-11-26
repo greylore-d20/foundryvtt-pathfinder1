@@ -144,7 +144,7 @@ export async function PatchCore() {
   };
 
   // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
-  if (Object.keys(Actor.collection.tokens).length > 0) {
+  if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
     Object.keys(Actor.collection.tokens).forEach((tokenId) => {
       let actor = Actor.collection.tokens[tokenId];
       for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {

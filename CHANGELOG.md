@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.6
+
+### Bug Fixes
+
+- Added another edgecase to mysterious TokenHelpers foundry bug workaround (Core#???)
+
 ## 0.76.5
 
 ### Bug Fixes

@@ -1,3 +1,5 @@
+import { REACH_HIGHLIGHT_SQUARES } from "./config/config_reach.js";
+
 // Namespace PF1 Configuration Values
 export const PF1 = {};
 
@@ -650,6 +652,7 @@ PF1.distanceUnits = {
   personal: "PF1.DistPersonal",
   touch: "PF1.DistTouch",
   melee: "PF1.DistMelee",
+  reach: "PF1.DistReach",
   close: "PF1.DistClose",
   medium: "PF1.DistMedium",
   long: "PF1.DistLong",
@@ -672,6 +675,11 @@ PF1.measureUnitsShort = {
   mi: "PF1.DistMiShort",
   m: "PF1.DistMShort",
   km: "PF1.DistKMShort",
+};
+
+PF1.actorStatures = {
+  tall: "PF1.StatureTall",
+  long: "PF1.StatureLong",
 };
 
 /* -------------------------------------------- */
@@ -1425,5 +1433,7 @@ PF1.CR_EXP_LEVELS = [
   6553600,
   9830400,
 ];
+
+PF1.REACH_HIGHLIGHT_SQUARES = REACH_HIGHLIGHT_SQUARES;
 
 CONFIG.Combat.initiative.decimals = 2;

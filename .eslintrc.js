@@ -460,5 +460,6 @@ module.exports = {
     ENTITY_PERMISSIONS: "readonly",
     DEFAULT_TOKEN: "readonly",
     DiceTerm: "readonly",
+    GRID_TYPES: "readonly",
   },
 };

@@ -1,11 +1,10 @@
+import { showAttackReach } from "./misc/attack-reach.js";
+import { getSkipActionPrompt } from "./settings.js";
+
 export class TokenQuickActions {
   static async addTop3Attacks(app, html, data) {
-    let actorId = data.actorId,
-      actor = game.actors.get(actorId);
-    if (data._id && game.actors.tokens[data._id] != null) {
-      actorId = data._id;
-      actor = game.actors.tokens[actorId];
-    }
+    const token = canvas.tokens.placeables.find((o) => o.id === data._id);
+    const actor = token.actor;
 
     if (actor == null) return;
 
@@ -27,14 +26,33 @@ export class TokenQuickActions {
     html.find(".col.middle").after(quickActions + "</div></div>");
 
     items.forEach(function (i) {
-      const item = i.item;
+      const item = actor.items.find((o) => o._id === i.item._id);
       const type = item.type;
-      html.find(`#${type}-${item._id}`).click(function (event) {
-        game.pf1.rollItemMacro(item.name, {
-          itemId: item._id,
-          itemType: type,
-          actorId: actorId,
-        });
+      const elem = html.find(`#${type}-${item._id}`);
+
+      // Add click handler
+      elem.on("click", (event) => {
+        if (!event.ctrlKey) {
+          return item.use({ skipDialog: getSkipActionPrompt() });
+        }
+        return item.roll();
+      });
+
+      // Add mouse enter handler
+      let highlight;
+      elem.on("mouseenter", (event) => {
+        highlight = showAttackReach(token, item);
+        if (!highlight) return;
+
+        highlight.normal.render();
+        highlight.reach.render();
+      });
+
+      elem.on("mouseleave", (event) => {
+        if (!highlight) return;
+
+        highlight.normal.clear(true);
+        highlight.reach.clear(true);
       });
     });
   }

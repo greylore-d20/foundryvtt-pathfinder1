@@ -1,7 +1,7 @@
 <div class="traits flexcol">
   <div class="form-group">
     <label>{{localize "PF1.Size"}}</label>
-    <select class="actor-size" name="data.traits.size">
+    <select name="data.traits.size">
       {{#select data.traits.size}}
       {{#each config.actorSizes as |label size|}}
       <option value="{{size}}">{{label}}</option>
@@ -107,6 +107,17 @@
     <label class="checkbox">
       <input type="checkbox" name="data.attributes.quadruped" {{checked data.attributes.quadruped}}/>
     </label>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "PF1.Stature"}}</label>
+    <select name="data.traits.stature">
+      {{#select data.traits.stature}}
+      {{#each config.actorStatures as |label key|}}
+      <option value="{{key}}">{{label}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
   </div>
 
   <div class="form-group">

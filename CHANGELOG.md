@@ -7,6 +7,10 @@
 - Added another edgecase to mysterious TokenHelpers foundry bug workaround (Core#???)
 - Display of biographies of actors with limited permissions could get cut off (#382)
 
+### Changelog
+
+- Initial support for reach templates when hovering over token quick actions
+
 ## 0.76.5
 
 ### Bug Fixes

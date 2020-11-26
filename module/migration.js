@@ -144,6 +144,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
   _migrateActorSpellbookDomainSlots(actor, updateData);
+  _migrateActorStatures(actor, updateData);
 
   if (!actor.items) return updateData;
 
@@ -800,6 +801,14 @@ const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
     if (b.domainSlotValue !== undefined) continue;
     const key = `data.attributes.spells.spellbooks.${k}.domainSlotValue`;
     updateData[key] = 1;
+  }
+};
+
+const _migrateActorStatures = function (ent, updateData) {
+  const stature = getProperty(ent.data, "data.traits.stature");
+
+  if (stature === undefined) {
+    updateData["data.traits.stature"] = "tall";
   }
 };
 

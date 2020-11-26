@@ -185,6 +185,7 @@ Hooks.once("setup", function () {
     "bonusModifiers",
     "abilityActivationTypes_unchained",
     "abilityActivationTypesPlurals_unchained",
+    "actorStatures",
   ];
 
   const doLocalize = function (obj) {
@@ -206,7 +207,7 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.76.5";
+  const NEEDS_MIGRATION_VERSION = "0.76.6";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";

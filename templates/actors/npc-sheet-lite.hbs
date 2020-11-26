@@ -130,6 +130,9 @@
           <th class="attribute initiative">
             <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
           </th>
+          <th class="attribute">
+            {{localize "PF1.Size"}}
+          </th>
         </tr>
       </thead>
 
@@ -138,6 +141,15 @@
           <td data-action="input-text" data-for="CHILD-0" data-attr-name="data.attributes.init.value">
             <input readonly type="text" data-dtype="Number" value="{{data.attributes.init.total}}"/>
           </td>
+          <td>
+            <select name="data.traits.size">
+              {{#select data.traits.size}}
+              {{#each config.actorSizes as |label size|}}
+              <option value="{{size}}">{{label}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -145,7 +157,7 @@
     <div class="combat-attacks">
       <section class="attacks-body">
         {{#each attacks as |section sid|}}
-        <div class="inventory-group flexcol {{#if section.initial}}active{{/if}}"">
+        <div class="inventory-group flexcol {{#if section.initial}}active{{/if}}">
           <ol class="inventory-list sub-scroll scroll-attacks">
             <li class="inventory-header flexrow">
               <h3 class="item-name flexrow">{{section.label}}</h3>

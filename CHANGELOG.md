@@ -10,6 +10,7 @@
 ### Changelog
 
 - Initial support for reach templates when hovering over token quick actions
+- Added a size selector to NPC Lite sheets
 
 ## 0.76.5
 

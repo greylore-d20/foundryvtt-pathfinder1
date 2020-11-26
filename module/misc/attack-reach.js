@@ -46,15 +46,25 @@ export class SquareHighlight {
 export const showAttackReach = function (token, attack) {
   const grid = canvas.grid;
   const gridSize = grid.size;
+  const tw = token.data.width;
+  const th = token.data.height;
   const origin = {
-    x: Math.floor(token.x / gridSize) + (token.data.width - 1),
-    y: Math.floor(token.y / gridSize) + (token.data.height - 1),
+    x: Math.floor(token.x / gridSize) + (tw - 1),
+    y: Math.floor(token.y / gridSize) + (th - 1),
   };
-  console.log(token.data.width);
 
+  // Get stature type
   const stature = getProperty(token.actor.data, "data.traits.stature");
-  const size = getProperty(token.actor.data, "data.traits.size");
+  let size = getProperty(token.actor.data, "data.traits.size");
 
+  // Determine size by token size, if possible
+  if (tw === 2 && th === 2) size = "lg";
+  else if (tw === 3 && th === 3) size = "huge";
+  else if (tw === 4 && th === 4) size = "grg";
+  else if (tw === 6 && th === 6) size = "col";
+  else if (!(tw === 1 && th === 1)) return;
+
+  // Determine whether reach
   const rangeKey = getProperty(attack.data, "data.range.units");
   if (!["melee", "touch", "reach"].includes(rangeKey)) return;
   const isReach = rangeKey === "reach";

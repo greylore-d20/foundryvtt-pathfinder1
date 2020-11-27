@@ -16,6 +16,7 @@ export class SquareHighlight {
 
   clear(permanent = false) {
     const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+    if (!hl) return;
     hl.clear();
 
     if (permanent) canvas.grid.destroyHighlightLayer(`AttackHighlight.${this._id}`);
@@ -85,4 +86,68 @@ export const showAttackReach = function (token, attack) {
     }
   }
   return result;
+};
+
+export const addReachCallback = function (data, html) {
+  let results = [];
+
+  // Don't do anything under certain circumstances
+  const itemID = getProperty(data, "flags.pf1.metadata.item");
+  if (!itemID) return results;
+
+  // console.log(app, html, data, itemID);
+
+  const speakerData = data.speaker;
+  // console.log(speakerData);
+  if (canvas.scene._id !== speakerData.scene) return results;
+
+  const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
+  if (!token) return results;
+
+  const item = token.actor.items.find((o) => o._id === itemID);
+  if (!item) return results;
+
+  let highlight;
+  // Add mouse enter callback
+  const mouseEnterCallback = function () {
+    if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item);
+
+    if (!highlight) return;
+
+    highlight.normal.render();
+    highlight.reach.render();
+  };
+  html.on("mouseenter", mouseEnterCallback);
+
+  // Add mouse leave callback
+  const mouseLeaveCallback = function () {
+    if (!highlight) return;
+
+    highlight.normal.clear(true);
+    highlight.reach.clear(true);
+  };
+  html.on("mouseleave", mouseLeaveCallback);
+  // Add 'click' event as a safeguard to remove highlights
+  html.on("click", mouseLeaveCallback);
+
+  // Add results
+  results.push(
+    {
+      event: "mouseenter",
+      callback: mouseEnterCallback,
+      elem: html,
+    },
+    {
+      event: "mouseleave",
+      callback: mouseLeaveCallback,
+      elem: html,
+    },
+    {
+      event: "click",
+      callback: mouseLeaveCallback,
+      elem: html,
+    }
+  );
+
+  return results;
 };

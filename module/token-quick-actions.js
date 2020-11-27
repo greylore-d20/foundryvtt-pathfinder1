@@ -49,6 +49,7 @@ export class TokenQuickActions {
         highlight.reach.render();
       });
 
+      // Add mouse leave callback
       elem.on("mouseleave", (event) => {
         if (!highlight) return;
 

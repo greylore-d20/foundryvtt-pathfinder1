@@ -36,6 +36,7 @@ import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
+import { addReachCallback } from "./module/misc/attack-reach.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
@@ -259,6 +260,35 @@ Hooks.on("canvasInit", function () {
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
+
+{
+  let callbacks = [];
+
+  Hooks.on("canvasReady", () => {
+    // Remove old callbacks
+    for (let cb of callbacks) {
+      console.log(cb);
+      cb.elem.off(cb.event, cb.callback);
+    }
+
+    // Add reach measurements
+    game.messages.forEach((m) => {
+      const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
+      if (!elem || (elem && !elem.length)) return;
+      const results = addReachCallback(m.data, elem);
+      callbacks.push(...results);
+    });
+  });
+
+  Hooks.on("renderChatMessage", (app, html, data) => {
+    // Wait for setup after this
+    if (!game.ready) return;
+
+    // Add reach measurements on hover
+    const results = addReachCallback(data.message, html);
+    callbacks.push(...results);
+  });
+}
 
 /* -------------------------------------------- */
 /*  Other Hooks                                 */

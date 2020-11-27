@@ -110,6 +110,7 @@ export const addReachCallback = function (data, html) {
   let highlight;
   // Add mouse enter callback
   const mouseEnterCallback = function () {
+    if (token._destroyed) return;
     if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item);
 
     if (!highlight) return;
@@ -121,6 +122,7 @@ export const addReachCallback = function (data, html) {
 
   // Add mouse leave callback
   const mouseLeaveCallback = function () {
+    if (token._destroyed) return;
     if (!highlight) return;
 
     highlight.normal.clear(true);

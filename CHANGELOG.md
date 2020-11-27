@@ -6,6 +6,7 @@
 
 - Added another edgecase to mysterious TokenHelpers foundry bug workaround (Core#???)
 - Display of biographies of actors with limited permissions could get cut off (#382)
+- Fix Inspire Courage formula (#388)
 
 ### Changelog
 

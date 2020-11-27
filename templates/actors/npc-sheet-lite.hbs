@@ -133,6 +133,9 @@
           <th class="attribute">
             {{localize "PF1.Size"}}
           </th>
+          <th class="attribute">
+            {{localize "PF1.Stature"}}
+          </th>
         </tr>
       </thead>
 
@@ -146,6 +149,15 @@
               {{#select data.traits.size}}
               {{#each config.actorSizes as |label size|}}
               <option value="{{size}}">{{label}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td>
+            <select name="data.traits.stature">
+              {{#select data.traits.stature}}
+              {{#each config.actorStatures as |label key|}}
+              <option value="{{key}}">{{label}}</option>
               {{/each}}
               {{/select}}
             </select>

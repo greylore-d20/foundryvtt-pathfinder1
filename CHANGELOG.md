@@ -12,6 +12,10 @@
 - Initial support for reach templates when hovering over token quick actions
 - Added a size selector to NPC Lite sheets
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.76.5
 
 ### Bug Fixes

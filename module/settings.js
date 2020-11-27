@@ -383,6 +383,18 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Hide reach measurements
+   */
+  game.settings.register("pf1", "hideReachMeasurements", {
+    name: "SETTINGS.pf1HideReachMeasurementsN",
+    hint: "SETTINGS.pf1HideReachMeasurementsH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };
 
 export const registerClientSettings = function () {

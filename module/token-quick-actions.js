@@ -41,7 +41,8 @@ export class TokenQuickActions {
       // Add mouse enter handler
       let highlight;
       elem.on("mouseenter", (event) => {
-        highlight = showAttackReach(token, item);
+        if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item);
+
         if (!highlight) return;
 
         highlight.normal.render();

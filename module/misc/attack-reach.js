@@ -49,8 +49,8 @@ export const showAttackReach = function (token, attack) {
   const tw = token.data.width;
   const th = token.data.height;
   const origin = {
-    x: Math.floor(token.x / gridSize) + (tw - 1),
-    y: Math.floor(token.y / gridSize) + (th - 1),
+    x: Math.floor((token.x + tw * gridSize - 0.5 * gridSize) / gridSize),
+    y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
   // Get stature type

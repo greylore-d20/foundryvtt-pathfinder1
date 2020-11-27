@@ -267,7 +267,6 @@ Hooks.on("canvasInit", function () {
   Hooks.on("canvasReady", () => {
     // Remove old callbacks
     for (let cb of callbacks) {
-      console.log(cb);
       cb.elem.off(cb.event, cb.callback);
     }
 

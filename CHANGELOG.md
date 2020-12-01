@@ -2,6 +2,10 @@
 
 ## 0.76.7
 
+### Bug Fixes
+
+- Containers self-destroyed when given to themselves
+
 ### Changelog
 
 - Added initial support for the script operator on changes

@@ -1806,7 +1806,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
-    if (target) {
+    if (target && target !== item) {
       const itemData = item.data;
       if (target instanceof Actor) {
         await target.createOwnedItem(itemData);

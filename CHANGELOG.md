@@ -6,6 +6,10 @@
 
 - Added initial support for the script operator on changes
 
+### Localization
+
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+
 ## 0.76.6
 
 ### Bug Fixes

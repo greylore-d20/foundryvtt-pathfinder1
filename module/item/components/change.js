@@ -2,6 +2,8 @@ export class ItemChange {
   static create(data, parent) {
     const result = new this();
 
+    if (!data._id) delete data._id;
+
     result.data = mergeObject(this.defaultData, data);
     result.parent = parent;
     result.updateTime = new Date();

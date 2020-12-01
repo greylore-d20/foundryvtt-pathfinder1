@@ -2,6 +2,7 @@ import { createTabs } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
+import { ScriptEditor } from "../../apps/script-editor.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -266,6 +267,7 @@ export class ItemSheetPF extends ItemSheet {
         const obj = { data: o };
 
         obj.subTargets = this.item.getChangeSubTargets(itemChange.target);
+        obj.isScript = obj.data.operator === "script";
 
         cur.push(obj);
         return cur;
@@ -734,6 +736,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Conditional Dropping
     html.find('div[data-tab="conditionals"]').on("drop", this._onConditionalDrop.bind(this));
+
+    // Edit change script contents
+    html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -865,6 +870,20 @@ export class ItemSheetPF extends ItemSheet {
 
     const conditionals = item.data.data.conditionals || [];
     await this.object.update({ "data.conditionals": conditionals.concat([data]) });
+  }
+
+  async _onEditChangeScriptContents(event) {
+    const elem = event.currentTarget;
+    const changeID = elem.closest(".change").dataset.change;
+    const change = this.item.changes.find((o) => o._id === changeID);
+
+    if (!change) return;
+
+    const scriptEditor = new ScriptEditor({ command: change.formula }).render(true);
+    const command = await scriptEditor.awaitResult();
+    if (typeof command === "string") {
+      return change.update({ formula: command });
+    }
   }
 
   /**

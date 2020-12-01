@@ -847,6 +847,7 @@
   "PF1.Defenses": "Defenses",
   "PF1.Description": "Description",
   "PF1.Details": "Details",
+  "PF1.Edit": "Edit",
   "PF1.Enchantments": "Enchantments",
   "PF1.EnRes": "Energy Resistances",
   "PF1.Equipped": "Equipped",
@@ -1258,6 +1259,7 @@
   "PF1.DomainSlotValue": "Domain Slot Value",
   "PF1.DomainSlotValueDesc": "How many 'free' slots do Domain/School spells provide for a spell level?",
   "PF1.DisableLightLowLightVision": "Disable Low-light Vision for Light Source",
+  "PF1.Command": "Command",
 
   "PF1.Help": {
     "Label": "Help",
@@ -1493,7 +1495,7 @@
             },
             "Operator": {
               "Label": "Operator",
-              "Desc": "The operator is either '+' (relative) or '=' (absolute). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula."
+              "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
             },
             "Priority": {
               "Label": "Priority",
@@ -1526,6 +1528,21 @@
             "SubTarget": {
               "Label": "Sub-Target",
               "Desc": "The specific attribute to alter with this change."
+            }
+          },
+          "ScriptOperator": {
+            "Label": "Script Operator",
+            "Desc": "The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.",
+            "Variables": {
+              "Desc": "Within these scripts, the following variables can be used:",
+              "0": {
+                "Name": "d",
+                "Desc": "The roll data at the time of processing the change. Contains any variable you could use within a normal change formula using the `@` symbol."
+              },
+              "1": {
+                "Name": "result",
+                "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
+              }
             }
           }
         }

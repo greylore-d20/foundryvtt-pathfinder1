@@ -6,25 +6,12 @@ import { ItemChange } from "../item/components/change.js";
 export const updateChanges = async function ({ data = null } = {}) {
   let updateData = {};
   let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
-  srcData1.items = this.items.reduce((cur, i) => {
-    const otherItem = srcData1.items.filter((o) => o._id === i._id)[0];
-    if (otherItem) cur.push(mergeObject(i.data, otherItem, { inplace: false }));
-    else cur.push(i.data);
-    return cur;
-  }, []);
-  const changeObjects = srcData1.items
-    .filter((obj) => {
-      return (
-        (obj.data.changes instanceof Array && obj.data.changes.length) ||
-        (obj.data.changeFlags && Object.values(obj.data.changeFlags).filter((o) => o === true).length)
-      );
-    })
-    .filter((obj) => {
-      if (obj.type === "buff") return obj.data.active;
-      if (obj.type === "equipment" || obj.type === "weapon") return obj.data.equipped;
-      if (obj.type === "loot" && obj.data.subType === "gear") return obj.data.equipped;
-      return true;
+  let changeObjects = [];
+  if (this.changeItems && this.changeItems.length) {
+    changeObjects = this.changeItems.map((o) => {
+      return o.data;
     });
+  }
 
   // Track previous values
   const prevValues = {
@@ -263,26 +250,42 @@ export const updateChanges = async function ({ data = null } = {}) {
         rollData.item = change.source.item.data;
       }
 
-      try {
-        // Execute formula
-        const roll = new Roll(formula, rollData);
+      let value = 0;
+      let operator = change.raw.operator;
+      if (change.raw.operator !== "script") {
+        try {
+          // Execute formula
+          const roll = new Roll(formula, rollData);
 
-        // Process result
-        var value = 0;
+          // Process result
+          value = 0;
+          value = roll.roll().total;
 
-        value = roll.roll().total;
-
-        if (change.raw.target === "ac" && change.raw.modifier === "enh") {
-          if (change.raw.subTarget === "aac") {
-            value = Math.max(0, value - highestArmorEnhBonus);
-          } else if (change.raw.subTarget === "sac") {
-            value = Math.max(0, value - highestShieldEnhBonus);
+          if (change.raw.target === "ac" && change.raw.modifier === "enh") {
+            if (change.raw.subTarget === "aac") {
+              value = Math.max(0, value - highestArmorEnhBonus);
+            } else if (change.raw.subTarget === "sac") {
+              value = Math.max(0, value - highestShieldEnhBonus);
+            }
           }
+        } catch (e) {
+          const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
+          console.error(msg);
+          ui.notifications.error(msg);
         }
-      } catch (e) {
-        const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
-        console.error(msg);
-        ui.notifications.error(msg);
+      } else {
+        // Create script functions, if non exist
+        // if (Object.keys(this._changeFunctions).length === 0) {
+        //   this.updateChangeEvals();
+        // }
+
+        // console.log(change);
+        const scriptResult = this._changeFunctions[change.raw._id].func(rollData);
+        // const scriptResult = evalChange.call(this, change);
+        if (typeof scriptResult === "object") {
+          value = scriptResult.value;
+          operator = scriptResult.operator;
+        }
       }
 
       // Set value
@@ -291,7 +294,7 @@ export const updateChanges = async function ({ data = null } = {}) {
       _parseChange.call(this, change, changeData[changeTarget], flags);
 
       // Set change
-      if (change.raw.operator === "set") {
+      if (operator === "set") {
         _applySetChanges(updateData, srcData1, [change]);
         // Set source info
         let flats = getChangeFlat(change.raw.subTarget, change.raw.modifier, srcData1.data);
@@ -301,7 +304,7 @@ export const updateChanges = async function ({ data = null } = {}) {
         });
       }
       // Add change
-      else if (["add", "+"].includes(change.raw.operator) || !change.raw.operator) {
+      else if (["add", "+"].includes(operator) || !operator) {
         const addData = _applyChanges.call(this, highestBonus, change, rollData);
         if (addData)
           _addDynamicData.call(this, {
@@ -2365,4 +2368,17 @@ const getSourceInfo = function (obj, key) {
     obj[key] = { negative: [], positive: [] };
   }
   return obj[key];
+};
+
+const evalChange = function (change) {
+  // let result = 0;
+
+  // // Create change function
+  // const funcName = change._id;
+  // this.changeEval = this.changeEval || {};
+  // this.changeEval[funcName] = eval(
+  // eval(`
+  //   this.changeEval[funcName] = new Function(
+  // `);
+  return 0;
 };

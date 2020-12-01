@@ -4,6 +4,7 @@ export class ItemChange {
 
     result.data = mergeObject(this.defaultData, data);
     result.parent = parent;
+    result.updateTime = new Date();
 
     return result;
   }
@@ -49,6 +50,8 @@ export class ItemChange {
   prepareData() {}
 
   async update(data, options = {}) {
+    this.updateTime = new Date();
+
     if (this.parent != null) {
       const rawChange = this.parent.data.data.changes.find((o) => o._id === this._id);
       const idx = this.parent.data.data.changes.indexOf(rawChange);

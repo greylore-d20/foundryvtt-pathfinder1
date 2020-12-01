@@ -11,6 +11,25 @@ import { updateChanges, getChangeFlat } from "./update-changes.js";
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
 export class ActorPF extends Actor {
+  constructor(...args) {
+    super(...args);
+
+    /**
+     * A list of all the active items with changes.
+     * @property
+     * @type {Array}
+     */
+    this.changeItems = [];
+
+    /**
+     * Change functions, as determined by changes' script formulas
+     * @property
+     * @private
+     * @type {Object}
+     */
+    this._changeFunctions = {};
+  }
+
   /* -------------------------------------------- */
 
   static chatListeners(html) {
@@ -578,6 +597,7 @@ export class ActorPF extends Actor {
     }
 
     data = expandObject(this.preUpdate(data));
+    this.updateChangeEvals();
 
     // Update changes
     let diff = data;
@@ -1999,5 +2019,67 @@ export class ActorPF extends Actor {
     }
 
     return Promise.all(promises);
+  }
+
+  updateChangeEvals() {
+    this.changeItems = this.items
+      .filter((obj) => {
+        return (
+          (obj.data.data.changes instanceof Array && obj.data.data.changes.length) ||
+          (obj.data.data.changeFlags && Object.values(obj.data.data.changeFlags).filter((o) => o === true).length)
+        );
+      })
+      .filter((obj) => {
+        if (obj.type === "buff") return obj.data.data.active;
+        if (obj.type === "equipment" || obj.type === "weapon") return obj.data.data.equipped;
+        if (obj.type === "loot" && obj.data.data.subType === "gear") return obj.data.data.equipped;
+        return true;
+      });
+
+    // Gather changes
+    const changes = this.changeItems.reduce((cur, o) => {
+      cur.push(
+        ...o.changes.filter((c) => {
+          return c.operator === "script";
+        })
+      );
+      return cur;
+    }, []);
+
+    const createFunction = function (funcDef, funcArgs = []) {
+      try {
+        const preDef = `const result = { operator: "add", value: 0, };`;
+        const postDef = `return result;`;
+        const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}${postDef}};`;
+        return new Function(fullDef)();
+      } catch (e) {
+        console.warn("Could not create change function with definition ", funcDef);
+        return function () {
+          return 0;
+        };
+      }
+    };
+
+    // Create functions
+    let removeIDs = Object.keys(this._changeFunctions);
+    for (let c of changes) {
+      if (this._changeFunctions[c._id] && c.updateTime < this._changeFunctions[c._id].time) continue;
+
+      if (removeIDs.includes(c._id)) removeIDs.splice(removeIDs.indexOf(c._id), 1);
+
+      const obj = {
+        time: new Date(),
+      };
+
+      // Create function
+      const funcDef = c.formula;
+      obj.func = createFunction(funcDef, ["d"]);
+      this._changeFunctions[c._id] = obj;
+    }
+
+    // Remove old functions
+    for (let id of removeIDs) {
+      delete this._changeFunctions[id];
+    }
   }
 }

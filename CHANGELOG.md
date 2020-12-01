@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.7
+
+### Changelog
+
+- Added initial support for the script operator on changes
+
 ## 0.76.6
 
 ### Bug Fixes

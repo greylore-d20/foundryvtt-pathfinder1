@@ -2531,9 +2531,10 @@ export class ItemPF extends Item {
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
-        if (rangeUnit === "close") label.range = `${label.range} (25 ft. + 5 ft./2 levels)`;
-        else if (rangeUnit === "medium") label.range = `${label.range} (100 ft. + 10 ft./level)`;
-        else if (rangeUnit === "long") label.range = `${label.range} (400 ft. + 40 ft./level)`;
+        const units = game.settings.get("pf1", "units")
+        if (rangeUnit === "close") label.range = `${label.range} ${ game.i18n.localize( units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort" ) }`;
+        else if (rangeUnit === "medium") label.range = `${label.range} ${ game.i18n.localize( units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium" ) }`;
+        else if (rangeUnit === "long") label.range = `${label.range} ${ game.i18n.localize( units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong" ) }`;
         else if (["ft", "mi"].includes(rangeUnit)) {
           if (!rangeValue) label.range = "";
           else label.range = `${rangeValue} ${label.range}`;

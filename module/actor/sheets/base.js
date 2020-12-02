@@ -341,8 +341,7 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.data.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType))
-          skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
       });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
       try {

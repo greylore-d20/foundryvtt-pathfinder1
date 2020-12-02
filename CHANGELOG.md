@@ -7,6 +7,7 @@
 - Containers self-destroyed when given to themselves
 - Empty strings could be passed into changes when created
 - The level unchained rogues get evasion was incorrectly set to 1
+- Actors received background skills for NPC classes and racial HD if they had a normal base class or prestige class as well
 
 ### Changelog
 

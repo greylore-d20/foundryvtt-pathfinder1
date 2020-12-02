@@ -1265,7 +1265,7 @@ export class ItemPF extends Item {
       let attackExtraParts = [],
         damageExtraParts = [],
         primaryAttack = true,
-        useMeasureTemplate = false,
+        useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
         conditionals;
       // Get form data

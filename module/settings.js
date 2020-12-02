@@ -333,6 +333,18 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
+  /*
+   * When skipping an action dialog prompt still place the template if one is configured
+   */
+  game.settings.register("pf1", "placeMeasureTemplateOnQuickRolls", {
+    name: "SETTINGS.placeMeasureTemplateOnQuickRollsN",
+    hint: "SETTINGS.placeMeasureTemplateOnQuickRollsH",
+    scope: "client",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Attack chat card template
    */

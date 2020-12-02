@@ -101,7 +101,7 @@ export const addReachCallback = function (data, html) {
 
   const speakerData = data.speaker;
   // console.log(speakerData);
-  if (canvas.scene._id !== speakerData.scene) return results;
+  if (!canvas.scene || canvas.scene._id !== speakerData.scene) return results;
 
   const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
   if (!token) return results;

@@ -1,13 +1,12 @@
 @import "./variables.less";
 .pf1.sheet.actor {
-
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
 
   .warning {
     flex: 0;
-    background-color: #CECE00;
+    background-color: #cece00;
     border: 1px solid #909000;
     border-radius: 2px;
   }
@@ -48,7 +47,7 @@
           border-right: @borderGroove;
           border-bottom: @borderGroove;
 
-          &:nth-child(3n+0) {
+          &:nth-child(3n + 0) {
             border-right: none;
           }
 
@@ -127,7 +126,7 @@
     .misc-header-items {
       flex: 0;
 
-      &>* {
+      & > * {
         margin-right: 8px;
       }
 
@@ -166,7 +165,7 @@
             font-size: 16px;
             color: rgba(0, 0, 0, 0);
 
-            &:hover  {
+            &:hover {
               color: @colorDark;
             }
           }
@@ -177,7 +176,9 @@
           }
 
           div.experience {
-            input[type="text"], span.text-box, .max {
+            input[type="text"],
+            span.text-box,
+            .max {
               padding: 0;
               flex: 1;
               text-align: center;
@@ -200,8 +201,8 @@
         border-radius: 4px;
 
         span.bar {
-          background: #63FF00;
-          border: 1px solid #D0FFB2;
+          background: #63ff00;
+          border: 1px solid #d0ffb2;
           border-radius: 2px;
           height: 10px;
           display: block;
@@ -284,7 +285,6 @@
   }
 
   .attributes {
-
     input[type="text"] {
       height: 24px;
     }
@@ -338,7 +338,8 @@
     }
   }
 
-  ul.attributes.misc-base, ul.attributes.misc-defenses {
+  ul.attributes.misc-base,
+  ul.attributes.misc-defenses {
     .attribute-footer input {
       width: 100%;
     }
@@ -359,7 +360,8 @@
     }
 
     table {
-      span.text-box, input[type="text"] {
+      span.text-box,
+      input[type="text"] {
         height: 20px;
         padding: 1px 3px;
       }
@@ -369,7 +371,7 @@
   /* ----------------------------------------- */
   /*  Defenses                                 */
   /* ----------------------------------------- */
-  
+
   .defenses {
     .attributes {
       flex: 0;
@@ -379,7 +381,8 @@
       width: 32px;
     }
 
-    .defense-rolls, .defense-notes {
+    .defense-rolls,
+    .defense-notes {
       label {
         line-height: 20px;
         white-space: nowrap;
@@ -426,7 +429,8 @@
   div.skill-rank {
     flex: 0;
 
-    ol, ul {
+    ol,
+    ul {
       padding-inline-start: 0;
     }
   }
@@ -440,7 +444,8 @@
     border: @borderGroove;
     border-radius: 3px;
 
-    li.skill, li.sub-skill {
+    li.skill,
+    li.sub-skill {
       height: 28px;
       padding: 3px 0;
       align-items: end;
@@ -460,10 +465,10 @@
           img {
             opacity: 60%;
           }
-		  
-		  img:hover {
-		  animation: 0;
-		  }
+
+          img:hover {
+            animation: 0;
+          }
         }
       }
 
@@ -490,15 +495,16 @@
             height: 24px;
             border: unset;
           }
-          
+
           img:hover {
-            animation: dice-spin 250ms cubic-bezier(0.600, -0.280, 0.735, 0.045) 1 forwards;
-			transform-origin: 50% 40%;
-			filter: @filterAuburn;
+            animation: dice-spin 250ms cubic-bezier(0.6, -0.28, 0.735, 0.045) 1 forwards;
+            transform-origin: 50% 40%;
+            filter: @filterAuburn;
           }
         }
 
-        h4, input[type="text"] {
+        h4,
+        input[type="text"] {
           display: inline-block;
           margin: 0;
           white-space: nowrap;
@@ -655,7 +661,8 @@
     overflow-y: hidden;
     margin: 0 5px;
 
-    .form-group, .form-group-stacked {
+    .form-group,
+    .form-group-stacked {
       margin: 0;
       justify-content: space-between;
     }
@@ -741,14 +748,14 @@
       font-size: 14px;
       line-height: 12px;
       text-align: right;
-      color: #EEE;
+      color: #eee;
       text-shadow: 0 0 5px #000;
     }
 
     &.encumbered {
       .encumbrance-bar {
-        background: #A80D0D;
-        border-color: #E14949;
+        background: #a80d0d;
+        border-color: #e14949;
       }
     }
 
@@ -776,8 +783,12 @@
     }
 
     &.encumbered {
-      .arrow-up { border-bottom: 4px solid #000; }
-      .arrow-down { border-top: 4px solid #000; }
+      .arrow-up {
+        border-bottom: 4px solid #000;
+      }
+      .arrow-down {
+        border-top: 4px solid #000;
+      }
     }
   }
 
@@ -819,7 +830,7 @@
     .inventory-group {
       height: 100%;
     }
-    
+
     .inventory-body {
       .inventory-list {
         height: 100%;
@@ -842,7 +853,8 @@
   .inventory-filters {
     margin: 0 8px;
     flex: 0 0 20px;
-    h3, .filter-title {
+    h3,
+    .filter-title {
       .nodesto();
       color: @colorOlive;
       font-size: 24px;
@@ -859,7 +871,8 @@
       flex: 0 0 100%;
     }
 
-    .inventory-tags, .carry-bonus {
+    .inventory-tags,
+    .carry-bonus {
       flex-basis: 50%;
       align-self: center;
     }
@@ -882,7 +895,8 @@
       color: @colorTan;
       white-space: nowrap;
     }
-    input[type="text"], span.text-box {
+    input[type="text"],
+    span.text-box {
       height: 20px;
       flex: 0 0 48px;
       text-align: center;
@@ -923,7 +937,8 @@
         flex: 0 0 160px;
       }
 
-      .value, .max {
+      .value,
+      .max {
         display: flex;
         flex: 0 0 32px;
         text-align: center;
@@ -967,7 +982,8 @@
         flex: 1;
       }
 
-      input, span.sep {
+      input,
+      span.sep {
         text-align: center;
       }
       span.sep {
@@ -1017,7 +1033,9 @@
     }
 
     // Empty spellbook controls
-    .spellbook-empty .item-controls { flex: 1; }
+    .spellbook-empty .item-controls {
+      flex: 1;
+    }
 
     .spell-failure {
       input[type="text"] {

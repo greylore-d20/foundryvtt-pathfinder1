@@ -24,7 +24,7 @@
 
 # After lazy image loading
 
-The bestiary took noticably longer to load *with* lazy image loading.
+The bestiary took noticably longer to load _with_ lazy image loading.
 
 I presume this is because the bestiary only uses a couple of different images\
 for each default entry, so there's not much lazy loading going on,\

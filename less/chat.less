@@ -10,8 +10,8 @@
 
   .card-header {
     padding: 3px 0;
-    border-top: 2px groove #FFF;
-    border-bottom: 2px groove #FFF;
+    border-top: 2px groove #fff;
+    border-bottom: 2px groove #fff;
 
     img {
       flex: 0 0 36px;
@@ -70,7 +70,7 @@
 
   .card-footer {
     padding: 3px 0 0;
-    border-top: 2px groove #FFF;
+    border-top: 2px groove #fff;
 
     .spell-failure {
       padding: 4px;
@@ -79,12 +79,13 @@
       border-radius: 3px;
 
       h3 {
-        color: #4C6D9F;
+        color: #4c6d9f;
         font-size: 16px;
         text-align: center;
       }
 
-      .dice-roll, .dice-total {
+      .dice-roll,
+      .dice-total {
         padding: 0;
       }
     }
@@ -95,7 +96,8 @@
     }
   }
 
-  .attack-row, .damage-row {
+  .attack-row,
+  .damage-row {
     align-items: baseline;
 
     a.inline-result {
@@ -106,7 +108,7 @@
       margin-bottom: 4px;
       font-size: 1.5em;
       font-weight: bold;
-	  border-bottom: unset;
+      border-bottom: unset;
       box-shadow: inset 0px -2px 0px 0px #782e22;
     }
 
@@ -123,18 +125,19 @@
     text-shadow: none;
     font-weight: normal;
   }
-  .inline-roll, .fake-inline-roll {
+  .inline-roll,
+  .fake-inline-roll {
     flex: 0;
     height: 100%;
 
     .dice-tooltip {
       z-index: 1;
     }
-  
+
     &.success {
       background-color: rgb(96, 192, 96);
     }
-  
+
     &.failure {
       background-color: rgb(192, 96, 96);
     }
@@ -150,7 +153,7 @@
       overflow: hidden;
 
       .dice-flavor {
-        color: #4C6D9F;
+        color: #4c6d9f;
         font-size: 11px;
         text-align: center;
         white-space: nowrap;
@@ -178,12 +181,12 @@
       background: rgba(0, 0, 0, 0.05);
       flex: 0 1 auto;
     }
-  
+
     input[type="text"] {
       height: 24px;
       margin: 2px;
     }
-    
+
     label {
       flex: 2;
       color: @colorOlive;
@@ -195,7 +198,7 @@
     margin-top: 8px;
     flex: 0 0 100%;
     white-space: pre-wrap;
-    
+
     label {
       flex: 2;
       color: @colorOlive;
@@ -216,7 +219,7 @@
     background: rgba(0, 0, 0, 0.1);
     border: 1px solid #999;
     border-radius: 3px;
-    box-shadow: 0 0 2px #FFF inset;
+    box-shadow: 0 0 2px #fff inset;
   }
 
   .extra-misc {
@@ -227,7 +230,7 @@
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid #999;
     border-radius: 3px;
-    box-shadow: 0 0 2px #FFF inset;
+    box-shadow: 0 0 2px #fff inset;
   }
 
   .extra-roll-label {
@@ -241,7 +244,8 @@
       width: 100%;
       table-layout: fixed;
 
-      td, th {
+      td,
+      th {
         text-align: center;
       }
     }

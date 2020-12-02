@@ -89,9 +89,9 @@
   /* ----------------------------------------- */
 
   .details {
-
     // Item Sheet form fields
-    input[type="text"], select {
+    input[type="text"],
+    select {
       border: 1px solid @colorTan;
       background: rgba(0, 0, 0, 0.05);
     }
@@ -165,20 +165,23 @@
         line-height: 24px;
         border-bottom: 1px solid @colorFaint;
 
-        &:last-child { border-bottom: none; }
+        &:last-child {
+          border-bottom: none;
+        }
 
         background-color: rgba(155, 155, 155, 0.3);
-        &:nth-child(2n+1) {
+        &:nth-child(2n + 1) {
           background-color: rgba(210, 210, 210, 0.3);
         }
 
-        .checkbox { flex: 0; }
+        .checkbox {
+          flex: 0;
+        }
       }
     }
   }
 
   .tab {
-
     // Inventory Header
     .inventory-header {
       margin: 2px 0;
@@ -207,7 +210,9 @@
       color: @colorTan;
       text-align: center;
       border-right: 1px solid @colorFaint;
-      &:last-child { border-right: none; }
+      &:last-child {
+        border-right: none;
+      }
     }
 
     .item-weight {
@@ -236,7 +241,11 @@
   /*  Item Actions                             */
   /* ----------------------------------------- */
 
-  h4.damage-header, h4.change-header, h4.context-notes-header, h4.attack-header, h4.conditional-header {
+  h4.damage-header,
+  h4.change-header,
+  h4.context-notes-header,
+  h4.attack-header,
+  h4.conditional-header {
     margin: 0;
     padding: 0;
     font-weight: bold;
@@ -247,12 +256,14 @@
     margin-left: 4px;
   }
 
-  .damage-parts, .attack-parts {
+  .damage-parts,
+  .attack-parts {
     list-style: none;
     margin: 0;
     padding: 0;
 
-    .damage-part, .attack-part {
+    .damage-part,
+    .attack-part {
       flex: 0 0 100%;
       padding: 2px;
 
@@ -362,7 +373,7 @@
         margin-left: 5px;
       }
       input[class*="conditional-name"]:not(:first-child) {
-          margin-left: 0;
+        margin-left: 0;
       }
       .conditional-name,
       .conditional-formula {
@@ -378,7 +389,13 @@
     }
   }
 
-  .delete-damage, .crit-damage-control, .delete-attack, .delete-change, .delete-note, .delete-conditional, .delete-conditional-modifier {
+  .delete-damage,
+  .crit-damage-control,
+  .delete-attack,
+  .delete-change,
+  .delete-note,
+  .delete-conditional,
+  .delete-conditional-modifier {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;

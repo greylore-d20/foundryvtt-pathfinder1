@@ -1502,7 +1502,7 @@
 
 - Add weapon range
 - Automatically fill out more slots when creating an attack: attack ability,
-damage ability, damage ability multiplier, action type and action range
+  damage ability, damage ability multiplier, action type and action range
 - Speed up actor sheets slightly
 - Add ability to change loot item subtypes
 - Fix measurement tools (cone and circle) to be more Pathfinder rule-friendly

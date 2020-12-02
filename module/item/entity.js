@@ -353,7 +353,7 @@ export class ItemPF extends Item {
   }
 
   get hasEffect() {
-    return this.hasDamage || (this.data.data.effectNotes && this.data.data.effectNotes.length > 0);
+    return this.hasDamage || (this.data.data.effectNotes != null && this.data.data.effectNotes.length > 0);
   }
 
   /* -------------------------------------------- */
@@ -963,19 +963,28 @@ export class ItemPF extends Item {
     const templateType = ["consumable"].includes(this.data.type) ? this.data.type : "item";
     const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
 
+    // Determine metadata
+    const metadata = {};
+    metadata.item = this._id;
+
     // Basic chat message data
-    const chatData = mergeObject(
-      {
-        user: game.user._id,
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
-        flags: {
-          core: {
-            canPopout: true,
+    const chatData = flattenObject(
+      mergeObject(
+        {
+          user: game.user._id,
+          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+          speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+          flags: {
+            core: {
+              canPopout: true,
+            },
+            pf1: {
+              metadata,
+            },
           },
         },
-      },
-      altChatData
+        altChatData
+      )
     );
 
     // Toggle default roll mode

@@ -67,10 +67,10 @@ export const showAttackReach = function (token, attack) {
     reach: [],
   };
 
-  if (rangeKey !== "ft") {
+  if (["melee", "touch", "reach"].includes(rangeKey)) {
     squares.normal = getReachSquares(token, range.melee);
     squares.reach = getReachSquares(token, range.reach, range.melee);
-  } else {
+  } else if (rangeKey === "ft") {
     const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
     squares.normal = getReachSquares(token, r);
   }

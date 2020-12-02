@@ -341,7 +341,7 @@ export const registerSystemSettings = function () {
     hint: "SETTINGS.placeMeasureTemplateOnQuickRollsH",
     scope: "client",
     config: true,
-    defualt: true,
+    default: true,
     type: Boolean,
   });
 

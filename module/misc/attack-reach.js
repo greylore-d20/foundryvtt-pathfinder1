@@ -54,24 +54,26 @@ export const showAttackReach = function (token, attack) {
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
-  // Get stature type
-  const stature = getProperty(token.actor.data, "data.traits.stature");
-  let size = getProperty(token.actor.data, "data.traits.size");
-
-  // Determine size by token size, if possible
-  if (tw === 2 && th === 2) size = "lg";
-  else if (tw === 3 && th === 3) size = "huge";
-  else if (tw === 4 && th === 4) size = "grg";
-  else if (tw === 6 && th === 6) size = "col";
-  else if (!(tw === 1 && th === 1)) return;
+  const rollData = token.actor.getRollData();
 
   // Determine whether reach
   const rangeKey = getProperty(attack.data, "data.range.units");
-  if (!["melee", "touch", "reach"].includes(rangeKey)) return;
+  if (!["melee", "touch", "reach", "ft"].includes(rangeKey)) return;
   const isReach = rangeKey === "reach";
+  const range = rollData.range;
 
-  const squares = getProperty(CONFIG.PF1.REACH_HIGHLIGHT_SQUARES, `${size}.${stature}`);
-  if (!squares) return;
+  let squares = {
+    normal: [],
+    reach: [],
+  };
+
+  if (rangeKey !== "ft") {
+    squares.normal = getReachSquares(token, range.melee);
+    squares.reach = getReachSquares(token, range.reach, range.melee);
+  } else {
+    const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
+    squares.normal = getReachSquares(token, r);
+  }
 
   const result = {
     normal: new SquareHighlight(origin, 0xff0000, 0x660000),
@@ -152,4 +154,122 @@ export const addReachCallback = function (data, html) {
   );
 
   return results;
+};
+
+const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null) {
+  let result = [];
+
+  if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
+  if (!addSquareFunction) addSquareFunction = shouldAddReachSquare;
+
+  // Initialize variables
+  const gridDist = canvas.scene.data.gridDistance;
+  const gridSize = canvas.grid.size;
+
+  // Determine token squares
+  let tokenSquares = [];
+  for (let a = 0; a < Math.floor(token.w / gridSize); a++) {
+    for (let b = 0; b < Math.floor(token.h / gridSize); b++) {
+      const x = Math.floor((token.x + gridSize * 0.5) / gridSize + a);
+      const y = Math.floor((token.y + gridSize * 0.5) / gridSize + b);
+      tokenSquares.push([x, y]);
+    }
+  }
+
+  // Determine token-based variables
+  let tokenRect = [
+    Math.floor((token.x + gridSize * 0.5) / gridSize),
+    Math.floor((token.y + gridSize * 0.5) / gridSize),
+    Math.floor(token.w / gridSize),
+    Math.floor(token.h / gridSize),
+  ];
+
+  // Create function to determine closest token square
+  const getClosestTokenSquare = function (pos) {
+    const lowest = { square: null, dist: null };
+    for (let s of tokenSquares) {
+      const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
+      if (lowest.dist == null || dist < lowest.dist) {
+        lowest.square = s;
+        lowest.dist = dist;
+      }
+    }
+
+    return lowest.square;
+  };
+
+  // Gather potential squares
+  const squareRange = Math.round(range / gridDist);
+  const wMax = squareRange * 2 + tokenRect[2];
+  const hMax = squareRange * 2 + tokenRect[3];
+  const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
+  for (let a = tl[0]; a < tl[0] + wMax; a++) {
+    for (let b = tl[1]; b < tl[1] + hMax; b++) {
+      const closestSquare = getClosestTokenSquare([a, b]);
+
+      const offset = [a - tokenRect[0], b - tokenRect[1]];
+      if (
+        !(
+          a >= tokenRect[0] &&
+          a < tokenRect[0] + tokenRect[2] &&
+          b >= tokenRect[1] &&
+          b < tokenRect[1] + tokenRect[2] &&
+          minRange != null
+        )
+      ) {
+        if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect)) {
+          result.push(offset);
+        }
+      }
+    }
+  }
+
+  return result;
+};
+
+const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, minRange, tokenRect) {
+  const gridDist = canvas.scene.data.gridDistance;
+  const gridSize = canvas.grid.size;
+  const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
+  const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
+
+  const dist = measureReachDistance(p0, p1);
+  const dist2 = measureReachDistance(p0, p1, true);
+  if (dist > range) {
+    // Special rule for 10-ft. reach
+    if (range !== 10) {
+      return false;
+    }
+  }
+
+  if (minRange != null && dist <= minRange) {
+    return false;
+  }
+
+  // Special rule for minimum ranges >= 10-ft.
+  if (minRange >= 10 && dist2 <= 10) {
+    return false;
+  }
+
+  return true;
+};
+
+export const measureReachDistance = function (p0, p1, alt = false) {
+  let gs = canvas.dimensions.size,
+    ray = new Ray(p0, p1),
+    nx = Math.abs(Math.ceil(ray.dx / gs)),
+    ny = Math.abs(Math.ceil(ray.dy / gs));
+
+  // Get the number of straight and diagonal moves
+  let nDiagonal = Math.min(nx, ny),
+    nStraight = Math.abs(ny - nx);
+
+  // Return distance
+  if (!alt) {
+    let nd10 = Math.floor(nDiagonal / 2);
+    let spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
+    return spaces * canvas.dimensions.distance;
+  }
+
+  return (nStraight + nDiagonal) * canvas.scene.data.gridDistance;
 };

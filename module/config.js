@@ -1,5 +1,3 @@
-import { REACH_HIGHLIGHT_SQUARES } from "./config/config_reach.js";
-
 // Namespace PF1 Configuration Values
 export const PF1 = {};
 
@@ -1433,7 +1431,5 @@ PF1.CR_EXP_LEVELS = [
   6553600,
   9830400,
 ];
-
-PF1.REACH_HIGHLIGHT_SQUARES = REACH_HIGHLIGHT_SQUARES;
 
 CONFIG.Combat.initiative.decimals = 2;

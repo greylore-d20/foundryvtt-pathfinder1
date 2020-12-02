@@ -1904,6 +1904,56 @@ export class ActorPF extends Actor {
       };
     }
 
+    // Add range info
+    result.range = {
+      melee: 5,
+      reach: 10,
+    };
+    switch (result.traits.size) {
+      case "fine":
+      case "dim":
+        result.range.melee = 0;
+        result.range.reach = 0;
+        break;
+      case "tiny":
+        result.range.melee = 0;
+        result.range.reach = 5;
+        break;
+      case "lg":
+        if (result.traits.stature === "tall") {
+          result.range.melee = 10;
+          result.range.reach = 20;
+        }
+        break;
+      case "huge":
+        if (result.traits.stature === "tall") {
+          result.range.melee = 15;
+          result.range.reach = 30;
+        } else {
+          result.range.melee = 10;
+          result.range.reach = 20;
+        }
+        break;
+      case "grg":
+        if (result.traits.stature === "tall") {
+          result.range.melee = 20;
+          result.range.reach = 40;
+        } else {
+          result.range.melee = 15;
+          result.range.reach = 30;
+        }
+        break;
+      case "col":
+        if (result.traits.stature === "tall") {
+          result.range.melee = 30;
+          result.range.reach = 60;
+        } else {
+          result.range.melee = 20;
+          result.range.reach = 40;
+        }
+        break;
+    }
+
     return result;
   }
 

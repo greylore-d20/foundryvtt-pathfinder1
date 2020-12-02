@@ -59,7 +59,7 @@ People and credits are listed in no particular order.
 
 - Added basic functionality and compendium entries for Mythic Paths
 
-## Dorgendubal
+## Dorgendubal/Sven Werlen
 
 - Helped with the Bestiary compendiums
 - Added quick attacks to tokens

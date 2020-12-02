@@ -6,6 +6,7 @@
 
 - Containers self-destroyed when given to themselves
 - Empty strings could be passed into changes when created
+- The level unchained rogues get evasion was incorrectly set to 1
 
 ### Changelog
 

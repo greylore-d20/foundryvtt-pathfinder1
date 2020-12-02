@@ -1898,9 +1898,9 @@ export class ActorPF extends Actor {
       setProperty(result, `spells.${k}`, spellbook);
       const cl = spellbook.cl.total;
       spellbook.range = {
-        close: 25 + 5 * Math.floor(cl / 2),
-        medium: 100 + 10 * cl,
-        long: 400 + 40 * cl,
+        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
+        medium: convertDistance(100 + 10 * cl)[0],
+        long: convertDistance(400 + 40 * cl)[0],
       };
     }
 

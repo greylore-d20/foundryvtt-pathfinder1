@@ -10,6 +10,7 @@
 ### Changelog
 
 - Added initial support for the script operator on changes
+- Add BAB, CMB and Initiative to the Combat tab
 
 ### Localization
 

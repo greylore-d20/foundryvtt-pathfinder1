@@ -1,3 +1,79 @@
+{{!-- Misc Combat Header --}}
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th class="attribute bab" data-attribute="bab" rowspan="2" colspan="2">
+          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
+        </th>
+        <th class="attribute cmb" data-attribute="cmb" colspan="2">
+          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
+        </th>
+        <th class="attribute initiative" data-attribute="initiative" rowspan="2" colspan="2">
+          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
+        </th>
+      </tr>
+
+      <tr>
+        <th>{{localize "PF1.Value"}}</th>
+        <th>{{localize "PF1.Ability"}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="tooltip" colspan="2">
+          <span class="tooltipcontent">
+            @attributes.bab.total : {{data.attributes.bab.total}}
+            {{#if sourceDetails.data.attributes.bab.total.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </span>
+
+          {{data.attributes.bab.total}}
+        </td>
+
+        <td class="tooltip">
+          <span class="tooltipcontent">
+            @attributes.cmb.total : {{data.attributes.cmb.total}}
+            {{#if sourceDetails.data.attributes.cmb.total.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </span>
+
+          {{data.attributes.cmb.total}}
+        </td>
+        <td>
+          <select name="data.attributes.cmbAbility">
+            {{#select data.attributes.cmbAbility}}
+            <option value=""></option>
+            {{#each config.abilities as |v k|}}
+            <option value="{{k}}">{{v}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+
+        <td class="tooltip" colspan="2">
+          <span class="tooltipcontent">
+            @attributes.init.total : {{data.attributes.init.total}}
+            {{#if sourceDetails.data.attributes.init.total.length}}
+            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </span>
+          
+          {{data.attributes.init.total}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
 {{!-- Attacks Header --}}
 <div class="combat-attacks">
 

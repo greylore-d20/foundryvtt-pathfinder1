@@ -135,6 +135,9 @@ export class ItemSheetPF extends ItemSheet {
       data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.duration.units);
     }
 
+    // Show additional ranged properties
+    data.showMaxRangeIncrements = getProperty(this.item.data, "data.range.units") === "ft";
+
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";

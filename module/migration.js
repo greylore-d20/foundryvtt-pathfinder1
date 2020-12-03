@@ -192,6 +192,7 @@ export const migrateItemData = function (item) {
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
   _migrateUnchainedActionEconomy(item, updateData);
+  _migrateItemRange(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -729,6 +730,17 @@ const _migrateUnchainedActionEconomy = function (ent, updateData) {
   if (curAction.type === "immediate") {
     updateData["data.unchainedAction.activation.type"] = "reaction";
     updateData["data.unchainedAction.activation.cost"] = 1;
+  }
+};
+
+const _migrateItemRange = function (ent, updateData) {
+  // Set max range increment
+  if (getProperty(ent.data, "data.range.maxIncrements") === undefined) {
+    setProperty(ent.data, "data.range.maxIncrements", 1);
+  }
+
+  if (ent.type === "weapon" && getProperty(ent.data, "data.weaponData.maxRangeIncrements") === undefined) {
+    setProperty(ent.data, "data.weaponData.maxRangeIncrements", 1);
   }
 };
 

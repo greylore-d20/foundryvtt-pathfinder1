@@ -47,6 +47,9 @@ export class TokenQuickActions {
 
         highlight.normal.render();
         highlight.reach.render();
+        highlight.extra.forEach((hl) => {
+          hl.render();
+        });
       });
 
       // Add mouse leave callback
@@ -55,6 +58,9 @@ export class TokenQuickActions {
 
         highlight.normal.clear(true);
         highlight.reach.clear(true);
+        highlight.extra.forEach((hl) => {
+          hl.clear(true);
+        });
       });
     });
   }

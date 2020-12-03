@@ -18,6 +18,7 @@
 - Added an option to show quick measurements on attacks when skipping the dialog, due to the efforts of Manuel Vögele (many thanks!)
 - Shift clicking "Apply Damage/ Healing" will now bring up an adjustment window
 - Added reach highlights for attacks, features and spells with a specific range (in feet) and with the 'Close' or 'Medium' range
+- Added range increments to weapons and attacks
 
 ### Localization
 

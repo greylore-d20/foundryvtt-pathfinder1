@@ -1,3 +1,15 @@
+import { Color } from "../lib/color/color.js";
+import { colorToInt } from "../lib.js";
+
+const rangeColor = {
+  fill: Color("#ff0000"),
+  border: Color("#ff0000").darken(0.1),
+};
+const reachColor = {
+  fill: Color("#ffff00"),
+  border: Color("#ffff00").darken(0.1),
+};
+
 export class SquareHighlight {
   constructor(origin, fillColor = 0x00ff00, borderColor = 0x000000) {
     this.origin = origin;
@@ -65,6 +77,7 @@ export const showAttackReach = function (token, attack) {
   let squares = {
     normal: [],
     reach: [],
+    extra: [],
   };
 
   if (["melee", "touch", "reach"].includes(rangeKey)) {
@@ -73,6 +86,21 @@ export const showAttackReach = function (token, attack) {
   } else if (rangeKey === "ft") {
     const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
     squares.normal = getReachSquares(token, r);
+
+    // Add range increments
+    const maxSquareRange = Math.min(
+      400,
+      Math.max(
+        (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
+        (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
+      ) + r
+    );
+    const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
+    for (let a = 1; a <= rangeIncrements; a++) {
+      if ((a + 1) * r <= maxSquareRange) {
+        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r));
+      }
+    }
   } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
     const spellbook = attack.spellbook;
     let r;
@@ -88,8 +116,9 @@ export const showAttackReach = function (token, attack) {
   }
 
   const result = {
-    normal: new SquareHighlight(origin, 0xff0000, 0x660000),
-    reach: new SquareHighlight(origin, 0xffff00, 0x666600),
+    normal: new SquareHighlight(origin, colorToInt(rangeColor.fill), colorToInt(rangeColor.border)),
+    reach: new SquareHighlight(origin, colorToInt(reachColor.fill), colorToInt(reachColor.border)),
+    extra: [],
   };
   for (let s of squares.normal) {
     result.normal.addSquare(s[0], s[1]);
@@ -99,6 +128,25 @@ export const showAttackReach = function (token, attack) {
       result.reach.addSquare(s[0], s[1]);
     }
   }
+
+  // Add extra range squares
+  {
+    for (let a = 0; a < squares.extra.length; a++) {
+      let squaresExtra = squares.extra[a];
+
+      const color = {
+        fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
+        border: a % 2 === 1 ? rangeColor.border : reachColor.border,
+      };
+
+      const hl = new SquareHighlight(origin, colorToInt(color.fill), colorToInt(color.border));
+      for (let s of squaresExtra) {
+        hl.addSquare(s[0], s[1]);
+      }
+      result.extra.push(hl);
+    }
+  }
+
   return result;
 };
 
@@ -128,6 +176,9 @@ export const addReachCallback = function (data, html) {
 
     highlight.normal.render();
     highlight.reach.render();
+    highlight.extra.forEach((hl) => {
+      hl.render();
+    });
   };
   html.on("mouseenter", mouseEnterCallback);
 
@@ -138,6 +189,9 @@ export const addReachCallback = function (data, html) {
 
     highlight.normal.clear(true);
     highlight.reach.clear(true);
+    highlight.extra.forEach((hl) => {
+      hl.clear(true);
+    });
   };
   html.on("mouseleave", mouseLeaveCallback);
   // Add 'click' event as a safeguard to remove highlights
@@ -149,6 +203,9 @@ export const addReachCallback = function (data, html) {
 
     highlight.normal.clear(true);
     highlight.reach.clear(true);
+    highlight.extra.forEach((hl) => {
+      hl.clear(true);
+    });
   });
 
   // Add results

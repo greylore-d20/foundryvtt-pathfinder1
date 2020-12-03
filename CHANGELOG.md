@@ -9,6 +9,7 @@
 - The level unchained rogues get evasion was incorrectly set to 1
 - Actors received background skills for NPC classes and racial HD if they had a normal base class or prestige class as well
 - Revealing a chat message to players caused its reach highlight (if any) to stay about
+- The Roll Mode entered for d20 rolls was sometimes ignored or only applied partially
 
 ### Changelog
 

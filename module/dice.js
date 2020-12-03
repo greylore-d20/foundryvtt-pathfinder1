@@ -111,21 +111,9 @@ export class DicePF {
             sound: noSound ? null : a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             content: await renderTemplate(chatTemplate, rollData),
+            rollMode: rollMode,
             "flags.pf1.noRollRender": true,
           };
-          // Handle different roll modes
-          switch (rollMode) {
-            case "gmroll":
-              chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
-              break;
-            case "selfroll":
-              chatData["whisper"] = [game.user._id];
-              break;
-            case "blindroll":
-              chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
-              chatData["blind"] = true;
-              break;
-          }
 
           // Send message
           rolled = true;

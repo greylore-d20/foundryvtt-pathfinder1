@@ -8,6 +8,7 @@
 - Empty strings could be passed into changes when created
 - The level unchained rogues get evasion was incorrectly set to 1
 - Actors received background skills for NPC classes and racial HD if they had a normal base class or prestige class as well
+- The Roll Mode entered for d20 rolls was sometimes ignored or only applied partially
 
 ### Changelog
 

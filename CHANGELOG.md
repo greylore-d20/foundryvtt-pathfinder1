@@ -15,6 +15,7 @@
 - Add BAB, CMB and Initiative to the Combat tab
 - Improved metric system support, due to the efforts of Sven Werlen (many thanks!)
 - Added an option to show quick measurements on attacks when skipping the dialog, due to the efforts of Manuel Vögele (many thanks!)
+- Shift clicking "Apply Damage/ Healing" will now bring up an adjustment window
 
 ### Localization
 

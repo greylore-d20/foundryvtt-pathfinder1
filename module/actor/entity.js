@@ -1441,31 +1441,117 @@ export class ActorPF extends Actor {
   /**
    * Apply rolled dice damage to the token or tokens which are currently controlled.
    * This allows for damage to be scaled by a multiplier to account for healing, critical hits, or resistance
+   * If Shift is held, will prompt for adjustments based on damage reduction and energy resistances
    *
    * @param {Number} value   The amount of damage to deal.
+   * @param {Object} {}      Object containing default settings for overriding
    * @return {Promise}
    */
-  static async applyDamage(value) {
+  static async applyDamage(value, { forceDialog = false, reductionDefault = "" } = {}) {
     const promises = [];
-    for (let t of canvas.tokens.controlled) {
-      let a = t.actor,
-        hp = a.data.data.attributes.hp,
-        tmp = parseInt(hp.temp) || 0,
-        dt = value > 0 ? Math.min(tmp, value) : 0;
-      if (!a.hasPerm(game.user, "OWNER")) {
-        const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-        console.warn(msg);
-        ui.notifications.warn(msg);
-        continue;
-      }
-      promises.push(
-        t.actor.update({
-          "data.attributes.hp.temp": tmp - dt,
-          "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
-        })
-      );
+    var controlled = canvas.tokens.controlled,
+      healingInvert = 1,
+      numReg = /(\d+)/g,
+      sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g;
+
+    if (value < 0) {
+      healingInvert = -1;
+      value = -1 * value;
     }
-    return Promise.all(promises);
+    //if (!controlled) return;
+
+    const _submit = async function (form, multiplier) {
+      if (form) {
+        value = parseInt(form.find('[name="damage"]').val() || 0);
+        if (multiplier < 0) {
+          value = Math.ceil(value * multiplier);
+          value = Math.max(value - (form.find('[name="damage-reduction"]').val() || 0), 0);
+        } else {
+          value = Math.floor(value * (multiplier ?? 1));
+          value = Math.min(value - (form.find('[name="damage-reduction"]').val() || 0), 0);
+        }
+        let checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
+        controlled = controlled.filter((con) => checked.includes(con.id));
+      }
+      for (let t of controlled) {
+        let a = t.actor,
+          hp = a.data.data.attributes.hp,
+          tmp = parseInt(hp.temp) || 0,
+          dt = value > 0 ? Math.min(tmp, value) : 0;
+        if (!a.hasPerm(game.user, "OWNER")) {
+          const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+          console.warn(msg);
+          ui.notifications.warn(msg);
+          continue;
+        }
+        promises.push(
+          t.actor.update({
+            "data.attributes.hp.temp": tmp - dt,
+            "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
+          })
+        );
+      }
+      return Promise.all(promises);
+    };
+
+    if (game.keyboard.isDown("Shift") ? !forceDialog : forceDialog) {
+      let tokens = controlled.map((tok) => {
+        return {
+          _id: tok.id,
+          name: tok.name,
+          dr: tok.actor.data.data.traits.dr.match(sliceReg),
+          eres: tok.actor.data.data.traits.eres.match(sliceReg),
+          checked: true,
+        };
+      });
+
+      reductionDefault = reductionDefault ?? "";
+
+      // Dialog configuration and callbacks
+      let template = "systems/pf1/templates/apps/damage-dialog.hbs";
+      let dialogData = {
+        damage: value,
+        damageReduction: reductionDefault,
+        tokens: tokens,
+      };
+      const html = await renderTemplate(template, dialogData);
+
+      const buttons = {};
+      buttons.normal = {
+        label: game.i18n.localize("PF1.Apply"),
+        callback: (html) => _submit.call(this, html, 1 * healingInvert),
+      };
+      buttons.half = {
+        label: game.i18n.localize("PF1.ApplyHalf"),
+        callback: (html) => _submit.call(this, html, 0.5 * healingInvert),
+      };
+      return new Promise((resolve) => {
+        var d = new Dialog({
+          title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
+          content: html,
+          buttons: buttons,
+          default: "normal",
+          close: (html) => {
+            resolve(false);
+          },
+        });
+
+        //Local dialog functionality
+        Hooks.once("renderDialog", (a, inp) => {
+          function swapSelected() {
+            let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
+            checked.forEach((chk) => (chk.checked = !chk.checked));
+          }
+          function setReduction(e) {
+            inp[0].querySelector('input[name="damage-reduction"]').value =
+              e.currentTarget.innerText.match(numReg) ?? "";
+          }
+          inp.on("click", 'a[name="swap-selected"]', swapSelected);
+          inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
+        });
+        d.render(true);
+      });
+    } else _submit();
   }
 
   getSkill(key) {

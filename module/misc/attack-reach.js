@@ -96,7 +96,7 @@ export const showAttackReach = function (token, attack) {
       ) + r
     );
     const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
-    for (let a = 1; a <= rangeIncrements; a++) {
+    for (let a = 1; a < rangeIncrements; a++) {
       if ((a + 1) * r <= maxSquareRange) {
         squares.extra.push(getReachSquares(token, (a + 1) * r, a * r));
       }

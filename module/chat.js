@@ -62,9 +62,17 @@ export const hideRollInfo = function (app, html, data) {
 export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.user.isGM) return;
 
-  let speaker = app.data.speaker,
-    actor =
-      speaker != null ? (speaker.token ? game.actors.tokens[speaker.token] : game.actors.get(speaker.actor)) : null;
+  let speaker = app.data.speaker;
+  let actor = null;
+  if (speaker != null) {
+    if (speaker.token) {
+      actor = game.actors.tokens[speaker.token];
+    }
+    if (!actor)  {
+      actor = game.actors.get(speaker.actor);
+    }
+  }
+
   if (!actor || (actor && actor.hasPerm(game.user, "LIMITED"))) return;
 
   // Hide info

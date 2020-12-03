@@ -68,7 +68,7 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     if (speaker.token) {
       actor = game.actors.tokens[speaker.token];
     }
-    if (!actor)  {
+    if (!actor) {
       actor = game.actors.get(speaker.actor);
     }
   }

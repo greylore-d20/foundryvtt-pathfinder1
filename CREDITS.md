@@ -137,3 +137,7 @@ People and credits are listed in no particular order.
 ## bnp800
 
 - Added Chinese translation
+
+## Manuel Vögele
+
+- Made some code contributions

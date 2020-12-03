@@ -97,10 +97,7 @@ export const addReachCallback = function (data, html) {
   const itemID = getProperty(data, "flags.pf1.metadata.item");
   if (!itemID) return results;
 
-  // console.log(app, html, data, itemID);
-
   const speakerData = data.speaker;
-  // console.log(speakerData);
   if (!canvas.scene || canvas.scene._id !== speakerData.scene) return results;
 
   const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
@@ -133,6 +130,14 @@ export const addReachCallback = function (data, html) {
   html.on("mouseleave", mouseLeaveCallback);
   // Add 'click' event as a safeguard to remove highlights
   html.on("click", mouseLeaveCallback);
+
+  // Clear highlights when chat messages are rendered
+  Hooks.on("renderChatMessage", () => {
+    if (!highlight) return;
+
+    highlight.normal.clear(true);
+    highlight.reach.clear(true);
+  });
 
   // Add results
   results.push(

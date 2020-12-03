@@ -54,11 +54,11 @@ export const showAttackReach = function (token, attack) {
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
-  const rollData = token.actor.getRollData();
+  const rollData = attack.getRollData();
 
   // Determine whether reach
   const rangeKey = getProperty(attack.data, "data.range.units");
-  if (!["melee", "touch", "reach", "ft"].includes(rangeKey)) return;
+  if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
   const isReach = rangeKey === "reach";
   const range = rollData.range;
 
@@ -72,6 +72,18 @@ export const showAttackReach = function (token, attack) {
     squares.reach = getReachSquares(token, range.reach, range.melee);
   } else if (rangeKey === "ft") {
     const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
+    squares.normal = getReachSquares(token, r);
+  } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
+    const spellbook = attack.spellbook;
+    let r;
+    switch (rangeKey) {
+      case "close":
+        r = new Roll("25 + floor(@cl / 2) * 5", rollData).roll().total;
+        break;
+      case "medium":
+        r = new Roll("100 + @cl * 10", rollData).roll().total;
+        break;
+    }
     squares.normal = getReachSquares(token, r);
   }
 

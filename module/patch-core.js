@@ -110,8 +110,8 @@ export async function PatchCore() {
           // Evaluate arithmetic-only parenthetical groups
           term = this._safeEval(term);
           /* Changed functionality */
-          /* Allow null/true/false */
-          if (term === null || typeof term === "boolean") term += "";
+          /* Allow null/string/true/false as it used to be and crash on undefined */
+          if (typeof term !== "undefined" && typeof term !== "number") term += "";
           else term = Number.isInteger(term) ? term : term.toFixed(2);
           /* End changed functionality */
 

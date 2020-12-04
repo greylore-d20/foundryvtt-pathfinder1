@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.8
+
+### Bug Fixes
+
+- Implement workaround for parenthetical return values in Rolls (Core#4195)
+
 ## 0.76.7
 
 ### Bug Fixes

@@ -7,6 +7,10 @@
 - Implement workaround for parenthetical return values in Rolls (Core#4195)
 - Spells not using Spell Points could manipulate their charge cost via conditional modifiers
 
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.76.7
 
 ### Bug Fixes

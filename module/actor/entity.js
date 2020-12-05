@@ -1512,6 +1512,7 @@ export class ActorPF extends Actor {
       let template = "systems/pf1/templates/apps/damage-dialog.hbs";
       let dialogData = {
         damage: value,
+        healing: healingInvert == -1 ? true : false,
         damageReduction: reductionDefault,
         tokens: tokens,
       };

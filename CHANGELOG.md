@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Implement workaround for parenthetical return values in Rolls (Core#4195)
+- Spells not using Spell Points could manipulate their charge cost via conditional modifiers
 
 ## 0.76.7
 

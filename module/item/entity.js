@@ -3187,7 +3187,7 @@ export class ItemPF extends Item {
     if (target === "misc") {
       // Add charges subTarget with specific label
       if (this.type === "spell" && this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
-      else if (this.isCharged) result["charges"] = game.i18n.localize("PF1.ChargeCost");
+      else if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
     return result;
   }

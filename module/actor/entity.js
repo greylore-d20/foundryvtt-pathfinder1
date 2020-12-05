@@ -1455,10 +1455,6 @@ export class ActorPF extends Actor {
       numReg = /(\d+)/g,
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g;
 
-    if (value < 0) {
-      healingInvert = -1;
-      value = -1 * value;
-    }
     //if (!controlled) return;
 
     const _submit = async function (form, multiplier) {
@@ -1496,6 +1492,10 @@ export class ActorPF extends Actor {
     };
 
     if (game.keyboard.isDown("Shift") ? !forceDialog : forceDialog) {
+      if (value < 0) {
+        healingInvert = -1;
+        value = -1 * value;
+      }
       let tokens = controlled.map((tok) => {
         return {
           _id: tok.id,

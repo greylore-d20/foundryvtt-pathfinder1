@@ -16,6 +16,7 @@ People and credits are listed in no particular order.
 - [Battle Gear](https://game-icons.net/1x1/lorc/battle-gear.html)
 - [Quill and Ink](https://game-icons.net/1x1/lorc/quill-ink.html)
 - [Gears](https://game-icons.net/1x1/lorc/gears.html)
+- [Hazard Sign](https://game-icons.net/1x1/lorc/hazard-sign.html)
 
 ## Delapouite's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
@@ -26,6 +27,7 @@ People and credits are listed in no particular order.
 - [Wheelbarrow](https://game-icons.net/1x1/delapouite/wheelbarrow.html)
 - [Weight](https://game-icons.net/1x1/delapouite/weight.html)
 - [Coins](https://game-icons.net/1x1/delapouite/coins.html)
+- [Skills](https://game-icons.net/1x1/delapouite/skills.html)
 
 ## sbed's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 
@@ -57,7 +59,7 @@ People and credits are listed in no particular order.
 
 - Added basic functionality and compendium entries for Mythic Paths
 
-## Dorgendubal
+## Dorgendubal/Sven Werlen
 
 - Helped with the Bestiary compendiums
 - Added quick attacks to tokens
@@ -135,3 +137,7 @@ People and credits are listed in no particular order.
 ## bnp800
 
 - Added Chinese translation
+
+## Manuel Vögele
+
+- Made some code contributions

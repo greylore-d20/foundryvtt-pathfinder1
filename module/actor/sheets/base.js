@@ -100,6 +100,8 @@ export class ActorSheetPF extends ActorSheet {
         ".skillset-body .skills-list.background",
         ".feats-body",
         ".traits",
+        ".actor-notes",
+        ".editor-content[data-edit='data.details.biography.value']",
       ],
     });
   }
@@ -134,7 +136,7 @@ export class ActorSheetPF extends ActorSheet {
       isCharacter: this.entity.data.type === "character",
       hasRace: false,
       config: CONFIG.PF1,
-      useBGSkills: this.entity.data.type === "character" && game.settings.get("pf1", "allowBackgroundSkills"),
+      useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.entity.spellFailure,
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
@@ -243,7 +245,7 @@ export class ActorSheetPF extends ActorSheet {
 
       // Subtract energy drain
       {
-        const energyDrain = getProperty(this.actor.data, "data.attributes.energyDrain");
+        const energyDrain = getProperty(data.data, "data.attributes.energyDrain");
         if (energyDrain) {
           skl.sourceDetails.push({
             name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -280,14 +282,13 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update spellbook info
-    for (let [sk, spellbook] of Object.entries(data.actor.data.attributes.spells.spellbooks)) {
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: 25 + 5 * Math.floor(cl / 2),
-        medium: 100 + 10 * cl,
-        long: 400 + 40 * cl,
-      };
-      spellbook.inUse = (getProperty(data.actor.data, "attributes.spells.usedSpellbooks") || []).includes(sk);
+    for (let [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
+      spellbook.range = getProperty(rollData, `spells.${k}.range`);
+      setProperty(
+        data.data,
+        `attributes.spells.spellbooks.${k}.inUse`,
+        (getProperty(data.data, "attributes.spells.usedSpellbooks") || []).includes(k)
+      );
     }
 
     // Control items
@@ -340,7 +341,7 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.data.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills) skillRanks.bgAllowed = this.actor.data.data.details.level.value * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
       });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
       try {
@@ -430,7 +431,7 @@ export class ActorSheetPF extends ActorSheet {
           return data;
         });
       if (magicItems.length > 0) {
-        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.html", {
+        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.hbs", {
           items: magicItems,
           isGM: game.user.isGM,
         });
@@ -528,8 +529,11 @@ export class ActorSheetPF extends ActorSheet {
       };
     }
     spells.forEach((spell) => {
-      const lvl = spell.data.level || 0;
-      spellbook[lvl].items.push(spell);
+      const spellBookKey = getProperty(spell, "data.spellbook");
+      if (spellBookKey === bookKey) {
+        const lvl = spell.data.level || 0;
+        spellbook[lvl].items.push(spell);
+      }
     });
 
     return spellbook;
@@ -560,12 +564,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /**
-   * Determine whether an Entity type filter is active for the given set of filters.
-   * @return {Boolean}
+   * Returns the amount of type filters currently active.
+   * @return {Number}
    * @private
    */
-  _hasTypeFilter(filters) {
-    return Array.from(filters).filter((s) => s.startsWith("type-")).length > 0;
+  _typeFilterCount(filters) {
+    return Array.from(filters).filter((s) => s.startsWith("type-")).length;
   }
 
   /* -------------------------------------------- */
@@ -576,7 +580,7 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _filterItems(items, filters) {
-    const hasTypeFilter = Array.from(filters).filter((s) => s.startsWith("type-")).length > 0;
+    const hasTypeFilter = this._typeFilterCount(filters) > 0;
 
     return items.filter((item) => {
       const data = item.data;
@@ -1801,7 +1805,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
-    if (target) {
+    if (target && target !== item) {
       const itemData = item.data;
       if (target instanceof Actor) {
         await target.createOwnedItem(itemData);
@@ -2174,8 +2178,12 @@ export class ActorSheetPF extends ActorSheet {
 
       for (let section of sections) {
         for (let [k, s] of Object.entries(section.section)) {
-          if (this._hasTypeFilter(this._filters[section.key]) && s.items.length === 0) {
+          const typeFilterCount = this._typeFilterCount(this._filters[section.key]);
+          if (typeFilterCount > 0 && s.items.length === 0) {
             s._hidden = true;
+          }
+          if (typeFilterCount === 1 && this._filters[section.key].has(`type-${k}`)) {
+            s._hidden = false;
           }
         }
       }
@@ -2233,9 +2241,23 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onToggleFilter(event) {
     event.preventDefault();
+
     const li = event.currentTarget;
     const set = this._filters[li.parentElement.dataset.filter];
     const filter = li.dataset.filter;
+    const typeFilterCount = this._typeFilterCount(set);
+
+    const tabLikeFilters = game.settings.get("pf1", "invertSectionFilterShiftBehaviour")
+      ? !event.shiftKey
+      : event.shiftKey;
+    if (tabLikeFilters) {
+      for (let f of Array.from(set)) {
+        if (f.startsWith("type-") && (f !== filter || typeFilterCount > 1)) {
+          set.delete(f);
+        }
+      }
+    }
+
     if (set.has(filter)) set.delete(filter);
     else set.add(filter);
     this.render();

@@ -28,8 +28,8 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * @type {String}
    */
   get template() {
-    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.html";
-    return "systems/pf1/templates/actors/npc-sheet.html";
+    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
+    return "systems/pf1/templates/actors/npc-sheet.hbs";
   }
 
   // static get name() {

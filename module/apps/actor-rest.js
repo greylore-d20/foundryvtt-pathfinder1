@@ -4,7 +4,7 @@ export class ActorRestDialog extends BaseEntitySheet {
     return mergeObject(options, {
       id: "actor-flags",
       classes: ["pf1", "actor-rest"],
-      template: "systems/pf1/templates/apps/actor-rest.html",
+      template: "systems/pf1/templates/apps/actor-rest.hbs",
       width: 500,
       closeOnSubmit: true,
     });
@@ -47,7 +47,7 @@ export class ActorRestDialog extends BaseEntitySheet {
       let heal = {
         hp: hd,
         abl: 1,
-        nonlethal: restOptions.hours,
+        nonlethal: restOptions.hours * hd,
       };
       if (restOptions["longTermCare"] === true) {
         heal.hp *= 2;

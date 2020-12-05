@@ -17,7 +17,7 @@ export const _getInitiativeFormula = function (actor) {
 
 Combat.showInitiativeDialog = function (formula = null) {
   return new Promise((resolve) => {
-    let template = "systems/pf1/templates/chat/roll-dialog.html";
+    let template = "systems/pf1/templates/chat/roll-dialog.hbs";
     let rollMode = game.settings.get("core", "rollMode");
     let dialogData = {
       formula: formula ? formula : "",

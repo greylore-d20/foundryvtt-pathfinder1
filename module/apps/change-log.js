@@ -13,7 +13,7 @@ export class ChangeLogWindow extends FormApplication {
     return mergeObject(options, {
       id: "changelog",
       classes: ["pf1", "changelog"],
-      template: "systems/pf1/templates/apps/changelog.html",
+      template: "systems/pf1/templates/apps/changelog.hbs",
       width: 500,
       submitOnChange: true,
       closeOnSubmit: false,

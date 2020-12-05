@@ -144,6 +144,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
   _migrateActorSpellbookDomainSlots(actor, updateData);
+  _migrateActorStatures(actor, updateData);
 
   if (!actor.items) return updateData;
 
@@ -191,6 +192,7 @@ export const migrateItemData = function (item) {
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
   _migrateUnchainedActionEconomy(item, updateData);
+  _migrateItemRange(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -688,6 +690,11 @@ const _migrateSpellCosts = function (ent, updateData) {
   if (spellPointCost == null) {
     updateData["data.spellPoints.cost"] = "1 + @sl";
   }
+
+  const slotCost = getProperty(ent.data, "data.slotCost");
+  if (slotCost == null) {
+    updateData["data.slotCost"] = 1;
+  }
 };
 
 const _migrateLootEquip = function (ent, updateData) {
@@ -723,6 +730,17 @@ const _migrateUnchainedActionEconomy = function (ent, updateData) {
   if (curAction.type === "immediate") {
     updateData["data.unchainedAction.activation.type"] = "reaction";
     updateData["data.unchainedAction.activation.cost"] = 1;
+  }
+};
+
+const _migrateItemRange = function (ent, updateData) {
+  // Set max range increment
+  if (getProperty(ent.data, "data.range.maxIncrements") === undefined) {
+    setProperty(ent.data, "data.range.maxIncrements", 1);
+  }
+
+  if (ent.type === "weapon" && getProperty(ent.data, "data.weaponData.maxRangeIncrements") === undefined) {
+    setProperty(ent.data, "data.weaponData.maxRangeIncrements", 1);
   }
 };
 
@@ -795,6 +813,14 @@ const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
     if (b.domainSlotValue !== undefined) continue;
     const key = `data.attributes.spells.spellbooks.${k}.domainSlotValue`;
     updateData[key] = 1;
+  }
+};
+
+const _migrateActorStatures = function (ent, updateData) {
+  const stature = getProperty(ent.data, "data.traits.stature");
+
+  if (stature === undefined) {
+    updateData["data.traits.stature"] = "tall";
   }
 };
 

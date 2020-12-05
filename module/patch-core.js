@@ -42,63 +42,89 @@ export async function PatchCore() {
     return terms;
   };
 
-  //Override null values throwing warnings
-  const Roll_replaceFormulaData = Roll.replaceFormulaData;
-  Roll.replaceFormulaData = function (formula, data, { missing, warn = false } = {}) {
-    let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-    return formula.replace(dataRgx, (match, term) => {
-      let value = getProperty(data, term);
-      if (value !== undefined) return String(value).trim();
-      if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-      if (missing !== undefined) return String(missing);
-      else return match;
-    });
-  };
+  if (isMinimumCoreVersion("0.7.7") && !isMinimumCoreVersion("0.7.8")) {
+    //Override null values throwing warnings
+    const Roll_replaceFormulaData = Roll.replaceFormulaData;
+    Roll.replaceFormulaData = function (formula, data, { missing, warn = false } = {}) {
+      let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
+      return formula.replace(dataRgx, (match, term) => {
+        let value = getProperty(data, term);
+        if (value !== undefined) return String(value).trim();
+        if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
+        if (missing !== undefined) return String(missing);
+        else return match;
+      });
+    };
 
-  //Override null values not being treated as 0 for Roll#total
-  const Roll__safeEval = Roll.prototype._safeEval;
-  Roll.prototype._safeEval = function (expression) {
-    const src = "with (sandbox) { return " + expression + "}";
-    const evl = new Function("sandbox", src);
-    const evld = evl(this.constructor.MATH_PROXY);
-    return evld === null ? 0 : evld;
-  };
+    //Override null values not being treated as 0 for Roll#total
+    const Roll__safeEval = Roll.prototype._safeEval;
+    Roll.prototype._safeEval = function (expression) {
+      const src = "with (sandbox) { return " + expression + "}";
+      const evl = new Function("sandbox", src);
+      const evld = evl(this.constructor.MATH_PROXY);
+      return evld === null ? 0 : evld;
+    };
+  }
 
-  //Remove after 0.7.7
-  if (isMinimumCoreVersion("0.7.6") && !isMinimumCoreVersion("0.7.7")) {
-    const Roll__splitDiceTerms = Roll.prototype._splitDiceTerms;
-    Roll.prototype._splitDiceTerms = function (formula) {
-      // Split on arithmetic terms and operators
-      const operators = this.constructor.ARITHMETIC.concat(["(", ")"]);
-      const arith = new RegExp(operators.map((o) => "\\" + o).join("|"), "g");
-      const split = formula.replace(arith, ";$&;").split(";");
+  if (isMinimumCoreVersion("0.7.8")) {
+    const Roll__splitParentheticalTerms = Roll.prototype._splitParentheticalTerms;
+    Roll.prototype._splitParentheticalTerms = function (formula) {
+      // Augment parentheses with semicolons and split into terms
+      const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
 
-      // Strip whitespace-only terms
-      let terms = split.reduce((arr, term) => {
-        term = term.trim();
-        if (term === "") return arr;
-        arr.push(term);
+      // Match outer-parenthetical groups
+      let nOpen = 0;
+      const terms = split.split(";").reduce((arr, t, i, terms) => {
+        if (t === "") return arr;
+
+        // Identify whether the left-parentheses opens a math function
+        let mathFn = false;
+        if (t === "(") {
+          const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
+          mathFn = fn && !!Roll.MATH_PROXY[fn[1]];
+        }
+
+        // Combine terms using open parentheses and math expressions
+        if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
+        else arr.push(t);
+
+        // Increment the count
+        if (t === "(") nOpen++;
+        else if (t === ")" && nOpen > 0) nOpen--;
         return arr;
       }, []);
 
-      // Categorize remaining non-whitespace terms
-      terms = terms.reduce((arr, term, i, split) => {
-        // Arithmetic terms
-        if (this.constructor.ARITHMETIC.includes(term)) {
-          if ((term !== "-" && !arr.length) || i === split.length - 1) return arr; // Ignore leading or trailing arithmetic
-          arr.push(term);
+      // Close any un-closed parentheses
+      for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
+
+      // Substitute parenthetical dice rolls groups to inner Roll objects
+      return terms.reduce((terms, term) => {
+        const prior = terms.length ? terms[terms.length - 1] : null;
+        if (term[0] === "(") {
+          // Handle inner Roll parenthetical groups
+          if (/[dD]/.test(term)) {
+            terms.push(Roll.fromTerm(term, this.data));
+            return terms;
+          }
+
+          // Evaluate arithmetic-only parenthetical groups
+          term = this._safeEval(term);
+          /* Changed functionality */
+          /* Allow null/string/true/false as it used to be and crash on undefined */
+          if (typeof term !== "undefined" && typeof term !== "number") term += "";
+          else term = Number.isInteger(term) ? term : term.toFixed(2);
+          /* End changed functionality */
+
+          // Continue wrapping math functions
+          const priorMath = prior && prior.split(" ").pop() in Math;
+          if (priorMath) term = `(${term})`;
         }
 
-        // Numeric terms
-        else if (Number.isNumeric(term)) arr.push(Number(term));
-        // Dice terms
-        else {
-          const die = DiceTerm.fromExpression(term);
-          arr.push(die || term);
-        }
-        return arr;
+        // Append terms to to non-Rolls
+        if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
+        else terms.push(term);
+        return terms;
       }, []);
-      return terms;
     };
   }
 
@@ -142,6 +168,16 @@ export async function PatchCore() {
 
     // return ActorPF.prototype.update.call(this, {});
   };
+
+  // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
+  if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
+    Object.keys(Actor.collection.tokens).forEach((tokenId) => {
+      let actor = Actor.collection.tokens[tokenId];
+      for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {
+        actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
+      }
+    });
+  }
 
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;

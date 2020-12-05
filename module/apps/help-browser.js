@@ -51,7 +51,7 @@ export class PF1_HelpBrowser extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "help-browser"],
-      template: "systems/pf1/templates/apps/help-browser.html",
+      template: "systems/pf1/templates/apps/help-browser.hbs",
       minWidth: 800,
       minHeight: 450,
       width: 960,
@@ -76,7 +76,7 @@ export class PF1_HelpBrowser extends Application {
     data.hasHistoryBack = this.history.length > this._historyIndex + 1;
     data.hasHistoryForward = this._historyIndex > 0;
 
-    data.nav = await renderTemplate("systems/pf1/help/nav.html", data);
+    data.nav = await renderTemplate("systems/pf1/help/nav.hbs", data);
 
     return data;
   }

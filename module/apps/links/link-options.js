@@ -6,7 +6,7 @@ export class LinkOptions extends FormApplication {
       id: "link-options",
       classes: ["pf1"],
       title: game.i18n.localize("PF1.LinkOptionsTitle"),
-      template: "systems/pf1/templates/apps/link-options.html",
+      template: "systems/pf1/templates/apps/link-options.hbs",
       width: 320,
       height: "auto",
       submitOnClose: true,

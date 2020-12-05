@@ -188,8 +188,8 @@
             "min": -100,
             "base": 0,
             "max": 0,
-            "temp": null,
-            "nonlethal": null
+            "temp": 0,
+            "nonlethal": 0
           },
           "wounds": {
             "min": 0,
@@ -754,7 +754,8 @@
           },
           "perception": {
             "_deprecated": true
-          }
+          },
+          "stature": "tall"
         },
         "currency": {
           "pp": 0,
@@ -818,7 +819,19 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "loot", "class", "spell", "feat", "buff", "attack", "race", "container"],
+    "types": [
+      "weapon",
+      "equipment",
+      "consumable",
+      "loot",
+      "class",
+      "spell",
+      "feat",
+      "buff",
+      "attack",
+      "race",
+      "container"
+    ],
     "templates": {
       "changes": {
         "changes": [],
@@ -887,7 +900,8 @@
         },
         "range": {
           "value": null,
-          "units": ""
+          "units": "",
+          "maxIncrements": 1
         },
         "uses": {
           "value": 0,
@@ -995,7 +1009,7 @@
       }
     },
     "equipment": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "changes", "contextNotes", "action", "links"],
       "equipped": true,
       "equipmentType": "armor",
       "equipmentSubtype": "lightArmor",
@@ -1076,7 +1090,8 @@
       "spellPoints": {
         "cost": "1 + @sl"
       },
-      "domain": false
+      "domain": false,
+      "slotCost": 1
     },
     "weapon": {
       "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
@@ -1094,7 +1109,8 @@
         "range": null,
         "attackFormula": "",
         "damageFormula": "",
-        "size": "med"
+        "size": "med",
+        "maxRangeIncrements": 1
       },
       "broken": false,
       "bonus": {

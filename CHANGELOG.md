@@ -1,5 +1,102 @@
 # Changelog
 
+## 0.76.8
+
+### Bug Fixes
+
+- Implement workaround for parenthetical return values in Rolls (Core#4195)
+
+## 0.76.7
+
+### Bug Fixes
+
+- Containers self-destroyed when given to themselves
+- Empty strings could be passed into changes when created
+- The level unchained rogues get evasion was incorrectly set to 1
+- Actors received background skills for NPC classes and racial HD if they had a normal base class or prestige class as well
+- Revealing a chat message to players caused its reach highlight (if any) to stay about
+- The Roll Mode entered for d20 rolls was sometimes ignored or only applied partially
+- GM sensitive information was shown on chat cards from actors with linked tokens (fixed by Manuel Vögele (many thanks!))
+
+### Changelog
+
+- Added initial support for the script operator on changes
+- Add BAB, CMB and Initiative to the Combat tab
+- Improved metric system support, due to the efforts of Sven Werlen (many thanks!)
+- Added an option to show quick measurements on attacks when skipping the dialog, due to the efforts of Manuel Vögele (many thanks!)
+- Shift clicking "Apply Damage/ Healing" will now bring up an adjustment window
+- Added reach highlights for attacks, features and spells with a specific range (in feet) and with the 'Close' or 'Medium' range
+- Added range increments to weapons and attacks
+
+### Localization
+
+- Updated the German localization, due to the efforts of Nico Weichbrodt (many thanks!)
+
+## 0.76.6
+
+### Bug Fixes
+
+- Added another edgecase to mysterious TokenHelpers foundry bug workaround (Core#???)
+- Display of biographies of actors with limited permissions could get cut off (#382)
+- Fix Inspire Courage formula (#388)
+
+### Changelog
+
+- Initial support for reach templates when hovering over token quick actions
+- Added a size selector to NPC Lite sheets
+
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
+## 0.76.5
+
+### Bug Fixes
+
+- Resting healed too little nonlethal damage
+- NPC Loot sheets reset to the inventory tab with every update
+- Brought the "Extra Attacks" header into line (#307)
+- Items with only change flags but no variable changes were not taken into account
+- The Advanced (Rebuild) creature template gave bonuses to ability scores when they were too low
+- Compendium browser could fail to load if saved results were no longer accessible (#380)
+- Armor/Equipment lost their action configuration when dragged/saved (#381)
+- Inventory footer overflowed the sheet on the native Foundry app (#384)
+- Biographies of actors with limited permissions were non-scrollable (#382)
+- Infinite loop in containers when coin weight divisor was set to 0 (#383)
+
+### Changelog
+
+- Added a spell slot cost to spells (#343)
+- Added a checkbox to ambient light and token configurations to disable low-light vision for that light source (#368)
+- Tweaked the look of Changes, Context Notes, Extra Attacks, and Damage Formulas (#306, #373)
+- Added NPC type classes
+- Added background skills for NPCs (#377)
+- Added quicker roll data for spellbook variables (#375)
+  - See tooltips on a spellbook for more info
+- Removed Close, Medium and Long ranges for non-spell items
+
+### Localization
+
+- Updated the German translation, due to the efforts of Nico Weichbrodt (many thanks!)
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+
+## 0.76.4 (Hotfix)
+
+### Bug Fixes
+
+- Fixed spellbooks showing spells for every spellbook
+
+### Changelog
+
+- Added the possibility of switching type filters, rather than adding them, by shift-clicking them (#370)
+- Improve visibility of attributes (#369)
+- Replaced the inventory icon to show the equipment slot
+- Show item sections even when the section is empty, if it's the only section filtered for (#371)
+
+### Localization
+
+- Updated the Chinese localization, due to the efforts of bnp800 (many thanks!)
+
 ## 0.76.3
 
 ### Bug Fixes
@@ -43,7 +140,7 @@
 
 ### Bug Fixes
 
-- Conditional Modifiers on spells were deleted when migrating data (#342) 
+- Conditional Modifiers on spells were deleted when migrating data (#342)
 - At-will spells caused an incorrect calculation of available spell slots
 - Token elevation couldn't be set to negative values or use relative math (#354)
 - The Haste buff had an incorrect formula for its speed increases (#348)
@@ -587,7 +684,7 @@
 - Chat metadata used an incorrect measure template ID
 - Entering a non-working formula for bonus feats caused the character sheet to not open anymore
 - Some item properties were still visible while unidentified which should have been invisible
-  
+
 ### Changelog
 
 - Added sample macro for creating a loot sheet from one or more tokens
@@ -633,7 +730,7 @@
 
 - TinyMCE editors were showing 2 scrollbars, depending on the content
 - Added backwards compatibility with old changes
-  
+
 ### Changelog
 
 - Improved visibility of tabs
@@ -1418,7 +1515,7 @@
 
 - Add weapon range
 - Automatically fill out more slots when creating an attack: attack ability,
-damage ability, damage ability multiplier, action type and action range
+  damage ability, damage ability multiplier, action type and action range
 - Speed up actor sheets slightly
 - Add ability to change loot item subtypes
 - Fix measurement tools (cone and circle) to be more Pathfinder rule-friendly

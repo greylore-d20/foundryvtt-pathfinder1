@@ -27,4 +27,3 @@ downloading a zip archive from the [Releases Page](https://gitlab.com/Furyspark/
 ## Information
 
 You can view information on this game system [here](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/).
-

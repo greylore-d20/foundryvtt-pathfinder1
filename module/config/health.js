@@ -15,7 +15,7 @@ export class HealthConfig extends FormApplication {
     return mergeObject(super.defaultOptions, {
       title: game.i18n.localize("SETTINGS.pf1HealthConfigName"),
       id: "health-config",
-      template: "systems/pf1/templates/settings/health.html",
+      template: "systems/pf1/templates/settings/health.hbs",
       width: 480,
       height: "auto",
       tabs: [

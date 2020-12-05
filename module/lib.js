@@ -1,6 +1,7 @@
 import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
 import { ItemPF } from "./item/entity.js";
+import { Color } from "./lib/color/color.js";
 
 /**
  * Creates a tag from a string.
@@ -579,4 +580,11 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
 
   if (Number.isNaN(result)) result = initialValue;
   return result;
+};
+
+export const colorToInt = function (color) {
+  const rgb = color.rgb().color;
+  let integer = ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
+
+  return integer;
 };

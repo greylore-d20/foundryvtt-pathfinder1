@@ -48,6 +48,14 @@
   "SETTINGS.pf1AttackChatCardTemplateH": "Select the style of attack type chat cards",
   "SETTINGS.pf1UnchainedActionEconomyN": "Unchained Action Economy",
   "SETTINGS.pf1UnchainedActionEconomyH": "Whether to use the Unchained Action Economy optional ruleset.",
+  "SETTINGS.pf1SkipActionDialogsN": "Skip Action Prompts",
+  "SETTINGS.pf1SkipActionDialogsH": "Skips action prompts (such as those from attacks and saving throws) unless you Shift-click them",
+  "SETTINGS.placeMeasureTemplateOnQuickRollsN": "Measure Template on Quickrolls",
+  "SETTINGS.placeMeasureTemplateOnQuickRollsH": "Enables the placement of measure templates when skipping the action prompt.",
+  "SETTINGS.pf1InvertSectionFilterBehaviourN": "Invert inventory filter behaviour",
+  "SETTINGS.pf1InvertSectionFilterBehaviourH": "Inverts shift-click behaviour on type filters in (item) sections.",
+  "SETTINGS.pf1HideReachMeasurementsN": "Hide Reach Measurements",
+  "SETTINGS.pf1HideReachMeasurementsH": "Don't show reach measurements, such as those found when hovering over token quick actions.",
 
   "SETTINGS.pf1HealthConfigName": "Health Configuration",
   "SETTINGS.pf1HealthConfigLabel": "Configure Health",
@@ -64,12 +72,10 @@
   "SETTINGS.pf1HealthContinuityHint": "Health can be computed discretely or continuously.  Discrete health is rounded at each level, meaning creatures will receive a stable amount of health for each hitdie.  Continuous health is rounded after each source of hitdie is evaluated, meaning creatures will receive a fluctuating amount of health for each hitdie.",
   "SETTINGS.pf1HealthContinuityContinuous": "Continuous",
   "SETTINGS.pf1HealthContinuityDiscrete": "Discrete",
-  "SETTINGS.pf1HealthConfigWoundsAndVigorPCName":  "Wounds and Vigor for PCs",
-  "SETTINGS.pf1HealthConfigWoundsAndVigorPCHint":  "Use the Wounds and Vigor optional ruleset for player characters.",
+  "SETTINGS.pf1HealthConfigWoundsAndVigorPCName": "Wounds and Vigor for PCs",
+  "SETTINGS.pf1HealthConfigWoundsAndVigorPCHint": "Use the Wounds and Vigor optional ruleset for player characters.",
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCName": "Wounds and Vigor for NPCs",
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint": "Use the Wounds and Vigor optional ruleset for nonplayer characters.",
-  "SETTINGS.pf1SkipActionDialogsN": "Skip Action Prompts",
-  "SETTINGS.pf1SkipActionDialogsH": "Skips action prompts (such as those from attacks and saving throws) unless you Shift-click them",
 
   "SETTINGS.pf1UnitsN": "System of units",
   "SETTINGS.pf1UnitsL": "System of units to be used in the world",
@@ -98,6 +104,9 @@
   "PF1.ApplyCriticalDamage": "Apply Critical Damage",
   "PF1.ApplyHealing": "Apply Healing",
   "PF1.ApplyCriticalHealing": "Apply Critical Healing",
+  "PF1.ReduceBy": "Reduce by",
+  "PF1.SwapSelected": "Swap Selected",
+  "PF1.ClearReduction": "Clear Reduction",
 
   "PF1.RollsForInitiative": "{0} rolls for initiative!",
 
@@ -212,6 +221,7 @@
   "PF1.ClassType": "Class Type",
   "PF1.ClassTypeBase": "Base Class",
   "PF1.ClassTypePrestige": "Prestige Class",
+  "PF1.ClassTypeNPC": "NPC Class",
   "PF1.ClassTypeRacial": "Racial HD",
   "PF1.ClassTypeMythic": "Mythic Path",
 
@@ -257,6 +267,7 @@
   "PF1.DistPersonal": "Personal",
   "PF1.DistTouch": "Touch",
   "PF1.DistMelee": "Melee",
+  "PF1.DistReach": "Reach",
   "PF1.DistClose": "Close",
   "PF1.DistMedium": "Medium",
   "PF1.DistLong": "Long",
@@ -749,7 +760,7 @@
   "PF1.BonusModifierCircumstance": "Circumstance",
   "PF1.BonusModifierAlchemical": "Alchemical",
   "PF1.BonusModifierPenalty": "Penalty",
-  
+
   "PF1.AbilityTypeExtraordinary": "Extraordinary",
   "PF1.AbilityTypeSupernatural": "Supernatural",
   "PF1.AbilityTypeSpell-Like": "Spell-Like",
@@ -805,6 +816,15 @@
   "PF1.Action": "Action",
   "PF1.All": "All",
   "PF1.Attack": "Attack",
+  "PF1.AddAttack": "Add Extra Attack",
+  "PF1.AddDamage": "Add Damage Formula",
+  "PF1.AddHealing": "Add Healing Formula",
+  "PF1.AddCriticalDamage": "Add Critical Damage Formula",
+  "PF1.AddNonCriticalDamage": "Add Non-critical Damage Formula",
+  "PF1.AddEffect": "Add Effect",
+  "PF1.AddConditional": "Add Conditional",
+  "PF1.AddChange": "Add Change",
+  "PF1.AddNote": "Add Note",
   "PF1.Confirmation": "Confirmation",
   "PF1.Attributes": "Attributes",
   "PF1.ArmorClass": "Armor Class",
@@ -816,8 +836,6 @@
   "PF1.ChargesSeperator": "of",
   "PF1.ClassAbilities": "Class Abilities",
   "PF1.Conditionals": "Conditional Modifiers",
-  "PF1.AddEffect": "Add Effect",
-  "PF1.AddConditional": "Add Conditional",
   "PF1.ConImm": "Condition Immunities",
   "PF1.ConRes": "Condition Resistances",
   "PF1.Critical": "Critical",
@@ -834,6 +852,7 @@
   "PF1.Defenses": "Defenses",
   "PF1.Description": "Description",
   "PF1.Details": "Details",
+  "PF1.Edit": "Edit",
   "PF1.Enchantments": "Enchantments",
   "PF1.EnRes": "Energy Resistances",
   "PF1.Equipped": "Equipped",
@@ -884,6 +903,9 @@
   "PF1.SpeedFly_Short": "Fly",
   "PF1.SpeedMisc": "Misc Movement",
   "PF1.Spells": "Spells",
+  "PF1.Stature": "Stature",
+  "PF1.StatureLong": "Long",
+  "PF1.StatureTall": "Tall",
   "PF1.Items": "Items",
   "PF1.Skills": "Skills",
   "PF1.KnowledgeSkills": "Knowledge Skills",
@@ -1004,6 +1026,12 @@
   "PF1.CastingTime": "Casting Time",
   "PF1.Components": "Components",
   "PF1.Aura": "Aura",
+  "PF1.SpellRangeShort": "(25 ft. + 5 ft./2 levels)",
+  "PF1.SpellRangeMedium": "(100 ft. + 10 ft./level)",
+  "PF1.SpellRangeLong": "(400 ft. + 40 ft./level)",
+  "PF1.SpellRangeShortMetric": "(7.5 m + 1.5 m/2 levels)",
+  "PF1.SpellRangeMediumMetric": "(30 m + 3 m/level)",
+  "PF1.SpellRangeLongMetric": "(120 m + 12 m/level)",
 
   "PF1.AuraStrength_Faint": "Faint",
   "PF1.AuraStrength_Moderate": "Moderate",
@@ -1017,6 +1045,7 @@
   "PF1.ConcentrationBonusFormula": "Concentration Bonus Formula",
   "PF1.ConcentrationNotes": "Concentration Notes",
   "PF1.SpellLevelOffset": "Spell Level Offset",
+  "PF1.SpellSlotCost": "Spell Slot Cost",
   "PF1.SpellCasting": "Spell Casting",
   "PF1.SpellcastingClass": "Spellcasting Class",
   "PF1.SpellcastingAbility": "Spellcasting Ability",
@@ -1240,6 +1269,9 @@
   "PF1.StaticSize": "Static Size",
   "PF1.DomainSlotValue": "Domain Slot Value",
   "PF1.DomainSlotValueDesc": "How many 'free' slots do Domain/School spells provide for a spell level?",
+  "PF1.DisableLightLowLightVision": "Disable Low-light Vision for Light Source",
+  "PF1.Command": "Command",
+  "PF1.MaximumRangeIncrements": "Maximum Range Increments",
 
   "PF1.Help": {
     "Label": "Help",
@@ -1281,6 +1313,27 @@
             },
             "HitDie": {
               "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            },
+            "EncumbranceLevel": {
+              "Desc": "The current encumbrance level of the actor.",
+              "0": "<code>0</code>: Light Load",
+              "1": "<code>1</code>: Medium Load",
+              "2": "<code>2</code>: Heavy Load"
+            },
+            "ArmorType": {
+              "Desc": "The type of armor the actor is wearing.",
+              "0": "<code>0</code>: No Armor",
+              "1": "<code>1</code>: Light Armor",
+              "2": "<code>2</code>: Medium Armor",
+              "3": "<code>3</code>: Heavy Armor"
+            },
+            "ShieldType": {
+              "Desc": "The type of shield the actor is holding.",
+              "0": "<code>0</code>: No Shield",
+              "1": "<code>1</code>: Miscellaneous Shield (such as a buckler)",
+              "2": "<code>2</code>: Light Shield",
+              "3": "<code>3</code>: Heavy Shield",
+              "4": "<code>4</code>: Tower Shield"
             }
           },
           "Functions": {
@@ -1376,7 +1429,7 @@
           "BonusDamageFormula": "Bonus Damage Formula",
           "BonusDamageFormulaDesc": "The bonus damage the weapon deals. Some examples:",
           "BonusDamageFormulaExamples": {
-            "0": "Will add either 4 or the wielder's Stregth modifier to the damage roll, whichever is lower"
+            "0": "Will add either 4 or the wielder's Strength modifier to the damage roll, whichever is lower"
           },
           "BaseWeaponCritical": "Base Weapon Critical",
           "BaseWeaponCriticalDesc": "The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied"
@@ -1414,7 +1467,7 @@
           "Description": "Description",
           "DescriptionDesc": "The description to show, if identified.",
           "UnidentifiedDescription": "Unidentified Description",
-          "UnidentifiedDescriptionDesc":  "The description to show to players, if unidentified.",
+          "UnidentifiedDescriptionDesc": "The description to show to players, if unidentified.",
           "Price": "Price",
           "PriceDesc": "The price of the item, in gold pieces, if identified",
           "UnidentifiedPrice": "Unidentified Price",
@@ -1450,11 +1503,11 @@
             "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
             "Formula": {
               "Label": "Formula",
-              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See <a href=\"systems/pf1/help/special/formulas.html\">this page</a> for more details."
+              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See {tagOpen}this page{tagClose} for more details."
             },
             "Operator": {
               "Label": "Operator",
-              "Desc": "The operator is either '+' (relative) or '=' (absolute). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula."
+              "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
             },
             "Priority": {
               "Label": "Priority",
@@ -1487,6 +1540,21 @@
             "SubTarget": {
               "Label": "Sub-Target",
               "Desc": "The specific attribute to alter with this change."
+            }
+          },
+          "ScriptOperator": {
+            "Label": "Script Operator",
+            "Desc": "The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.",
+            "Variables": {
+              "Desc": "Within these scripts, the following variables can be used:",
+              "0": {
+                "Name": "d",
+                "Desc": "The roll data at the time of processing the change. Contains any variable you could use within a normal change formula using the `@` symbol."
+              },
+              "1": {
+                "Name": "result",
+                "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
+              }
             }
           }
         }

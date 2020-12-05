@@ -92,6 +92,15 @@
 .pf1 .placeholder {
   color: #7a7971;
 }
+.pf1 .align-left {
+  text-align: start;
+}
+.pf1 .align-center {
+  text-align: center;
+}
+.pf1 .align-right {
+  text-align: end;
+}
 .pf1 li {
   align-items: center;
 }
@@ -156,7 +165,7 @@
 .pf1 .form-group label.header {
   flex: 0 0 100%;
 }
-.pf1 .form-group label:nth-child(1n+1) {
+.pf1 .form-group label:nth-child(1n + 1) {
   margin-left: 4px;
 }
 .pf1 .form-group .buff-flags {
@@ -289,7 +298,7 @@
   flex: 0;
 }
 .pf1 .fake-inline-roll {
-  background: #DDD;
+  background: #ddd;
   padding: 1px 4px;
   border: 1px solid #4b4a44;
   border-radius: 2px;
@@ -362,7 +371,7 @@
 .pf1.sheet .inventory-list .item:last-child {
   border-bottom: none;
 }
-.pf1.sheet .inventory-list .item:nth-child(2n+1) {
+.pf1.sheet .inventory-list .item:nth-child(2n + 1) {
   background-color: rgba(210, 210, 210, 0.3);
 }
 .pf1.sheet .inventory-list .item:hover {
@@ -573,23 +582,26 @@
   border-top: 1px solid #c9c7b8;
 }
 .pf1.sheet input[type="text"],
-.pf1.sheet input[type="number"],
-.pf1.sheet textarea {
+.pf1.sheet input[type="number"] {
   background: none;
   border: 1px solid transparent;
 }
 .pf1.sheet input[type="text"]:hover,
 .pf1.sheet input[type="number"]:hover,
-.pf1.sheet textarea:hover,
 .pf1.sheet input[type="text"]:focus,
-.pf1.sheet input[type="number"]:focus,
-.pf1.sheet textarea:focus {
+.pf1.sheet input[type="number"]:focus {
   border: 1px solid #111;
 }
 .pf1.sheet textarea {
   font-family: sans-serif;
   padding: 1px 5px;
   resize: none;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+.pf1.sheet textarea:hover {
+  border: 1px solid #111;
 }
 .pf1.sheet select {
   flex: 1;
@@ -720,7 +732,7 @@
   border-bottom: 3px solid #7a7971;
 }
 .pf1.sheet .filter-list .filter-item.active {
-  border-bottom: 3px solid #44191A;
+  border-bottom: 3px solid #44191a;
 }
 .pf1.sheet a > .icon:hover {
   opacity: 0.5;
@@ -744,7 +756,7 @@
   flex: 0;
 }
 .pf1.sheet div.info span a {
-  color: #7E78DC;
+  color: #7e78dc;
 }
 .pf1.sheet .currency {
   list-style: none;
@@ -876,7 +888,7 @@
 }
 .compendium-browser .directory-container .directory-list .directory-item {
   align-items: center;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #ccc;
 }
 .compendium-browser .directory-container .directory-list .directory-item img {
   flex: 0;
@@ -897,7 +909,7 @@
 .pf1.pointbuy-calculator ol.item-list li {
   background-color: rgba(155, 155, 155, 0.3);
 }
-.pf1.pointbuy-calculator ol.item-list li:nth-child(2n+1) {
+.pf1.pointbuy-calculator ol.item-list li:nth-child(2n + 1) {
   background-color: rgba(210, 210, 210, 0.3);
 }
 .pf1.pointbuy-calculator ol.item-list .ability-controls {
@@ -977,13 +989,32 @@
   padding-bottom: 32px;
 }
 .pf1.help-browser section.window-content .content code {
-  background-color: #ddd;
+  padding: 2px;
+  background-color: black;
+  color: white;
 }
 .pf1.help-browser section.window-content .content img {
   margin-left: 8px;
 }
 .pf1.help-browser section.window-content .content h2 {
   margin-top: 1em;
+}
+/* ----------------------------------------- */
+/* Script Editor
+/* ----------------------------------------- */
+.pf1.script-editor .form-group.command {
+  flex: 1;
+  flex-direction: column;
+  align-items: unset;
+}
+.pf1.script-editor .form-group.command label {
+  flex: 0;
+}
+.pf1.script-editor .form-group.command textarea {
+  flex: 1;
+}
+.pf1.script-editor footer {
+  flex: 0 0 32px;
 }
 .pf1.sheet.actor {
   /* ----------------------------------------- */
@@ -1036,7 +1067,7 @@
 }
 .pf1.sheet.actor .warning {
   flex: 0;
-  background-color: #CECE00;
+  background-color: #cece00;
   border: 1px solid #909000;
   border-radius: 2px;
 }
@@ -1067,7 +1098,7 @@
   border-right: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
 }
-.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-child(3n+0) {
+.pf1.sheet.actor .tab.summary .summary-header .character-summary > div:nth-child(3n + 0) {
   border-right: none;
 }
 .pf1.sheet.actor .tab.summary .summary-header .character-summary > div.alignment {
@@ -1187,8 +1218,8 @@
   border-radius: 4px;
 }
 .pf1.sheet.actor .tab.summary .hd-level .xpbar span.bar {
-  background: #63FF00;
-  border: 1px solid #D0FFB2;
+  background: #63ff00;
+  border: 1px solid #d0ffb2;
   border-radius: 2px;
   height: 10px;
   display: block;
@@ -1554,7 +1585,7 @@
 .pf1.sheet.actor .traits .trait-selector {
   flex: 0 0 16px;
   padding: 2px 0;
-  color: #999;
+  color: #666;
   font-size: 14px;
 }
 .pf1.sheet.actor .traits .configure-flags {
@@ -1566,8 +1597,8 @@
   padding: 0;
   text-align: right;
 }
-.pf1.sheet.actor .traits .actor-size {
-  flex: 0 0 150px;
+.pf1.sheet.actor .traits select {
+  flex: 0 0 180px;
 }
 .pf1.sheet.actor .traits label {
   flex: 0 0 150px;
@@ -1583,10 +1614,8 @@
   float: right;
   margin-right: 3px;
   text-align: right;
-  color: #999;
 }
 .pf1.sheet.actor .traits i.fas:hover {
-  color: #111;
   text-shadow: 0 0 10px red;
 }
 .pf1.sheet.actor .traits .inactive {
@@ -1618,12 +1647,12 @@
   font-size: 14px;
   line-height: 12px;
   text-align: right;
-  color: #EEE;
+  color: #eee;
   text-shadow: 0 0 5px #000;
 }
 .pf1.sheet.actor .encumbrance.encumbered .encumbrance-bar {
-  background: #A80D0D;
-  border-color: #E14949;
+  background: #a80d0d;
+  border-color: #e14949;
 }
 .pf1.sheet.actor .encumbrance .encumbrance-breakpoint {
   position: absolute;
@@ -1740,6 +1769,17 @@
 .pf1.sheet.actor .inventory-filters.spellbook-filters {
   flex: 0 0 40px;
 }
+.pf1.sheet.actor .tab.inventory .tab-footer > * {
+  flex: 0 0 100%;
+}
+.pf1.sheet.actor .tab.inventory .inventory-tags,
+.pf1.sheet.actor .tab.inventory .carry-bonus {
+  flex-basis: 50%;
+  align-self: center;
+}
+.pf1.sheet.actor .tab.inventory .inventory-tags {
+  justify-content: flex-end;
+}
 .pf1.sheet.actor .carry-label {
   flex: 0 0 24px;
 }
@@ -1751,7 +1791,9 @@
   color: #7a7971;
   white-space: nowrap;
 }
-.pf1.sheet.actor .carry-bonus input[type="text"] {
+.pf1.sheet.actor .carry-bonus input[type="text"],
+.pf1.sheet.actor .carry-bonus span.text-box {
+  height: 20px;
   flex: 0 0 48px;
   text-align: center;
   margin-left: 8px;
@@ -2052,7 +2094,7 @@
 .pf1.sheet.item .details .item-list .item:last-child {
   border-bottom: none;
 }
-.pf1.sheet.item .details .item-list .item:nth-child(2n+1) {
+.pf1.sheet.item .details .item-list .item:nth-child(2n + 1) {
   background-color: rgba(210, 210, 210, 0.3);
 }
 .pf1.sheet.item .details .item-list .item .checkbox {
@@ -2113,6 +2155,9 @@
   line-height: 24px;
   color: #4b4a44;
 }
+.pf1.sheet.item h4.attack-header {
+  margin-left: 4px;
+}
 .pf1.sheet.item .damage-parts,
 .pf1.sheet.item .attack-parts {
   list-style: none;
@@ -2124,7 +2169,7 @@
 .pf1.sheet.item .damage-parts .attack-part,
 .pf1.sheet.item .attack-parts .attack-part {
   flex: 0 0 100%;
-  padding: 0;
+  padding: 2px;
 }
 .pf1.sheet.item .damage-parts .damage-part .damage-type,
 .pf1.sheet.item .attack-parts .damage-part .damage-type,
@@ -2137,6 +2182,12 @@
 .pf1.sheet.item .damage-parts .attack-part input,
 .pf1.sheet.item .attack-parts .attack-part input {
   flex: 3;
+}
+.pf1.sheet.item .damage-parts .damage-part input:not(:first-child),
+.pf1.sheet.item .attack-parts .damage-part input:not(:first-child),
+.pf1.sheet.item .damage-parts .attack-part input:not(:first-child),
+.pf1.sheet.item .attack-parts .attack-part input:not(:first-child) {
+  margin-left: 5px;
 }
 .pf1.sheet.item .damage-parts .damage-part select,
 .pf1.sheet.item .attack-parts .damage-part select,
@@ -2160,7 +2211,7 @@
 .pf1.sheet.item .context-notes .context-note,
 .pf1.sheet.item .conditionals .context-note {
   flex: 0 0 100%;
-  padding: 0;
+  padding: 1px;
 }
 .pf1.sheet.item .changes .change input,
 .pf1.sheet.item .context-notes .change input,
@@ -2169,6 +2220,26 @@
 .pf1.sheet.item .context-notes .context-note input,
 .pf1.sheet.item .conditionals .context-note input {
   flex: 3;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+  height: 24px;
+}
+.pf1.sheet.item .changes .change input[type="text"]:invalid,
+.pf1.sheet.item .context-notes .change input[type="text"]:invalid,
+.pf1.sheet.item .conditionals .change input[type="text"]:invalid,
+.pf1.sheet.item .changes .context-note input[type="text"]:invalid,
+.pf1.sheet.item .context-notes .context-note input[type="text"]:invalid,
+.pf1.sheet.item .conditionals .context-note input[type="text"]:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .changes .change input[type="text"]:not(:first-child),
+.pf1.sheet.item .context-notes .change input[type="text"]:not(:first-child),
+.pf1.sheet.item .conditionals .change input[type="text"]:not(:first-child),
+.pf1.sheet.item .changes .context-note input[type="text"]:not(:first-child),
+.pf1.sheet.item .context-notes .context-note input[type="text"]:not(:first-child),
+.pf1.sheet.item .conditionals .context-note input[type="text"]:not(:first-child) {
+  margin-left: 5px;
 }
 .pf1.sheet.item .changes .change select,
 .pf1.sheet.item .context-notes .change select,
@@ -2178,7 +2249,7 @@
 .pf1.sheet.item .conditionals .context-note select {
   flex: 0 0 80px;
   width: 80px;
-  margin-left: 5px;
+  background: rgba(0, 0, 0, 0.05);
 }
 .pf1.sheet.item .changes .change select.change-sub-target,
 .pf1.sheet.item .context-notes .change select.change-sub-target,
@@ -2188,6 +2259,23 @@
 .pf1.sheet.item .conditionals .context-note select.change-sub-target {
   flex: 0 0 128px;
   width: 128px;
+}
+.pf1.sheet.item .changes .change select:invalid,
+.pf1.sheet.item .context-notes .change select:invalid,
+.pf1.sheet.item .conditionals .change select:invalid,
+.pf1.sheet.item .changes .context-note select:invalid,
+.pf1.sheet.item .context-notes .context-note select:invalid,
+.pf1.sheet.item .conditionals .context-note select:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .changes .change select:not(:first-child),
+.pf1.sheet.item .context-notes .change select:not(:first-child),
+.pf1.sheet.item .conditionals .change select:not(:first-child),
+.pf1.sheet.item .changes .context-note select:not(:first-child),
+.pf1.sheet.item .context-notes .context-note select:not(:first-child),
+.pf1.sheet.item .conditionals .context-note select:not(:first-child) {
+  margin-left: 5px;
 }
 .pf1.sheet.item .changes .change .change-priority,
 .pf1.sheet.item .context-notes .change .change-priority,
@@ -2221,38 +2309,85 @@
 .pf1.sheet.item .conditionals .context-note .conditional-modifier {
   display: flex;
 }
-.pf1.sheet.item .conditionals select {
+.pf1.sheet.item .conditionals .conditional,
+.pf1.sheet.item .conditionals .conditional-modifier {
+  padding: 1px;
+}
+.pf1.sheet.item .conditionals .conditional select,
+.pf1.sheet.item .conditionals .conditional-modifier select {
   max-width: max-content;
   min-width: 80px;
   flex: 1;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals .conditional select:not(:first-child),
+.pf1.sheet.item .conditionals .conditional-modifier select:not(:first-child) {
   margin-left: 5px;
 }
-.pf1.sheet.item .conditionals .conditional-formula {
+.pf1.sheet.item .conditionals .conditional select:invalid,
+.pf1.sheet.item .conditionals .conditional-modifier select:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 80% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals .conditional input[type="text"],
+.pf1.sheet.item .conditionals .conditional-modifier input[type="text"] {
+  height: 24px;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals .conditional input[type="text"]:invalid,
+.pf1.sheet.item .conditionals .conditional-modifier input[type="text"]:invalid {
+  border: 2px solid #782e22;
+  background: url(icons/misc/hazard-sign.svg) no-repeat 100% 50% rgba(0, 0, 0, 0.05);
+}
+.pf1.sheet.item .conditionals .conditional input[type="text"]:not(:first-child),
+.pf1.sheet.item .conditionals .conditional-modifier input[type="text"]:not(:first-child) {
+  margin-left: 5px;
+}
+.pf1.sheet.item .conditionals .conditional input[class*="conditional-name"]:not(:first-child),
+.pf1.sheet.item .conditionals .conditional-modifier input[class*="conditional-name"]:not(:first-child) {
+  margin-left: 0;
+}
+.pf1.sheet.item .conditionals .conditional .conditional-name,
+.pf1.sheet.item .conditionals .conditional-modifier .conditional-name,
+.pf1.sheet.item .conditionals .conditional .conditional-formula,
+.pf1.sheet.item .conditionals .conditional-modifier .conditional-formula {
   min-width: 140px;
 }
-.pf1.sheet.item .conditionals .conditional-damage-type {
+.pf1.sheet.item .conditionals .conditional .conditional-damage-type,
+.pf1.sheet.item .conditionals .conditional-modifier .conditional-damage-type {
+  min-width: 90px;
   max-width: 200px;
 }
-.pf1.sheet.item .conditionals .form-group {
-  padding-left: 28px;
+.pf1.sheet.item .conditionals .conditional .form-group,
+.pf1.sheet.item .conditionals .conditional-modifier .form-group {
+  padding-left: 30px;
 }
-.pf1.sheet.item .conditionals .conditional-add {
-  flex: 0 0 auto;
-  line-height: 24px;
-  color: #7a7971;
-}
-.pf1.sheet.item .damage-control,
+.pf1.sheet.item .delete-damage,
 .pf1.sheet.item .crit-damage-control,
-.pf1.sheet.item .attack-control,
-.pf1.sheet.item .change-control,
-.pf1.sheet.item .context-note-control,
-.pf1.sheet.item .conditional-remove {
+.pf1.sheet.item .delete-attack,
+.pf1.sheet.item .delete-change,
+.pf1.sheet.item .delete-note,
+.pf1.sheet.item .delete-conditional,
+.pf1.sheet.item .delete-conditional-modifier {
   width: 18px;
   flex: 0 0 18px;
   line-height: 24px;
   float: right;
   text-align: right;
   color: #7a7971;
+}
+.pf1.sheet.item .add-attack,
+.pf1.sheet.item .add-damage,
+.pf1.sheet.item .add-change,
+.pf1.sheet.item .add-note,
+.pf1.sheet.item .add-conditional,
+.pf1.sheet.item .add-conditional-modifier {
+  flex: 0 0 auto;
+  line-height: 24px;
+  color: #7a7971;
+  margin-left: 2px;
 }
 .pf1.sheet.item .recharge span {
   line-height: 24px;
@@ -2290,8 +2425,8 @@
 }
 .pf1.chat-card .card-header {
   padding: 3px 0;
-  border-top: 2px groove #FFF;
-  border-bottom: 2px groove #FFF;
+  border-top: 2px groove #fff;
+  border-bottom: 2px groove #fff;
 }
 .pf1.chat-card .card-header img {
   flex: 0 0 36px;
@@ -2336,11 +2471,11 @@
   display: block;
   line-height: 20px;
   text-align: center;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
 }
 .pf1.chat-card .card-footer {
   padding: 3px 0 0;
-  border-top: 2px groove #FFF;
+  border-top: 2px groove #fff;
 }
 .pf1.chat-card .card-footer .spell-failure {
   padding: 4px;
@@ -2349,7 +2484,7 @@
   border-radius: 3px;
 }
 .pf1.chat-card .card-footer .spell-failure h3 {
-  color: #4C6D9F;
+  color: #4c6d9f;
   font-size: 16px;
   text-align: center;
 }
@@ -2414,7 +2549,7 @@
   overflow: hidden;
 }
 .message .chat-attack .dice-roll .dice-flavor {
-  color: #4C6D9F;
+  color: #4c6d9f;
   font-size: 11px;
   text-align: center;
   white-space: nowrap;
@@ -2469,7 +2604,7 @@
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid #999;
   border-radius: 3px;
-  box-shadow: 0 0 2px #FFF inset;
+  box-shadow: 0 0 2px #fff inset;
 }
 .message .extra-misc {
   position: relative;
@@ -2479,7 +2614,7 @@
   background: rgba(0, 0, 0, 0.05);
   border: 1px solid #999;
   border-radius: 3px;
-  box-shadow: 0 0 2px #FFF inset;
+  box-shadow: 0 0 2px #fff inset;
 }
 .message .extra-roll-label {
   font-weight: bold;
@@ -2664,9 +2799,9 @@
   mask-image: url(icons/actions/gears.svg);
   -webkit-mask-image: url(icons/actions/gears.svg);
 }
-.icon.icon-plug {
-  mask-image: url(icons/actions/plug.svg);
-  -webkit-mask-image: url(icons/actions/plug.svg);
+.icon.icon-inventory-slot {
+  mask-image: url(icons/actions/inventory-slot.svg);
+  -webkit-mask-image: url(icons/actions/inventory-slot.svg);
 }
 .icon.icon-coins {
   mask-image: url(icons/actions/coins.svg);
@@ -2899,7 +3034,7 @@ input.text-box {
   font-size: 12px;
   border: 1px solid black;
   border-radius: 2px;
-  background: #E1E1E1;
+  background: #e1e1e1;
 }
 .widget.item-picker .row {
   display: flex;
@@ -2908,13 +3043,13 @@ input.text-box {
 .widget.item-picker .row .item {
   height: 28px;
   line-height: 24px;
-  border: 1px solid #4F4F4F;
-  background: #D3D3D3;
+  border: 1px solid #4f4f4f;
+  background: #d3d3d3;
   margin: 2px;
   padding: 1px;
   overflow: hidden;
   text-align: center;
 }
 .widget.item-picker .row .item:hover {
-  border-color: #DA0000;
+  border-color: #da0000;
 }

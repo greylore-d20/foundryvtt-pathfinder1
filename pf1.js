@@ -6,7 +6,12 @@
 
 // Import Modules
 import { PF1 } from "./module/config.js";
-import { registerSystemSettings, registerClientSettings, getSkipActionPrompt } from "./module/settings.js";
+import {
+  registerSystemSettings,
+  registerClientSettings,
+  getSkipActionPrompt,
+  migrateSystemSettings,
+} from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { measureDistances } from "./module/canvas.js";
@@ -31,8 +36,10 @@ import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
+import { addReachCallback } from "./module/misc/attack-reach.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
+import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -179,6 +186,7 @@ Hooks.once("setup", function () {
     "bonusModifiers",
     "abilityActivationTypes_unchained",
     "abilityActivationTypesPlurals_unchained",
+    "actorStatures",
   ];
 
   const doLocalize = function (obj) {
@@ -200,7 +208,7 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.76.1";
+  const NEEDS_MIGRATION_VERSION = "0.76.7";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -216,6 +224,9 @@ Hooks.once("ready", async function () {
   if (needMigration && game.user.isGM) {
     await migrations.migrateWorld();
   }
+
+  // Migrate system settings
+  await migrateSystemSettings();
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {
@@ -249,6 +260,34 @@ Hooks.on("canvasInit", function () {
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
+
+{
+  let callbacks = [];
+
+  Hooks.on("canvasReady", () => {
+    // Remove old callbacks
+    for (let cb of callbacks) {
+      cb.elem.off(cb.event, cb.callback);
+    }
+
+    // Add reach measurements
+    game.messages.forEach((m) => {
+      const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
+      if (!elem || (elem && !elem.length)) return;
+      const results = addReachCallback(m.data, elem);
+      callbacks.push(...results);
+    });
+  });
+
+  Hooks.on("renderChatMessage", (app, html, data) => {
+    // Wait for setup after this
+    if (!game.ready) return;
+
+    // Add reach measurements on hover
+    const results = addReachCallback(data.message, html);
+    callbacks.push(...results);
+  });
+}
 
 /* -------------------------------------------- */
 /*  Other Hooks                                 */
@@ -290,6 +329,10 @@ Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
+
+Hooks.on("renderLightConfig", (app, html) => {
+  RenderLightConfig_LowLightVision(app, html);
+});
 
 Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
@@ -451,7 +494,7 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 // Render TokenConfig
 Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
-  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.html", {
+  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {
     object: duplicate(app.object.data),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
@@ -463,6 +506,9 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   if (getProperty(app.object.data, "flags.pf1.staticSize")) newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
+
+  // Add disable low-light vision checkbox
+  RenderTokenConfig_LowLightVision(app, html);
 });
 
 // Render Sidebar
@@ -479,7 +525,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
     button = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
     html.find("#game-details").append(button);
     button.click(() => {
-      new PF1_HelpBrowser().openURL("systems/pf1/help/index.html");
+      new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs");
     });
   }
 });

@@ -333,6 +333,18 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
+  /*
+   * When skipping an action dialog prompt still place the template if one is configured
+   */
+  game.settings.register("pf1", "placeMeasureTemplateOnQuickRolls", {
+    name: "SETTINGS.placeMeasureTemplateOnQuickRollsN",
+    hint: "SETTINGS.placeMeasureTemplateOnQuickRollsH",
+    scope: "client",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Attack chat card template
    */
@@ -341,11 +353,11 @@ export const registerSystemSettings = function () {
     hint: "SETTINGS.pf1AttackChatCardTemplateH",
     scope: "world",
     config: true,
-    default: "systems/pf1/templates/chat/attack-roll.html",
+    default: "systems/pf1/templates/chat/attack-roll.hbs",
     type: String,
     choices: {
-      "systems/pf1/templates/chat/attack-roll.html": "PF1.Primary",
-      "systems/pf1/templates/chat/attack-roll2.html": "PF1.Alternate",
+      "systems/pf1/templates/chat/attack-roll.hbs": "PF1.Primary",
+      "systems/pf1/templates/chat/attack-roll2.hbs": "PF1.Alternate",
     },
   });
 
@@ -370,6 +382,30 @@ export const registerSystemSettings = function () {
       }
       return Promise.all(promises);
     },
+  });
+
+  /**
+   * Invert filter Shift-clicking
+   */
+  game.settings.register("pf1", "invertSectionFilterShiftBehaviour", {
+    name: "SETTINGS.pf1InvertSectionFilterBehaviourN",
+    hint: "SETTINGS.pf1InvertSectionFilterBehaviourH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  /**
+   * Hide reach measurements
+   */
+  game.settings.register("pf1", "hideReachMeasurements", {
+    name: "SETTINGS.pf1HideReachMeasurementsN",
+    hint: "SETTINGS.pf1HideReachMeasurementsH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
   });
 };
 
@@ -416,6 +452,19 @@ export const registerClientSettings = function () {
     },
     type: Object,
   });
+};
+
+export const migrateSystemSettings = async function () {
+  if (!game.user.isGM) return;
+
+  // Migrate attack template
+  {
+    const template = game.settings.get("pf1", "attackChatCardTemplate");
+    if (template.endsWith(".html")) {
+      const newTemplate = template.slice(0, template.length - "html".length) + "hbs";
+      await game.settings.set("pf1", "attackChatCardTemplate", newTemplate);
+    }
+  }
 };
 
 export const getSkipActionPrompt = function () {

@@ -353,7 +353,7 @@ export class ItemPF extends Item {
   }
 
   get hasEffect() {
-    return this.hasDamage || (this.data.data.effectNotes && this.data.data.effectNotes.length > 0);
+    return this.hasDamage || (this.data.data.effectNotes != null && this.data.data.effectNotes.length > 0);
   }
 
   /* -------------------------------------------- */
@@ -961,21 +961,30 @@ export class ItemPF extends Item {
 
     // Render the chat card template
     const templateType = ["consumable"].includes(this.data.type) ? this.data.type : "item";
-    const template = `systems/pf1/templates/chat/${templateType}-card.html`;
+    const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
+
+    // Determine metadata
+    const metadata = {};
+    metadata.item = this._id;
 
     // Basic chat message data
-    const chatData = mergeObject(
-      {
-        user: game.user._id,
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
-        flags: {
-          core: {
-            canPopout: true,
+    const chatData = flattenObject(
+      mergeObject(
+        {
+          user: game.user._id,
+          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+          speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+          flags: {
+            core: {
+              canPopout: true,
+            },
+            pf1: {
+              metadata,
+            },
           },
         },
-      },
-      altChatData
+        altChatData
+      )
     );
 
     // Toggle default roll mode
@@ -1256,7 +1265,7 @@ export class ItemPF extends Item {
       let attackExtraParts = [],
         damageExtraParts = [],
         primaryAttack = true,
-        useMeasureTemplate = false,
+        useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
         conditionals;
       // Get form data
@@ -1881,7 +1890,7 @@ export class ItemPF extends Item {
     if (skipDialog) return _roll.call(this, true);
 
     // Render modal dialog
-    let template = "systems/pf1/templates/apps/attack-roll-dialog.html";
+    let template = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
     let dialogData = {
       data: rollData,
       item: this.data.data,
@@ -2213,7 +2222,7 @@ export class ItemPF extends Item {
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
     } else {
-      const chatTemplate = "systems/pf1/templates/chat/roll-ext.html";
+      const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
       let roll = new Roll(parts.join("+"), data).roll();
@@ -2531,9 +2540,19 @@ export class ItemPF extends Item {
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
-        if (rangeUnit === "close") label.range = `${label.range} (25 ft. + 5 ft./2 levels)`;
-        else if (rangeUnit === "medium") label.range = `${label.range} (100 ft. + 10 ft./level)`;
-        else if (rangeUnit === "long") label.range = `${label.range} (400 ft. + 40 ft./level)`;
+        const units = game.settings.get("pf1", "units");
+        if (rangeUnit === "close")
+          label.range = `${label.range} ${game.i18n.localize(
+            units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
+          )}`;
+        else if (rangeUnit === "medium")
+          label.range = `${label.range} ${game.i18n.localize(
+            units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
+          )}`;
+        else if (rangeUnit === "long")
+          label.range = `${label.range} ${game.i18n.localize(
+            units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
+          )}`;
         else if (["ft", "mi"].includes(rangeUnit)) {
           if (!rangeValue) label.range = "";
           else label.range = `${rangeValue} ${label.range}`;
@@ -2563,7 +2582,7 @@ export class ItemPF extends Item {
       srcData,
       updateData,
       "data.description.value",
-      await renderTemplate("systems/pf1/templates/internal/spell-description.html", data)
+      await renderTemplate("systems/pf1/templates/internal/spell-description.hbs", data)
     );
   }
 
@@ -2792,7 +2811,7 @@ export class ItemPF extends Item {
     data.data.cl = slcl[1];
 
     // Set description
-    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.html", {
+    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
       origData: origData,
       data: data,
       isWand: type === "wand",
@@ -3468,6 +3487,7 @@ export class ItemPF extends Item {
 
   _calculateCoinWeight(data) {
     const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
+    if (!coinWeightDivisor) return 0;
     return (
       Object.values(getProperty(data, "data.currency") || {}).reduce((cur, amount) => {
         return cur + amount;

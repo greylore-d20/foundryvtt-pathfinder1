@@ -1759,6 +1759,10 @@ export class ItemPF extends Item {
             properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);
           }
         }
+        // Add info for broken state
+        if (this.data.data.broken) {
+          properties.push(game.i18n.localize("PF1.Broken"));
+        }
         // Add info for Power Attack to melee, Deadly Aim to ranged attacks
         if (attackExtraParts.includes("@powerAttackPenalty")) {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));

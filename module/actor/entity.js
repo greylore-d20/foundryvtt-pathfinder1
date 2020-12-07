@@ -1539,20 +1539,18 @@ export class ActorPF extends Actor {
           close: (html) => {
             resolve(false);
           },
-        });
-
-        //Local dialog functionality
-        Hooks.once("renderDialog", (a, inp) => {
-          function swapSelected() {
-            let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
-            checked.forEach((chk) => (chk.checked = !chk.checked));
-          }
-          function setReduction(e) {
-            inp[0].querySelector('input[name="damage-reduction"]').value =
-              e.currentTarget.innerText.match(numReg) ?? "";
-          }
-          inp.on("click", 'a[name="swap-selected"]', swapSelected);
-          inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
+          render: (inp) => {
+            function swapSelected() {
+              let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
+              checked.forEach((chk) => (chk.checked = !chk.checked));
+            }
+            function setReduction(e) {
+              inp[0].querySelector('input[name="damage-reduction"]').value =
+                e.currentTarget.innerText.match(numReg) ?? "";
+            }
+            inp.on("click", 'a[name="swap-selected"]', swapSelected);
+            inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
+          },
         });
         d.render(true);
       });

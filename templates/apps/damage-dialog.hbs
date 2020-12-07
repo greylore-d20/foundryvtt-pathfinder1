@@ -1,11 +1,11 @@
 <form>
   <div class="form-group">
       <label>{{#if healing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}</label>
-      <input type="number" name="damage" value="{{damage}}"/>
+      <input type="text" name="damage" data-dtype="Number" value="{{damage}}"/>
   </div>
   <div class="form-group">
     <label>{{localize "PF1.ReduceBy"}}</label>
-    <input type="number" name="damage-reduction" value="{{damageReduction}}"/>
+    <input type="text" name="damage-reduction" data-dtype="Number" value="{{damageReduction}}"/>
   </div>
 
   {{!-- Selected tokens --}}

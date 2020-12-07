@@ -1459,13 +1459,16 @@ export class ActorPF extends Actor {
 
     const _submit = async function (form, multiplier) {
       if (form) {
-        value = parseInt(form.find('[name="damage"]').val() || 0);
+        value = form.find('[name="damage"]').val();
+        let dR = form.find('[name="damage-reduction"]').val();
+        value = value.length ? new Roll(value).roll().total : 0;
+        dR = dR.length ? new Roll(dR).roll().total : 0;
         if (multiplier < 0) {
           value = Math.ceil(value * multiplier);
-          value = Math.min(value - (form.find('[name="damage-reduction"]').val() || 0), 0);
+          value = Math.min(value - dR, 0);
         } else {
           value = Math.floor(value * (multiplier ?? 1));
-          value = Math.max(value - (form.find('[name="damage-reduction"]').val() || 0), 0);
+          value = Math.max(value - dR, 0);
         }
         let checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
         controlled = controlled.filter((con) => checked.includes(con.id));

@@ -747,6 +747,14 @@ export class ActorSheetPF extends ActorSheet {
       li.addEventListener("dragstart", handler, false);
     });
 
+    // Race Dragging
+    html.find(".race-container").each((i, el) => {
+      if (el.dataset?.itemId) {
+        el.setAttribute("draggable", true);
+        el.addEventListener("dragstart", handler, false);
+      }
+    });
+
     // Skill dragging
     html.find("li.skill[data-skill]").each((i, li) => {
       li.setAttribute("draggable", true);
@@ -877,6 +885,10 @@ export class ActorSheetPF extends ActorSheet {
     // Alignment
     html.find(".control.alignment").click(this._onControlAlignment.bind(this));
 
+    // Quick edit race item
+    html.find(".race").each((i, el) => {
+      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
+    });
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */

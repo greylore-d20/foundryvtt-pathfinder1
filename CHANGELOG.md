@@ -8,6 +8,7 @@
 - Spells not using Spell Points could manipulate their charge cost via conditional modifiers
 - Apply Damage dialog said damage and also applied damage instead of healing when not used
 - Compendium with spell-like abilities had incorrect caster levels
+- The race item was not draggable from its actor's sheet
 
 ### Changelog
 

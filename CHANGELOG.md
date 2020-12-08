@@ -7,6 +7,7 @@
 - Implement workaround for parenthetical return values in Rolls (Core#4195)
 - Spells not using Spell Points could manipulate their charge cost via conditional modifiers
 - Apply Damage dialog said damage and also applied damage instead of healing when not used
+- Compendium with spell-like abilities had incorrect caster levels
 
 ### Changelog
 

@@ -141,3 +141,7 @@ People and credits are listed in no particular order.
 ## Manuel Vögele
 
 - Made some code contributions
+
+## mkahvi
+
+- Made some code contributions

@@ -6,10 +6,11 @@
 
 - Implement workaround for parenthetical return values in Rolls (Core#4195)
 - Spells not using Spell Points could manipulate their charge cost via conditional modifiers
-- Apply Damage dialog said damage and also applied damage instead of healing when not used
+- Apply Damage dialog said damage and also applied damage instead of healing when not used (#410)
 - Compendium with spell-like abilities had incorrect caster levels
-- The race item was not draggable from its actor's sheet
+- The race item was not draggable from its actor's sheet (#417)
 - Incorrect reach templates were shown when using the metric system (#404)
+- Don't sort if items are dropped on themselves, due to the efforts of mkahvi (many thanks!) (#194)
 
 ### Changelog
 

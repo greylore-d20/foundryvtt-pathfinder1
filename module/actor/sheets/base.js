@@ -2422,6 +2422,7 @@ export class ActorSheetPF extends ActorSheet {
     // Get the drop target
     const dropTarget = event.target.closest(".item");
     const targetId = dropTarget ? dropTarget.dataset.itemId : null;
+    if (targetId === source._id) return; // Don't sort if item is dropped onto itself
     const target = siblings.find((s) => s.data._id === targetId);
 
     // Ensure we are only sorting like-types

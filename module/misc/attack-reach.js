@@ -1,5 +1,5 @@
 import { Color } from "../lib/color/color.js";
-import { colorToInt } from "../lib.js";
+import { colorToInt, convertDistance } from "../lib.js";
 
 const rangeColor = {
   fill: Color("#ff0000"),
@@ -93,11 +93,11 @@ export const showAttackReach = function (token, attack) {
       Math.max(
         (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
         (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
-      ) + r
+      ) + convertDistance(r)[0]
     );
     const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
     for (let a = 1; a < rangeIncrements; a++) {
-      if ((a + 1) * r <= maxSquareRange) {
+      if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
         squares.extra.push(getReachSquares(token, (a + 1) * r, a * r));
       }
     }
@@ -231,6 +231,9 @@ export const addReachCallback = function (data, html) {
 };
 
 const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null) {
+  range = convertDistance(range)[0];
+  if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
+
   let result = [];
 
   if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
@@ -309,9 +312,10 @@ const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, mi
 
   const dist = measureReachDistance(p0, p1);
   const dist2 = measureReachDistance(p0, p1, true);
+  const reachRuleRange = convertDistance(10)[0];
   if (dist > range) {
     // Special rule for 10-ft. reach
-    if (range !== 10) {
+    if (range !== reachRuleRange) {
       return false;
     }
   }
@@ -321,7 +325,7 @@ const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, mi
   }
 
   // Special rule for minimum ranges >= 10-ft.
-  if (minRange >= 10 && dist2 <= 10) {
+  if (minRange >= reachRuleRange && dist2 <= reachRuleRange) {
     return false;
   }
 

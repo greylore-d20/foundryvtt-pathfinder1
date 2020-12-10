@@ -9,6 +9,7 @@
 - Apply Damage dialog said damage and also applied damage instead of healing when not used
 - Compendium with spell-like abilities had incorrect caster levels
 - The race item was not draggable from its actor's sheet
+- Incorrect reach templates were shown when using the metric system (#404)
 
 ### Changelog
 

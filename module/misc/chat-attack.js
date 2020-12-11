@@ -39,6 +39,7 @@ export class ChatAttack {
       parts: [],
     };
     this.hasDamage = false;
+    this.minimumDamage = false;
     this.damageRows = 0;
 
     this.notesOnly = true;
@@ -269,6 +270,14 @@ export class ChatAttack {
       }, totalDamage);
     }
 
+    // Handle minimum damage rule
+    let minimumDamage = false;
+    if (totalDamage < 1) {
+      totalDamage = 1;
+      minimumDamage = true;
+      flavor = game.i18n.localize("PF1.Nonlethal");
+    }
+
     // Add card
     if (critical) {
       if (!this.cards.critical)
@@ -292,11 +301,13 @@ export class ChatAttack {
           label: game.i18n.localize("PF1.Apply"),
           value: totalDamage,
           action: "applyDamage",
+          tags: minimumDamage ? "nonlethal" : "",
         });
         this.cards.critical.items.push({
           label: game.i18n.localize("PF1.ApplyHalf"),
           value: Math.floor(totalDamage / 2),
           action: "applyDamage",
+          tags: minimumDamage ? "nonlethal" : "",
         });
       }
     } else {
@@ -321,11 +332,13 @@ export class ChatAttack {
           label: game.i18n.localize("PF1.Apply"),
           value: totalDamage,
           action: "applyDamage",
+          tags: minimumDamage ? "nonlethal" : "",
         });
         this.cards.damage.items.push({
           label: game.i18n.localize("PF1.ApplyHalf"),
           value: Math.floor(totalDamage / 2),
           action: "applyDamage",
+          tags: minimumDamage ? "nonlethal" : "",
         });
       }
     }

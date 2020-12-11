@@ -81,13 +81,13 @@
         <label>{{cardGroup.label}}</label>
         <div class="flexrow">
         {{#each cardGroup.items as |item|}}
-          <button data-action="{{item.action}}" data-value="{{item.value}}">{{item.label}}</button>
+          <button data-action="{{item.action}}" data-value="{{item.value}}" data-tags="{{item.tags"}}">{{item.label}}</button>
         {{/each}}
         </div>
       </div>
       {{/each}}
       {{#if ../save.hasSave}}
-      <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}">{{../save.label}}</button>
+      <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}} data-tags="{{../save.tags}}">{{../save.label}}</button>
       {{/if}}
     </div>
     {{/if}}

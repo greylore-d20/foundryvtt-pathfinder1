@@ -2361,10 +2361,10 @@ export class ItemPF extends Item {
     if (action === "consume") await item.useConsumable({ event });
     // Apply damage
     else if (action === "applyDamage") {
-      var asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
+      let asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
         .map((o) => o.innerText)
         .includes(game.i18n.localize("PF1.Nonlethal"));
-      if (button.dataset.tags?.split(",").includes("nonlethal")) asNonlethal = true;
+      if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
 
       const value = button.dataset.value;
       if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value), { asNonlethal });

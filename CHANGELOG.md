@@ -11,6 +11,11 @@
 - The race item was not draggable from its actor's sheet (#417)
 - Incorrect reach templates were shown when using the metric system (#404)
 - Don't sort if items are dropped on themselves, due to the efforts of mkahvi (many thanks!) (#194)
+- Spell sounds were not played under certain circumstances (#352)
+- Spell save buttons were not shown under certain circumstances (#393)
+- Abilities with just a save configured could not be used (#328)
+- Alternate attack cards were not rendered
+- Fixed missing styling for attack and item chat cards (#326)
 
 ### Changelog
 

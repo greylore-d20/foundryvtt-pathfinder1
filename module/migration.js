@@ -133,6 +133,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorDefenseNotes(actor, updateData);
   _migrateActorSpeed(actor, updateData);
   _migrateSpellDivineFocus(actor, updateData);
+  _migrateActorSpellbookCL(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData);
   _migrateActorBaseStats(actor, updateData);
   _migrateActorCreatureType(actor, updateData);
@@ -404,6 +405,21 @@ const _migrateActorSpellbookDCFormula = function (ent, updateData) {
     const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = getProperty(ent.data, key);
     if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
+  }
+};
+
+const _migrateActorSpellbookCL = function (ent, updateData) {
+  const spellbooks = Object.keys(getProperty(ent.data, "data.attributes.spells.spellbooks") || {});
+
+  for (let k of spellbooks) {
+    const key = `data.attributes.spells.spellbooks.${k}.cl`;
+    const curBase = parseInt(getProperty(ent.data, key + ".base"));
+    const curFormula = getProperty(ent.data, key + ".formula");
+    if (curBase > 0) {
+      if (curFormula.length > 0) updateData[`${key}.formula`] = curFormula + " + " + curBase;
+      else updateData[`${key}.formula`] = curFormula + curBase;
+      updateData[`${key}.base`] = 0;
+    }
   }
 };
 

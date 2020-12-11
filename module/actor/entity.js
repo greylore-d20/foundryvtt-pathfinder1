@@ -825,6 +825,7 @@ export class ActorPF extends Actor {
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
     attackData["data.masterwork"] = item.data.data.masterwork;
+    attackData["data.nonlethal"] = item.data.data.nonlethal;
     attackData["data.attackType"] = "weapon";
     attackData["data.enh"] = item.data.data.enh;
     attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
@@ -1448,7 +1449,7 @@ export class ActorPF extends Actor {
    * @param {Object} {}      Object containing default settings for overriding
    * @return {Promise}
    */
-  static async applyDamage(value, { forceDialog = false, reductionDefault = "" } = {}) {
+  static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
     const promises = [];
     var controlled = canvas.tokens.controlled,
       healingInvert = 1,
@@ -1476,8 +1477,18 @@ export class ActorPF extends Actor {
       for (let t of controlled) {
         let a = t.actor,
           hp = a.data.data.attributes.hp,
-          tmp = parseInt(hp.temp) || 0,
-          dt = value > 0 ? Math.min(tmp, value) : 0;
+          tmp = parseInt(hp.temp) || 0;
+
+        // Handle nonlethal damage
+        let nld = 0;
+        if (asNonlethal && value > 0) {
+          nld = Math.min(hp.max - hp.nonlethal, value);
+          value -= nld;
+        }
+
+        // Temp HP adjustment
+        let dt = value > 0 ? Math.min(tmp, value) : 0;
+
         if (!a.hasPerm(game.user, "OWNER")) {
           const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
           console.warn(msg);
@@ -1486,6 +1497,7 @@ export class ActorPF extends Actor {
         }
         promises.push(
           t.actor.update({
+            "data.attributes.hp.nonlethal": hp.nonlethal + nld,
             "data.attributes.hp.temp": tmp - dt,
             "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
           })
@@ -1518,6 +1530,7 @@ export class ActorPF extends Actor {
         healing: healingInvert == -1 ? true : false,
         damageReduction: reductionDefault,
         tokens: tokens,
+        nonlethal: asNonlethal,
       };
       const html = await renderTemplate(template, dialogData);
 

@@ -1,6 +1,6 @@
 <form>
   <div class="form-group">
-      <label>{{#if healing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}</label>
+      <label>{{#if nonlethal}}{{localize "PF1.Nonlethal"}} {{/if}}{{#if healing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}</label>
       <input type="text" name="damage" data-dtype="Number" value="{{damage}}"/>
   </div>
   <div class="form-group">

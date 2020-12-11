@@ -17,6 +17,7 @@
 - Apply Damage dialog accepts math instead of just pure numbers
 - Attacks with the "Broken" state now have a chat card indicator
 - Added melee and ranged combat maneuvers to available action types (#155)
+- Nonlethal damage can now be indicated and applied, due to the effort of mkahvi (#421)
 
 ### Localization
 

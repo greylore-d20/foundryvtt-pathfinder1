@@ -1763,6 +1763,8 @@ export class ItemPF extends Item {
         if (this.data.data.broken) {
           properties.push(game.i18n.localize("PF1.Broken"));
         }
+        // Nonlethal
+        if (this.data.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
         // Add info for Power Attack to melee, Deadly Aim to ranged attacks
         if (attackExtraParts.includes("@powerAttackPenalty")) {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
@@ -2359,8 +2361,11 @@ export class ItemPF extends Item {
     if (action === "consume") await item.useConsumable({ event });
     // Apply damage
     else if (action === "applyDamage") {
+      const asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
+        .map((o) => o.innerText)
+        .includes(game.i18n.localize("PF1.Nonlethal"));
       const value = button.dataset.value;
-      if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value));
+      if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value), { asNonlethal });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {

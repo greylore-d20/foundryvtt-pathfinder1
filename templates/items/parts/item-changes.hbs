@@ -1,7 +1,16 @@
 {{!-- Flags --}}
 <div class="form-group">
   <label class="header">{{localize "PF1.CheckFlags"}}</label>
-  <div class="buff-flags">
+  <div class="buff-flags flexcol">
+    <label class="checkbox">
+      <input type="checkbox" name="data.changeFlags.noEncumbrance" {{checked data.changeFlags.noEncumbrance}}/> {{localize "PF1.ChangeFlagDwarflikeEncumbrance"}}
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="data.changeFlags.mediumArmorFullSpeed" {{checked data.changeFlags.mediumArmorFullSpeed}}/> {{localize "PF1.ChangeFlagMediumArmorFullSpeed"}}
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="data.changeFlags.heavyArmorFullSpeed" {{checked data.changeFlags.heavyArmorFullSpeed}}/> {{localize "PF1.ChangeFlagHeavyArmorFullSpeed"}}
+    </label>
     <label class="checkbox">
       <input type="checkbox" name="data.changeFlags.loseDexToAC" {{checked data.changeFlags.loseDexToAC}}/> {{localize "PF1.ChangeFlagLoseDexToAC"}}
     </label>
@@ -19,15 +28,6 @@
     </label>
     <label class="checkbox">
       <input type="checkbox" name="data.changeFlags.oneCha" {{checked data.changeFlags.oneCha}}/> {{localize "PF1.ChangeFlagOneCha"}}
-    </label>
-    <label class="checkbox">
-      <input type="checkbox" name="data.changeFlags.noEncumbrance" {{checked data.changeFlags.noEncumbrance}}/> {{localize "PF1.ChangeFlagDwarflikeEncumbrance"}}
-    </label>
-    <label class="checkbox">
-      <input type="checkbox" name="data.changeFlags.mediumArmorFullSpeed" {{checked data.changeFlags.mediumArmorFullSpeed}}/> {{localize "PF1.ChangeFlagMediumArmorFullSpeed"}}
-    </label>
-    <label class="checkbox">
-      <input type="checkbox" name="data.changeFlags.heavyArmorFullSpeed" {{checked data.changeFlags.heavyArmorFullSpeed}}/> {{localize "PF1.ChangeFlagHeavyArmorFullSpeed"}}
     </label>
   </div>
 </div>

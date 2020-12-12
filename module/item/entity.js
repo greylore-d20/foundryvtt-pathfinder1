@@ -2812,6 +2812,24 @@ export class ItemPF extends Item {
     // Set consumable type
     data.data.consumableType = type;
 
+    // Set range
+    data.data.range.units = origData.data.range.units;
+    data.data.range.value = origData.data.range.value;
+    switch (data.data.range.units) {
+      case "close":
+        data.data.range.value = new Roll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.units = "ft";
+        break;
+      case "medium":
+        data.data.range.value = new Roll("100 + @cl * 10", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.units = "ft";
+        break;
+      case "long":
+        data.data.range.value = new Roll("400 + @cl * 40", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.units = "ft";
+        break;
+    }
+
     // Set name
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
@@ -2827,6 +2845,8 @@ export class ItemPF extends Item {
       data.data.hardness = 1;
       data.data.hp.max = 1;
       data.data.hp.value = 1;
+      data.data.range.value = 0;
+      data.data.range.units = "personal";
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";

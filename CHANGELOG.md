@@ -26,6 +26,7 @@
 - Minimum damage is now taken into account in attacks, due to the efforts of mkahvi (#129)
 - Compendiums now refresh if the availability of compendiums for its type has changed (#412)
 - Attack chat cards now have a dedicated hover region for showing reach
+- Creating consumables from spells now also set an appropriate range
 
 ### Localization
 

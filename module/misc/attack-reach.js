@@ -180,7 +180,8 @@ export const addReachCallback = function (data, html) {
       hl.render();
     });
   };
-  html.on("mouseenter", mouseEnterCallback);
+  const rangeElems = html.find(".card-range");
+  rangeElems.on("mouseenter", mouseEnterCallback);
 
   // Add mouse leave callback
   const mouseLeaveCallback = function () {
@@ -193,9 +194,9 @@ export const addReachCallback = function (data, html) {
       hl.clear(true);
     });
   };
-  html.on("mouseleave", mouseLeaveCallback);
+  rangeElems.on("mouseleave", mouseLeaveCallback);
   // Add 'click' event as a safeguard to remove highlights
-  html.on("click", mouseLeaveCallback);
+  // html.on("click", mouseLeaveCallback);
 
   // Clear highlights when chat messages are rendered
   Hooks.on("renderChatMessage", () => {

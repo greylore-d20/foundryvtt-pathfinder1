@@ -159,6 +159,32 @@ export class ItemPF extends Item {
     return 4;
   }
 
+  // Returns range (in feet)
+  get range() {
+    let range = getProperty(this.data, "data.range.value");
+    const rangeType = getProperty(this.data, "data.range.units");
+
+    if (rangeType == null) return null;
+
+    switch (rangeType) {
+      case "melee":
+      case "touch":
+        return convertDistance(getProperty(this.getRollData(), "range.melee") || 0)[0];
+      case "reach":
+        return convertDistance(getProperty(this.getRollData(), "range.reach") || 0)[0];
+      case "close":
+        return convertDistance(new Roll("25 + floor(@cl / 2) * 5", this.getRollData()).roll().total)[0];
+      case "medium":
+        return convertDistance(new Roll("100 + @cl * 10", this.getRollData()).roll().total)[0];
+      case "long":
+        return convertDistance(new Roll("400 + @cl * 40", this.getRollData()).roll().total)[0];
+      case "mi":
+        return convertDistance(range * 5280)[0];
+      default:
+        return convertDistance(range)[0];
+    }
+  }
+
   get parentActor() {
     if (this.actor) return this.actor;
 
@@ -1827,6 +1853,23 @@ export class ItemPF extends Item {
           },
           { inplace: false }
         );
+
+        // Range
+        {
+          const range = this.range;
+          if (range != null) {
+            templateData.range = range;
+            templateData.rangeLabel = `${templateData.range} ft.`;
+            if (game.settings.get("pf1", "units") === "metric") {
+              templateData.rangeLabel = `${templateData.range} m`;
+            }
+
+            const rangeUnits = getProperty(this.data, "data.range.units");
+            if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
+              templateData.rangeLabel = CONFIG.PF1.distanceUnits[rangeUnits];
+            }
+          }
+        }
 
         // Spell failure
         if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {

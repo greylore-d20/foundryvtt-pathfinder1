@@ -452,6 +452,27 @@ export const registerClientSettings = function () {
     },
     type: Object,
   });
+
+  /*
+   * Compendium difference data
+   */
+  game.settings.register("pf1", "compendiumForceRefresh", {
+    name: "Compendium Force Refresh Data",
+    hint: "Data needed to determine whether to force refresh compendiums",
+    scope: "client",
+    config: false,
+    default: {
+      diff: {
+        items: [],
+        spells: [],
+        classes: [],
+        races: [],
+        feats: [],
+        bestiary: [],
+      },
+    },
+    type: Object,
+  });
 };
 
 export const migrateSystemSettings = async function () {

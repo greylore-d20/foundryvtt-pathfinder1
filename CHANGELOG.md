@@ -24,6 +24,7 @@
 - Added melee and ranged combat maneuvers to available action types (#155)
 - Nonlethal damage can now be indicated and applied, due to the efforts of mkahvi (#421)
 - Minimum damage is now taken into account in attacks, due to the efforts of mkahvi (#129)
+- Compendiums now refresh if the availability of compendiums for its type has changed (#412)
 
 ### Localization
 

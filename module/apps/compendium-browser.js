@@ -11,6 +11,15 @@ const NEED_NEW_VERSION = {
   races: "0.75.6",
 };
 
+export const COMPENDIUM_TYPES = {
+  spells: "Item",
+  items: "Item",
+  bestiary: "Actor",
+  feats: "Item",
+  classes: "Item",
+  races: "Item",
+};
+
 export class CompendiumBrowser extends Application {
   constructor(...args) {
     super(...args);
@@ -94,6 +103,52 @@ export class CompendiumBrowser extends Application {
     });
   }
 
+  shouldForceRefresh() {
+    let result = false;
+
+    if (!this._currentCompendiums) {
+      this.updateForceRefreshData();
+    }
+
+    const forceRefreshData = game.settings.get("pf1", "compendiumForceRefresh");
+    const diff = getProperty(forceRefreshData, `diff.${this.type}`);
+
+    // Determine difference in used compendiums
+    if (!diff) {
+      result = true;
+    } else {
+      let diffCompendiums = [];
+      for (let o of [...this._currentCompendiums, ...diff]) {
+        if (!diff.includes(o) || !this._currentCompendiums.includes(o)) diffCompendiums.push(o);
+      }
+      if (diffCompendiums.length > 0) result = true;
+    }
+
+    return result;
+  }
+
+  updateForceRefreshData(options = { save: false, refresh: true }) {
+    // Generate list of usable compendiums
+    if (options.refresh) {
+      this._currentCompendiums = game.packs
+        .filter((o) => {
+          if (o.metadata.entity !== this.entityType) return false;
+          if (o.private && !game.user.isGM) return false;
+          return true;
+        })
+        .map((o) => {
+          return `${o.metadata.package}.${o.metadata.name}`;
+        });
+    }
+
+    // Save results
+    if (options.save) {
+      const forceRefreshData = duplicate(game.settings.get("pf1", "compendiumForceRefresh"));
+      setProperty(forceRefreshData, `diff.${this.type}`, this._currentCompendiums);
+      return game.settings.set("pf1", "compendiumForceRefresh", forceRefreshData);
+    }
+  }
+
   _initLazyLoad() {
     const rootElem = this.element.find(".directory-list");
     const elems = rootElem.find(".directory-item");
@@ -127,7 +182,7 @@ export class CompendiumBrowser extends Application {
     });
   }
 
-  loadData() {
+  async loadData() {
     return new Promise((resolve) => {
       let promise = this._data.promise;
       if (promise == null) {
@@ -187,7 +242,7 @@ export class CompendiumBrowser extends Application {
   }
 
   get entityType() {
-    return this.options.entityType;
+    return COMPENDIUM_TYPES[this.type];
   }
 
   _onProgress(progress) {
@@ -230,7 +285,7 @@ export class CompendiumBrowser extends Application {
   async _fetchMetadata() {
     this.items = [];
 
-    if (this._savedItems.length === 0) {
+    if (this.shouldForceRefresh() || this._savedItems.length === 0) {
       // Initialize progress bar
       let packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
@@ -548,7 +603,9 @@ export class CompendiumBrowser extends Application {
   }
 
   async getData() {
-    if (!this._data.loaded) await this.loadData();
+    this.updateForceRefreshData();
+    if (this.shouldForceRefresh() || !this._data.loaded) await this.loadData();
+    await this.updateForceRefreshData({ save: true, refresh: false });
 
     return this._data.data;
   }

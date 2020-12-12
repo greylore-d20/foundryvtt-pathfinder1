@@ -77,14 +77,7 @@ Hooks.once("init", async function () {
     },
     migrateWorld: migrations.migrateWorld,
     runUnitTests,
-    compendiums: {
-      spells: new CompendiumBrowser({ type: "spells", entityType: "Item" }),
-      items: new CompendiumBrowser({ type: "items", entityType: "Item" }),
-      bestiary: new CompendiumBrowser({ type: "bestiary", entityType: "Actor" }),
-      feats: new CompendiumBrowser({ type: "feats", entityType: "Item" }),
-      classes: new CompendiumBrowser({ type: "classes", entityType: "Item" }),
-      races: new CompendiumBrowser({ type: "races", entityType: "Item" }),
-    },
+    compendiums: {},
   };
 
   // Record Configuration Values
@@ -227,6 +220,16 @@ Hooks.once("ready", async function () {
 
   // Migrate system settings
   await migrateSystemSettings();
+
+  // Create compendium browsers
+  game.pf1.compendiums = {
+    spells: new CompendiumBrowser({ type: "spells" }),
+    items: new CompendiumBrowser({ type: "items" }),
+    bestiary: new CompendiumBrowser({ type: "bestiary" }),
+    feats: new CompendiumBrowser({ type: "feats" }),
+    classes: new CompendiumBrowser({ type: "classes" }),
+    races: new CompendiumBrowser({ type: "races" }),
+  };
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {

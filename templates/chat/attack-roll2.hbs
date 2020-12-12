@@ -8,6 +8,12 @@
     {{{data.description.value}}}
   </div>
 
+  {{#if range}}
+  <div class="card-range" data-range="{{range}}">
+    {{localize "PF1.Range"}}: {{rangeLabel}}
+  </div>
+  {{/if}}
+
   {{#each attacks as |atk|}}
   <div class="chat-attack">
 

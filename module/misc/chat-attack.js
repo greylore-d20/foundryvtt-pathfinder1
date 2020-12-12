@@ -194,6 +194,9 @@ export class ChatAttack {
     if (this.item != null && this.item.data.data.attackNotes) {
       notes.push(...this.item.data.data.attackNotes.split(/[\n\r]+/));
     }
+    if (["mcman", "rcman"].includes(this.item?.data.data.actionType)) {
+      notes.push(...this.item?.actor?.getContextNotesParsed("misc.cmb"));
+    }
 
     this.attackNotes = notes;
     this.setAttackNotesHTML();

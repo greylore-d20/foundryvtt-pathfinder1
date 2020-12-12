@@ -2,6 +2,10 @@
 
 ## 0.76.9
 
+### Bug Fixes
+
+- Combat Maneuver attacks were not showing CMB context notes (#425)
+
 ### Changelog
 
 - Unclump skill modifiers in rolls (thanks mkahvi!) (#250)

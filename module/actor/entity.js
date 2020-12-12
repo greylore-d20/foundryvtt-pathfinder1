@@ -949,16 +949,20 @@ export class ActorPF extends Actor {
     }
 
     let skl, sklName;
-    const skillParts = skillId.split("."),
+    const data = this.data.data,
+      skillParts = skillId.split("."),
       isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
+    let sources = [];
     if (isSubSkill) {
       skillId = skillParts[0];
-      skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
+      skl = data.skills[skillId].subSkills[skillParts[2]];
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
+      sources = this.sourceDetails[`data.skills.${skillId}.subSkills.${skillParts[2]}.changeBonus`];
     } else {
-      skl = this.data.data.skills[skillId];
+      skl = data.skills[skillId];
       if (skl.name != null) sklName = skl.name;
       else sklName = CONFIG.PF1.skills[skillId];
+      sources = this.sourceDetails[`data.skills.${skillId}.changeBonus`];
     }
 
     // Add contextual attack string
@@ -978,15 +982,27 @@ export class ActorPF extends Actor {
       notes.push(game.i18n.localize("PF1.Untrained"));
     }
 
+    // Build base modifiers, but don't include all if they're zeroed.
+    let mods = [skl.rank];
+    if (skl.cs && skl.rank > 0) mods.push(3);
+    mods.push(data.abilities[skl.ability].mod);
+    const acp = data.attributes.acp.total;
+    if (skl.acp && acp > 0) mods.push(-acp);
+    const energyDrain = Math.abs(data.attributes.energyDrain);
+    if (energyDrain > 0) mods.push(-energyDrain);
+
+    // BUG: Character update needs to have run once or the changes will be empty.
+    let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+
     let props = [];
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
     return DicePF.d20Roll({
       event: options.event,
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
-      parts: ["@mod"],
+      parts: [...mods, ...changes],
       dice: options.dice,
-      data: { mod: skl.mod },
+      data: {},
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",

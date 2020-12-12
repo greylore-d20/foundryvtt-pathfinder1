@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.9
+
+### Changelog
+
+- Unclump skill modifiers in rolls (thanks mkahvi!) (#250)
+
 ## 0.76.8
 
 ### Bug Fixes

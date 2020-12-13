@@ -64,7 +64,7 @@
             {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
-          
+
           {{data.attributes.init.total}}
         </td>
       </tr>
@@ -74,18 +74,17 @@
 
 <hr>
 
+{{!-- Attack Filters --}}
+<div class="inventory-filters flexrow">
+  <ul class="filter-list flexrow" data-filter="attacks">
+    {{#each sections as |section sid|}}
+      <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
+    {{/each}}
+  </ul>
+</div>
+
 {{!-- Attacks Header --}}
 <div class="combat-attacks">
-
-  {{!-- Attack Filters --}}
-  <div class="inventory-filters flexrow">  
-    <ul class="filter-list flexrow" data-filter="attacks">
-      {{#each sections as |section sid|}}
-      <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
-      {{/each}}
-    </ul>
-  </div>
-
   <section class="attacks-body">
     {{#each sections as |section sid|}}
     {{#unless section._hidden}}
@@ -95,11 +94,11 @@
           <h3 class="item-name flexrow">{{section.label}}</h3>
 
           {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" title="{{localize "PF1.Type"}}"></i></div>{{/if}}
-          
+
           <div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>
-          
+
           <div class="item-detail item-uses"><i class="icon icon-battery-pack large" title="{{localize "PF1.ChargePlural"}}"></i></div>
-          
+
           {{#if ../owner}}
           <div class="item-controls">
             {{#if section.canCreate}}
@@ -110,7 +109,7 @@
           </div>
           {{/if}}
         </li>
-        
+
         <ol class="item-list">
           {{#each section.items as |item iid|}}
           <li class="item flexrow" data-item-id="{{item._id}}">
@@ -126,7 +125,7 @@
               <span>{{lookup ../../config.attackTypes item.data.attackType}}</span>
             </div>
             {{/if}}
-            
+
             <div class="item-detail item-actions">
               <div class="item-attack tooltip">
                 {{#if item.hasAction}}
@@ -137,7 +136,7 @@
                 {{/if}}
               </div>
             </div>
-            
+
             <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
               {{#if item.isCharged}}
               <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.data.uses.value}}</span>
@@ -149,7 +148,7 @@
               </span>
               {{/if}}
             </div>
-            
+
             {{#if ../../owner}}
             <div class="item-controls">
               <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
@@ -166,6 +165,8 @@
     {{/each}}
   </section>
 </div>
+
+<hr>
 
 {{!-- Defenses Header --}}
 <div class="combat-defenses">

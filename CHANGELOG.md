@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Combat Maneuver attacks were not showing CMB context notes (#425)
+- Attack filters in the combat tab scrolled out of view
 
 ### Changelog
 

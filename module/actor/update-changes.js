@@ -1764,16 +1764,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         });
         flags["loseDexToAC"] = true;
         getSourceInfo(sourceInfo, "data.attributes.ac.normal.total").negative.push({
-          name: "Stunned",
-          value: "Lose Dex to AC",
+          name: game.i18n.localize("PF1.CondStunned"),
+          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
         });
         getSourceInfo(sourceInfo, "data.attributes.ac.touch.total").negative.push({
-          name: "Stunned",
-          value: "Lose Dex to AC",
+          name: game.i18n.localize("PF1.CondStunned"),
+          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
         });
         getSourceInfo(sourceInfo, "data.attributes.cmd.total").negative.push({
-          name: "Stunned",
-          value: "Lose Dex to AC",
+          name: game.i18n.localize("PF1.CondStunned"),
+          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
         });
         break;
     }

@@ -7,10 +7,12 @@
 - Combat Maneuver attacks were not showing CMB context notes (#425)
 - Attack filters in the combat tab scrolled out of view
 - Stunned change sources were not translated in tooltips (fixed by mkahvi (many thanks!))
+- Actor's changes were not initialised until the actor was updated
 
 ### Changelog
 
 - Unclump skill modifiers in rolls (thanks mkahvi!) (#250)
+- Unclump saving throw modifiers in rolls (thanks mkahvi!)
 
 ## 0.76.8
 

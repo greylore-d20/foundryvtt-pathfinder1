@@ -991,7 +991,6 @@ export class ActorPF extends Actor {
     const energyDrain = Math.abs(data.attributes.energyDrain);
     if (energyDrain > 0) mods.push(-energyDrain);
 
-    // BUG: Character update needs to have run once or the changes will be empty.
     let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
 
     let props = [];
@@ -1260,7 +1259,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // BUG: Character update needs to have run once or the changes will be empty.
     const changes = this.sourceDetails[`data.attributes.savingThrows.${savingThrowId}.total`];
     const abl = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.ability`);
     const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);

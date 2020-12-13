@@ -7,6 +7,9 @@ export const updateChanges = async function ({ data = null } = {}) {
   let updateData = {};
   let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
   let changeObjects = [];
+
+  // Populate actor's changeItems, then add to chengeObjects
+  this.updateChangeEvals();
   if (this.changeItems && this.changeItems.length) {
     changeObjects = this.changeItems.map((o) => {
       return o.data;

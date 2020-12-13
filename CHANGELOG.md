@@ -6,6 +6,7 @@
 
 - Combat Maneuver attacks were not showing CMB context notes (#425)
 - Attack filters in the combat tab scrolled out of view
+- Stunned change sources were not translated in tooltips (fixed by mkahvi (many thanks!))
 
 ### Changelog
 

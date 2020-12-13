@@ -1260,6 +1260,13 @@ export class ActorPF extends Actor {
       }
     }
 
+    // BUG: Character update needs to have run once or the changes will be empty.
+    const changes = this.sourceDetails[`data.attributes.savingThrows.${savingThrowId}.total`];
+    const abl = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.ability`);
+    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);
+    let mods = changes.map((item) => item.value);
+    if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
+
     // Roll saving throw
     let props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -1267,10 +1274,10 @@ export class ActorPF extends Actor {
     const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod"],
+      parts: mods,
       dice: options.dice,
       situational: true,
-      data: { mod: savingThrow.total },
+      data: {},
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,

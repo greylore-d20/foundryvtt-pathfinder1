@@ -81,11 +81,11 @@ export const showAttackReach = function (token, attack) {
   };
 
   if (["melee", "touch", "reach"].includes(rangeKey)) {
-    squares.normal = getReachSquares(token, range.melee);
-    squares.reach = getReachSquares(token, range.reach, range.melee);
+    squares.normal = getReachSquares(token, range.melee, null, null, { useReachRule: true });
+    squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule: true });
   } else if (rangeKey === "ft") {
     const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
-    squares.normal = getReachSquares(token, r);
+    squares.normal = getReachSquares(token, range.melee, null, null, { useReachRule: true });
 
     // Add range increments
     const maxSquareRange = Math.min(
@@ -231,7 +231,7 @@ export const addReachCallback = function (data, html) {
   return results;
 };
 
-const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null) {
+const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {
   range = convertDistance(range)[0];
   if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
 
@@ -295,7 +295,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           minRange != null
         )
       ) {
-        if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect)) {
+        if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect, options)) {
           result.push(offset);
         }
       }
@@ -305,7 +305,15 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   return result;
 };
 
-const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, minRange, tokenRect) {
+const shouldAddReachSquare = function (
+  token,
+  pos,
+  closestTokenSquare,
+  range,
+  minRange,
+  tokenRect,
+  options = { useReachRule: false }
+) {
   const gridDist = canvas.scene.data.gridDistance;
   const gridSize = canvas.grid.size;
   const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
@@ -316,7 +324,7 @@ const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, mi
   const reachRuleRange = convertDistance(10)[0];
   if (dist > range) {
     // Special rule for 10-ft. reach
-    if (range !== reachRuleRange) {
+    if (!(options.useReachRule && range === reachRuleRange)) {
       return false;
     }
   }
@@ -326,7 +334,7 @@ const shouldAddReachSquare = function (token, pos, closestTokenSquare, range, mi
   }
 
   // Special rule for minimum ranges >= 10-ft.
-  if (minRange >= reachRuleRange && dist2 <= reachRuleRange) {
+  if (options.useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
     return false;
   }
 

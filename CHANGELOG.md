@@ -10,6 +10,7 @@
 - Actor's changes were not initialised until the actor was updated
 - Fixed error on using consumables generated from spells (#426)
 - Attacks played the default and Dice So Nice's sound (fixed by Manuel Vögele (many thanks!))
+- Fix error during scene migration if token's actor didn't exist anymore
 
 ### Changelog
 

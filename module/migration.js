@@ -222,7 +222,7 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actordata = {};
     }
-    const originalActor = game.actors.get(token.actor.id);
+    const originalActor = game.actors.get(token.actor?.id);
     if (!originalActor) {
       t.actorId = null;
       t.actorData = {};

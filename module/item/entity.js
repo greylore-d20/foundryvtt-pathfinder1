@@ -1798,6 +1798,13 @@ export class ItemPF extends Item {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
           if (this.data.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
         }
+
+        // Add info for Point-Blank shot
+        if (attackExtraParts.includes("@pointBlankBonus")) properties.push(game.i18n.localize("PF1.PointBlankShot"));
+
+        // Add info for Rapid Shot
+        if (attackExtraParts.includes("@rapidShotPenalty")) properties.push(game.i18n.localize("PF1.RapidShot"));
+
         // Add conditionals info
         if (conditionals?.length) {
           conditionals.forEach((c) => {

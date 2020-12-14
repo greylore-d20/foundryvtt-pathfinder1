@@ -16,6 +16,7 @@
 
 - Unclump skill modifiers in rolls (thanks mkahvi!) (#250)
 - Unclump saving throw modifiers in rolls (thanks mkahvi!)
+- Added Point-Blank Shot and Rapid Shot info to attack chat cards (#431)
 
 ## 0.76.8
 

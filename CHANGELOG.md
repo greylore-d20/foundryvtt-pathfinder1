@@ -8,6 +8,7 @@
 - Attack filters in the combat tab scrolled out of view
 - Stunned change sources were not translated in tooltips (fixed by mkahvi (many thanks!))
 - Actor's changes were not initialised until the actor was updated
+- Fixed error on using consumables generated from spells (#426)
 
 ### Changelog
 

@@ -239,7 +239,7 @@ export class ItemPF extends Item {
       }
       return result;
     }
-    const dcFormula = getProperty(data, "save.dc") || "0";
+    const dcFormula = getProperty(data, "save.dc")?.toString() || "0";
     try {
       result = new Roll(dcFormula, rollData).roll().total + dcBonus;
     } catch (e) {
@@ -2884,7 +2884,7 @@ export class ItemPF extends Item {
 
     // Set saves
     data.data.save.description = origData.data.save.description;
-    data.data.save.dc = 10 + slcl[0] + Math.floor(slcl[0] / 2);
+    data.data.save.dc = 10 + slcl[0] + Math.floor(slcl[0] / 2) + "";
 
     // Copy variables
     data.data.attackNotes = origData.data.attackNotes;

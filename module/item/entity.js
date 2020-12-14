@@ -1706,12 +1706,13 @@ export class ItemPF extends Item {
       let chatData = {
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         rollMode: rollMode,
-        sound: CONFIG.sounds.dice,
         "flags.pf1.noRollRender": true,
       };
 
       // Set attack sound
       if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
+      // Set dice sound if neither attack sound nor Dice so Nice are available
+      else if (game.dice3d == null || !game.dice3d.isEnabled()) chatData.sound = CONFIG.sounds.dice;
 
       // Dice So Nice integration
       if (game.dice3d != null && game.dice3d.isEnabled()) {

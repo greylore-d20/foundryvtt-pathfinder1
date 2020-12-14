@@ -9,6 +9,7 @@
 - Stunned change sources were not translated in tooltips (fixed by mkahvi (many thanks!))
 - Actor's changes were not initialised until the actor was updated
 - Fixed error on using consumables generated from spells (#426)
+- Attacks played the default and Dice So Nice's sound (fixed by Manuel Vögele (many thanks!))
 
 ### Changelog
 

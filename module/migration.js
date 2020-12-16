@@ -146,6 +146,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorNullValues(actor, updateData);
   _migrateActorSpellbookDomainSlots(actor, updateData);
   _migrateActorStatures(actor, updateData);
+  _migrateActorInitAbility(actor, updateData);
 
   if (!actor.items) return updateData;
 
@@ -837,6 +838,14 @@ const _migrateActorStatures = function (ent, updateData) {
 
   if (stature === undefined) {
     updateData["data.traits.stature"] = "tall";
+  }
+};
+
+const _migrateActorInitAbility = function (ent, updateData) {
+  const abl = getProperty(ent.data, "data.attributes.init.ability");
+
+  if (abl === undefined) {
+    updateData["data.attributes.init.ability"] = "dex";
   }
 };
 

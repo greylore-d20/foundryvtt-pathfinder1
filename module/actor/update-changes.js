@@ -1365,14 +1365,36 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
 
   // Add Dexterity Modifier to Initiative
   {
-    changes.push({
-      raw: mergeObject(
-        ItemChange.defaultData,
-        { formula: "@abilities.dex.mod", target: "misc", subTarget: "init", modifier: "untypedPerm", priority: -100 },
-        { inplace: false }
-      ),
-      source: { name: CONFIG.PF1.abilities["dex"] },
-    });
+    const abl = getProperty(data, "data.attributes.init.ability");
+    const acp = getProperty(data, "data.attributes.acp.attackPenalty");
+    if (abl) {
+      changes.push({
+        raw: mergeObject(
+          ItemChange.defaultData,
+          {
+            formula: `@abilities.${abl}.mod`,
+            target: "misc",
+            subTarget: "init",
+            modifier: "untypedPerm",
+            priority: -100,
+          },
+          { inplace: false }
+        ),
+        source: { name: CONFIG.PF1.abilities[abl] },
+      });
+    }
+
+    //Add ACP penalty
+    if (["str", "dex"].includes(abl) && acp > 0) {
+      changes.push({
+        raw: mergeObject(
+          ItemChange.defaultData,
+          { formula: "-@attributes.acp.attackPenalty", target: "misc", subTarget: "init", modifier: "penalty" },
+          { inplace: false }
+        ),
+        source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },
+      });
+    }
   }
 
   // Add Ability modifiers and Energy Drain to saving throws

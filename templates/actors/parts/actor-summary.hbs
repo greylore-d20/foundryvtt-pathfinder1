@@ -393,15 +393,19 @@
       <table>
         <thead>
           <tr>
-            <th class="attribute bab" data-attribute="bab">
+            <th class="attribute bab" data-attribute="bab" rowspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
             </th>
-            <th class="attribute cmb" data-attribute="cmb">
+            <th class="attribute cmb" data-attribute="cmb" rowspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
             </th>
-            <th class="attribute initiative" data-attribute="initiative">
+            <th class="attribute initiative" data-attribute="initiative" colspan="2">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
             </th>
+          </tr>
+          <tr>
+            <th>{{localize "PF1.Value"}}</th>
+            <th>{{localize "PF1.Ability"}}</th>
           </tr>
         </thead>
 
@@ -435,12 +439,19 @@
               <span class="tooltipcontent">
                 @attributes.init.total : {{data.attributes.init.total}}
                 {{#if sourceDetails.data.attributes.init.total.length}}
-                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                  {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
               </span>
-
               {{data.attributes.init.total}}
+            </td>
+            <td>
+              <select data-name="data.attributes.init.ability">
+                {{#select data.attributes.init.ability}}
+                  <option value=""></option>
+                  {{selectOptions config.abilities}}
+                {{/select}}
+              </select>
             </td>
           </tr>
         </tbody>

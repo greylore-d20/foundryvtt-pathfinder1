@@ -1779,6 +1779,7 @@ export class ItemPF extends Item {
 
         const itemChatData = this.getChatData(null, rollData);
         const properties = itemChatData.properties;
+
         // Add actual cost
         if (cost) {
           if (this.data.type === "spell" && this.useSpellPoints()) {
@@ -1787,12 +1788,15 @@ export class ItemPF extends Item {
             properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);
           }
         }
+
         // Add info for broken state
         if (this.data.data.broken) {
           properties.push(game.i18n.localize("PF1.Broken"));
         }
+
         // Nonlethal
         if (this.data.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
+
         // Add info for Power Attack to melee, Deadly Aim to ranged attacks
         if (attackExtraParts.includes("@powerAttackPenalty")) {
           if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
@@ -1804,6 +1808,10 @@ export class ItemPF extends Item {
 
         // Add info for Rapid Shot
         if (attackExtraParts.includes("@rapidShotPenalty")) properties.push(game.i18n.localize("PF1.RapidShot"));
+
+        // Add Armor Check Penalty's application to attack rolls info
+        if (this.hasAttack && rollData.attributes.acp.attackPenalty > 0)
+          properties.push(game.i18n.localize("PF1.ArmorCheckPenalty"));
 
         // Add conditionals info
         if (conditionals?.length) {

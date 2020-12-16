@@ -941,7 +941,9 @@ const _addDynamicData = function ({
 
   // Check if there's any matching proficiency
   const hasArmorProficiency = (item, proficiencyName) => {
-    if (data.NPC) return true; // HACK: NPCs lack proficiencies
+    // Assume NPCs to be proficient with their armor
+    if (data.type === "npc") return true;
+
     const name = item.name.toLowerCase(),
       tag = item.data.tag;
     return (

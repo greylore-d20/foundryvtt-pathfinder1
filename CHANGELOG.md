@@ -17,6 +17,7 @@
 - Unclump skill modifiers in rolls (thanks mkahvi!) (#250)
 - Unclump saving throw modifiers in rolls (thanks mkahvi!)
 - Added Point-Blank Shot and Rapid Shot info to attack chat cards (#431)
+- Add armor proficiency detection and application of ACP to attack rolls in case of lacking proficiency (thanks mkahvi!)
 
 ## 0.76.8
 

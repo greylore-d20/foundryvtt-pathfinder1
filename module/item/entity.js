@@ -794,8 +794,10 @@ export class ItemPF extends Item {
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
-    // Initialize tag
-    if (this.type === "class" && !srcData.data.useCustomTag) {
+    // Initialize tag for items that have tagged template
+    // TODO: Parse template.json to keep this automatically up-to-date.
+    const taggedTypes = ["class", "feat", "buff", "equipment", "loot", "attack", "weapon"];
+    if (taggedTypes.includes(this.type) && !srcData.data.useCustomTag) {
       const name = srcData.name;
       linkData(srcData, data, "data.tag", createTag(name));
     }

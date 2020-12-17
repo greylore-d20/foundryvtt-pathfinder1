@@ -670,12 +670,46 @@ export class ItemPF extends Item {
 
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
+      let changeIndexes = [];
       let subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
       let arr = duplicate(this.data.data.changes || []);
+
+      // Get pre update data for changes
+      subData.forEach((entry) => {
+        const i = entry[0].split(".").slice(2)[0];
+
+        // Add change update data
+        if (!changeIndexes.includes(i)) {
+          changeIndexes.push(i);
+          const changeID = this.data.data.changes[i]._id;
+          const change = this.changes.get(changeID);
+          if (change) {
+            const changeDataPrefix = `data.changes.${i}.`;
+            const thisChangeData = subData
+              .filter((o) => o[0].startsWith(changeDataPrefix))
+              .reduce((cur, o) => {
+                const key = o[0].slice(changeDataPrefix.length);
+                cur[key] = o[1];
+                return cur;
+              }, {});
+            const preUpdateData = change.preUpdate(thisChangeData);
+
+            // Apply pre-update data to the data to be parsed
+            for (const [k, v] of Object.entries(preUpdateData)) {
+              const dataKey = `data.changes.${i}.${k}`;
+              data[dataKey] = v;
+            }
+          }
+        }
+      });
+      // Refresh sub-data
+      subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
+
       subData.forEach((entry) => {
         let subKey = entry[0].split(".").slice(2);
         let i = subKey[0];
         let subKey2 = subKey.slice(1).join(".");
+
         if (!arr[i]) arr[i] = {};
 
         // Remove property

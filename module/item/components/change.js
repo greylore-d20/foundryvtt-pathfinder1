@@ -51,10 +51,27 @@ export class ItemChange {
 
   prepareData() {}
 
+  preUpdate(data) {
+    // Make sure sub-target is valid
+    {
+      if (data["target"]) {
+        const subTarget = data["subTarget"] || this.subTarget;
+        const changeSubTargets = CONFIG.PF1.buffTargets[data["target"]];
+        if (changeSubTargets[subTarget] == null) {
+          data["subTarget"] = Object.keys(changeSubTargets).filter((o) => !o.startsWith("_"))[0];
+        }
+      }
+    }
+
+    return data;
+  }
+
   async update(data, options = {}) {
     this.updateTime = new Date();
 
     if (this.parent != null) {
+      data = this.preUpdate(data);
+
       const rawChange = this.parent.data.data.changes.find((o) => o._id === this._id);
       const idx = this.parent.data.data.changes.indexOf(rawChange);
       if (idx >= 0) {

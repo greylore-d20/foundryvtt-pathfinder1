@@ -22,6 +22,7 @@
 - Add armor proficiency detection and application of ACP to attack rolls in case of lacking proficiency (thanks mkahvi!)
 - Add ability choice for Initiative
 - Added an option for adding minimum reach to abilities (#405)
+- Add custom tag option for more than just classes (thanks mkahvi!) (#351)
 
 ## 0.76.8
 

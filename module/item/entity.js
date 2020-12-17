@@ -795,8 +795,9 @@ export class ItemPF extends Item {
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
 
     // Initialize tag for items that have tagged template
-    // TODO: Parse template.json to keep this automatically up-to-date.
-    const taggedTypes = ["class", "feat", "buff", "equipment", "loot", "attack", "weapon"];
+    const taggedTypes = game.system.template.Item.types.filter((t) =>
+      game.system.template.Item[t].templates?.includes("tagged")
+    );
     if (taggedTypes.includes(this.type) && !srcData.data.useCustomTag) {
       const name = srcData.name;
       linkData(srcData, data, "data.tag", createTag(name));

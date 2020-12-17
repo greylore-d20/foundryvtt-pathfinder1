@@ -963,13 +963,15 @@
           "sp": 0,
           "cp": 0
         }
+      },
+      "tagged": {
+        "tag": "",
+        "useCustomTag": false
       }
     },
     "class": {
-      "templates": ["itemDescription", "changes", "links"],
+      "templates": ["itemDescription", "changes", "links", "tagged"],
       "classType": "base",
-      "tag": "",
-      "useCustomTag": false,
       "levels": {
         "value": 0,
         "_deprecated": true
@@ -992,14 +994,14 @@
       "classSkills": {}
     },
     "buff": {
-      "templates": ["itemDescription", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links", "tagged"],
       "buffType": "temp",
       "active": false,
       "level": 0,
       "hideFromToken": false
     },
     "consumable": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "links"],
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "links", "tagged"],
       "consumableType": "potion",
       "uses": {
         "value": 0,
@@ -1009,7 +1011,16 @@
       }
     },
     "equipment": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "changes", "contextNotes", "action", "links"],
+      "templates": [
+        "itemDescription",
+        "physicalItem",
+        "activatedEffect",
+        "changes",
+        "contextNotes",
+        "action",
+        "links",
+        "tagged"
+      ],
       "equipped": true,
       "equipmentType": "armor",
       "equipmentSubtype": "lightArmor",
@@ -1027,7 +1038,7 @@
       "nonlethal": false
     },
     "feat": {
-      "templates": ["itemDescription", "activatedEffect", "action", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "activatedEffect", "action", "changes", "contextNotes", "links", "tagged"],
       "featType": "feat",
       "associations": {
         "classes": []
@@ -1041,7 +1052,7 @@
       }
     },
     "loot": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged"],
       "subType": "misc",
       "equipped": true
     },
@@ -1097,7 +1108,7 @@
       "slotCost": 1
     },
     "weapon": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged"],
       "equipped": true,
       "masterwork": false,
       "nonlethal": false,
@@ -1135,7 +1146,7 @@
       }
     },
     "attack": {
-      "templates": ["itemDescription", "activatedEffect", "action", "links"],
+      "templates": ["itemDescription", "activatedEffect", "action", "links", "tagged"],
       "attackType": "weapon",
       "masterwork": false,
       "nonlethal": false,

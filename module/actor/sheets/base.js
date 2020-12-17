@@ -1888,7 +1888,7 @@ export class ActorSheetPF extends ActorSheet {
       if (!id) continue;
       const item = this.actor.items.find((o) => o._id === id);
       if (!item) continue;
-      item.data.tag = key;
+      item.data.tag = !item.data.data.useCustomTag ? key : item.data.data.tag;
     }
 
     // Categorize items as inventory, spellbook, features, and classes

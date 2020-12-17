@@ -572,7 +572,7 @@ export class ActorPF extends Actor {
         });
       }
       // Remove resource
-      if (item == null || createTag(item.name) !== tag) {
+      if (item == null || (item.data.data.useCustomTag ? item.data.tag : createTag(item.name)) !== tag) {
         data[`data.resources.-=${tag}`] = null;
       }
     }
@@ -715,7 +715,7 @@ export class ActorPF extends Actor {
     if (!this.hasPerm(game.user, "OWNER")) return;
 
     if (item.data.data.uses != null && item.data.data.activation != null && item.data.data.activation.type !== "") {
-      const itemTag = createTag(item.data.name);
+      const itemTag = !item.data.data.useCustomTag ? createTag(item.data.name) : item.data.data.tag;
       let curUses = item.data.data.uses;
 
       const res = getProperty(this.data, `data.resources.${itemTag}`);

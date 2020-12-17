@@ -13,6 +13,8 @@
 - Fix error during scene migration if token's actor didn't exist anymore
 - Change subtargets were not set correctly when changing primary targets (#429)
 - Reach highlighting for abilities with a specific reach in feet incorrectly used melee reach
+- Chat card labels for at-will spells from spellbooks using Spell Points showed Infinity as remaining spell points
+- DC labels for chat card labels were not properly localized (#428)
 
 ### Changelog
 

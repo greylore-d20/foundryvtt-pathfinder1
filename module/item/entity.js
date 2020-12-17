@@ -1146,7 +1146,7 @@ export class ItemPF extends Item {
         let saveDC = this.getDC(rollData);
         let saveDesc = data.save.description;
         if (saveDC > 0 && saveDesc) {
-          props.push(`DC ${saveDC}`);
+          props.push(`${game.i18n.localize("PF1.DC")} ${saveDC}`);
           props.push(saveDesc);
         }
       }
@@ -1167,7 +1167,7 @@ export class ItemPF extends Item {
     }
 
     // Add charges
-    if (this.isCharged) {
+    if (this.isCharged && !this.data.data.atWill) {
       if (this.type === "spell" && this.useSpellPoints()) {
         props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
       } else {
@@ -1818,7 +1818,7 @@ export class ItemPF extends Item {
         const properties = itemChatData.properties;
 
         // Add actual cost
-        if (cost) {
+        if (cost && !this.data.data.atWill) {
           if (this.data.type === "spell" && this.useSpellPoints()) {
             properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
           } else {

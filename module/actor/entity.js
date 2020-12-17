@@ -714,7 +714,7 @@ export class ActorPF extends Actor {
     if (!(item instanceof Item)) return;
     if (!this.hasPerm(game.user, "OWNER")) return;
 
-    if (item.data.data.uses != null && item.data.data.activation != null && item.data.data.activation.type !== "") {
+    if (item.data.data.uses?.per && item.data.data.activation?.type) {
       const itemTag = !item.data.data.useCustomTag ? createTag(item.data.name) : item.data.data.tag;
       let curUses = item.data.data.uses;
 

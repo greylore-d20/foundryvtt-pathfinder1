@@ -23,6 +23,7 @@
 - Add ability choice for Initiative
 - Added an option for adding minimum reach to abilities (#405)
 - Add custom tag option for more than just classes (thanks mkahvi!) (#351)
+- Restrict Items showing up in an actor's resources to those with limited charges
 
 ## 0.76.8
 

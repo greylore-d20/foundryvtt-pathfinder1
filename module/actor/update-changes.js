@@ -920,12 +920,44 @@ const _addDynamicData = function ({
   const prevMods = { total: {}, base: {} };
   const modDiffs = { total: {}, base: {} };
 
+  // Item type to proficiency maps
+  const armorProficiencyMap = {
+    lightArmor: "lgt",
+    mediumArmor: "med",
+    heavyArmor: "hvy",
+  };
+  const shieldProficiencyMap = {
+    other: "shl", // buckler
+    lightShield: "shl",
+    heavyShield: "shl",
+    towerShield: "twr",
+  };
+  // Custom proficiencies
+  const customProficiencies =
+    data.data.traits.armorProf?.custom
+      .split(";")
+      .map((item) => item.trim().toLowerCase())
+      .filter((item) => item.length > 0) || [];
+
+  // Check if there's any matching proficiency
+  const hasArmorProficiency = (item, proficiencyName) => {
+    if (data.NPC) return true; // HACK: NPCs lack proficiencies
+    const name = item.name.toLowerCase(),
+      tag = item.data.tag;
+    return (
+      data.data.traits.armorProf.value.includes(proficiencyName) ||
+      customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
+    );
+  };
+
   // Apply ACP and Max Dexterity Bonus
   {
-    let armorACP = null;
-    let shieldACP = null;
+    let armorACP = 0;
+    let shieldACP = 0;
+    let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
     let armorMDex = null;
     let shieldMDex = null;
+
     data.items
       .filter((obj) => {
         return obj.type === "equipment" && obj.data.equipped;
@@ -961,10 +993,13 @@ const _addDynamicData = function ({
 
         switch (obj.data.equipmentType) {
           case "armor":
-            armorACP = Math.max(armorACP == null ? -999 : armorACP, itemACP);
+            if (itemACP > armorACP) armorACP = itemACP;
+            if (!hasArmorProficiency(obj, armorProficiencyMap[obj.data.equipmentSubtype])) attackACPPenalty += armorACP;
             break;
           case "shield":
-            shieldACP = Math.max(shieldACP == null ? -999 : shieldACP, itemACP);
+            if (itemACP > shieldACP) shieldACP = itemACP;
+            if (!hasArmorProficiency(obj, shieldProficiencyMap[obj.data.equipmentSubtype]))
+              attackACPPenalty += shieldACP;
             break;
         }
 
@@ -1007,6 +1042,8 @@ const _addDynamicData = function ({
           }
         }
       });
+
+    // Update
     linkData(
       data,
       updateData,
@@ -1021,6 +1058,7 @@ const _addDynamicData = function ({
         Math.min(armorMDex == null ? 999 : armorMDex, shieldMDex == null ? 999 : shieldMDex)
       );
     }
+    linkData(data, updateData, "data.attributes.acp.attackPenalty", attackACPPenalty);
   }
 
   // Reset ability modifiers

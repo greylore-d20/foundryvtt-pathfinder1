@@ -2081,6 +2081,10 @@ export class ItemPF extends Item {
       rollData.bonus = new Roll(bonus, rollData).roll().total;
       parts.push("@bonus");
     }
+
+    // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
+    if (rollData.attributes.acp.attackPenalty > 0) parts.push("-@attributes.acp.attackPenalty");
+
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
     let roll = new Roll([rollData.d20, ...parts].join("+"), rollData).roll();

@@ -12,6 +12,7 @@
 - Attacks played the default and Dice So Nice's sound (fixed by Manuel Vögele (many thanks!))
 - Fix error during scene migration if token's actor didn't exist anymore
 - Change subtargets were not set correctly when changing primary targets (#429)
+- Reach highlighting for abilities with a specific reach in feet incorrectly used melee reach
 
 ### Changelog
 
@@ -20,6 +21,7 @@
 - Added Point-Blank Shot and Rapid Shot info to attack chat cards (#431)
 - Add armor proficiency detection and application of ACP to attack rolls in case of lacking proficiency (thanks mkahvi!)
 - Add ability choice for Initiative
+- Added an option for adding minimum reach to abilities (#405)
 
 ## 0.76.8
 

@@ -74,6 +74,15 @@ export const showAttackReach = function (token, attack) {
   const isReach = rangeKey === "reach";
   const range = rollData.range;
 
+  // Determine minimum range
+  const minRangeKey = getProperty(attack.data, "data.range.minUnits");
+  let minRange = null;
+  if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
+  if (minRangeKey === "reach") minRange = range.reach;
+  if (minRangeKey === "ft") {
+    minRange = new Roll(getProperty(attack.data, "data.range.minValue") || "0", rollData).roll().total;
+  }
+
   let squares = {
     normal: [],
     reach: [],
@@ -81,11 +90,11 @@ export const showAttackReach = function (token, attack) {
   };
 
   if (["melee", "touch", "reach"].includes(rangeKey)) {
-    squares.normal = getReachSquares(token, range.melee, null, null, { useReachRule: true });
+    squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule: true });
     squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule: true });
   } else if (rangeKey === "ft") {
     const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
-    squares.normal = getReachSquares(token, range.melee, null, null, { useReachRule: true });
+    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
 
     // Add range increments
     const maxSquareRange = Math.min(
@@ -102,7 +111,6 @@ export const showAttackReach = function (token, attack) {
       }
     }
   } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
-    const spellbook = attack.spellbook;
     let r;
     switch (rangeKey) {
       case "close":
@@ -112,7 +120,7 @@ export const showAttackReach = function (token, attack) {
         r = new Roll("100 + @cl * 10", rollData).roll().total;
         break;
     }
-    squares.normal = getReachSquares(token, r);
+    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
   }
 
   const result = {

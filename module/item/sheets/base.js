@@ -131,6 +131,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     if (data.item.data.range != null) {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
+      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.range.minUnits);
     }
     if (data.item.data.duration != null) {
       data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.duration.units);

@@ -52,6 +52,24 @@
   </div>
 </div>
 
+{{#if data.range.units}}
+{{!-- Minimum Range --}}
+<div class="form-group input-select">
+  <label>{{localize "PF1.MinRange"}}</label>
+  <div class="form-fields">
+    {{#if canInputMinRange}}<input type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    <select name="data.range.minUnits">
+      {{#select data.range.minUnits}}
+      <option value=""></option>
+      {{#each distanceUnits as |name key|}}
+      <option value="{{key}}">{{name}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
+</div>
+{{/if}}
+
 {{!-- Range Increments --}}
 {{#if showMaxRangeIncrements}}
 <div class="form-group input-select-select">

@@ -16,6 +16,7 @@
 - Chat card labels for at-will spells from spellbooks using Spell Points showed Infinity as remaining spell points
 - DC labels for chat card labels were not properly localized (#428)
 - Arcane spell failure rolls were not properly styled
+- Resource names were not generated when using Unchained Action Economy (#430)
 
 ### Changelog
 

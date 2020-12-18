@@ -114,11 +114,9 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     // Add relative value
     else {
       let dt = value;
-      console.log(data.attribute);
       if (data.attribute === "attributes.hp" && actor.data.data.attributes.hp.temp > 0 && operator === "-") {
         dt = Math.min(0, actor.data.data.attributes.hp.temp - value);
         updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp - value);
-        console.log(actor.data.data.attributes.hp.value, value, dt);
         value = actor.data.data.attributes.hp.value + dt;
       } else if (operator === "-") {
         if (data.attribute === "attributes.hp") value = Math.min(current.value - dt, current.max);

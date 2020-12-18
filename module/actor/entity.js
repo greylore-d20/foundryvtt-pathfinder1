@@ -714,7 +714,10 @@ export class ActorPF extends Actor {
     if (!(item instanceof Item)) return;
     if (!this.hasPerm(game.user, "OWNER")) return;
 
-    if (item.data.data.uses?.per && item.data.data.activation?.type) {
+    const activationType = game.settings.get("pf1", "unchainedActionEconomy")
+      ? item.data.data.unchainedAction?.activation?.type
+      : item.data.data.activation?.type;
+    if (item.data.data.uses?.per && activationType) {
       const itemTag = !item.data.data.useCustomTag ? createTag(item.data.name) : item.data.data.tag;
       let curUses = item.data.data.uses;
 

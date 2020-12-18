@@ -21,8 +21,17 @@
 </div>
 {{/if}}
 
-{{!-- Attack Roll Bonus --}}
 {{#if hasAttackRoll }}
+
+{{!-- Attack Name --}}
+<div class="form-group">
+  <label>{{localize "PF1.AttackName"}}</label>
+  <div class="form-fields">
+    <input type="text" name="data.attackName" value="{{data.attackName}}" placeholder="{{localize "PF1.Attack"}}" />
+  </div>
+</div>
+
+{{!-- Attack Roll Bonus --}}
 <div class="form-group">
   <label>{{localize "PF1.AttackRollBonus"}}</label>
   <div class="form-fields">

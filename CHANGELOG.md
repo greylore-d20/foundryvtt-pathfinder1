@@ -28,6 +28,7 @@
 - Add custom tag option for more than just classes (thanks mkahvi!) (#351)
 - Restrict Items showing up in an actor's resources to those with limited charges
 - Actor hit points can now go below -100 (#415)
+- Add text input for primary attack name (#413)
 
 ## 0.76.8
 

@@ -1432,15 +1432,16 @@ export class ItemPF extends Item {
       }
 
       // Create attacks
+      const attackName = this.data.data.attackName;
       const allAttacks = fullAttack
         ? this.data.data.attackParts.reduce(
             (cur, r) => {
               cur.push({ bonus: r[0], label: r[1] });
               return cur;
             },
-            [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }]
+            [{ bonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]
           )
-        : [{ bonus: "", label: `${game.i18n.localize("PF1.Attack")}` }];
+        : [{ bonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
 
       const subtractAmmo = function (value) {

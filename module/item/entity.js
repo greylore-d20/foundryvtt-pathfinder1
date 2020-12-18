@@ -1913,6 +1913,10 @@ export class ItemPF extends Item {
           const range = this.range;
           if (range != null) {
             templateData.range = range;
+            if (typeof range === "string") {
+              templateData.range = new Roll(range, rollData).roll().total;
+              templateData.rangeFormula = range;
+            }
             templateData.rangeLabel = `${templateData.range} ft.`;
             if (game.settings.get("pf1", "units") === "metric") {
               templateData.rangeLabel = `${templateData.range} m`;

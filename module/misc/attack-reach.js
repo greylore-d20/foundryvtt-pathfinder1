@@ -107,7 +107,7 @@ export const showAttackReach = function (token, attack) {
     const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
     for (let a = 1; a < rangeIncrements; a++) {
       if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
-        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r));
+        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule: true }));
       }
     }
   } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {

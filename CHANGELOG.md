@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.10
+
+### Bug Fixes
+
+- Changes to Specific Skills could only target Acrobatics
+
 ## 0.76.9
 
 ### Bug Fixes

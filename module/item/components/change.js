@@ -56,9 +56,9 @@ export class ItemChange {
     {
       if (data["target"]) {
         const subTarget = data["subTarget"] || this.subTarget;
-        const changeSubTargets = CONFIG.PF1.buffTargets[data["target"]];
+        const changeSubTargets = this.parent.getChangeSubTargets(data["target"]);
         if (changeSubTargets[subTarget] == null) {
-          data["subTarget"] = Object.keys(changeSubTargets).filter((o) => !o.startsWith("_"))[0];
+          data["subTarget"] = Object.keys(changeSubTargets)[0];
         }
       }
     }

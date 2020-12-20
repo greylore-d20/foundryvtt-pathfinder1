@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.76.10
+## 0.76.10 (Hotfix)
 
 ### Bug Fixes
 

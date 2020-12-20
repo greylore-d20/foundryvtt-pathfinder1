@@ -412,9 +412,7 @@ export class ItemPF extends Item {
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
-    super.prepareData();
-
-    const itemData = this.data;
+    let itemData = super.prepareData() || this.data;
     const data = itemData.data;
     const C = CONFIG.PF1;
     const labels = {};
@@ -605,13 +603,17 @@ export class ItemPF extends Item {
 
     this.prepareLinks();
 
+    // Update changes
     if (this.data.data.changes instanceof Array) {
       this.changes = this._prepareChanges(this.data.data.changes);
     }
 
+    // Update contained items
     if (this.data.data.inventoryItems instanceof Array) {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
+
+    return itemData;
   }
 
   prepareLinks() {
@@ -653,13 +655,14 @@ export class ItemPF extends Item {
       let item = null;
       if (prior && prior.has(o._id)) {
         item = prior.get(o._id);
-        item.data = o;
+        item._data = o;
+        item.data = item._data;
         item.prepareData();
       } else {
         item = new CONFIG.Item.entityClass(o);
         item.parentItem = this;
       }
-      // else item = ItemPF.create(o, this);
+
       collection.set(o._id || item.data._id, item);
     }
     return collection;

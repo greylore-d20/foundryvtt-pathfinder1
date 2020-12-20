@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Changes to Specific Skills could only target Acrobatics
+- Items in containers could not be updated (#444)
 
 ## 0.76.9
 

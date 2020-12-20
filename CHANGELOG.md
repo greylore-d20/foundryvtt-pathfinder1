@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.11
+
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+
 ## 0.76.10 (Hotfix)
 
 ### Bug Fixes

@@ -2,6 +2,10 @@
 
 ## 0.76.11
 
+### Bug Fixes
+
+- Unlinked tokens could not roll saving throws and skill checks unless edited in any way beforehand (#451)
+
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)

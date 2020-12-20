@@ -249,6 +249,11 @@ Hooks.once("ready", async function () {
     updateChanges.call(obj, { sourceOnly: true });
   });
 
+  // Refresh tokens on startup
+  Object.values(game.actors.tokens)?.forEach((obj) => {
+    updateChanges.call(obj, { sourceOnly: true });
+  });
+
   Hooks.on("renderTokenHUD", (app, html, data) => {
     TokenQuickActions.addTop3Attacks(app, html, data);
   });
@@ -402,6 +407,14 @@ Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
       actor.updateItemResources(i);
     }
   }
+});
+
+Hooks.on("createToken", async (scene, token, options, userId) => {
+  if (userId !== game.user._id) return;
+
+  const actor = game.actors.tokens[token._id];
+  // Update changes and generate sourceDetails to ensure valid actor data
+  if (actor != null) updateChanges.call(actor);
 });
 
 // Create race on actor

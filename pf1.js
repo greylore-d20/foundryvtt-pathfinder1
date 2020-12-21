@@ -249,11 +249,6 @@ Hooks.once("ready", async function () {
     updateChanges.call(obj, { sourceOnly: true });
   });
 
-  // Refresh tokens on startup
-  Object.values(game.actors.tokens)?.forEach((obj) => {
-    updateChanges.call(obj, { sourceOnly: true });
-  });
-
   Hooks.on("renderTokenHUD", (app, html, data) => {
     TokenQuickActions.addTop3Attacks(app, html, data);
   });
@@ -273,7 +268,7 @@ Hooks.on("canvasInit", function () {
   let callbacks = [];
 
   Hooks.on("canvasReady", () => {
-    // Remove old callbacks
+    // Remove old reach callbacks
     for (let cb of callbacks) {
       cb.elem.off(cb.event, cb.callback);
     }
@@ -284,6 +279,11 @@ Hooks.on("canvasInit", function () {
       if (!elem || (elem && !elem.length)) return;
       const results = addReachCallback(m.data, elem);
       callbacks.push(...results);
+    });
+
+    // Refresh tokens on startup
+    Object.values(game.actors.tokens)?.forEach((obj) => {
+      updateChanges.call(obj, { sourceOnly: true });
     });
   });
 

@@ -128,9 +128,14 @@
           {{/if}}
         </div>
 
-        <span class="race-info">
-          {{raceLabel}}
-        </span>
+        {{#if race}}
+        <div class="race-info">
+          <span class="tag type3">{{lookup config.creatureTypes race.data.creatureType}}</span>
+          {{#each race.data.subTypes as |v|}}
+          <span class="tag">{{v}}</span>
+          {{/each}}
+        </div>
+        {{/if}}
       </div>
 
       {{!-- Hit Point Ability --}}

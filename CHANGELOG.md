@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.12
+
+### Changelog
+
+- Improved race type and subtype visibility on actors
+
 ## 0.76.11
 
 ### Bug Fixes

@@ -6,6 +6,10 @@
 
 - Unlinked tokens could not roll saving throws and skill checks unless edited in any way beforehand (#451)
 
+### Changelog
+
+- Add race type and subtype display to actors
+
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)

@@ -185,6 +185,15 @@ export class ActorSheetPF extends ActorSheet {
         .format(totalValue.gp, totalValue.sp, totalValue.cp);
     }
 
+    // Race type label
+    if (data.race) {
+      data.raceLabel = CONFIG.PF1.creatureTypes[data.race.data.creatureType];
+      const subTypes = data.race.data.subTypes;
+      if (subTypes && subTypes.length) {
+        data.raceLabel = `${data.raceLabel} (${subTypes.join(", ")})`;
+      }
+    }
+
     // Hit point sources
     if (this.actor.sourceDetails != null) data.sourceDetails = expandObject(this.actor.sourceDetails);
     else data.sourceDetails = null;

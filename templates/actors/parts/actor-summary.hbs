@@ -103,7 +103,7 @@
       </div>
 
       {{!-- Alignment --}}
-      <div class="controls alignment flexrow">
+      <div class="controls alignment flexrow" title="{{localize "PF1.Alignment"}}">
         {{#if labels.alignment}}<span>{{labels.alignment}}</span>{{else}}<span class="placeholder">{{localize "PF1.Alignment"}}</span>{{/if}}
         <a class="control alignment"><i class="fas fa-cog"></i></a>
       </div>
@@ -127,6 +127,10 @@
           {{/if}}
           {{/if}}
         </div>
+
+        <span class="race-info">
+          {{raceLabel}}
+        </span>
       </div>
 
       {{!-- Hit Point Ability --}}

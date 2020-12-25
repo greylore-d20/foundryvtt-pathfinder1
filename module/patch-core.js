@@ -181,7 +181,6 @@ export async function PatchCore() {
 
   // Add combat tracker context menu options
   {
-    console.log("meow!!!");
     const origFunc = CombatTracker.prototype._getEntryContextOptions;
     CombatTracker.prototype._getEntryContextOptions = function () {
       let result = origFunc.call(this);

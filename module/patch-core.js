@@ -2,7 +2,7 @@ import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
-import { updateChanges } from "./actor/update-changes.js";
+import { addCombatTrackerContextOptions } from "./combat.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -177,6 +177,17 @@ export async function PatchCore() {
         actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
       }
     });
+  }
+
+  // Add combat tracker context menu options
+  {
+    console.log("meow!!!");
+    const origFunc = CombatTracker.prototype._getEntryContextOptions;
+    CombatTracker.prototype._getEntryContextOptions = function () {
+      let result = origFunc.call(this);
+      addCombatTrackerContextOptions.call(this, result);
+      return result;
+    };
   }
 
   // Patch, patch, patch

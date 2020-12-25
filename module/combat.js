@@ -177,3 +177,47 @@ export const addChatMessageContextOptions = function (html, options) {
   );
   return options;
 };
+
+const duplicateCombatantInitiativeDialog = function (combat, combatantId) {
+  const combatant = combat.combatants.filter((o) => o._id === combatantId)[0];
+  if (!combatant) {
+    ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
+    return;
+  }
+
+  new Dialog({
+    title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.actor.name}`,
+    content: `<div class="flexrow form-group">
+      <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
+      <input type="number" name="initiativeOffset" value="0"/>
+    </div>`,
+    buttons: {
+      confirm: {
+        label: game.i18n.localize("PF1.Confirm"),
+        callback: (html) => {
+          const offset = parseFloat(html.find('input[name="initiativeOffset"]').val());
+          const prevInitiative = combatant.initiative != null ? combatant.initiative : 0;
+          const newInitiative = prevInitiative + offset;
+          duplicateCombatantInitiative(combat, combatant, newInitiative);
+        },
+      },
+      cancel: {
+        label: game.i18n.localize("Cancel"),
+      },
+    },
+    default: "confirm",
+  }).render(true);
+};
+
+export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
+  console.log(combatant);
+  combat.createEmbeddedEntity("Combatant", mergeObject(combatant, { initiative: initiative }, { inplace: false }));
+};
+
+export const addCombatTrackerContextOptions = function (result) {
+  result.push({
+    name: "PF1.DuplicateInitiative",
+    icon: '<i class="fas fa-dice-d20"></i>',
+    callback: (li) => duplicateCombatantInitiativeDialog.call(this, this.combat, li.data("combatant-id")),
+  });
+};

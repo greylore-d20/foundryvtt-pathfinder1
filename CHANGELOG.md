@@ -5,6 +5,7 @@
 ### Changelog
 
 - Improved race type and subtype visibility on actors
+- Add context menu entry for duplicating a combatant's initiative
 
 ## 0.76.11
 

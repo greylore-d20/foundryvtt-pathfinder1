@@ -1251,7 +1251,11 @@ export class ActorPF extends Actor {
     // Add bonus
     rollData.bonus = bonus;
     if (bonus.length > 0) formula += " + @bonus";
-    if (rollData.attributes.woundThresholds.penalty > 0) formula += " - @attributes.woundThresholds.penalty";
+    if (rollData.attributes.woundThresholds.penalty > 0) {
+      formula += " - @attributes.woundThresholds.penalty";
+      // TODO: Output wound level penalty note
+      // notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+    }
 
     // Roll initiative
     const rollMode = overrideRollMode;

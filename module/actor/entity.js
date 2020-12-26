@@ -1001,7 +1001,7 @@ export class ActorPF extends Actor {
     const woundMult = this.getWoundTresholdMultiplier(),
       woundLevel = data.attributes.woundThresholds.level,
       woundPenalty = woundLevel * woundMult + data.attributes.woundThresholds.mod;
-    if (woundPenalty > 0) {
+    if (woundMult > 0 && woundPenalty > 0) {
       mods.push(-woundPenalty);
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
     }
@@ -1290,9 +1290,10 @@ export class ActorPF extends Actor {
 
     // Wound Threshold penalty
     const woundMult = this.getWoundTresholdMultiplier(),
-      woundLevel = this.data.data.attributes.woundThresholds.level;
-    if (woundMult > 0 && woundLevel > 0) {
-      mods.push(-woundLevel * woundMult);
+      woundLevel = this.data.data.attributes.woundThresholds.level,
+      woundPenalty = woundLevel * woundMult + this.data.data.attributes.woundThresholds.mod;
+    if (woundMult > 0 && woundPenalty > 0) {
+      mods.push(-woundPenalty);
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
     }
 

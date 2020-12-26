@@ -1676,9 +1676,9 @@ export class ActorPF extends Actor {
    */
   getWoundTresholdMultiplier() {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const usage = this.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+    const conf = this.data.type === "npc" ? hpconf.npc : hpconf.pc;
     const override = this.data.data.attributes.woundThresholds.override;
-    return override >= 0 ? override : usage;
+    return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
   }
 
   getSkill(key) {

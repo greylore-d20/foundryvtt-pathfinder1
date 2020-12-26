@@ -92,6 +92,12 @@
         </select>
         <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsThresholdsNPCHint'}}</p>
       </div>
+
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideName'}}</label>
+        <input type="checkbox" {{#if variants.pc.allowWoundThresholdOverride}}checked{{/if}} name="variants.pc.allowWoundThresholdOverride">
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideHint'}}</p>
+      </div>
     </section>
   </div>
 

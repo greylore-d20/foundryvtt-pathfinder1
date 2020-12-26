@@ -11,7 +11,7 @@
 {{!-- Wound Thresholds --}}
 <div class="form-group">
     <label>{{localize "PF1.WoundThresholdOverride"}}</label>
-    <select name="data.attributes.woundThresholds.override">
+    <select name="data.attributes.woundThresholds.override" {{#unless woundThresholds.allowWoundThresholdOverride}}disabled{{/unless}}>
     {{#select data.attributes.woundThresholds.override}}
         <option value="-1">{{localize 'PF1.Default'}}</option>
         <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>

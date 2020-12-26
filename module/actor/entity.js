@@ -1105,6 +1105,13 @@ export class ActorPF extends Actor {
     // Add contextual caster level string
     const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
 
+    // Wound Threshold penalty
+    const woundMult = this.getWoundTresholdMultiplier(),
+      woundLevel = this.data.data.attributes.woundThresholds.level,
+      woundPenalty = woundLevel * woundMult + this.data.data.attributes.woundThresholds.mod;
+    if (woundMult > 0 && woundPenalty > 0)
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({

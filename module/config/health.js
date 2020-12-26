@@ -82,6 +82,9 @@ export class HealthConfig extends FormApplication {
       hd.rate = Math.max(0, Math.min(hd.rate, 100));
       hd.maximized = Math.max(0, Math.min(Math.floor(hd.maximized), 100));
     }
+
+    settings.variants.npc.allowWoundThresholdOverride = true; // HACK: This setting vanishes otherwise
+
     await game.settings.set("pf1", "healthConfig", settings);
     ui.notifications.info("Updated Pathfinder health configuration.");
   }

@@ -1470,6 +1470,15 @@ export class ActorPF extends Actor {
       energyResistance.push(...values.map((o) => game.i18n.localize("PF1.VulnerableTo").format(o)));
     }
 
+    // Wound Threshold penalty
+    const woundMult = this.getWoundTresholdMultiplier(),
+      woundLevel = this.data.data.attributes.woundThresholds.level,
+      woundPenalty = woundLevel * woundMult + this.data.data.attributes.woundThresholds.mod;
+    if (woundMult > 0 && woundPenalty > 0) {
+      acNotes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+      cmdNotes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+    }
+
     // Create message
     const d = this.data.data;
     const data = {

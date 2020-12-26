@@ -71,7 +71,7 @@
       <!-- Wound Thresholds -->
       <div class="form-group">
         <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCName'}}</label>
-        <select name="variants.pc.useWoundThresholds">
+        <select data-dtype="Number" name="variants.pc.useWoundThresholds">
         {{#select variants.pc.useWoundThresholds}}
             <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>
             <option value="1">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdNormal'}}</option>
@@ -83,7 +83,7 @@
 
       <div class="form-group">
         <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsNPCName'}}</label>
-        <select name="variants.npc.useWoundThresholds">
+        <select data-dtype="Number" name="variants.npc.useWoundThresholds">
         {{#select variants.npc.useWoundThresholds}}
             <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>
             <option value="1">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdNormal'}}</option>
@@ -95,7 +95,7 @@
 
       <div class="form-group">
         <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideName'}}</label>
-        <input type="checkbox" {{#if variants.pc.allowWoundThresholdOverride}}checked{{/if}} name="variants.pc.allowWoundThresholdOverride">
+        <input data-dtype="Boolean" type="checkbox" {{#if variants.pc.allowWoundThresholdOverride}}checked{{/if}} name="variants.pc.allowWoundThresholdOverride">
         <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideHint'}}</p>
       </div>
 

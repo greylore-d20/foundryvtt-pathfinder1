@@ -39,8 +39,8 @@ export class HealthConfig extends FormApplication {
       rounding: "up",
       continuity: "discrete",
       variants: {
-        pc: { useWoundsAndVigor: false },
-        npc: { useWoundsAndVigor: false },
+        pc: { useWoundsAndVigor: false, useWoundThresholds: 0 },
+        npc: { useWoundsAndVigor: false, useWoundThresholds: 0 },
       },
     };
   }

@@ -499,6 +499,16 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: clBonus,
         });
       }
+
+      // Subtract Wound Thresholds penalty. Can't reduce below 1.
+      if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
+        total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+        getSourceInfo(sourceInfo, key).negative.push({
+          name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+          value: -rollData.attributes.woundThresholds.penalty,
+        });
+      }
+
       // Subtract energy drain
       if (rollData.attributes.energyDrain) {
         total = Math.max(0, total - rollData.attributes.energyDrain);
@@ -507,6 +517,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: -Math.abs(rollData.attributes.energyDrain),
         });
       }
+
       linkData(srcData1, updateData, key, total);
     }
 
@@ -771,6 +782,32 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
   linkData(data, updateData, "data.attributes.hp.max", getProperty(data, "data.attributes.hp.base") || 0);
   linkData(data, updateData, "data.attributes.wounds.max", getProperty(data, "data.attributes.wounds.base") || 0);
   linkData(data, updateData, "data.attributes.vigor.max", getProperty(data, "data.attributes.vigor.base") || 0);
+
+  // Reset wound thresholds
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.level",
+    getProperty(data, "data.attributes.woundThresholds.level") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.override",
+    getProperty(data, "data.attributes.woundThresholds.override") || -1
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.mod",
+    getProperty(data, "data.attributes.woundThresholds.mod") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.penalty",
+    getProperty(data, "data.attributes.woundThresholds.penalty") || 0
+  );
 
   // Reset AC
   for (let type of Object.keys(data1.attributes.ac)) {

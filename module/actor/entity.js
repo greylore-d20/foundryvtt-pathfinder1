@@ -1358,8 +1358,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    let props = this.getDefenseHeaders();
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
     const label = CONFIG.PF1.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
 
@@ -1370,9 +1368,17 @@ export class ActorPF extends Actor {
     if (this.data.data.attributes.energyDrain) {
       formula += " - @attributes.energyDrain";
     }
-    if (this.data.data.attributes.woundThresholds.penalty > 0) {
+
+    // Wound Threshold penalty
+    console.debug("Wound: ", rollData.attributes.woundThresholds.penalty);
+    if (rollData.attributes.woundThresholds.penalty > 0) {
       formula += " - @attributes.woundThresholds.penalty";
+      const woundLevel = rollData.attributes.woundThresholds.level;
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
     }
+
+    let props = this.getDefenseHeaders();
+    if (notes.length > 0) props.push({ header: "Notes", value: notes });
 
     return DicePF.d20Roll({
       event: options.event,

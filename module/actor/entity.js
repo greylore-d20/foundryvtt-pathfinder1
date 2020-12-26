@@ -2142,7 +2142,9 @@ export class ActorPF extends Actor {
     // Wound Threshold penalty shorthand
     const woundLevelMult = this.getWoundTresholdMultiplier(),
       woundLevel = data.attributes.woundThresholds.level,
-      woundPenalty = woundLevel * woundLevelMult + data.attributes.woundThresholds.mod;
+      woundPenaltyBase = woundLevel * woundLevelMult,
+      woundPenalty = woundPenaltyBase + data.attributes.woundThresholds.mod;
+    result.attributes.woundThresholds.penaltyBase = woundPenaltyBase; // To aid relevant formulas
     result.attributes.woundThresholds.penalty = woundPenalty;
 
     return result;

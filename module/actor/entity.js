@@ -1137,6 +1137,14 @@ export class ActorPF extends Actor {
     // Add contextual concentration string
     const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
 
+    // Wound Threshold penalty
+    const woundMult = this.getWoundTresholdMultiplier(),
+      woundLevel = rollData.attributes.woundThresholds.level,
+      woundPenalty = woundLevel * woundMult + rollData.attributes.woundThresholds.mod;
+    if (woundMult > 0 && woundPenalty > 0)
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+    // TODO: Make the penalty show separate of the CL.total.
+
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 

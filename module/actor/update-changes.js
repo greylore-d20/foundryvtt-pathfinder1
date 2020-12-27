@@ -1230,9 +1230,8 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       return a.sort - b.sort;
     });
 
-  const isPC = this.data.type === "character";
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const cls_options = isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+  const cls_options = this.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
   const race_options = healthConfig.hitdice.Racial;
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
   const continuous = { discrete: false, continuous: true }[healthConfig.continuity];

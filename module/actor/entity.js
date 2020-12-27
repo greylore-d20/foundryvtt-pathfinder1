@@ -1244,7 +1244,7 @@ export class ActorPF extends Actor {
     rollData.bonus = bonus;
     if (bonus.length > 0) formula += " + @bonus";
     if (rollData.attributes.woundThresholds.penalty > 0) {
-      formula += " - @attributes.woundThresholds.penalty";
+      // TODO: Show penalty separately (@attributes.woundThresholds.penalty)
       // TODO: Output wound level penalty note
       // notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
     }
@@ -1293,11 +1293,8 @@ export class ActorPF extends Actor {
     if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
 
     // Wound Threshold penalty
-    const wT = this.getWoundThresholdData(rollData);
-    if (wT.valid) {
-      mods.push(-wT.penalty);
-      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
-    }
+    if (rollData.attributes.woundThresholds.penalty > 0)
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
 
     // Roll saving throw
     let props = this.getDefenseHeaders();
@@ -1360,11 +1357,9 @@ export class ActorPF extends Actor {
     }
 
     // Wound Threshold penalty
-    console.debug("Wound: ", rollData.attributes.woundThresholds.penalty);
     if (rollData.attributes.woundThresholds.penalty > 0) {
       formula += " - @attributes.woundThresholds.penalty";
-      const woundLevel = rollData.attributes.woundThresholds.level;
-      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
     }
 
     let props = this.getDefenseHeaders();
@@ -1649,15 +1644,14 @@ export class ActorPF extends Actor {
    */
   updateWoundThreshold() {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const usage = this.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+    const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
     const curHP = this.data.data.attributes.hp.value,
       maxHP = this.data.data.attributes.hp.max;
 
     const level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
 
-    const mod = this.data.data.attributes.woundThresholds.mod;
     this.data.data.attributes.woundThresholds.level = level;
-    this.data.data.attributes.woundThresholds.total = level + mod;
+    this.data.data.attributes.woundThresholds.total = level + this.data.data.attributes.woundThresholds.mod;
   }
 
   /**

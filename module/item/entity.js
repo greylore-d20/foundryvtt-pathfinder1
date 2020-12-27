@@ -1860,6 +1860,13 @@ export class ItemPF extends Item {
             properties.push(this.data.data.conditionals[c].name);
           });
         }
+
+        // Add Wound Thresholds info
+        if (rollData.attributes.woundThresholds.level > 0)
+          properties.push(
+            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level])
+          );
+
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
         // Add combat info
@@ -2104,6 +2111,12 @@ export class ItemPF extends Item {
         parts.push("- max(0, abs(@attributes.energyDrain))");
       }
     }
+
+    // Add wound thresholds penalties
+    if (rollData.attributes.woundThresholds.penalty > 0) {
+      parts.push("- @attributes.woundThresholds.penalty");
+    }
+
     // Add certain attack bonuses
     if (rollData.attributes.attack.general !== 0) {
       parts.push("@attributes.attack.general");

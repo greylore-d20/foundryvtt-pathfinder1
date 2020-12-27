@@ -1185,6 +1185,7 @@ const _addDynamicData = function ({
 const _updateSkills = function (updateData, data) {
   const data1 = data.data;
   let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
+  const woundThresholdPenalty = data1.attributes.woundThresholds.penalty;
   for (let [sklKey, skl] of Object.entries(data1.skills)) {
     if (skl == null) continue;
 
@@ -1194,7 +1195,13 @@ const _updateSkills = function (updateData, data) {
 
     // Parse main skills
     let sklValue =
-      skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
+      skl.rank +
+      (skl.cs && skl.rank > 0 ? 3 : 0) +
+      ablMod +
+      specificSkillBonus -
+      acpPenalty -
+      energyDrainPenalty -
+      woundThresholdPenalty;
     linkData(data, updateData, `data.skills.${sklKey}.mod`, sklValue);
     // Parse sub-skills
     for (let [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
@@ -1210,7 +1217,8 @@ const _updateSkills = function (updateData, data) {
         ablMod +
         specificSkillBonus -
         acpPenalty -
-        energyDrainPenalty;
+        energyDrainPenalty -
+        woundThresholdPenalty;
       linkData(data, updateData, `data.skills.${sklKey}.subSkills.${subSklKey}.mod`, sklValue);
     }
   }
@@ -1229,11 +1237,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       return a.sort - b.sort;
     });
 
+  const isPC = this.data.type === "character";
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const cls_options = this.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+  const cls_options = isPC ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
   const race_options = healthConfig.hitdice.Racial;
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
   const continuous = { discrete: false, continuous: true }[healthConfig.continuity];
+
+  // BUG: HP data is wrong (0/0) at launch for some reason?
+  this.updateWoundThreshold();
+  const wTdata = this.getWoundThresholdData(this.getRollData()); // this is bad
 
   const push_health = (value, source) => {
     changes.push({
@@ -1371,6 +1384,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
     });
 
+    // Wound Threholds to CMB
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "cmb", modifier: "penalty" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+    });
+
     // BAB to CMD
     changes.push({
       raw: mergeObject(
@@ -1397,6 +1420,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         { inplace: false }
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
+    });
+
+    // Wound Thresholds to CMD
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "cmd", modifier: "penalty" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
     });
   }
 
@@ -1432,6 +1465,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },
       });
     }
+
+    // Wound Thresholds penalty to initiative
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "init", modifier: "penalty" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+    });
   }
 
   // Add Ability modifiers and Energy Drain to saving throws
@@ -1487,6 +1530,21 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
     });
+
+    // Wound Thresholds to saves
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        {
+          formula: "-@attributes.woundThresholds.penalty",
+          target: "savingThrows",
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+    });
   }
   // Natural armor
   {
@@ -1528,6 +1586,16 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         });
       }
     });
+
+  // Wound Thresholds to AC
+  changes.push({
+    raw: mergeObject(
+      ItemChange.defaultData,
+      { formula: "-@attributes.woundThresholds.penalty", target: "ac", subTarget: "ac", modifier: "penalty" },
+      { inplace: false }
+    ),
+    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+  });
 
   // Add fly bonuses or penalties based on maneuverability
   const flyKey = getProperty(data, "data.attributes.speed.fly.maneuverability");

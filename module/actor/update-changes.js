@@ -273,7 +273,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           }
         } catch (e) {
           const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
-          console.error(msg);
+          console.error(msg, formula);
           ui.notifications.error(msg);
         }
       } else {
@@ -1185,7 +1185,7 @@ const _addDynamicData = function ({
 const _updateSkills = function (updateData, data) {
   const data1 = data.data;
   let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
-  const woundThresholdPenalty = data1.attributes.woundThresholds.penalty;
+
   for (let [sklKey, skl] of Object.entries(data1.skills)) {
     if (skl == null) continue;
 
@@ -1195,13 +1195,7 @@ const _updateSkills = function (updateData, data) {
 
     // Parse main skills
     let sklValue =
-      skl.rank +
-      (skl.cs && skl.rank > 0 ? 3 : 0) +
-      ablMod +
-      specificSkillBonus -
-      acpPenalty -
-      energyDrainPenalty -
-      woundThresholdPenalty;
+      skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrainPenalty;
     linkData(data, updateData, `data.skills.${sklKey}.mod`, sklValue);
     // Parse sub-skills
     for (let [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
@@ -1217,8 +1211,7 @@ const _updateSkills = function (updateData, data) {
         ablMod +
         specificSkillBonus -
         acpPenalty -
-        energyDrainPenalty -
-        woundThresholdPenalty;
+        energyDrainPenalty;
       linkData(data, updateData, `data.skills.${sklKey}.subSkills.${subSklKey}.mod`, sklValue);
     }
   }
@@ -1716,6 +1709,30 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       },
     });
   }
+
+  // Wound Thresholds to skills
+  changes.push({
+    raw: mergeObject(
+      ItemChange.defaultData,
+      { formula: "-@attributes.woundThresholds.penalty", target: "skills", subTarget: "skills", modifier: "penalty" },
+      { inplace: false }
+    ),
+    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+  });
+  // Wound Thresholds to ability checks
+  changes.push({
+    raw: mergeObject(
+      ItemChange.defaultData,
+      {
+        formula: "-@attributes.woundThresholds.penalty",
+        target: "abilityChecks",
+        subTarget: "allChecks",
+        modifier: "penalty",
+      },
+      { inplace: false }
+    ),
+    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
+  });
 
   // Add conditions
   for (let [con, v] of Object.entries(data.data.attributes.conditions || {})) {

@@ -1357,10 +1357,8 @@ export class ActorPF extends Actor {
     }
 
     // Wound Threshold penalty
-    if (rollData.attributes.woundThresholds.penalty > 0) {
-      formula += " - @attributes.woundThresholds.penalty";
+    if (rollData.attributes.woundThresholds.penalty > 0)
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
-    }
 
     let props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: "Notes", value: notes });

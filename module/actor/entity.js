@@ -998,7 +998,7 @@ export class ActorPF extends Actor {
     if (energyDrain > 0) mods.push(-energyDrain);
 
     // Wound Threshold penalty
-    const wT = this.getWoundThresholdData(rollData);
+    const wT = this.getWoundThresholdData();
     if (wT.multiplier > 0 && wT.penalty > 0) {
       mods.push(-wT.penalty);
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
@@ -1104,7 +1104,7 @@ export class ActorPF extends Actor {
     const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
 
     // Wound Threshold penalty
-    const wT = this.getWoundThresholdData(rollData);
+    const wT = this.getWoundThresholdData();
     if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
 
     let props = [];
@@ -1133,7 +1133,7 @@ export class ActorPF extends Actor {
     const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
 
     // Wound Threshold penalty
-    const wT = this.getWoundThresholdData(rollData);
+    const wT = this.getWoundThresholdData();
     if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
     // TODO: Make the penalty show separate of the CL.total.
 
@@ -1462,7 +1462,7 @@ export class ActorPF extends Actor {
     }
 
     // Wound Threshold penalty
-    const wT = this.getWoundThresholdData(rollData);
+    const wT = this.getWoundThresholdData();
     if (wT.valid) {
       const wTlabel = game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]);
       acNotes.push(wTlabel);
@@ -1648,10 +1648,15 @@ export class ActorPF extends Actor {
     const curHP = this.data.data.attributes.hp.value,
       maxHP = this.data.data.attributes.hp.max;
 
-    const level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+    let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+    if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
 
     this.data.data.attributes.woundThresholds.level = level;
-    this.data.data.attributes.woundThresholds.total = level + this.data.data.attributes.woundThresholds.mod;
+
+    const wtMult = this.getWoundTresholdMultiplier();
+
+    this.data.data.attributes.woundThresholds.penaltyBase = level * wtMult; // To aid relevant formulas
+    this.data.data.attributes.woundThresholds.penalty = level * wtMult + this.data.data.attributes.woundThresholds.mod;
   }
 
   /**
@@ -1669,10 +1674,10 @@ export class ActorPF extends Actor {
    *
    * @param {*} rollData Provided valid rollData
    */
-  getWoundThresholdData(rollData) {
+  getWoundThresholdData() {
     const woundMult = this.getWoundTresholdMultiplier(),
-      woundLevel = rollData.attributes.woundThresholds.level,
-      woundPenalty = woundLevel * woundMult + rollData.attributes.woundThresholds.mod;
+      woundLevel = this.data.data.attributes.woundThresholds.level,
+      woundPenalty = woundLevel * woundMult + this.data.data.attributes.woundThresholds.mod;
     return {
       level: woundLevel,
       penalty: woundPenalty,

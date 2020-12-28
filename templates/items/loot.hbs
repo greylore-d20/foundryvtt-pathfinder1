@@ -2,33 +2,10 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header loot-header flexrow">
-    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
     <div class="header-details flexrow">
-      {{#if isGM}}
-      <h3 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
-      </h3>
-
-      <h3 class="charname">
-        <input name="data.unidentified.name" type="text" value="{{data.unidentified.name}}" placeholder="{{localize "PF1.UnidentifiedName"}}"/>
-      </h3>
-      {{else}}
-      {{#if showUnidentifiedData}}
-      <h1 class="charname">
-        <input name="data.unidentified.name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
-      </h1>
-      {{else}}
-      <h1 class="charname">
-        <input name="name" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
-      </h1>
-      {{/if}}
-      {{/if}}
-
-      <div class="item-subtitle">
-        <h4 class="item-type">{{localize "PF1.Item"}}</h4>
-        <span class="item-status">{{itemStatus}}</span>
-      </div>
+      {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
 
       <ul class="summary">
         <li>

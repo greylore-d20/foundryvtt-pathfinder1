@@ -2,29 +2,9 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
-    <div class="header-details flexrow">
-      {{#if isGM}}
-      <h3 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}" title="{{localize "PF1.ItemName"}}"/>
-      </h3>
-
-      <h3 class="charname">
-        <input name="data.unidentified.name" type="text" value="{{data.unidentified.name}}" placeholder="{{localize "PF1.UnidentifiedName"}}" title="{{localize "PF1.UnidentifiedName"}}"/>
-      </h3>
-      {{else}}
-      {{#if showUnidentifiedData}}
-      <h1 class="charname">
-        <input name="data.unidentified.name" title="{{localize "PF1.ItemName"}}" type="text" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
-      </h1>
-      {{else}}
-      <h1 class="charname">
-        <input name="name" type="text" title="{{localize "PF1.ItemName"}}" value="{{itemName}}" placeholder="{{localize "PF1.ItemName"}}"/>
-      </h1>
-      {{/if}}
-      {{/if}}
-    </div>
+    {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
   </header>
 
   {{!-- Item Sheet Navigation --}}

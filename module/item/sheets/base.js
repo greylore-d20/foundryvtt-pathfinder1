@@ -720,7 +720,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
 
     // Add drop handler to link tabs
-    html.find('div[data-group="links"]').on("drop", this._onLinksDrop.bind(this));
+    html.find('div[data-group="links"],a.item[data-tab="links"]').on("drop", this._onLinksDrop.bind(this));
 
     html.find(".link-control").click(this._onLinkControl.bind(this));
 
@@ -789,7 +789,10 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onLinksDrop(event) {
     const elem = event.currentTarget;
-    const linkType = elem.dataset.tab;
+    var linkType = elem.dataset.tab;
+
+    // Default selection for dropping on tab instead of body
+    if (linkType === "links") linkType = "children";
 
     // Try to extract the data
     let data;

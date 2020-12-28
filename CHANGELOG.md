@@ -6,6 +6,7 @@
 
 - Improved race type and subtype visibility on actors
 - Add context menu entry for duplicating a combatant's initiative
+- Dropping an item on another Item's "Links" will create and add it as a child if it doesn't already exist
 
 ## 0.76.11
 

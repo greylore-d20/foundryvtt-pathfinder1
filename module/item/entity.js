@@ -3142,6 +3142,17 @@ export class ItemPF extends Item {
       }, 50);
 
       return true;
+    } else if (linkType === "children" && dataType !== "data") {
+      const itemData = duplicate(targetItem.data);
+      delete itemData._id;
+
+      // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
+      if (getProperty(itemData, "type") === "spell") setProperty(itemData, "data.spellbook", "spelllike");
+
+      const newItemData = await this.parentActor.createOwnedItem(itemData);
+      const newItem = this.parentActor.items.get(newItemData._id);
+
+      await this.createItemLink("children", "data", newItem, newItem._id);
     }
 
     return false;

@@ -2,6 +2,10 @@
 
 ## 0.76.12
 
+### Bug Fixes
+
+- Dice numbers were not able to be imputed ('/r d6' works now)
+
 ### Changelog
 
 - Improved race type and subtype visibility on actors

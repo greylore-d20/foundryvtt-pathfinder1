@@ -36,9 +36,9 @@ export async function PatchCore() {
   };
 
   const Roll__identifyTerms = Roll.prototype._identifyTerms;
-  Roll.prototype._identifyTerms = function (formula) {
+  Roll.prototype._identifyTerms = function (formula, { step = 0 } = {}) {
     formula = _preProcessDiceFormula(formula, this.data);
-    const terms = Roll__identifyTerms.call(this, formula);
+    const terms = Roll__identifyTerms.call(this, formula, step);
     return terms;
   };
 

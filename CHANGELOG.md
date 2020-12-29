@@ -5,6 +5,8 @@
 ### Bug Fixes
 
 - Dice numbers were not able to be imputed ('/r d6' works now)
+- Attacks and Consumables could not sometimes not be linked to a charge pool (#432)
+- Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
 
 ### Changelog
 

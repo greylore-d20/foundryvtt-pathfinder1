@@ -195,6 +195,7 @@ export const migrateItemData = function (item) {
   _migrateLootEquip(item, updateData);
   _migrateUnchainedActionEconomy(item, updateData);
   _migrateItemRange(item, updateData);
+  _migrateItemLinks(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -758,6 +759,12 @@ const _migrateItemRange = function (ent, updateData) {
 
   if (ent.type === "weapon" && getProperty(ent.data, "data.weaponData.maxRangeIncrements") === undefined) {
     setProperty(ent.data, "data.weaponData.maxRangeIncrements", 1);
+  }
+};
+
+const _migrateItemLinks = function (ent, updateData) {
+  if (["attack", "consumable"].includes(ent.type) && !hasProperty(ent.data, "data.links.charges")) {
+    updateData["data.links.charges"] = [];
   }
 };
 

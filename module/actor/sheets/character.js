@@ -49,6 +49,10 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
 
+    const hasArmorProf = data.data.traits.armorProf.custom.length > 0 || data.data.traits.armorProf.value.length > 0;
+    const hasWeaponProf = data.data.traits.weaponProf.custom.length > 0 || data.data.traits.weaponProf.value.length > 0;
+    data.hasProficiencies = hasArmorProf && hasWeaponProf;
+
     // Return data for rendering
     return data;
   }

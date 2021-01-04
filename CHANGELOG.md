@@ -16,6 +16,7 @@
 - Add context menu entry for duplicating a combatant's initiative
 - Dropping an item on another Item's "Links" will create and add it as a child if it doesn't already exist
 - Item sheet's names now use available space more efficiently (thanks mkahvi!)
+- Change sources list templates as such instead of defaulting to "Feat" (thanks mkahvi!)
 
 ## 0.76.11
 

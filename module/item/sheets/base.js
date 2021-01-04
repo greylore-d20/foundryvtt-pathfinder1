@@ -3,6 +3,7 @@ import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
+import { ActorTraitSelector } from "../../apps/trait-selector.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -254,6 +255,34 @@ export class ItemSheetPF extends ItemSheet {
           cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
           return cur;
         }, {});
+      }
+    }
+
+    // Prepare proficiencies
+    const profs = {
+      armorProf: CONFIG.PF1.armorProficiencies,
+      weaponProf: CONFIG.PF1.weaponProficiencies,
+    };
+    for (let [t, choices] of Object.entries(profs)) {
+      if (hasProperty(data.item.data, t)) {
+        const trait = data.data[t];
+        if (!trait) continue;
+        let values = [];
+        if (trait.value) {
+          values = trait.value instanceof Array ? trait.value : [trait.value];
+        }
+        trait.selected = values.reduce((obj, t) => {
+          obj[t] = choices[t];
+          return obj;
+        }, {});
+
+        // Add custom entry
+        if (trait.custom) {
+          trait.custom
+            .split(CONFIG.PF1.re.traitSeparator)
+            .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+        }
+        trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
       }
     }
 
@@ -744,6 +773,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Edit change script contents
     html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
+
+    // Trait Selector
+    html.find(".trait-selector").click(this._onTraitSelector.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -892,6 +924,23 @@ export class ItemSheetPF extends ItemSheet {
     if (typeof command === "string") {
       return change.update({ formula: command });
     }
+  }
+
+  /**
+   * Handle spawning the ActorTraitSelector application which allows a checkbox of multiple trait options
+   * @param {Event} event   The click event which originated the selection
+   * @private
+   */
+  _onTraitSelector(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const label = a.parentElement.querySelector("label");
+    const options = {
+      name: label.getAttribute("for"),
+      title: label.innerText,
+      choices: CONFIG.PF1[a.dataset.options],
+    };
+    new ActorTraitSelector(this.object, options).render(true);
   }
 
   /**

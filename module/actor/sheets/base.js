@@ -488,7 +488,10 @@ export class ActorSheetPF extends ActorSheet {
       const trait = traits[t];
       if (!trait) continue;
       let values = [];
-      if (trait.value) {
+      // Prefer total over value for dynamically collected proficiencies
+      if (["armorProf", "weaponProf"].includes(t)) {
+        values = trait.total ?? trait.value;
+      } else if (trait.value) {
         values = trait.value instanceof Array ? trait.value : [trait.value];
       }
       trait.selected = values.reduce((obj, t) => {
@@ -496,8 +499,13 @@ export class ActorSheetPF extends ActorSheet {
         return obj;
       }, {});
 
-      // Add custom entry
-      if (trait.custom) {
+      // Prefer total over value for dynamically collected proficiencies
+      if (trait.customTotal) {
+        trait.customTotal
+          .split(CONFIG.PF1.re.traitSeparator)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+      } else if (trait.custom) {
+        // Add custom entry
         trait.custom
           .split(CONFIG.PF1.re.traitSeparator)
           .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));

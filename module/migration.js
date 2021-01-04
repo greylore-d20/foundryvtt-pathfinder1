@@ -199,6 +199,7 @@ export const migrateItemData = function (item) {
   _migrateUnchainedActionEconomy(item, updateData);
   _migrateItemRange(item, updateData);
   _migrateItemLinks(item, updateData);
+  _migrateProficiencies(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -768,6 +769,19 @@ const _migrateItemRange = function (ent, updateData) {
 const _migrateItemLinks = function (ent, updateData) {
   if (["attack", "consumable"].includes(ent.type) && !hasProperty(ent.data, "data.links.charges")) {
     updateData["data.links.charges"] = [];
+  }
+};
+
+const _migrateProficiencies = function (ent, updateData) {
+  // Add proficiency objects to items able to grant proficiencies
+  if (["feat", "class", "race"].includes(ent.type)) {
+    for (const prof of ["armorProf", "weaponProf"]) {
+      if (!hasProperty(ent.data, `data.${prof}`))
+        updateData[`data.${prof}`] = {
+          value: [],
+          custom: "",
+        };
+    }
   }
 };
 

@@ -239,6 +239,65 @@ export const updateChanges = async function ({ data = null } = {}) {
         return Math.max(cur, o.data.data.armor.enh);
       }, 0);
 
+    // Handle armor and weapon proficiencies for PCs
+    // NPCs are considered proficient with their armor
+    if (this.data.type === "character") {
+      // Collect proficiencies from items, add them to actor's proficiency totals
+      for (const prof of ["armorProf", "weaponProf"]) {
+        // Custom proficiency baseline from actor
+        const customProficiencies =
+          srcData1.data.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) ||
+          [];
+
+        // Iterate over all items to create one array of non-custom proficiencies
+        const proficiencies = this.items.reduce(
+          (profs, item) => {
+            // Check only items able to grant proficiencies
+            if (hasProperty(item.data, `data.${prof}`)) {
+              // Get existing sourceInfo for item with this name, create sourceInfo if none is found
+              // Remember whether sourceInfo can be modified or has to be pushed at the end
+              let [sInfo, hasInfo] = getSourceInfo(sourceInfo, `data.traits.${prof}`).positive.find(
+                (o) => o.name === item.name
+              ) ?? [{ name: item.name, value: [] }, false];
+
+              // Regular proficiencies
+              for (const proficiency of item.data.data[prof].value) {
+                // Add localized source info if item's info does not have this proficiency already
+                if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
+                // Add raw proficiency key
+                if (!profs.includes(proficiency)) profs.push(proficiency);
+              }
+
+              // Custom proficiencies
+              if (item.data.data.armorProf.custom) {
+                // Collect trimmed but otherwise original strings, dedupe array for actor's total
+                const customProfs =
+                  item.data.data[prof].custom
+                    .split(CONFIG.PF1.re.traitSeparator)
+                    .map((i) => i.trim())
+                    .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+                // Add readable custom profs to sources and overall collection
+                sInfo.value.push(...customProfs);
+                customProficiencies.push(...customProfs);
+              }
+              if (sInfo.value.length > 0) {
+                // Transform arrays into presentable strings
+                sInfo.value = sInfo.value.join(", ");
+                // If sourceInfo was not a reference to existing info, push it now
+                if (!hasInfo) getSourceInfo(sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
+              }
+            }
+            return profs;
+          },
+          [...srcData1.data.traits[prof].value] // Default proficiency baseline from actor
+        );
+
+        // Save collected proficiencies in actor's data
+        linkData(srcData1, updateData, `data.traits.${prof}.total`, [...proficiencies]);
+        linkData(srcData1, updateData, `data.traits.${prof}.customTotal`, customProficiencies.join(";"));
+      }
+    }
+
     // Parse change formulas
     const highestBonus = {};
     allChanges.forEach((change, a) => {
@@ -873,6 +932,12 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
     }
   }
 
+  // Reset proficiencies
+  linkData(data, updateData, "data.traits.armorProf.total", []);
+  linkData(data, updateData, "data.traits.armorProf.customTotal", "");
+  linkData(data, updateData, "data.traits.weaponProf.total", []);
+  linkData(data, updateData, "data.traits.weaponProf.customTotal", "");
+
   // Reset ACP and Max Dex bonus
   linkData(data, updateData, "data.attributes.acp.gear", 0);
   linkData(data, updateData, "data.attributes.acp.armorBonus", 0);
@@ -974,8 +1039,8 @@ const _addDynamicData = function ({
   };
   // Custom proficiencies
   const customProficiencies =
-    data.data.traits.armorProf?.custom
-      .split(";")
+    data.data.traits.armorProf?.customTotal
+      ?.split(CONFIG.PF1.re.traitSeparator)
       .map((item) => item.trim().toLowerCase())
       .filter((item) => item.length > 0) || [];
 
@@ -987,7 +1052,7 @@ const _addDynamicData = function ({
     const name = item.name.toLowerCase(),
       tag = item.data.tag;
     return (
-      data.data.traits.armorProf.value.includes(proficiencyName) ||
+      data.data.traits.armorProf.total.includes(proficiencyName) ||
       customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
     );
   };
@@ -1407,7 +1472,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
   // Add Dexterity Modifier to Initiative
   {
     const abl = getProperty(data, "data.attributes.init.ability");
-    const acp = getProperty(data, "data.attributes.acp.attackPenalty");
     if (abl) {
       changes.push({
         raw: mergeObject(
@@ -1426,11 +1490,17 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
     }
 
     //Add ACP penalty
-    if (["str", "dex"].includes(abl) && acp > 0) {
+    if (["str", "dex"].includes(abl)) {
       changes.push({
         raw: mergeObject(
           ItemChange.defaultData,
-          { formula: "-@attributes.acp.attackPenalty", target: "misc", subTarget: "init", modifier: "penalty" },
+          {
+            formula: "-@attributes.acp.attackPenalty",
+            target: "misc",
+            subTarget: "init",
+            modifier: "penalty",
+            priority: -100,
+          },
           { inplace: false }
         ),
         source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },

@@ -92,25 +92,41 @@
   </div>
 
   {{#if isCharacter}}
-  <div class="form-group {{data.traits.weaponProf.cssClass}}">
-    <label for="data.traits.weaponProf">{{localize "PF1.TraitWeaponProf"}}</label>
-    <ul class="traits-list">
-      {{#each data.traits.weaponProf.selected as |v k|}}
-      <li class="tag {{k}}">{{v}}</li>
-      {{/each}}
-    </ul>
-    <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
-  </div>
+    <div class="form-group {{data.traits.weaponProf.cssClass}}">
+      <label for="data.traits.weaponProf">
+        {{localize "PF1.TraitWeaponProf"}}
+      </label>
+      <ul class="traits-list tooltip">
+        {{#each data.traits.weaponProf.selected as |v k|}}
+          <li class="tag {{k}}">{{v}}</li>
+        {{/each}}
+        {{#if sourceDetails.data.traits.weaponProf.length}}
+          <div class="tooltipcontent">
+            {{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.traits.weaponProf as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          </div>
+        {{/if}}
+      </ul>
+      <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
+    </div>
 
-  <div class="form-group {{data.traits.armorProf.cssClass}}">
-    <label for="data.traits.armorProf">{{localize "PF1.TraitArmorProf"}}</label>
-    <ul class="traits-list">
-      {{#each data.traits.armorProf.selected as |v k|}}
-      <li class="tag {{k}}">{{v}}</li>
-      {{/each}}
-    </ul>
-    <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
-  </div>
+    <div class="form-group {{data.traits.armorProf.cssClass}}">
+      <label for="data.traits.armorProf">
+        {{localize "PF1.TraitArmorProf"}}
+      </label>
+      <ul class="traits-list tooltip">
+        {{#each data.traits.armorProf.selected as |v k|}}
+          <li class="tag {{k}}">{{v}}</li>
+        {{/each}}
+        {{#if sourceDetails.data.traits.armorProf.length}}
+          <div class="tooltipcontent">
+            {{localize "PF1.FromSources"}}:<br/>
+            {{#each sourceDetails.data.traits.armorProf as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          </div>
+        {{/if}}
+      </ul>
+      <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
+    </div>
   {{/if}}
 
   <div class="form-group">

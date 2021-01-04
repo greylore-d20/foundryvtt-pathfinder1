@@ -977,10 +977,20 @@
       "tagged": {
         "tag": "",
         "useCustomTag": false
+      },
+      "proficiencies": {
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        }
       }
     },
     "class": {
-      "templates": ["itemDescription", "changes", "links", "tagged"],
+      "templates": ["itemDescription", "changes", "links", "tagged", "proficiencies"],
       "classType": "base",
       "levels": {
         "value": 0,
@@ -1051,7 +1061,16 @@
       "nonlethal": false
     },
     "feat": {
-      "templates": ["itemDescription", "activatedEffect", "action", "changes", "contextNotes", "links", "tagged"],
+      "templates": [
+        "itemDescription",
+        "activatedEffect",
+        "action",
+        "changes",
+        "contextNotes",
+        "links",
+        "tagged",
+        "proficiencies"
+      ],
       "featType": "feat",
       "associations": {
         "classes": []
@@ -1175,7 +1194,7 @@
       }
     },
     "race": {
-      "templates": ["itemDescription", "changes", "contextNotes", "links"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links", "proficiencies"],
       "creatureType": "humanoid",
       "subTypes": []
     },

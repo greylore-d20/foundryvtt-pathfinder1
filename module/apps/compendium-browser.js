@@ -8,7 +8,7 @@ const NEED_NEW_VERSION = {
   bestiary: "0.76.9",
   feats: "0.76.9",
   classes: "0.76.5",
-  races: "0.75.6",
+  races: "0.76.12",
 };
 
 export const COMPENDIUM_TYPES = {

@@ -4,10 +4,11 @@
 
 ### Bug Fixes
 
-- Dice numbers were not able to be inputted ('/r d6' works now)
+- Dice numbers were not able to be imputed ('/r d6' works now)
 - Attacks and Consumables could sometimes not be linked to a charge pool (#432)
 - Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
 - Quick token actions for Items without images caused visual glitches
+- Fix Wyvaran racial dex bonus
 
 ### Changelog
 

@@ -363,7 +363,15 @@ export class ChatAttack {
         }
         return arr;
       }, []);
+
+      // Spell specific notes
+      if (this.item.type === "spell") {
+        let _notes = this.item.actor.getContextNotes("spell.effect").forEach((o) => {
+          for (let n of o.notes) notes.push(...n.split(/[\n\r]+/));
+        });
+      }
     }
+
     if (this.item != null && this.item.data.data.effectNotes) {
       notes.push(...this.item.data.data.effectNotes.split(/[\n\r]+/));
     }

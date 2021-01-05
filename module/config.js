@@ -1222,6 +1222,7 @@ PF1.contextNoteTargets = {
   },
   spell: {
     _label: "PF1.BuffTarSpells",
+    effect: "PF1.SpellBuffEffect",
     concentration: "PF1.Concentration",
     cl: "PF1.CasterLevel",
   },

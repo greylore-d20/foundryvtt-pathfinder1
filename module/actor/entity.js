@@ -1765,6 +1765,14 @@ export class ActorPF extends Actor {
       return result;
     }
 
+    if (context.match(/^spell\.effect$/)) {
+      for (let note of result) {
+        note.notes = note.notes.filter((o) => o.target === "spell" && o.subTarget === "effect").map((o) => o.text);
+      }
+
+      return result;
+    }
+
     return [];
   }
 

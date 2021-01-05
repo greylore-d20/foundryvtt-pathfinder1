@@ -14,39 +14,40 @@ export const migrateWorld = async function () {
     return ui.notifications.error(msg);
   }
   ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
+  console.log("System Migration starting.");
 
   await _migrateWorldSettings();
 
   // Migrate World Actors
+  console.log("Migrating Actor entities");
   for (let a of game.actors.entities) {
     try {
       const updateData = await migrateActorData(a);
-      console.log(`Migrating Actor entity ${a.name}`);
       await a.update(updateData);
     } catch (err) {
-      console.error(err);
+      console.error(`Error migrating actor entity ${a.name}`, err);
     }
   }
 
   // Migrate World Items
+  console.log("Migrating Item entities.");
   for (let i of game.items.entities) {
     try {
       const updateData = migrateItemData(i);
-      console.log(`Migrating Item entity ${i.name}`);
       await i.update(updateData, { enforceTypes: false });
     } catch (err) {
-      console.error(err);
+      console.error(`Error migrating item entity ${i.name}`, err);
     }
   }
 
   // Migrate Actor Override Tokens
+  console.log("Migrating scene entities.");
   for (let s of game.scenes.entities) {
     try {
       const updateData = await migrateSceneData(s.data);
-      console.log(`Migrating Scene entity ${s.name}`);
       await s.update(updateData);
     } catch (err) {
-      console.error(err);
+      console.error(`Error migrating scene entity ${s.name}`, err);
     }
   }
 
@@ -65,6 +66,7 @@ export const migrateWorld = async function () {
   // Set the migration as complete
   game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
   ui.notifications.info(`PF1 System Migration to version ${game.system.data.version} succeeded!`);
+  console.log("System Migration completed.");
 };
 
 /* -------------------------------------------- */
@@ -83,6 +85,7 @@ export const migrateCompendium = async function (pack) {
   const content = await pack.getContent();
 
   // Iterate over compendium entries - applying fine-tuned migration functions
+  console.log(`Migrating ${entity} entities in Compendium ${pack.collection}`);
   for (let ent of content) {
     try {
       let updateData = null;
@@ -92,9 +95,9 @@ export const migrateCompendium = async function (pack) {
       expandObject(updateData);
       updateData["_id"] = ent._id;
       await pack.updateEntity(updateData);
-      console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
+      //console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
     } catch (err) {
-      console.error(err);
+      console.error(`Error migrating ${entity} entity ${ent.name} in Compendium ${pack.collection}`, err);
     }
   }
   console.log(`Migrated all ${entity} entities from Compendium ${pack.collection}`);

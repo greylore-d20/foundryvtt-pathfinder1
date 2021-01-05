@@ -210,7 +210,7 @@ const duplicateCombatantInitiativeDialog = function (combat, combatantId) {
 };
 
 export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
-  console.log(combatant);
+  console.debug("Duplicating combatant:", combatant);
   combat.createEmbeddedEntity("Combatant", mergeObject(combatant, { initiative: initiative }, { inplace: false }));
 };
 

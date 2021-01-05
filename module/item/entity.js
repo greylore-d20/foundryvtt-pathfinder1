@@ -234,7 +234,7 @@ export class ItemPF extends Item {
             new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
             dcBonus;
         } catch (e) {
-          console.error(e);
+          console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
         }
       }
       return result;
@@ -243,7 +243,7 @@ export class ItemPF extends Item {
     try {
       result = new Roll(dcFormula, rollData).roll().total + dcBonus;
     } catch (e) {
-      console.error(e);
+      console.error(e, dcFormula);
     }
     return result;
   }
@@ -1511,8 +1511,9 @@ export class ItemPF extends Item {
         // Add specific pre-rolled rollData entries
         for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
           if (conditionalPartsCommon[target] != null) {
+            const formula = conditionalPartsCommon[target].join("+");
             try {
-              const roll = new Roll(conditionalPartsCommon[target].join("+"), rollData).roll().total;
+              const roll = new Roll(formula, rollData).roll().total;
               switch (target) {
                 case "effect.cl":
                   rollData.cl += roll;
@@ -1525,7 +1526,7 @@ export class ItemPF extends Item {
                   break;
               }
             } catch (e) {
-              console.error(e);
+              console.error(e, formula);
             }
           }
         }

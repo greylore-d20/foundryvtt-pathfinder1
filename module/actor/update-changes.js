@@ -273,7 +273,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           }
         } catch (e) {
           const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
-          console.error(msg);
+          console.error(msg, formula);
           ui.notifications.error(msg);
         }
       } else {
@@ -2418,7 +2418,7 @@ const _updateSimpleAttributes = function (updateData, data) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
           .format(game.i18n.localize("PF1.SpellResistance"), this.name);
-        console.error(msg);
+        console.error(msg, formula);
         ui.notifications.error(msg);
         linkData(data, updateData, "data.attributes.sr.total", 0);
       }

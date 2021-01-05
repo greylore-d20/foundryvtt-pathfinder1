@@ -123,7 +123,7 @@ export class ActorRestDialog extends BaseEntitySheet {
               const restoreRoll = new Roll(spellbook.spellPoints.restoreFormula, actor.getRollData()).roll().total;
               restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll, spellbook.spellPoints.max);
             } catch (e) {
-              console.error(e);
+              console.error(e, spellbook.spellPoints.restoreFormula);
             }
           }
           updateData[`data.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;

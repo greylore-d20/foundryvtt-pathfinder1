@@ -324,6 +324,30 @@ export class ActorPF extends Actor {
         });
     }
 
+    // Add wound threshold data
+    {
+      const hpconf = game.settings.get("pf1", "healthConfig").variants;
+      const wtUsage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+      if (wtUsage > 0) {
+        const wtData = this.getWoundThresholdData(actorData);
+
+        if (wtData.level > 0) {
+          const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+          for (let fk of changeFlatKeys) {
+            let flats = getChangeFlat.call(this, fk, "penalty", actorData.data);
+            if (!(flats instanceof Array)) flats = [flats];
+            for (let k of flats) {
+              if (!k) continue;
+              sourceDetails[k].push({
+                name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtData.level]),
+                value: -wtData.penalty,
+              });
+            }
+          }
+        }
+      }
+    }
+
     // Add extra data
     for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
       for (let grp of Object.values(changeGrp)) {
@@ -618,8 +642,6 @@ export class ActorPF extends Actor {
       }
       await this.toggleConditionStatusIcons();
       await this.refreshItems();
-
-      this.updateWoundThreshold();
     }
     return diff;
   }
@@ -1633,37 +1655,17 @@ export class ActorPF extends Actor {
         d.render(true);
       });
     } else _submit();
-
-    this.updateWoundThreshold();
-  }
-
-  /**
-   * Updates attributes.woundThresholds.level variable.
-   */
-  updateWoundThreshold() {
-    const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
-    const curHP = this.data.data.attributes.hp.value,
-      maxHP = this.data.data.attributes.hp.max;
-
-    let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
-    if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
-
-    this.data.data.attributes.woundThresholds.level = level;
-
-    const wtMult = this.getWoundTresholdMultiplier();
-
-    this.data.data.attributes.woundThresholds.penaltyBase = level * wtMult; // To aid relevant formulas
-    this.data.data.attributes.woundThresholds.penalty = level * wtMult + this.data.data.attributes.woundThresholds.mod;
   }
 
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    */
-  getWoundTresholdMultiplier() {
+  getWoundThresholdMultiplier(data = null) {
+    data = data ?? this.data;
+
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
     const conf = this.data.type === "npc" ? hpconf.npc : hpconf.pc;
-    const override = this.data.data.attributes.woundThresholds.override;
+    const override = getProperty(data, "data.attributes.woundThresholds.override") ?? -1;
     return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
   }
 
@@ -1672,10 +1674,12 @@ export class ActorPF extends Actor {
    *
    * @param {*} rollData Provided valid rollData
    */
-  getWoundThresholdData() {
-    const woundMult = this.getWoundTresholdMultiplier(),
-      woundLevel = this.data.data.attributes.woundThresholds.level,
-      woundPenalty = woundLevel * woundMult + this.data.data.attributes.woundThresholds.mod;
+  getWoundThresholdData(data = null) {
+    data = data ?? this.data;
+
+    const woundMult = this.getWoundThresholdMultiplier(data),
+      woundLevel = getProperty(data, "data.attributes.woundThresholds.level") ?? 0,
+      woundPenalty = woundLevel * woundMult + (getProperty(data, "data.attributes.woundThresholds.mod") ?? 0);
     return {
       level: woundLevel,
       penalty: woundPenalty,
@@ -2172,8 +2176,8 @@ export class ActorPF extends Actor {
 
     // Wound Threshold penalty shorthand
     const wT = this.getWoundThresholdData(result);
-    result.attributes.woundThresholds.penaltyBase = wT.level * wT.multiplier; // To aid relevant formulas
-    result.attributes.woundThresholds.penalty = wT.penalty;
+    setProperty(result, "attributes.woundThresholds.penaltyBase", wT.level * wT.multiplier); // To aid relevant formulas
+    setProperty(result, "attributes.woundThresholds.penalty", wT.penalty);
 
     return result;
   }

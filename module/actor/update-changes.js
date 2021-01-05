@@ -655,6 +655,9 @@ export const updateChanges = async function ({ data = null } = {}) {
     }
   }
 
+  // Apply wound thresholds
+  updateWoundThreshold.call(this, srcData1, updateData);
+
   // Refresh source info
   for (let [bt, change] of Object.entries(changeData)) {
     for (let [ct, values] of Object.entries(change)) {
@@ -1236,10 +1239,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
   const continuous = { discrete: false, continuous: true }[healthConfig.continuity];
 
-  // BUG: HP data is wrong (0/0) at launch for some reason?
-  this.updateWoundThreshold();
-  const wTdata = this.getWoundThresholdData(this.getRollData()); // this is bad
-
   const push_health = (value, source) => {
     changes.push({
       raw: mergeObject(
@@ -1376,16 +1375,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
     });
 
-    // Wound Threholds to CMB
-    changes.push({
-      raw: mergeObject(
-        ItemChange.defaultData,
-        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "cmb", modifier: "penalty" },
-        { inplace: false }
-      ),
-      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-    });
-
     // BAB to CMD
     changes.push({
       raw: mergeObject(
@@ -1412,16 +1401,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         { inplace: false }
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
-    });
-
-    // Wound Thresholds to CMD
-    changes.push({
-      raw: mergeObject(
-        ItemChange.defaultData,
-        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "cmd", modifier: "penalty" },
-        { inplace: false }
-      ),
-      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
     });
   }
 
@@ -1457,16 +1436,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },
       });
     }
-
-    // Wound Thresholds penalty to initiative
-    changes.push({
-      raw: mergeObject(
-        ItemChange.defaultData,
-        { formula: "-@attributes.woundThresholds.penalty", target: "misc", subTarget: "init", modifier: "penalty" },
-        { inplace: false }
-      ),
-      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-    });
   }
 
   // Add Ability modifiers and Energy Drain to saving throws
@@ -1522,21 +1491,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
     });
-
-    // Wound Thresholds to saves
-    changes.push({
-      raw: mergeObject(
-        ItemChange.defaultData,
-        {
-          formula: "-@attributes.woundThresholds.penalty",
-          target: "savingThrows",
-          subTarget: "allSavingThrows",
-          modifier: "penalty",
-        },
-        { inplace: false }
-      ),
-      source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-    });
   }
   // Natural armor
   {
@@ -1578,16 +1532,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         });
       }
     });
-
-  // Wound Thresholds to AC
-  changes.push({
-    raw: mergeObject(
-      ItemChange.defaultData,
-      { formula: "-@attributes.woundThresholds.penalty", target: "ac", subTarget: "ac", modifier: "penalty" },
-      { inplace: false }
-    ),
-    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-  });
 
   // Add fly bonuses or penalties based on maneuverability
   const flyKey = getProperty(data, "data.attributes.speed.fly.maneuverability");
@@ -1708,30 +1652,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
       },
     });
   }
-
-  // Wound Thresholds to skills
-  changes.push({
-    raw: mergeObject(
-      ItemChange.defaultData,
-      { formula: "-@attributes.woundThresholds.penalty", target: "skills", subTarget: "skills", modifier: "penalty" },
-      { inplace: false }
-    ),
-    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-  });
-  // Wound Thresholds to ability checks
-  changes.push({
-    raw: mergeObject(
-      ItemChange.defaultData,
-      {
-        formula: "-@attributes.woundThresholds.penalty",
-        target: "abilityChecks",
-        subTarget: "allChecks",
-        modifier: "penalty",
-      },
-      { inplace: false }
-    ),
-    source: { name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wTdata.level]) },
-  });
 
   // Add conditions
   for (let [con, v] of Object.entries(data.data.attributes.conditions || {})) {
@@ -2044,7 +1964,7 @@ export const isStackingModifier = function (modifier) {
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData) {
-  if (curData == null) curData = this.data.data;
+  curData = curData ?? this.data.data;
   let result = [];
 
   switch (changeTarget) {
@@ -2567,4 +2487,40 @@ const evalChange = function (change) {
   //   this.changeEval[funcName] = new Function(
   // `);
   return 0;
+};
+
+/**
+ * Updates attributes.woundThresholds.level variable.
+ */
+const updateWoundThreshold = function (expandedData = {}, data = {}) {
+  const hpconf = game.settings.get("pf1", "healthConfig").variants;
+  const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+  const curHP =
+      getProperty(expandedData, "data.attributes.hp.value") ?? getProperty(this.data, "data.attributes.hp.value"),
+    maxHP = getProperty(expandedData, "data.attributes.hp.max") ?? getProperty(this.data, "data.attributes.hp.max");
+
+  let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+  if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
+
+  const wtMult = this.getWoundThresholdMultiplier(expandedData);
+  const wtMod =
+    getProperty(expandedData, "data.attributes.woundThresholds.mod") ??
+    getProperty(this.data, "data.attributes.woundThresholds.mod") ??
+    0;
+
+  linkData(expandedData, data, "data.attributes.woundThresholds.level", level);
+  linkData(expandedData, data, "data.attributes.woundThresholds.penaltyBase", level * wtMult); // To aid relevant formulas
+  linkData(expandedData, data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
+
+  const penalty = getProperty(expandedData, "data.attributes.woundThresholds.penalty");
+  const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+  for (let fk of changeFlatKeys) {
+    let flats = getChangeFlat.call(this, fk, "penalty", expandedData.data);
+    if (!(flats instanceof Array)) flats = [flats];
+    for (let k of flats) {
+      if (!k) continue;
+      const curValue = getProperty(expandedData, k);
+      linkData(expandedData, data, k, curValue - penalty);
+    }
+  }
 };

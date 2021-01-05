@@ -9,6 +9,7 @@
 - Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
 - Quick token actions for Items without images caused visual glitches
 - Fix Wyvaran racial dex bonus
+- API calls for dice rolls properly return and resolve to their result(s)
 
 ### Changelog
 

@@ -1261,7 +1261,7 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ ev = null, skipDialog = false }) {
+  async use({ ev = null, skipDialog = false } = {}) {
     if (this.type === "spell") {
       return this.parentActor.useSpell(this, ev, { skipDialog: skipDialog });
     } else if (this.hasAction) {
@@ -1337,7 +1337,8 @@ export class ItemPF extends Item {
         primaryAttack = true,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
-        conditionals;
+        conditionals,
+        result;
       // Get form data
       if (form) {
         rollData.d20 = form.find('[name="d20"]').val();
@@ -1994,15 +1995,16 @@ export class ItemPF extends Item {
         setProperty(chatData, "flags.core.canPopout", true);
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
-        await createCustomChatMessage(t, templateData, chatData);
+        result = await createCustomChatMessage(t, templateData, chatData);
       }
       // Post chat card even without action
       else {
-        this.roll();
+        result = this.roll();
       }
 
       // Subtract ammunition
       await subtractAmmo(-ammoCost);
+      return result;
     };
 
     // Handle fast-forwarding
@@ -2027,28 +2029,28 @@ export class ItemPF extends Item {
     };
     const html = await renderTemplate(template, dialogData);
 
-    let roll;
-    const buttons = {};
-    if (this.hasAttack) {
-      if (this.type !== "spell") {
+    let result = await new Promise((resolve) => {
+      let roll;
+      const buttons = {};
+      if (this.hasAttack) {
+        if (this.type !== "spell") {
+          buttons.normal = {
+            label: game.i18n.localize("PF1.SingleAttack"),
+            callback: (html) => resolve((roll = _roll.call(this, false, html))),
+          };
+        }
+        if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
+          buttons.multi = {
+            label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
+            callback: (html) => resolve((roll = _roll.call(this, true, html))),
+          };
+        }
+      } else {
         buttons.normal = {
-          label: game.i18n.localize("PF1.SingleAttack"),
-          callback: (html) => (roll = _roll.call(this, false, html)),
+          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
+          callback: (html) => resolve((roll = _roll.call(this, false, html))),
         };
       }
-      if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
-        buttons.multi = {
-          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
-          callback: (html) => (roll = _roll.call(this, true, html)),
-        };
-      }
-    } else {
-      buttons.normal = {
-        label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
-        callback: (html) => (roll = _roll.call(this, false, html)),
-      };
-    }
-    return new Promise((resolve) => {
       new Dialog({
         title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
         content: html,
@@ -2059,6 +2061,8 @@ export class ItemPF extends Item {
         },
       }).render(true);
     });
+
+    return result;
   }
 
   /**

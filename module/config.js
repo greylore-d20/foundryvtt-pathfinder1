@@ -1232,6 +1232,7 @@ PF1.contextNoteTargets = {
     cmb: "PF1.CMBAbbr",
     cmd: "PF1.CMDAbbr",
     sr: "PF1.SpellResistance",
+    init: "PF1.Initiative",
   },
 };
 

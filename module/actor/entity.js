@@ -135,6 +135,7 @@ export class ActorPF extends Actor {
       if (subtype === "trait") result = game.i18n.localize("PF1.SourceInfoTraits");
       if (subtype === "racial") result = game.i18n.localize("PF1.SourceInfoRacialTraits");
       if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscFeatures");
+      if (subtype === "template") result = game.i18n.localize("PF1.SourceInfoTemplate");
     }
     if (type === "race") {
       result = game.i18n.localize("PF1.SourceInfoRace");

@@ -49,6 +49,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
 
+    const hpSettings = game.settings.get("pf1", "healthConfig");
+    data["woundThresholds"] = hpSettings.variants.pc;
+
     // Return data for rendering
     return data;
   }

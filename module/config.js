@@ -232,6 +232,13 @@ PF1.abilityActivationTypesPlurals_unchained = {
   special: "PF1.ActivationTypeSpecial",
 };
 
+PF1.woundThresholdConditions = {
+  0: "PF1.WoundLevelHealthy",
+  1: "PF1.WoundLevelGrazed",
+  2: "PF1.WoundLevelWounded",
+  3: "PF1.WoundLevelCritical",
+};
+
 PF1.divineFocus = {
   0: "",
   1: "PF1.SpellComponentDivineFocusAlone",

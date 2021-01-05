@@ -55,6 +55,7 @@
 
     <!-- Variants Tab -->
     <section class="tab" data-tab="variants">
+      <!-- Wounds & Vigor -->
       <div class="form-group">
         <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorPCName'}}</label>
         <input type="checkbox" {{#if variants.pc.useWoundsAndVigor}}checked{{/if}} name="variants.pc.useWoundsAndVigor">
@@ -65,6 +66,37 @@
         <label>{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCName'}}</label>
         <input type="checkbox" {{#if variants.npc.useWoundsAndVigor}}checked{{/if}} name="variants.npc.useWoundsAndVigor">
         <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint'}}</p>
+      </div>
+
+      <!-- Wound Thresholds -->
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCName'}}</label>
+        <select data-dtype="Number" name="variants.pc.useWoundThresholds">
+        {{#select variants.pc.useWoundThresholds}}
+            <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>
+            <option value="1">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdNormal'}}</option>
+            <option value="2">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdGritty'}}</option>
+        {{/select}}
+        </select>
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsThresholdsPCHint'}}</p>
+      </div>
+
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsNPCName'}}</label>
+        <select data-dtype="Number" name="variants.npc.useWoundThresholds">
+        {{#select variants.npc.useWoundThresholds}}
+            <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>
+            <option value="1">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdNormal'}}</option>
+            <option value="2">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdGritty'}}</option>
+        {{/select}}
+        </select>
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundsThresholdsNPCHint'}}</p>
+      </div>
+
+      <div class="form-group">
+        <label>{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideName'}}</label>
+        <input data-dtype="Boolean" type="checkbox" {{#if variants.pc.allowWoundThresholdOverride}}checked{{/if}} name="variants.pc.allowWoundThresholdOverride">
+        <p class="notes">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideHint'}}</p>
       </div>
     </section>
   </div>

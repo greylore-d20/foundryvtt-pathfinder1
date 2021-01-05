@@ -17,6 +17,9 @@
 - Dropping an item on another Item's "Links" will create and add it as a child if it doesn't already exist
 - Item sheet's names now use available space more efficiently (thanks mkahvi!)
 - Change sources list templates as such instead of defaulting to "Feat" (thanks mkahvi!)
+- Implement Wounds Threshold optional rule (thanks mkahvi!)
+- Added ability for classes & feats to grant weapon/ armor proficiencies (#131)
+- Improve error and migration logging (thanks mkahvi!)
 
 ## 0.76.11
 

@@ -234,7 +234,7 @@ export class ItemPF extends Item {
             new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
             dcBonus;
         } catch (e) {
-          console.error(e);
+          console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
         }
       }
       return result;
@@ -243,7 +243,7 @@ export class ItemPF extends Item {
     try {
       result = new Roll(dcFormula, rollData).roll().total + dcBonus;
     } catch (e) {
-      console.error(e);
+      console.error(e, dcFormula);
     }
     return result;
   }
@@ -1511,8 +1511,9 @@ export class ItemPF extends Item {
         // Add specific pre-rolled rollData entries
         for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
           if (conditionalPartsCommon[target] != null) {
+            const formula = conditionalPartsCommon[target].join("+");
             try {
-              const roll = new Roll(conditionalPartsCommon[target].join("+"), rollData).roll().total;
+              const roll = new Roll(formula, rollData).roll().total;
               switch (target) {
                 case "effect.cl":
                   rollData.cl += roll;
@@ -1525,7 +1526,7 @@ export class ItemPF extends Item {
                   break;
               }
             } catch (e) {
-              console.error(e);
+              console.error(e, formula);
             }
           }
         }
@@ -1860,6 +1861,13 @@ export class ItemPF extends Item {
             properties.push(this.data.data.conditionals[c].name);
           });
         }
+
+        // Add Wound Thresholds info
+        if (rollData.attributes.woundThresholds.level > 0)
+          properties.push(
+            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level])
+          );
+
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
         // Add combat info
@@ -2104,6 +2112,12 @@ export class ItemPF extends Item {
         parts.push("- max(0, abs(@attributes.energyDrain))");
       }
     }
+
+    // Add wound thresholds penalties
+    if (rollData.attributes.woundThresholds.penalty > 0) {
+      parts.push("- @attributes.woundThresholds.penalty");
+    }
+
     // Add certain attack bonuses
     if (rollData.attributes.attack.general !== 0) {
       parts.push("@attributes.attack.general");

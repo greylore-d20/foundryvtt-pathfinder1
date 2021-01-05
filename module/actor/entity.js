@@ -135,6 +135,7 @@ export class ActorPF extends Actor {
       if (subtype === "trait") result = game.i18n.localize("PF1.SourceInfoTraits");
       if (subtype === "racial") result = game.i18n.localize("PF1.SourceInfoRacialTraits");
       if (subtype === "misc") result = game.i18n.localize("PF1.SourceInfoMiscFeatures");
+      if (subtype === "template") result = game.i18n.localize("PF1.SourceInfoTemplate");
     }
     if (type === "race") {
       result = game.i18n.localize("PF1.SourceInfoRace");
@@ -322,6 +323,30 @@ export class ActorPF extends Actor {
           name: game.i18n.localize("PF1.AbilityDex"),
           value: cmd.ff,
         });
+    }
+
+    // Add wound threshold data
+    {
+      const hpconf = game.settings.get("pf1", "healthConfig").variants;
+      const wtUsage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+      if (wtUsage > 0) {
+        const wtData = this.getWoundThresholdData(actorData);
+
+        if (wtData.level > 0) {
+          const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+          for (let fk of changeFlatKeys) {
+            let flats = getChangeFlat.call(this, fk, "penalty", actorData.data);
+            if (!(flats instanceof Array)) flats = [flats];
+            for (let k of flats) {
+              if (!k) continue;
+              sourceDetails[k].push({
+                name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtData.level]),
+                value: -wtData.penalty,
+              });
+            }
+          }
+        }
+      }
     }
 
     // Add extra data
@@ -606,6 +631,7 @@ export class ActorPF extends Actor {
       if (updateObj.diff.items) delete updateObj.diff.items;
       diff = mergeObject(diff, updateObj.diff);
     }
+
     // Diff token data
     if (data.token != null) {
       diff.token = diffObject(this.data.token, data.token);
@@ -994,6 +1020,13 @@ export class ActorPF extends Actor {
     const energyDrain = Math.abs(data.attributes.energyDrain);
     if (energyDrain > 0) mods.push(-energyDrain);
 
+    // Wound Threshold penalty
+    const wT = this.getWoundThresholdData();
+    if (wT.multiplier > 0 && wT.penalty > 0) {
+      mods.push(-wT.penalty);
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
+    }
+
     let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
 
     let props = [];
@@ -1093,6 +1126,10 @@ export class ActorPF extends Actor {
     // Add contextual caster level string
     const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
 
+    // Wound Threshold penalty
+    const wT = this.getWoundThresholdData();
+    if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
+
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
@@ -1117,6 +1154,11 @@ export class ActorPF extends Actor {
 
     // Add contextual concentration string
     const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
+
+    // Wound Threshold penalty
+    const wT = this.getWoundThresholdData();
+    if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
+    // TODO: Make the penalty show separate of the CL.total.
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -1220,14 +1262,19 @@ export class ActorPF extends Actor {
 
     if (stop) return;
 
-    const actorData = this.getRollData();
+    const rollData = this.getRollData();
     // Add bonus
-    actorData.bonus = bonus;
+    rollData.bonus = bonus;
     if (bonus.length > 0) formula += " + @bonus";
+    if (rollData.attributes.woundThresholds.penalty > 0) {
+      // TODO: Show penalty separately (@attributes.woundThresholds.penalty)
+      // TODO: Output wound level penalty note
+      // notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
+    }
 
     // Roll initiative
     const rollMode = overrideRollMode;
-    const roll = new Roll(formula, actorData).roll();
+    const roll = new Roll(formula, rollData).roll();
 
     // Construct chat message data
     let messageData = {
@@ -1267,6 +1314,10 @@ export class ActorPF extends Actor {
     const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);
     let mods = changes.map((item) => item.value);
     if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
+
+    // Wound Threshold penalty
+    if (rollData.attributes.woundThresholds.penalty > 0)
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
 
     // Roll saving throw
     let props = this.getDefenseHeaders();
@@ -1317,8 +1368,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    let props = this.getDefenseHeaders();
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
     const label = CONFIG.PF1.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
 
@@ -1329,6 +1378,13 @@ export class ActorPF extends Actor {
     if (this.data.data.attributes.energyDrain) {
       formula += " - @attributes.energyDrain";
     }
+
+    // Wound Threshold penalty
+    if (rollData.attributes.woundThresholds.penalty > 0)
+      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
+
+    let props = this.getDefenseHeaders();
+    if (notes.length > 0) props.push({ header: "Notes", value: notes });
 
     return DicePF.d20Roll({
       event: options.event,
@@ -1424,6 +1480,14 @@ export class ActorPF extends Actor {
         ...(this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : []),
       ];
       energyResistance.push(...values.map((o) => game.i18n.localize("PF1.VulnerableTo").format(o)));
+    }
+
+    // Wound Threshold penalty
+    const wT = this.getWoundThresholdData();
+    if (wT.valid) {
+      const wTlabel = game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]);
+      acNotes.push(wTlabel);
+      cmdNotes.push(wTlabel);
     }
 
     // Create message
@@ -1592,6 +1656,37 @@ export class ActorPF extends Actor {
         d.render(true);
       });
     } else _submit();
+  }
+
+  /**
+   * Returns effective Wound Threshold multiplier with rules and overrides applied.
+   */
+  getWoundThresholdMultiplier(data = null) {
+    data = data ?? this.data;
+
+    const hpconf = game.settings.get("pf1", "healthConfig").variants;
+    const conf = this.data.type === "npc" ? hpconf.npc : hpconf.pc;
+    const override = getProperty(data, "data.attributes.woundThresholds.override") ?? -1;
+    return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
+  }
+
+  /**
+   * Returns Wound Threshold relevant data.
+   *
+   * @param {*} rollData Provided valid rollData
+   */
+  getWoundThresholdData(data = null) {
+    data = data ?? this.data;
+
+    const woundMult = this.getWoundThresholdMultiplier(data),
+      woundLevel = getProperty(data, "data.attributes.woundThresholds.level") ?? 0,
+      woundPenalty = woundLevel * woundMult + (getProperty(data, "data.attributes.woundThresholds.mod") ?? 0);
+    return {
+      level: woundLevel,
+      penalty: woundPenalty,
+      multiplier: woundMult,
+      valid: woundLevel > 0 && woundMult > 0,
+    };
   }
 
   getSkill(key) {
@@ -2079,6 +2174,11 @@ export class ActorPF extends Actor {
         }
         break;
     }
+
+    // Wound Threshold penalty shorthand
+    const wT = this.getWoundThresholdData(result);
+    setProperty(result, "attributes.woundThresholds.penaltyBase", wT.level * wT.multiplier); // To aid relevant formulas
+    setProperty(result, "attributes.woundThresholds.penalty", wT.penalty);
 
     return result;
   }

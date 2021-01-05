@@ -5,8 +5,10 @@
 ### Bug Fixes
 
 - Dice numbers were not able to be imputed ('/r d6' works now)
-- Attacks and Consumables could not sometimes not be linked to a charge pool (#432)
+- Attacks and Consumables could sometimes not be linked to a charge pool (#432)
 - Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
+- Quick token actions for Items without images caused visual glitches
+- Fix Wyvaran racial dex bonus
 
 ### Changelog
 
@@ -14,6 +16,7 @@
 - Add context menu entry for duplicating a combatant's initiative
 - Dropping an item on another Item's "Links" will create and add it as a child if it doesn't already exist
 - Item sheet's names now use available space more efficiently (thanks mkahvi!)
+- Change sources list templates as such instead of defaulting to "Feat" (thanks mkahvi!)
 
 ## 0.76.11
 

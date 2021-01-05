@@ -47,6 +47,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     // Experience Tracking
     data["disableExperience"] = xpSettings.disableExperienceTracking;
 
+    const hpSettings = game.settings.get("pf1", "healthConfig");
+    data["woundThresholds"] = hpSettings.variants.pc;
+
     data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
 
     // Mark as having proficiencies if the character either has them, or does not have levels in classes that are expected to give proficiencies.

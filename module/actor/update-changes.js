@@ -273,7 +273,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           }
         } catch (e) {
           const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
-          console.error(msg);
+          console.error(msg, formula);
           ui.notifications.error(msg);
         }
       } else {
@@ -499,6 +499,16 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: clBonus,
         });
       }
+
+      // Subtract Wound Thresholds penalty. Can't reduce below 1.
+      if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
+        total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+        getSourceInfo(sourceInfo, key).negative.push({
+          name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+          value: -rollData.attributes.woundThresholds.penalty,
+        });
+      }
+
       // Subtract energy drain
       if (rollData.attributes.energyDrain) {
         total = Math.max(0, total - rollData.attributes.energyDrain);
@@ -507,6 +517,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: -Math.abs(rollData.attributes.energyDrain),
         });
       }
+
       linkData(srcData1, updateData, key, total);
     }
 
@@ -644,6 +655,9 @@ export const updateChanges = async function ({ data = null } = {}) {
     }
   }
 
+  // Apply wound thresholds
+  updateWoundThreshold.call(this, srcData1, updateData);
+
   // Refresh source info
   for (let [bt, change] of Object.entries(changeData)) {
     for (let [ct, values] of Object.entries(change)) {
@@ -771,6 +785,32 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
   linkData(data, updateData, "data.attributes.hp.max", getProperty(data, "data.attributes.hp.base") || 0);
   linkData(data, updateData, "data.attributes.wounds.max", getProperty(data, "data.attributes.wounds.base") || 0);
   linkData(data, updateData, "data.attributes.vigor.max", getProperty(data, "data.attributes.vigor.base") || 0);
+
+  // Reset wound thresholds
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.level",
+    getProperty(data, "data.attributes.woundThresholds.level") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.override",
+    getProperty(data, "data.attributes.woundThresholds.override") || -1
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.mod",
+    getProperty(data, "data.attributes.woundThresholds.mod") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.penalty",
+    getProperty(data, "data.attributes.woundThresholds.penalty") || 0
+  );
 
   // Reset AC
   for (let type of Object.keys(data1.attributes.ac)) {
@@ -1148,6 +1188,7 @@ const _addDynamicData = function ({
 const _updateSkills = function (updateData, data) {
   const data1 = data.data;
   let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
+
   for (let [sklKey, skl] of Object.entries(data1.skills)) {
     if (skl == null) continue;
 
@@ -1923,7 +1964,7 @@ export const isStackingModifier = function (modifier) {
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData) {
-  if (curData == null) curData = this.data.data;
+  curData = curData ?? this.data.data;
   let result = [];
 
   switch (changeTarget) {
@@ -2418,7 +2459,7 @@ const _updateSimpleAttributes = function (updateData, data) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
           .format(game.i18n.localize("PF1.SpellResistance"), this.name);
-        console.error(msg);
+        console.error(msg, formula);
         ui.notifications.error(msg);
         linkData(data, updateData, "data.attributes.sr.total", 0);
       }
@@ -2446,4 +2487,40 @@ const evalChange = function (change) {
   //   this.changeEval[funcName] = new Function(
   // `);
   return 0;
+};
+
+/**
+ * Updates attributes.woundThresholds.level variable.
+ */
+const updateWoundThreshold = function (expandedData = {}, data = {}) {
+  const hpconf = game.settings.get("pf1", "healthConfig").variants;
+  const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+  const curHP =
+      getProperty(expandedData, "data.attributes.hp.value") ?? getProperty(this.data, "data.attributes.hp.value"),
+    maxHP = getProperty(expandedData, "data.attributes.hp.max") ?? getProperty(this.data, "data.attributes.hp.max");
+
+  let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+  if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
+
+  const wtMult = this.getWoundThresholdMultiplier(expandedData);
+  const wtMod =
+    getProperty(expandedData, "data.attributes.woundThresholds.mod") ??
+    getProperty(this.data, "data.attributes.woundThresholds.mod") ??
+    0;
+
+  linkData(expandedData, data, "data.attributes.woundThresholds.level", level);
+  linkData(expandedData, data, "data.attributes.woundThresholds.penaltyBase", level * wtMult); // To aid relevant formulas
+  linkData(expandedData, data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
+
+  const penalty = getProperty(expandedData, "data.attributes.woundThresholds.penalty");
+  const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+  for (let fk of changeFlatKeys) {
+    let flats = getChangeFlat.call(this, fk, "penalty", expandedData.data);
+    if (!(flats instanceof Array)) flats = [flats];
+    for (let k of flats) {
+      if (!k) continue;
+      const curValue = getProperty(expandedData, k);
+      linkData(expandedData, data, k, curValue - penalty);
+    }
+  }
 };

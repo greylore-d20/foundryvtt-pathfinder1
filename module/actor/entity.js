@@ -1294,25 +1294,6 @@ export class ActorPF extends Actor {
     await ChatMessage.create(chatData);
   }
 
-  setInitiativeNoteHTML() {
-    if (this.effectNotes.length === 0) {
-      this.effectNotesHTML = "";
-      return;
-    }
-
-    let result = "";
-    for (let n of this.effectNotes) {
-      if (n.length > 0) {
-        result += `<span class="tag">${n}</span>`;
-      }
-    }
-    const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.effectNotesHTML =
-      '<div class="flexcol property-group gm-sensitive"><label>' +
-      game.i18n.localize("PF1.Notes") +
-      '</label><div class="flexrow">${inner}</div></div>';
-  }
-
   rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);

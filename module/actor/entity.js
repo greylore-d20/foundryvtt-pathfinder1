@@ -1201,6 +1201,28 @@ export class ActorPF extends Actor {
     return headers;
   }
 
+  getInitiativeContextNotes() {
+    let notes = this.getContextNotes("misc.init").reduce((arr, o) => {
+      for (let n of o.notes) arr.push(...n.split(/[\n\r]+/));
+      return arr;
+    }, []);
+
+    let notesHTML;
+    if (notes.length > 0) {
+      // Format notes if they're present
+      let notesHTMLParts = [];
+      notes.forEach((note) => notesHTMLParts.push(`<span class="tag">${note}</span>`));
+      notesHTML =
+        '<div class="flexcol property-group gm-sensitive"><label>' +
+        game.i18n.localize("PF1.Notes") +
+        '</label> <div class="flexrow">' +
+        notesHTMLParts.join("") +
+        "</div></div>";
+    }
+
+    return [notes, notesHTML];
+  }
+
   async rollInitiative() {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -1231,24 +1253,7 @@ export class ActorPF extends Actor {
     const roll = new Roll(formula, actorData).roll();
 
     // Context notes
-    let noteData;
-    let notes = this.getContextNotes("misc.init").reduce((arr, o) => {
-      for (let n of o.notes) arr.push(...n.split(/[\n\r]+/));
-      return arr;
-    }, []);
-
-    if (notes.length > 0) {
-      // Format notes if they're present
-      let notesHTMLParts = [];
-      notes.forEach((note) => notesHTMLParts.push(`<span class="tag">${note}</span>`));
-      const notesHTML =
-        '<div class="flexcol property-group gm-sensitive"><label>' +
-        game.i18n.localize("PF1.Notes") +
-        '</label> <div class="flexrow">' +
-        notesHTMLParts.join("") +
-        "</div></div>";
-      noteData = { hasExtraText: true, extraText: notesHTML };
-    }
+    let [notes, notesHTML] = this.getInitiativeContextNotes();
 
     // Create roll template data
     const rollData = mergeObject(
@@ -1258,7 +1263,7 @@ export class ActorPF extends Actor {
         tooltip: await roll.getTooltip(),
         total: roll.total,
       },
-      noteData || {}
+      notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
     );
 
     // Create chat data

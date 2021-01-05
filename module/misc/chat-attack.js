@@ -366,7 +366,7 @@ export class ChatAttack {
 
       // Spell specific notes
       if (this.item.type === "spell") {
-        let _notes = this.item.actor.getContextNotes("spell.effect").forEach((o) => {
+        this.item.actor.getContextNotes("spell.effect").forEach((o) => {
           for (let n of o.notes) notes.push(...n.split(/[\n\r]+/));
         });
       }

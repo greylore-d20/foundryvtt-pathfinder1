@@ -2387,6 +2387,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let itemData = {};
     let dataType = "";
+    let fromContainer = false;
 
     // Case 1 - Import from a Compendium pack
     const actor = this.actor;
@@ -2405,6 +2406,8 @@ export class ActorSheetPF extends ActorSheet {
 
       dataType = "data";
       itemData = data.data;
+
+      fromContainer = data.containerId ?? false;
     }
 
     // Case 3 - Import from World entity
@@ -2413,7 +2416,22 @@ export class ActorSheetPF extends ActorSheet {
       itemData = game.items.get(data.id).data;
     }
 
-    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType);
+    const item = await this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType);
+    // Handle container cleanup
+    if (item && fromContainer) {
+      try {
+        const sourceActor = game.actors.get(actor._id);
+        const container = sourceActor?.getOwnedItem(data.containerId);
+        if (container) await container.deleteContainerContent(itemData._id);
+      } catch (err) {
+        console.error(
+          `Failed to remove item ${itemData._id} (${itemData.name}) from container ${data.containerId} on actor ${actor._id} (${actor.name})`,
+          err
+        );
+      }
+    }
+
+    return item;
   }
 
   getDropData(origData) {

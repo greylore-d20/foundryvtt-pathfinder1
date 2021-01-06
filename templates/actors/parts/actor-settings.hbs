@@ -20,13 +20,31 @@
             </tr>
         </thead>
         <tbody>
+            {{!-- General --}}
+            <tr>
+                <th colspan="2">{{localize "PF1.General"}}</th>
+            </tr>
+            <tr>
+                <td><label>{{localize "PF1.HitPoints"}}</label></td>
+                <td>
+                    <select name="data.attributes.hpAbility">
+                        {{#select data.attributes.hpAbility}}
+                        <option value=""></option>
+                        {{#each config.abilities as |ability a|}}
+                        <option value="{{a}}">{{ability}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+
             {{!-- Combat --}}
             <tr>
                 <th colspan="2">{{localize "PF1.Combat"}}</th>
             </tr>
             <tr>
                 {{!-- Initiative --}}
-                <td>{{localize "PF1.Initiative"}}</td>
+                <td><label>{{localize "PF1.Initiative"}}</label></td>
                 <td>
                     <select data-name="data.attributes.init.ability">
                         {{#select data.attributes.init.ability}}
@@ -38,7 +56,7 @@
             </tr>
             <tr>
                 {{!-- CMB --}}
-                <td>{{localize "PF1.CMB"}}</td>
+                <td><label>{{localize "PF1.CMB"}}</label></td>
                 <td>
                     <select name="data.attributes.cmbAbility">
                         {{#select data.attributes.cmbAbility}}
@@ -57,7 +75,7 @@
             </tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
             <tr>
-                <td>{{savingThrow.label}}</td>
+                <td><label>{{savingThrow.label}}</label></td>
                 <td>
                     <select data-name="data.attributes.savingThrows.{{id}}.ability">
                         {{#select savingThrow.ability}}

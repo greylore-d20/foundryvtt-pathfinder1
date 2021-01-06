@@ -137,19 +137,6 @@
         </div>
         {{/if}}
       </div>
-
-      {{!-- Hit Point Ability --}}
-      <div class="form-group select hp-ability">
-        <label>{{localize "PF1.HPAbility"}}</label>
-        <select name="data.attributes.hpAbility">
-          {{#select data.attributes.hpAbility}}
-          <option value=""></option>
-          {{#each config.abilities as |ability a|}}
-          <option value="{{a}}">{{ability}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
-      </div>
     </div>
   </div>
 </div>

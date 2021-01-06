@@ -8,6 +8,72 @@
     {{/each}}
 </div>
 
+<div class="form-group">
+    <label>{{localize "PF1.AbilityScoreLinks"}}</label>
+</div>
+<div class="form-group">
+    <table class="abilityscore-table">
+        <thead>
+            <tr>
+                <th>{{localize "PF1.Feature"}}</th>
+                <th>{{localize "PF1.AbilityScore"}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{!-- Combat --}}
+            <tr>
+                <th colspan="2">{{localize "PF1.Combat"}}</th>
+            </tr>
+            <tr>
+                {{!-- Initiative --}}
+                <td>{{localize "PF1.Initiative"}}</td>
+                <td>
+                    <select data-name="data.attributes.init.ability">
+                        {{#select data.attributes.init.ability}}
+                        <option value=""></option>
+                        {{selectOptions config.abilities}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                {{!-- CMB --}}
+                <td>{{localize "PF1.CMB"}}</td>
+                <td>
+                    <select name="data.attributes.cmbAbility">
+                        {{#select data.attributes.cmbAbility}}
+                        <option value=""></option>
+                        {{#each config.abilities as |label value|}}
+                        <option value="{{value}}">{{label}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+
+            {{!-- Saving Throws --}}
+            <tr>
+                <th colspan="2">{{localize "PF1.SavingThrowPlural"}}</th>
+            </tr>
+            {{#each data.attributes.savingThrows as |savingThrow id|}}
+            <tr>
+                <td>{{savingThrow.label}}</td>
+                <td>
+                    <select data-name="data.attributes.savingThrows.{{id}}.ability">
+                        {{#select savingThrow.ability}}
+                        <option value=""></option>
+                        {{#each ../config.abilities as |label value|}}
+                        <option value="{{value}}">{{label}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
 {{!-- Wound Thresholds --}}
 <div class="form-group">
     <label>{{localize "PF1.WoundThresholdOverride"}}</label>

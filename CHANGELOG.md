@@ -22,6 +22,7 @@
 - Implement Wounds Threshold optional rule (thanks mkahvi!) (#131)
 - Added ability for classes & feats to grant weapon/ armor proficiencies (#466)
 - Improve error and migration logging (thanks mkahvi!)
+- Added confirmation dialog for when unsaved TinyMCE changes are about to be lost (#286)
 
 ## 0.76.11
 

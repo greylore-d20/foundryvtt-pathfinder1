@@ -9,87 +9,84 @@
 </div>
 
 <div class="form-group">
-    <label>{{localize "PF1.AbilityScoreLinks"}}</label>
+    <h2>{{localize "PF1.AbilityScoreLinks"}}</h2>
 </div>
-<div class="form-group">
-    <table class="abilityscore-table">
-        <thead>
-            <tr>
-                <th>{{localize "PF1.Feature"}}</th>
-                <th>{{localize "PF1.AbilityScore"}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{!-- General --}}
-            <tr>
-                <th colspan="2">{{localize "PF1.General"}}</th>
-            </tr>
-            <tr>
-                <td><label>{{localize "PF1.HitPoints"}}</label></td>
-                <td>
-                    <select name="data.attributes.hpAbility">
-                        {{#select data.attributes.hpAbility}}
-                        <option value=""></option>
-                        {{#each config.abilities as |ability a|}}
-                        <option value="{{a}}">{{ability}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-            </tr>
 
-            {{!-- Combat --}}
-            <tr>
-                <th colspan="2">{{localize "PF1.Combat"}}</th>
-            </tr>
-            <tr>
-                {{!-- Initiative --}}
-                <td><label>{{localize "PF1.Initiative"}}</label></td>
-                <td>
-                    <select data-name="data.attributes.init.ability">
-                        {{#select data.attributes.init.ability}}
-                        <option value=""></option>
-                        {{selectOptions config.abilities}}
-                        {{/select}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                {{!-- CMB --}}
-                <td><label>{{localize "PF1.CMB"}}</label></td>
-                <td>
-                    <select name="data.attributes.cmbAbility">
-                        {{#select data.attributes.cmbAbility}}
-                        <option value=""></option>
-                        {{#each config.abilities as |label value|}}
-                        <option value="{{value}}">{{label}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-            </tr>
+<div class="form-group table">
+    <div class="flexcol" style="max-width: 32em;">
+        {{!-- Header --}}
+        <div class="flexrow header">
+            <label class="cell left-label">{{localize "PF1.Feature"}}</label>
+            <label class="cell midsize">{{localize "PF1.AbilityScore"}}</label>
+        </div>
 
-            {{!-- Saving Throws --}}
-            <tr>
-                <th colspan="2">{{localize "PF1.SavingThrowPlural"}}</th>
-            </tr>
-            {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <tr>
-                <td><label>{{savingThrow.label}}</label></td>
-                <td>
-                    <select data-name="data.attributes.savingThrows.{{id}}.ability">
-                        {{#select savingThrow.ability}}
-                        <option value=""></option>
-                        {{#each ../config.abilities as |label value|}}
-                        <option value="{{value}}">{{label}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+        {{!-- General --}}
+        <div class="flexrow sub-header">
+            <label class="cell">{{localize "PF1.General"}}</label>
+        </div>
+
+        {{!-- Hit Points --}}
+            <div class="flexrow">
+                <label class="cell left-label">{{localize "PF1.HitPoints"}}</label>
+                <select name="data.attributes.hpAbility" class="cell midsize-cell">
+                    {{#select data.attributes.hpAbility}}
+                    <option value=""></option>
+                    {{#each config.abilities as |ability a|}}
+                    <option value="{{a}}">{{ability}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+        {{!-- Combat --}}
+        <div class="flexrow sub-header">
+            <label class="cell">{{localize "PF1.Combat"}}</label>
+        </div>
+
+        {{!-- Initiative --}}
+        <div class="flexrow">
+            <label class="cell left-label">{{localize "PF1.Initiative"}}</label>
+            <select data-name="data.attributes.init.ability" class="cell midsize">
+                {{#select data.attributes.init.ability}}
+                <option value=""></option>
+                {{selectOptions config.abilities}}
+                {{/select}}
+            </select>
+        </div>
+
+        {{!-- CMB --}}
+        <div class="flexrow">
+            <label class="cell left-label">{{localize "PF1.CMB"}}</label>
+            <select name="data.attributes.cmbAbility" class="cell midsize">
+                {{#select data.attributes.cmbAbility}}
+                <option value=""></option>
+                {{#each config.abilities as |label value|}}
+                <option value="{{value}}">{{label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+
+        {{!-- Saving Throws --}}
+        <div class="flexrow sub-header">
+            <label class="cell">{{localize "PF1.SavingThrowPlural"}}</label>
+        </div>
+
+        {{#each data.attributes.savingThrows as |savingThrow id|}}
+        <div class="flexrow">
+            <label class="cell left-label">{{savingThrow.label}}</label>
+            <select data-name="data.attributes.savingThrows.{{id}}.ability" class="cell midsize">
+                {{#select savingThrow.ability}}
+                <option value=""></option>
+                {{#each ../config.abilities as |label value|}}
+                <option value="{{value}}">{{label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        {{/each}}
+    </div>
+</div>
 </div>
 
 {{!-- Wound Thresholds --}}

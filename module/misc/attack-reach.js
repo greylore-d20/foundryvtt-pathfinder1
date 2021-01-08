@@ -270,6 +270,20 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
     `GRID:${canvas.grid.type} - RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist} - gridRange: ${gridRange}`
   );
 
+  // Create function to determine closest token square
+  const getClosestTokenSquare = function (pos) {
+    const lowest = { square: null, dist: null };
+    for (let s of tokenGrid) {
+      const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
+      if (lowest.dist == null || dist < lowest.dist) {
+        lowest.square = s;
+        lowest.dist = dist;
+      }
+    }
+
+    return lowest.square;
+  };
+
   // Gather potential squares
   switch (canvas.grid.type) {
     case CONST.GRID_TYPES.GRIDLESS:
@@ -291,20 +305,6 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           Math.floor(token.w / gridW),
           Math.floor(token.h / gridH),
         ];
-
-        // Create function to determine closest token square
-        const getClosestTokenSquare = function (pos) {
-          const lowest = { square: null, dist: null };
-          for (let s of tokenGrid) {
-            const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
-            if (lowest.dist == null || dist < lowest.dist) {
-              lowest.square = s;
-              lowest.dist = dist;
-            }
-          }
-
-          return lowest.square;
-        };
 
         const wMax = gridRange * 2 + tokenRect[2];
         const hMax = gridRange * 2 + tokenRect[3];
@@ -333,51 +333,67 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
       break;
     case CONST.GRID_TYPES.HEXEVENQ:
     case CONST.GRID_TYPES.HEXODDQ:
-      result.push([0, 0]); // highlight self
-      result.push([0, -2]);
+      {
+        const createHexCircleR = function (range, result) {
+          const hRatio = 3 / 4,
+            vStep = 1,
+            vAlign = 0.5;
+          for (let i = 0; i < range; i++) {
+            // top and top-right
+            result.push([i * -hRatio, range * vStep + i * -vAlign]);
+            // top-right and right
+            result.push([range * -hRatio, vAlign * range + i * -vStep]);
+            // bottom-right
+            result.push([-hRatio * range + i * hRatio, -vAlign * range + -vAlign * i]);
+            // bottom and bottom-left
+            result.push([i * hRatio, range * -vStep + i * vAlign]);
+            // bottom-left and left
+            result.push([hRatio * range, -vAlign * range + vStep * i]);
+            // top-left
+            result.push([hRatio * range + i * -hRatio, range * vAlign + i * vAlign]);
+          }
+          return result;
+        };
+
+        const minGridRange = minRange ? minRange / gridDist : 0;
+        if (gridRange < minRange / gridDist) return result;
+        for (let ringDistance = gridRange; ringDistance > minGridRange; ringDistance--)
+          result = createHexCircleR(ringDistance, result);
+      }
       break;
     case CONST.GRID_TYPES.HEXEVENR:
     case CONST.GRID_TYPES.HEXODDR:
       {
-        const heightRatio = 3 / 4;
-        result.push([0, 0]); // highlight self
-        result.push([0.5, heightRatio]); // left up
-        result.push([-0.5, heightRatio]); // right up
-        result.push([1, 0]); // left
-        result.push([-1, 0]); // right
-        result.push([0.5, -heightRatio]); // left down
-        result.push([-0.5, -heightRatio]); // right down
-        console.debug(result);
+        const createHexCircleR = function (range, result) {
+          const vRatio = 3 / 4,
+            hStep = 1,
+            hAlign = 0.5;
+          for (let i = 0; i < range; i++) {
+            // top-left and top
+            result.push([hAlign * range + i * -hStep, vRatio * range]);
+            // top-right
+            result.push([range * -hAlign + i * -hAlign, vRatio * range + i * -vRatio]);
+            // right & bottom-right
+            result.push([-hStep * range + i * hAlign, -vRatio * i]);
+            // bottom-right and bottom
+            result.push([-hAlign * range + i * hStep, -vRatio * range]);
+            // bottom-left
+            result.push([hAlign * range + i * hAlign, -range * vRatio + i * vRatio]);
+            // left and top-left
+            result.push([hStep * range + i * -hAlign, vRatio * i]);
+          }
+          return result;
+        };
+
+        const minGridRange = minRange ? minRange / gridDist : 0;
+        if (gridRange < minRange / gridDist) return result;
+        for (let ringDistance = gridRange; ringDistance > minGridRange; ringDistance--)
+          result = createHexCircleR(ringDistance, result);
       }
       break;
   }
 
   return result;
-};
-
-/**
- * Convert axial coordinate to cube coordinate.
- */
-const axialToCube = function (axialCoords = { x: 0, y: 0 }) {
-  //
-};
-
-/**
- * Convert cube coordinate to axial coordinate.
- */
-const cubeToAxial = function (cubeCoords = { x: 0, y: 0, z: 0 }) {
-  //
-};
-
-const createHexCircle = function (N) {
-  let points = [];
-  for (let x = -N; x <= N; x++) {
-    //
-    for (let y = Math.max(-N, -x - N); y < Math.min(N, -x + N); y++) {
-      let z = -x - y;
-      points.push();
-    }
-  }
 };
 
 const shouldAddReachSquare = function (

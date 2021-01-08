@@ -681,12 +681,16 @@ export class ActorPF extends Actor {
    * @param {Object} data - The update data, as per ActorPF.update()
    */
   _updateExp(data) {
-    const classes = this.items.filter((o) => o.type === "class" && o.data.data.classType !== "mythic");
-    const level = classes.reduce((cur, o) => {
-      return cur + o.data.data.level;
-    }, 0);
+    const classes = this.items.filter((o) => o.type === "class");
+    const level = classes.filter((o) => o.data.data.type !== "mythic").reduce((cur, o) => cur + o.data.data.level, 0);
     if (getProperty(this.data, "data.details.level.value") !== level) {
       data["data.details.level.value"] = level;
+    }
+    const mythicTier = classes
+      .filter((o) => o.data.data.classType === "mythic")
+      .reduce((acc, o) => acc + o.data.data.level, 0);
+    if (getProperty(this.data, "data.details.mythicTier") !== mythicTier) {
+      data["data.details.mythicTier"] = mythicTier;
     }
 
     // The following is not for NPCs

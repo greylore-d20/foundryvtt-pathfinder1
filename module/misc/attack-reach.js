@@ -265,6 +265,11 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   }
   //console.debug("TOKENSQUARES (x,y):", tokenSquares);
 
+  const gridRange = Math.round(range / gridDist);
+  console.debug(
+    `GRID:${canvas.grid.type} - RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist} - gridRange: ${gridRange}`
+  );
+
   // Gather potential squares
   switch (canvas.grid.type) {
     case CONST.GRID_TYPES.GRIDLESS:
@@ -301,10 +306,9 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           return lowest.square;
         };
 
-        const squareRange = Math.round(range / gridDist);
-        const wMax = squareRange * 2 + tokenRect[2];
-        const hMax = squareRange * 2 + tokenRect[3];
-        const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
+        const wMax = gridRange * 2 + tokenRect[2];
+        const hMax = gridRange * 2 + tokenRect[3];
+        const tl = [tokenRect[0] - gridRange, tokenRect[1] - gridRange];
         for (let a = tl[0]; a < tl[0] + wMax; a++) {
           for (let b = tl[1]; b < tl[1] + hMax; b++) {
             const closestSquare = getClosestTokenSquare([a, b]);
@@ -329,17 +333,51 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
       break;
     case CONST.GRID_TYPES.HEXEVENQ:
     case CONST.GRID_TYPES.HEXODDQ:
-      console.debug(`RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist}`);
       result.push([0, 0]); // highlight self
+      result.push([0, -2]);
       break;
     case CONST.GRID_TYPES.HEXEVENR:
     case CONST.GRID_TYPES.HEXODDR:
-      console.debug(`RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist}`);
-      result.push([0, 0]); // highlight self
+      {
+        const heightRatio = 3 / 4;
+        result.push([0, 0]); // highlight self
+        result.push([0.5, heightRatio]); // left up
+        result.push([-0.5, heightRatio]); // right up
+        result.push([1, 0]); // left
+        result.push([-1, 0]); // right
+        result.push([0.5, -heightRatio]); // left down
+        result.push([-0.5, -heightRatio]); // right down
+        console.debug(result);
+      }
       break;
   }
 
   return result;
+};
+
+/**
+ * Convert axial coordinate to cube coordinate.
+ */
+const axialToCube = function (axialCoords = { x: 0, y: 0 }) {
+  //
+};
+
+/**
+ * Convert cube coordinate to axial coordinate.
+ */
+const cubeToAxial = function (cubeCoords = { x: 0, y: 0, z: 0 }) {
+  //
+};
+
+const createHexCircle = function (N) {
+  let points = [];
+  for (let x = -N; x <= N; x++) {
+    //
+    for (let y = Math.max(-N, -x - N); y < Math.min(N, -x + N); y++) {
+      let z = -x - y;
+      points.push();
+    }
+  }
 };
 
 const shouldAddReachSquare = function (

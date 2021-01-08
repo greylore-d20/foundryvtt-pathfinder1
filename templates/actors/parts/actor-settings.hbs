@@ -1,13 +1,18 @@
 {{!-- Spellbooks --}}
+<div class="form-group">
+    <h2>{{localize "PF1.SpellbookUsage"}}</h2>
+</div>
+
 <div class="form-group stacked">
-    <label>{{localize "PF1.SpellbookUsage"}}</label>
+    <label>{{localize "PF1.SpellBookPlural"}}</label>
     {{#each spellbookData as |spellbook a|}}
     <label class="checkbox">
-        <input type="checkbox" {{checked spellbook.orig.inUse}} name="spellbook-{{a}}-inuse"/> {{spellbook.orig.name}}
+        <input type="checkbox" {{checked spellbook.orig.inUse}} name="spellbook-{{a}}-inuse" /> {{spellbook.orig.name}}
     </label>
     {{/each}}
 </div>
 
+{{!-- Ability Score Linking --}}
 <div class="form-group">
     <h2>{{localize "PF1.AbilityScoreLinks"}}</h2>
 </div>
@@ -87,17 +92,21 @@
         {{/each}}
     </div>
 </div>
+
+{{!-- Optional Rules --}}
+<div class="form-group">
+    <h2>{{localize "PF1.OptionalAndVariantRules"}}</h2>
 </div>
 
 {{!-- Wound Thresholds --}}
 <div class="form-group">
     <label>{{localize "PF1.WoundThresholdOverride"}}</label>
     <select data-dtype="Number" name="data.attributes.woundThresholds.override" {{#unless woundThresholds.allowWoundThresholdOverride}}disabled{{/unless}}>
-    {{#select data.attributes.woundThresholds.override}}
+        {{#select data.attributes.woundThresholds.override}}
         <option value="-1">{{localize 'PF1.Default'}}</option>
         <option value="0">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdDisabled'}}</option>
         <option value="1">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdNormal'}}</option>
         <option value="2">{{localize 'SETTINGS.pf1HealthConfigWoundThresholdGritty'}}</option>
-    {{/select}}
+        {{/select}}
     </select>
 </div>

@@ -137,19 +137,6 @@
         </div>
         {{/if}}
       </div>
-
-      {{!-- Hit Point Ability --}}
-      <div class="form-group select hp-ability">
-        <label>{{localize "PF1.HPAbility"}}</label>
-        <select name="data.attributes.hpAbility">
-          {{#select data.attributes.hpAbility}}
-          <option value=""></option>
-          {{#each config.abilities as |ability a|}}
-          <option value="{{a}}">{{ability}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
-      </div>
     </div>
   </div>
 </div>
@@ -402,19 +389,15 @@
       <table>
         <thead>
           <tr>
-            <th class="attribute bab" data-attribute="bab" rowspan="2">
+            <th class="attribute bab" data-attribute="bab">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
             </th>
-            <th class="attribute cmb" data-attribute="cmb" rowspan="2">
+            <th class="attribute cmb" data-attribute="cmb">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
             </th>
-            <th class="attribute initiative" data-attribute="initiative" colspan="2">
+            <th class="attribute initiative" data-attribute="initiative">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
             </th>
-          </tr>
-          <tr>
-            <th>{{localize "PF1.Value"}}</th>
-            <th>{{localize "PF1.Ability"}}</th>
           </tr>
         </thead>
 
@@ -453,14 +436,6 @@
                 {{/if}}
               </span>
               {{data.attributes.init.total}}
-            </td>
-            <td>
-              <select data-name="data.attributes.init.ability">
-                {{#select data.attributes.init.ability}}
-                  <option value=""></option>
-                  {{selectOptions config.abilities}}
-                {{/select}}
-              </select>
             </td>
           </tr>
         </tbody>

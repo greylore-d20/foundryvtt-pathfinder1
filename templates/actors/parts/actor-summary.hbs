@@ -99,6 +99,10 @@
           @attributes.hd.total : {{data.attributes.hd.total}}<br/>
           @details.cr.base : {{data.details.cr.base}}<br/>
           @details.cr.total : {{data.details.cr.total}}
+          {{#if data.details.mythicTier}}
+          <br />
+          @details.mythicTier : {{data.details.mythicTier}}
+          {{/if}}
         </span>
       </div>
       {{/if}}

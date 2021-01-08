@@ -682,7 +682,9 @@ export class ActorPF extends Actor {
    */
   _updateExp(data) {
     const classes = this.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.data.data.type !== "mythic").reduce((cur, o) => cur + o.data.data.level, 0);
+    const level = classes
+      .filter((o) => o.data.data.classType !== "mythic")
+      .reduce((cur, o) => cur + o.data.data.level, 0);
     if (getProperty(this.data, "data.details.level.value") !== level) {
       data["data.details.level.value"] = level;
     }

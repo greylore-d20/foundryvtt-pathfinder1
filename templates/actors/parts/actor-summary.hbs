@@ -13,25 +13,37 @@
       <div class="hd-level character tooltip">
         <span class="tooltipcontent">
           @attributes.hd.total : {{data.attributes.hd.total}}
+          {{#if data.details.mythicTier}}
+          <br />
+          @details.mythicTier : {{data.details.mythicTier}}
+          {{/if}}
         </span>
 
         <table>
           <thead>
             <tr>
-              <th>{{localize "PF1.Level"}}</th>
+              <th class="level">{{localize "PF1.Level"}}</th>
+              {{#if data.details.mythicTier}}
+              <th class="tier">{{localize "PF1.Tier"}}</th>
+              {{/if}}
               {{#unless disableExperience}}
-              <th>{{localize "PF1.Experience"}}</th>
+              <th class="experience">{{localize "PF1.Experience"}}</th>
               {{/unless}}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
+              <td class="level">
                 {{data.details.level.value}}
               </td>
+              {{#if data.details.mythicTier}}
+              <td class="tier">
+                {{data.details.mythicTier}}
+              </td>
+              {{/if}}
               {{#unless disableExperience}}
-              <td>
-                <div class="flexrow experience">
+              <td class="experience">
+                <div class="flexrow">
                   <span class="text-box direct allow-relative" name="data.details.xp.value" data-dtype="Number">{{data.details.xp.value}}</span>
                   <span class="separator"> / </span>
                   <span class="text-box max readonly">{{data.details.xp.max}}</span>
@@ -55,20 +67,28 @@
         <table>
           <thead>
             <tr>
-              <th>{{localize "PF1.HitDieShort"}}</th>
+              <th class="level">{{localize "PF1.HitDieShort"}}</th>
+              {{#if data.details.mythicTier}}
+              <th class="tier">{{localize "PF1.Tier"}}</th>
+              {{/if}}
               <th>{{localize "PF1.ChallengeRatingShort"}}</th>
               <th>{{localize "PF1.Experience"}}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
+              <td class="level">
                 {{data.attributes.hd.total}}
               </td>
+              {{#if data.details.mythicTier}}
+              <td class="tier">
+                {{data.details.mythicTier}}
+              </td>
+              {{/if}}
               <td>
                 <span class="text-box cr-input" name="data.details.cr.base">{{labels.cr}}</span>
               </td>
-              <td>
+              <td class="experience">
                 {{data.details.xp.value}}
               </td>
             </tr>

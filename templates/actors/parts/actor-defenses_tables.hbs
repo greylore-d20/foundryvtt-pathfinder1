@@ -70,7 +70,7 @@
     <thead>
         <tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <th class="saving-throw tooltip" data-savingthrow="{{id}}" colspan="2">
+            <th class="saving-throw tooltip" data-savingthrow="{{id}}">
                 <div class="tooltipcontent">
                 @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
             
@@ -85,7 +85,7 @@
                 <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
             </th>
             {{/each}}
-            <th rowspan="2" class="tooltip">
+            <th class="tooltip">
                 <div class="tooltipcontent">
                 @attributes.sr.total : {{data.attributes.sr.total}}
                 </div>
@@ -93,29 +93,12 @@
                 {{localize "PF1.SpellResistance"}}
             </th>
         </tr>
-
-        <tr>
-            {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <th>{{localize "PF1.Value"}}</th>
-            <th>{{localize "PF1.Ability"}}</th>
-            {{/each}}
-        </tr>
     </thead>
 
     <tbody>
         <tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
             <td>{{numberFormat savingThrow.total decimals=0 sign=true}}</td>
-            <td>
-                <select data-name="data.attributes.savingThrows.{{id}}.ability">
-                    {{#select savingThrow.ability}}
-                    <option value=""></option>
-                    {{#each ../config.abilities as |abl a|}}
-                    <option value="{{a}}">{{abl}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </td>
             {{/each}}
             <td>{{data.attributes.sr.total}}</td>
         </tr>

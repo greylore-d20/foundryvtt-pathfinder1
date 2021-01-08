@@ -1114,6 +1114,32 @@
       }
     }
   }
+
+  .table {
+    .header {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .sub-header {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .header,
+    .sub-header {
+      label {
+        color: #f0f0e0;
+        text-shadow: rgb(0, 0, 0) 1px 1px 0px;
+      }
+    }
+    .cell {
+      background: rgba(0, 0, 0, 0.05);
+      .midsize {
+        flex-basis: 40%;
+      }
+      .left-label {
+        flex-basis: 60%;
+        //flex-shrink: true;
+      }
+    }
+  }
 }
 
 .locked {

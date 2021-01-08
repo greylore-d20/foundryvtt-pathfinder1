@@ -36,15 +36,16 @@ export class SquareHighlight {
 
   render() {
     const grid = canvas.grid;
-    const gridSize = grid.size;
+    const gridW = grid.w,
+      gridH = grid.h;
     const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
 
     this.clear();
 
     // Highlight squares
     for (let s of this._squares) {
-      const x = Math.floor(this.origin.x - s.x) * gridSize;
-      const y = Math.floor(this.origin.y - s.y) * gridSize;
+      const x = (this.origin.x - s.x) * gridW;
+      const y = (this.origin.y - s.y) * gridH;
       grid.grid.highlightGridPosition(hl, { x: x, y: y, border: this.borderColor, color: this.fillColor });
     }
   }
@@ -58,12 +59,13 @@ export class SquareHighlight {
  */
 export const showAttackReach = function (token, attack) {
   const grid = canvas.grid;
-  const gridSize = grid.size;
   const tw = token.data.width;
   const th = token.data.height;
+  const gridW = grid.w,
+    gridH = grid.h;
   const origin = {
-    x: Math.floor((token.x + tw * gridSize - 0.5 * gridSize) / gridSize),
-    y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
+    x: (token.x + tw * gridW - gridW) / gridW,
+    y: (token.y + th * gridH - gridH) / gridH,
   };
 
   const rollData = attack.getRollData();
@@ -245,69 +247,96 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
 
   let result = [];
 
-  if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
+  //if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
   if (!addSquareFunction) addSquareFunction = shouldAddReachSquare;
 
   // Initialize variables
-  const gridDist = canvas.scene.data.gridDistance;
-  const gridSize = canvas.grid.size;
-
+  const gridDist = canvas.scene.data.gridDistance,
+    gridW = canvas.grid.w,
+    gridH = canvas.grid.h;
   // Determine token squares
-  let tokenSquares = [];
-  for (let a = 0; a < Math.floor(token.w / gridSize); a++) {
-    for (let b = 0; b < Math.floor(token.h / gridSize); b++) {
-      const x = Math.floor((token.x + gridSize * 0.5) / gridSize + a);
-      const y = Math.floor((token.y + gridSize * 0.5) / gridSize + b);
-      tokenSquares.push([x, y]);
-    }
+  let tokenGrid = [];
+  if (canvas.grid.type > 1) {
+    tokenGrid = [];
+    // token size in grid units
+    const tokenGridWidth = token.w / gridW,
+      tokenGridHeight = token.h / gridH;
+    tokenGrid.push([token.x / (gridW * 0.5), token.y / (gridH * 0.5)]);
   }
-
-  // Determine token-based variables
-  let tokenRect = [
-    Math.floor((token.x + gridSize * 0.5) / gridSize),
-    Math.floor((token.y + gridSize * 0.5) / gridSize),
-    Math.floor(token.w / gridSize),
-    Math.floor(token.h / gridSize),
-  ];
-
-  // Create function to determine closest token square
-  const getClosestTokenSquare = function (pos) {
-    const lowest = { square: null, dist: null };
-    for (let s of tokenSquares) {
-      const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
-      if (lowest.dist == null || dist < lowest.dist) {
-        lowest.square = s;
-        lowest.dist = dist;
-      }
-    }
-
-    return lowest.square;
-  };
+  //console.debug("TOKENSQUARES (x,y):", tokenSquares);
 
   // Gather potential squares
-  const squareRange = Math.round(range / gridDist);
-  const wMax = squareRange * 2 + tokenRect[2];
-  const hMax = squareRange * 2 + tokenRect[3];
-  const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
-  for (let a = tl[0]; a < tl[0] + wMax; a++) {
-    for (let b = tl[1]; b < tl[1] + hMax; b++) {
-      const closestSquare = getClosestTokenSquare([a, b]);
+  switch (canvas.grid.type) {
+    case CONST.GRID_TYPES.GRIDLESS:
+      break;
+    case CONST.GRID_TYPES.SQUARE:
+      {
+        for (let a = 0; a < Math.floor(token.w / gridW); a++) {
+          for (let b = 0; b < Math.floor(token.h / gridH); b++) {
+            const x = (token.x + gridW * 0.5) / gridW + a;
+            const y = (token.y + gridH * 0.5) / gridH + b;
+            tokenGrid.push([x, y]);
+          }
+        }
 
-      const offset = [a - tokenRect[0], b - tokenRect[1]];
-      if (
-        !(
-          a >= tokenRect[0] &&
-          a < tokenRect[0] + tokenRect[2] &&
-          b >= tokenRect[1] &&
-          b < tokenRect[1] + tokenRect[2] &&
-          minRange != null
-        )
-      ) {
-        if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect, options)) {
-          result.push(offset);
+        // Determine token-based variables
+        let tokenRect = [
+          Math.floor((token.x + gridW * 0.5) / gridW),
+          Math.floor((token.y + gridH * 0.5) / gridH),
+          Math.floor(token.w / gridW),
+          Math.floor(token.h / gridH),
+        ];
+
+        // Create function to determine closest token square
+        const getClosestTokenSquare = function (pos) {
+          const lowest = { square: null, dist: null };
+          for (let s of tokenGrid) {
+            const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
+            if (lowest.dist == null || dist < lowest.dist) {
+              lowest.square = s;
+              lowest.dist = dist;
+            }
+          }
+
+          return lowest.square;
+        };
+
+        const squareRange = Math.round(range / gridDist);
+        const wMax = squareRange * 2 + tokenRect[2];
+        const hMax = squareRange * 2 + tokenRect[3];
+        const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
+        for (let a = tl[0]; a < tl[0] + wMax; a++) {
+          for (let b = tl[1]; b < tl[1] + hMax; b++) {
+            const closestSquare = getClosestTokenSquare([a, b]);
+
+            const offset = [a - tokenRect[0], b - tokenRect[1]];
+            if (
+              !(
+                a >= tokenRect[0] &&
+                a < tokenRect[0] + tokenRect[2] &&
+                b >= tokenRect[1] &&
+                b < tokenRect[1] + tokenRect[2] &&
+                minRange != null
+              )
+            ) {
+              if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect, options)) {
+                result.push(offset);
+              }
+            }
+          }
         }
       }
-    }
+      break;
+    case CONST.GRID_TYPES.HEXEVENQ:
+    case CONST.GRID_TYPES.HEXODDQ:
+      console.debug(`RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist}`);
+      result.push([0, 0]); // highlight self
+      break;
+    case CONST.GRID_TYPES.HEXEVENR:
+    case CONST.GRID_TYPES.HEXODDR:
+      console.debug(`RANGE: ${range} - minimum: ${minRange} - gridDist: ${gridDist}`);
+      result.push([0, 0]); // highlight self
+      break;
   }
 
   return result;
@@ -323,9 +352,10 @@ const shouldAddReachSquare = function (
   options = { useReachRule: false }
 ) {
   const gridDist = canvas.scene.data.gridDistance;
-  const gridSize = canvas.grid.size;
-  const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
-  const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
+  const gridW = canvas.grid.w,
+    gridH = canvas.grid.h;
+  const p0 = { x: closestTokenSquare[0] * gridW, y: closestTokenSquare[1] * gridH };
+  const p1 = { x: pos[0] * gridW, y: pos[1] * gridH };
 
   const dist = measureReachDistance(p0, p1);
   const dist2 = measureReachDistance(p0, p1, true);

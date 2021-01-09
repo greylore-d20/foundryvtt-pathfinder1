@@ -13,11 +13,11 @@
       <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.formula"
       value="{{spellbook.orig.cl.formula}}" placeholder="{{localize "PF1.CasterLevelBonusFormula"}}" />
     </div>
+
+    <div class="spellcasting-config flexrow" style="flex: 0 5 5%; align-items: center; margin-left: auto; text-align: right;">
+      <label><a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}"><i class="fas fa-cogs"></i></a></label>
+    </div>
   </div>
-  
-  <a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}">
-    <i class="fas {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}fa-arrow-circle-down{{else}}fa-arrow-circle-up{{/if}}"></i>
-  </a>
   <div class="hide spellbook-info_{{spellbookIndex}} {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}hidden{{/if}}">
     <div class="flexrow spellcasting-notes pf1-sheet-group">
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>

@@ -349,19 +349,25 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           const hRatio = 3 / 4,
             vStep = 1,
             vAlign = 0.5;
+          const vDist = vStep * range,
+            hDist = hRatio * range,
+            vAlignedDist = vAlign * range;
           for (let i = 0; i < range; i++) {
+            const hShiftDist = hRatio * i,
+              vAlignedShift = vAlign * i,
+              vStepShift = vStep * i;
             // top and top-right
-            result.push([i * -hRatio, range * vStep + i * -vAlign]);
+            result.push([-hShiftDist, vDist + -vAlignedShift]);
             // top-right and right
-            result.push([range * -hRatio, vAlign * range + i * -vStep]);
+            result.push([-hDist, vAlignedDist + -vStepShift]);
             // bottom-right
-            result.push([-hRatio * range + i * hRatio, -vAlign * range + -vAlign * i]);
+            result.push([-hDist + hShiftDist, -vAlignedDist + -vAlignedShift]);
             // bottom and bottom-left
-            result.push([i * hRatio, range * -vStep + i * vAlign]);
+            result.push([hShiftDist, -vDist + vAlignedShift]);
             // bottom-left and left
-            result.push([hRatio * range, -vAlign * range + vStep * i]);
+            result.push([hDist, -vAlignedDist + vStepShift]);
             // top-left
-            result.push([hRatio * range + i * -hRatio, range * vAlign + i * vAlign]);
+            result.push([hDist + -hShiftDist, vAlignedDist + vAlignedShift]);
           }
           return result;
         };
@@ -377,22 +383,28 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
       {
         result.push([0, 0]); // self
         const createHexCircleR = function (range, result) {
-          const vRatio = 3 / 4,
-            hStep = 1,
-            hAlign = 0.5;
+          const vRatio = 3 / 4, // row height difference
+            hStep = 1, // distance between grids on same row
+            hAlign = 0.5; // horizontal on adjacent rows
+          const vDist = vRatio * range,
+            hAlignedDist = hAlign * range,
+            hDist = hStep * range;
           for (let i = 0; i < range; i++) {
+            const vShiftDist = vRatio * i,
+              hShiftDist = hStep * i,
+              hAlignedShift = hAlign * i;
             // top-left and top
-            result.push([hAlign * range + i * -hStep, vRatio * range]);
+            result.push([hAlignedDist + -hShiftDist, vDist]);
             // top-right
-            result.push([range * -hAlign + i * -hAlign, vRatio * range + i * -vRatio]);
+            result.push([-hAlignedDist + -hAlignedShift, vDist + -vShiftDist]);
             // right & bottom-right
-            result.push([-hStep * range + i * hAlign, -vRatio * i]);
+            result.push([-hDist + hAlignedShift, -vShiftDist]);
             // bottom-right and bottom
-            result.push([-hAlign * range + i * hStep, -vRatio * range]);
+            result.push([-hAlignedDist + hShiftDist, -vDist]);
             // bottom-left
-            result.push([hAlign * range + i * hAlign, -range * vRatio + i * vRatio]);
+            result.push([hAlignedDist + hAlignedShift, -vDist + vShiftDist]);
             // left and top-left
-            result.push([hStep * range + i * -hAlign, vRatio * i]);
+            result.push([hDist + -hAlignedShift, vShiftDist]);
           }
           return result;
         };

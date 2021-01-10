@@ -256,14 +256,6 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
     gridH = canvas.grid.h;
   // Determine token squares
   let tokenGrid = [];
-  if (canvas.grid.type > 1) {
-    tokenGrid = [];
-    // token size in grid units
-    const tokenGridWidth = token.w / gridW,
-      tokenGridHeight = token.h / gridH;
-    tokenGrid.push([token.x / (gridW * 0.5), token.y / (gridH * 0.5)]);
-  }
-  //console.debug("TOKENSQUARES (x,y):", tokenSquares);
 
   const gridRange = Math.round(range / gridDist);
   console.debug(
@@ -286,12 +278,11 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
 
   const tokenHexSize = function () {
     const length = Math.max(token.w / gridW, token.h / gridH);
-    //
     const centerOnIntersection = length > 1 ? length % 2 === 0 : false;
-
     console.debug(`TOKEN HEX SIZE: ${length} - centerOnIntersection: ${centerOnIntersection}`);
   };
 
+  const minGridRange = minRange ? minRange / gridDist : 0;
   tokenHexSize();
 
   // Gather potential squares
@@ -344,7 +335,6 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
     case CONST.GRID_TYPES.HEXEVENQ:
     case CONST.GRID_TYPES.HEXODDQ:
       {
-        result.push([0, 0]); // self
         const createHexCircleR = function (range, result) {
           const hRatio = 3 / 4,
             vStep = 1,
@@ -372,8 +362,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           return result;
         };
 
-        const minGridRange = minRange ? minRange / gridDist : 0;
-        if (gridRange < minRange / gridDist) return result;
+        if (minRange === null) result.push([0, 0]); // self
         for (let ringDistance = gridRange; ringDistance > minGridRange; ringDistance--)
           result = createHexCircleR(ringDistance, result);
       }
@@ -381,7 +370,6 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
     case CONST.GRID_TYPES.HEXEVENR:
     case CONST.GRID_TYPES.HEXODDR:
       {
-        result.push([0, 0]); // self
         const createHexCircleR = function (range, result) {
           const vRatio = 3 / 4, // row height difference
             hStep = 1, // distance between grids on same row
@@ -409,13 +397,11 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
           return result;
         };
 
-        const minGridRange = minRange ? minRange / gridDist : 0;
-        if (gridRange < minRange / gridDist) return result;
-        console.debug("RANGE: ", minGridRange, gridRange);
+        if (minRange === null) result.push([0, 0]); // self
         for (let ringDistance = gridRange; ringDistance > minGridRange; ringDistance--)
           result = createHexCircleR(ringDistance, result);
       }
-      console.debug(result);
+
       break;
   }
 

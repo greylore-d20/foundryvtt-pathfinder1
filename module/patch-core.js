@@ -195,6 +195,7 @@ export async function PatchCore() {
   window.getTemplate = PF1_getTemplate;
 
   await import("./low-light-vision.js");
+  await import("./hexgrid.js");
 }
 
 import { isMinimumCoreVersion } from "./lib.js";

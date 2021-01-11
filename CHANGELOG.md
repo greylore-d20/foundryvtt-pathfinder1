@@ -26,6 +26,7 @@
 - Move ability score configuration to settings tab (thanks mkahvi!)
 - Added "Spell Resistance" as a "Misc" Change subtarget
   - The SR formula entered in the combat tab will now be used as a "Base" type value
+- Added "chargeCost" as roll data field
 
 ## 0.76.11
 

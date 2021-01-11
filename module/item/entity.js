@@ -1533,6 +1533,30 @@ export class ItemPF extends Item {
         }
       }
 
+      // Deduct charge
+      let cost;
+      if (this.autoDeductCharges) {
+        cost = this.chargeCost;
+        let uses = this.charges;
+        if (this.data.type === "spell" && this.useSpellPoints()) {
+          cost = this.getSpellPointCost(rollData);
+          uses = this.getSpellUses();
+        }
+        // Add charge cost from conditional modifiers
+        cost += rollData["chargeCostBonus"] ?? 0;
+
+        // Cancel usage on insufficient charges
+        if (cost > uses) {
+          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+          console.warn(msg);
+          ui.notifications.warn(msg);
+          return;
+        }
+        await this.addCharges(-cost);
+      }
+      // Save chargeCost as rollData entry for following formulae
+      rollData.chargeCost = cost;
+
       if (this.hasAttack) {
         ammoCost = Math.min(minAmmo, allAttacks.length);
         for (
@@ -1721,28 +1745,6 @@ export class ItemPF extends Item {
             return;
           }
         }
-      }
-
-      // Deduct charge
-      let cost;
-      if (this.autoDeductCharges) {
-        cost = this.chargeCost;
-        let uses = this.charges;
-        if (this.data.type === "spell" && this.useSpellPoints()) {
-          cost = this.getSpellPointCost(rollData);
-          uses = this.getSpellUses();
-        }
-        // Add charge cost from conditional modifiers
-        cost += rollData["chargeCostBonus"] ?? 0;
-
-        // Cancel usage on insufficient charges
-        if (cost > uses) {
-          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
-          console.warn(msg);
-          ui.notifications.warn(msg);
-          return;
-        }
-        await this.addCharges(-cost);
       }
 
       // Set chat data

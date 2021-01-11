@@ -23,7 +23,8 @@
 - Added ability for classes & feats to grant weapon/ armor proficiencies (#466)
 - Improve error and migration logging (thanks mkahvi!)
 - Added confirmation dialog for when unsaved TinyMCE changes are about to be lost (#286)
-
+- Made spellcasting configuration button a little clearer (thanks mkahvi!) (#454)
+- Move ability score configuration to settings tab (thanks mkahvi!)
 ## 0.76.11
 
 ### Bug Fixes

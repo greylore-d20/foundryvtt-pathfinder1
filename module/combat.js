@@ -10,8 +10,9 @@ import { isMinimumCoreVersion } from "./lib.js";
  * See Combat._getInitiativeFormula for more detail.
  */
 export const _getInitiativeFormula = function (actor) {
-  if (!actor) return "1d20";
-  const parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
+  if (CONFIG.Combat.initiative.formula) var parts = CONFIG.Combat.initiative.formula.split(/\s*\+\s*/);
+  else parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
+  if (!actor) return parts[0] ?? "0";
   return parts.filter((p) => p !== null).join(" + ");
 };
 

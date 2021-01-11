@@ -145,7 +145,7 @@ export class ActorSheetPF extends ActorSheet {
         }
       }
       return Promise.all(unsavedChanges).then(() => {
-        super.close(options);
+        return super.close(options);
       });
     }
   }

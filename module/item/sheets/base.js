@@ -82,7 +82,7 @@ export class ItemSheetPF extends ItemSheet {
         }
       }
       return Promise.all(unsavedChanges).then(() => {
-        super.close(options);
+        return super.close(options);
       });
     }
   }

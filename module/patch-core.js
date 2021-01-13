@@ -146,6 +146,7 @@ export async function PatchCore() {
       await this.toggleConditionStatusIcons();
       await this.refreshItems();
     }
+    return diff;
   };
   // Patch ActorTokenHelpers.deleteEmbeddedEntity
   const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;

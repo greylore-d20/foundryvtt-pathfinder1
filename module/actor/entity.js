@@ -1622,16 +1622,17 @@ export class ActorPF extends Actor {
       };
       const html = await renderTemplate(template, dialogData);
 
-      const buttons = {};
-      buttons.normal = {
-        label: game.i18n.localize("PF1.Apply"),
-        callback: (html) => _submit.call(this, html, 1 * healingInvert),
-      };
-      buttons.half = {
-        label: game.i18n.localize("PF1.ApplyHalf"),
-        callback: (html) => _submit.call(this, html, 0.5 * healingInvert),
-      };
       return new Promise((resolve) => {
+        const buttons = {};
+        buttons.normal = {
+          label: game.i18n.localize("PF1.Apply"),
+          callback: (html) => resolve(_submit.call(this, html, 1 * healingInvert)),
+        };
+        buttons.half = {
+          label: game.i18n.localize("PF1.ApplyHalf"),
+          callback: (html) => resolve(_submit.call(this, html, 0.5 * healingInvert)),
+        };
+
         var d = new Dialog({
           title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
           content: html,
@@ -1649,13 +1650,26 @@ export class ActorPF extends Actor {
               inp[0].querySelector('input[name="damage-reduction"]').value =
                 e.currentTarget.innerText.match(numReg) ?? "";
             }
+            function mouseWheelAdd(event) {
+              const el = event.currentTarget;
+
+              //Digits with optional sign only
+              if (/[^\d+-]|(?:\d[+-])/.test(el.value.trim())) return;
+
+              const value = parseFloat(el.value) || 0;
+              const increase = -Math.sign(event.originalEvent.deltaY);
+
+              el.value = (value + increase).toString();
+            }
+
             inp.on("click", 'a[name="swap-selected"]', swapSelected);
             inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
+            inp.on("wheel", "input", mouseWheelAdd);
           },
         });
         d.render(true);
       });
-    } else _submit();
+    } else return _submit();
   }
 
   /**

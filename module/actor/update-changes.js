@@ -730,15 +730,26 @@ export const updateChanges = async function ({ data = null } = {}) {
         value: -srcData1.data.attributes.acp.attackPenalty,
       });
     }
-    /*
-    if (srcData1.data.attributes.energyDrainPenalty > 0) {
+    if (srcData1.data.attributes.energyDrain > 0) {
       atkSrc.negative.push({
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-        value: -srcData1.data.attributes.energyDrainPenalty,
+        value: -srcData1.data.attributes.energyDrain,
       });
     }
-    */
-    const totalAtk = srcData1.data.attributes.bab.total - srcData1.data.attributes.acp.attackPenalty;
+    let sizeMod = CONFIG.PF1.sizeMods[srcData1.data.traits.size];
+    if (sizeMod !== 0) {
+      const sizeChange = {
+        name: game.i18n.localize("PF1.Size"),
+        value: sizeMod,
+      };
+      if (sizeMod > 0) atkSrc.positive.push(sizeChange);
+      else atkSrc.negative.push(sizeChange);
+    }
+    const totalAtk =
+      srcData1.data.attributes.bab.total +
+      sizeMod -
+      srcData1.data.attributes.acp.attackPenalty -
+      srcData1.data.attributes.energyDrain;
     linkData(srcData1, updateData, k, totalAtk);
   }
 

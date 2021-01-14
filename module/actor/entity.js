@@ -1160,7 +1160,7 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@attributes.bab.total", ...changes],
+      parts: changes,
       dice: options.dice,
       data: rollData,
       title: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),

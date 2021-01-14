@@ -1295,14 +1295,13 @@ export class ActorPF extends Actor {
     }
 
     // Roll initiative
-    const rollMode = overrideRollMode;
     const roll = new Roll(formula, rollData).roll();
 
     // Context notes
     let [notes, notesHTML] = this.getInitiativeContextNotes();
 
     // Create roll template data
-    const rollData = mergeObject(
+    const templateData = mergeObject(
       {
         user: game.user._id,
         formula: roll.formula,
@@ -1316,30 +1315,18 @@ export class ActorPF extends Actor {
     let chatData = {
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-      rollMode: rollMode,
+      rollMode: overrideRollMode,
       sound: CONFIG.sounds.dice,
       speaker: {
-        scene: canvas.scene._id,
+        scene: canvas.scene?._id,
         actor: this._id,
-        token: this.token ? this.token._id : null,
-        alias: this.token ? this.token.name : null,
+        token: this.token?.id,
+        alias: this.token?.name,
       },
       flavor: game.i18n.localize("PF1.RollsForInitiative").format(this.token ? this.token.name : this.name),
       roll: roll,
-      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
+      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
     };
-    // Handle different roll modes
-    switch (chatData.rollMode) {
-      case "gmroll":
-        chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
-        break;
-      case "selfroll":
-        chatData["whisper"] = [game.user._id];
-        break;
-      case "blindroll":
-        chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
-        chatData["blind"] = true;
-    }
 
     // Send message
     await ChatMessage.create(chatData);

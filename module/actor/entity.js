@@ -1242,6 +1242,28 @@ export class ActorPF extends Actor {
     return headers;
   }
 
+  getInitiativeContextNotes() {
+    let notes = this.getContextNotes("misc.init").reduce((arr, o) => {
+      for (let n of o.notes) arr.push(...n.split(/[\n\r]+/));
+      return arr;
+    }, []);
+
+    let notesHTML;
+    if (notes.length > 0) {
+      // Format notes if they're present
+      let notesHTMLParts = [];
+      notes.forEach((note) => notesHTMLParts.push(`<span class="tag">${note}</span>`));
+      notesHTML =
+        '<div class="flexcol property-group gm-sensitive"><label>' +
+        game.i18n.localize("PF1.Notes") +
+        '</label> <div class="flexrow">' +
+        notesHTMLParts.join("") +
+        "</div></div>";
+    }
+
+    return [notes, notesHTML];
+  }
+
   async rollInitiative() {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -1276,8 +1298,26 @@ export class ActorPF extends Actor {
     const rollMode = overrideRollMode;
     const roll = new Roll(formula, rollData).roll();
 
-    // Construct chat message data
-    let messageData = {
+    // Context notes
+    let [notes, notesHTML] = this.getInitiativeContextNotes();
+
+    // Create roll template data
+    const rollData = mergeObject(
+      {
+        user: game.user._id,
+        formula: roll.formula,
+        tooltip: await roll.getTooltip(),
+        total: roll.total,
+      },
+      notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
+    );
+
+    // Create chat data
+    let chatData = {
+      user: game.user._id,
+      type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+      rollMode: rollMode,
+      sound: CONFIG.sounds.dice,
       speaker: {
         scene: canvas.scene._id,
         actor: this._id,
@@ -1285,8 +1325,24 @@ export class ActorPF extends Actor {
         alias: this.token ? this.token.name : null,
       },
       flavor: game.i18n.localize("PF1.RollsForInitiative").format(this.token ? this.token.name : this.name),
+      roll: roll,
+      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
     };
-    roll.toMessage(messageData, { rollMode });
+    // Handle different roll modes
+    switch (chatData.rollMode) {
+      case "gmroll":
+        chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+        break;
+      case "selfroll":
+        chatData["whisper"] = [game.user._id];
+        break;
+      case "blindroll":
+        chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+        chatData["blind"] = true;
+    }
+
+    // Send message
+    await ChatMessage.create(chatData);
   }
 
   rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
@@ -1868,6 +1924,14 @@ export class ActorPF extends Actor {
       const spellbookNotes = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
       if (spellbookNotes.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
+      }
+
+      return result;
+    }
+
+    if (context.match(/^spell\.effect$/)) {
+      for (let note of result) {
+        note.notes = note.notes.filter((o) => o.target === "spell" && o.subTarget === "effect").map((o) => o.text);
       }
 
       return result;

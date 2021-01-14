@@ -73,9 +73,10 @@ export const _rollInitiative = async function (ids, formula = null, messageOptio
   if (stop) return this;
 
   // Iterate over Combatants, performing an initiative roll for each
-  const [updates, messages] = ids.reduce(
-    (results, id, i) => {
-      let [updates, messages] = results;
+  const [updates, messages] = await ids.reduce(
+    async (results, id, i) => {
+      const result = await results;
+      let [updates, messages] = result;
 
       // Get Combatant data
       const c = this.getCombatant(id);
@@ -99,9 +100,26 @@ export const _rollInitiative = async function (ids, formula = null, messageOptio
       const roll = new Roll(formula, actorData).roll();
       updates.push({ _id: id, initiative: roll.total });
 
-      // Construct chat message data
-      let messageData = mergeObject(
+      let [notes, notesHTML] = c.actor.getInitiativeContextNotes();
+
+      // Create roll template data
+      const rollData = mergeObject(
         {
+          user: game.user._id,
+          formula: roll.formula,
+          tooltip: await roll.getTooltip(),
+          total: roll.total,
+        },
+        notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
+      );
+
+      // Create chat data
+      let chatData = mergeObject(
+        {
+          user: game.user._id,
+          type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+          rollMode: rollMode,
+          sound: CONFIG.sounds.dice,
           speaker: {
             scene: canvas.scene._id,
             actor: c.actor ? c.actor._id : null,
@@ -109,10 +127,25 @@ export const _rollInitiative = async function (ids, formula = null, messageOptio
             alias: c.token.name,
           },
           flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
+          roll: roll,
+          content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
         },
         messageOptions
       );
-      const chatData = roll.toMessage(messageData, { rollMode, create: false });
+
+      // Handle different roll modes
+      switch (chatData.rollMode) {
+        case "gmroll":
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          break;
+        case "selfroll":
+          chatData["whisper"] = [game.user._id];
+          break;
+        case "blindroll":
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          chatData["blind"] = true;
+      }
+
       if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
       messages.push(chatData);
 

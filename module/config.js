@@ -1197,6 +1197,12 @@ PF1.contextNoteTargets = {
     _label: "PF1.Attacks",
     attack: "PF1.AttackRollPlural",
     effect: "PF1.Effects",
+    melee: "PF1.Melee",
+    meleeWeapon: "PF1.MeleeWeapon",
+    meleeSpell: "PF1.MeleeSpell",
+    ranged: "PF1.Ranged",
+    rangedWeapon: "PF1.RangedWeapon",
+    rangedSpell: "PF1.RangedSpell",
   },
   savingThrows: {
     _label: "PF1.SavingThrowPlural",
@@ -1230,6 +1236,7 @@ PF1.contextNoteTargets = {
   },
   spell: {
     _label: "PF1.BuffTarSpells",
+    effect: "PF1.SpellBuffEffect",
     concentration: "PF1.Concentration",
     cl: "PF1.CasterLevel",
   },
@@ -1239,6 +1246,7 @@ PF1.contextNoteTargets = {
     cmb: "PF1.CMBAbbr",
     cmd: "PF1.CMDAbbr",
     sr: "PF1.SpellResistance",
+    init: "PF1.Initiative",
   },
 };
 

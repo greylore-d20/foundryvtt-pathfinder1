@@ -31,6 +31,7 @@
 - Added "chargeCost" as roll data field
 - Add mousewheel support on Apply Damage dialog when inputs are just numbers
 - Add context notes for initiative rolls and more specific attack rolls (thanks mkhavi!)
+- Changes now report the source of their warninings instead of just the warning
 
 ## 0.76.11
 

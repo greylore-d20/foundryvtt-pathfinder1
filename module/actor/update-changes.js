@@ -319,6 +319,9 @@ export const updateChanges = async function ({ data = null } = {}) {
           // Execute formula
           const roll = new Roll(formula, rollData);
 
+          if (roll.warning)
+            ui.notifications.warn(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
+
           // Process result
           value = 0;
           value = roll.roll().total;

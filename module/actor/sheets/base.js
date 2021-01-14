@@ -875,6 +875,10 @@ export class ActorSheetPF extends ActorSheet {
     // CMB Check
     html.find(".attribute.cmb .rollable").click(this._onRollCMB.bind(this));
 
+    // Attack check
+    html.find(".attribute.attack.melee .rollable").click(this._onRollMelee.bind(this));
+    html.find(".attribute.attack.ranged .rollable").click(this._onRollRanged.bind(this));
+
     // Initiative Check
     html.find(".attribute.initiative .rollable").click(this._onRollInitiative.bind(this));
 
@@ -1902,6 +1906,16 @@ export class ActorSheetPF extends ActorSheet {
   _onRollBAB(event) {
     event.preventDefault();
     this.actor.rollBAB({ event: event });
+  }
+
+  _onRollMelee(event) {
+    event.preventDefault();
+    this.actor.rollAttack({ event: event, melee: true });
+  }
+
+  _onRollRanged(event) {
+    event.preventDefault();
+    this.actor.rollAttack({ event: event, melee: false });
   }
 
   _onRollCMB(event) {

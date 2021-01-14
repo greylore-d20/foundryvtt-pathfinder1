@@ -712,6 +712,32 @@ export const updateChanges = async function ({ data = null } = {}) {
   // Apply wound thresholds
   updateWoundThreshold.call(this, srcData1, updateData);
 
+  // Shared attack bonuses
+  {
+    const k = "data.attributes.attack.shared";
+    const atkSrc = getSourceInfo(sourceInfo, k);
+    atkSrc.positive.push({
+      name: game.i18n.localize("PF1.BAB"),
+      value: srcData1.data.attributes.bab.total,
+    });
+    if (srcData1.data.attributes.acp.attackPenalty > 0) {
+      atkSrc.negative.push({
+        name: game.i18n.localize("PF1.ArmorCheckPenalty"),
+        value: -srcData1.data.attributes.acp.attackPenalty,
+      });
+    }
+    /*
+    if (srcData1.data.attributes.energyDrainPenalty > 0) {
+      atkSrc.negative.push({
+        name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        value: -srcData1.data.attributes.energyDrainPenalty,
+      });
+    }
+    */
+    const totalAtk = srcData1.data.attributes.bab.total - srcData1.data.attributes.acp.attackPenalty;
+    linkData(srcData1, updateData, k, totalAtk);
+  }
+
   // Refresh source info
   for (let [bt, change] of Object.entries(changeData)) {
     for (let [ct, values] of Object.entries(change)) {
@@ -988,6 +1014,7 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
       );
     }
   }
+  linkData(data, updateData, "data.attributes.attack.shared", 0);
   linkData(data, updateData, "data.attributes.cmb.total", 0);
   linkData(data, updateData, "data.attributes.cmd.total", 10);
   linkData(data, updateData, "data.attributes.cmd.flatFootedTotal", 10);
@@ -1405,7 +1432,85 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
     });
   }
 
-  // Add variables to CMD and CMD
+  // Add variables to Attacks
+  {
+    // Ability to ranged
+    {
+      const rAbl = getProperty(data, "data.attributes.attack.rangedAbility");
+      if (rAbl) {
+        changes.push({
+          raw: mergeObject(
+            ItemChange.defaultData,
+            { formula: `@abilities.${rAbl}.mod`, target: "attack", subTarget: "rattack", modifier: "untypedPerm" },
+            { inplace: false }
+          ),
+          source: { name: CONFIG.PF1.abilities[rAbl] },
+        });
+      }
+    }
+    // Ability to melee
+    {
+      const mAbl = getProperty(data, "data.attributes.attack.meleeAbility");
+      if (mAbl) {
+        changes.push({
+          raw: mergeObject(
+            ItemChange.defaultData,
+            { formula: `@abilities.${mAbl}.mod`, target: "attack", subTarget: "mattack", modifier: "untypedPerm" },
+            { inplace: false }
+          ),
+          source: { name: CONFIG.PF1.abilities[mAbl] },
+        });
+      }
+    }
+    // Energy Drain to attack
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "-@attributes.energyDrain", target: "attack", subTarget: "attackCore", modifier: "untypedPerm" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
+    });
+  }
+
+  // Add base attack modifiers shared by all attacks
+  {
+    // BAB to attack
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "@attributes.bab.total", target: "attack", subTarget: "attackCore", modifier: "untypedPerm" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize("PF1.BAB") },
+    });
+    // Energy Drain to attack
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        { formula: "-@attributes.energyDrain", target: "attack", subTarget: "attackCore", modifier: "untypedPerm" },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
+    });
+    // ACP to attack
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        {
+          formula: "-@attributes.acp.attackPenalty",
+          target: "attack",
+          subTarget: "attackCore",
+          modifier: "penalty",
+          priority: -100,
+        },
+        { inplace: false }
+      ),
+      source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },
+    });
+  }
+
+  // Add variables to CMB and CMD
   {
     // BAB to CMB
     changes.push({
@@ -1710,6 +1815,22 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
           formula: CONFIG.PF1.sizeFlyMods[sizeKey].toString(),
           target: "skill",
           subTarget: "skill.fly",
+          modifier: "size",
+        },
+        { inplace: false }
+      ),
+      source: {
+        type: "size",
+      },
+    });
+    // Attack
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        {
+          formula: CONFIG.PF1.sizeMods[sizeKey].toString(),
+          target: "attack",
+          subTarget: "attackCore",
           modifier: "size",
         },
         { inplace: false }
@@ -2096,6 +2217,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData) {
       return ["data.attributes.ac.normal.total", "data.attributes.ac.flatFooted.total"];
     case "attack":
       return "data.attributes.attack.general";
+    case "attackCore":
+      return "data.attributes.attack.shared";
     case "mattack":
       return "data.attributes.attack.melee";
     case "rattack":
@@ -2330,6 +2453,7 @@ const _blacklistChangeData = function (data, changeTarget) {
       result.attributes.ac = null;
       break;
     case "attack":
+    case "attackCore":
     case "mattack":
     case "rattack":
       result.attributes.attack = null;
@@ -2412,6 +2536,7 @@ const getSortChangePriority = function () {
       "sac",
       "nac",
       "attack",
+      "attackCore",
       "mattack",
       "rattack",
       "damage",

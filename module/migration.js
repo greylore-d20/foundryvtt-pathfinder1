@@ -143,7 +143,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorSpellbookDCFormula(actor, updateData);
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
-  _migrateCMBAbility(actor, updateData);
+  _migrateAttackAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
@@ -797,11 +797,15 @@ const _migrateActorCR = function (ent, updateData) {
   }
 };
 
-const _migrateCMBAbility = function (ent, updateData) {
+const _migrateAttackAbility = function (ent, updateData) {
   const cmbAbl = getProperty(ent.data, "data.attributes.cmbAbility");
-  if (cmbAbl == null) {
-    updateData["data.attributes.cmbAbility"] = "str";
-  }
+  if (cmbAbl == null) updateData["data.attributes.cmbAbility"] = "str";
+
+  const meleeAbl = getProperty(ent.data, "data.attributes.attack.meleeAbility");
+  if (meleeAbl == null) updateData["data.attributes.attack.meleeAbility"] = "str";
+
+  const rangedAbl = getProperty(ent.data, "data.attributes.attack.rangedAbility");
+  if (rangedAbl == null) updateData["data.attributes.attack.rangedAbility"] = "dex";
 };
 
 const _migrateActorTokenVision = function (ent, updateData) {

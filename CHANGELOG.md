@@ -11,6 +11,7 @@
 - API calls for dice rolls properly return and resolve to their result(s)
 - Removes items from containers when dragged out to same actor (prevents duplication) (thanks mkahvi!)
 - Initiative wasn't deferring to "CONFIG.Combat.initiative.formula" setting as per core
+- Resource names were not being updated on import from compendium
 
 ### Changelog
 

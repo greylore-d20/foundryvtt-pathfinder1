@@ -67,8 +67,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data["meleeAttack"] = coreAttack + genAttack + data.data.attributes.attack.melee;
     data["rangedAttack"] = coreAttack + genAttack + data.data.attributes.attack.ranged;
 
-    console.log(data.sourceDetails);
-
     // Return data for rendering
     return data;
   }

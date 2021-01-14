@@ -72,6 +72,30 @@
             </select>
         </div>
 
+        <div class="flexrow">
+            <label class="cell left-label">{{localize "PF1.Melee"}}<!-- Attack --></label>
+            <select name="data.attributes.attack.meleeAbility" class="cell midsize">
+                {{#select data.attributes.attack.meleeAbility}}
+                <option value=""></option>
+                {{#each config.abilities as |label value|}}
+                <option value="{{value}}">{{label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+
+        <div class="flexrow">
+            <label class="cell left-label">{{localize "PF1.Ranged"}}<!-- Attack --></label>
+            <select name="data.attributes.attack.rangedAbility" class="cell midsize">
+                {{#select data.attributes.attack.rangedAbility}}
+                <option value=""></option>
+                {{#each config.abilities as |label value|}}
+                <option value="{{value}}">{{label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+
         {{!-- Saving Throws --}}
         <div class="flexrow sub-header">
             <label class="cell">{{localize "PF1.SavingThrowPlural"}}</label>

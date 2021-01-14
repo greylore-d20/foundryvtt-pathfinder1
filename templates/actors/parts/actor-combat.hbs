@@ -9,6 +9,12 @@
         <th class="attribute cmb" data-attribute="cmb">
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
         </th>
+        <th class="attribute attack melee" data-attribute="melee">
+          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Melee"}}</span></a>
+        </th>
+        <th class="attribute attack ranged" data-attribute="ranged">
+          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Ranged"}}</span></a>
+        </th>
         <th class="attribute initiative" data-attribute="initiative">
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
         </th>
@@ -26,19 +32,66 @@
             {{/if}}
           </span>
 
-          {{data.attributes.bab.total}}
+          {{#if iteratives}}
+          {{iteratives}}
+          {{else}}
+          {{numberFormat data.attributes.bab.total decimals=0 sign=true}}
+          {{/if}}
         </td>
 
         <td class="tooltip">
           <span class="tooltipcontent">
             @attributes.cmb.total : {{data.attributes.cmb.total}}
-            {{#if sourceDetails.data.attributes.cmb.total.length}}
             <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+            {{#if sourceDetails.data.attributes.cmb.total.length}}
             {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
 
-          {{data.attributes.cmb.total}}
+          {{numberFormat data.attributes.cmb.total decimals=0 sign=true}}
+        </td>
+
+        <td class="tooltip">
+          <span class="tooltipcontent">
+            …<br/>
+            + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
+            + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
+            + @attributes.attack.melee : {{data.attributes.attack.melee}}
+
+            <br/><br/>{{localize "PF1.FromSources"}}<br/>
+            {{#if sourceDetails.data.attributes.attack.shared.length}}
+            {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+            {{#if sourceDetails.data.attributes.attack.general.length}}
+            {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+            {{#if sourceDetails.data.attributes.attack.melee.length}}
+            {{#each sourceDetails.data.attributes.attack.melee as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </span>
+          {{numberFormat meleeAttack decimals=0 sign=true}}
+        </td>
+
+        <td class="tooltip">
+          <span class="tooltipcontent">
+            …<br/>
+            + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
+            + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
+            + @attributes.attack.ranged : {{data.attributes.attack.ranged}}
+
+            <br/><br/>{{localize "PF1.FromSources"}}<br/>
+            {{#if sourceDetails.data.attributes.attack.shared.length}}
+            {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+            {{#if sourceDetails.data.attributes.attack.general.length}}
+            {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+            {{#if sourceDetails.data.attributes.attack.ranged.length}}
+            {{#each sourceDetails.data.attributes.attack.ranged as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{/if}}
+          </span>
+
+          {{numberFormat rangedAttack decimals=0 sign=true}}
         </td>
 
         <td class="tooltip">

@@ -52,6 +52,23 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const hpSettings = game.settings.get("pf1", "healthConfig");
     data["woundThresholds"] = hpSettings.variants.pc;
 
+    // BAB iteratives
+    const iteratives = game.settings.get("pf1", "displayIteratives");
+    const bab = data.data.attributes.bab.total;
+    if (iteratives) {
+      let iters = [bab];
+      for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
+      data["iteratives"] = `+${iters.join(" / +")}`;
+    }
+
+    // Generic melee and ranged attack bonuses.
+    const genAttack = data.data.attributes.attack.general,
+      coreAttack = data.data.attributes.attack.shared;
+    data["meleeAttack"] = coreAttack + genAttack + data.data.attributes.attack.melee;
+    data["rangedAttack"] = coreAttack + genAttack + data.data.attributes.attack.ranged;
+
+    console.log(data.sourceDetails);
+
     // Return data for rendering
     return data;
   }

@@ -340,14 +340,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           ui.notifications.error(msg);
         }
       } else {
-        // Create script functions, if non exist
-        // if (Object.keys(this._changeFunctions).length === 0) {
-        //   this.updateChangeEvals();
-        // }
-
-        // console.log(change);
         const scriptResult = this._changeFunctions[change.raw._id].func(rollData);
-        // const scriptResult = evalChange.call(this, change);
         if (typeof scriptResult === "object") {
           value = scriptResult.value;
           operator = scriptResult.operator;
@@ -2571,6 +2564,7 @@ const evalChange = function (change) {
 const updateWoundThreshold = function (expandedData = {}, data = {}) {
   const hpconf = game.settings.get("pf1", "healthConfig").variants;
   const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+  if (!usage) return;
   const curHP =
       getProperty(expandedData, "data.attributes.hp.value") ?? getProperty(this.data, "data.attributes.hp.value"),
     maxHP = getProperty(expandedData, "data.attributes.hp.max") ?? getProperty(this.data, "data.attributes.hp.max");

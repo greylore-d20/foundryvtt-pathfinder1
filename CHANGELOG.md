@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.76.13 (Hotfix)
+
+- Wound Tresholds was causing issues with actor variables if it wasn't initialized
+
 ## 0.76.12
 
 ### Bug Fixes

@@ -30,8 +30,8 @@
   - The SR formula entered in the combat tab will now be used as a "Base" type value
 - Added "chargeCost" as roll data field
 - Add mousewheel support on Apply Damage dialog when inputs are just numbers
-- Add context notes for initiative rolls and more specific attack rolls (thanks mkhavi!)
-- Changes now report the source of their warninings instead of just the warning
+- Add context notes for initiative rolls and more specific attack rolls (thanks mkahvi!)
+- Changes now report the source of their warnings instead of just the warning
 
 ## 0.76.11
 

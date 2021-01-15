@@ -2564,7 +2564,12 @@ const evalChange = function (change) {
 const updateWoundThreshold = function (expandedData = {}, data = {}) {
   const hpconf = game.settings.get("pf1", "healthConfig").variants;
   const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
-  if (!usage) return;
+  if (!usage) {
+    linkData(expandedData, data, "data.attributes.woundThresholds.level", 0);
+    linkData(expandedData, data, "data.attributes.woundThresholds.penaltyBase", 0);
+    linkData(expandedData, data, "data.attributes.woundThresholds.penalty", 0);
+    return;
+  }
   const curHP =
       getProperty(expandedData, "data.attributes.hp.value") ?? getProperty(this.data, "data.attributes.hp.value"),
     maxHP = getProperty(expandedData, "data.attributes.hp.max") ?? getProperty(this.data, "data.attributes.hp.max");

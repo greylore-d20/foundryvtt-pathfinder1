@@ -2,6 +2,10 @@
 
 ## 0.76.14
 
+### Bug Fixes
+
+- Fixed deleted buff effects being toggled on related unlinked tokens (#319)
+
 ### Changelog
 
 - Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.

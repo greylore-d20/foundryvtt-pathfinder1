@@ -170,7 +170,8 @@ export async function PatchCore() {
     if (item) {
       let promises = [];
       if (item.type === "buff" && item.data.data.active) {
-        const tokens = this.getActiveTokens();
+        const isLinkedToken = getProperty(this.data, "token.actorLink");
+        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
         for (const token of tokens) {
           promises.push(token.toggleEffect(item.data.img));
         }

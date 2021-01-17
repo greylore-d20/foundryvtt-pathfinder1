@@ -412,9 +412,23 @@ Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
 Hooks.on("createToken", async (scene, token, options, userId) => {
   if (userId !== game.user._id) return;
 
-  const actor = game.actors.tokens[token._id];
+  const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) updateChanges.call(actor);
+});
+
+Hooks.on("preCreateToken", async (scene, token, options, userId) => {
+  let buffTextures = game.actors.get(token.actorId)._calcStatusTextures();
+  const fx = token.effects ?? [];
+  for (let [img, active] of Object.entries(buffTextures)) {
+    const idx = fx.findIndex((e) => e === img);
+    if (idx === -1 && active === true) {
+      fx.push(img);
+    } else if (idx !== -1 && active === false) {
+      fx.splice(idx, 1);
+    }
+  }
+  token.effects = fx;
 });
 
 // Create race on actor

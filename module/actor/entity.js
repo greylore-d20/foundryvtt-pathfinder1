@@ -2320,6 +2320,27 @@ export class ActorPF extends Actor {
 
     if (!tokens.length) return;
 
+    let buffTextures = this._calcStatusTextures();
+
+    // Update token(s)
+    let promises = [];
+    for (let token of tokens) {
+      const fx = token.data.effects;
+      for (let [img, active] of Object.entries(buffTextures)) {
+        const idx = fx.findIndex((e) => e === img);
+        if (idx === -1 && active === true) {
+          fx.push(img);
+        } else if (idx !== -1 && active === false) {
+          fx.splice(idx, 1);
+        }
+      }
+      promises.push(token.update({ effects: fx }, { diff: false }));
+    }
+
+    return Promise.all(promises);
+  }
+
+  _calcStatusTextures() {
     // Determine buff textures
     const buffs = this.items.filter((o) => o.type === "buff");
     let buffTextures = buffs.reduce((cur, o) => {
@@ -2343,23 +2364,7 @@ export class ActorPF extends Actor {
         if (buffTextures[k] == null) buffTextures[k] = v;
       }
     }
-
-    // Update token(s)
-    let promises = [];
-    for (let token of tokens) {
-      const fx = token.data.effects;
-      for (let [img, active] of Object.entries(buffTextures)) {
-        const idx = fx.findIndex((e) => e === img);
-        if (idx === -1 && active === true) {
-          fx.push(img);
-        } else if (idx !== -1 && active === false) {
-          fx.splice(idx, 1);
-        }
-      }
-      promises.push(token.update({ effects: fx }, { diff: false }));
-    }
-
-    return Promise.all(promises);
+    return buffTextures;
   }
 
   updateChangeEvals() {

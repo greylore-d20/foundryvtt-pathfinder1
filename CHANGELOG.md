@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.76.14
+
+### Changelog
+
+- Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.
+
 ## 0.76.13 (Hotfix)
 
 ### Bug Fixes

@@ -103,7 +103,7 @@
       </div>
 
       {{!-- Alignment --}}
-      <div class="controls alignment flexrow">
+      <div class="controls alignment flexrow" title="{{localize "PF1.Alignment"}}">
         {{#if labels.alignment}}<span>{{labels.alignment}}</span>{{else}}<span class="placeholder">{{localize "PF1.Alignment"}}</span>{{/if}}
         <a class="control alignment"><i class="fas fa-cog"></i></a>
       </div>
@@ -127,19 +127,15 @@
           {{/if}}
           {{/if}}
         </div>
-      </div>
 
-      {{!-- Hit Point Ability --}}
-      <div class="form-group select hp-ability">
-        <label>{{localize "PF1.HPAbility"}}</label>
-        <select name="data.attributes.hpAbility">
-          {{#select data.attributes.hpAbility}}
-          <option value=""></option>
-          {{#each config.abilities as |ability a|}}
-          <option value="{{a}}">{{ability}}</option>
+        {{#if race}}
+        <div class="race-info">
+          <span class="tag type3">{{lookup config.creatureTypes race.data.creatureType}}</span>
+          {{#each race.data.subTypes as |v|}}
+          <span class="tag">{{v}}</span>
           {{/each}}
-          {{/select}}
-        </select>
+        </div>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -149,7 +145,7 @@
 
   {{!-- Rest --}}
   <div class="actor-quick-actions">
-    <button type="button" class="rest">{{localize "PF1.Rest"}}</button>
+    <button type="button" class="rest"><i class="fas fa-bed"></i> {{localize "PF1.Rest"}}</button>
   </div>
 </div>
 
@@ -393,19 +389,15 @@
       <table>
         <thead>
           <tr>
-            <th class="attribute bab" data-attribute="bab" rowspan="2">
+            <th class="attribute bab" data-attribute="bab">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
             </th>
-            <th class="attribute cmb" data-attribute="cmb" rowspan="2">
+            <th class="attribute cmb" data-attribute="cmb">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
             </th>
-            <th class="attribute initiative" data-attribute="initiative" colspan="2">
+            <th class="attribute initiative" data-attribute="initiative">
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
             </th>
-          </tr>
-          <tr>
-            <th>{{localize "PF1.Value"}}</th>
-            <th>{{localize "PF1.Ability"}}</th>
           </tr>
         </thead>
 
@@ -444,14 +436,6 @@
                 {{/if}}
               </span>
               {{data.attributes.init.total}}
-            </td>
-            <td>
-              <select data-name="data.attributes.init.ability">
-                {{#select data.attributes.init.ability}}
-                  <option value=""></option>
-                  {{selectOptions config.abilities}}
-                {{/select}}
-              </select>
             </td>
           </tr>
         </tbody>

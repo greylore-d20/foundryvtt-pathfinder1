@@ -121,6 +121,35 @@ export class ActorSheetPF extends ActorSheet {
 
   /* -------------------------------------------- */
 
+  async close(options = {}) {
+    //Room left for potential client setting
+    if (typeof options.save === "boolean") {
+      if (options.save) {
+        for (let ed of Object.values(this.editors)) {
+          if (ed.mce && ed.changed) ed.saveEditor(ed.target);
+        }
+      }
+      return super.close(options);
+    } else {
+      let unsavedChanges = [];
+      for (let ed of Object.values(this.editors)) {
+        if (ed.mce && ed.changed) {
+          let d = Dialog.confirm({
+            title: this.object.name + " : " + ed.target,
+            content: `<p>${game.i18n.localize("PF1.UnsavedTinyMCE")}</p>`,
+            yes: () => this.saveEditor(ed.target),
+            no: () => ed.mce.destroy(),
+            defaultYes: true,
+          });
+          unsavedChanges.push(d);
+        }
+      }
+      return Promise.all(unsavedChanges).then(() => {
+        return super.close(options);
+      });
+    }
+  }
+
   /**
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
    */
@@ -183,6 +212,15 @@ export class ActorSheetPF extends ActorSheet {
       data.labels.totalValue = game.i18n
         .localize("PF1.ItemContainerTotalItemValue")
         .format(totalValue.gp, totalValue.sp, totalValue.cp);
+    }
+
+    // Race type label
+    if (data.race) {
+      data.raceLabel = CONFIG.PF1.creatureTypes[data.race.data.creatureType];
+      const subTypes = data.race.data.subTypes;
+      if (subTypes && subTypes.length) {
+        data.raceLabel = `${data.raceLabel} (${subTypes.join(", ")})`;
+      }
     }
 
     // Hit point sources
@@ -479,7 +517,10 @@ export class ActorSheetPF extends ActorSheet {
       const trait = traits[t];
       if (!trait) continue;
       let values = [];
-      if (trait.value) {
+      // Prefer total over value for dynamically collected proficiencies
+      if (["armorProf", "weaponProf"].includes(t)) {
+        values = trait.total ?? trait.value;
+      } else if (trait.value) {
         values = trait.value instanceof Array ? trait.value : [trait.value];
       }
       trait.selected = values.reduce((obj, t) => {
@@ -487,8 +528,13 @@ export class ActorSheetPF extends ActorSheet {
         return obj;
       }, {});
 
-      // Add custom entry
-      if (trait.custom) {
+      // Prefer total over value for dynamically collected proficiencies
+      if (trait.customTotal) {
+        trait.customTotal
+          .split(CONFIG.PF1.re.traitSeparator)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+      } else if (trait.custom) {
+        // Add custom entry
         trait.custom
           .split(CONFIG.PF1.re.traitSeparator)
           .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
@@ -2370,6 +2416,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let itemData = {};
     let dataType = "";
+    let fromContainer = false;
 
     // Case 1 - Import from a Compendium pack
     const actor = this.actor;
@@ -2388,6 +2435,8 @@ export class ActorSheetPF extends ActorSheet {
 
       dataType = "data";
       itemData = data.data;
+
+      fromContainer = data.containerId ?? false;
     }
 
     // Case 3 - Import from World entity
@@ -2396,7 +2445,21 @@ export class ActorSheetPF extends ActorSheet {
       itemData = game.items.get(data.id).data;
     }
 
-    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType);
+    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType)
+      .then((item) => {
+        // Remove from container if destination is parent actor
+        if (item && fromContainer) {
+          const sourceActor = game.actors.get(actor._id);
+          const container = sourceActor?.getOwnedItem(data.containerId);
+          if (container) container.deleteContainerContent(itemData._id);
+        }
+      })
+      .catch((err) => {
+        console.error(
+          `Failed to remove item ${itemData._id} (${itemData.name}) from container ${data.containerId} on actor ${actor._id} (${actor.name})`,
+          err
+        );
+      });
   }
 
   getDropData(origData) {
@@ -2458,7 +2521,12 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (itemData._id) delete itemData._id;
-    return this.actor.createEmbeddedEntity("OwnedItem", itemData);
+    var actorRef = this.actor;
+    return this.actor.createEmbeddedEntity("OwnedItem", itemData).then((createdItem) => {
+      var fullItem = actorRef.items.get(createdItem._id);
+      if (fullItem.isCharged) return actorRef.updateItemResources(fullItem);
+      else return fullItem;
+    });
   }
 
   async _onConfigControl(event) {

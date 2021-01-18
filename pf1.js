@@ -201,7 +201,7 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.76.9";
+  const NEEDS_MIGRATION_VERSION = "0.76.12";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -268,7 +268,7 @@ Hooks.on("canvasInit", function () {
   let callbacks = [];
 
   Hooks.on("canvasReady", () => {
-    // Remove old callbacks
+    // Remove old reach callbacks
     for (let cb of callbacks) {
       cb.elem.off(cb.event, cb.callback);
     }
@@ -279,6 +279,11 @@ Hooks.on("canvasInit", function () {
       if (!elem || (elem && !elem.length)) return;
       const results = addReachCallback(m.data, elem);
       callbacks.push(...results);
+    });
+
+    // Refresh tokens on startup
+    Object.values(game.actors.tokens)?.forEach((obj) => {
+      updateChanges.call(obj, { sourceOnly: true });
     });
   });
 
@@ -402,6 +407,28 @@ Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
       actor.updateItemResources(i);
     }
   }
+});
+
+Hooks.on("createToken", async (scene, token, options, userId) => {
+  if (userId !== game.user._id) return;
+
+  const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
+  // Update changes and generate sourceDetails to ensure valid actor data
+  if (actor != null) updateChanges.call(actor);
+});
+
+Hooks.on("preCreateToken", async (scene, token, options, userId) => {
+  let buffTextures = game.actors.get(token.actorId)._calcStatusTextures();
+  const fx = token.effects ?? [];
+  for (let [img, active] of Object.entries(buffTextures)) {
+    const idx = fx.findIndex((e) => e === img);
+    if (idx === -1 && active === true) {
+      fx.push(img);
+    } else if (idx !== -1 && active === false) {
+      fx.splice(idx, 1);
+    }
+  }
+  token.effects = fx;
 });
 
 // Create race on actor

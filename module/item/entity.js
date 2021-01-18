@@ -234,7 +234,7 @@ export class ItemPF extends Item {
             new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
             dcBonus;
         } catch (e) {
-          console.error(e);
+          console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
         }
       }
       return result;
@@ -243,7 +243,7 @@ export class ItemPF extends Item {
     try {
       result = new Roll(dcFormula, rollData).roll().total + dcBonus;
     } catch (e) {
-      console.error(e);
+      console.error(e, dcFormula);
     }
     return result;
   }
@@ -1261,7 +1261,7 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ ev = null, skipDialog = false }) {
+  async use({ ev = null, skipDialog = false } = {}) {
     if (this.type === "spell") {
       return this.parentActor.useSpell(this, ev, { skipDialog: skipDialog });
     } else if (this.hasAction) {
@@ -1337,7 +1337,8 @@ export class ItemPF extends Item {
         primaryAttack = true,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
-        conditionals;
+        conditionals,
+        result;
       // Get form data
       if (form) {
         rollData.d20 = form.find('[name="d20"]').val();
@@ -1511,8 +1512,9 @@ export class ItemPF extends Item {
         // Add specific pre-rolled rollData entries
         for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
           if (conditionalPartsCommon[target] != null) {
+            const formula = conditionalPartsCommon[target].join("+");
             try {
-              const roll = new Roll(conditionalPartsCommon[target].join("+"), rollData).roll().total;
+              const roll = new Roll(formula, rollData).roll().total;
               switch (target) {
                 case "effect.cl":
                   rollData.cl += roll;
@@ -1525,11 +1527,35 @@ export class ItemPF extends Item {
                   break;
               }
             } catch (e) {
-              console.error(e);
+              console.error(e, formula);
             }
           }
         }
       }
+
+      // Deduct charge
+      let cost;
+      if (this.autoDeductCharges) {
+        cost = this.chargeCost;
+        let uses = this.charges;
+        if (this.data.type === "spell" && this.useSpellPoints()) {
+          cost = this.getSpellPointCost(rollData);
+          uses = this.getSpellUses();
+        }
+        // Add charge cost from conditional modifiers
+        cost += rollData["chargeCostBonus"] ?? 0;
+
+        // Cancel usage on insufficient charges
+        if (cost > uses) {
+          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+          console.warn(msg);
+          ui.notifications.warn(msg);
+          return;
+        }
+        await this.addCharges(-cost);
+      }
+      // Save chargeCost as rollData entry for following formulae
+      rollData.chargeCost = cost;
 
       if (this.hasAttack) {
         ammoCost = Math.min(minAmmo, allAttacks.length);
@@ -1721,28 +1747,6 @@ export class ItemPF extends Item {
         }
       }
 
-      // Deduct charge
-      let cost;
-      if (this.autoDeductCharges) {
-        cost = this.chargeCost;
-        let uses = this.charges;
-        if (this.data.type === "spell" && this.useSpellPoints()) {
-          cost = this.getSpellPointCost(rollData);
-          uses = this.getSpellUses();
-        }
-        // Add charge cost from conditional modifiers
-        cost += rollData["chargeCostBonus"] ?? 0;
-
-        // Cancel usage on insufficient charges
-        if (cost > uses) {
-          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
-          console.warn(msg);
-          ui.notifications.warn(msg);
-          return;
-        }
-        await this.addCharges(-cost);
-      }
-
       // Set chat data
       let chatData = {
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
@@ -1860,6 +1864,13 @@ export class ItemPF extends Item {
             properties.push(this.data.data.conditionals[c].name);
           });
         }
+
+        // Add Wound Thresholds info
+        if (rollData.attributes.woundThresholds.level > 0)
+          properties.push(
+            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level])
+          );
+
         if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
         // Add combat info
@@ -1986,15 +1997,16 @@ export class ItemPF extends Item {
         setProperty(chatData, "flags.core.canPopout", true);
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
-        await createCustomChatMessage(t, templateData, chatData);
+        result = await createCustomChatMessage(t, templateData, chatData);
       }
       // Post chat card even without action
       else {
-        this.roll();
+        result = this.roll();
       }
 
       // Subtract ammunition
       await subtractAmmo(-ammoCost);
+      return result;
     };
 
     // Handle fast-forwarding
@@ -2019,28 +2031,28 @@ export class ItemPF extends Item {
     };
     const html = await renderTemplate(template, dialogData);
 
-    let roll;
-    const buttons = {};
-    if (this.hasAttack) {
-      if (this.type !== "spell") {
+    let result = await new Promise((resolve) => {
+      let roll;
+      const buttons = {};
+      if (this.hasAttack) {
+        if (this.type !== "spell") {
+          buttons.normal = {
+            label: game.i18n.localize("PF1.SingleAttack"),
+            callback: (html) => resolve((roll = _roll.call(this, false, html))),
+          };
+        }
+        if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
+          buttons.multi = {
+            label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
+            callback: (html) => resolve((roll = _roll.call(this, true, html))),
+          };
+        }
+      } else {
         buttons.normal = {
-          label: game.i18n.localize("PF1.SingleAttack"),
-          callback: (html) => (roll = _roll.call(this, false, html)),
+          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
+          callback: (html) => resolve((roll = _roll.call(this, false, html))),
         };
       }
-      if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
-        buttons.multi = {
-          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
-          callback: (html) => (roll = _roll.call(this, true, html)),
-        };
-      }
-    } else {
-      buttons.normal = {
-        label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
-        callback: (html) => (roll = _roll.call(this, false, html)),
-      };
-    }
-    return new Promise((resolve) => {
       new Dialog({
         title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
         content: html,
@@ -2051,6 +2063,8 @@ export class ItemPF extends Item {
         },
       }).render(true);
     });
+
+    return result;
   }
 
   /**
@@ -2104,6 +2118,12 @@ export class ItemPF extends Item {
         parts.push("- max(0, abs(@attributes.energyDrain))");
       }
     }
+
+    // Add wound thresholds penalties
+    if (rollData.attributes.woundThresholds.penalty > 0) {
+      parts.push("- @attributes.woundThresholds.penalty");
+    }
+
     // Add certain attack bonuses
     if (rollData.attributes.attack.general !== 0) {
       parts.push("@attributes.attack.general");
@@ -3069,11 +3089,22 @@ export class ItemPF extends Item {
 
     const targetLinks = getProperty(targetItem.data, `data.links.${linkType}`);
     if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
-      if (linkType === "charges" && targetLinks.length > 0) {
-        ui.notifications.warn(
-          game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)
-        );
-        return false;
+      if (linkType === "charges") {
+        // Try to limit charge pool linking to a depth of 1
+        if (targetLinks.length > 0) {
+          ui.notifications.warn(
+            game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)
+          );
+          return false;
+        } else if (targetItem.links.charges != null) {
+          // Prevent the linking of one item to multiple resource pools
+          ui.notifications.warn(
+            game.i18n
+              .localize("PF1.WarningCannotCreateChargeLink2")
+              .format(this.name, targetItem.name, targetItem.links.charges.name)
+          );
+          return false;
+        }
       }
       return true;
     }
@@ -3142,6 +3173,17 @@ export class ItemPF extends Item {
       }, 50);
 
       return true;
+    } else if (linkType === "children" && dataType !== "data") {
+      const itemData = duplicate(targetItem.data);
+      delete itemData._id;
+
+      // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
+      if (getProperty(itemData, "type") === "spell") setProperty(itemData, "data.spellbook", "spelllike");
+
+      const newItemData = await this.parentActor.createOwnedItem(itemData);
+      const newItem = this.parentActor.items.get(newItemData._id);
+
+      await this.createItemLink("children", "data", newItem, newItem._id);
     }
 
     return false;

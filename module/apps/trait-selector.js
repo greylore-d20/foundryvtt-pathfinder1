@@ -43,10 +43,14 @@ export class ActorTraitSelector extends FormApplication {
       };
     }
 
+    // Object type
+    const updateButton = this.object instanceof Actor ? "PF1.UpdateActor" : "PF1.UpdateItem";
+
     // Return data
     return {
       choices: choices,
       custom: attr.custom,
+      updateButton,
     };
   }
 

@@ -1,5 +1,68 @@
 # Changelog
 
+## 0.76.14
+
+### Bug Fixes
+
+- Fixed deleted buff effects being toggled on related unlinked tokens (#319)
+
+### Changelog
+
+- Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.
+
+## 0.76.13 (Hotfix)
+
+### Bug Fixes
+
+- Wound Tresholds was causing issues with actor variables if it wasn't initialized
+
+## 0.76.12
+
+### Bug Fixes
+
+- Dice numbers were not able to be imputed ('/r d6' works now)
+- Attacks and Consumables could sometimes not be linked to a charge pool (#432)
+- Acid Splash was listed as having a "Ranged Weapon Attack" (#453)
+- Quick token actions for Items without images caused visual glitches
+- API calls for dice rolls properly return and resolve to their result(s)
+- Removes items from containers when dragged out to same actor (prevents duplication) (thanks mkahvi!)
+- Initiative wasn't deferring to "CONFIG.Combat.initiative.formula" setting as per core
+- Resource names were not being updated on import from compendium
+
+### Changelog
+
+- Improved race type and subtype visibility on actors
+- Add context menu entry for duplicating a combatant's initiative
+- Dropping an item on another Item's "Links" will create and add it as a child if it doesn't already exist
+- Item sheet's names now use available space more efficiently (thanks mkahvi!)
+- Change sources list templates as such instead of defaulting to "Feat" (thanks mkahvi!)
+- Implement Wounds Threshold optional rule (thanks mkahvi!) (#131)
+- Added ability for classes & feats to grant weapon/ armor proficiencies (#466)
+- Improve error and migration logging (thanks mkahvi!)
+- Added confirmation dialog for when unsaved TinyMCE changes are about to be lost (#286)
+- Made spellcasting configuration button a little clearer (thanks mkahvi!) (#454)
+- Move ability score configuration to settings tab (thanks mkahvi!)
+- Added "Spell Resistance" as a "Misc" Change subtarget
+  - The SR formula entered in the combat tab will now be used as a "Base" type value
+- Added "chargeCost" as roll data field
+- Add mousewheel support on Apply Damage dialog when inputs are just numbers
+- Add context notes for initiative rolls and more specific attack rolls (thanks mkahvi!)
+- Changes now report the source of their warnings instead of just the warning
+
+## 0.76.11
+
+### Bug Fixes
+
+- Unlinked tokens could not roll saving throws and skill checks unless edited in any way beforehand (#451)
+
+### Changelog
+
+- Add race type and subtype display to actors
+
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+
 ## 0.76.10 (Hotfix)
 
 ### Bug Fixes

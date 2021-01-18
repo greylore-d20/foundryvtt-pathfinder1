@@ -56,6 +56,27 @@
         </select>
       </div>
 
+      {{!-- Proficiencies --}}
+      <div class="form-group {{data.armorProf.cssClass}}">
+        <label for="data.weaponProf">{{localize "PF1.TraitWeaponProf"}}</label>
+        <ul class="traits-list">
+          {{#each data.weaponProf.selected as |v k|}}
+            <li class="tag {{k}}">{{v}}</li>
+          {{/each}}
+        </ul>
+        <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
+      </div>
+
+      <div class="form-group {{data.armorProf.cssClass}}">
+        <label for="data.armorProf">{{localize "PF1.TraitArmorProf"}}</label>
+        <ul class="traits-list">
+          {{#each data.armorProf.selected as |v k|}}
+            <li class="tag {{k}}">{{v}}</li>
+          {{/each}}
+        </ul>
+        <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
+      </div>
+
       {{!-- Feat Tags --}}
       <div class="form-group stacked">
         <div class="data-selector">
@@ -86,7 +107,7 @@
         </label>
         {{/unless}}
         {{/if}}
-        
+
         <label class="checkbox">
           <input type="checkbox" name="data.nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
         </label>

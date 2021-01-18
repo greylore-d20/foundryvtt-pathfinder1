@@ -2,7 +2,7 @@ import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
-import { updateChanges } from "./actor/update-changes.js";
+import { addCombatTrackerContextOptions } from "./combat.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -35,36 +35,29 @@ export async function PatchCore() {
     });
   };
 
-  const Roll__identifyTerms = Roll.prototype._identifyTerms;
-  Roll.prototype._identifyTerms = function (formula) {
+  // const Roll__identifyTerms = Roll.prototype._identifyTerms;
+  Roll.prototype._identifyTerms = function (formula, { step = 0 } = {}) {
     formula = _preProcessDiceFormula(formula, this.data);
-    const terms = Roll__identifyTerms.call(this, formula);
+    var warned;
+    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
+
+    // Step 1 - Update the Roll formula using provided data
+    [formula, warned] = this.constructor.replaceFormulaData(formula, this.data, { missing: "0", warn: false });
+    if (warned) this.warning = true;
+
+    // Step 2 - identify separate parenthetical terms
+    let terms = this._splitParentheticalTerms(formula);
+
+    // Step 3 - expand pooled terms
+    terms = this._splitPooledTerms(terms);
+
+    // Step 4 - expand remaining arithmetic terms
+    terms = this._splitDiceTerms(terms, step);
+
+    // Step 5 - clean and de-dupe terms
+    terms = this.constructor.cleanTerms(terms);
     return terms;
   };
-
-  if (isMinimumCoreVersion("0.7.7") && !isMinimumCoreVersion("0.7.8")) {
-    //Override null values throwing warnings
-    const Roll_replaceFormulaData = Roll.replaceFormulaData;
-    Roll.replaceFormulaData = function (formula, data, { missing, warn = false } = {}) {
-      let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-      return formula.replace(dataRgx, (match, term) => {
-        let value = getProperty(data, term);
-        if (value !== undefined) return String(value).trim();
-        if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-        if (missing !== undefined) return String(missing);
-        else return match;
-      });
-    };
-
-    //Override null values not being treated as 0 for Roll#total
-    const Roll__safeEval = Roll.prototype._safeEval;
-    Roll.prototype._safeEval = function (expression) {
-      const src = "with (sandbox) { return " + expression + "}";
-      const evl = new Function("sandbox", src);
-      const evld = evl(this.constructor.MATH_PROXY);
-      return evld === null ? 0 : evld;
-    };
-  }
 
   if (isMinimumCoreVersion("0.7.8")) {
     const Roll__splitParentheticalTerms = Roll.prototype._splitParentheticalTerms;
@@ -126,6 +119,24 @@ export async function PatchCore() {
         return terms;
       }, []);
     };
+
+    const Roll_replaceFormulaData = Roll.replaceFormulaData;
+    Roll.replaceFormulaData = function (formula, data, { missing, warn = false }) {
+      let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
+      var warned = false;
+      return [
+        formula.replace(dataRgx, (match, term) => {
+          let value = getProperty(data, term);
+          if (value === undefined) {
+            if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
+            warned = true;
+            return missing !== undefined ? String(missing) : match;
+          }
+          return String(value).trim();
+        }),
+        warned,
+      ];
+    };
   }
 
   // Patch ActorTokenHelpers.update
@@ -146,6 +157,7 @@ export async function PatchCore() {
       await this.toggleConditionStatusIcons();
       await this.refreshItems();
     }
+    return diff;
   };
   // Patch ActorTokenHelpers.deleteEmbeddedEntity
   const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
@@ -158,7 +170,8 @@ export async function PatchCore() {
     if (item) {
       let promises = [];
       if (item.type === "buff" && item.data.data.active) {
-        const tokens = this.getActiveTokens();
+        const isLinkedToken = getProperty(this.data, "token.actorLink");
+        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
         for (const token of tokens) {
           promises.push(token.toggleEffect(item.data.img));
         }
@@ -177,6 +190,16 @@ export async function PatchCore() {
         actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
       }
     });
+  }
+
+  // Add combat tracker context menu options
+  {
+    const origFunc = CombatTracker.prototype._getEntryContextOptions;
+    CombatTracker.prototype._getEntryContextOptions = function () {
+      let result = origFunc.call(this);
+      addCombatTrackerContextOptions.call(this, result);
+      return result;
+    };
   }
 
   // Patch, patch, patch

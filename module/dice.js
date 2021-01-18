@@ -129,6 +129,7 @@ export class DicePF {
             sound: a === 0 ? CONFIG.sounds.dice : null,
           });
         }
+        return roll;
       }
     };
 
@@ -156,17 +157,17 @@ export class DicePF {
           buttons: {
             normal: {
               label: "Normal",
-              callback: (html) => (roll = _roll(parts, staticRoll != null ? staticRoll : -1, html)),
+              callback: (html) => resolve((roll = _roll(parts, staticRoll != null ? staticRoll : -1, html))),
             },
             takeTen: {
               label: "Take 10",
               condition: takeTwenty,
-              callback: (html) => (roll = _roll(parts, 10, html)),
+              callback: (html) => resolve((roll = _roll(parts, 10, html))),
             },
             takeTwenty: {
               label: "Take 20",
               condition: takeTwenty,
-              callback: (html) => (roll = _roll(parts, 20, html)),
+              callback: (html) => resolve((roll = _roll(parts, 20, html))),
             },
           },
           default: "normal",

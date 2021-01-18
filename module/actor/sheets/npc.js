@@ -54,6 +54,10 @@ export class ActorSheetPFNPC extends ActorSheetPF {
         data.labels.cr = CR.fromNumber(1);
       }
     }
+
+    const hpSettings = game.settings.get("pf1", "healthConfig");
+    data["woundThresholds"] = hpSettings.variants.npc;
+
     return data;
   }
 

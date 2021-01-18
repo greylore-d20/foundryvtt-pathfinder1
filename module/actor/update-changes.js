@@ -239,6 +239,65 @@ export const updateChanges = async function ({ data = null } = {}) {
         return Math.max(cur, o.data.data.armor.enh);
       }, 0);
 
+    // Handle armor and weapon proficiencies for PCs
+    // NPCs are considered proficient with their armor
+    if (this.data.type === "character") {
+      // Collect proficiencies from items, add them to actor's proficiency totals
+      for (const prof of ["armorProf", "weaponProf"]) {
+        // Custom proficiency baseline from actor
+        const customProficiencies =
+          srcData1.data.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) ||
+          [];
+
+        // Iterate over all items to create one array of non-custom proficiencies
+        const proficiencies = this.items.reduce(
+          (profs, item) => {
+            // Check only items able to grant proficiencies
+            if (hasProperty(item.data, `data.${prof}`)) {
+              // Get existing sourceInfo for item with this name, create sourceInfo if none is found
+              // Remember whether sourceInfo can be modified or has to be pushed at the end
+              let [sInfo, hasInfo] = getSourceInfo(sourceInfo, `data.traits.${prof}`).positive.find(
+                (o) => o.name === item.name
+              ) ?? [{ name: item.name, value: [] }, false];
+
+              // Regular proficiencies
+              for (const proficiency of item.data.data[prof].value) {
+                // Add localized source info if item's info does not have this proficiency already
+                if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
+                // Add raw proficiency key
+                if (!profs.includes(proficiency)) profs.push(proficiency);
+              }
+
+              // Custom proficiencies
+              if (item.data.data.armorProf.custom) {
+                // Collect trimmed but otherwise original strings, dedupe array for actor's total
+                const customProfs =
+                  item.data.data[prof].custom
+                    .split(CONFIG.PF1.re.traitSeparator)
+                    .map((i) => i.trim())
+                    .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+                // Add readable custom profs to sources and overall collection
+                sInfo.value.push(...customProfs);
+                customProficiencies.push(...customProfs);
+              }
+              if (sInfo.value.length > 0) {
+                // Transform arrays into presentable strings
+                sInfo.value = sInfo.value.join(", ");
+                // If sourceInfo was not a reference to existing info, push it now
+                if (!hasInfo) getSourceInfo(sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
+              }
+            }
+            return profs;
+          },
+          [...srcData1.data.traits[prof].value] // Default proficiency baseline from actor
+        );
+
+        // Save collected proficiencies in actor's data
+        linkData(srcData1, updateData, `data.traits.${prof}.total`, [...proficiencies]);
+        linkData(srcData1, updateData, `data.traits.${prof}.customTotal`, customProficiencies.join(";"));
+      }
+    }
+
     // Parse change formulas
     const highestBonus = {};
     allChanges.forEach((change, a) => {
@@ -260,6 +319,9 @@ export const updateChanges = async function ({ data = null } = {}) {
           // Execute formula
           const roll = new Roll(formula, rollData);
 
+          if (roll.warning)
+            ui.notifications.warn(game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name));
+
           // Process result
           value = 0;
           value = roll.roll().total;
@@ -272,19 +334,13 @@ export const updateChanges = async function ({ data = null } = {}) {
             }
           }
         } catch (e) {
-          const msg = game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
-          console.error(msg);
+          const msg =
+            change.raw.error ?? game.i18n.localize("PF1.ErrorItemFormula").format(change.source.name, this.name);
+          console.error(msg, formula);
           ui.notifications.error(msg);
         }
       } else {
-        // Create script functions, if non exist
-        // if (Object.keys(this._changeFunctions).length === 0) {
-        //   this.updateChangeEvals();
-        // }
-
-        // console.log(change);
         const scriptResult = this._changeFunctions[change.raw._id].func(rollData);
-        // const scriptResult = evalChange.call(this, change);
         if (typeof scriptResult === "object") {
           value = scriptResult.value;
           operator = scriptResult.operator;
@@ -320,8 +376,6 @@ export const updateChanges = async function ({ data = null } = {}) {
       }
     });
   }
-
-  _updateSimpleAttributes.call(this, updateData, srcData1);
 
   // Update encumbrance
   this._computeEncumbrance(updateData, srcData1);
@@ -499,6 +553,16 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: clBonus,
         });
       }
+
+      // Subtract Wound Thresholds penalty. Can't reduce below 1.
+      if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
+        total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+        getSourceInfo(sourceInfo, key).negative.push({
+          name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+          value: -rollData.attributes.woundThresholds.penalty,
+        });
+      }
+
       // Subtract energy drain
       if (rollData.attributes.energyDrain) {
         total = Math.max(0, total - rollData.attributes.energyDrain);
@@ -507,6 +571,7 @@ export const updateChanges = async function ({ data = null } = {}) {
           value: -Math.abs(rollData.attributes.energyDrain),
         });
       }
+
       linkData(srcData1, updateData, key, total);
     }
 
@@ -644,6 +709,9 @@ export const updateChanges = async function ({ data = null } = {}) {
     }
   }
 
+  // Apply wound thresholds
+  updateWoundThreshold.call(this, srcData1, updateData);
+
   // Refresh source info
   for (let [bt, change] of Object.entries(changeData)) {
     for (let [ct, values] of Object.entries(change)) {
@@ -772,6 +840,32 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
   linkData(data, updateData, "data.attributes.wounds.max", getProperty(data, "data.attributes.wounds.base") || 0);
   linkData(data, updateData, "data.attributes.vigor.max", getProperty(data, "data.attributes.vigor.base") || 0);
 
+  // Reset wound thresholds
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.level",
+    getProperty(data, "data.attributes.woundThresholds.level") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.override",
+    getProperty(data, "data.attributes.woundThresholds.override") || -1
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.mod",
+    getProperty(data, "data.attributes.woundThresholds.mod") || 0
+  );
+  linkData(
+    data,
+    updateData,
+    "data.attributes.woundThresholds.penalty",
+    getProperty(data, "data.attributes.woundThresholds.penalty") || 0
+  );
+
   // Reset AC
   for (let type of Object.keys(data1.attributes.ac)) {
     linkData(data, updateData, `data.attributes.ac.${type}.total`, 10);
@@ -832,6 +926,12 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
       );
     }
   }
+
+  // Reset proficiencies
+  linkData(data, updateData, "data.traits.armorProf.total", []);
+  linkData(data, updateData, "data.traits.armorProf.customTotal", "");
+  linkData(data, updateData, "data.traits.weaponProf.total", []);
+  linkData(data, updateData, "data.traits.weaponProf.customTotal", "");
 
   // Reset ACP and Max Dex bonus
   linkData(data, updateData, "data.attributes.acp.gear", 0);
@@ -907,6 +1007,9 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
       linkData(data, updateData, `data.skills.${k}.subSkills.${k2}.cs`, isClassSkill);
     }
   }
+
+  // Reset Spell Resistance
+  linkData(data, updateData, "data.attributes.sr.total", 0);
 };
 
 const _addDynamicData = function ({
@@ -934,8 +1037,8 @@ const _addDynamicData = function ({
   };
   // Custom proficiencies
   const customProficiencies =
-    data.data.traits.armorProf?.custom
-      .split(";")
+    data.data.traits.armorProf?.customTotal
+      ?.split(CONFIG.PF1.re.traitSeparator)
       .map((item) => item.trim().toLowerCase())
       .filter((item) => item.length > 0) || [];
 
@@ -947,7 +1050,7 @@ const _addDynamicData = function ({
     const name = item.name.toLowerCase(),
       tag = item.data.tag;
     return (
-      data.data.traits.armorProf.value.includes(proficiencyName) ||
+      data.data.traits.armorProf.total.includes(proficiencyName) ||
       customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
     );
   };
@@ -1148,6 +1251,7 @@ const _addDynamicData = function ({
 const _updateSkills = function (updateData, data) {
   const data1 = data.data;
   let energyDrainPenalty = Math.abs(data1.attributes.energyDrain);
+
   for (let [sklKey, skl] of Object.entries(data1.skills)) {
     if (skl == null) continue;
 
@@ -1366,7 +1470,6 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
   // Add Dexterity Modifier to Initiative
   {
     const abl = getProperty(data, "data.attributes.init.ability");
-    const acp = getProperty(data, "data.attributes.acp.attackPenalty");
     if (abl) {
       changes.push({
         raw: mergeObject(
@@ -1385,11 +1488,17 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
     }
 
     //Add ACP penalty
-    if (["str", "dex"].includes(abl) && acp > 0) {
+    if (["str", "dex"].includes(abl)) {
       changes.push({
         raw: mergeObject(
           ItemChange.defaultData,
-          { formula: "-@attributes.acp.attackPenalty", target: "misc", subTarget: "init", modifier: "penalty" },
+          {
+            formula: "-@attributes.acp.attackPenalty",
+            target: "misc",
+            subTarget: "init",
+            modifier: "penalty",
+            priority: -100,
+          },
           { inplace: false }
         ),
         source: { name: game.i18n.localize("PF1.ArmorCheckPenalty") },
@@ -1449,6 +1558,27 @@ const _addDefaultChanges = function (data, changes, flags, sourceInfo) {
         { inplace: false }
       ),
       source: { name: game.i18n.localize("PF1.CondTypeEnergyDrain") },
+    });
+  }
+  // Spell Resistance
+  {
+    const sr = getProperty(data, "data.attributes.sr.formula") || 0;
+    changes.push({
+      raw: mergeObject(
+        ItemChange.defaultData,
+        {
+          formula: sr.toString(),
+          target: "misc",
+          subTarget: "spellResist",
+          modifier: "base",
+          priority: 1000,
+          error: game.i18n
+            .localize("PF1.ErrorActorFormula")
+            .format(game.i18n.localize("PF1.SpellResistance"), this.name),
+        },
+        { inplace: false }
+      ),
+      source: { name: `${game.i18n.localize("PF1.SpellResistance")} (${game.i18n.localize("PF1.Base")})` },
     });
   }
   // Natural armor
@@ -1923,7 +2053,7 @@ export const isStackingModifier = function (modifier) {
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData) {
-  if (curData == null) curData = this.data.data;
+  curData = curData ?? this.data.data;
   let result = [];
 
   switch (changeTarget) {
@@ -2124,6 +2254,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData) {
       return "data.attributes.mDex.armorBonus";
     case "mDexS":
       return "data.attributes.mDex.shieldBonus";
+    case "spellResist":
+      return "data.attributes.sr.total";
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
@@ -2406,28 +2538,6 @@ const _applySetChanges = function (updateData, data, changes) {
   }
 };
 
-const _updateSimpleAttributes = function (updateData, data) {
-  // Update Spell Resistance
-  {
-    const formula = updateData["data.attributes.sr.formula"] || "";
-    if (formula.length > 0) {
-      try {
-        let roll = new Roll(formula, this.getRollData()).roll();
-        linkData(data, updateData, "data.attributes.sr.total", roll.total);
-      } catch (e) {
-        const msg = game.i18n
-          .localize("PF1.ErrorActorFormula")
-          .format(game.i18n.localize("PF1.SpellResistance"), this.name);
-        console.error(msg);
-        ui.notifications.error(msg);
-        linkData(data, updateData, "data.attributes.sr.total", 0);
-      }
-    } else {
-      linkData(data, updateData, "data.attributes.sr.total", 0);
-    }
-  }
-};
-
 const getSourceInfo = function (obj, key) {
   if (!obj[key]) {
     obj[key] = { negative: [], positive: [] };
@@ -2446,4 +2556,46 @@ const evalChange = function (change) {
   //   this.changeEval[funcName] = new Function(
   // `);
   return 0;
+};
+
+/**
+ * Updates attributes.woundThresholds.level variable.
+ */
+const updateWoundThreshold = function (expandedData = {}, data = {}) {
+  const hpconf = game.settings.get("pf1", "healthConfig").variants;
+  const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+  if (!usage) {
+    linkData(expandedData, data, "data.attributes.woundThresholds.level", 0);
+    linkData(expandedData, data, "data.attributes.woundThresholds.penaltyBase", 0);
+    linkData(expandedData, data, "data.attributes.woundThresholds.penalty", 0);
+    return;
+  }
+  const curHP =
+      getProperty(expandedData, "data.attributes.hp.value") ?? getProperty(this.data, "data.attributes.hp.value"),
+    maxHP = getProperty(expandedData, "data.attributes.hp.max") ?? getProperty(this.data, "data.attributes.hp.max");
+
+  let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+  if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
+
+  const wtMult = this.getWoundThresholdMultiplier(expandedData);
+  const wtMod =
+    getProperty(expandedData, "data.attributes.woundThresholds.mod") ??
+    getProperty(this.data, "data.attributes.woundThresholds.mod") ??
+    0;
+
+  linkData(expandedData, data, "data.attributes.woundThresholds.level", level);
+  linkData(expandedData, data, "data.attributes.woundThresholds.penaltyBase", level * wtMult); // To aid relevant formulas
+  linkData(expandedData, data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
+
+  const penalty = getProperty(expandedData, "data.attributes.woundThresholds.penalty");
+  const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+  for (let fk of changeFlatKeys) {
+    let flats = getChangeFlat.call(this, fk, "penalty", expandedData.data);
+    if (!(flats instanceof Array)) flats = [flats];
+    for (let k of flats) {
+      if (!k) continue;
+      const curValue = getProperty(expandedData, k);
+      linkData(expandedData, data, k, curValue - penalty);
+    }
+  }
 };

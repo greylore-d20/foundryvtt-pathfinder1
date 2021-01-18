@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fixed deleted buff effects being toggled on related unlinked tokens (#319)
+- Fixed world level items being corrupted when changing permission before an update
 
 ### Changelog
 

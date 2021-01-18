@@ -669,6 +669,10 @@ export class ItemPF extends Item {
   }
 
   async update(data, options = {}) {
+    // Avoid regular update flow for explicitly non-recursive update calls
+    if (options.recursive === false) {
+      return super.update(data, options);
+    }
     const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
 
     // Make sure changes remains an array
@@ -801,7 +805,7 @@ export class ItemPF extends Item {
     const taggedTypes = game.system.template.Item.types.filter((t) =>
       game.system.template.Item[t].templates?.includes("tagged")
     );
-    if (taggedTypes.includes(this.type) && !srcData.data.useCustomTag) {
+    if (data["useCustomTag"] !== undefined && taggedTypes.includes(this.type) && !srcData.data.useCustomTag) {
       const name = srcData.name;
       linkData(srcData, data, "data.tag", createTag(name));
     }

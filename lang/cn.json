@@ -77,6 +77,27 @@
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCName": "负伤与活力（NPC）",
   "SETTINGS.pf1HealthConfigWoundsAndVigorNPCHint": "对NPC适用'负伤与活力'可选规则。",
 
+  "SETTINGS.pf1HealthConfigWoundThresholdsPCName": "PC伤害临界",
+  "SETTINGS.pf1HealthConfigWoundsThresholdsPCHint": "为玩家启用伤害临界可选规则。",
+  "SETTINGS.pf1HealthConfigWoundThresholdsNPCName": "NPC伤害临界",
+  "SETTINGS.pf1HealthConfigWoundsThresholdsNPCHint": "为非玩家角色启用伤害临界可选规则",
+  "SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideName": "允许PC覆盖伤害临界设置",
+  "SETTINGS.pf1HealthConfigWoundThresholdsPCOverrideHint": "允许每个玩家角色单独在人物卡设置页面中覆盖伤害临界调整值的设置。",
+  "SETTINGS.pf1HealthConfigWoundThresholdsNPCOverrideName": "允许NPC覆盖伤害临界设置",
+  "SETTINGS.pf1HealthConfigWoundThresholdsNPCOverrideHint": "允许每个非玩家角色单独在人物卡设置页面中覆盖伤害临界调整值的设置。",
+  "SETTINGS.pf1HealthConfigWoundThresholdDisabled": "禁用",
+  "SETTINGS.pf1HealthConfigWoundThresholdNormal": "正常",
+  "SETTINGS.pf1HealthConfigWoundThresholdGritty": "硬汉",
+
+  "PF1.OptionalAndVariantRules": "选项及变体规则",
+
+  "PF1.WoundThresholdOverride": "伤害临界覆盖",
+
+  "PF1.WoundLevelHealthy": "健康",
+  "PF1.WoundLevelGrazed": "擦伤",
+  "PF1.WoundLevelWounded": "受伤",
+  "PF1.WoundLevelCritical": "重伤",
+
   "SETTINGS.pf1UnitsN": "单位制",
   "SETTINGS.pf1UnitsL": "游戏世界中使用的单位制",
 
@@ -97,6 +118,8 @@
   "PF1.AccessibilityConfigHint": "改变无障碍功能设定",
   "PF1.AccessibilityFontSize": "字体大小",
   "PF1.AccessibilityFontSizeHint": "改变游戏中某些特定位置的字体大小，例如攻击投骰",
+
+  "PF1.General": "总体",
 
   "PF1.Apply": "应用",
   "PF1.ApplyHalf": "减半",
@@ -338,7 +361,9 @@
   "PF1.BuffTarIntChecks": "智力检定",
   "PF1.BuffTarWisChecks": "感知检定",
   "PF1.BuffTarChaChecks": "魅力检定",
+  
   "PF1.BuffTarSpells": "法术",
+  "PF1.SpellBuffEffect": "效果",
 
   "PF1.SkillAcr": "特技",
   "PF1.SkillApr": "估价",
@@ -634,6 +659,8 @@
   "PF1.WarningConditionalRoll": "投特定调整值{name}的{number}号公式时发生了错误",
   "PF1.WarningNoItemOnActor": "角色{0}未持有物品{1}",
   "PF1.WarningCannotCreateChargeLink": "无法在{0}和{1}之间创建充能型关联，因为{1}已经有自己的充能型关联了",
+  "PF1.WarningCannotCreateChargeLink2": "无法在{0}和{1}之间创建充能型关联，因为{1}已经关联至{2}了",
+  "PF1.WarningNoCombatantFound": "未找到参战者",
   "PF1.NotificationCreatedAttack": "从 {0} 创建攻击",
 
   "PF1.Action_RollDefenses": "显示防御信息",
@@ -802,6 +829,7 @@
   "PF1.SourceInfoTraits": "背景特性",
   "PF1.SourceInfoRacialTraits": "种族特性",
   "PF1.SourceInfoMiscFeatures": "杂项特性",
+  "PF1.SourceInfoTemplate": "模板",
   "PF1.SourceInfoRace": "种族",
 
   "PF1.CreateItemForSpell": "从 {0} 创建物品",
@@ -878,6 +906,7 @@
   "PF1.InfoShort": "信息",
   "PF1.Inventory": "所持物",
   "PF1.Inspiration": "灵感",
+  "PF1.Feature": "特性",
   "PF1.Features": "特性",
   "PF1.FullRoundAttack": "整轮攻击",
   "PF1.Languages": "语言",
@@ -946,6 +975,7 @@
   "PF1.Active": "激活",
   "PF1.SpellDetails": "法术详情",
   "PF1.SpellBook": "法术书",
+  "PF1.SpellBookPlural": "法术书",
   "PF1.SpellLevel": "法术等级",
   "PF1.SpellSchool": "法术学派",
   "PF1.SpellComponents": "法术成分",
@@ -962,12 +992,17 @@
   "PF1.Area": "区域",
   "PF1.Supply": "供应",
   "PF1.Melee": "近战",
+  "PF1.MeleeWeapon": "近战武器",
+  "PF1.MeleeSpell": "近战法术",
   "PF1.Ranged": "远程",
+  "PF1.RangedWeapon": "远程武器",
+  "PF1.RangedSpell": "远程法术",
   "PF1.WeaponDamage": "武器伤害",
   "PF1.SpellDamage": "法术伤害",
   "PF1.AttackRollPlural": "攻击骰",
   "PF1.DamageRollPlural": "伤害骰",
   "PF1.AbilityScore": "属性值",
+  "PF1.AbilityScoreLinks": "属性值关联",
   "PF1.SavingThrow": "豁免",
   "PF1.SavingThrowPlural": "豁免",
   "PF1.SavingThrowEffect": "豁免效果",
@@ -990,6 +1025,7 @@
   "PF1.CMDFFAbbr": "失敏CMD",
   "PF1.Untrained": "未受训",
   "PF1.DeleteItemConfirmation": "你确定要删除该物品吗？",
+  "PF1.UnsavedTinyMCE": "你有未保存的文本<br>你想要在关闭前保存吗?",
   "PF1.UsesItem": "使用 {0}",
   "PF1.OtherFormula": "其他公式",
   "PF1.Range": "射程",
@@ -1276,5 +1312,7 @@
   "PF1.DomainSlotValueDesc": "领域/学派法术每环提供多少额外法术位?",
   "PF1.DisableLightLowLightVision": "为光源禁用昏暗视觉",
   "PF1.Command": "命令",
-  "PF1.MaximumRangeIncrements": "最大射程增量"
+  "PF1.MaximumRangeIncrements": "最大射程增量",
+  "PF1.DuplicateInitiative": "复制先攻",
+  "PF1.InitiativeOffset": "先攻调整"
 }

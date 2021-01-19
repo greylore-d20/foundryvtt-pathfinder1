@@ -1121,6 +1121,7 @@ PF1.buffTargets = {
     attack: "PF1.All",
     mattack: "PF1.Melee",
     rattack: "PF1.Ranged",
+    "~attackCore": "", // hidden
   },
   damage: {
     _label: "PF1.Damage",

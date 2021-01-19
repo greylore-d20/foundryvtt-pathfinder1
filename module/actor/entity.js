@@ -1128,15 +1128,11 @@ export class ActorPF extends Actor {
       return ui.notifications.warn(msg);
     }
 
-    const sources = mergeObject(
-      this.sourceDetails["data.attributes.attack.shared"],
-      mergeObject(
-        this.sourceDetails["data.attributes.attack.general"],
-        this.sourceDetails[`data.attributes.attack.${options.melee ? "melee" : "ranged"}`],
-        { inplace: false }
-      ),
-      { inplace: false }
-    );
+    const sources = [
+      ...this.sourceDetails["data.attributes.attack.shared"],
+      ...this.sourceDetails["data.attributes.attack.general"],
+      ...this.sourceDetails[`data.attributes.attack.${options.melee ? "melee" : "ranged"}`],
+    ];
 
     // Add contextual notes
     let notes = [];
@@ -1153,8 +1149,10 @@ export class ActorPF extends Actor {
     rollData.item = {};
 
     let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
-    if ((getProperty(this.data, "data.attributes.acp.attackPenalty") || 0) > 0)
-      changes.push("-@attributes.acp.attackPenalty");
+
+    // Add ability modifier
+    const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
+    changes.push(getProperty(this.data, `data.abilities.${atkAbl}.mod`));
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });

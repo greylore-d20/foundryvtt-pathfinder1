@@ -1911,7 +1911,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _onRollInitiative(event) {
     event.preventDefault();
-    this.actor.rollInitiative();
+    this.actor.rollInitiative({ createCombatants: true, rerollInitiative: game.user.isGM });
   }
 
   _onRollSavingThrow(event) {

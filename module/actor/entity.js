@@ -1264,72 +1264,37 @@ export class ActorPF extends Actor {
     return [notes, notesHTML];
   }
 
-  async rollInitiative() {
-    if (!this.hasPerm(game.user, "OWNER")) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+  async rollInitiative({ createCombatants = false, rerollInitiative = false, initiativeOptions = {} } = {}) {
+    // Obtain (or create) a combat encounter
+    let combat = game.combat;
+    if (!combat) {
+      if (game.user.isGM && canvas.scene) {
+        combat = await game.combats.object.create({ scene: canvas.scene._id, active: true });
+      } else {
+        ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
+        return null;
+      }
     }
 
-    let formula = _getInitiativeFormula(this);
-    let overrideRollMode = null,
-      bonus = "",
-      stop = false;
-    if (keyboard.isDown("Shift")) {
-      const dialogData = await Combat.showInitiativeDialog(formula);
-      overrideRollMode = dialogData.rollMode;
-      bonus = dialogData.bonus || "";
-      stop = dialogData.stop || false;
+    // Create new combatants
+    if (createCombatants) {
+      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
+      const createData = tokens.reduce((arr, t) => {
+        if (t.inCombat) return arr;
+        arr.push({ tokenId: t.id, hidden: t.data.hidden });
+        return arr;
+      }, []);
+      await combat.createEmbeddedEntity("Combatant", createData);
     }
 
-    if (stop) return;
-
-    const rollData = this.getRollData();
-    // Add bonus
-    rollData.bonus = bonus;
-    if (bonus.length > 0) formula += " + @bonus";
-    if (rollData.attributes.woundThresholds.penalty > 0) {
-      // TODO: Show penalty separately (@attributes.woundThresholds.penalty)
-      // TODO: Output wound level penalty note
-      // notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[woundLevel]));
-    }
-
-    // Roll initiative
-    const roll = new Roll(formula, rollData).roll();
-
-    // Context notes
-    let [notes, notesHTML] = this.getInitiativeContextNotes();
-
-    // Create roll template data
-    const templateData = mergeObject(
-      {
-        user: game.user._id,
-        formula: roll.formula,
-        tooltip: await roll.getTooltip(),
-        total: roll.total,
-      },
-      notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
-    );
-
-    // Create chat data
-    let chatData = {
-      user: game.user._id,
-      type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-      rollMode: overrideRollMode,
-      sound: CONFIG.sounds.dice,
-      speaker: {
-        scene: canvas.scene?._id,
-        actor: this._id,
-        token: this.token?.id,
-        alias: this.token?.name,
-      },
-      flavor: game.i18n.localize("PF1.RollsForInitiative").format(this.token ? this.token.name : this.name),
-      roll: roll,
-      content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
-    };
-
-    // Send message
-    await ChatMessage.create(chatData);
+    // Iterate over combatants to roll for
+    const combatantIds = combat.combatants.reduce((arr, c) => {
+      if (c.actor.id !== this.id || (this.isToken && c.tokenId !== this.token.id)) return arr;
+      if (c.initiative && !rerollInitiative) return arr;
+      arr.push(c._id);
+      return arr;
+    }, []);
+    return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
   }
 
   rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {

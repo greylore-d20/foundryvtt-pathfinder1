@@ -10,6 +10,8 @@
 ### Changelog
 
 - Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.
+- The initiative roll button on the sheet adds to the current active combat now
+- The sheet initiative button will allow rerolls if clicker is a GM
 
 ## 0.76.13 (Hotfix)
 

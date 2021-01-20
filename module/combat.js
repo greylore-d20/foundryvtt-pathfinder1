@@ -54,11 +54,11 @@ Combat.showInitiativeDialog = function (formula = null) {
   });
 };
 
-export const _rollInitiative = async function (ids, formula = null, messageOptions = {}) {
+export const _rollInitiative = async function (ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
   // Structure input data
   ids = typeof ids === "string" ? [ids] : ids;
   const currentId = this.combatant._id;
-  if (!formula) formula = _getInitiativeFormula(this.combatant.actor);
+  if (formula ?? true) formula = _getInitiativeFormula(this.combatant.actor);
 
   let overrideRollMode = null,
     bonus = "",
@@ -160,7 +160,7 @@ export const _rollInitiative = async function (ids, formula = null, messageOptio
   await this.updateEmbeddedEntity("Combatant", updates);
 
   // Ensure the turn order remains with the same combatant
-  await this.update({ turn: this.turns.findIndex((t) => t._id === currentId) });
+  if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t._id === currentId) });
 
   // Create multiple chat messages
   await ChatMessage.create(messages);

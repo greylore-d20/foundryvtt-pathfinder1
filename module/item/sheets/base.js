@@ -227,7 +227,7 @@ export class ItemSheetPF extends ItemSheet {
       // Update formulaic attack count if it's not present
       const fAtkCount = data.item.data.formulaicAttacks?.count;
       if (fAtkCount?.formula?.length > 0 && fAtkCount?.value === null)
-        this.item.parseFormulaicAttacks(fAtkCount.formula);
+        this.item.parseFormulaicAttacks({ formula: fAtkCount.formula });
     }
 
     // Prepare spell specific stuff
@@ -1100,7 +1100,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     await this._onSubmit(event); // Submit any unsaved changes
 
-    const exAtks = this.item.parseFormulaicAttacks(event.target.value);
+    const exAtks = this.item.parseFormulaicAttacks({ formula: event.target.value });
     await this.item.update({ "data.formulaicAttacks.count.value": exAtks });
   }
 

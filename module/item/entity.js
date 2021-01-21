@@ -905,6 +905,9 @@ export class ItemPF extends Item {
       }
     }
 
+    // Update formulaic attacks
+    if (this.data?.hasAttack) data["data.formulaicAttacks.count.value"] = this.parseFormulaicAttacks({ update: false });
+
     // Set equipment subtype and slot
     if (
       data["data.equipmentType"] != null &&
@@ -1425,8 +1428,8 @@ export class ItemPF extends Item {
     this.roll();
   }
 
-  parseFormulaicAttacks(attackFormula = null) {
-    const exAtkCountFormula = attackFormula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
+  parseFormulaicAttacks({ formula = null, update = true } = {}) {
+    const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
     let extraAttacks = 0;
     const rollData = this.getRollData();
     try {
@@ -1454,7 +1457,7 @@ export class ItemPF extends Item {
     }
 
     // Update item
-    this.update({ "data.formulaicAttacks.count.value": extraAttacks });
+    if (update) this.update({ "data.formulaicAttacks.count.value": extraAttacks });
 
     return extraAttacks;
   }

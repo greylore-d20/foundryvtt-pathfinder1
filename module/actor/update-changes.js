@@ -443,20 +443,20 @@ export const updateChanges = async function ({ data = null } = {}) {
       srcData1,
       updateData,
       "data.attributes.ac.normal.total",
-      ac.normal + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      ac.normal + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(
       srcData1,
       updateData,
       "data.attributes.ac.touch.total",
-      ac.touch + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      ac.touch + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", ac.ff + Math.min(0, dex));
     linkData(
       srcData1,
       updateData,
       "data.attributes.cmd.total",
-      cmd.normal + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      cmd.normal + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(srcData1, updateData, "data.attributes.cmd.flatFootedTotal", cmd.ff + Math.min(0, dex));
   }
@@ -1108,11 +1108,12 @@ const _addDynamicData = function ({
             break;
         }
 
-        if (obj.data.armor.dex != null) {
+        if (obj.data.armor.dex !== null) {
+          const mdex = Number.parseInt(obj.data.armor.dex);
           switch (obj.data.equipmentType) {
             case "armor":
-              if (obj.data.armor.dex) {
-                const armorMDex = obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"];
+              if (Number.isInteger(mdex)) {
+                const armorMDex = mdex + updateData["data.attributes.mDex.armorBonus"];
                 armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
                 if (!Number.isNaN(armorMDex) && sourceInfo) {
                   const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(
@@ -1129,8 +1130,8 @@ const _addDynamicData = function ({
               }
               break;
             case "shield":
-              if (obj.data.armor.dex) {
-                const shieldMDex = obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"];
+              if (Number.isInteger(mdex)) {
+                const shieldMDex = mdex + updateData["data.attributes.mDex.shieldBonus"];
                 shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
                 if (!Number.isNaN(shieldMDex) && sourceInfo) {
                   const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(
@@ -1152,7 +1153,7 @@ const _addDynamicData = function ({
 
     // Update
     linkData(data, updateData, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
-    if (armorMDexWorst != null || shieldMDexWorst != null) {
+    if (armorMDexWorst !== null || shieldMDexWorst !== null) {
       linkData(
         data,
         updateData,

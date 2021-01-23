@@ -389,7 +389,7 @@ export const updateChanges = async function ({ data = null } = {}) {
         srcData1,
         updateData,
         "data.attributes.maxDexBonus",
-        Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 3)
+        Math.min(updateData["data.attributes.maxDexBonus"] ?? Number.POSITIVE_INFINITY, 3)
       );
       getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.push({
         name: game.i18n.localize("PF1.Encumbrance"),
@@ -406,7 +406,7 @@ export const updateChanges = async function ({ data = null } = {}) {
         srcData1,
         updateData,
         "data.attributes.maxDexBonus",
-        Math.min(updateData["data.attributes.maxDexBonus"] || Number.POSITIVE_INFINITY, 1)
+        Math.min(updateData["data.attributes.maxDexBonus"] ?? Number.POSITIVE_INFINITY, 1)
       );
       getSourceInfo(sourceInfo, "data.attributes.acp.total").negative.push({
         name: game.i18n.localize("PF1.Encumbrance"),
@@ -443,20 +443,20 @@ export const updateChanges = async function ({ data = null } = {}) {
       srcData1,
       updateData,
       "data.attributes.ac.normal.total",
-      ac.normal + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      ac.normal + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(
       srcData1,
       updateData,
       "data.attributes.ac.touch.total",
-      ac.touch + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      ac.touch + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(srcData1, updateData, "data.attributes.ac.flatFooted.total", ac.ff + Math.min(0, dex));
     linkData(
       srcData1,
       updateData,
       "data.attributes.cmd.total",
-      cmd.normal + (maxDex != null ? Math.min(maxDex, dex) : dex)
+      cmd.normal + (maxDex !== null ? Math.min(maxDex, dex) : dex)
     );
     linkData(srcData1, updateData, "data.attributes.cmd.flatFootedTotal", cmd.ff + Math.min(0, dex));
   }
@@ -1060,8 +1060,8 @@ const _addDynamicData = function ({
     let armorACP = 0;
     let shieldACP = 0;
     let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
-    let armorMDex = null;
-    let shieldMDex = null;
+    let armorMDexWorst = null;
+    let shieldMDexWorst = null;
 
     data.items
       .filter((obj) => {
@@ -1108,12 +1108,14 @@ const _addDynamicData = function ({
             break;
         }
 
-        if (obj.data.armor.dex != null) {
+        if (obj.data.armor.dex !== null) {
+          const mDex = Number.parseInt(obj.data.armor.dex);
           switch (obj.data.equipmentType) {
             case "armor":
-              if (obj.data.armor.dex) {
-                armorMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.armorBonus"]);
-                if (armorMDex && sourceInfo) {
+              if (Number.isInteger(mDex)) {
+                const armorMDex = mDex + updateData["data.attributes.mDex.armorBonus"];
+                armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
+                if (!Number.isNaN(armorMDex) && sourceInfo) {
                   const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(
                     (o) => o.name === obj.name
                   );
@@ -1128,9 +1130,10 @@ const _addDynamicData = function ({
               }
               break;
             case "shield":
-              if (obj.data.armor.dex) {
-                shieldMDex = Math.max(0, obj.data.armor.dex + updateData["data.attributes.mDex.shieldBonus"]);
-                if (shieldMDex && sourceInfo) {
+              if (Number.isInteger(mDex)) {
+                const shieldMDex = mDex + updateData["data.attributes.mDex.shieldBonus"];
+                shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
+                if (!Number.isNaN(shieldMDex) && sourceInfo) {
                   const sInfo = getSourceInfo(sourceInfo, "data.attributes.maxDexBonus").negative.find(
                     (o) => o.name === obj.name
                   );
@@ -1149,20 +1152,16 @@ const _addDynamicData = function ({
       });
 
     // Update
-    linkData(
-      data,
-      updateData,
-      "data.attributes.acp.gear",
-      (armorACP == null ? 0 : armorACP) + (shieldACP == null ? 0 : shieldACP)
-    );
-    if (armorMDex != null || shieldMDex != null) {
+    linkData(data, updateData, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
+    if (armorMDexWorst !== null || shieldMDexWorst !== null) {
       linkData(
         data,
         updateData,
         "data.attributes.maxDexBonus",
-        Math.min(armorMDex == null ? 999 : armorMDex, shieldMDex == null ? 999 : shieldMDex)
+        Math.min(armorMDexWorst ?? Number.POSITIVE_INFINITY, shieldMDexWorst ?? Number.POSITIVE_INFINITY)
       );
     }
+
     linkData(data, updateData, "data.attributes.acp.attackPenalty", attackACPPenalty);
   }
 

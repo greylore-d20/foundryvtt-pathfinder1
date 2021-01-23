@@ -290,12 +290,12 @@ export class ActorPF extends Actor {
       const dex = actorData.data.abilities.dex.mod;
       const maxDex = actorData.data.attributes.maxDexBonus;
       const ac = {
-        normal: maxDex != null ? Math.min(maxDex, dex) : dex,
-        touch: maxDex != null ? Math.min(maxDex, dex) : dex,
+        normal: maxDex !== null ? Math.min(maxDex, dex) : dex,
+        touch: maxDex !== null ? Math.min(maxDex, dex) : dex,
         ff: Math.min(0, dex),
       };
       const cmd = {
-        normal: maxDex != null ? Math.min(maxDex, dex) : dex,
+        normal: maxDex !== null ? Math.min(maxDex, dex) : dex,
         ff: Math.min(0, dex),
       };
       if (ac.normal !== 0)

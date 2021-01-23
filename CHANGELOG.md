@@ -7,6 +7,7 @@
 - Fixed deleted buff effects being toggled on related unlinked tokens (#319)
 - Fixed world level items being corrupted when changing permission before an update
 - Buffs/ conditions are toggleable from the statusHUD (#329)
+- Fix max dex bonus being calculated wrong sometimes (thanks mkahvi!) (#490)
 
 ### Changelog
 

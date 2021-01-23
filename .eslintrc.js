@@ -122,6 +122,7 @@ module.exports = {
     Folder: "readonly",
     Items: "readonly",
     Item: "readonly",
+    ActiveEffect: "readonly",
     Journal: "readonly",
     JournalEntry: "readonly",
     Macros: "readonly",

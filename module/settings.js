@@ -322,6 +322,21 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Display default token conditions alongside system ones
+   */
+  game.settings.register("pf1", "coreEffects", {
+    name: "SETTINGS.pf1CoreEffectsN",
+    hint: "SETTINGS.pf1CoreEffectsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      window.location.reload();
+    },
+  });
+
+  /**
    * Skip action dialog prompts
    */
   game.settings.register("pf1", "skipActionDialogs", {

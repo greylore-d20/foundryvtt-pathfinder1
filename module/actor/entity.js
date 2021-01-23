@@ -2282,54 +2282,37 @@ export class ActorPF extends Actor {
   async toggleConditionStatusIcons() {
     const isLinkedToken = getProperty(this.data, "token.actorLink");
     const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
+    const buffTextures = this._calcBuffTextures();
 
-    if (!tokens.length) return;
-
-    let buffTextures = this._calcStatusTextures();
-
-    // Update token(s)
     let promises = [];
-    for (let token of tokens) {
-      const fx = token.data.effects;
-      for (let [img, active] of Object.entries(buffTextures)) {
-        const idx = fx.findIndex((e) => e === img);
-        if (idx === -1 && active === true) {
-          fx.push(img);
-        } else if (idx !== -1 && active === false) {
-          fx.splice(idx, 1);
-        }
-      }
-      promises.push(token.update({ effects: fx }, { diff: false }));
+    const fx = [...this.effects];
+
+    for (let [id, obj] of Object.entries(buffTextures)) {
+      if (obj.active) obj.item.toEffect();
+      else await fx.find((f) => f.data.origin === id)?.delete();
     }
 
+    for (let token of tokens) {
+      CONFIG.statusEffects.forEach((con) => {
+        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
+        if (CONFIG.PF1.conditions[con.id] && (idx !== -1) != this.data.data.attributes.conditions[con.id])
+          promises.push(token.toggleEffect(con, { midUpdate: true }));
+      });
+    }
     return Promise.all(promises);
   }
-
-  _calcStatusTextures() {
-    // Determine buff textures
+  // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
+  _calcBuffTextures() {
     const buffs = this.items.filter((o) => o.type === "buff");
-    let buffTextures = buffs.reduce((cur, o) => {
-      const img = o.data.img;
-      if (o.data.data.active && !o.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"))
-        cur[img] = true;
-      else if (cur[img] == null) cur[img] = false;
-      return cur;
-    }, {});
+    return buffs.reduce((acc, cur) => {
+      const id = cur.uuid;
+      if (cur.data.data.hideFromToken) return acc;
 
-    // Determine condition textures
-    let conditionTextures = Object.entries(CONFIG.PF1.conditionTextures).reduce((cur, o) => {
-      if (this.data.data.attributes.conditions[o[0]]) cur[o[1]] = true;
-      else if (!this.data.data.attributes.conditions[o[0]] && cur[o[1]] == null) cur[o[1]] = false;
-      return cur;
+      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.data.img, item: cur };
+      if (cur.data.data.active) acc[id].active = true;
+      else acc[id].active = false;
+      return acc;
     }, {});
-    for (let [k, v] of Object.entries(conditionTextures)) {
-      if (v === true) {
-        if (!buffTextures[k] && !game.settings.get("pf1", "hideTokenConditions")) buffTextures[k] = v;
-      } else if (v === false) {
-        if (buffTextures[k] == null) buffTextures[k] = v;
-      }
-    }
-    return buffTextures;
   }
 
   updateChangeEvals() {

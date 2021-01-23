@@ -14,7 +14,7 @@ import {
 } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
-import { measureDistances } from "./module/canvas.js";
+import { measureDistances, getConditions } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -89,6 +89,9 @@ Hooks.once("init", async function () {
 
   // Register System Settings
   registerSystemSettings();
+
+  //Calculate conditions for world
+  CONFIG.statusEffects = getConditions();
 
   // Preload Handlebars Templates
   await preloadHandlebarsTemplates();
@@ -356,31 +359,13 @@ Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) =
     item._onLevelChange(curLevel, newLevel);
   }
 });
+
 Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
-
-  // Update token buff effect images
-  const isLinkedToken = getProperty(actor.data, "token.actorLink");
-  if (isLinkedToken) {
-    let promises = [];
-    const isActive = item.data.data.active || changedData["data.active"];
-
-    if (item.data.type === "buff" && isActive && changedData["img"]) {
-      const tokens = actor.getActiveTokens();
-      for (const token of tokens) {
-        const fx = token.data.effects || [];
-        if (fx.indexOf(item.data.img) !== -1) fx.splice(fx.indexOf(item.data.img), 1);
-        if (fx.indexOf(changedData["img"]) === -1) fx.push(changedData["img"]);
-        promises.push(token.update({ effects: fx }, { diff: false }));
-      }
-    }
-
-    await Promise.all(promises);
-  }
 
   // Merge changed data into item data immediately, to avoid update lag
   // item.data = mergeObject(item.data, changedData);
@@ -393,10 +378,11 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
     if (!result) await actor.refresh();
   }
 });
-Hooks.on("updateToken", (scene, sceneId, data, options, userId) => {
+
+Hooks.on("updateToken", (scene, token, data, options, userId) => {
   if (userId !== game.user._id) return;
 
-  const actor = game.actors.tokens[data._id];
+  const actor = game.actors.tokens[data._id] ?? game.actors.get(token.actorId);
   if (actor != null && hasProperty(data, "actorData.items")) {
     if (!actor.hasPerm(game.user, "OWNER")) return;
     actor.refresh();
@@ -413,22 +399,10 @@ Hooks.on("createToken", async (scene, token, options, userId) => {
   if (userId !== game.user._id) return;
 
   const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
+  actor.toggleConditionStatusIcons();
+
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) updateChanges.call(actor);
-});
-
-Hooks.on("preCreateToken", async (scene, token, options, userId) => {
-  let buffTextures = game.actors.get(token.actorId)._calcStatusTextures();
-  const fx = token.effects ?? [];
-  for (let [img, active] of Object.entries(buffTextures)) {
-    const idx = fx.findIndex((e) => e === img);
-    if (idx === -1 && active === true) {
-      fx.push(img);
-    } else if (idx !== -1 && active === false) {
-      fx.splice(idx, 1);
-    }
-  }
-  token.effects = fx;
 });
 
 // Create race on actor

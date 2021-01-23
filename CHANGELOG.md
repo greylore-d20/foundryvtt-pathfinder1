@@ -6,12 +6,17 @@
 
 - Fixed deleted buff effects being toggled on related unlinked tokens (#319)
 - Fixed world level items being corrupted when changing permission before an update
+- Buffs/ conditions are toggleable from the statusHUD (#329)
 
 ### Changelog
 
 - Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.
 - The initiative roll button on the sheet adds to the current active combat now
 - The sheet initiative button will allow rerolls if clicker is a GM
+- Conditions and token status effects are now tied together via ActiveEffects
+  - New world setting for including default conditions in status effects (off by default)
+  - Buffs are always visible from statusHUD unless "Hide from token" is checked
+  - Conditions are always visible, regardless of "Hide Token Conditions" world setting
 
 ## 0.76.13 (Hotfix)
 

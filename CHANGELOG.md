@@ -8,6 +8,7 @@
 - Fixed world level items being corrupted when changing permission before an update
 - Buffs/ conditions are toggleable from the statusHUD (#329)
 - Fix max dex bonus being calculated wrong sometimes (thanks mkahvi!) (#490)
+- SR notes were not listed in the defenses summary when the actor had no SR
 
 ### Changelog
 

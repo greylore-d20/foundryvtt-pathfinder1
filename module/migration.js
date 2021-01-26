@@ -767,7 +767,7 @@ const _migrateItemRange = function (ent, updateData) {
 };
 
 const _migrateItemLinks = function (ent, updateData) {
-  if (["attack", "consumable"].includes(ent.type) && !hasProperty(ent.data, "data.links.charges")) {
+  if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent.data, "data.links.charges")) {
     updateData["data.links.charges"] = [];
   }
 };

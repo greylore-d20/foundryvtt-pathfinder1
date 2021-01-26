@@ -3110,7 +3110,7 @@ export class ItemPF extends Item {
     const targetLinks = getProperty(targetItem.data, `data.links.${linkType}`);
     if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
       if (linkType === "charges") {
-        // Try to limit charge pool linking to a depth of 1
+        // Prevent the closing of charge link loops
         if (targetLinks.length > 0) {
           ui.notifications.warn(
             game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)

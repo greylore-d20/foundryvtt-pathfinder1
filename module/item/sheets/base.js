@@ -392,7 +392,7 @@ export class ItemSheetPF extends ItemSheet {
     });
 
     // Add charges link type
-    if (["feat", "consumable", "attack"].includes(this.item.type)) {
+    if (["feat", "consumable", "attack", "equipment"].includes(this.item.type)) {
       data.links.list.push({
         id: "charges",
         label: game.i18n.localize("PF1.LinkTypeCharges"),

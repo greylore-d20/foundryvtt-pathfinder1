@@ -630,6 +630,27 @@
 .pf1.sheet .editor .tox-toolbar__primary {
   background: none;
 }
+.pf1.sheet .notImp {
+  text-decoration: firebrick dotted underline;
+  text-decoration-skip-ink: none;
+}
+.pf1.sheet .notImp::after {
+  color: firebrick;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f071";
+  text-shadow: 0 0 4px white;
+}
+.pf1.sheet .needSteps {
+  text-decoration: goldenrod double underline;
+}
+.pf1.sheet .needSteps::after {
+  color: goldenrod;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f14a";
+  text-shadow: 0 0 4px black;
+}
 .pf1.sheet .sheet-header {
   flex: 0 0 100px;
   border-bottom: 2px groove #eeede0;

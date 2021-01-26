@@ -20,6 +20,7 @@
   - New world setting for including default conditions in status effects (off by default)
   - Buffs are always visible from statusHUD unless "Hide from token" is checked
   - Conditions are always visible, regardless of "Hide Token Conditions" world setting
+- Added two new styles in TextEditors to document unimplemented features
 
 ## 0.76.13 (Hotfix)
 

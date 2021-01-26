@@ -14,6 +14,7 @@ import {
 } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
+import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -195,6 +196,9 @@ Hooks.once("setup", function () {
   for (let o of toLocalize) {
     CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o]);
   }
+
+  // TinyMCE variables and commands
+  tinyMCEInit();
 });
 
 /* -------------------------------------------- */

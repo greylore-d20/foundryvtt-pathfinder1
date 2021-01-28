@@ -291,59 +291,59 @@
       <tbody>
         <td class="tooltip">
           <span class="text-box direct speed" name="data.attributes.speed.land.base" data-dtype="Number">
-            {{#if data.attributes.speed.land.total}}{{data.attributes.speed.land.total}}{{/if}}
+            {{#if data.attributes.speed.land.total}}{{convertDistance data.attributes.speed.land.total}}{{/if}}
           </span>
 
           <div class="tooltipcontent">
-            @attributes.speed.land.total : {{data.attributes.speed.land.total}}
+            @attributes.speed.land.total : {{convertDistance data.attributes.speed.land.total}}
             {{#if sourceDetails.data.attributes.speed.land.total.length}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
         </td>
         <td class="tooltip">
           <span class="text-box direct speed" name="data.attributes.speed.climb.base" data-dtype="Number">
-            {{#if data.attributes.speed.climb.total}}{{data.attributes.speed.climb.total}}{{/if}}
+            {{#if data.attributes.speed.climb.total}}{{convertDistance data.attributes.speed.climb.total}}{{/if}}
           </span>
 
           <div class="tooltipcontent">
-            @attributes.speed.climb.total : {{data.attributes.speed.climb.total}}
+            @attributes.speed.climb.total : {{convertDistance data.attributes.speed.climb.total}}
             {{#if sourceDetails.data.attributes.speed.climb.total.length}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
         </td>
         <td class="tooltip">
           <span class="text-box direct speed" name="data.attributes.speed.swim.base" data-dtype="Number">
-            {{#if data.attributes.speed.swim.total}}{{data.attributes.speed.swim.total}}{{/if}}
+            {{#if data.attributes.speed.swim.total}}{{convertDistance data.attributes.speed.swim.total}}{{/if}}
           </span>
 
           <div class="tooltipcontent">
-            @attributes.speed.swim.total : {{data.attributes.speed.swim.total}}
+            @attributes.speed.swim.total : {{convertDistance data.attributes.speed.swim.total}}
             {{#if sourceDetails.data.attributes.speed.swim.total.length}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
         </td>
         <td class="tooltip">
           <span class="text-box direct speed" name="data.attributes.speed.burrow.base" data-dtype="Number">
-            {{#if data.attributes.speed.burrow.total}}{{data.attributes.speed.burrow.total}}{{/if}}
+            {{#if data.attributes.speed.burrow.total}}{{convertDistance data.attributes.speed.burrow.total}}{{/if}}
           </span>
 
           <div class="tooltipcontent">
-            @attributes.speed.burrow.total : {{data.attributes.speed.burrow.total}}
+            @attributes.speed.burrow.total : {{convertDistance data.attributes.speed.burrow.total}}
             {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
         </td>
         <td class="tooltip">
           <span class="text-box direct speed" name="data.attributes.speed.fly.base" data-dtype="Number">
-            {{#if data.attributes.speed.fly.total}}{{data.attributes.speed.fly.total}}{{/if}}
+            {{#if data.attributes.speed.fly.total}}{{convertDistance data.attributes.speed.fly.total}}{{/if}}
           </span>
 
           <div class="tooltipcontent">
@@ -351,7 +351,7 @@
             @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
             {{#if sourceDetails.data.attributes.speed.fly.total.length}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
         </td>

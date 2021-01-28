@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.76.14
+## 0.77.0
 
 ### Bug Fixes
 
@@ -25,6 +25,7 @@
 - Added two new styles in TextEditors to document unimplemented features
 
 ### API
+
 - Conditions and token status effects are now tied together via ActiveEffects
 - Added two new Hooks for module developers
   - itemUse: (item, type, options)

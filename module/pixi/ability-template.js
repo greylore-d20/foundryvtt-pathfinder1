@@ -14,6 +14,7 @@ export class AbilityTemplate extends MeasuredTemplate {
     let distance = options.distance;
     if (!type) return null;
     if (!distance) return null;
+    if (!canvas.scene) return null;
     if (!["cone", "circle", "rect", "ray"].includes(type)) return null;
 
     // Prepare template data
@@ -165,6 +166,7 @@ export class AbilityTemplate extends MeasuredTemplate {
 
   refresh() {
     if (!this.template) return;
+    if (!canvas.scene) return;
 
     super.refresh();
 

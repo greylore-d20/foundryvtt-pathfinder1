@@ -12,6 +12,7 @@
 - Fix charge linking using Items from the equipment category
 - Fix template errors with no scene (thanks mkahvi!) (#434)
 - Fix speed not displaying as metric (thanks mkahvi!) (#402)
+- Fix privately rolled dice displaying who and what was being rolled (#243)
 
 ### Changelog
 

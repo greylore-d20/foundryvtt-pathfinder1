@@ -10,6 +10,7 @@
 - Fix max dex bonus being calculated wrong sometimes (thanks mkahvi!) (#490)
 - SR notes were not listed in the defenses summary when the actor had no SR
 - Fix charge linking using Items from the equipment category
+- Fix template errors with no scene (thanks mkahvi!) (#434)
 
 ### Changelog
 

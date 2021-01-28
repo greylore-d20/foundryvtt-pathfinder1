@@ -1,3 +1,5 @@
+import { convertDistance } from "../lib.js";
+
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("concat", (a, b) => {
     if (typeof a === "number") a = a.toString();
@@ -54,4 +56,6 @@ export const registerHandlebarsHelpers = function () {
     if (button && editable) editor.append($('<a class="editor-edit"><i class="fas fa-edit"></i></a>'));
     return new Handlebars.SafeString(editor[0].outerHTML);
   });
+
+  Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
 };

@@ -11,6 +11,7 @@
 - SR notes were not listed in the defenses summary when the actor had no SR
 - Fix charge linking using Items from the equipment category
 - Fix template errors with no scene (thanks mkahvi!) (#434)
+- Fix speed not displaying as metric (thanks mkahvi!) (#402)
 
 ### Changelog
 

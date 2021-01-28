@@ -978,7 +978,7 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("actorRoll", this, "skill", skillId, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     let skl, sklName;
     const data = this.data.data,
@@ -1070,7 +1070,7 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("actorRoll", this, "bab", null, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     return DicePF.d20Roll({
       event: options.event,
@@ -1092,7 +1092,7 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("actorRoll", this, "cmb", null, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add contextual notes
     let notes = [];
@@ -1133,7 +1133,7 @@ export class ActorPF extends Actor {
     rollData.cl = spellbook.cl.total;
 
     const allowed = Hooks.call("actorRoll", this, "cl", spellbookKey, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add contextual caster level string
     const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
@@ -1165,7 +1165,7 @@ export class ActorPF extends Actor {
     rollData.concentrationBonus = spellbook.concentration;
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add contextual concentration string
     const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
@@ -1320,7 +1320,7 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("actorRoll", this, "save", savingThrowId, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add contextual notes
     let notes = [];
@@ -1382,7 +1382,7 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("actorRoll", this, "ability", abilityId, options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add contextual notes
     let notes = [];

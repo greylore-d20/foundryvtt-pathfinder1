@@ -2301,6 +2301,7 @@ export class ActorPF extends Actor {
     }
     return Promise.all(promises);
   }
+
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffTextures() {
     const buffs = this.items.filter((o) => o.type === "buff");

@@ -219,6 +219,7 @@ export const migrateSceneData = async function (scene) {
     const token = new Token(t);
 
     migrateTokenVision(token, t);
+    migrateTokenStatuses(token, t);
 
     if (!t.actorId || t.actorLink || !t.actorData.data) {
       t.actorData = {};
@@ -880,6 +881,21 @@ const migrateTokenVision = function (token, updateData) {
 
   setProperty(updateData, "flags.pf1.lowLightVision", getProperty(token.actor.data, "token.flags.pf1.lowLightVision"));
   setProperty(updateData, "brightSight", getProperty(token.actor.data, "token.brightSight"));
+};
+
+const migrateTokenStatuses = function (token, updateData) {
+  if (!token.actor) return;
+
+  if (token.data.effects.length) {
+    var effects = token.data.effects;
+    effects = effects.filter((e) => {
+      const [key, tex] = Object.entries(CONFIG.PF1.conditionTextures).find((t) => e === t[1]) ?? [];
+      if (key && token.actor.data.data.attributes.conditions[key]) return false;
+      if (token.actor.items.find((i) => i.type === "buff" && i.data.data.active && i.img === e)) return false;
+      return true;
+    });
+  }
+  setProperty(updateData, "effects", effects);
 };
 
 /* -------------------------------------------- */

@@ -19,11 +19,18 @@
 - Removed FoundryVTT 0.7.7 support. Please update your software if you are still on this version.
 - The initiative roll button on the sheet adds to the current active combat now
 - The sheet initiative button will allow rerolls if clicker is a GM
-- Conditions and token status effects are now tied together via ActiveEffects
-  - New world setting for including default conditions in status effects (off by default)
-  - Buffs are always visible from statusHUD unless "Hide from token" is checked
-  - Conditions are always visible, regardless of "Hide Token Conditions" world setting
+- New world setting for including default conditions in status effects (off by default)
+- Buffs are always visible from statusHUD unless "Hide from token" is checked
+- Conditions are always visible, regardless of "Hide Token Conditions" world setting
 - Added two new styles in TextEditors to document unimplemented features
+
+### API
+- Conditions and token status effects are now tied together via ActiveEffects
+- Added two new Hooks for module developers
+  - itemUse: (item, type, options)
+  	- Types: description, attack, spell
+  - actorRoll: (actor, type, id, options)
+  	- Types: skill, bab, cmb, cl, concentration, save, ability,
 
 ## 0.76.13 (Hotfix)
 

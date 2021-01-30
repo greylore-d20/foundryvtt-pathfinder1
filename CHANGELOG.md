@@ -7,6 +7,10 @@
 - Status icon creation failure state could enter a loop and create two icons
 - Error spam in consoles on tokens with statuses
 
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+
 ## 0.77.1 (Hotfix)
 
 ### Bug Fixes

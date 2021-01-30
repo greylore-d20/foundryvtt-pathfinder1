@@ -845,25 +845,25 @@ const _resetData = function (updateData, data, flags, sourceInfo) {
     data,
     updateData,
     "data.attributes.woundThresholds.level",
-    getProperty(data, "data.attributes.woundThresholds.level") || 0
+    getProperty(data, "data.attributes.woundThresholds.level") ?? 0
   );
   linkData(
     data,
     updateData,
     "data.attributes.woundThresholds.override",
-    getProperty(data, "data.attributes.woundThresholds.override") || -1
+    getProperty(data, "data.attributes.woundThresholds.override") ?? -1
   );
   linkData(
     data,
     updateData,
     "data.attributes.woundThresholds.mod",
-    getProperty(data, "data.attributes.woundThresholds.mod") || 0
+    getProperty(data, "data.attributes.woundThresholds.mod") ?? 0
   );
   linkData(
     data,
     updateData,
     "data.attributes.woundThresholds.penalty",
-    getProperty(data, "data.attributes.woundThresholds.penalty") || 0
+    getProperty(data, "data.attributes.woundThresholds.penalty") ?? 0
   );
 
   // Reset AC
@@ -2587,7 +2587,7 @@ const updateWoundThreshold = function (expandedData = {}, data = {}) {
   linkData(expandedData, data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
 
   const penalty = getProperty(expandedData, "data.attributes.woundThresholds.penalty");
-  const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+  const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "allChecks"];
   for (let fk of changeFlatKeys) {
     let flats = getChangeFlat.call(this, fk, "penalty", expandedData.data);
     if (!(flats instanceof Array)) flats = [flats];

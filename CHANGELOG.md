@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.77.1 (Hotfix)
+
+### Bug Fixes
+
+- Wound Thresholds variant rule wasn't being applied to certain attributes
+- Setting Wound Threshold Override for an actor to Disabled instead put it on Default
+
 ## 0.77.0
 
 ### Bug Fixes

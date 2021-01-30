@@ -405,14 +405,17 @@ Hooks.on("createToken", async (scene, token, options, userId) => {
   if (userId !== game.user._id) return;
 
   const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
-  actor.toggleConditionStatusIcons();
 
   // Update changes and generate sourceDetails to ensure valid actor data
-  if (actor != null) updateChanges.call(actor);
+  if (actor != null) {
+    actor.toggleConditionStatusIcons();
+    updateChanges.call(actor);
+  }
 });
 
 Hooks.on("preCreateToken", async (scene, token, options, userId) => {
-  const buffTextures = Object.values(game.actors.get(token.actorId)._calcBuffTextures()).map((b) => b.icon);
+  const actor = game.actors.get(token.actorId),
+    buffTextures = Object.values(actor._calcBuffTextures() ?? []).map((b) => b.icon);
   for (let icon of buffTextures) await loadTexture(icon);
 });
 

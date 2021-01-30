@@ -169,7 +169,7 @@ export const addReachCallback = function (data, html) {
   if (!canvas.scene || canvas.scene._id !== speakerData.scene) return results;
 
   const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
-  if (!token) return results;
+  if (!token || !token.actor) return results;
 
   const item = token.actor.items.find((o) => o._id === itemID);
   if (!item) return results;

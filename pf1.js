@@ -21,6 +21,7 @@ import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
+import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
@@ -84,6 +85,7 @@ Hooks.once("init", async function () {
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.entityClass = ActorPF;
+  CONFIG.ActiveEffect.entityClass = ActiveEffectPF;
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.entityClass = ChatMessagePF;
@@ -208,7 +210,7 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.0";
+  const NEEDS_MIGRATION_VERSION = "0.77.1";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -409,6 +411,11 @@ Hooks.on("createToken", async (scene, token, options, userId) => {
   if (actor != null) updateChanges.call(actor);
 });
 
+Hooks.on("preCreateToken", async (scene, token, options, userId) => {
+  const buffTextures = Object.values(game.actors.get(token.actorId)._calcBuffTextures()).map((b) => b.icon);
+  for (let icon of buffTextures) await loadTexture(icon);
+});
+
 // Create race on actor
 Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
   if (userId !== game.user._id) return;
@@ -448,9 +455,10 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
   if (isLinkedToken) {
     let promises = [];
     if (itemData.type === "buff" && itemData.data.active) {
+      actor.effects.find((e) => e.data.origin?.indexOf(itemData._id) > 0)?.delete();
       const tokens = actor.getActiveTokens();
       for (const token of tokens) {
-        promises.push(token.toggleEffect(itemData.img));
+        promises.push(token.toggleEffect(itemData.img, { active: false }));
       }
     }
     await Promise.all(promises);

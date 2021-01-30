@@ -94,10 +94,10 @@ const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoi
 TokenHUD.prototype._getStatusEffectChoices = function () {
   let core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
-  Object.entries(this.object.actor._calcBuffTextures()).forEach((obj) => {
+  Object.entries(this.object.actor._calcBuffTextures()).forEach((obj, ind) => {
     let [idx, buff] = obj;
-    if (buffs[buff.icon] && buff.label) buffs[buff.icon].title = buff.label;
-    else {
+    if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;
+    if (buff) {
       buffs[buff.icon] = {
         id: buff.id,
         title: buff.label,
@@ -129,13 +129,13 @@ Token.prototype.toggleEffect = async function (effect, { active, overlay = false
     let buffItem = this.actor.items.get(effect);
     if (buffItem) {
       call = await buffItem.update({ "data.active": !buffItem.data.data.active });
-    } else call = Token_toggleEffect.call(this, effect, { active, overlay });
+    } else call = await Token_toggleEffect.call(this, effect, { active, overlay });
   } else if (!midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
     const updates = {};
     updates["data.attributes.conditions." + effect.id] = !this.actor.data.data.attributes.conditions[effect.id];
-    call = this.actor.update(updates);
+    call = await this.actor.update(updates);
   } else {
-    call = Token_toggleEffect.call(this, effect, { active, overlay });
+    call = await Token_toggleEffect.call(this, effect, { active, overlay });
   }
   if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();
   return call;

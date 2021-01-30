@@ -4,8 +4,17 @@
 
 ### Bug Fixes
 
+- Newly created tokens were not displaying if they had buffs
+- Status HUD was not allowing duplicate textures in list
+- Deleting an ActiveEffect didn't deactivate an actor's status
+- Deleting an active buff didn't properly remove the effect from tokens
 - Wound Thresholds variant rule wasn't being applied to certain attributes
 - Setting Wound Threshold Override for an actor to Disabled instead put it on Default
+
+### Changelog
+
+- Partial compatibility with Status Icon Counters module
+  - Use right click to enable buff icons
 
 ## 0.77.0
 
@@ -36,9 +45,9 @@
 - Conditions and token status effects are now tied together via ActiveEffects
 - Added two new Hooks for module developers
   - itemUse: (item, type, options)
-  	- Types: description, attack, spell
+    - Types: description, attack, spell
   - actorRoll: (actor, type, id, options)
-  	- Types: skill, bab, cmb, cl, concentration, save, ability,
+    - Types: skill, bab, cmb, cl, concentration, save, ability,
 
 ## 0.76.13 (Hotfix)
 

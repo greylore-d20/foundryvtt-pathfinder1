@@ -965,11 +965,11 @@ export class ItemPF extends Item {
   }
 
   //Creates a simple ActiveEffect from a buff item. Returns the effect
-  async toEffect() {
+  async toEffect({ noCreate = false } = {}) {
     if (!this.parentActor || this.type !== "buff") return;
 
     const existing = this.parentActor.effects.find((e) => e.data.origin == this.uuid);
-    if (existing) return existing;
+    if (existing || noCreate) return existing;
 
     // Add a new effect
     const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
@@ -994,8 +994,8 @@ export class ItemPF extends Item {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("itemUse", this, "description", {altChatData, addDC});
-    if ( allowed === false ) return;
+    const allowed = Hooks.call("itemUse", this, "description", { altChatData, addDC });
+    if (allowed === false) return;
 
     // Basic template rendering data
     const token = this.parentActor.token;
@@ -1320,8 +1320,8 @@ export class ItemPF extends Item {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("itemUse", this, "attack", {ev, skipDialog, dice});
-    if ( allowed === false ) return;
+    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
+    if (allowed === false) return;
 
     const itemQuantity = getProperty(this.data, "data.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
@@ -2376,7 +2376,7 @@ export class ItemPF extends Item {
     const data = this.getRollData();
 
     const allowed = Hooks.call("itemUse", this, "consumable", options);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Add effect string
     let effectStr = "";

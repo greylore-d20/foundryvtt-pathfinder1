@@ -2308,7 +2308,7 @@ export class ActorPF extends Actor {
     }
 
     for (let ae of fx) {
-      let item = await fromUuid(ae.data.origin);
+      let item = this.items.get(ae.data.origin?.split(".")[3]);
       if (!item && ae.data.origin) await ae.delete();
     }
 

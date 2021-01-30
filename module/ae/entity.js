@@ -4,7 +4,7 @@ export class ActiveEffectPF extends ActiveEffect {
   }
 
   async update(data, options) {
-    super.update(data, options);
+    return super.update(data, options);
   }
 
   async create(options) {
@@ -14,12 +14,14 @@ export class ActiveEffectPF extends ActiveEffect {
     if (statusId && this.parent?.data.data.attributes.conditions[statusId] === false) {
       updates[`data.attributes.conditions.${statusId}`] = true;
       await this.parent.update(updates);
+      let created = this.parent.effects.find((e) => e.data.flags.core.statusId === statusId);
+      if (created) return created;
     }
     if (origin) {
       let buffItem = this.parent.items.get(origin.split(".")[3]);
       if (buffItem && !buffItem.data.data.active) await buffItem.update({ "data.active": true });
     }
-    super.create(options);
+    return super.create(options);
   }
 
   async delete(options) {

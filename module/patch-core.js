@@ -139,14 +139,6 @@ export async function PatchCore() {
     };
   }
 
-  // const ActiveEffects_isTemporary = ActiveEffects.prototype.isTemporary;
-  Object.defineProperty(ActiveEffect.prototype, "isTemporary", {
-    get: function () {
-      const duration = this.data.duration.seconds ?? (this.data.duration.rounds || this.data.duration.turns) ?? 0;
-      return duration > 0 || this.getFlag("core", "statusId") || this.getFlag("pf1", "show");
-    },
-  });
-
   // Patch ActorTokenHelpers.update
   const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
   ActorTokenHelpers.prototype.update = async function (data, options = {}) {

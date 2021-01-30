@@ -21,6 +21,7 @@ import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
+import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
@@ -84,6 +85,7 @@ Hooks.once("init", async function () {
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.entityClass = ActorPF;
+  CONFIG.ActiveEffect.entityClass = ActiveEffectPF;
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.entityClass = ChatMessagePF;
@@ -407,6 +409,11 @@ Hooks.on("createToken", async (scene, token, options, userId) => {
 
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) updateChanges.call(actor);
+});
+
+Hooks.on("preCreateToken", async (scene, token, options, userId) => {
+  const buffTextures = Object.values(game.actors.get(token.actorId)._calcBuffTextures()).map((b) => b.icon);
+  for (let icon of buffTextures) await loadTexture(icon);
 });
 
 // Create race on actor

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.77.1
+
+### Bug Fixes
+
+- Newly created tokens were not displaying if they had buffs
+- Status HUD was not allowing duplicate textures in list
+- Deleting an ActiveEffect didn't deactivate an actor's status
+
+### Changelog
+
+- Partial compatibility with Status Icon Counters module
+  - Use right click to enable buff icons
+
 ## 0.77.0
 
 ### Bug Fixes

@@ -2309,7 +2309,7 @@ export class ActorPF extends Actor {
     const fx = [...this.effects];
 
     for (let [id, obj] of Object.entries(buffTextures)) {
-      if (obj.active) obj.item.toEffect();
+      if (obj.active) await obj.item.toEffect();
       else await fx.find((f) => f.data.origin === id)?.delete();
     }
 

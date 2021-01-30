@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.77.2 
+## 0.77.2 (Hotfix)
 
 ### Bug Fixes
 

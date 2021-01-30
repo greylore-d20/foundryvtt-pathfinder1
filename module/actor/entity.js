@@ -2313,6 +2313,11 @@ export class ActorPF extends Actor {
       else await fx.find((f) => f.data.origin === id)?.delete();
     }
 
+    for (let ae of fx) {
+      let item = await fromUuid(ae.data.origin);
+      if (!item && ae.data.origin) await ae.delete();
+    }
+
     for (let token of tokens) {
       CONFIG.statusEffects.forEach((con) => {
         const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);

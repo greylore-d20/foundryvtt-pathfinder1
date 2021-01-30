@@ -7,6 +7,7 @@
 - Newly created tokens were not displaying if they had buffs
 - Status HUD was not allowing duplicate textures in list
 - Deleting an ActiveEffect didn't deactivate an actor's status
+- Deleting an active buff didn't properly remove the effect from tokens
 
 ### Changelog
 

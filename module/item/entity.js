@@ -965,11 +965,11 @@ export class ItemPF extends Item {
   }
 
   //Creates a simple ActiveEffect from a buff item. Returns the effect
-  async toEffect() {
+  async toEffect({ noCreate = false } = {}) {
     if (!this.parentActor || this.type !== "buff") return;
 
     const existing = this.parentActor.effects.find((e) => e.data.origin == this.uuid);
-    if (existing) return existing;
+    if (existing || noCreate) return existing;
 
     // Add a new effect
     const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };

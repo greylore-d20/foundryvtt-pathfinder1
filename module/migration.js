@@ -297,7 +297,7 @@ const _migrateAddValues = function (ent, updateData, toAdd) {
 /* -------------------------------------------- */
 
 const _migrateCharacterLevel = function (ent, updateData) {
-  const arr = ["details.level.value", "details.level.min", "details.level.max"];
+  const arr = ["details.level.value", "details.level.min", "details.level.max", "details.mythicTier"];
   for (let k of arr) {
     const value = getProperty(ent.data.data, k);
     if (value == null) {

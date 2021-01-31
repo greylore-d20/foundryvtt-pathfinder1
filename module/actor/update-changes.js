@@ -658,6 +658,13 @@ export const updateChanges = async function ({ data = null } = {}) {
       const rollData = this.getRollData(srcData1.data);
       rollData.cl = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
       rollData.ablMod = spellbookAbilityMod;
+      const spellClass = getProperty(srcData1, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
+      rollData.classLevel =
+        spellClass === "_hd"
+          ? rollData.attributes.hd.total
+          : spellClass?.length > 0
+          ? getProperty(rollData, `classes.${spellClass}.level`) || 0
+          : 0;
       const roll = new Roll(formula, rollData).roll();
       linkData(srcData1, updateData, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
     }

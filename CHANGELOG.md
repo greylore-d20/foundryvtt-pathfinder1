@@ -2,6 +2,12 @@
 
 ## 0.77.3
 
+### Bug Fixes
+
+- Compendium browsers didn't open if there was too much metadata to process
+
+### Changelog
+
 - Add counter for total mythic tiers (thanks mkahvi!)
 - Add `@classLevel` variable to spell roll data (thanks mkahvi!)
 

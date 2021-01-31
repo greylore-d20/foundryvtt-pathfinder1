@@ -193,7 +193,12 @@ export class CompendiumBrowser extends Application {
       promise.then(async () => {
         this._data.loaded = true;
         this._data.promise = null;
-        await this.saveEntries();
+        try {
+          await this.saveEntries();
+        } catch (err) {
+          console.error(err);
+          this.clearEntries();
+        }
         resolve(this._data.data);
       });
     });
@@ -1320,6 +1325,13 @@ export class CompendiumBrowser extends Application {
 
     const settings = game.settings.get("pf1", "compendiumItems") || {};
     settings[this.type] = entries;
+
+    return game.settings.set("pf1", "compendiumItems", settings);
+  }
+
+  clearEntries() {
+    const settings = game.settings.get("pf1", "compendiumItems") || {};
+    settings[this.type] = [];
 
     return game.settings.set("pf1", "compendiumItems", settings);
   }

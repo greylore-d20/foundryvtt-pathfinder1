@@ -3,6 +3,7 @@
 ## 0.77.3
 
 - Add counter for total mythic tiers (thanks mkahvi!)
+- Add `@classLevel` variable to spell roll data (thanks mkahvi!)
 
 ## 0.77.2 (Hotfix)
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.77.3
+
+- Add counter for total mythic tiers (thanks mkahvi!)
+
 ## 0.77.2 (Hotfix)
 
 ### Bug Fixes

@@ -197,7 +197,7 @@ export class CompendiumBrowser extends Application {
           await this.saveEntries();
         } catch (err) {
           console.error(err);
-          this.clearEntries();
+          await this.clearEntries();
         }
         resolve(this._data.data);
       });

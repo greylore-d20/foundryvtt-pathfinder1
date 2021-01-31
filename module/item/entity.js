@@ -2459,6 +2459,12 @@ export class ItemPF extends Item {
 
       result.cl = this.casterLevel || 0;
       result.sl = this.spellLevel || 0;
+      result.classLevel =
+        spellbook.class === "_hd"
+          ? result.attributes.hd.total
+          : spellbook.class?.length > 0
+          ? getProperty(result, `classes.${spellbook.class}.level`) || 0
+          : 0;
       result.ablMod = ablMod;
     }
     if (this.type === "buff") result.item.level = this.data.data.level;

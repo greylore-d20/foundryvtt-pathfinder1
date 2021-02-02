@@ -1,15 +1,14 @@
 import { linkData } from "../lib.js";
 import { ActorPF } from "./entity.js";
-import { ItemPF } from "../item/entity.js";
 import { ItemChange } from "../item/components/change.js";
 
-export const updateChanges = async function ({ data = null } = {}) {
+export const updateChanges = function ({ data = null } = {}) {
   let updateData = {};
   let srcData1 = mergeObject(this.data, expandObject(data || {}), { inplace: false });
   let changeObjects = [];
 
-  // Populate actor's changeItems, then add to chengeObjects
-  this.updateChangeEvals();
+  // Populate actor's changeItems, then add to changeObjects
+  this.updateChangeEvals(srcData1);
   if (this.changeItems && this.changeItems.length) {
     changeObjects = this.changeItems.map((o) => {
       return o.data;
@@ -76,7 +75,7 @@ export const updateChanges = async function ({ data = null } = {}) {
   // Create an array of changes
   let allChanges = [];
   changeObjects.forEach((item) => {
-    item.data.changes.forEach((change) => {
+    item.changes.forEach((change) => {
       allChanges.push({
         raw: change,
         source: {
@@ -99,8 +98,8 @@ export const updateChanges = async function ({ data = null } = {}) {
 
   // Check flags
   for (let obj of changeObjects) {
-    if (!obj.data.changeFlags) continue;
-    for (let [flagKey, flagValue] of Object.entries(obj.data.changeFlags)) {
+    if (!obj.changeFlags) continue;
+    for (let [flagKey, flagValue] of Object.entries(obj.changeFlags)) {
       if (flagValue === true) {
         flags[flagKey] = true;
 
@@ -2544,7 +2543,7 @@ const _applySetChanges = function (updateData, data, changes) {
   }
 };
 
-const getSourceInfo = function (obj, key) {
+export const getSourceInfo = function (obj, key) {
   if (!obj[key]) {
     obj[key] = { negative: [], positive: [] };
   }

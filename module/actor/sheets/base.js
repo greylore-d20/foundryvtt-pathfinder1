@@ -277,6 +277,7 @@ export class ActorSheetPF extends ActorSheet {
       });
 
       // Add misc skill bonus source
+      // console.log(this.actor.sourceDetails);
       if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) {
         skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.data.skills[s].changeBonus);
       }
@@ -1352,7 +1353,10 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.currentTarget;
 
     this._mouseWheelAdd(event.originalEvent, el);
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
+      value = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
+    }
     const name = el.getAttribute("name");
     if (name) {
       this._pendingUpdates[name] = value;

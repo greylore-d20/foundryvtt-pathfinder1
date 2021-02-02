@@ -33,7 +33,6 @@ import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion 
 import { ChatMessagePF } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
-import { updateChanges } from "./module/actor/update-changes.js";
 import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
@@ -210,7 +209,7 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.1";
+  const NEEDS_MIGRATION_VERSION = "0.77.3";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -253,11 +252,6 @@ Hooks.once("ready", async function () {
     }
   }
 
-  // Refresh actors on startup
-  game.actors.entities.forEach((obj) => {
-    updateChanges.call(obj, { sourceOnly: true });
-  });
-
   Hooks.on("renderTokenHUD", (app, html, data) => {
     TokenQuickActions.addTop3Attacks(app, html, data);
   });
@@ -288,11 +282,6 @@ Hooks.on("canvasInit", function () {
       if (!elem || (elem && !elem.length)) return;
       const results = addReachCallback(m.data, elem);
       callbacks.push(...results);
-    });
-
-    // Refresh tokens on startup
-    Object.values(game.actors.tokens)?.forEach((obj) => {
-      updateChanges.call(obj, { sourceOnly: true });
     });
   });
 
@@ -351,22 +340,7 @@ Hooks.on("renderLightConfig", (app, html) => {
   RenderLightConfig_LowLightVision(app, html);
 });
 
-Hooks.on("preUpdateOwnedItem", (actor, itemData, changedData, options, userId) => {
-  if (userId !== game.user._id) return;
-  if (!(actor instanceof Actor)) return;
-
-  const item = actor.getOwnedItem(changedData._id);
-  if (!item) return;
-
-  // On level change
-  if (item.type === "class" && getProperty(changedData, "data.level") != null) {
-    const curLevel = item.data.data.level;
-    const newLevel = getProperty(changedData, "data.level");
-    item._onLevelChange(curLevel, newLevel);
-  }
-});
-
-Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
+Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
@@ -376,12 +350,29 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
   // Merge changed data into item data immediately, to avoid update lag
   // item.data = mergeObject(item.data, changedData);
 
+  // Update level
   {
-    // Update item resources
-    const result = await actor.updateItemResources(item);
-
-    // Refresh actor
-    if (!result) await actor.refresh();
+    new Promise((resolve) => {
+      if (item.type === "class" && hasProperty(changedData, "data.level")) {
+        const prevLevel = getProperty(item.data, "data.level");
+        const newLevel = getProperty(changedData, "data.level");
+        item._onLevelChange(prevLevel, newLevel).then(() => {
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    })
+      .then(actor.updateItemResources(item))
+      .then((result) => {
+        return new Promise((resolve) => {
+          if (!result) {
+            actor.refresh().then(() => {
+              resolve();
+            });
+          }
+        });
+      });
   }
 });
 
@@ -409,7 +400,6 @@ Hooks.on("createToken", async (scene, token, options, userId) => {
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) {
     actor.toggleConditionStatusIcons();
-    updateChanges.call(actor);
   }
 });
 
@@ -431,7 +421,7 @@ Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
   }
 });
 
-Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
+Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
@@ -444,9 +434,9 @@ Hooks.on("createOwnedItem", async (actor, itemData, options, userId) => {
   }
 
   // Refresh item
-  await item.update({});
+  item.update({});
   // Refresh actor
-  await actor.update({});
+  // await actor.update({});
 });
 
 Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {

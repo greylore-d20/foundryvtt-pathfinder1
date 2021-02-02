@@ -150,7 +150,6 @@ export const migrateActorData = async function (actor) {
   _migrateActorSpellbookDomainSlots(actor, updateData);
   _migrateActorStatures(actor, updateData);
   _migrateActorInitAbility(actor, updateData);
-  _migrateActorChangeRevamp(actor, updateData);
 
   if (!actor.items) return updateData;
 
@@ -872,24 +871,6 @@ const _migrateActorInitAbility = function (ent, updateData) {
 
   if (abl === undefined) {
     updateData["data.attributes.init.ability"] = "dex";
-  }
-};
-
-const _migrateActorChangeRevamp = function (ent, updateData) {
-  const keys = {
-    "data.attributes.ac.normal.total": 10,
-    "data.attributes.ac.touch.total": 10,
-    "data.attributes.ac.flatFooted.total": 10,
-    "data.attributes.cmd.total": 10,
-    "data.attributes.cmd.flatFootedTotal": 10,
-    "data.attributes.sr.total": 0,
-    "data.attributes.init.total": 0,
-    "data.attributes.cmb.total": 0,
-    "data.attributes.hp.max": 0,
-  };
-
-  for (const [k, v] of Object.entries(keys)) {
-    updateData[k] = v;
   }
 };
 

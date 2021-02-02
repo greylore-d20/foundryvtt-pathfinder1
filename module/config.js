@@ -635,8 +635,6 @@ PF1.bonusModifiers = {
   penalty: "PF1.BonusModifierPenalty",
 };
 
-PF1.stackingBonusModifiers = ["untyped", "untypedPerm", "dodge", "racial", "penalty"];
-
 /* -------------------------------------------- */
 
 // Damage Types

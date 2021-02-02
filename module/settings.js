@@ -49,12 +49,10 @@ export const registerSystemSettings = function () {
     config: false,
     onChange: () => {
       game.actors.entities.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        o.update({});
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        o.update({});
       });
     },
   });
@@ -76,12 +74,10 @@ export const registerSystemSettings = function () {
     config: false,
     onChange: () => {
       game.actors.entities.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        o.update({});
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        o.update({});
       });
     },
   });
@@ -140,7 +136,7 @@ export const registerSystemSettings = function () {
           return o.data.type === "character";
         })
         .forEach((o) => {
-          o.prepareData();
+          o.update({});
           if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
         });
     },
@@ -166,7 +162,7 @@ export const registerSystemSettings = function () {
           return o.data.type === "character";
         })
         .forEach((o) => {
-          o.prepareData();
+          o.update({});
           if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
         });
     },
@@ -204,10 +200,10 @@ export const registerSystemSettings = function () {
     type: Boolean,
     onChange: () => {
       game.actors.entities.forEach((o) => {
-        o.prepareData();
+        o.update({});
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
+        o.update({});
       });
     },
   });
@@ -294,10 +290,10 @@ export const registerSystemSettings = function () {
     type: Number,
     onChange: () => {
       game.actors.entities.forEach((o) => {
-        o.prepareData();
+        o.update({});
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
+        o.update({});
       });
     },
   });

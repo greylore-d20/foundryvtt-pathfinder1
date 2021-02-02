@@ -25,12 +25,6 @@ export class ItemPF extends Item {
      * Links are stored here during runtime.
      */
     this.links = {};
-
-    /**
-     * @property {Object} _rollData
-     * Cached roll data for this item.
-     */
-    this._rollData = null;
   }
 
   static isInventoryItem(type) {
@@ -946,9 +940,6 @@ export class ItemPF extends Item {
   _updateMaxUses(data, { srcData = null } = {}) {
     // No actor? No charges!
     if (!this.parentActor) return;
-
-    // No charges? No charges!
-    if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
 
     let doLinkData = true;
     if (srcData == null) {
@@ -2456,17 +2447,10 @@ export class ItemPF extends Item {
   /**
    * @returns {Object} An object with data to be used in rolls in relation to this item.
    */
-  getRollData(options = { forceRefresh: false }) {
-    const result = this.parentActor != null ? this.parentActor.getRollData({ forceRefresh: false }) : {};
+  getRollData() {
+    const result = this.parentActor != null ? this.parentActor.getRollData() : {};
+    result.item = duplicate(this.data.data);
 
-    if (this._rollData === this.data.data) {
-      if (!options.forceRefresh) {
-        result.item = this._rollData;
-        return result;
-      }
-    }
-
-    result.item = this.data.data;
     if (this.type === "spell" && this.parentActor != null) {
       const spellbook = this.spellbook;
       const spellAbility = spellbook.ability;
@@ -2493,7 +2477,6 @@ export class ItemPF extends Item {
       }
     }
 
-    this._rollData = result.item;
     return result;
   }
 
@@ -3078,7 +3061,6 @@ export class ItemPF extends Item {
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parentActor) return;
 
-    const selfUpdateData = {};
     // Add items associated to this class
     if (newLevel > curLevel) {
       const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
@@ -3097,8 +3079,7 @@ export class ItemPF extends Item {
         const newItemData = await this.parentActor.createOwnedItem(itemData);
         const newItem = this.parentActor.items.find((o) => o._id === newItemData._id);
 
-        // await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
-        selfUpdateData[`flags.pf1.links.classAssociations.${newItemData._id}`] = co.level;
+        await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
         await this.createItemLink("children", "data", newItem, newItem._id);
       }
     }
@@ -3120,8 +3101,6 @@ export class ItemPF extends Item {
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
     }
-
-    await this.update(selfUpdateData);
   }
 
   /**

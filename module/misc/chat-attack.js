@@ -39,6 +39,7 @@ export class ChatAttack {
       parts: [],
     };
     this.hasDamage = false;
+    this.hasRange = item.hasRange;
     this.minimumDamage = false;
     this.damageRows = 0;
 

@@ -58,4 +58,79 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
+
+  Handlebars.registerHelper("itemRange", (item, rollData) => {
+    // ItemPF.range is not accessible here and is thus largely duplicated here
+
+    let range = getProperty(item, "data.range.value");
+    const rangeType = getProperty(item, "data.range.units");
+
+    if (rangeType == null) return null;
+
+    const toFeet = () => {
+      switch (rangeType) {
+        case "melee":
+        case "touch":
+          return getProperty(rollData, "range.melee") || 0;
+        case "reach":
+          return getProperty(rollData, "range.reach") || 0;
+        case "close":
+          return new Roll("25 + floor(@cl / 2) * 5", item).roll().total;
+        case "medium":
+          return new Roll("100 + @cl * 10", rollData).roll().total;
+        case "long":
+          return new Roll("400 + @cl * 40", rollData).roll().total;
+        case "mi":
+          return range * 5280;
+        default:
+          return range;
+      }
+    };
+
+    const ft = toFeet();
+    if (ft) {
+      const rv = convertDistance(ft);
+      return `${rv[0]} ${rv[1]}`;
+    }
+    return null;
+  });
+
+  Handlebars.registerHelper("itemDamage", (item, rollData) => {
+    console.log("WIP - ITEM DAMAGE: ", item, rollData);
+
+    if (!item.hasDamage) return null; // It was a mistake to call this
+
+    try {
+      // Get damage parts
+      const parts = [...item.data.damage.parts, ...item.data.damage.nonCritParts].map(
+        (p) =>
+          // `${p[0]})[${p[1]}]` // includes damage type
+          p[0] // Discard damage type as it makes the output barely readable.
+      );
+      let hasMore = item.data.damage.critParts?.length > 0;
+
+      const ablMod = getProperty(rollData, `abilities.${item.data.ability.damage}.mod`),
+        ablMult = item.data.ability.damageMult;
+      console.log("ABILITY: ", ablMod, ablMult);
+
+      const rv = [];
+      if (ablMod != null) rv.push(new Roll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).roll().total);
+      console.log(parts);
+      parts.slice(0, 3).forEach((r) => rv.push(new Roll(r, rollData).formula));
+      const cutParts = parts.length > 3 ? parts.slice(3) : [];
+      console.log("RETURN VALUE: ", rv);
+      console.log("CUT PARTS: ", cutParts);
+      if (hasMore) rv.push("…"); // Too much detail or too compliacted for display
+
+      const out = rv.join("+").replace(/\s+/g, ""); // Combine and remove whitespace
+      return out;
+    } catch {
+      // ignore errors, they should be handled elsewhere
+    }
+
+    return null;
+  });
+
+  // Avoids contaminating rollData or item data
+  Handlebars.registerHelper("abilityMod", (abl, rollData) => getProperty(rollData, `abilities.${abl}.mod`));
 };

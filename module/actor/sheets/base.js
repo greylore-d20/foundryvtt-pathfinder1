@@ -181,6 +181,7 @@ export class ActorSheetPF extends ActorSheet {
       i.data.hasAttack = i.hasAttack;
       i.data.hasMultiAttack = i.hasMultiAttack;
       i.data.hasDamage = i.hasDamage;
+      i.data.hasRange = i.hasRange;
       i.data.hasEffect = i.hasEffect;
       i.data.hasAction = i.hasAction || i.isCharged;
       i.data.showUnidentifiedData = i.showUnidentifiedData;

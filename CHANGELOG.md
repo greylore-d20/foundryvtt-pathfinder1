@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fix actor skill bonus values being too high in some cases
+- Fix Active Effects throwing errors on creation
 
 ## 0.77.3
 

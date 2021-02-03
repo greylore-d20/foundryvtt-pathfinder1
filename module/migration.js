@@ -8,6 +8,7 @@ import { ItemChange } from "./item/components/change.js";
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function () {
+  game.pf1.isMigrating = true;
   if (!game.user.isGM) {
     const msg = game.i18n.localize("PF1.ErrorUnauthorizedAction");
     console.error(msg);
@@ -67,6 +68,7 @@ export const migrateWorld = async function () {
   game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
   ui.notifications.info(`PF1 System Migration to version ${game.system.data.version} succeeded!`);
   console.log("System Migration completed.");
+  game.pf1.isMigrating = false;
 };
 
 /* -------------------------------------------- */

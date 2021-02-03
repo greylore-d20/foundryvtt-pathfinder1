@@ -635,12 +635,14 @@ export class ActorPF extends Actor {
     const rollData = this.getRollData();
 
     // Refresh HP
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      const prevMax = this._prevAttributes[k] || 0;
-      const newMax = getProperty(this.data, `${k}.max`) || 0;
-      const prevValue = getProperty(this.data, `${k}.value`);
-      const newValue = prevValue + (newMax - prevMax);
-      this._queuedUpdates[`${k}.value`] = newValue;
+    if (!game.pf1.isMigrating) {
+      for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+        const prevMax = this._prevAttributes[k] || 0;
+        const newMax = getProperty(this.data, `${k}.max`) || 0;
+        const prevValue = getProperty(this.data, `${k}.value`);
+        const newValue = prevValue + (newMax - prevMax);
+        this._queuedUpdates[`${k}.value`] = newValue;
+      }
     }
 
     // Reset spell slots and spell points

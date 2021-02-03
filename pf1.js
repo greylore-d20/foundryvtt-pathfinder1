@@ -80,6 +80,7 @@ Hooks.once("init", async function () {
     migrateWorld: migrations.migrateWorld,
     runUnitTests,
     compendiums: {},
+    isMigrating: false,
   };
 
   // Record Configuration Values

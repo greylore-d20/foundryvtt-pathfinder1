@@ -1,12 +1,13 @@
 # Changelog
 
-## 0.77.4
+## 0.77.4 (Hotfix)
 
 ### Bug Fixes
 
 - Fix actor skill bonus values being too high in some cases
 - Fix Active Effects throwing errors on creation
 - Some sources were not listed for AC fields
+- Unlinked tokens received incorrect information during migration processes
 
 ## 0.77.3
 

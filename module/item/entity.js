@@ -165,7 +165,7 @@ export class ItemPF extends Item {
     return 4;
   }
 
-  // Returns range (in feet)
+  // Returns range (in system configured units)
   get range() {
     let range = getProperty(this.data, "data.range.value");
     const rangeType = getProperty(this.data, "data.range.units");
@@ -376,6 +376,14 @@ export class ItemPF extends Item {
    */
   get hasDamage() {
     return !!(this.data.data.damage && this.data.data.damage.parts.length);
+  }
+
+  /**
+   * Does the item have range defined.
+   * @type {boolean}
+   */
+  get hasRange() {
+    return this.data.data.range?.units != null;
   }
 
   /* -------------------------------------------- */
@@ -1021,6 +1029,7 @@ export class ItemPF extends Item {
       hasAction: this.hasAction || this.isCharged,
       isHealing: this.isHealing,
       hasDamage: this.hasDamage,
+      hasRange: this.hasRange,
       hasEffect: this.hasEffect,
       isVersatile: this.isVersatile,
       hasSave: this.hasSave,

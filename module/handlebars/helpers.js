@@ -81,7 +81,7 @@ export const registerHandlebarsHelpers = function () {
         case "long":
           return new Roll("400 + @cl * 40", rollData).roll().total;
         case "mi":
-          return range * 5280;
+          return range * 5280; // TODO: Should remain as miles for shortness
         default:
           return range;
       }
@@ -96,8 +96,6 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("itemDamage", (item, rollData) => {
-    console.log("WIP - ITEM DAMAGE: ", item, rollData);
-
     if (!item.hasDamage) return null; // It was a mistake to call this
 
     try {
@@ -111,15 +109,18 @@ export const registerHandlebarsHelpers = function () {
 
       const ablMod = getProperty(rollData, `abilities.${item.data.ability.damage}.mod`),
         ablMult = item.data.ability.damageMult;
-      console.log("ABILITY: ", ablMod, ablMult);
 
-      const rv = [];
-      if (ablMod != null) rv.push(new Roll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).roll().total);
-      console.log(parts);
-      parts.slice(0, 3).forEach((r) => rv.push(new Roll(r, rollData).formula));
-      const cutParts = parts.length > 3 ? parts.slice(3) : [];
-      console.log("RETURN VALUE: ", rv);
-      console.log("CUT PARTS: ", cutParts);
+      const rv = [],
+        cutOff = 1;
+      // TODO: Make this cut based on actual string length instead of part count. Or push adjustment to handlebars.
+      //slice(0, cutOff)
+      parts.forEach((r) => rv.push(new Roll(r, rollData).formula));
+      const cutParts = []; // parts.length > cutOff ? parts.slice(cutOff - 1) : [];
+
+      // Include ability score only if the string isn't too long yet
+      if (ablMod != null && cutParts.length == 0)
+        rv.push(new Roll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).roll().total);
+
       if (hasMore) rv.push("…"); // Too much detail or too compliacted for display
 
       const out = rv.join("+").replace(/\s+/g, ""); // Combine and remove whitespace
@@ -131,6 +132,34 @@ export const registerHandlebarsHelpers = function () {
     return null;
   });
 
-  // Avoids contaminating rollData or item data
+  Handlebars.registerHelper("itemAttacks", (item) => 1 + item.data.attackParts.length);
+
+  // Fetches ability mod value based on ability key.
+  // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData) => getProperty(rollData, `abilities.${abl}.mod`));
+
+  // Shorten string with ellipsis
+  // Favor cutting off near specific symbol within margin of error
+  Handlebars.registerHelper("ellipsis", (value, desiredLength, searchStartOffset = -4, searchEndOffset = 2) => {
+    const delimiters = /(\s|\+|,)/g;
+    // Process only if it's too long
+    if (value.length > desiredLength + searchEndOffset) {
+      let cut = 0;
+
+      const end = Math.min(value.length - 1, desiredLength + searchEndOffset),
+        start = Math.max(0, desiredLength + searchStartOffset);
+
+      // Find nice cutting position
+      for (let i = end; i > start; i--) {
+        if (value[i].match(delimiters)?.length > 0) {
+          cut = i + 1;
+          break;
+        }
+      }
+      if (cut == 0) cut = desiredLength; // No better position found, just cut it.
+
+      return value.substring(0, cut) + "…";
+    }
+    return value;
+  });
 };

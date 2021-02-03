@@ -2493,7 +2493,7 @@ export class ItemPF extends Item {
         spellbook.class === "_hd"
           ? result.attributes.hd.total
           : spellbook.class?.length > 0
-          ? getProperty(result, `classes.${spellbook.class}.level`) || 0
+          ? getProperty(result, `classes.${spellbook.class}.level`) || 0 // `
           : 0;
       result.ablMod = ablMod;
     }

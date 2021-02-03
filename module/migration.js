@@ -2,6 +2,7 @@ import { ItemPF } from "./item/entity.js";
 import { ExperienceConfig } from "./config/experience.js";
 import { createTag } from "./lib.js";
 import { ItemChange } from "./item/components/change.js";
+import { getChangeFlat } from "./actor/apply-changes.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -893,6 +894,11 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
     "data.attributes.cmb.total": 0,
     "data.attributes.hp.max": 0,
   };
+
+  const skillKeys = getChangeFlat.call(ent, "skills", "skills");
+  for (let k of skillKeys) {
+    keys[k] = 0;
+  }
 
   for (const [k, v] of Object.entries(keys)) {
     updateData[k] = v;

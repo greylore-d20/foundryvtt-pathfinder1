@@ -239,10 +239,25 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else {
-      const updateData = await migrateActorData(token.data.actorData);
-      t.actorData = mergeObject(token.data.actorData, updateData);
+      // console.log(token.data);
+      let originalData = {};
+      if (token.data.actorId) {
+        const originalActor = game.actors.entities.find((o) => o._id === token.data.actorId);
+        if (originalActor) {
+          originalData = originalActor.data;
+        }
+      }
+      const combinedData = mergeObject(originalData, token.data.actorData, { inplace: false });
+      const tA = await Actor.create(combinedData);
+      const updateData = await migrateActorData(tA);
+      const newData = diffObject(combinedData, expandObject(updateData));
+      // console.log(tA, combinedData, updateData, newData);
+      // t.actorData = mergeObject(token.data.actorData, updateData);
+      await tA.delete();
+      t.actorData = newData;
     }
   }
+  // console.log(result);
   return result;
 };
 
@@ -896,9 +911,13 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
     "data.attributes.hp.max": 0,
   };
 
-  const skillKeys = getChangeFlat.call(ent, "skills", "skills");
-  for (let k of skillKeys) {
-    keys[k] = 0;
+  try {
+    const skillKeys = getChangeFlat.call(ent, "skills", "skills");
+    for (let k of skillKeys) {
+      keys[k] = 0;
+    }
+  } catch (err) {
+    console.warn("Could not determine skills for an unknown actor in the migration process", ent);
   }
 
   for (const [k, v] of Object.entries(keys)) {

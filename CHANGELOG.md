@@ -8,6 +8,7 @@
 - Fix Active Effects throwing errors on creation
 - Some sources were not listed for AC fields
 - Unlinked tokens received incorrect information during migration processes
+- Critical hit multipliers were effectively always 2
 
 ## 0.77.3
 

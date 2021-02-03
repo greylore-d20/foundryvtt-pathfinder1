@@ -100,14 +100,14 @@ export const registerHandlebarsHelpers = function () {
 
     try {
       // Get damage parts
-      const parts = [...item.data.damage.parts, ...item.data.damage.nonCritParts].map(
+      const parts = [...(item.data.damage.parts ?? []), ...(item.data.damage.nonCritParts ?? [])].map(
         (p) =>
           // `${p[0]})[${p[1]}]` // includes damage type
           p[0] // Discard damage type as it makes the output barely readable.
       );
       let hasMore = item.data.damage.critParts?.length > 0;
 
-      const ablMod = getProperty(rollData, `abilities.${item.data.ability.damage}.mod`),
+      const ablMod = getProperty(rollData, `abilities.${item.data.ability.damage}.mod`), // `
         ablMult = item.data.ability.damageMult;
 
       const rv = [],
@@ -149,7 +149,7 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("ellipsis", (value, desiredLength, searchStartOffset = -4, searchEndOffset = 2) => {
     const delimiters = /(\s|\+|,)/g;
     // Process only if it's too long
-    if (value.length > desiredLength + searchEndOffset) {
+    if (value?.length > desiredLength + searchEndOffset) {
       let cut = 0;
 
       const end = Math.min(value.length - 1, desiredLength + searchEndOffset),

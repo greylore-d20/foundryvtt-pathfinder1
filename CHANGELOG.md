@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.5
+
+### Bug Fixes
+
+- Fix some actor sheets not being openable if they contained certain attack configurations
+
 ## 0.77.4 (Hotfix)
 
 ### Bug Fixes

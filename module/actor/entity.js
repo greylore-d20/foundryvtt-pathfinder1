@@ -804,6 +804,19 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Shared attack bonuses
+    {
+      // Size
+      const sizeMod = CONFIG.PF1.sizeMods[this.data.data.traits.size];
+      // Total
+      const totalAtk =
+        getProperty(this.data, "data.attributes.bab.total") -
+        getProperty(this.data, "data.attributes.acp.attackPenalty") -
+        getProperty(this.data, "data.attributes.energyDrain") +
+        sizeMod;
+      setProperty(this.data, "data.attributes.attack.shared", totalAtk);
+    }
+
     // Create arbitrary skill slots
     for (let skillId of CONFIG.PF1.arbitrarySkills) {
       if (data.skills[skillId] == null) continue;

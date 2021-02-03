@@ -11,6 +11,7 @@
 - Add counter for total mythic tiers (thanks mkahvi!)
 - Add `@classLevel` variable to spell roll data (thanks mkahvi!)
 - Changed the backend for changes, improving performance for actor updates
+- Added basic attack rolls to the combat page (thanks mkahvi!)
 
 ## 0.77.2 (Hotfix)
 

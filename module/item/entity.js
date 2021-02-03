@@ -2127,9 +2127,14 @@ export class ItemPF extends Item {
     // Add bonus parts
     parts = parts.concat(extraParts);
     // Add attack bonus
-    if (itemData.attackBonus !== "") {
+    if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
       let attackBonus = new Roll(itemData.attackBonus, rollData).roll().total;
       rollData.item.attackBonus = attackBonus;
+      parts.push("@item.attackBonus");
+    }
+    // Backwards compatibility
+    else if (typeof itemData.attackBonus === "number") {
+      rollData.item.attackBonus = itemData.attackBonus;
       parts.push("@item.attackBonus");
     }
 

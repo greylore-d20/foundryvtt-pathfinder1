@@ -101,6 +101,7 @@ const getSortChangePriority = function () {
       "sac",
       "nac",
       "attack",
+      "~attackCore",
       "mattack",
       "rattack",
       "damage",
@@ -202,6 +203,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.natural";
     case "attack":
       return "data.attributes.attack.general";
+    case "~attackCore":
+      return "data.attributes.attack.shared";
     case "mattack":
       return "data.attributes.attack.melee";
     case "rattack":
@@ -559,6 +562,49 @@ export const addDefaultChanges = function (changes) {
     }
   }
 
+  // Add base attack modifiers shared by all attacks
+  {
+    // BAB to attack
+    changes.push(
+      ItemChange.create({
+        formula: "@attributes.bab.total",
+        target: "attack",
+        subTarget: "~attackCore",
+        modifier: "untypedPerm",
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").positive.push({
+      formula: "@attributes.bab.total",
+      name: game.i18n.localize("PF1.BAB"),
+    });
+    // Energy drain to attack
+    changes.push(
+      ItemChange.create({
+        formula: "-@attributes.energyDrain",
+        target: "attack",
+        subTarget: "~attackCore",
+        modifier: "untypedPerm",
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").negative.push({
+      formula: "-@attributes.energyDrain",
+      name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+    });
+    // ACP to attack
+    changes.push(
+      ItemChange.create({
+        formula: "-@attributes.acp.attackPenalty",
+        target: "attack",
+        subTarget: "~attackCore",
+        modifier: "penalty",
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").negative.push({
+      formula: "-@attributes.acp.attackPenalty",
+      name: game.i18n.localize("PF1.ArmorCheckPenalty"),
+    });
+  }
+
   // Add variables to CMD and CMD
   {
     // BAB to CMB
@@ -914,6 +960,19 @@ export const addDefaultChanges = function (changes) {
     );
     getSourceInfo(this.sourceInfo, "data.skills.fly.changeBonus").positive.push({
       value: CONFIG.PF1.sizeFlyMods[sizeKey].toString(),
+      type: "size",
+    });
+    // Attack
+    changes.push(
+      ItemChange.create({
+        formula: CONFIG.PF1.sizeMods[sizeKey].toString(),
+        target: "attack",
+        subTarget: "~attackCore",
+        modifier: "size",
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").positive.push({
+      value: CONFIG.PF1.sizeMods[sizeKey],
       type: "size",
     });
     // CMB

@@ -14,7 +14,7 @@ export class ActiveEffectPF extends ActiveEffect {
     if (statusId && this.parent?.data.data.attributes.conditions[statusId] === false) {
       updates[`data.attributes.conditions.${statusId}`] = true;
       await this.parent.update(updates);
-      let created = this.parent.effects.find((e) => e.data.flags.core.statusId === statusId);
+      let created = this.parent.effects.find((e) => e.getFlag("core", "statusId") === statusId);
       if (created) return created;
     }
     if (origin) {

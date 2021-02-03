@@ -1322,9 +1322,11 @@ export class ActorPF extends Actor {
 
   refreshItems(token) {
     return new Promise((resolve) => {
-      token.cancel = function () {
-        resolve();
-      };
+      if (token) {
+        token.cancel = function () {
+          resolve();
+        };
+      }
 
       const items = Array.from(this.items);
       const updates = items.map((o) => o.update({}, { skipUpdate: true }));
@@ -1333,11 +1335,15 @@ export class ActorPF extends Actor {
 
         if (values.length > 0) {
           this.updateOwnedItem(values).then(() => {
-            this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
+            if (token) {
+              this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
+            }
             resolve();
           });
         } else {
-          this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
+          if (token) {
+            this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
+          }
           resolve();
         }
       });

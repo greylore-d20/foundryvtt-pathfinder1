@@ -52,6 +52,27 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const hpSettings = game.settings.get("pf1", "healthConfig");
     data["woundThresholds"] = hpSettings.variants.pc;
 
+    // BAB iteratives
+    const iteratives = game.settings.get("pf1", "displayIteratives");
+    const bab = data.data.attributes.bab.total;
+    if (iteratives) {
+      let iters = [bab];
+      for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
+      data["iteratives"] = `+${iters.join(" / +")}`;
+    }
+
+    // Generic melee and ranged attack bonuses, only present for sheet.
+    const coreAttack = data.data.attributes.attack.shared + data.data.attributes.attack.general,
+      meleeAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.meleeAbility}.mod`),
+      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`);
+
+    data.data.attributes.attack.meleeAttackMod = meleeAtkAbl;
+    data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
+    data.meleeAttack = coreAttack + data.data.attributes.attack.melee + meleeAtkAbl;
+    data.rangedAttack = coreAttack + data.data.attributes.attack.ranged + rangedAtkAbl;
+    data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
+    data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
+
     // Return data for rendering
     return data;
   }

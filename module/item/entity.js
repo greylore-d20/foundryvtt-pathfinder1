@@ -3354,7 +3354,7 @@ export class ItemPF extends Item {
     // Add static subtargets
     else if (hasProperty(CONFIG.PF1.buffTargets, target)) {
       for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets[target])) {
-        if (!k.startsWith("_")) result[k] = v;
+        if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }
     }
 
@@ -3389,7 +3389,7 @@ export class ItemPF extends Item {
     // Add static targets
     if (hasProperty(CONFIG.PF1.conditionalTargets, target)) {
       for (let [k, v] of Object.entries(CONFIG.PF1.conditionalTargets[target])) {
-        if (!k.startsWith("_")) result[k] = v;
+        if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }
     }
     // Add subtargets depending on attacks
@@ -3490,7 +3490,7 @@ export class ItemPF extends Item {
     // Add static subtargets
     else if (hasProperty(CONFIG.PF1.contextNoteTargets, target)) {
       for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets[target])) {
-        if (!k.startsWith("_")) result[k] = v;
+        if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }
     }
 

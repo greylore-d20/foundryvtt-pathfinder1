@@ -422,6 +422,18 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Display BAB iteratives instead of simply total
+   */
+  game.settings.register("pf1", "displayIteratives", {
+    name: "SETTINGS.pf1DisplayIterativesN",
+    hint: "SETTINGS.pf1DisplayIterativesH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };
 
 export const registerClientSettings = function () {

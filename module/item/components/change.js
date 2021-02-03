@@ -52,6 +52,19 @@ export class ItemChange {
   get source() {
     return this.data.source;
   }
+  getSourceInfoTargets(actor) {
+    switch (this.subTarget) {
+      case "aac":
+      case "sac":
+      case "nac":
+        return ["data.attributes.ac.normal.total", "data.attributes.ac.flatFooted.total"];
+    }
+
+    // Return default targets
+    let flats = getChangeFlat.call(actor, this.subTarget, this.modifier);
+    if (!(flats instanceof Array)) flats = [flats];
+    return flats;
+  }
 
   prepareData() {}
 
@@ -94,6 +107,7 @@ export class ItemChange {
       targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
       if (!(targets instanceof Array)) targets = [targets];
     }
+    const sourceInfoTargets = this.getSourceInfoTargets(actor);
 
     const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
 
@@ -130,11 +144,13 @@ export class ItemChange {
               overrides[t][operator][this.modifier] = (prior ?? 0) + value;
 
               if (this.parent) {
-                getSourceInfo(actor.sourceInfo, t).positive.push({
-                  value: value,
-                  name: this.parent.name,
-                  type: this.parent.type,
-                });
+                for (let si of sourceInfoTargets) {
+                  getSourceInfo(actor.sourceInfo, si).positive.push({
+                    value: value,
+                    name: this.parent.name,
+                    type: this.parent.type,
+                  });
+                }
               }
             } else {
               const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
@@ -142,26 +158,28 @@ export class ItemChange {
               overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
 
               if (this.parent) {
-                const sInfo = getSourceInfo(actor.sourceInfo, t).positive;
+                for (let si of sourceInfoTargets) {
+                  const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
 
-                let doAdd = true;
-                sInfo.forEach((o) => {
-                  if (o.modifier === this.modifier) {
-                    if (o.value < value) {
-                      sInfo.splice(sInfo.indexOf(o), 1);
-                    } else {
-                      doAdd = false;
+                  let doAdd = true;
+                  sInfo.forEach((o) => {
+                    if (o.modifier === this.modifier) {
+                      if (o.value < value) {
+                        sInfo.splice(sInfo.indexOf(o), 1);
+                      } else {
+                        doAdd = false;
+                      }
                     }
-                  }
-                });
-
-                if (doAdd) {
-                  sInfo.push({
-                    value: value,
-                    name: this.parent.name,
-                    type: this.parent.type,
-                    modifier: this.modifier,
                   });
+
+                  if (doAdd) {
+                    sInfo.push({
+                      value: value,
+                      name: this.parent.name,
+                      type: this.parent.type,
+                      modifier: this.modifier,
+                    });
+                  }
                 }
               }
             }
@@ -172,12 +190,14 @@ export class ItemChange {
             overrides[t][operator][this.modifier] = value;
 
             if (this.parent) {
-              getSourceInfo(actor.sourceInfo, t).positive.push({
-                value: value,
-                operator: "set",
-                name: this.parent.name,
-                type: this.parent.type,
-              });
+              for (let si of sourceInfoTargets) {
+                getSourceInfo(actor.sourceInfo, si).positive.push({
+                  value: value,
+                  operator: "set",
+                  name: this.parent.name,
+                  type: this.parent.type,
+                });
+              }
             }
             break;
         }

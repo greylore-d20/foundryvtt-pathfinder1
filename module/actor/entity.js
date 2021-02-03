@@ -701,13 +701,15 @@ export class ActorPF extends Actor {
           });
         }
 
-        // Subtract Wound Thresholds penalty. Can't reduce below 1.
-        if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
-          total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
-          getSourceInfo(this.sourceInfo, key).negative.push({
-            name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
-            value: -rollData.attributes.woundThresholds.penalty,
-          });
+        if (getProperty(rollData, "attributes.woundThresholds.penalty") != null) {
+          // Subtract Wound Thresholds penalty. Can't reduce below 1.
+          if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
+            total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+            getSourceInfo(this.sourceInfo, key).negative.push({
+              name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+              value: -rollData.attributes.woundThresholds.penalty,
+            });
+          }
         }
 
         // Subtract energy drain

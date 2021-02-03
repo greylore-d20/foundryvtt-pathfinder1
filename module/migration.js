@@ -132,6 +132,7 @@ const _migrateWorldSettings = async function () {
  * @return {Object}       The updateData to apply
  */
 export const migrateActorData = async function (actor) {
+  if (!(actor instanceof Actor)) return {};
   const updateData = {};
 
   _migrateCharacterLevel(actor, updateData);

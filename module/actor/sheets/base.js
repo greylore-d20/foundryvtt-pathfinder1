@@ -195,6 +195,18 @@ export class ActorSheetPF extends ActorSheet {
     data.labels = this.actor.labels || {};
     data.filters = this._filters;
 
+    // Generic melee and ranged attack bonuses, only present for sheet.
+    const coreAttack = data.data.attributes.attack.shared + data.data.attributes.attack.general,
+      meleeAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.meleeAbility}.mod`),
+      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`);
+
+    data.data.attributes.attack.meleeAttackMod = meleeAtkAbl;
+    data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
+    data.meleeAttack = coreAttack + data.data.attributes.attack.melee + (meleeAtkAbl ?? 0);
+    data.rangedAttack = coreAttack + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
+    data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
+    data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
+
     // Add inventory value
     {
       const gpValue = this.calculateTotalItemValue();

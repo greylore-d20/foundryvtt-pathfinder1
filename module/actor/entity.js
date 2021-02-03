@@ -42,6 +42,12 @@ export class ActorPF extends Actor {
      * Cached roll data for this item.
      */
     this._rollData = null;
+
+    /**
+     * @property {Array.<String>} _runningFunctions
+     * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
+     */
+    this._runningFunctions = [];
   }
 
   /* -------------------------------------------- */
@@ -2961,7 +2967,10 @@ export class ActorPF extends Actor {
   }
 
   toggleConditionStatusIcons(token) {
+    if (this._runningFunctions.indexOf("toggleConditionStatusIcons") !== -1) return;
+
     return new Promise((resolve) => {
+      this._runningFunctions.push("toggleConditionStatusIcons");
       if (token) {
         token.cancel = function () {
           resolve();
@@ -2998,6 +3007,7 @@ export class ActorPF extends Actor {
         if (token) {
           this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
         }
+        this._runningFunctions.splice(this._runningFunctions.indexOf("toggleConditionStatusIcons"), 1);
         resolve();
       });
     });
@@ -3028,5 +3038,12 @@ export class ActorPF extends Actor {
       const result = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
       setProperty(this.data, `data.abilities.${k}.mod`, result);
     }
+  }
+
+  importFromJSON(json) {
+    const data = JSON.parse(json);
+    delete data._id;
+    data.effects = [];
+    return this.update(data);
   }
 }

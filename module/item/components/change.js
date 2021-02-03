@@ -108,6 +108,7 @@ export class ItemChange {
       if (!(targets instanceof Array)) targets = [targets];
     }
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
+    let addedSourceInfo = false;
 
     const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
 
@@ -143,7 +144,7 @@ export class ItemChange {
               setProperty(actor.data, t, (getProperty(actor.data, t) ?? 0) + value);
               overrides[t][operator][this.modifier] = (prior ?? 0) + value;
 
-              if (this.parent) {
+              if (this.parent && !addedSourceInfo) {
                 for (let si of sourceInfoTargets) {
                   getSourceInfo(actor.sourceInfo, si).positive.push({
                     value: value,
@@ -151,6 +152,7 @@ export class ItemChange {
                     type: this.parent.type,
                   });
                 }
+                addedSourceInfo = true;
               }
             } else {
               const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
@@ -189,7 +191,7 @@ export class ItemChange {
             setProperty(actor.data, t, value);
             overrides[t][operator][this.modifier] = value;
 
-            if (this.parent) {
+            if (this.parent && !addedSourceInfo) {
               for (let si of sourceInfoTargets) {
                 getSourceInfo(actor.sourceInfo, si).positive.push({
                   value: value,
@@ -198,6 +200,7 @@ export class ItemChange {
                   type: this.parent.type,
                 });
               }
+              addedSourceInfo = true;
             }
             break;
         }

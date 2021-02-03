@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.4
+
+### Bug Fixes
+
+- Fix actor skill bonus values being too high in some cases
+
 ## 0.77.3
 
 ### Bug Fixes

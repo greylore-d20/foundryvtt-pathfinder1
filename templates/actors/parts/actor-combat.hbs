@@ -131,6 +131,9 @@
               {{#if item.hasDamage}}
               <label>{{ellipsis (itemDamage item ../../rollData) 8 -4 2}}</label>
               <span class="tooltipcontent">
+                {{itemDamage item ../../rollData}}<br/>
+                <br/>
+                {{localize "PF1.Details"}}:<br/>
                 {{#each item.data.damage.parts as |pt ix|}}
                   {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
                 {{/each}}

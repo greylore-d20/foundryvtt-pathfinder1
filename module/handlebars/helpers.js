@@ -118,10 +118,16 @@ export const registerHandlebarsHelpers = function () {
       const cutParts = []; // parts.length > cutOff ? parts.slice(cutOff - 1) : [];
 
       // Include ability score only if the string isn't too long yet
-      if (ablMod != null && cutParts.length == 0)
+      if (ablMod != null && cutParts.length === 0)
         rv.push(new Roll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).roll().total);
 
-      if (hasMore) rv.push("…"); // Too much detail or too compliacted for display
+      // Include enhancement bonus
+      const enhBonus = item.data.enh ?? 0;
+      if (enhBonus && cutParts.length === 0) {
+        rv.push(enhBonus);
+      }
+
+      if (hasMore) rv.push("…"); // Too much detail or too complicated for display
 
       const out = rv.join("+").replace(/\s+/g, ""); // Combine and remove whitespace
       return out;

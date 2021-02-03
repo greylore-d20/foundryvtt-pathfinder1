@@ -226,9 +226,6 @@ export class ChatAttack {
     let rollData = duplicate(this.rollData);
     // Enforce critical multiplier
     rollData.critCount = 0;
-    if (!critical) {
-      rollData.critMult = 1;
-    }
 
     // Roll damage
     const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;

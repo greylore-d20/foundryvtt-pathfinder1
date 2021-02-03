@@ -1508,8 +1508,11 @@ export class ActorPF extends Actor {
 
     // Add ability modifiers
     const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged";
-    if (isMelee) attackData["data.ability.attack"] = "str";
-    else attackData["data.ability.attack"] = "dex";
+
+    if (isMelee)
+      attackData["data.ability.attack"] = getProperty(this.data, "data.attributes.attack.meleeAbility") || "str";
+    else attackData["data.ability.attack"] = getProperty(this.data, "data.attributes.attack.rangedAbility") || "dex";
+
     if (isMelee) {
       attackData["data.ability.damage"] = "str";
       if (item.data.data.weaponSubtype === "2h" && isMelee) {
@@ -1786,6 +1789,55 @@ export class ActorPF extends Actor {
       dice: options.dice,
       data: { mod: this.data.data.attributes.cmb.total },
       title: game.i18n.localize("PF1.CMB"),
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      takeTwenty: false,
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      noSound: options.noSound,
+    });
+  }
+
+  rollAttack(options = { melee: true, noSound: false, dice: "1d20" }) {
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+
+    const sources = [
+      ...this.sourceDetails["data.attributes.attack.shared"],
+      ...this.sourceDetails["data.attributes.attack.general"],
+      ...this.sourceDetails[`data.attributes.attack.${options.melee ? "melee" : "ranged"}`],
+    ];
+
+    // Add contextual notes
+    let notes = [];
+    let rollData = this.getRollData();
+    const noteObjects = [...this.getContextNotes("attacks.effect"), ...this.getContextNotes("attacks.attack")];
+    for (let noteObj of noteObjects) {
+      rollData.item = {};
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
+
+      for (let note of noteObj.notes) {
+        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
+      }
+    }
+    rollData.item = {};
+
+    let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+
+    // Add ability modifier
+    const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
+    changes.push(getProperty(this.data, `data.abilities.${atkAbl}.mod`));
+
+    let props = [];
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
+    return DicePF.d20Roll({
+      event: options.event,
+      parts: changes,
+      dice: options.dice,
+      data: rollData,
+      title: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",

@@ -52,6 +52,15 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const hpSettings = game.settings.get("pf1", "healthConfig");
     data["woundThresholds"] = hpSettings.variants.pc;
 
+    // BAB iteratives
+    const iteratives = game.settings.get("pf1", "displayIteratives");
+    const bab = data.data.attributes.bab.total;
+    if (iteratives) {
+      let iters = [bab];
+      for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
+      data["iteratives"] = `+${iters.join(" / +")}`;
+    }
+
     // Return data for rendering
     return data;
   }

@@ -195,6 +195,18 @@ export class ActorSheetPF extends ActorSheet {
     data.labels = this.actor.labels || {};
     data.filters = this._filters;
 
+    // Generic melee and ranged attack bonuses, only present for sheet.
+    const coreAttack = data.data.attributes.attack.shared + data.data.attributes.attack.general,
+      meleeAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.meleeAbility}.mod`),
+      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`);
+
+    data.data.attributes.attack.meleeAttackMod = meleeAtkAbl;
+    data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
+    data.meleeAttack = coreAttack + data.data.attributes.attack.melee + (meleeAtkAbl ?? 0);
+    data.rangedAttack = coreAttack + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
+    data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
+    data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
+
     // Add inventory value
     {
       const gpValue = this.calculateTotalItemValue();
@@ -875,6 +887,10 @@ export class ActorSheetPF extends ActorSheet {
 
     // CMB Check
     html.find(".attribute.cmb .rollable").click(this._onRollCMB.bind(this));
+
+    // Attack check
+    html.find(".attribute.attack.melee .rollable").click(this._onRollMelee.bind(this));
+    html.find(".attribute.attack.ranged .rollable").click(this._onRollRanged.bind(this));
 
     // Initiative Check
     html.find(".attribute.initiative .rollable").click(this._onRollInitiative.bind(this));
@@ -1906,6 +1922,16 @@ export class ActorSheetPF extends ActorSheet {
   _onRollBAB(event) {
     event.preventDefault();
     this.actor.rollBAB({ event: event });
+  }
+
+  _onRollMelee(event) {
+    event.preventDefault();
+    this.actor.rollAttack({ event: event, melee: true });
+  }
+
+  _onRollRanged(event) {
+    event.preventDefault();
+    this.actor.rollAttack({ event: event, melee: false });
   }
 
   _onRollCMB(event) {

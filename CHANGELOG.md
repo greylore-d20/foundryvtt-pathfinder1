@@ -6,6 +6,7 @@
 
 - Fix actor skill bonus values being too high in some cases
 - Fix Active Effects throwing errors on creation
+- Some sources were not listed for AC fields
 
 ## 0.77.3
 

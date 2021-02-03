@@ -13,6 +13,7 @@
 - Changed the backend for changes, improving performance for actor updates
 - Added basic attack rolls to the combat page (thanks mkahvi!)
 - Added tooltip display for attack damage formulas (thanks mkahvi!)
+- Added support for the module Drag Ruler by Stäbchenfisch
 
 ## 0.77.2 (Hotfix)
 

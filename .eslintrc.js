@@ -462,5 +462,6 @@ module.exports = {
     DEFAULT_TOKEN: "readonly",
     DiceTerm: "readonly",
     GRID_TYPES: "readonly",
+    dragRuler: "readonly",
   },
 };

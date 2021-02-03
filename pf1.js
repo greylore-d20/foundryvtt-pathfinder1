@@ -41,6 +41,7 @@ import { addReachCallback } from "./module/misc/attack-reach.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
+import "./module/modules.js";
 
 // Add String.format
 if (!String.prototype.format) {

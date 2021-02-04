@@ -562,54 +562,6 @@ export class ActorPF extends Actor {
       setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
     }
 
-    // Compute encumbrance
-    this._computeEncumbrance();
-    switch (this.data.data.attributes.encumbrance.level) {
-      case 0:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
-        break;
-      case 1:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        break;
-      case 2:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 6,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 1,
-        });
-        break;
-    }
-    setProperty(
-      this.data,
-      "data.attributes.acp.total",
-      Math.max(
-        getProperty(this.data, "data.attributes.acp.gear"),
-        getProperty(this.data, "data.attributes.acp.encumbrance")
-      )
-    );
-
     // Reset class skills
     for (let [k, s] of Object.entries(getProperty(this.data, "data.skills"))) {
       if (!s) continue;
@@ -838,6 +790,54 @@ export class ActorPF extends Actor {
         delete data.skills[skillId];
       }
     }
+
+    // Compute encumbrance
+    this._computeEncumbrance();
+    switch (this.data.data.attributes.encumbrance.level) {
+      case 0:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
+        break;
+      case 1:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
+        );
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        break;
+      case 2:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
+        );
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 6,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 1,
+        });
+        break;
+    }
+    setProperty(
+      this.data,
+      "data.attributes.acp.total",
+      Math.max(
+        getProperty(this.data, "data.attributes.acp.gear"),
+        getProperty(this.data, "data.attributes.acp.encumbrance")
+      )
+    );
 
     // Prepare modifier containers
     data.attributes.mods = data.attributes.mods || {};

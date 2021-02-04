@@ -10,6 +10,7 @@
 - The 'Helpless' change flag and the pinned condition incorrectly removed dexterity penalties
 - Saving Throw bonuses from racial HD weren't being added
 - Armor and encumbrance weren't slowing down actors
+- Encumbrance only took base strength into account
 
 ## 0.77.4 (Hotfix)
 

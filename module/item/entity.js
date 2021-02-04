@@ -219,12 +219,12 @@ export class ItemPF extends Item {
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.
    */
-  getDC(rollData = null) {
+  getDC() {
     // No actor? No DC!
     if (!this.parentActor) return 0;
 
-    if (!rollData) rollData = this.getRollData();
-    const data = this.data.data;
+    const rollData = this.getRollData();
+    const data = rollData.item;
 
     let result = 10;
 
@@ -2470,8 +2470,8 @@ export class ItemPF extends Item {
   /**
    * @returns {Object} An object with data to be used in rolls in relation to this item.
    */
-  getRollData(options = { forceRefresh: false }) {
-    const result = this.parentActor != null ? this.parentActor.getRollData({ forceRefresh: false }) : {};
+  getRollData(options = { forceRefresh: true }) {
+    const result = this.parentActor != null ? this.parentActor.getRollData(options) : {};
 
     if (this._rollData === this.data.data) {
       if (!options.forceRefresh) {

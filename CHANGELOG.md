@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Certain attacks and spells with attack or damage rolls weren't working
+- Roll data for items could be inconsistent
 
 ## 0.77.5
 

@@ -3,6 +3,7 @@ import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
+import { _migrateActorChangeRevamp } from "./migration.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -198,6 +199,24 @@ export async function PatchCore() {
     CombatTracker.prototype._getEntryContextOptions = function () {
       let result = origFunc.call(this);
       addCombatTrackerContextOptions.call(this, result);
+      return result;
+    };
+  }
+
+  // Fix importing Entities from before PF1 0.77.3 from compendiums
+  {
+    const origFunc = EntityCollection.prototype.importFromCollection;
+    EntityCollection.prototype.importFromCollection = async function (...args) {
+      const result = await origFunc.call(this, ...args);
+
+      const updateData = {};
+      _migrateActorChangeRevamp(result, updateData);
+      // Fix incorrect hit point offset
+      updateData["data.attributes.hp.value"] =
+        result.data.data.attributes.hp.value + Math.floor(result.data.data.attributes.hp.max / 2);
+
+      await result.update(updateData);
+
       return result;
     };
   }

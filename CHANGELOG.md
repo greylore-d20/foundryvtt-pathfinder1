@@ -6,6 +6,7 @@
 
 - Certain attacks and spells with attack or damage rolls weren't working
 - Roll data for items could be inconsistent
+- Importing older entities from a compendium gave it incorrect attributes
 
 ## 0.77.5
 

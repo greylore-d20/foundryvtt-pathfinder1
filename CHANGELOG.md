@@ -7,6 +7,7 @@
 - Fix some actor sheets not being openable if they contained certain attack configurations
 - Fix range not being calculated on actor sheet preview
 - Fix subskill bonus values being NaN
+- The 'Helpless' change flag and the pinned condition incorrectly removed dexterity penalties
 
 ## 0.77.4 (Hotfix)
 

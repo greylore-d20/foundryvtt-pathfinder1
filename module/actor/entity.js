@@ -871,8 +871,9 @@ export class ActorPF extends Actor {
     }
 
     // Add Dexterity to AC
-    if (!this.flags["loseDexToAC"]) {
-      const dex = this.data.data.abilities.dex.mod;
+    {
+      let dex = this.data.data.abilities.dex.mod;
+      if (this.flags["loseDexToAC"]) dex = Math.min(dex, 0);
       const maxDex = this.data.data.attributes.maxDexBonus;
       const ac = {
         normal: maxDex !== null ? Math.min(maxDex, dex) : dex,

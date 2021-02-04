@@ -140,7 +140,10 @@ export const registerHandlebarsHelpers = function () {
     return null;
   });
 
-  Handlebars.registerHelper("itemAttacks", (item) => 1 + item.data.attackParts.length);
+  Handlebars.registerHelper(
+    "itemAttacks",
+    (item) => 1 + item.data.attackParts.length + (item.data.formulaicAttacks?.count?.value ?? 0)
+  );
 
   // Fetches ability mod value based on ability key.
   // Avoids contaminating rollData or item data with excess strings.

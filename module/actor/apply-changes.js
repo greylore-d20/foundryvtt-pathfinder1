@@ -1471,7 +1471,7 @@ const resetSkills = function () {
     if (!skl) continue;
 
     let acpPenalty = skl.acp ? this.data.data.attributes.acp.total : 0;
-    let ablMod = this.data.data.abilities[skl.ability].mod;
+    let ablMod = this.data.data.abilities[skl.ability].mod || 0;
     let specificSkillBonus = skl.changeBonus || 0;
 
     // Parse main skills
@@ -1484,7 +1484,7 @@ const resetSkills = function () {
       if (!getProperty(this.data, `data.skills.${sklKey}.subSkills.${subSklKey}`)) continue;
 
       acpPenalty = subSkl.acp ? this.data.data.attributes.acp.total : 0;
-      ablMod = this.data.data.abilities[subSkl.ability];
+      ablMod = this.data.data.abilities[subSkl.ability].mod || 0;
       specificSkillBonus = subSkl.changeBonus || 0;
       sklValue =
         subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrain;

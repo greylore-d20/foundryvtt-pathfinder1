@@ -6,6 +6,7 @@
 
 - Fix some actor sheets not being openable if they contained certain attack configurations
 - Fix range not being calculated on actor sheet preview
+- Fix subskill bonus values being NaN
 
 ## 0.77.4 (Hotfix)
 

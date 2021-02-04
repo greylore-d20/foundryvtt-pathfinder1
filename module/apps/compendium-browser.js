@@ -3,9 +3,9 @@ import { ItemPF } from "../item/entity.js";
 import { SemanticVersion } from "../semver.js";
 
 const NEED_NEW_VERSION = {
-  spells: "0.76.12",
+  spells: "0.77.6",
   items: "0.76.14",
-  bestiary: "0.76.14",
+  bestiary: "0.77.6",
   feats: "0.76.14",
   classes: "0.76.12",
   races: "0.76.12",

@@ -1636,7 +1636,7 @@ export class ItemPF extends Item {
           };
 
           // Create attack object
-          let attack = new ChatAttack(this, { label: atk.label, rollData: rollData, primaryAttack: primaryAttack });
+          let attack = new ChatAttack(this, { label: atk.label, primaryAttack: primaryAttack });
 
           // Add attack roll
           await attack.addAttack({ bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts });

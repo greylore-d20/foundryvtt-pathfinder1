@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.6
+
+### Bug Fixes
+
+- Certain attacks and spells with attack or damage rolls weren't working
+
 ## 0.77.5
 
 ### Bug Fixes

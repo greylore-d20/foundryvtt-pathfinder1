@@ -8,6 +8,7 @@
 - Fix range not being calculated on actor sheet preview
 - Fix subskill bonus values being NaN
 - The 'Helpless' change flag and the pinned condition incorrectly removed dexterity penalties
+- Saving Throw bonuses from racial HD weren't being added
 
 ## 0.77.4 (Hotfix)
 

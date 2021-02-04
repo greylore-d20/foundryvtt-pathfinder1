@@ -464,6 +464,7 @@ export const addDefaultChanges = function (changes) {
   compute_health(classes, cls_options);
 
   // Add class data to saving throws
+  const allClasses = [...classes, ...racialHD];
   for (let a of Object.keys(this.data.data.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
     // Using Fractional Base Bonuses
@@ -473,7 +474,7 @@ export const addDefaultChanges = function (changes) {
         this.data,
         k,
         Math.floor(
-          classes.reduce((cur, obj) => {
+          allClasses.reduce((cur, obj) => {
             const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
             if (saveScale === "high") {
               const acc = highStart ? 0 : 2;
@@ -494,7 +495,7 @@ export const addDefaultChanges = function (changes) {
       setProperty(
         this.data,
         k,
-        classes.reduce((cur, obj) => {
+        allClasses.reduce((cur, obj) => {
           const classType = getProperty(obj.data, "classType") || "base";
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
           if (formula == null) formula = "0";

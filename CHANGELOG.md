@@ -11,6 +11,7 @@
 - Saving Throw bonuses from racial HD weren't being added
 - Armor and encumbrance weren't slowing down actors
 - Encumbrance only took base strength into account
+- Damage breakdown tooltips on actor sheets didn't show correct ability bonus
 
 ## 0.77.4 (Hotfix)
 

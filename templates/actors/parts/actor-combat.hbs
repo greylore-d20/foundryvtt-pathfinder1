@@ -204,10 +204,10 @@
                   {{/each}}
                 {{/if}}
                 {{#if item.data.ability.damage}}
-                  {{abilityMod item.data.ability.damage ../../rollData}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
+                  {{abilityMod item.data.ability.damage ../../rollData item.data.ability.damageMult}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
                 {{/if}}
                 {{#if item.data.enh}}
-                  +{{item.data.enh}} [{{localize "PF1.EnhancementBonus"}}]<br/>
+                  {{item.data.enh}} [{{localize "PF1.EnhancementBonus"}}]<br/>
                 {{/if}}
                 {{#if item.data.damage.critParts}}
                   <br/>+ {{localize "PF1.CritDamageBonusFormula"}}<br/>

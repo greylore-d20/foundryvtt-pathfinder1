@@ -904,6 +904,43 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Reduce final speed under certain circumstances
+    {
+      const armorItems = this.items.filter((o) => o.data.type === "equipment");
+      let reducedSpeed = false;
+      let sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
+      if (this.data.data.attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
+        reducedSpeed = true;
+        sInfo.name = game.i18n.localize("PF1.Encumbrance");
+      }
+      if (
+        armorItems.filter((o) => getProperty(o.data.data, "equipmentSubtype") === "mediumArmor" && o.data.data.equipped)
+          .length &&
+        !this.flags["mediumArmorFullSpeed"]
+      ) {
+        reducedSpeed = true;
+        sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
+      }
+      if (
+        armorItems.filter((o) => getProperty(o.data.data, "equipmentSubtype") === "heavyArmor" && o.data.data.equipped)
+          .length &&
+        !this.flags["heavyArmorFullSpeed"]
+      ) {
+        reducedSpeed = true;
+        sInfo.name = game.i18n.localize("PF1.EquipTypeHeavy");
+      }
+      if (reducedSpeed) {
+        for (const speedKey of Object.keys(this.data.data.attributes.speed)) {
+          const key = `data.attributes.speed.${speedKey}.total`;
+          let value = getProperty(this.data, key);
+          setProperty(this.data, key, this.constructor.getReducedMovementSpeed(value));
+          if (value > 0) {
+            getSourceInfo(this.sourceInfo, key).negative.push(sInfo);
+          }
+        }
+      }
+    }
+
     // Setup links
     this.prepareItemLinks();
   }

@@ -209,13 +209,15 @@ export async function PatchCore() {
     EntityCollection.prototype.importFromCollection = async function (...args) {
       const result = await origFunc.call(this, ...args);
 
-      const updateData = {};
-      _migrateActorChangeRevamp(result, updateData);
-      // Fix incorrect hit point offset
-      updateData["data.attributes.hp.value"] =
-        result.data.data.attributes.hp.value + Math.floor(result.data.data.attributes.hp.max / 2);
+      if (result instanceof Actor) {
+        const updateData = {};
+        _migrateActorChangeRevamp(result, updateData);
+        // Fix incorrect hit point offset
+        updateData["data.attributes.hp.value"] =
+          result.data.data.attributes.hp.value + Math.floor(result.data.data.attributes.hp.max / 2);
 
-      await result.update(updateData);
+        await result.update(updateData);
+      }
 
       return result;
     };

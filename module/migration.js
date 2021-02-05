@@ -898,7 +898,7 @@ const _migrateActorInitAbility = function (ent, updateData) {
   }
 };
 
-export const _migrateActorChangeRevamp = function (ent, updateData) {
+const _migrateActorChangeRevamp = function (ent, updateData) {
   const keys = {
     "data.attributes.ac.normal.total": 10,
     "data.attributes.ac.touch.total": 10,

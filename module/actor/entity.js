@@ -262,6 +262,7 @@ export class ActorPF extends Actor {
 
   prepareBaseData() {
     super.prepareBaseData();
+    this._resetInherentTotals();
 
     const classes = this.data.items.filter((obj) => {
       return obj.type === "class";
@@ -1045,6 +1046,33 @@ export class ActorPF extends Actor {
     }
 
     this.sourceDetails = sourceDetails;
+  }
+
+  _resetInherentTotals() {
+    const keys = {
+      "data.attributes.ac.normal.total": 10,
+      "data.attributes.ac.touch.total": 10,
+      "data.attributes.ac.flatFooted.total": 10,
+      "data.attributes.cmd.total": 10,
+      "data.attributes.cmd.flatFootedTotal": 10,
+      "data.attributes.sr.total": 0,
+      "data.attributes.init.total": 0,
+      "data.attributes.cmb.total": 0,
+      "data.attributes.hp.max": 0,
+    };
+
+    try {
+      const skillKeys = getChangeFlat.call(this, "skills", "skills");
+      for (let k of skillKeys) {
+        keys[k] = 0;
+      }
+    } catch (err) {
+      console.warn("Could not determine skills for an unknown actor in the creation process", this);
+    }
+
+    for (const [k, v] of Object.entries(keys)) {
+      setProperty(this.data, k, v);
+    }
   }
 
   async refresh() {

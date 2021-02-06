@@ -2874,7 +2874,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  getRollData(options = { forceRefresh: false }) {
+  getRollData(options = { forceRefresh: true }) {
     if (this._rollData === this.data.data) {
       if (!options.forceRefresh) return this._rollData;
     }

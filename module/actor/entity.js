@@ -308,18 +308,16 @@ export class ActorPF extends Actor {
                   if (!profs.includes(proficiency)) profs.push(proficiency);
                 }
 
-                // Custom proficiencies
-                if (item.data.armorProf.custom) {
-                  // Collect trimmed but otherwise original strings, dedupe array for actor's total
-                  const customProfs =
-                    item.data[prof].custom
-                      .split(CONFIG.PF1.re.traitSeparator)
-                      .map((i) => i.trim())
-                      .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
-                  // Add readable custom profs to sources and overall collection
-                  sInfo.value.push(...customProfs);
-                  customProficiencies.push(...customProfs);
-                }
+                // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
+                const customProfs =
+                  item.data[prof].custom
+                    ?.split(CONFIG.PF1.re.traitSeparator)
+                    .map((i) => i.trim())
+                    .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+                // Add readable custom profs to sources and overall collection
+                sInfo.value.push(...customProfs);
+                customProficiencies.push(...customProfs);
+
                 if (sInfo.value.length > 0) {
                   // Transform arrays into presentable strings
                   sInfo.value = sInfo.value.join(", ");

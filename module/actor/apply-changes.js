@@ -1189,18 +1189,45 @@ export const addDefaultChanges = function (changes) {
         break;
       case "pinned":
         this.flags["loseDexToAC"] = true;
-        getSourceInfo(this.sourceInfo, "data.attributes.ac.normal.total").negative.push({
-          name: game.i18n.localize("PF1.CondPinned"),
-          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.ac.touch.total").negative.push({
-          name: game.i18n.localize("PF1.CondPinned"),
-          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.cmd.total").negative.push({
-          name: game.i18n.localize("PF1.CondPinned"),
-          value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
-        });
+        for (const k of [
+          "data.attributes.ac.normal.total",
+          "data.attributes.ac.touch.total",
+          "data.attributes.cmd.total",
+        ]) {
+          getSourceInfo(this.sourceInfo, k).negative.push({
+            name: game.i18n.localize("PF1.CondPinned"),
+            value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
+          });
+        }
+
+        changes.push(
+          ItemChange.create({
+            formula: "-4",
+            target: "ac",
+            subTarget: "ac",
+            modifier: "penalty",
+          })
+        );
+        changes.push(
+          ItemChange.create({
+            formula: "-4",
+            target: "misc",
+            subTarget: "cmd",
+            modifier: "penalty",
+          })
+        );
+        for (const k of [
+          "data.attributes.ac.normal.total",
+          "data.attributes.ac.touch.total",
+          "data.attributes.ac.flatFooted.total",
+          "data.attributes.cmd.total",
+          "data.attributes.cmd.flatFootedTotal",
+        ]) {
+          getSourceInfo(this.sourceInfo, k).negative.push({
+            name: game.i18n.localize("PF1.CondPinned"),
+            value: -4,
+          });
+        }
         break;
       case "fear":
         changes.push(

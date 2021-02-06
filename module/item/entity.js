@@ -949,7 +949,7 @@ export class ItemPF extends Item {
 
         for (const barKey of ["bar1", "bar2"]) {
           const bar = token.getBarAttribute(barKey);
-          if (bar.attribute === `resources.${this.data.data.tag}`) {
+          if (bar && bar.attribute === `resources.${this.data.data.tag}`) {
             tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
           }
         }

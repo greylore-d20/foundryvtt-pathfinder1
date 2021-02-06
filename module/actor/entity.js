@@ -1402,7 +1402,9 @@ export class ActorPF extends Actor {
       const items = Array.from(this.items);
       const updates = items.map((o) => o.update({}, { skipUpdate: true }));
       Promise.all(updates).then((results) => {
-        const values = results.filter((o) => Object.keys(o).length > 1);
+        const values = results.filter((o) => {
+          return o != null ? Object.keys(o).length > 1 : false;
+        });
 
         if (values.length > 0) {
           this.updateOwnedItem(values).then(() => {

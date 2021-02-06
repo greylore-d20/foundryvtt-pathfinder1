@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.77.7 (Hotfix)
+
+### Bug Fixes
+
+- The Token configuration window could give an error and refuse to close in some cases
+- Updating custom resources while only 1 bar was visible on the actor's tokens gave an error
+
 ## 0.77.6
 
 ### Bug Fixes

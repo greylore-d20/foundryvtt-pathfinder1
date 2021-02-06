@@ -278,7 +278,9 @@ export class ItemSheetPF extends ItemSheet {
           return cur;
         }, {});
       } else {
-        data.skills = Object.entries(this.actor.data.data.skills).reduce((cur, o) => {
+        // Get sorted skill list from config, custom skills get appended to bottom of list
+        const skills = mergeObject(duplicate(CONFIG.PF1.skills), this.actor.data.data.skills);
+        data.skills = Object.entries(skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
           cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };

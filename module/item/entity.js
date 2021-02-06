@@ -3373,7 +3373,7 @@ export class ItemPF extends Item {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = this.parentActor.data.data.skills;
+        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parentActor.data.data.skills);
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -3509,7 +3509,7 @@ export class ItemPF extends Item {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = this.parentActor.data.data.skills;
+        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parentActor.data.data.skills);
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;

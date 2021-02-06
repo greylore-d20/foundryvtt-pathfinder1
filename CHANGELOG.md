@@ -9,6 +9,10 @@
 - Importing older entities from a compendium gave it incorrect attributes
 - Custom weapon proficiencies were not properly collected (thanks Ritsuna!)
 
+### Changelog
+
+- Some lists are sorted by their localised strings now, e.g. conditions and languages (#390)
+
 ## 0.77.5
 
 ### Bug Fixes

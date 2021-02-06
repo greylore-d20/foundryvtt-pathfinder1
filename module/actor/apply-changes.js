@@ -933,7 +933,7 @@ export const addDefaultChanges = function (changes) {
     );
     for (const k of ["normal", "touch", "flatFooted"]) {
       getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
-        value: CONFIG.PF1.sizeMods[sizeKey].toString(),
+        value: CONFIG.PF1.sizeMods[sizeKey],
         type: "size",
       });
     }
@@ -947,7 +947,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.ste.changeBonus").positive.push({
-      value: CONFIG.PF1.sizeStealthMods[sizeKey].toString(),
+      value: CONFIG.PF1.sizeStealthMods[sizeKey],
       type: "size",
     });
     // Fly skill
@@ -960,7 +960,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.fly.changeBonus").positive.push({
-      value: CONFIG.PF1.sizeFlyMods[sizeKey].toString(),
+      value: CONFIG.PF1.sizeFlyMods[sizeKey],
       type: "size",
     });
     // Attack
@@ -986,7 +986,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").positive.push({
-      value: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
+      value: CONFIG.PF1.sizeSpecialMods[sizeKey],
       type: "size",
     });
     // CMD
@@ -1000,7 +1000,7 @@ export const addDefaultChanges = function (changes) {
     );
     for (let k of ["total", "flatFootedTotal"]) {
       getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
-        value: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
+        value: CONFIG.PF1.sizeSpecialMods[sizeKey],
         type: "size",
       });
     }

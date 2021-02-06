@@ -1742,17 +1742,14 @@ export class ActorPF extends Actor {
     const data = this.data.data,
       skillParts = skillId.split("."),
       isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
-    let sources = [];
     if (isSubSkill) {
       skillId = skillParts[0];
       skl = data.skills[skillId].subSkills[skillParts[2]];
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
-      sources = this.sourceDetails[`data.skills.${skillId}.subSkills.${skillParts[2]}.changeBonus`];
     } else {
       skl = data.skills[skillId];
       if (skl.name != null) sklName = skl.name;
       else sklName = CONFIG.PF1.skills[skillId];
-      sources = this.sourceDetails[`data.skills.${skillId}.changeBonus`];
     }
 
     // Add contextual attack string
@@ -1773,21 +1770,7 @@ export class ActorPF extends Actor {
     }
 
     // Build base modifiers, but don't include all if they're zeroed.
-    let mods = [skl.rank];
-    if (skl.cs && skl.rank > 0) mods.push(3);
-    mods.push(data.abilities[skl.ability].mod);
-    const acp = data.attributes.acp.total;
-    if (skl.acp && acp > 0) mods.push(-acp);
-    const energyDrain = Math.abs(data.attributes.energyDrain);
-    if (energyDrain > 0) mods.push(-energyDrain);
-
-    // Wound Threshold penalty
-    const wT = this.getWoundThresholdData();
-    if (wT.multiplier > 0 && wT.penalty > 0) {
-      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
-    }
-
-    let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+    let mods = [skl.mod];
 
     let props = [];
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
@@ -1795,7 +1778,7 @@ export class ActorPF extends Actor {
       event: options.event,
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
-      parts: [...mods, ...changes],
+      parts: mods.filter((m) => !!m),
       dice: options.dice,
       data: {},
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),

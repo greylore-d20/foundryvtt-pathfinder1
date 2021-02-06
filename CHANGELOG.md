@@ -8,6 +8,11 @@
 - Roll data for items could be inconsistent
 - Importing older entities from a compendium gave it incorrect attributes
 - Custom weapon proficiencies were not properly collected (thanks Ritsuna!)
+- Custom resources occasionally didn't get a tag
+- Spell ranges didn't update correctly
+- The Pinned condition didn't apply a -4 penalty to AC
+- The Prone condition didn't apply a -4 penalty to melee attack rolls
+- Size bonuses and penalties weren't added to relevant skill checks
 
 ### Changelog
 

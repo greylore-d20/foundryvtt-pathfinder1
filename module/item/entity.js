@@ -909,7 +909,7 @@ export class ItemPF extends Item {
     let diff = diffObject(flattenObject(this.data), data);
     if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
-        return super.update(diff, options);
+        await super.update(diff, options);
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
@@ -933,14 +933,33 @@ export class ItemPF extends Item {
 
           // Update parent item
           await this.parentItem.update(diff);
-          return this.render();
+          await this.render();
         }
       }
     } else if (options.skipUpdate) {
       diff["_id"] = this._id;
-      return diff;
     }
-    return false;
+
+    // Update tokens with this item as a resource bar
+    if (this.actor && diff["data.uses.value"] != null) {
+      let promises = [];
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor._id === this.actor._id);
+      for (const token of tokens) {
+        const tokenUpdateData = {};
+
+        for (const barKey of ["bar1", "bar2"]) {
+          const bar = token.getBarAttribute(barKey);
+          if (bar.attribute === `resources.${this.data.data.tag}`) {
+            tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
+          }
+        }
+
+        if (!isObjectEmpty(tokenUpdateData)) {
+          promises.push(token.update(tokenUpdateData));
+        }
+      }
+      await Promise.all(promises);
+    }
   }
 
   _updateContentsWeight(data, { srcData = null } = {}) {

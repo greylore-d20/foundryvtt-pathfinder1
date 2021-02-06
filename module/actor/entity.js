@@ -1325,7 +1325,6 @@ export class ActorPF extends Actor {
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
-    const time = new Date();
     this._pendingUpdateTokens.forEach((token) => {
       token.cancel();
     });
@@ -1379,7 +1378,6 @@ export class ActorPF extends Actor {
               promises.push(p);
             }
 
-            console.log("update", new Date() - time, "ms");
             Promise.all(promises).then(() => {
               for (let t of tokens) {
                 this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(t), 1);

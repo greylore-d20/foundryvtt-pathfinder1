@@ -387,7 +387,7 @@ Hooks.on("renderLightConfig", (app, html) => {
   RenderLightConfig_LowLightVision(app, html);
 });
 
-Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
+Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
@@ -396,7 +396,7 @@ Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
 
   // Update level
   {
-    new Promise((resolve) => {
+    await new Promise((resolve) => {
       if (item.type === "class" && hasProperty(changedData, "data.level")) {
         const prevLevel = getProperty(item.data, "data.level");
         const newLevel = getProperty(changedData, "data.level");
@@ -407,6 +407,9 @@ Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
         resolve();
       }
     });
+    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+      await actor.toggleConditionStatusIcons();
+    }
   }
 });
 

@@ -6,6 +6,7 @@
 
 - The Token configuration window could give an error and refuse to close in some cases
 - Updating custom resources while only 1 bar was visible on the actor's tokens gave an error
+- Removing a class with links gave an error
 
 ## 0.77.6
 

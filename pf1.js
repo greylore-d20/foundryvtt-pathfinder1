@@ -484,7 +484,7 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
     for (let [linkType, links] of Object.entries(itemLinks)) {
       for (let link of links) {
         const item = actor.items.find((o) => o._id === link.id);
-        let otherItemLinks = item.links;
+        let otherItemLinks = item?.links || {};
         if (otherItemLinks[linkType]) {
           delete otherItemLinks[linkType];
         }

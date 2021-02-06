@@ -627,6 +627,19 @@ export class ItemPF extends Item {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
 
+    // Initialize tag for items that have tagged template
+    const taggedTypes = game.system.template.Item.types.filter((t) =>
+      game.system.template.Item[t].templates?.includes("tagged")
+    );
+    if (
+      this.data.data["useCustomTag"] !== undefined &&
+      taggedTypes.includes(this.data.type) &&
+      !this.data.data.useCustomTag
+    ) {
+      const name = this.name;
+      this.data.data.tag = createTag(name);
+    }
+
     return itemData;
   }
 
@@ -814,15 +827,6 @@ export class ItemPF extends Item {
 
     // Update description
     if (this.type === "spell") await this._updateSpellDescription(data, srcData);
-
-    // Initialize tag for items that have tagged template
-    const taggedTypes = game.system.template.Item.types.filter((t) =>
-      game.system.template.Item[t].templates?.includes("tagged")
-    );
-    if (data["useCustomTag"] !== undefined && taggedTypes.includes(this.type) && !srcData.data.useCustomTag) {
-      const name = srcData.name;
-      linkData(srcData, data, "data.tag", createTag(name));
-    }
 
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"] != null) {

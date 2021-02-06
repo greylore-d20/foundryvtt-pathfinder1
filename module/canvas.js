@@ -164,15 +164,25 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
   // For attribute bar values, update the associated Actor
   // TODO: Switch to Actor#modifyTokenAttribute
   if (bar) {
-    const actor = this.object?.actor;
-    if (!actor) return;
+    if (!this.object) return;
+    const actor = this.object.actor;
+    let entity = actor;
     const data = this.object.getBarAttribute(bar);
+    if (data.attribute.startsWith("resources.")) {
+      const itemTag = data.attribute.split(".").slice(-1)[0];
+      entity = actor.items.find((item) => item.data.data.tag === itemTag);
+    }
+    if (!actor || !entity) return;
     const current = getProperty(actor.data.data, data.attribute);
     const updateData = {};
 
     // Set to specified negative value
     if (operator === "--" || (!isDelta && operator == "-")) {
-      updateData[`data.${data.attribute}.value`] = -value;
+      if (entity instanceof Actor) {
+        updateData[`data.${data.attribute}.value`] = -value;
+      } else {
+        updateData["data.uses.value"] = -value;
+      }
     }
 
     // Add relative value
@@ -189,10 +199,15 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
         if (data.attribute === "attributes.hp") value = Math.min(current.value + dt, current.max);
         else value = Math.clamped(current.min || 0, current.value + dt, current.max);
       }
-      updateData[`data.${data.attribute}.value`] = value;
+      if (entity instanceof Actor) {
+        updateData[`data.${data.attribute}.value`] = value;
+      } else {
+        updateData["data.uses.value"] = value;
+      }
     }
 
-    actor.update(updateData);
+    entity.update(updateData);
+    this.object.update({ [input.name]: value });
   }
 
   // Otherwise update the Token

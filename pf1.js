@@ -394,9 +394,6 @@ Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
 
-  // Merge changed data into item data immediately, to avoid update lag
-  // item.data = mergeObject(item.data, changedData);
-
   // Update level
   {
     new Promise((resolve) => {
@@ -409,33 +406,7 @@ Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
       } else {
         resolve();
       }
-    })
-      .then(actor.updateItemResources(item))
-      .then((result) => {
-        return new Promise((resolve) => {
-          if (!result) {
-            actor.refresh().then(() => {
-              resolve();
-            });
-          }
-        });
-      });
-  }
-});
-
-Hooks.on("updateToken", (scene, token, data, options, userId) => {
-  if (userId !== game.user._id) return;
-
-  const actor = game.actors.tokens[data._id] ?? game.actors.get(token.actorId);
-  if (actor != null && hasProperty(data, "actorData.items")) {
-    if (!actor.hasPerm(game.user, "OWNER")) return;
-    actor.refresh();
-
-    // Update items
-    for (let i of actor.items) {
-      if (!i.hasPerm(game.user, "OWNER")) continue;
-      actor.updateItemResources(i);
-    }
+    });
   }
 });
 

@@ -942,6 +942,11 @@ export class ActorPF extends Actor {
 
     // Setup links
     this.prepareItemLinks();
+
+    // Update item resources
+    this.items.forEach((item) => {
+      this.updateItemResources(item);
+    });
   }
 
   prepareItemLinks() {
@@ -1188,7 +1193,7 @@ export class ActorPF extends Actor {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
-  preUpdate(data) {
+  async preUpdate(data) {
     data = flattenObject(data);
 
     // Apply settings
@@ -1274,7 +1279,7 @@ export class ActorPF extends Actor {
           if (data[key] != null && data[key] !== item.data.data.uses.max) {
             itemUpdateData["data.uses.max"] = data[key];
           }
-          if (Object.keys(itemUpdateData).length > 0) item.update(itemUpdateData);
+          if (Object.keys(itemUpdateData).length > 0) await item.update(itemUpdateData);
         }
       }
     }
@@ -1320,6 +1325,7 @@ export class ActorPF extends Actor {
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
+    const time = new Date();
     this._pendingUpdateTokens.forEach((token) => {
       token.cancel();
     });
@@ -1331,7 +1337,7 @@ export class ActorPF extends Actor {
     }
 
     this.getRollData({ forceRefresh: true });
-    data = this.preUpdate(data);
+    data = await this.preUpdate(data);
 
     // Update changes
     let diff = data;
@@ -1373,6 +1379,7 @@ export class ActorPF extends Actor {
               promises.push(p);
             }
 
+            console.log("update", new Date() - time, "ms");
             Promise.all(promises).then(() => {
               for (let t of tokens) {
                 this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(t), 1);
@@ -1491,7 +1498,7 @@ export class ActorPF extends Actor {
     super._onCreate(data, options, userId, context);
   }
 
-  async updateItemResources(item) {
+  updateItemResources(item) {
     if (!(item instanceof Item)) return;
     if (!this.hasPerm(game.user, "OWNER")) return;
 
@@ -1500,26 +1507,15 @@ export class ActorPF extends Actor {
       : item.data.data.activation?.type;
     if (item.data.data.uses?.per && activationType) {
       const itemTag = !item.data.data.useCustomTag ? createTag(item.data.name) : item.data.data.tag;
+      const resKey = `data.resources.${itemTag}`;
       let curUses = item.data.data.uses;
 
-      const res = getProperty(this.data, `data.resources.${itemTag}`);
-      if (!res || (res && !res._id)) {
-        const updateData = {
-          [`data.resources.${itemTag}.value`]: curUses.value,
-          [`data.resources.${itemTag}.max`]: curUses.max,
-          [`data.resources.${itemTag}._id`]: item._id,
-        };
-        return this.update(updateData);
-      } else if (res._id === item._id) {
-        const updateData = {};
-        if (this.data.data.resources[itemTag].value !== curUses.value) {
-          updateData[`data.resources.${itemTag}.value`] = curUses.value;
-        }
-        if (this.data.data.resources[itemTag].max !== curUses.max) {
-          updateData[`data.resources.${itemTag}.max`] = curUses.max;
-        }
-        if (Object.keys(updateData).length > 0) return this.update(updateData);
-      }
+      setProperty(this.data, resKey, { value: 0, max: 0, _id: null });
+      const res = getProperty(this.data, resKey);
+      res.value = curUses.value;
+      res.max = curUses.max;
+      res._id = item._id;
+      return true;
     }
 
     return false;

@@ -1187,6 +1187,20 @@ export const addDefaultChanges = function (changes) {
           value: game.i18n.localize("PF1.ChangeFlagNoStr"),
         });
         break;
+      case "prone":
+        changes.push(
+          ItemChange.create({
+            formula: "-4",
+            target: "attack",
+            subTarget: "mattack",
+            modifier: "penalty",
+          })
+        );
+        getSourceInfo(this.sourceInfo, "data.attributes.attack.melee").negative.push({
+          name: game.i18n.localize("PF1.CondProne"),
+          value: -4,
+        });
+        break;
       case "pinned":
         this.flags["loseDexToAC"] = true;
         for (const k of [

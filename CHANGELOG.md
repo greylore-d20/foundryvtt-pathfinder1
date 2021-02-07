@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.8
+
+### Bug Fixes
+
+- Clearing the experience point field didn't reset the value to the minimum for the current level
+
 ## 0.77.7 (Hotfix)
 
 ### Bug Fixes

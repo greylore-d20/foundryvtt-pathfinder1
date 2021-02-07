@@ -399,8 +399,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    this._updateExp();
-
     // Prepare Character data
     if (this.data.type === "character") this._prepareCharacterData(this.data.data);
     else if (this.data.type === "npc") this._prepareNPCData(this.data.data);
@@ -1313,6 +1311,9 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Update experience
+    this._updateExp(data);
+
     return data;
   }
 
@@ -1447,48 +1448,48 @@ export class ActorPF extends Actor {
    * Makes sure experience values are correct in update data.
    * @param {Object} data - The update data, as per ActorPF.update()
    */
-  _updateExp() {
+  _updateExp(updateData) {
+    // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
     const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
-    setProperty(this.data, "data.details.level.value", level);
+    updateData["data.details.level.value"] = level;
 
     const mythicTier = classes.filter((o) => o.data.classType === "mythic").reduce((acc, o) => acc + o.data.level, 0);
-    setProperty(this.data, "data.details.mythicTier", mythicTier);
+    updateData["data.details.mythicTier"] = mythicTier;
 
     // The following is not for NPCs
     if (this.data.type !== "character") return;
 
+    if (updateData["data.details.xp.value"] == null) return;
+
     // Translate update exp value to number
-    let newExp = getProperty(this.data, "data.details.xp.value"),
+    let newExp = updateData["data.details.xp.value"],
       resetExp = false;
     if (typeof newExp === "string") {
+      const curExp =
+        typeof this.data.data.details.xp.value === "number"
+          ? this.data.data.details.xp.value
+          : parseInt(this.data.data.details.xp.value);
       if (newExp.match(/^\+([0-9]+)$/)) {
-        newExp = this.data.data.details.xp.value + parseInt(RegExp.$1);
+        newExp = curExp + parseInt(RegExp.$1);
       } else if (newExp.match(/^-([0-9]+)$/)) {
-        newExp = this.data.data.details.xp.value - parseInt(RegExp.$1);
+        newExp = curExp - parseInt(RegExp.$1);
       } else if (newExp === "") {
         resetExp = true;
-      } else {
+      } else if (newExp.match(/^([0-9]+)$/)) {
         newExp = parseInt(newExp);
-        if (Number.isNaN(newExp)) newExp = this.data.data.details.xp.value;
+      } else {
+        newExp = curExp;
       }
 
-      setProperty(this.data, "data.details.xp.value", newExp);
+      updateData["data.details.xp.value"] = newExp;
     }
     const maxExp = this.getLevelExp(level);
-    setProperty(this.data, "data.details.xp.max", maxExp);
+    updateData["data.details.xp.max"] = maxExp;
 
-    const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
     if (resetExp) {
-      setProperty(this.data, "data.details.xp.value", minExp);
-    }
-
-    // Make sure experience ends as a number
-    if (typeof getProperty(this.data, "data.details.xp.value") === "string") {
-      const xpValue = parseInt(getProperty(this.data, "data.details.xp.value"));
-      if (!Number.isNaN(xpValue)) {
-        setProperty(this.data, "data.details.xp.value", xpValue);
-      }
+      const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
+      updateData["data.details.xp.value"] = minExp;
     }
   }
 

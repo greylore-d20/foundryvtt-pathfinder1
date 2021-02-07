@@ -6,6 +6,10 @@
 
 - Clearing the experience point field didn't reset the value to the minimum for the current level
 
+### Changelog
+
+- Unhide Links tab instructions on items (thanks mkahvi) (#565)
+
 ## 0.77.7 (Hotfix)
 
 ### Bug Fixes

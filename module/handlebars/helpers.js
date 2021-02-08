@@ -83,7 +83,7 @@ export const registerHandlebarsHelpers = function () {
         case "mi":
           return range * 5280; // TODO: Should remain as miles for shortness
         case "ft":
-          return new Roll(range, rollData)?.roll()?.total ?? range;
+          return new Roll(range || "0", rollData).roll().total;
         default:
           return range;
       }

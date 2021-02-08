@@ -1632,7 +1632,7 @@ export class ItemPF extends Item {
         if (exAtkCount > 0) {
           try {
             const frollData = duplicate(rollData); // temporary duplicate to avoid contaminating the actual rolldata
-            const fatlabel = this.data.data.formulaicAttacks.label ?? game.i18n.localize("PF1.FormulaAttack");
+            const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
             for (let i = 0; i < exAtkCount; i++) {
               frollData["formulaicAttack"] = i + 1; // Add and update attack counter
               const bonus = new Roll(exAtkBonusFormula, frollData).roll().total;

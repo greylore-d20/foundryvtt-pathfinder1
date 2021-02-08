@@ -943,7 +943,7 @@ export class ItemPF extends Item {
     // Update tokens with this item as a resource bar
     if (this.actor && diff["data.uses.value"] != null) {
       let promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor._id === this.actor._id);
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === this.actor._id);
       for (const token of tokens) {
         const tokenUpdateData = {};
 

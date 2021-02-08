@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Clearing the experience point field didn't reset the value to the minimum for the current level
+- Fix error when orphaned tokens were on a scene
 
 ### Changelog
 

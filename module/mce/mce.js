@@ -28,6 +28,7 @@ export const tinyMCEInit = function () {
 
 function registerContextMenu(editor) {
   var isInfoElement = function (node) {
+    if (node.nodeName.toLowerCase() !== "span") node = node.parentNode;
     return (
       node.nodeName.toLowerCase() === "span" &&
       (node.classList.contains("notImp") || node.classList.contains("needSteps"))
@@ -36,7 +37,7 @@ function registerContextMenu(editor) {
 
   var getInfoElement = function () {
     var node = editor.selection.getNode();
-    return isInfoElement(node) ? node : null;
+    return isInfoElement(node) ? node.closest("span.notImp,span.needSteps") : null;
   };
 
   editor.ui.registry.addContextForm("info-form", {

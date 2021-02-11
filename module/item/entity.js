@@ -941,9 +941,9 @@ export class ItemPF extends Item {
     }
 
     // Update tokens with this item as a resource bar
-    if (this.actor && diff["data.uses.value"] != null) {
+    if (this.parentActor && diff["data.uses.value"] != null) {
       let promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === this.actor._id);
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === this.parentActor._id);
       for (const token of tokens) {
         const tokenUpdateData = {};
 
@@ -1014,7 +1014,7 @@ export class ItemPF extends Item {
     // Add a new effect
     const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
     createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    const effect = ActiveEffect.create(createData, this.actor);
+    const effect = ActiveEffect.create(createData, this.parentActor);
     await effect.create();
 
     return effect;

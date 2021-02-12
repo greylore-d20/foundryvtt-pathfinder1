@@ -1,6 +1,8 @@
 import { HealthConfig } from "./config/health.js";
 import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
+import { TooltipConfig } from "./config/tooltip.js";
+import { TooltipWorldConfig } from "./config/tooltip_world.js";
 import { CompendiumBrowser } from "./apps/compendium-browser.js";
 
 export const registerSystemSettings = function () {
@@ -103,6 +105,46 @@ export const registerSystemSettings = function () {
     config: false,
     onChange: () => {
       window.location.reload();
+    },
+  });
+
+  // Tooltip configuration
+  game.settings.registerMenu("pf1", "tooltipConfig", {
+    name: "PF1.TooltipConfigName",
+    label: "PF1.TooltipConfigLabel",
+    hint: "PF1.TooltipConfigHint",
+    restricted: false,
+    icon: "fas fa-window-maximize",
+    type: TooltipConfig,
+  });
+  game.settings.register("pf1", "tooltipConfig", {
+    name: "PF1.TooltipConfigName",
+    scope: "client",
+    default: TooltipConfig.defaultSettings,
+    type: Object,
+    config: false,
+    onChange: () => {
+      game.pf1.tooltip?.setPosition();
+    },
+  });
+
+  // Tooltip World configuration
+  /* game.settings.registerMenu("pf1", "tooltipWorldConfig", {
+    name: "PF1.TooltipWorldConfigName",
+    label: "PF1.TooltipWorldConfigLabel",
+    hint: "PF1.TooltipWorldConfigHint",
+    restricted: true,
+    icon: "fas fa-window-maximize",
+    type: TooltipWorldConfig,
+  }); */
+  game.settings.register("pf1", "tooltipWorldConfig", {
+    name: "PF1.TooltipWorldConfigName",
+    scope: "world",
+    default: TooltipWorldConfig.defaultSettings,
+    type: Object,
+    config: false,
+    onChange: () => {
+      game.pf1.tooltip?.setPosition();
     },
   });
 

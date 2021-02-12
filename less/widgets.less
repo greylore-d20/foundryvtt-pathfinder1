@@ -31,3 +31,38 @@
     }
   }
 }
+
+.pf1-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+
+  padding: 4px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: url("/ui/denim075.png") repeat;
+  color: #f0f0e0;
+
+  .controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+    z-index: 1;
+
+    button {
+      pointer-events: auto;
+      flex: 0 0 32px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .portrait {
+    display: flex;
+    justify-content: space-around;
+
+    img {
+      border: none;
+    }
+  }
+}

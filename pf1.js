@@ -38,6 +38,7 @@ import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
 import { addReachCallback } from "./module/misc/attack-reach.js";
+import { TooltipPF } from "./module/hud/tooltip.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
@@ -81,6 +82,7 @@ Hooks.once("init", async function () {
     runUnitTests,
     compendiums: {},
     isMigrating: false,
+    tooltip: null,
   };
 
   // Record Configuration Values
@@ -285,6 +287,16 @@ Hooks.once("ready", async function () {
     classes: new CompendiumBrowser({ type: "classes" }),
     races: new CompendiumBrowser({ type: "races" }),
   };
+
+  // Create tooltip
+  game.pf1.tooltip = new TooltipPF();
+  window.addEventListener("resize", () => {
+    game.pf1.tooltip.setPosition();
+  });
+  Hooks.on("hoverToken", (token, hovering) => {
+    if (hovering) game.pf1.tooltip.bind(token);
+    else game.pf1.tooltip.unbind(token);
+  });
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {

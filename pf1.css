@@ -3144,3 +3144,32 @@ input.text-box {
 .widget.item-picker .row .item:hover {
   border-color: #da0000;
 }
+.pf1-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  padding: 4px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: url("/ui/denim075.png") repeat;
+  color: #f0f0e0;
+}
+.pf1-tooltip .controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+  z-index: 1;
+}
+.pf1-tooltip .controls button {
+  pointer-events: auto;
+  flex: 0 0 32px;
+  width: 24px;
+  height: 24px;
+}
+.pf1-tooltip .portrait {
+  display: flex;
+  justify-content: space-around;
+}
+.pf1-tooltip .portrait img {
+  border: none;
+}

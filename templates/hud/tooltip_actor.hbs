@@ -5,3 +5,29 @@
 {{/if}}
 
 <h1>{{data.name}}</h1>
+
+{{#if conditions}}
+    <h2>{{localize "PF1.ConditionPlural"}}</h2>
+
+    <div class="conditions">
+        {{#each conditions as |c|}}
+            <div class="condition">
+                <img src="{{c.icon}}">
+                <span>{{c.label}}</span>
+            </div>
+        {{/each}}
+    </div>
+{{/if}}
+
+{{#if buffs}}
+    <h2>{{localize "PF1.Buffs"}}</h2>
+
+    <div class="buffs">
+        {{#each buffs as |b|}}
+            <div class="buff">
+                <img src="{{b.icon}}">
+                <span>{{b.label}}{{#if b.level}} ({{b.level}}){{/if}}</span>
+            </div>
+        {{/each}}
+    </div>
+{{/if}}

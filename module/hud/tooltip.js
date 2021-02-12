@@ -106,6 +106,33 @@ export class TooltipPF extends Application {
     if (!data.isOwner) data.name = "???";
     this.getPortrait(data, actor.img);
 
+    // Get conditions
+    {
+      const conditions = getProperty(actor.data, "data.attributes.conditions") || {};
+      for (const [ck, cv] of Object.entries(conditions)) {
+        if (cv === true) {
+          data.conditions = data.conditions || [];
+          data.conditions.push({
+            label: CONFIG.PF1.conditions[ck],
+            icon: CONFIG.PF1.conditionTextures[ck],
+          });
+        }
+      }
+    }
+
+    // Get buffs
+    {
+      const buffs = actor.items.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
+      for (const b of buffs) {
+        data.buffs = data.buffs || [];
+        data.buffs.push({
+          label: b.name,
+          icon: b.img,
+          level: b.data.data.level,
+        });
+      }
+    }
+
     return data;
   }
 

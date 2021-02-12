@@ -52,8 +52,8 @@
     button {
       pointer-events: auto;
       flex: 0 0 32px;
-      width: 24px;
-      height: 24px;
+      width: 32px;
+      height: 28px;
     }
   }
 
@@ -63,6 +63,36 @@
 
     img {
       border: none;
+    }
+  }
+
+  .conditions,
+  .buffs {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    min-width: 320px;
+
+    .condition {
+      flex: 1 1 50%;
+    }
+    .buff {
+      flex: 1 1 100%;
+    }
+
+    .condition,
+    .buff {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+
+      span {
+        margin-left: 4px;
+      }
     }
   }
 }

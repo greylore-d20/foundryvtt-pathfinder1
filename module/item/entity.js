@@ -907,6 +907,17 @@ export class ItemPF extends Item {
     }
 
     let diff = diffObject(flattenObject(this.data), data);
+    // Filter diff for arrays that haven't changed. Single level depth with speed as priority
+    for (let d in diff) {
+      if (!(diff[d] instanceof Array)) continue;
+      let origData = getProperty(this.data, d);
+      if (diff[d].length !== origData.length) continue;
+      let anyDiff = diff[d].some((obj, idx) => {
+        if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
+      });
+      if (!anyDiff) delete diff[d];
+    }
+
     if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
         await super.update(diff, options);

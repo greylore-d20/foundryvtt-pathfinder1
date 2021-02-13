@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.77.9
+
+### Bug Fixes
+
+- Buff icons on unlinked tokens could not update themselves (#583)
+- Conditional modifiers couldn't be modified
+
 ## 0.77.8
 
 ### Bug Fixes

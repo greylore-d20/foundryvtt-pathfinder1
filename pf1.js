@@ -257,8 +257,14 @@ Hooks.once("setup", function () {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", async function () {
+  // Create tooltip
+  game.pf1.tooltip = new TooltipPF();
+  window.addEventListener("resize", () => {
+    game.pf1.tooltip.setPosition();
+  });
+
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.4";
+  const NEEDS_MIGRATION_VERSION = "0.77.8";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -287,12 +293,6 @@ Hooks.once("ready", async function () {
     classes: new CompendiumBrowser({ type: "classes" }),
     races: new CompendiumBrowser({ type: "races" }),
   };
-
-  // Create tooltip
-  game.pf1.tooltip = new TooltipPF();
-  window.addEventListener("resize", () => {
-    game.pf1.tooltip.setPosition();
-  });
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {

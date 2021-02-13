@@ -3158,11 +3158,19 @@ export class ActorPF extends Actor {
         }
 
         for (let token of tokens) {
-          CONFIG.statusEffects.forEach((con) => {
+          for (let con of CONFIG.statusEffects) {
             const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
-            if (CONFIG.PF1.conditions[con.id] && (idx !== -1) != this.data.data.attributes.conditions[con.id])
-              promises.push(token.toggleEffect(con, { midUpdate: true }));
-          });
+            const hasCondition = this.data.data.attributes.conditions[con.id] === true;
+            const hasEffectIcon = idx >= 0;
+
+            if (hasCondition !== hasEffectIcon) {
+              promises.push(
+                token.toggleEffect(con, {
+                  midUpdate: true,
+                })
+              );
+            }
+          }
         }
         await Promise.all(promises);
       })().then(() => {

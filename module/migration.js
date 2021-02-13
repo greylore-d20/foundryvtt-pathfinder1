@@ -932,6 +932,7 @@ const _migrateActorConditions = function (ent, updateData) {
     const cond = getProperty(ent.data, "data.conditions.fear");
     if (cond === true) {
       updateData["data.conditions.shaken"] = true;
+      updateData["data.conditions.-=fear"] = null;
     }
   }
 };

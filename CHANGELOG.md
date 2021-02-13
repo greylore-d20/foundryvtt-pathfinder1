@@ -6,6 +6,10 @@
 
 - Clearing the experience point field didn't reset the value to the minimum for the current level
 
+### Changelog
+
+- Added a fairly robust (initial) tooltip system
+
 ## 0.77.7 (Hotfix)
 
 ### Bug Fixes

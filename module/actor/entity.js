@@ -3025,6 +3025,13 @@ export class ActorPF extends Actor {
         break;
     }
 
+    // Add combat round, if in combat
+    if (game.combats?.viewed) {
+      result.combat = {
+        round: game.combat.round || 0,
+      };
+    }
+
     this._rollData = result;
     return result;
   }

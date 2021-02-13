@@ -16,6 +16,7 @@
 
 - Unhide Links tab instructions on items (thanks mkahvi) (#565)
 - Added a fairly robust (initial) tooltip system
+- Added `combat.round` to actor and item roll data
 
 ## 0.77.7 (Hotfix)
 

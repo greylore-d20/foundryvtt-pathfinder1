@@ -1536,7 +1536,7 @@ export class ActorPF extends Actor {
     let t = itemData.type;
     let initial = {};
     // Assume NPCs are always proficient with weapons and always have spells prepared
-    const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
+    const hasPlayerOwner = this.hasPlayerOwner;
     if (!hasPlayerOwner) {
       if (t === "weapon") initial["data.proficient"] = true;
       if (["weapon", "equipment"].includes(t)) initial["data.equipped"] = true;
@@ -1545,6 +1545,11 @@ export class ActorPF extends Actor {
       if (this.sheet != null && this.sheet._spellbookTab != null) {
         initial["data.spellbook"] = this.sheet._spellbookTab;
       }
+    }
+
+    // Alter change ids
+    for (const c of getProperty(itemData, "data.changes") || []) {
+      c._id = randomID(8);
     }
 
     mergeObject(itemData, initial);

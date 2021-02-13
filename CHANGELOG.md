@@ -10,6 +10,7 @@
 - Not Implemented/ Steps Required text styles were incorrect with bold/ italics
 - Actor sheet wouldn't render if two classes/ features named the same thing granted proficiency
 - Spell range type could not be changed
+- Duplicating items did not give their changes a new identifier
 
 ### Changelog
 

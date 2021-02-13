@@ -11,6 +11,7 @@
 ### Changelog
 
 - The GM can now hold Shift to see tooltips from a player's perspective
+- All equipped armor is now shown in tooltips, rather than just the first piece of armor in the actor's inventory
 
 ## 0.77.8
 

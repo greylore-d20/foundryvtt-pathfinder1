@@ -186,17 +186,20 @@ export class TooltipPF extends Application {
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
     ) {
-      const armor = actor.items.find((i) => {
+      const armor = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
-        if (getProperty(i.data, "data.equipmentType") !== "armor") return false;
+        if (!i.data.data.equipped) return false;
+        if (i.data.data.equipmentType !== "armor") return false;
         return true;
       });
 
-      if (armor)
-        data.armor = {
-          label: armor.getName(this.forceHideGMInfo),
-          icon: armor.img,
-        };
+      for (const i of armor) {
+        data.armor = data.armor || [];
+        data.armor.push({
+          label: i.getName(this.forceHideGMInfo),
+          icon: i.img,
+        });
+      }
     }
 
     // Get clothing

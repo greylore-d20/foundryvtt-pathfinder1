@@ -51,11 +51,14 @@
 {{!-- Show equipped armor --}}
 {{#if armor}}
     <h2>{{localize "PF1.EquipTypeArmor"}}</h2>
+
     <div class="held-items">
-        <div class="held-item">
-            <img src="{{armor.icon}}">
-            <span>{{armor.label}}</span>
-        </div>
+        {{#each armor as |i|}}
+            <div class="held-item">
+                <img src="{{i.icon}}">
+                <span>{{i.label}}</span>
+            </div>
+        {{/each}}
     </div>
 {{/if}}
 

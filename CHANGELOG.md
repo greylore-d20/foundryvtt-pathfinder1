@@ -15,6 +15,7 @@
 - Continuous health wasn't rounding
 - (Compendium) Acid Arrow was incorrectly set up to have a Ranged Weapon Attack
 - Fixed error messages for players when GM updated an entity which would do something with an actor's hit points they didn't own
+- NPC Lite sheets were bugging out majorly
 
 ### Changelog
 

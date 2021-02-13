@@ -576,6 +576,11 @@ export class ActorPF extends Actor {
         setProperty(this.data, `data.skills.${k}.subSkills.${k2}.cs`, isClassSkill);
       }
     }
+
+    // Add base initiative (for NPC Lite sheets)
+    {
+      setProperty(this.data, "data.attributes.init.total", getProperty(this.data, "data.attributes.init.value"));
+    }
   }
 
   /**

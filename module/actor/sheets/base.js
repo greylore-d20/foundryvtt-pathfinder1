@@ -443,7 +443,11 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Fetch the game settings relevant to sheet rendering.
-    data.healthConfig = game.settings.get("pf1", "healthConfig");
+    {
+      const actorType = { character: "pc", npc: "npc" }[this.actor.data.type];
+      data.healthConfig = game.settings.get("pf1", "healthConfig");
+      data.useWoundsAndVigor = data.healthConfig.variants[actorType].useWoundsAndVigor;
+    }
 
     // Get classes
     data.data.classes = rollData.classes;

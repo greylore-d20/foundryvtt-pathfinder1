@@ -293,9 +293,15 @@ Hooks.once("ready", async function () {
   window.addEventListener("resize", () => {
     game.pf1.tooltip.setPosition();
   });
+  // Show token tooltip
   Hooks.on("hoverToken", (token, hovering) => {
     if (hovering) game.pf1.tooltip.bind(token);
     else game.pf1.tooltip.unbind(token);
+  });
+  // Hide token tooltip on token update
+  Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
+    const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
+    if (token) game.pf1.tooltip.unbind(token);
   });
 
   // Show changelog

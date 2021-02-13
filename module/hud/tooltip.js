@@ -46,21 +46,21 @@ export class TooltipPF extends Application {
     return this.element[0].style.visibility === "hidden";
   }
 
-  async bind(object) {
+  bind(object) {
     if (this.objects.indexOf(object) === -1) {
       this.objects.push(object);
-      await this.render(true);
+      this.render(true);
     }
   }
 
-  async unbind(object) {
+  unbind(object) {
     const idx = this.objects.indexOf(object);
     if (idx >= 0) {
       this.objects.splice(idx, 1);
       if (this.objects.length === 0) {
         this.hide();
       } else {
-        await this.render();
+        this.render();
       }
     }
   }
@@ -245,12 +245,12 @@ export class TooltipPF extends Application {
       let loadedContentCount = 0;
       loadableContent.one("load", () => {
         loadedContentCount++;
-        if (loadedContentCount === loadableContentCount) {
+        if (loadedContentCount === loadableContentCount && this.objects.length) {
           this._setPosition();
           this.show();
         }
       });
-    } else {
+    } else if (this.objects.length) {
       this._setPosition();
       this.show();
     }

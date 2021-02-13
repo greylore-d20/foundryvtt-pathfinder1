@@ -13,6 +13,7 @@
 - Duplicating items did not give their changes a new identifier
 - Prevent errors and having to click delete twice on certain item properties
 - Continuous health wasn't rounding
+- (Compendium) Acid Arrow was incorrectly set up to have a Ranged Weapon Attack
 
 ### Changelog
 

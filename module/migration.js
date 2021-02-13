@@ -462,8 +462,15 @@ const _migrateActorHPAbility = function (ent, updateData) {
 };
 
 const _migrateItemArrayTypes = function (ent, updateData) {
-  if (!(getProperty(ent.data, "data.conditionals") instanceof Array)) {
+  const conditionals = getProperty(ent.data, "data.conditionals");
+  if (conditionals != null && !(conditionals instanceof Array)) {
     updateData["data.conditionals"] = [];
+  }
+
+  const contextNotes = getProperty(ent.data, "data.contextNotes");
+  if (contextNotes != null && !(contextNotes instanceof Array)) {
+    if (contextNotes instanceof Object) updateData["data.contextNotes"] = [contextNotes];
+    else updateData["data.contextNotes"] = [];
   }
 };
 

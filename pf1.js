@@ -452,6 +452,14 @@ Hooks.on("hoverToken", (token, hovering) => {
   else game.pf1.tooltip.unbind(token);
 });
 
+Hooks.on("preDeleteToken", (scene, data, options, userId) => {
+  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
+  if (!token) return;
+
+  // Hide token tooltip on token deletion
+  game.pf1.tooltip.unbind(token);
+});
+
 Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
   const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
   if (!token) return;

@@ -6,6 +6,7 @@
 
 - Buff icons on unlinked tokens could not update themselves (#583)
 - Conditional modifiers couldn't be modified
+- Updating items with context notes resulted in an error message
 
 ## 0.77.8
 

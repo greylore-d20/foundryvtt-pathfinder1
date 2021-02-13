@@ -819,6 +819,7 @@ export class ItemPF extends Item {
         { key: "data.damage.parts" },
         { key: "data.damage.critParts" },
         { key: "data.damage.nonCritParts" },
+        { key: "data.contextNotes" },
       ];
 
       for (let kArr of keepArray) {

@@ -293,16 +293,6 @@ Hooks.once("ready", async function () {
   window.addEventListener("resize", () => {
     game.pf1.tooltip.setPosition();
   });
-  // Show token tooltip
-  Hooks.on("hoverToken", (token, hovering) => {
-    if (hovering) game.pf1.tooltip.bind(token);
-    else game.pf1.tooltip.unbind(token);
-  });
-  // Hide token tooltip on token update
-  Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
-    const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
-    if (token) game.pf1.tooltip.unbind(token);
-  });
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {
@@ -446,6 +436,31 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   const actor = game.actors.get(token.actorId),
     buffTextures = Object.values(actor._calcBuffTextures() ?? []).map((b) => b.icon);
   for (let icon of buffTextures) await loadTexture(icon);
+});
+
+Hooks.on("hoverToken", (token, hovering) => {
+  // Show token tooltip
+  if (hovering) {
+    const p = game.pf1.tooltip.mousePos;
+    const el = document.elementFromPoint(p.x, p.y);
+    // This check is required to prevent hovering over tokens under application windows
+    if (el.id === "board") {
+      game.pf1.tooltip.bind(token);
+    }
+  }
+  // Hide token tooltip
+  else game.pf1.tooltip.unbind(token);
+});
+
+Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
+  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
+  if (!token) return;
+
+  // Hide token tooltip on token update
+  game.pf1.tooltip.unbind(token);
+
+  // Update token's actor sheet (if any)
+  token.actor?.sheet?.render();
 });
 
 // Create race on actor

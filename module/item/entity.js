@@ -217,7 +217,7 @@ export class ItemPF extends Item {
 
   getName() {
     if (game.user.isGM) return this.name;
-    if (getProperty(this.data, "data.identified") === false) return getProperty(this.data, "data.unidentifiedName");
+    if (getProperty(this.data, "data.identified") === false) return getProperty(this.data, "data.unidentified.name");
     return this.name;
   }
 

@@ -93,6 +93,11 @@ export class TooltipPF extends Application {
   getTokenData(token) {
     const data = this.getActorData(token.actor);
 
+    data.name = token.data.name;
+    if (!game.user.isGM) {
+      data.name = getProperty(token.actor.data, "data.details.tooltip.name") || token.data.name;
+    }
+
     return data;
   }
 
@@ -101,6 +106,10 @@ export class TooltipPF extends Application {
       data: actor.data,
       name: actor.data.name,
     };
+
+    if (!game.user.isGM) {
+      data.name = getProperty(actor.data, "data.details.tooltip.name") || actor.data.name;
+    }
 
     data.isOwner = game.user.isGM || actor.owner;
     if (!data.isOwner) data.name = "???";
@@ -121,7 +130,11 @@ export class TooltipPF extends Application {
     }
 
     // Get buffs
-    {
+    if (
+      game.user.isGM ||
+      actor.owner ||
+      (!getProperty(actor.data, "data.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
+    ) {
       const buffs = actor.items.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
       for (const b of buffs) {
         data.buffs = data.buffs || [];
@@ -134,7 +147,11 @@ export class TooltipPF extends Application {
     }
 
     // Get held items
-    {
+    if (
+      game.user.isGM ||
+      actor.owner ||
+      (!getProperty(actor.data, "data.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
+    ) {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
         if (!i.data.data.equipped) return false;
@@ -154,7 +171,11 @@ export class TooltipPF extends Application {
     }
 
     // Get armor
-    {
+    if (
+      game.user.isGM ||
+      actor.owner ||
+      (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
+    ) {
       const armor = actor.items.find((i) => {
         if (i.type !== "equipment") return false;
         if (getProperty(i.data, "data.equipmentType") !== "armor") return false;

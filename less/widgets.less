@@ -67,13 +67,15 @@
   }
 
   .conditions,
-  .buffs {
+  .buffs,
+  .held-items {
     display: flex;
     justify-content: flex-start;
     flex-flow: row wrap;
     min-width: 320px;
 
-    .condition {
+    .condition,
+    .held-item {
       flex: 1 1 50%;
     }
     .buff {
@@ -81,7 +83,8 @@
     }
 
     .condition,
-    .buff {
+    .buff,
+    .held-item {
       display: flex;
       align-items: center;
 

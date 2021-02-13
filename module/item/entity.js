@@ -215,6 +215,12 @@ export class ItemPF extends Item {
     return super.hasPerm(user, permission, exact);
   }
 
+  getName() {
+    if (game.user.isGM) return this.name;
+    if (getProperty(this.data, "data.identified") === false) return getProperty(this.data, "data.unidentifiedName");
+    return this.name;
+  }
+
   /**
    * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {Number} The Difficulty Class for this item.

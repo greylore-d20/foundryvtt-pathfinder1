@@ -78,8 +78,8 @@ export class TooltipConfig extends FormApplication {
       portrait: {
         hide: false,
         maxSize: {
-          width: 400,
-          height: 400,
+          width: 280,
+          height: 280,
         },
       },
     };

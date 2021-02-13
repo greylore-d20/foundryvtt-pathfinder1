@@ -3174,37 +3174,58 @@ input.text-box {
   border: none;
 }
 .pf1-tooltip .conditions,
-.pf1-tooltip .buffs {
+.pf1-tooltip .buffs,
+.pf1-tooltip .held-items {
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
   min-width: 320px;
 }
 .pf1-tooltip .conditions .condition,
-.pf1-tooltip .buffs .condition {
+.pf1-tooltip .buffs .condition,
+.pf1-tooltip .held-items .condition,
+.pf1-tooltip .conditions .held-item,
+.pf1-tooltip .buffs .held-item,
+.pf1-tooltip .held-items .held-item {
   flex: 1 1 50%;
 }
 .pf1-tooltip .conditions .buff,
-.pf1-tooltip .buffs .buff {
+.pf1-tooltip .buffs .buff,
+.pf1-tooltip .held-items .buff {
   flex: 1 1 100%;
 }
 .pf1-tooltip .conditions .condition,
 .pf1-tooltip .buffs .condition,
+.pf1-tooltip .held-items .condition,
 .pf1-tooltip .conditions .buff,
-.pf1-tooltip .buffs .buff {
+.pf1-tooltip .buffs .buff,
+.pf1-tooltip .held-items .buff,
+.pf1-tooltip .conditions .held-item,
+.pf1-tooltip .buffs .held-item,
+.pf1-tooltip .held-items .held-item {
   display: flex;
   align-items: center;
 }
 .pf1-tooltip .conditions .condition img,
 .pf1-tooltip .buffs .condition img,
+.pf1-tooltip .held-items .condition img,
 .pf1-tooltip .conditions .buff img,
-.pf1-tooltip .buffs .buff img {
+.pf1-tooltip .buffs .buff img,
+.pf1-tooltip .held-items .buff img,
+.pf1-tooltip .conditions .held-item img,
+.pf1-tooltip .buffs .held-item img,
+.pf1-tooltip .held-items .held-item img {
   width: 16px;
   height: 16px;
 }
 .pf1-tooltip .conditions .condition span,
 .pf1-tooltip .buffs .condition span,
+.pf1-tooltip .held-items .condition span,
 .pf1-tooltip .conditions .buff span,
-.pf1-tooltip .buffs .buff span {
+.pf1-tooltip .buffs .buff span,
+.pf1-tooltip .held-items .buff span,
+.pf1-tooltip .conditions .held-item span,
+.pf1-tooltip .buffs .held-item span,
+.pf1-tooltip .held-items .held-item span {
   margin-left: 4px;
 }

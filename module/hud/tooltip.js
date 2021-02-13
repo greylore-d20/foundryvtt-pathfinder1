@@ -133,6 +133,41 @@ export class TooltipPF extends Application {
       }
     }
 
+    // Get held items
+    {
+      const held = actor.items.filter((i) => {
+        if (!["weapon", "equipment"].includes(i.type)) return false;
+        if (!i.data.data.equipped) return false;
+        if (i.type === "equipment") {
+          if (i.data.data.equipmentType !== "shield") return false;
+        }
+        return true;
+      });
+
+      for (const i of held) {
+        data.held = data.held || [];
+        data.held.push({
+          label: i.getName(),
+          icon: i.img,
+        });
+      }
+    }
+
+    // Get armor
+    {
+      const armor = actor.items.find((i) => {
+        if (i.type !== "equipment") return false;
+        if (getProperty(i.data, "data.equipmentType") !== "armor") return false;
+        return true;
+      });
+
+      if (armor)
+        data.armor = {
+          label: armor.getName(),
+          icon: armor.img,
+        };
+    }
+
     return data;
   }
 

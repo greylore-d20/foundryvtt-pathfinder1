@@ -262,6 +262,18 @@ Hooks.once("ready", async function () {
   window.addEventListener("resize", () => {
     game.pf1.tooltip.setPosition();
   });
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Shift" && game.user.isGM) {
+      game.pf1.tooltip.forceHideGMInfo = true;
+      game.pf1.tooltip.render();
+    }
+  });
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "Shift" && game.user.isGM) {
+      game.pf1.tooltip.forceHideGMInfo = false;
+      game.pf1.tooltip.render();
+    }
+  });
 
   // Migrate data
   const NEEDS_MIGRATION_VERSION = "0.77.8";

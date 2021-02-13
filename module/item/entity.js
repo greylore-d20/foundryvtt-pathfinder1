@@ -215,9 +215,10 @@ export class ItemPF extends Item {
     return super.hasPerm(user, permission, exact);
   }
 
-  getName() {
-    if (game.user.isGM) return this.name;
-    if (getProperty(this.data, "data.identified") === false) return getProperty(this.data, "data.unidentified.name");
+  getName(forcePlayerPerspective = false) {
+    if (game.user.isGM && !forcePlayerPerspective) return this.name;
+    if (getProperty(this.data, "data.identified") === false && getProperty(this.data, "data.unidentified.name"))
+      return getProperty(this.data, "data.unidentified.name");
     return this.name;
   }
 

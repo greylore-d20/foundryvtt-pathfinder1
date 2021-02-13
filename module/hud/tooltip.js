@@ -13,6 +13,8 @@ export class TooltipPF extends Application {
     });
 
     this.objects = [];
+
+    this.forceHideGMInfo = false;
   }
 
   static get defaultOptions() {
@@ -95,7 +97,7 @@ export class TooltipPF extends Application {
     if (!data) return null;
 
     data.name = token.data.name;
-    if (!game.user.isGM) {
+    if (!(game.user.isGM && !this.forceHideGMInfo)) {
       data.name = getProperty(token.actor.data, "data.details.tooltip.name") || token.data.name;
     }
 
@@ -110,7 +112,7 @@ export class TooltipPF extends Application {
       name: actor.data.name,
     };
 
-    if (!game.user.isGM) {
+    if (!(game.user.isGM && !this.forceHideGMInfo)) {
       data.name = getProperty(actor.data, "data.details.tooltip.name") || actor.data.name;
     }
 
@@ -120,7 +122,7 @@ export class TooltipPF extends Application {
 
     // Get conditions
     if (
-      game.user.isGM ||
+      (game.user.isGM && !this.forceHideGMInfo) ||
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideConditions") &&
         !getProperty(this.worldConfig, "hideConditions"))
@@ -139,7 +141,7 @@ export class TooltipPF extends Application {
 
     // Get buffs
     if (
-      game.user.isGM ||
+      (game.user.isGM && !this.forceHideGMInfo) ||
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
     ) {
@@ -156,7 +158,7 @@ export class TooltipPF extends Application {
 
     // Get held items
     if (
-      game.user.isGM ||
+      (game.user.isGM && !this.forceHideGMInfo) ||
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
     ) {
@@ -172,7 +174,7 @@ export class TooltipPF extends Application {
       for (const i of held) {
         data.held = data.held || [];
         data.held.push({
-          label: i.getName(),
+          label: i.getName(this.forceHideGMInfo),
           icon: i.img,
         });
       }
@@ -180,7 +182,7 @@ export class TooltipPF extends Application {
 
     // Get armor
     if (
-      game.user.isGM ||
+      (game.user.isGM && !this.forceHideGMInfo) ||
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
     ) {
@@ -192,14 +194,14 @@ export class TooltipPF extends Application {
 
       if (armor)
         data.armor = {
-          label: armor.getName(),
+          label: armor.getName(this.forceHideGMInfo),
           icon: armor.img,
         };
     }
 
     // Get clothing
     if (
-      game.user.isGM ||
+      (game.user.isGM && !this.forceHideGMInfo) ||
       actor.owner ||
       (!getProperty(actor.data, "data.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
     ) {
@@ -214,7 +216,7 @@ export class TooltipPF extends Application {
       for (const i of clothing) {
         data.clothing = data.clothing || [];
         data.clothing.push({
-          label: i.getName(),
+          label: i.getName(this.forceHideGMInfo),
           icon: i.img,
         });
       }

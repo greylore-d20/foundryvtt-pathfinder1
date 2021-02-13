@@ -8,6 +8,10 @@
 - Conditional modifiers couldn't be modified
 - Updating items with context notes resulted in an error message
 
+### Changelog
+
+- The GM can now hold Shift to see tooltips from a player's perspective
+
 ## 0.77.8
 
 ### Bug Fixes

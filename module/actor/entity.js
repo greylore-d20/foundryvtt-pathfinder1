@@ -2783,8 +2783,8 @@ export class ActorPF extends Actor {
     // Determine load level
     let encLevel = 0;
     if (carriedWeight > 0) {
-      if (carriedWeight >= this.data.data.attributes.encumbrance.levels.light) encLevel++;
-      if (carriedWeight >= this.data.data.attributes.encumbrance.levels.medium) encLevel++;
+      if (carriedWeight > this.data.data.attributes.encumbrance.levels.light) encLevel++;
+      if (carriedWeight > this.data.data.attributes.encumbrance.levels.medium) encLevel++;
     }
     setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
   }

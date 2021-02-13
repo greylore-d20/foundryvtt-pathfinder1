@@ -796,7 +796,7 @@ export class ItemPF extends Item {
           }
           arr[i] = expandObject(obj);
         }
-        // Add or item property
+        // Add or change property
         else {
           arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
         }
@@ -809,11 +809,10 @@ export class ItemPF extends Item {
     // Make sure stuff remains an array
     {
       const keepArray = [
-        { key: "data.attackParts", count: 2 },
-        { key: "data.damage.parts", count: 2 },
-        { key: "data.damage.critParts", count: 2 },
-        { key: "data.damage.nonCritParts", count: 2 },
-        { key: "data.conditionals", count: 1 },
+        { key: "data.attackParts" },
+        { key: "data.damage.parts" },
+        { key: "data.damage.critParts" },
+        { key: "data.damage.nonCritParts" },
       ];
 
       for (let kArr of keepArray) {
@@ -822,25 +821,25 @@ export class ItemPF extends Item {
           let arr = duplicate(getProperty(this.data, kArr.key) || []);
           const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
           subData.forEach((entry) => {
-            let subKey = entry[0].split(".").slice(keySeparatorCount);
+            let subKey = entry[0].split(".").slice(keySeparatorCount + 1);
             let i = subKey[0];
-            let subKey2 = subKey.slice(keySeparatorCount).join(".");
+            let subKey2 = subKey.slice(1).join(".");
             if (!arr[i]) arr[i] = {};
 
             // Remove property
             if (subKey[subKey.length - 1].startsWith("-=")) {
               const obj = flattenObject(arr[i]);
               subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-              const deleteKeys = Object.keys(obj).filter((o) =>
-                o.startsWith(subKey.slice(keySeparatorCount).join("."))
-              );
+              const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
               for (let k of deleteKeys) {
                 if (Object.prototype.hasOwnProperty.call(obj, k)) {
                   delete obj[k];
                 }
               }
               arr[i] = expandObject(obj);
-            } else {
+            }
+            // Add or change property
+            else {
               arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
             }
 

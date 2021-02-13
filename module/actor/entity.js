@@ -250,7 +250,7 @@ export class ActorPF extends Actor {
     super.prepareData();
 
     // Send queued updates
-    if (this._initialized) {
+    if (this._initialized && this.hasPerm(game.user, "OWNER")) {
       const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
       if (!isObjectEmpty(diff)) {
         this.update(diff);

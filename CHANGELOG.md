@@ -5,6 +5,14 @@
 ### Bug Fixes
 
 - Clearing the experience point field didn't reset the value to the minimum for the current level
+- Fix error when orphaned tokens were on a scene
+- Clearing the range field on an attack would make the actor's sheet unviewable
+- Not Implemented/ Steps Required text styles were incorrect with bold/ italics
+- Actor sheet wouldn't render if two classes/ features named the same thing granted proficiency
+
+### Changelog
+
+- Unhide Links tab instructions on items (thanks mkahvi) (#565)
 
 ### Changelog
 

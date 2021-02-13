@@ -297,9 +297,12 @@ export class ActorPF extends Actor {
               if (hasProperty(item, `data.${prof}`)) {
                 // Get existing sourceInfo for item with this name, create sourceInfo if none is found
                 // Remember whether sourceInfo can be modified or has to be pushed at the end
-                let [sInfo, hasInfo] = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
-                  (o) => o.name === item.name
-                ) ?? [{ name: item.name, value: [] }, false];
+                let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
+                    (o) => o.name === item.name
+                  ),
+                  hasInfo = !!sInfo;
+                if (!sInfo) sInfo = { name: item.name, value: [] };
+                else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
                 // Regular proficiencies
                 for (const proficiency of item.data[prof].value) {
@@ -320,6 +323,8 @@ export class ActorPF extends Actor {
                 customProficiencies.push(...customProfs);
 
                 if (sInfo.value.length > 0) {
+                  // Dedupe if adding to existing sourceInfo
+                  if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
                   // Transform arrays into presentable strings
                   sInfo.value = sInfo.value.join(", ");
                   // If sourceInfo was not a reference to existing info, push it now

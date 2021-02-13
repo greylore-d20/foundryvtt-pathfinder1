@@ -913,6 +913,17 @@ export class ItemPF extends Item {
     }
 
     let diff = diffObject(flattenObject(this.data), data);
+    // Filter diff for arrays that haven't changed. Single level depth with speed as priority
+    for (let d in diff) {
+      if (!(diff[d] instanceof Array)) continue;
+      let origData = getProperty(this.data, d);
+      if (diff[d].length !== origData.length) continue;
+      let anyDiff = diff[d].some((obj, idx) => {
+        if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
+      });
+      if (!anyDiff) delete diff[d];
+    }
+
     if (Object.keys(diff).length && !options.skipUpdate) {
       if (this.parentItem == null) {
         await super.update(diff, options);
@@ -947,9 +958,9 @@ export class ItemPF extends Item {
     }
 
     // Update tokens with this item as a resource bar
-    if (this.actor && diff["data.uses.value"] != null) {
+    if (this.parentActor && diff["data.uses.value"] != null) {
       let promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor._id === this.actor._id);
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === this.parentActor._id);
       for (const token of tokens) {
         const tokenUpdateData = {};
 
@@ -1020,7 +1031,7 @@ export class ItemPF extends Item {
     // Add a new effect
     const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
     createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    const effect = ActiveEffect.create(createData, this.actor);
+    const effect = ActiveEffect.create(createData, this.parentActor);
     await effect.create();
 
     return effect;

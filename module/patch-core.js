@@ -37,9 +37,9 @@ export async function PatchCore() {
 
   // const Roll__identifyTerms = Roll.prototype._identifyTerms;
   Roll.prototype._identifyTerms = function (formula, { step = 0 } = {}) {
+    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
     formula = _preProcessDiceFormula(formula, this.data);
     var warned;
-    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
 
     // Step 1 - Update the Roll formula using provided data
     [formula, warned] = this.constructor.replaceFormulaData(formula, this.data, { missing: "0", warn: false });

@@ -17,6 +17,7 @@
 - Fixed error messages for players when GM updated an entity which would do something with an actor's hit points they didn't own
 - NPC Lite sheets were bugging out majorly
 - Wounds and Vigor incorrectly checked for PC rules even for NPCs
+- Adding a pre-active buff to an actor didn't add a token overlay
 
 ### Changelog
 

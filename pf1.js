@@ -497,8 +497,10 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
 
   // Refresh item
   item.update({});
-  // Refresh actor
-  // await actor.update({});
+  // Show buff if active
+  if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
+    actor.toggleConditionStatusIcons();
+  }
 });
 
 Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {

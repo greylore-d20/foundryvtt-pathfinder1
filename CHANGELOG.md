@@ -7,6 +7,7 @@
 - Buff icons on unlinked tokens could not update themselves (#583)
 - Conditional modifiers couldn't be modified
 - Updating items with context notes resulted in an error message
+- Unlinked tokens were reset back to their base stats when migrating worlds
 - Encumbrance was incorrectly applied when equal to or above the threshold, instead of when above the threshold
 
 ### Changelog

@@ -241,22 +241,9 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else {
-      // console.log(token.data);
-      let originalData = {};
-      if (token.data.actorId) {
-        const originalActor = game.actors.entities.find((o) => o._id === token.data.actorId);
-        if (originalActor) {
-          originalData = originalActor.data;
-        }
-      }
-      const combinedData = mergeObject(originalData, token.data.actorData, { inplace: false });
-      const tA = await Actor.create(combinedData);
-      const updateData = await migrateActorData(tA);
-      const newData = diffObject(combinedData, expandObject(updateData));
-      // console.log(tA, combinedData, updateData, newData);
-      // t.actorData = mergeObject(token.data.actorData, updateData);
-      await tA.delete();
-      t.actorData = newData;
+      const a = Actor.fromToken(token);
+      const updateData = await migrateActorData(a.data);
+      t.actorData = mergeObject(a.data, updateData);
     }
   }
   // console.log(result);

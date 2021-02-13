@@ -35,6 +35,8 @@ export class TooltipWorldConfig extends FormApplication {
       hideHeld: false,
       hideArmor: false,
       hideBuffs: false,
+      hideConditions: false,
+      hideClothing: false,
     };
   }
 

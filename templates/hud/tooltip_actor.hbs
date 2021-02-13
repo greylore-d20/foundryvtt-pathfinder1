@@ -58,3 +58,17 @@
         </div>
     </div>
 {{/if}}
+
+{{!-- Show Clothing --}}
+{{#if clothing}}
+    <h2>{{localize "PF1.EquipTypeClothing"}}</h2>
+
+    <div class="held-items">
+        {{#each clothing as |i|}}
+            <div class="held-item">
+                <img src="{{i.icon}}">
+                <span>{{i.label}}</span>
+            </div>
+        {{/each}}
+    </div>
+{{/if}}

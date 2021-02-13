@@ -39,6 +39,14 @@
         </div>
     </div>
 
+    {{!-- Hide Conditions globally --}}
+    <div class="form-group" title="{{localize "PF1.TooltipWorldConfigHideConditions_Hint"}}">
+        <label>{{localize "PF1.TooltipWorldConfigHideConditions"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="hideConditions" data-dtype="Boolean" {{checked data.hideConditions}}/>
+        </div>
+    </div>
+
     <div class="form-group">
         <button type="button" name="reset">
             <i class="fas fa-undo"></i> {{localize 'SETTINGS.Reset'}}

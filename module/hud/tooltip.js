@@ -116,7 +116,12 @@ export class TooltipPF extends Application {
     this.getPortrait(data, actor.img);
 
     // Get conditions
-    {
+    if (
+      game.user.isGM ||
+      actor.owner ||
+      (!getProperty(actor.data, "data.details.tooltip.hideConditions") &&
+        !getProperty(this.worldConfig, "hideConditions"))
+    ) {
       const conditions = getProperty(actor.data, "data.attributes.conditions") || {};
       for (const [ck, cv] of Object.entries(conditions)) {
         if (cv === true) {
@@ -187,6 +192,29 @@ export class TooltipPF extends Application {
           label: armor.getName(),
           icon: armor.img,
         };
+    }
+
+    // Get clothing
+    if (
+      game.user.isGM ||
+      actor.owner ||
+      (!getProperty(actor.data, "data.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
+    ) {
+      const clothing = actor.items.filter((i) => {
+        if (i.type !== "equipment") return false;
+        if (!i.data.data.equipped) return false;
+        if (i.data.data.equipmentType !== "misc") return false;
+        if (i.data.data.equipmentSubtype !== "clothing") return false;
+        return true;
+      });
+
+      for (const i of clothing) {
+        data.clothing = data.clothing || [];
+        data.clothing.push({
+          label: i.getName(),
+          icon: i.img,
+        });
+      }
     }
 
     return data;

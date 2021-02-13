@@ -177,6 +177,7 @@ export class ActorSheetPF extends ActorSheet {
     // The Actor and its Items
     data.actor = duplicate(this.actor.data);
     if (this.actor.isToken) data.token = duplicate(this.actor.token.data);
+    else data.token = data.actor.token;
     data.items = this.actor.items.map((i) => {
       i.data.labels = i.labels;
       i.data.hasAttack = i.hasAttack;

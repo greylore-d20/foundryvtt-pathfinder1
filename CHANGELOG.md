@@ -12,6 +12,7 @@
 - Spell range type could not be changed
 - Duplicating items did not give their changes a new identifier
 - Prevent errors and having to click delete twice on certain item properties
+- Continuous health wasn't rounding
 
 ### Changelog
 

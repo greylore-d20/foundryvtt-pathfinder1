@@ -588,6 +588,13 @@ export class ActorPF extends Actor {
     const data = actorData.data;
     const rollData = this.getRollData();
 
+    // Round health
+    const healthConfig = game.settings.get("pf1", "healthConfig");
+    const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
+    for (const k of ["data.attributes.hp.max", "data.attributes.vigor.max"]) {
+      setProperty(this.data, `${k}`, round(getProperty(this.data, `${k}`)));
+    }
+
     // Refresh HP
     if (!game.pf1.isMigrating) {
       for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {

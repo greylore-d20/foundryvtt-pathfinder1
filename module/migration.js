@@ -183,6 +183,7 @@ export const migrateActorData = async function (actor) {
 export const migrateItemData = function (item) {
   const updateData = {};
 
+  _migrateItemArrayTypes(item, updateData);
   _migrateItemSpellUses(item, updateData);
   _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
@@ -470,6 +471,12 @@ const _migrateActorHPAbility = function (ent, updateData) {
   // Set Will save ability
   if (getProperty(ent.data, "data.attributes.savingThrows.will.ability") === undefined) {
     updateData["data.attributes.savingThrows.will.ability"] = "wis";
+  }
+};
+
+const _migrateItemArrayTypes = function (ent, updateData) {
+  if (!(getProperty(ent.data, "data.conditionals") instanceof Array)) {
+    updateData["data.conditionals"] = [];
   }
 };
 

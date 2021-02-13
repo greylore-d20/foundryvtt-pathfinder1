@@ -13,9 +13,6 @@
 ### Changelog
 
 - Unhide Links tab instructions on items (thanks mkahvi) (#565)
-
-### Changelog
-
 - Added a fairly robust (initial) tooltip system
 
 ## 0.77.7 (Hotfix)

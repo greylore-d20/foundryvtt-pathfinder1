@@ -162,9 +162,9 @@ export async function PatchCore() {
   // Patch ActorTokenHelpers.deleteEmbeddedEntity
   const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
   ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function (embeddedName, id, options = {}) {
-    const item = this.items.find((o) => o._id === id);
+    const item = this.items.get(id);
 
-    await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, id, options);
+    const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, id, options);
 
     // Remove token effects for deleted buff
     if (item) {
@@ -179,7 +179,31 @@ export async function PatchCore() {
       await Promise.all(promises);
     }
 
-    // return ActorPF.prototype.update.call(this, {});
+    return deleted;
+  };
+
+  const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
+  ActorTokenHelpers.prototype.createEmbeddedEntity = async function (embeddedName, data, options = {}) {
+    const created = await ActorTokenHelpers_createEmbeddedEntity.call(this, embeddedName, data, options);
+    if (embeddedName === "OwnedItem") {
+      if (data.type === "buff" && getProperty(data, "data.active") === true) {
+        this.toggleConditionStatusIcons();
+      }
+    }
+
+    return created;
+  };
+
+  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
+  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
+    const updates = await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
+    if (embeddedName === "OwnedItem") {
+      if (updates.type === "buff" && data["data.active"] !== undefined) {
+        this.toggleConditionStatusIcons();
+      }
+    }
+
+    return updates;
   };
 
   // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.

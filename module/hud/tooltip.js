@@ -43,7 +43,7 @@ export class TooltipPF extends Application {
   }
 
   get hidden() {
-    return this.element[0].style.visibility === "hidden";
+    return this.element[0]?.style.visibility === "hidden";
   }
 
   bind(object) {
@@ -92,6 +92,7 @@ export class TooltipPF extends Application {
 
   getTokenData(token) {
     const data = this.getActorData(token.actor);
+    if (!data) return null;
 
     data.name = token.data.name;
     if (!game.user.isGM) {
@@ -102,6 +103,8 @@ export class TooltipPF extends Application {
   }
 
   getActorData(actor) {
+    if (!actor) return null;
+
     const data = {
       data: actor.data,
       name: actor.data.name,

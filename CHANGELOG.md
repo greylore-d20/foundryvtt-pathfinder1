@@ -11,6 +11,7 @@
 - Actor sheet wouldn't render if two classes/ features named the same thing granted proficiency
 - Spell range type could not be changed
 - Duplicating items did not give their changes a new identifier
+- Prevent errors and having to click delete twice on certain item properties
 
 ### Changelog
 

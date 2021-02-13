@@ -606,7 +606,7 @@ export class ItemPF extends Item {
 
       // Damage
       let dam = data.damage || {};
-      if (dam.parts) {
+      if (dam.parts && dam.parts instanceof Array) {
         labels.damage = dam.parts
           .map((d) => d[0])
           .join(" + ")
@@ -804,6 +804,51 @@ export class ItemPF extends Item {
         delete data[entry[0]];
       });
       linkData(srcData, data, "data.inventoryItems", arr);
+    }
+
+    // Make sure stuff remains an array
+    {
+      const keepArray = [
+        { key: "data.attackParts", count: 2 },
+        { key: "data.damage.parts", count: 2 },
+        { key: "data.damage.critParts", count: 2 },
+        { key: "data.damage.nonCritParts", count: 2 },
+        { key: "data.conditionals", count: 1 },
+      ];
+
+      for (let kArr of keepArray) {
+        if (Object.keys(data).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {
+          let subData = Object.entries(data).filter((e) => e[0].startsWith(`${kArr.key}.`));
+          let arr = duplicate(getProperty(this.data, kArr.key) || []);
+          const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
+          subData.forEach((entry) => {
+            let subKey = entry[0].split(".").slice(keySeparatorCount);
+            let i = subKey[0];
+            let subKey2 = subKey.slice(keySeparatorCount).join(".");
+            if (!arr[i]) arr[i] = {};
+
+            // Remove property
+            if (subKey[subKey.length - 1].startsWith("-=")) {
+              const obj = flattenObject(arr[i]);
+              subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
+              const deleteKeys = Object.keys(obj).filter((o) =>
+                o.startsWith(subKey.slice(keySeparatorCount).join("."))
+              );
+              for (let k of deleteKeys) {
+                if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                  delete obj[k];
+                }
+              }
+              arr[i] = expandObject(obj);
+            } else {
+              arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+            }
+
+            delete data[entry[0]];
+          });
+          linkData(srcData, data, kArr.key, arr);
+        }
+      }
     }
 
     // Update weight from base weight

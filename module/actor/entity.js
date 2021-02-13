@@ -1323,6 +1323,20 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Make only 1 fear condition active at most
+    {
+      const keys = ["shaken", "frightened", "panicked"];
+      for (let k of keys) {
+        k = `data.attributes.conditions.${k}`;
+        if (data[k] === true) {
+          for (let k2 of keys) {
+            k2 = `data.attributes.conditions.${k2}`;
+            if (k2 !== k) data[k2] = false;
+          }
+        }
+      }
+    }
+
     // Update experience
     this._updateExp(data);
 

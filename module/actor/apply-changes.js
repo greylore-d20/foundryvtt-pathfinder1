@@ -1243,7 +1243,9 @@ export const addDefaultChanges = function (changes) {
           });
         }
         break;
-      case "fear":
+      case "shaken":
+      case "frightened":
+      case "panicked":
         changes.push(
           ItemChange.create({
             formula: "-2",

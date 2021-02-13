@@ -155,6 +155,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorStatures(actor, updateData);
   _migrateActorInitAbility(actor, updateData);
   _migrateActorChangeRevamp(actor, updateData);
+  _migrateActorConditions(actor, updateData);
 
   if (!actor.items) return updateData;
 
@@ -922,6 +923,16 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
 
   for (const [k, v] of Object.entries(keys)) {
     updateData[k] = v;
+  }
+};
+
+const _migrateActorConditions = function (ent, updateData) {
+  // Migrate fear to shaken
+  {
+    const cond = getProperty(ent.data, "data.conditions.fear");
+    if (cond === true) {
+      updateData["data.conditions.shaken"] = true;
+    }
   }
 };
 

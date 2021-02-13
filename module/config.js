@@ -1055,10 +1055,14 @@ PF1.conditions = {
   paralyzed: "PF1.CondParalyzed",
   pinned: "PF1.CondPinned",
   prone: "PF1.CondProne",
-  fear: "PF1.CondFear",
-  sickened: "PF1.CondSickened",
   staggered: "PF1.CondStaggered",
   stunned: "PF1.CondStunned",
+  shaken: "PF1.CondShaken",
+  frightened: "PF1.CondFrightened",
+  panicked: "PF1.CondPanicked",
+  sickened: "PF1.CondSickened",
+  nauseated: "PF1.CondNauseated",
+  dazed: "PF1.CondDazed",
 };
 
 PF1.conditionTextures = {
@@ -1077,10 +1081,14 @@ PF1.conditionTextures = {
   paralyzed: "systems/pf1/icons/conditions/paralyzed.png",
   pinned: "systems/pf1/icons/conditions/pinned.png",
   prone: "systems/pf1/icons/conditions/prone.png",
-  fear: "systems/pf1/icons/conditions/fear.png",
   sickened: "systems/pf1/icons/conditions/sickened.png",
   staggered: "systems/pf1/icons/conditions/staggered.png",
   stunned: "systems/pf1/icons/conditions/stunned.png",
+  shaken: "systems/pf1/icons/conditions/shaken.png",
+  frightened: "systems/pf1/icons/conditions/frightened.png",
+  panicked: "systems/pf1/icons/conditions/fear.png",
+  nauseated: "systems/pf1/icons/conditions/nauseated.png",
+  dazed: "systems/pf1/icons/conditions/dazed.png",
 };
 
 PF1.buffTypes = {

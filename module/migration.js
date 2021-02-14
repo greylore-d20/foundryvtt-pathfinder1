@@ -469,7 +469,7 @@ const _migrateItemArrayTypes = function (ent, updateData) {
 
   const contextNotes = getProperty(ent.data, "data.contextNotes");
   if (contextNotes != null && !(contextNotes instanceof Array)) {
-    if (contextNotes instanceof Object) updateData["data.contextNotes"] = [contextNotes];
+    if (contextNotes instanceof Object) updateData["data.contextNotes"] = Object.values(contextNotes);
     else updateData["data.contextNotes"] = [];
   }
 };

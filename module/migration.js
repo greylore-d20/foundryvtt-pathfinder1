@@ -837,7 +837,7 @@ const _migrateActorTokenVision = function (ent, updateData) {
 
   updateData["data.attributes.-=vision"] = null;
   updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
-  if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision;
+  if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision ?? 0;
 };
 
 const _migrateActorSpellbookUsage = function (ent, updateData) {

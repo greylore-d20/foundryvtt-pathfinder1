@@ -3410,6 +3410,7 @@ export class ItemPF extends Item {
     // Compendium entry
     if (l.dataType === "compendium") {
       const pack = game.packs.get(id.slice(0, 2).join("."));
+      if (!pack) return null;
       item = await pack.getEntity(id[2]);
     }
     // World entry
@@ -3435,7 +3436,11 @@ export class ItemPF extends Item {
     for (let links of Object.values(linkGroups)) {
       for (let l of links) {
         const i = await this.getLinkItem(l);
-        if (i == null) continue;
+        if (i == null) {
+          l.name = l.name + (l.name.indexOf("[x]") > -1 ? "" : " [x]");
+          l.img = "icons/svg/mystery-man.svg";
+          continue;
+        }
         l.name = i.name;
         l.img = i.img;
       }

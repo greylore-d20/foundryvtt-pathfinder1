@@ -2261,7 +2261,7 @@ export class ItemPF extends Item {
     }
 
     // Add wound thresholds penalties
-    if (rollData.attributes.woundThresholds.penalty > 0) {
+    if (rollData.attributes.woundThresholds?.penalty > 0) {
       parts.push("- @attributes.woundThresholds.penalty");
     }
 

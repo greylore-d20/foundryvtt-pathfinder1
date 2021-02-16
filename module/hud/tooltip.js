@@ -97,7 +97,7 @@ export class TooltipPF extends Application {
     if (!data) return null;
 
     data.name = token.data.name;
-    if (!(game.user.isGM && !this.forceHideGMInfo)) {
+    if (!(token.actor.hasPerm(game.user, "OBSERVER") && !this.forceHideGMInfo)) {
       const tooltipName = getProperty(token.actor.data, "data.details.tooltip.name");
       data.name = tooltipName || token.data.name;
 

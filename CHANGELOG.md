@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.10
+
+### Changelog
+
+- Changed default world settings for tooltips to hide most information from players (may be reverted in the future)
+
 ## 0.77.9 (Hotfix)
 
 ### Bug Fixes

@@ -352,6 +352,12 @@ export class ActorPF extends Actor {
           `data.abilities.${ab}.total`,
           getProperty(this.data, `data.abilities.${ab}.value`) - getProperty(this.data, `data.abilities.${ab}.drain`)
         );
+        setProperty(
+          this.data,
+          `data.abilities.${ab}.penalty`,
+          (getProperty(this.data, `data.abilities.${ab}.penalty`) || 0) +
+            (getProperty(this.data, `data.abilities.${ab}.userPenalty`) || 0)
+        );
       }
       this.refreshAbilityModifiers();
     }
@@ -3200,9 +3206,7 @@ export class ActorPF extends Actor {
   refreshAbilityModifiers() {
     for (let k of Object.keys(this.data.data.abilities)) {
       const total = getProperty(this.data, `data.abilities.${k}.total`);
-      const penalty =
-        Math.abs(getProperty(this.data, `data.abilities.${k}.penalty`) || 0) +
-        (getProperty(this.data, `data.abilities.${k}.userPenalty`) || 0);
+      const penalty = Math.abs(getProperty(this.data, `data.abilities.${k}.penalty`) || 0);
       const damage = getProperty(this.data, `data.abilities.${k}.damage`);
 
       const result = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));

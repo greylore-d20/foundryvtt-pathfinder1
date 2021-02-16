@@ -2,6 +2,10 @@
 
 ## 0.77.10
 
+### Bug Fixes
+
+- Ability score penalties were not being reflected in roll data's `@abilities.<ability>.penalty`
+
 ### Changelog
 
 - Changed default world settings for tooltips to hide most information from players (may be reverted in the future)

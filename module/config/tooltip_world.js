@@ -37,6 +37,8 @@ export class TooltipWorldConfig extends FormApplication {
       hideBuffs: true,
       hideConditions: false,
       hideClothing: true,
+      hideActorName: true,
+      hideActorNameReplacement: "???",
     };
   }
 

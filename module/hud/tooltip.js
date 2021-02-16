@@ -98,7 +98,15 @@ export class TooltipPF extends Application {
 
     data.name = token.data.name;
     if (!(game.user.isGM && !this.forceHideGMInfo)) {
-      data.name = getProperty(token.actor.data, "data.details.tooltip.name") || token.data.name;
+      const tooltipName = getProperty(token.actor.data, "data.details.tooltip.name");
+      data.name = tooltipName || token.data.name;
+
+      if (
+        (this.worldConfig.hideActorName === true && !tooltipName) ||
+        getProperty(token.actor.data, "data.details.tooltip.hideName") === true
+      ) {
+        data.name = this.worldConfig.hideActorNameReplacement || "???";
+      }
     }
 
     return data;

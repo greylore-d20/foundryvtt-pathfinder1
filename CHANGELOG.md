@@ -6,11 +6,13 @@
 
 - Ability score penalties were not being reflected in roll data's `@abilities.<ability>.penalty`
 - Tooltips for tokens became wider with more items
+- Several migration fixes. Please let us know if migration doesn't finish for you.
 
 ### Changelog
 
 - Changed default world settings for tooltips to hide most information from players (may be reverted in the future)
 - Added better option to hide actor names from players in tooltips
+- Class Association links now indicate if the referenced item doesn't exist
 
 ## 0.77.9 (Hotfix)
 

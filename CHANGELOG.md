@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Ability score penalties were not being reflected in roll data's `@abilities.<ability>.penalty`
+- Tooltips for tokens became wider with more items
 
 ### Changelog
 

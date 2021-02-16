@@ -3154,6 +3154,8 @@ input.text-box {
   border-color: #da0000;
 }
 .pf1-tooltip {
+  display: flex;
+  flex-flow: column nowrap;
   position: absolute;
   pointer-events: none;
   z-index: 1000;
@@ -3185,10 +3187,8 @@ input.text-box {
 .pf1-tooltip .conditions,
 .pf1-tooltip .buffs,
 .pf1-tooltip .held-items {
-  display: flex;
-  justify-content: flex-start;
-  flex-flow: row wrap;
-  min-width: 320px;
+  display: grid;
+  grid-template-columns: auto auto;
 }
 .pf1-tooltip .conditions .condition,
 .pf1-tooltip .buffs .condition,
@@ -3196,12 +3196,12 @@ input.text-box {
 .pf1-tooltip .conditions .held-item,
 .pf1-tooltip .buffs .held-item,
 .pf1-tooltip .held-items .held-item {
-  flex: 1 1 50%;
+  flex: 0 0 50%;
 }
 .pf1-tooltip .conditions .buff,
 .pf1-tooltip .buffs .buff,
 .pf1-tooltip .held-items .buff {
-  flex: 1 1 100%;
+  flex: 0 0 100%;
 }
 .pf1-tooltip .conditions .condition,
 .pf1-tooltip .buffs .condition,
@@ -3214,6 +3214,7 @@ input.text-box {
 .pf1-tooltip .held-items .held-item {
   display: flex;
   align-items: center;
+  min-width: 220px;
 }
 .pf1-tooltip .conditions .condition img,
 .pf1-tooltip .buffs .condition img,

@@ -1463,7 +1463,7 @@ export class ItemPF extends Item {
       }
     }
 
-    const rollData = this.getRollData();
+    const rollData = duplicate(this.getRollData());
     rollData.d20 = dice !== "1d20" ? dice : "";
 
     let rolled = false;

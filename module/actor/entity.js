@@ -48,6 +48,13 @@ export class ActorPF extends Actor {
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
     this._runningFunctions = [];
+
+    /**
+     * @property {Boolean} _initializing
+     * Starts as true to flag the actor as initializing, so some things (such as offsetting HP with max HP changes) don't apply initially
+     * Gets deleted after initialization.
+     */
+    this._initializing = true;
   }
 
   /* -------------------------------------------- */
@@ -612,7 +619,7 @@ export class ActorPF extends Actor {
     }
 
     // Refresh HP
-    if (!game.pf1.isMigrating) {
+    if (!game.pf1.isMigrating && !this._initializing) {
       for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
         const prevMax = this._prevAttributes[k] || 0;
         const newMax = getProperty(this.data, `${k}.max`) || 0;
@@ -976,6 +983,11 @@ export class ActorPF extends Actor {
     this.items.forEach((item) => {
       this.updateItemResources(item);
     });
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (this.hasOwnProperty("_initializing")) {
+      delete this._initializing;
+    }
   }
 
   prepareItemLinks() {
@@ -1093,6 +1105,12 @@ export class ActorPF extends Actor {
       "data.attributes.init.total": 0,
       "data.attributes.cmb.total": 0,
       "data.attributes.hp.max": 0,
+      "data.attributes.attack.general": 0,
+      "data.attributes.attack.melee": 0,
+      "data.attributes.attack.ranged": 0,
+      "data.attributes.damage.general": 0,
+      "data.attributes.damage.weapon": 0,
+      "data.attributes.damage.spell": 0,
     };
 
     try {
@@ -1223,6 +1241,7 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   async preUpdate(data) {
+    const fullData = mergeObject(this.data, data, { inplace: false });
     data = flattenObject(data);
 
     // Apply settings
@@ -1250,7 +1269,7 @@ export class ActorPF extends Actor {
         else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
           usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
       }
-      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+      linkData(fullData, data, "data.attributes.spells.usedSpellbooks", usedSpellbooks);
     }
 
     // Make certain variables absolute
@@ -1264,7 +1283,7 @@ export class ActorPF extends Actor {
         return data[k] != null;
       });
     for (const k of _absoluteKeys) {
-      data[k] = Math.abs(data[k]);
+      linkData(fullData, data, k, Math.abs(data[k]));
     }
 
     // Apply changes in Actor size to Token width/height
@@ -1279,9 +1298,9 @@ export class ActorPF extends Actor {
         o.update({ width: size.w, height: size.h, scale: size.scale });
       });
       if (!this.isToken) {
-        data["token.width"] = size.w;
-        data["token.height"] = size.h;
-        data["token.scale"] = size.scale;
+        linkData(fullData, data, "token.width", size.w);
+        linkData(fullData, data, "token.height", size.h);
+        linkData(fullData, data, "token.scale", size.scale);
       }
     }
 
@@ -1357,7 +1376,7 @@ export class ActorPF extends Actor {
     }
 
     // Update experience
-    this._updateExp(data);
+    this._updateExp(data, fullData);
 
     return data;
   }
@@ -1493,9 +1512,9 @@ export class ActorPF extends Actor {
    * Makes sure experience values are correct in update data.
    * @param {Object} data - The update data, as per ActorPF.update()
    */
-  _updateExp(updateData) {
+  _updateExp(updateData, fullData) {
     // Update total level and mythic tier
-    const classes = this.data.items.filter((o) => o.type === "class");
+    const classes = fullData.items.filter((o) => o.type === "class");
     const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
     updateData["data.details.level.value"] = level;
 
@@ -3211,6 +3230,9 @@ export class ActorPF extends Actor {
 
         for (let token of tokens) {
           for (let con of CONFIG.statusEffects) {
+            // Don't toggle non-condition effects
+            if (CONFIG.PF1.conditions[con.id] == null) continue;
+
             const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
             const hasCondition = this.data.data.attributes.conditions[con.id] === true;
             const hasEffectIcon = idx >= 0;
@@ -3264,6 +3286,10 @@ export class ActorPF extends Actor {
   }
 
   importFromJSON(json) {
+    // Set _initializing flag to prevent faults (such as HP changing incorrectly)
+    this._initializing = true;
+
+    // Import from JSON
     const data = JSON.parse(json);
     delete data._id;
     data.effects = [];

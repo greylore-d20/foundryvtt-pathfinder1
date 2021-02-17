@@ -617,6 +617,9 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Update wound threshold
+    this.updateWoundThreshold();
+
     // Reset spell slots and spell points
     for (let spellbookKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
       const spellbook = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
@@ -2558,6 +2561,45 @@ export class ActorPF extends Actor {
       multiplier: woundMult,
       valid: woundLevel > 0 && woundMult > 0,
     };
+  }
+
+  /**
+   * Updates attributes.woundThresholds.level variable.
+   */
+  updateWoundThreshold() {
+    const hpconf = game.settings.get("pf1", "healthConfig").variants;
+    const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+    if (!usage) {
+      setProperty(this.data, "data.attributes.woundThresholds.level", 0);
+      setProperty(this.data, "data.attributes.woundThresholds.penaltyBase", 0);
+      setProperty(this.data, "data.attributes.woundThresholds.penalty", 0);
+      return;
+    }
+    const curHP = getProperty(this.data, "data.attributes.hp.value"),
+      maxHP = getProperty(this.data, "data.attributes.hp.max");
+    console.log(curHP, maxHP);
+
+    let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
+    if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
+
+    const wtMult = this.getWoundThresholdMultiplier();
+    const wtMod = getProperty(this.data, "data.attributes.woundThresholds.mod") ?? 0;
+
+    setProperty(this.data, "data.attributes.woundThresholds.level", level);
+    setProperty(this.data, "data.attributes.woundThresholds.penaltyBase", level * wtMult); // To aid relevant formulas
+    setProperty(this.data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
+
+    const penalty = getProperty(this.data, "data.attributes.woundThresholds.penalty");
+    const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "allChecks"];
+    for (let fk of changeFlatKeys) {
+      let flats = getChangeFlat.call(this, fk, "penalty", this.data.data);
+      if (!(flats instanceof Array)) flats = [flats];
+      for (let k of flats) {
+        if (!k) continue;
+        const curValue = getProperty(this.data, k);
+        setProperty(this.data, k, curValue - penalty);
+      }
+    }
   }
 
   getSkill(key) {

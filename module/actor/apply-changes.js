@@ -880,7 +880,7 @@ export const addDefaultChanges = function (changes) {
         ItemChange.create({
           formula: flyValue.toString(),
           target: "skill",
-          subtarget: "skill.fly",
+          subTarget: "skill.fly",
           modifier: "racial",
         })
       );

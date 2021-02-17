@@ -8,6 +8,7 @@
 - Tooltips for tokens became wider with more items
 - Several migration fixes. Please let us know if migration doesn't finish for you.
 - Attack range calculation on actor sheets could cause the sheet to be unopeneable
+- Fly maneuverability bonuses/penalties didn't apply to the fly skill bonus
 
 ### Changelog
 

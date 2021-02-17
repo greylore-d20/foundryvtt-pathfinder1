@@ -7,6 +7,7 @@
 - Ability score penalties were not being reflected in roll data's `@abilities.<ability>.penalty`
 - Tooltips for tokens became wider with more items
 - Several migration fixes. Please let us know if migration doesn't finish for you.
+- Attack range calculation on actor sheets could cause the sheet to be unopeneable
 
 ### Changelog
 

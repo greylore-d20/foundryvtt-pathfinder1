@@ -909,7 +909,7 @@ export class ActorPF extends Actor {
         flatFooted: Math.min(0, dex),
       };
       const cmd = {
-        total: maxDex !== null ? Math.min(maxDex, dex) : dex,
+        total: dex,
         flatFootedTotal: Math.min(0, dex),
       };
       for (const [k, v] of Object.entries(ac)) {

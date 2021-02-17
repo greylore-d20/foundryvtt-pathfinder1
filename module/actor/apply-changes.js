@@ -179,22 +179,39 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
       return `data.abilities.${changeTarget}.total`;
     case "ac":
-      if (changeType === "dodge")
-        return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
-      else if (changeType === "deflection") {
-        return [
-          "data.attributes.ac.normal.total",
-          "data.attributes.ac.touch.total",
-          "data.attributes.ac.flatFooted.total",
-          "data.attributes.cmd.total",
-          "data.attributes.cmd.flatFootedTotal",
-        ];
+      switch (changeType) {
+        case "dodge":
+          return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
+        case "deflection":
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+            "data.attributes.cmd.total",
+            "data.attributes.cmd.flatFootedTotal",
+          ];
+        case "circumstance":
+        case "insight":
+        case "luck":
+        case "morale":
+        case "profane":
+        case "sacred":
+        case "untyped":
+        case "untypedPerm":
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+            "data.attributes.cmd.total",
+            "data.attributes.cmd.flatFootedTotal",
+          ];
+        default:
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+          ];
       }
-      return [
-        "data.attributes.ac.normal.total",
-        "data.attributes.ac.touch.total",
-        "data.attributes.ac.flatFooted.total",
-      ];
     case "aac":
       return "temp.ac.armor";
     case "sac":

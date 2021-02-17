@@ -347,17 +347,22 @@ export class ActorPF extends Actor {
     {
       const abs = Object.keys(this.data.data.abilities);
       for (let ab of abs) {
-        setProperty(
-          this.data,
-          `data.abilities.${ab}.total`,
-          getProperty(this.data, `data.abilities.${ab}.value`) - getProperty(this.data, `data.abilities.${ab}.drain`)
-        );
-        setProperty(
-          this.data,
-          `data.abilities.${ab}.penalty`,
-          (getProperty(this.data, `data.abilities.${ab}.penalty`) || 0) +
-            (getProperty(this.data, `data.abilities.${ab}.userPenalty`) || 0)
-        );
+        const value = getProperty(this.data, `data.abilities.${ab}.value`);
+        if (value == null) {
+          setProperty(this.data, `data.abilities.${ab}.total`, null);
+        } else {
+          setProperty(
+            this.data,
+            `data.abilities.${ab}.total`,
+            value - getProperty(this.data, `data.abilities.${ab}.drain`)
+          );
+          setProperty(
+            this.data,
+            `data.abilities.${ab}.penalty`,
+            (getProperty(this.data, `data.abilities.${ab}.penalty`) || 0) +
+              (getProperty(this.data, `data.abilities.${ab}.userPenalty`) || 0)
+          );
+        }
       }
       this.refreshAbilityModifiers();
     }
@@ -2577,7 +2582,6 @@ export class ActorPF extends Actor {
     }
     const curHP = getProperty(this.data, "data.attributes.hp.value"),
       maxHP = getProperty(this.data, "data.attributes.hp.max");
-    console.log(curHP, maxHP);
 
     let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
     if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
@@ -3248,11 +3252,14 @@ export class ActorPF extends Actor {
   refreshAbilityModifiers() {
     for (let k of Object.keys(this.data.data.abilities)) {
       const total = getProperty(this.data, `data.abilities.${k}.total`);
-      const penalty = Math.abs(getProperty(this.data, `data.abilities.${k}.penalty`) || 0);
-      const damage = getProperty(this.data, `data.abilities.${k}.damage`);
-
-      const result = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
-      setProperty(this.data, `data.abilities.${k}.mod`, result);
+      if (total == null) {
+        setProperty(this.data, `data.abilities.${k}.mod`, 0);
+      } else {
+        const penalty = Math.abs(getProperty(this.data, `data.abilities.${k}.penalty`) || 0);
+        const damage = getProperty(this.data, `data.abilities.${k}.damage`);
+        const result = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
+        setProperty(this.data, `data.abilities.${k}.mod`, result);
+      }
     }
   }
 

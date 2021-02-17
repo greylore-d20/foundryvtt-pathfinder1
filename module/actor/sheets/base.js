@@ -246,6 +246,7 @@ export class ActorSheetPF extends ActorSheet {
     for (let [a, abl] of Object.entries(data.actor.data.abilities)) {
       abl.label = CONFIG.PF1.abilities[a];
       abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.abilities[a].total : [];
+      abl.totalLabel = abl.total == null ? "-" : abl.total;
     }
 
     // Armor Class
@@ -1376,11 +1377,20 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.currentTarget;
 
     this._mouseWheelAdd(event.originalEvent, el);
+    // Get base value
     let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
       value = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
     }
+
+    // Adjust value if needed
     const name = el.getAttribute("name");
+    if (name.match(/data\.abilities\.([a-zA-Z0-9]+)\.value$/)) {
+      if (Number.isNaN(parseInt(value))) value = null;
+      else value = parseInt(value);
+    }
+
+    // Add pending update
     if (name) {
       this._pendingUpdates[name] = value;
     }

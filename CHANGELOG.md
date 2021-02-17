@@ -17,6 +17,7 @@
 - Changed default world settings for tooltips to hide most information from players (may be reverted in the future)
 - Added better option to hide actor names from players in tooltips
 - Class Association links now indicate if the referenced item doesn't exist
+- Clearing an ability score turns it to a null (-) value
 
 ## 0.77.9 (Hotfix)
 

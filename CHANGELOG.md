@@ -12,6 +12,7 @@
 - Changing an attack's damage ability multiplier in the attack dialog changed the value for the item in-memory
 - The Wound Threshold optional rule was no longer working
 - Dexterity bonuses to CMD were incorrectly limited by the actor's Maximum Dexterity Bonus
+- The slayer talent class feature was incorrectly gained at level 1
 
 ### Changelog
 

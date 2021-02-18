@@ -1111,6 +1111,9 @@ export class ActorPF extends Actor {
       "data.attributes.damage.general": 0,
       "data.attributes.damage.weapon": 0,
       "data.attributes.damage.spell": 0,
+      "data.attributes.woundThresholds.level": 0,
+      "data.attributes.woundThresholds.penaltyBase": 0,
+      "data.attributes.woundThresholds.penalty": 0,
     };
 
     try {

@@ -565,16 +565,26 @@ Hooks.on("chatMessage", (log, message, chatData) => {
         const rollData = actor ? actor.getRollData() : {};
         const roll = new Roll(value, rollData).roll();
         const total = roll.total;
-        chat.createCustomChatMessage("systems/pf1/templates/chat/simple-damage.hbs", {
-          tokenId: tokenId,
-          isHealing: type.toUpperCase() === "HEAL",
-          roll: {
-            value: total,
-            halfValue: Math.floor(total / 2),
-            formula: value,
-            json: escape(JSON.stringify(roll.toJSON())),
-          },
-        });
+
+        (async () => {
+          const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
+            tokenId: tokenId,
+            isHealing: type.toUpperCase() === "HEAL",
+            roll: {
+              value: total,
+              halfValue: Math.floor(total / 2),
+              formula: value,
+              json: escape(JSON.stringify(roll.toJSON())),
+            },
+          });
+          const chatOptions = {
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+            roll: roll,
+            rollMode: game.settings.get("core", "rollMode"),
+            content: content,
+          };
+          ChatMessage.create(chatOptions);
+        })();
         return false;
     }
   }

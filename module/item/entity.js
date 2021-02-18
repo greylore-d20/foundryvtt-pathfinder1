@@ -2628,7 +2628,13 @@ export class ItemPF extends Item {
 
     // Get the Actor from a synthetic Token
     const actor = this._getChatCardActor(card);
-    if (!actor) return;
+    if (!actor) {
+      if (action === "applyDamage") {
+        await this._onChatCardAction(action, { button: button });
+        button.disabled = false;
+      }
+      return;
+    }
 
     // Get the Item
     const item = actor.getOwnedItem(card.dataset.itemId);

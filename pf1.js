@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /**
  * The Pathfinder 1st edition game system for Foundry Virtual Tabletop
  * Author: Furyspark
@@ -549,6 +550,34 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
 
   // Refresh actor
   actor.refresh();
+});
+
+Hooks.on("chatMessage", (log, message, chatData) => {
+  if (message.match(/^\/([a-zA-Z0-9]+)(?:[ ]+(.*)+)?/)) {
+    const type = RegExp.$1;
+    const value = RegExp.$2;
+    const actor = ChatMessage.getSpeakerActor(chatData.speaker);
+    const tokenId = chatData.speaker.token;
+
+    switch (type.toUpperCase()) {
+      case "DAMAGE":
+      case "HEAL":
+        const rollData = actor ? actor.getRollData() : {};
+        const roll = new Roll(value, rollData).roll();
+        const total = roll.total;
+        chat.createCustomChatMessage("systems/pf1/templates/chat/simple-damage.hbs", {
+          tokenId: tokenId,
+          isHealing: type.toUpperCase() === "HEAL",
+          roll: {
+            value: total,
+            halfValue: Math.floor(total / 2),
+            formula: value,
+            json: escape(JSON.stringify(roll.toJSON())),
+          },
+        });
+        return false;
+    }
+  }
 });
 
 /* -------------------------------------------- */

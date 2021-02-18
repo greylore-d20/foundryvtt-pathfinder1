@@ -915,6 +915,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.clm",
         modifier: "racial",
+        priority: -1,
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.clm.changeBonus").positive.push({
@@ -928,6 +929,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.swm",
         modifier: "racial",
+        priority: -1,
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.swm.changeBonus").positive.push({

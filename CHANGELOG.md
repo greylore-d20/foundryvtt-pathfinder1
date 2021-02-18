@@ -28,6 +28,7 @@
 - Tooltips will not show while Alt is held
 - Attack and Damage bonuses from changes are now deferred until attack rolls
   - This also means that enhancement bonuses to attack and damage don't stack with enhancement bonuses (and the masterwork property) of attacks
+- Added sample macro to show an actor's social defenses (demoralize/intimidate and diplomacy DCs)
 
 ## 0.77.9 (Hotfix)
 

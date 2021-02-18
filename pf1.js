@@ -580,6 +580,7 @@ Hooks.on("chatMessage", (log, message, chatData) => {
           const chatOptions = {
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             roll: roll,
+            speaker: ChatMessage.getSpeaker({ user: game.user }),
             rollMode: game.settings.get("core", "rollMode"),
             content: content,
           };

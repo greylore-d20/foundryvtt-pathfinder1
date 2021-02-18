@@ -114,8 +114,6 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (let t of targets) {
-      if (!t) continue;
-
       if (overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
@@ -136,6 +134,9 @@ export class ItemChange {
           }
         }
 
+        this.data.value = value;
+
+        if (!t) continue;
         const prior = overrides[t][operator][this.modifier];
 
         switch (operator) {

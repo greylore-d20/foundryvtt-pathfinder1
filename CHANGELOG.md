@@ -26,6 +26,8 @@
 - Adjusted when players can see a token's name in the tooltip slightly, so that they can always see the actual name if they at least have Observer permissions
 - Added `/damage <roll>` and `/heal <roll>` chat commands
 - Tooltips will not show while Alt is held
+- Attack and Damage bonuses from changes are now deferred until attack rolls
+  - This also means that enhancement bonuses to attack and damage don't stack with enhancement bonuses (and the masterwork property) of attacks
 
 ## 0.77.9 (Hotfix)
 

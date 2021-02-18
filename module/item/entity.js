@@ -6,6 +6,7 @@ import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
 import { SemanticVersion } from "../semver.js";
 import { ItemChange } from "./components/change.js";
+import { getHighestChanges } from "../actor/apply-changes.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -1472,8 +1473,50 @@ export class ItemPF extends Item {
         primaryAttack = true,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
+        changes = this.actor.changes.filter((c) => {
+          return ["attack", "mattack", "rattack", "damage", "wdamage", "sdamage"].includes(c.subTarget);
+        }),
         conditionals,
         result;
+
+      // Add attack enhancement bonus as a change, so as to not stack with other enhancement bonuses
+      if (getProperty(this.data, "data.enh") != null) {
+        const enh = getProperty(this.data, "data.enh");
+        changes.push(
+          ItemChange.create({
+            formula: enh.toString(),
+            operator: "add",
+            target: "attack",
+            subTarget: "attack",
+            modifier: "enh",
+            value: enh,
+          })
+        );
+        changes.push(
+          ItemChange.create({
+            formula: enh.toString(),
+            operator: "add",
+            target: "damage",
+            subTarget: "damage",
+            modifier: "enh",
+            value: enh,
+          })
+        );
+      }
+      // Add masterwork bonus as a change
+      if (this.data.type === "attack" && getProperty(this.data, "data.masterwork") === true) {
+        changes.push(
+          ItemChange.create({
+            formula: "1",
+            operator: "add",
+            target: "attack",
+            subTarget: "attack",
+            modifier: "enh",
+            value: 1,
+          })
+        );
+      }
+
       // Get form data
       if (form) {
         rollData.d20 = form.find('[name="d20"]').val();
@@ -2259,33 +2302,33 @@ export class ItemPF extends Item {
       }
     }
 
+    // Add change bonus
+    const isRanged = ["rwak", "rsak"].includes(this.data.data.actionType);
+    let changeBonus = 0;
+    {
+      // Get attack bonus
+      const attackTargets = ["attack"].concat(isRanged ? ["rattack"] : ["mattack"]);
+      const changes = this.actor.changes.filter((c) => attackTargets.includes(c.subTarget));
+      changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.actor);
+          return !["set", "="].includes(c.operator) && attackTargets.includes(c.subTarget);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        return cur + c.value;
+      }, 0);
+    }
+    if (changeBonus) parts.push(changeBonus.toString());
+
     // Add wound thresholds penalties
     if (rollData.attributes.woundThresholds?.penalty > 0) {
       parts.push("- @attributes.woundThresholds.penalty");
     }
 
-    // Add certain attack bonuses
-    if (rollData.attributes.attack.general !== 0) {
-      parts.push("@attributes.attack.general");
-    }
-    if (["mwak", "msak", "mcman"].includes(itemData.actionType) && rollData.attributes.attack.melee !== 0) {
-      parts.push("@attributes.attack.melee");
-    } else if (["rwak", "rsak", "rcman"].includes(itemData.actionType) && rollData.attributes.attack.ranged !== 0) {
-      parts.push("@attributes.attack.ranged");
-    }
-
-    // Add item's enhancement bonus
-    if (rollData.item.enh !== 0 && rollData.item.enh != null) {
-      parts.push("@item.enh");
-    }
     // Add proficiency penalty
     if (this.data.type === "attack" && !itemData.proficient) {
       parts.push("@item.proficiencyPenalty");
-    }
-    // Add masterwork bonus
-    if (this.data.type === "attack" && itemData.masterwork === true && itemData.enh < 1) {
-      rollData.item.masterworkBonus = 1;
-      parts.push("@item.masterworkBonus");
     }
     // Add secondary natural attack penalty
     if (primaryAttack === false) parts.push("-5");
@@ -2425,6 +2468,24 @@ export class ItemPF extends Item {
       });
     }
 
+    const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
+    let changeBonus = 0;
+    {
+      // Get damage bonus
+      const damageTargets = ["damage"].concat(isSpell ? ["sdamage"] : ["wdamage"]);
+      const changes = this.actor.changes.filter((c) => damageTargets.includes(c.subTarget));
+      changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.actor);
+          return !["set", "="].includes(c.operator) && damageTargets.includes(c.subTarget);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        return cur + c.value;
+      }, 0);
+    }
+    if (changeBonus) parts[0].extra.push(changeBonus.toString());
+
     // Add broken penalty
     if (this.data.data.broken) {
       parts[0].extra.push("-2");
@@ -2438,28 +2499,6 @@ export class ItemPF extends Item {
       if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
       else if (critical === true) parts[0].extra.push("@ablDamage");
       else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
-    }
-    // Add enhancement bonus
-    if (rollData.item.enh != null && rollData.item.enh !== 0 && rollData.item.enh != null) {
-      if (critical === true) parts[0].extra.push("@item.enh");
-      else parts[0].extra.push("@item.enh");
-    }
-
-    // Add general damage
-    if (rollData.attributes.damage.general !== 0) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.general");
-      else parts[0].extra.push("@attributes.damage.general");
-    }
-    // Add melee or spell damage
-    if (rollData.attributes.damage.weapon !== 0 && ["mwak", "rwak"].includes(this.data.data.actionType)) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.weapon");
-      else parts[0].extra.push("@attributes.damage.weapon");
-    } else if (
-      rollData.attributes.damage.spell !== 0 &&
-      ["msak", "rsak", "spellsave"].includes(this.data.data.actionType)
-    ) {
-      if (critical === true) parts[0].extra.push("@attributes.damage.spell");
-      else parts[0].extra.push("@attributes.damage.spell");
     }
 
     // Create roll

@@ -218,20 +218,20 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
-    case "attack":
-      return "data.attributes.attack.general";
+    // case "attack":
+    //   return "data.attributes.attack.general";
     case "~attackCore":
       return "data.attributes.attack.shared";
-    case "mattack":
-      return "data.attributes.attack.melee";
-    case "rattack":
-      return "data.attributes.attack.ranged";
-    case "damage":
-      return "data.attributes.damage.general";
-    case "wdamage":
-      return "data.attributes.damage.weapon";
-    case "sdamage":
-      return "data.attributes.damage.spell";
+    // case "mattack":
+    //   return "data.attributes.attack.melee";
+    // case "rattack":
+    //   return "data.attributes.attack.ranged";
+    // case "damage":
+    //   return "data.attributes.damage.general";
+    // case "wdamage":
+    //   return "data.attributes.damage.weapon";
+    // case "sdamage":
+    //   return "data.attributes.damage.spell";
     case "allSavingThrows":
       return [
         "data.attributes.savingThrows.fort.total",
@@ -1561,4 +1561,56 @@ export const getSourceInfo = function (obj, key) {
     obj[key] = { negative: [], positive: [] };
   }
   return obj[key];
+};
+
+/**
+ * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
+ */
+export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {
+  const highestTemplate = {
+    value: 0,
+    ids: [],
+    highestID: null,
+  };
+  const highest = Object.keys(CONFIG.PF1.bonusModifiers).reduce((cur, k) => {
+    if (options.ignoreTarget) cur[k] = duplicate(highestTemplate);
+    else cur[k] = {};
+    return cur;
+  }, {});
+
+  for (let c of changes) {
+    let h;
+    if (options.ignoreTarget) h = highest[c.modifier];
+    else h = highest[c.modifier][c.subTarget];
+
+    h.ids.push(c._id);
+    if (h.value < c.value || !h.highestID) {
+      h.value = c.value;
+      h.highestID = c._id;
+    }
+  }
+
+  {
+    let mod, h;
+    const filterFunc = function (c) {
+      if (h.highestID === c._id) return true;
+      if (CONFIG.PF1.stackingBonusModifiers.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
+      return true;
+    };
+
+    for (mod of Object.keys(highest)) {
+      if (options.ignoreTarget) {
+        h = highest[mod];
+        changes = changes.filter(filterFunc);
+      } else {
+        for (let subTarget of Object.keys(highest[mod])) {
+          h = highest[mod][subTarget];
+          changes = changes.filter(filterFunc);
+        }
+      }
+    }
+  }
+
+  return changes;
 };

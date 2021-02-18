@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.11 (Hotfix)
+
+### Bug Fixes
+
+- Armor, shield and natural armor wasn't being applied to actors
+
 ## 0.77.10
 
 ### Bug Fixes

@@ -744,7 +744,7 @@ const _migrateSpellCosts = function (ent, updateData) {
 
   // Migrate level 0 spell charge deduction in a specific version
   if (
-    !SemanticVersion.fromString(game.system.data.version).isHigherThan(SemanticVersion.fromString("0.77.10")) &&
+    !SemanticVersion.fromString(game.system.data.version).isHigherThan(SemanticVersion.fromString("0.77.11")) &&
     getProperty(ent.data, "data.level") === 0
   ) {
     updateData["data.preparation.autoDeductCharges"] = false;

@@ -30,6 +30,19 @@
   - This also means that enhancement bonuses to attack and damage don't stack with enhancement bonuses (and the masterwork property) of attacks
 - Added sample macro to show an actor's social defenses (demoralize/intimidate and diplomacy DCs)
 
+### Compendium
+
+- Changes added to Fleet, Greater Shield Focus, Shield Focus (Feats) and Track (Class Feature)
+- Slayer (Class) - Talent initial level incorrect
+- Rage (Class Feature) - Use formula incorrect
+- Smite Evil (Class Feature) - Scaling off HD instead of level
+- Divine Grace (Class Feature) - Minimum 0 to benefit
+- Mirror Image (Spell) - Workaround for roll bug
+- Chakram (Weapon) - Not listed as ranged
+- Wraith (Bestiary1) - No attacks
+- Boar (Bestiary3) - Masterwork checked on attack
+- Spectre (Bestiary4) - Incorrect attacks
+
 ## 0.77.9 (Hotfix)
 
 ### Bug Fixes

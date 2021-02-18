@@ -120,7 +120,6 @@ export class ItemPF extends Item {
   get chargeCost() {
     if (this.type === "spell") {
       if (this.useSpellPoints()) return this.getSpellPointCost();
-      if (this.spellLevel === 0) return 0;
       return 1;
     }
 
@@ -2983,7 +2982,6 @@ export class ItemPF extends Item {
       updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
       return this.parentActor.update(updateData);
     } else {
-      if (this.data.data.level === 0) return;
       const newCharges = isSpontaneous
         ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
         : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);

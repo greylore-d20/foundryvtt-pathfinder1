@@ -21,6 +21,7 @@
 - Added better option to hide actor names from players in tooltips
 - Class Association links now indicate if the referenced item doesn't exist
 - Clearing an ability score turns it to a null (-) value
+- Level 0 spells now use up charges, but will be migrated to not auto deduct charges this version
 
 ## 0.77.9 (Hotfix)
 

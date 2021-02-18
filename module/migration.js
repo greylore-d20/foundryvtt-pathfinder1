@@ -3,6 +3,7 @@ import { ExperienceConfig } from "./config/experience.js";
 import { createTag } from "./lib.js";
 import { ItemChange } from "./item/components/change.js";
 import { getChangeFlat } from "./actor/apply-changes.js";
+import { SemanticVersion } from "./semver.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -739,6 +740,14 @@ const _migrateSpellCosts = function (ent, updateData) {
   const slotCost = getProperty(ent.data, "data.slotCost");
   if (slotCost == null) {
     updateData["data.slotCost"] = 1;
+  }
+
+  // Migrate level 0 spell charge deduction in a specific version
+  if (
+    !SemanticVersion.fromString(game.system.data.version).isHigherThan(SemanticVersion.fromString("0.77.9")) &&
+    getProperty(ent.data, "data.level") === 0
+  ) {
+    updateData["data.preparation.autoDeductCharges"] = false;
   }
 };
 

@@ -6,7 +6,7 @@
   <ol class="context-notes form-group">
     {{#each data.contextNotes as |note a|}}
     <li class="context-note flexrow" data-note="{{a}}">
-      <textarea class="context-note-text" name="data.contextNotes.{{a}}.text" placeholder="{{localize "PF1.Notes"}}">{{{lookup this "text"}}}</textarea>
+      <textarea class="context-note-text context-text" name="data.contextNotes.{{a}}.text" placeholder="{{localize "PF1.Notes"}}">{{{lookup this "text"}}}</textarea>
       <select class="context-note-target" name="data.contextNotes.{{a}}.target" required>
         {{#select (lookup this "target") }}
         <option value=""></option>

@@ -2988,7 +2988,7 @@ export class ActorPF extends Actor {
       if (!options.forceRefresh) return this._rollData;
     }
 
-    let result = this.data.data;
+    let result = duplicate(this.data.data);
 
     // Set size index
     result.size = Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(result, "traits.size")) - 4;

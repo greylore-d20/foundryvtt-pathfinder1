@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.12
+
+### Changelog
+
+- Add HTML classes to certain elements, for use by developers
+
 ## 0.77.11 (Hotfix)
 
 ### Bug Fixes

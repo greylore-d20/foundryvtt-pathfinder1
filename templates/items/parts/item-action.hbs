@@ -35,7 +35,7 @@
 <div class="form-group">
   <label>{{localize "PF1.AttackRollBonus"}}</label>
   <div class="form-fields">
-    <input type="text" name="data.attackBonus" value="{{data.attackBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
+    <input class="formula" type="text" name="data.attackBonus" value="{{data.attackBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
   </div>
 </div>
 
@@ -56,7 +56,7 @@
 <div class="form-group">
   <label>{{localize "PF1.CriticalConfirmBonus"}}</label>
   <div class="form-fields">
-    <input type="text" name="data.critConfirmBonus" value="{{data.critConfirmBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
+    <input class="formula" type="text" name="data.critConfirmBonus" value="{{data.critConfirmBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
   </div>
 </div>
 {{/unless}}
@@ -80,7 +80,7 @@
 <ol class="attack-parts form-group">
   {{#each data.attackParts as |part a|}}
   <li class="attack-part flexrow" data-attack-part="{{a}}">
-    <input type="text" name="data.attackParts.{{a}}.0" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{lookup this "0"}}"/>
+    <input class="formula" type="text" name="data.attackParts.{{a}}.0" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{lookup this "0"}}"/>
     <input type="text" name="data.attackParts.{{a}}.1" placeholder="{{localize "PF1.Name"}}" value="{{lookup this "1"}}"/>
     <a class="attack-control delete-attack"><i class="fas fa-trash"></i></a>
   </li>
@@ -121,7 +121,7 @@
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula" type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input class="damage-formula formula" type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
       <input class="damage-type" type="text" name="data.damage.parts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -143,7 +143,7 @@
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula" type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input class="damage-formula formula" type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
       <input class="damage-type" type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -162,7 +162,7 @@
   <ol class="damage-parts form-group">
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula" type="text" name="data.damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
+      <input class="damage-formula formula" type="text" name="data.damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
       <input class="damage-type" type="text" name="data.damage.nonCritParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -178,7 +178,7 @@
 <div class="form-group input-select">
   <label>{{#unless isSpell}}{{localize "PF1.DC"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}</label>
   <div class="form-fields">
-    <input type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DCOffset"}}{{/unless}}"/>
+    <input class="formula" type="text" name="data.save.dc" value="{{data.save.dc}}" placeholder="{{#unless isSpell}}{{localize "PF1.DCOffset"}}{{else}}{{localize "PF1.DC"}}{{/unless}}"/>
     <select name="data.save.type">
       {{#select data.save.type}}
       <option value=""></option>
@@ -201,14 +201,14 @@
 {{#if hasAttackRoll}}
 <div class="form-group stacked">
   <label>{{localize "PF1.AttackNotes"}}</label>
-  <textarea type="text" name="data.attackNotes">{{data.attackNotes}}</textarea>
+  <textarea class="context-text" type="text" name="data.attackNotes">{{data.attackNotes}}</textarea>
 </div>
 {{/if}}
 
 {{!-- Effect Notes --}}
 <div class="form-group stacked">
   <label>{{localize "PF1.EffectNotes"}}</label>
-  <textarea type="text" name="data.effectNotes" style="white-space: pre">{{data.effectNotes}}</textarea>
+  <textarea class="context-text" type="text" name="data.effectNotes" style="white-space: pre">{{data.effectNotes}}</textarea>
 </div>
 {{/if}}
 

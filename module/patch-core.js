@@ -226,6 +226,16 @@ export async function PatchCore() {
     };
   }
 
+  // Change tooltip showing on alt
+  {
+    const fn = KeyboardManager.prototype._onAlt;
+    KeyboardManager.prototype._onAlt = function (event, up, modifiers) {
+      if (!up) game.pf1.tooltip.lock.new = true;
+      fn.call(this, event, up, modifiers);
+      if (up) game.pf1.tooltip.lock.new = false;
+    };
+  }
+
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
   Combat.prototype.rollInitiative = _rollInitiative;

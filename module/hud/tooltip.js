@@ -15,6 +15,11 @@ export class TooltipPF extends Application {
     this.objects = [];
 
     this.forceHideGMInfo = false;
+
+    this.lock = {
+      new: false,
+      old: false,
+    };
   }
 
   static get defaultOptions() {
@@ -49,6 +54,8 @@ export class TooltipPF extends Application {
   }
 
   bind(object) {
+    if (this.lock.new) return;
+
     if (this.objects.indexOf(object) === -1) {
       this.objects.push(object);
       this.render(true);
@@ -56,6 +63,8 @@ export class TooltipPF extends Application {
   }
 
   unbind(object) {
+    if (this.lock.old) return;
+
     const idx = this.objects.indexOf(object);
     if (idx >= 0) {
       this.objects.splice(idx, 1);

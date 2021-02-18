@@ -453,7 +453,7 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
 
 Hooks.on("hoverToken", (token, hovering) => {
   // Show token tooltip
-  if (hovering) {
+  if (hovering && !game.keyboard.isDown("Alt")) {
     const p = game.pf1.tooltip.mousePos;
     const el = document.elementFromPoint(p.x, p.y);
     // This check is required to prevent hovering over tokens under application windows

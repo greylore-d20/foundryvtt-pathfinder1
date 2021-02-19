@@ -264,15 +264,29 @@ Hooks.once("ready", async function () {
     game.pf1.tooltip.setPosition();
   });
   window.addEventListener("keydown", (event) => {
+    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = true;
       game.pf1.tooltip.render();
+    } else if (event.key === "Control") {
+      if (tooltipConfig.hideWithoutKey) {
+        game.pf1.tooltip.show();
+      } else {
+        game.pf1.tooltip.hide();
+      }
     }
   });
   window.addEventListener("keyup", (event) => {
+    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = false;
       game.pf1.tooltip.render();
+    } else if (event.key === "Control") {
+      if (tooltipConfig.hideWithoutKey) {
+        game.pf1.tooltip.hide();
+      } else {
+        game.pf1.tooltip.show();
+      }
     }
   });
 

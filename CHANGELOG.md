@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.77.12
+## 0.77.12 (Semi-hotfix)
 
 ### Bug Fixes
 
@@ -9,7 +9,8 @@
 
 ### Changelog
 
-- Add HTML classes to certain elements, for use by developers
+- Added option to only show tooltips while Control is held
+  - Similarly, without that option enabled, holding Control now hides tooltips
 
 ## 0.77.11 (Hotfix)
 

@@ -7,13 +7,6 @@
         </div>
     </div>
 
-    {{!-- Location Preview --}}
-    {{!-- <div class="form-group">
-        <label>{{localize "PF1.TooltipConfigLocationPreview"}}</label>
-
-        <canvas class="tooltip-preview" width="{{preview.width}}" height="{{preview.height}}"></canvas>
-    </div> --}}
-
     {{!-- Anchor --}}
     <div class="flexrow">
         <label>{{localize "PF1.TooltipConfigAnchor"}}</label>
@@ -101,6 +94,15 @@
                                                                                                  min="64" max="720" step="1"/>
                 <span class="range-value">{{data.portrait.maxSize.height}}</span>
             </div>
+        </div>
+    </div>
+
+    {{!-- Hide without key press --}}
+    <div class="form-group">
+        <label>{{localize "PF1.TooltipConfigHideWithoutKey" key=hideKey}}</label>
+
+        <div class="form-fields">
+            <input type="checkbox" name="hideWithoutKey" data-dtype="Boolean" {{checked data.hideWithoutKey}}/>
         </div>
     </div>
 

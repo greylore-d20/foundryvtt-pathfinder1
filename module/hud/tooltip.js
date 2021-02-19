@@ -297,6 +297,9 @@ export class TooltipPF extends Application {
   }
 
   show() {
+    if (this.objects.length === 0) return;
+    if (this.config.hideWithoutKey && !game.keyboard.isDown("Control")) return;
+    if (!this.config.hideWithoutKey && game.keyboard.isDown("Control")) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
     this.element.css("visibility", "visible");

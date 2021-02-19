@@ -232,7 +232,7 @@ export async function PatchCore() {
     KeyboardManager.prototype._onAlt = function (event, up, modifiers) {
       if (!up) game.pf1.tooltip.lock.new = true;
       fn.call(this, event, up, modifiers);
-      if (up) game.pf1.tooltip.lock.new = false;
+      if (!up) game.pf1.tooltip.lock.new = false;
     };
   }
 

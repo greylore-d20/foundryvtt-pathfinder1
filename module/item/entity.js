@@ -1463,7 +1463,7 @@ export class ItemPF extends Item {
       }
     }
 
-    const rollData = duplicate(this.getRollData());
+    const rollData = this.getRollData();
     rollData.d20 = dice !== "1d20" ? dice : "";
 
     let rolled = false;
@@ -1770,7 +1770,7 @@ export class ItemPF extends Item {
           };
 
           // Create attack object
-          let attack = new ChatAttack(this, { label: atk.label, primaryAttack: primaryAttack });
+          let attack = new ChatAttack(this, { label: atk.label, primaryAttack: primaryAttack, rollData: rollData });
 
           // Add attack roll
           await attack.addAttack({ bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts });
@@ -1897,7 +1897,7 @@ export class ItemPF extends Item {
         // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
         if (typeof dist === "string") {
-          dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), this.getRollData()).roll().total;
+          dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), rollData).roll().total;
         }
         dist = convertDistance(dist)[0];
 
@@ -2610,7 +2610,7 @@ export class ItemPF extends Item {
       }
     }
 
-    result.item = this.data.data;
+    result.item = duplicate(this.data.data);
     if (this.type === "spell" && this.parentActor != null) {
       const spellbook = this.spellbook;
       const spellAbility = spellbook.ability;

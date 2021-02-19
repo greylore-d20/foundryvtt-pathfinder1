@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Basic melee and ranged attack rolls weren't working
+- Certain temporary bonuses/penalties, such as the caster level from a spell's attack dialog, didn't apply
 
 ### Changelog
 

@@ -4,6 +4,7 @@
 
 - Enhancement and masterwork bonuses to attack and damage weren't applying
 - Show correct label for DC fields in items
+- Show correct range label in item description sidebar
 
 ## 0.77.13 (Hotfix)
 

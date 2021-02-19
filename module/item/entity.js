@@ -583,10 +583,16 @@ export class ItemPF extends Item {
       if (labels.target) labels.target = `Target: ${labels.target}`;
 
       // Range Label
-      let rng = data.range || {};
+      let rng = duplicate(data.range || {});
       if (!["ft", "mi", "spec"].includes(rng.units)) {
         rng.value = null;
         rng.long = null;
+      } else if (typeof rng.value === "string" && rng.value.length) {
+        try {
+          rng.value = new Roll(rng.value, this.getRollData()).roll().total.toString();
+        } catch (err) {
+          console.error(err);
+        }
       }
       labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
       if (labels.range.length > 0) labels.range = ["Range:", labels.range].join(" ");

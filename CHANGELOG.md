@@ -3,6 +3,7 @@
 ## 0.77.14
 
 - Enhancement and masterwork bonuses to attack and damage weren't applying
+- Show correct label for DC fields in items
 
 ## 0.77.13 (Hotfix)
 

@@ -1473,49 +1473,8 @@ export class ItemPF extends Item {
         primaryAttack = true,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
-        changes = this.actor.changes.filter((c) => {
-          return ["attack", "mattack", "rattack", "damage", "wdamage", "sdamage"].includes(c.subTarget);
-        }),
         conditionals,
         result;
-
-      // Add attack enhancement bonus as a change, so as to not stack with other enhancement bonuses
-      if (getProperty(this.data, "data.enh") != null) {
-        const enh = getProperty(this.data, "data.enh");
-        changes.push(
-          ItemChange.create({
-            formula: enh.toString(),
-            operator: "add",
-            target: "attack",
-            subTarget: "attack",
-            modifier: "enh",
-            value: enh,
-          })
-        );
-        changes.push(
-          ItemChange.create({
-            formula: enh.toString(),
-            operator: "add",
-            target: "damage",
-            subTarget: "damage",
-            modifier: "enh",
-            value: enh,
-          })
-        );
-      }
-      // Add masterwork bonus as a change
-      if (this.data.type === "attack" && getProperty(this.data, "data.masterwork") === true) {
-        changes.push(
-          ItemChange.create({
-            formula: "1",
-            operator: "add",
-            target: "attack",
-            subTarget: "attack",
-            modifier: "enh",
-            value: 1,
-          })
-        );
-      }
 
       // Get form data
       if (form) {
@@ -2246,6 +2205,79 @@ export class ItemPF extends Item {
   }
 
   /**
+   * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
+   * @param {string} [context="mattack"] - The given context. Either "mattack", "rattack", "wdamage", "sdamage".
+   * @returns {ItemChange[]} The resulting changes.
+   */
+  getContextChanges(context = "attack") {
+    let result = this.actor.changes;
+
+    switch (context) {
+      case "mattack":
+      case "rattack": {
+        const subTargetList = ["attack", context];
+        result = result.filter((c) => {
+          if (!subTargetList.includes(c.subTarget)) return false;
+          return true;
+        });
+        // Add masterwork bonus
+        if (getProperty(this.data, "data.masterwork") === true) {
+          result.push(
+            ItemChange.create({
+              formula: "1",
+              operator: "add",
+              target: "attack",
+              subTarget: "attack",
+              modifier: "enh",
+              value: 1,
+            })
+          );
+        }
+        // Add enhancement bonus
+        if (getProperty(this.data, "data.enh") != null) {
+          const enh = getProperty(this.data, "data.enh");
+          result.push(
+            ItemChange.create({
+              formula: enh.toString(),
+              operator: "add",
+              target: "attack",
+              subTarget: "attack",
+              modifier: "enh",
+              value: enh,
+            })
+          );
+        }
+        break;
+      }
+      case "wdamage":
+      case "sdamage": {
+        const subTargetList = ["damage", context];
+        result = result.filter((c) => {
+          if (!subTargetList.includes(c.subTarget)) return false;
+          return true;
+        });
+        // Add enhancement bonus
+        if (getProperty(this.data, "data.enh") != null) {
+          const enh = getProperty(this.data, "data.enh");
+          result.push(
+            ItemChange.create({
+              formula: enh.toString(),
+              operator: "add",
+              target: "attack",
+              subTarget: "attack",
+              modifier: "enh",
+              value: enh,
+            })
+          );
+        }
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
    */
@@ -2304,15 +2336,14 @@ export class ItemPF extends Item {
 
     // Add change bonus
     const isRanged = ["rwak", "rsak"].includes(this.data.data.actionType);
+    const changes = this.getContextChanges(isRanged ? "rattack" : "mattack");
     let changeBonus = 0;
     {
       // Get attack bonus
-      const attackTargets = ["attack"].concat(isRanged ? ["rattack"] : ["mattack"]);
-      const changes = this.actor.changes.filter((c) => attackTargets.includes(c.subTarget));
       changeBonus = getHighestChanges(
         changes.filter((c) => {
           c.applyChange(this.actor);
-          return !["set", "="].includes(c.operator) && attackTargets.includes(c.subTarget);
+          return !["set", "="].includes(c.operator);
         }),
         { ignoreTarget: true }
       ).reduce((cur, c) => {
@@ -2469,15 +2500,14 @@ export class ItemPF extends Item {
     }
 
     const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
+    const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
     let changeBonus = 0;
     {
       // Get damage bonus
-      const damageTargets = ["damage"].concat(isSpell ? ["sdamage"] : ["wdamage"]);
-      const changes = this.actor.changes.filter((c) => damageTargets.includes(c.subTarget));
       changeBonus = getHighestChanges(
         changes.filter((c) => {
           c.applyChange(this.actor);
-          return !["set", "="].includes(c.operator) && damageTargets.includes(c.subTarget);
+          return !["set", "="].includes(c.operator);
         }),
         { ignoreTarget: true }
       ).reduce((cur, c) => {

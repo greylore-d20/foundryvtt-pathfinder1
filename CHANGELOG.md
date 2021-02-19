@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.77.14
+
+- Enhancement and masterwork bonuses to attack and damage weren't applying
+
 ## 0.77.13 (Hotfix)
 
 ### Bug Fixes

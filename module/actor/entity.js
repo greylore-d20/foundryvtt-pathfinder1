@@ -48,13 +48,6 @@ export class ActorPF extends Actor {
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
     if (this._runningFunctions === undefined) this._runningFunctions = [];
-
-    /**
-     * @property {Boolean} _initializing
-     * Starts as true to flag the actor as initializing, so some things (such as offsetting HP with max HP changes) don't apply initially
-     * Gets deleted after initialization.
-     */
-    if (this._initializing === undefined) this._initializing = true;
   }
 
   /* -------------------------------------------- */
@@ -619,7 +612,7 @@ export class ActorPF extends Actor {
     }
 
     // Refresh HP
-    if (!game.pf1.isMigrating && !this._initializing) {
+    if (!game.pf1.isMigrating && this._initialized) {
       for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
         const prevMax = this._prevAttributes[k] || 0;
         const newMax = getProperty(this.data, `${k}.max`) || 0;
@@ -983,11 +976,6 @@ export class ActorPF extends Actor {
     this.items.forEach((item) => {
       this.updateItemResources(item);
     });
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (this.hasOwnProperty("_initializing")) {
-      delete this._initializing;
-    }
   }
 
   prepareItemLinks() {
@@ -1101,6 +1089,9 @@ export class ActorPF extends Actor {
       "data.attributes.ac.flatFooted.total": 10,
       "data.attributes.cmd.total": 10,
       "data.attributes.cmd.flatFootedTotal": 10,
+      "temp.ac.armor": 0,
+      "temp.ac.shield": 0,
+      "temp.ac.natural": 0,
       "data.attributes.sr.total": 0,
       "data.attributes.init.bonus": 0,
       "data.attributes.init.total": 0,
@@ -3303,8 +3294,8 @@ export class ActorPF extends Actor {
   }
 
   importFromJSON(json) {
-    // Set _initializing flag to prevent faults (such as HP changing incorrectly)
-    this._initializing = true;
+    // Set _initialized flag to prevent faults (such as HP changing incorrectly)
+    this._initialized = false;
 
     // Import from JSON
     const data = JSON.parse(json);

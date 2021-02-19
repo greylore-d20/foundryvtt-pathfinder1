@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.13 (Hotfix)
+
+### Bug Fixes
+
+- Armor, shield and natural armor bonuses could double on unlinked tokens
+
 ## 0.77.12 (Semi-hotfix)
 
 ### Bug Fixes

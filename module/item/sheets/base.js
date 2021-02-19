@@ -596,29 +596,6 @@ export class ItemSheetPF extends ItemSheet {
       return arr;
     }, []);
 
-    // Handle change array
-    // let change = Object.entries(formData).filter(e => e[0].startsWith("data.changes"));
-    // formData["data.changes"] = change.reduce((arr, entry) => {
-    // let [i, j] = entry[0].split(".").slice(2);
-    // if ( !arr[i] ) arr[i] = ItemPF.defaultChange;
-    // arr[i][j] = entry[1];
-    // // Reset subtarget (if necessary)
-    // if (j === "subTarget") {
-    // const target = (change.find(o => o[0] === `data.changes.${i}.target`) || [])[1];
-    // const subTarget = entry[1];
-    // if (typeof target === "string") {
-    // const keys = Object.keys(this.item.getChangeSubTargets(target));
-    // if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-    // }
-    // }
-    // // Limit priority
-    // if (j === "priority") {
-    // const prio = Math.max(-1000, Math.min(1000, entry[1]));
-    // arr[i][j] = prio;
-    // }
-    // return arr;
-    // }, []);
-
     // Handle conditionals array
     let conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
     formData["data.conditionals"] = conditionals.reduce((arr, entry) => {

@@ -2,6 +2,10 @@
 
 ## 0.77.12
 
+### Bug Fixes
+
+- Basic melee and ranged attack rolls weren't working
+
 ### Changelog
 
 - Add HTML classes to certain elements, for use by developers

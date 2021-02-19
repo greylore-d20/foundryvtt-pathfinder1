@@ -19,19 +19,19 @@ export class ItemPF extends Item {
      * @property {Object} _prevData
      * When an item gets updated, certain data is stored here for use in _onUpdate.
      */
-    this._prevData = {};
+    if (this._prevData === undefined) this._prevData = {};
 
     /**
      * @property {Object} links
      * Links are stored here during runtime.
      */
-    this.links = {};
+    if (this.links === undefined) this.links = {};
 
     /**
      * @property {Object} _rollData
      * Cached roll data for this item.
      */
-    this._rollData = null;
+    if (this._rollData === undefined) this._rollData = null;
   }
 
   static isInventoryItem(type) {

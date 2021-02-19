@@ -19,7 +19,7 @@ export class ActorPF extends Actor {
      * @property
      * @type {Array}
      */
-    this.changeItems = [];
+    if (this.changeItems === undefined) this.changeItems = [];
 
     /**
      * Stores all ItemChanges from carried items.
@@ -27,7 +27,7 @@ export class ActorPF extends Actor {
      * @public
      * @type {Object}
      */
-    this.changes = new Collection();
+    if (this.changes === undefined) this.changes = new Collection();
 
     /**
      * Stores cancellable tokens for pending update promises.
@@ -35,26 +35,26 @@ export class ActorPF extends Actor {
      * @private
      * @type {Array.<Object>}
      */
-    this._pendingUpdateTokens = [];
+    if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
 
     /**
      * @property {Object} _rollData
      * Cached roll data for this item.
      */
-    this._rollData = null;
+    if (this._rollData === undefined) this._rollData = null;
 
     /**
      * @property {Array.<String>} _runningFunctions
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
-    this._runningFunctions = [];
+    if (this._runningFunctions === undefined) this._runningFunctions = [];
 
     /**
      * @property {Boolean} _initializing
      * Starts as true to flag the actor as initializing, so some things (such as offsetting HP with max HP changes) don't apply initially
      * Gets deleted after initialization.
      */
-    this._initializing = true;
+    if (this._initializing === undefined) this._initializing = true;
   }
 
   /* -------------------------------------------- */
@@ -1405,7 +1405,6 @@ export class ActorPF extends Actor {
       return super.update(data, options);
     }
 
-    this.getRollData({ forceRefresh: true });
     data = await this.preUpdate(data);
 
     // Update changes
@@ -1947,8 +1946,8 @@ export class ActorPF extends Actor {
 
     const sources = [
       ...this.sourceDetails["data.attributes.attack.shared"],
-      ...this.sourceDetails["data.attributes.attack.general"],
-      ...this.sourceDetails[`data.attributes.attack.${options.melee ? "melee" : "ranged"}`],
+      // ...this.sourceDetails["data.attributes.attack.general"],
+      // ...this.sourceDetails[`data.attributes.attack.${options.melee ? "melee" : "ranged"}`],
     ];
 
     // Add contextual notes
@@ -1966,6 +1965,18 @@ export class ActorPF extends Actor {
     rollData.item = {};
 
     let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+
+    // Add attack bonuses from changes
+    const attackTargets = ["attack"].concat(options.melee ? ["mattack"] : ["rattack"]);
+    const attackChanges = this.changes.filter((c) => {
+      return attackTargets.includes(c.subTarget);
+    });
+    changes.push(
+      ...attackChanges.map((c) => {
+        c.applyChange(this);
+        return c.value;
+      })
+    );
 
     // Add ability modifier
     const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);

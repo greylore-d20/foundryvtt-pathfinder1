@@ -2620,6 +2620,7 @@ export class ActorPF extends Actor {
 
     let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
     if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
+    level = Math.max(0, level);
 
     const wtMult = this.getWoundThresholdMultiplier();
     const wtMod = getProperty(this.data, "data.attributes.woundThresholds.mod") ?? 0;

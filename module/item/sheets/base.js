@@ -1167,7 +1167,7 @@ export class ItemSheetPF extends ItemSheet {
       updateData[`data.links.${group.dataset.tab}`] = links;
 
       // Call hook for deleting a link
-      Hooks.call("deleteItemLink", this.item, link, group.dataset.tab);
+      Hooks.callAll("deleteItemLink", this.item, link, group.dataset.tab);
 
       await this.item.update(updateData);
 

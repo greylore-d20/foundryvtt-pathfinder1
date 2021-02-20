@@ -3403,7 +3403,7 @@ export class ItemPF extends Item {
 
       // Call link creation hook
       await this.update(updateData);
-      Hooks.call("createItemLink", this, link, linkType);
+      Hooks.callAll("createItemLink", this, link, linkType);
 
       /**
        * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,

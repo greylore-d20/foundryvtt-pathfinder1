@@ -4,7 +4,8 @@
 
 ### API
 
-- Added hook `pf1MigrationFinished`, which is called once world migration is done
+- Added more hooks, and created a documentation file for hooks
+- Added a small tutorial on creating custom changes
 
 ## 0.77.14 (Hotfix)
 

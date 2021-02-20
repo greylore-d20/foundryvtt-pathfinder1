@@ -261,6 +261,7 @@ export class ActorPF extends Actor {
   }
 
   prepareBaseData() {
+    Hooks.callAll("prepareBaseActorData", this);
     super.prepareBaseData();
     this._resetInherentTotals();
 
@@ -598,6 +599,7 @@ export class ActorPF extends Actor {
    * Augment the basic actor data with additional dynamic data.
    */
   prepareDerivedData() {
+    Hooks.callAll("prepareDerivedActorData", this);
     super.prepareDerivedData();
 
     const actorData = this.data;

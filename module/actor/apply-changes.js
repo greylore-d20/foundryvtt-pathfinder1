@@ -397,10 +397,21 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     }
   }
 
+  // Try to determine a change flat from hooks
+  {
+    let result = { keys: [] };
+    Hooks.callAll("getChangeFlat", changeTarget, changeType, result);
+    if (result.keys && result.keys.length) return result.keys;
+  }
   return null;
 };
 
 export const addDefaultChanges = function (changes) {
+  // Call hook
+  let tempChanges = [];
+  Hooks.callAll("addDefaultChanges", this, tempChanges);
+  changes.push(...tempChanges.filter((c) => c instanceof ItemChange));
+
   // Class hit points
   const classes = this.data.items
     .filter((o) => o.type === "class" && !["racial"].includes(getProperty(o.data, "classType")))

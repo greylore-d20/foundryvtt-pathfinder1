@@ -121,8 +121,8 @@ export class ItemChange {
 
         let value = 0;
         if (operator === "script") {
-          const fn = this.createFunction(this.formula, ["d"]);
-          const result = fn(rollData);
+          const fn = this.createFunction(this.formula, ["d", "item"]);
+          const result = fn(rollData, this.parent);
           value = result.value;
           operator = result.operator;
         } else {
@@ -216,7 +216,7 @@ export class ItemChange {
 
   createFunction(funcDef, funcArgs = []) {
     try {
-      const preDef = `const result = { operator: "add", value: 0, };`;
+      const preDef = `const actor = item.actor; const result = { operator: "add", value: 0, };`;
       const postDef = `return result;`;
       const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}${postDef}};`;
       return new Function(fullDef)();

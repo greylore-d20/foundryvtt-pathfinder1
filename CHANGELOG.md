@@ -6,6 +6,10 @@
 
 - Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
 
+### Changelog
+
+- The variables `item` and `actor` are now present in a script change
+
 ### API
 
 - Added more hooks, and created a documentation file for hooks

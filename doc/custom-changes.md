@@ -39,7 +39,7 @@ Hooks.once("init", () => {
 Next, we have to add a hook that actually changes the actor's data.
 
 ```js
-Hooks.on("getChangeFlat", (target, modifier, result) => {
+Hooks.on("pf1.getChangeFlat", (target, modifier, result) => {
     if (target === "gp") {
         result.keys.push("data.currency.gp");
     }

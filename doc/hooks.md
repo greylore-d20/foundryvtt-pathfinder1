@@ -1,6 +1,6 @@
 # Pathfinder 1 Hooks
 
-## prepareBaseActorData
+## pf1.prepareBaseActorData
 
 ### Parameters
 
@@ -10,7 +10,7 @@
 
 Called when an actor calls its `prepareBaseData` method.
 
-## prepareDerivedActorData
+## pf1.prepareDerivedActorData
 
 ### Parameters
 
@@ -20,7 +20,7 @@ Called when an actor calls its `prepareBaseData` method.
 
 Called when an actor calls its `prepareDerivedData` method.
 
-## pf1MigrationFinished
+## pf1.migrationFinished
 
 ### Description
 
@@ -101,7 +101,7 @@ Called when an item link has been created.
 - sheet<ItemSheetPF_Container> - The container's sheet.
 - data<Object> - The event's transfer data.
 
-## addDefaultChanges
+## pf1.addDefaultChanges
 
 ### Parameters
 
@@ -112,7 +112,7 @@ Called when an item link has been created.
 
 Called when default changes are being determined and added for an actor. You can add your own changes into the `changes` array, which will also be added.
 
-## getChangeFlat
+## pf1.getChangeFlat
 
 ### Parameters
 

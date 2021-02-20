@@ -1066,7 +1066,12 @@ export class ActorPF extends Actor {
           for (let src of grp) {
             if (!src.operator) src.operator = "add";
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
-            let srcValue = src.value != null ? src.value : new Roll(src.formula || "0", rollData).roll().total;
+            let srcValue = 0;
+            try {
+              srcValue = src.value != null ? src.value : new Roll(src.formula || "0", rollData).roll().total;
+            } catch (err) {
+              console.error(err, changeTarget, src, this);
+            }
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
               sourceDetails[changeTarget].push({

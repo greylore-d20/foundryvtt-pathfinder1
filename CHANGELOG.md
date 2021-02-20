@@ -2,9 +2,12 @@
 
 ## 0.77.14
 
+### Bug Fixes
+
 - Enhancement and masterwork bonuses to attack and damage weren't applying
 - Show correct label for DC fields in items
 - Show correct range label in item description sidebar
+- Change formulas could cause errors that were not properly handled
 
 ## 0.77.13 (Hotfix)
 

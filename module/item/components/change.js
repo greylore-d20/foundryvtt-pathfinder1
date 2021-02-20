@@ -130,7 +130,7 @@ export class ItemChange {
             value = new Roll(this.formula || "0", rollData).roll().total;
           } catch (err) {
             value = 0;
-            console.error(err);
+            console.error(err, t, this);
           }
         }
 

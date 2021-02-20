@@ -26,7 +26,7 @@ downloading a zip archive from the [Releases Page](https://gitlab.com/Furyspark/
 
 ## API
 
-This system adds some hooks for modders to use. Browse the `doc` directory in this git repository or check out the [Hooks documentation](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/raw/master/doc/hooks.md) directly.
+This system adds some hooks for modders to use. Browse the `doc` directory in this git repository or check out the [Hooks documentation](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/blob/master/doc/hooks.md) directly.
 
 ## Information
 

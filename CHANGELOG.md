@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.15
+
+### API
+
+- Added hook `pf1MigrationFinished`, which is called once world migration is done
+
 ## 0.77.14 (Hotfix)
 
 ### Bug Fixes

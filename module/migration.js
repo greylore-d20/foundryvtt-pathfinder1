@@ -71,6 +71,7 @@ export const migrateWorld = async function () {
   ui.notifications.info(`PF1 System Migration to version ${game.system.data.version} succeeded!`);
   console.log("System Migration completed.");
   game.pf1.isMigrating = false;
+  Hooks.call("pf1MigrationFinished");
 };
 
 /* -------------------------------------------- */

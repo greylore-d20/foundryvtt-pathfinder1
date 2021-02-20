@@ -10,12 +10,12 @@ import { SemanticVersion } from "./semver.js";
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function () {
-  game.pf1.isMigrating = true;
   if (!game.user.isGM) {
     const msg = game.i18n.localize("PF1.ErrorUnauthorizedAction");
     console.error(msg);
     return ui.notifications.error(msg);
   }
+  game.pf1.isMigrating = true;
   ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
   console.log("System Migration starting.");
 

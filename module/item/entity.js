@@ -3307,6 +3307,8 @@ export class ItemPF extends Item {
     }
 
     await this.update(selfUpdateData);
+    // Always update actor for this
+    await this.actor.update({});
   }
 
   /**

@@ -2,6 +2,10 @@
 
 ## 0.77.15
 
+### Bug Fixes
+
+- Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
+
 ### API
 
 - Added more hooks, and created a documentation file for hooks

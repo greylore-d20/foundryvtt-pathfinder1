@@ -11,7 +11,7 @@ In your module, make a hook for "init", and alter the PF1 configuration object. 
 
 ```js
 Hooks.once("init", () => {
-    CONFIG.PF1.buffTargets.misc.gp = "Gold Pieces";
+  CONFIG.PF1.buffTargets.misc.gp = "Gold Pieces";
 });
 ```
 
@@ -19,10 +19,10 @@ Or, you could add a whole new base category for the changes.
 
 ```js
 Hooks.once("init", () => {
-    CONFIG.PF1.buffTargets.currency = {
-        _label: "Currency",
-        gp: "Gold Pieces",
-    };
+  CONFIG.PF1.buffTargets.currency = {
+    _label: "Currency",
+    gp: "Gold Pieces",
+  };
 });
 ```
 
@@ -30,7 +30,7 @@ Alternatively, if you want the change to be present internally, but hidden from 
 
 ```js
 Hooks.once("init", () => {
-    CONFIG.PF1.buffTargets.misc["~gp"] = "Gold Pieces";
+  CONFIG.PF1.buffTargets.misc["~gp"] = "Gold Pieces";
 });
 ```
 
@@ -40,9 +40,9 @@ Next, we have to add a hook that actually changes the actor's data.
 
 ```js
 Hooks.on("pf1.getChangeFlat", (target, modifier, result) => {
-    if (target === "gp") {
-        result.keys.push("data.currency.gp");
-    }
+  if (target === "gp") {
+    result.keys.push("data.currency.gp");
+  }
 });
 ```
 

@@ -3,6 +3,7 @@ import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
+import { customRolls } from "./sidebar/chat-message.js";
 
 const FormApplication_close = FormApplication.prototype.close;
 
@@ -223,6 +224,39 @@ export async function PatchCore() {
       let result = origFunc.call(this);
       addCombatTrackerContextOptions.call(this, result);
       return result;
+    };
+  }
+
+  // Add inline support for extra /commands
+  {
+    const origParse = ChatLog.parse;
+    ChatLog.parse = function (message) {
+      const match = message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/),
+        type = match?.[1];
+      if (["HEAL", "DAMAGE"].includes(type?.toUpperCase())) {
+        match[2] = match[0].slice(1);
+        return ["custom", match];
+      } else return origParse.call(this, message);
+    };
+
+    const origClick = TextEditor._onClickInlineRoll;
+    TextEditor._onClickInlineRoll = function (event) {
+      event.preventDefault();
+      const a = event.currentTarget;
+      if (!a.classList.contains("custom")) return origClick.call(this, event);
+
+      const chatMessage = `/${a.dataset.formula}`;
+      const cMsg = CONFIG.ChatMessage.entityClass;
+      const speaker = cMsg.getSpeaker();
+      let actor = cMsg.getSpeakerActor(speaker);
+      let rollData = actor ? actor.getRollData() : {};
+
+      const sheet = a.closest(".sheet");
+      if (sheet) {
+        const app = ui.windows[sheet.dataset.appid];
+        if (["Actor", "Item"].includes(app?.object?.entity)) rollData = app.object.getRollData();
+      }
+      return customRolls(chatMessage, speaker, rollData);
     };
   }
 

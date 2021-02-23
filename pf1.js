@@ -31,7 +31,7 @@ import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
-import { ChatMessagePF } from "./module/sidebar/chat-message.js";
+import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
@@ -567,42 +567,8 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {
-  if (message.match(/^\/([a-zA-Z0-9]+)(?:[ ]+(.*)+)?/)) {
-    const type = RegExp.$1;
-    const value = RegExp.$2;
-    const actor = ChatMessage.getSpeakerActor(chatData.speaker);
-    const tokenId = chatData.speaker.token;
-
-    switch (type.toUpperCase()) {
-      case "DAMAGE":
-      case "HEAL":
-        const rollData = actor ? actor.getRollData() : {};
-        const roll = new Roll(value, rollData).roll();
-        const total = roll.total;
-
-        (async () => {
-          const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
-            tokenId: tokenId,
-            isHealing: type.toUpperCase() === "HEAL",
-            roll: {
-              value: total,
-              halfValue: Math.floor(total / 2),
-              formula: value,
-              json: escape(JSON.stringify(roll.toJSON())),
-            },
-          });
-          const chatOptions = {
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            roll: roll,
-            speaker: ChatMessage.getSpeaker({ user: game.user }),
-            rollMode: game.settings.get("core", "rollMode"),
-            content: content,
-          };
-          ChatMessage.create(chatOptions);
-        })();
-        return false;
-    }
-  }
+  const result = customRolls(message, chatData.speaker);
+  return !result;
 });
 
 /* -------------------------------------------- */

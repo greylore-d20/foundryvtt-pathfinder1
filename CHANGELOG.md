@@ -9,6 +9,8 @@
 ### Changelog
 
 - The variables `item` and `actor` are now present in a script change
+- Added label support for `/damage <roll> #label` and `/heal <roll> #label` chat commands
+- Added inline support for damage/ heal commands
 
 ### API
 

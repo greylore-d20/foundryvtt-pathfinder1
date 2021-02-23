@@ -17,7 +17,8 @@
 
 ### Localization
 
-- Updated the French translation, due to the efforts of rectulo (many thanks!)
+- Updated the French localization (thanks rectulo!)
+- Updated the Chinese localization (thanks bnp800!)
 
 ## 0.77.14 (Hotfix)
 

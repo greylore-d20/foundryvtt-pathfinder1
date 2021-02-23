@@ -15,6 +15,10 @@
 - Added more hooks, and created a documentation file for hooks
 - Added a small tutorial on creating custom changes
 
+### Localization
+
+- Updated the French translation, due to the efforts of rectulo (many thanks!)
+
 ## 0.77.14 (Hotfix)
 
 ### Bug Fixes

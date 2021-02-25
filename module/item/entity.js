@@ -598,8 +598,15 @@ export class ItemPF extends Item {
       if (labels.range.length > 0) labels.range = ["Range:", labels.range].join(" ");
 
       // Duration Label
-      let dur = data.duration || {};
+      let dur = duplicate(data.duration || {});
       if (["inst", "perm", "spec"].includes(dur.units)) dur.value = null;
+      else if (typeof dur.value === "string" && dur.value.length) {
+        try {
+          dur.value = new Roll(dur.value, this.getRollData()).roll().total.toString();
+        } catch (err) {
+          console.error(err);
+        }
+      }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
     }
 

@@ -158,6 +158,8 @@ const _sortChanges = function (a, b) {
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData = null) {
+  if (changeTarget == null) return null;
+
   curData = curData ?? this.data.data;
   let result = [];
 

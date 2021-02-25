@@ -6,6 +6,7 @@
 
 - Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
 - Rules for d10s weren't acknowledged in `sizeRoll`
+- Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
 
 ### Changelog
 

@@ -1230,12 +1230,13 @@
 .pf1.sheet.actor .tab.summary .hd-level {
   flex: 0 0 256px;
   overflow-x: hidden;
-}
-.pf1.sheet.actor .tab.summary .hd-level table {
   margin: 0 0 4px 8px;
 }
 .pf1.sheet.actor .tab.summary .hd-level table:hover a.config-icon {
   color: #b5b3a4;
+}
+.pf1.sheet.actor .tab.summary .hd-level table th.level {
+  width: 32px;
 }
 .pf1.sheet.actor .tab.summary .hd-level table tr td {
   padding: 0;
@@ -1258,14 +1259,14 @@
   flex: 1 0 32px;
   height: auto;
 }
-.pf1.sheet.actor .tab.summary .hd-level table tr div.experience input[type="text"],
-.pf1.sheet.actor .tab.summary .hd-level table tr div.experience span.text-box,
-.pf1.sheet.actor .tab.summary .hd-level table tr div.experience .max {
+.pf1.sheet.actor .tab.summary .hd-level table tr td.experience input[type="text"],
+.pf1.sheet.actor .tab.summary .hd-level table tr td.experience span.text-box,
+.pf1.sheet.actor .tab.summary .hd-level table tr td.experience .max {
   padding: 0;
   flex: 1;
   text-align: center;
 }
-.pf1.sheet.actor .tab.summary .hd-level table tr div.experience .separator {
+.pf1.sheet.actor .tab.summary .hd-level table tr td.experience .separator {
   flex: 0;
 }
 .pf1.sheet.actor .tab.summary .hd-level .xpbar {
@@ -1296,6 +1297,9 @@
 }
 .pf1.sheet.actor .tab.summary .tab.quick-info ul.attributes {
   margin: 2px 0;
+}
+.pf1.sheet.actor .tab.summary .tab.quick-info table {
+  margin-bottom: 4px;
 }
 .pf1.sheet.actor .tab.summary .tab.quick-info .quick-actions {
   display: flex;
@@ -1422,6 +1426,9 @@
 }
 .pf1.sheet.actor .ability-scores {
   flex: 0;
+  margin-bottom: 4px;
+}
+.pf1.sheet.actor .ability-scores table {
   margin-bottom: 4px;
 }
 .pf1.sheet.actor .bottom {
@@ -1777,15 +1784,6 @@
 .pf1.sheet.actor .tab.buffs .buffs-conditions {
   flex: 0;
 }
-.pf1.sheet.actor .tab.features .combat-attacks,
-.pf1.sheet.actor .tab.inventory .combat-attacks,
-.pf1.sheet.actor .tab.spellbook .combat-attacks,
-.pf1.sheet.actor .tab.attributes .combat-attacks,
-.pf1.sheet.actor .tab.combat .combat-attacks,
-.pf1.sheet.actor .tab.buffs .combat-attacks {
-  flex: 1 1 320px;
-  overflow-y: scroll;
-}
 .pf1.sheet.actor .tab.features .inventory-group,
 .pf1.sheet.actor .tab.inventory .inventory-group,
 .pf1.sheet.actor .tab.spellbook .inventory-group,
@@ -1802,6 +1800,13 @@
 .pf1.sheet.actor .tab.buffs .inventory-body .inventory-list {
   height: 100%;
   overflow-y: scroll;
+}
+.pf1.sheet.actor .tab.combat .combat-attacks {
+  flex: 1 1 320px;
+  overflow-y: scroll;
+}
+.pf1.sheet.actor .tab.combat .combat-defenses table {
+  margin-bottom: 4px;
 }
 .pf1.sheet.actor .tab.settings {
   overflow-x: hidden;
@@ -1829,6 +1834,9 @@
 }
 .pf1.sheet.actor .tab.inventory .tab-footer > * {
   flex: 0 0 100%;
+}
+.pf1.sheet.actor .tab.inventory .tab-footer table {
+  margin-top: 4px;
 }
 .pf1.sheet.actor .tab.inventory .inventory-tags,
 .pf1.sheet.actor .tab.inventory .carry-bonus {
@@ -1972,6 +1980,9 @@
 }
 .pf1.sheet.actor .spellbook-group .spell-range input[type="text"] {
   flex: 1 1 48px;
+}
+.pf1.sheet.actor .spellbook-group .spell-range table {
+  margin-bottom: 4px;
 }
 .pf1.sheet.actor a.rollable span {
   margin: 0 2px;
@@ -3031,7 +3042,7 @@ input.text-box {
   text-align: center;
 }
 .pf1 table {
-  margin: 4px 0;
+  margin: 0;
 }
 .pf1 table thead .icon {
   background-color: white;

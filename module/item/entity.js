@@ -580,7 +580,7 @@ export class ItemPF extends Item {
         tgt.units = null;
       }
       labels.target = [tgt.value, C.distanceUnits[tgt.units], C.targetTypes[tgt.type]].filterJoin(" ");
-      if (labels.target) labels.target = `Target: ${labels.target}`;
+      if (labels.target) labels.target = `${game.i18n.localize("PF1.Target")}: ${labels.target}`;
 
       // Range Label
       let rng = duplicate(data.range || {});
@@ -595,11 +595,18 @@ export class ItemPF extends Item {
         }
       }
       labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
-      if (labels.range.length > 0) labels.range = ["Range:", labels.range].join(" ");
+      if (labels.range.length > 0) labels.range = [game.i18n.localize("PF1.Range") + ":", labels.range].join(" ");
 
       // Duration Label
-      let dur = data.duration || {};
-      if (["inst", "perm", "spec"].includes(dur.units)) dur.value = null;
+      let dur = duplicate(data.duration || {});
+      if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
+      else if (typeof dur.value === "string") {
+        try {
+          dur.value = new Roll(dur.value || "0", this.getRollData()).roll().total.toString();
+        } catch (err) {
+          console.error(this.name, "- Duration -", err);
+        }
+      }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
     }
 

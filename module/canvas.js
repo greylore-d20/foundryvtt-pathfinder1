@@ -211,9 +211,9 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
   }
 
   // Otherwise update the Token
-  else {
+  else if (this.object) {
     if (operator === "--" || (!isDelta && operator == "-")) value = -value;
-    else if (isDelta) {
+    else if (isDelta && this.object) {
       const current = getProperty(this.object.data, input.name);
       if (operator === "-") value = current - value;
       else if (operator === "+") value = current + value;

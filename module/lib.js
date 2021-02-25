@@ -209,8 +209,26 @@ export const sizeDie = function (origCount, origSides, targetSize = "M", crit = 
     );
   let c = duplicate(CONFIG.PF1.sizeDie);
 
-  const mediumDie = `${origCount}d${origSides}`;
-  const mediumDieMax = origCount * origSides;
+  let curSize = 4,
+    modSides = origSides,
+    modCount = origCount;
+
+  // d10 special cases
+  if (origSides === 10 && origCount > 1) {
+    if (targetSize > curSize) {
+      modCount *= 2;
+      modSides = 8;
+      curSize++;
+    } else if (targetSize < curSize) {
+      modSides = 8;
+      curSize--;
+    }
+  }
+
+  let mediumDie = `${modCount}d${modSides}`;
+  if (curSize === targetSize) return mediumDie; // Already what it should be
+
+  const mediumDieMax = modCount * modSides;
   if (c.indexOf(mediumDie) === -1) {
     c = c.map((d) => {
       if (d.match(/^([0-9]+)d([0-9]+)$/)) {
@@ -232,7 +250,6 @@ export const sizeDie = function (origCount, origSides, targetSize = "M", crit = 
     const d6Index = c.indexOf("1d6");
     let d8Index = c.indexOf("1d8");
     if (d8Index === -1) d8Index = c.indexOf("2d4");
-    let curSize = 4;
 
     // When decreasing in size (e.g. from medium to small)
     while (curSize > targetSize) {

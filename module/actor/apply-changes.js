@@ -196,8 +196,6 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         case "morale":
         case "profane":
         case "sacred":
-        case "untyped":
-        case "untypedPerm":
           return [
             "data.attributes.ac.normal.total",
             "data.attributes.ac.touch.total",

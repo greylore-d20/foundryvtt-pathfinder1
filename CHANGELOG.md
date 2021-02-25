@@ -18,6 +18,7 @@
 - Added a 4th parameter to `sizeRoll` which is a number indicating the original size you are measuring from (4 for medium)
 - Altered the `@size` roll data variable. It's no longer a relative value based off medium. Instead, it's now an absolute size number (with 4 being medium)
   - The `sizeRoll` function has been altered to accomodate for this change. The player shouldn't need to alter anything
+- Untyped bonuses to AC no longer grant that bonus to CMD
 
 ### API
 

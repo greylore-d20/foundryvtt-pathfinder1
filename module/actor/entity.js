@@ -3001,7 +3001,10 @@ export class ActorPF extends Actor {
     let result = duplicate(this.data.data);
 
     // Set size index
-    result.size = Object.keys(CONFIG.PF1.sizeChart).indexOf(getProperty(result, "traits.size")) - 4;
+    {
+      const sizeChart = Object.keys(CONFIG.PF1.sizeChart);
+      result.size = sizeChart.indexOf(getProperty(result, "traits.size"));
+    }
 
     // Set class data
     result.classes = {};

@@ -196,33 +196,58 @@ export const CR = {
   },
 };
 
-export const sizeDie = function (origCount, origSides, targetSize = "M", crit = 1) {
-  if (typeof targetSize === "string")
-    targetSize = Object.values(CONFIG.PF1.sizeChart).indexOf(targetSize.toUpperCase());
-  else if (typeof targetSize === "number")
-    targetSize = Math.max(
-      0,
-      Math.min(
-        Object.values(CONFIG.PF1.sizeChart).length - 1,
-        Object.values(CONFIG.PF1.sizeChart).indexOf("M") + targetSize
-      )
-    );
-  let c = duplicate(CONFIG.PF1.sizeDie);
+export const sizeDieExt = function (origCount, origSides, targetSize = "M", initialSize = "M") {
+  const _getSizeIndex = function (size) {
+    if (typeof size === "string") return Object.values(CONFIG.PF1.sizeChart).indexOf(size.toUpperCase());
+    return size;
+  };
+  targetSize = _getSizeIndex(targetSize);
+  initialSize = _getSizeIndex(initialSize);
+  let skipWarning = false;
 
-  const mediumDie = `${origCount}d${origSides}`;
-  const mediumDieMax = origCount * origSides;
-  if (c.indexOf(mediumDie) === -1) {
-    c = c.map((d) => {
-      if (d.match(/^([0-9]+)d([0-9]+)$/)) {
-        const dieCount = parseInt(RegExp.$1),
-          dieSides = parseInt(RegExp.$2),
-          dieMaxValue = dieCount * dieSides;
-
-        if (dieMaxValue === mediumDieMax) return mediumDie;
+  // D10 special rule: https://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9t3f
+  if (origCount > 1 && origSides === 10 && (origCount % 2 === 0 || origCount === 3)) {
+    skipWarning = true;
+    const d10Arr = [
+      { orig: [2, 10], larger: [4, 8], smaller: [2, 8] },
+      { orig: [3, 10], larger: [6, 8], smaller: [3, 8] },
+      { orig: [4, 10], larger: [8, 8], smaller: [4, 8] },
+      { orig: [6, 10], larger: [12, 8], smaller: [6, 8] },
+      { orig: [8, 10], larger: [16, 8], smaller: [8, 8] },
+    ];
+    for (let v of d10Arr) {
+      if (v.orig[0] === origCount && v.orig[1] === origSides) {
+        if (targetSize < initialSize) {
+          initialSize--;
+          origCount = v.smaller[0];
+          origSides = v.smaller[1];
+        } else if (targetSize > initialSize) {
+          initialSize++;
+          origCount = v.larger[0];
+          origSides = v.larger[1];
+        }
       }
+    }
+  }
 
-      return d;
-    });
+  // Get initial die type
+  let mediumDie = `${origCount}d${origSides}`;
+  let mediumDieMax = origCount * origSides;
+  let c = duplicate(CONFIG.PF1.sizeDie);
+  {
+    if (c.indexOf(mediumDie) === -1) {
+      c = c.map((d) => {
+        if (d.match(/^([0-9]+)d([0-9]+)$/)) {
+          const dieCount = parseInt(RegExp.$1);
+          const dieSides = parseInt(RegExp.$2);
+          const dieMaxValue = dieCount * dieSides;
+
+          if (dieMaxValue === mediumDieMax) return mediumDie;
+        }
+
+        return d;
+      });
+    }
   }
 
   // Pick an index from the chart
@@ -232,46 +257,48 @@ export const sizeDie = function (origCount, origSides, targetSize = "M", crit = 
     const d6Index = c.indexOf("1d6");
     let d8Index = c.indexOf("1d8");
     if (d8Index === -1) d8Index = c.indexOf("2d4");
-    let curSize = 4;
+    let sizeOffset = initialSize - targetSize;
+    let curSize = initialSize;
 
     // When decreasing in size (e.g. from medium to small)
-    while (curSize > targetSize) {
+    while (sizeOffset > 0) {
       if (curSize <= 4 || index <= d8Index) {
         index--;
+        sizeOffset--;
         curSize--;
       } else {
         index -= 2;
+        sizeOffset--;
         curSize--;
       }
     }
     // When increasing in size (e.g. from medium to large)
-    while (curSize < targetSize) {
+    while (sizeOffset < 0) {
       if (curSize <= 3 || index <= d6Index) {
         index++;
+        sizeOffset++;
         curSize++;
       } else {
         index += 2;
+        sizeOffset++;
         curSize++;
       }
     }
 
-    // Alter crit
-    index = Math.max(0, Math.min(c.length - 1, index));
     formula = c[index];
   }
 
-  // if (crit !== 1 && formula.match(/^([0-9]+)d([0-9]+)(.*)/)) {
-  // const count = parseInt(RegExp.$1);
-  // const sides = parseInt(RegExp.$2);
-  // formula = `${count * crit}d${sides}${RegExp.$3}`;
-  // }
-  if (index === -1) {
+  if (index === -1 && !skipWarning) {
     const msg = game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula);
     console.warn(msg);
     ui.notifications.warn(msg);
   }
 
   return formula;
+};
+
+export const sizeDie = function (origCount, origSides, targetSize = "M") {
+  return sizeDieExt(origCount, origSides, targetSize);
 };
 
 export const normalDie = function (origCount, origSides, crit = 1) {
@@ -291,13 +318,13 @@ export const normalDie = function (origCount, origSides, crit = 1) {
  * @param {number} origCount - The original number of die to roll.
  * @param {number} origSides - The original number of sides per die to roll.
  * @param {string|number} [targetSize="M"] - The target size to change the die to.
- * @param {number} [crit=1] - The critical multiplier (for if the attack is a critical threat).
  *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
  *   Can also be a number in the range of -4 to 4, where 0 is Medium.
+ * @param {string|number} [initialSize="M"] - The initial size of the creature. See targetSize above.
  * @returns {number} The result of the new roll.
  */
-export const sizeRoll = function (origCount, origSides, targetSize = "M", crit = 1) {
-  return new Roll(sizeDie(origCount, origSides, targetSize, crit)).roll().total;
+export const sizeRoll = function (origCount, origSides, targetSize = "M", initialSize = "M") {
+  return new Roll(sizeDieExt(origCount, origSides, targetSize, initialSize)).roll().total;
 };
 
 /**

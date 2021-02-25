@@ -30,7 +30,7 @@ import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
+import { getItemOwner, sizeDieExt, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
@@ -76,7 +76,7 @@ Hooks.once("init", async function () {
     rollActorAttributeMacro,
     CompendiumDirectoryPF,
     rollPreProcess: {
-      sizeRoll: sizeDie,
+      sizeRoll: sizeDieExt,
       roll: normalDie,
     },
     migrateWorld: migrations.migrateWorld,

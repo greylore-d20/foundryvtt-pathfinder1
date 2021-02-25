@@ -3518,7 +3518,7 @@ export class ItemPF extends Item {
       for (let l of links) {
         const i = await this.getLinkItem(l);
         if (i == null) {
-          l.name = l.name + (l.name.indexOf("[x]") > -1 ? "" : " [x]");
+          l.name = l.name + (l.name?.indexOf("[x]") > -1 ? "" : " [x]");
           l.img = "icons/svg/mystery-man.svg";
           continue;
         }

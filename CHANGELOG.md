@@ -5,12 +5,16 @@
 ### Bug Fixes
 
 - Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
+- Rules for d10s weren't acknowledged in `sizeRoll`
 
 ### Changelog
 
 - The variables `item` and `actor` are now present in a script change
 - Added label support for `/damage <roll> #label` and `/heal <roll> #label` chat commands
 - Added inline support for damage/ heal commands
+- Added a 4th parameter to `sizeRoll` which is a number indicating the original size you are measuring from (4 for medium)
+- Altered the `@size` roll data variable. It's no longer a relative value based off medium. Instead, it's now an absolute size number (with 4 being medium)
+  - The `sizeRoll` function has been altered to accomodate for this change. The player shouldn't need to alter anything
 
 ### API
 

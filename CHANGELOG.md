@@ -20,6 +20,7 @@
 
 - Added more hooks, and created a documentation file for hooks
 - Added a small tutorial on creating custom changes
+- Update Drag Ruler API for Version 1.3.0 (thanks Stäbchenfisch!)
 
 ### Localization
 

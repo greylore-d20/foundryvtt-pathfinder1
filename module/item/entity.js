@@ -414,7 +414,7 @@ export class ItemPF extends Item {
    * @type {boolean}
    */
   get hasSave() {
-    return !!this.data.data.save?.type;
+    return typeof this.data.data.save?.type === "string" && this.data.data.save?.type.length > 0;
   }
 
   /**
@@ -1130,10 +1130,9 @@ export class ItemPF extends Item {
       hasRange: this.hasRange,
       hasEffect: this.hasEffect,
       isVersatile: this.isVersatile,
-      hasSave: this.hasSave,
+      hasSave: this.hasSave && addDC,
       isSpell: this.data.type === "spell",
       save: {
-        hasSave: addDC === true && typeof saveType === "string" && saveType.length > 0,
         dc: saveDC,
         type: saveType,
         label: game.i18n
@@ -2053,8 +2052,8 @@ export class ItemPF extends Item {
             hasProperties: props.length > 0,
             item: this.data,
             actor: this.parentActor.data,
+            hasSave: this.hasSave,
             save: {
-              hasSave: typeof save === "string" && save.length > 0,
               dc: saveDC,
               type: save,
               label: game.i18n

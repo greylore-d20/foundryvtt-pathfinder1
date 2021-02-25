@@ -6,8 +6,8 @@
 
 - Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
 - Rules for d10s weren't acknowledged in `sizeRoll`
-- NPC classes didn't raise the eligible feat count
 - Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
+- The feats-by-level calculation for actors did not take NPC classes into account (thanks Grarl!)
 
 ### Changelog
 

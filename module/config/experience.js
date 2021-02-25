@@ -1,5 +1,3 @@
-import { isMinimumCoreVersion } from "../lib.js";
-
 export class ExperienceConfig extends FormApplication {
   constructor(object, options) {
     super(object || ExperienceConfig.defaultSettings, options);
@@ -65,26 +63,8 @@ export class ExperienceConfig extends FormApplication {
   }
 
   _updateApplicationSettings() {
-    let formData;
-    if (isMinimumCoreVersion("0.7.2")) {
-      formData = this._getSubmitData();
-    } else {
-      const FD = this._getFormData(this.form);
-      const dtypes = FD._dtypes;
-
-      // Construct update data object by casting form data
-      formData = Array.from(FD).reduce((obj, [k, v]) => {
-        let dt = dtypes[k];
-        if (dt === "Number") obj[k] = v !== "" ? Number(v) : null;
-        else if (dt === "Boolean") obj[k] = v === "true";
-        else if (dt === "Radio") obj[k] = JSON.parse(v);
-        else obj[k] = v;
-        return obj;
-      }, {});
-    }
-
     // Update settings and re-render
-    this._settings = mergeObject(this._settings, expandObject(formData));
+    this._settings = mergeObject(this._settings, expandObject(this._getSubmitData()));
     this.render();
   }
 

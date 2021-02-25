@@ -60,7 +60,7 @@ export async function PatchCore() {
     return terms;
   };
 
-  if (isMinimumCoreVersion("0.7.8")) {
+  {
     const Roll__splitParentheticalTerms = Roll.prototype._splitParentheticalTerms;
     Roll.prototype._splitParentheticalTerms = function (formula) {
       // Augment parentheses with semicolons and split into terms
@@ -278,5 +278,4 @@ export async function PatchCore() {
   await import("./low-light-vision.js");
 }
 
-import { isMinimumCoreVersion } from "./lib.js";
 import "./measure.js";

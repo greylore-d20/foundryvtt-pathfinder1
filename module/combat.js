@@ -1,5 +1,4 @@
 import { ActorPF } from "./actor/entity.js";
-import { isMinimumCoreVersion } from "./lib.js";
 
 /* -------------------------------------------- */
 

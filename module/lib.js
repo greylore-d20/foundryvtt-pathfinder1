@@ -225,7 +225,7 @@ export const sizeDie = function (origCount, origSides, targetSize = "M", crit = 
     }
   }
 
-  let mediumDie = `${modCount}d${modSides}`;
+  const mediumDie = `${modCount}d${modSides}`;
   if (curSize === targetSize) return mediumDie; // Already what it should be
 
   const mediumDieMax = modCount * modSides;

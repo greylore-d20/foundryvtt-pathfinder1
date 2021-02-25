@@ -9,6 +9,8 @@
 - Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
 - The feats-by-level calculation for actors did not take NPC classes into account (thanks Grarl!)
 - Roll data resources weren't updated for changes
+- (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working, resulting in unexpected behavior
+  - Manual intervention is required for pre-existing actors using these class features. Simply remove the previous class feature (AC Bonus) and re-add it from the feature compendium
 
 ### Changelog
 

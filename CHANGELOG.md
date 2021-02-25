@@ -8,6 +8,7 @@
 - Rules for d10s weren't acknowledged in `sizeRoll`
 - Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
 - The feats-by-level calculation for actors did not take NPC classes into account (thanks Grarl!)
+- Roll data resources weren't updated for changes
 
 ### Changelog
 

@@ -261,6 +261,11 @@ export class ActorPF extends Actor {
   }
 
   prepareBaseData() {
+    // Update item resource values
+    this.data.items.forEach((item) => {
+      this.updateItemResources(item);
+    });
+
     Hooks.callAll("pf1.prepareBaseActorData", this);
     super.prepareBaseData();
     this._resetInherentTotals();
@@ -270,17 +275,6 @@ export class ActorPF extends Actor {
     });
 
     {
-      const highestArmorEnhBonus = this.data.items
-        .filter((o) => o.type === "equipment" && o.data.equipmentType === "armor" && o.data.equipped)
-        .reduce((cur, o) => {
-          return Math.max(cur, o.data.armor.enh);
-        }, 0);
-      const highestShieldEnhBonus = this.data.items
-        .filter((o) => o.type === "equipment" && o.data.equipmentType === "shield" && o.data.equipped)
-        .reduce((cur, o) => {
-          return Math.max(cur, o.data.armor.enh);
-        }, 0);
-
       // Handle armor and weapon proficiencies for PCs
       // NPCs are considered proficient with their armor
       if (this.data.type === "character") {
@@ -975,7 +969,7 @@ export class ActorPF extends Actor {
     this.prepareItemLinks();
 
     // Update item resources
-    this.items.forEach((item) => {
+    this.data.items.forEach((item) => {
       this.updateItemResources(item);
     });
   }
@@ -1307,63 +1301,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // Send resource updates to item
-    let updatedResources = [];
-    for (let key of Object.keys(data)) {
-      if (key.match(/^data\.resources\.([a-zA-Z0-9]+)/)) {
-        const resourceTag = RegExp.$1;
-        if (updatedResources.includes(resourceTag)) continue;
-        updatedResources.push(resourceTag);
-
-        const resource = this.data.data.resources[resourceTag];
-        if (resource != null) {
-          const itemId = resource._id;
-          const item = this.getOwnedItem(itemId);
-          if (item == null) continue;
-
-          const itemUpdateData = {};
-          let key = `data.resources.${resourceTag}.value`;
-          if (data[key] != null && data[key] !== item.data.data.uses.value) {
-            itemUpdateData["data.uses.value"] = data[key];
-          }
-          key = `data.resources.${resourceTag}.max`;
-          if (data[key] != null && data[key] !== item.data.data.uses.max) {
-            itemUpdateData["data.uses.max"] = data[key];
-          }
-          if (Object.keys(itemUpdateData).length > 0) await item.update(itemUpdateData);
-        }
-      }
-    }
-
-    // Clean up old item resources
-    for (let [tag, res] of Object.entries(getProperty(this.data, "data.resources") || {})) {
-      if (!res) continue;
-      if (!res._id) continue;
-      const itemId = res._id;
-      const item = this.getOwnedItem(itemId);
-      // Remove resource from token bars
-      if (item == null) {
-        const tokens = this.getActiveTokens();
-        tokens.forEach((token) => {
-          ["bar1", "bar2"].forEach((b) => {
-            const barAttr = token.getBarAttribute(b);
-            if (barAttr == null) {
-              return;
-            }
-            if (barAttr.attribute === `resources.${tag}`) {
-              const tokenUpdateData = {};
-              tokenUpdateData[`${b}.attribute`] = null;
-              token.update(token.scene._id, tokenUpdateData);
-            }
-          });
-        });
-      }
-      // Remove resource
-      if (item == null || (item.data.data.useCustomTag ? item.data.tag : createTag(item.name)) !== tag) {
-        data[`data.resources.-=${tag}`] = null;
-      }
-    }
-
     // Make only 1 fear condition active at most
     {
       const keys = ["shaken", "frightened", "panicked"];
@@ -1565,23 +1502,22 @@ export class ActorPF extends Actor {
     super._onCreate(data, options, userId, context);
   }
 
-  updateItemResources(item) {
-    if (!(item instanceof Item)) return;
+  updateItemResources(itemData) {
     if (!this.hasPerm(game.user, "OWNER")) return;
 
     const activationType = game.settings.get("pf1", "unchainedActionEconomy")
-      ? item.data.data.unchainedAction?.activation?.type
-      : item.data.data.activation?.type;
-    if (item.data.data.uses?.per && activationType) {
-      const itemTag = !item.data.data.useCustomTag ? createTag(item.data.name) : item.data.data.tag;
+      ? itemData.data.unchainedAction?.activation?.type
+      : itemData.data.activation?.type;
+    if (itemData.data.uses?.per && activationType) {
+      const itemTag = !itemData.data.useCustomTag ? createTag(itemData.name) : itemData.data.tag;
       const resKey = `data.resources.${itemTag}`;
-      let curUses = item.data.data.uses;
+      let curUses = itemData.data.uses;
 
       setProperty(this.data, resKey, { value: 0, max: 0, _id: null });
       const res = getProperty(this.data, resKey);
       res.value = curUses.value;
       res.max = curUses.max;
-      res._id = item._id;
+      res._id = itemData._id;
       return true;
     }
 

@@ -1,5 +1,4 @@
 import { ChatMessagePF } from "./sidebar/chat-message.js";
-import { isMinimumCoreVersion } from "./lib.js";
 
 export const formulaHasDice = function (formula) {
   return formula.match(/[0-9)][dD]/) || formula.match(/[dD][0-9(]/);
@@ -89,7 +88,7 @@ export class DicePF {
         // Convert the roll to a chat message
         if (chatTemplate) {
           // Create roll template data
-          const d20 = isMinimumCoreVersion("0.7.2") ? roll.terms[0] : roll.parts[0];
+          const d20 = roll.terms[0];
           const rollData = mergeObject(
             {
               user: game.user._id,

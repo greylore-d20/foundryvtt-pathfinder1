@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, linkData, isMinimumCoreVersion, convertDistance, convertWeight } from "../lib.js";
+import { createTag, linkData, convertDistance, convertWeight } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
@@ -194,7 +194,7 @@ export class ActorPF extends Actor {
         return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
       });
     }
-    const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
+    const hasPlayerOwner = this.hasPlayerOwner;
     return hasPlayerOwner;
   }
 
@@ -3017,7 +3017,7 @@ export class ActorPF extends Actor {
         if (!tag) return;
 
         let healthConfig = game.settings.get("pf1", "healthConfig");
-        const hasPlayerOwner = isMinimumCoreVersion("0.7.2") ? this.hasPlayerOwner : this.isPC;
+        const hasPlayerOwner = this.hasPlayerOwner;
         healthConfig =
           cls.data.classType === "racial"
             ? healthConfig.hitdice.Racial

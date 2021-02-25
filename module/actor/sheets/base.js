@@ -5,7 +5,6 @@ import { DicePF } from "../../dice.js";
 import {
   createTag,
   createTabs,
-  isMinimumCoreVersion,
   CR,
   convertWeight,
   createConsumableSpellDialog,

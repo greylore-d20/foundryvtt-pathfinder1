@@ -423,7 +423,7 @@ export class ActorSheetPF extends ActorSheet {
         (o) => o.type === "feat" && o.data.data.featType === "feat"
       ).length;
       const totalLevels = this.actor.items
-        .filter((o) => o.type === "class" && ["base", "prestige", "racial"].includes(o.data.data.classType))
+        .filter((o) => o.type === "class" && ["base", "prestige", "racial", "npc"].includes(o.data.data.classType))
         .reduce((cur, o) => {
           return cur + o.data.data.level;
         }, 0);

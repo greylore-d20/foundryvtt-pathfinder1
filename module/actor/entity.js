@@ -813,7 +813,7 @@ export class ActorPF extends Actor {
           spellClass === "_hd"
             ? rollData.attributes.hd.total
             : spellClass?.length > 0
-            ? getProperty(rollData, `classes.${spellClass}.level`) || 0
+            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
             : 0;
         const roll = new Roll(formula, rollData).roll();
         setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);

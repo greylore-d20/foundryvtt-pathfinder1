@@ -3208,22 +3208,22 @@ export class ActorPF extends Actor {
           if (!item && ae.data.origin) await ae.delete();
         }
 
-        for (let token of tokens) {
-          for (let con of CONFIG.statusEffects) {
-            // Don't toggle non-condition effects
-            if (CONFIG.PF1.conditions[con.id] == null) continue;
+        let token = tokens[0];
+        if (!token) return;
+        for (let con of CONFIG.statusEffects) {
+          // Don't toggle non-condition effects
+          if (CONFIG.PF1.conditions[con.id] == null) continue;
 
-            const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
-            const hasCondition = this.data.data.attributes.conditions[con.id] === true;
-            const hasEffectIcon = idx >= 0;
+          const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
+          const hasCondition = this.data.data.attributes.conditions[con.id] === true;
+          const hasEffectIcon = idx >= 0;
 
-            if (hasCondition !== hasEffectIcon) {
-              promises.push(
-                token.toggleEffect(con, {
-                  midUpdate: true,
-                })
-              );
-            }
+          if (hasCondition !== hasEffectIcon) {
+            promises.push(
+              token.toggleEffect(con, {
+                midUpdate: true,
+              })
+            );
           }
         }
         await Promise.all(promises);

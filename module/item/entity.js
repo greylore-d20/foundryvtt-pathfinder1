@@ -2464,8 +2464,8 @@ export class ItemPF extends Item {
    * Rely upon the DicePF.d20Roll logic for the core implementation
    */
   rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
-    const itemData = this.data.data;
-    const rollData = mergeObject(this.getRollData(), data || {});
+    const rollData = duplicate(data ?? this.getRollData());
+    const itemData = rollData.item;
 
     // Determine size bonus
     rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];
@@ -2634,12 +2634,19 @@ export class ItemPF extends Item {
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    */
-  rollDamage({ data = null, critical = false, extraParts = [], conditionalParts = {} } = {}) {
-    const rollData = mergeObject(this.getRollData(), data || {});
+  rollDamage({ data = null, critical = false, extraParts = [], conditionalParts = {}, primaryAttack = true } = {}) {
+    const rollData = duplicate(data ?? this.getRollData());
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
+
+    // Determine critical multiplier
+    rollData.critMult = 1;
+    if (critical) rollData.critMult = this.data.data.ability.critMult;
+    // Determine ability multiplier
+    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = this.data.data.damage.parts.map((p) => {

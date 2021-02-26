@@ -68,7 +68,7 @@ export class ChatAttack {
     }
 
     this.item = item;
-    this.rollData = mergeObject(this.item.getRollData(), this._rollData);
+    this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
 
     this.setRollData();
   }

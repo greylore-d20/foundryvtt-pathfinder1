@@ -85,6 +85,7 @@
 
     {{#if atk.hasCards}}
     <hr>
+    {{/if}}
 
     <div class="flexcol card-buttons">
       {{#each atk.cards as |cardGroup|}}
@@ -101,7 +102,6 @@
       <button data-action="save" data-dc="{{../save.dc}}" data-type="{{../save.type}}" data-tags="{{../save.tags}}">{{../save.label}}</button>
       {{/if}}
     </div>
-    {{/if}}
 
     {{{atk.effectNotesHTML}}}
   </div>

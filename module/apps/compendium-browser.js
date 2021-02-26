@@ -81,7 +81,7 @@ export class CompendiumBrowser extends Application {
         game.settings.set(
           "pf1",
           "compendiumSaveVersions",
-          mergeObject(cacheVersions, { [this.type]: needVersion.toString() })
+          mergeObject(cacheVersions, { [this.type]: game.system.data.version })
         );
       } else {
         const settings = game.settings.get("pf1", "compendiumItems");

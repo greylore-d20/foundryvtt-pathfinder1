@@ -2511,26 +2511,28 @@ export class ItemPF extends Item {
       });
     }
 
-    const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
-    const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
-    let changeBonus = 0;
-    {
-      // Get damage bonus
-      changeBonus = getHighestChanges(
-        changes.filter((c) => {
-          c.applyChange(this.actor);
-          return !["set", "="].includes(c.operator);
-        }),
-        { ignoreTarget: true }
-      ).reduce((cur, c) => {
-        return cur + c.value;
-      }, 0);
-    }
-    if (changeBonus) parts[0].extra.push(changeBonus.toString());
+    if (!this.isHealing) {
+      const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
+      const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
+      let changeBonus = 0;
+      {
+        // Get damage bonus
+        changeBonus = getHighestChanges(
+          changes.filter((c) => {
+            c.applyChange(this.actor);
+            return !["set", "="].includes(c.operator);
+          }),
+          { ignoreTarget: true }
+        ).reduce((cur, c) => {
+          return cur + c.value;
+        }, 0);
+      }
+      if (changeBonus) parts[0].extra.push(changeBonus.toString());
 
-    // Add broken penalty
-    if (this.data.data.broken) {
-      parts[0].extra.push("-2");
+      // Add broken penalty
+      if (this.data.data.broken) {
+        parts[0].extra.push("-2");
+      }
     }
 
     // Determine ability score modifier

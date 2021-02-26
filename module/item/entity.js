@@ -1107,7 +1107,6 @@ export class ItemPF extends Item {
     if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
 
     const rollData = this.getRollData();
-    if (this.name === "Panache") console.log(rollData.abilities.cha.total, rollData.abilities.cha.mod);
 
     if (hasProperty(this.data, "data.uses.maxFormula")) {
       const maxFormula = getProperty(this.data, "data.uses.maxFormula");

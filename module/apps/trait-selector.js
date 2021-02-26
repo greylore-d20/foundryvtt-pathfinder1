@@ -1,11 +1,10 @@
 /**
  * A specialized form used to select damage or condition types which apply to an Actor
- * @type {FormApplication}
+ * @type {BaseEntitySheet}
  */
-export class ActorTraitSelector extends FormApplication {
+export class ActorTraitSelector extends BaseEntitySheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.id = "trait-selector";
     options.classes = ["pf1", "trait-selector"];
     options.title = "Actor Trait Selection";
     options.template = "systems/pf1/templates/apps/trait-selector.hbs";

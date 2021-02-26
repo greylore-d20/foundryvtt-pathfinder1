@@ -13,7 +13,7 @@
     <ol class="conditionals form-group">
       {{#each this.modifiers as |modifier m|}}
       <li class="conditional-modifier flexrow" data-conditional="{{a}}" data-modifier="{{m}}">
-        <input class="conditional-formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
+        <input class="conditional-formula formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
         placeholder="{{localize "PF1.Formula"}}" required/>
 
         <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target" required>

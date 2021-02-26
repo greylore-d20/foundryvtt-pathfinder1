@@ -24,6 +24,10 @@ downloading a zip archive from the [Releases Page](https://gitlab.com/Furyspark/
 
 "This system uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content. This [website, character sheet, or whatever it is] is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit paizo.com/communityuse. For more information about Paizo Inc. and Paizo products, please visit paizo.com."
 
+## API
+
+This system adds some hooks for modders to use. Browse the `doc` directory in this git repository or check out the [Hooks documentation](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/blob/master/doc/hooks.md) directly.
+
 ## Information
 
 You can view information on this game system [here](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/).

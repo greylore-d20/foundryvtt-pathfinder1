@@ -114,8 +114,6 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (let t of targets) {
-      if (!t) continue;
-
       if (overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
@@ -123,8 +121,8 @@ export class ItemChange {
 
         let value = 0;
         if (operator === "script") {
-          const fn = this.createFunction(this.formula, ["d"]);
-          const result = fn(rollData);
+          const fn = this.createFunction(this.formula, ["d", "item"]);
+          const result = fn(rollData, this.parent);
           value = result.value;
           operator = result.operator;
         } else {
@@ -132,10 +130,13 @@ export class ItemChange {
             value = new Roll(this.formula || "0", rollData).roll().total;
           } catch (err) {
             value = 0;
-            console.error(err);
+            console.error(err, t, this, rollData);
           }
         }
 
+        this.data.value = value;
+
+        if (!t) continue;
         const prior = overrides[t][operator][this.modifier];
 
         switch (operator) {
@@ -215,7 +216,7 @@ export class ItemChange {
 
   createFunction(funcDef, funcArgs = []) {
     try {
-      const preDef = `const result = { operator: "add", value: 0, };`;
+      const preDef = `const actor = item.actor; const result = { operator: "add", value: 0, };`;
       const postDef = `return result;`;
       const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}${postDef}};`;
       return new Function(fullDef)();

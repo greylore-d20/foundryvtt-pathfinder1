@@ -93,6 +93,10 @@
   "SETTINGS.pf1HealthConfigWoundThresholdNormal": "Normal",
   "SETTINGS.pf1HealthConfigWoundThresholdGritty": "Gritty",
 
+  "SETTINGS.pf1DragRulerWalk": "walk",
+  "SETTINGS.pf1DragRulerDash": "dash",
+  "SETTINGS.pf1DragRulerRun": "run",
+
   "PF1.OptionalAndVariantRules": "Optional & Variant Rules",
 
   "PF1.WoundThresholdOverride": "Wound Threshold override",
@@ -134,6 +138,7 @@
   "PF1.TooltipConfigHidePortraits": "Hide Portraits",
   "PF1.TooltipConfigMaxPortraitSize": "Maximum Portrait Size",
   "PF1.TooltipConfigDisable": "Disable Tooltips",
+  "PF1.TooltipConfigHideWithoutKey": "Hide unless {key} is held",
   "PF1.OnMouse": "On Mouse",
 
   "PF1.TooltipWorldConfigName": "Tooltip World Configuration",
@@ -151,6 +156,9 @@
   "PF1.TooltipWorldConfigHideConditions_Hint": "Hide Conditions from all players",
   "PF1.TooltipWorldConfigHideClothing": "Hide Clothing (globally)",
   "PF1.TooltipWorldConfigHideClothing_Hint": "Hide Clothing from all players",
+  "PF1.TooltipWorldConfigHideActorName": "Hide Actor names (globally)",
+  "PF1.TooltipWorldConfigHideActorName_Hint": "Hide Actor names from all players",
+  "PF1.TooltipWorldConfigHideActorNameReplacement": "Hidden Replacement Name",
 
   "PF1.General": "General",
 
@@ -652,6 +660,8 @@
   "PF1.FavouredClassSkill": "Skills",
   "PF1.FavouredClassAlt": "Alt",
 
+  "PF1.Key_Control": "Control",
+
   "PF1.ArmorProfLight": "Light Armor",
   "PF1.ArmorProfMedium": "Medium Armor",
   "PF1.ArmorProfHeavy": "Heavy Armor",
@@ -889,6 +899,7 @@
   "PF1.HideBuffs": "Hide Buffs",
   "PF1.HideConditions": "Hide Conditions",
   "PF1.HideClothing": "Hide Clothing",
+  "PF1.HideName": "Hide Name",
   "PF1.Action": "Action",
   "PF1.All": "All",
   "PF1.Attack": "Attack",
@@ -1278,6 +1289,7 @@
   "PF1.Links": "Links",
   "PF1.Confirm": "Confirm",
   "PF1.CROffset": "Challenge Rating Offset",
+  "PF1.Haste": "Haste",
   "PF1.RapidShot": "Rapid Shot",
   "PF1.PointBlankShot": "Point-Blank Shot",
   "PF1.Priority": "Priority",
@@ -1369,6 +1381,7 @@
   "PF1.NotImplemented": "Not Implemented",
   "PF1.StepsRequired": "Steps Required",
   "PF1.RemoveInfo": "Remove Info",
+  "PF1.CustomRollDesc": "This roll uses a non-default formula",
 
   "PF1.Help": {
     "Label": "Help",
@@ -1485,6 +1498,13 @@
               "Desc": "Returns x to the power of y.",
               "Examples": {
                 "0": "Returns 64."
+              }
+            },
+            "SizeRoll": {
+              "Desc": "Alters a damage roll to that of another size category.",
+              "Examples": {
+                "0": "Rolls 1d8 for medium actors, and alters the damage formula according to the calling actor's current size.",
+                "1": "Translates a damage roll of 1d4 from a tiny actor (size '2') to a huge actor (size '6')<br/>Output: 3d6"
               }
             }
           }

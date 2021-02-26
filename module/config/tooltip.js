@@ -49,6 +49,9 @@ export class TooltipConfig extends FormApplication {
     settings = mergeObject(this.constructor.defaultSettings, settings);
     result.data = settings;
 
+    // Get hide key
+    result.hideKey = game.i18n.localize("PF1.Key_Control");
+
     this._cachedData = result;
     return result;
   }
@@ -82,6 +85,7 @@ export class TooltipConfig extends FormApplication {
           height: 280,
         },
       },
+      hideWithoutKey: false,
     };
   }
 
@@ -92,25 +96,6 @@ export class TooltipConfig extends FormApplication {
 
     html.find('button[name="submit"]').click(this._onSubmit.bind(this));
     html.find('button[name="reset"]').click(this._onReset.bind(this));
-
-    // Render preview
-    /* {
-      const canvas = this.element.find(".tooltip-preview")[0];
-      const ctx = canvas.getContext("2d");
-
-      const d = this._cachedData;
-      const p = d.preview;
-      const w = p.width;
-      const h = p.height;
-
-      // Clear canvas to black
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, w, h);
-
-      // Draw tooltip preview
-      ctx.strokeStyle = "white";
-      ctx.strokeRect(20, 20, 80, 80);
-    } */
   }
 
   _handleImmediateChange(event) {

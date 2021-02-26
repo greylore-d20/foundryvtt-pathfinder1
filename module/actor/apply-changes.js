@@ -158,6 +158,8 @@ const _sortChanges = function (a, b) {
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData = null) {
+  if (changeTarget == null) return null;
+
   curData = curData ?? this.data.data;
   let result = [];
 
@@ -179,42 +181,57 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
       return `data.abilities.${changeTarget}.total`;
     case "ac":
-      if (changeType === "dodge")
-        return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
-      else if (changeType === "deflection") {
-        return [
-          "data.attributes.ac.normal.total",
-          "data.attributes.ac.touch.total",
-          "data.attributes.ac.flatFooted.total",
-          "data.attributes.cmd.total",
-          "data.attributes.cmd.flatFootedTotal",
-        ];
+      switch (changeType) {
+        case "dodge":
+          return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
+        case "deflection":
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+            "data.attributes.cmd.total",
+            "data.attributes.cmd.flatFootedTotal",
+          ];
+        case "circumstance":
+        case "insight":
+        case "luck":
+        case "morale":
+        case "profane":
+        case "sacred":
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+            "data.attributes.cmd.total",
+            "data.attributes.cmd.flatFootedTotal",
+          ];
+        default:
+          return [
+            "data.attributes.ac.normal.total",
+            "data.attributes.ac.touch.total",
+            "data.attributes.ac.flatFooted.total",
+          ];
       }
-      return [
-        "data.attributes.ac.normal.total",
-        "data.attributes.ac.touch.total",
-        "data.attributes.ac.flatFooted.total",
-      ];
     case "aac":
       return "temp.ac.armor";
     case "sac":
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
-    case "attack":
-      return "data.attributes.attack.general";
+    // case "attack":
+    //   return "data.attributes.attack.general";
     case "~attackCore":
       return "data.attributes.attack.shared";
-    case "mattack":
-      return "data.attributes.attack.melee";
-    case "rattack":
-      return "data.attributes.attack.ranged";
-    case "damage":
-      return "data.attributes.damage.general";
-    case "wdamage":
-      return "data.attributes.damage.weapon";
-    case "sdamage":
-      return "data.attributes.damage.spell";
+    // case "mattack":
+    //   return "data.attributes.attack.melee";
+    // case "rattack":
+    //   return "data.attributes.attack.ranged";
+    // case "damage":
+    //   return "data.attributes.damage.general";
+    // case "wdamage":
+    //   return "data.attributes.damage.weapon";
+    // case "sdamage":
+    //   return "data.attributes.damage.spell";
     case "allSavingThrows":
       return [
         "data.attributes.savingThrows.fort.total",
@@ -380,10 +397,21 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     }
   }
 
+  // Try to determine a change flat from hooks
+  {
+    let result = { keys: [] };
+    Hooks.callAll("pf1.getChangeFlat", changeTarget, changeType, result);
+    if (result.keys && result.keys.length) return result.keys;
+  }
   return null;
 };
 
 export const addDefaultChanges = function (changes) {
+  // Call hook
+  let tempChanges = [];
+  Hooks.callAll("pf1.addDefaultChanges", this, tempChanges);
+  changes.push(...tempChanges.filter((c) => c instanceof ItemChange));
+
   // Class hit points
   const classes = this.data.items
     .filter((o) => o.type === "class" && !["racial"].includes(getProperty(o.data, "classType")))
@@ -880,7 +908,7 @@ export const addDefaultChanges = function (changes) {
         ItemChange.create({
           formula: flyValue.toString(),
           target: "skill",
-          subtarget: "skill.fly",
+          subTarget: "skill.fly",
           modifier: "racial",
         })
       );
@@ -898,6 +926,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.clm",
         modifier: "racial",
+        priority: -1,
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.clm.changeBonus").positive.push({
@@ -911,6 +940,7 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.swm",
         modifier: "racial",
+        priority: -1,
       })
     );
     getSourceInfo(this.sourceInfo, "data.skills.swm.changeBonus").positive.push({
@@ -1542,4 +1572,56 @@ export const getSourceInfo = function (obj, key) {
     obj[key] = { negative: [], positive: [] };
   }
   return obj[key];
+};
+
+/**
+ * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
+ */
+export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {
+  const highestTemplate = {
+    value: 0,
+    ids: [],
+    highestID: null,
+  };
+  const highest = Object.keys(CONFIG.PF1.bonusModifiers).reduce((cur, k) => {
+    if (options.ignoreTarget) cur[k] = duplicate(highestTemplate);
+    else cur[k] = {};
+    return cur;
+  }, {});
+
+  for (let c of changes) {
+    let h;
+    if (options.ignoreTarget) h = highest[c.modifier];
+    else h = highest[c.modifier][c.subTarget];
+
+    h.ids.push(c._id);
+    if (h.value < c.value || !h.highestID) {
+      h.value = c.value;
+      h.highestID = c._id;
+    }
+  }
+
+  {
+    let mod, h;
+    const filterFunc = function (c) {
+      if (h.highestID === c._id) return true;
+      if (CONFIG.PF1.stackingBonusModifiers.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
+      return true;
+    };
+
+    for (mod of Object.keys(highest)) {
+      if (options.ignoreTarget) {
+        h = highest[mod];
+        changes = changes.filter(filterFunc);
+      } else {
+        for (let subTarget of Object.keys(highest[mod])) {
+          h = highest[mod][subTarget];
+          changes = changes.filter(filterFunc);
+        }
+      }
+    }
+  }
+
+  return changes;
 };

@@ -21,7 +21,16 @@
   <div class="form-group stacked">
     <label>{{localize "PF1.Misc"}}</label>
     <label class="checkbox">
-      <input type="checkbox" name="power-attack"/> {{localize "PF1.PowerAttack"}}/{{localize "PF1.DeadlyAim"}}
+      <input type="checkbox" name="haste-attack"/> {{localize "PF1.Haste"}}
+    </label>
+    {{#if isMeleeWeaponAttackAction}}
+    <label class="checkbox">
+      <input type="checkbox" name="power-attack"/> {{localize "PF1.PowerAttack"}}
+    </label>
+    {{/if}}
+    {{#if isRangedWeaponAttackAction}}
+    <label class="checkbox">
+      <input type="checkbox" name="power-attack"/> {{localize "PF1.DeadlyAim"}}
     </label>
     <label class="checkbox">
       <input type="checkbox" name="rapid-shot"/> {{localize "PF1.RapidShot"}}
@@ -29,6 +38,7 @@
     <label class="checkbox">
       <input type="checkbox" name="point-blank-shot"/> {{localize "PF1.PointBlankShot"}}
     </label>
+    {{/if}}
     {{#if isNaturalAttack}}
     <label class="checkbox">
       <input type="checkbox" {{checked item.primaryAttack}} name="primary-attack"/> {{localize "PF1.PrimaryAttack"}}

@@ -5,7 +5,6 @@ import { DicePF } from "../../dice.js";
 import {
   createTag,
   createTabs,
-  isMinimumCoreVersion,
   CR,
   convertWeight,
   createConsumableSpellDialog,
@@ -246,6 +245,7 @@ export class ActorSheetPF extends ActorSheet {
     for (let [a, abl] of Object.entries(data.actor.data.abilities)) {
       abl.label = CONFIG.PF1.abilities[a];
       abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.abilities[a].total : [];
+      abl.totalLabel = abl.total == null ? "-" : abl.total;
     }
 
     // Armor Class
@@ -422,7 +422,7 @@ export class ActorSheetPF extends ActorSheet {
         (o) => o.type === "feat" && o.data.data.featType === "feat"
       ).length;
       const totalLevels = this.actor.items
-        .filter((o) => o.type === "class" && ["base", "prestige", "racial"].includes(o.data.data.classType))
+        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
         .reduce((cur, o) => {
           return cur + o.data.data.level;
         }, 0);
@@ -935,9 +935,6 @@ export class ActorSheetPF extends ActorSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
-    // Configure Special Flags
-    html.find(".configure-flags").click(this._onConfigureFlags.bind(this));
-
     // Roll defenses
     html.find(".generic-defenses .rollable").click((ev) => {
       this.actor.rollDefenses();
@@ -1263,17 +1260,13 @@ export class ActorSheetPF extends ActorSheet {
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  /**
-   * Handle click events for the Traits tab button to configure special Character Flags
-   */
-  _onConfigureFlags(event) {
-    event.preventDefault();
-    new ActorSheetFlags(this.actor).render(true);
-  }
-
   _onRest(event) {
     event.preventDefault();
-    new ActorRestDialog(this.actor).render(true);
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorRestDialog && o._element;
+    });
+    if (app) app.bringToTop();
+    else new ActorRestDialog(this.actor).render(true);
   }
 
   /* -------------------------------------------- */
@@ -1376,11 +1369,20 @@ export class ActorSheetPF extends ActorSheet {
     const el = event.currentTarget;
 
     this._mouseWheelAdd(event.originalEvent, el);
+    // Get base value
     let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
       value = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
     }
+
+    // Adjust value if needed
     const name = el.getAttribute("name");
+    if (name.match(/data\.abilities\.([a-zA-Z0-9]+)\.value$/)) {
+      if (Number.isNaN(parseInt(value))) value = null;
+      else value = parseInt(value);
+    }
+
+    // Add pending update
     if (name) {
       this._pendingUpdates[name] = value;
     }
@@ -1679,7 +1681,11 @@ export class ActorSheetPF extends ActorSheet {
   async _onPointBuyCalculator(event) {
     event.preventDefault();
 
-    new PointBuyCalculator(this).render(true);
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof PointBuyCalculator && o._element;
+    });
+    if (app) app.bringToTop();
+    else new PointBuyCalculator(this.actor).render(true);
   }
 
   async _onControlAlignment(event) {
@@ -1834,7 +1840,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const li = event.currentTarget.closest(".item");
     const item = this.actor.getOwnedItem(li.dataset.itemId);
-    item.sheet.render(true);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ItemSheet && o.object === item && o._element;
+    });
+    if (app) app.bringToTop();
+    else item.sheet.render(true);
   }
 
   /**
@@ -2374,7 +2385,12 @@ export class ActorSheetPF extends ActorSheet {
       title: label.innerText,
       choices: CONFIG.PF1[a.dataset.options],
     };
-    new ActorTraitSelector(this.actor, options).render(true);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorTraitSelector && o.options.name === options.name && o._element;
+    });
+    if (app) app.bringToTop();
+    else new ActorTraitSelector(this.actor, options).render(true);
   }
 
   setItemUpdate(id, key, value) {

@@ -3,18 +3,19 @@ import { ExperienceConfig } from "./config/experience.js";
 import { createTag } from "./lib.js";
 import { ItemChange } from "./item/components/change.js";
 import { getChangeFlat } from "./actor/apply-changes.js";
+import { SemanticVersion } from "./semver.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function () {
-  game.pf1.isMigrating = true;
   if (!game.user.isGM) {
     const msg = game.i18n.localize("PF1.ErrorUnauthorizedAction");
     console.error(msg);
     return ui.notifications.error(msg);
   }
+  game.pf1.isMigrating = true;
   ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
   console.log("System Migration starting.");
 
@@ -70,6 +71,7 @@ export const migrateWorld = async function () {
   ui.notifications.info(`PF1 System Migration to version ${game.system.data.version} succeeded!`);
   console.log("System Migration completed.");
   game.pf1.isMigrating = false;
+  Hooks.callAll("pf1.migrationFinished");
 };
 
 /* -------------------------------------------- */
@@ -740,6 +742,14 @@ const _migrateSpellCosts = function (ent, updateData) {
   if (slotCost == null) {
     updateData["data.slotCost"] = 1;
   }
+
+  // Migrate level 0 spell charge deduction in a specific version
+  if (
+    !SemanticVersion.fromString(game.system.data.version).isHigherThan(SemanticVersion.fromString("0.77.11")) &&
+    getProperty(ent.data, "data.level") === 0
+  ) {
+    updateData["data.preparation.autoDeductCharges"] = false;
+  }
 };
 
 const _migrateLootEquip = function (ent, updateData) {
@@ -837,7 +847,7 @@ const _migrateActorTokenVision = function (ent, updateData) {
 
   updateData["data.attributes.-=vision"] = null;
   updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
-  if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision;
+  if (!getProperty(ent.data, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision ?? 0;
 };
 
 const _migrateActorSpellbookUsage = function (ent, updateData) {

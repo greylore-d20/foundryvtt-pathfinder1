@@ -40,7 +40,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputRange}}<input class="{{#unless isSpell}}formula{{/unless}}" type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="data.range.units">
       {{#select data.range.units}}
       <option value=""></option>
@@ -57,7 +57,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.MinRange"}}</label>
   <div class="form-fields">
-    {{#if canInputMinRange}}<input type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputMinRange}}<input class="{{#unless isSpell}}formula{{/unless}}" type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="data.range.minUnits">
       {{#select data.range.minUnits}}
       <option value=""></option>
@@ -97,7 +97,7 @@
     {{#if isSpell}}
     <input type="text" name="data.spellDuration" value="{{data.spellDuration}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
     {{else}}
-    {{#if canInputDuration}}<input type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
+    {{#if canInputDuration}}<input class="formula" type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
     <select name="data.duration.units">
       {{#select data.duration.units}}
       <option value=""></option>
@@ -132,7 +132,7 @@
 </div>
 {{#if isCharged}}
 <div class="form-group uses-per">
-  <input type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
+  <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
 </div>
 {{/if}}
 

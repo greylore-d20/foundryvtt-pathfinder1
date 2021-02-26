@@ -1103,11 +1103,13 @@ PF1.conditionalTargets = {
   attack: {
     _label: "PF1.AttackRollPlural",
     allAttack: "PF1.All",
+    hasteAttack: "PF1.Haste",
     rapidShotAttack: "PF1.RapidShot",
   },
   damage: {
     _label: "PF1.Damage",
     allDamage: "PF1.All",
+    hasteDamage: "PF1.Haste",
     rapidShotDamage: "PF1.RapidShot",
   },
   effect: {

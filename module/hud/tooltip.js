@@ -15,6 +15,11 @@ export class TooltipPF extends Application {
     this.objects = [];
 
     this.forceHideGMInfo = false;
+
+    this.lock = {
+      new: false,
+      old: false,
+    };
   }
 
   static get defaultOptions() {
@@ -49,6 +54,8 @@ export class TooltipPF extends Application {
   }
 
   bind(object) {
+    if (this.lock.new) return;
+
     if (this.objects.indexOf(object) === -1) {
       this.objects.push(object);
       this.render(true);
@@ -56,6 +63,8 @@ export class TooltipPF extends Application {
   }
 
   unbind(object) {
+    if (this.lock.old) return;
+
     const idx = this.objects.indexOf(object);
     if (idx >= 0) {
       this.objects.splice(idx, 1);
@@ -97,8 +106,16 @@ export class TooltipPF extends Application {
     if (!data) return null;
 
     data.name = token.data.name;
-    if (!(game.user.isGM && !this.forceHideGMInfo)) {
-      data.name = getProperty(token.actor.data, "data.details.tooltip.name") || token.data.name;
+    if ((game.user.isGM && this.forceHideGMInfo) || (!game.user.isGM && !token.actor.hasPerm(game.user, "OBSERVER"))) {
+      const tooltipName = getProperty(token.actor.data, "data.details.tooltip.name");
+      data.name = tooltipName || token.data.name;
+
+      if (
+        (this.worldConfig.hideActorName === true && !tooltipName) ||
+        getProperty(token.actor.data, "data.details.tooltip.hideName") === true
+      ) {
+        data.name = this.worldConfig.hideActorNameReplacement || "???";
+      }
     }
 
     return data;
@@ -280,6 +297,9 @@ export class TooltipPF extends Application {
   }
 
   show() {
+    if (this.objects.length === 0) return;
+    if (this.config.hideWithoutKey && !game.keyboard.isDown("Control")) return;
+    if (!this.config.hideWithoutKey && game.keyboard.isDown("Control")) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
     this.element.css("visibility", "visible");

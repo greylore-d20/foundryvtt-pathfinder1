@@ -1,5 +1,124 @@
 # Changelog
 
+## 0.77.15
+
+### Bug Fixes
+
+- Changing a class' level on an actor didn't update the actor, unless health calculation was set to automatic
+- Rules for d10s weren't acknowledged in `sizeRoll`
+- Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
+- The feats-by-level calculation for actors did not take NPC classes into account (thanks Grarl!)
+- Roll data resources weren't updated for changes
+- (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working, resulting in unexpected behavior
+  - Manual intervention is required for pre-existing actors using these class features. Simply remove the previous class feature (AC Bonus) and re-add it from the feature compendium
+- Damage bonuses and penalties were being applied to healing effects
+- Dragging an item from one container to another with an item with the same ID didn't do anything
+- Dragging an item from one container to another duplicated the item instead of moving it
+- Toggling buff visibility didn't update active ones on tokens
+- Toggling a condition for linked actors with multiple tokens on the current canvas created multiple token effects for each one
+- Alternate attack chat cards didn't show buttons if they didn't have damage rolls
+
+### Changelog
+
+- The variables `item` and `actor` are now present in a script change
+- Added label support for `/damage <roll> #label` and `/heal <roll> #label` chat commands
+- Added inline support for damage/ heal commands
+- Added a 4th parameter to `sizeRoll` which is a number indicating the original size you are measuring from (4 for medium)
+- Altered the `@size` roll data variable. It's no longer a relative value based off medium. Instead, it's now an absolute size number (with 4 being medium)
+  - The `sizeRoll` function has been altered to accomodate for this change. The player shouldn't need to alter anything
+- Untyped bonuses to AC no longer grant that bonus to CMD
+- Added the source compendium's label in compendium browsers
+- Using a custom formula inplace of a d20 for an attack will now highlight that fact in the chat card
+- Implemented bring to top functionality for actor traits, rest, and point buy calculator dialogs and item sheets
+- Added error catcher to PF1 socket calls (thanks mkahvi!)
+- Added an option for Haste in the attack roll dialog (thanks Grarl!)
+
+### API
+
+- Added more hooks, and created a documentation file for hooks
+- Added a small tutorial on creating custom changes
+- Update Drag Ruler API for Version 1.3.0 (thanks Stäbchenfisch!)
+
+### Localization
+
+- Updated the French localization (thanks rectulo!)
+- Updated the Chinese localization (thanks bnp800!)
+
+## 0.77.14 (Hotfix)
+
+### Bug Fixes
+
+- Enhancement and masterwork bonuses to attack and damage weren't applying
+- Show correct label for DC fields in items
+- Show correct range label in item description sidebar
+- Change formulas could cause errors that were not properly handled
+
+## 0.77.13 (Hotfix)
+
+### Bug Fixes
+
+- Armor, shield and natural armor bonuses could double on unlinked tokens
+
+## 0.77.12 (Semi-hotfix)
+
+### Bug Fixes
+
+- Basic melee and ranged attack rolls weren't working
+- Certain temporary bonuses/penalties, such as the caster level from a spell's attack dialog, didn't apply
+
+### Changelog
+
+- Added option to only show tooltips while Control is held
+  - Similarly, without that option enabled, holding Control now hides tooltips
+
+## 0.77.11 (Hotfix)
+
+### Bug Fixes
+
+- Armor, shield and natural armor wasn't being applied to actors
+
+## 0.77.10
+
+### Bug Fixes
+
+- Ability score penalties were not being reflected in roll data's `@abilities.<ability>.penalty`
+- Tooltips for tokens became wider with more items
+- Several migration fixes. Please let us know if migration doesn't finish for you.
+- Attack range calculation on actor sheets could cause the sheet to be unopeneable
+- Fly maneuverability bonuses/penalties didn't apply to the fly skill bonus
+- Changing an attack's damage ability multiplier in the attack dialog changed the value for the item in-memory
+- The Wound Threshold optional rule was no longer working
+- Dexterity bonuses to CMD were incorrectly limited by the actor's Maximum Dexterity Bonus
+- Some attributes (hp, max xp, and some others) were incorrect after importing an actor
+- Climb and Swim speeds gained from changes didn't apply a racial skill bonus
+
+### Changelog
+
+- Changed default world settings for tooltips to hide most information from players (may be reverted in the future)
+- Added better option to hide actor names from players in tooltips
+- Class Association links now indicate if the referenced item doesn't exist
+- Clearing an ability score turns it to a null (-) value
+- Level 0 spells now use up charges, but will be migrated to not auto deduct charges this version
+- Adjusted when players can see a token's name in the tooltip slightly, so that they can always see the actual name if they at least have Observer permissions
+- Added `/damage <roll>` and `/heal <roll>` chat commands
+- Tooltips will not show while Alt is held
+- Attack and Damage bonuses from changes are now deferred until attack rolls
+  - This also means that enhancement bonuses to attack and damage don't stack with enhancement bonuses (and the masterwork property) of attacks
+- Added sample macro to show an actor's social defenses (demoralize/intimidate and diplomacy DCs)
+
+### Compendium
+
+- Changes added to Fleet, Greater Shield Focus, Shield Focus (Feats) and Track (Class Feature)
+- Slayer (Class) - Talent initial level incorrect
+- Rage (Class Feature) - Use formula incorrect
+- Smite Evil (Class Feature) - Scaling off HD instead of level
+- Divine Grace (Class Feature) - Minimum 0 to benefit
+- Mirror Image (Spell) - Workaround for roll bug
+- Chakram (Weapon) - Not listed as ranged
+- Wraith (Bestiary1) - No attacks
+- Boar (Bestiary3) - Masterwork checked on attack
+- Spectre (Bestiary4) - Incorrect attacks
+
 ## 0.77.9 (Hotfix)
 
 ### Bug Fixes

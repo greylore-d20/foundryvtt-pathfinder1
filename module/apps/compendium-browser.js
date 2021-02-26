@@ -3,12 +3,12 @@ import { ItemPF } from "../item/entity.js";
 import { SemanticVersion } from "../semver.js";
 
 const NEED_NEW_VERSION = {
-  spells: "0.77.6",
-  items: "0.76.14",
-  bestiary: "0.77.6",
-  feats: "0.76.14",
-  classes: "0.76.12",
-  races: "0.76.12",
+  spells: "0.77.15",
+  items: "0.77.15",
+  bestiary: "0.77.15",
+  feats: "0.77.15",
+  classes: "0.77.15",
+  races: "0.77.15",
 };
 
 export const COMPENDIUM_TYPES = {
@@ -319,7 +319,7 @@ export class CompendiumBrowser extends Application {
       }
     } else {
       for (let i of this._savedItems) {
-        const p = game.packs.get(i.collection);
+        const p = game.packs.get(i.collection._id);
         if (p) {
           this.items.push(this._mapEntry(p, i.item));
           this.packs[i.collection] = p;
@@ -572,7 +572,10 @@ export class CompendiumBrowser extends Application {
 
   _mapEntry(pack, item) {
     const result = {
-      collection: pack.collection,
+      collection: {
+        _id: pack.collection,
+        label: pack.metadata.label,
+      },
       item: {
         _id: item._id,
         name: item.name,

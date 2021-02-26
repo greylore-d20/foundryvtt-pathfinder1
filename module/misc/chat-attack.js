@@ -1,8 +1,7 @@
-import { isMinimumCoreVersion } from "../lib.js";
-
 export class ChatAttack {
-  constructor(item, { label = "", primaryAttack = true } = {}) {
+  constructor(item, { label = "", primaryAttack = true, rollData = {} } = {}) {
     this.primaryAttack = primaryAttack;
+    this._rollData = rollData;
     this.setItem(item);
     this.label = label;
 
@@ -63,13 +62,13 @@ export class ChatAttack {
    */
   setItem(item) {
     if (item == null) {
-      this.rollData = {};
+      this.rollData = this._rollData;
       this.item = null;
       return;
     }
 
     this.item = item;
-    this.rollData = duplicate(this.item.getRollData());
+    this.rollData = mergeObject(this.item.getRollData(), this._rollData);
 
     this.setRollData();
   }

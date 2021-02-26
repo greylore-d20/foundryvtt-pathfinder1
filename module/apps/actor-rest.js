@@ -2,7 +2,6 @@ export class ActorRestDialog extends BaseEntitySheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
     return mergeObject(options, {
-      id: "actor-flags",
       classes: ["pf1", "actor-rest"],
       template: "systems/pf1/templates/apps/actor-rest.hbs",
       width: 500,

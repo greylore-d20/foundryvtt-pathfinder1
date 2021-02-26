@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /**
  * The Pathfinder 1st edition game system for Foundry Virtual Tabletop
  * Author: Furyspark
@@ -29,8 +30,8 @@ import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDie, normalDie, getActorFromId, isMinimumCoreVersion } from "./module/lib.js";
-import { ChatMessagePF } from "./module/sidebar/chat-message.js";
+import { getItemOwner, sizeDieExt, normalDie, getActorFromId } from "./module/lib.js";
+import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
@@ -75,7 +76,7 @@ Hooks.once("init", async function () {
     rollActorAttributeMacro,
     CompendiumDirectoryPF,
     rollPreProcess: {
-      sizeRoll: sizeDie,
+      sizeRoll: sizeDieExt,
       roll: normalDie,
     },
     migrateWorld: migrations.migrateWorld,
@@ -263,20 +264,34 @@ Hooks.once("ready", async function () {
     game.pf1.tooltip.setPosition();
   });
   window.addEventListener("keydown", (event) => {
+    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = true;
       game.pf1.tooltip.render();
+    } else if (event.key === "Control") {
+      if (tooltipConfig.hideWithoutKey) {
+        game.pf1.tooltip.show();
+      } else {
+        game.pf1.tooltip.hide();
+      }
     }
   });
   window.addEventListener("keyup", (event) => {
+    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = false;
       game.pf1.tooltip.render();
+    } else if (event.key === "Control") {
+      if (tooltipConfig.hideWithoutKey) {
+        game.pf1.tooltip.hide();
+      } else {
+        game.pf1.tooltip.show();
+      }
     }
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.9";
+  const NEEDS_MIGRATION_VERSION = "0.77.10";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -452,7 +467,7 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
 
 Hooks.on("hoverToken", (token, hovering) => {
   // Show token tooltip
-  if (hovering) {
+  if (hovering && !game.keyboard.isDown("Alt")) {
     const p = game.pf1.tooltip.mousePos;
     const el = document.elementFromPoint(p.x, p.y);
     // This check is required to prevent hovering over tokens under application windows
@@ -549,6 +564,11 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
 
   // Refresh actor
   actor.refresh();
+});
+
+Hooks.on("chatMessage", (log, message, chatData) => {
+  const result = customRolls(message, chatData.speaker);
+  return !result;
 });
 
 /* -------------------------------------------- */

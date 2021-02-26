@@ -68,33 +68,39 @@ export const registerHandlebarsHelpers = function () {
     if (rangeType == null) return null;
 
     const toFeet = () => {
-      switch (rangeType) {
-        case "melee":
-        case "touch":
-          return getProperty(rollData, "range.melee") || 0;
-        case "reach":
-          return getProperty(rollData, "range.reach") || 0;
-        case "close":
-          return new Roll("25 + floor(@cl / 2) * 5", item).roll().total;
-        case "medium":
-          return new Roll("100 + @cl * 10", rollData).roll().total;
-        case "long":
-          return new Roll("400 + @cl * 40", rollData).roll().total;
-        case "mi":
-          return range * 5280; // TODO: Should remain as miles for shortness
-        case "ft":
-          return new Roll(range || "0", rollData).roll().total;
-        default:
-          return range;
+      try {
+        switch (rangeType) {
+          case "melee":
+          case "touch":
+            return getProperty(rollData, "range.melee") || 0;
+          case "reach":
+            return getProperty(rollData, "range.reach") || 0;
+          case "close":
+            return new Roll("25 + floor(@cl / 2) * 5", rollData).roll().total;
+          case "medium":
+            return new Roll("100 + @cl * 10", rollData).roll().total;
+          case "long":
+            return new Roll("400 + @cl * 40", rollData).roll().total;
+          case "mi":
+            return range * 5280; // TODO: Should remain as miles for shortness
+          case "ft":
+            return new Roll(range, rollData).roll().total;
+          default:
+            return range;
+        }
+      } catch (err) {
+        console.log(err, item);
+        return "[x]";
       }
     };
 
     const ft = toFeet();
-    if (ft) {
+    if (ft && typeof ft !== "string") {
       const rv = convertDistance(ft);
       return `${rv[0]} ${rv[1]}`;
+    } else {
+      return "" + (ft ?? "");
     }
-    return null;
   });
 
   Handlebars.registerHelper("itemDamage", (item, rollData) => {

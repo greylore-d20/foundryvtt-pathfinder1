@@ -55,7 +55,11 @@ export class ItemPF extends Item {
   }
 
   get hasMultiAttack() {
-    return this.hasAttack && this.data.data.attackParts != null && this.data.data.attackParts.length > 0;
+    return (
+      this.hasAttack &&
+      ((this.data.data.attackParts != null && this.data.data.attackParts.length > 0) ||
+        this.data.data.formulaicAttacks?.count?.value > 0)
+    );
   }
 
   get hasTemplate() {
@@ -914,6 +918,9 @@ export class ItemPF extends Item {
       }
     }
 
+    // Update formulaic attacks
+    if (this.data?.hasAttack) data["data.formulaicAttacks.count.value"] = this.parseFormulaicAttacks({ update: false });
+
     // Set equipment subtype and slot
     if (
       data["data.equipmentType"] != null &&
@@ -1461,6 +1468,40 @@ export class ItemPF extends Item {
     this.roll();
   }
 
+  parseFormulaicAttacks({ formula = null, update = true } = {}) {
+    const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
+    let extraAttacks = 0;
+    const rollData = this.getRollData();
+    try {
+      if (exAtkCountFormula.length > 0) {
+        const xaroll = new Roll(exAtkCountFormula, rollData).roll();
+        extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
+      }
+    } catch (err) {
+      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      console.warn(msg, err, exAtkCountFormula);
+      ui.notifications.warn(msg);
+    }
+
+    // Test bonus attack formula
+    const exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus || "";
+    try {
+      if (exAtkBonusFormula.length > 0) {
+        rollData["attackCount"] = 1;
+        new Roll(exAtkBonusFormula, rollData).roll().total;
+      }
+    } catch (err) {
+      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      console.warn(msg, err, exAtkBonusFormula);
+      ui.notifications.warn(msg);
+    }
+
+    // Update item
+    if (update) this.update({ "data.formulaicAttacks.count.value": extraAttacks });
+
+    return extraAttacks;
+  }
+
   async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.parentActor;
@@ -1624,6 +1665,28 @@ export class ItemPF extends Item {
           )
         : [{ bonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
+
+      // Formulaic extra attacks
+      if (fullAttack) {
+        const exAtkCount = this.parseFormulaicAttacks(),
+          exAtkBonusFormula = this.data.data.formulaicAttacks.bonus.formula || "0";
+        if (exAtkCount > 0) {
+          try {
+            const frollData = duplicate(rollData); // temporary duplicate to avoid contaminating the actual rolldata
+            const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
+            for (let i = 0; i < exAtkCount; i++) {
+              frollData["formulaicAttack"] = i + 1; // Add and update attack counter
+              const bonus = new Roll(exAtkBonusFormula, frollData).roll().total;
+              allAttacks.push({
+                bonus: bonus.toString(),
+                label: fatlabel.format(i + 2),
+              });
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
 
       const subtractAmmo = function (value) {
         if (!ammoLinks.length) return;
@@ -2283,7 +2346,13 @@ export class ItemPF extends Item {
             callback: (html) => resolve((roll = _roll.call(this, false, html))),
           };
         }
-        if ((getProperty(this.data, "data.attackParts") || []).length || this.type === "spell") {
+
+        // Fetch formulaic attacks and ensure .value is set
+        let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+        if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0)
+          fmAtks = this.parseFormulaicAttacks();
+
+        if ((getProperty(this.data, "data.attackParts") || []).length || fmAtks > 0 || this.type === "spell") {
           buttons.multi = {
             label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
             callback: (html) => resolve((roll = _roll.call(this, true, html))),

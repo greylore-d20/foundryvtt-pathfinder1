@@ -995,8 +995,9 @@ export class ActorPF extends Actor {
     this.prepareItemLinks();
 
     // Update item resources
-    this.data.items.forEach((item) => {
-      this.updateItemResources(item);
+    this.items.forEach((item) => {
+      this.updateItemResources(item.data);
+      item.prepareDerivedData();
     });
   }
 

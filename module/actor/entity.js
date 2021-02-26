@@ -48,6 +48,12 @@ export class ActorPF extends Actor {
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
     if (this._runningFunctions === undefined) this._runningFunctions = [];
+
+    /**
+     * @property {ItemPF[]} containerItems
+     * All items this actor is holding in containers.
+     */
+    if (this.containerItems === undefined) this.containerItems = [];
   }
 
   /* -------------------------------------------- */
@@ -200,7 +206,27 @@ export class ActorPF extends Actor {
 
   prepareEmbeddedEntities() {
     super.prepareEmbeddedEntities();
+    this.containerItems = this._prepareContainerItems(this.items);
     this._prepareChanges();
+  }
+
+  _prepareContainerItems(items) {
+    let collection = [];
+
+    const getContainerContents = function (item) {
+      if (item.type !== "container") return;
+
+      item.items.forEach((i) => {
+        collection.push(i);
+        getContainerContents(i);
+      });
+    };
+
+    items.forEach((item) => {
+      getContainerContents(item);
+    });
+
+    return collection;
   }
 
   _prepareChanges() {

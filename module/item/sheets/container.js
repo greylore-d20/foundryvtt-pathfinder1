@@ -412,6 +412,14 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       data: item.data,
     };
 
+    // Add actor to drag data
+    const actor = this.item.parentActor;
+    if (actor) {
+      dragData.actorId = actor.id;
+      dragData.sceneId = actor.isToken ? canvas.scene?.id : null;
+      dragData.tokenId = actor.isToken ? actor.token.id : null;
+    }
+
     // Set data transfer
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
@@ -465,7 +473,14 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       await this.item.createContainerContent(itemData);
 
       if (actor) {
-        await actor.deleteOwnedItem(data.data._id);
+        if (actor.items.get(data.data._id)) {
+          await actor.deleteOwnedItem(data.data._id);
+        } else {
+          const containerItem = actor.containerItems.find((i) => i._id === data.data._id);
+          if (containerItem) {
+            await containerItem.parentItem.deleteContainerContent(data.data._id);
+          }
+        }
       }
     }
   }

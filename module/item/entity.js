@@ -3728,6 +3728,7 @@ export class ItemPF extends Item {
     const user = game.user;
     const itemOptions = { temporary: false, renderSheet: false };
 
+    let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
     // Iterate over data to create
     data = data instanceof Array ? data : [data];
     if (!(itemOptions.temporary || itemOptions.noHook)) {
@@ -3737,11 +3738,12 @@ export class ItemPF extends Item {
           console.debug(`${vtt} | ${embeddedName} creation prevented by preCreate hook`);
           return null;
         }
+
+        d._id = randomID(16);
       }
     }
 
-    // Trigger the Socket workflow
-    let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
+    // Add to updates
     const items = data.map((o) => {
       if (!options.raw) {
         let template = duplicate(game.system.template.Item[o.type]);
@@ -3755,7 +3757,6 @@ export class ItemPF extends Item {
         o.data = mergeObject(template, o.data || {});
       }
 
-      if (!o._id) o._id = randomID(16);
       return o;
     });
     inventory.push(...items);

@@ -12,6 +12,8 @@
 - (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working, resulting in unexpected behavior
   - Manual intervention is required for pre-existing actors using these class features. Simply remove the previous class feature (AC Bonus) and re-add it from the feature compendium
 - Damage bonuses and penalties were being applied to healing effects
+- Dragging an item from one container to another with an item with the same ID didn't do anything
+- Dragging an item from one container to another duplicated the item instead of moving it
 
 ### Changelog
 

@@ -9,8 +9,6 @@
 - Duration tags in item sheets weren't calculated in preview (thanks mkahvi!)
 - The feats-by-level calculation for actors did not take NPC classes into account (thanks Grarl!)
 - Roll data resources weren't updated for changes
-- (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working, resulting in unexpected behavior
-  - Manual intervention is required for pre-existing actors using these class features. Simply remove the previous class feature (AC Bonus) and re-add it from the feature compendium
 - Damage bonuses and penalties were being applied to healing effects
 - Dragging an item from one container to another with an item with the same ID didn't do anything
 - Dragging an item from one container to another duplicated the item instead of moving it
@@ -46,6 +44,14 @@
 
 - Updated the French localization (thanks rectulo!)
 - Updated the Chinese localization (thanks bnp800!)
+
+### Compendium
+
+- Swarms' tokens were set to their creature size instead of their space size
+- Monks weren't receiving AC Bonus automatically
+- (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working
+- Trapfinding was only giving bonuses to Disable Device vs traps instead of always
+  - Manual intervention is required for pre-existing actors using these class features. Remove the previous class feature and re-add it from the feature compendium
 
 ## 0.77.14 (Hotfix)
 

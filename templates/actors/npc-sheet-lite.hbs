@@ -66,7 +66,7 @@
             <span class="text-box direct wheel-change allow-relative hp-current-input" name="data.attributes.hp.value" data-dtype="Number">{{data.attributes.hp.value}}</span>
           </td>
           <td>
-            <span class="text-box readonly">{{data.attributes.hp.max}}</span>
+            <span class="text-box direct hp-max-input" name="data.attributes.hp.base">{{data.attributes.hp.max}}</span>
           </td>
           <td>
             <span class="text-box direct allow-relative hp-temp-input" name="data.attributes.hp.temp" data-dtype="Number">{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}</span>
@@ -105,7 +105,7 @@
             <span class="text-box direct wheel-change allow-relative" name="data.attributes.vigor.value" data-dtype="Number">{{data.attributes.vigor.value}}</span>
           </td>
           <td>
-            <span class="text-box readonly">{{data.attributes.vigor.max}}</span>
+            <span class="text-box direct" name="data.attributes.vigor.base">{{data.attributes.vigor.max}}</span>
           </td>
           <td>
             <span class="text-box direct wheel-change allow-relative" name="data.attributes.vigor.temp" data-dtype="Number">{{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}</span>
@@ -114,7 +114,7 @@
             <span class="text-box direct wheel-change allow-relative" name="data.attributes.wounds.value" data-dtype="Number">{{data.attributes.wounds.value}}</span>
           </td>
           <td>
-            <span class="text-box readonly">{{data.attributes.wounds.max}}</span>
+            <span class="text-box direct" name="data.attributes.wounds.base">{{data.attributes.wounds.max}}</span>
           </td>
         </tr>
       </tbody>

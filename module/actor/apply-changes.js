@@ -553,7 +553,7 @@ export const addDefaultChanges = function (changes) {
     );
     changes.push(
       ItemChange.create({
-        formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
+        formula: `@attributes.wounds.base ? 0 : (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`,
         target: "misc",
         subTarget: "wounds",
         modifier: "base",

@@ -51,8 +51,8 @@
 - Swarms' tokens were set to their creature size instead of their space size
 - Monks weren't receiving AC Bonus automatically
 - (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working
-- Trapfinding was only giving bonuses to Disable Device vs traps instead of always
   - Manual intervention is required for pre-existing actors using these class features. Remove the previous class feature and re-add it from the feature compendium
+- Trapfinding was only giving bonuses to Disable Device vs traps instead of always
 
 ## 0.77.14 (Hotfix)
 

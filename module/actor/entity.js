@@ -803,7 +803,7 @@ export class ActorPF extends Actor {
           spellClass === "_hd"
             ? rollData.attributes.hd.total
             : spellClass?.length > 0
-            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
+            ? getProperty(rollData, `classes.${spellClass}.level`) || 0
             : 0;
         const roll = new Roll(formula, rollData).roll();
         setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
@@ -1357,6 +1357,7 @@ export class ActorPF extends Actor {
    * @return {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
+    const t = new Date();
     this._pendingUpdateTokens.forEach((token) => {
       token.cancel();
     });
@@ -1408,6 +1409,7 @@ export class ActorPF extends Actor {
               const p = this.refreshItems(token);
               promises.push(p);
             }
+            console.log("update", new Date() - t, "ms");
 
             Promise.all(promises).then(() => {
               for (let t of tokens) {
@@ -2956,12 +2958,20 @@ export class ActorPF extends Actor {
     });
   }
 
-  getRollData(options = { forceRefresh: true }) {
-    if (this._rollData === this.data.data) {
-      if (!options.forceRefresh) return this._rollData;
+  getRollData(options = { refresh: false }) {
+    if (!options.refresh && this._rollData) {
+      let result = this._rollData;
+
+      // Clear certain fields
+      const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
+      for (let k of clearFields) {
+        setProperty(result, k, undefined);
+      }
+
+      return result;
     }
 
-    let result = duplicate(this.data.data);
+    let result = this.data.data;
 
     // Set size index
     {

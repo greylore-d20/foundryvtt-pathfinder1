@@ -1463,4 +1463,34 @@ PF1.CR_EXP_LEVELS = [
   9830400,
 ];
 
+PF1.temporaryRollDataFields = {
+  actor: [
+    "d20",
+    "attackBonus",
+    "damageBonus",
+    "pointBlankBonus",
+    "rapidShotPenalty",
+    "powerAttackBonus",
+    "powerAttackPenalty",
+    "conditionals",
+    "concentrationBonus",
+    "formulaBonus",
+    "dcBonus",
+    "chargeCostBonus",
+    "chargeCost",
+    "sizeBonus",
+    "bonus",
+    "critMult",
+    "ablMult",
+    "ablDamage",
+    "cl",
+    "sl",
+    "classLevel",
+    "ablMod",
+    "item",
+    "level",
+    "mod",
+  ],
+};
+
 CONFIG.Combat.initiative.decimals = 2;

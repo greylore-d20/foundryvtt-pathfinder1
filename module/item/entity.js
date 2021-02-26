@@ -2814,15 +2814,8 @@ export class ItemPF extends Item {
   /**
    * @returns {Object} An object with data to be used in rolls in relation to this item.
    */
-  getRollData(options = { forceRefresh: true }) {
-    const result = this.parentActor != null ? this.parentActor.getRollData(options) : {};
-
-    if (this._rollData === this.data.data) {
-      if (!options.forceRefresh) {
-        result.item = this._rollData;
-        return result;
-      }
-    }
+  getRollData() {
+    const result = this.parentActor != null ? this.parentActor.getRollData() : {};
 
     result.item = duplicate(this.data.data);
     if (this.type === "spell" && this.parentActor != null) {
@@ -2842,14 +2835,6 @@ export class ItemPF extends Item {
       result.ablMod = ablMod;
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
-
-    // Get aura strength
-    {
-      const aura = getProperty(this.data, "data.aura.school");
-      if (typeof aura === "string" && aura.length > 0) {
-        result.item.auraStrength = this.auraStrength;
-      }
-    }
 
     this._rollData = result.item;
     return result;

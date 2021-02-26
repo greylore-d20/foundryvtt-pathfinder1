@@ -33,6 +33,7 @@
 - Added error catcher to PF1 socket calls (thanks mkahvi!)
 - Added an option for Haste in the attack roll dialog (thanks Grarl!)
 - Added an option to give an attack a number of extra attacks based on a formual (thanks mkahvi!)
+- Re-enabled speedy actor updates
 
 ### API
 

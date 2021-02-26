@@ -1022,17 +1022,45 @@ export class ItemPF extends Item {
       diff["_id"] = this._id;
     }
 
-    // Update tokens with this item as a resource bar
-    if (this.parentActor && diff["data.uses.value"] != null) {
+    // Update tokens and the actor using this item
+    const actor = this.parentActor;
+    if (actor) {
+      // Update actor
+      {
+        let effectUpdates = {};
+        // Update token effects
+        if (diff["data.hideFromToken"] != null) {
+          const fx = actor.effects.find((fx) => fx.data.origin === this.uuid);
+          if (fx) {
+            effectUpdates[fx.id] = effectUpdates[fx.id] || {
+              "flags.pf1.show": !diff["data.hideFromToken"],
+            };
+          }
+        }
+
+        // Update effects
+        effectUpdates = Object.entries(effectUpdates).reduce((cur, o) => {
+          const obj = o[1];
+          obj._id = o[0];
+          cur.push(obj);
+          return cur;
+        }, []);
+        if (effectUpdates.length) await actor.updateEmbeddedEntity("ActiveEffect", effectUpdates);
+      }
+
+      // Update tokens
       let promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === this.parentActor._id);
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === actor._id);
       for (const token of tokens) {
         const tokenUpdateData = {};
 
-        for (const barKey of ["bar1", "bar2"]) {
-          const bar = token.getBarAttribute(barKey);
-          if (bar && bar.attribute === `resources.${this.data.data.tag}`) {
-            tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
+        // Update tokens with this item as a resource bar
+        if (diff["data.uses.value"] != null) {
+          for (const barKey of ["bar1", "bar2"]) {
+            const bar = token.getBarAttribute(barKey);
+            if (bar && bar.attribute === `resources.${this.data.data.tag}`) {
+              tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
+            }
           }
         }
 
@@ -1040,7 +1068,7 @@ export class ItemPF extends Item {
           promises.push(token.update(tokenUpdateData));
         }
       }
-      await Promise.all(promises);
+      if (promises.length) await Promise.all(promises);
     }
   }
 

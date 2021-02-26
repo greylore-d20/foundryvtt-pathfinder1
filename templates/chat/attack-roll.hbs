@@ -30,15 +30,15 @@
         </tr>
         {{#if atk.hasCritConfirm}}
         <tr>
-          <th colspan="2">{{atk.attack.flavor}}</th>
-          <th colspan="2">{{atk.critConfirm.flavor}}</th>
+          <th class="attack-flavor alt" colspan="2">{{atk.attack.flavor}}</th>
+          <th class="attack-flavor crit-confirm" colspan="2">{{atk.critConfirm.flavor}}</th>
         </tr>
         {{/if}}
         {{else}}
         <tr>
-          <th colspan="2">
+          <th class="attack-damage" colspan="2">
             {{atk.damage.flavor}}
-            <a class="fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+            <a class="attack-damage total fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
           </th>

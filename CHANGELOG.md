@@ -14,6 +14,7 @@
 - Damage bonuses and penalties were being applied to healing effects
 - Dragging an item from one container to another with an item with the same ID didn't do anything
 - Dragging an item from one container to another duplicated the item instead of moving it
+- Toggling buff visibility didn't update active ones on tokens
 
 ### Changelog
 

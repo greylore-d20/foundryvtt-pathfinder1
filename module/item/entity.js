@@ -676,6 +676,9 @@ export class ItemPF extends Item {
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
     }
+
+    // Update maximum uses
+    this._updateMaxUses();
   }
 
   prepareLinks() {
@@ -953,9 +956,6 @@ export class ItemPF extends Item {
     // Set previous data
     this._prevData["level"] = getProperty(this.data, "data.level");
 
-    // Update maximum uses
-    this._updateMaxUses(data, { srcData: srcData });
-
     // Make sure charges doesn't exceed max charges, and vice versa
     {
       let charges = 0;
@@ -1099,26 +1099,21 @@ export class ItemPF extends Item {
     linkData(srcData, data, "data.weight", result);
   }
 
-  _updateMaxUses(data, { srcData = null } = {}) {
+  _updateMaxUses() {
     // No actor? No charges!
     if (!this.parentActor) return;
 
     // No charges? No charges!
     if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
 
-    let doLinkData = true;
-    if (srcData == null) {
-      srcData = this.data;
-      doLinkData = false;
-    }
     const rollData = this.getRollData();
+    if (this.name === "Panache") console.log(rollData.abilities.cha.total, rollData.abilities.cha.mod);
 
-    if (hasProperty(srcData, "data.uses.maxFormula")) {
-      const maxFormula = getProperty(srcData, "data.uses.maxFormula");
+    if (hasProperty(this.data, "data.uses.maxFormula")) {
+      const maxFormula = getProperty(this.data, "data.uses.maxFormula");
       if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
         let roll = new Roll(maxFormula, rollData).roll();
-        if (doLinkData) linkData(srcData, data, "data.uses.max", roll.total);
-        else data["data.uses.max"] = roll.total;
+        setProperty(this.data, "data.uses.max", roll.total);
       } else if (formulaHasDice(maxFormula)) {
         const msg = game.i18n
           .localize("PF1.WarningNoDiceAllowedInFormula")

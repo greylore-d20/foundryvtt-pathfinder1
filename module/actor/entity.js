@@ -273,6 +273,7 @@ export class ActorPF extends Actor {
     this.sourceInfo = {};
     this.flags = {};
 
+    // Prepare data
     super.prepareData();
 
     // Send queued updates
@@ -287,6 +288,9 @@ export class ActorPF extends Actor {
   }
 
   prepareBaseData() {
+    // Refresh roll data
+    this.getRollData({ refresh: true });
+
     // Update item resource values
     this.data.items.forEach((item) => {
       this.updateItemResources(item);
@@ -1006,8 +1010,18 @@ export class ActorPF extends Actor {
 
     // Update item resources
     this.items.forEach((item) => {
-      this.updateItemResources(item.data);
       item.prepareDerivedData();
+      this.updateItemResources(item.data);
+
+      // Update tokens for resources
+      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
+      tokens.forEach((t) => {
+        try {
+          t.drawBars();
+        } catch (err) {
+          // Drop the harmless error
+        }
+      });
     });
   }
 
@@ -1323,10 +1337,7 @@ export class ActorPF extends Actor {
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      let tokens = this.isToken ? [this.token] : [];
-      if (this.data.token.actorLink) {
-        tokens = this.getActiveTokens();
-      }
+      let tokens = this.isToken ? [this.token] : this.getActiveTokens();
       tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
       tokens.forEach((o) => {
         o.update({ width: size.w, height: size.h, scale: size.scale });
@@ -1471,16 +1482,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    for (let i of this.items.values()) {
-      let itemUpdateData = {};
-
-      i._updateMaxUses(itemUpdateData, { actorData: data });
-      if (isObjectEmpty(itemUpdateData)) continue;
-
-      const itemDiff = diffObject(flattenObject(i.data), itemUpdateData);
-      if (Object.keys(itemDiff).length > 0 && i.hasPerm(game.user, "OWNER")) i.update(itemDiff);
-    }
-
     super._onUpdate(data, options, userId, context);
   }
 
@@ -1546,8 +1547,8 @@ export class ActorPF extends Actor {
       const resKey = `data.resources.${itemTag}`;
       let curUses = itemData.data.uses;
 
-      setProperty(this.data, resKey, { value: 0, max: 0, _id: null });
-      const res = getProperty(this.data, resKey);
+      const res = { value: 0, max: 0, _id: null };
+      setProperty(this.data, resKey, res);
       res.value = curUses.value;
       res.max = curUses.max;
       res._id = itemData._id;
@@ -3028,27 +3029,27 @@ export class ActorPF extends Actor {
       });
 
     // Add more info for formulas
-    if (this.items) {
+    if (this.data.items) {
       result.armor = { type: 0 };
       result.shield = { type: 0 };
 
       // Determine equipped armor type
-      const armor = this.items.filter(
-        (o) => o.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
+      const armor = this.data.items.filter(
+        (o) => o.type === "equipment" && o.data.equipmentType === "armor" && o.data.equipped
       );
       for (let o of armor) {
-        const subtype = o.data.data.equipmentSubtype;
+        const subtype = o.data.equipmentSubtype;
         if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
         else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
         else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
       }
 
       // Determine equipped shield type
-      const shields = this.items.filter(
-        (o) => o.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
+      const shields = this.data.items.filter(
+        (o) => o.type === "equipment" && o.data.equipmentType === "shield" && o.data.equipped
       );
       for (let o of shields) {
-        const subtype = o.data.data.equipmentSubtype;
+        const subtype = o.data.equipmentSubtype;
         if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
         else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
         else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;

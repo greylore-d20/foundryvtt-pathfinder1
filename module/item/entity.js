@@ -1793,6 +1793,68 @@ export class ItemPF extends Item {
           // Add to list
           attacks.push(attack);
 
+          // Create additional attack for Haste
+          if (a === 0 && form && form.find('[name="haste-attack"]').prop("checked")) {
+            // Combine conditional modifiers for Haste attack and damage
+            const conditionalParts = {
+              "attack.normal": [
+                ...(conditionalPartsCommon[`attack.hasteAttack.normal`] ?? []),
+                ...(conditionalPartsCommon["attack.allAttack.normal"] ?? []),
+              ], //`
+              "attack.crit": [
+                ...(conditionalPartsCommon[`attack.hasteAttack.crit`] ?? []),
+                ...(conditionalPartsCommon["attack.allAttack.crit"] ?? []),
+              ], //`
+              "damage.normal": [
+                ...(conditionalPartsCommon[`damage.hasteDamage.normal`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.normal"] ?? []),
+              ], //`
+              "damage.crit": [
+                ...(conditionalPartsCommon[`damage.hasteDamage.crit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.crit"] ?? []),
+              ], //`
+              "damage.nonCrit": [
+                ...(conditionalPartsCommon[`damage.hasteDamage.nonCrit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
+              ], //`
+            }; //`
+
+            // Create attack object, then add attack roll
+            let hasteAttack = new ChatAttack(this, {
+              label: game.i18n.localize("PF1.Haste"),
+              rollData: rollData,
+              primaryAttack: primaryAttack,
+            });
+            await hasteAttack.addAttack({
+              bonus: atk.bonus,
+              extraParts: duplicate(attackExtraParts),
+              conditionalParts,
+            });
+
+            // Add damage
+            if (this.hasDamage) {
+              await hasteAttack.addDamage({
+                extraParts: duplicate(damageExtraParts),
+                critical: false,
+                conditionalParts,
+              });
+
+              // Add critical hit damage
+              if (hasteAttack.hasCritConfirm) {
+                await hasteAttack.addDamage({
+                  extraParts: duplicate(damageExtraParts),
+                  critical: true,
+                  conditionalParts,
+                });
+              }
+            }
+
+            // Add effect notes
+            hasteAttack.addEffectNotes();
+
+            attacks.push(hasteAttack);
+          }
+
           // Create attack for Rapid Shot
           if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
             // Combine conditional modifiers for Rapid Shot attack and damage
@@ -2202,6 +2264,8 @@ export class ItemPF extends Item {
       hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
       isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
       isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
+      isMeleeWeaponAttackAction: getProperty(this.data, "data.actionType") === "mwak",
+      isRangedWeaponAttackAction: getProperty(this.data, "data.actionType") === "rwak",
       isAttack: this.type === "attack",
       isSpell: this.type === "spell",
       hasTemplate: this.hasTemplate,

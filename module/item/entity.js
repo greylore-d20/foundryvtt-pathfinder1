@@ -664,12 +664,18 @@ export class ItemPF extends Item {
       this.data.data.tag = createTag(name);
     }
 
+    if (!this.actor) {
+      this.prepareDerivedData();
+    }
+
+    return itemData;
+  }
+
+  prepareDerivedData() {
     // Parse formulaic attacks
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
     }
-
-    return itemData;
   }
 
   prepareLinks() {

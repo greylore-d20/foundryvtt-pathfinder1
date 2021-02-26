@@ -319,7 +319,7 @@ export class CompendiumBrowser extends Application {
       }
     } else {
       for (let i of this._savedItems) {
-        const p = game.packs.get(i.collection);
+        const p = game.packs.get(i.collection._id);
         if (p) {
           this.items.push(this._mapEntry(p, i.item));
           this.packs[i.collection] = p;

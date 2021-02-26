@@ -1743,6 +1743,7 @@ export class ItemPF extends Item {
           a++
         ) {
           let atk = allAttacks[a];
+          const isLastAttack = a === allAttacks.length - 1;
 
           // Combine conditional modifiers for attack a attack and damage
           const conditionalParts = {
@@ -1794,7 +1795,7 @@ export class ItemPF extends Item {
           attacks.push(attack);
 
           // Create additional attack for Haste
-          if (a === 0 && form && form.find('[name="haste-attack"]').prop("checked")) {
+          if (isLastAttack && form && form.find('[name="haste-attack"]').prop("checked")) {
             // Combine conditional modifiers for Haste attack and damage
             const conditionalParts = {
               "attack.normal": [
@@ -1856,7 +1857,7 @@ export class ItemPF extends Item {
           }
 
           // Create attack for Rapid Shot
-          if (a === 0 && form && form.find('[name="rapid-shot"]').prop("checked")) {
+          if (isLastAttack && form && form.find('[name="rapid-shot"]').prop("checked")) {
             // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
               "attack.normal": [

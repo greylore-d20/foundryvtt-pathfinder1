@@ -551,22 +551,25 @@ export const addDefaultChanges = function (changes) {
         modifier: "base",
       })
     );
-    changes.push(
-      ItemChange.create({
-        formula: `@attributes.wounds.base ? 0 : (@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain)`,
-        target: "misc",
-        subTarget: "wounds",
-        modifier: "base",
-      })
-    );
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
       formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`,
       name: CONFIG.PF1.abilities[hpAbility],
     });
-    getSourceInfo(this.sourceInfo, "data.attributes.wounds.max").positive.push({
-      formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
-      name: CONFIG.PF1.abilities[hpAbility],
-    });
+
+    if (!getProperty(this.data, "data.attributes.wounds.base")) {
+      changes.push(
+        ItemChange.create({
+          formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
+          target: "misc",
+          subTarget: "wounds",
+          modifier: "base",
+        })
+      );
+      getSourceInfo(this.sourceInfo, "data.attributes.wounds.max").positive.push({
+        formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
+        name: CONFIG.PF1.abilities[hpAbility],
+      });
+    }
   }
 
   // Add movement speed(s)

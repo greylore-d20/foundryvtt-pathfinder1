@@ -223,11 +223,6 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "attack") {
       data.isWeaponAttack = data.item.data.attackType === "weapon";
       data.isNaturalAttack = data.item.data.attackType === "natural";
-
-      // Update formulaic attack count if it's not present
-      const fAtkCount = data.item.data.formulaicAttacks?.count;
-      if (fAtkCount?.formula?.length > 0 && fAtkCount?.value === null)
-        this.item.parseFormulaicAttacks({ formula: fAtkCount.formula });
     }
 
     // Prepare spell specific stuff
@@ -764,8 +759,6 @@ export class ItemSheetPF extends ItemSheet {
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 
-    html.find(".formulaic-attacks").change(this._onFormulaicAttackChange.bind(this));
-
     // Modify damage formula
     html.find(".damage-control").click(this._onDamageControl.bind(this));
 
@@ -1094,14 +1087,6 @@ export class ItemSheetPF extends ItemSheet {
       attackParts.splice(Number(li.dataset.attackPart), 1);
       return this.item.update({ "data.attackParts": attackParts });
     }
-  }
-
-  async _onFormulaicAttackChange(event) {
-    event.preventDefault();
-    await this._onSubmit(event); // Submit any unsaved changes
-
-    const exAtks = this.item.parseFormulaicAttacks({ formula: event.target.value });
-    await this.item.update({ "data.formulaicAttacks.count.value": exAtks });
   }
 
   async _onBuffControl(event) {

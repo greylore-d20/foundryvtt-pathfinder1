@@ -651,6 +651,11 @@ export class ItemPF extends Item {
       this.data.data.tag = createTag(name);
     }
 
+    // Parse formulaic attacks
+    if (this.hasAttack) {
+      this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
+    }
+
     return itemData;
   }
 
@@ -904,9 +909,6 @@ export class ItemPF extends Item {
         linkData(srcData, data, "data.weaponSubtype", keys[0]);
       }
     }
-
-    // Update formulaic attacks
-    if (this.data?.hasAttack) data["data.formulaicAttacks.count.value"] = this.parseFormulaicAttacks({ update: false });
 
     // Set equipment subtype and slot
     if (
@@ -1428,7 +1430,7 @@ export class ItemPF extends Item {
     this.roll();
   }
 
-  parseFormulaicAttacks({ formula = null, update = true } = {}) {
+  parseFormulaicAttacks({ formula = null } = {}) {
     const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
     let extraAttacks = 0;
     const rollData = this.getRollData();
@@ -1457,7 +1459,7 @@ export class ItemPF extends Item {
     }
 
     // Update item
-    if (update) this.update({ "data.formulaicAttacks.count.value": extraAttacks });
+    setProperty(this.data, "data.formulaicAttacks.count.value", extraAttacks);
 
     return extraAttacks;
   }
@@ -1627,7 +1629,7 @@ export class ItemPF extends Item {
 
       // Formulaic extra attacks
       if (fullAttack) {
-        const exAtkCount = this.parseFormulaicAttacks(),
+        const exAtkCount = getProperty(this.data, "data.formulaicAttacks.count.value"),
           exAtkBonusFormula = this.data.data.formulaicAttacks.bonus.formula || "0";
         if (exAtkCount > 0) {
           try {
@@ -2244,7 +2246,7 @@ export class ItemPF extends Item {
         // Fetch formulaic attacks and ensure .value is set
         let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
         if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0)
-          fmAtks = this.parseFormulaicAttacks();
+          fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
 
         if ((getProperty(this.data, "data.attackParts") || []).length || fmAtks > 0 || this.type === "spell") {
           buttons.multi = {

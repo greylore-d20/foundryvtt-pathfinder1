@@ -92,12 +92,12 @@
 
 {{!-- Formulaic Extra Attacks --}}
 <h4 class="attack-header">{{localize 'PF1.FormulaicExtraAttacks'}}</h4>
-<div class"formulaic-attacks-box">
+<div class="formulaic-attacks-box">
 <div class="form-group">
   <label>{{localize 'PF1.FormulaicAttacksCount'}}</label>
   <input type="text" class="formulaic-attacks formula" name="data.formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="ceil(@attributes.bab.total / 5) - 1" />
   {{!-- to avoid disappearance of .value --}}
-  <input type="text" class="formula-result small" readonly name="data.formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" title="{{localize 'PF1.FormulaResult'}}" placeholder="0" data-dtype="Number" />
+  <input type="text" disabled class="formula-result small" name="data.formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" title="{{localize 'PF1.FormulaResult'}}" placeholder="0" data-dtype="Number" />
 </div>
 <div class="form-group">
   <label>{{localize 'PF1.AttackBonusFormula'}}</label>

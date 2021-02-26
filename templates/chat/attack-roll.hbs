@@ -21,8 +21,11 @@
       <thead>
         {{#if atk.hasAttack}}
         <tr>
-          <th {{#if atk.hasCritConfirm}}colspan="4"{{else}}colspan="2"{{/if}}>
+          <th class="attack-flavor" {{#if atk.hasCritConfirm}}colspan="4"{{else}}colspan="2"{{/if}}>
             {{atk.attack.flavor}}
+            {{#if atk.rollData.d20}}
+            <i class="fas fa-dice-d20" title="{{localize "PF1.CustomRollDesc"}}"></i>
+            {{/if}}
           </th>
         </tr>
         {{#if atk.hasCritConfirm}}

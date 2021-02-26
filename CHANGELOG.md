@@ -25,6 +25,7 @@
   - The `sizeRoll` function has been altered to accomodate for this change. The player shouldn't need to alter anything
 - Untyped bonuses to AC no longer grant that bonus to CMD
 - Added the source compendium's label in compendium browsers
+- Using a custom formula inplace of a d20 for an attack will now highlight that fact in the chat card
 
 ### API
 

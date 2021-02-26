@@ -935,9 +935,6 @@ export class ActorSheetPF extends ActorSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
-    // Configure Special Flags
-    html.find(".configure-flags").click(this._onConfigureFlags.bind(this));
-
     // Roll defenses
     html.find(".generic-defenses .rollable").click((ev) => {
       this.actor.rollDefenses();
@@ -1263,17 +1260,13 @@ export class ActorSheetPF extends ActorSheet {
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  /**
-   * Handle click events for the Traits tab button to configure special Character Flags
-   */
-  _onConfigureFlags(event) {
-    event.preventDefault();
-    new ActorSheetFlags(this.actor).render(true);
-  }
-
   _onRest(event) {
     event.preventDefault();
-    new ActorRestDialog(this.actor).render(true);
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorRestDialog && o._element;
+    });
+    if (app) app.bringToTop();
+    else new ActorRestDialog(this.actor).render(true);
   }
 
   /* -------------------------------------------- */
@@ -1688,7 +1681,11 @@ export class ActorSheetPF extends ActorSheet {
   async _onPointBuyCalculator(event) {
     event.preventDefault();
 
-    new PointBuyCalculator(this).render(true);
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof PointBuyCalculator && o._element;
+    });
+    if (app) app.bringToTop();
+    else new PointBuyCalculator(this.actor).render(true);
   }
 
   async _onControlAlignment(event) {
@@ -1843,7 +1840,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const li = event.currentTarget.closest(".item");
     const item = this.actor.getOwnedItem(li.dataset.itemId);
-    item.sheet.render(true);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ItemSheet && o.object === item && o._element;
+    });
+    if (app) app.bringToTop();
+    else item.sheet.render(true);
   }
 
   /**
@@ -2383,7 +2385,12 @@ export class ActorSheetPF extends ActorSheet {
       title: label.innerText,
       choices: CONFIG.PF1[a.dataset.options],
     };
-    new ActorTraitSelector(this.actor, options).render(true);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof ActorTraitSelector && o.options.name === options.name && o._element;
+    });
+    if (app) app.bringToTop();
+    else new ActorTraitSelector(this.actor, options).render(true);
   }
 
   setItemUpdate(id, key, value) {

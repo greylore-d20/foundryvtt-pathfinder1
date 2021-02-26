@@ -1,4 +1,4 @@
-export class PointBuyCalculator extends FormApplication {
+export class PointBuyCalculator extends BaseEntitySheet {
   constructor(...args) {
     super(...args);
 
@@ -14,7 +14,6 @@ export class PointBuyCalculator extends FormApplication {
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: "pointbuy-calculator",
       classes: ["pf1", "pointbuy-calculator"],
       title: "Point Buy Calculator",
       template: "systems/pf1/templates/apps/pointbuy-calculator.hbs",
@@ -23,6 +22,10 @@ export class PointBuyCalculator extends FormApplication {
       closeOnSubmit: false,
       submitOnClose: false,
     });
+  }
+
+  get title() {
+    return `${this.options.title}: ${this.object.name}`;
   }
 
   get actor() {

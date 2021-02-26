@@ -28,6 +28,7 @@
 - Untyped bonuses to AC no longer grant that bonus to CMD
 - Added the source compendium's label in compendium browsers
 - Using a custom formula inplace of a d20 for an attack will now highlight that fact in the chat card
+- Implemented bring to top functionality for actor traits, rest, and point buy calculator dialogs and item sheets
 
 ### API
 

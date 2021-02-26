@@ -17,6 +17,7 @@
 - Toggling buff visibility didn't update active ones on tokens
 - Toggling a condition for linked actors with multiple tokens on the current canvas created multiple token effects for each one
 - Alternate attack chat cards didn't show buttons if they didn't have damage rolls
+- Required experience points weren't updated timely
 
 ### Changelog
 

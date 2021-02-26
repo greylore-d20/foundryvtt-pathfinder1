@@ -296,9 +296,19 @@ export class ActorPF extends Actor {
     super.prepareBaseData();
     this._resetInherentTotals();
 
-    const classes = this.data.items.filter((obj) => {
-      return obj.type === "class";
-    });
+    // Update total level and mythic tier
+    const classes = this.data.items.filter((o) => o.type === "class");
+    const level = classes.filter((o) => o.type !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    setProperty(this.data, "data.details.level.value", level);
+
+    const mythicTier = classes.filter((o) => o.type === "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    setProperty(this.data, "data.details.mythicTier", mythicTier);
+
+    // The following is not for NPCs
+    if (this.data.type === "character") {
+      const maxExp = this.getLevelExp(level);
+      setProperty(this.data, "data.details.xp.max", maxExp);
+    }
 
     {
       // Handle armor and weapon proficiencies for PCs
@@ -1479,13 +1489,9 @@ export class ActorPF extends Actor {
    * @param {Object} data - The update data, as per ActorPF.update()
    */
   _updateExp(updateData, fullData) {
-    // Update total level and mythic tier
+    // Get total level
     const classes = fullData.items.filter((o) => o.type === "class");
     const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
-    updateData["data.details.level.value"] = level;
-
-    const mythicTier = classes.filter((o) => o.data.classType === "mythic").reduce((acc, o) => acc + o.data.level, 0);
-    updateData["data.details.mythicTier"] = mythicTier;
 
     // The following is not for NPCs
     if (this.data.type !== "character") return;

@@ -2584,11 +2584,10 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (itemData._id) delete itemData._id;
-    var actorRef = this.actor;
+    let actorRef = this.actor;
     return this.actor.createEmbeddedEntity("OwnedItem", itemData).then((createdItem) => {
-      var fullItem = actorRef.items.get(createdItem._id);
-      if (fullItem.isCharged) return actorRef.updateItemResources(fullItem);
-      else return fullItem;
+      let fullItem = actorRef.items.get(createdItem._id);
+      return fullItem;
     });
   }
 

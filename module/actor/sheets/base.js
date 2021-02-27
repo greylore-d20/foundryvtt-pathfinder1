@@ -2500,11 +2500,21 @@ export class ActorSheetPF extends ActorSheet {
 
     return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType)
       .then((item) => {
-        // Remove from container if destination is parent actor
+        // Try to remove from container
         if (item && fromContainer) {
-          const sourceActor = game.actors.get(actor._id);
-          const container = sourceActor?.getOwnedItem(data.containerId);
-          if (container) container.deleteContainerContent(itemData._id);
+          // Search for actor
+          let sourceActor = data.tokenId
+            ? canvas.tokens.placeables.find((o) => o.id === data.tokenId)?.actor
+            : game.actors.get(actor._id);
+          // Only remove if actor is the same
+          if (sourceActor === item.parentActor) {
+            const allItems = sourceActor
+              ? [...Array.from(sourceActor.items), ...Array.from(sourceActor.containerItems)]
+              : [];
+            let container = allItems.find((o) => o._id === data.containerId);
+            // Remove from container
+            if (container) container.deleteContainerContent(itemData._id);
+          }
         }
       })
       .catch((err) => {

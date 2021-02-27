@@ -2482,7 +2482,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Case 2 - Data explicitly provided
     else if (data.data) {
-      let sameActor = data.actorId === actor._id;
+      let sameActor = data.actorId === actor._id && !data.containerId;
       if (sameActor && actor.isToken) sameActor = data.tokenId === actor.token.id;
       if (sameActor) return this._onSortItem(event, data.data); // Sort existing items
 

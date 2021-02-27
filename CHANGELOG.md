@@ -54,6 +54,7 @@
 - Monks weren't receiving AC Bonus automatically
 - (Unchained) Monk and Brawler AC bonuses used formulas that were no longer working
 - Trapfinding was only giving bonuses to Disable Device vs traps instead of always
+- All versions of Channel Energy have received templates and improvements (thanks Grarl!)
   - Manual intervention is required for pre-existing actors using these class features. Remove the previous class feature and re-add it from the feature compendium
 - Haste and Slow had their measure template radius fixed
 

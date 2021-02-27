@@ -1671,7 +1671,7 @@ export class ItemPF extends Item {
       // Formulaic extra attacks
       if (fullAttack) {
         const exAtkCount = getProperty(this.data, "data.formulaicAttacks.count.value"),
-          exAtkBonusFormula = this.data.data.formulaicAttacks.bonus.formula || "0";
+          exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
         if (exAtkCount > 0) {
           try {
             const frollData = duplicate(rollData); // temporary duplicate to avoid contaminating the actual rolldata

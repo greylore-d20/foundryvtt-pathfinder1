@@ -472,7 +472,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (ItemPF.isInventoryItem(item.data.type)) {
       await this.item.createContainerContent(itemData);
 
-      if (actor && actor === this.item.actor) {
+      if (actor && actor === this.item.parentActor) {
         if (actor.items.get(data.data._id)) {
           await actor.deleteOwnedItem(data.data._id);
         } else {

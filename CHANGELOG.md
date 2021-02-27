@@ -18,6 +18,7 @@
 - Required experience points weren't updated timely
 - Fixed not being able to change maximum hit points on NPC Lite sheets
 - Using items with measure templates subtracted uses before confirming the template
+- rollInitiative API did not use override formulas
 
 ### Changelog
 

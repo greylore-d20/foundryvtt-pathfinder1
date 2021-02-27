@@ -57,7 +57,7 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
   // Structure input data
   ids = typeof ids === "string" ? [ids] : ids;
   const currentId = this.combatant._id;
-  if (formula ?? true) formula = _getInitiativeFormula(this.combatant.actor);
+  if (!formula) formula = _getInitiativeFormula(this.combatant.actor);
 
   let overrideRollMode = null,
     bonus = "",

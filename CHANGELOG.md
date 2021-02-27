@@ -17,6 +17,7 @@
 - Alternate attack chat cards didn't show buttons if they didn't have damage rolls
 - Required experience points weren't updated timely
 - Fixed not being able to change maximum hit points on NPC Lite sheets
+- Using items with measure templates subtracted uses before confirming the template
 
 ### Changelog
 

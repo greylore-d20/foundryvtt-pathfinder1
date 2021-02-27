@@ -1775,7 +1775,7 @@ export class ItemPF extends Item {
         }
       }
 
-      // Deduct charge
+      // Determine charge cost
       let cost;
       if (this.autoDeductCharges) {
         cost = this.chargeCost;
@@ -1794,7 +1794,6 @@ export class ItemPF extends Item {
           ui.notifications.warn(msg);
           return;
         }
-        await this.addCharges(-cost);
       }
       // Save chargeCost as rollData entry for following formulae
       rollData.chargeCost = cost;
@@ -2043,10 +2042,11 @@ export class ItemPF extends Item {
         // Create template
         template = AbilityTemplate.fromData(templateOptions);
         if (template) {
-          if (getProperty(this, "actor.sheet.rendered")) this.parentActor.sheet.minimize();
+          const sheetRendered = this.parentActor?.sheet?._element != null;
+          if (sheetRendered) this.parentActor.sheet.minimize();
           template = await template.drawPreview(ev);
           if (!template) {
-            if (getProperty(this, "actor.sheet.rendered")) this.parentActor.sheet.maximize();
+            if (sheetRendered) this.parentActor.sheet.maximize();
             return;
           }
         }
@@ -2119,6 +2119,9 @@ export class ItemPF extends Item {
           console.error(e);
         }
       }
+
+      // Subtract uses
+      await this.addCharges(-cost);
 
       // Post message
       if (this.hasAction) {

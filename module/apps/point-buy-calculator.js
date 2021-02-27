@@ -29,7 +29,7 @@ export class PointBuyCalculator extends BaseEntitySheet {
   }
 
   get actor() {
-    return this.object.actor;
+    return this.entity;
   }
 
   getData() {

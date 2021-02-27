@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.16
+
+### Bug Fixes
+
+- Changing a context note's main category didn't set the note's secondary category to something appropriate, making it not show up unless edited again
+
 ## 0.77.15
 
 ### Bug Fixes

@@ -884,6 +884,18 @@ export class ItemPF extends Item {
 
             delete data[entry[0]];
           });
+
+          // Special case for context notes
+          if (kArr.key === "data.contextNotes") {
+            for (let obj of arr) {
+              if (obj.target && !obj.subTarget) {
+                obj.subTarget = Object.keys(CONFIG.PF1.contextNoteTargets[obj.target]).filter(
+                  (o) => !o.match(/^[~_]/)
+                )[0];
+              }
+            }
+          }
+
           linkData(srcData, data, kArr.key, arr);
         }
       }

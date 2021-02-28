@@ -1543,12 +1543,12 @@ export class ItemPF extends Item {
 
     // Check ammunition links
     let ammoLinks = [],
-      minAmmo;
+      ammoAvailable;
     if (this.type === "attack") {
       ammoLinks = await this.getLinkedItems("ammunition", true);
       for (let l of ammoLinks) {
-        if (minAmmo == null) minAmmo = l.item.charges;
-        else minAmmo = Math.min(minAmmo, l.item.charges);
+        if (ammoAvailable == null) ammoAvailable = l.item.charges;
+        else ammoAvailable = Math.min(ammoAvailable, l.item.charges);
 
         if (l.item.charges <= 0) {
           const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
@@ -1704,14 +1704,14 @@ export class ItemPF extends Item {
 
       const subtractAmmo = function (value) {
         if (!ammoLinks.length) return;
-        if (value == null) value = -1;
+        if (value == null) value = 1;
         let promises = [];
         for (let l of ammoLinks) {
-          promises.push(l.item.addCharges(value));
+          promises.push(l.item.addCharges(-value));
         }
         return Promise.all(promises);
       };
-      let ammoCost = 0;
+      let ammoUsed = 0;
 
       // Create conditionalParts from all enabled conditional modifiers
       let conditionalPartsCommon = {};
@@ -1810,16 +1810,23 @@ export class ItemPF extends Item {
       // Save chargeCost as rollData entry for following formulae
       rollData.chargeCost = cost;
 
+      let hasteAttackRequired = form && form.find('[name="haste-attack"]').prop("checked");
+      let hasteAttack;
+      let rapidShotAttackRequired = form && form.find('[name="rapid-shot"]').prop("checked");
+      let rapidShotAttack;
+
       if (this.hasAttack) {
-        ammoCost = Math.min(minAmmo, allAttacks.length);
+        let ammoRequired = allAttacks.length;
+        if (hasteAttackRequired) ammoRequired++;
+        if (rapidShotAttackRequired) ammoRequired++;
+        ammoRequired = Math.min(ammoAvailable, ammoRequired);
+
         for (
           let a = 0;
-          (ammoLinks.length && a < Math.min(minAmmo, allAttacks.length)) ||
-          (!ammoLinks.length && a < allAttacks.length);
+          (ammoLinks.length && ammoUsed < ammoRequired) || (!ammoLinks.length && a < allAttacks.length);
           a++
         ) {
           let atk = allAttacks[a];
-          const isLastAttack = a === allAttacks.length - 1;
 
           // Combine conditional modifiers for attack a attack and damage
           const conditionalParts = {
@@ -1869,9 +1876,10 @@ export class ItemPF extends Item {
 
           // Add to list
           attacks.push(attack);
+          ammoUsed++;
 
           // Create additional attack for Haste
-          if (isLastAttack && form && form.find('[name="haste-attack"]').prop("checked")) {
+          if (a === 0 && hasteAttackRequired && ammoUsed < ammoAvailable) {
             // Combine conditional modifiers for Haste attack and damage
             const conditionalParts = {
               "attack.normal": [
@@ -1897,7 +1905,7 @@ export class ItemPF extends Item {
             }; //`
 
             // Create attack object, then add attack roll
-            let hasteAttack = new ChatAttack(this, {
+            hasteAttack = new ChatAttack(this, {
               label: game.i18n.localize("PF1.Haste"),
               rollData: rollData,
               primaryAttack: primaryAttack,
@@ -1929,11 +1937,12 @@ export class ItemPF extends Item {
             // Add effect notes
             hasteAttack.addEffectNotes();
 
-            attacks.push(hasteAttack);
+            // Deliberately not pushing this attack yet, but do account for ammo.
+            ammoUsed++;
           }
 
           // Create attack for Rapid Shot
-          if (isLastAttack && form && form.find('[name="rapid-shot"]').prop("checked")) {
+          if (a === 0 && rapidShotAttackRequired && ammoUsed < ammoAvailable) {
             // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
               "attack.normal": [
@@ -1959,7 +1968,7 @@ export class ItemPF extends Item {
             }; //`
 
             // Create attack object, then add attack roll
-            let rapidShotAttack = new ChatAttack(this, {
+            rapidShotAttack = new ChatAttack(this, {
               label: game.i18n.localize("PF1.RapidShot"),
               rollData: rollData,
               primaryAttack: primaryAttack,
@@ -1991,13 +2000,22 @@ export class ItemPF extends Item {
             // Add effect notes
             rapidShotAttack.addEffectNotes();
 
-            attacks.push(rapidShotAttack);
+            // Deliberately not pushing this attack yet, but do account for ammo.
+            ammoUsed++;
           }
+        }
+
+        // Pushing was delayed until now so that these appear after iteratives in chat
+        if (hasteAttack != null) {
+          attacks.push(hasteAttack);
+        }
+        if (rapidShotAttack != null) {
+          attacks.push(rapidShotAttack);
         }
       }
       // Add damage only
       else if (this.hasDamage) {
-        ammoCost = 1;
+        ammoUsed = 1;
 
         // Set conditional modifiers
         const conditionalParts = {
@@ -2325,7 +2343,7 @@ export class ItemPF extends Item {
       }
 
       // Subtract ammunition
-      await subtractAmmo(-ammoCost);
+      await subtractAmmo(ammoUsed);
       return result;
     };
 

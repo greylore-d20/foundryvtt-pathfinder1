@@ -630,6 +630,22 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * Called just before the first change is applied, and after every change is applied.
+   * Sets additional variables (such as spellbook range)
+   */
+  refreshDerivedData() {
+    // Set spellbook info
+    for (let spellbook of Object.values(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
+      const cl = spellbook.cl.total;
+      spellbook.range = {
+        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
+        medium: convertDistance(100 + 10 * cl)[0],
+        long: convertDistance(400 + 40 * cl)[0],
+      };
+    }
+  }
+
+  /**
    * Augment the basic actor data with additional dynamic data.
    */
   prepareDerivedData() {
@@ -1004,6 +1020,8 @@ export class ActorPF extends Actor {
         }
       }
     }
+
+    this.refreshDerivedData();
 
     // Setup links
     this.prepareItemLinks();
@@ -1970,7 +1988,7 @@ export class ActorPF extends Actor {
 
   rollCL(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
-    const rollData = this.getRollData();
+    const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
 
     const allowed = Hooks.call("actorRoll", this, "cl", spellbookKey, options);
@@ -2000,7 +2018,7 @@ export class ActorPF extends Actor {
 
   rollConcentration(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
-    const rollData = this.getRollData();
+    const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.data.data.abilities[spellbook.ability].mod;
     rollData.concentrationBonus = spellbook.concentration;
@@ -3063,12 +3081,6 @@ export class ActorPF extends Actor {
     // Add spellbook info
     for (let [k, spellbook] of Object.entries(getProperty(result, "attributes.spells.spellbooks"))) {
       setProperty(result, `spells.${k}`, spellbook);
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
-        medium: convertDistance(100 + 10 * cl)[0],
-        long: convertDistance(400 + 40 * cl)[0],
-      };
     }
 
     // Add range info

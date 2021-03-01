@@ -2849,7 +2849,7 @@ export class ItemPF extends Item {
   getRollData() {
     const result = this.parentActor != null ? this.parentActor.getRollData() : {};
 
-    result.item = duplicate(this.data.data);
+    result.item = this.data.data;
     if (this.type === "spell" && this.parentActor != null) {
       const spellbook = this.spellbook;
       const spellAbility = spellbook.ability;

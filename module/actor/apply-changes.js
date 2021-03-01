@@ -30,6 +30,7 @@ export function applyChanges() {
       }
     }
   }
+  this.refreshDerivedData();
 
   // Apply all changes
   for (let change of c) {
@@ -40,6 +41,8 @@ export function applyChanges() {
     }
 
     change.applyChange(this, flats, this.flags);
+
+    this.refreshDerivedData();
   }
 
   resetSkills.call(this);

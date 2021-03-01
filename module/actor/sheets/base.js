@@ -337,7 +337,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update spellbook info
     for (let [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
-      spellbook.range = getProperty(rollData, `spells.${k}.range`);
       setProperty(
         data.data,
         `attributes.spells.spellbooks.${k}.inUse`,

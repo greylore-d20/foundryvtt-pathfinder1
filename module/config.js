@@ -1490,6 +1490,7 @@ PF1.temporaryRollDataFields = {
     "item",
     "level",
     "mod",
+    "spells",
   ],
 };
 

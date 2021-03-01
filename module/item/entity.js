@@ -2190,6 +2190,15 @@ export class ItemPF extends Item {
         // Add info for Rapid Shot
         if (attackExtraParts.includes("@rapidShotPenalty")) properties.push(game.i18n.localize("PF1.RapidShot"));
 
+        // Add ammo-remaining counter or out-of-ammunition warning
+        if (ammoLinks.length) {
+          if (ammoUsed === ammoAvailable) {
+            properties.push(game.i18n.localize("PF1.AmmoDepleted"));
+          } else {
+            properties.push(game.i18n.localize("PF1.AmmoRemaining").format(ammoAvailable - ammoUsed));
+          }
+        }
+
         // Add Armor Check Penalty's application to attack rolls info
         if (this.hasAttack && rollData.attributes.acp.attackPenalty > 0)
           properties.push(game.i18n.localize("PF1.ArmorCheckPenalty"));

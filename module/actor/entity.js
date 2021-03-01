@@ -802,7 +802,7 @@ export class ActorPF extends Actor {
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;
-          const slotCost = i.data.data.slotCost || 1;
+          const slotCost = i.data.data.slotCost ?? 1;
           let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`);
           let uses = getProperty(slots, `${sbKey}.${a}.value`);
           if (Number.isFinite(i.maxCharges)) {

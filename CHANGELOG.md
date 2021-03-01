@@ -12,6 +12,7 @@
 - Fixed CL and Concentration bonuses not applying on rolls
 - Fixed spellbook ranges not updating
 - Limit sizeRoll minimum and maximum
+- Limit container quantity maximum to 1
 
 ### Changelog
 

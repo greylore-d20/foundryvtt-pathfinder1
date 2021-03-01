@@ -1722,7 +1722,10 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.actor.getOwnedItem(itemId);
 
     const curQuantity = getProperty(item.data, "data.quantity") || 0;
-    const newQuantity = Math.max(0, curQuantity + add);
+    let newQuantity = Math.max(0, curQuantity + add);
+
+    if (item.type === "container") newQuantity = Math.min(newQuantity, 1);
+
     this.setItemUpdate(item._id, "data.quantity", newQuantity);
     this._updateItems();
   }

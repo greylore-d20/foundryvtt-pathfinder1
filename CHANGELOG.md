@@ -11,6 +11,7 @@
 - Fixed race condition preventing inline heal/ damage rolls from working sometimes
 - Fixed CL and Concentration bonuses not applying on rolls
 - Fixed spellbook ranges not updating
+- Limit sizeRoll minimum and maximum
 
 ### Changelog
 

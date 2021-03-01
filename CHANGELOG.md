@@ -6,6 +6,7 @@
 
 - Changing a context note's main category didn't set the note's secondary category to something appropriate, making it not show up unless edited again
 - Actor's carry weight could be calculated wrong if world coin weight divisor was set to `0` (#626)
+- Fixed race condition preventing inline heal/ damage rolls from working sometimes
 
 ## 0.77.15
 

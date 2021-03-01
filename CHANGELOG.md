@@ -8,6 +8,10 @@
 - Actor's carry weight could be calculated wrong if world coin weight divisor was set to `0` (#626)
 - Fixed race condition preventing inline heal/ damage rolls from working sometimes
 
+### Changelog
+
+- Improve migration messaging and add localization strings
+
 ## 0.77.15
 
 ### Bug Fixes

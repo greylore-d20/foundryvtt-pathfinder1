@@ -16,7 +16,9 @@ export const migrateWorld = async function () {
     return ui.notifications.error(msg);
   }
   game.pf1.isMigrating = true;
-  ui.notifications.info(`Applying PF1 System Migration for version ${game.system.data.version}. Please stand by.`);
+  ui.notifications.info(game.i18n.format("PF1.Migration.Start", { version: game.system.data.version }), {
+    permanent: true,
+  });
   console.log("System Migration starting.");
 
   await _migrateWorldSettings();
@@ -68,7 +70,14 @@ export const migrateWorld = async function () {
 
   // Set the migration as complete
   game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
-  ui.notifications.info(`PF1 System Migration to version ${game.system.data.version} succeeded!`);
+  ui.notifications.active
+    .find(
+      (o) =>
+        o.hasClass("permanent") &&
+        o[0].innerText === game.i18n.format("PF1.Migration.Start", { version: game.system.data.version })
+    )
+    ?.click();
+  ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.data.version }));
   console.log("System Migration completed.");
   game.pf1.isMigrating = false;
   Hooks.callAll("pf1.migrationFinished");

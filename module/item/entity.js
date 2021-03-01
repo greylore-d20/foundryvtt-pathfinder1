@@ -1566,6 +1566,8 @@ export class ItemPF extends Item {
       let attackExtraParts = [],
         damageExtraParts = [],
         primaryAttack = true,
+        hasteAttackRequired = false,
+        rapidShotAttackRequired = false,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
         conditionals,
@@ -1587,8 +1589,12 @@ export class ItemPF extends Item {
           damageExtraParts.push("@pointBlankBonus");
         }
 
+        // Haste
+        hasteAttackRequired = fullAttack && form.find('[name="haste-attack"]').prop("checked");
+
         // Rapid Shot
-        if (form.find('[name="rapid-shot"]').prop("checked")) {
+        rapidShotAttackRequired = fullAttack && form.find('[name="rapid-shot"]').prop("checked");
+        if (rapidShotAttackRequired) {
           rollData.rapidShotPenalty = -2;
           attackExtraParts.push("@rapidShotPenalty");
         }
@@ -1810,16 +1816,14 @@ export class ItemPF extends Item {
       // Save chargeCost as rollData entry for following formulae
       rollData.chargeCost = cost;
 
-      let hasteAttackRequired = form && form.find('[name="haste-attack"]').prop("checked");
-      let hasteAttack;
-      let rapidShotAttackRequired = form && form.find('[name="rapid-shot"]').prop("checked");
-      let rapidShotAttack;
-
       if (this.hasAttack) {
         let ammoRequired = allAttacks.length;
         if (hasteAttackRequired) ammoRequired++;
         if (rapidShotAttackRequired) ammoRequired++;
         ammoRequired = Math.min(ammoAvailable, ammoRequired);
+
+        let hasteAttack;
+        let rapidShotAttack;
 
         for (
           let a = 0;
@@ -1879,7 +1883,7 @@ export class ItemPF extends Item {
           ammoUsed++;
 
           // Create additional attack for Haste
-          if (a === 0 && hasteAttackRequired && ammoUsed < ammoAvailable) {
+          if (a === 0 && hasteAttackRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {
             // Combine conditional modifiers for Haste attack and damage
             const conditionalParts = {
               "attack.normal": [
@@ -1942,7 +1946,7 @@ export class ItemPF extends Item {
           }
 
           // Create attack for Rapid Shot
-          if (a === 0 && rapidShotAttackRequired && ammoUsed < ammoAvailable) {
+          if (a === 0 && rapidShotAttackRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {
             // Combine conditional modifiers for Rapid Shot attack and damage
             const conditionalParts = {
               "attack.normal": [

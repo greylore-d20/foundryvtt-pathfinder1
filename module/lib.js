@@ -285,6 +285,7 @@ export const sizeDieExt = function (origCount, origSides, targetSize = "M", init
       }
     }
 
+    index = Math.max(0, Math.min(c.length - 1, index));
     formula = c[index];
   }
 

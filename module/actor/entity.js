@@ -50,6 +50,12 @@ export class ActorPF extends Actor {
     if (this._runningFunctions === undefined) this._runningFunctions = [];
 
     /**
+     * @property {Object} _queuedItemUpdates
+     * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
+     */
+    if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
+
+    /**
      * @property {ItemPF[]} containerItems
      * All items this actor is holding in containers.
      */
@@ -1369,6 +1375,19 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Apply changes in resources
+    for (let [k, v] of Object.entries(data)) {
+      if (k.match(/^data\.resources\.([a-zA-Z0-9]+)\.value$/)) {
+        const resKey = RegExp.$1;
+        const itemId = getProperty(this.data, `data.resources.${resKey}._id`);
+        if (itemId && itemId.length) {
+          this._queuedItemUpdates[itemId] = mergeObject(this._queuedItemUpdates[itemId] ?? {}, {
+            "data.uses.value": v,
+          });
+        }
+      }
+    }
+
     // Make only 1 fear condition active at most
     {
       const keys = ["shaken", "frightened", "panicked"];
@@ -1454,7 +1473,19 @@ export class ActorPF extends Actor {
               for (let t of tokens) {
                 this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(t), 1);
               }
-              resolve();
+
+              // Update items
+              let itemUpdates = Object.entries(this._queuedItemUpdates).reduce((cur, o) => {
+                const obj = { _id: o[0] };
+                for (let [k, v] of Object.entries(o[1])) {
+                  obj[k] = v;
+                }
+                cur.push(obj);
+                return cur;
+              }, []);
+              this.updateEmbeddedEntity("OwnedItem", itemUpdates).then(() => {
+                resolve();
+              });
             });
           });
         });

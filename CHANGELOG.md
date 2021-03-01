@@ -14,6 +14,7 @@
 - Limit sizeRoll minimum and maximum
 - Limit container quantity maximum to 1
 - Spell slot costs of 0 still deducted available spell slots
+- Couldn't update item resources on actors with macros anymore
 
 ### Changelog
 

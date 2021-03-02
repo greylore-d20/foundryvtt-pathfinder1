@@ -1484,6 +1484,7 @@ export class ActorPF extends Actor {
                 return cur;
               }, []);
               this.updateEmbeddedEntity("OwnedItem", itemUpdates).then(() => {
+                this._queuedItemUpdates = {};
                 resolve();
               });
             });

@@ -17,6 +17,7 @@
 - Couldn't update item resources on actors with macros anymore
 - Fix incorrect spell charge enforcement rules, which made spell costs undefined in some cases
 - Adding to a - ability score incorrectly added to the value
+- Mythic tiers were incorrectly added to Hit Die
 
 ### Changelog
 

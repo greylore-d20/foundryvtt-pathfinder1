@@ -308,10 +308,10 @@ export class ActorPF extends Actor {
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.type !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
     setProperty(this.data, "data.details.level.value", level);
 
-    const mythicTier = classes.filter((o) => o.type === "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const mythicTier = classes.filter((o) => o.data.classType === "mythic").reduce((cur, o) => cur + o.data.level, 0);
     setProperty(this.data, "data.details.mythicTier", mythicTier);
 
     // The following is not for NPCs

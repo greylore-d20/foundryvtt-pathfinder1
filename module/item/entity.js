@@ -2381,12 +2381,22 @@ export class ItemPF extends Item {
           };
         }
 
-        // Fetch formulaic attacks and ensure .value is set
-        let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
-        if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0)
-          fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+        let showFullAttack = false;
 
-        if ((getProperty(this.data, "data.attackParts") || []).length || fmAtks > 0 || this.type === "spell") {
+        if (["mwak", "rwak"].includes(getProperty(this.data, "data.actionType"))) {
+          showFullAttack = true;
+        } else if ((getProperty(this.data, "data.AttackParts") || []).length) {
+          showFullAttack = true;
+        } else {
+          // Fetch formulaic attacks and ensure .value is set
+          let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+          if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0) {
+            fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+            if (fmAtks > 0) showFullAttack = true;
+          }
+        }
+
+        if (showFullAttack || this.type === "spell") {
           buttons.multi = {
             label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
             callback: (html) => resolve((roll = _roll.call(this, true, html))),

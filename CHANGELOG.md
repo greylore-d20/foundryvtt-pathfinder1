@@ -24,6 +24,11 @@
 - Improve migration messaging and add localization strings
 - Added chat context notes to show remaining ammunition after using an ammunition-using attack (thanks Grarl!)
 
+### Compendium
+
+- Bestiaries were using incorrect sizeRoll arguments
+- Freedom's Call (class ability) was a free action
+  
 ## 0.77.15
 
 ### Bug Fixes

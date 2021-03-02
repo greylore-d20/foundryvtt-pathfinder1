@@ -888,10 +888,11 @@ export class ItemPF extends Item {
           // Special case for context notes
           if (kArr.key === "data.contextNotes") {
             for (let obj of arr) {
-              if (obj.target && !obj.subTarget) {
-                obj.subTarget = Object.keys(CONFIG.PF1.contextNoteTargets[obj.target]).filter(
-                  (o) => !o.match(/^[~_]/)
-                )[0];
+              if (obj.target) {
+                const subTargets = Object.keys(this.getContextNoteSubTargets(obj.target));
+                if (!subTargets.includes(obj.subTarget)) {
+                  obj.subTarget = subTargets[0];
+                }
               }
             }
           }

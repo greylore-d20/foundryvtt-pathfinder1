@@ -1793,7 +1793,7 @@ export class ItemPF extends Item {
       }
 
       // Determine charge cost
-      let cost;
+      let cost = 0;
       if (this.autoDeductCharges) {
         cost = this.chargeCost;
         let uses = this.charges;

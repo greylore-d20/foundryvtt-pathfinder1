@@ -1655,7 +1655,11 @@ export class ActorPF extends Actor {
     }
     if (item.data.type !== "spell") throw new Error("Wrong Item type");
 
-    if (getProperty(item.data, "data.preparation.mode") !== "atwill" && item.getSpellUses() < item.chargeCost) {
+    if (
+      getProperty(item.data, "data.preparation.mode") !== "atwill" &&
+      item.getSpellUses() < item.chargeCost &&
+      item.autoDeductCharges
+    ) {
       const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
       console.warn(msg);
       return ui.notifications.warn(msg);

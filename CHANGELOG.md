@@ -15,6 +15,7 @@
 - Limit container quantity maximum to 1
 - Spell slot costs of 0 still deducted available spell slots
 - Couldn't update item resources on actors with macros anymore
+- Fix incorrect spell charge enforcement rules, which made spell costs undefined in some cases
 
 ### Changelog
 

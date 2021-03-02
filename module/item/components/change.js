@@ -141,47 +141,52 @@ export class ItemChange {
 
         switch (operator) {
           case "add":
-            if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
-              setProperty(actor.data, t, (getProperty(actor.data, t) ?? 0) + value);
-              overrides[t][operator][this.modifier] = (prior ?? 0) + value;
+            {
+              const base = getProperty(actor.data, t);
+              if (typeof base === "number") {
+                if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
+                  setProperty(actor.data, t, base + value);
+                  overrides[t][operator][this.modifier] = (prior ?? 0) + value;
 
-              if (this.parent && !addedSourceInfo) {
-                for (let si of sourceInfoTargets) {
-                  getSourceInfo(actor.sourceInfo, si).positive.push({
-                    value: value,
-                    name: this.parent.name,
-                    type: this.parent.type,
-                  });
-                }
-                addedSourceInfo = true;
-              }
-            } else {
-              const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-              setProperty(actor.data, t, (getProperty(actor.data, t) ?? 0) + diff);
-              overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
+                  if (this.parent && !addedSourceInfo) {
+                    for (let si of sourceInfoTargets) {
+                      getSourceInfo(actor.sourceInfo, si).positive.push({
+                        value: value,
+                        name: this.parent.name,
+                        type: this.parent.type,
+                      });
+                    }
+                    addedSourceInfo = true;
+                  }
+                } else {
+                  const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
+                  setProperty(actor.data, t, base + diff);
+                  overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
 
-              if (this.parent) {
-                for (let si of sourceInfoTargets) {
-                  const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
+                  if (this.parent) {
+                    for (let si of sourceInfoTargets) {
+                      const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
 
-                  let doAdd = true;
-                  sInfo.forEach((o) => {
-                    if (o.modifier === this.modifier) {
-                      if (o.value < value) {
-                        sInfo.splice(sInfo.indexOf(o), 1);
-                      } else {
-                        doAdd = false;
+                      let doAdd = true;
+                      sInfo.forEach((o) => {
+                        if (o.modifier === this.modifier) {
+                          if (o.value < value) {
+                            sInfo.splice(sInfo.indexOf(o), 1);
+                          } else {
+                            doAdd = false;
+                          }
+                        }
+                      });
+
+                      if (doAdd) {
+                        sInfo.push({
+                          value: value,
+                          name: this.parent.name,
+                          type: this.parent.type,
+                          modifier: this.modifier,
+                        });
                       }
                     }
-                  });
-
-                  if (doAdd) {
-                    sInfo.push({
-                      value: value,
-                      name: this.parent.name,
-                      type: this.parent.type,
-                      modifier: this.modifier,
-                    });
                   }
                 }
               }

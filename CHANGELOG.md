@@ -22,6 +22,7 @@
 ### Changelog
 
 - Improve migration messaging and add localization strings
+- Added chat context notes to show remaining ammunition after using an ammunition-using attack (thanks Grarl!)
 
 ## 0.77.15
 

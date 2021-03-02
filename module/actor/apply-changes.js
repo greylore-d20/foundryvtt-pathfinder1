@@ -395,7 +395,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
   } else if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9]+)$/)) {
     const sklKey = RegExp.$1;
     const subSklKey = RegExp.$2;
-    if (curData.skills[sklKey] != null && curData.skills[sklKey].subSkills[subSklKey] != null) {
+    if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
       return `data.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`;
     }
   }

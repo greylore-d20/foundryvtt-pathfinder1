@@ -18,6 +18,7 @@
 - Fix incorrect spell charge enforcement rules, which made spell costs undefined in some cases
 - Adding to a - ability score incorrectly added to the value
 - Mythic tiers were incorrectly added to Hit Die
+- Fix incomplete subskill data crashing initialization
 
 ### Changelog
 

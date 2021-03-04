@@ -6,6 +6,10 @@
 
 - Race condition preventing functionality could still happen for `heal/ damage` inline rolls
 
+### Compendium
+
+- Bestiaries were using incorrect sizeRoll arguments for non-medium monsters
+
 ## 0.77.16
 
 ### Bug Fixes

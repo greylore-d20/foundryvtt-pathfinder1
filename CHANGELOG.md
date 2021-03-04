@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.17
+
+### Bug Fixes
+
+- Race condition preventing functionality could still happen for `heal/ damage` inline rolls
+
 ## 0.77.16
 
 ### Bug Fixes

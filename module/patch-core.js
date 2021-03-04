@@ -260,7 +260,7 @@ export async function PatchCore() {
     };
 
     // Fix for race condition
-    if ($._data($("body").get(0), "events")?.click.find((o) => o.selector === "a.inline-roll")) {
+    if ($._data($("body").get(0), "events")?.click?.find((o) => o.selector === "a.inline-roll")) {
       $("body").off("click", "a.inline-roll", origClick);
       $("body").on("click", "a.inline-roll", TextEditor._onClickInlineRoll);
     }

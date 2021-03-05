@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Race condition preventing functionality could still happen for `heal/ damage` inline rolls
+- Potential fix for compendium browsers not opening (#669)
 
 ### Compendium
 
@@ -39,7 +40,7 @@
 
 - Bestiaries were using incorrect sizeRoll arguments
 - Freedom's Call (class ability) was a free action
-  
+
 ## 0.77.15
 
 ### Bug Fixes

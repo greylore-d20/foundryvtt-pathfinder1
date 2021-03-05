@@ -205,7 +205,13 @@ export class CompendiumBrowser extends Application {
   }
 
   async _gatherData() {
-    await this._fetchMetadata();
+    try {
+      await this._fetchMetadata();
+    } catch (err) {
+      console.warn(err);
+      this._savedItems = [];
+      await this._fetchMetadata();
+    }
 
     this._data.data = {
       filters: this.filters,

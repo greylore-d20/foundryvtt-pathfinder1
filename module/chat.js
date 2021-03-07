@@ -125,3 +125,11 @@ export const applyAccessibilitySettings = function (app, html, data, conf) {
     }
   }
 };
+
+export const createInlineRollString = function (roll) {
+  return (
+    `<a class="inline-roll inline-result" title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}">` +
+    `<i class="fas fa-dice-d20"></i> ${roll.total}` +
+    `</a>`
+  );
+};

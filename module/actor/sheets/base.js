@@ -2174,6 +2174,9 @@ export class ActorSheetPF extends ActorSheet {
       features[k].items.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
+    classes.forEach((item) => {
+      if (item.data.classType !== "mythic") item.canLevelUp = true;
+    });
 
     // Buffs
     let buffs = data.items.filter((obj) => {

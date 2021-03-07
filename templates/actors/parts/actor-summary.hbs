@@ -487,6 +487,10 @@
 
         <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
 
+        {{#if levelUp}}
+          <div class="item-detail item-button"><span>{{localize "PF1.Action"}}</span></div>
+        {{/if}}
+
         {{#if owner}}
         <div class="item-controls">
           <a class="item-control item-create" title="Create Item" data-type="class">
@@ -510,6 +514,14 @@
             <span>Level {{item.data.level}}</span>
             <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{item.data.level}}</span>
           </div>
+
+          {{#if ../levelUp}}
+            <div class="item-detail item-button">
+            {{#if item.canLevelUp}}
+              <button class="action-level-up" data-item-id="{{item._id}}">{{localize "PF1.LevelUp.Label"}}</button>
+            {{/if}}
+            </div>
+          {{/if}}
 
           {{#if ../owner}}
           <div class="item-controls">

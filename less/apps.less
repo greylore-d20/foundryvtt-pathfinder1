@@ -9,8 +9,44 @@
 /* ----------------------------------------- */
 
 .pf1 {
+  .switch-check {
+    display: none;
+  }
+
+  .switch-label > span {
+    display: block;
+    border: 1px solid @dark-color;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: auto;
+    padding: 2px;
+    width: calc(100% - 2px);
+    text-align: center;
+  }
+
+  .switch-label > span.switch-primary {
+    background-color: fade(@light-color, 75%);
+    color: @dark-color;
+  }
+
+  .switch-label > span.switch-secondary {
+    background-color: fade(@dark-color, 75%);
+    color: @light-color;
+  }
+
+  .switch-check:not(:checked) + .switch-label .switch-primary {
+    display: none;
+  }
+  .switch-check:checked + .switch-label .switch-secondary {
+    display: none;
+  }
+
   input[type="text"]::placeholder,
   .placeholder {
+    color: @colorTan;
+  }
+
+  input[type="text"][disabled] {
     color: @colorTan;
   }
 
@@ -505,6 +541,17 @@
 
       &.item-range {
         flex: 0 1 56px;
+      }
+
+      &.item-button {
+        flex: 0 0 64px;
+
+        button {
+          height: 24px;
+          font-size: 11px;
+          padding: 0;
+          line-height: 24px;
+        }
       }
 
       &:nth-child(2) {
@@ -1183,5 +1230,34 @@
 
   footer {
     flex: 0 0 32px;
+  }
+}
+
+/* ----------------------------------------- */
+/* Level Up Dialog
+/* ----------------------------------------- */
+
+.pf1.level-up {
+  div.part {
+    margin-bottom: 4px;
+  }
+
+  div.health {
+    display: flex;
+    flex-flow: row nowrap;
+
+    .switch.roll-health {
+      flex: 0 0 96px;
+
+      .switch-label span {
+        height: 26px;
+        line-height: 26px;
+        padding: 0;
+      }
+    }
+
+    input[type="text"] {
+      flex: 0 0 64px;
+    }
   }
 }

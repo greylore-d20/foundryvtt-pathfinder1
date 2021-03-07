@@ -1,4 +1,5 @@
 import { ActorSheetPF } from "./base.js";
+import { LevelUpForm } from "../../apps/level-up.js";
 
 /**
  * An Actor sheet for player character type actors in the PF system.
@@ -61,6 +62,19 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       data["iteratives"] = `+${iters.join(" / +")}`;
     }
 
+    // Add level up buttons to classes
+    if (
+      this.actor.data.type === "character" &&
+      game.settings.get("pf1", "experienceConfig").disableExperienceTracking !== true
+    ) {
+      const xp = getProperty(this.actor.data, "data.details.xp");
+      if (xp && xp.value >= xp.max) {
+        data.levelUp = true;
+      }
+    } else {
+      data.levelUp = true;
+    }
+
     // Return data for rendering
     return data;
   }
@@ -82,6 +96,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Spell Preparation
     html.find(".toggle-prepared").click(this._onPrepareItem.bind(this));
+
+    // Level Up
+    html.find(".action-level-up").click(this._onLevelUp.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -96,6 +113,18 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
     return item.update({ "data.preparation.prepared": !item.data.data.preparation.prepared });
+  }
+
+  _onLevelUp(event) {
+    event.preventDefault;
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.getOwnedItem(itemId);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof LevelUpForm && o._element;
+    });
+    if (app) app.bringToTop();
+    else new LevelUpForm(item).render(true);
   }
 
   /* -------------------------------------------- */

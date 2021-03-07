@@ -106,6 +106,12 @@ PF1.favouredClassBonuses = {
   alt: "PF1.FavouredClassAlt",
 };
 
+PF1.favouredClassBonusIcons = {
+  hp: "fa-heartbeat",
+  skill: "fa-wrench",
+  alt: "fa-tag",
+};
+
 /**
  * The set of Armor Classes
  * @type {Object}

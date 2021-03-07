@@ -7,6 +7,10 @@
 - Race condition preventing functionality could still happen for `heal/ damage` inline rolls
 - Potential fix for compendium browsers not opening (#669)
 
+### Changelog
+
+- Added a basic level up dialog
+
 ### Compendium
 
 - Bestiaries were using incorrect sizeRoll arguments for non-medium monsters

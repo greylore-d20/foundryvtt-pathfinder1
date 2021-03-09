@@ -31,7 +31,7 @@ export const customRolls = function (message, speaker, rollData) {
       case "DAMAGE":
       case "HEAL":
         rollData = rollData ?? actor?.getRollData() ?? {};
-        var roll = new Roll(value, rollData).roll();
+        var roll = RollPF.safeRoll(value, rollData);
         var total = roll.total;
 
         return (async () => {

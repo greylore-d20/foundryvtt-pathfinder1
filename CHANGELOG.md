@@ -11,6 +11,11 @@
 
 - Added a basic level up dialog
 
+### API
+
+- `RollPF` and `RollPF.safeRoll` have been added to the system for better roll error handling
+- `CONFIG.debug.roll` has been added to log all dice errors and warnings to console
+
 ### Compendium
 
 - Bestiaries were using incorrect sizeRoll arguments for non-medium monsters

@@ -325,7 +325,7 @@ export const normalDie = function (origCount, origSides, crit = 1) {
  * @returns {number} The result of the new roll.
  */
 export const sizeRoll = function (origCount, origSides, targetSize = "M", initialSize = "M") {
-  return new Roll(sizeDieExt(origCount, origSides, targetSize, initialSize)).roll().total;
+  return RollPF.safeRoll(sizeDieExt(origCount, origSides, targetSize, initialSize)).total;
 };
 
 /**
@@ -335,7 +335,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
  * @returns {number} The result of the new roll.
  */
 export const normalRoll = function (count, sides, crit = 1) {
-  return new Roll(normalDie(count, sides, crit)).roll().total;
+  return RollPF.safeRoll(normalDie(count, sides, crit)).total;
 };
 
 export const getActorFromId = function (id) {

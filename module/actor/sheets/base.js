@@ -397,12 +397,9 @@ export class ActorSheetPF extends ActorSheet {
         if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
       });
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-      try {
-        let roll = new Roll(this.actor.data.data.details.bonusSkillRankFormula, rollData).roll();
-        skillRanks.allowed += roll.total;
-      } catch (e) {
-        console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-      }
+      let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
+      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+      skillRanks.allowed += roll.total;
     }
     // Calculate used background skills
     if (data.useBGSkills) {
@@ -426,17 +423,14 @@ export class ActorSheetPF extends ActorSheet {
           return cur + o.data.data.level;
         }, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
-      try {
-        data.featCount.byFormula = this.actor.data.data.details.bonusFeatFormula
-          ? new Roll(this.actor.data.data.details.bonusFeatFormula, rollData).roll().total
-          : 0;
-      } catch (e) {
+      const featCountRoll = RollPF.safeRoll(this.actor.data.data.details.bonusFeatFormula || "0", rollData);
+      data.featCount.byFormula = featCountRoll.total;
+      if (featCountRoll.err) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
           .format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name);
         console.error(msg);
         ui.notifications.error(msg);
-        data.featCount.byFormula = 0;
       }
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
     }

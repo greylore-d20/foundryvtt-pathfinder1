@@ -116,7 +116,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     event.preventDefault();
     const formula = this.actor.data.data.attributes.hp.formula;
     if (!formula) return;
-    const hp = new Roll(formula).roll().total;
+    const hp = RollPF.safeRoll(formula).total;
     AudioHelper.play({ src: CONFIG.sounds.dice });
     this.actor.update({ "data.attributes.hp.value": hp, "data.attributes.hp.max": hp });
   }

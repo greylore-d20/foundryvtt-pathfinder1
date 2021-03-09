@@ -1501,3 +1501,4 @@ PF1.temporaryRollDataFields = {
 };
 
 CONFIG.Combat.initiative.decimals = 2;
+CONFIG.debug.roll = false;

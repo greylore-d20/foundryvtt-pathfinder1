@@ -66,7 +66,7 @@ export class LevelUpForm extends BaseEntitySheet {
     } else if (formData["health.roll"]) {
       // Roll for health
       const formula = `1d${item.data.data.hd}`;
-      const roll = new Roll(formula).roll();
+      const roll = RollPF.safeRoll(formula);
       chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
         add: createInlineRollString(roll),

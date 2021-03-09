@@ -126,12 +126,7 @@ export class ItemChange {
           value = result.value;
           operator = result.operator;
         } else {
-          try {
-            value = new Roll(this.formula || "0", rollData).roll().total;
-          } catch (err) {
-            value = 0;
-            console.error(err, t, this, rollData);
-          }
+          value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData]).total;
         }
 
         this.data.value = value;

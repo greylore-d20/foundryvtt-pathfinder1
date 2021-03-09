@@ -6,6 +6,7 @@ import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
 import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo } from "./apply-changes.js";
+import { RollPF } from "../roll.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -439,9 +440,7 @@ export class ActorPF extends Actor {
           this.data,
           k,
           classes.reduce((cur, obj) => {
-            const formula =
-              CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-            const v = new Roll(formula, { level: obj.data.level }).roll().total;
+            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }).total;
 
             if (v !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -692,7 +691,7 @@ export class ActorPF extends Actor {
       // Add spell slots based on ability bonus slot formula
       {
         const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
-        spellbookAbilityScore += new Roll(formula, rollData).roll().total;
+        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
       }
 
       const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
@@ -725,7 +724,7 @@ export class ActorPF extends Actor {
           });
         }
         // Add from bonus formula
-        const clBonus = new Roll(formula, rollData).roll().total;
+        const clBonus = RollPF.safeRoll(formula, rollData).total;
         total += clBonus;
         if (clBonus > 0) {
           getSourceInfo(this.sourceInfo, key).positive.push({
@@ -841,7 +840,7 @@ export class ActorPF extends Actor {
             : spellClass?.length > 0
             ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
             : 0;
-        const roll = new Roll(formula, rollData).roll();
+        const roll = RollPF.safeRoll(formula, rollData);
         setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
       }
     }
@@ -1137,12 +1136,10 @@ export class ActorPF extends Actor {
           for (let src of grp) {
             if (!src.operator) src.operator = "add";
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
-            let srcValue = 0;
-            try {
-              srcValue = src.value != null ? src.value : new Roll(src.formula || "0", rollData).roll().total;
-            } catch (err) {
-              console.error(err, changeTarget, src, this);
-            }
+            let srcValue =
+              src.value != null
+                ? src.value
+                : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this]).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
               sourceDetails[changeTarget].push({
@@ -1291,7 +1288,7 @@ export class ActorPF extends Actor {
       for (let a = 0; a < level; a++) {
         const rollData = this.getRollData();
         rollData.level = a + 1;
-        const roll = new Roll(expConfig.custom.formula, rollData).roll();
+        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData);
         totalXP += roll.total;
       }
     }
@@ -2075,7 +2072,7 @@ export class ActorPF extends Actor {
 
     let formulaRoll = 0;
     if (spellbook.concentrationFormula.length)
-      formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
+      formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
@@ -2474,8 +2471,8 @@ export class ActorPF extends Actor {
       if (form) {
         value = form.find('[name="damage"]').val();
         let dR = form.find('[name="damage-reduction"]').val();
-        value = value.length ? new Roll(value).roll().total : 0;
-        dR = dR.length ? new Roll(dR).roll().total : 0;
+        value = value.length ? RollPF.safeRoll(value, {}, []).total : 0;
+        dR = dR.length ? RollPF.safeRoll(dR, {}, []).total : 0;
         if (multiplier < 0) {
           value = Math.ceil(value * multiplier);
           value = Math.min(value - dR, 0);
@@ -3081,7 +3078,7 @@ export class ActorPF extends Actor {
         for (let k of Object.keys(result.classes[tag].savingThrows)) {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = new Roll(formula, { level: cls.data.level }).roll().total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
         }
       });
 
@@ -3192,7 +3189,7 @@ export class ActorPF extends Actor {
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
-        cur += new Roll(crOffset, this.getRollData(data)).roll().total;
+        cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
       return cur;
     }, base);
   }

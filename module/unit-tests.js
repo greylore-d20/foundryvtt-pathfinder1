@@ -86,9 +86,10 @@ const _addSizeRollTest = async function (
   resultArr.push(test);
 
   try {
-    const roll = new Roll(
+    const roll = RollPF.safeRoll(
       `sizeRoll(${baseDie[0]}, ${baseDie[1]}, ${options.targetSize}, ${options.initialSize})`
-    ).roll();
+    );
+    if (roll.err) throw roll.err;
     const term = roll.terms[0];
     if (term.number !== expectedDie[0] || term.faces !== expectedDie[1])
       throw new Error(

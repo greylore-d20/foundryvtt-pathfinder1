@@ -530,7 +530,7 @@ export const addDefaultChanges = function (changes) {
           const classType = getProperty(obj.data, "classType") || "base";
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
           if (formula == null) formula = "0";
-          const v = Math.floor(new Roll(formula, { level: obj.data.level }).roll().total);
+          const v = Math.floor(RollPF.safeRoll(formula, { level: obj.data.level }).total);
 
           if (v !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });

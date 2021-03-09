@@ -30,6 +30,7 @@ import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
+import { RollPF } from "./module/roll.js";
 import { getItemOwner, sizeDieExt, normalDie, getActorFromId } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
@@ -86,6 +87,9 @@ Hooks.once("init", async function () {
     tooltip: null,
   };
 
+  // Global exports
+  window.RollPF = RollPF;
+
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.entityClass = ActorPF;
@@ -93,6 +97,7 @@ Hooks.once("init", async function () {
   CONFIG.Item.entityClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.entityClass = ChatMessagePF;
+  CONFIG.Dice.rolls[0] = RollPF;
 
   // Register System Settings
   registerSystemSettings();

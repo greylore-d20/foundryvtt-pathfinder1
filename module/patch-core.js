@@ -1,5 +1,4 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
-import { _preProcessDiceFormula } from "./dice.js";
 import "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
@@ -35,110 +34,6 @@ export async function PatchCore() {
       displayBar2: bar2 != null && bar2.attribute != null && bar2.value != null,
     });
   };
-
-  // const Roll__identifyTerms = Roll.prototype._identifyTerms;
-  Roll.prototype._identifyTerms = function (formula, { step = 0 } = {}) {
-    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
-    formula = _preProcessDiceFormula(formula, this.data);
-    var warned;
-
-    // Step 1 - Update the Roll formula using provided data
-    [formula, warned] = this.constructor.replaceFormulaData(formula, this.data, { missing: "0", warn: false });
-    if (warned) this.warning = true;
-
-    // Step 2 - identify separate parenthetical terms
-    let terms = this._splitParentheticalTerms(formula);
-
-    // Step 3 - expand pooled terms
-    terms = this._splitPooledTerms(terms);
-
-    // Step 4 - expand remaining arithmetic terms
-    terms = this._splitDiceTerms(terms, step);
-
-    // Step 5 - clean and de-dupe terms
-    terms = this.constructor.cleanTerms(terms);
-    return terms;
-  };
-
-  {
-    const Roll__splitParentheticalTerms = Roll.prototype._splitParentheticalTerms;
-    Roll.prototype._splitParentheticalTerms = function (formula) {
-      // Augment parentheses with semicolons and split into terms
-      const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
-
-      // Match outer-parenthetical groups
-      let nOpen = 0;
-      const terms = split.split(";").reduce((arr, t, i, terms) => {
-        if (t === "") return arr;
-
-        // Identify whether the left-parentheses opens a math function
-        let mathFn = false;
-        if (t === "(") {
-          const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
-          mathFn = fn && !!Roll.MATH_PROXY[fn[1]];
-        }
-
-        // Combine terms using open parentheses and math expressions
-        if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
-        else arr.push(t);
-
-        // Increment the count
-        if (t === "(") nOpen++;
-        else if (t === ")" && nOpen > 0) nOpen--;
-        return arr;
-      }, []);
-
-      // Close any un-closed parentheses
-      for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
-
-      // Substitute parenthetical dice rolls groups to inner Roll objects
-      return terms.reduce((terms, term) => {
-        const prior = terms.length ? terms[terms.length - 1] : null;
-        if (term[0] === "(") {
-          // Handle inner Roll parenthetical groups
-          if (/[dD]/.test(term)) {
-            terms.push(Roll.fromTerm(term, this.data));
-            return terms;
-          }
-
-          // Evaluate arithmetic-only parenthetical groups
-          term = this._safeEval(term);
-          /* Changed functionality */
-          /* Allow null/string/true/false as it used to be and crash on undefined */
-          if (typeof term !== "undefined" && typeof term !== "number") term += "";
-          else term = Number.isInteger(term) ? term : term.toFixed(2);
-          /* End changed functionality */
-
-          // Continue wrapping math functions
-          const priorMath = prior && prior.split(" ").pop() in Math;
-          if (priorMath) term = `(${term})`;
-        }
-
-        // Append terms to to non-Rolls
-        if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
-        else terms.push(term);
-        return terms;
-      }, []);
-    };
-
-    const Roll_replaceFormulaData = Roll.replaceFormulaData;
-    Roll.replaceFormulaData = function (formula, data, { missing, warn = false }) {
-      let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-      var warned = false;
-      return [
-        formula.replace(dataRgx, (match, term) => {
-          let value = getProperty(data, term);
-          if (value === undefined) {
-            if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-            warned = true;
-            return missing !== undefined ? String(missing) : match;
-          }
-          return String(value).trim();
-        }),
-        warned,
-      ];
-    };
-  }
 
   // Patch ActorTokenHelpers.update
   const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;

@@ -10,6 +10,7 @@
 ### Changelog
 
 - Added a basic level up dialog
+- Removed ability score change flags (0 Str, 1 Cha, etc.)
 
 ### API
 

@@ -144,6 +144,7 @@ export class ActorSheetPF extends ActorSheet {
       isGM: game.user.isGM,
       race: this.actor.race != null ? duplicate(this.actor.race.data) : null,
       usesAnySpellbook: (getProperty(this.actor.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
+      sourceData: {},
     };
     const rollData = this.actor.getRollData();
     data.rollData = rollData;
@@ -359,45 +360,99 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     // Count allowed skill ranks
-    this.actor.data.items
-      .filter((obj) => {
-        return obj.type === "class" && obj.data.classType !== "mythic";
-      })
-      .forEach((cls) => {
-        const clsLevel = cls.data.level;
-        const clsSkillsPerLevel = cls.data.skillsPerLevel;
-        const fcSkills = cls.data.fc.skill.value;
-        skillRanks.allowed +=
-          Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
-      });
-    if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-      let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
-      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-      skillRanks.allowed += roll.total;
-    }
-    // Calculate used background skills
-    if (data.useBGSkills) {
-      if (skillRanks.bgUsed > skillRanks.bgAllowed) {
-        skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
-        skillRanks.allowed -= skillRanks.sentToBG;
-        skillRanks.bgAllowed += skillRanks.sentToBG;
+    {
+      const sourceData = [];
+      setProperty(data.sourceData, "skillRanks", sourceData);
+      // Count from classes
+      this.actor.data.items
+        .filter((obj) => {
+          return obj.type === "class" && obj.data.classType !== "mythic";
+        })
+        .forEach((cls) => {
+          const clsLevel = cls.data.level;
+          const clsSkillsPerLevel = cls.data.skillsPerLevel;
+          const fcSkills = cls.data.fc.skill.value;
+          skillRanks.allowed +=
+            Math.max(1, clsSkillsPerLevel + this.actor.data.data.abilities.int.mod) * clsLevel + fcSkills;
+          sourceData.push({
+            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+            value: clsSkillsPerLevel * clsLevel,
+          });
+          sourceData.push({
+            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+            value: fcSkills,
+          });
+
+          if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType))
+            skillRanks.bgAllowed += clsLevel * 2;
+        });
+      // Count from intelligence
+      if (getProperty(this.actor.data, "data.abilities.int.mod") !== 0) {
+        sourceData.push({
+          name: game.i18n.localize("PF1.AbilityInt"),
+          value:
+            getProperty(this.actor.data, "data.abilities.int.mod") *
+            getProperty(this.actor.data, "data.attributes.hd.total"),
+        });
       }
+      // Count from bonus skill rank formula
+      if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
+        let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
+        if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+        skillRanks.allowed += roll.total;
+        sourceData.push({
+          name: game.i18n.localize("PF1.SkillBonusRankFormula"),
+          value: roll.total,
+        });
+      }
+      // Calculate from changes
+      this.actor.changes
+        .filter((o) => o.subTarget === "bonusSkillRanks")
+        .forEach((o) => {
+          if (!o.value) return;
+
+          skillRanks.allowed += o.value;
+          sourceData.push({
+            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+            value: o.value,
+          });
+        });
+      // Calculate used background skills
+      if (data.useBGSkills) {
+        if (skillRanks.bgUsed > skillRanks.bgAllowed) {
+          skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
+          skillRanks.allowed -= skillRanks.sentToBG;
+          skillRanks.bgAllowed += skillRanks.sentToBG;
+        }
+      }
+      data.skillRanks = skillRanks;
     }
-    data.skillRanks = skillRanks;
 
     // Feat count
     {
+      const sourceData = [];
+      setProperty(data.sourceData, "bonusFeats", sourceData);
+
+      // Feats
       data.featCount = {};
       data.featCount.value = this.actor.items.filter(
         (o) => o.type === "feat" && o.data.data.featType === "feat"
       ).length;
+
+      // Feat count
+      // By level
       const totalLevels = this.actor.items
         .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
         .reduce((cur, o) => {
           return cur + o.data.data.level;
         }, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
+      sourceData.push({
+        name: game.i18n.localize("PF1.Level"),
+        value: data.featCount.byLevel,
+      });
+
+      // Bonus feat formula
       const featCountRoll = RollPF.safeRoll(this.actor.data.data.details.bonusFeatFormula || "0", rollData);
       data.featCount.byFormula = featCountRoll.total;
       if (featCountRoll.err) {
@@ -407,7 +462,28 @@ export class ActorSheetPF extends ActorSheet {
         console.error(msg);
         ui.notifications.error(msg);
       }
+      if (data.featCount.byFormula !== 0) {
+        sourceData.push({
+          name: game.i18n.localize("PF1.BonusFeatFormula"),
+          value: data.featCount.byFormula,
+        });
+      }
+
+      // Count total
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
+
+      // Changes
+      this.actor.changes
+        .filter((o) => o.subTarget === "bonusFeats")
+        .forEach((o) => {
+          if (!o.value) return;
+
+          data.featCount.total += o.value;
+          sourceData.push({
+            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+            value: o.value,
+          });
+        });
     }
 
     // Fetch the game settings relevant to sheet rendering.

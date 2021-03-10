@@ -221,20 +221,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
-    // case "attack":
-    //   return "data.attributes.attack.general";
     case "~attackCore":
       return "data.attributes.attack.shared";
-    // case "mattack":
-    //   return "data.attributes.attack.melee";
-    // case "rattack":
-    //   return "data.attributes.attack.ranged";
-    // case "damage":
-    //   return "data.attributes.damage.general";
-    // case "wdamage":
-    //   return "data.attributes.damage.weapon";
-    // case "sdamage":
-    //   return "data.attributes.damage.spell";
     case "allSavingThrows":
       return [
         "data.attributes.savingThrows.fort.total",

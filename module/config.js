@@ -1172,6 +1172,7 @@ PF1.buffTargets = {
     intSkills: "PF1.BuffTarIntSkills",
     wisSkills: "PF1.BuffTarWisSkills",
     chaSkills: "PF1.BuffTarChaSkills",
+    bonusSkillRanks: "PF1.BuffTarBonusSkillRanks",
   },
   skill: {
     _label: "PF1.BuffTarSpecificSkill",
@@ -1208,6 +1209,7 @@ PF1.buffTargets = {
     mDexA: "PF1.MaxDexArmor",
     mDexS: "PF1.MaxDexShield",
     spellResist: "PF1.SpellResistance",
+    bonusFeats: "PF1.BuffTarBonusFeats",
   },
 };
 

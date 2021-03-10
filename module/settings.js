@@ -50,7 +50,7 @@ export const registerSystemSettings = function () {
     type: Object,
     config: false,
     onChange: () => {
-      game.actors.entities.forEach((o) => {
+      game.actors.contents.forEach((o) => {
         o.prepareData();
         if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
       });
@@ -77,7 +77,7 @@ export const registerSystemSettings = function () {
     type: Object,
     config: false,
     onChange: () => {
-      game.actors.entities.forEach((o) => {
+      game.actors.contents.forEach((o) => {
         o.prepareData();
         if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
       });
@@ -177,7 +177,7 @@ export const registerSystemSettings = function () {
     default: "",
     type: String,
     onChange: () => {
-      [...game.actors.entities, ...Object.values(game.actors.tokens)]
+      [...game.actors.contents, ...Object.values(game.actors.tokens)]
         .filter((o) => {
           return o.data.type === "character";
         })
@@ -203,7 +203,7 @@ export const registerSystemSettings = function () {
       metric: "Metric (meters, kg)",
     },
     onChange: () => {
-      [...game.actors.entities, ...Object.values(game.actors.tokens)]
+      [...game.actors.contents, ...Object.values(game.actors.tokens)]
         .filter((o) => {
           return o.data.type === "character";
         })
@@ -225,7 +225,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     onChange: () => {
-      game.actors.entities.forEach((o) => {
+      game.actors.contents.forEach((o) => {
         if (o.sheet && o.sheet.rendered) o.sheet.render(true);
       });
       Object.values(game.actors.tokens).forEach((o) => {
@@ -245,7 +245,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     onChange: () => {
-      game.actors.entities.forEach((o) => {
+      game.actors.contents.forEach((o) => {
         o.prepareData();
       });
       Object.values(game.actors.tokens).forEach((o) => {
@@ -335,7 +335,7 @@ export const registerSystemSettings = function () {
     default: 50,
     type: Number,
     onChange: () => {
-      game.actors.entities.forEach((o) => {
+      game.actors.contents.forEach((o) => {
         o.prepareData();
       });
       Object.values(game.actors.tokens).forEach((o) => {
@@ -357,7 +357,7 @@ export const registerSystemSettings = function () {
     onChange: () => {
       let promises = [];
       const actors = [
-        ...Array.from(game.actors.entities.filter((o) => getProperty(o.data, "token.actorLink"))),
+        ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
         ...Object.values(game.actors.tokens),
       ];
       for (let actor of actors) {
@@ -435,7 +435,7 @@ export const registerSystemSettings = function () {
     onChange: () => {
       let promises = [];
       const actors = [
-        ...Array.from(game.actors.entities.filter((o) => getProperty(o.data, "token.actorLink"))),
+        ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
         ...Object.values(game.actors.tokens),
       ];
       for (let actor of actors) {

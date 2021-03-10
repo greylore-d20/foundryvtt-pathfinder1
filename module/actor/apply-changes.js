@@ -463,19 +463,20 @@ export const addDefaultChanges = function (changes) {
     });
   };
   const manual_health = (health_source) => {
-    let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+    let health =
+      health_source.data.data.hp + (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
     if (!continuous) health = round(health);
     push_health(health, health_source);
   };
   const auto_health = (health_source, options, maximized = 0) => {
     if (health_source.data.hd === 0) return;
 
-    let die_health = 1 + (health_source.data.hd - 1) * options.rate;
+    let die_health = 1 + (health_source.data.data.hd - 1) * options.rate;
     if (!continuous) die_health = round(die_health);
 
-    const maxed_health = Math.min(health_source.data.level, maximized) * health_source.data.hd;
-    const level_health = Math.max(0, health_source.data.level - maximized) * die_health;
-    const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+    const maxed_health = Math.min(health_source.data.data.level, maximized) * health_source.data.data.hd;
+    const level_health = Math.max(0, health_source.data.data.level - maximized) * die_health;
+    const favor_health = (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
     let health = maxed_health + level_health + favor_health;
 
     push_health(health, health_source);
@@ -528,9 +529,9 @@ export const addDefaultChanges = function (changes) {
         k,
         allClasses.reduce((cur, obj) => {
           const classType = getProperty(obj.data, "classType") || "base";
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.data.savingThrows[a].value];
           if (formula == null) formula = "0";
-          const v = Math.floor(new Roll(formula, { level: obj.data.level }).roll().total);
+          const v = Math.floor(new Roll(formula, { level: obj.data.data.level }).roll().total);
 
           if (v !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });

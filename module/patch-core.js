@@ -141,81 +141,81 @@ export async function PatchCore() {
   }
 
   // Patch ActorTokenHelpers.update
-  const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
-  ActorTokenHelpers.prototype.update = async function (data, options = {}) {
-    // Avoid regular update flow for explicitly non-recursive update calls
-    if (getProperty(options, "recursive") === false) {
-      return ActorTokenHelpers_update.call(this, data, options);
-    }
+  // const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
+  // ActorTokenHelpers.prototype.update = async function (data, options = {}) {
+  // // Avoid regular update flow for explicitly non-recursive update calls
+  // if (getProperty(options, "recursive") === false) {
+  // return ActorTokenHelpers_update.call(this, data, options);
+  // }
 
-    const diff = await ActorPF.prototype.update.call(
-      this,
-      data,
-      mergeObject(options, { recursive: true, skipUpdate: true })
-    );
-    if (Object.keys(diff).length) {
-      await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
-      await this.toggleConditionStatusIcons();
-      await this.refreshItems();
-    }
-    return diff;
-  };
-  // Patch ActorTokenHelpers.deleteEmbeddedEntity
-  const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
-  ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function (embeddedName, id, options = {}) {
-    const item = this.items.get(id);
+  // const diff = await ActorPF.prototype.update.call(
+  // this,
+  // data,
+  // mergeObject(options, { recursive: true, skipUpdate: true })
+  // );
+  // if (Object.keys(diff).length) {
+  // await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
+  // await this.toggleConditionStatusIcons();
+  // await this.refreshItems();
+  // }
+  // return diff;
+  // };
+  // // Patch ActorTokenHelpers.deleteEmbeddedEntity
+  // const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
+  // ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function (embeddedName, id, options = {}) {
+  // const item = this.items.get(id);
 
-    const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, id, options);
+  // const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, id, options);
 
-    // Remove token effects for deleted buff
-    if (item) {
-      let promises = [];
-      if (item.type === "buff" && item.data.data.active) {
-        const isLinkedToken = getProperty(this.data, "token.actorLink");
-        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
-        for (const token of tokens) {
-          promises.push(token.toggleEffect(item.data.img, { active: false }));
-        }
-      }
-      await Promise.all(promises);
-    }
+  // // Remove token effects for deleted buff
+  // if (item) {
+  // let promises = [];
+  // if (item.type === "buff" && item.data.data.active) {
+  // const isLinkedToken = getProperty(this.data, "token.actorLink");
+  // const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
+  // for (const token of tokens) {
+  // promises.push(token.toggleEffect(item.data.img, { active: false }));
+  // }
+  // }
+  // await Promise.all(promises);
+  // }
 
-    return deleted;
-  };
+  // return deleted;
+  // };
 
-  const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
-  ActorTokenHelpers.prototype.createEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    const created = await ActorTokenHelpers_createEmbeddedEntity.call(this, embeddedName, data, options);
-    if (embeddedName === "OwnedItem") {
-      if (data.type === "buff" && getProperty(data, "data.active") === true) {
-        this.toggleConditionStatusIcons();
-      }
-    }
+  // const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
+  // ActorTokenHelpers.prototype.createEmbeddedEntity = async function (embeddedName, data, options = {}) {
+  // const created = await ActorTokenHelpers_createEmbeddedEntity.call(this, embeddedName, data, options);
+  // if (embeddedName === "OwnedItem") {
+  // if (data.type === "buff" && getProperty(data, "data.active") === true) {
+  // this.toggleConditionStatusIcons();
+  // }
+  // }
 
-    return created;
-  };
+  // return created;
+  // };
 
-  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
-  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    const updates = await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
-    if (embeddedName === "OwnedItem") {
-      if (updates.type === "buff" && data["data.active"] !== undefined) {
-        this.toggleConditionStatusIcons();
-      }
-    }
+  // const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
+  // ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
+  // const updates = await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
+  // if (embeddedName === "OwnedItem") {
+  // if (updates.type === "buff" && data["data.active"] !== undefined) {
+  // this.toggleConditionStatusIcons();
+  // }
+  // }
 
-    return updates;
-  };
+  // return updates;
+  // };
 
   // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
-  if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
-    Object.keys(Actor.collection.tokens).forEach((tokenId) => {
-      let actor = Actor.collection.tokens[tokenId];
-      for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {
-        actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
-      }
-    });
-  }
+  // if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
+  // Object.keys(Actor.collection.tokens).forEach((tokenId) => {
+  // let actor = Actor.collection.tokens[tokenId];
+  // for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {
+  // actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
+  // }
+  // });
+  // }
 
   // Add combat tracker context menu options
   {

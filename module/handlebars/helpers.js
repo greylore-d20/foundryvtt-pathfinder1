@@ -12,18 +12,18 @@ export const registerHandlebarsHelpers = function () {
    */
   Handlebars.registerHelper("roll-editor", function (options) {
     // Find item and/or actor
-    const _id = (getProperty(options, "data.root.entity") || getProperty(options, "data.root.actor") || {})._id;
+    const _id = (getProperty(options, "data.root.data") || getProperty(options, "data.root.actor") || {})._id;
     let actor = null,
       item = null;
-    const actors = [...Array.from(game.actors.entities), ...Array.from(game.actors.tokens)];
-    const items = [...Array.from(game.items.entities)];
+    const actors = [...Array.from(game.actors.contents), ...Array.from(game.actors.tokens)];
+    const items = [...Array.from(game.items.contents)];
     if (_id != null) {
       // Find actor or item on actor
       for (let a of actors) {
-        if (a._id === _id) {
+        if (a.id === _id) {
           actor = a;
         } else {
-          if (item == null) item = a.items.find((o) => o._id === _id);
+          if (item == null) item = a.items.find((o) => o.id === _id);
         }
       }
       // Find item

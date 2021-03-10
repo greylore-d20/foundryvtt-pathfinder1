@@ -166,12 +166,12 @@ export const addReachCallback = function (data, html) {
   if (!itemID) return results;
 
   const speakerData = data.speaker;
-  if (!canvas.scene || canvas.scene._id !== speakerData.scene) return results;
+  if (!canvas.scene || canvas.scene.id !== speakerData.scene) return results;
 
   const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
   if (!token || !token.actor) return results;
 
-  const item = token.actor.items.find((o) => o._id === itemID);
+  const item = token.actor.items.find((o) => o.id === itemID);
   if (!item) return results;
 
   let highlight;

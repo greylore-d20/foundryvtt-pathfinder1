@@ -91,7 +91,7 @@ export class DicePF {
           const d20 = roll.terms[0];
           const rollData = mergeObject(
             {
-              user: game.user._id,
+              user: game.user.id,
               formula: roll.formula,
               tooltip: await roll.getTooltip(),
               total: roll.total,
@@ -105,7 +105,7 @@ export class DicePF {
 
           // Create chat data
           let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: noSound ? null : a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,

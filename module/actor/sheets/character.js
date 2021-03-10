@@ -118,7 +118,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
   _onLevelUp(event) {
     event.preventDefault;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
+    const item = this.actor.items.get(itemId);
 
     const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof LevelUpForm && o._element;

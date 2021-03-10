@@ -88,11 +88,11 @@ Hooks.once("init", async function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
-  CONFIG.Actor.entityClass = ActorPF;
-  CONFIG.ActiveEffect.entityClass = ActiveEffectPF;
-  CONFIG.Item.entityClass = ItemPF;
+  CONFIG.Actor.documentClass = ActorPF;
+  CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
+  CONFIG.Item.documentClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
-  CONFIG.ChatMessage.entityClass = ChatMessagePF;
+  CONFIG.ChatMessage.documentClass = ChatMessagePF;
 
   // Register System Settings
   registerSystemSettings();
@@ -422,19 +422,30 @@ Hooks.on("renderLightConfig", (app, html) => {
   RenderLightConfig_LowLightVision(app, html);
 });
 
-Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
-  if (userId !== game.user._id) return;
-  if (!(actor instanceof Actor)) return;
+Hooks.on("preUpdateItem", (actor, item, changedData, options, userId) => {
+  // Update level
+  {
+    if (item.type === "class" && hasProperty(changedData, "data.level")) {
+      const prevLevel = getProperty(item.data, "data.level");
+      // const newLevel = getProperty(changedData, "data.level");
+      // item._onLevelChange(prevLevel, newLevel);
+      item._prevLevel = prevLevel;
+    }
+  }
+});
 
-  const item = actor.getOwnedItem(changedData._id);
+Hooks.on("updateItem", async (actor, item, changedData, options, userId) => {
+  if (userId !== game.user.id) return;
+  if (!(actor instanceof Actor)) return;
   if (item == null) return;
 
   // Update level
   {
     await new Promise((resolve) => {
       if (item.type === "class" && hasProperty(changedData, "data.level")) {
-        const prevLevel = getProperty(item.data, "data.level");
         const newLevel = getProperty(changedData, "data.level");
+        const prevLevel = item._prevLevel ?? newLevel;
+        if (item._prevLevel !== undefined) delete item._prevLevel;
         item._onLevelChange(prevLevel, newLevel).then(() => {
           resolve();
         });
@@ -449,9 +460,9 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
 });
 
 Hooks.on("createToken", async (scene, token, options, userId) => {
-  if (userId !== game.user._id) return;
+  if (userId !== game.user.id) return;
 
-  const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
+  const actor = game.actors.tokens[token.data._id] ?? game.actors.get(token.actorId);
 
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) {
@@ -479,16 +490,13 @@ Hooks.on("hoverToken", (token, hovering) => {
   else game.pf1.tooltip.unbind(token);
 });
 
-Hooks.on("preDeleteToken", (scene, data, options, userId) => {
-  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
-  if (!token) return;
-
+Hooks.on("preDeleteToken", (scene, token, options, userId) => {
   // Hide token tooltip on token deletion
   game.pf1.tooltip.unbind(token);
 });
 
 Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
-  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
+  const token = canvas.tokens.placeables.find((t) => t.data.id === data.id);
   if (!token) return;
 
   // Hide token tooltip on token update
@@ -499,8 +507,8 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
 });
 
 // Create race on actor
-Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
-  if (userId !== game.user._id) return;
+Hooks.on("preCreateItem", (actor, item, options, userId) => {
+  if (userId !== game.user.id) return;
   if (!(actor instanceof Actor)) return;
   if (actor.race == null) return;
 
@@ -510,11 +518,9 @@ Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
   }
 });
 
-Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
-  if (userId !== game.user._id) return;
+Hooks.on("createItem", (actor, item, options, userId) => {
+  if (userId !== game.user.id) return;
   if (!(actor instanceof Actor)) return;
-
-  const item = actor.items.find((o) => o._id === itemData._id);
   if (!item) return;
 
   // Create class
@@ -525,35 +531,35 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
   // Refresh item
   item.update({});
   // Show buff if active
-  if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
+  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
     actor.toggleConditionStatusIcons();
   }
 });
 
-Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
-  if (userId !== game.user._id) return;
+Hooks.on("deleteItem", async (actor, item, options, userId) => {
+  if (userId !== game.user.id) return;
   if (!(actor instanceof Actor)) return;
 
   // Remove token effects for deleted buff
   const isLinkedToken = getProperty(actor.data, "token.actorLink");
   if (isLinkedToken) {
     let promises = [];
-    if (itemData.type === "buff" && itemData.data.active) {
-      actor.effects.find((e) => e.data.origin?.indexOf(itemData._id) > 0)?.delete();
+    if (item.data.type === "buff" && item.data.data.active) {
+      actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
       const tokens = actor.getActiveTokens();
       for (const token of tokens) {
-        promises.push(token.toggleEffect(itemData.img, { active: false }));
+        promises.push(token.toggleEffect(item.data.img, { active: false }));
       }
     }
     await Promise.all(promises);
   }
 
   // Remove links
-  const itemLinks = getProperty(itemData, "data.links");
+  const itemLinks = getProperty(item.data, "data.links");
   if (itemLinks) {
     for (let [linkType, links] of Object.entries(itemLinks)) {
       for (let link of links) {
-        const item = actor.items.find((o) => o._id === link.id);
+        const item = actor.items.find((o) => o.id === link.id);
         let otherItemLinks = item?.links || {};
         if (otherItemLinks[linkType]) {
           delete otherItemLinks[linkType];

@@ -1,6 +1,6 @@
 import { createInlineRollString } from "../chat.js";
 
-export class LevelUpForm extends BaseEntitySheet {
+export class LevelUpForm extends DocumentSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
@@ -103,7 +103,7 @@ export class LevelUpForm extends BaseEntitySheet {
   }
 
   async createChatMessage(formData) {
-    const chatMessageClass = CONFIG.ChatMessage.entityClass;
+    const chatMessageClass = CONFIG.ChatMessage.documentClass;
     const speaker = chatMessageClass.getSpeaker({ actor: this.actor });
 
     const templateData = {
@@ -116,7 +116,7 @@ export class LevelUpForm extends BaseEntitySheet {
     await chatMessageClass.create({
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
       speaker: speaker,
-      user: game.user._id,
+      user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
     });
   }

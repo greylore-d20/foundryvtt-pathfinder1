@@ -463,5 +463,8 @@ module.exports = {
     DiceTerm: "readonly",
     GRID_TYPES: "readonly",
     dragRuler: "readonly",
+    foundry: "readonly",
+    TokenDocument: "readonly",
+    DocumentSheet: "readonly",
   },
 };

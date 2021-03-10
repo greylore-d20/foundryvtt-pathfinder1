@@ -39,7 +39,7 @@ export class ChatAttack {
     this.hasDamage = false;
     this.hasRange = item.hasRange;
     this.minimumDamage = false;
-    this.damageRows = 0;
+    this.damageRows = [];
 
     this.notesOnly = true;
 
@@ -168,6 +168,7 @@ export class ChatAttack {
     data.isCrit = critType === 1;
     data.isFumble = critType === 2;
     data.rollJSON = escape(JSON.stringify(roll));
+    data.formula = roll.formula;
 
     // Add crit confirm
     if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
@@ -246,7 +247,7 @@ export class ChatAttack {
     let tooltips = "";
     let consolidatedParts = data.parts.reduce((cur, o) => {
       if (!cur[o.damageType]) {
-        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.rolls.slice(), critical ? "critical" : o.type);
+        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.roll, critical ? "critical" : o.type);
       } else {
         cur[o.damageType].amount += o.amount;
         cur[o.damageType].rolls.push(...o.rolls);
@@ -396,7 +397,7 @@ export class ChatAttack {
     this.hasCards = Object.keys(this.cards).length > 0;
 
     // Determine damage rows for chat cards
-    this.damageRows = [];
+    // this.damageRows = [];
     for (let a = 0; a < Math.max(this.damage.parts.length, this.critDamage.parts.length); a++) {
       this.damageRows.push({ normal: null, crit: null });
     }
@@ -412,21 +413,26 @@ export class ChatAttack {
 }
 
 export class DamagePart {
-  constructor(amount, damageType, rolls, type = "normal") {
+  constructor(amount, damageType, roll, type = "normal") {
     this.amount = amount;
     this.damageType = damageType;
     if (!this.damageType) this.damageType = "Untyped";
     this.type = type;
-    this.rolls = [];
+    this.roll = {
+      json: escape(JSON.stringify(roll)),
+      formula: roll.formula,
+      total: roll.total,
+    };
+    // this.rolls = [];
 
-    if (rolls != null) {
-      if (!(rolls instanceof Array)) rolls = [rolls];
-      this.rolls = rolls.map((o) => {
-        return {
-          roll: o,
-          json: escape(JSON.stringify(o)),
-        };
-      });
-    }
+    // if (rolls != null) {
+    // if (!(rolls instanceof Array)) rolls = [rolls];
+    // this.rolls = rolls.map((o) => {
+    // return {
+    // roll: o,
+    // json: escape(JSON.stringify(o)),
+    // };
+    // });
+    // }
   }
 }

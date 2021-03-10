@@ -446,20 +446,20 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropItem(event, data) {
-    if (!this.item.owner) return false;
+    if (!this.item.isOwner) return false;
 
     let actor;
     if (data.tokenId) {
       actor = game.actors.tokens[data.tokenId];
     } else if (data.actorId) {
-      actor = game.actors.entities.find((o) => o._id === data.actorId);
+      actor = game.actors.contents.find((o) => o.id === data.actorId);
     }
 
     const item = await ItemPF.fromDropData(data);
     const itemData = duplicate(item.data);
 
     // Sort item
-    if (data.containerId === this.item._id) return this._onSortItem(event, itemData);
+    if (data.containerId === this.item.id) return this._onSortItem(event, itemData);
 
     // Create consumable from spell
     if (itemData.type === "spell") {

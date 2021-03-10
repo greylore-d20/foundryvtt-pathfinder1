@@ -25,6 +25,7 @@
 ### Compendium
 
 - Bestiaries were using incorrect sizeRoll arguments for non-medium monsters
+- Replaced some external links with compendium links for some races
 
 ## 0.77.16
 

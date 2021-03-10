@@ -7,6 +7,7 @@
 - Race condition preventing functionality could still happen for `heal/ damage` inline rolls
 - Potential fix for compendium browsers not opening (#669)
 - Fixed error on deleting an active buff
+- The `@spells` roll data variable was incorrectly getting deleted in the beginning of an actor update
 
 ### Changelog
 

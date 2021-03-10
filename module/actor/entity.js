@@ -3024,7 +3024,14 @@ export class ActorPF extends Actor {
       // Clear certain fields
       const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
       for (let k of clearFields) {
-        setProperty(result, k, undefined);
+        const arr = k.split(".");
+        const k2 = arr.slice(0, -1).join(".");
+        const k3 = arr.slice(-1)[0];
+        if (k2 === "") delete result[k];
+        else {
+          const obj = getProperty(result, k2);
+          if (typeof obj === "object") delete obj[k3];
+        }
       }
 
       return result;

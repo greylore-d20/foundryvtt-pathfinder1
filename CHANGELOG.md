@@ -8,6 +8,7 @@
 - Potential fix for compendium browsers not opening (#669)
 - Fixed error on deleting an active buff
 - The `@spells` roll data variable was incorrectly getting deleted in the beginning of an actor update
+- Encumbrance wasn't being taken into account when calculating skill bonuses
 
 ### Changelog
 

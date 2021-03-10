@@ -59,32 +59,7 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   async close(options = {}) {
-    //Room left for potential client setting
-    if (typeof options.save === "boolean") {
-      if (options.save) {
-        for (let ed of Object.values(this.editors)) {
-          if (ed.mce && ed.changed) ed.saveEditor(ed.target);
-        }
-      }
-      return super.close(options);
-    } else {
-      let unsavedChanges = [];
-      for (let ed of Object.values(this.editors)) {
-        if (ed.mce && ed.changed) {
-          let d = Dialog.confirm({
-            title: this.object.name + " : " + ed.target,
-            content: `<p>${game.i18n.localize("PF1.UnsavedTinyMCE")}</p>`,
-            yes: () => this.saveEditor(ed.target),
-            no: () => ed.mce.destroy(),
-            defaultYes: true,
-          });
-          unsavedChanges.push(d);
-        }
-      }
-      return Promise.all(unsavedChanges).then(() => {
-        return super.close(options);
-      });
-    }
+    return super.close(mergeObject(options, { submit: true }, { inplace: false }));
   }
 
   /**

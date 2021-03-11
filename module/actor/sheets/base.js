@@ -379,10 +379,12 @@ export class ActorSheetPF extends ActorSheet {
             name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
             value: clsSkillsPerLevel * clsLevel,
           });
-          sourceData.push({
-            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
-            value: fcSkills,
-          });
+          if (fcSkills > 0) {
+            sourceData.push({
+              name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+              value: fcSkills,
+            });
+          }
 
           if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType))
             skillRanks.bgAllowed += clsLevel * 2;

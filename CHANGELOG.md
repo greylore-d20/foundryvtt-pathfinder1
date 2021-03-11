@@ -19,6 +19,7 @@
 - Added bonus skill ranks and bonus feats as change targets
 - Improved speed on creating or removing multiple class features as a result of changing class level
 - Always show "full attack" button for melee/ranged weapon attacks (thanks Grarl!)
+- Added Manyshot to ranged weapon attacks (thanks Grarl!)
 
 ### API
 

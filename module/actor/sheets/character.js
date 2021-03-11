@@ -19,10 +19,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     });
   }
 
-  // static get name() {
-  //   return game.i18n.localize("PF1.ActorSheetPFCharacter");
-  // }
-
   /* -------------------------------------------- */
   /*  Rendering                                   */
   /* -------------------------------------------- */
@@ -65,7 +61,8 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     // Add level up buttons to classes
     if (
       this.actor.data.type === "character" &&
-      game.settings.get("pf1", "experienceConfig").disableExperienceTracking !== true
+      game.settings.get("pf1", "experienceConfig").disableExperienceTracking !== true &&
+      data.hasClasses
     ) {
       const xp = getProperty(this.actor.data, "data.details.xp");
       if (xp && xp.value >= xp.max) {
@@ -96,9 +93,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Spell Preparation
     html.find(".toggle-prepared").click(this._onPrepareItem.bind(this));
-
-    // Level Up
-    html.find(".action-level-up").click(this._onLevelUp.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -113,18 +107,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
     return item.update({ "data.preparation.prepared": !item.data.data.preparation.prepared });
-  }
-
-  _onLevelUp(event) {
-    event.preventDefault;
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
-
-    const app = Object.values(this.actor.apps).find((o) => {
-      return o instanceof LevelUpForm && o._element;
-    });
-    if (app) app.bringToTop();
-    else new LevelUpForm(item).render(true);
   }
 
   /* -------------------------------------------- */

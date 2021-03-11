@@ -14,6 +14,7 @@
 ### Changelog
 
 - Added a basic level up dialog
+- Added dialog on dragging a class to an actor to determine how to import the class, with the choice to make use of the new level up dialog
 - Removed ability score change flags (0 Str, 1 Cha, etc.)
 - Always submit data on closing an actor or item sheet
 - Added bonus skill ranks and bonus feats as change targets

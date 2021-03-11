@@ -18,6 +18,33 @@ export class LevelUpForm extends BaseEntitySheet {
     return this.object.actor;
   }
 
+  static async addClassWizard(actor, rawData) {
+    // Alter initial data
+    setProperty(rawData, "data.hp", 0);
+    setProperty(rawData, "data.level", 0);
+
+    // Add class item
+    const itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
+    const item = actor.items.get(itemData._id);
+    if (!item) {
+      throw new Error("No class was created at class initialization wizard");
+    }
+
+    // Add level up form for new class
+    return new Promise((resolve) => {
+      const _app = new LevelUpForm(item).render(true);
+      Hooks.on("closeLevelUpForm", function _onClose(app) {
+        if (app === _app) {
+          if (getProperty(item.data, "data.level") === 0) {
+            actor.deleteEmbeddedEntity("OwnedItem", [item.id]);
+          }
+          Hooks.off("closeLevelUpForm", _onClose);
+          resolve();
+        }
+      });
+    });
+  }
+
   getData() {
     const result = {};
 

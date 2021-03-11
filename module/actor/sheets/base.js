@@ -16,6 +16,7 @@ import { getSkipActionPrompt } from "../../settings.js";
 import { ItemPF } from "../../item/entity.js";
 import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
+import { LevelUpForm } from "../../apps/level-up.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -1080,6 +1081,13 @@ export class ActorSheetPF extends ActorSheet {
       });
 
     /* -------------------------------------------- */
+    /*  Classes
+    /* -------------------------------------------- */
+
+    // Level Up
+    html.find(".level-up").click(this._onLevelUp.bind(this));
+
+    /* -------------------------------------------- */
     /*  Spells
     /* -------------------------------------------- */
 
@@ -1516,18 +1524,16 @@ export class ActorSheetPF extends ActorSheet {
     this._updateItems();
   }
 
-  /* -------------------------------------------- */
-
-  /**
-   * Handle attempting to recharge an item usage by rolling a recharge check
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onItemRecharge(event) {
-    event.preventDefault();
+  _onLevelUp(event) {
+    event.preventDefault;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
-    return item.rollRecharge();
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof LevelUpForm && o._element && o.object === item;
+    });
+    if (app) app.bringToTop();
+    else new LevelUpForm(item).render(true);
   }
 
   /* -------------------------------------------- */
@@ -2548,7 +2554,7 @@ export class ActorSheetPF extends ActorSheet {
       itemData = game.items.get(data.id).data;
     }
 
-    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), dataType)
+    return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), { event: event })
       .then((item) => {
         // Try to remove from container
         if (item && fromContainer) {
@@ -2626,11 +2632,46 @@ export class ActorSheetPF extends ActorSheet {
     });
   }
 
-  async importItem(itemData) {
+  async importItem(itemData, { event }) {
+    // Import spell as consumable
     if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
       let resultData = await createConsumableSpellDialog(itemData);
       if (resultData) return this.actor.createEmbeddedEntity("OwnedItem", resultData);
       else return false;
+    }
+    // Choose how to import class
+    if (
+      itemData.type === "class" &&
+      getProperty(itemData, "data.classType") !== "mythic" &&
+      !(event && event.shiftKey)
+    ) {
+      let doReturn = await new Promise((resolve) => {
+        new Dialog({
+          title: game.i18n.localize("PF1.AddClass"),
+          buttons: {
+            normal: {
+              icon: '<i class="fas fa-hat-wizard"></i>',
+              label: game.i18n.localize("PF1.Normal"),
+              callback: () => {
+                LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
+                  resolve(true);
+                });
+              },
+            },
+            raw: {
+              icon: '<i class="fas fa-file"></i>',
+              label: game.i18n.localize("PF1.Raw"),
+              callback: () => {
+                resolve(false);
+              },
+            },
+          },
+          close: () => {
+            resolve(true);
+          },
+        }).render(true);
+      });
+      if (doReturn) return false;
     }
 
     if (itemData._id) delete itemData._id;

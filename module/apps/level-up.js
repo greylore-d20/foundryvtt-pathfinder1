@@ -1,4 +1,5 @@
 import { createInlineRollString } from "../chat.js";
+import { createCustomChatMessage } from "../chat.js";
 
 export class LevelUpForm extends BaseEntitySheet {
   static get defaultOptions() {
@@ -190,11 +191,9 @@ export class LevelUpForm extends BaseEntitySheet {
       actor: duplicate(this.actor.data),
     };
 
-    await chatMessageClass.create({
-      content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
-      speaker: speaker,
-      user: game.user._id,
+    await createCustomChatMessage("systems/pf1/templates/chat/level-up.hbs", templateData, {
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      speaker,
     });
   }
 

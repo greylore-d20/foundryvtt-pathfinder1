@@ -652,11 +652,7 @@ export class ItemPF extends Item {
     const taggedTypes = game.system.template.Item.types.filter((t) =>
       game.system.template.Item[t].templates?.includes("tagged")
     );
-    if (
-      this.data.data["useCustomTag"] !== undefined &&
-      taggedTypes.includes(this.data.type) &&
-      !this.data.data.useCustomTag
-    ) {
+    if (this.data.data["useCustomTag"] !== true && taggedTypes.includes(this.data.type)) {
       const name = this.name;
       this.data.data.tag = createTag(name);
     }

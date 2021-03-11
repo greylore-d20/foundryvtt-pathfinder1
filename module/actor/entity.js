@@ -3053,8 +3053,11 @@ export class ActorPF extends Actor {
         return obj.type === "class";
       })
       .forEach((cls) => {
-        const tag = cls.data.tag;
-        if (!tag) return;
+        let tag = cls.data.tag;
+        if (!tag) {
+          if (cls.data["useCustomTag"] !== true) tag = createTag(cls.name);
+          else return;
+        }
 
         let healthConfig = game.settings.get("pf1", "healthConfig");
         const hasPlayerOwner = this.hasPlayerOwner;

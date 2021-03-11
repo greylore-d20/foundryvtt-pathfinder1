@@ -1556,6 +1556,7 @@ export class ItemPF extends Item {
         damageExtraParts = [],
         primaryAttack = true,
         hasteAttackRequired = false,
+        manyshotDamageRequired = false,
         rapidShotAttackRequired = false,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
@@ -1580,6 +1581,9 @@ export class ItemPF extends Item {
 
         // Haste
         hasteAttackRequired = fullAttack && form.find('[name="haste-attack"]').prop("checked");
+
+        // Manyshot
+        manyshotDamageRequired = fullAttack && form.find('[name="manyshot"]').prop("checked");
 
         // Rapid Shot
         rapidShotAttackRequired = fullAttack && form.find('[name="rapid-shot"]').prop("checked");
@@ -1801,6 +1805,7 @@ export class ItemPF extends Item {
       if (this.hasAttack) {
         let ammoRequired = allAttacks.length;
         if (hasteAttackRequired) ammoRequired++;
+        if (manyshotDamageRequired) ammoRequired++;
         if (rapidShotAttackRequired) ammoRequired++;
         ammoRequired = Math.min(ammoAvailable, ammoRequired);
 
@@ -1862,6 +1867,40 @@ export class ItemPF extends Item {
           // Add to list
           attacks.push(attack);
           ammoUsed++;
+
+          // Add additional damage for Manyshot
+          if (a === 0 && manyshotDamageRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {
+            const conditionalParts = {
+              "damage.normal": [
+                ...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.normal"] ?? []),
+              ], //`
+              "damage.nonCrit": [
+                ...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
+              ], //`
+            };
+
+            let manyshot = new ChatAttack(this, {
+              label: game.i18n.localize("PF1.Manyshot"),
+              rollData: rollData,
+              primaryAttack: primaryAttack,
+            });
+            // Add damage
+            await manyshot.addDamage({
+              extraParts: duplicate(damageExtraParts),
+              critical: false,
+              conditionalParts,
+            });
+            manyshot.damage.flavor = manyshot.label;
+
+            // Add effect notes
+            manyshot.addEffectNotes();
+
+            // Add to list (don't delay this one; we want it next to Attack #1)
+            attacks.push(manyshot);
+            ammoUsed++;
+          }
 
           // Create additional attack for Haste
           if (a === 0 && hasteAttackRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {

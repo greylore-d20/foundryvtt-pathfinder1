@@ -2650,6 +2650,11 @@ export class ActorSheetPF extends ActorSheet {
       let doReturn = await new Promise((resolve) => {
         new Dialog({
           title: game.i18n.localize("PF1.AddClass"),
+          content: `<div class="pf1"><p>${game.i18n.localize(
+            "PF1.Info.AddClassDialog_Desc"
+          )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
+            "PF1.Info.AddClassDialog"
+          )}</div></div>`,
           buttons: {
             normal: {
               icon: '<i class="fas fa-hat-wizard"></i>',

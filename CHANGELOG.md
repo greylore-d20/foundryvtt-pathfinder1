@@ -17,6 +17,7 @@
 - Removed ability score change flags (0 Str, 1 Cha, etc.)
 - Always submit data on closing an actor or item sheet
 - Added bonus skill ranks and bonus feats as change targets
+- Improved speed on creating or removing multiple class features as a result of changing class level
 
 ### API
 

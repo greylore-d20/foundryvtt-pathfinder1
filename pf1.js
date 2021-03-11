@@ -535,6 +535,14 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
   }
 });
 
+Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
+  const item = actor.items.get(itemData._id);
+  if (!item) return;
+
+  // Delete class assocations
+  if (item.type === "class") item._onLevelChange(item.data.data.level, 0);
+});
+
 Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;

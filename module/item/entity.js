@@ -3458,6 +3458,7 @@ export class ItemPF extends Item {
         return o.level > curLevel && o.level <= newLevel;
       });
 
+      let newItems = [];
       for (let co of classAssociations) {
         const collection = co.id.split(".").slice(0, 2).join(".");
         const itemId = co.id.split(".")[2];
@@ -3465,19 +3466,39 @@ export class ItemPF extends Item {
         const item = await pack.getEntity(itemId);
 
         const itemData = duplicate(item.data);
-        delete itemData._id;
-        const newItemData = await this.parentActor.createOwnedItem(itemData);
-        const newItem = this.parentActor.items.find((o) => o._id === newItemData._id);
 
-        // await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
-        selfUpdateData[`flags.pf1.links.classAssociations.${newItemData._id}`] = co.level;
-        await this.createItemLink("children", "data", newItem, newItem._id);
+        // Set temporary flag
+        setProperty(itemData, "flags.pf1.__co", duplicate(co));
+
+        delete itemData._id;
+        newItems.push({ data: itemData, co: co });
+      }
+
+      if (newItems.length) {
+        let items = await this.actor.createEmbeddedEntity(
+          "OwnedItem",
+          newItems.map((o) => o.data)
+        );
+        if (!(items instanceof Array)) items = [items];
+
+        let updateData = [];
+        const classUpdateData = { _id: this.data._id };
+        updateData.push(classUpdateData);
+        for (let i of items) {
+          const co = getProperty(i, "flags.pf1.__co");
+          // Set class association flags
+          classUpdateData[`flags.pf1.links.classAssociations.${i._id}`] = co.level;
+          // Remove temporary flag
+          updateData.push({ _id: i._id, "flags.pf1.-=__co": null });
+        }
+        if (updateData.length) await this.actor.updateEmbeddedEntity("OwnedItem", updateData);
       }
     }
 
     // Remove items associated to this class
     if (newLevel < curLevel) {
       let associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
+      let itemIds = [];
       for (let [id, level] of Object.entries(associations)) {
         const item = this.parentActor.items.find((o) => o._id === id);
         if (!item) {
@@ -3486,16 +3507,17 @@ export class ItemPF extends Item {
         }
 
         if (level > newLevel) {
-          await this.parentActor.deleteOwnedItem(id);
+          itemIds.push(id);
           delete associations[id];
         }
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
+      await this.actor.deleteEmbeddedEntity("OwnedItem", itemIds);
     }
 
-    await this.update(selfUpdateData);
-    // Always update actor for this
-    await this.actor.update({});
+    if (!isObjectEmpty(selfUpdateData)) {
+      await this.update(selfUpdateData);
+    }
   }
 
   /**

@@ -998,6 +998,13 @@ export class ItemPF extends Item {
       }
     }
 
+    // Level change
+    if (this.type === "class" && data["data.level"]) {
+      const prevLevel = getProperty(this.data, "data.level");
+      const newLevel = data["data.level"];
+      await this._onLevelChange(prevLevel, newLevel);
+    }
+
     let diff = diffObject(flattenObject(this.data), data);
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (let d in diff) {

@@ -125,6 +125,19 @@ export class LevelUpForm extends BaseEntitySheet {
     updateData["data.level"] = chatData.level.new;
     await this.object.update(updateData);
 
+    // Add new class features to chat data
+    {
+      const classAssociations = getProperty(this.object.data, "flags.pf1.links.classAssociations") || {};
+      const newAssociations = Object.entries(classAssociations).filter((o) => {
+        return o[1] === chatData.level.new;
+      });
+      chatData.newFeatures = [];
+      for (let co of newAssociations) {
+        chatData.newFeatures.push(duplicate(this.actor.items.get(co[0])));
+      }
+      console.log(chatData.newFeatures, classAssociations, newAssociations);
+    }
+
     // Create chat message
     return this.createChatMessage(chatData);
   }

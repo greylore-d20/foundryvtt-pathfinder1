@@ -2115,7 +2115,7 @@ export class ActorSheetPF extends ActorSheet {
     // Partition items by category
     let [items, spells, feats, classes, attacks] = data.items.reduce(
       (arr, item) => {
-        item.img = item.img || DEFAULT_TOKEN;
+        item.img = item.img || CONST.DEFAULT_TOKEN;
         item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
         item.hasUses = item.data.uses && item.data.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));

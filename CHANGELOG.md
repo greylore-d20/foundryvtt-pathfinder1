@@ -11,6 +11,7 @@
 - Encumbrance wasn't being taken into account when calculating skill bonuses
 - Fix `@classes` entries in roll data for classes without a custom tag
 - Adding a class to an unlinked token didn't add class features
+- Items in containers couldn't have their image changed while within the container
 
 ### Changelog
 

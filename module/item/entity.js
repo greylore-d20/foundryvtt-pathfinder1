@@ -1007,7 +1007,7 @@ export class ItemPF extends Item {
       let anyDiff = diff[d].some((obj, idx) => {
         if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
       });
-      if (!anyDiff) delete diff[d];
+      if (!anyDiff && !(diff[d] instanceof Array)) delete diff[d];
     }
 
     if (Object.keys(diff).length && !options.skipUpdate) {
@@ -3775,7 +3775,7 @@ export class ItemPF extends Item {
         const i = await this.getLinkItem(l);
         if (i == null) {
           l.name = l.name + (l.name?.indexOf("[x]") > -1 ? "" : " [x]");
-          l.img = "icons/svg/mystery-man.svg";
+          l.img = CONST.DEFAULT_TOKEN;
           continue;
         }
         l.name = i.name;

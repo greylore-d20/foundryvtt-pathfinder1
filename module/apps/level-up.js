@@ -24,8 +24,9 @@ export class LevelUpForm extends BaseEntitySheet {
     setProperty(rawData, "data.level", 0);
 
     // Add class item
-    const itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
-    const item = actor.items.get(itemData._id);
+    let itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    const item = actor.items.get(itemData[0]._id);
     if (!item) {
       throw new Error("No class was created at class initialization wizard");
     }

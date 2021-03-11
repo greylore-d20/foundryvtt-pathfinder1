@@ -10,6 +10,7 @@
 - The `@spells` roll data variable was incorrectly getting deleted in the beginning of an actor update
 - Encumbrance wasn't being taken into account when calculating skill bonuses
 - Fix `@classes` entries in roll data for classes without a custom tag
+- Adding a class to an unlinked token didn't add class features
 
 ### Changelog
 

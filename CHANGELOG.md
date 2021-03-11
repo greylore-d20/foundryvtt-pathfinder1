@@ -18,6 +18,7 @@
 - Always submit data on closing an actor or item sheet
 - Added bonus skill ranks and bonus feats as change targets
 - Improved speed on creating or removing multiple class features as a result of changing class level
+- Always show "full attack" button for melee/ranged weapon attacks (thanks Grarl!)
 
 ### API
 

@@ -21,6 +21,7 @@
 - Improved speed on creating or removing multiple class features as a result of changing class level
 - Always show "full attack" button for melee/ranged weapon attacks (thanks Grarl!)
 - Added Manyshot to ranged weapon attacks (thanks Grarl!)
+- Separate base class hit points from favoured class hit points in source info
 
 ### API
 

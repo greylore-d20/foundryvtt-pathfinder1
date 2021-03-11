@@ -123,7 +123,18 @@ export class LevelUpForm extends BaseEntitySheet {
 
     // Update class
     updateData["data.level"] = chatData.level.new;
-    await this.object.update(updateData);
+    this.object.update(updateData);
+    await new Promise((resolve) => {
+      Hooks.on(
+        "pf1.classLevelChange",
+        function _waiter(actor, item) {
+          if (item.id === this.object.id) {
+            Hooks.off("pf1.classLevelChange", _waiter);
+            resolve();
+          }
+        }.bind(this)
+      );
+    });
 
     // Add new class features to chat data
     {
@@ -133,9 +144,34 @@ export class LevelUpForm extends BaseEntitySheet {
       });
       chatData.newFeatures = [];
       for (let co of newAssociations) {
-        chatData.newFeatures.push(duplicate(this.actor.items.get(co[0])));
+        const item = this.actor.items.get(co[0]);
+        if (item) chatData.newFeatures.push(duplicate(item.data));
       }
-      console.log(chatData.newFeatures, classAssociations, newAssociations);
+    }
+
+    // Add extra info (new feats, skill ranks, etc.)
+    {
+      const ex = {};
+      chatData.extra = ex;
+
+      // Show new feat count
+      const featCount = this.actor.getFeatCount();
+      featCount.new = Math.max(0, featCount.max - featCount.value);
+      ex.feats = featCount;
+      if (featCount.new > 0) {
+        ex.enabled = true;
+        if (featCount.new === 1) featCount.label = game.i18n.localize("PF1.LevelUp.Chat.Extra.NewFeat");
+        else featCount.label = game.i18n.format("PF1.LevelUp.Chat.Extra.NewFeats", { newValue: featCount.new });
+      }
+
+      // Show new ability score
+      const hd = getProperty(this.actor.data, "data.attributes.hd.total");
+      if (typeof hd === "number" && hd % 4 === 0) {
+        ex.enabled = true;
+        ex.newAbilityScore = {
+          label: game.i18n.localize("PF1.LevelUp.Chat.Extra.NewAbilityScore"),
+        };
+      }
     }
 
     // Create chat message

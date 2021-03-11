@@ -998,13 +998,6 @@ export class ItemPF extends Item {
       }
     }
 
-    // Level change
-    if (this.type === "class" && data["data.level"]) {
-      const prevLevel = getProperty(this.data, "data.level");
-      const newLevel = data["data.level"];
-      await this._onLevelChange(prevLevel, newLevel);
-    }
-
     let diff = diffObject(flattenObject(this.data), data);
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (let d in diff) {
@@ -3506,7 +3499,6 @@ export class ItemPF extends Item {
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parentActor) return;
 
-    const selfUpdateData = {};
     // Add items associated to this class
     if (newLevel > curLevel) {
       const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
@@ -3571,9 +3563,8 @@ export class ItemPF extends Item {
       await this.actor.deleteEmbeddedEntity("OwnedItem", itemIds);
     }
 
-    if (!isObjectEmpty(selfUpdateData)) {
-      await this.update(selfUpdateData);
-    }
+    // Call level change hook
+    Hooks.call("pf1.classLevelChange", this.actor, this, curLevel, newLevel);
   }
 
   /**

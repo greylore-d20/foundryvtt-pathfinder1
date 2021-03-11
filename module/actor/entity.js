@@ -3350,4 +3350,49 @@ export class ActorPF extends Actor {
     data.effects = [];
     return this.update(data);
   }
+
+  /**
+   * @typdef MaxAndValue
+   * @type {object}
+   * @property {number} max - The maximum value.
+   * @property {number} value - The current value.
+   *
+   * @returns {MaxAndValue} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
+   */
+  getFeatCount() {
+    const result = { max: 0, value: 0 };
+    result.value = this.items.filter((o) => {
+      return o.type === "feat" && o.data.data.featType === "feat";
+    }).length;
+
+    // Add feat count by level
+    const totalLevels = this.items
+      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
+      .reduce((cur, o) => {
+        return cur + o.data.data.level;
+      }, 0);
+    result.max += Math.ceil(totalLevels / 2);
+
+    // Bonus feat formula
+    const featCountRoll = RollPF.safeRoll(this.data.data.details.bonusFeatFormula || "0", this.getRollData());
+    result.max += featCountRoll.total;
+    if (featCountRoll.err) {
+      const msg = game.i18n
+        .localize("PF1.ErrorActorFormula")
+        .format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name);
+      console.error(msg);
+      ui.notifications.error(msg);
+    }
+
+    // Changes
+    this.changes
+      .filter((o) => o.subTarget === "bonusFeats")
+      .forEach((o) => {
+        if (!o.value) return;
+
+        result.max += o.value;
+      });
+
+    return result;
+  }
 }

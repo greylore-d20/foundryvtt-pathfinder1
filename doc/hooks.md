@@ -125,3 +125,12 @@ Called when default changes are being determined and added for an actor. You can
 If you want to add custom change targets, this is a vital hook. Add strings to the 3rd parameter's `keys` array to be able to change those attributes.
 
 See the `custom-changes.md` file next to this one to see how something like this might be accomplished.
+
+## pf1.classLevelChange
+
+### Parameters
+
+- actor<ActorPF> - The actor which owns the class.
+- item<ItemPF> - The class changing level.
+- prevLevel<number> - The level of the class before the change.
+- newLevel<number> - The level of the class after the change.

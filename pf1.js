@@ -436,17 +436,17 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
 
   // Update level
   {
-    // await new Promise((resolve) => {
-    //   if (item.type === "class" && hasProperty(changedData, "data.level")) {
-    //     const prevLevel = getProperty(item.data, "data.level");
-    //     const newLevel = getProperty(changedData, "data.level");
-    //     item._onLevelChange(prevLevel, newLevel).then(() => {
-    //       resolve();
-    //     });
-    //   } else {
-    //     resolve();
-    //   }
-    // });
+    await new Promise((resolve) => {
+      if (item.type === "class" && hasProperty(changedData, "data.level")) {
+        const prevLevel = getProperty(item.data, "data.level");
+        const newLevel = getProperty(changedData, "data.level");
+        item._onLevelChange(prevLevel, newLevel).then(() => {
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    });
     if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
       await actor.toggleConditionStatusIcons();
     }

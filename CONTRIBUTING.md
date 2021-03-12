@@ -30,7 +30,7 @@ Merge requests are the most direct way to get ideas or changes implemented into 
 
 ### Setup
 
-This project uses [npm](https://www.npmjs.com/) as its package manager, [less](http://lesscss.org/) to create CSS files, and [ESLint](https://eslint.org/) as well as [Prettier](https://prettier.io/) to lint and format code.
+This project uses [npm](https://www.npmjs.com/) as its package manager, [less](http://lesscss.org/) to create CSS files, [rollup](https://rollupjs.org/guide/en/) to bundle JS, and [ESLint](https://eslint.org/) as well as [Prettier](https://prettier.io/) to lint and format code.
 npm installation instructions for specific operating systems are given at the above URL.
 
 To create a development setup:
@@ -40,8 +40,9 @@ To create a development setup:
   - This can be set up in the repository's settings, under "Repository" > "Mirroring repositories" and adding "Pull" mirroring.
 - Clone the forked repository into a local directory using `git clone` or another git client of your choice.
 - Install JavaScript dependencies with `npm install`.
-- Run `npx gulp` to watch for changes requiring the compilation of less files.
+- Run `npm run build:watch` to watch for changes.
   - Do not change the `pf1.css` file directly; instead, always edit the less files and run the gulp task.
+- The file watcher will create a `dist` directory. Copy this to Foundry's `Data/systems` directory as `pf1`, or symlink it accordingly.
 
 This setup will compile files whenever necessary and activate a commit hook to automatically lint and format any JS, less or markdown files.
 

@@ -1,0 +1,149 @@
+{
+  "_id": "MJbeCji2yK4omd80",
+  "name": "AC Bonus (UMK)",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>When unarmored and unencumbered, the monk adds his&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;bonus (if any) to his&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Armor-class\">AC</a>&nbsp;and his&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Combat-Maneuver-Defense\">CMD</a>. In addition, a monk gains a +1 bonus to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Armor-Class\">AC</a>&nbsp;and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Combat-Maneuver-Defense\">CMD</a>&nbsp;at 4th level. This bonus increases by 1 for every four monk levels thereafter, up to a maximum of +5 at 20th level.</p>\n<p>These bonuses to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Armor-Class\">AC</a>&nbsp;apply even against touch attacks or when the monk is&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Flat-Footed\">flat-footed</a>. He loses these bonuses <span class=\"notImp\" title=\"Not Implemented\">when he is immobilized or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Helpless\">helpless</a></span>, when he wears any&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, when he carries a shield, or when he carries a medium or heavy load.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "passive"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": "passive"
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [
+      {
+        "_id": "icda5p5f",
+        "formula": "if (d.shield.type < 1 && d.armor.type < 1 && d.attributes.encumbrance.level < 1) {\n    result.value = d.abilities.wis.mod;\n    result.value += Math.floor((d.classes?.monkUnchained?.level ?? 0) / 4);\n}",
+        "operator": "script",
+        "target": "ac",
+        "subTarget": "ac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      },
+      {
+        "_id": "rsxq5qsu",
+        "formula": "if (d.shield.type < 1 && d.armor.type < 1 && d.attributes.encumbrance.level < 1) {\n    result.value = d.abilities.wis.mod;\n    result.value += Math.floor((d.classes?.monkUnchained?.level ?? 0) / 4);\n}",
+        "operator": "script",
+        "target": "misc",
+        "subTarget": "cmd",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Monk (Unchained)"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    },
+    "identifiedName": "AC Bonus (UMK)"
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/spells/fog-air-1.jpg",
+  "effects": []
+}

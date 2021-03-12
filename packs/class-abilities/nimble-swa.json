@@ -1,0 +1,138 @@
+{
+  "_id": "H9Rq9os7iM27l8Gt",
+  "name": "Nimble (SWA)",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>At 3rd level, a swashbuckler gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the swashbuckler to lose her Dexterity bonus to AC also causes her to lose this dodge bonus.</p>\n<p>This bonus increases by 1 for every 4 levels beyond 3rd (to a maximum of +5 at 19th level).</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": ""
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [
+      {
+        "_id": "rivltfwf",
+        "formula": "floor((@classes.swashbuckler.level + 1) / 4)",
+        "operator": "+",
+        "target": "ac",
+        "subTarget": "ac",
+        "modifier": "dodge",
+        "priority": 0,
+        "value": 0
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Swashbuckler"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/skills/armor_01.jpg",
+  "effects": []
+}

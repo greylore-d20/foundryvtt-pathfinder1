@@ -1,0 +1,128 @@
+{
+  "_id": "6wCdUOugsM5e7Nt6",
+  "name": "Divine Anger",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>At 6th level, you gain the ability to rage like a barbarian. Your effective barbarian level for this ability is your inquisitor level – 3. If you have levels in barbarian, these levels stack when determining the effect of your rage. You do not gain any rage powers from this granted power, though if you have rage powers from another class, you may use them with these rages. You can rage a number of rounds per day equal to your Wisdom bonus, plus 1 round for every inquisitor level above 4th.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "free"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": "free"
+      }
+    },
+    "duration": {
+      "value": "1",
+      "units": "round"
+    },
+    "target": {
+      "value": "self"
+    },
+    "range": {
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": -4,
+      "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": "@abilities.wis.mod + (@classes.inquisitor.level - 4)"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Inquisitor"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "effects": []
+}

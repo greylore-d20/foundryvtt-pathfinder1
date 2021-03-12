@@ -1,0 +1,157 @@
+{
+  "_id": "XRPuApgE1Ltz4YHN",
+  "name": "Greater Shield Focus",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "\n                <i>You are skilled at deflecting blows with your shield.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Shield Focus, Shield Proficiency, base attack bonus +1, 8th-level fighter.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> Increase the AC bonus granted by any shield you are using by 1. This bonus stacks with the bonus granted by Shield Focus.</p></p>\n                \n            \n            ",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [
+      [
+        "Combat"
+      ],
+      [
+        "Shield"
+      ],
+      [
+        "Defensive"
+      ]
+    ],
+    "activation": {
+      "cost": 1,
+      "type": ""
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [
+      {
+        "_id": "u7naxmoj",
+        "formula": "@shield.type > 0 ? 1 : 0",
+        "modifier": "untyped",
+        "operator": "add",
+        "priority": 0,
+        "subTarget": "sac",
+        "target": "ac",
+        "value": 0
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "greaterShieldFocus",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "feat",
+    "associations": {
+      "classes": []
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "recharge": {
+      "value": null,
+      "charged": false,
+      "_deprecated": true
+    },
+    "time": {
+      "value": "",
+      "_deprecated": true
+    },
+    "damageType": {
+      "value": "",
+      "_deprecated": true
+    },
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/feats/greater-shield-focus.jpg",
+  "effects": []
+}

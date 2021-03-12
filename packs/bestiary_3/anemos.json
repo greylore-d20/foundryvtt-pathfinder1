@@ -1,0 +1,4826 @@
+{
+  "_id": "RLFHTdBiLenVSFWq",
+  "name": "Anemos",
+  "permission": {
+    "default": 0
+  },
+  "type": "npc",
+  "data": {
+    "abilities": {
+      "str": {
+        "total": 18,
+        "mod": 4,
+        "value": 18,
+        "carryBonus": 0,
+        "carryMultiplier": 1,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "dex": {
+        "total": 31,
+        "mod": 10,
+        "value": 31,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "con": {
+        "total": 30,
+        "mod": 10,
+        "value": 30,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "int": {
+        "total": 23,
+        "mod": 6,
+        "value": 23,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "wis": {
+        "total": 26,
+        "mod": 8,
+        "value": 26,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "cha": {
+        "total": 31,
+        "mod": 10,
+        "value": 31,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      }
+    },
+    "resources": {},
+    "attributes": {
+      "encumbrance": {
+        "level": 0,
+        "levels": {
+          "light": 100,
+          "medium": 200,
+          "heavy": 300,
+          "carry": 600,
+          "drag": 1500
+        },
+        "carriedWeight": 0
+      },
+      "hpAbility": "con",
+      "cmbAbility": "str",
+      "hd": {
+        "total": 22,
+        "max": {
+          "_deprecated": true,
+          "value": 0
+        }
+      },
+      "naturalAC": 4,
+      "ac": {
+        "normal": {
+          "value": 0,
+          "total": 10
+        },
+        "touch": {
+          "value": 0,
+          "total": 10
+        },
+        "flatFooted": {
+          "value": 0,
+          "total": 10
+        }
+      },
+      "bab": {
+        "value": 22,
+        "total": 22
+      },
+      "cmd": {
+        "value": "26",
+        "total": 10,
+        "flatFootedTotal": 10
+      },
+      "cmb": {
+        "value": 57,
+        "total": 0
+      },
+      "sr": {
+        "formula": "29",
+        "total": 0
+      },
+      "saveNotes": "",
+      "acNotes": "(+10 deflection, +10 Dex, +4 natural)",
+      "cmdNotes": "",
+      "srNotes": "",
+      "attack": {
+        "general": 0,
+        "shared": 0,
+        "melee": 0,
+        "ranged": 0,
+        "meleeAbility": "str",
+        "rangedAbility": "dex"
+      },
+      "damage": {
+        "general": 0,
+        "weapon": 0,
+        "spell": 0
+      },
+      "maxDexBonus": null,
+      "mDex": {
+        "armorBonus": 0,
+        "shieldBonus": 0
+      },
+      "acp": {
+        "gear": 0,
+        "encumbrance": 0,
+        "total": 0,
+        "armorBonus": 0,
+        "shieldBonus": 0,
+        "attackPenalty": 0
+      },
+      "energyDrain": 0,
+      "quadruped": false,
+      "savingThrows": {
+        "fort": {
+          "total": 23,
+          "ability": "con"
+        },
+        "ref": {
+          "total": 23,
+          "ability": "dex"
+        },
+        "will": {
+          "total": 17,
+          "ability": "wis"
+        }
+      },
+      "hp": {
+        "value": 341,
+        "max": 0,
+        "temp": null,
+        "nonlethal": null,
+        "min": -100
+      },
+      "wounds": {
+        "min": 0,
+        "value": 60,
+        "max": 60
+      },
+      "vigor": {
+        "min": 0,
+        "value": 121,
+        "temp": 0,
+        "max": 121
+      },
+      "woundThresholds": {
+        "penalty": 0,
+        "mod": 0,
+        "level": 0,
+        "override": -1
+      },
+      "init": {
+        "value": 0,
+        "bonus": 0,
+        "total": 0,
+        "ability": ""
+      },
+      "prof": 2,
+      "speed": {
+        "land": {
+          "base": 30,
+          "total": 30
+        },
+        "climb": {
+          "base": 0,
+          "total": 0
+        },
+        "swim": {
+          "base": 0,
+          "total": 0
+        },
+        "burrow": {
+          "base": 0,
+          "total": 0
+        },
+        "fly": {
+          "base": 480,
+          "total": 480,
+          "maneuverability": "perfect"
+        }
+      },
+      "conditions": {
+        "bleed": false,
+        "blind": false,
+        "confused": false,
+        "dazzled": false,
+        "deaf": false,
+        "entangled": false,
+        "fatigued": false,
+        "exhausted": false,
+        "grappled": false,
+        "helpless": false,
+        "incorporeal": false,
+        "invisible": false,
+        "paralyzed": false,
+        "pinned": false,
+        "prone": false,
+        "fear": false,
+        "sickened": false,
+        "staggered": false,
+        "stunned": false
+      },
+      "spells": {
+        "usedSpellbooks": [
+          "spelllike"
+        ],
+        "spellbooks": {
+          "primary": {
+            "name": "Primary",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 0,
+              "total": 0,
+              "formula": ""
+            },
+            "concentration": 0,
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": false,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "secondary": {
+            "name": "Secondary",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 0,
+              "total": 0,
+              "formula": ""
+            },
+            "concentration": 0,
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": false,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "tertiary": {
+            "name": "Tertiary",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 0,
+              "total": 0,
+              "formula": ""
+            },
+            "concentration": 0,
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": false,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "spelllike": {
+            "name": "Spell-likes",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 20,
+              "total": 20,
+              "formula": "20"
+            },
+            "concentration": "+30",
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "cha",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": true,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 1,
+                "max": 1,
+                "base": "1"
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          }
+        },
+        "concentration": {
+          "bonus": 0,
+          "context": ""
+        }
+      },
+      "spellcasting": {
+        "_deprecated": true
+      },
+      "spelldc": {
+        "_deprecated": true
+      },
+      "spellLevel": 0,
+      "cmbNotes": "",
+      "mods": {
+        "skills": {}
+      },
+      "creatureType": "humanoid"
+    },
+    "details": {
+      "level": {
+        "value": 22,
+        "min": 0,
+        "max": 40
+      },
+      "mythicTier": 0,
+      "bonusFeatFormula": "",
+      "alignment": "n",
+      "biography": {
+        "value": "",
+        "public": ""
+      },
+      "notes": {
+        "value": "",
+        "public": ""
+      },
+      "bonusSkillRankFormula": "",
+      "type": "",
+      "environment": "",
+      "cr": {
+        "base": 18,
+        "total": 18
+      },
+      "xp": {
+        "value": "153600"
+      }
+    },
+    "skills": {
+      "acr": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 25,
+        "mod": 35,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "apr": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "art": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "blf": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "clm": {
+        "value": 0,
+        "ability": "str",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 4,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "crf": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": true,
+        "changeBonus": 0
+      },
+      "dip": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "dev": {
+        "value": 0,
+        "ability": "dex",
+        "rt": true,
+        "acp": true,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "dis": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "esc": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "fly": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 25,
+        "mod": 43,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "han": {
+        "value": 0,
+        "ability": "cha",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "hea": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 8,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "int": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kar": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kdu": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "ken": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kge": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 25,
+        "mod": 31,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "khi": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "klo": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kna": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 25,
+        "mod": 31,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kno": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kpl": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 22,
+        "mod": 31,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "kre": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "lin": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "lor": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 6,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "per": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 22,
+        "mod": 33,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "prf": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 10,
+        "background": true,
+        "notes": "",
+        "subSkills": {
+          "prf1": {
+            "name": "wind instruments",
+            "ability": "cha",
+            "rank": 27,
+            "mod": 37,
+            "rt": false,
+            "acp": false,
+            "value": 0,
+            "cs": false,
+            "changeBonus": 0
+          }
+        },
+        "cs": false,
+        "changeBonus": 0
+      },
+      "pro": {
+        "value": 0,
+        "ability": "wis",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 8,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "rid": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 10,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "sen": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 22,
+        "mod": 33,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "slt": {
+        "value": 0,
+        "ability": "dex",
+        "rt": true,
+        "acp": true,
+        "rank": 0,
+        "mod": 10,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "spl": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 22,
+        "mod": 28,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "ste": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 22,
+        "mod": 35,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "sur": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 22,
+        "mod": 30,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "swm": {
+        "value": 0,
+        "ability": "str",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 4,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "umd": {
+        "value": 0,
+        "ability": "cha",
+        "rt": true,
+        "acp": false,
+        "rank": 25,
+        "mod": 35,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      }
+    },
+    "customSkills": {},
+    "traits": {
+      "size": "med",
+      "senses": "blindsight 120 ft., darkvision 60 ft.; Perception +33 \n",
+      "dr": "15/",
+      "eres": "",
+      "cres": "",
+      "regen": "15 (earth see earthbane)",
+      "fastHealing": "",
+      "languages": {
+        "value": [
+          "aquan",
+          "auran",
+          "common",
+          "ignan",
+          "sylvan",
+          "terran"
+        ],
+        "custom": ""
+      },
+      "di": {
+        "value": [
+          "electric"
+        ],
+        "custom": ""
+      },
+      "dv": {
+        "value": [],
+        "custom": "earthbane"
+      },
+      "ci": {
+        "value": [
+          "daze"
+        ],
+        "custom": "elemental traits SR 29 Weaknesses earthbane"
+      },
+      "perception": {
+        "_deprecated": true
+      },
+      "stature": "tall"
+    },
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "altCurrency": {
+      "pp": 0,
+      "gp": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "classes": {}
+  },
+  "sort": 100001,
+  "flags": {
+    "pf1": {}
+  },
+  "img": "systems/pf1/icons/races/creature-types/outsider.png",
+  "token": {
+    "flags": {
+      "pf1": {
+        "lowLightVision": false
+      }
+    },
+    "name": "Anemos",
+    "displayName": 0,
+    "img": "systems/pf1/icons/races/creature-types/outsider.png",
+    "tint": null,
+    "width": 1,
+    "height": 1,
+    "scale": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "vision": true,
+    "dimSight": 0,
+    "brightSight": 60,
+    "dimLight": 0,
+    "brightLight": 0,
+    "sightAngle": 360,
+    "lightAngle": 360,
+    "lightAlpha": 1,
+    "lightAnimation": {
+      "speed": 5,
+      "intensity": 5
+    },
+    "actorId": "RLFHTdBiLenVSFWq",
+    "actorLink": false,
+    "disposition": -1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {},
+    "randomImg": false
+  },
+  "items": [
+    {
+      "_id": "oUqpYQjdjXsLGNHe",
+      "name": "Outsider",
+      "type": "class",
+      "data": {
+        "description": {
+          "value": "<p>An outsider is at least partially composed of the essence (but not necessarily the material) of some plane other than the Material Plane. Some creatures start out as some other type and become outsiders when they attain a higher (or lower) state of spiritual existence.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>An outsider has the following features.</p>\n<ul>\n<li>d10 Hit Dice.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Two good saving throws, usually&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>&nbsp;and Will.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for outsiders: <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a>&nbsp;(planes), <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, and <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>. Due to their varied nature, outsiders also receive 4 additional class skills determined by the creature’s theme.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>An outsider possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li>Darkvision 60 feet.</li>\n<li>Unlike most living creatures, an outsider does not have a dual nature—its soul and body form one unit. When an outsider is slain, no soul is set loose. Spells that restore souls to their bodies, such as&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/raise-dead\" rel=\"nofollow\">raise dead</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/reincarnate\" rel=\"nofollow\">reincarnate</a>,&nbsp;and&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/resurrection\" rel=\"nofollow\">resurrection</a>,&nbsp;don’t work on an outsider. It takes a different magical effect, such as&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/l/limited-wish\" rel=\"nofollow\">limited wish</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/w/wish\" rel=\"nofollow\">wish</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/m/miracle\" rel=\"nofollow\">miracle</a>,&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/t/true-resurrection\" rel=\"nofollow\">true resurrection</a>&nbsp;to restore it to life. An outsider with the native subtype can be raised, reincarnated, or resurrected just as other living creatures can be.</li>\n<li>Proficient with all simple and martial weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with whatever type of armor (light, medium, or heavy) it is described as wearing, as well as all lighter types. Outsiders not indicated as wearing armor are not proficient with armor. Outsiders are proficient with shields if they are proficient with any form of armor.</li>\n<li>Outsiders breathe, but do not need to eat or sleep (although they can do so if they wish). Native outsiders breathe, eat, and sleep.</li>\n</ul>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "links": {
+          "children": []
+        },
+        "tag": "outsider",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "classType": "racial",
+        "levels": 1,
+        "level": 22,
+        "hd": 10,
+        "hp": 121,
+        "bab": "high",
+        "skillsPerLevel": 6,
+        "savingThrows": {
+          "fort": {
+            "value": "low"
+          },
+          "ref": {
+            "value": "high"
+          },
+          "will": {
+            "value": "high"
+          }
+        },
+        "fc": {
+          "hp": {
+            "value": 0
+          },
+          "skill": {
+            "value": 0
+          },
+          "alt": {
+            "value": 0
+          }
+        },
+        "classSkills": {
+          "acr": false,
+          "apr": false,
+          "art": false,
+          "blf": true,
+          "clm": false,
+          "crf": true,
+          "dip": false,
+          "dev": false,
+          "dis": false,
+          "esc": false,
+          "fly": false,
+          "han": false,
+          "hea": false,
+          "int": false,
+          "kar": false,
+          "kdu": false,
+          "ken": false,
+          "kge": false,
+          "khi": false,
+          "klo": false,
+          "kna": false,
+          "kno": false,
+          "kpl": true,
+          "kre": false,
+          "lin": false,
+          "lor": false,
+          "per": true,
+          "prf": false,
+          "pro": false,
+          "rid": false,
+          "sen": true,
+          "slt": false,
+          "spl": false,
+          "ste": true,
+          "sur": false,
+          "swm": false,
+          "umd": false
+        },
+        "damage": {
+          "parts": []
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/yellow_40.jpg",
+      "effects": []
+    },
+    {
+      "_id": "wvpcKNG3wD2oQMSU",
+      "name": "Defensive Ability: windblessed DR 15/- Immune daze",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "HYi4ap1A0wv24kl3",
+      "name": "Defensive Ability: electricity",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "jFwz6c6lUo29t9eQ",
+      "name": "Defensive Ability: elemental traits SR 29 Weaknesses earthbane",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "gIUNEm4ecsNCd9fA",
+      "name": "+5 shock thundering spear",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "0",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size, 4) + -3",
+              ""
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [
+          [
+            -5,
+            "Iterative Attack with -5"
+          ],
+          [
+            -10,
+            "Iterative Attack with -10"
+          ],
+          [
+            -15,
+            "Iterative Attack with -15"
+          ]
+        ],
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": "19",
+          "critMult": "3"
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "[[1d6]] electricity",
+        "attackNotes": "Reach: 5 ft.\n+5 shock thundering spear +31/+15/+10/+5 (1d8+11/19-20/x3 plus 1d6 electricity)",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": true,
+        "nonlethal": false,
+        "enh": "5",
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "NML9rw0WjUSKIgPp",
+      "name": "thunderstorm blast",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "0",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(20, 6, @size, 4) + 26",
+              ""
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": "19",
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "thunderstorm blast +32 (20d6+30/19-20)",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": false,
+        "nonlethal": false,
+        "enh": null,
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "7To3gNovjvZ772xY",
+      "name": "Special Attack: Infusions",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "-26",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              0,
+              ""
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": false,
+        "nonlethal": false,
+        "enh": null,
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "irHlCzGLiLulVIA2",
+      "name": "electric blast",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "0",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(10, 6, @size, 4) + 1",
+              ""
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": "19",
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "touch\nelectric blast +32 (10d6+5/19-20)",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": false,
+        "nonlethal": false,
+        "enh": null,
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "k8txxtcuSzDSpxXE",
+      "name": "Combat Reflexes",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "UGrOcp1szrTc8UQR",
+      "name": "Deadly Aim",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "bRgWyme62Wz17biy",
+      "name": "Flyby Attack",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "fgn769RwMJlg3kUW",
+      "name": "Improved Critical (kinetic blast)",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "Kov9iaqGGJnkFRvu",
+      "name": "Improved Critical (spear)",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "ZOX500gDmhz6d1gE",
+      "name": "Improved Initiative",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "8foYBWrF9Pgr7pCu",
+      "name": "Improved Iron Will",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "Bb2biqqXeRcnUQho",
+      "name": "Improved Precise Shot",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "GeDGqXPYMfXq4OZA",
+      "name": "Iron Will",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "zea33nG7Hu8pYPZI",
+      "name": "Point-Blank Shot",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "v3jTz3HVv0W2cCT6",
+      "name": "Precise Shot ",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "hnLWQJLDzYtfXWdo",
+      "name": "air blast",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "0",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(10, 6, @size, 4) + 16",
+              ""
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": "19",
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "air blast +32 (10d6+20/19-20)",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": false,
+        "nonlethal": false,
+        "enh": null,
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "5Kn53XtgXxmdM9AP",
+      "name": "SQ: utility wild talents (windsight)",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "6qtHiKA3XhgGfKQg",
+      "name": "sbc | Conversion Changes",
+      "type": "buff",
+      "data": {
+        "description": {
+          "value": "<h2>Actor created with Lavaeolous' StatBlock Converter</h2>\n<p>This Buff contains data that could not be represented in other ways. It is advised to re-check the stats in this when adding new features, such as Feats (e.g. Improved Initiative).</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [
+          {
+            "_id": "zohcp616",
+            "formula": "4",
+            "operator": "+",
+            "target": "misc",
+            "subTarget": "init",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "h1lz3sf2",
+            "formula": "10",
+            "operator": "+",
+            "target": "ac",
+            "subTarget": "ac",
+            "modifier": "deflection",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "70wzmxc9",
+            "formula": "6",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "fort",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "lwb7nujw",
+            "formula": "0",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "ref",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "adjel94z",
+            "formula": "-4",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "will",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          }
+        ],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "buffType": "perm",
+        "active": true,
+        "level": "",
+        "hideFromToken": true,
+        "damage": {
+          "parts": []
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 100001,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/yellow_36.jpg",
+      "effects": []
+    },
+    {
+      "_id": "9s5oseou738k2qif",
+      "name": "fickle winds",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[air];\n    <strong>Level</strong>&nbsp;cleric/oracle 5, druid 5, hunter 3, ranger 3, sorcerer/wizard 5, spiritualist 5;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    \n    \n    <strong>Targets</strong>&nbsp;one or more Medium creatures/level, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;none (see text);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You create a mobile cylinder of wind encompassing every target of the spell and protecting them as <i>wind wall</i>, but not interfering with them in any way. For example, arrows and bolts fired at the targets are deflected upward and miss, but the targets' own arrows or bolts pass through the wall as if it were not there.</p><p>A Large creature counts as 4 Medium creatures for the purpose of how many targets you can effect with the spell; a Huge creature counts as 8, a Gargantuan creature as 16, and a Colossal creature as 32. This spell has no effect within the area of a higher-level wind or weather spell.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "one or more Medium creatures/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "none (see text)"
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "sorcerer/wizard",
+              5
+            ],
+            [
+              "cleric/oracle",
+              5
+            ],
+            [
+              "druid",
+              5
+            ],
+            [
+              "ranger",
+              3
+            ],
+            [
+              "spiritualist",
+              5
+            ],
+            [
+              "hunter",
+              3
+            ]
+          ],
+          "domain": [],
+          "subDomain": [],
+          "elementalSchool": [],
+          "bloodline": []
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "trs",
+        "subschool": "",
+        "types": "air",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": false,
+          "focus": false,
+          "divineFocus": 0
+        },
+        "castTime": "",
+        "materials": {
+          "value": "",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 0,
+          "maxAmount": 0,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": false,
+        "sr": true,
+        "shortDescription": "<p>You create a mobile cylinder of wind encompassing every target of the spell and protecting them as <i>wind wall</i>, but not interfering with them in any way. For example, arrows and bolts fired at the targets are deflected upward and miss, but the targets' own arrows or bolts pass through the wall as if it were not there.</p><p>A Large creature counts as 4 Medium creatures for the purpose of how many targets you can effect with the spell; a Huge creature counts as 8, a Gargantuan creature as 16, and a Colossal creature as 32. This spell has no effect within the area of a higher-level wind or weather spell.</p>",
+        "spellDuration": "1 minute/level (D)",
+        "spellEffect": "",
+        "spellArea": "",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1100000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    },
+    {
+      "_id": "lvzq2mwkqmozolpl",
+      "name": "freedom of movement",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 4, bard 4, cleric/oracle 4, druid 4, hunter 4, inquisitor 4, medium 4, mesmerist 4, occultist 4, psychic 4, ranger 4, spiritualist 4;\n    <strong>Domain</strong>&nbsp;Liberation 4, Luck 4;\n    <strong>Subdomain</strong>&nbsp;Flowing 4;\n    \n    <strong>Bloodline</strong>&nbsp;Destined 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a leather strip bound to the target), DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you or creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell enables you or a creature you touch to move and attack normally for the duration of the spell, even under the influence of magic that usually impedes movement, such as paralysis, solid fog, slow, and <i>web.</i> All combat maneuver checks made to grapple the target automatically fail. The subject automatically succeeds on any combat maneuver checks and Escape Artist checks made to escape a grapple or a pin.</p><p>The spell also allows the subject to move and attack normally while underwater, even with slashing weapons such as axes and swords or with bludgeoning weapons such as flails, hammers, and maces, provided that the weapon is wielded in the hand rather than hurled. The <i>freedom of movement</i> spell does not, however, grant water breathing.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "you or creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "cleric/oracle",
+              4
+            ],
+            [
+              "druid",
+              4
+            ],
+            [
+              "ranger",
+              4
+            ],
+            [
+              "bard",
+              4
+            ],
+            [
+              "alchemist",
+              4
+            ],
+            [
+              "inquisitor",
+              4
+            ],
+            [
+              "psychic",
+              4
+            ],
+            [
+              "medium",
+              4
+            ],
+            [
+              "mesmerist",
+              4
+            ],
+            [
+              "occultist",
+              4
+            ],
+            [
+              "spiritualist",
+              4
+            ],
+            [
+              "hunter",
+              4
+            ]
+          ],
+          "domain": [
+            [
+              "Liberation",
+              4
+            ],
+            [
+              "Luck",
+              4
+            ]
+          ],
+          "subDomain": [
+            [
+              "Flowing",
+              4
+            ]
+          ],
+          "elementalSchool": [],
+          "bloodline": [
+            [
+              "Destined",
+              4
+            ]
+          ]
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "abj",
+        "subschool": "",
+        "types": "",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": true,
+          "focus": false,
+          "divineFocus": 1
+        },
+        "castTime": "",
+        "materials": {
+          "value": "a leather strip bound to the target",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 0,
+          "maxAmount": 0,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": false,
+        "sr": true,
+        "shortDescription": "<p>This spell enables you or a creature you touch to move and attack normally for the duration of the spell, even under the influence of magic that usually impedes movement, such as paralysis, solid fog, slow, and <i>web.</i> All combat maneuver checks made to grapple the target automatically fail. The subject automatically succeeds on any combat maneuver checks and Escape Artist checks made to escape a grapple or a pin.</p><p>The spell also allows the subject to move and attack normally while underwater, even with slashing weapons such as axes and swords or with bludgeoning weapons such as flails, hammers, and maces, provided that the weapon is wielded in the hand rather than hurled. The <i>freedom of movement</i> spell does not, however, grant water breathing.</p>",
+        "spellDuration": "10 min./level",
+        "spellEffect": "",
+        "spellArea": "",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1200000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    },
+    {
+      "_id": "578t0lra5ll3aifs",
+      "name": "control weather",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;cleric/oracle 7, druid 7, shaman 7, sorcerer/wizard 7, witch 7;\n    <strong>Domain</strong>&nbsp;Weather 7;\n    <strong>Subdomain</strong>&nbsp;Catastrophe 7;\n    \n    <strong>Bloodline</strong>&nbsp;Stormborn 7;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;2 miles<br>\n    <strong>Area</strong>&nbsp;2-mile-radius circle, centered on you; see text<br>\n    \n    \n    <strong>Duration</strong>&nbsp;4d12 hours; see text<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You change the weather in the local area. It takes 10 minutes to cast the spell and an additional 10 minutes for the effects to manifest. You can call forth weather appropriate to the climate and season of the area you are in. You can also use this spell to cause the weather in the area to become calm and normal for the season.</p>   <table border ='1'><tr><th>Season</th><th>Possible Weather</th></tr><tr><td>Spring</td><td>Tornado, thunderstorm, sleet storm, or hot weather</td></tr><tr><td>Summer</td><td>Torrential rain, heat wave, or hailstorm</td></tr><tr><td>Autumn</td><td>Hot or cold weather, fog, or sleet</td></tr><tr><td>Winter</td><td>Frigid cold, blizzard, or thaw</td></tr><tr><td>Late winter or early spring</td><td>Hurricane-force winds</td></tr></table>   You control the general tendencies of the weather, such as the direction and intensity of the wind. You cannot control specific applications of the weather-where lightning strikes, for example, or the exact path of a tornado. The weather continues as you left it for the duration, or until you use a standard action to designate a new kind of weather (which fully manifests itself 10 minutes later). Contradictory conditions are not possible simultaneously.</p><p><i>Control weather</i> can do away with atmospheric phenomena (naturally occurring or otherwise) as well as create them.</p><p>A druid casting this spell doubles the duration and affects a circle with a 3-mile radius.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 2,
+          "units": "mi",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "sorcerer/wizard",
+              7
+            ],
+            [
+              "cleric/oracle",
+              7
+            ],
+            [
+              "druid",
+              7
+            ],
+            [
+              "witch",
+              7
+            ],
+            [
+              "shaman",
+              7
+            ]
+          ],
+          "domain": [
+            [
+              "Weather",
+              7
+            ]
+          ],
+          "subDomain": [
+            [
+              "Catastrophe",
+              7
+            ]
+          ],
+          "elementalSchool": [],
+          "bloodline": [
+            [
+              "Stormborn",
+              7
+            ]
+          ]
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "trs",
+        "subschool": "",
+        "types": "",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": false,
+          "focus": false,
+          "divineFocus": 0
+        },
+        "castTime": "",
+        "materials": {
+          "value": "",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 0,
+          "maxAmount": 0,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": true,
+        "sr": false,
+        "shortDescription": "<p>You change the weather in the local area. It takes 10 minutes to cast the spell and an additional 10 minutes for the effects to manifest. You can call forth weather appropriate to the climate and season of the area you are in. You can also use this spell to cause the weather in the area to become calm and normal for the season.</p>   <table border ='1'><tr><th>Season</th><th>Possible Weather</th></tr><tr><td>Spring</td><td>Tornado, thunderstorm, sleet storm, or hot weather</td></tr><tr><td>Summer</td><td>Torrential rain, heat wave, or hailstorm</td></tr><tr><td>Autumn</td><td>Hot or cold weather, fog, or sleet</td></tr><tr><td>Winter</td><td>Frigid cold, blizzard, or thaw</td></tr><tr><td>Late winter or early spring</td><td>Hurricane-force winds</td></tr></table>   You control the general tendencies of the weather, such as the direction and intensity of the wind. You cannot control specific applications of the weather-where lightning strikes, for example, or the exact path of a tornado. The weather continues as you left it for the duration, or until you use a standard action to designate a new kind of weather (which fully manifests itself 10 minutes later). Contradictory conditions are not possible simultaneously.</p><p><i>Control weather</i> can do away with atmospheric phenomena (naturally occurring or otherwise) as well as create them.</p><p>A druid casting this spell doubles the duration and affects a circle with a 3-mile radius.</p>",
+        "spellDuration": "4d12 hours; see text",
+        "spellEffect": "",
+        "spellArea": "2-mile-radius circle, centered on you; see text",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1300000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    },
+    {
+      "_id": "g9koefk7x9szoheo",
+      "name": "control winds",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[air];\n    <strong>Level</strong>&nbsp;druid 5, hunter 5, occultist 5, shaman 5;\n    <strong>Domain</strong>&nbsp;Air 5, Weather 6;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;40 feet<br>\n    <strong>Area</strong>&nbsp;40 ft./level radius cylinder 40 ft. high<br>\n    \n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You alter wind force in the area surrounding you. You can make the wind blow in a certain direction or manner, increase its strength, or decrease its strength. The new wind direction and strength persist until the spell ends or until you choose to alter your handiwork, which requires concentration. You may create an \"eye\" of calm air up to 80 feet in diameter at the center of the area if you so desire, and you may choose to limit the area to any cylindrical area less than your full limit.</p><p><i>Wind Direction</i>: You may choose one of four basic wind patterns to function over the spell's area.</p><p><ul>     <li> A downdraft blows from the center outward in equal strength in all directions.</p><p>    <li> An updraft blows from the outer edges in toward the center in equal strength from all directions, veering upward before impinging on the eye in the center.</p><p>    <li> Rotation causes the winds to circle the center in clockwise or counterclockwise fashion.</p><p>    <li> A blast simply causes the winds to blow in one direction across the entire area from one side to the other.</ul></p><p> <i>Wind Strength</i>: For every three caster levels, you can increase or decrease wind strength by one level. Each round on your turn, a creature in the wind must make a Fortitude save or suffer the effect of being in the windy area. See Environment for more details.</p><p>Strong winds (21+ mph) make sailing difficult.</p><p>A severe wind (31+ mph) causes minor ship and building damage.</p><p>A windstorm (51+ mph) drives most flying creatures from the skies, uproots small trees, knocks down light wooden structures, tears off roofs, and endangers ships.</p><p>Hurricane force winds (75+ mph) destroy wooden buildings, uproot large trees, and cause most ships to founder.</p><p>A tornado (175+ mph) destroys all nonfortified buildings and often uproots large trees.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 40,
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "druid",
+              5
+            ],
+            [
+              "shaman",
+              5
+            ],
+            [
+              "occultist",
+              5
+            ],
+            [
+              "hunter",
+              5
+            ]
+          ],
+          "domain": [
+            [
+              "Air",
+              5
+            ],
+            [
+              "Weather",
+              6
+            ]
+          ],
+          "subDomain": [],
+          "elementalSchool": [],
+          "bloodline": []
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "trs",
+        "subschool": "",
+        "types": "air",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": false,
+          "focus": false,
+          "divineFocus": 0
+        },
+        "castTime": "",
+        "materials": {
+          "value": "",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 0,
+          "maxAmount": 0,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": true,
+        "sr": false,
+        "shortDescription": "<p>You alter wind force in the area surrounding you. You can make the wind blow in a certain direction or manner, increase its strength, or decrease its strength. The new wind direction and strength persist until the spell ends or until you choose to alter your handiwork, which requires concentration. You may create an \"eye\" of calm air up to 80 feet in diameter at the center of the area if you so desire, and you may choose to limit the area to any cylindrical area less than your full limit.</p><p><i>Wind Direction</i>: You may choose one of four basic wind patterns to function over the spell's area.</p><p><ul>     <li> A downdraft blows from the center outward in equal strength in all directions.</p><p>    <li> An updraft blows from the outer edges in toward the center in equal strength from all directions, veering upward before impinging on the eye in the center.</p><p>    <li> Rotation causes the winds to circle the center in clockwise or counterclockwise fashion.</p><p>    <li> A blast simply causes the winds to blow in one direction across the entire area from one side to the other.</ul></p><p> <i>Wind Strength</i>: For every three caster levels, you can increase or decrease wind strength by one level. Each round on your turn, a creature in the wind must make a Fortitude save or suffer the effect of being in the windy area. See Environment for more details.</p><p>Strong winds (21+ mph) make sailing difficult.</p><p>A severe wind (31+ mph) causes minor ship and building damage.</p><p>A windstorm (51+ mph) drives most flying creatures from the skies, uproots small trees, knocks down light wooden structures, tears off roofs, and endangers ships.</p><p>Hurricane force winds (75+ mph) destroy wooden buildings, uproot large trees, and cause most ships to founder.</p><p>A tornado (175+ mph) destroys all nonfortified buildings and often uproots large trees.</p>",
+        "spellDuration": "10 min./level",
+        "spellEffect": "",
+        "spellArea": "40 ft./level radius cylinder 40 ft. high",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1400000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    },
+    {
+      "_id": "n4e35m6qu9nmkhgm",
+      "name": "storm of vengeance",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(summoning);\n    <strong>Level</strong>&nbsp;cleric/oracle 9, druid 9, shaman 9, witch 9;\n    <strong>Domain</strong>&nbsp;Nobility 9, Weather 9;\n    <strong>Subdomain</strong>&nbsp;Cloud 9;\n    \n    <strong>Bloodline</strong>&nbsp;Stormborn 9;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;360-ft.-radius storm cloud<br>\n    <strong>Duration</strong>&nbsp;concentration (maximum 10 rounds) (D)<br>\n    <strong>Saving Throw</strong>&nbsp;see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You create a huge black storm cloud in the air. Each creature under the cloud must succeed on a Fortitude save or be deafened for 1d4 x 10 minutes. Each round you continue to concentrate, the spell generates additional effects as noted below. Each effect occurs on your turn.</p><p><i>2nd Round</i>: Acid rains down in the area, dealing 1d6 points of acid damage (no save).</p><p><i>3rd Round</i>: You call six bolts of lightning down from the cloud.</p><p>You decide where the bolts strike. No two bolts may be directed at the same target. Each bolt deals 10d6 points of electricity damage. A creature struck can attempt a Reflex save for half damage.</p><p><i>4th Round</i>: Hailstones rain down in the area, dealing 5d6 points of bludgeoning damage (no save).</p><p><i>5th through 10th Rounds</i>: Violent rain and wind gusts reduce visibility. The rain obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target). Speed is reduced by three-quarters.</p><p>Ranged attacks within the area of the storm are impossible. Spells cast within the area are disrupted unless the caster succeeds on a Concentration check against a DC equal to the <i>storm of</i> vengeance's save DC + the level of the spell the caster is trying to cast.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "long",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "see text"
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "cleric/oracle",
+              9
+            ],
+            [
+              "druid",
+              9
+            ],
+            [
+              "witch",
+              9
+            ],
+            [
+              "shaman",
+              9
+            ]
+          ],
+          "domain": [
+            [
+              "Nobility",
+              9
+            ],
+            [
+              "Weather",
+              9
+            ]
+          ],
+          "subDomain": [
+            [
+              "Cloud",
+              9
+            ]
+          ],
+          "elementalSchool": [],
+          "bloodline": [
+            [
+              "Stormborn",
+              9
+            ]
+          ]
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "con",
+        "subschool": "summoning",
+        "types": "",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": false,
+          "focus": false,
+          "divineFocus": 0
+        },
+        "castTime": "",
+        "materials": {
+          "value": "",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 1,
+          "maxAmount": 1,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": false,
+        "sr": true,
+        "shortDescription": "<p>You create a huge black storm cloud in the air. Each creature under the cloud must succeed on a Fortitude save or be deafened for 1d4 x 10 minutes. Each round you continue to concentrate, the spell generates additional effects as noted below. Each effect occurs on your turn.</p><p><i>2nd Round</i>: Acid rains down in the area, dealing 1d6 points of acid damage (no save).</p><p><i>3rd Round</i>: You call six bolts of lightning down from the cloud.</p><p>You decide where the bolts strike. No two bolts may be directed at the same target. Each bolt deals 10d6 points of electricity damage. A creature struck can attempt a Reflex save for half damage.</p><p><i>4th Round</i>: Hailstones rain down in the area, dealing 5d6 points of bludgeoning damage (no save).</p><p><i>5th through 10th Rounds</i>: Violent rain and wind gusts reduce visibility. The rain obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target). Speed is reduced by three-quarters.</p><p>Ranged attacks within the area of the storm are impossible. Spells cast within the area are disrupted unless the caster succeeds on a Concentration check against a DC equal to the <i>storm of</i> vengeance's save DC + the level of the spell the caster is trying to cast.</p>",
+        "spellDuration": "concentration (maximum 10 rounds) (D)",
+        "spellEffect": "360-ft.-radius storm cloud",
+        "spellArea": "",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1500000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    },
+    {
+      "_id": "mi52crelhwuy6bmp",
+      "name": "summon monster IX",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(summoning);\n    <strong>Level</strong>&nbsp;cleric/oracle 9, psychic 9, sorcerer/wizard 9, witch 9;\n    <strong>Domain</strong>&nbsp;Chaos 9, Evil 9, Good 9, Law 9;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Abyssal 9;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a tiny bag and a small candle)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one summoned creature<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>summon monster I,</i> except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list.</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "sorcerer/wizard",
+              9
+            ],
+            [
+              "cleric/oracle",
+              9
+            ],
+            [
+              "witch",
+              9
+            ],
+            [
+              "psychic",
+              9
+            ]
+          ],
+          "domain": [
+            [
+              "Chaos",
+              9
+            ],
+            [
+              "Evil",
+              9
+            ],
+            [
+              "Good",
+              9
+            ],
+            [
+              "Law",
+              9
+            ]
+          ],
+          "subDomain": [],
+          "elementalSchool": [],
+          "bloodline": [
+            [
+              "Abyssal",
+              9
+            ]
+          ]
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "con",
+        "subschool": "summoning",
+        "types": "",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": true,
+          "material": false,
+          "focus": true,
+          "divineFocus": 3
+        },
+        "castTime": "",
+        "materials": {
+          "value": "",
+          "focus": "a tiny bag and a small candle",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 1,
+          "maxAmount": 1,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": false,
+        "sr": false,
+        "shortDescription": "<p>This spell functions like <i>summon monster I,</i> except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list.</p>",
+        "spellDuration": "1 round/level",
+        "spellEffect": "one summoned creature",
+        "spellArea": "",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1600000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    }
+  ],
+  "effects": []
+}

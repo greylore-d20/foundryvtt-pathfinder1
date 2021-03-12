@@ -1,0 +1,128 @@
+{
+  "_id": "XjLcCIhCBES0J3Oj",
+  "name": "Shell of Succor",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>You can surround an ally with bolstering energies that supplement its health and grant it extra vigor. With a touch from you (a standard action), one creature gains a ward of restorative energy, granting it a number of temporary hit points equal to your Charisma bonus + 1d6 per 2 oracle levels you have (maximum 10d6). These temporary hit points last 1 minute per oracle level you have.</p>\n<p>The target always loses these temporary hit points first, even before other temporary hit points (including those from, for example, the purify body spell on page 9 or a kineticist’s force ward defense wild talent). If an attack deals fewer points of damage than the target has as temporary hit points from shell of succor, it still reduces those temporary hit points but otherwise counts as a miss for the purpose of abilities that trigger on a hit or a miss.</p>\n<p>You can use this revelation once per day, plus one additional time at 11th and 19th levels.</p>\n<p>You must be at least 3rd level before selecting this revelation.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "duration": {
+      "value": "@classes.oracle.level",
+      "units": "minute"
+    },
+    "target": {
+      "value": "creature touched"
+    },
+    "range": {
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 1,
+      "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": "@classes.oracle.level >= 19 ? 3 : ((@classes.oracle.level > 10 && @classes.oracle.level < 19) ? 2 : 1)"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "effects": []
+}

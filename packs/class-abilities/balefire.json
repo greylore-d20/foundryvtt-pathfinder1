@@ -1,0 +1,133 @@
+{
+  "_id": "17aTGwzPnyZazYHY",
+  "name": "Balefire",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>You call upon the cleansing or searing fires of the Outer Rifts to burn your foes. As a standard action, one target within 30 feet is wreathed in screaming flames and takes 1d6 points of fire damage per level. A successful Reflex save halves this damage.</p>\n<p>At 10th level, the fire’s howls cause any creatures damaged by it to be staggered for 1 round.</p>\n<p>At 15th level, creatures who fail their saves against the balefire are staggered for 1d4 rounds and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": "inst"
+    },
+    "target": {
+      "value": "one creature"
+    },
+    "range": {
+      "value": "30",
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 1,
+      "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "rsak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.oracle.level)d6",
+          "Fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": "",
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "ref",
+      "description": "Reflex half"
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "effects": []
+}

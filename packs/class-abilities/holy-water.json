@@ -1,0 +1,132 @@
+{
+  "_id": "A3ZtNeUxGs4jHdCy",
+  "name": "Holy Water",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>The arcanist can unleash a jet of holy water by expending 1 point from her arcane reservoir. This creates a 30-foot line of water that deals damage equal to 1d8 points of damage plus the arcanist’s Charisma modifier, plus an additional 1d8 points of damage for every 2 levels beyond 1st (to a maximum of 10d8 at 19th level) to each target in the line that would normally take damage from holy water. Creatures in the area of effect can attempt a Reflex saving throw to halve the damage.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": "inst"
+    },
+    "target": {
+      "value": "30-ft. line"
+    },
+    "range": {
+      "value": "30",
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "spellsave",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.arcanist.level / 2))d8 + @abilities.cha.mod",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "ref",
+      "description": "Reflex half"
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Arcanist"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+  "effects": []
+}

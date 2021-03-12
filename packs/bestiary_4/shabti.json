@@ -1,0 +1,2881 @@
+{
+  "_id": "qdWLWCuTnBfo9CSv",
+  "name": "Shabti",
+  "permission": {
+    "default": 0
+  },
+  "type": "npc",
+  "data": {
+    "abilities": {
+      "str": {
+        "total": 10,
+        "mod": 0,
+        "value": 10,
+        "carryBonus": 0,
+        "carryMultiplier": 1,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "dex": {
+        "total": 12,
+        "mod": 1,
+        "value": 12,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "con": {
+        "total": 16,
+        "mod": 3,
+        "value": 14,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "int": {
+        "total": 13,
+        "mod": 1,
+        "value": 13,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "wis": {
+        "total": 8,
+        "mod": -1,
+        "value": 8,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      },
+      "cha": {
+        "total": 17,
+        "mod": 3,
+        "value": 15,
+        "checkMod": 0,
+        "damage": 0,
+        "drain": 0,
+        "penalty": 0,
+        "userPenalty": 0,
+        "base": 10,
+        "baseMod": 0
+      }
+    },
+    "resources": {},
+    "attributes": {
+      "encumbrance": {
+        "level": 0,
+        "levels": {
+          "light": 33,
+          "medium": 66,
+          "heavy": 100,
+          "carry": 200,
+          "drag": 500
+        },
+        "carriedWeight": 0
+      },
+      "hpAbility": "con",
+      "cmbAbility": "str",
+      "hd": {
+        "total": 1,
+        "max": {
+          "_deprecated": true,
+          "value": 0
+        }
+      },
+      "naturalAC": null,
+      "ac": {
+        "normal": {
+          "value": 0,
+          "total": 10
+        },
+        "touch": {
+          "value": 0,
+          "total": 10
+        },
+        "flatFooted": {
+          "value": 0,
+          "total": 10
+        }
+      },
+      "bab": {
+        "value": 0,
+        "total": 0
+      },
+      "cmd": {
+        "value": "0",
+        "total": 10,
+        "flatFootedTotal": 10
+      },
+      "cmb": {
+        "value": 11,
+        "total": 0
+      },
+      "sr": {
+        "formula": 0,
+        "total": 0
+      },
+      "saveNotes": "",
+      "acNotes": "(+1 Dex)",
+      "cmdNotes": "",
+      "srNotes": "",
+      "attack": {
+        "general": 0,
+        "shared": 0,
+        "melee": 0,
+        "ranged": 0,
+        "meleeAbility": "str",
+        "rangedAbility": "dex"
+      },
+      "damage": {
+        "general": 0,
+        "weapon": 0,
+        "spell": 0
+      },
+      "maxDexBonus": null,
+      "mDex": {
+        "armorBonus": 0,
+        "shieldBonus": 0
+      },
+      "acp": {
+        "gear": 0,
+        "encumbrance": 0,
+        "total": 0,
+        "armorBonus": 0,
+        "shieldBonus": 0,
+        "attackPenalty": 0
+      },
+      "energyDrain": 0,
+      "quadruped": false,
+      "savingThrows": {
+        "fort": {
+          "total": 3,
+          "ability": "con"
+        },
+        "ref": {
+          "total": 1,
+          "ability": "dex"
+        },
+        "will": {
+          "total": 1,
+          "ability": "wis"
+        }
+      },
+      "hp": {
+        "value": 12,
+        "max": 0,
+        "temp": null,
+        "nonlethal": null,
+        "min": -100
+      },
+      "wounds": {
+        "min": 0,
+        "value": 32,
+        "max": 32
+      },
+      "vigor": {
+        "min": 0,
+        "value": 4,
+        "temp": 0,
+        "max": 4
+      },
+      "woundThresholds": {
+        "penalty": 0,
+        "mod": 0,
+        "level": 0,
+        "override": -1
+      },
+      "init": {
+        "value": 0,
+        "bonus": 0,
+        "total": 0,
+        "ability": ""
+      },
+      "prof": 2,
+      "speed": {
+        "land": {
+          "base": 30,
+          "total": 30
+        },
+        "climb": {
+          "base": 0,
+          "total": 0
+        },
+        "swim": {
+          "base": 0,
+          "total": 0
+        },
+        "burrow": {
+          "base": 0,
+          "total": 0
+        },
+        "fly": {
+          "base": 0,
+          "total": 0,
+          "maneuverability": "average"
+        }
+      },
+      "conditions": {
+        "bleed": false,
+        "blind": false,
+        "confused": false,
+        "dazzled": false,
+        "deaf": false,
+        "entangled": false,
+        "fatigued": false,
+        "exhausted": false,
+        "grappled": false,
+        "helpless": false,
+        "incorporeal": false,
+        "invisible": false,
+        "paralyzed": false,
+        "pinned": false,
+        "prone": false,
+        "fear": false,
+        "sickened": false,
+        "staggered": false,
+        "stunned": false
+      },
+      "spells": {
+        "usedSpellbooks": [
+          "spelllike"
+        ],
+        "spellbooks": {
+          "primary": {
+            "name": "Primary",
+            "class": "Oracle",
+            "cl": {
+              "base": 0,
+              "value": 1,
+              "total": 1,
+              "formula": "1"
+            },
+            "concentration": "+4",
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": true,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "secondary": {
+            "name": "Secondary",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 0,
+              "total": 0,
+              "formula": ""
+            },
+            "concentration": 0,
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": false,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "tertiary": {
+            "name": "Tertiary",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 0,
+              "total": 0,
+              "formula": ""
+            },
+            "concentration": 0,
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "int",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": false,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          },
+          "spelllike": {
+            "name": "Spell-likes",
+            "class": "",
+            "cl": {
+              "base": 0,
+              "value": 1,
+              "total": 1,
+              "formula": "1"
+            },
+            "concentration": "+4",
+            "concentrationFormula": "",
+            "concentrationNotes": "",
+            "clNotes": "",
+            "ability": "cha",
+            "autoSpellLevels": true,
+            "arcaneSpellFailure": true,
+            "baseDCFormula": "10 + @sl + @ablMod",
+            "spontaneous": true,
+            "spellPoints": {
+              "useSystem": false,
+              "value": 0,
+              "max": 0,
+              "maxFormula": "",
+              "restoreFormula": ""
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "spells": {
+              "spell0": {
+                "value": 1,
+                "max": 1,
+                "base": "1"
+              },
+              "spell1": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell2": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell3": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell4": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell5": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell6": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell7": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell8": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              },
+              "spell9": {
+                "value": 0,
+                "max": 0,
+                "base": null
+              }
+            }
+          }
+        },
+        "concentration": {
+          "bonus": 0,
+          "context": ""
+        }
+      },
+      "spellcasting": {
+        "_deprecated": true
+      },
+      "spelldc": {
+        "_deprecated": true
+      },
+      "spellLevel": 0,
+      "cmbNotes": "",
+      "mods": {
+        "skills": {}
+      },
+      "creatureType": "humanoid"
+    },
+    "details": {
+      "level": {
+        "value": 1,
+        "min": 0,
+        "max": 40
+      },
+      "mythicTier": 0,
+      "bonusFeatFormula": "",
+      "alignment": "ln",
+      "biography": {
+        "value": "",
+        "public": ""
+      },
+      "notes": {
+        "value": "",
+        "public": ""
+      },
+      "bonusSkillRankFormula": "",
+      "type": "",
+      "environment": "",
+      "cr": {
+        "base": 0.5,
+        "total": 0.5
+      },
+      "xp": {
+        "value": "200"
+      }
+    },
+    "skills": {
+      "acr": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "apr": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "art": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "blf": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "clm": {
+        "value": 0,
+        "ability": "str",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 0,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "crf": {
+        "value": 0,
+        "ability": "int",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": true,
+        "changeBonus": 0
+      },
+      "dip": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 1,
+        "mod": 7,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "dev": {
+        "value": 0,
+        "ability": "dex",
+        "rt": true,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "dis": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "esc": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "fly": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "han": {
+        "value": 0,
+        "ability": "cha",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "hea": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": -1,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "int": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kar": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kdu": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "ken": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kge": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "khi": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "klo": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kna": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kno": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "kpl": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "kre": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 1,
+        "mod": 5,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "lin": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "lor": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "per": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 1,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "prf": {
+        "value": 0,
+        "ability": "cha",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": false,
+        "changeBonus": 0
+      },
+      "pro": {
+        "value": 0,
+        "ability": "wis",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": -1,
+        "background": true,
+        "notes": "",
+        "subSkills": {},
+        "cs": true,
+        "changeBonus": 0
+      },
+      "rid": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "sen": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 1,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "slt": {
+        "value": 0,
+        "ability": "dex",
+        "rt": true,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": true,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "spl": {
+        "value": 0,
+        "ability": "int",
+        "rt": true,
+        "acp": false,
+        "rank": 1,
+        "mod": 5,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "ste": {
+        "value": 0,
+        "ability": "dex",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 1,
+        "background": false,
+        "notes": "",
+        "cs": true,
+        "changeBonus": 0
+      },
+      "sur": {
+        "value": 0,
+        "ability": "wis",
+        "rt": false,
+        "acp": false,
+        "rank": 0,
+        "mod": -1,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "swm": {
+        "value": 0,
+        "ability": "str",
+        "rt": false,
+        "acp": true,
+        "rank": 0,
+        "mod": 0,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      },
+      "umd": {
+        "value": 0,
+        "ability": "cha",
+        "rt": true,
+        "acp": false,
+        "rank": 0,
+        "mod": 3,
+        "background": false,
+        "notes": "",
+        "cs": false,
+        "changeBonus": 0
+      }
+    },
+    "customSkills": {},
+    "traits": {
+      "size": "med",
+      "senses": "darkvision 60 ft.; Perception +3 \n",
+      "dr": "",
+      "eres": "",
+      "cres": "",
+      "regen": "",
+      "fastHealing": "",
+      "languages": {
+        "value": [
+          "celestial",
+          "common"
+        ],
+        "custom": ""
+      },
+      "di": {
+        "value": [],
+        "custom": ""
+      },
+      "dv": {
+        "value": [],
+        "custom": ""
+      },
+      "ci": {
+        "value": [],
+        "custom": "to undeath,resist level drain    "
+      },
+      "perception": {
+        "_deprecated": true
+      },
+      "stature": "tall"
+    },
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "altCurrency": {
+      "pp": 0,
+      "gp": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "classes": {
+      "oracle": {
+        "level": 1,
+        "name": "oracle",
+        "hd": 8,
+        "bab": "med",
+        "hp": false,
+        "savingThrows": {
+          "fort": 0,
+          "ref": 0,
+          "will": 2
+        },
+        "fc": {
+          "hp": 0,
+          "skill": 0,
+          "alt": 0
+        }
+      }
+    }
+  },
+  "sort": 100001,
+  "flags": {
+    "pf1": {}
+  },
+  "img": "systems/pf1/icons/races/creature-types/outsider.png",
+  "token": {
+    "flags": {
+      "pf1": {
+        "lowLightVision": false
+      }
+    },
+    "name": "Shabti",
+    "displayName": 0,
+    "img": "systems/pf1/icons/races/creature-types/outsider.png",
+    "tint": null,
+    "width": 1,
+    "height": 1,
+    "scale": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "vision": true,
+    "dimSight": 0,
+    "brightSight": 60,
+    "dimLight": 0,
+    "brightLight": 0,
+    "sightAngle": 360,
+    "lightAngle": 360,
+    "lightAlpha": 1,
+    "lightAnimation": {
+      "speed": 5,
+      "intensity": 5
+    },
+    "actorId": "qdWLWCuTnBfo9CSv",
+    "actorLink": false,
+    "disposition": -1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {},
+    "randomImg": false
+  },
+  "items": [
+    {
+      "_id": "buDqndL2UlLeiCDm",
+      "name": "Oracle",
+      "type": "class",
+      "data": {
+        "description": {
+          "value": "<p>Although the gods work through many agents, perhaps none is more mysterious than the oracle. These divine vessels are granted power without their choice, selected by providence to wield powers that even they do not fully understand. Unlike a cleric, who draws her magic through devotion to a deity, oracles garner strength and power from many sources, namely those patron deities who support their ideals. Instead of worshiping a single source, oracles tend to venerate all of the gods that share their beliefs. While some see the powers of the oracle as a gift, others view them as a curse, changing the life of the chosen in unforeseen ways.</p>\n<p><strong>Role</strong>: Oracles do not usually associate with any one church or temple, instead preferring to strike out on their own, or with a small group of like-minded individuals. Oracles typically use their spells and revelations to further their understanding of their mystery, be it through fighting mighty battles or tending to the poor and sick.</p>\n<p><strong>Alignment</strong>: Any.</p>\n<p><strong>Hit Dice</strong>: d8.</p>\n<p><strong>Starting Wealth</strong>: 3d6 × 10 gp (average 105gp.) In addition, each character begins play with an outfit worth 10 gp or less.</p>\n<h2><span id=\"Class_Skills\">Class Skills</span></h2>\n<p>The oracle’s class skills are&nbsp;<a href=\"https://www.d20pfsrd.com/skills/craft\">Craft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/diplomacy\">Diplomacy</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/heal\">Heal</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(history) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(planes) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(religion) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/profession\">Profession</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>),&nbsp;<a href=\"https://www.d20pfsrd.com/skills/sense-motive\">Sense Motive</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), and&nbsp;<a href=\"https://www.d20pfsrd.com/skills/spellcraft\">Spellcraft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>). In addition, oracles receive additional class skills depending upon their oracle mystery.</p>\n<p><strong>Skill Ranks per Level</strong>: 4 +&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a> modifier.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "links": "",
+        "tag": "oracle",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "classType": "base",
+        "levels": {
+          "value": 0,
+          "_deprecated": true
+        },
+        "level": 1,
+        "hd": 8,
+        "hp": 4,
+        "bab": "med",
+        "skillsPerLevel": 4,
+        "savingThrows": {
+          "fort": {
+            "value": "low"
+          },
+          "ref": {
+            "value": "low"
+          },
+          "will": {
+            "value": "high"
+          }
+        },
+        "fc": {
+          "hp": {
+            "value": 0
+          },
+          "skill": {
+            "value": 0
+          },
+          "alt": {
+            "value": 0
+          }
+        },
+        "classSkills": {
+          "crf": true,
+          "acr": false,
+          "apr": false,
+          "art": false,
+          "blf": false,
+          "clm": false,
+          "dip": true,
+          "dev": false,
+          "dis": false,
+          "esc": false,
+          "fly": false,
+          "han": false,
+          "hea": true,
+          "int": false,
+          "kar": false,
+          "kdu": false,
+          "ken": false,
+          "kge": false,
+          "khi": true,
+          "klo": false,
+          "kna": false,
+          "kno": false,
+          "kpl": true,
+          "kre": true,
+          "lin": false,
+          "lor": false,
+          "per": false,
+          "prf": false,
+          "pro": true,
+          "rid": false,
+          "sen": true,
+          "slt": false,
+          "spl": true,
+          "ste": false,
+          "sur": false,
+          "swm": false,
+          "umd": false
+        },
+        "extraDescription": {
+          "value": "<h2>Weapon and Armor Proficiency</h2>\n<p>Oracles are proficient with all simple weapons, light&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, medium&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, and shields (except tower shields). Some oracle revelations grant additional proficiencies.</p>\n<h2>Spells</h2>\n<p>An oracle casts divine spells drawn from the&nbsp;<a href=\"https://www.d20pfsrd.com/magic/spell-lists-and-domains/spell-lists-cleric\">cleric spell lists</a>. She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, an oracle must have a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;score equal to at least 10 + the spell level. The Difficulty Class for a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Saving-Throws\">saving throw</a>&nbsp;against an oracle’s spell is 10 + the spell’s level + the oracle’s&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>\n<p>Like other spellcasters, an oracle can cast only a certain number of spells per day of each spell level. Her base daily spell allotment is given on&nbsp;Table: Oracle. In addition, she receives bonus spells per day if she has a high&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;score (see&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Abilities-and-Spellcasters\">Table: Ability Modifiers and Bonus Spells</a>).</p>\n<p>Unlike other divine spellcasters, an oracle’s selection of spells is extremely limited. An oracle begins play knowing four 0-level spells and two 1st-level spells of her choice. At each new oracle level, she gains one or more new spells, as indicated on&nbsp;Table: Oracle Spells Known. Unlike spells per day, the number of spells an oracle knows is not affected by her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;score; the numbers on&nbsp;Table: Oracle Spells Known&nbsp;are fixed.</p>\n<p>In addition to the spells gained by oracles as they gain levels, each oracle also adds all of either the cure spells or the inflict spells to her list of spells known (cure spells include all spells with “cure” in the name, inflict spells include all spells with “inflict” in the name). These spells are added as soon as the oracle is capable of casting them. This choice is made when the oracle gains her first level and cannot be changed.</p>\n<p>Upon reaching 4th level, and at every even-numbered oracle level after that (6th, 8th, and so on), an oracle can choose to learn a new spell in place of one she already knows. In effect, the oracle loses the old spell in exchange for the new one. The new spell’s level must be the same as that of the spell being exchanged. An oracle may swap only a single spell at any given level, and must choose whether or not to swap the spell at the same time that she gains new spells known for the level. She cannot swap any cure or inflict spells, nor can she swap any spells gained from her mystery. Unlike a&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric</a>, an oracle need not prepare her spells in advance. She can cast any spell she knows at any time, assuming she has not yet used up her spells per day for that spell level. Oracles do not need to provide a divine focus to cast spells that list divine focus (DF) as part of the&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Components\">components</a>.</p>\n<table style=\"box-sizing: border-box; border-spacing: 0px; background-color: #ffffff; margin: 10px; table-layout: fixed; border-color: #888888; min-width: 200px; color: #333333; font-family: Varela, sans-serif;\" border=\"1\" cellpadding=\"5\"><caption style=\"box-sizing: border-box; padding-top: 8px; padding-bottom: 8px; color: black; text-align: left; font-weight: bold;\">Table: Oracle Spells Known</caption>\n<thead style=\"box-sizing: border-box; background-color: #cfe2f3;\">\n<tr style=\"box-sizing: border-box;\">\n<th class=\"text\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">Level</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">0th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">1st</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">2nd</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">3rd</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">4th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">5th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">6th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">7th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">8th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\">9th</th>\n</tr>\n</thead>\n<tbody style=\"box-sizing: border-box;\">\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1st</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2nd</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3rd</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">7</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">7th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">7</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">8th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">8</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">8</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">10th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">11th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">12th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">13th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">14th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">15th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">16th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">17th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">18th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">19th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">20th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n</tr>\n</tbody>\n</table>\n<h2>Mystery</h2>\n<p>Each oracle draws upon a divine mystery to grant her spells and powers. This mystery also grants additional class skills and other special abilities. This mystery can represent a devotion to one ideal, prayers to deities that support the concept, or a natural calling to champion a cause. For example, an oracle with the waves mystery might have been born at sea and found a natural calling to worship the gods of the oceans, rivers, and lakes, be they benign or malevolent. Regardless of its source, the mystery manifests in a number of ways as the oracle gains levels. An oracle must pick one mystery upon taking her first level of oracle. Once made, this choice cannot be changed.</p>\n<p>At 2nd level, and every two levels thereafter, an oracle learns an additional spell derived from her mystery. These spells are in addition to the number of spells given on&nbsp;Table: Oracle Spells Known. They cannot be exchanged for different spells at higher levels.</p>\n<p>Each oracle must choose from among the following mysteries.</p>\n<ul class=\"ogn-childpages\" style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: #333333; font-family: sans-serif;\">\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/ancestor/\">Ancestor</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/apocalypse/\">Apocalypse</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/battle/\">Battle</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/bones/\">Bones</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/dark-tapestry/\">Dark Tapestry</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/dragon-oracle-mystery/\">Dragon</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/elemental-oracle-mystery/\">Elemental</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/flame/\">Flame</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/godclaw/\">Godclaw</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/heavens/\">Heavens</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/intrigue-oracle-mystery/\">Intrigue</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/juju/\">Juju (PAP39/PZO9039)</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/juju-faiths-philosophies/\">Juju (PZO9436)</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/life/\">Life</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/lore/\">Lore</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/lunar-mystery/\">Lunar</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/metal/\">Metal</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/nature/\">Nature</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/occult/\">Occult</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/outer-rifts/\">Outer Rifts</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/reaper/\">Reaper</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/shadow/\">Shadow</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/solar-mystery/\">Solar</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/spellscar/\">Spellscar</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/stone/\">Stone</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/streets-oracle-mystery/\">Streets</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/succor/\">Succor</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/time/\">Time</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/volcano-oracle-mystery/\">Volcano</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/waves/\">Waves</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/whimsy-oracle-mystery/\">Whimsy</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/wind/\">Wind</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/winter/\">Winter</a></li>\n<li class=\"page new parent\" style=\"box-sizing: border-box;\"><a style=\"box-sizing: border-box; text-underline-position: under; color: #003965 !important;\" href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/mysteries/paizo-oracle-mysteries/wood/\">Wood</a></li>\n</ul>\n<h2>Oracle's Curse (Ex)</h2>\n<p>Each oracle is cursed, but this curse comes with a benefit as well as a hindrance. This choice is made at 1st level, and once made, it cannot be changed. The oracle’s curse cannot be removed or dispelled without the aid of a deity. An oracle’s curse is based on her oracle level plus one for every two levels or Hit Dice other than oracle. Each oracle must choose one of the following curses.</p>\n<ul>\n<li>A complete listing of Oracle Curses can be found here:&nbsp;<a href=\"https://www.d20pfsrd.com/classes/base-classes/oracle/oracle-curses\">Oracle Curses</a></li>\n</ul>\n<h2>Orisons</h2>\n<p>Oracles learn a number of orisons, or 0-level spells, as noted on&nbsp;Table: Oracle Spells Known&nbsp;under “Spells Known.” These spells are cast like any other spell, but they do not consume any slots and may be used again.</p>\n<h2>Revelation</h2>\n<p>At 1st level, 3rd level, and every four levels thereafter (7th, 11th, and so on), an oracle uncovers a new secret about her mystery that grants her powers and abilities. The oracle must select a revelation from the list of revelations available to her mystery. If a revelation is chosen at a later level, the oracle gains all of the abilities and bonuses granted by that revelation based on her current level. Unless otherwise noted, activating the power of a revelation is a <a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>.</p>\n<p>Unless otherwise noted, the DC to save against these revelations is equal to 10 + 1/2 the oracle’s level + the oracle’s&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>\n<h2>Final Revelation</h2>\n<p>At 20th level, an oracle learns the final revelation about her mystery, granting her amazing powers and abilities. The nature of these bonuses depends upon the oracle’s mystery.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "damage": {
+          "parts": []
+        },
+        "preparation": {
+          "maxAmount": 0
+        },
+        "weaponData": {
+          "critRange": 20,
+          "critMult": 2
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 600001,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/red_09.jpg",
+      "effects": []
+    },
+    {
+      "_id": "H6tsZqHiaTOcFSOn",
+      "name": "Shabti",
+      "type": "race",
+      "data": {
+        "description": {
+          "value": "<h2>Standard Racial Traits</h2>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Ability Score Modifiers</span>: Shabti have powerful bodies and presences to match. They gain +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Constitution-Con-\">Constitution</a>&nbsp;and +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma.</a></li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Type</span>: Shabti are&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Outsider\">outsiders</a>&nbsp;with the&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Native\">native</a>&nbsp;subtype.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Size</span>: Shabti are Medium creatures and receive no bonuses or penalties due to their size.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Speed</span>: Shabti have a base speed of 30 feet.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Languages</span>: Shabti begin play speaking Common. Those with high&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Intelligence</a>&nbsp;scores can choose any languages they want (except secret languages, such as Druidic).</li>\n</ul>\n<h3>Senses</h3>\n<ul>\n<li><strong>Darkvision:</strong> Shabti can see perfectly in the dark up to 60 feet.</li>\n</ul>\n<h3>Defensive Abilities</h3>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Immortal</span>: Shabti do not age naturally and cannot die of old age. While some might come into being at age categories other than adulthood, they never leave their original age category. Spells and effects that cause aging affect a shabti as normal.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Immune to Undeath</span>: Shabti can’t become undead. Spells and abilities that would transform a shabti into an undead creature have no effect.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Resist Level Drain</span>: A shabti takes no penalties from energy drain effects, though he can still be killed if he accrues more negative levels than he has Hit Dice. After 24 hours, any negative levels a shabti takes are automatically removed without the need for an additional saving throw.</li>\n</ul>\n<h3>Skill Racial Abilities</h3>\n<ul>\n<li>\n<p><strong>Past Life&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a></strong>: Shabti remember bits of their past lives. As a result, they treat all&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;skills as class skills.</p>\n</li>\n</ul>\n<h3>Other Racial Traits</h3>\n<ul>\n<li><strong>Shattered Soul:</strong> Shabti who are killed are exceptionally difficult to return to life. Those who attempt to return a shabti to life using raise dead, resurrection, or similar spells must succeed at a caster level check equal to 10 + the shabti’s Hit Dice. If this check fails, the spell fails and the caster can’t return the shabti to life for the next 24 hours (though the caster can try again after this period).</li>\n</ul>\n<h3>Spell-Like Abilities</h3>\n<ul>\n<li><strong>Spell-Like Ability: </strong>Shabti can use&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/s/suggestion\">suggestion</a>&nbsp;once per day as a&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like ability</a>, with the&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Caster-Level\">caster level</a>&nbsp;equal to the shabti’s class level.</li>\n</ul>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [
+          {
+            "_id": "pj049u1y",
+            "formula": "2",
+            "operator": "+",
+            "target": "ability",
+            "subTarget": "con",
+            "modifier": "racial",
+            "priority": 0,
+            "value": 0
+          },
+          {
+            "_id": "3g63nd73",
+            "formula": "2",
+            "operator": "+",
+            "target": "ability",
+            "subTarget": "cha",
+            "modifier": "racial",
+            "priority": 0,
+            "value": 0
+          }
+        ],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": []
+        },
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "creatureType": "outsider",
+        "subTypes": [
+          [
+            "Native"
+          ]
+        ],
+        "damage": {
+          "parts": []
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 1100000,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/light_07.jpg",
+      "effects": []
+    },
+    {
+      "_id": "zstgJoQCRJNFC1Kv",
+      "name": "Outsider",
+      "type": "class",
+      "data": {
+        "description": {
+          "value": "<p>An outsider is at least partially composed of the essence (but not necessarily the material) of some plane other than the Material Plane. Some creatures start out as some other type and become outsiders when they attain a higher (or lower) state of spiritual existence.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>An outsider has the following features.</p>\n<ul>\n<li>d10 Hit Dice.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Two good saving throws, usually&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>&nbsp;and Will.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for outsiders: <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a>&nbsp;(planes), <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, and <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>. Due to their varied nature, outsiders also receive 4 additional class skills determined by the creature’s theme.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>An outsider possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li>Darkvision 60 feet.</li>\n<li>Unlike most living creatures, an outsider does not have a dual nature—its soul and body form one unit. When an outsider is slain, no soul is set loose. Spells that restore souls to their bodies, such as&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/raise-dead\" rel=\"nofollow\">raise dead</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/reincarnate\" rel=\"nofollow\">reincarnate</a>,&nbsp;and&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/r/resurrection\" rel=\"nofollow\">resurrection</a>,&nbsp;don’t work on an outsider. It takes a different magical effect, such as&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/l/limited-wish\" rel=\"nofollow\">limited wish</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/w/wish\" rel=\"nofollow\">wish</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/m/miracle\" rel=\"nofollow\">miracle</a>,&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/t/true-resurrection\" rel=\"nofollow\">true resurrection</a>&nbsp;to restore it to life. An outsider with the native subtype can be raised, reincarnated, or resurrected just as other living creatures can be.</li>\n<li>Proficient with all simple and martial weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with whatever type of armor (light, medium, or heavy) it is described as wearing, as well as all lighter types. Outsiders not indicated as wearing armor are not proficient with armor. Outsiders are proficient with shields if they are proficient with any form of armor.</li>\n<li>Outsiders breathe, but do not need to eat or sleep (although they can do so if they wish). Native outsiders breathe, eat, and sleep.</li>\n</ul>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "links": {
+          "children": []
+        },
+        "tag": "outsider",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "classType": "racial",
+        "levels": 1,
+        "level": 0,
+        "hd": 10,
+        "hp": 0,
+        "bab": "high",
+        "skillsPerLevel": 6,
+        "savingThrows": {
+          "fort": {
+            "value": "low"
+          },
+          "ref": {
+            "value": "high"
+          },
+          "will": {
+            "value": "high"
+          }
+        },
+        "fc": {
+          "hp": {
+            "value": 0
+          },
+          "skill": {
+            "value": 0
+          },
+          "alt": {
+            "value": 0
+          }
+        },
+        "classSkills": {
+          "acr": false,
+          "apr": false,
+          "art": false,
+          "blf": true,
+          "clm": false,
+          "crf": true,
+          "dip": false,
+          "dev": false,
+          "dis": false,
+          "esc": false,
+          "fly": false,
+          "han": false,
+          "hea": false,
+          "int": false,
+          "kar": false,
+          "kdu": false,
+          "ken": false,
+          "kge": false,
+          "khi": false,
+          "klo": false,
+          "kna": false,
+          "kno": false,
+          "kpl": true,
+          "kre": false,
+          "lin": false,
+          "lor": false,
+          "per": true,
+          "prf": false,
+          "pro": false,
+          "rid": false,
+          "sen": true,
+          "slt": false,
+          "spl": false,
+          "ste": true,
+          "sur": false,
+          "swm": false,
+          "umd": false
+        },
+        "damage": {
+          "parts": []
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/yellow_40.jpg",
+      "effects": []
+    },
+    {
+      "_id": "yVPOuYeobGO8uVTv",
+      "name": "Defensive Ability: immune to undeath",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "3BW0s4tcGETNz7Kr",
+      "name": "Defensive Ability: resist level drain   ",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "GrTvU8ZAqHo1jjDb",
+      "name": "longsword",
+      "type": "attack",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": "",
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "0",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size, 4) + 0",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": "19",
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "Reach: 5 ft.\nlongsword +0 (1d8/19-20)",
+        "soundEffect": "",
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "attackType": "weapon",
+        "masterwork": false,
+        "nonlethal": false,
+        "enh": null,
+        "proficient": true,
+        "primaryAttack": true,
+        "showInQuickbar": true,
+        "broken": false,
+        "held": "normal",
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "VoLnJTpI8N8e2tfz",
+      "name": "Martial weapon Proficiency (longsword) ",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": null,
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "feat",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "none",
+        "crOffset": "",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 100000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "UEey2uLhNU9Sv66v",
+      "name": "SQ: Immortal",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "U5EP0j607nhi4OBE",
+      "name": "SQ: Oracle's Curse (haunted)",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "5Cu9b8WFyg3R8Dft",
+      "name": "SQ: Past-life Knowledge",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "R0T12ECaLFanrY12",
+      "name": "SQ: Revelations (coat Of Many Stars)",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "EP0jTVeMNy0ZjlnB",
+      "name": "SQ: Shattered Soul",
+      "type": "feat",
+      "data": {
+        "description": {
+          "value": "",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "changes": [],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "armorProf": {
+          "value": [],
+          "custom": ""
+        },
+        "weaponProf": {
+          "value": [],
+          "custom": ""
+        },
+        "featType": "misc",
+        "associations": {
+          "classes": []
+        },
+        "showInQuickbar": false,
+        "nonlethal": false,
+        "abilityType": "",
+        "crOffset": "0",
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1000000,
+      "flags": {},
+      "img": "icons/svg/mystery-man.svg",
+      "effects": []
+    },
+    {
+      "_id": "7ZhpWQojfbRUovpl",
+      "name": "sbc | Conversion Changes",
+      "type": "buff",
+      "data": {
+        "description": {
+          "value": "<h2>Actor created with Lavaeolous' StatBlock Converter</h2>\n<p>This Buff contains data that could not be represented in other ways. It is advised to re-check the stats in this when adding new features, such as Feats (e.g. Improved Initiative).</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "changes": [
+          {
+            "_id": "bt3szksc",
+            "formula": "5",
+            "operator": "+",
+            "target": "misc",
+            "subTarget": "mhp",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "wi13sv4f",
+            "formula": "0",
+            "operator": "+",
+            "target": "misc",
+            "subTarget": "init",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "fugzfevx",
+            "formula": "0",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "fort",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "r5rpi1q7",
+            "formula": "-2",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "ref",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          },
+          {
+            "_id": "dz763sff",
+            "formula": "-2",
+            "operator": "+",
+            "target": "savingThrows",
+            "subTarget": "will",
+            "modifier": "untyped",
+            "priority": 1,
+            "value": 0
+          }
+        ],
+        "changeFlags": {
+          "loseDexToAC": false,
+          "noStr": false,
+          "noDex": false,
+          "oneInt": false,
+          "oneWis": false,
+          "oneCha": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false
+        },
+        "contextNotes": [],
+        "links": {
+          "children": []
+        },
+        "tag": "",
+        "useCustomTag": false,
+        "buffType": "perm",
+        "active": true,
+        "level": "",
+        "hideFromToken": true,
+        "damage": {
+          "parts": []
+        },
+        "range": {
+          "maxIncrements": 1
+        }
+      },
+      "sort": 100001,
+      "flags": {},
+      "img": "systems/pf1/icons/skills/yellow_36.jpg",
+      "effects": []
+    },
+    {
+      "_id": "zqj5qzyl46af27v0",
+      "name": "suggestion",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;bard 2, medium 2, mesmerist 2, occultist 3, psychic 2, sorcerer/wizard 3, witch 3;\n    <strong>Domain</strong>&nbsp;Charm 3;\n    <strong>Subdomain</strong>&nbsp;Corruption 2, Devil 3, Innuendo 3;\n    \n    <strong>Bloodline</strong>&nbsp;Infernal 3, Maestro 3, Rakshasa 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M (a snake&#x27;s tongue and a honeycomb)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level or until completed<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You influence the actions of the target creature by suggesting a course of activity (limited to a sentence or two). The <i>suggestion</i> must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell.</p><p>The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed.</p><p>A very reasonable <i>suggestion</i> causes the save to be made with a penalty (such as -1 or -2).</p>\n</div>\n",
+          "chat": "",
+          "unidentified": ""
+        },
+        "tags": [],
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": "",
+          "long": null
+        },
+        "uses": {
+          "value": null,
+          "max": null,
+          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": "",
+        "attackNotes": "",
+        "soundEffect": "",
+        "links": {
+          "children": []
+        },
+        "learnedAt": {
+          "class": [
+            [
+              "sorcerer/wizard",
+              3
+            ],
+            [
+              "bard",
+              2
+            ],
+            [
+              "witch",
+              3
+            ],
+            [
+              "psychic",
+              2
+            ],
+            [
+              "medium",
+              2
+            ],
+            [
+              "mesmerist",
+              2
+            ],
+            [
+              "occultist",
+              3
+            ]
+          ],
+          "domain": [
+            [
+              "Charm",
+              3
+            ]
+          ],
+          "subDomain": [
+            [
+              "Devil",
+              3
+            ],
+            [
+              "Corruption",
+              2
+            ],
+            [
+              "Innuendo",
+              3
+            ]
+          ],
+          "elementalSchool": [],
+          "bloodline": [
+            [
+              "Infernal",
+              3
+            ],
+            [
+              "Maestro",
+              3
+            ],
+            [
+              "Rakshasa",
+              3
+            ]
+          ]
+        },
+        "level": 0,
+        "clOffset": 0,
+        "slOffset": 0,
+        "school": "enc",
+        "subschool": "compulsion",
+        "types": "language-dependent, mind-affecting",
+        "nonlethal": false,
+        "conditionals": [],
+        "components": {
+          "value": "",
+          "verbal": true,
+          "somatic": false,
+          "material": true,
+          "focus": false,
+          "divineFocus": 0
+        },
+        "castTime": "",
+        "materials": {
+          "value": "a snake's tongue and a honeycomb",
+          "focus": "",
+          "gpValue": 0
+        },
+        "spellbook": "spelllike",
+        "preparation": {
+          "preparedAmount": 1,
+          "maxAmount": 1,
+          "autoDeductCharges": true,
+          "spontaneousPrepared": true,
+          "mode": "prepared"
+        },
+        "atWill": false,
+        "sr": true,
+        "shortDescription": "<p>You influence the actions of the target creature by suggesting a course of activity (limited to a sentence or two). The <i>suggestion</i> must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell.</p><p>The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed.</p><p>A very reasonable <i>suggestion</i> causes the save to be made with a penalty (such as -1 or -2).</p>",
+        "spellDuration": "1 hour/level or until completed",
+        "spellEffect": "",
+        "spellArea": "",
+        "showInQuickbar": false,
+        "spellPoints": {
+          "cost": "1 + @sl"
+        },
+        "domain": false,
+        "slotCost": 1,
+        "attack": {
+          "parts": []
+        }
+      },
+      "sort": 1200000,
+      "flags": {},
+      "img": "systems/pf1/icons/misc/magic-swirl.png",
+      "effects": []
+    }
+  ],
+  "effects": []
+}

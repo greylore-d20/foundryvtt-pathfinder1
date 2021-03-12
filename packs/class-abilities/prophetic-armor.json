@@ -1,0 +1,148 @@
+{
+  "_id": "AD0cF0bBitk3VOZk",
+  "name": "Prophetic Armor",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>You are so in tune with your primal nature that your instincts often act to save you from danger that your civilized mind isn’t even aware of. You may use your Charisma modifier (instead of your Dexterity modifier) as part of your Armor Class and all Reflex saving throws. Your armor’s maximum Dexterity bonus applies to your Charisma, instead.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "passive"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": "passive"
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [
+      {
+        "_id": "4dd281tg",
+        "formula": "@abilities.cha.mod - @abilities.dex.mod",
+        "operator": "+",
+        "target": "ac",
+        "subTarget": "ac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      },
+      {
+        "_id": "fblis2zj",
+        "formula": "@abilities.cha.mod - @abilities.dex.mod",
+        "operator": "+",
+        "target": "savingThrows",
+        "subTarget": "ref",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "effects": []
+}

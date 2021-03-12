@@ -1,0 +1,164 @@
+{
+  "_id": "OSt0Qkjh4F8O4ymC",
+  "name": "Young",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p><strong>Acquired/Inherited Template</strong>&nbsp;Acquired<br><strong>Simple Template&nbsp;</strong>Yes<br><strong>Usable with Summons</strong>&nbsp;No<br><br>Creatures with the young template are immature specimens of the base creature. You can also use this simple template to easily create a smaller variant of a monster. This template cannot be applied to creatures that increase in power through aging or feeding (such as dragons or barghests) or creatures that are Fine-sized.<br><br><strong>Quick Rules:</strong> +2 to all Dex-based rolls, –2 to all other rolls, –2 hp/HD.<br><br><strong>Rebuild Rules:</strong>&nbsp;Size&nbsp;decrease by one category;&nbsp;AC&nbsp;reduce natural armor by –2 (minimum +0);&nbsp;Attacks&nbsp;decrease damage dice by 1 step;&nbsp;Ability Scores&nbsp;–4 Strength, –4 Con, +4 size bonus to Dex.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": ""
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [
+      {
+        "_id": "jnhu8bwm",
+        "formula": "-min(2, @attributes.naturalAC)",
+        "operator": "add",
+        "target": "ac",
+        "subTarget": "nac",
+        "modifier": "untyped",
+        "priority": -10,
+        "value": 0
+      },
+      {
+        "_id": "jzankxwi",
+        "formula": "-4",
+        "operator": "add",
+        "target": "ability",
+        "subTarget": "str",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      },
+      {
+        "_id": "w7c4m08y",
+        "formula": "-4",
+        "operator": "add",
+        "target": "ability",
+        "subTarget": "con",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0
+      },
+      {
+        "_id": "t3p96nbw",
+        "formula": "4",
+        "operator": "add",
+        "target": "ability",
+        "subTarget": "dex",
+        "modifier": "size",
+        "priority": 0,
+        "value": 0
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "template",
+    "associations": {
+      "classes": []
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "-1",
+    "attack": {
+      "parts": []
+    }
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/skills/violet_07.jpg",
+  "effects": []
+}

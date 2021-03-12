@@ -1,0 +1,84 @@
+{
+  "_id": "kXvipUvebDtVfxEv",
+  "name": "Prayer (Positive)",
+  "permission": {
+    "default": 0
+  },
+  "type": "buff",
+  "data": {
+    "description": {
+      "value": "<p>You have a +1 luck bonus on attack rolls, weapon damage rolls, saves and skill checks.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "changes": [
+      {
+        "_id": "o2dkmdkf",
+        "formula": "1",
+        "operator": "+",
+        "target": "attack",
+        "subTarget": "attack",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 1
+      },
+      {
+        "_id": "6kp0tugu",
+        "formula": "1",
+        "operator": "+",
+        "target": "damage",
+        "subTarget": "wdamage",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 1
+      },
+      {
+        "_id": "3cxhoj07",
+        "formula": "1",
+        "operator": "+",
+        "target": "savingThrows",
+        "subTarget": "allSavingThrows",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 1
+      },
+      {
+        "_id": "v4txq9o0",
+        "formula": "1",
+        "operator": "+",
+        "target": "skills",
+        "subTarget": "skills",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 1
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": []
+    },
+    "buffType": "temp",
+    "active": false,
+    "level": "",
+    "hideFromToken": false,
+    "damage": {
+      "parts": []
+    }
+  },
+  "sort": 6700000,
+  "flags": {},
+  "img": "systems/pf1/icons/skills/yellow_13.jpg",
+  "effects": []
+}

@@ -1,0 +1,134 @@
+{
+  "_id": "veyAa4qdI9lqSx6m",
+  "name": "Channel Negative Energy",
+  "permission": {
+    "default": 0
+  },
+  "type": "feat",
+  "data": {
+    "description": {
+      "value": "<p>When an antipaladin reaches 4th level, he gains the supernatural ability to channel negative energy like a&nbsp;<a href=\"https://www.aonprd.com/ClassDisplay.aspx?ItemName=Cleric\">cleric</a>. Using this ability consumes two uses of his touch of corruption ability. An antipaladin uses his level as his effective cleric level when channeling negative energy. This is a Charisma-based ability.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "activation": {
+      "cost": 1,
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": "inst"
+    },
+    "target": {
+      "value": "self; affects living OR undead"
+    },
+    "range": {
+      "value": "30",
+      "units": "ft",
+      "maxIncrements": "1",
+      "minValue": null,
+      "minUnits": "",
+      "long": null
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": "charges",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "2",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "circle",
+      "size": "30",
+      "overrideColor": true,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "save",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.antipaladin.level / 2))d6",
+          "Negative"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "10+floor(@classes.antipaladin.level / 2) + @abilities.cha.mod",
+      "type": "will",
+      "description": "Will halves damage"
+    },
+    "effectNotes": "",
+    "attackNotes": "",
+    "soundEffect": "",
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noStr": false,
+      "noDex": false,
+      "oneInt": false,
+      "oneWis": false,
+      "oneCha": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "channelNegativeEnergy",
+    "useCustomTag": false,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Antipaladin"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "attack": {
+      "parts": []
+    },
+    "identifiedName": "Channel Negative Energy"
+  },
+  "flags": {},
+  "img": "systems/pf1/icons/skills/violet_17.jpg",
+  "effects": []
+}

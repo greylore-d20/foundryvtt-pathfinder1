@@ -24,12 +24,16 @@
 - Always show "full attack" button for melee/ranged weapon attacks (thanks Grarl!)
 - Added Manyshot to ranged weapon attacks (thanks Grarl!)
 - Separate base class hit points from favoured class hit points in source info
+- Added flags to items, which can be referenced by modules and macros (see API changes below)
 
 ### API
 
 - `RollPF` and `RollPF.safeRoll` have been added to the system for better roll error handling
 - `CONFIG.debug.roll` has been added to log all dice errors and warnings to console
 - Moved `useSpell` from ActorPF to ItemPF
+- Flags have been added to all items, which can be referenced by modules
+  - `ItemPF.hasItemBooleanFlag(flagName)` and `ItemPF.getItemDictionaryFlag(flagName)` can be used to determine what flags an item has
+  - `ActorPF.hasItemBooleanFlag(flagName)` can be used to check whether an actor possesses a boolean flag on any of their owned items
 
 ### Compendium
 

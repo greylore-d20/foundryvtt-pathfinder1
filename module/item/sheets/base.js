@@ -349,6 +349,9 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Add item flags
+    this._prepareItemFlags(data);
+
     // Add links
     await this._prepareLinks(data);
 
@@ -430,6 +433,24 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     await this.item.updateLinkItems();
+  }
+
+  _prepareItemFlags(data) {
+    // Add boolean flags
+    {
+      const flags = getProperty(data.item, "data.flags.boolean") || [];
+      setProperty(data, "flags.boolean", flags);
+    }
+
+    // Add dictionary flags
+    {
+      const flags = getProperty(data.item, "data.flags.dictionary") || {};
+      let result = [];
+      for (let [k, v] of flags) {
+        result.push({ key: k, value: v });
+      }
+      setProperty(data, "flags.dictionary", result);
+    }
   }
 
   /* -------------------------------------------- */

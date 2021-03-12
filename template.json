@@ -1008,10 +1008,16 @@
           "value": [],
           "custom": ""
         }
+      },
+      "flags": {
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        }
       }
     },
     "class": {
-      "templates": ["itemDescription", "changes", "links", "tagged", "proficiencies"],
+      "templates": ["itemDescription", "changes", "links", "tagged", "proficiencies", "flags"],
       "classType": "base",
       "levels": {
         "value": 0,
@@ -1035,14 +1041,14 @@
       "classSkills": {}
     },
     "buff": {
-      "templates": ["itemDescription", "changes", "contextNotes", "links", "tagged"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links", "tagged", "flags"],
       "buffType": "temp",
       "active": false,
       "level": 0,
       "hideFromToken": false
     },
     "consumable": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "links", "tagged"],
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action", "links", "tagged", "flags"],
       "consumableType": "potion",
       "uses": {
         "value": 0,
@@ -1063,7 +1069,8 @@
         "contextNotes",
         "action",
         "links",
-        "tagged"
+        "tagged",
+        "flags"
       ],
       "equipped": true,
       "equipmentType": "armor",
@@ -1093,7 +1100,8 @@
         "contextNotes",
         "links",
         "tagged",
-        "proficiencies"
+        "proficiencies",
+        "flags"
       ],
       "featType": "feat",
       "associations": {
@@ -1108,12 +1116,12 @@
       }
     },
     "loot": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged", "flags"],
       "subType": "misc",
       "equipped": true
     },
     "spell": {
-      "templates": ["itemDescription", "activatedEffect", "action", "links"],
+      "templates": ["itemDescription", "activatedEffect", "action", "links", "flags"],
       "learnedAt": {
         "class": [],
         "domain": [],
@@ -1164,7 +1172,7 @@
       "slotCost": 1
     },
     "weapon": {
-      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged"],
+      "templates": ["itemDescription", "physicalItem", "changes", "contextNotes", "links", "tagged", "flags"],
       "equipped": true,
       "masterwork": false,
       "nonlethal": false,
@@ -1202,7 +1210,7 @@
       }
     },
     "attack": {
-      "templates": ["itemDescription", "activatedEffect", "action", "links", "tagged"],
+      "templates": ["itemDescription", "activatedEffect", "action", "links", "tagged", "flags"],
       "attackType": "weapon",
       "masterwork": false,
       "nonlethal": false,
@@ -1218,12 +1226,12 @@
       }
     },
     "race": {
-      "templates": ["itemDescription", "changes", "contextNotes", "links", "proficiencies"],
+      "templates": ["itemDescription", "changes", "contextNotes", "links", "proficiencies", "flags"],
       "creatureType": "humanoid",
       "subTypes": []
     },
     "container": {
-      "templates": ["itemDescription", "physicalItem", "inventory"],
+      "templates": ["itemDescription", "physicalItem", "inventory", "flags"],
       "basePrice": 0,
       "unidentified": {
         "basePrice": 0

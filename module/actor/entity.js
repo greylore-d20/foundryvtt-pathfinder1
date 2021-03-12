@@ -214,6 +214,7 @@ export class ActorPF extends Actor {
   prepareEmbeddedEntities() {
     super.prepareEmbeddedEntities();
     this.containerItems = this._prepareContainerItems(this.items);
+    this.itemFlags = this._prepareItemFlags(this.allItems);
     this._prepareChanges();
   }
 
@@ -234,6 +235,22 @@ export class ActorPF extends Actor {
     });
 
     return collection;
+  }
+
+  _prepareItemFlags(items) {
+    let bFlags = {};
+
+    for (let i of items) {
+      const flags = getProperty(i.data, "data.flags.boolean") || [];
+      for (let f of flags) {
+        bFlags[f] = bFlags[f] || { sources: [] };
+        bFlags[f].sources.push(i);
+      }
+    }
+
+    return {
+      boolean: bFlags,
+    };
   }
 
   _prepareChanges() {
@@ -2621,6 +2638,13 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * @returns {ItemPF[]} All items on this actor, including those in containers.
+   */
+  get allItems() {
+    return [...this.containerItems, ...Array.from(this.items)];
+  }
+
+  /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    * @param {String} context - The context to draw from.
    */
@@ -3367,5 +3391,13 @@ export class ActorPF extends Actor {
       });
 
     return result;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag to search for.
+   * @returns {boolean} Whether this actor has any owned item with the given flag.
+   */
+  hasItemBooleanFlag(flagName) {
+    return getProperty(this, `itemFlags.boolean.${flagName}`) != null;
   }
 }

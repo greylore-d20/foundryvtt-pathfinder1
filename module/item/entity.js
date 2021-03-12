@@ -959,6 +959,16 @@ export class ItemPF extends Item {
       }
     }
 
+    // Try to convert dictionary flags to numbers
+    if (data["data.flags.dictionary"] !== undefined) {
+      let flags = data["data.flags.dictionary"];
+
+      for (let f of flags) {
+        let v = parseFloat(f[1]);
+        if (!Number.isNaN(v)) f[1] = v;
+      }
+    }
+
     // Set previous data
     this._prevData["level"] = getProperty(this.data, "data.level");
 
@@ -4217,5 +4227,123 @@ export class ItemPF extends Item {
         return cur + amount;
       }, 0) / coinWeightDivisor
     );
+  }
+
+  /**
+   * Sets a boolean flag on this item.
+   * @param {string} flagName - The name/key of the flag to set.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async addItemBooleanFlag(flagName) {
+    let flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    if (flags.filter((f) => f[0] === flagName).length === 0) {
+      await this.update({ "data.flags.boolean": flags.concat([[flagName]]) });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Removes a boolean flag from this item.
+   * @param {string} flagName - The name/key of the flag to remove.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async removeItemBooleanFlag(flagName) {
+    let flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    if (flags.filter((f) => f[0] === flagName).length > 0) {
+      flags = flags.filter((f) => f[0] !== flagName);
+      await this.update({ "data.flags.boolean": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag on this item.
+   * @returns {boolean} Whether the flag was found on this item.
+   */
+  hasItemBooleanFlag(flagName) {
+    const flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    return flags.map((f) => f[0]).includes(flagName);
+  }
+
+  /**
+   * Sets a dictionary flag value on this item.
+   * @param {string} flagName - The name/key of the flag to set.
+   * @param {number|string} value - The flag's new value.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async setItemDictionaryFlag(flagName, value) {
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
+
+    let doUpdate = false;
+    let foundFlag = false;
+    for (let f of flags) {
+      if (f[0] === flagName) {
+        foundFlag = true;
+        if (f[1] !== value) {
+          f[1] = value;
+          doUpdate = true;
+        }
+      }
+    }
+    if (!foundFlag) {
+      flags.push([flagName, value]);
+      doUpdate = true;
+    }
+
+    if (doUpdate) {
+      await this.update({ "data.flags.dictionary": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Removes a dictionary flag from this item.
+   * @param {string} flagName - The name/key of the flag to remove.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async removeItemDictionaryFlag(flagName) {
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || {});
+
+    let doUpdate = false;
+    for (let a = 0; a < flags.length; a++) {
+      let f = flags[a];
+      if (f[0] === flagName) {
+        flags.splice(a, 1);
+        a--;
+        doUpdate = true;
+      }
+    }
+
+    if (doUpdate) {
+      await this.update({ "data.flags.dictionary": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag to get.
+   * @returns {object} The value stored in the flag.
+   */
+  getItemDictionaryFlag(flagName) {
+    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+
+    for (let f of flags) {
+      if (f[0] === flagName) {
+        return f[1];
+      }
+    }
+
+    return undefined;
   }
 }

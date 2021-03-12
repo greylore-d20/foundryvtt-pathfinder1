@@ -32,6 +32,7 @@
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
     <a class="item" data-tab="changes">{{localize "PF1.Changes"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
+    <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
   </nav>
 
   {{!-- Item Sheet Body --}}
@@ -173,6 +174,10 @@
 
     <div class="tab flexcol" data-group="primary" data-tab="links">
       {{> "systems/pf1/templates/items/parts/item-links.hbs"}}
+    </div>
+
+    <div class="tab flexcol" data-group="primary" data-tab="advanced">
+      {{> "systems/pf1/templates/items/parts/item-advanced.hbs"}}
     </div>
   </section>
 </form>

@@ -444,7 +444,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add dictionary flags
     {
-      const flags = getProperty(data.item, "data.flags.dictionary") || {};
+      const flags = getProperty(data.item, "data.flags.dictionary") || [];
       let result = [];
       for (let [k, v] of flags) {
         result.push({ key: k, value: v });

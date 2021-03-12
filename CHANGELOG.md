@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.18
+
+### Bug Fixes
+
+- Item dictionary flags defaulted to an object, causing older items to sometimes not open
+
 ## 0.77.17
 
 ### Bug Fixes

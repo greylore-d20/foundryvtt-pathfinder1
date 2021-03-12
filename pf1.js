@@ -871,5 +871,22 @@ const handleChatTooltips = function (event) {
 
 // Export objects for being a library
 
-export { ActorPF, ItemPF, ActorSheetPFCharacter, ActorSheetPFNPC, ActorSheetPFNPCLite, ActorSheetPFNPCLoot };
+export {
+  ActorPF,
+  ItemPF,
+  ActorSheetPFCharacter,
+  ActorSheetPFNPC,
+  ActorSheetPFNPCLite,
+  ActorSheetPFNPCLoot,
+  ItemSheetPF,
+  ItemSheetPF_Container,
+  ActiveEffectPF,
+};
 export { DicePF, ChatMessagePF, measureDistances };
+
+export { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
+export { ItemChange } from "./module/item/components/change.js";
+export { SemanticVersion };
+export { RollPF } from "./module/roll.js";
+export { ChatAttack } from "./module/misc/chat-attack.js";
+export { dialogGetNumber, dialogGetActor } from "./module/dialog.js";

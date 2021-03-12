@@ -29,6 +29,7 @@
 
 - `RollPF` and `RollPF.safeRoll` have been added to the system for better roll error handling
 - `CONFIG.debug.roll` has been added to log all dice errors and warnings to console
+- Moved `useSpell` from ActorPF to ItemPF
 
 ### Compendium
 

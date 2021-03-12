@@ -1446,7 +1446,7 @@ export class ItemPF extends Item {
 
   async use({ ev = null, skipDialog = false } = {}) {
     if (this.type === "spell") {
-      return this.parentActor.useSpell(this, ev, { skipDialog: skipDialog });
+      return this.useSpell(ev, { skipDialog: skipDialog });
     } else if (this.hasAction) {
       return this.useAttack({ ev: ev, skipDialog: skipDialog });
     }
@@ -1503,6 +1503,32 @@ export class ItemPF extends Item {
     setProperty(this.data, "data.formulaicAttacks.count.value", extraAttacks);
 
     return extraAttacks;
+  }
+
+  /**
+   * Cast a Spell, consuming a spell slot of a certain level
+   * @param {MouseEvent} ev The click event
+   */
+  async useSpell(ev, { skipDialog = false } = {}) {
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+    if (this.data.type !== "spell") throw new Error("Wrong Item type");
+
+    if (
+      getProperty(this.data, "data.preparation.mode") !== "atwill" &&
+      this.getSpellUses() < this.chargeCost &&
+      this.autoDeductCharges
+    ) {
+      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+
+    // Invoke the Item roll
+    return this.useAttack({ ev: ev, skipDialog: skipDialog });
   }
 
   async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {

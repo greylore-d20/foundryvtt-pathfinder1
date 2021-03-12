@@ -18,7 +18,7 @@ You may do this by downloading a zip archive from the [Releases Page](https://gi
 1. Clone or download this repository.
 2. Change directory to the repository root and run `npm install`.
 3. Run `npm run build` to create a `dist` directory containing all files necessary to use the system in Foundry.
-3a. If you want to further edit files, run `npm run build:watch` to let the bundler watch for changes.
+   3a. If you want to further edit files, run `npm run build:watch` to let the bundler watch for changes.
 
 ## Legal
 

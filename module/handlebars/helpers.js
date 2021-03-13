@@ -187,4 +187,6 @@ export const registerHandlebarsHelpers = function () {
     }
     return value;
   });
+
+  Handlebars.registerHelper("pf1-fallback", (...args) => args.slice(0, -1).find((x) => !!x));
 };

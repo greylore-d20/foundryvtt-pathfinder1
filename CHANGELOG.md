@@ -11,6 +11,10 @@
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
 - Spellbook names can now be customized in their spellbook settings (thanks claudekennilol!)
 
+### API
+
+- Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`)
+
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)

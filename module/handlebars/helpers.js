@@ -188,7 +188,15 @@ export const registerHandlebarsHelpers = function () {
     return value;
   });
 
+  /**
+   * Returns the first argument that is truthy.
+   */
   Handlebars.registerHelper("pf1-fallback", (...args) => args.slice(0, -1).find((x) => !!x));
+
+  /**
+   * Returns the argument as is, unless its a string that starts with an underscore
+   *   Used combined with 'pf1-fallback' to prevent displaying _hd in the character spell tab
+   */
   Handlebars.registerHelper("pf1-nullIfUnderscore", (arg) =>
     typeof "" === typeof arg && arg.startsWith("_") ? null : arg
   );

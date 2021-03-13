@@ -3120,8 +3120,20 @@ export class ActorPF extends Actor {
     }
 
     // Add spellbook info
-    for (let [k, spellbook] of Object.entries(getProperty(result, "attributes.spells.spellbooks"))) {
+    const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
+    let keyedBooks = [];
+    for (let [k, spellbook] of spellbooks) {
       setProperty(result, `spells.${k}`, spellbook);
+      keyedBooks.push(k);
+    }
+    const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
+    for (let book of aliasBooks) {
+      // don't add an alias if it's named the same a spellbook key or the class has been used
+      //  in a previous spell tab
+      if (!keyedBooks.includes(book.class)) {
+        setProperty(result, `spells.${book.class}`, book);
+        keyedBooks.push(book.class);
+      }
     }
 
     // Add range info

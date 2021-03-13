@@ -82,7 +82,7 @@
         <div class="flexrow alt-name">
           <label><h3>{{localize "PF1.AlternativeSpellbookName"}}</h3></label>
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.altName"
-            value="{{spellbook.orig.altName}}" placeholder="{{pf1-fallback spellbook.orig.altName spellbook.orig.class spellbook.orig.name }}" />
+            value="{{spellbook.orig.altName}}" placeholder="{{pf1-fallback spellbook.orig.altName (pf1-nullIfUnderscore spellbook.orig.class) spellbook.orig.name }}" />
         </div>
 
         <div class="flexrow domain-slot-value">

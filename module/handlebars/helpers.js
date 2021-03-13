@@ -189,4 +189,7 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("pf1-fallback", (...args) => args.slice(0, -1).find((x) => !!x));
+  Handlebars.registerHelper("pf1-nullIfUnderscore", (arg) =>
+    typeof "" === typeof arg && arg.startsWith("_") ? null : arg
+  );
 };

@@ -79,6 +79,7 @@ function rollup() {
     output: {
       format: "es",
       exports: "named",
+      sourcemap: true,
     },
     cache: cache,
   })

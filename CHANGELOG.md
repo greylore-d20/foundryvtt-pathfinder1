@@ -6,6 +6,11 @@
 
 - Item dictionary flags defaulted to an object, causing older items to sometimes not open
 
+### API
+
+- Due to recent workflow changes, most PF1 classes will now need to be imported from `/systems/pf1/pf1.js`, instead of `/systems/pf1/modules/**/*.js`
+  - Some modules referencing PF1 classes will need an update before they work again (many apologies)
+
 ## 0.77.17
 
 ### Bug Fixes

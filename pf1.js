@@ -18,6 +18,7 @@ import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
+import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
@@ -874,6 +875,7 @@ const handleChatTooltips = function (event) {
 export {
   ActorPF,
   ItemPF,
+  ActorSheetPF,
   ActorSheetPFCharacter,
   ActorSheetPFNPC,
   ActorSheetPFNPCLite,

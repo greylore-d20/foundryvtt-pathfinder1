@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.77.18
+## 0.77.18 (Hotfix)
 
 ### Bug Fixes
 

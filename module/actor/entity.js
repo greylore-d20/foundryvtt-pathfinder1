@@ -7,6 +7,7 @@ import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
 import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo } from "./apply-changes.js";
 import { RollPF } from "../roll.js";
+import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -197,6 +198,15 @@ export class ActorPF extends Actor {
       } else skills.push(`skill.${sklKey}`);
     }
     return [...skills, ...subSkills];
+  }
+
+  /**
+   * The VisionPermissionSheet instance for this actor
+   * @type {VisionPermissionSheet}
+   */
+  get visionPermissionSheet() {
+    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
+    return this._visionPermissionSheet;
   }
 
   _dataIsPC(data) {

@@ -17,6 +17,7 @@
 
 - Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`) (thanks claudekennilol!) (#510)
 - ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
+- An error prevented modules from extending PF1 classes under some circumstances (e.g. Forge hosting)
 
 ### Localization
 

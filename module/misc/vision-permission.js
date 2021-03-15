@@ -60,6 +60,12 @@ export class VisionPermissionSheet extends FormApplication {
   }
 }
 
+/**
+ * Check if a Token can be a vison source for the current user (due to shared vision).
+ *
+ * @param {Token} token - The Token
+ * @return {boolean} Whether token is a possible vision source
+ */
 export const hasTokenVision = function (token) {
   if (!token.actor) return false;
   if (token.actor.hasPerm(game.user, "OWNER")) return true;
@@ -71,60 +77,3 @@ export const hasTokenVision = function (token) {
 
   return false;
 };
-
-Object.defineProperty(Actor.prototype, "visionPermissionSheet", {
-  get() {
-    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
-    return this._visionPermissionSheet;
-  },
-});
-
-const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;
-ActorDirectory.prototype._getEntryContextOptions = function () {
-  return ActorDirectory__getEntryContextOptions.call(this).concat([
-    {
-      name: "PF1.Vision",
-      icon: '<i class="fas fa-eye"></i>',
-      condition: (li) => {
-        return game.user.isGM;
-      },
-      callback: (li) => {
-        const entity = this.constructor.collection.get(li.data("entityId"));
-        if (entity) {
-          const sheet = entity.visionPermissionSheet;
-          if (sheet.rendered) {
-            if (sheet._minimized) sheet.maximize();
-            else sheet.close();
-          } else sheet.render(true);
-        }
-      },
-    },
-  ]);
-};
-
-// const SightLayer__isTokenVisionSource = SightLayer.prototype._isTokenVisionSource;
-SightLayer.prototype._isTokenVisionSource = function (token) {
-  if (!this.tokenVision || !token.hasSight) return false;
-
-  // Only display hidden tokens for the GM
-  const isGM = game.user.isGM;
-  if (token.data.hidden && !isGM) return false;
-
-  // Always display controlled tokens which have vision
-  if (token._controlled) return true;
-
-  // Otherwise vision is ignored for GM users
-  if (isGM) return false;
-
-  // If a non-GM user controls no other tokens with sight, display sight anyways
-  const canObserve = token.actor && hasTokenVision(token);
-  if (!canObserve) return false;
-  const others = canvas.tokens.controlled.filter((t) => !t.data.hidden && t.hasSight);
-  return !others.length || game.settings.get("pf1", "sharedVisionMode") === "1";
-};
-
-Object.defineProperty(Token.prototype, "observer", {
-  get() {
-    return game.user.isGM || hasTokenVision(this);
-  },
-});

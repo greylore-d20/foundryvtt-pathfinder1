@@ -44,8 +44,8 @@ import { addReachCallback } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
-import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
-import "./module/modules.js";
+import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
+import { initializeModules } from "./module/modules.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -126,7 +126,11 @@ Hooks.once("init", async function () {
   });
   Items.registerSheet("PF1", ItemSheetPF_Container, { types: ["container"], makeDefault: true });
 
+  // Initialize socket listener
   initializeSocket();
+
+  // Initialize module integrations
+  initializeModules();
 });
 
 /* -------------------------------------------- */
@@ -425,7 +429,7 @@ Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("renderLightConfig", (app, html) => {
-  RenderLightConfig_LowLightVision(app, html);
+  addLowLightVisionToLightConfig(app, html);
 });
 
 Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
@@ -627,7 +631,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
 
   // Add disable low-light vision checkbox
-  RenderTokenConfig_LowLightVision(app, html);
+  addLowLightVisionToTokenConfig(app, html);
 });
 
 // Render Sidebar

@@ -93,6 +93,10 @@
   "SETTINGS.pf1HealthConfigWoundThresholdNormal": "正常",
   "SETTINGS.pf1HealthConfigWoundThresholdGritty": "硬汉",
 
+  "SETTINGS.pf1DragRulerWalk": "行走",
+  "SETTINGS.pf1DragRulerDash": "疾走",
+  "SETTINGS.pf1DragRulerRun": "奔跑",
+
   "PF1.OptionalAndVariantRules": "选项及变体规则",
 
   "PF1.WoundThresholdOverride": "伤害临界覆盖",
@@ -156,6 +160,34 @@
   "PF1.TooltipWorldConfigHideActorName_Hint": "对所有玩家隐藏名称",
   "PF1.TooltipWorldConfigHideActorNameReplacement": "隐藏替换名称",
 
+  "PF1.LevelUpForm_Title": "给{className}升级",
+  "PF1.LevelUpForm_Health": "生命值",
+  "PF1.LevelUpForm_Health_Roll": "投骰",
+  "PF1.LevelUpForm_Health_Manual": "手动",
+  "PF1.LevelUp": {
+    "Label": "升级",
+    "Chat": {
+      "Header": "升级报告",
+      "Health": {
+        "Header": "生命值",
+        "Roll": "已为生命值投骰: {add}",
+        "Manual": "手动生命值: {add}"
+      },
+      "FC": {
+        "Header": "天赋职业奖励"
+      },
+      "Extra": {
+        "Header": "额外",
+        "NewFeat": "你有一个新专长可选择",
+        "NewFeats": "你有{newValue}个新专长可选",
+        "NewAbilityScore": "你可以选择一项属性值+1"
+      }
+    }
+  },
+
+  "PF1.Submit": "提交",
+  "PF1.Next": "下一个",
+  "PF1.Previous": "上一个",
   "PF1.General": "总体",
 
   "PF1.Apply": "应用",
@@ -170,9 +202,17 @@
 
   "PF1.RollsForInitiative": "{0} 投掷先攻!",
 
+  "PF1.Flags": "标志",
   "PF1.FlagsInstructions": "设置人物特质以符合PF1系统。",
   "PF1.FlagsTitle": "设置特质",
   "PF1.FlagsSave": "更新特质",
+  "PF1.FlagsBoolean": "布尔标志",
+  "PF1.FlagsDictionary": "字典标志",
+  "PF1.AdvancedInfo": {
+    "Flags": {
+      "InfoBox": "标志可以被模组或宏使用，而它们自己并不做任何事情。"
+    }
+  },
 
   "PF1.AbilityDamage": "属性伤害",
   "PF1.AbilityDrain": "属性吸取",
@@ -403,6 +443,8 @@
   "PF1.BuffTarIntChecks": "智力检定",
   "PF1.BuffTarWisChecks": "感知检定",
   "PF1.BuffTarChaChecks": "魅力检定",
+  "PF1.BuffTarBonusSkillRanks": "奖励技能等级",
+  "PF1.BuffTarBonusFeats": "奖励专长",
 
   "PF1.BuffTarSpells": "法术",
   "PF1.SpellBuffEffect": "效果",
@@ -656,6 +698,13 @@
   "PF1.FavouredClassSkill": "技能",
   "PF1.FavouredClassAlt": "职业",
 
+  "PF1.FavouredClassBonus": {
+    "Label": "天赋职业奖励",
+    "HP": "生命值",
+    "Skill": "技能点",
+    "Alt": "替换"
+  },
+
   "PF1.Key_Control": "Control",
 
   "PF1.ArmorProfLight": "轻型护甲",
@@ -673,11 +722,6 @@
   "PF1.InventoryContainers": "容器",
 
   "PF1.ChangeFlagLoseDexToAC": "AC失去敏捷加值",
-  "PF1.ChangeFlagNoDex": "敏捷为0",
-  "PF1.ChangeFlagNoStr": "力量为0",
-  "PF1.ChangeFlagOneInt": "智力为1",
-  "PF1.ChangeFlagOneWis": "感知为1",
-  "PF1.ChangeFlagOneCha": "魅力为1",
   "PF1.ChangeFlagDwarflikeEncumbrance": "矮人负载",
   "PF1.ChangeFlagMediumArmorFullSpeed": "中甲全速",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "重甲全速",
@@ -877,6 +921,9 @@
   "PF1.SourceInfoTemplate": "模板",
   "PF1.SourceInfoRace": "种族",
 
+  "PF1.SourceInfoSkillRank_ClassBase": "{className} (基础)",
+  "PF1.SourceInfoSkillRank_ClassFC": "{className} (天赋职业)",
+
   "PF1.CreateItemForSpell": "从 {0} 创建物品",
   "PF1.CreateItemWand": "魔杖",
   "PF1.CreateItemScroll": "卷轴",
@@ -888,6 +935,7 @@
   "PF1.CombatInfo_Header": "战斗",
   "PF1.CombatInfo_Round": "第{0}轮",
 
+  "PF1.AddClass": "添加职业",
   "PF1.Horizontal": "水平",
   "PF1.Vertical": "垂直",
   "PF1.HideHeld": "隐藏所持物品",
@@ -899,6 +947,10 @@
   "PF1.Action": "动作",
   "PF1.All": "全部",
   "PF1.Attack": "攻击",
+  "PF1.FormulaAttack": "攻击 #{0}",
+  "PF1.FormulaAttackHint": "插入 {0} 以显示迭代计数器。",
+  "PF1.FormulaicExtraAttacks": "公式化额外攻击",
+  "PF1.FormulaicAttacksCount": "攻击计数公式",
   "PF1.AddAttack": "添加额外攻击",
   "PF1.AddDamage": "添加伤害公式",
   "PF1.AddHealing": "添加治疗公式",
@@ -914,6 +966,7 @@
   "PF1.Attacks": "攻击",
   "PF1.Biography": "传记",
   "PF1.Buffs": "增益",
+  "PF1.Change": "改变",
   "PF1.Changes": "改变",
   "PF1.Charged": "充能",
   "PF1.ChargesSeperator": "/",
@@ -1095,6 +1148,7 @@
   "PF1.ClassPlural": "职业",
   "PF1.FeatPlural": "专长",
   "PF1.ClassFeaturePlural": "职业特性",
+  "PF1.NewClassFeaturePlural": "新职业特性",
   "PF1.TraitPlural": "特质",
   "PF1.RacialTraitPlural": "种族特性",
   "PF1.TemplatePlural": "模板",
@@ -1157,6 +1211,7 @@
   "PF1.Unlimited": "无限",
   "PF1.Requirements": "需求",
   "PF1.Formula": "公式",
+  "PF1.FormulaResult": "公式结果",
   "PF1.ActionType": "动作类型",
   "PF1.AttackRollBonus": "攻击加值",
   "PF1.AttackRollDice": "攻击投骰",
@@ -1280,8 +1335,12 @@
   "PF1.Links": "关联",
   "PF1.Confirm": "确认",
   "PF1.CROffset": "挑战等级补偿",
+  "PF1.Haste": "加速",
+  "PF1.Manyshot": "多重射击",
   "PF1.RapidShot": "快速射击",
   "PF1.PointBlankShot": "近距射击",
+  "PF1.AmmoRemaining": "弹药剩余: {0}",
+  "PF1.AmmoDepleted": "弹药耗尽!",
   "PF1.Priority": "优先级",
   "PF1.Creatures": "生物",
   "PF1.ChargeCost": "充能消耗",
@@ -1334,6 +1393,7 @@
   "PF1.MaxDexArmor": "最大敏捷修正（护甲）",
   "PF1.MaxDexShield": "最大敏捷修正（盾牌）",
   "PF1.Encumbrance": "负重",
+  "PF1.Raw": "原始",
   "PF1.Normal": "正常",
   "PF1.Large": "大",
   "PF1.ExtraLarge": "超大",
@@ -1370,5 +1430,314 @@
   "PF1.InitiativeOffset": "先攻调整",
   "PF1.NotImplemented": "未执行",
   "PF1.StepsRequired": "必要步骤",
-  "PF1.RemoveInfo": "移除信息"
+  "PF1.RemoveInfo": "移除信息",
+  "PF1.CustomRollDesc": "该投骰使用的是非默认公式",
+
+  "PF1.Migration.Start": "为PF1系统版本：{version}执行迁移中。 请稍等。",
+  "PF1.Migration.Ongoing": "迁移进行中，请等待其完成。",
+  "PF1.Migration.End": "PF1升级至版本：{version}成功!",
+
+  "PF1.Info": {
+    "AddClassDialog": "你可以按住Shift来跳过该对话。",
+    "AddClassDialog_Desc": "点击“正常”会出现一个简短的向导，点击“原始"则会不作任何替换地添加一个职业。
+  },
+
+  "PF1.Help": {
+    "Label": "Help",
+    "WIP": "This section is currently a Work In Progress (WIP).",
+    "Desc": "This is a reference sheet and information panel on various topics of the Pathfinder 1e system for Foundry Virtual Tabletop.",
+    "Desc2": "You can select topics on the left, whose contents will appear on the right. On the top of this window are navigational tools.",
+    "Img": {
+      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
+      "Items.Equipment": "systems/pf1/help/img/en/equipment-details.jpg",
+      "Items.Description": "systems/pf1/help/img/en/item-description.jpg",
+      "Items.Changes": "systems/pf1/help/img/en/item-changes.jpg"
+    },
+    "Nav": {
+      "Home": "Home",
+      "Actors": "Actors",
+      "Items": "Items",
+      "ItemTypes": "Item Types",
+      "Concepts": "Concepts",
+      "Special": "Special"
+    },
+    "Content": {
+      "Special": {
+        "Formulas": {
+          "Label": "Formulas",
+          "Desc": "Formulas are an important aspect in the Pathfinder 1e system. They can be as simple as a single numerical value, or as complex as single lines of code. They play a great role in item changes.",
+          "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
+          "Variables": {
+            "Label": "Variables",
+            "Desc": "Below you will find an (incomplete) list of variables you can use within your formulas.",
+            "Header": {
+              "Name": "Variable",
+              "Description": "Description"
+            },
+            "AbilityScoreTotal": {
+              "Desc": "The total value of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
+            },
+            "AbilityScoreMod": {
+              "Desc": "The modifier of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
+            },
+            "HitDie": {
+              "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            },
+            "EncumbranceLevel": {
+              "Desc": "The current encumbrance level of the actor.",
+              "0": "<code>0</code>: Light Load",
+              "1": "<code>1</code>: Medium Load",
+              "2": "<code>2</code>: Heavy Load"
+            },
+            "ArmorType": {
+              "Desc": "The type of armor the actor is wearing.",
+              "0": "<code>0</code>: No Armor",
+              "1": "<code>1</code>: Light Armor",
+              "2": "<code>2</code>: Medium Armor",
+              "3": "<code>3</code>: Heavy Armor"
+            },
+            "ShieldType": {
+              "Desc": "The type of shield the actor is holding.",
+              "0": "<code>0</code>: No Shield",
+              "1": "<code>1</code>: Miscellaneous Shield (such as a buckler)",
+              "2": "<code>2</code>: Light Shield",
+              "3": "<code>3</code>: Heavy Shield",
+              "4": "<code>4</code>: Tower Shield"
+            },
+            "CombatRound": {
+              "Desc": "The current round of combat, or <code>0</code> if not in combat."
+            }
+          },
+          "Functions": {
+            "Label": "Functions",
+            "Desc": "The following are functions you can use within formulas, and examples on how to use them.",
+            "Header": {
+              "Name": "Function",
+              "Description": "Description",
+              "Examples": "Examples",
+              "Example": "Example"
+            },
+            "Max": {
+              "Desc": "Returns the highest of the given numbers.",
+              "Examples": {
+                "0": "Returns the either the actor's Strength modifier or the actor's Dexterity modifier, whichever is higher."
+              }
+            },
+            "Min": {
+              "Desc": "Returns the lowest of the given numbers.",
+              "Examples": {
+                "0": "Returns the either the actor's Hit Die total or the number 10, whichever is lower."
+              }
+            },
+            "Floor": {
+              "Desc": "Rounds the given number down to the lowest integer.",
+              "Examples": {
+                "0": "Returns half of the actor's Hit Die total, rounded down."
+              }
+            },
+            "Ceil": {
+              "Desc": "Rounds the given number down to the highest integer.",
+              "Examples": {
+                "0": "Returns half of the actor's Hit Die total, rounded up."
+              }
+            },
+            "Round": {
+              "Desc": "Rounds the given number to the nearest integer.",
+              "Examples": {
+                "0": "Returns one third of the actor's Hit Die total, rounded to the nearest whole number."
+              }
+            },
+            "SquareRoot": {
+              "Desc": "Returns the positive square root of the given number.",
+              "Examples": {
+                "0": "Returns 4."
+              }
+            },
+            "Power": {
+              "Desc": "Returns x to the power of y.",
+              "Examples": {
+                "0": "Returns 64."
+              }
+            },
+            "SizeRoll": {
+              "Desc": "Alters a damage roll to that of another size category.",
+              "Examples": {
+                "0": "Rolls 1d8 for medium actors, and alters the damage formula according to the calling actor's current size.",
+                "1": "Translates a damage roll of 1d4 from a tiny actor (size '2') to a huge actor (size '6')<br/>Output: 3d6"
+              }
+            }
+          }
+        }
+      },
+      "Items": {
+        "ItemTypes.Physical": "Physical Item Types",
+        "ItemTypes.Other": "Other Item Types",
+        "Generic": {
+          "EnhancementBonus": "Enhancement Bonus",
+          "EnhancementBonusDesc": "The item's enhancement bonus, as per the Core rules",
+          "Masterwork": "Masterwork",
+          "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
+          "Broken": "Broken",
+          "BrokenDesc": "Whether the item is broken, as per the Core rules",
+          "EquipmentStatus": "Equipment Status",
+          "Equipped": "Equipped",
+          "EquippedDesc": "Whether the item is currently equipped, and transfers its changes to its actor (if any)",
+          "Identified": "Identified (GM only)",
+          "IdentifiedDesc": "Whether the item is currently identified, and shows its identified information to players",
+          "Size": "Size",
+          "SizeDesc": "The item's size, similar to a character's size"
+        },
+        "Weapons": {
+          "Label": "Weapons",
+          "Desc": "Weapons are meant to represent physical weapons that a character can hold.",
+          "Category": "Category",
+          "CategoryDesc": "The weapon's category (simple, martial, exotic or misc)",
+          "Type": "Type",
+          "TypeDesc": "The weapon's type (light, one-handed, two-handed or ranged)",
+          "Size": "Weapon Size",
+          "SizeDesc": "The weapon's size, similar to a character's size",
+          "Properties": "Weapon Properties",
+          "PropertiesDesc": "The weapon's properties, as per the Core rules (does nothing mechanically)",
+          "BonusAttackFormula": "Bonus Attack Formula",
+          "BonusAttackFormulaDesc": "The weapon's attack bonus formula. Some examples:",
+          "BonusAttackFormulaExamples": {
+            "0": "Will incur a penalty to the attack roll of -2 if the wielder's Strength modifier is lower than 3"
+          },
+          "BaseWeaponDamage": "Base Weapon Damage",
+          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)",
+          "BonusDamageFormula": "Bonus Damage Formula",
+          "BonusDamageFormulaDesc": "The bonus damage the weapon deals. Some examples:",
+          "BonusDamageFormulaExamples": {
+            "0": "Will add either 4 or the wielder's Strength modifier to the damage roll, whichever is lower"
+          },
+          "BaseWeaponCritical": "Base Weapon Critical",
+          "BaseWeaponCriticalDesc": "The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied"
+        },
+        "Equipment": {
+          "Label": "Equipment",
+          "Desc": "Equipment represents all non-weapon equippable items, including armor, shields, rings and wondrous items.",
+          "Category": "Category",
+          "CategoryDesc": "The armor's category (whether it's armor, a shield, or something else)",
+          "Type": "Type",
+          "TypeDesc": "Armor or Shield size type, or other item type (clothing, wondrous item, etc.)",
+          "Slot": "Slot",
+          "SlotDesc": "What slot this item is for (only shows up for items other than armor or shields)",
+          "Status": "Equipment Status",
+          "StatusDesc": "Status flags of this particular item"
+        },
+        "Consumables": {
+          "Label": "Consumables",
+          "Desc": "Consumables represent physical items with limited uses, such as potions or wands."
+        },
+        "Containers": {
+          "Label": "Containers",
+          "Desc": "Containers are items which can contain other items."
+        },
+        "Loot": {
+          "Label": "Loot",
+          "Desc": "Loot items are all types of physical items that don't fit in other major categories, such as trade goods and ammunition."
+        },
+        "Description": {
+          "Label": "Description",
+          "Name": "Name",
+          "NameDesc": "The name of the item, if identified.",
+          "UnidentifiedName": "Unidentified Name",
+          "UnidentifiedNameDesc": "The name of the item, if unidentified. Shows the identified name for players if left empty.",
+          "Description": "Description",
+          "DescriptionDesc": "The description to show, if identified.",
+          "UnidentifiedDescription": "Unidentified Description",
+          "UnidentifiedDescriptionDesc": "The description to show to players, if unidentified.",
+          "Price": "Price",
+          "PriceDesc": "The price of the item, in gold pieces, if identified",
+          "UnidentifiedPrice": "Unidentified Price",
+          "UnidentifiedPriceDesc": "The price of the item, in gold pieces, if unidentified."
+        },
+        "Changes": {
+          "Label": "Changes",
+          "Flags": {
+            "Label": "Flags",
+            "LoseDexToAC": {
+              "Label": "Lose Dex to AC",
+              "Desc": "While an item with this change is active, a character loses his Dexterity bonuses to Armor Class."
+            },
+            "SetAbility": {
+              "Label": "X Ability",
+              "Desc": "Sets the appropriate ability to the flag's specified value. This might be removed in a later version, since the same can be accomplished with the '=' operator (see below)."
+            },
+            "DwarfLikeEncumbrance": {
+              "Label": "Dwarf-like Encumbrance",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by being in a medium or heavy load."
+            },
+            "FullSpeedMediumArmor": {
+              "Label": "Full Speed in Medium Armor",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing medium armor."
+            },
+            "FullSpeedHeavyArmor": {
+              "Label": "Full Speed in Heavy Armor",
+              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing heavy armor."
+            }
+          },
+          "Changes": {
+            "Label": "Changes",
+            "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
+            "Formula": {
+              "Label": "Formula",
+              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See {tagOpen}this page{tagClose} for more details."
+            },
+            "Operator": {
+              "Label": "Operator",
+              "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
+            },
+            "Priority": {
+              "Label": "Priority",
+              "Desc": "The priority of this change. Changes with lower priorities will be processed later."
+            },
+            "Target": {
+              "Label": "Target",
+              "Desc": "A general category of the attribute to alter."
+            },
+            "SubTarget": {
+              "Label": "Sub-Target",
+              "Desc": "The specific attribute to alter with this change."
+            },
+            "Modifier": {
+              "Label": "Modifier",
+              "Desc": "The modifier of this change."
+            }
+          },
+          "ContextNotes": {
+            "Label": "Context Notes",
+            "Desc": "This a list of contextual notes, which are shown in appropriate situations. From left to right:",
+            "Description": {
+              "Label": "Description",
+              "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
+            },
+            "Target": {
+              "Label": "Target",
+              "Desc": "A general category of the attribute to alter."
+            },
+            "SubTarget": {
+              "Label": "Sub-Target",
+              "Desc": "The specific attribute to alter with this change."
+            }
+          },
+          "ScriptOperator": {
+            "Label": "Script Operator",
+            "Desc": "The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.",
+            "Variables": {
+              "Desc": "Within these scripts, the following variables can be used:",
+              "0": {
+                "Name": "d",
+                "Desc": "The roll data at the time of processing the change. Contains any variable you could use within a normal change formula using the `@` symbol."
+              },
+              "1": {
+                "Name": "result",
+                "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

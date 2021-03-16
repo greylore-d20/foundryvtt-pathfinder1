@@ -18,7 +18,7 @@ export class ChatMessagePF extends ChatMessage {
 // Returns a promise to the created chatMessage or false if no command was executed
 export const customRolls = function (message, speaker, rollData) {
   if (message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/)) {
-    const type = RegExp.$1;
+    const type = RegExp.$1?.toUpperCase();
     const value = RegExp.$2;
     const flavor = RegExp.$3;
     const cMsg = CONFIG.ChatMessage.entityClass;
@@ -27,8 +27,10 @@ export const customRolls = function (message, speaker, rollData) {
     const actor = cMsg.getSpeakerActor(speaker);
     const tokenId = speaker.token;
 
-    switch (type.toUpperCase()) {
+    switch (type) {
+      case "D":
       case "DAMAGE":
+      case "H":
       case "HEAL":
         rollData = rollData ?? actor?.getRollData() ?? {};
         var roll = RollPF.safeRoll(value, rollData);
@@ -37,7 +39,7 @@ export const customRolls = function (message, speaker, rollData) {
         return (async () => {
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
             tokenId: tokenId,
-            isHealing: type.toUpperCase() === "HEAL",
+            isHealing: type === "HEAL" || type === "H",
             roll: {
               value: total,
               halfValue: Math.floor(total / 2),

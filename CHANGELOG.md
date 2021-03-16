@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.19
+
+### Changelog
+
+- Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
+
 ## 0.77.18 (Hotfix)
 
 ### Bug Fixes

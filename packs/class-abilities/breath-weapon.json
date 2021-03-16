@@ -43,7 +43,7 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": ""
+      "maxFormula": "1 + (@classes.sorcerer.level > 16 ? @classes.sorcerer.level > 19 : 2 : 1)"
     },
     "measureTemplate": {
       "type": "",
@@ -96,7 +96,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "breathWeapon",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -120,7 +120,23 @@
     "crOffset": "",
     "attack": {
       "parts": []
-    }
+    },
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "conditionals": [],
+    "identifiedName": "Breath Weapon"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/fireball-red-3.jpg",

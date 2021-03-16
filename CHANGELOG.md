@@ -10,6 +10,15 @@
 
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
 
+### Compendium
+
+- Haggis, Caviar, and Chocolate were missing
+- Soap had wrong weight
+- Restoration spells were missing classes
+- Entangle spell was missing a template
+- Burning Arc, Magic Missile, Storm Step, and Blast Barrier were missing damage
+- Breath Weapon, Freedom's Call, Charmed Life and Stunning Fist had incorrect formula
+
 ## 0.77.18 (Hotfix)
 
 ### Bug Fixes

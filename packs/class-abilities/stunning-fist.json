@@ -43,7 +43,7 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "@attributes.hd.total"
+      "maxFormula": "@classes.monk.level + floor((@attributes.hd.total - @classes.monk.level ) / 4)"
     },
     "measureTemplate": {
       "type": "",
@@ -96,7 +96,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "stunningFist",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -120,7 +120,23 @@
     "crOffset": "",
     "attack": {
       "parts": []
-    }
+    },
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "conditionals": [],
+    "identifiedName": "Stunning Fist"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/yellow_08.jpg",

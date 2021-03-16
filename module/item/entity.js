@@ -1482,6 +1482,8 @@ export class ItemPF extends Item {
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
+    if (!this.parentActor) return;
+
     const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
     let extraAttacks = 0,
       xaroll;

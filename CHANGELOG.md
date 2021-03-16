@@ -2,6 +2,10 @@
 
 ## 0.77.19
 
+### Bug Fixes
+
+- Prevent error in console on unowned items containing formulaic attacks
+
 ### Changelog
 
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)

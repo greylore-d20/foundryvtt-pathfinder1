@@ -1,13 +1,13 @@
 {
-  "_id": "QGEEtV5NqZbomKE6",
-  "name": "Battle Spirit",
+  "_id": "1XDvZLP9UPjr1glZ",
+  "name": "Grave Touch (WIZ)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +1 morale bonus on attack rolls and weapon damage rolls.</p>\n<p>At 8th level and 16th level, these bonuses increase by 1.</p>\n<p>The shaman can use this ability for a number of rounds per day equal to 3 + her Charisma modifier. These rounds do not need to be consecutive.</p>",
+      "value": "<p>As a standard action, you can make a melee touch attack that causes a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Shaken\" rel=\"nofollow\">shaken</a>&nbsp;for a number of rounds equal to 1/2 your wizard level (minimum 1). If you touch a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Shaken\" rel=\"nofollow\">shaken</a>&nbsp;creature with this ability, it becomes&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Frightened\" rel=\"nofollow\">frightened</a>&nbsp;for 1 round if it has fewer Hit Dice than your wizard level. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\" rel=\"nofollow\">Intelligence</a>&nbsp;modifier.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -23,16 +23,16 @@
       }
     },
     "duration": {
-      "value": "1",
+      "value": "@classes.wizard.leve < 4 ? 1 : floor(@classes.wizard.level / 2)",
       "units": "round"
     },
     "target": {
-      "value": "allies withing range"
+      "value": "Creature touched"
     },
     "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
       "long": null
@@ -43,18 +43,18 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.cha.mod"
+      "maxFormula": "3 + @abilities.int.mod"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
       "customTexture": ""
     },
     "attackName": "",
-    "actionType": "",
+    "actionType": "mwak",
     "attackBonus": "",
     "critConfirmBonus": "",
     "damage": {
@@ -65,14 +65,14 @@
     "attackParts": [],
     "formula": "",
     "ability": {
-      "attack": null,
-      "damage": null,
+      "attack": "dex",
+      "damage": "",
       "damageMult": 1,
       "critRange": 20,
       "critMult": 2
     },
     "save": {
-      "dc": 0,
+      "dc": "0",
       "type": "",
       "description": ""
     },
@@ -110,21 +110,30 @@
     "associations": {
       "classes": [
         [
-          "Shaman"
+          "Wizard"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "sp",
     "crOffset": "",
     "attack": {
       "parts": []
     },
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": ""
+    },
     "conditionals": [],
-    "identifiedName": "Battle Spirit"
+    "identifiedName": "Grave Touch"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "img": "systems/pf1/icons/skills/affliction_04.jpg",
   "effects": []
 }

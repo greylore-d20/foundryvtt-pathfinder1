@@ -1,13 +1,13 @@
 {
-  "_id": "JqKkksR6VURLDc3T",
-  "name": "Grave Touch",
+  "_id": "rO2rMMlGeDdyIxJv",
+  "name": "Dazing Touch (WIZ)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Starting at 1st level, you can make a melee touch attack as a standard action that causes a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;for a number of rounds equal to 1/2 your sorcerer level (minimum 1). If you touch a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;creature with this ability, it becomes&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#frightened\" rel=\"nofollow\">frightened</a>&nbsp;for 1 round if it has fewer Hit Dice than your sorcerer level. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\" rel=\"nofollow\">Charisma</a>&nbsp;modifier.</p>",
+      "value": "<p>You can cause a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Dazed\" rel=\"nofollow\">dazed</a>&nbsp;for 1 round as a melee touch attack. Creatures with more Hit Dice than your wizard level are unaffected. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\" rel=\"nofollow\">Intelligence</a>&nbsp;modifier.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -23,7 +23,7 @@
       }
     },
     "duration": {
-      "value": "max(1, (floor(@classes.sorcerer.level / 2)))",
+      "value": "1",
       "units": "round"
     },
     "target": {
@@ -43,7 +43,7 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.cha.mod"
+      "maxFormula": "3 + @abilities.int.mod"
     },
     "measureTemplate": {
       "type": "",
@@ -110,7 +110,7 @@
     "associations": {
       "classes": [
         [
-          "Sorcerer"
+          "Wizard"
         ]
       ]
     },
@@ -120,9 +120,11 @@
     "crOffset": "",
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Dazing Touch"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/affliction_07.jpg",
+  "img": "systems/pf1/icons/skills/ice_16.jpg",
   "effects": []
 }

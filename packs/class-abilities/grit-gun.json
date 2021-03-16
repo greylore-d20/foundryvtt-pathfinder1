@@ -1,53 +1,53 @@
 {
-  "_id": "QGEEtV5NqZbomKE6",
-  "name": "Battle Spirit",
+  "_id": "Rh4www7gtV7wvUzg",
+  "name": "Grit (GUN)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +1 morale bonus on attack rolls and weapon damage rolls.</p>\n<p>At 8th level and 16th level, these bonuses increase by 1.</p>\n<p>The shaman can use this ability for a number of rounds per day equal to 3 + her Charisma modifier. These rounds do not need to be consecutive.</p>",
+      "value": "<p>A gunslinger makes her mark upon the world with daring deeds. Some gunslingers claim they belong to a mystical way of the gun, but it's more likely that the volatile nature of firearms simply prunes the unlucky and careless from their ranks. Whatever the reason, all gunslingers have grit. In game terms, grit is a fluctuating measure of a gunslinger's ability to perform amazing actions in combat. At the start of each day, a gunslinger gains a number of grit points equal to her Wisdom modifier (minimum 1). Her grit goes up or down throughout the day, but usually cannot go higher than her Wisdom modifier (minimum 1), though some feats and magic items may affect this maximum. A gunslinger spends grit to accomplish deeds (see below), and regains grit in the following ways.<br><br><em>Critical Hit with a Firearm: </em>Each time the gunslinger confirms a critical hit with a firearm attack while in the heat of combat, she regains 1 grit point. Confirming a critical hit on a helpless or unaware creature or on a creature that has fewer Hit Dice than half the gunslinger's character level does not restore grit.<br><br><em>Killing Blow with a Firearm:</em> When the gunslinger reduces a creature to 0 or fewer hit points with a firearm attack while in the heat of combat, she regains 1 grit point. Destroying an unattended object, reducing a helpless or unaware creature to 0 or fewer hit points, or reducing a creature that has fewer Hit Dice than half the gunslinger's character level to 0 or fewer hit points does not restore any grit.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "standard"
+      "type": "passive"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 2,
-        "type": "action"
+        "cost": 1,
+        "type": "passive"
       }
     },
     "duration": {
-      "value": "1",
-      "units": "round"
+      "value": null,
+      "units": ""
     },
     "target": {
-      "value": "allies withing range"
+      "value": ""
     },
     "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
       "long": null
     },
     "uses": {
       "value": 0,
-      "max": 3,
+      "max": 0,
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.cha.mod"
+      "maxFormula": "@abilities.wis.mod"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +110,21 @@
     "associations": {
       "classes": [
         [
-          "Shaman"
+          "Gunslinger"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "ex",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Battle Spirit"
+    "identifiedName": "Grit"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "img": "systems/pf1/icons/skills/weapon_36.jpg",
   "effects": []
 }

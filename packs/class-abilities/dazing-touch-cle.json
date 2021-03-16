@@ -1,13 +1,13 @@
 {
-  "_id": "QGEEtV5NqZbomKE6",
-  "name": "Battle Spirit",
+  "_id": "Jle1tYl0Fr251J97",
+  "name": "Dazing Touch (CLE)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +1 morale bonus on attack rolls and weapon damage rolls.</p>\n<p>At 8th level and 16th level, these bonuses increase by 1.</p>\n<p>The shaman can use this ability for a number of rounds per day equal to 3 + her Charisma modifier. These rounds do not need to be consecutive.</p>",
+      "value": "<p>You can cause a living creature to become dazed for 1 round as a melee touch attack. Creatures with more Hit Dice than your cleric level are unaffected. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -27,12 +27,12 @@
       "units": "round"
     },
     "target": {
-      "value": "allies withing range"
+      "value": "creature touched"
     },
     "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
       "long": null
@@ -43,11 +43,11 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.cha.mod"
+      "maxFormula": "3 + @abilities.wis.mod"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +110,21 @@
     "associations": {
       "classes": [
         [
-          "Shaman"
+          "Cleric"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "sp",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Battle Spirit"
+    "identifiedName": "Dazing Touch"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "img": "systems/pf1/icons/skills/ice_16.jpg",
   "effects": []
 }

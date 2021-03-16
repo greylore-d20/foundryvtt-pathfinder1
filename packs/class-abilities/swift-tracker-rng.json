@@ -1,53 +1,52 @@
 {
-  "_id": "QGEEtV5NqZbomKE6",
-  "name": "Battle Spirit",
+  "_id": "sk0HNTe9lKBpHQpN",
+  "name": "Swift Tracker (RNG)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +1 morale bonus on attack rolls and weapon damage rolls.</p>\n<p>At 8th level and 16th level, these bonuses increase by 1.</p>\n<p>The shaman can use this ability for a number of rounds per day equal to 3 + her Charisma modifier. These rounds do not need to be consecutive.</p>",
+      "value": "<p>Beginning at 8th level, a ranger can move at his normal speed while using&nbsp;<a href=\"https://www.d20pfsrd.com/skills/survival\">Survival</a>&nbsp;to follow tracks without taking the normal –5 penalty. He takes only a –10 penalty (instead of the normal –20) when moving at up to twice normal speed while tracking.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "standard"
+      "type": "passive"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 2,
-        "type": "action"
+        "cost": 1,
+        "type": "passive"
       }
     },
     "duration": {
-      "value": "1",
-      "units": "round"
+      "value": null,
+      "units": ""
     },
     "target": {
-      "value": "allies withing range"
+      "value": ""
     },
     "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
       "long": null
     },
     "uses": {
       "value": 0,
-      "max": 3,
-      "per": "day",
+      "max": 0,
+      "per": "",
       "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.cha.mod"
+      "autoDeductChargesCost": "1"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +109,21 @@
     "associations": {
       "classes": [
         [
-          "Shaman"
+          "Ranger"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "ex",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Battle Spirit"
+    "identifiedName": "Swift Tracker"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "img": "systems/pf1/icons/skills/green_20.jpg",
   "effects": []
 }

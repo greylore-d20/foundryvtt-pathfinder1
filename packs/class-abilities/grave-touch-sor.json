@@ -1,13 +1,13 @@
 {
-  "_id": "QGEEtV5NqZbomKE6",
-  "name": "Battle Spirit",
+  "_id": "JqKkksR6VURLDc3T",
+  "name": "Grave Touch (SOR)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +1 morale bonus on attack rolls and weapon damage rolls.</p>\n<p>At 8th level and 16th level, these bonuses increase by 1.</p>\n<p>The shaman can use this ability for a number of rounds per day equal to 3 + her Charisma modifier. These rounds do not need to be consecutive.</p>",
+      "value": "<p>Starting at 1st level, you can make a melee touch attack as a standard action that causes a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;for a number of rounds equal to 1/2 your sorcerer level (minimum 1). If you touch a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;creature with this ability, it becomes&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#frightened\" rel=\"nofollow\">frightened</a>&nbsp;for 1 round if it has fewer Hit Dice than your sorcerer level. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\" rel=\"nofollow\">Charisma</a>&nbsp;modifier.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -23,16 +23,16 @@
       }
     },
     "duration": {
-      "value": "1",
+      "value": "max(1, (floor(@classes.sorcerer.level / 2)))",
       "units": "round"
     },
     "target": {
-      "value": "allies withing range"
+      "value": "creature touched"
     },
     "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
       "long": null
@@ -47,7 +47,7 @@
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +110,21 @@
     "associations": {
       "classes": [
         [
-          "Shaman"
+          "Sorcerer"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "sp",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Battle Spirit"
+    "identifiedName": "Grave Touch"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "img": "systems/pf1/icons/skills/affliction_07.jpg",
   "effects": []
 }

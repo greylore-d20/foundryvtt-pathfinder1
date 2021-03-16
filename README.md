@@ -26,7 +26,7 @@ You may do this by downloading a zip archive from the [Releases Page](https://gi
 We are expressly prohibited from charging you to use or access this content.
 This [website, character sheet, or whatever it is] is not published, endorsed, or specifically approved by Paizo Inc.
 For more information about Paizo's Community Use Policy, please visit [paizo.com/communityuse](http://paizo.com/communityuse).
-For more information about Paizo Inc. and Paizo products, please visit [paizo.com](paizo.com)."
+For more information about Paizo Inc. and Paizo products, please visit [paizo.com](https://paizo.com)."
 
 ## API
 
@@ -36,3 +36,5 @@ Information on them can be found in [this repository's wiki](https://gitlab.com/
 ## Information
 
 You can view information on this game system [here](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/).
+While running the system in Foundry, you can find a Help browser in the Settings tab.
+That information can also be found in [this repository's wiki](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/wikis/Help/Home).

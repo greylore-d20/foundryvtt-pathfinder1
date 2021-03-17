@@ -1,25 +1,25 @@
 {
-  "_id": "zHOV0GMi31u7zgOk",
-  "name": "Combat Healer",
+  "_id": "fFIUxMaZ8a6MhpBk",
+  "name": "Face in the Crowd (ROG)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Whenever you cast a cure spell (a spell with “cure” in its name), you can cast it as a swift action, as if using the Quicken Spell feat, by expending two spell slots. This does not increase the level of the spell. You can use this ability once per day at 7th level and one additional time per day for every four levels beyond 7th.</p>\n<p>You must be at least 7th level to select this revelation.</p>",
+      "value": "<p>A rogue with this talent can blend into groups easily. Opposed Perception and Sense Motive checks take a –2 penalty when made against the rogue’s Bluff, Disguise, Sleight of Hand, or Stealth checks if she’s within 30 feet of at least two non-hostile characters of her apparent creature type. This penalty increases to –4 if she’s within 30 feet of at least eight such creatures or is currently in a square occupied by a crowd.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "swift"
+      "type": ""
     },
     "unchainedAction": {
       "activation": {
         "cost": 1,
-        "type": "action"
+        "type": ""
       }
     },
     "duration": {
@@ -40,14 +40,13 @@
     "uses": {
       "value": 0,
       "max": 0,
-      "per": "day",
+      "per": null,
       "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "autoDeductChargesCost": "1"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +109,21 @@
     "associations": {
       "classes": [
         [
-          "Oracle"
+          "Rogue"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "ex",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Combat Healer"
+    "identifiedName": "Face in the Crowd"
   },
   "flags": {},
-  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "img": "systems/pf1/icons/items/weapons/dagger.PNG",
   "effects": []
 }

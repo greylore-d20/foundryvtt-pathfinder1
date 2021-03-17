@@ -1,37 +1,37 @@
 {
-  "_id": "lqWarOs0RLAfT9tl",
-  "name": "Wings",
+  "_id": "Q4Z9iU23UvkEqfp5",
+  "name": "Spellbreaker (BAR)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>At 15th level, leathery dragon wings grow from your back as a standard action, giving you a fly speed of 60 feet with average maneuverability. You can dismiss the wings as a free action.</p>",
+      "value": "<p>When raging, the barbarian gains @Compendium[pf1.feats.yE3hVOvBq9rx6TAw]{Spellbreaker}&nbsp;as a bonus feat.</p>\n<p>A barbarian must have the disruptive rage power and be at least 12th level to select this rage power.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "standard"
+      "type": ""
     },
     "unchainedAction": {
       "activation": {
-        "cost": 2,
-        "type": "action"
+        "cost": 1,
+        "type": ""
       }
     },
     "duration": {
       "value": null,
-      "units": "seeText"
+      "units": ""
     },
     "target": {
-      "value": "Self"
+      "value": ""
     },
     "range": {
       "value": null,
-      "units": "personal",
+      "units": "",
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
@@ -40,7 +40,7 @@
     "uses": {
       "value": 0,
       "max": 0,
-      "per": "",
+      "per": null,
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1"
     },
@@ -78,18 +78,7 @@
     "effectNotes": "",
     "attackNotes": "",
     "soundEffect": "",
-    "changes": [
-      {
-        "_id": "pibjfd0o",
-        "formula": "60",
-        "operator": "add",
-        "target": "speed",
-        "subTarget": "flySpeed",
-        "modifier": "base",
-        "priority": 0,
-        "value": 0
-      }
-    ],
+    "changes": [],
     "changeFlags": {
       "loseDexToAC": false,
       "noStr": false,
@@ -120,19 +109,24 @@
     "associations": {
       "classes": [
         [
-          "Sorcerer"
+          "Barbarian"
+        ],
+        [
+          "Skald"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "none",
     "crOffset": "",
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Spellbreaker"
   },
   "flags": {},
-  "img": "systems/pf1/icons/skills/blue_02.jpg",
+  "img": "systems/pf1/icons/feats/deafening-critical.jpg",
   "effects": []
 }

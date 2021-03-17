@@ -1,25 +1,25 @@
 {
-  "_id": "zHOV0GMi31u7zgOk",
-  "name": "Combat Healer",
+  "_id": "E90iE6Ynyq1cgGXA",
+  "name": "Camouflage (RNG)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Whenever you cast a cure spell (a spell with “cure” in its name), you can cast it as a swift action, as if using the Quicken Spell feat, by expending two spell slots. This does not increase the level of the spell. You can use this ability once per day at 7th level and one additional time per day for every four levels beyond 7th.</p>\n<p>You must be at least 7th level to select this revelation.</p>",
+      "value": "<p>A ranger of 12th level or higher can use the&nbsp;<a href=\"https://www.d20pfsrd.com/skills/stealth\">Stealth</a>&nbsp;skill to hide in any of his favored terrains, even if the terrain doesn’t grant&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Cover\">cover</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Concealment\">concealment</a>.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "swift"
+      "type": "passive"
     },
     "unchainedAction": {
       "activation": {
         "cost": 1,
-        "type": "action"
+        "type": "passive"
       }
     },
     "duration": {
@@ -40,14 +40,13 @@
     "uses": {
       "value": 0,
       "max": 0,
-      "per": "day",
+      "per": "",
       "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "autoDeductChargesCost": "1"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +109,21 @@
     "associations": {
       "classes": [
         [
-          "Oracle"
+          "Ranger"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "ex",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Combat Healer"
+    "identifiedName": "Camouflage"
   },
   "flags": {},
-  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "img": "systems/pf1/icons/skills/green_18.jpg",
   "effects": []
 }

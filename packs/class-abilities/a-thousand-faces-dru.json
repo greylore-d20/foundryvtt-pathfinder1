@@ -1,37 +1,37 @@
 {
-  "_id": "zHOV0GMi31u7zgOk",
-  "name": "Combat Healer",
+  "_id": "MXj2WoyW7vLxiVYw",
+  "name": "A Thousand Faces (DRU)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Whenever you cast a cure spell (a spell with “cure” in its name), you can cast it as a swift action, as if using the Quicken Spell feat, by expending two spell slots. This does not increase the level of the spell. You can use this ability once per day at 7th level and one additional time per day for every four levels beyond 7th.</p>\n<p>You must be at least 7th level to select this revelation.</p>",
+      "value": "<p>At 13th level, a druid gains the ability to change her appearance at will, as if using the&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/a/alter-self\">alter self</a>&nbsp;spell, but only while in her normal form.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "swift"
+      "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
+        "cost": 2,
         "type": "action"
       }
     },
     "duration": {
-      "value": null,
-      "units": ""
+      "value": "@cl",
+      "units": "minute"
     },
     "target": {
-      "value": ""
+      "value": "Self"
     },
     "range": {
       "value": null,
-      "units": "",
+      "units": "personal",
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
@@ -40,14 +40,13 @@
     "uses": {
       "value": 0,
       "max": 0,
-      "per": "day",
+      "per": "",
       "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "autoDeductChargesCost": "1"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,7 +109,7 @@
     "associations": {
       "classes": [
         [
-          "Oracle"
+          "Druid"
         ]
       ]
     },
@@ -122,9 +121,9 @@
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Combat Healer"
+    "identifiedName": "A Thousand Faces"
   },
   "flags": {},
-  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "img": "systems/pf1/icons/skills/water_07.jpg",
   "effects": []
 }

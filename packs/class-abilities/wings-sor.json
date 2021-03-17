@@ -1,37 +1,37 @@
 {
-  "_id": "gIesygL1nL45vr0C",
-  "name": "Intense Focus",
+  "_id": "lqWarOs0RLAfT9tl",
+  "name": "Wings (SOR)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>The implement channels and enhances the effects of damaging evocations. A spellcaster who bears the implement can add the implement as an additional focus component for any of his damaging evocation spells that have an instantaneous duration or focus powers with an instantaneous duration. If he does so, the spell or focus power deals 1 additional point of damage of the same type to each creature for every 2 points of mental focus invested in the implement, to a maximum of 1 + 1 for every 2 occultist levels you possess.</p>",
+      "value": "<p>At 15th level, leathery dragon wings grow from your back as a standard action, giving you a fly speed of 60 feet with average maneuverability. You can dismiss the wings as a free action.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": ""
+      "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
-        "type": ""
+        "cost": 2,
+        "type": "action"
       }
     },
     "duration": {
       "value": null,
-      "units": ""
+      "units": "seeText"
     },
     "target": {
-      "value": ""
+      "value": "Self"
     },
     "range": {
       "value": null,
-      "units": "",
+      "units": "personal",
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
@@ -40,13 +40,13 @@
     "uses": {
       "value": 0,
       "max": 0,
-      "per": null,
+      "per": "",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -78,7 +78,18 @@
     "effectNotes": "",
     "attackNotes": "",
     "soundEffect": "",
-    "changes": [],
+    "changes": [
+      {
+        "_id": "pibjfd0o",
+        "formula": "60",
+        "operator": "add",
+        "target": "speed",
+        "subTarget": "flySpeed",
+        "modifier": "base",
+        "priority": 0,
+        "value": 0
+      }
+    ],
     "changeFlags": {
       "loseDexToAC": false,
       "noStr": false,
@@ -109,7 +120,7 @@
     "associations": {
       "classes": [
         [
-          "Occultist"
+          "Sorcerer"
         ]
       ]
     },
@@ -119,9 +130,11 @@
     "crOffset": "",
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Wings"
   },
   "flags": {},
-  "img": "systems/pf1/icons/items/weapons/lantern-staff.png",
+  "img": "systems/pf1/icons/skills/blue_02.jpg",
   "effects": []
 }

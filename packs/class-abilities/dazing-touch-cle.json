@@ -1,37 +1,37 @@
 {
-  "_id": "zHOV0GMi31u7zgOk",
-  "name": "Combat Healer",
+  "_id": "Jle1tYl0Fr251J97",
+  "name": "Dazing Touch (CLE)",
   "permission": {
     "default": 0
   },
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Whenever you cast a cure spell (a spell with “cure” in its name), you can cast it as a swift action, as if using the Quicken Spell feat, by expending two spell slots. This does not increase the level of the spell. You can use this ability once per day at 7th level and one additional time per day for every four levels beyond 7th.</p>\n<p>You must be at least 7th level to select this revelation.</p>",
+      "value": "<p>You can cause a living creature to become dazed for 1 round as a melee touch attack. Creatures with more Hit Dice than your cleric level are unaffected. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "activation": {
       "cost": 1,
-      "type": "swift"
+      "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
+        "cost": 2,
         "type": "action"
       }
     },
     "duration": {
-      "value": null,
-      "units": ""
+      "value": "1",
+      "units": "round"
     },
     "target": {
-      "value": ""
+      "value": "creature touched"
     },
     "range": {
       "value": null,
-      "units": "",
+      "units": "touch",
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": "",
@@ -39,15 +39,15 @@
     },
     "uses": {
       "value": 0,
-      "max": 0,
+      "max": 3,
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "maxFormula": "3 + @abilities.wis.mod"
     },
     "measureTemplate": {
       "type": "",
-      "size": "",
+      "size": "0",
       "overrideColor": false,
       "customColor": "",
       "overrideTexture": false,
@@ -110,21 +110,21 @@
     "associations": {
       "classes": [
         [
-          "Oracle"
+          "Cleric"
         ]
       ]
     },
     "showInQuickbar": false,
     "nonlethal": false,
-    "abilityType": "su",
+    "abilityType": "sp",
     "crOffset": "",
     "attack": {
       "parts": []
     },
     "conditionals": [],
-    "identifiedName": "Combat Healer"
+    "identifiedName": "Dazing Touch"
   },
   "flags": {},
-  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "img": "systems/pf1/icons/skills/ice_16.jpg",
   "effects": []
 }

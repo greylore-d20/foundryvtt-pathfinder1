@@ -9,11 +9,12 @@
 ### Changelog
 
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
-- Spellbook names can now be customized in their spellbook settings (thanks claudekennilol!)
+- Spellbook names can now be customized in their spellbook settings (thanks claudekennilol!) (#610)
 
 ### API
 
-- Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`)
+- Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`) (thanks claudekennilol!) (#510)
+- ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
 
 ### Localization
 

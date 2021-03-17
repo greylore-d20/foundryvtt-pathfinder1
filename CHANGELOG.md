@@ -9,6 +9,7 @@
 ### Changelog
 
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
+- Spellbook names can now be customized in their spellbook settings (thanks claudekennilol!)
 
 ### Localization
 

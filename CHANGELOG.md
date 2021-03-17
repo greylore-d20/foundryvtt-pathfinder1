@@ -5,6 +5,8 @@
 ### Bug Fixes
 
 - Prevent error in console on unowned items containing formulaic attacks
+- Consumables had two Advanced tabs when identified (#715)
+- Damage rolls ignored the damage multiplier selected in their attack dialog (#706)
 
 ### Changelog
 

@@ -2749,7 +2749,7 @@ export class ItemPF extends Item {
     rollData.critMult = 1;
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
-    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (rollData.ablMult == null) rollData.ablMult = this.data.data.ability.damageMult;
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts

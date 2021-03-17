@@ -10,6 +10,10 @@
 
 - Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
 
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+
 ### Compendium
 
 - Haggis, Caviar, and Chocolate were missing
@@ -18,6 +22,7 @@
 - Entangle spell was missing a template
 - Burning Arc, Magic Missile, Storm Step, and Blast Barrier were missing damage
 - Breath Weapon, Freedom's Call, Charmed Life and Stunning Fist had incorrect formula
+- Added back in similarly named class features that were automatically pruned
 
 ## 0.77.18 (Hotfix)
 

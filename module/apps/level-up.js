@@ -2,6 +2,15 @@ import { createInlineRollString } from "../chat.js";
 import { createCustomChatMessage } from "../chat.js";
 
 export class LevelUpForm extends BaseEntitySheet {
+  constructor(...args) {
+    super(...args);
+
+    /**
+     * Tracks whether this form has already been submitted.
+     */
+    this._submitted = false;
+  }
+
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
@@ -201,6 +210,14 @@ export class LevelUpForm extends BaseEntitySheet {
     html.find(`.switch-check[name="health.roll"]`).change(this._switchHealthRoll.bind(this));
 
     html.find('button[name="submit"]').click(this._onSubmit.bind(this));
+  }
+
+  _onSubmit(event, ...args) {
+    event.preventDefault();
+    if (this._submitted) return;
+
+    this._submitted = true;
+    super._onSubmit(event, ...args);
   }
 
   _switchHealthRoll(event) {

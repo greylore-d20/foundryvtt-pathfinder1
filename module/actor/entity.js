@@ -792,20 +792,35 @@ export class ActorPF extends Actor {
       }
 
       // Spell slots
+      const useAuto = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`);
       for (let a = 0; a < 10; a++) {
-        let base = parseInt(
-          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`)
-        );
-        if (Number.isNaN(base)) {
-          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
-          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
+        const getAbilityBonus = () =>
+          typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
+        if (
+          useAuto &&
+          CONFIG.PF1.classCasterType[spellbook.class] &&
+          rollData.classes[spellbook.class] &&
+          CONFIG.PF1.casterProgression[spellbook.spontaneous ? "spontaneous" : "prepared"][
+            CONFIG.PF1.classCasterType[spellbook.class]
+          ]
+        ) {
+          const classLevel = rollData.classes[spellbook.class].level;
+          const casterType = CONFIG.PF1.classCasterType[spellbook.class];
+          const spellsForLevels =
+            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "spontaneous" : "prepared"][casterType];
+          const spellsForLevel = spellsForLevels[classLevel - 1][a];
+          const max = typeof spellsForLevel === "number" ? spellsForLevel + getAbilityBonus() : null;
+          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
         } else {
-          if (getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`)) {
-            const value =
-              typeof spellbookAbilityMod === "number"
-                ? base + ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a)
-                : base;
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, value);
+          let base = parseInt(
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`)
+          );
+          if (Number.isNaN(base)) {
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
+          } else if (useAuto) {
+            base += getAbilityBonus();
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
           } else {
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
           }

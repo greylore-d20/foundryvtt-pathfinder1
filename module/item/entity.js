@@ -2131,7 +2131,7 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
       // Add effect notes only
-      else if (this.hasEffect || this.hasSave) {
+      else {
         let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
 
         // Add effect notes
@@ -2254,7 +2254,7 @@ export class ItemPF extends Item {
       await this.addCharges(-cost);
 
       // Post message
-      if (this.hasAction) {
+      if (attacks.length) {
         // Get extra text and properties
         let props = [];
         let extraText = "";

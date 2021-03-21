@@ -7,7 +7,8 @@
 - Prevent error in console on unowned items containing formulaic attacks
 - Consumables had two Advanced tabs when identified (#715)
 - Damage rolls ignored the damage multiplier selected in their attack dialog (#706)
-- Prevent level up dialog from accepting multiple clicks (#717)
+- The level up dialog was accepting multiple clicks (#717)
+- Players received roll errors for actors they did not own (#716)
 
 ### Changelog
 

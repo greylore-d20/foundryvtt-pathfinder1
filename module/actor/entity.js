@@ -467,7 +467,9 @@ export class ActorPF extends Actor {
           this.data,
           k,
           classes.reduce((cur, obj) => {
-            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }).total;
+            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }, null, {
+              supressError: !this.hasPerm(game.user, "OWNER"),
+            }).total;
 
             if (v !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -721,7 +723,9 @@ export class ActorPF extends Actor {
       // Add spell slots based on ability bonus slot formula
       {
         const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
-        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
+        spellbookAbilityScore += RollPF.safeRoll(formula, rollData, null, {
+          supressError: !this.hasPerm(game.user, "OWNER"),
+        }).total;
       }
 
       const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
@@ -754,7 +758,9 @@ export class ActorPF extends Actor {
           });
         }
         // Add from bonus formula
-        const clBonus = RollPF.safeRoll(formula, rollData).total;
+        const clBonus = RollPF.safeRoll(formula, rollData, null, {
+          supressError: !this.hasPerm(game.user, "OWNER"),
+        }).total;
         total += clBonus;
         if (clBonus > 0) {
           getSourceInfo(this.sourceInfo, key).positive.push({
@@ -870,7 +876,9 @@ export class ActorPF extends Actor {
             : spellClass?.length > 0
             ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
             : 0;
-        const roll = RollPF.safeRoll(formula, rollData);
+        const roll = RollPF.safeRoll(formula, rollData, null, {
+          supressError: !this.hasPerm(game.user, "OWNER"),
+        });
         setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
       }
     }
@@ -1121,7 +1129,9 @@ export class ActorPF extends Actor {
             let srcValue =
               src.value != null
                 ? src.value
-                : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this]).total;
+                : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
+                    supressError: !this.hasPerm(game.user, "OWNER"),
+                  }).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
               sourceDetails[changeTarget].push({
@@ -1270,7 +1280,9 @@ export class ActorPF extends Actor {
       for (let a = 0; a < level; a++) {
         const rollData = this.getRollData();
         rollData.level = a + 1;
-        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData);
+        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData, null, {
+          supressError: !this.hasPerm(game.user, "OWNER"),
+        });
         totalXP += roll.total;
       }
     }
@@ -2027,7 +2039,9 @@ export class ActorPF extends Actor {
 
     let formulaRoll = 0;
     if (spellbook.concentrationFormula.length)
-      formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
+      formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData, null, {
+        supressError: !this.hasPerm(game.user, "OWNER"),
+      }).total;
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
@@ -2426,8 +2440,16 @@ export class ActorPF extends Actor {
       if (form) {
         value = form.find('[name="damage"]').val();
         let dR = form.find('[name="damage-reduction"]').val();
-        value = value.length ? RollPF.safeRoll(value, {}, []).total : 0;
-        dR = dR.length ? RollPF.safeRoll(dR, {}, []).total : 0;
+        value = value.length
+          ? RollPF.safeRoll(value, {}, [], {
+              supressError: !this.hasPerm(game.user, "OWNER"),
+            }).total
+          : 0;
+        dR = dR.length
+          ? RollPF.safeRoll(dR, {}, [], {
+              supressError: !this.hasPerm(game.user, "OWNER"),
+            }).total
+          : 0;
         if (multiplier < 0) {
           value = Math.ceil(value * multiplier);
           value = Math.min(value - dR, 0);
@@ -3096,7 +3118,9 @@ export class ActorPF extends Actor {
         for (let k of Object.keys(result.classes[tag].savingThrows)) {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }, null, {
+            supressError: !this.hasPerm(game.user, "OWNER"),
+          }).total;
         }
       });
 
@@ -3217,7 +3241,9 @@ export class ActorPF extends Actor {
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
-        cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
+        cur += RollPF.safeRoll(crOffset, this.getRollData(data), null, {
+          supressError: !this.hasPerm(game.user, "OWNER"),
+        }).total;
       return cur;
     }, base);
   }
@@ -3391,7 +3417,9 @@ export class ActorPF extends Actor {
     result.max += Math.ceil(totalLevels / 2);
 
     // Bonus feat formula
-    const featCountRoll = RollPF.safeRoll(this.data.data.details.bonusFeatFormula || "0", this.getRollData());
+    const featCountRoll = RollPF.safeRoll(this.data.data.details.bonusFeatFormula || "0", this.getRollData(), null, {
+      supressError: !this.hasPerm(game.user, "OWNER"),
+    });
     result.max += featCountRoll.total;
     if (featCountRoll.err) {
       const msg = game.i18n

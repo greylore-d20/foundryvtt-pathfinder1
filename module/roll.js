@@ -3,7 +3,7 @@ export class RollPF extends Roll {
     return "Roll";
   }
 
-  static safeRoll(formula, data = {}, context) {
+  static safeRoll(formula, data = {}, context, options = { supressError: false }) {
     let roll;
     try {
       roll = this.create(formula, data).roll();
@@ -12,7 +12,7 @@ export class RollPF extends Roll {
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
-    if (roll.err) {
+    if (roll.err && !options.supressError) {
       if (context) console.error(context, roll.err);
       else if (CONFIG.debug.roll) console.error(roll.err);
     }

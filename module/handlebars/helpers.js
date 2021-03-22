@@ -76,18 +76,18 @@ export const registerHandlebarsHelpers = function () {
         case "reach":
           return getProperty(rollData, "range.reach") || 0;
         case "close":
-          feet = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData).total;
+          feet = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData);
           break;
         case "medium":
-          feet = RollPF.safeRoll("100 + @cl * 10", rollData).total;
+          feet = RollPF.safeRoll("100 + @cl * 10", rollData);
           break;
         case "long":
-          feet = RollPF.safeRoll("400 + @cl * 40", rollData).total;
+          feet = RollPF.safeRoll("400 + @cl * 40", rollData);
           break;
         case "mi":
           return range * 5280; // TODO: Should remain as miles for shortness
         case "ft":
-          feet = RollPF.safeRoll(range, rollData).total;
+          feet = RollPF.safeRoll(range, rollData);
           break;
         default:
           return range;

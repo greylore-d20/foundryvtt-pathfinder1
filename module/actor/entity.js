@@ -800,14 +800,13 @@ export class ActorPF extends Actor {
           useAuto &&
           CONFIG.PF1.classCasterType[spellbook.class] &&
           rollData.classes[spellbook.class] &&
-          CONFIG.PF1.casterProgression[spellbook.spontaneous ? "spontaneous" : "prepared"][
+          CONFIG.PF1.casterProgression.castsPerDay[spellbook.spellPreparationMode][
             CONFIG.PF1.classCasterType[spellbook.class]
           ]
         ) {
           const classLevel = rollData.classes[spellbook.class].level;
           const casterType = CONFIG.PF1.classCasterType[spellbook.class];
-          const spellsForLevels =
-            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "spontaneous" : "prepared"][casterType];
+          const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellbook.spellPreparationMode][casterType];
           const spellsForLevel = spellsForLevels[classLevel - 1][a];
           const max = typeof spellsForLevel === "number" ? spellsForLevel + getAbilityBonus() : null;
           setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);

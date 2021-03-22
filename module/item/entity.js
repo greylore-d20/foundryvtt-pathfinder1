@@ -248,8 +248,8 @@ export class ItemPF extends Item {
       if (spellbook != null) {
         try {
           result =
-            Roll.create(spellbook.baseDCFormula, rollData).roll().total +
-            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
+            Roll.create(spellbook.baseDCFormula, rollData).evaluate().total +
+            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).evaluate().total +
             dcBonus;
         } catch (e) {
           console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
@@ -594,7 +594,7 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = Roll.create(rng.value, this.getRollData()).roll().total.toString();
+          rng.value = Roll.create(rng.value, this.getRollData()).evaluate().total.toString();
         } catch (err) {
           console.error(err);
         }
@@ -1224,7 +1224,7 @@ export class ItemPF extends Item {
         `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
       );
       if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = Roll.create("1d100").roll().total;
+        templateData.spellFailure = Roll.create("1d100").evaluate().total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
@@ -1505,7 +1505,7 @@ export class ItemPF extends Item {
     try {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
-        Roll.create(exAtkBonusFormula, rollData).roll().total;
+        Roll.create(exAtkBonusFormula, rollData).evaluate().total;
       }
     } catch (err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
@@ -2357,7 +2357,7 @@ export class ItemPF extends Item {
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = Roll.create("1d100").roll().total;
+            templateData.spellFailure = Roll.create("1d100").evaluate().total;
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }

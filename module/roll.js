@@ -6,9 +6,9 @@ export class RollPF extends Roll {
   static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {
-      roll = this.create(formula, data).roll();
+      roll = this.create(formula, data).evaluate();
     } catch (err) {
-      roll = this.create("0", data).roll();
+      roll = this.create("0", data).evaluate();
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");

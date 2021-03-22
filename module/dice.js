@@ -83,7 +83,7 @@ export class DicePF {
         }
 
         // Execute the roll
-        let roll = Roll.create(curParts.join(" + "), data).roll();
+        let roll = Roll.create(curParts.join(" + "), data).evaluate();
 
         // Convert the roll to a chat message
         if (chatTemplate) {
@@ -242,7 +242,7 @@ export class DicePF {
         flavor = `${flavor} (Critical)`;
       }
 
-      roll.roll();
+      roll.evaluate();
 
       // Convert the roll to a chat message
       if (chatTemplate) {

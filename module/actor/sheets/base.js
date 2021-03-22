@@ -108,7 +108,7 @@ export class ActorSheetPF extends ActorSheet {
 
   get currentPrimaryTab() {
     const primaryElem = this.element.find('nav[data-group="primary"] .item.active');
-    if (primaryElem.length !== 1 || primaryElem.attr("data-tab") !== "inventory") return null;
+    if (primaryElem.length !== 1) return null;
     return primaryElem.attr("data-tab");
   }
 

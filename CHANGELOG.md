@@ -10,6 +10,7 @@
 - The level up dialog was accepting multiple clicks (#717)
 - Players received roll errors for actors they did not own (#716)
 - Context notes didn't show for spells with no effects (#711)
+- Item durations with formulas errored on unowned items (#719)
 
 ### Changelog
 

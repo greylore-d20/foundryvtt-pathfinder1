@@ -131,9 +131,7 @@ export class ItemPF extends Item {
 
     const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
-    const cost = RollPF.safeRoll(formula, this.getRollData(), null, {
-      supressError: !this.hasPerm(game.user, "OWNER"),
-    }).total;
+    const cost = RollPF.safeRoll(formula, this.getRollData()).total;
     return cost;
   }
 
@@ -186,23 +184,11 @@ export class ItemPF extends Item {
       case "reach":
         return convertDistance(getProperty(this.getRollData(), "range.reach") || 0)[0];
       case "close":
-        return convertDistance(
-          RollPF.safeRoll("25 + floor(@cl / 2) * 5", this.getRollData(), null, {
-            supressError: !this.hasPerm(game.user, "OWNER"),
-          }).total
-        )[0];
+        return convertDistance(RollPF.safeRoll("25 + floor(@cl / 2) * 5", this.getRollData()).total)[0];
       case "medium":
-        return convertDistance(
-          RollPF.safeRoll("100 + @cl * 10", this.getRollData(), null, {
-            supressError: !this.hasPerm(game.user, "OWNER"),
-          }).total
-        )[0];
+        return convertDistance(RollPF.safeRoll("100 + @cl * 10", this.getRollData()).total)[0];
       case "long":
-        return convertDistance(
-          RollPF.safeRoll("400 + @cl * 40", this.getRollData(), null, {
-            supressError: !this.hasPerm(game.user, "OWNER"),
-          }).total
-        )[0];
+        return convertDistance(RollPF.safeRoll("400 + @cl * 40", this.getRollData()).total)[0];
       case "mi":
         return convertDistance(range * 5280)[0];
       default:
@@ -619,9 +605,9 @@ export class ItemPF extends Item {
       // Duration Label
       let dur = duplicate(data.duration || {});
       if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
-      else if (typeof dur.value === "string") {
+      else if (typeof dur.value === "string" && this.parentActor) {
         dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"], {
-          supressError: !this.hasPerm(game.user, "OWNER"),
+          suppressError: !this.hasPerm(game.user, "OWNER"),
         }).total.toString();
       }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
@@ -1143,9 +1129,7 @@ export class ItemPF extends Item {
     if (hasProperty(this.data, "data.uses.maxFormula")) {
       const maxFormula = getProperty(this.data, "data.uses.maxFormula");
       if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
-        let roll = RollPF.safeRoll(maxFormula, rollData, null, {
-          supressError: !this.hasPerm(game.user, "OWNER"),
-        });
+        let roll = RollPF.safeRoll(maxFormula, rollData);
         setProperty(this.data, "data.uses.max", roll.total);
       } else if (formulaHasDice(maxFormula)) {
         const msg = game.i18n
@@ -1327,19 +1311,10 @@ export class ItemPF extends Item {
             break;
           case "ft":
           case "mi":
-            rangeValue = convertDistance(
-              RollPF.safeRoll(data.range.value || "0", rollData, null, {
-                supressError: !this.hasPerm(game.user, "OWNER"),
-              }).total,
-              data.range.units
-            );
+            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total, data.range.units);
             break;
           case "spec":
-            rangeValue = convertDistance(
-              RollPF.safeRoll(data.range.value || "0", rollData, null, {
-                supressError: !this.hasPerm(game.user, "OWNER"),
-              }).total
-            );
+            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total);
             break;
         }
         dynamicLabels.range =
@@ -1350,9 +1325,7 @@ export class ItemPF extends Item {
       // Duration
       if (data.duration != null) {
         if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
-          let duration = RollPF.safeRoll(data.duration.value || "0", rollData, null, {
-            supressError: !this.hasPerm(game.user, "OWNER"),
-          }).total;
+          let duration = RollPF.safeRoll(data.duration.value || "0", rollData).total;
           dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
         }
       }
@@ -1518,9 +1491,7 @@ export class ItemPF extends Item {
       xaroll;
     const rollData = this.getRollData();
     if (exAtkCountFormula.length > 0) {
-      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData, null, {
-        supressError: !this.hasPerm(game.user, "OWNER"),
-      });
+      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
       extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
     }
     if (xaroll?.err) {
@@ -1758,9 +1729,7 @@ export class ItemPF extends Item {
             const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
             for (let i = 0; i < exAtkCount; i++) {
               frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-              const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData, null, {
-                supressError: !this.hasPerm(game.user, "OWNER"),
-              }).total;
+              const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
               allAttacks.push({
                 bonus: bonus.toString(),
                 label: fatlabel.format(i + 2),
@@ -1799,19 +1768,14 @@ export class ItemPF extends Item {
           for (const [i, modifier] of conditional.modifiers.entries()) {
             // Adds a formula's result to rollData to allow referencing it.
             // Due to being its own roll, this will only correctly work for static formulae.
-            const conditionalRoll = RollPF.safeRoll(modifier.formula, rollData, null, {
-              supressError: !this.hasPerm(game.user, "OWNER"),
-            });
+            const conditionalRoll = RollPF.safeRoll(modifier.formula, rollData);
             if (conditionalRoll.err) {
               const msg = game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name });
               console.warn(msg);
               ui.notifications.warn(msg);
               // Skip modifier to avoid multiple errors from one non-evaluating entry
               continue;
-            } else
-              conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, rollData, null, {
-                supressError: !this.hasPerm(game.user, "OWNER"),
-              }).total;
+            } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, rollData).total;
 
             // Create a key string for the formula array
             const partString = `${modifier.target}.${modifier.subTarget}${
@@ -1839,9 +1803,7 @@ export class ItemPF extends Item {
         for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
           if (conditionalPartsCommon[target] != null) {
             const formula = conditionalPartsCommon[target].join("+");
-            const roll = RollPF.safeRoll(formula, rollData, [target, formula], {
-              supressError: !this.hasPerm(game.user, "OWNER"),
-            }).total;
+            const roll = RollPF.safeRoll(formula, rollData, [target, formula]).total;
             switch (target) {
               case "effect.cl":
                 rollData.cl += roll;
@@ -2151,9 +2113,7 @@ export class ItemPF extends Item {
         // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
         if (typeof dist === "string") {
-          dist = RollPF.safeRoll(getProperty(this.data, "data.measureTemplate.size"), rollData, null, {
-            supressError: !this.hasPerm(game.user, "OWNER"),
-          }).total;
+          dist = RollPF.safeRoll(getProperty(this.data, "data.measureTemplate.size"), rollData).total;
         }
         dist = convertDistance(dist)[0];
 
@@ -2375,9 +2335,7 @@ export class ItemPF extends Item {
           if (range != null) {
             templateData.range = range;
             if (typeof range === "string") {
-              templateData.range = RollPF.safeRoll(range, rollData, null, {
-                supressError: !this.hasPerm(game.user, "OWNER"),
-              }).total;
+              templateData.range = RollPF.safeRoll(range, rollData).total;
               templateData.rangeFormula = range;
             }
             templateData.rangeLabel = `${templateData.range} ft.`;
@@ -2633,9 +2591,7 @@ export class ItemPF extends Item {
     parts = parts.concat(extraParts);
     // Add attack bonus
     if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
-      let attackBonus = RollPF.safeRoll(itemData.attackBonus, rollData, null, {
-        supressError: !this.hasPerm(game.user, "OWNER"),
-      }).total;
+      let attackBonus = RollPF.safeRoll(itemData.attackBonus, rollData).total;
       rollData.item.attackBonus = attackBonus;
       parts.push("@item.attackBonus");
     }
@@ -2697,9 +2653,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false) parts.push("-5");
     // Add bonus
     if (bonus) {
-      rollData.bonus = RollPF.safeRoll(bonus, rollData, null, {
-        supressError: !this.hasPerm(game.user, "OWNER"),
-      }).total;
+      rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
       parts.push("@bonus");
     }
 
@@ -2708,9 +2662,7 @@ export class ItemPF extends Item {
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
-    let roll = RollPF.safeRoll([rollData.d20, ...parts].join("+"), rollData, {
-      supressError: !this.hasPerm(game.user, "OWNER"),
-    });
+    let roll = RollPF.safeRoll([rollData.d20, ...parts].join("+"), rollData);
     return roll;
   }
 
@@ -2776,9 +2728,7 @@ export class ItemPF extends Item {
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
-    const roll = RollPF.safeRoll(itemData.formula, rollData, null, {
-      supressError: !this.hasPerm(game.user, "OWNER"),
-    });
+    const roll = RollPF.safeRoll(itemData.formula, rollData);
     return roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
       flavor: itemData.chatFlavor || title,
@@ -2885,9 +2835,7 @@ export class ItemPF extends Item {
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: RollPF.safeRoll([part.base, ...rollParts].join("+"), rollData, {
-          supressError: !this.hasPerm(game.user, "OWNER"),
-        }),
+        roll: RollPF.safeRoll([part.base, ...rollParts].join("+"), rollData),
         damageType: part.damageType,
         type: part.type,
       };
@@ -2932,9 +2880,7 @@ export class ItemPF extends Item {
       const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
-      let roll = RollPF.safeRoll(parts.join("+"), data, null, {
-        supressError: !this.hasPerm(game.user, "OWNER"),
-      });
+      let roll = RollPF.safeRoll(parts.join("+"), data);
 
       // Create roll template data
       const rollData = mergeObject(
@@ -3371,9 +3317,7 @@ export class ItemPF extends Item {
   getSpellPointCost(rollData = null) {
     if (!rollData) rollData = this.getRollData();
 
-    const roll = RollPF.safeRoll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData, {
-      supressError: !this.hasPerm(game.user, "OWNER"),
-    });
+    const roll = RollPF.safeRoll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData);
     return roll.total;
   }
 
@@ -3471,21 +3415,15 @@ export class ItemPF extends Item {
     data.data.range.value = origData.data.range.value;
     switch (data.data.range.units) {
       case "close":
-        data.data.range.value = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }, null, {
-          supressError: !this.hasPerm(game.user, "OWNER"),
-        }).total.toString();
+        data.data.range.value = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
       case "medium":
-        data.data.range.value = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }, null, {
-          supressError: !this.hasPerm(game.user, "OWNER"),
-        }).total.toString();
+        data.data.range.value = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
       case "long":
-        data.data.range.value = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }, null, {
-          supressError: !this.hasPerm(game.user, "OWNER"),
-        }).total.toString();
+        data.data.range.value = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
     }

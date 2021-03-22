@@ -24,6 +24,7 @@
 - ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
 - An error prevented modules from extending PF1 classes under some circumstances (e.g. Forge hosting)
 - `ActorSheetPF#currentPrimaryTab` will now report tabs that aren't inventory as well
+- Add `game.pf1.utils` containing dialogGetActor, dialogGetNumber, createTag, getItemOwner, getActorFromId, getChangeFlat, convertDistance, convertWeight, convertWeightBack, and measureReachDistance
 
 ### Localization
 

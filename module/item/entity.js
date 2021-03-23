@@ -7,6 +7,7 @@ import { ChatAttack } from "../misc/chat-attack.js";
 import { SemanticVersion } from "../semver.js";
 import { ItemChange } from "./components/change.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
+import { RollPF } from "../roll.js";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -130,7 +131,7 @@ export class ItemPF extends Item {
 
     const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
-    const cost = new Roll(formula, this.getRollData()).roll().total;
+    const cost = RollPF.safeRoll(formula, this.getRollData()).total;
     return cost;
   }
 
@@ -183,11 +184,11 @@ export class ItemPF extends Item {
       case "reach":
         return convertDistance(getProperty(this.getRollData(), "range.reach") || 0)[0];
       case "close":
-        return convertDistance(new Roll("25 + floor(@cl / 2) * 5", this.getRollData()).roll().total)[0];
+        return convertDistance(RollPF.safeRoll("25 + floor(@cl / 2) * 5", this.getRollData()).total)[0];
       case "medium":
-        return convertDistance(new Roll("100 + @cl * 10", this.getRollData()).roll().total)[0];
+        return convertDistance(RollPF.safeRoll("100 + @cl * 10", this.getRollData()).total)[0];
       case "long":
-        return convertDistance(new Roll("400 + @cl * 40", this.getRollData()).roll().total)[0];
+        return convertDistance(RollPF.safeRoll("400 + @cl * 40", this.getRollData()).total)[0];
       case "mi":
         return convertDistance(range * 5280)[0];
       default:
@@ -240,8 +241,8 @@ export class ItemPF extends Item {
       if (spellbook != null) {
         try {
           result =
-            new Roll(spellbook.baseDCFormula, rollData).roll().total +
-            new Roll(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
+            Roll.create(spellbook.baseDCFormula, rollData).evaluate().total +
+            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).evaluate().total +
             dcBonus;
         } catch (e) {
           console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
@@ -251,7 +252,7 @@ export class ItemPF extends Item {
     }
     const dcFormula = getProperty(data, "save.dc")?.toString() || "0";
     try {
-      result = new Roll(dcFormula, rollData).roll().total + dcBonus;
+      result = Roll.create(dcFormula, rollData).roll().total + dcBonus;
     } catch (e) {
       console.error(e, dcFormula);
     }
@@ -586,7 +587,7 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = new Roll(rng.value, this.getRollData()).roll().total.toString();
+          rng.value = Roll.create(rng.value, this.getRollData()).evaluate().total.toString();
         } catch (err) {
           console.error(err);
         }
@@ -597,12 +598,10 @@ export class ItemPF extends Item {
       // Duration Label
       let dur = duplicate(data.duration || {});
       if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
-      else if (typeof dur.value === "string") {
-        try {
-          dur.value = new Roll(dur.value || "0", this.getRollData()).roll().total.toString();
-        } catch (err) {
-          console.error(this.name, "- Duration -", err);
-        }
+      else if (typeof dur.value === "string" && this.parentActor) {
+        dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"], {
+          suppressError: !this.hasPerm(game.user, "OWNER"),
+        }).total.toString();
       }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
     }
@@ -648,11 +647,7 @@ export class ItemPF extends Item {
     const taggedTypes = game.system.template.Item.types.filter((t) =>
       game.system.template.Item[t].templates?.includes("tagged")
     );
-    if (
-      this.data.data["useCustomTag"] !== undefined &&
-      taggedTypes.includes(this.data.type) &&
-      !this.data.data.useCustomTag
-    ) {
+    if (this.data.data["useCustomTag"] !== true && taggedTypes.includes(this.data.type)) {
       const name = this.name;
       this.data.data.tag = createTag(name);
     }
@@ -959,6 +954,16 @@ export class ItemPF extends Item {
       }
     }
 
+    // Try to convert dictionary flags to numbers
+    if (data["data.flags.dictionary"] !== undefined) {
+      let flags = data["data.flags.dictionary"];
+
+      for (let f of flags) {
+        let v = parseFloat(f[1]);
+        if (!Number.isNaN(v)) f[1] = v;
+      }
+    }
+
     // Set previous data
     this._prevData["level"] = getProperty(this.data, "data.level");
 
@@ -1007,7 +1012,7 @@ export class ItemPF extends Item {
       let anyDiff = diff[d].some((obj, idx) => {
         if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
       });
-      if (!anyDiff) delete diff[d];
+      if (!anyDiff && !(diff[d] instanceof Array)) delete diff[d];
     }
 
     if (Object.keys(diff).length && !options.skipUpdate) {
@@ -1117,7 +1122,7 @@ export class ItemPF extends Item {
     if (hasProperty(this.data, "data.uses.maxFormula")) {
       const maxFormula = getProperty(this.data, "data.uses.maxFormula");
       if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
-        let roll = new Roll(maxFormula, rollData).roll();
+        let roll = RollPF.safeRoll(maxFormula, rollData);
         setProperty(this.data, "data.uses.max", roll.total);
       } else if (formulaHasDice(maxFormula)) {
         const msg = game.i18n
@@ -1209,8 +1214,8 @@ export class ItemPF extends Item {
     if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0) {
       const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = new Roll("1d100").roll().total;
-        templateData.spellFailureSuccess = templateData.spellFailure > this.parent.spellFailure;
+        templateData.spellFailure = Roll.create("1d100").evaluate().total;
+        templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
 
@@ -1296,15 +1301,10 @@ export class ItemPF extends Item {
             break;
           case "ft":
           case "mi":
-            rangeValue = convertDistance(
-              new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total,
-              data.range.units
-            );
+            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total, data.range.units);
             break;
           case "spec":
-            rangeValue = convertDistance(
-              new Roll(data.range.value.length > 0 ? data.range.value : "0", rollData).roll().total
-            );
+            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total);
             break;
         }
         dynamicLabels.range =
@@ -1315,7 +1315,7 @@ export class ItemPF extends Item {
       // Duration
       if (data.duration != null) {
         if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
-          let duration = new Roll(data.duration.value.length > 0 ? data.duration.value : "0", rollData).roll().total;
+          let duration = RollPF.safeRoll(data.duration.value || "0", rollData).total;
           dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
         }
       }
@@ -1448,7 +1448,7 @@ export class ItemPF extends Item {
 
   async use({ ev = null, skipDialog = false } = {}) {
     if (this.type === "spell") {
-      return this.parent.useSpell(this, ev, { skipDialog: skipDialog });
+      return this.useSpell(this, ev, { skipDialog: skipDialog });
     } else if (this.hasAction) {
       return this.useAttack({ ev: ev, skipDialog: skipDialog });
     }
@@ -1474,17 +1474,19 @@ export class ItemPF extends Item {
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
+    if (!this.parentActor) return;
+
     const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
-    let extraAttacks = 0;
+    let extraAttacks = 0,
+      xaroll;
     const rollData = this.getRollData();
-    try {
-      if (exAtkCountFormula.length > 0) {
-        const xaroll = new Roll(exAtkCountFormula, rollData).roll();
-        extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
-      }
-    } catch (err) {
+    if (exAtkCountFormula.length > 0) {
+      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
+      extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
+    }
+    if (xaroll?.err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
-      console.warn(msg, err, exAtkCountFormula);
+      console.warn(msg, xaroll.err, exAtkCountFormula);
       ui.notifications.warn(msg);
     }
 
@@ -1493,7 +1495,7 @@ export class ItemPF extends Item {
     try {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
-        new Roll(exAtkBonusFormula, rollData).roll().total;
+        Roll.create(exAtkBonusFormula, rollData).evaluate().total;
       }
     } catch (err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
@@ -1505,6 +1507,32 @@ export class ItemPF extends Item {
     setProperty(this.data, "data.formulaicAttacks.count.value", extraAttacks);
 
     return extraAttacks;
+  }
+
+  /**
+   * Cast a Spell, consuming a spell slot of a certain level
+   * @param {MouseEvent} ev The click event
+   */
+  async useSpell(ev, { skipDialog = false } = {}) {
+    if (!this.hasPerm(game.user, "OWNER")) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+    if (this.data.type !== "spell") throw new Error("Wrong Item type");
+
+    if (
+      getProperty(this.data, "data.preparation.mode") !== "atwill" &&
+      this.getSpellUses() < this.chargeCost &&
+      this.autoDeductCharges
+    ) {
+      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+
+    // Invoke the Item roll
+    return this.useAttack({ ev: ev, skipDialog: skipDialog });
   }
 
   async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {
@@ -1558,6 +1586,7 @@ export class ItemPF extends Item {
         damageExtraParts = [],
         primaryAttack = true,
         hasteAttackRequired = false,
+        manyshotDamageRequired = false,
         rapidShotAttackRequired = false,
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
@@ -1582,6 +1611,9 @@ export class ItemPF extends Item {
 
         // Haste
         hasteAttackRequired = fullAttack && form.find('[name="haste-attack"]').prop("checked");
+
+        // Manyshot
+        manyshotDamageRequired = fullAttack && form.find('[name="manyshot"]').prop("checked");
 
         // Rapid Shot
         rapidShotAttackRequired = fullAttack && form.find('[name="rapid-shot"]').prop("checked");
@@ -1687,7 +1719,7 @@ export class ItemPF extends Item {
             const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
             for (let i = 0; i < exAtkCount; i++) {
               frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-              const bonus = new Roll(exAtkBonusFormula, frollData).roll().total;
+              const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
               allAttacks.push({
                 bonus: bonus.toString(),
                 label: fatlabel.format(i + 2),
@@ -1726,16 +1758,14 @@ export class ItemPF extends Item {
           for (const [i, modifier] of conditional.modifiers.entries()) {
             // Adds a formula's result to rollData to allow referencing it.
             // Due to being its own roll, this will only correctly work for static formulae.
-            // In try-block to avoid stalling due to malformed modifier
-            try {
-              conditionalData[[tag, i].join(".")] = new Roll(modifier.formula, rollData).roll().total;
-            } catch (e) {
+            const conditionalRoll = RollPF.safeRoll(modifier.formula, rollData);
+            if (conditionalRoll.err) {
               const msg = game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name });
               console.warn(msg);
               ui.notifications.warn(msg);
               // Skip modifier to avoid multiple errors from one non-evaluating entry
               continue;
-            }
+            } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, rollData).total;
 
             // Create a key string for the formula array
             const partString = `${modifier.target}.${modifier.subTarget}${
@@ -1763,21 +1793,17 @@ export class ItemPF extends Item {
         for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
           if (conditionalPartsCommon[target] != null) {
             const formula = conditionalPartsCommon[target].join("+");
-            try {
-              const roll = new Roll(formula, rollData).roll().total;
-              switch (target) {
-                case "effect.cl":
-                  rollData.cl += roll;
-                  break;
-                case "effect.dc":
-                  rollData.dcBonus = roll;
-                  break;
-                case "misc.charges":
-                  rollData.chargeCostBonus = roll;
-                  break;
-              }
-            } catch (e) {
-              console.error(e, formula);
+            const roll = RollPF.safeRoll(formula, rollData, [target, formula]).total;
+            switch (target) {
+              case "effect.cl":
+                rollData.cl += roll;
+                break;
+              case "effect.dc":
+                rollData.dcBonus = roll;
+                break;
+              case "misc.charges":
+                rollData.chargeCostBonus = roll;
+                break;
             }
           }
         }
@@ -1809,6 +1835,7 @@ export class ItemPF extends Item {
       if (this.hasAttack) {
         let ammoRequired = allAttacks.length;
         if (hasteAttackRequired) ammoRequired++;
+        if (manyshotDamageRequired) ammoRequired++;
         if (rapidShotAttackRequired) ammoRequired++;
         ammoRequired = Math.min(ammoAvailable, ammoRequired);
 
@@ -1870,6 +1897,40 @@ export class ItemPF extends Item {
           // Add to list
           attacks.push(attack);
           ammoUsed++;
+
+          // Add additional damage for Manyshot
+          if (a === 0 && manyshotDamageRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {
+            const conditionalParts = {
+              "damage.normal": [
+                ...(conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.normal"] ?? []),
+              ], //`
+              "damage.nonCrit": [
+                ...(conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []),
+                ...(conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
+              ], //`
+            };
+
+            let manyshot = new ChatAttack(this, {
+              label: game.i18n.localize("PF1.Manyshot"),
+              rollData: rollData,
+              primaryAttack: primaryAttack,
+            });
+            // Add damage
+            await manyshot.addDamage({
+              extraParts: duplicate(damageExtraParts),
+              critical: false,
+              conditionalParts,
+            });
+            manyshot.damage.flavor = manyshot.label;
+
+            // Add effect notes
+            manyshot.addEffectNotes();
+
+            // Add to list (don't delay this one; we want it next to Attack #1)
+            attacks.push(manyshot);
+            ammoUsed++;
+          }
 
           // Create additional attack for Haste
           if (a === 0 && hasteAttackRequired && (!ammoLinks.length || ammoUsed < ammoAvailable)) {
@@ -2022,7 +2083,7 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
       // Add effect notes only
-      else if (this.hasEffect || this.hasSave) {
+      else {
         let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
 
         // Add effect notes
@@ -2042,7 +2103,7 @@ export class ItemPF extends Item {
         // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
         if (typeof dist === "string") {
-          dist = new Roll(getProperty(this.data, "data.measureTemplate.size"), rollData).roll().total;
+          dist = RollPF.safeRoll(getProperty(this.data, "data.measureTemplate.size"), rollData).total;
         }
         dist = convertDistance(dist)[0];
 
@@ -2143,7 +2204,7 @@ export class ItemPF extends Item {
       await this.addCharges(-cost);
 
       // Post message
-      if (this.hasAction) {
+      if (attacks.length) {
         // Get extra text and properties
         let props = [];
         let extraText = "";
@@ -2264,7 +2325,7 @@ export class ItemPF extends Item {
           if (range != null) {
             templateData.range = range;
             if (typeof range === "string") {
-              templateData.range = new Roll(range, rollData).roll().total;
+              templateData.range = RollPF.safeRoll(range, rollData).total;
               templateData.rangeFormula = range;
             }
             templateData.rangeLabel = `${templateData.range} ft.`;
@@ -2286,8 +2347,8 @@ export class ItemPF extends Item {
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = new Roll("1d100").roll().total;
-            templateData.spellFailureSuccess = templateData.spellFailure > this.parent.spellFailure;
+            templateData.spellFailure = Roll.create("1d100").evaluate().total;
+            templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }
         // Add metadata
@@ -2380,12 +2441,22 @@ export class ItemPF extends Item {
           };
         }
 
-        // Fetch formulaic attacks and ensure .value is set
-        let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
-        if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0)
-          fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+        let showFullAttack = false;
 
-        if ((getProperty(this.data, "data.attackParts") || []).length || fmAtks > 0 || this.type === "spell") {
+        if (["mwak", "rwak"].includes(getProperty(this.data, "data.actionType"))) {
+          showFullAttack = true;
+        } else if ((getProperty(this.data, "data.AttackParts") || []).length) {
+          showFullAttack = true;
+        } else {
+          // Fetch formulaic attacks and ensure .value is set
+          let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+          if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0) {
+            fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
+            if (fmAtks > 0) showFullAttack = true;
+          }
+        }
+
+        if (showFullAttack || this.type === "spell") {
           buttons.multi = {
             label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
             callback: (html) => resolve((roll = _roll.call(this, true, html))),
@@ -2510,7 +2581,7 @@ export class ItemPF extends Item {
     parts = parts.concat(extraParts);
     // Add attack bonus
     if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
-      let attackBonus = new Roll(itemData.attackBonus, rollData).roll().total;
+      let attackBonus = RollPF.safeRoll(itemData.attackBonus, rollData).total;
       rollData.item.attackBonus = attackBonus;
       parts.push("@item.attackBonus");
     }
@@ -2572,7 +2643,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false) parts.push("-5");
     // Add bonus
     if (bonus) {
-      rollData.bonus = new Roll(bonus, rollData).roll().total;
+      rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
       parts.push("@bonus");
     }
 
@@ -2581,7 +2652,7 @@ export class ItemPF extends Item {
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
-    let roll = new Roll([rollData.d20, ...parts].join("+"), rollData).roll();
+    let roll = RollPF.safeRoll([rollData.d20, ...parts].join("+"), rollData);
     return roll;
   }
 
@@ -2647,7 +2718,7 @@ export class ItemPF extends Item {
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
-    const roll = new Roll(itemData.formula, rollData).roll();
+    const roll = RollPF.safeRoll(itemData.formula, rollData);
     return roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.parent }),
       flavor: itemData.chatFlavor || title,
@@ -2670,7 +2741,7 @@ export class ItemPF extends Item {
     rollData.critMult = 1;
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
-    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (rollData.ablMult == null) rollData.ablMult = this.data.data.ability.damageMult;
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Define Roll parts
@@ -2754,7 +2825,7 @@ export class ItemPF extends Item {
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: new Roll([part.base, ...rollParts].join("+"), rollData).roll(),
+        roll: RollPF.safeRoll([part.base, ...rollParts].join("+"), rollData),
         damageType: part.damageType,
         type: part.type,
       };
@@ -2791,15 +2862,15 @@ export class ItemPF extends Item {
     });
     // Submit the roll to chat
     if (effectStr === "") {
-      new Roll(parts.join("+")).toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.parent }),
+      Roll.create(parts.join("+")).toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
     } else {
       const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
-      let roll = new Roll(parts.join("+"), data).roll();
+      let roll = RollPF.safeRoll(parts.join("+"), data);
 
       // Create roll template data
       const rollData = mergeObject(
@@ -3238,7 +3309,7 @@ export class ItemPF extends Item {
   getSpellPointCost(rollData = null) {
     if (!rollData) rollData = this.getRollData();
 
-    const roll = new Roll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData).roll();
+    const roll = RollPF.safeRoll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData);
     return roll.total;
   }
 
@@ -3330,15 +3401,15 @@ export class ItemPF extends Item {
     data.data.range.value = origData.data.range.value;
     switch (data.data.range.units) {
       case "close":
-        data.data.range.value = new Roll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.value = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
       case "medium":
-        data.data.range.value = new Roll("100 + @cl * 10", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.value = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
       case "long":
-        data.data.range.value = new Roll("400 + @cl * 40", { cl: slcl[1] }).roll().total.toString();
+        data.data.range.value = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }).total.toString();
         data.data.range.units = "ft";
         break;
     }
@@ -3454,7 +3525,6 @@ export class ItemPF extends Item {
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parent) return;
 
-    const selfUpdateData = {};
     // Add items associated to this class
     if (newLevel > curLevel) {
       const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
@@ -3481,7 +3551,7 @@ export class ItemPF extends Item {
       if (newItems.length) {
         const items = await CONFIG.Item.documentClass.create(
           newItems.map((o) => o.data),
-          { parent: this.parent }
+          { parent: this.parentActor }
         );
 
         let updateData = [];
@@ -3494,7 +3564,8 @@ export class ItemPF extends Item {
           // Remove temporary flag
           updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
         }
-        if (updateData.length) await CONFIG.Item.documentClass.updateDocuments(updateData, { parent: this.parent });
+        if (updateData.length)
+          await CONFIG.Item.documentClass.updateDocuments(updateData, { parent: this.parentActor });
       }
       // const newItemData = await ItemPF.create(itemData, { parent: this.parent });
       // const newItem = this.parent.items.find((o) => o.id === newItemData.id);
@@ -3525,11 +3596,8 @@ export class ItemPF extends Item {
       await CONFIG.Item.documentClass.deleteDocuments(itemIds, { parent: this.parent });
     }
 
-    if (!isObjectEmpty(selfUpdateData)) {
-      await this.update(selfUpdateData);
-    }
-    // Always update actor for this
-    // await this.actor.update({});
+    // Call level change hook
+    Hooks.call("pf1.classLevelChange", this.actor, this, curLevel, newLevel);
   }
 
   /**
@@ -3740,7 +3808,7 @@ export class ItemPF extends Item {
         const i = await this.getLinkItem(l);
         if (i == null) {
           l.name = l.name + (l.name?.indexOf("[x]") > -1 ? "" : " [x]");
-          l.img = "icons/svg/mystery-man.svg";
+          l.img = CONST.DEFAULT_TOKEN;
           continue;
         }
         l.name = i.name;
@@ -4164,5 +4232,122 @@ export class ItemPF extends Item {
     }
 
     return super.delete(context);
+  }
+  /**
+   * Sets a boolean flag on this item.
+   * @param {string} flagName - The name/key of the flag to set.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async addItemBooleanFlag(flagName) {
+    let flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    if (flags.filter((f) => f[0] === flagName).length === 0) {
+      await this.update({ "data.flags.boolean": flags.concat([[flagName]]) });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Removes a boolean flag from this item.
+   * @param {string} flagName - The name/key of the flag to remove.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async removeItemBooleanFlag(flagName) {
+    let flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    if (flags.filter((f) => f[0] === flagName).length > 0) {
+      flags = flags.filter((f) => f[0] !== flagName);
+      await this.update({ "data.flags.boolean": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag on this item.
+   * @returns {boolean} Whether the flag was found on this item.
+   */
+  hasItemBooleanFlag(flagName) {
+    const flags = getProperty(this.data, "data.flags.boolean") || [];
+
+    return flags.map((f) => f[0]).includes(flagName);
+  }
+
+  /**
+   * Sets a dictionary flag value on this item.
+   * @param {string} flagName - The name/key of the flag to set.
+   * @param {number|string} value - The flag's new value.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async setItemDictionaryFlag(flagName, value) {
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
+
+    let doUpdate = false;
+    let foundFlag = false;
+    for (let f of flags) {
+      if (f[0] === flagName) {
+        foundFlag = true;
+        if (f[1] !== value) {
+          f[1] = value;
+          doUpdate = true;
+        }
+      }
+    }
+    if (!foundFlag) {
+      flags.push([flagName, value]);
+      doUpdate = true;
+    }
+
+    if (doUpdate) {
+      await this.update({ "data.flags.dictionary": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Removes a dictionary flag from this item.
+   * @param {string} flagName - The name/key of the flag to remove.
+   * @returns {Promise<boolean>} Whether something was changed.
+   */
+  async removeItemDictionaryFlag(flagName) {
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || {});
+
+    let doUpdate = false;
+    for (let a = 0; a < flags.length; a++) {
+      let f = flags[a];
+      if (f[0] === flagName) {
+        flags.splice(a, 1);
+        a--;
+        doUpdate = true;
+      }
+    }
+
+    if (doUpdate) {
+      await this.update({ "data.flags.dictionary": flags });
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag to get.
+   * @returns {object} The value stored in the flag.
+   */
+  getItemDictionaryFlag(flagName) {
+    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+
+    for (let f of flags) {
+      if (f[0] === flagName) {
+        return f[1];
+      }
+    }
+
+    return undefined;
   }
 }

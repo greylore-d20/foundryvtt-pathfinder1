@@ -175,11 +175,19 @@
       },
       "FC": {
         "Header": "Favoured Class Bonus"
+      },
+      "Extra": {
+        "Header": "Extra",
+        "NewFeat": "You have 1 new feat to choose",
+        "NewFeats": "You have {newValue} new feats to choose",
+        "NewAbilityScore": "You can increase an ability score by +1"
       }
     }
   },
 
   "PF1.Submit": "Submit",
+  "PF1.Next": "Next",
+  "PF1.Previous": "Previous",
   "PF1.General": "General",
 
   "PF1.Apply": "Apply",
@@ -194,9 +202,17 @@
 
   "PF1.RollsForInitiative": "{0} rolls for initiative!",
 
+  "PF1.Flags": "Flags",
   "PF1.FlagsInstructions": "Configure character features and traits which fine-tune behaviors of the PF1 system.",
   "PF1.FlagsTitle": "Configure Special Traits",
   "PF1.FlagsSave": "Update Special Traits",
+  "PF1.FlagsBoolean": "Boolean Flags",
+  "PF1.FlagsDictionary": "Dictionary Flags",
+  "PF1.AdvancedInfo": {
+    "Flags": {
+      "InfoBox": "Flags can be used by modules and macros, and don't do anything by themselves."
+    }
+  },
 
   "PF1.AbilityDamage": "Ability Damage",
   "PF1.AbilityDrain": "Ability Drain",
@@ -427,6 +443,8 @@
   "PF1.BuffTarIntChecks": "Intelligence Checks",
   "PF1.BuffTarWisChecks": "Wisdom Checks",
   "PF1.BuffTarChaChecks": "Charisma Checks",
+  "PF1.BuffTarBonusSkillRanks": "Bonus Skill Ranks",
+  "PF1.BuffTarBonusFeats": "Bonus Feats",
 
   "PF1.BuffTarSpells": "Spells",
   "PF1.SpellBuffEffect": "Effect",
@@ -704,11 +722,6 @@
   "PF1.InventoryContainers": "Containers",
 
   "PF1.ChangeFlagLoseDexToAC": "Lose Dex to AC",
-  "PF1.ChangeFlagNoDex": "0 Dex",
-  "PF1.ChangeFlagNoStr": "0 Str",
-  "PF1.ChangeFlagOneInt": "1 Int",
-  "PF1.ChangeFlagOneWis": "1 Wis",
-  "PF1.ChangeFlagOneCha": "1 Cha",
   "PF1.ChangeFlagDwarflikeEncumbrance": "Dwarf-like Encumbrance",
   "PF1.ChangeFlagMediumArmorFullSpeed": "Full Speed in Medium Armor",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "Full Speed in Heavy Armor",
@@ -908,6 +921,9 @@
   "PF1.SourceInfoTemplate": "Template",
   "PF1.SourceInfoRace": "Race",
 
+  "PF1.SourceInfoSkillRank_ClassBase": "{className} (Base)",
+  "PF1.SourceInfoSkillRank_ClassFC": "{className} (Favoured Class)",
+
   "PF1.CreateItemForSpell": "Create Item for {0}",
   "PF1.CreateItemWand": "Wand",
   "PF1.CreateItemScroll": "Scroll",
@@ -919,6 +935,7 @@
   "PF1.CombatInfo_Header": "Combat",
   "PF1.CombatInfo_Round": "Round {0}",
 
+  "PF1.AddClass": "Add Class",
   "PF1.Horizontal": "Horizontal",
   "PF1.Vertical": "Vertical",
   "PF1.HideHeld": "Hide Held items",
@@ -949,6 +966,7 @@
   "PF1.Attacks": "Attacks",
   "PF1.Biography": "Biography",
   "PF1.Buffs": "Buffs",
+  "PF1.Change": "Change",
   "PF1.Changes": "Changes",
   "PF1.Charged": "Charged",
   "PF1.ChargesSeperator": "of",
@@ -1130,6 +1148,7 @@
   "PF1.ClassPlural": "Classes",
   "PF1.FeatPlural": "Feats",
   "PF1.ClassFeaturePlural": "Class Features",
+  "PF1.NewClassFeaturePlural": "New Class Features",
   "PF1.TraitPlural": "Traits",
   "PF1.RacialTraitPlural": "Racial Traits",
   "PF1.TemplatePlural": "Templates",
@@ -1317,6 +1336,7 @@
   "PF1.Confirm": "Confirm",
   "PF1.CROffset": "Challenge Rating Offset",
   "PF1.Haste": "Haste",
+  "PF1.Manyshot": "Manyshot",
   "PF1.RapidShot": "Rapid Shot",
   "PF1.PointBlankShot": "Point-Blank Shot",
   "PF1.AmmoRemaining": "Ammunition Remaining: {0}",
@@ -1373,6 +1393,7 @@
   "PF1.MaxDexArmor": "Max Dexterity Bonus (Armor)",
   "PF1.MaxDexShield": "Max Dexterity Bonus (Shield)",
   "PF1.Encumbrance": "Encumbrance",
+  "PF1.Raw": "Raw",
   "PF1.Normal": "Normal",
   "PF1.Large": "Large",
   "PF1.ExtraLarge": "Extra Large",
@@ -1399,6 +1420,7 @@
   "PF1.Settings": "Settings",
   "PF1.SpellbookUsage": "Spellbook Usage",
   "PF1.SpellSlotAbilityBonus": "Spell Slot Ability Bonus",
+  "PF1.AlternativeSpellbookName": "Spellbook Name",
   "PF1.StaticSize": "Static Size",
   "PF1.DomainSlotValue": "Domain Slot Value",
   "PF1.DomainSlotValueDesc": "How many 'free' slots do Domain/School spells provide for a spell level?",
@@ -1415,6 +1437,11 @@
   "PF1.Migration.Start": "Applying PF1 System Migration for version {version}. Please stand by.",
   "PF1.Migration.Ongoing": "Migration is ongoing. Please wait until it finishes.",
   "PF1.Migration.End": "PF1 System Migration to version {version} succeeded!",
+
+  "PF1.Info": {
+    "AddClassDialog": "You can hold Shift to bypass this dialog.",
+    "AddClassDialog_Desc": "Pressing Normal opens a short wizard, while pressing Raw will add the class without any alterations."
+  },
 
   "PF1.Help": {
     "Label": "Help",

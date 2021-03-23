@@ -83,7 +83,7 @@ export class DicePF {
         }
 
         // Execute the roll
-        let roll = new Roll(curParts.join(" + "), data).roll();
+        let roll = Roll.create(curParts.join(" + "), data).evaluate();
 
         // Convert the roll to a chat message
         if (chatTemplate) {
@@ -233,7 +233,7 @@ export class DicePF {
         data["ablMult"] = data.item.ability.damageMult;
       }
 
-      let roll = new Roll(parts.join("+"), data);
+      let roll = Roll.create(parts.join("+"), data);
       if (crit === true) {
         let mult = data.item.ability.critMult || 2;
 
@@ -242,7 +242,7 @@ export class DicePF {
         flavor = `${flavor} (Critical)`;
       }
 
-      roll.roll();
+      roll.evaluate();
 
       // Convert the roll to a chat message
       if (chatTemplate) {
@@ -344,68 +344,8 @@ export class DicePF {
   static messageRoll({ data, msgStr }) {
     let re = /\[\[(.+)\]\]/g;
     return msgStr.replace(re, (_, p1) => {
-      const roll = new Roll(p1, data).roll();
+      const roll = RollPF.safeRoll(p1, data);
       return roll.total.toString();
     });
   }
 }
-
-export const _preProcessDiceFormula = function (formula, data = {}) {
-  // Replace parentheses with semicolons to use for splitting
-  let toSplit = formula
-    .replace(/([A-z]+)?\(/g, (match, prefix) => {
-      return prefix in game.pf1.rollPreProcess || prefix in Math ? `;${prefix};(;` : ";(;";
-    })
-    .replace(/\)/g, ";);");
-  let terms = toSplit.split(";");
-
-  // Match parenthetical groups
-  let nOpen = 0,
-    nOpenPreProcess = [];
-  terms = terms.reduce((arr, t) => {
-    // Handle cases where the prior term is a math function
-    const beginPreProcessFn = t[0] === "(" && arr[arr.length - 1] in game.pf1.rollPreProcess;
-    if (beginPreProcessFn) nOpenPreProcess.push([arr.length - 1, nOpen]);
-    const beginMathFn = t[0] === "(" && arr[arr.length - 1] in Math;
-    if (beginMathFn && nOpenPreProcess.length > 0) nOpenPreProcess.push([arr.length - 1, nOpen]);
-
-    // Add terms to the array
-    arr.push(t);
-
-    // Increment the number of open parentheses
-    if (t === "(") nOpen++;
-    if (nOpen > 0 && t === ")") {
-      nOpen--;
-      for (let a = 0; a < nOpenPreProcess.length; a++) {
-        let obj = nOpenPreProcess[a];
-        // End pre process function
-        if (obj[1] === nOpen) {
-          const sliceLen = arr.length - obj[0];
-          let fnData = arr.splice(obj[0], sliceLen),
-            fn = fnData[0];
-          let fnParams = fnData
-            .slice(2, -1)
-            .reduce((cur, s) => {
-              cur.push(...s.split(/\s*,\s*/));
-              return cur;
-            }, [])
-            .map((o) => {
-              return new Roll(o, data).roll().total;
-            })
-            .filter((o) => o !== "" && o != null);
-          if (fn in Math) {
-            arr.push(Math[fn](...fnParams).toString());
-          } else {
-            arr.push(game.pf1.rollPreProcess[fn](...fnParams).toString());
-          }
-
-          nOpenPreProcess.splice(a, 1);
-          a--;
-        }
-      }
-    }
-    return arr;
-  }, []);
-
-  return terms.join("");
-};

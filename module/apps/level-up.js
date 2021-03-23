@@ -1,6 +1,16 @@
 import { createInlineRollString } from "../chat.js";
+import { createCustomChatMessage } from "../chat.js";
 
 export class LevelUpForm extends DocumentSheet {
+  constructor(...args) {
+    super(...args);
+
+    /**
+     * Tracks whether this form has already been submitted.
+     */
+    this._submitted = false;
+  }
+
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
@@ -16,6 +26,34 @@ export class LevelUpForm extends DocumentSheet {
 
   get actor() {
     return this.object.actor;
+  }
+
+  static async addClassWizard(actor, rawData) {
+    // Alter initial data
+    setProperty(rawData, "data.hp", 0);
+    setProperty(rawData, "data.level", 0);
+
+    // Add class item
+    let itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    const item = actor.items.get(itemData[0]._id);
+    if (!item) {
+      throw new Error("No class was created at class initialization wizard");
+    }
+
+    // Add level up form for new class
+    return new Promise((resolve) => {
+      const _app = new LevelUpForm(item).render(true);
+      Hooks.on("closeLevelUpForm", function _onClose(app) {
+        if (app === _app) {
+          if (getProperty(item.data, "data.level") === 0) {
+            actor.deleteEmbeddedEntity("OwnedItem", [item.id]);
+          }
+          Hooks.off("closeLevelUpForm", _onClose);
+          resolve();
+        }
+      });
+    });
   }
 
   getData() {
@@ -66,7 +104,7 @@ export class LevelUpForm extends DocumentSheet {
     } else if (formData["health.roll"]) {
       // Roll for health
       const formula = `1d${item.data.data.hd}`;
-      const roll = new Roll(formula).roll();
+      const roll = RollPF.safeRoll(formula);
       chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
         add: createInlineRollString(roll),
@@ -96,7 +134,56 @@ export class LevelUpForm extends DocumentSheet {
 
     // Update class
     updateData["data.level"] = chatData.level.new;
-    await this.object.update(updateData);
+    this.object.update(updateData);
+    await new Promise((resolve) => {
+      Hooks.on(
+        "pf1.classLevelChange",
+        function _waiter(actor, item) {
+          if (item.id === this.object.id) {
+            Hooks.off("pf1.classLevelChange", _waiter);
+            resolve();
+          }
+        }.bind(this)
+      );
+    });
+
+    // Add new class features to chat data
+    {
+      const classAssociations = getProperty(this.object.data, "flags.pf1.links.classAssociations") || {};
+      const newAssociations = Object.entries(classAssociations).filter((o) => {
+        return o[1] === chatData.level.new;
+      });
+      chatData.newFeatures = [];
+      for (let co of newAssociations) {
+        const item = this.actor.items.get(co[0]);
+        if (item) chatData.newFeatures.push(duplicate(item.data));
+      }
+    }
+
+    // Add extra info (new feats, skill ranks, etc.)
+    {
+      const ex = {};
+      chatData.extra = ex;
+
+      // Show new feat count
+      const featCount = this.actor.getFeatCount();
+      featCount.new = Math.max(0, featCount.max - featCount.value);
+      ex.feats = featCount;
+      if (featCount.new > 0) {
+        ex.enabled = true;
+        if (featCount.new === 1) featCount.label = game.i18n.localize("PF1.LevelUp.Chat.Extra.NewFeat");
+        else featCount.label = game.i18n.format("PF1.LevelUp.Chat.Extra.NewFeats", { newValue: featCount.new });
+      }
+
+      // Show new ability score
+      const hd = getProperty(this.actor.data, "data.attributes.hd.total");
+      if (typeof hd === "number" && hd % 4 === 0) {
+        ex.enabled = true;
+        ex.newAbilityScore = {
+          label: game.i18n.localize("PF1.LevelUp.Chat.Extra.NewAbilityScore"),
+        };
+      }
+    }
 
     // Create chat message
     return this.createChatMessage(chatData);
@@ -115,9 +202,9 @@ export class LevelUpForm extends DocumentSheet {
 
     await chatMessageClass.create({
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
-      speaker: speaker,
       user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      speaker,
     });
   }
 
@@ -125,6 +212,14 @@ export class LevelUpForm extends DocumentSheet {
     html.find(`.switch-check[name="health.roll"]`).change(this._switchHealthRoll.bind(this));
 
     html.find('button[name="submit"]').click(this._onSubmit.bind(this));
+  }
+
+  _onSubmit(event, ...args) {
+    event.preventDefault();
+    if (this._submitted) return;
+
+    this._submitted = true;
+    super._onSubmit(event, ...args);
   }
 
   _switchHealthRoll(event) {

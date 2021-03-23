@@ -96,7 +96,8 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
           : messageOptions.rollMode || c.token.hidden || c.hidden
           ? "gmroll"
           : "roll";
-      const roll = new Roll(formula, actorData).roll();
+      const roll = RollPF.safeRoll(formula, actorData);
+      if (roll.err) ui.notifications.warn(roll.err.message);
       updates.push({ _id: id, initiative: roll.total });
 
       let [notes, notesHTML] = c.actor.getInitiativeContextNotes();

@@ -46,6 +46,7 @@ module.exports = {
     FateDie: "readonly",
     DicePool: "readonly",
     Roll: "readonly",
+    RollPF: "readonly",
     MersenneTwister: "readonly",
     EntityCollection: "readonly",
     Compendium: "readonly",

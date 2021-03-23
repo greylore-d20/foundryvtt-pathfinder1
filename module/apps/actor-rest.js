@@ -118,12 +118,9 @@ export class ActorRestDialog extends BaseEntitySheet {
           // Try to roll restoreFormula, fall back to restoring max spell points
           let restorePoints = spellbook.spellPoints.max;
           if (spellbook.spellPoints.restoreFormula) {
-            try {
-              const restoreRoll = new Roll(spellbook.spellPoints.restoreFormula, actor.getRollData()).roll().total;
-              restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll, spellbook.spellPoints.max);
-            } catch (e) {
-              console.error(e, spellbook.spellPoints.restoreFormula);
-            }
+            const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, actor.getRollData());
+            if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
+            else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
           }
           updateData[`data.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;
         }

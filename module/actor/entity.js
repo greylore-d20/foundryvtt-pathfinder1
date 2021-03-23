@@ -7,6 +7,8 @@ import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
 import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo } from "./apply-changes.js";
 import { ActorDataPF } from "./data.js";
+import { RollPF } from "../roll.js";
+import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
@@ -205,6 +207,15 @@ export class ActorPF extends ActorDataPF(Actor) {
     return [...skills, ...subSkills];
   }
 
+  /**
+   * The VisionPermissionSheet instance for this actor
+   * @type {VisionPermissionSheet}
+   */
+  get visionPermissionSheet() {
+    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
+    return this._visionPermissionSheet;
+  }
+
   _dataIsPC(data) {
     if (data.permission != null) {
       const nonGM = game.users.entities.filter((u) => !u.isGM);
@@ -219,6 +230,8 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   prepareEmbeddedEntities() {
     super.prepareEmbeddedEntities();
+    this.containerItems = this._prepareContainerItems(this.items);
+    this.itemFlags = this._prepareItemFlags(this.allItems);
     this._prepareChanges();
     this.containerItems = this._prepareContainerItems(this.items);
   }
@@ -240,6 +253,22 @@ export class ActorPF extends ActorDataPF(Actor) {
     });
 
     return collection;
+  }
+
+  _prepareItemFlags(items) {
+    let bFlags = {};
+
+    for (let i of items) {
+      const flags = getProperty(i.data, "data.flags.boolean") || [];
+      for (let f of flags) {
+        bFlags[f] = bFlags[f] || { sources: [] };
+        bFlags[f].sources.push(i);
+      }
+    }
+
+    return {
+      boolean: bFlags,
+    };
   }
 
   _prepareChanges() {
@@ -440,9 +469,7 @@ export class ActorPF extends ActorDataPF(Actor) {
           this.data,
           k,
           classes.reduce((cur, obj) => {
-            const formula =
-              CONFIG.PF1.classBABFormulas[obj.data.bab] != null ? CONFIG.PF1.classBABFormulas[obj.data.bab] : "0";
-            const v = new Roll(formula, { level: obj.data.level }).roll().total;
+            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }).total;
 
             if (v !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -650,6 +677,9 @@ export class ActorPF extends ActorDataPF(Actor) {
         long: convertDistance(400 + 40 * cl)[0],
       };
     }
+
+    // Compute encumbrance
+    this._computeEncumbrance();
   }
 
   /**
@@ -697,7 +727,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       // Add spell slots based on ability bonus slot formula
       {
         const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
-        spellbookAbilityScore += new Roll(formula, rollData).roll().total;
+        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
       }
 
       const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
@@ -730,7 +760,7 @@ export class ActorPF extends ActorDataPF(Actor) {
           });
         }
         // Add from bonus formula
-        const clBonus = new Roll(formula, rollData).roll().total;
+        const clBonus = RollPF.safeRoll(formula, rollData).total;
         total += clBonus;
         if (clBonus > 0) {
           getSourceInfo(this.sourceInfo, key).positive.push({
@@ -846,7 +876,7 @@ export class ActorPF extends ActorDataPF(Actor) {
             : spellClass?.length > 0
             ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
             : 0;
-        const roll = new Roll(formula, rollData).roll();
+        const roll = RollPF.safeRoll(formula, rollData);
         setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
       }
     }
@@ -881,54 +911,6 @@ export class ActorPF extends ActorDataPF(Actor) {
         delete data.skills[skillId];
       }
     }
-
-    // Compute encumbrance
-    this._computeEncumbrance();
-    switch (this.data.data.attributes.encumbrance.level) {
-      case 0:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
-        break;
-      case 1:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        break;
-      case 2:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 6,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 1,
-        });
-        break;
-    }
-    setProperty(
-      this.data,
-      "data.attributes.acp.total",
-      Math.max(
-        getProperty(this.data, "data.attributes.acp.gear"),
-        getProperty(this.data, "data.attributes.acp.encumbrance")
-      )
-    );
 
     // Prepare modifier containers
     data.attributes.mods = data.attributes.mods || {};
@@ -1030,6 +1012,30 @@ export class ActorPF extends ActorDataPF(Actor) {
           }
         }
       }
+    }
+
+    // Add encumbrance source details
+    switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
+      case 1:
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        break;
+      case 2:
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 6,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 1,
+        });
+        break;
     }
 
     this.refreshDerivedData();
@@ -1142,12 +1148,12 @@ export class ActorPF extends ActorDataPF(Actor) {
           for (let src of grp) {
             if (!src.operator) src.operator = "add";
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
-            let srcValue = 0;
-            try {
-              srcValue = src.value != null ? src.value : new Roll(src.formula || "0", rollData).roll().total;
-            } catch (err) {
-              console.error(err, changeTarget, src, this);
-            }
+            let srcValue =
+              src.value != null
+                ? src.value
+                : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
+                    suppressError: !this.hasPerm(game.user, "OWNER"),
+                  }).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
               sourceDetails[changeTarget].push({
@@ -1296,7 +1302,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let a = 0; a < level; a++) {
         const rollData = this.getRollData();
         rollData.level = a + 1;
-        const roll = new Roll(expConfig.custom.formula, rollData).roll();
+        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData);
         totalXP += roll.total;
       }
     }
@@ -2080,7 +2086,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     let formulaRoll = 0;
     if (spellbook.concentrationFormula.length)
-      formulaRoll = new Roll(spellbook.concentrationFormula, rollData).roll().total;
+      formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
@@ -2479,8 +2485,8 @@ export class ActorPF extends ActorDataPF(Actor) {
       if (form) {
         value = form.find('[name="damage"]').val();
         let dR = form.find('[name="damage-reduction"]').val();
-        value = value.length ? new Roll(value).roll().total : 0;
-        dR = dR.length ? new Roll(dR).roll().total : 0;
+        value = value.length ? RollPF.safeRoll(value, {}, []).total : 0;
+        dR = dR.length ? RollPF.safeRoll(dR, {}, []).total : 0;
         if (multiplier < 0) {
           value = Math.ceil(value * multiplier);
           value = Math.min(value - dR, 0);
@@ -2701,6 +2707,13 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   /**
+   * @returns {ItemPF[]} All items on this actor, including those in containers.
+   */
+  get allItems() {
+    return [...this.containerItems, ...Array.from(this.items)];
+  }
+
+  /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    * @param {String} context - The context to draw from.
    */
@@ -2904,6 +2917,37 @@ export class ActorPF extends ActorDataPF(Actor) {
       if (carriedWeight > this.data.data.attributes.encumbrance.levels.medium) encLevel++;
     }
     setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
+
+    switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
+      case 0:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
+        setProperty(this.data, "data.attributes.maxDexBonus", null);
+        break;
+      case 1:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
+        );
+        break;
+      case 2:
+        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
+        );
+        break;
+    }
+    setProperty(
+      this.data,
+      "data.attributes.acp.total",
+      Math.max(
+        getProperty(this.data, "data.attributes.acp.gear"),
+        getProperty(this.data, "data.attributes.acp.encumbrance")
+      )
+    );
   }
 
   _calculateCoinWeight() {
@@ -3034,7 +3078,14 @@ export class ActorPF extends ActorDataPF(Actor) {
       // Clear certain fields
       const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
       for (let k of clearFields) {
-        setProperty(result, k, undefined);
+        const arr = k.split(".");
+        const k2 = arr.slice(0, -1).join(".");
+        const k3 = arr.slice(-1)[0];
+        if (k2 === "") delete result[k];
+        else {
+          const obj = getProperty(result, k2);
+          if (typeof obj === "object") delete obj[k3];
+        }
       }
 
       return result;
@@ -3055,8 +3106,11 @@ export class ActorPF extends ActorDataPF(Actor) {
         return obj.type === "class";
       })
       .forEach((cls) => {
-        const tag = cls.data.tag;
-        if (!tag) return;
+        let tag = cls.data.tag;
+        if (!tag) {
+          if (cls.data["useCustomTag"] !== true) tag = createTag(cls.name);
+          else return;
+        }
 
         let healthConfig = game.settings.get("pf1", "healthConfig");
         const hasPlayerOwner = this.hasPlayerOwner;
@@ -3088,7 +3142,7 @@ export class ActorPF extends ActorDataPF(Actor) {
         for (let k of Object.keys(result.classes[tag].savingThrows)) {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = new Roll(formula, { level: cls.data.level }).roll().total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
         }
       });
 
@@ -3122,8 +3176,18 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Add spellbook info
-    for (let [k, spellbook] of Object.entries(getProperty(result, "attributes.spells.spellbooks"))) {
-      setProperty(result, `spells.${k}`, spellbook);
+    const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
+    let keyedBooks = [];
+    for (let [k, book] of spellbooks) {
+      setProperty(result, `spells.${k}`, book);
+      keyedBooks.push(k);
+    }
+    const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
+    for (let book of aliasBooks) {
+      if (!keyedBooks.includes(book.class)) {
+        setProperty(result, `spells.${book.class}`, book);
+        keyedBooks.push(book.class);
+      }
     }
 
     // Add range info
@@ -3199,7 +3263,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
-        cur += new Roll(crOffset, this.getRollData(data)).roll().total;
+        cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
       return cur;
     }, base);
   }
@@ -3348,5 +3412,58 @@ export class ActorPF extends ActorDataPF(Actor) {
     delete data._id;
     data.effects = [];
     return this.update(data);
+  }
+
+  /**
+   * @typdef MaxAndValue
+   * @type {object}
+   * @property {number} max - The maximum value.
+   * @property {number} value - The current value.
+   *
+   * @returns {MaxAndValue} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
+   */
+  getFeatCount() {
+    const result = { max: 0, value: 0 };
+    result.value = this.items.filter((o) => {
+      return o.type === "feat" && o.data.data.featType === "feat";
+    }).length;
+
+    // Add feat count by level
+    const totalLevels = this.items
+      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
+      .reduce((cur, o) => {
+        return cur + o.data.data.level;
+      }, 0);
+    result.max += Math.ceil(totalLevels / 2);
+
+    // Bonus feat formula
+    const featCountRoll = RollPF.safeRoll(this.data.data.details.bonusFeatFormula || "0", this.getRollData());
+    result.max += featCountRoll.total;
+    if (featCountRoll.err) {
+      const msg = game.i18n
+        .localize("PF1.ErrorActorFormula")
+        .format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name);
+      console.error(msg);
+      ui.notifications.error(msg);
+    }
+
+    // Changes
+    this.changes
+      .filter((o) => o.subTarget === "bonusFeats")
+      .forEach((o) => {
+        if (!o.value) return;
+
+        result.max += o.value;
+      });
+
+    return result;
+  }
+
+  /**
+   * @param {string} flagName - The name/key of the flag to search for.
+   * @returns {boolean} Whether this actor has any owned item with the given flag.
+   */
+  hasItemBooleanFlag(flagName) {
+    return getProperty(this, `itemFlags.boolean.${flagName}`) != null;
   }
 }

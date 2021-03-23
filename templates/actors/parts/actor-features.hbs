@@ -106,7 +106,15 @@
 </section>
 
 <hr>
-<div class="tab-footer flexcol">
+<div class="tab-footer flexcol tooltip">
+  <span class="tooltipcontent">
+    {{#if sourceData.bonusFeats}}
+    {{localize "PF1.FromSources"}}:<br/>
+    {{#each sourceData.bonusFeats as |src|}}
+    {{src.name}}: {{src.value}}<br/>
+    {{/each}}
+    {{/if}}
+  </span>
   <div class="flexrow form-group">
     <label>{{localize "PF1.BonusFeatFormula"}}</label>
     <input class="formula" type="text" name="data.details.bonusFeatFormula" value="{{data.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />

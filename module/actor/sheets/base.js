@@ -16,6 +16,8 @@ import { getSkipActionPrompt } from "../../settings.js";
 import { ItemPF } from "../../item/entity.js";
 import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
+import { LevelUpForm } from "../../apps/level-up.js";
+import { getSourceInfo } from "../apply-changes.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -107,7 +109,7 @@ export class ActorSheetPF extends ActorSheet {
 
   get currentPrimaryTab() {
     const primaryElem = this.element.find('nav[data-group="primary"] .item.active');
-    if (primaryElem.length !== 1 || primaryElem.attr("data-tab") !== "inventory") return null;
+    if (primaryElem.length !== 1) return null;
     return primaryElem.attr("data-tab");
   }
 
@@ -121,32 +123,7 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   async close(options = {}) {
-    //Room left for potential client setting
-    if (typeof options.save === "boolean") {
-      if (options.save) {
-        for (let ed of Object.values(this.editors)) {
-          if (ed.mce && ed.changed) ed.saveEditor(ed.target);
-        }
-      }
-      return super.close(options);
-    } else {
-      let unsavedChanges = [];
-      for (let ed of Object.values(this.editors)) {
-        if (ed.mce && ed.changed) {
-          let d = Dialog.confirm({
-            title: this.object.name + " : " + ed.target,
-            content: `<p>${game.i18n.localize("PF1.UnsavedTinyMCE")}</p>`,
-            yes: () => this.saveEditor(ed.target),
-            no: () => ed.mce.destroy(),
-            defaultYes: true,
-          });
-          unsavedChanges.push(d);
-        }
-      }
-      return Promise.all(unsavedChanges).then(() => {
-        return super.close(options);
-      });
-    }
+    return super.close(mergeObject(options, { submit: true }, { inplace: false }));
   }
 
   /**
@@ -167,6 +144,7 @@ export class ActorSheetPF extends ActorSheet {
       isGM: game.user.isGM,
       race: this.document.race != null ? duplicate(this.document.race.data) : null,
       usesAnySpellbook: (getProperty(this.document.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
+      sourceData: {},
     });
     data.data = data.data.data;
     const rollData = this.document.getRollData();
@@ -380,6 +358,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     // Count allowed skill ranks
+    const sourceData = getSourceInfo(this.sourceInfo, "data.skillRanks").positive;
     this.document.data.items
       .filter((obj) => {
         return obj.type === "class" && obj.data.classType !== "mythic";
@@ -391,6 +370,19 @@ export class ActorSheetPF extends ActorSheet {
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.data.data.abilities.int.mod) * clsLevel + fcSkills;
         if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
+
+        sourceData.push({
+          name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+          value: clsSkillsPerLevel * clsLevel,
+        });
+        if (fcSkills > 0) {
+          sourceData.push({
+            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+            value: fcSkills,
+          });
+        }
+
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
       });
     if (this.document.data.data.details.bonusSkillRankFormula !== "") {
       try {
@@ -399,19 +391,55 @@ export class ActorSheetPF extends ActorSheet {
       } catch (e) {
         console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.document.name}.`);
       }
-    }
-    // Calculate used background skills
-    if (data.useBGSkills) {
-      if (skillRanks.bgUsed > skillRanks.bgAllowed) {
-        skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
-        skillRanks.allowed -= skillRanks.sentToBG;
-        skillRanks.bgAllowed += skillRanks.sentToBG;
+      // Count from intelligence
+      if (getProperty(this.actor.data, "data.abilities.int.mod") !== 0) {
+        sourceData.push({
+          name: game.i18n.localize("PF1.AbilityInt"),
+          value:
+            getProperty(this.actor.data, "data.abilities.int.mod") *
+            getProperty(this.actor.data, "data.attributes.hd.total"),
+        });
       }
+      // Count from bonus skill rank formula
+      if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
+        let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
+        if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+        skillRanks.allowed += roll.total;
+        sourceData.push({
+          name: game.i18n.localize("PF1.SkillBonusRankFormula"),
+          value: roll.total,
+        });
+      }
+      // Calculate from changes
+      this.actor.changes
+        .filter((o) => o.subTarget === "bonusSkillRanks")
+        .forEach((o) => {
+          if (!o.value) return;
+
+          skillRanks.allowed += o.value;
+          sourceData.push({
+            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+            value: o.value,
+          });
+        });
+      // Calculate used background skills
+      if (data.useBGSkills) {
+        if (skillRanks.bgUsed > skillRanks.bgAllowed) {
+          skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
+          skillRanks.allowed -= skillRanks.sentToBG;
+          skillRanks.bgAllowed += skillRanks.sentToBG;
+        }
+      }
+      data.skillRanks = skillRanks;
     }
-    data.skillRanks = skillRanks;
 
     // Feat count
     {
+      const sourceData = [];
+      setProperty(data.sourceData, "bonusFeats", sourceData);
+
+      // Feat count
+      // By level
       data.featCount = {};
       data.featCount.value = this.document.items.filter(
         (o) => o.type === "feat" && o.data.data.featType === "feat"
@@ -422,19 +450,43 @@ export class ActorSheetPF extends ActorSheet {
           return cur + o.data.data.level;
         }, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
-      try {
-        data.featCount.byFormula = this.document.data.data.details.bonusFeatFormula
-          ? new Roll(this.document.data.data.details.bonusFeatFormula, rollData).roll().total
-          : 0;
-      } catch (e) {
+      sourceData.push({
+        name: game.i18n.localize("PF1.Level"),
+        value: data.featCount.byLevel,
+      });
+
+      // Bonus feat formula
+      const featCountRoll = RollPF.safeRoll(this.document.data.data.details.bonusFeatFormula || "0", rollData);
+      data.featCount.byFormula = featCountRoll.total;
+      if (featCountRoll.err) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
           .format(game.i18n.localize("PF1.BonusFeatFormula"), this.document.name);
         console.error(msg);
         ui.notifications.error(msg);
-        data.featCount.byFormula = 0;
       }
+      if (data.featCount.byFormula !== 0) {
+        sourceData.push({
+          name: game.i18n.localize("PF1.BonusFeatFormula"),
+          value: data.featCount.byFormula,
+        });
+      }
+
+      // Count total
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
+
+      // Changes
+      this.actor.changes
+        .filter((o) => o.subTarget === "bonusFeats")
+        .forEach((o) => {
+          if (!o.value) return;
+
+          data.featCount.total += o.value;
+          sourceData.push({
+            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+            value: o.value,
+          });
+        });
     }
 
     // Fetch the game settings relevant to sheet rendering.
@@ -1031,6 +1083,13 @@ export class ActorSheetPF extends ActorSheet {
       });
 
     /* -------------------------------------------- */
+    /*  Classes
+    /* -------------------------------------------- */
+
+    // Level Up
+    html.find(".level-up").click(this._onLevelUp.bind(this));
+
+    /* -------------------------------------------- */
     /*  Spells
     /* -------------------------------------------- */
 
@@ -1467,18 +1526,16 @@ export class ActorSheetPF extends ActorSheet {
     this._updateItems();
   }
 
-  /* -------------------------------------------- */
-
-  /**
-   * Handle attempting to recharge an item usage by rolling a recharge check
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onItemRecharge(event) {
-    event.preventDefault();
+  _onLevelUp(event) {
+    event.preventDefault;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.getOwnedItem(itemId);
-    return item.rollRecharge();
+    const item = this.actor.getOwnedItem(itemId);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof LevelUpForm && o._element && o.object === item;
+    });
+    if (app) app.bringToTop();
+    else new LevelUpForm(item).render(true);
   }
 
   /* -------------------------------------------- */
@@ -2061,7 +2118,7 @@ export class ActorSheetPF extends ActorSheet {
     // Partition items by category
     let [items, spells, feats, classes, attacks] = data.items.reduce(
       (arr, item) => {
-        item.img = item.img || DEFAULT_TOKEN;
+        item.img = item.img || CONST.DEFAULT_TOKEN;
         item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
         item.hasUses = item.data.uses && item.data.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
@@ -2594,11 +2651,51 @@ export class ActorSheetPF extends ActorSheet {
     });
   }
 
-  async importItem(itemData) {
+  async importItem(itemData, { event } = {}) {
+    // Import spell as consumable
     if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
       let resultData = await createConsumableSpellDialog(itemData);
       if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
       else return false;
+    }
+    // Choose how to import class
+    if (
+      itemData.type === "class" &&
+      getProperty(itemData, "data.classType") !== "mythic" &&
+      !(event && event.shiftKey)
+    ) {
+      let doReturn = await new Promise((resolve) => {
+        new Dialog({
+          title: game.i18n.localize("PF1.AddClass"),
+          content: `<div class="pf1"><p>${game.i18n.localize(
+            "PF1.Info.AddClassDialog_Desc"
+          )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
+            "PF1.Info.AddClassDialog"
+          )}</div></div>`,
+          buttons: {
+            normal: {
+              icon: '<i class="fas fa-hat-wizard"></i>',
+              label: game.i18n.localize("PF1.Normal"),
+              callback: () => {
+                LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
+                  resolve(true);
+                });
+              },
+            },
+            raw: {
+              icon: '<i class="fas fa-file"></i>',
+              label: game.i18n.localize("PF1.Raw"),
+              callback: () => {
+                resolve(false);
+              },
+            },
+          },
+          close: () => {
+            resolve(true);
+          },
+        }).render(true);
+      });
+      if (doReturn) return false;
     }
 
     if (itemData._id) delete itemData._id;

@@ -1,19 +1,97 @@
 # Changelog
 
+## 0.77.19
+
+### Bug Fixes
+
+- Prevent error in console on unowned items containing formulaic attacks
+- Consumables had two Advanced tabs when identified (#715)
+- Damage rolls ignored the damage multiplier selected in their attack dialog (#706)
+- The level up dialog was accepting multiple clicks (#717)
+- Players received roll errors for actors they did not own (#716)
+- Context notes didn't show for spells with no effects (#711)
+- Item durations with formulas errored on unowned items (#719)
+- Fix range calculation on sheets not working anymore (#725)
+- Encumbrance applied incorrectly with Strength altering changes (#729)
+
+### Changelog
+
+- Added `/d` and `/h` as shorthands for `/damage/heal` (#698)
+- Spellbook names can now be customized in their spellbook settings (thanks claudekennilol!) (#610)
+
+### API
+
+- Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`) (thanks claudekennilol!) (#510)
+- ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
+- An error prevented modules from extending PF1 classes under some circumstances (e.g. Forge hosting)
+- `ActorSheetPF#currentPrimaryTab` will now report tabs that aren't inventory as well
+- Add `game.pf1.utils` containing dialogGetActor, dialogGetNumber, createTag, getItemOwner, getActorFromId, getChangeFlat, convertDistance, convertWeight, convertWeightBack, and measureReachDistance
+
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+- Updated the German localization (thanks Nico Weichbrodt!)
+
+### Compendium
+
+- Haggis, Caviar, and Chocolate were missing
+- Soap had wrong weight
+- Restoration spells were missing classes
+- Entangle spell was missing a template
+- Burning Arc, Magic Missile, Storm Step, and Blast Barrier were missing damage
+- Breath Weapon, Freedom's Call, Charmed Life and Stunning Fist had incorrect formula
+- Added back in similarly named class features that were automatically pruned
+
+## 0.77.18 (Hotfix)
+
+### Bug Fixes
+
+- Item dictionary flags defaulted to an object, causing older items to sometimes not open
+
+### API
+
+- Due to recent workflow changes, most PF1 classes will now need to be imported from `/systems/pf1/pf1.js`, instead of `/systems/pf1/modules/**/*.js`
+  - Some modules referencing PF1 classes will need an update before they work again (many apologies)
+
 ## 0.77.17
 
 ### Bug Fixes
 
 - Race condition preventing functionality could still happen for `heal/ damage` inline rolls
 - Potential fix for compendium browsers not opening (#669)
+- Fixed error on deleting an active buff
+- The `@spells` roll data variable was incorrectly getting deleted in the beginning of an actor update
+- Encumbrance wasn't being taken into account when calculating skill bonuses
+- Fix `@classes` entries in roll data for classes without a custom tag
+- Adding a class to an unlinked token didn't add class features
+- Items in containers couldn't have their image changed while within the container
 
 ### Changelog
 
 - Added a basic level up dialog
+- Added dialog on dragging a class to an actor to determine how to import the class, with the choice to make use of the new level up dialog
+- Removed ability score change flags (0 Str, 1 Cha, etc.)
+- Always submit data on closing an actor or item sheet
+- Added bonus skill ranks and bonus feats as change targets
+- Improved speed on creating or removing multiple class features as a result of changing class level
+- Always show "full attack" button for melee/ranged weapon attacks (thanks Grarl!)
+- Added Manyshot to ranged weapon attacks (thanks Grarl!)
+- Separate base class hit points from favoured class hit points in source info
+- Added flags to items, which can be referenced by modules and macros (see API changes below)
+
+### API
+
+- `RollPF` and `RollPF.safeRoll` have been added to the system for better roll error handling
+- `CONFIG.debug.roll` has been added to log all dice errors and warnings to console
+- Moved `useSpell` from ActorPF to ItemPF
+- Flags have been added to all items, which can be referenced by modules
+  - `ItemPF.hasItemBooleanFlag(flagName)` and `ItemPF.getItemDictionaryFlag(flagName)` can be used to determine what flags an item has
+  - `ActorPF.hasItemBooleanFlag(flagName)` can be used to check whether an actor possesses a boolean flag on any of their owned items
 
 ### Compendium
 
 - Bestiaries were using incorrect sizeRoll arguments for non-medium monsters
+- Replaced some external links with compendium links for some races
 
 ## 0.77.16
 

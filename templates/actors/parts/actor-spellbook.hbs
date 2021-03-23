@@ -79,6 +79,13 @@
                              value="{{spellbook.orig.spellSlotAbilityBonusFormula}}" placeholder="{{localize "PF1.Formula"}}" />
         </div>
 
+        <div class="flexrow alt-name">
+          <label><h3>{{localize "PF1.AlternativeSpellbookName"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.altName"
+            value="{{spellbook.orig.altName}}" placeholder="{{#if (and spellbook.orig.class (ne spellbook.orig.class "_hd"))}}{{spellbook.orig.class}}
+              {{else}}{{~spellbook.orig.name}}{{/if}}" />
+        </div>
+
         <div class="flexrow domain-slot-value">
           <label><h3>{{localize "PF1.DomainSlotValue"}}</h3></label>
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.domainSlotValue"

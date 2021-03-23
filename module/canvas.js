@@ -130,11 +130,11 @@ Token.prototype.toggleEffect = async function (effect, { active, overlay = false
     if (buffItem) {
       call = await buffItem.update({ "data.active": !buffItem.data.data.active });
     } else call = await Token_toggleEffect.call(this, effect, { active, overlay });
-  } else if (!midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
+  } else if (effect && !midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
     const updates = {};
     updates["data.attributes.conditions." + effect.id] = !this.actor.data.data.attributes.conditions[effect.id];
     call = await this.actor.update(updates);
-  } else {
+  } else if (effect) {
     call = await Token_toggleEffect.call(this, effect, { active, overlay });
   }
   if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();

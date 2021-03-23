@@ -80,7 +80,7 @@ export const showAttackReach = function (token, attack) {
   if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
   if (minRangeKey === "reach") minRange = range.reach;
   if (minRangeKey === "ft") {
-    minRange = new Roll(getProperty(attack.data, "data.range.minValue") || "0", rollData).roll().total;
+    minRange = RollPF.safeRoll(getProperty(attack.data, "data.range.minValue") || "0", rollData).total;
   }
 
   let squares = {
@@ -93,7 +93,7 @@ export const showAttackReach = function (token, attack) {
     squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule: true });
     squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule: true });
   } else if (rangeKey === "ft") {
-    const r = new Roll(getProperty(attack.data, "data.range.value") || "0", rollData).roll().total;
+    const r = RollPF.safeRoll(getProperty(attack.data, "data.range.value") || "0", rollData).total;
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
 
     // Add range increments
@@ -114,10 +114,10 @@ export const showAttackReach = function (token, attack) {
     let r;
     switch (rangeKey) {
       case "close":
-        r = new Roll("25 + floor(@cl / 2) * 5", rollData).roll().total;
+        r = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData).total;
         break;
       case "medium":
-        r = new Roll("100 + @cl * 10", rollData).roll().total;
+        r = RollPF.safeRoll("100 + @cl * 10", rollData).total;
         break;
     }
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });

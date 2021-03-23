@@ -68,30 +68,35 @@ export const registerHandlebarsHelpers = function () {
     if (rangeType == null) return null;
 
     const toFeet = () => {
-      try {
-        switch (rangeType) {
-          case "melee":
-          case "touch":
-            return getProperty(rollData, "range.melee") || 0;
-          case "reach":
-            return getProperty(rollData, "range.reach") || 0;
-          case "close":
-            return new Roll("25 + floor(@cl / 2) * 5", rollData).roll().total;
-          case "medium":
-            return new Roll("100 + @cl * 10", rollData).roll().total;
-          case "long":
-            return new Roll("400 + @cl * 40", rollData).roll().total;
-          case "mi":
-            return range * 5280; // TODO: Should remain as miles for shortness
-          case "ft":
-            return new Roll(range, rollData).roll().total;
-          default:
-            return range;
-        }
-      } catch (err) {
-        console.log(err, item);
+      let feet;
+      switch (rangeType) {
+        case "melee":
+        case "touch":
+          return getProperty(rollData, "range.melee") || 0;
+        case "reach":
+          return getProperty(rollData, "range.reach") || 0;
+        case "close":
+          feet = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData);
+          break;
+        case "medium":
+          feet = RollPF.safeRoll("100 + @cl * 10", rollData);
+          break;
+        case "long":
+          feet = RollPF.safeRoll("400 + @cl * 40", rollData);
+          break;
+        case "mi":
+          return range * 5280; // TODO: Should remain as miles for shortness
+        case "ft":
+          feet = RollPF.safeRoll(range, rollData);
+          break;
+        default:
+          return range;
+      }
+      if (feet.err) {
+        console.log(feet.err, item);
         return "[x]";
       }
+      return feet.total;
     };
 
     const ft = toFeet();
@@ -122,12 +127,12 @@ export const registerHandlebarsHelpers = function () {
         cutOff = 1;
       // TODO: Make this cut based on actual string length instead of part count. Or push adjustment to handlebars.
       //slice(0, cutOff)
-      parts.forEach((r) => rv.push(new Roll(r, rollData).formula));
+      parts.forEach((r) => rv.push(Roll.create(r, rollData).formula));
       const cutParts = []; // parts.length > cutOff ? parts.slice(cutOff - 1) : [];
 
       // Include ability score only if the string isn't too long yet
       if (ablMod != null && cutParts.length === 0)
-        rv.push(new Roll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).roll().total);
+        rv.push(RollPF.safeRoll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).total);
 
       // Include enhancement bonus
       const enhBonus = item.data.enh ?? 0;

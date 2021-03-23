@@ -18,6 +18,7 @@ import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { ActorPF } from "./module/actor/entity.js";
+import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
@@ -26,11 +27,22 @@ import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
+import { getChangeFlat } from "./module/actor/apply-changes.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
-import { getItemOwner, sizeDieExt, normalDie, getActorFromId } from "./module/lib.js";
+import { RollPF } from "./module/roll.js";
+import {
+  getItemOwner,
+  sizeDieExt,
+  normalDie,
+  getActorFromId,
+  createTag,
+  convertWeight,
+  convertWeightBack,
+  convertDistance,
+} from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
@@ -38,12 +50,17 @@ import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
-import { addReachCallback } from "./module/misc/attack-reach.js";
+import { addReachCallback, measureReachDistance } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
+import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
-import { RenderLightConfig_LowLightVision, RenderTokenConfig_LowLightVision } from "./module/low-light-vision.js";
-import "./module/modules.js";
+import {
+  addLowLightVisionToLightConfig,
+  addLowLightVisionToTokenConfig,
+  hasTokenVision,
+} from "./module/low-light-vision.js";
+import { initializeModules } from "./module/modules.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -84,7 +101,22 @@ Hooks.once("init", async function () {
     compendiums: {},
     isMigrating: false,
     tooltip: null,
+    utils: {
+      createTag,
+      getItemOwner,
+      getActorFromId,
+      getChangeFlat,
+      convertDistance,
+      convertWeight,
+      convertWeightBack,
+      measureReachDistance,
+      dialogGetActor,
+      dialogGetNumber,
+    },
   };
+
+  // Global exports
+  window.RollPF = RollPF;
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
@@ -93,6 +125,7 @@ Hooks.once("init", async function () {
   CONFIG.Item.documentClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
+  CONFIG.Dice.rolls[0] = RollPF;
 
   // Register System Settings
   registerSystemSettings();
@@ -120,7 +153,11 @@ Hooks.once("init", async function () {
   });
   Items.registerSheet("PF1", ItemSheetPF_Container, { types: ["container"], makeDefault: true });
 
+  // Initialize socket listener
   initializeSocket();
+
+  // Initialize module integrations
+  initializeModules();
 });
 
 /* -------------------------------------------- */
@@ -419,7 +456,7 @@ Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("renderLightConfig", (app, html) => {
-  RenderLightConfig_LowLightVision(app, html);
+  addLowLightVisionToLightConfig(app, html);
 });
 
 Hooks.on("preUpdateItem", (actor, item, changedData, options, userId) => {
@@ -536,8 +573,21 @@ Hooks.on("createItem", (actor, item, options, userId) => {
   }
 });
 
+// <<<<<<< HEAD
 Hooks.on("deleteItem", async (actor, item, options, userId) => {
   if (userId !== game.user.id) return;
+  // =======
+  // Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
+  // const item = actor.items.get(itemData._id);
+  // if (!item) return;
+
+  // // Delete class assocations
+  // if (item.type === "class") item._onLevelChange(item.data.data.level, 0);
+  // });
+
+  // Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
+  // if (userId !== game.user._id) return;
+  // >>>>>>> master
   if (!(actor instanceof Actor)) return;
 
   // Remove token effects for deleted buff
@@ -619,7 +669,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
 
   // Add disable low-light vision checkbox
-  RenderTokenConfig_LowLightVision(app, html);
+  addLowLightVisionToTokenConfig(app, html);
 });
 
 // Render Sidebar
@@ -864,5 +914,23 @@ const handleChatTooltips = function (event) {
 
 // Export objects for being a library
 
-export { ActorPF, ItemPF, ActorSheetPFCharacter, ActorSheetPFNPC, ActorSheetPFNPCLite, ActorSheetPFNPCLoot };
+export {
+  ActorPF,
+  ItemPF,
+  ActorSheetPF,
+  ActorSheetPFCharacter,
+  ActorSheetPFNPC,
+  ActorSheetPFNPCLite,
+  ActorSheetPFNPCLoot,
+  ItemSheetPF,
+  ItemSheetPF_Container,
+  ActiveEffectPF,
+};
 export { DicePF, ChatMessagePF, measureDistances };
+
+export { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
+export { ItemChange } from "./module/item/components/change.js";
+export { SemanticVersion };
+export { RollPF } from "./module/roll.js";
+export { ChatAttack } from "./module/misc/chat-attack.js";
+export { dialogGetNumber, dialogGetActor } from "./module/dialog.js";

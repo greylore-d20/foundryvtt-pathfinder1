@@ -221,20 +221,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
-    // case "attack":
-    //   return "data.attributes.attack.general";
     case "~attackCore":
       return "data.attributes.attack.shared";
-    // case "mattack":
-    //   return "data.attributes.attack.melee";
-    // case "rattack":
-    //   return "data.attributes.attack.ranged";
-    // case "damage":
-    //   return "data.attributes.damage.general";
-    // case "wdamage":
-    //   return "data.attributes.damage.weapon";
-    // case "sdamage":
-    //   return "data.attributes.damage.spell";
     case "allSavingThrows":
       return [
         "data.attributes.savingThrows.fort.total",
@@ -452,19 +440,29 @@ export const addDefaultChanges = function (changes) {
         source: source.name,
       })
     );
-
-    getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-      value: value,
-      name: source.name,
-    });
-    getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-      value: value,
-      name: source.name,
-    });
   };
   const manual_health = (health_source) => {
-    let health =
-      health_source.data.data.hp + (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
+    let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+
+    getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+      value: health_source.data.hp,
+      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
+    });
+    getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
+      value: health_source.data.hp,
+      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
+    });
+    if (health_source.data.fc.hp.value > 0) {
+      getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+        value: health_source.data.fc.hp.value,
+        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
+      });
+      getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
+        value: health_source.data.fc.hp.value,
+        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
+      });
+    }
+
     if (!continuous) health = round(health);
     push_health(health, health_source);
   };
@@ -478,6 +476,25 @@ export const addDefaultChanges = function (changes) {
     const level_health = Math.max(0, health_source.data.data.level - maximized) * die_health;
     const favor_health = (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
     let health = maxed_health + level_health + favor_health;
+
+    getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+      value: maxed_health + level_health,
+      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
+    });
+    getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
+      value: maxed_health + level_health,
+      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
+    });
+    if (health_source.data.fc.hp.value > 0) {
+      getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+        value: health_source.data.fc.hp.value,
+        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
+      });
+      getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
+        value: health_source.data.fc.hp.value,
+        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
+      });
+    }
 
     push_health(health, health_source);
   };
@@ -531,7 +548,7 @@ export const addDefaultChanges = function (changes) {
           const classType = getProperty(obj.data, "classType") || "base";
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.data.savingThrows[a].value];
           if (formula == null) formula = "0";
-          const v = Math.floor(new Roll(formula, { level: obj.data.data.level }).roll().total);
+          const v = Math.floor(RollPF.safeRoll(formula, { level: obj.data.level }).total);
 
           if (v !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });

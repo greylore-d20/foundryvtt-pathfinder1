@@ -1,11 +1,10 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
-import { _preProcessDiceFormula } from "./dice.js";
-import "./misc/vision-permission.js";
+import { hasTokenVision } from "./misc/vision-permission.js";
 import { ActorPF } from "./actor/entity.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
-
-const FormApplication_close = FormApplication.prototype.close;
+import { patchLowLightVision } from "./low-light-vision.js";
+import { patchMeasureTools } from "./measure.js";
 
 export async function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
@@ -36,111 +35,8 @@ export async function PatchCore() {
     });
   };
 
-  // const Roll__identifyTerms = Roll.prototype._identifyTerms;
-  Roll.prototype._identifyTerms = function (formula, { step = 0 } = {}) {
-    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
-    formula = _preProcessDiceFormula(formula, this.data);
-    var warned;
-
-    // Step 1 - Update the Roll formula using provided data
-    [formula, warned] = this.constructor.replaceFormulaData(formula, this.data, { missing: "0", warn: false });
-    if (warned) this.warning = true;
-
-    // Step 2 - identify separate parenthetical terms
-    let terms = this._splitParentheticalTerms(formula);
-
-    // Step 3 - expand pooled terms
-    terms = this._splitPooledTerms(terms);
-
-    // Step 4 - expand remaining arithmetic terms
-    terms = this._splitDiceTerms(terms, step);
-
-    // Step 5 - clean and de-dupe terms
-    terms = this.constructor.cleanTerms(terms);
-    return terms;
-  };
-
-  {
-    const Roll__splitParentheticalTerms = Roll.prototype._splitParentheticalTerms;
-    Roll.prototype._splitParentheticalTerms = function (formula) {
-      // Augment parentheses with semicolons and split into terms
-      const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
-
-      // Match outer-parenthetical groups
-      let nOpen = 0;
-      const terms = split.split(";").reduce((arr, t, i, terms) => {
-        if (t === "") return arr;
-
-        // Identify whether the left-parentheses opens a math function
-        let mathFn = false;
-        if (t === "(") {
-          const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
-          mathFn = fn && !!Roll.MATH_PROXY[fn[1]];
-        }
-
-        // Combine terms using open parentheses and math expressions
-        if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
-        else arr.push(t);
-
-        // Increment the count
-        if (t === "(") nOpen++;
-        else if (t === ")" && nOpen > 0) nOpen--;
-        return arr;
-      }, []);
-
-      // Close any un-closed parentheses
-      for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
-
-      // Substitute parenthetical dice rolls groups to inner Roll objects
-      return terms.reduce((terms, term) => {
-        const prior = terms.length ? terms[terms.length - 1] : null;
-        if (term[0] === "(") {
-          // Handle inner Roll parenthetical groups
-          if (/[dD]/.test(term)) {
-            terms.push(Roll.fromTerm(term, this.data));
-            return terms;
-          }
-
-          // Evaluate arithmetic-only parenthetical groups
-          term = this._safeEval(term);
-          /* Changed functionality */
-          /* Allow null/string/true/false as it used to be and crash on undefined */
-          if (typeof term !== "undefined" && typeof term !== "number") term += "";
-          else term = Number.isInteger(term) ? term : term.toFixed(2);
-          /* End changed functionality */
-
-          // Continue wrapping math functions
-          const priorMath = prior && prior.split(" ").pop() in Math;
-          if (priorMath) term = `(${term})`;
-        }
-
-        // Append terms to to non-Rolls
-        if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
-        else terms.push(term);
-        return terms;
-      }, []);
-    };
-
-    const Roll_replaceFormulaData = Roll.replaceFormulaData;
-    Roll.replaceFormulaData = function (formula, data, { missing, warn = false }) {
-      let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-      var warned = false;
-      return [
-        formula.replace(dataRgx, (match, term) => {
-          let value = getProperty(data, term);
-          if (value === undefined) {
-            if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-            warned = true;
-            return missing !== undefined ? String(missing) : match;
-          }
-          return String(value).trim();
-        }),
-        warned,
-      ];
-    };
-  }
-
   // Patch ActorTokenHelpers.update
+  // <<<<<<< HEAD
   // const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
   // ActorTokenHelpers.prototype.update = async function (data, options = {}) {
   // // Avoid regular update flow for explicitly non-recursive update calls
@@ -206,6 +102,177 @@ export async function PatchCore() {
 
   // return updates;
   // };
+  // =======
+  // const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
+  // ActorTokenHelpers.prototype.update = async function (data, options = {}) {
+  // // Avoid regular update flow for explicitly non-recursive update calls
+  // if (getProperty(options, "recursive") === false) {
+  // return ActorTokenHelpers_update.call(this, data, options);
+  // }
+
+  // const diff = await ActorPF.prototype.update.call(
+  // this,
+  // data,
+  // mergeObject(options, { recursive: true, skipUpdate: true })
+  // );
+  // if (Object.keys(diff).length) {
+  // await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
+  // await this.toggleConditionStatusIcons();
+  // await this.refreshItems();
+  // }
+  // return diff;
+  // };
+  // // Patch ActorTokenHelpers.deleteEmbeddedEntity
+  // const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
+  // ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function (embeddedName, data, options = {}) {
+  // data = data instanceof Array ? data : [data];
+  // const ids = data.map((o) => {
+  // if (typeof o === "string") return o;
+  // return o._id;
+  // });
+  // const items = this.items.filter((o) => {
+  // return ids.includes(o.id);
+  // });
+
+  // // Remove class associations
+  // for (let item of items) {
+  // if (item.data.type === "class") {
+  // await item._onLevelChange(getProperty(item.data, "data.level"), 0);
+  // }
+  // }
+
+  // // Delete item
+  // const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, data, options);
+
+  // // Remove token effects for deleted buff
+  // for (let item of items) {
+  // let promises = [];
+  // if (item.type === "buff" && item.data.data.active) {
+  // const isLinkedToken = getProperty(this.data, "token.actorLink");
+  // const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
+  // for (const token of tokens) {
+  // promises.push(token.toggleEffect(item.data.img, { active: false }));
+  // }
+  // }
+  // await Promise.all(promises);
+  // }
+
+  // return deleted;
+  // };
+
+  // const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
+  // ActorTokenHelpers.prototype.createEmbeddedEntity = async function (embeddedName, data, options = {}) {
+  // let created = await ActorTokenHelpers_createEmbeddedEntity.call(this, embeddedName, data, options);
+  // created = created instanceof Array ? created : [created];
+
+  // if (embeddedName === "OwnedItem") {
+  // for (let i of created) {
+  // const item = this.items.get(i._id);
+
+  // // Show new buff icon
+  // if (item.data.type === "buff" && getProperty(item.data, "data.active") === true) {
+  // await this.toggleConditionStatusIcons();
+  // }
+
+  // // Add class features
+  // if (item.data.type === "class") {
+  // await item._onLevelChange(0, item.data.data.level);
+  // }
+  // }
+  // }
+
+  // return created;
+  // };
+
+  // const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
+  // ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
+  // data = data instanceof Array ? data : [data];
+  // const prevData = data.reduce((cur, o) => {
+  // const obj = duplicate(this.items.get(o._id));
+  // cur.set(o._id, obj);
+  // return cur;
+  // }, new Map());
+  // let updates = await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
+  // updates = updates instanceof Array ? updates : [updates];
+
+  // if (embeddedName === "OwnedItem") {
+  // for (let i of updates) {
+  // const item = this.items.get(i._id);
+  // const prev = prevData.get(i._id);
+  // const d = data.find((o) => o._id === i._id);
+
+  // // Show updated buff icon
+  // if (item.data.type === "buff" && d["data.active"] !== undefined) {
+  // await this.toggleConditionStatusIcons();
+  // }
+
+  // // Add or remove class features
+  // if (item.data.type === "class") {
+  // const prevLevel = getProperty(prev, "data.level");
+  // const newLevel = getProperty(item.data, "data.level");
+  // if (prevLevel !== newLevel) {
+  // await item._onLevelChange(prevLevel, newLevel);
+  // }
+  // }
+  // }
+  // }
+
+  // return updates;
+  // };
+  // >>>>>>> master
+
+  // Token patch for shared vision
+  const Token__isVisionSource = Token.prototype._isVisionSource;
+  Token.prototype._isVisionSource = function () {
+    if (!canvas.sight.tokenVision || !this.hasSight) return false;
+
+    // Only display hidden tokens for the GM
+    const isGM = game.user.isGM;
+    if (this.data.hidden && !isGM) return false;
+
+    // Always display controlled tokens which have vision
+    if (this._controlled) return true;
+
+    // Otherwise vision is ignored for GM users
+    if (isGM) return false;
+
+    // If a non-GM user controls no other tokens with sight, display sight anyways
+    const canObserve = this.actor && hasTokenVision(this);
+    if (!canObserve) return false;
+    const others = this.layer.controlled.filter((t) => !t.data.hidden && t.hasSight);
+    return !others.length || game.settings.get("pf1", "sharedVisionMode") === "1";
+  };
+
+  // Token#observer patch to make use of vision permission settings
+  Object.defineProperty(Token.prototype, "observer", {
+    get() {
+      return game.user.isGM || hasTokenVision(this);
+    },
+  });
+
+  // Add Vision Permission sheet to ActorDirectory context options
+  const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;
+  ActorDirectory.prototype._getEntryContextOptions = function () {
+    return ActorDirectory__getEntryContextOptions.call(this).concat([
+      {
+        name: "PF1.Vision",
+        icon: '<i class="fas fa-eye"></i>',
+        condition: (li) => {
+          return game.user.isGM;
+        },
+        callback: (li) => {
+          const entity = this.constructor.collection.get(li.data("entityId"));
+          if (entity) {
+            const sheet = entity.visionPermissionSheet;
+            if (sheet.rendered) {
+              if (sheet._minimized) sheet.maximize();
+              else sheet.close();
+            } else sheet.render(true);
+          }
+        },
+      },
+    ]);
+  };
 
   // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
   // if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
@@ -281,7 +348,9 @@ export async function PatchCore() {
   Combat.prototype.rollInitiative = _rollInitiative;
   window.getTemplate = PF1_getTemplate;
 
-  await import("./low-light-vision.js");
-}
+  // Apply low light vision patches
+  patchLowLightVision();
 
-import "./measure.js";
+  // Apply measurement patches
+  patchMeasureTools();
+}

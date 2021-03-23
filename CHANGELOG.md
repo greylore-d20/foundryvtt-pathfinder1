@@ -29,6 +29,7 @@
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)
+- Updated the German localization (thanks Nico Weichbrodt!)
 
 ### Compendium
 

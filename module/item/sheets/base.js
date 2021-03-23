@@ -89,7 +89,7 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = Object.prototype.hasOwnProperty.call(data.item.data, "quantity");
+    data.isPhysical = Object.prototype.hasOwnProperty.call(data.item.data.data, "quantity");
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;

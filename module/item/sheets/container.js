@@ -474,7 +474,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
       if (actor && actor === this.item.parentActor) {
         if (actor.items.get(data.data._id)) {
-          await actor.deleteOwnedItem(data.data._id);
+          await actor.deleteEmbeddedDocuments("Item", [data.data._id]);
         } else {
           const containerItem = actor.containerItems.find((i) => i._id === data.data._id);
           if (containerItem) {

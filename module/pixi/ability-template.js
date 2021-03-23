@@ -2,7 +2,7 @@
  * A helper class for building MeasuredTemplates for PF1 spells and abilities
  * @extends {MeasuredTemplate}
  */
-export class AbilityTemplate extends MeasuredTemplate {
+export class AbilityTemplate extends MeasuredTemplateDocument {
   /**
    * A factory method to create an AbilityTemplate instance using provided data
    * @param {string} type -             The type of template ("cone", "circle", "rect" or "ray")
@@ -120,7 +120,7 @@ export class AbilityTemplate extends MeasuredTemplate {
         this.data.y = destination.y;
 
         // Create the template
-        const result = await canvas.scene.createEmbeddedEntity("MeasuredTemplate", this.data);
+        const result = await canvas.scene.createEmbeddedEntity("MeasuredTemplateDocument", this.data);
         resolve(result);
       };
 

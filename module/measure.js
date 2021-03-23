@@ -23,11 +23,11 @@ export function patchMeasureTools() {
 
     // Create the template
     const data = {
-      user: game.user._id,
+      user: game.user.id,
       t: tool,
       x: pos.x,
       y: pos.y,
-      distance: 0,
+      distance: 5,
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
     };
@@ -35,7 +35,8 @@ export function patchMeasureTools() {
     else if (tool === "ray") data["width"] = 5;
 
     // Assign the template
-    let template = new MeasuredTemplate(data);
+    const doc = new MeasuredTemplateDocument(data, { parent: canvas.scene });
+    const template = new MeasuredTemplate(doc);
     event.data.preview = this.preview.addChild(template);
     template.draw();
   };
@@ -60,14 +61,18 @@ export function patchMeasureTools() {
       // Update the shape data
       if (["cone", "circle"].includes(template.data.t)) {
         const direction = ray.angle;
-        template.data.direction = toDegrees(
+        template.data.direction = Math.toDegrees(
           Math.floor((direction + Math.PI * 0.125) / (Math.PI * 0.25)) * (Math.PI * 0.25)
         );
         const distance = ray.distance / ratio;
         template.data.distance = Math.floor(distance / canvas.dimensions.distance) * canvas.dimensions.distance;
       } else {
-        template.data.direction = toDegrees(ray.angle);
-        template.data.distance = ray.distance / ratio;
+        template.data.direction = Math.toDegrees(ray.angle);
+        if (template.data.t === "ray") {
+          template.data.distance = Math.floor(ray.distance / ratio / 2.5) * 2.5;
+        } else {
+          template.data.distance = ray.distance / ratio;
+        }
       }
 
       // Draw the pending shape

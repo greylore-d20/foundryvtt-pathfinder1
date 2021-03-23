@@ -358,7 +358,8 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     // Count allowed skill ranks
-    const sourceData = getSourceInfo(this.sourceInfo, "data.skillRanks").positive;
+    const sourceData = [];
+    setProperty(data.sourceData, "skillRanks", sourceData);
     this.document.data.items
       .filter((obj) => {
         return obj.type === "class" && obj.data.classType !== "mythic";
@@ -430,8 +431,8 @@ export class ActorSheetPF extends ActorSheet {
           skillRanks.bgAllowed += skillRanks.sentToBG;
         }
       }
-      data.skillRanks = skillRanks;
     }
+    data.skillRanks = skillRanks;
 
     // Feat count
     {
@@ -2593,8 +2594,16 @@ export class ActorSheetPF extends ActorSheet {
 
     // Handle item sorting within the same actor
     const actor = this.document;
-    let sameActor = data.actorId === actor.id || (actor.isToken && data.tokenId === actor.token.id);
+    let sameActor =
+      (!data.containerId && data.actorId === actor.id) || (actor.isToken && data.tokenId === actor.token.id);
     if (sameActor) return this._onSortItem(event, itemData);
+
+    // Remove from container
+    if (data.containerId) {
+      const container = actor.allItems.find((o) => o.id === data.containerId);
+
+      if (container) container.deleteContainerContent(itemData._id);
+    }
 
     // Create the owned item
     return this._onDropItemCreate(itemData);
@@ -2617,13 +2626,13 @@ export class ActorSheetPF extends ActorSheet {
     if (this.document.isToken) return;
 
     // Get the drag source and its siblings
-    const source = this.document.getOwnedItem(itemData._id);
+    const source = this.document.getEmbeddedDocument("Item", itemData._id);
     const siblings = this._getSortSiblings(source);
 
     // Get the drop target
     const dropTarget = event.target.closest(".item");
     const targetId = dropTarget ? dropTarget.dataset.itemId : null;
-    if (targetId === source._id) return; // Don't sort if item is dropped onto itself
+    if (targetId === source.id) return; // Don't sort if item is dropped onto itself
     const target = siblings.find((s) => s.data._id === targetId);
 
     // Ensure we are only sorting like-types
@@ -2638,7 +2647,7 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Perform the update
-    return this.document.updateEmbeddedEntity("OwnedItem", updateData);
+    return this.document.updateEmbeddedDocuments("Item", updateData);
   }
 
   /**

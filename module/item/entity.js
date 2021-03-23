@@ -196,8 +196,8 @@ export class ItemPF extends Item {
     }
   }
 
-  get parent() {
-    if (this.actor) return this.actor;
+  get parentActor() {
+    if (this.parent) return this.parent;
 
     let actor = null;
     let p = this.parentItem;
@@ -600,7 +600,7 @@ export class ItemPF extends Item {
       if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
       else if (typeof dur.value === "string" && this.parentActor) {
         dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"], {
-          suppressError: !this.hasPerm(game.user, "OWNER"),
+          suppressError: !this.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER),
         }).total.toString();
       }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
@@ -1021,7 +1021,7 @@ export class ItemPF extends Item {
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
-        const parentItem = parentInventory.find((o) => o._id === this._id);
+        const parentItem = parentInventory.find((o) => o.id === this.id);
         const idx = parentInventory.indexOf(parentItem);
 
         if (idx >= 0) {
@@ -1514,7 +1514,7 @@ export class ItemPF extends Item {
    * @param {MouseEvent} ev The click event
    */
   async useSpell(ev, { skipDialog = false } = {}) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER)) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);

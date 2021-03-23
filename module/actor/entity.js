@@ -1008,6 +1008,30 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Add encumbrance source details
+    switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
+      case 1:
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 3,
+        });
+        break;
+      case 2:
+        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 6,
+        });
+        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+          name: game.i18n.localize("PF1.Encumbrance"),
+          value: 1,
+        });
+        break;
+    }
+
     this.refreshDerivedData();
 
     // Setup links
@@ -2864,6 +2888,7 @@ export class ActorPF extends Actor {
     switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
       case 0:
         setProperty(this.data, "data.attributes.acp.encumbrance", 0);
+        setProperty(this.data, "data.attributes.maxDexBonus", null);
         break;
       case 1:
         setProperty(this.data, "data.attributes.acp.encumbrance", 3);
@@ -2872,14 +2897,6 @@ export class ActorPF extends Actor {
           "data.attributes.maxDexBonus",
           Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
         );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 3,
-        });
         break;
       case 2:
         setProperty(this.data, "data.attributes.acp.encumbrance", 6);
@@ -2888,14 +2905,6 @@ export class ActorPF extends Actor {
           "data.attributes.maxDexBonus",
           Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
         );
-        getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 6,
-        });
-        getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-          name: game.i18n.localize("PF1.Encumbrance"),
-          value: 1,
-        });
         break;
     }
     setProperty(

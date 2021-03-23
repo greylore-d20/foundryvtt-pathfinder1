@@ -42,6 +42,8 @@
   "SETTINGS.pf1SharedVisionWithSelection": "Immer",
   "SETTINGS.pf1HideTokenConditionsN": "Verstecke Token Zustände",
   "SETTINGS.pf1HideTokenConditionsH": "Ob die Icons von Zuständen und Buffs auf dem Token versteckt werden sollen",
+  "SETTINGS.pf1CoreEffectsN": "Default Token Conditions",
+  "SETTINGS.pf1CoreEffectsH": "Displays only PF1 conditions on tokens (unchecked) or core icons as well (checked)",
   "SETTINGS.pf1HideChatButtonsN": "Verstecke Chat-Karten Schaltflächen",
   "SETTINGS.pf1HideChatButtonsH": "Ob die Schaltflächen in Chat-Karten, wie die bei Angriffswürfen, versteckt werden sollen.",
   "SETTINGS.pf1AttackChatCardTemplateN": "Stil der Angriffswurf-Chat-Karten",
@@ -56,6 +58,8 @@
   "SETTINGS.pf1InvertSectionFilterBehaviourH": "Invertiert das Shift-Klick Verhalten von Typfiltern in (Gegenstands-)Abschnitten.",
   "SETTINGS.pf1HideReachMeasurementsN": "Verstecke Reichweitenmessschlabonen",
   "SETTINGS.pf1HideReachMeasurementsH": "Zeige nicht die Reichweitenmessschablonen welche beim Hovern über den Schnellen Aktionen angezeigt werden",
+  "SETTINGS.pf1DisplayIterativesN": "Display iteratives",
+  "SETTINGS.pf1DisplayIterativesH": "Breaks down BAB display to iteratives instead of only the total bonus",
 
   "SETTINGS.pf1HealthConfigName": "TP Konfiguration",
   "SETTINGS.pf1HealthConfigLabel": "Configure Health",
@@ -89,6 +93,10 @@
   "SETTINGS.pf1HealthConfigWoundThresholdNormal": "Normal",
   "SETTINGS.pf1HealthConfigWoundThresholdGritty": "Gritty",
 
+  "SETTINGS.pf1DragRulerWalk": "walk",
+  "SETTINGS.pf1DragRulerDash": "dash",
+  "SETTINGS.pf1DragRulerRun": "run",
+
   "PF1.OptionalAndVariantRules": "Optional & Variant Rules",
 
   "PF1.WoundThresholdOverride": "Wound Threshold override",
@@ -119,6 +127,67 @@
   "PF1.AccessibilityFontSize": "Schriftgröße",
   "PF1.AccessibilityFontSizeHint": "Ändert die Schriftgröße an einigen Stellen im Spiel (z.B. in den Char-Karten der Angriffswürfe)",
 
+  "PF1.TooltipConfigName": "Tooltip Configuration",
+  "PF1.TooltipConfigLabel": "Tooltip",
+  "PF1.TooltipConfigHint": "Change tooltip settings",
+  "PF1.TooltipConfigResetInfo": "Reset Pathfinder tooltip configuration.",
+  "PF1.TooltipConfigUpdateInfo": "Updated Pathfinder tooltip configuration.",
+  "PF1.TooltipConfigAnchor": "Tooltip Anchor",
+  "PF1.TooltipConfigOffset": "Tooltip Offset",
+  "PF1.TooltipConfigLocationPreview": "Location Preview",
+  "PF1.TooltipConfigHidePortraits": "Hide Portraits",
+  "PF1.TooltipConfigMaxPortraitSize": "Maximum Portrait Size",
+  "PF1.TooltipConfigDisable": "Disable Tooltips",
+  "PF1.TooltipConfigHideWithoutKey": "Hide unless {key} is held",
+  "PF1.OnMouse": "On Mouse",
+
+  "PF1.TooltipWorldConfigName": "Tooltip World Configuration",
+  "PF1.TooltipWorldConfigLabel": "Tooltip (World)",
+  "PF1.TooltipWorldConfigHint": "Change world-wide tooltip settings",
+  "PF1.TooltipWorldConfigHidePortraits": "Hide Portraits (globally)",
+  "PF1.TooltipWorldConfigDisable": "Disable Tooltips (globally)",
+  "PF1.TooltipWorldConfigHideHeld": "Hide Held items (globally)",
+  "PF1.TooltipWorldConfigHideHeld_Hint": "Hide Held items from all players",
+  "PF1.TooltipWorldConfigHideArmor": "Hide Armor (globally)",
+  "PF1.TooltipWorldConfigHideArmor_Hint": "Hide Armor from all players",
+  "PF1.TooltipWorldConfigHideBuffs": "Hide Buffs (globally)",
+  "PF1.TooltipWorldConfigHideBuffs_Hint": "Hide Buffs from all players",
+  "PF1.TooltipWorldConfigHideConditions": "Hide Conditions (globally)",
+  "PF1.TooltipWorldConfigHideConditions_Hint": "Hide Conditions from all players",
+  "PF1.TooltipWorldConfigHideClothing": "Hide Clothing (globally)",
+  "PF1.TooltipWorldConfigHideClothing_Hint": "Hide Clothing from all players",
+  "PF1.TooltipWorldConfigHideActorName": "Hide Actor names (globally)",
+  "PF1.TooltipWorldConfigHideActorName_Hint": "Hide Actor names from all players",
+  "PF1.TooltipWorldConfigHideActorNameReplacement": "Hidden Replacement Name",
+
+  "PF1.LevelUpForm_Title": "Level up {className}",
+  "PF1.LevelUpForm_Health": "Trefferpunkte",
+  "PF1.LevelUpForm_Health_Roll": "Würfeln",
+  "PF1.LevelUpForm_Health_Manual": "Manuell",
+  "PF1.LevelUp": {
+    "Label": "Stufenaufstieg",
+    "Chat": {
+      "Header": "Level Up Report",
+      "Health": {
+        "Header": "Trefferpunkte",
+        "Roll": "Erwürfelte TP: {add}",
+        "Manual": "Manuelle TP: {add}"
+      },
+      "FC": {
+        "Header": "Favorisierte-Klasse-Bonus"
+      },
+      "Extra": {
+        "Header": "Extra",
+        "NewFeat": "Du kannst ein neues Talent wählen",
+        "NewFeats": "Du kannst {newValue} neue Talente wählen",
+        "NewAbilityScore": "Du kannst einen Attributswert um 1 erhöhen"
+      }
+    }
+  },
+
+  "PF1.Submit": "Bestätigen",
+  "PF1.Next": "Next",
+  "PF1.Previous": "Previous",
   "PF1.General": "Allgemein",
 
   "PF1.Apply": "Anwenden",
@@ -133,9 +202,17 @@
 
   "PF1.RollsForInitiative": "{0} würfelt Initiative!",
 
+  "PF1.Flags": "Flags",
   "PF1.FlagsInstructions": "Konfiguration der Charakterfähigkeiten und -eigenschaften die das Verhalten des PF1-Systems fein abstimmen.",
   "PF1.FlagsTitle": "Konfiguriere Spezielle Fähigkeiten",
   "PF1.FlagsSave": "Update Spezielle Fähigkeiten",
+  "PF1.FlagsBoolean": "Boolsche Flags",
+  "PF1.FlagsDictionary": "Dictionary Flags",
+  "PF1.AdvancedInfo": {
+    "Flags": {
+      "InfoBox": "Flags können von Modulen und Makros verwendet werden, sie tuen nichts von selbst."
+    }
+  },
 
   "PF1.AbilityDamage": "Attributsschaden",
   "PF1.AbilityDrain": "Attributsentzug",
@@ -217,9 +294,14 @@
   "PF1.CondPinned": "im Haltegriff",
   "PF1.CondProne": "Liegend",
   "PF1.CondFear": "Angst (alle)",
+  "PF1.CondShaken": "Erschüttert",
+  "PF1.CondFrightened": "Verängstigt",
+  "PF1.CondPanicked": "In Panik",
   "PF1.CondSickened": "Kränkelnd",
   "PF1.CondStaggered": "Wankend",
   "PF1.CondStunned": "Betäubt",
+  "PF1.CondNauseated": "Nauseated",
+  "PF1.CondDazed": "Benommen",
 
   "PF1.CondTypeBleed": "Blutend",
   "PF1.CondTypeBlind": "Blindheit",
@@ -361,6 +443,8 @@
   "PF1.BuffTarIntChecks": "Intelligenz Proben",
   "PF1.BuffTarWisChecks": "Weisheit Proben",
   "PF1.BuffTarChaChecks": "Charisma Proben",
+  "PF1.BuffTarBonusSkillRanks": "Bonusfertigkeitsränge",
+  "PF1.BuffTarBonusFeats": "Bonustalente",
 
   "PF1.BuffTarSpells": "Zauber",
   "PF1.SpellBuffEffect": "Effekt",
@@ -611,8 +695,17 @@
 
   "PF1.FavouredClassBonuses": "Bevorzugte Klasse-Boni",
   "PF1.FavouredClassHP": "Trefferpunkte",
-  "PF1.FavouredClassSkill": "Fertigkeiten",
-  "PF1.FavouredClassAlt": "Alt",
+  "PF1.FavouredClassSkill": "Fertigkeitsränge",
+  "PF1.FavouredClassAlt": "Alternativ",
+
+  "PF1.FavouredClassBonus": {
+    "Label": "Favorisierte-Klasse-Bonus",
+    "HP": "Trefferpunkt",
+    "Skill": "Fertigkeitsrang",
+    "Alt": "Alternativ"
+  },
+
+  "PF1.Key_Control": "Strg",
 
   "PF1.ArmorProfLight": "Leichte Rüstung",
   "PF1.ArmorProfMedium": "Mittlere Rüstung",
@@ -629,15 +722,11 @@
   "PF1.InventoryContainers": "Behälter",
 
   "PF1.ChangeFlagLoseDexToAC": "Geschicklichkeit von RK abziehen",
-  "PF1.ChangeFlagNoDex": "0 GE",
-  "PF1.ChangeFlagNoStr": "0 ST",
-  "PF1.ChangeFlagOneInt": "1 IN",
-  "PF1.ChangeFlagOneWis": "1 WE",
-  "PF1.ChangeFlagOneCha": "1 CH",
   "PF1.ChangeFlagDwarflikeEncumbrance": "Zwergenähnliche Traglast",
   "PF1.ChangeFlagMediumArmorFullSpeed": "Bewegungsrate in Mittlerer Rüstung",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "Bewegungsrate in Schwerer Rüstung",
 
+  "PF1.ErrorGenericPermission": "Du hast keine Rechte diese Aktion auszuführen",
   "PF1.ErrorNoActorPermission": "Du hast keine Rechte den Aktor zu kontrollieren",
   "PF1.ErrorNoActorPermissionAlt": "Du hast keine Rechte den Aktor '{0}' zu kontrollieren",
   "PF1.ErrorNoFormula": "{0} hat keine Formel zum Würfeln!",
@@ -832,6 +921,9 @@
   "PF1.SourceInfoTemplate": "Schablone",
   "PF1.SourceInfoRace": "Volk",
 
+  "PF1.SourceInfoSkillRank_ClassBase": "{className} (Basis)",
+  "PF1.SourceInfoSkillRank_ClassFC": "{className} (Bevorzugte Klasse)",
+
   "PF1.CreateItemForSpell": "Erstelle Item für {0}",
   "PF1.CreateItemWand": "Zauberstab",
   "PF1.CreateItemScroll": "Schriftrolle",
@@ -843,9 +935,22 @@
   "PF1.CombatInfo_Header": "Kampf",
   "PF1.CombatInfo_Round": "Runde {0}",
 
+  "PF1.AddClass": "Klasse hinzufügen",
+  "PF1.Horizontal": "Horizontal",
+  "PF1.Vertical": "Vertikal",
+  "PF1.HideHeld": "Hide Held items",
+  "PF1.HideArmor": "Hide Armor",
+  "PF1.HideBuffs": "Hide Buffs",
+  "PF1.HideConditions": "Hide Conditions",
+  "PF1.HideClothing": "Hide Clothing",
+  "PF1.HideName": "Hide Name",
   "PF1.Action": "Aktion",
   "PF1.All": "Alle",
   "PF1.Attack": "Angriff",
+  "PF1.FormulaAttack": "Angriff #{0}",
+  "PF1.FormulaAttackHint": "Nutze {0} für den Iterationszähler",
+  "PF1.FormulaicExtraAttacks": "Extra Angriffe durch Formel",
+  "PF1.FormulaicAttacksCount": "Angriffsanzahlformel",
   "PF1.AddAttack": "Extra Angriff hinzufügen",
   "PF1.AddDamage": "Schadensformel hinzufügen",
   "PF1.AddHealing": "Heilformel hinzufügen",
@@ -861,6 +966,7 @@
   "PF1.Attacks": "Angriffe",
   "PF1.Biography": "Biographie",
   "PF1.Buffs": "Zustände",
+  "PF1.Change": "Änderung",
   "PF1.Changes": "Änderungen",
   "PF1.Charged": "Geladen",
   "PF1.ChargesSeperator": "von",
@@ -991,7 +1097,7 @@
   "PF1.SpellEffectExample": "z.B. ein Klumpen Säure",
   "PF1.Area": "Bereich",
   "PF1.Supply": "Materialien",
-  "PF1.Melee": "Nachkampf",
+  "PF1.Melee": "Nahkampf",
   "PF1.MeleeWeapon": "Nahkampfwaffe",
   "PF1.MeleeSpell": "Nahkampfzauber",
   "PF1.Ranged": "Fernkampf",
@@ -1042,6 +1148,7 @@
   "PF1.ClassPlural": "Klassen",
   "PF1.FeatPlural": "Talente",
   "PF1.ClassFeaturePlural": "Klassenfertigkeiten",
+  "PF1.NewClassFeaturePlural": "Neue Klassenfertigkeiten",
   "PF1.TraitPlural": "Wesenszüge",
   "PF1.RacialTraitPlural": "Volksmerkmale",
   "PF1.TemplatePlural": "Schablonen",
@@ -1104,6 +1211,7 @@
   "PF1.Unlimited": "Unlimitiert",
   "PF1.Requirements": "Anforderungen",
   "PF1.Formula": "Formel",
+  "PF1.FormulaResult": "Formelergebnis",
   "PF1.ActionType": "Aktionstyp",
   "PF1.AttackRollBonus": "Angriffsbonus",
   "PF1.AttackRollDice": "Angriffswürfel",
@@ -1227,8 +1335,12 @@
   "PF1.Links": "Verknüpfungen",
   "PF1.Confirm": "Bestätigen",
   "PF1.CROffset": "Herausforderungsgradoffset",
+  "PF1.Haste": "Hast",
+  "PF1.Manyshot": "Mehrfachschuss",
   "PF1.RapidShot": "Schnelles Schießen",
   "PF1.PointBlankShot": "Kernschuss",
+  "PF1.AmmoRemaining": "Ammunition Remaining: {0}",
+  "PF1.AmmoDepleted": "Out of Ammunition!",
   "PF1.Priority": "Priorität",
   "PF1.Creatures": "Kreaturen",
   "PF1.ChargeCost": "Verbrauchte Ladungen",
@@ -1281,6 +1393,7 @@
   "PF1.MaxDexArmor": "Max Geschicklichkeits Bonus (Rüstung)",
   "PF1.MaxDexShield": "Max Geschicklichkeits Bonus (Schild)",
   "PF1.Encumbrance": "Belastung",
+  "PF1.Raw": "Roh",
   "PF1.Normal": "Normal",
   "PF1.Large": "Groß",
   "PF1.ExtraLarge": "Sehr Groß",
@@ -1307,6 +1420,7 @@
   "PF1.Settings": "Einstellungen",
   "PF1.SpellbookUsage": "Zauberbücher",
   "PF1.SpellSlotAbilityBonus": "Spell Slot Ability Bonus",
+  "PF1.AlternativeSpellbookName": "Zauberbuchname",
   "PF1.StaticSize": "Statische Größe",
   "PF1.DomainSlotValue": "Domänenzauberplatzmenge",
   "PF1.DomainSlotValueDesc": "Wie viele 'freie' Zauberplätze sollen für Domänen- und Schulenzauber für jeden Grad zur Verfügung stehen?",
@@ -1314,5 +1428,18 @@
   "PF1.Command": "Befehl",
   "PF1.MaximumRangeIncrements": "Maximum Range Increments",
   "PF1.DuplicateInitiative": "Dupliziere Initiative",
-  "PF1.InitiativeOffset": "Initiative Offset"
+  "PF1.InitiativeOffset": "Initiative Offset",
+  "PF1.NotImplemented": "Nicht implementiert",
+  "PF1.StepsRequired": "Steps Required",
+  "PF1.RemoveInfo": "Remove Info",
+  "PF1.CustomRollDesc": "Dieser Wurf nutzt nicht die Standardformel",
+
+  "PF1.Migration.Start": "Starte PF1 System-Migration für Version {version}. Bitte warten.",
+  "PF1.Migration.Ongoing": "Migration läuft noch. Bitte warten bis diese abgeschlossen ist.",
+  "PF1.Migration.End": "PF1 System-Migration auf Version {version} erfolgreich abgeschlossen!",
+
+  "PF1.Info": {
+    "AddClassDialog": "Du kannst Shift gedrückt halten um diesen Dialog zu unterdrücken.",
+    "AddClassDialog_Desc": "Normal öffnen einen kurzen Anpassungsassistenten, während Roh die Klasse ohne Anpassungen hinzufügt."
+  }
 }

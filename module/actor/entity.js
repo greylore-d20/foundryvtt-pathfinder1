@@ -815,7 +815,29 @@ export class ActorPF extends Actor {
             spellsForLevel
           );
 
-          const max = typeof spellsForLevel === "number" ? spellsForLevel + getAbilityBonus() : null;
+          rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
+          rollData.ablMod = spellbookAbilityMod;
+          const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
+          rollData.classLevel =
+            spellClass === "_hd"
+              ? rollData.attributes.hd.total
+              : spellClass?.length > 0
+              ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
+              : 0;
+
+          const allFormula =
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevelAllModFormula`) || "0";
+          const formula =
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevel${a}ModFormula`) || "0";
+
+          const roll = RollPF.safeRoll(formula, rollData);
+          let max =
+            typeof spellsForLevel === "number"
+              ? spellsForLevel +
+                getAbilityBonus() +
+                RollPF.safeRoll(allFormula, rollData) +
+                RollPF.safeRoll(formula, rollData)
+              : null;
           setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
         } else {
           let base = parseInt(

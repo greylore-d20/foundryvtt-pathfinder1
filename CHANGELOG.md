@@ -7,7 +7,12 @@
 - Prevent error in console on unowned items containing formulaic attacks
 - Consumables had two Advanced tabs when identified (#715)
 - Damage rolls ignored the damage multiplier selected in their attack dialog (#706)
-- Prevent level up dialog from accepting multiple clicks (#717)
+- The level up dialog was accepting multiple clicks (#717)
+- Players received roll errors for actors they did not own (#716)
+- Context notes didn't show for spells with no effects (#711)
+- Item durations with formulas errored on unowned items (#719)
+- Fix range calculation on sheets not working anymore (#725)
+- Encumbrance applied incorrectly with Strength altering changes (#729)
 
 ### Changelog
 
@@ -19,10 +24,13 @@
 - Add aliases to spellbook reference names (e.g., `@spells.sorcerer` as well as `@spells.primary`) (thanks claudekennilol!) (#510)
 - ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
 - An error prevented modules from extending PF1 classes under some circumstances (e.g. Forge hosting)
+- `ActorSheetPF#currentPrimaryTab` will now report tabs that aren't inventory as well
+- Add `game.pf1.utils` containing dialogGetActor, dialogGetNumber, createTag, getItemOwner, getActorFromId, getChangeFlat, convertDistance, convertWeight, convertWeightBack, and measureReachDistance
 
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)
+- Updated the German localization (thanks Nico Weichbrodt!)
 
 ### Compendium
 

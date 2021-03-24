@@ -27,12 +27,22 @@ import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
+import { getChangeFlat } from "./module/actor/apply-changes.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { RollPF } from "./module/roll.js";
-import { getItemOwner, sizeDieExt, normalDie, getActorFromId } from "./module/lib.js";
+import {
+  getItemOwner,
+  sizeDieExt,
+  normalDie,
+  getActorFromId,
+  createTag,
+  convertWeight,
+  convertWeightBack,
+  convertDistance,
+} from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
@@ -40,11 +50,16 @@ import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
-import { addReachCallback } from "./module/misc/attack-reach.js";
+import { addReachCallback, measureReachDistance } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
+import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
-import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
+import {
+  addLowLightVisionToLightConfig,
+  addLowLightVisionToTokenConfig,
+  hasTokenVision,
+} from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 
 // Add String.format
@@ -86,6 +101,18 @@ Hooks.once("init", async function () {
     compendiums: {},
     isMigrating: false,
     tooltip: null,
+    utils: {
+      createTag,
+      getItemOwner,
+      getActorFromId,
+      getChangeFlat,
+      convertDistance,
+      convertWeight,
+      convertWeightBack,
+      measureReachDistance,
+      dialogGetActor,
+      dialogGetNumber,
+    },
   };
 
   // Global exports

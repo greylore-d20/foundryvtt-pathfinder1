@@ -248,8 +248,8 @@ export class ItemPF extends Item {
       if (spellbook != null) {
         try {
           result =
-            Roll.create(spellbook.baseDCFormula, rollData).roll().total +
-            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).roll().total +
+            Roll.create(spellbook.baseDCFormula, rollData).evaluate().total +
+            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).evaluate().total +
             dcBonus;
         } catch (e) {
           console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
@@ -594,7 +594,7 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = Roll.create(rng.value, this.getRollData()).roll().total.toString();
+          rng.value = Roll.create(rng.value, this.getRollData()).evaluate().total.toString();
         } catch (err) {
           console.error(err);
         }
@@ -605,8 +605,10 @@ export class ItemPF extends Item {
       // Duration Label
       let dur = duplicate(data.duration || {});
       if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
-      else if (typeof dur.value === "string") {
-        dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"]).total.toString();
+      else if (typeof dur.value === "string" && this.parentActor) {
+        dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"], {
+          suppressError: !this.hasPerm(game.user, "OWNER"),
+        }).total.toString();
       }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
     }
@@ -1222,7 +1224,7 @@ export class ItemPF extends Item {
         `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
       );
       if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = Roll.create("1d100").roll().total;
+        templateData.spellFailure = Roll.create("1d100").evaluate().total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
@@ -1503,7 +1505,7 @@ export class ItemPF extends Item {
     try {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
-        Roll.create(exAtkBonusFormula, rollData).roll().total;
+        Roll.create(exAtkBonusFormula, rollData).evaluate().total;
       }
     } catch (err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
@@ -2091,7 +2093,7 @@ export class ItemPF extends Item {
         attacks.push(attack);
       }
       // Add effect notes only
-      else if (this.hasEffect || this.hasSave) {
+      else {
         let attack = new ChatAttack(this, { rollData: rollData, primaryAttack: primaryAttack });
 
         // Add effect notes
@@ -2212,7 +2214,7 @@ export class ItemPF extends Item {
       await this.addCharges(-cost);
 
       // Post message
-      if (this.hasAction) {
+      if (attacks.length) {
         // Get extra text and properties
         let props = [];
         let extraText = "";
@@ -2355,7 +2357,7 @@ export class ItemPF extends Item {
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = Roll.create("1d100").roll().total;
+            templateData.spellFailure = Roll.create("1d100").evaluate().total;
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }

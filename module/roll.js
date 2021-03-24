@@ -3,17 +3,17 @@ export class RollPF extends Roll {
     return "Roll";
   }
 
-  static safeRoll(formula, data = {}, context) {
+  static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {
-      roll = this.create(formula, data).roll();
+      roll = this.create(formula, data).evaluate();
     } catch (err) {
-      roll = this.create("0", data).roll();
+      roll = this.create("0", data).evaluate();
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
     if (roll.err) {
-      if (context) console.error(context, roll.err);
+      if (context && !options.suppressError) console.error(context, roll.err);
       else if (CONFIG.debug.roll) console.error(roll.err);
     }
     return roll;

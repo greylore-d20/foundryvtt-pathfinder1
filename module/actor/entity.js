@@ -835,8 +835,8 @@ export class ActorPF extends Actor {
             typeof spellsForLevel === "number"
               ? spellsForLevel +
                 getAbilityBonus() +
-                RollPF.safeRoll(allFormula, rollData) +
-                RollPF.safeRoll(formula, rollData)
+                RollPF.safeRoll(allFormula, rollData).total +
+                RollPF.safeRoll(formula, rollData).total
               : null;
           setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
         } else {

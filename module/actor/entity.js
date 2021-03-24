@@ -807,7 +807,14 @@ export class ActorPF extends Actor {
           const classLevel = rollData.classes[spellbook.class].level;
           const casterType = CONFIG.PF1.classCasterType[spellbook.class];
           const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellbook.spellPreparationMode][casterType];
+
           const spellsForLevel = spellsForLevels[classLevel - 1][a];
+          setProperty(
+            this.data,
+            `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`,
+            spellsForLevel
+          );
+
           const max = typeof spellsForLevel === "number" ? spellsForLevel + getAbilityBonus() : null;
           setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
         } else {

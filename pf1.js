@@ -6,7 +6,7 @@
  */
 
 // Import Modules
-import { PF1 } from "./module/config.js";
+import { PF1, CONFIG_OVERRIDES } from "./module/config.js";
 import {
   registerSystemSettings,
   registerClientSettings,
@@ -112,10 +112,11 @@ Hooks.once("init", function () {
   };
 
   // Global exports
-  window.RollPF = RollPF;
+  globalThis.RollPF = RollPF;
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
+  mergeObject(CONFIG, CONFIG_OVERRIDES);
   CONFIG.Actor.entityClass = ActorPF;
   CONFIG.ActiveEffect.entityClass = ActiveEffectPF;
   CONFIG.Item.entityClass = ItemPF;
@@ -912,6 +913,7 @@ export {
   ActiveEffectPF,
 };
 export { DicePF, ChatMessagePF, measureDistances };
+export { PF1 };
 
 export { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
 export { ItemChange } from "./module/item/components/change.js";

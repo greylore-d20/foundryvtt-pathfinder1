@@ -556,42 +556,6 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   async _updateObject(event, formData) {
-    // Handle Damage Array
-    let damage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.parts"));
-    formData["data.damage.parts"] = damage.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(3);
-      if (!arr[i]) arr[i] = [];
-      arr[i][j] = entry[1];
-      return arr;
-    }, []);
-
-    // Handle Critical Damage Array
-    let critDamage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.critParts"));
-    formData["data.damage.critParts"] = critDamage.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(3);
-      if (!arr[i]) arr[i] = [];
-      arr[i][j] = entry[1];
-      return arr;
-    }, []);
-
-    // Handle Non-critical Damage Array
-    let nonCritDamage = Object.entries(formData).filter((e) => e[0].startsWith("data.damage.nonCritParts"));
-    formData["data.damage.nonCritParts"] = nonCritDamage.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(3);
-      if (!arr[i]) arr[i] = [];
-      arr[i][j] = entry[1];
-      return arr;
-    }, []);
-
-    // Handle Attack Array
-    let attacks = Object.entries(formData).filter((e) => e[0].startsWith("data.attackParts"));
-    formData["data.attackParts"] = attacks.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(2);
-      if (!arr[i]) arr[i] = [];
-      arr[i][j] = entry[1];
-      return arr;
-    }, []);
-
     // Handle conditionals array
     let conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
     formData["data.conditionals"] = conditionals.reduce((arr, entry) => {
@@ -625,25 +589,6 @@ export class ItemSheetPF extends ItemSheet {
       } else {
         arr[i][j] = entry[1];
       }
-      return arr;
-    }, []);
-
-    // Handle notes array
-    let note = Object.entries(formData).filter((e) => e[0].startsWith("data.contextNotes"));
-    formData["data.contextNotes"] = note.reduce((arr, entry) => {
-      let [i, j] = entry[0].split(".").slice(2);
-      if (!arr[i]) arr[i] = {};
-      arr[i][j] = entry[1];
-      // Reset subtarget (if necessary)
-      if (j === "subTarget") {
-        const target = (note.find((o) => o[0] === `data.contextNotes.${i}.target`) || [])[1];
-        const subTarget = entry[1];
-        if (typeof target === "string") {
-          const keys = Object.keys(this.item.getContextNoteSubTargets(target));
-          if (!keys.includes(subTarget)) arr[i][j] = keys[0];
-        }
-      }
-      // }
       return arr;
     }, []);
 
@@ -1022,22 +967,20 @@ export class ItemSheetPF extends ItemSheet {
       const initialData = ["", ""];
 
       // Add data
-      await this._onSubmit(event); // Submit any unsaved changes
       const damage = getProperty(this.item.data, k2);
       const updateData = {};
       updateData[k] = getProperty(damage, k3).concat([initialData]);
-      return this.item.update(updateData);
+      return this._onSubmit(event, { updateData });
     }
 
     // Remove a damage component
     if (a.classList.contains("delete-damage")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".damage-part");
       const damage = duplicate(getProperty(this.item.data, k2));
       getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
       const updateData = {};
       updateData[k] = getProperty(damage, k3);
-      return this.item.update(updateData);
+      return this._onSubmit(event, { updateData });
     }
   }
 
@@ -1047,18 +990,16 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new attack component
     if (a.classList.contains("add-attack")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const attackParts = this.item.data.data.attackParts;
-      return this.item.update({ "data.attackParts": attackParts.concat([["", ""]]) });
+      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts.concat([["", ""]]) } });
     }
 
     // Remove an attack component
     if (a.classList.contains("delete-attack")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".attack-part");
       const attackParts = duplicate(this.item.data.data.attackParts);
       attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this.item.update({ "data.attackParts": attackParts });
+      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts } });
     }
   }
 
@@ -1068,20 +1009,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new change
     if (a.classList.contains("add-change")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const changes = this.item.data.data.changes || [];
       const change = ItemChange.create({}, null);
-      return this.item.update({ "data.changes": changes.concat(change.data) });
+      return this._onSubmit(event, { updateData: { "data.changes": changes.concat(change.data) } });
     }
 
     // Remove a change
     if (a.classList.contains("delete-change")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".change");
       const changes = duplicate(this.item.data.data.changes);
       const change = changes.find((o) => o._id === li.dataset.change);
       changes.splice(changes.indexOf(change), 1);
-      return this.item.update({ "data.changes": changes });
+      return this._onSubmit(event, { updateData: { "data.changes": changes } });
     }
   }
 
@@ -1131,18 +1070,20 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const contextNotes = this.item.data.data.contextNotes || [];
-      return this.item.update({ "data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote]) });
+      await this._onSubmit(event, {
+        updateData: { "data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote]) },
+      });
     }
 
     // Remove a note
     if (a.classList.contains("delete-note")) {
-      await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".context-note");
       const contextNotes = duplicate(this.item.data.data.contextNotes);
       contextNotes.splice(Number(li.dataset.note), 1);
-      return this.item.update({ "data.contextNotes": contextNotes });
+      await this._onSubmit(event, {
+        updateData: { "data.contextNotes": contextNotes },
+      });
     }
   }
 
@@ -1152,7 +1093,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Delete link
     if (a.classList.contains("delete-link")) {
-      await this._onSubmit(event);
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
       let links = duplicate(getProperty(this.item.data, `data.links.${group.dataset.tab}`) || []);
@@ -1165,7 +1105,7 @@ export class ItemSheetPF extends ItemSheet {
       // Call hook for deleting a link
       Hooks.callAll("deleteItemLink", this.item, link, group.dataset.tab);
 
-      await this.item.update(updateData);
+      await this._onSubmit(event, { updateData });
 
       // Clean link
       this.item._cleanLink(link, group.dataset.tab);

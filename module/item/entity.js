@@ -2949,6 +2949,9 @@ export class ItemPF extends Item {
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
 
+    // Set aura strength
+    setProperty(result, "item.auraStrength", this.auraStrength);
+
     this._rollData = result.item;
     return result;
   }

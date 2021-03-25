@@ -13,6 +13,7 @@
 - Item durations with formulas errored on unowned items (#719)
 - Fix range calculation on sheets not working anymore (#725)
 - Encumbrance applied incorrectly with Strength altering changes (#729)
+- Item aura strength was empty (#731)
 
 ### Changelog
 

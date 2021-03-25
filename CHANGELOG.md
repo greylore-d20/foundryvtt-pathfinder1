@@ -15,6 +15,7 @@
 - Encumbrance applied incorrectly with Strength altering changes (#729)
 - Item aura strength was empty (#731)
 - Fix race condition causing issues with adding context notes and changes (#730)
+- Spontaneous-flagged spellbooks initially showed an undefined value for casts per day remaining
 
 ### Changelog
 

@@ -126,15 +126,17 @@
         </label>
         {{/unless}}
         {{#if spellbook.orig.autoSpellLevels}}
-          <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.orig.spellPreparationMode 'prepared')}} /> prepared
-          </label>
-          <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="spontaneous" {{checked (eq spellbook.orig.spellPreparationMode 'spontaneous')}} /> spontaneous
-          </label>
-          <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode 'hybrid')}} /> hybrid
-          </label>
+          <div class="radios">
+            <label class="checkbox">
+              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.orig.spellPreparationMode 'prepared')}} /> prepared
+            </label>
+            <label class="checkbox">
+              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="spontaneous" {{checked (eq spellbook.orig.spellPreparationMode 'spontaneous')}} /> spontaneous
+            </label>
+            <label class="checkbox">
+              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode 'hybrid')}} /> hybrid
+            </label>
+          </div>
 
           <div class="flexrow formulas">
             <label><h3>Modify all spell levels</h3></label>

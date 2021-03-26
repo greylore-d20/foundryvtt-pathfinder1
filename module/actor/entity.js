@@ -796,17 +796,21 @@ export class ActorPF extends Actor {
       for (let a = 0; a < 10; a++) {
         const getAbilityBonus = () =>
           typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
-        if (
-          useAuto &&
-          CONFIG.PF1.classCasterType[spellbook.class] &&
-          rollData.classes[spellbook.class] &&
-          CONFIG.PF1.casterProgression.castsPerDay[spellbook.spellPreparationMode][
-            CONFIG.PF1.classCasterType[spellbook.class]
-          ]
-        ) {
+        if (useAuto && rollData.classes[spellbook.class]) {
           const classLevel = rollData.classes[spellbook.class].level;
-          const casterType = CONFIG.PF1.classCasterType[spellbook.class];
-          const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellbook.spellPreparationMode][casterType];
+          let casterType =
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.casterType`) || "high";
+          const spellPrepMode =
+            spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
+              ? spellbook.spellPreparationMode
+              : "prepared";
+
+          // todo hybrid should only have "high" option
+          if (spellPrepMode === "hybrid" || casterType === "null") {
+            // todo find out if "null" check is actually necessary when going from good data
+            casterType = "high";
+          }
+          const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
 
           const spellsForLevel = spellsForLevels[classLevel - 1][a];
           setProperty(

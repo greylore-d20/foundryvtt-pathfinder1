@@ -987,6 +987,33 @@
       }
     }
 
+    .radios {
+      display: flex;
+      justify-content: space-evenly;
+
+      label.checkbox {
+        display: flex;
+        &:first-child {
+          margin-top: unset;
+        }
+      }
+
+      input {
+        margin-inline-end: 4px;
+      }
+
+      *:not(:last-child) {
+        margin-inline-end: 4px;
+      }
+    }
+
+    .spell-level-mod-container {
+      display: grid;
+      grid-auto-rows: auto;
+      column-gap: 4px;
+      grid-template-columns: min-content 1fr;
+    }
+
     .spell-comps,
     .spell-uses {
       white-space: nowrap;

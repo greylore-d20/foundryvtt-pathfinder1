@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.20
+
+### Bug Fixes
+
+- Item links could not be deleted
+
 ## 0.77.19
 
 ### Bug Fixes

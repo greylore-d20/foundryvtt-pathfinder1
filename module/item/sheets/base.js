@@ -601,6 +601,9 @@ export class ItemSheetPF extends ItemSheet {
       const subPath = path.slice(4).join(".");
       const value = e[1];
 
+      // Non-indexed formData is presumed to have been handled already
+      if (index == null) continue;
+
       delete formData[e[0]];
 
       if (!formData[`data.links.${linkType}`])

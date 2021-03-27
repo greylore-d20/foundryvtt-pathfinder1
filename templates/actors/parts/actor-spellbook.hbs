@@ -153,8 +153,10 @@
             <label><h3>{{localize "Modify all spell levels"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevelAllModFormula" value="{{spellbook.orig.autoLevelAllModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
 
+            {{#if (eq spellbook.orig.casterType 'high')}}
             <label><h3>{{localize "PF1.SpellLevel0"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel0ModFormula" value="{{spellbook.orig.autoLevel0ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            {{/if}}
 
             <label><h3>{{localize "PF1.SpellLevel1"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel1ModFormula" value="{{spellbook.orig.autoLevel1ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
@@ -168,12 +170,15 @@
             <label><h3>{{localize "PF1.SpellLevel4"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel4ModFormula" value="{{spellbook.orig.autoLevel4ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
 
+            {{#if (or (eq spellbook.orig.casterType 'med') (eq spellbook.orig.casterType 'high'))}}
             <label><h3>{{localize "PF1.SpellLevel5"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel5ModFormula" value="{{spellbook.orig.autoLevel5ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
 
             <label><h3>{{localize "PF1.SpellLevel6"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel6ModFormula" value="{{spellbook.orig.autoLevel6ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            {{/if}}
 
+            {{#if (eq spellbook.orig.casterType 'high')}}
             <label><h3>{{localize "PF1.SpellLevel7"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel7ModFormula" value="{{spellbook.orig.autoLevel7ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
 
@@ -182,6 +187,8 @@
 
             <label><h3>{{localize "PF1.SpellLevel9"}}</h3></label>
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoLevel9ModFormula" value="{{spellbook.orig.autoLevel9ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            {{/if}}
+
           </section>
         {{/if}}
       </div>

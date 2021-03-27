@@ -623,8 +623,6 @@ export class ActorSheetPF extends ActorSheet {
     const owner = this.actor.owner;
     const book = this.actor.data.data.attributes.spells.spellbooks[bookKey];
     // todo
-    // Reduce spells to the nested spellbook structure
-    let spellbook = {};
     let min = 0;
     let max = 9;
     if (book.autoSpellLevels) {
@@ -646,6 +644,9 @@ export class ActorSheetPF extends ActorSheet {
     const spontaneous =
       (!book.autoSpellLevels && book.spontaneous) ||
       (book.autoSpellLevels && book.spellPreparationMode === "spontaneous");
+
+    // Reduce spells to the nested spellbook structure
+    let spellbook = {};
     for (let a = min; a <= max; a++) {
       spellbook[a] = {
         level: a,

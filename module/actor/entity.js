@@ -792,10 +792,11 @@ export class ActorPF extends Actor {
       }
 
       // Spell slots
-      const useAuto = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`);
-      for (let a = 0; a < 10; a++) {
-        const getAbilityBonus = () =>
+      {
+        const useAuto = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`);
+        const getAbilityBonus = (a) =>
           typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
+
         if (useAuto && rollData.classes[spellbook.class]) {
           const classLevel = rollData.classes[spellbook.class].level;
           let casterType =
@@ -804,57 +805,57 @@ export class ActorPF extends Actor {
             spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
               ? spellbook.spellPreparationMode
               : "prepared";
-
           // todo hybrid should only have "high" option
           if (spellPrepMode === "hybrid" || casterType === "null") {
             // todo find out if "null" check is actually necessary when going from good data
             casterType = "high";
           }
           const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
-
-          const spellsForLevel = spellsForLevels[classLevel - 1][a];
-          setProperty(
-            this.data,
-            `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`,
-            spellsForLevel
-          );
-
           rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
           rollData.ablMod = spellbookAbilityMod;
           const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
-          rollData.classLevel =
-            spellClass === "_hd"
-              ? rollData.attributes.hd.total
-              : spellClass?.length > 0
-              ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
-              : 0;
 
-          const allFormula =
-            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevelAllModFormula`) || "0";
-          const formula =
-            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevel${a}ModFormula`) || "0";
+          for (let a = 0; a < 10; a++) {
+            const spellsForLevel = spellsForLevels[classLevel - 1][a];
+            setProperty(
+              this.data,
+              `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`,
+              spellsForLevel
+            );
 
-          const roll = RollPF.safeRoll(formula, rollData);
-          let max =
-            typeof spellsForLevel === "number"
-              ? spellsForLevel +
-                getAbilityBonus() +
-                RollPF.safeRoll(allFormula, rollData).total +
-                RollPF.safeRoll(formula, rollData).total
-              : null;
-          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
+            rollData.classLevel = classLevel;
+
+            const allFormula =
+              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevelAllModFormula`) || "0";
+            const formula =
+              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevel${a}ModFormula`) ||
+              "0";
+
+            const roll = RollPF.safeRoll(formula, rollData);
+            let max =
+              typeof spellsForLevel === "number"
+                ? spellsForLevel +
+                  getAbilityBonus(a) +
+                  RollPF.safeRoll(allFormula, rollData).total +
+                  RollPF.safeRoll(formula, rollData).total
+                : null;
+
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
+          }
         } else {
-          let base = parseInt(
-            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`)
-          );
-          if (Number.isNaN(base)) {
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
-          } else if (useAuto) {
-            base += getAbilityBonus();
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
-          } else {
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
+          for (let a = 0; a < 10; a++) {
+            let base = parseInt(
+              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`)
+            );
+            if (Number.isNaN(base)) {
+              setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
+              setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
+            } else if (useAuto) {
+              base += getAbilityBonus(a);
+              setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
+            } else {
+              setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
+            }
           }
         }
       }
@@ -880,7 +881,8 @@ export class ActorPF extends Actor {
         const spells = this.items.filter((o) => o.type === "spell");
         for (let i of spells) {
           const sb = i.spellbook;
-          if (!sb || (sb && sb.spontaneous)) continue;
+          if (!sb || (sb && (sb.spontaneous || (sb.autoSpellLevels && sb.spellPreparationMode === "spontaneous"))))
+            continue;
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;

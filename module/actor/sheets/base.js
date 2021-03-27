@@ -622,14 +622,35 @@ export class ActorSheetPF extends ActorSheet {
   _prepareSpellbook(data, spells, bookKey) {
     const owner = this.actor.owner;
     const book = this.actor.data.data.attributes.spells.spellbooks[bookKey];
-
+    // todo
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = 0; a < 10; a++) {
+    let min = 0;
+    let max = 9;
+    if (book.autoSpellLevels) {
+      switch (book.casterType) {
+        case "low":
+          min = 1;
+          max = 4;
+          break;
+        case "med":
+          min = 1;
+          max = 6;
+          break;
+        default:
+          min = 0;
+          max = 9;
+          break;
+      }
+    }
+    const spontaneous =
+      (!book.autoSpellLevels && book.spontaneous) ||
+      (book.autoSpellLevels && book.spellPreparationMode === "spontaneous");
+    for (let a = min; a <= max; a++) {
       spellbook[a] = {
         level: a,
         usesSlots: true,
-        spontaneous: book.spontaneous,
+        spontaneous,
         canCreate: owner === true,
         canPrepare: data.actor.type === "character",
         label: CONFIG.PF1.spellLevels[a],

@@ -833,12 +833,6 @@ export class ItemPF extends Item {
       linkData(srcData, data, "data.inventoryItems", arr);
     }
 
-    // Remove non-array conditionals data
-    {
-      let subData = Object.keys(data).filter((e) => e.startsWith("data.conditionals."));
-      if (subData.length > 0) subData.forEach((s) => delete data[s]);
-    }
-
     // Make sure stuff remains an array
     {
       const keepArray = [
@@ -895,6 +889,12 @@ export class ItemPF extends Item {
           linkData(srcData, data, kArr.key, arr);
         }
       }
+    }
+
+    // Remove non-array conditionals data
+    {
+      let subData = Object.keys(data).filter((e) => e.startsWith("data.conditionals."));
+      if (subData.length > 0) subData.forEach((s) => delete data[s]);
     }
 
     // Update weight from base weight
@@ -2948,6 +2948,9 @@ export class ItemPF extends Item {
       result.ablMod = ablMod;
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
+
+    // Set aura strength
+    setProperty(result, "item.auraStrength", this.auraStrength);
 
     this._rollData = result.item;
     return result;

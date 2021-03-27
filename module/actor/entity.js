@@ -858,6 +858,12 @@ export class ActorPF extends Actor {
             }
           }
         }
+
+        // Set spontaneous spell slots to something sane
+        {
+          const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
+          setProperty(this.data, k, getProperty(this.data, k) || 0);
+        }
       }
 
       // Update spellbook slots

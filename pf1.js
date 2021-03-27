@@ -75,7 +75,7 @@ if (!String.prototype.format) {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 
-Hooks.once("init", async function () {
+Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Register client settings
@@ -134,7 +134,7 @@ Hooks.once("init", async function () {
   CONFIG.statusEffects = getConditions();
 
   // Preload Handlebars Templates
-  await preloadHandlebarsTemplates();
+  preloadHandlebarsTemplates();
   registerHandlebarsHelpers();
 
   // Patch Core Functions

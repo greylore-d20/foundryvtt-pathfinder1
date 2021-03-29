@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.77.20
+
+### Bug Fixes
+
+- Item links could not be deleted
+- Conditional modifiers could not adjust an item's DC
+
 ## 0.77.19
 
 ### Bug Fixes

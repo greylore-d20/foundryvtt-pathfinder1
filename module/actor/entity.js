@@ -841,6 +841,12 @@ export class ActorPF extends Actor {
                 : null;
 
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
+
+            // Set spontaneous spell slots to something sane
+            {
+              const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
+              setProperty(this.data, k, getProperty(this.data, k) || 0);
+            }
           }
         } else {
           for (let a = 0; a < 10; a++) {
@@ -856,13 +862,13 @@ export class ActorPF extends Actor {
             } else {
               setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
             }
-          }
-        }
 
-        // Set spontaneous spell slots to something sane
-        {
-          const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
-          setProperty(this.data, k, getProperty(this.data, k) || 0);
+            // Set spontaneous spell slots to something sane
+            {
+              const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
+              setProperty(this.data, k, getProperty(this.data, k) || 0);
+            }
+          }
         }
       }
 

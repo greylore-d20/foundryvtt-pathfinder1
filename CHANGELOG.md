@@ -6,6 +6,7 @@
 
 - Item links could not be deleted
 - Conditional modifiers could not adjust an item's DC
+- Fix compendium browser packs filter lacking options (#683)
 
 ## 0.77.19
 

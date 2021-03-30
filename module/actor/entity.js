@@ -3063,8 +3063,12 @@ export class ActorPF extends Actor {
   }
 
   getRollData(options = { refresh: false }) {
-    if (!options.refresh && this._rollData) {
-      let result = this._rollData;
+    let result = this.data.data;
+
+    // Return cached data, if applicable
+    let skipRefresh = !options.refresh && this._rollData;
+    if (skipRefresh) {
+      result = this._rollData;
 
       // Clear certain fields
       const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
@@ -3078,12 +3082,24 @@ export class ActorPF extends Actor {
           if (typeof obj === "object") delete obj[k3];
         }
       }
-
-      return result;
     }
 
-    let result = this.data.data;
+    /* ----------------------------- */
+    /* Always add the following data
+    /* ----------------------------- */
+    // Add combat round, if in combat
+    if (game.combats?.viewed) {
+      result.combat = {
+        round: game.combat.round || 0,
+      };
+    }
 
+    // Return cached data, if applicable
+    if (skipRefresh) return result;
+
+    /* ----------------------------- */
+    /* Set the following data on a refresh
+    /* ----------------------------- */
     // Set size index
     {
       const sizeChart = Object.keys(CONFIG.PF1.sizeChart);
@@ -3229,13 +3245,6 @@ export class ActorPF extends Actor {
           result.range.reach = 40;
         }
         break;
-    }
-
-    // Add combat round, if in combat
-    if (game.combats?.viewed) {
-      result.combat = {
-        round: game.combat.round || 0,
-      };
     }
 
     this._rollData = result;

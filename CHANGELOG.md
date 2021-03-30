@@ -8,6 +8,7 @@
 - Conditional modifiers could not adjust an item's DC
 - Fix compendium browser packs filter lacking options (#683)
 - Fix maximum dexterity bonus (#736)
+- `@combat.round` was rarely refreshed (#738)
 
 ## 0.77.19
 

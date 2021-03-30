@@ -828,8 +828,10 @@ export class ActorPF extends Actor {
             const allFormula =
               getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevelAllModFormula`) || "0";
             const formula =
-              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoLevel${a}ModFormula`) ||
-              "0";
+              getProperty(
+                this.data,
+                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.offsetFormula`
+              ) || "0";
 
             const roll = RollPF.safeRoll(formula, rollData);
             let max =

@@ -55,11 +55,7 @@ import { TooltipPF } from "./module/hud/tooltip.js";
 import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
-import {
-  addLowLightVisionToLightConfig,
-  addLowLightVisionToTokenConfig,
-  hasTokenVision,
-} from "./module/low-light-vision.js";
+import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 
 // Add String.format

@@ -328,7 +328,7 @@ export class CompendiumBrowser extends Application {
         const p = game.packs.get(i.collection._id);
         if (p) {
           this.items.push(this._mapEntry(p, i.item));
-          this.packs[i.collection] = p;
+          this.packs[i.collection._id] = p;
         }
       }
       this._savedItems = [];

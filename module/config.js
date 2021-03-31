@@ -1057,7 +1057,7 @@ PF1.casterProgression = {
       ],
     },
   },
-  spellsAvailablePerDay: {
+  spellsPreparedPerDay: {
     [prepared]: {
       [low]: [
         [null],

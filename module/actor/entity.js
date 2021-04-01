@@ -699,13 +699,13 @@ export class ActorPF extends Actor {
             // todo find out if "null" check is actually necessary when going from good data
             casterType = "high";
           }
-          const spellsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
+          const castsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
           rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
           rollData.ablMod = spellbookAbilityMod;
           const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
 
           for (let a = 0; a < 10; a++) {
-            const spellsForLevel = spellsForLevels[classLevel - 1][a];
+            const spellsForLevel = castsForLevels[classLevel - 1][a];
             setProperty(
               this.data,
               `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`,
@@ -732,6 +732,17 @@ export class ActorPF extends Actor {
                 : null;
 
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);
+
+            if (spellPrepMode === "hybrid" || spellPrepMode === "spontaneous") {
+              const knownForLevel =
+                CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a];
+
+              setProperty(
+                this.data,
+                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.known`,
+                knownForLevel
+              );
+            }
           }
         } else {
           for (let a = 0; a < 10; a++) {

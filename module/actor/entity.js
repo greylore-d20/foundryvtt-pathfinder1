@@ -814,6 +814,60 @@ export class ActorPF extends Actor {
           setProperty(slots, `${sbKey}.${a}.domainSlots`, dSlots);
           setProperty(this.data, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
         }
+
+        // Spells available hint text if auto spell levels is enabled
+        {
+          const useAuto = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`);
+          if (useAuto && rollData.classes[spellbook.class]) {
+            const spellPrepMode =
+              spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
+                ? spellbook.spellPreparationMode
+                : "prepared";
+            let casterType =
+              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.casterType`) || "high";
+            const classLevel = rollData.classes[spellbook.class].level;
+
+            const max = this.items.size;
+
+            for (let a = 0; a < 10; a++) {
+              const used = spells.filter((i) => i.data.data.level === a).length;
+              const preps =
+                CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
+                  casterType === "null" ? "high" : casterType
+                ]?.[classLevel - 1][a];
+
+              const remaining = preps - used;
+              if (!remaining) {
+                continue;
+              }
+
+              let remainingMessage = "";
+              if (remaining < 0 && spellPrepMode !== "prepared") {
+                remainingMessage = game.i18n.localize("PF1.TooManySpells");
+              } else if (remaining > 0) {
+                if (spellPrepMode === "spontaneous") {
+                  remainingMessage =
+                    remaining === 1
+                      ? game.i18n.localize("PF1.LearnMoreSpell")
+                      : game.i18n.localize("PF1.LearnMoreSpells").format(remaining);
+                } else if (spellPrepMode === "hybrid") {
+                  remainingMessage =
+                    remaining === 1
+                      ? game.i18n.localize("PF1.PrepareMoreSpell")
+                      : game.i18n.localize("PF1.PrepareMoreSpells").format(remaining);
+                }
+              }
+
+              if (remainingMessage) {
+                setProperty(
+                  this.data,
+                  `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.spellMessage`,
+                  remainingMessage
+                );
+              }
+            }
+          }
+        }
       }
 
       // Spell points

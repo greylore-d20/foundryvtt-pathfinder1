@@ -328,6 +328,10 @@
       </li>
       
       <ol class="item-list">
+        {{#if section.message}}
+          <h4>{{section.message}}</h4>
+        {{/if}}
+
         {{#each section.items as |item i|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">

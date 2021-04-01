@@ -622,7 +622,7 @@ export class ActorSheetPF extends ActorSheet {
   _prepareSpellbook(data, spells, bookKey) {
     const owner = this.actor.owner;
     const book = this.actor.data.data.attributes.spells.spellbooks[bookKey];
-    // todo
+
     let min = 0;
     let max = 9;
     if (book.autoSpellLevels) {
@@ -661,6 +661,7 @@ export class ActorSheetPF extends ActorSheet {
         slots: getProperty(book, `spells.spell${a}.max`) || 0,
         dataset: { type: "spell", level: a, spellbook: bookKey },
         name: game.i18n.localize(`PF1.SpellLevel${a}`),
+        message: getProperty(book, `spells.spell${a}.spellMessage`),
       };
     }
     spells.forEach((spell) => {

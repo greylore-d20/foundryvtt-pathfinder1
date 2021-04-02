@@ -5,7 +5,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["eslint:recommended", "plugin:prettier/recommended"],
+  extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
@@ -25,6 +25,10 @@ module.exports = {
     "no-unused-vars": "off",
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
+    "valid-jsdoc": "off",
+  },
+  settings: {
+    mode: "typescript",
   },
   globals: {
     AudioHelper: "readonly",

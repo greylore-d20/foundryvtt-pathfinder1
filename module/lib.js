@@ -1,7 +1,6 @@
 import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
 import { ItemPF } from "./item/entity.js";
-import { Color } from "./lib/color/color.js";
 
 /**
  * Creates a tag from a string.

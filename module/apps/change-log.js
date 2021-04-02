@@ -1,4 +1,4 @@
-import "../lib/markdown/markdown-it.js";
+import MarkdownIt from "markdown-it";
 import { SemanticVersion } from "../semver.js";
 
 export class ChangeLogWindow extends FormApplication {
@@ -46,7 +46,7 @@ export class ChangeLogWindow extends FormApplication {
   }
 
   _processChangelog(md) {
-    const MD = window.markdownit();
+    const MD = new MarkdownIt();
 
     // Cut off irrelevant changelog entries
     let lines = md.split(/[\n\r]/);

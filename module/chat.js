@@ -1,6 +1,6 @@
 import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
-import { Color } from "./lib/color/color.js";
+import Color from "color";
 
 /* -------------------------------------------- */
 

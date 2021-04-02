@@ -1,4 +1,4 @@
-import { Color } from "../lib/color/color.js";
+import Color from "color";
 import { colorToInt, convertDistance } from "../lib.js";
 
 const rangeColor = {

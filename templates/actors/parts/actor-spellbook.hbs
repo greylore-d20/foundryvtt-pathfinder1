@@ -137,17 +137,19 @@
               <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode 'hybrid')}} /> hybrid
             </label>
           </div>
-          <div class="radios">
-            <label class="checkbox">
-              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="low" {{checked (eq spellbook.orig.casterType 'low')}} /> low
-            </label>
-            <label class="checkbox">
-              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="med" {{checked (eq spellbook.orig.casterType 'med')}} /> medium
-            </label>
-            <label class="checkbox">
-              <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="high" {{checked (eq spellbook.orig.casterType 'high')}} /> high
-            </label>
-          </div>
+          {{#unless (eq spellbook.orig.spellPreparationMode 'hybrid')}}
+            <div class="radios">
+              <label class="checkbox">
+                <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="low" {{checked (eq spellbook.orig.casterType 'low')}} /> low
+              </label>
+              <label class="checkbox">
+                <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="med" {{checked (eq spellbook.orig.casterType 'med')}} /> medium
+              </label>
+              <label class="checkbox">
+                <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="high" {{checked (eq spellbook.orig.casterType 'high')}} /> high
+              </label>
+            </div>
+          {{/unless}}
 
           <section class="spell-level-mod-container">
             <label><h3>{{localize "Modify all spell levels"}}</h3></label>

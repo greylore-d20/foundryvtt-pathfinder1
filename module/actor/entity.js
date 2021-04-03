@@ -694,10 +694,10 @@ export class ActorPF extends Actor {
             spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
               ? spellbook.spellPreparationMode
               : "prepared";
-          // todo hybrid should only have "high" option
-          if (spellPrepMode === "hybrid" || casterType === "null") {
+          if (casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
             // todo find out if "null" check is actually necessary when going from good data
             casterType = "high";
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.casterType`, casterType);
           }
           const castsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
           rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);

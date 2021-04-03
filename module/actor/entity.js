@@ -719,7 +719,7 @@ export class ActorPF extends Actor {
             const formula =
               getProperty(
                 this.data,
-                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.offsetFormula`
+                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.preparedOffsetFormula`
               ) || "0";
 
             const roll = RollPF.safeRoll(formula, rollData);
@@ -791,7 +791,11 @@ export class ActorPF extends Actor {
         const spells = this.items.filter((o) => o.type === "spell");
         for (let i of spells) {
           const sb = i.spellbook;
-          if (!sb || (sb && (sb.spontaneous || (sb.autoSpellLevels && sb.spellPreparationMode === "spontaneous"))))
+          if (
+            !sb ||
+            (!sb.autoSpellLevels && sb.spontaneous) ||
+            (sb.autoSpellLevels && sb.spellPreparationMode === "spontaneous")
+          )
             continue;
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;

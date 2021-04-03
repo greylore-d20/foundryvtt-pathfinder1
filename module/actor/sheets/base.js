@@ -643,7 +643,7 @@ export class ActorSheetPF extends ActorSheet {
     }
     const spontaneous =
       (!book.autoSpellLevels && book.spontaneous) ||
-      (book.autoSpellLevels && book.spellPreparationMode === "spontaneous");
+      (book.autoSpellLevels && (book.spellPreparationMode === "spontaneous" || book.spellPreparationMode === "hybrid"));
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};

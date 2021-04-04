@@ -18,6 +18,14 @@ import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
+import { ActorSheetFlags } from "./module/apps/actor-flags.js";
+import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { EntrySelector } from "./module/apps/entry-selector.js";
+import { LevelUpForm } from "./module/apps/level-up.js";
+import { PointBuyCalculator } from "./module/apps/point-buy-calculator.js";
+import { ScriptEditor } from "./module/apps/script-editor.js";
+import { SidebarPF } from "./module/apps/sidebar.js";
+import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
@@ -91,7 +99,17 @@ Hooks.once("init", function () {
       ItemSheetPF,
       ItemSheetPF_Container,
       // Misc
+      ActorSheetFlags,
+      ActorRestDialog,
+      ActorTraitSelector,
       CompendiumDirectoryPF,
+      CompendiumBrowser,
+      EntrySelector,
+      LevelUpForm,
+      PointBuyCalculator,
+      ScriptEditor,
+      SidebarPF,
+      TooltipPF,
     },
     compendiums: {},
     // Rolling
@@ -119,6 +137,10 @@ Hooks.once("init", function () {
       dialogGetNumber,
       SemanticVersion,
     },
+    // Components
+    documentComponents: {
+      ItemChange,
+    },
     // Macros
     macros,
     rollItemMacro: macros.rollItemMacro,
@@ -130,7 +152,6 @@ Hooks.once("init", function () {
     migrateWorld: migrations.migrateWorld,
     isMigrating: false,
     // Misc
-    ItemChange,
     config: PF1,
     tooltip: null,
     runUnitTests,

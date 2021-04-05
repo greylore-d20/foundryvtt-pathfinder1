@@ -9,6 +9,7 @@
 - Fix compendium browser packs filter lacking options (#683)
 - Fix maximum dexterity bonus (#736)
 - `@combat.round` was rarely refreshed (#738)
+- Dice So Nice settings were ignored for attack and damage rolls
 
 ## 0.77.19
 

@@ -2174,36 +2174,50 @@ export class ItemPF extends Item {
               break;
           }
 
-          // Define showRoll to be version independent
-          const showRoll = async (rollDice) => {
-            // Check for DsN v3, which uses DicePool instead of [Roll]
-            if (
-              SemanticVersion.fromString(game.modules.get("dice-so-nice").data.version).isHigherThan(
-                SemanticVersion.fromString("2.9.0")
-              )
-            ) {
-              rollDice = new DicePool({ rolls: rollDice });
+          const mergeRolls = game.settings.get("dice-so-nice", "enabledSimultaneousRolls");
+          const skipRolls = game.settings.get("dice-so-nice", "immediatelyDisplayChatMessages");
+
+          /**
+           * Visually roll dice
+           *
+           * @async
+           * @param {DicePool[]} pools - An array of DicePools to be rolled together
+           * @returns {Promise} A Promise that is resolved when all rolls have been displayed
+           */
+          const showRoll = async (pools) => {
+            if (mergeRolls) {
+              return Promise.all(pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, whisper, blind)));
+            } else {
+              for (const pool of pools) {
+                await game.dice3d.showForRoll(pool, game.user, true, whisper, blind);
+              }
             }
-            await game.dice3d.showForRoll(rollDice, game.user, true, whisper, blind);
           };
 
-          // Iterate over every single attack
-          for (let atk of attacks) {
-            let rolls = [];
-            if (atk.attack.roll) rolls.push(atk.attack.roll);
-            for (let dmgRoll of atk.damage.rolls) {
-              if (dmgRoll?.roll) rolls.push(dmgRoll.roll);
-            }
-            // Visually roll an attack's attack roll + its damage roll
-            await showRoll(rolls);
-            if (atk.hasCritConfirm) {
-              rolls = [atk.critConfirm.roll];
-              for (let critDmgRoll of atk.critDamage.rolls) {
-                if (critDmgRoll?.roll) rolls.push(critDmgRoll.roll);
-              }
-              // Visually roll an attack's crit confirm + crit damage roll
-              await showRoll(rolls);
-            }
+          /** @type {DicePool[]} */
+          const pools = [];
+
+          for (const atk of attacks) {
+            // Create DicePool for attack and damage rolls
+            const attackPool = new DicePool();
+            if (atk.attack.roll) attackPool.rolls.push(atk.attack.roll);
+            attackPool.rolls.push(...(atk.damage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
+
+            // Create DicePool for crit confirmation and crit damage rolls
+            const critPool = new DicePool();
+            if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm.roll);
+            critPool.rolls.push(...(atk.critDamage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
+
+            // Add non-empty pools to the array of rolls to be displayed
+            if (attackPool.rolls.length) pools.push(attackPool);
+            if (critPool.rolls.length) pools.push(critPool);
+          }
+
+          if (pools.length) {
+            // Chat card is to be shown immediately
+            if (skipRolls) showRoll(pools);
+            // Wait for rolls to finish before showing the chat card
+            else await showRoll(pools);
           }
         } catch (e) {
           console.error(e);

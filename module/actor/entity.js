@@ -1205,7 +1205,11 @@ export class ActorPF extends Actor {
         )
       );
     }
-    setProperty(this.data, "data.attributes.acp.total", getProperty(this.data, "data.attributes.acp.gear"));
+    setProperty(
+      this.data,
+      "data.attributes.acp.total",
+      getProperty(this.data, "data.attributes.acp.gear") + getProperty(this.data, "data.attributes.acp.encumbrance")
+    );
 
     setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
   }

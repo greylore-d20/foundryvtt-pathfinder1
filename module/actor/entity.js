@@ -2503,39 +2503,12 @@ export class ActorPF extends Actor {
    * This allows for damage to be scaled by a multiplier to account for healing, critical hits, or resistance
    * If Shift is held, will prompt for adjustments based on damage reduction and energy resistances
    *
-   * @param {Number} value   The amount of damage to deal.
-   * @param {Object} {}      Object containing default settings for overriding
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @param {}.forceDialog
-   * @param {}.reductionDefault
-   * @param {}.asNonlethal
-   * @return {Promise}
+   * @param {number} value - The amount of damage to deal.
+   * @param {object} [options] - Object containing default settings for overriding
+   * @param {boolean} [options.forceDialog=true] - Forces the opening of a Dialog as if Shift was pressed
+   * @param {string} [options.reductionDefault] - Default value for Damage Reduction
+   * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
+   * @returns {Promise}
    */
   static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
     const promises = [];

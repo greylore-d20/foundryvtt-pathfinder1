@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.21
+
+### Bug Fixes
+
+- ACP from equipment and encumbrance incorrectly stacked
+
 ## 0.77.20
 
 ### Bug Fixes

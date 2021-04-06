@@ -18,6 +18,7 @@ export class ActorPF extends Actor {
 
     /**
      * A list of all the active items with changes.
+     *
      * @property
      * @type {Array}
      */
@@ -25,34 +26,36 @@ export class ActorPF extends Actor {
 
     /**
      * Stores all ItemChanges from carried items.
+     *
      * @property
      * @public
-     * @type {Object}
+     * @type {object}
      */
     if (this.changes === undefined) this.changes = new Collection();
 
     /**
      * Stores cancellable tokens for pending update promises.
+     *
      * @property
      * @private
-     * @type {Array.<Object>}
+     * @type {Array.<object>}
      */
     if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
 
     /**
-     * @property {Object} _rollData
+     * @property {object} _rollData
      * Cached roll data for this item.
      */
     if (this._rollData === undefined) this._rollData = null;
 
     /**
-     * @property {Array.<String>} _runningFunctions
+     * @property {Array.<string>} _runningFunctions
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
     if (this._runningFunctions === undefined) this._runningFunctions = [];
 
     /**
-     * @property {Object} _queuedItemUpdates
+     * @property {object} _queuedItemUpdates
      * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
      */
     if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
@@ -119,6 +122,7 @@ export class ActorPF extends Actor {
 
   /**
    * Returns an array of all selected tokens, along with their actors.
+   *
    * @returns {Array.<ActorPF, Token>[]}
    */
   static getSelectedActors() {
@@ -202,6 +206,7 @@ export class ActorPF extends Actor {
 
   /**
    * The VisionPermissionSheet instance for this actor
+   *
    * @type {VisionPermissionSheet}
    */
   get visionPermissionSheet() {
@@ -518,6 +523,7 @@ export class ActorPF extends Actor {
 
   /**
    * Checks if there's any matching proficiency
+   *
    * @param {ItemPF } item - The item to check for.
    * @param {string} proficiencyName - The proficiency name to look for. e.g. 'lightShield' or 'mediumArmor'.
    * @returns {boolean} Whether the actor is proficient with that item.
@@ -562,11 +568,27 @@ export class ActorPF extends Actor {
     // Reset maximum dexterity bonus
     setProperty(this.data, "data.attributes.maxDexBonus", null);
 
-    // Compute encumbrance
-    this._computeEncumbrance();
+    {
+      // Compute encumbrance
+      const encPen = this._computeEncumbrance();
 
-    // Apply armor penalties
-    this._applyArmorPenalties();
+      // Apply armor penalties
+      const gearPen = this._applyArmorPenalties();
+
+      // Set armor check penalty
+      setProperty(this.data, "data.attributes.acp.encumbrance", encPen.acp);
+      setProperty(this.data, "data.attributes.acp.gear", gearPen.acp);
+      setProperty(this.data, "data.attributes.acp.total", Math.max(encPen.acp, gearPen.acp));
+
+      // Set maximum dexterity bonus
+      if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(encPen.maxDexBonus ?? Number.POSITIVE_INFINITY, gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY)
+        );
+      }
+    }
   }
 
   /**
@@ -949,6 +971,11 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Computes armor penalties for this actor.
+   *
+   * @returns {MobilityPenaltyResult} The resulting penalties from armor.
+   */
   _applyArmorPenalties() {
     // Item type to proficiency maps
     const armorProficiencyMap = {
@@ -1063,26 +1090,23 @@ export class ActorPF extends Actor {
         }
       });
 
-    // Update
+    // Return result
+    let result = {
+      maxDexBonus: null,
+      acp: (armorACP ?? 0) + (shieldACP ?? 0),
+    };
     setProperty(this.data, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
     if (armorMDexWorst !== null || shieldMDexWorst !== null) {
-      setProperty(
-        this.data,
-        "data.attributes.maxDexBonus",
-        Math.min(
-          armorMDexWorst ?? Number.POSITIVE_INFINITY,
-          shieldMDexWorst ?? Number.POSITIVE_INFINITY,
-          getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY
-        )
+      result.maxDexBonus = Math.min(
+        armorMDexWorst ?? Number.POSITIVE_INFINITY,
+        shieldMDexWorst ?? Number.POSITIVE_INFINITY
       );
     }
-    setProperty(
-      this.data,
-      "data.attributes.acp.total",
-      getProperty(this.data, "data.attributes.acp.gear") + getProperty(this.data, "data.attributes.acp.encumbrance")
-    );
 
+    // Set armor penalty to attack rolls
     setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
+
+    return result;
   }
 
   prepareItemLinks() {
@@ -1275,8 +1299,9 @@ export class ActorPF extends Actor {
 
   /**
    * Return reduced movement speed.
-   * @param {Number} value - The non-reduced movement speed.
-   * @returns {Number} The reduced movement speed.
+   *
+   * @param {number} value - The non-reduced movement speed.
+   * @returns {number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
     const incr = 5;
@@ -1298,9 +1323,10 @@ export class ActorPF extends Actor {
 
   /**
    * Return increased amount of spell slots by ability score modifier.
-   * @param {Number} mod - The associated ability modifier.
-   * @param {Number} level - Spell level.
-   * @returns {Number} Amount of spell levels to increase.
+   *
+   * @param {number} mod - The associated ability modifier.
+   * @param {number} level - Spell level.
+   * @returns {number} Amount of spell levels to increase.
    */
   static getSpellSlotIncrease(mod, level) {
     if (level === 0) return 0;
@@ -1310,8 +1336,9 @@ export class ActorPF extends Actor {
 
   /**
    * Return the amount of experience required to gain a certain character level.
-   * @param level {Number}  The desired level
-   * @return {Number}       The XP required
+   *
+   * @param level {number}  The desired level
+   * @returns {number}       The XP required
    */
   getLevelExp(level) {
     const expConfig = game.settings.get("pf1", "experienceConfig");
@@ -1338,8 +1365,9 @@ export class ActorPF extends Actor {
 
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
-   * @param cr {Number}     The creature's challenge rating
-   * @return {Number}       The amount of experience granted per kill
+   *
+   * @param cr {number}     The creature's challenge rating
+   * @returns {number}       The amount of experience granted per kill
    */
   getCRExp(cr) {
     if (cr < 1.0) return Math.max(400 * cr, 10);
@@ -1448,9 +1476,9 @@ export class ActorPF extends Actor {
    * Extend the default update method to enhance data before submission.
    * See the parent Entity.update method for full details.
    *
-   * @param {Object} data     The data with which to update the Actor
-   * @param {Object} options  Additional options which customize the update workflow
-   * @return {Promise}        A Promise which resolves to the updated Entity
+   * @param {object} data     The data with which to update the Actor
+   * @param {object} options  Additional options which customize the update workflow
+   * @returns {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
     this._pendingUpdateTokens.forEach((token) => {
@@ -1575,7 +1603,10 @@ export class ActorPF extends Actor {
 
   /**
    * Makes sure experience values are correct in update data.
-   * @param {Object} data - The update data, as per ActorPF.update()
+   *
+   * @param {object} data - The update data, as per ActorPF.update()
+   * @param updateData
+   * @param fullData
    */
   _updateExp(updateData, fullData) {
     // Get total level
@@ -1650,6 +1681,9 @@ export class ActorPF extends Actor {
 
   /**
    * See the base Actor class for API documentation of this method
+   *
+   * @param itemData
+   * @param options
    */
   async createOwnedItem(itemData, options) {
     let t = itemData.type;
@@ -1828,8 +1862,9 @@ export class ActorPF extends Actor {
   /**
    * Roll a Skill Check
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   *
    * @param {string} skillId      The skill id (e.g. "ins")
-   * @param {Object} options      Options which configure how the skill check is rolled
+   * @param {object} options      Options which configure how the skill check is rolled
    */
   rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -1898,8 +1933,9 @@ export class ActorPF extends Actor {
   /**
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
-   * @param {String} abilityId     The ability id (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests or saving throws are rolled
+   *
+   * @param {string} abilityId     The ability id (e.g. "str")
+   * @param {object} options      Options which configure how ability tests or saving throws are rolled
    */
   rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
     this.rollAbilityTest(abilityId, options);
@@ -2275,8 +2311,9 @@ export class ActorPF extends Actor {
   /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {String} abilityId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
+   *
+   * @param {string} abilityId    The ability ID (e.g. "str")
+   * @param {object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -2468,6 +2505,36 @@ export class ActorPF extends Actor {
    *
    * @param {Number} value   The amount of damage to deal.
    * @param {Object} {}      Object containing default settings for overriding
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
+   * @param {}.forceDialog
+   * @param {}.reductionDefault
+   * @param {}.asNonlethal
    * @return {Promise}
    */
   static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
@@ -2575,14 +2642,23 @@ export class ActorPF extends Actor {
             resolve(false);
           },
           render: (inp) => {
+            /**
+             *
+             */
             function swapSelected() {
               let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
               checked.forEach((chk) => (chk.checked = !chk.checked));
             }
+            /**
+             * @param e
+             */
             function setReduction(e) {
               inp[0].querySelector('input[name="damage-reduction"]').value =
                 e.currentTarget.innerText.match(numReg) ?? "";
             }
+            /**
+             * @param event
+             */
             function mouseWheelAdd(event) {
               const el = event.currentTarget;
 
@@ -2607,6 +2683,8 @@ export class ActorPF extends Actor {
 
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
+   *
+   * @param data
    */
   getWoundThresholdMultiplier(data = null) {
     data = data ?? this.data;
@@ -2621,6 +2699,7 @@ export class ActorPF extends Actor {
    * Returns Wound Threshold relevant data.
    *
    * @param {*} rollData Provided valid rollData
+   * @param data
    */
   getWoundThresholdData(data = null) {
     data = data ?? this.data;
@@ -2713,7 +2792,8 @@ export class ActorPF extends Actor {
 
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
-   * @param {String} context - The context to draw from.
+   *
+   * @param {string} context - The context to draw from.
    */
   getContextNotes(context) {
     let result = this.allNotes;
@@ -2865,6 +2945,7 @@ export class ActorPF extends Actor {
 
   /**
    * Returns a list of already parsed context notes.
+   *
    * @param {string} context - The context to draw notes from.
    * @returns {string[]} The resulting notes, already parsed.
    */
@@ -2897,6 +2978,17 @@ export class ActorPF extends Actor {
     return super.createEmbeddedEntity(embeddedName, noArray ? createData[0] : createData, options);
   }
 
+  /**
+   * @typedef {object} MobilityPenaltyResult
+   * @property {number|null} maxDexBonus - The maximum dexterity bonus allowed for this result.
+   * @property {number} acp - The armor check penalty of this result.
+   */
+
+  /**
+   * Computes encumbrance values for this actor.
+   *
+   * @returns {MobilityPenaltyResult} The resulting penalties from encumbrance.
+   */
   _computeEncumbrance() {
     const carry = this.getCarryCapacity();
     setProperty(this.data, "data.attributes.encumbrance.levels.light", carry.light);
@@ -2916,35 +3008,23 @@ export class ActorPF extends Actor {
     }
     setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
 
+    let result = {
+      maxDexBonus: null,
+      acp: 0,
+    };
+
     switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
-      case 0:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
-        break;
       case 1:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
-        );
+        result.acp = 3;
+        result.maxDexBonus = 3;
         break;
       case 2:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
-        );
+        result.acp = 6;
+        result.maxDexBonus = 1;
         break;
     }
-    setProperty(
-      this.data,
-      "data.attributes.acp.total",
-      Math.max(
-        getProperty(this.data, "data.attributes.acp.gear"),
-        getProperty(this.data, "data.attributes.acp.encumbrance")
-      )
-    );
+
+    return result;
   }
 
   _calculateCoinWeight() {
@@ -3007,6 +3087,7 @@ export class ActorPF extends Actor {
 
   /**
    * Converts currencies of the given category to the given currency type
+   *
    * @param {string} category - Either 'currency' or 'altCurrency'.
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */

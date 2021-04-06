@@ -680,6 +680,7 @@ export class ActorPF extends Actor {
         setProperty(this.data, key, total);
       }
 
+      const safeTotal = (formula, data) => (isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula);
       const getAbilityBonus = (a) =>
         typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
       // Spell slots
@@ -708,7 +709,7 @@ export class ActorPF extends Actor {
           const allLevelModFormula =
             getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.preparedLevelAllModFormula`) ||
             "0";
-          const allLevelMod = RollPF.safeRoll(allLevelModFormula, rollData).total;
+          const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
             const spellsForLevel = castsForLevels[classLevel - 1][a];
@@ -726,7 +727,7 @@ export class ActorPF extends Actor {
 
             let max =
               typeof spellsForLevel === "number"
-                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeRoll(offsetFormula, rollData).total
+                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + safeTotal(offsetFormula, rollData)
                 : null;
 
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, max);

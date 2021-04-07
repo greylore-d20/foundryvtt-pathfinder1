@@ -807,6 +807,7 @@ export class ActorPF extends Actor {
             (sb.autoSpellLevels && sb.spellPreparationMode === "spontaneous")
           )
             continue;
+
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;
@@ -871,6 +872,7 @@ export class ActorPF extends Actor {
 
               const remaining = available - used;
               if (!remaining) {
+                console.log("just adding something that is not whitespace for testing");
                 continue;
               }
 

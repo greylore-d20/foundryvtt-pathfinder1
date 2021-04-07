@@ -26,12 +26,6 @@ module.exports = {
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto",
-      },
-    ],
   },
   settings: {
     mode: "typescript",

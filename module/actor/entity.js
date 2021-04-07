@@ -19,6 +19,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     /**
      * A list of all the active items with changes.
+     *
      * @property
      * @type {Array}
      */
@@ -26,34 +27,36 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     /**
      * Stores all ItemChanges from carried items.
+     *
      * @property
      * @public
-     * @type {Object}
+     * @type {object}
      */
     if (this.changes === undefined) this.changes = new Collection();
 
     /**
      * Stores cancellable tokens for pending update promises.
+     *
      * @property
      * @private
-     * @type {Array.<Object>}
+     * @type {Array.<object>}
      */
     if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
 
     /**
-     * @property {Object} _rollData
+     * @property {object} _rollData
      * Cached roll data for this item.
      */
     if (this._rollData === undefined) this._rollData = null;
 
     /**
-     * @property {Array.<String>} _runningFunctions
+     * @property {Array.<string>} _runningFunctions
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
     if (this._runningFunctions === undefined) this._runningFunctions = [];
 
     /**
-     * @property {Object} _queuedItemUpdates
+     * @property {object} _queuedItemUpdates
      * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
      */
     if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
@@ -65,7 +68,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (this.containerItems === undefined) this.containerItems = [];
 
     /**
-     * @property {Object} _prevAttributes
+     * @property {object} _prevAttributes
      * A list of attributes to remember between updates.
      */
     if (this._prevAttributes === undefined) this._prevAttributes = null;
@@ -126,6 +129,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Returns an array of all selected tokens, along with their actors.
+   *
    * @returns {Array.<ActorPF, Token>[]}
    */
   static getSelectedActors() {
@@ -209,6 +213,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * The VisionPermissionSheet instance for this actor
+   *
    * @type {VisionPermissionSheet}
    */
   get visionPermissionSheet() {
@@ -496,153 +501,8 @@ export class ActorPF extends ActorDataPF(Actor) {
       setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
     }
 
-    // Item type to proficiency maps
-    const armorProficiencyMap = {
-      lightArmor: "lgt",
-      mediumArmor: "med",
-      heavyArmor: "hvy",
-    };
-    const shieldProficiencyMap = {
-      other: "shl", // buckler
-      lightShield: "shl",
-      heavyShield: "shl",
-      towerShield: "twr",
-    };
-    // Custom proficiencies
-    const customProficiencies =
-      this.data.data.traits.armorProf?.customTotal
-        ?.split(CONFIG.PF1.re.traitSeparator)
-        .map((item) => item.trim().toLowerCase())
-        .filter((item) => item.length > 0) || [];
-
-    // Check if there's any matching proficiency
-    const hasArmorProficiency = (item, proficiencyName) => {
-      // Assume NPCs to be proficient with their armor
-      if (this.data.type === "npc") return true;
-
-      const name = item.name.toLowerCase(),
-        tag = item.data.tag;
-      return (
-        this.data.data.traits.armorProf.total.includes(proficiencyName) ||
-        customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
-      );
-    };
-
     // Apply ACP and Max Dexterity Bonus
-    {
-      let armorACP = 0;
-      let shieldACP = 0;
-      let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
-      let armorMDexWorst = null;
-      let shieldMDexWorst = null;
-
-      this.data.items
-        .filter((obj) => {
-          return obj.type === "equipment" && obj.data.equipped;
-        })
-        .forEach((obj) => {
-          let itemACP = Math.abs(obj.data.armor.acp);
-          if (obj.data.masterwork === true && ["armor", "shield"].includes(obj.data.equipmentType)) {
-            itemACP = Math.max(0, itemACP - 1);
-          }
-
-          switch (obj.data.equipmentType) {
-            case "armor":
-              itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.armorBonus"));
-              break;
-            case "shield":
-              itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.shieldBonus"));
-              break;
-          }
-
-          if (obj.data.broken) {
-            itemACP *= 2;
-          }
-
-          if (itemACP) {
-            const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.find(
-              (o) => o.name === obj.name
-            );
-            if (sInfo) sInfo.value = itemACP;
-            else {
-              getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
-                name: obj.name,
-                value: itemACP,
-              });
-            }
-          }
-
-          switch (obj.data.equipmentType) {
-            case "armor":
-              if (itemACP > armorACP) armorACP = itemACP;
-              if (!hasArmorProficiency(obj, armorProficiencyMap[obj.data.equipmentSubtype]))
-                attackACPPenalty += armorACP;
-              break;
-            case "shield":
-              if (itemACP > shieldACP) shieldACP = itemACP;
-              if (!hasArmorProficiency(obj, shieldProficiencyMap[obj.data.equipmentSubtype]))
-                attackACPPenalty += shieldACP;
-              break;
-          }
-
-          if (obj.data.armor.dex !== null) {
-            const mDex = Number.parseInt(obj.data.armor.dex);
-            switch (obj.data.equipmentType) {
-              case "armor":
-                if (Number.isInteger(mDex)) {
-                  const armorMDex = mDex + getProperty(this.data, "data.attributes.mDex.armorBonus");
-                  armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
-
-                  if (!Number.isNaN(armorMDex)) {
-                    const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
-                      (o) => o.name === obj.name
-                    );
-                    if (sInfo) sInfo.value = armorMDex;
-                    else {
-                      getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-                        name: obj.name,
-                        value: armorMDex,
-                      });
-                    }
-                  }
-                }
-                break;
-              case "shield":
-                if (Number.isInteger(mDex)) {
-                  const shieldMDex = mDex + getProperty(this.data, "data.attributes.mDex.shieldBonus");
-                  shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
-
-                  if (!Number.isNaN(shieldMDex)) {
-                    const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
-                      (o) => o.name === obj.name
-                    );
-                    if (sInfo) sInfo.value = shieldMDex;
-                    else {
-                      getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-                        name: obj.name,
-                        value: shieldMDex,
-                      });
-                    }
-                  }
-                }
-                break;
-            }
-          }
-        });
-
-      // Update
-      setProperty(this.data, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
-      if (armorMDexWorst !== null || shieldMDexWorst !== null) {
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(armorMDexWorst ?? Number.POSITIVE_INFINITY, shieldMDexWorst ?? Number.POSITIVE_INFINITY)
-        );
-      }
-      setProperty(this.data, "data.attributes.acp.total", getProperty(this.data, "data.attributes.acp.gear"));
-
-      setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
-    }
+    this._applyArmorPenalties();
 
     // Reset class skills
     for (let [k, s] of Object.entries(getProperty(this.data, "data.skills"))) {
@@ -664,6 +524,35 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   /**
+   * Checks if there's any matching proficiency
+   *
+   * @param {ItemPF } item - The item to check for.
+   * @param {string} proficiencyName - The proficiency name to look for. e.g. 'lightShield' or 'mediumArmor'.
+   * @returns {boolean} Whether the actor is proficient with that item.
+   */
+  hasArmorProficiency(item, proficiencyName) {
+    // Assume NPCs to be proficient with their armor
+    if (this.data.type === "npc") return true;
+
+    // Check for item type
+    if (item.type !== "equipment" || !["armor", "shield"].includes(item.data.equipmentType)) return true;
+
+    // Custom proficiencies
+    const customProficiencies =
+      this.data.data.traits.armorProf?.customTotal
+        ?.split(CONFIG.PF1.re.traitSeparator)
+        .map((item) => item.trim().toLowerCase())
+        .filter((item) => item.length > 0) || [];
+
+    const name = item.name.toLowerCase(),
+      tag = item.data.tag;
+    return (
+      this.data.data.traits.armorProf.total.includes(proficiencyName) ||
+      customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
+    );
+  }
+
+  /**
    * Called just before the first change is applied, and after every change is applied.
    * Sets additional variables (such as spellbook range)
    */
@@ -678,8 +567,30 @@ export class ActorPF extends ActorDataPF(Actor) {
       };
     }
 
-    // Compute encumbrance
-    this._computeEncumbrance();
+    // Reset maximum dexterity bonus
+    setProperty(this.data, "data.attributes.maxDexBonus", null);
+
+    {
+      // Compute encumbrance
+      const encPen = this._computeEncumbrance();
+
+      // Apply armor penalties
+      const gearPen = this._applyArmorPenalties();
+
+      // Set armor check penalty
+      setProperty(this.data, "data.attributes.acp.encumbrance", encPen.acp);
+      setProperty(this.data, "data.attributes.acp.gear", gearPen.acp);
+      setProperty(this.data, "data.attributes.acp.total", Math.max(encPen.acp, gearPen.acp));
+
+      // Set maximum dexterity bonus
+      if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(encPen.maxDexBonus ?? Number.POSITIVE_INFINITY, gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY)
+        );
+      }
+    }
   }
 
   /**
@@ -815,6 +726,12 @@ export class ActorPF extends ActorDataPF(Actor) {
           } else {
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
           }
+        }
+
+        // Set spontaneous spell slots to something sane
+        {
+          const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
+          setProperty(this.data, k, getProperty(this.data, k) || 0);
         }
       }
 
@@ -1060,6 +977,144 @@ export class ActorPF extends ActorDataPF(Actor) {
     });
   }
 
+  /**
+   * Computes armor penalties for this actor.
+   *
+   * @returns {MobilityPenaltyResult} The resulting penalties from armor.
+   */
+  _applyArmorPenalties() {
+    // Item type to proficiency maps
+    const armorProficiencyMap = {
+      lightArmor: "lgt",
+      mediumArmor: "med",
+      heavyArmor: "hvy",
+    };
+    const shieldProficiencyMap = {
+      other: "shl", // buckler
+      lightShield: "shl",
+      heavyShield: "shl",
+      towerShield: "twr",
+    };
+
+    let armorACP = 0;
+    let shieldACP = 0;
+    let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
+    let armorMDexWorst = null;
+    let shieldMDexWorst = null;
+
+    this.data.items
+      .filter((obj) => {
+        return obj.type === "equipment" && obj.data.equipped;
+      })
+      .forEach((obj) => {
+        let itemACP = Math.abs(obj.data.armor.acp);
+        if (obj.data.masterwork === true && ["armor", "shield"].includes(obj.data.equipmentType)) {
+          itemACP = Math.max(0, itemACP - 1);
+        }
+
+        switch (obj.data.equipmentType) {
+          case "armor":
+            itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.armorBonus"));
+            break;
+          case "shield":
+            itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.shieldBonus"));
+            break;
+        }
+
+        if (obj.data.broken) {
+          itemACP *= 2;
+        }
+
+        if (itemACP) {
+          const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.find(
+            (o) => o.name === obj.name
+          );
+          if (sInfo) sInfo.value = itemACP;
+          else {
+            getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
+              name: obj.name,
+              value: itemACP,
+            });
+          }
+        }
+
+        switch (obj.data.equipmentType) {
+          case "armor":
+            if (itemACP > armorACP) armorACP = itemACP;
+            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.equipmentSubtype]))
+              attackACPPenalty += armorACP;
+            break;
+          case "shield":
+            if (itemACP > shieldACP) shieldACP = itemACP;
+            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.equipmentSubtype]))
+              attackACPPenalty += shieldACP;
+            break;
+        }
+
+        if (obj.data.armor.dex !== null) {
+          const mDex = Number.parseInt(obj.data.armor.dex);
+          switch (obj.data.equipmentType) {
+            case "armor":
+              if (Number.isInteger(mDex)) {
+                const armorMDex = mDex + getProperty(this.data, "data.attributes.mDex.armorBonus");
+                armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
+
+                if (!Number.isNaN(armorMDex)) {
+                  const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
+                    (o) => o.name === obj.name
+                  );
+                  if (sInfo) sInfo.value = armorMDex;
+                  else {
+                    getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+                      name: obj.name,
+                      value: armorMDex,
+                    });
+                  }
+                }
+              }
+              break;
+            case "shield":
+              if (Number.isInteger(mDex)) {
+                const shieldMDex = mDex + getProperty(this.data, "data.attributes.mDex.shieldBonus");
+                shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
+
+                if (!Number.isNaN(shieldMDex)) {
+                  const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
+                    (o) => o.name === obj.name
+                  );
+                  if (sInfo) sInfo.value = shieldMDex;
+                  else {
+                    getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+                      name: obj.name,
+                      value: shieldMDex,
+                    });
+                  }
+                }
+              }
+              break;
+          }
+        }
+      });
+
+    // Return result
+    let result = {
+      maxDexBonus: null,
+      acp: (armorACP ?? 0) + (shieldACP ?? 0),
+    };
+    setProperty(this.data, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
+    if (armorMDexWorst !== null || shieldMDexWorst !== null) {
+      result.maxDexBonus = Math.min(
+        armorMDexWorst ?? Number.POSITIVE_INFINITY,
+        shieldMDexWorst ?? Number.POSITIVE_INFINITY
+      );
+    }
+
+    // Set armor penalty to attack rolls
+    setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
+
+    return result;
+  }
+
   prepareItemLinks() {
     if (!this.items) return;
 
@@ -1250,8 +1305,9 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Return reduced movement speed.
-   * @param {Number} value - The non-reduced movement speed.
-   * @returns {Number} The reduced movement speed.
+   *
+   * @param {number} value - The non-reduced movement speed.
+   * @returns {number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
     const incr = 5;
@@ -1273,9 +1329,10 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Return increased amount of spell slots by ability score modifier.
-   * @param {Number} mod - The associated ability modifier.
-   * @param {Number} level - Spell level.
-   * @returns {Number} Amount of spell levels to increase.
+   *
+   * @param {number} mod - The associated ability modifier.
+   * @param {number} level - Spell level.
+   * @returns {number} Amount of spell levels to increase.
    */
   static getSpellSlotIncrease(mod, level) {
     if (level === 0) return 0;
@@ -1285,8 +1342,9 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Return the amount of experience required to gain a certain character level.
-   * @param level {Number}  The desired level
-   * @return {Number}       The XP required
+   *
+   * @param level {number}  The desired level
+   * @returns {number}       The XP required
    */
   getLevelExp(level) {
     const expConfig = game.settings.get("pf1", "experienceConfig");
@@ -1313,8 +1371,9 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
-   * @param cr {Number}     The creature's challenge rating
-   * @return {Number}       The amount of experience granted per kill
+   *
+   * @param cr {number}     The creature's challenge rating
+   * @returns {number}       The amount of experience granted per kill
    */
   getCRExp(cr) {
     if (cr < 1.0) return Math.max(400 * cr, 10);
@@ -1423,9 +1482,9 @@ export class ActorPF extends ActorDataPF(Actor) {
    * Extend the default update method to enhance data before submission.
    * See the parent Entity.update method for full details.
    *
-   * @param {Object} data     The data with which to update the Actor
-   * @param {Object} options  Additional options which customize the update workflow
-   * @return {Promise}        A Promise which resolves to the updated Entity
+   * @param {object} data     The data with which to update the Actor
+   * @param {object} options  Additional options which customize the update workflow
+   * @returns {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
     this._pendingUpdateTokens.forEach((token) => {
@@ -1550,7 +1609,10 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Makes sure experience values are correct in update data.
-   * @param {Object} data - The update data, as per ActorPF.update()
+   *
+   * @param {object} data - The update data, as per ActorPF.update()
+   * @param updateData
+   * @param fullData
    */
   _updateExp(updateData, fullData) {
     // Get total level
@@ -1625,6 +1687,9 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * See the base Actor class for API documentation of this method
+   *
+   * @param itemData
+   * @param options
    */
   async createOwnedItem(itemData, options) {
     let t = itemData.type;
@@ -1656,8 +1721,11 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Cast a Spell, consuming a spell slot of a certain level
+   *
    * @param {ItemPF} item   The spell being cast by the actor
    * @param {MouseEvent} ev The click event
+   * @param root0
+   * @param root0.skipDialog
    */
   async useSpell(item, ev, { skipDialog = false } = {}) {
     if (!this.isOwner) {
@@ -1830,8 +1898,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   /**
    * Roll a Skill Check
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   *
    * @param {string} skillId      The skill id (e.g. "ins")
-   * @param {Object} options      Options which configure how the skill check is rolled
+   * @param {object} options      Options which configure how the skill check is rolled
    */
   rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
@@ -1900,8 +1969,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   /**
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
-   * @param {String} abilityId     The ability id (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests or saving throws are rolled
+   *
+   * @param {string} abilityId     The ability id (e.g. "str")
+   * @param {object} options      Options which configure how ability tests or saving throws are rolled
    */
   rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
     this.rollAbilityTest(abilityId, options);
@@ -2277,8 +2347,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {String} abilityId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
+   *
+   * @param {string} abilityId    The ability ID (e.g. "str")
+   * @param {object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
@@ -2468,9 +2539,12 @@ export class ActorPF extends ActorDataPF(Actor) {
    * This allows for damage to be scaled by a multiplier to account for healing, critical hits, or resistance
    * If Shift is held, will prompt for adjustments based on damage reduction and energy resistances
    *
-   * @param {Number} value   The amount of damage to deal.
-   * @param {Object} {}      Object containing default settings for overriding
-   * @return {Promise}
+   * @param {number} value - The amount of damage to deal.
+   * @param {object} [options] - Object containing default settings for overriding
+   * @param {boolean} [options.forceDialog=true] - Forces the opening of a Dialog as if Shift was pressed
+   * @param {string} [options.reductionDefault] - Default value for Damage Reduction
+   * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
+   * @returns {Promise}
    */
   static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
     const promises = [];
@@ -2577,14 +2651,23 @@ export class ActorPF extends ActorDataPF(Actor) {
             resolve(false);
           },
           render: (inp) => {
+            /**
+             *
+             */
             function swapSelected() {
               let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
               checked.forEach((chk) => (chk.checked = !chk.checked));
             }
+            /**
+             * @param e
+             */
             function setReduction(e) {
               inp[0].querySelector('input[name="damage-reduction"]').value =
                 e.currentTarget.innerText.match(numReg) ?? "";
             }
+            /**
+             * @param event
+             */
             function mouseWheelAdd(event) {
               const el = event.currentTarget;
 
@@ -2609,6 +2692,8 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
+   *
+   * @param data
    */
   getWoundThresholdMultiplier(data = null) {
     data = data ?? this.data;
@@ -2623,6 +2708,7 @@ export class ActorPF extends ActorDataPF(Actor) {
    * Returns Wound Threshold relevant data.
    *
    * @param {*} rollData Provided valid rollData
+   * @param data
    */
   getWoundThresholdData(data = null) {
     data = data ?? this.data;
@@ -2715,7 +2801,8 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
-   * @param {String} context - The context to draw from.
+   *
+   * @param {string} context - The context to draw from.
    */
   getContextNotes(context) {
     let result = this.allNotes;
@@ -2867,6 +2954,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Returns a list of already parsed context notes.
+   *
    * @param {string} context - The context to draw notes from.
    * @returns {string[]} The resulting notes, already parsed.
    */
@@ -2899,6 +2987,17 @@ export class ActorPF extends ActorDataPF(Actor) {
     return super.createEmbeddedDocuments(embeddedName, noArray ? createData[0] : createData, options);
   }
 
+  /**
+   * @typedef {object} MobilityPenaltyResult
+   * @property {number|null} maxDexBonus - The maximum dexterity bonus allowed for this result.
+   * @property {number} acp - The armor check penalty of this result.
+   */
+
+  /**
+   * Computes encumbrance values for this actor.
+   *
+   * @returns {MobilityPenaltyResult} The resulting penalties from encumbrance.
+   */
   _computeEncumbrance() {
     const carry = this.getCarryCapacity();
     setProperty(this.data, "data.attributes.encumbrance.levels.light", carry.light);
@@ -2918,36 +3017,23 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
     setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
 
+    let result = {
+      maxDexBonus: null,
+      acp: 0,
+    };
+
     switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
-      case 0:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 0);
-        setProperty(this.data, "data.attributes.maxDexBonus", null);
-        break;
       case 1:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 3);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 3)
-        );
+        result.acp = 3;
+        result.maxDexBonus = 3;
         break;
       case 2:
-        setProperty(this.data, "data.attributes.acp.encumbrance", 6);
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(getProperty(this.data, "data.attributes.maxDexBonus") ?? Number.POSITIVE_INFINITY, 1)
-        );
+        result.acp = 6;
+        result.maxDexBonus = 1;
         break;
     }
-    setProperty(
-      this.data,
-      "data.attributes.acp.total",
-      Math.max(
-        getProperty(this.data, "data.attributes.acp.gear"),
-        getProperty(this.data, "data.attributes.acp.encumbrance")
-      )
-    );
+
+    return result;
   }
 
   _calculateCoinWeight() {
@@ -3010,6 +3096,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   /**
    * Converts currencies of the given category to the given currency type
+   *
    * @param {string} category - Either 'currency' or 'altCurrency'.
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
@@ -3070,10 +3157,12 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   getRollData(options = { refresh: false }) {
-    if (!this.data?.data) return {};
+    let result = this.data.data;
 
-    if (!options.refresh && this._rollData) {
-      let result = this._rollData;
+    // Return cached data, if applicable
+    let skipRefresh = !options.refresh && this._rollData;
+    if (skipRefresh) {
+      result = this._rollData;
 
       // Clear certain fields
       const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
@@ -3087,12 +3176,24 @@ export class ActorPF extends ActorDataPF(Actor) {
           if (typeof obj === "object") delete obj[k3];
         }
       }
-
-      return result;
     }
 
-    let result = this.data.data;
+    /* ----------------------------- */
+    /* Always add the following data
+    /* ----------------------------- */
+    // Add combat round, if in combat
+    if (game.combats?.viewed) {
+      result.combat = {
+        round: game.combat.round || 0,
+      };
+    }
 
+    // Return cached data, if applicable
+    if (skipRefresh) return result;
+
+    /* ----------------------------- */
+    /* Set the following data on a refresh
+    /* ----------------------------- */
     // Set size index
     {
       const sizeChart = Object.keys(CONFIG.PF1.sizeChart);
@@ -3238,13 +3339,6 @@ export class ActorPF extends ActorDataPF(Actor) {
           result.range.reach = 40;
         }
         break;
-    }
-
-    // Add combat round, if in combat
-    if (game.combats?.viewed) {
-      result.combat = {
-        round: game.combat.round || 0,
-      };
     }
 
     this._rollData = result;

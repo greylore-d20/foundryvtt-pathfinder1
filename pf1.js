@@ -6,13 +6,8 @@
  */
 
 // Import Modules
-import { PF1 } from "./module/config.js";
-import {
-  registerSystemSettings,
-  registerClientSettings,
-  getSkipActionPrompt,
-  migrateSystemSettings,
-} from "./module/settings.js";
+import { PF1, CONFIG_OVERRIDES } from "./module/config.js";
+import { registerSystemSettings, registerClientSettings, migrateSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
@@ -23,11 +18,19 @@ import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
+import { ActorSheetFlags } from "./module/apps/actor-flags.js";
+import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { EntrySelector } from "./module/apps/entry-selector.js";
+import { LevelUpForm } from "./module/apps/level-up.js";
+import { PointBuyCalculator } from "./module/apps/point-buy-calculator.js";
+import { ScriptEditor } from "./module/apps/script-editor.js";
+import { SidebarPF } from "./module/apps/sidebar.js";
+import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
-import { getChangeFlat } from "./module/actor/apply-changes.js";
+import { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
@@ -39,11 +42,13 @@ import {
   normalDie,
   getActorFromId,
   createTag,
+  createTabs,
   convertWeight,
   convertWeightBack,
   convertDistance,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
+import { ChatAttack } from "./module/misc/chat-attack.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
@@ -55,12 +60,10 @@ import { TooltipPF } from "./module/hud/tooltip.js";
 import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
-import {
-  addLowLightVisionToLightConfig,
-  addLowLightVisionToTokenConfig,
-  hasTokenVision,
-} from "./module/low-light-vision.js";
+import * as macros from "./module/macros.js";
+import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
+import { ItemChange } from "./module/item/components/change.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -75,7 +78,7 @@ if (!String.prototype.format) {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 
-Hooks.once("init", async function () {
+Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Register client settings
@@ -83,40 +86,79 @@ Hooks.once("init", async function () {
 
   // Create a PF1 namespace within the game global
   game.pf1 = {
-    ActorPF,
+    documents: { ActorPF, ItemPF },
+    entities: { ActorPF, ItemPF },
+    applications: {
+      // Actors
+      ActorSheetPF,
+      ActorSheetPFCharacter,
+      ActorSheetPFNPC,
+      ActorSheetPFNPCLite,
+      ActorSheetPFNPCLoot,
+      // Items
+      ItemSheetPF,
+      ItemSheetPF_Container,
+      // Misc
+      ActorSheetFlags,
+      ActorRestDialog,
+      ActorTraitSelector,
+      CompendiumDirectoryPF,
+      CompendiumBrowser,
+      EntrySelector,
+      LevelUpForm,
+      PointBuyCalculator,
+      ScriptEditor,
+      SidebarPF,
+      TooltipPF,
+    },
+    compendiums: {},
+    // Rolling
     DicePF,
-    ItemPF,
-    migrations,
-    rollItemMacro,
-    rollSkillMacro,
-    rollDefenses,
-    rollActorAttributeMacro,
-    CompendiumDirectoryPF,
     rollPreProcess: {
       sizeRoll: sizeDieExt,
       roll: normalDie,
     },
-    migrateWorld: migrations.migrateWorld,
-    runUnitTests,
-    compendiums: {},
-    isMigrating: false,
-    tooltip: null,
+    //Chat
+    chat: { ChatAttack, ChatMessagePF },
+    // Utility
     utils: {
       createTag,
+      createTabs,
       getItemOwner,
       getActorFromId,
       getChangeFlat,
+      getSourceInfo,
       convertDistance,
       convertWeight,
       convertWeightBack,
+      measureDistances,
       measureReachDistance,
       dialogGetActor,
       dialogGetNumber,
+      SemanticVersion,
     },
+    // Components
+    documentComponents: {
+      ItemChange,
+    },
+    // Macros
+    macros,
+    rollItemMacro: macros.rollItemMacro,
+    rollSkillMacro: macros.rollSkillMacro,
+    rollDefenses: macros.rollDefenses,
+    rollActorAttributeMacro: macros.rollActorAttributeMacro,
+    // Migrations
+    migrations,
+    migrateWorld: migrations.migrateWorld,
+    isMigrating: false,
+    // Misc
+    config: PF1,
+    tooltip: null,
+    runUnitTests,
   };
 
   // Global exports
-  window.RollPF = RollPF;
+  globalThis.RollPF = RollPF;
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
@@ -134,7 +176,7 @@ Hooks.once("init", async function () {
   CONFIG.statusEffects = getConditions();
 
   // Preload Handlebars Templates
-  await preloadHandlebarsTemplates();
+  preloadHandlebarsTemplates();
   registerHandlebarsHelpers();
 
   // Patch Core Functions
@@ -573,21 +615,8 @@ Hooks.on("createItem", (actor, item, options, userId) => {
   }
 });
 
-// <<<<<<< HEAD
 Hooks.on("deleteItem", async (actor, item, options, userId) => {
   if (userId !== game.user.id) return;
-  // =======
-  // Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
-  // const item = actor.items.get(itemData._id);
-  // if (!item) return;
-
-  // // Delete class assocations
-  // if (item.type === "class") item._onLevelChange(item.data.data.level, 0);
-  // });
-
-  // Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
-  // if (userId !== game.user._id) return;
-  // >>>>>>> master
   if (!(actor instanceof Actor)) return;
 
   // Remove token effects for deleted buff
@@ -634,21 +663,21 @@ Hooks.on("chatMessage", (log, message, chatData) => {
 // Create macro from item
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (data.type !== "Item") return true;
-  createItemMacro(data.data, slot);
+  macros.createItemMacro(data.data, slot);
   return false;
 });
 
 // Create macro from skill
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (data.type !== "skill") return true;
-  createSkillMacro(data.skill, data.actor, slot);
+  macros.createSkillMacro(data.skill, data.actor, slot);
   return false;
 });
 
 // Create macro to roll miscellaneous attribute from an actor
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (!["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type)) return true;
-  createMiscActorMacro(data.type, data.actor, slot, data.altType);
+  macros.createMiscActorMacro(data.type, data.actor, slot, data.altType);
   return false;
 });
 
@@ -691,215 +720,6 @@ Hooks.on("renderSidebarTab", (app, html) => {
   }
 });
 
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {Object} item     The item data
- * @param {number} slot     The hotbar slot to use
- * @returns {Promise}
- */
-async function createItemMacro(item, slot) {
-  const actor = getItemOwner(item);
-  const command =
-    `game.pf1.rollItemMacro("${item.name}", {\n` +
-    `  itemId: "${item._id}",\n` +
-    `  itemType: "${item.type}",\n` +
-    (actor != null ? `  actorId: "${actor._id}",\n` : "") +
-    `});`;
-  let macro = game.macros.entities.find((m) => m.name === item.name && m.command === command);
-  if (!macro) {
-    macro = await Macro.create(
-      {
-        name: item.name,
-        type: "script",
-        img: item.img,
-        command: command,
-        flags: { "pf1.itemMacro": true },
-      },
-      { displaySheet: false }
-    );
-  }
-  game.user.assignHotbarMacro(macro, slot);
-}
-
-async function createSkillMacro(skillId, actorId, slot) {
-  const actor = getActorFromId(actorId);
-  if (!actor) return;
-
-  const skillInfo = actor.getSkillInfo(skillId);
-  const command = `game.pf1.rollSkillMacro("${actorId}", "${skillId}");`;
-  const name = game.i18n.localize("PF1.RollSkillMacroName").format(actor.name, skillInfo.name);
-  let macro = game.macros.entities.find((m) => m.name === name && m.command === command);
-  if (!macro) {
-    macro = await Macro.create(
-      {
-        name: name,
-        type: "script",
-        img: "systems/pf1/icons/items/inventory/dice.jpg",
-        command: command,
-        flags: { "pf1.skillMacro": true },
-      },
-      { displaySheet: false }
-    );
-  }
-
-  game.user.assignHotbarMacro(macro, slot);
-}
-
-async function createMiscActorMacro(type, actorId, slot, altType = null) {
-  const actor = getActorFromId(actorId);
-  if (!actor) return;
-
-  let altTypeLabel = "";
-  switch (altType) {
-    case "primary":
-      altTypeLabel = "Primary";
-      break;
-    case "secondary":
-      altTypeLabel = "Secondary";
-      break;
-    case "tertiary":
-      altTypeLabel = "Tertiary";
-      break;
-    case "spelllike":
-      altTypeLabel = "Spell-like";
-      break;
-  }
-
-  const command = altType
-    ? `game.pf1.rollActorAttributeMacro("${actorId}", "${type}", "${altType}");`
-    : `game.pf1.rollActorAttributeMacro("${actorId}", "${type}");`;
-  let name, img;
-  switch (type) {
-    case "defenses":
-      name = game.i18n.localize("PF1.RollDefensesMacroName").format(actor.name);
-      img = "systems/pf1/icons/items/armor/shield-light-metal.png";
-      break;
-    case "cmb":
-      name = game.i18n.localize("PF1.RollCMBMacroName").format(actor.name);
-      img = "systems/pf1/icons/feats/improved-grapple.jpg";
-      break;
-    case "cl":
-      name = game.i18n.localize("PF1.RollCLMacroName").format(actor.name, altTypeLabel);
-      img = "systems/pf1/icons/spells/wind-grasp-eerie-3.jpg";
-      break;
-    case "concentration":
-      name = game.i18n.localize("PF1.RollConcentrationMacroName").format(actor.name, altTypeLabel);
-      img = "systems/pf1/icons/skills/light_01.jpg";
-      break;
-    case "bab":
-      name = game.i18n.localize("PF1.RollBABMacroName").format(actor.name);
-      img = "systems/pf1/icons/skills/yellow_08.jpg";
-      break;
-  }
-
-  if (!name) return;
-
-  let macro = game.macros.entities.find((o) => o.name === name && o.command === command);
-  if (!macro) {
-    macro = await Macro.create(
-      {
-        name: name,
-        type: "script",
-        img: img,
-        command: command,
-        flags: { "pf1.miscMacro": true },
-      },
-      { displaySheet: false }
-    );
-  }
-
-  game.user.assignHotbarMacro(macro, slot);
-}
-
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {string} itemName
- * @param {object} [options={}]
- * @return {Promise}
- */
-function rollItemMacro(itemName, { itemId, itemType, actorId } = {}) {
-  let actor = getActorFromId(actorId);
-  if (actor && !actor.hasPerm(game.user, "OWNER")) {
-    const msg = game.i18n.localize("PF1.ErrorNoActorPermission");
-    console.warn(msg);
-    return ui.notifications.warn(msg);
-  }
-  const item = actor
-    ? actor.items.find((i) => {
-        if (itemId != null && i._id !== itemId) return false;
-        if (itemType != null && i.type !== itemType) return false;
-        return i.name === itemName;
-      })
-    : null;
-  if (!item) {
-    const msg = game.i18n.localize("PF1.WarningNoItemOnActor").format(actor.name, itemName);
-    console.warn(msg);
-    return ui.notifications.warn(msg);
-  }
-
-  // Trigger the item roll
-  if (!game.keyboard.isDown("Control")) {
-    return item.use({ skipDialog: getSkipActionPrompt() });
-  }
-  return item.roll();
-}
-
-function rollSkillMacro(actorId, skillId) {
-  const actor = getActorFromId(actorId);
-  if (!actor) {
-    const msg = game.i18n.localize("PF1.ErrorActorNotFound").format(actorId);
-    console.warn(msg);
-    return ui.notifications.error(msg);
-  }
-
-  return actor.rollSkill(skillId, { skipDialog: getSkipActionPrompt() });
-}
-
-/**
- * Show an actor's defenses.
- */
-function rollDefenses({ actorName = null, actorId = null } = {}) {
-  const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
-  if (!actor) {
-    const msg = game.i18n
-      .localize("PF1.ErrorNoApplicableActorFoundForAction")
-      .format(game.i18n.localize("PF1.Action_RollDefenses"));
-    console.warn(msg);
-    return ui.notifications.warn(msg);
-  }
-
-  return actor.rollDefenses();
-}
-
-function rollActorAttributeMacro(actorId, type, altType = null) {
-  const actor = getActorFromId(actorId);
-  if (!actor) {
-    const msg = game.i18n.localize("PF1.ErrorActorNotFound").format(actorId);
-    console.error(msg);
-    return ui.notifications.error(msg);
-  }
-
-  switch (type) {
-    case "defenses":
-      actor.rollDefenses();
-      break;
-    case "cmb":
-      actor.rollCMB();
-      break;
-    case "cl":
-      actor.rollCL(altType);
-      break;
-    case "concentration":
-      actor.rollConcentration(altType);
-      break;
-    case "bab":
-      actor.rollBAB();
-      break;
-  }
-}
-
 // Handle chat tooltips
 const handleChatTooltips = function (event) {
   const elem = $(event.currentTarget);
@@ -912,8 +732,8 @@ const handleChatTooltips = function (event) {
   elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
 };
 
-// Export objects for being a library
-
+// These exports are deprecated.
+// Do not use them, access classes and functions from the game.pf1 global instead!
 export {
   ActorPF,
   ItemPF,
@@ -927,7 +747,7 @@ export {
   ActiveEffectPF,
 };
 export { DicePF, ChatMessagePF, measureDistances };
-
+export { PF1 };
 export { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
 export { ItemChange } from "./module/item/components/change.js";
 export { SemanticVersion };

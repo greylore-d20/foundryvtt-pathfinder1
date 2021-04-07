@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.77.21
+
+### Bug Fixes
+
+- ACP from equipment and encumbrance incorrectly stacked
+
+## 0.77.20
+
+### Bug Fixes
+
+- Item links could not be deleted
+- Conditional modifiers could not adjust an item's DC
+- Fix compendium browser packs filter lacking options (#683)
+- Fix maximum dexterity bonus (#736)
+- `@combat.round` was rarely refreshed (#738)
+- Dice So Nice settings were ignored for attack and damage rolls
+
 ## 0.77.19
 
 ### Bug Fixes
@@ -13,6 +30,9 @@
 - Item durations with formulas errored on unowned items (#719)
 - Fix range calculation on sheets not working anymore (#725)
 - Encumbrance applied incorrectly with Strength altering changes (#729)
+- Item aura strength was empty (#731)
+- Fix race condition causing issues with adding context notes and changes (#730)
+- Spontaneous-flagged spellbooks initially showed an undefined value for casts per day remaining
 
 ### Changelog
 

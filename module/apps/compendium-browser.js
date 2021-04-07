@@ -39,31 +39,36 @@ export class CompendiumBrowser extends Application {
 
     /**
      * The bottom scroll treshold (in pixels) at which the browser should start lazy loading some more items.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyLoadTreshold = 80;
     /**
      * The maximum number of items initially visible in regards to lazy loading.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyStart = 80;
     /**
      * The current amount of items visible in regards to lazy loading.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyIndex = 0;
     /**
      * The amount of new items to lazy load when triggered.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyAdd = 20;
 
     /**
      * A list of packs used, for filtering purposes.
+     *
      * @type {Compendium{}}
      * @property
      */
@@ -319,7 +324,7 @@ export class CompendiumBrowser extends Application {
         const p = game.packs.get(i.collection._id);
         if (p) {
           this.items.push(this._mapEntry(p, i.item));
-          this.packs[i.collection] = p;
+          this.packs[i.collection._id] = p;
         }
       }
       this._savedItems = [];
@@ -1059,6 +1064,9 @@ export class CompendiumBrowser extends Application {
 
   /**
    * Handle opening a single compendium entry by invoking the configured entity class and its sheet
+   *
+   * @param collectionKey
+   * @param entryId
    * @private
    */
   async _onEntry(collectionKey, entryId) {
@@ -1069,6 +1077,8 @@ export class CompendiumBrowser extends Application {
 
   /**
    * Handle a new drag event from the compendium, create a placeholder token for dropping the item
+   *
+   * @param event
    * @private
    */
   _onDragStart(event) {

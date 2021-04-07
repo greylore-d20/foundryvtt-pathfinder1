@@ -1,4 +1,4 @@
-import { Color } from "../lib/color/color.js";
+import Color from "color";
 import { colorToInt, convertDistance } from "../lib.js";
 
 const rangeColor = {
@@ -52,6 +52,7 @@ export class SquareHighlight {
 
 /**
  * Highlights the reach of an attack for a token.
+ *
  * @param {Token} token
  * @param {ItemPF} attack
  * @returns SquareHighlight

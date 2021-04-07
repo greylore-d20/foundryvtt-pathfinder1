@@ -9,7 +9,7 @@ import { patchMeasureTools } from "./measure.js";
 export async function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
   async function PF1_getTemplate(path) {
-    if (!Object.prototype.hasOwnProperty.call(_templateCache, path)) {
+    if (!Object.prototype.hasOwnProperty.call(_templateCache, path) || CONFIG.debug.template) {
       await new Promise((resolve) => {
         game.socket.emit("template", path, (resp) => {
           const compiled = Handlebars.compile(resp.html, { preventIndent: true });

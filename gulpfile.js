@@ -7,6 +7,9 @@ const replace = require("gulp-replace");
 const sourcemaps = require("gulp-sourcemaps");
 const del = require("del");
 const rollupStream = require("@rollup/stream");
+const nodeResolve = require("@rollup/plugin-node-resolve").nodeResolve;
+const commonjs = require("@rollup/plugin-commonjs");
+const json = require("@rollup/plugin-json");
 const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 const changed = require("gulp-changed");
@@ -69,6 +72,11 @@ function compileLESS() {
 /* ----------------------------------------- */
 /*  Compile JS
 /* ----------------------------------------- */
+/**
+ * The rollup cache to improve speed when watching files
+ *
+ * @type {object}
+ */
 let cache;
 /**
  * Bundles JS modules into one file
@@ -80,8 +88,10 @@ function rollup() {
       format: "es",
       exports: "named",
       sourcemap: true,
+      preferConst: true,
     },
     cache: cache,
+    plugins: [nodeResolve({ preferBuiltins: false }), commonjs(), json()],
   })
     .on("bundle", (bundle) => {
       cache = bundle;

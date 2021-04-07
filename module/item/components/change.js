@@ -1,4 +1,5 @@
 import { getChangeFlat, getSourceInfo } from "../../actor/apply-changes.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemChange {
   static create(data, parent) {

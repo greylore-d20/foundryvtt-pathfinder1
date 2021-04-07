@@ -167,6 +167,7 @@ module.exports = {
     Note: "readonly",
     AmbientSound: "readonly",
     MeasuredTemplate: "readonly",
+    MeasuredTemplateDocument: "readonly",
     Tile: "readonly",
     Token: "readonly",
     Wall: "readonly",
@@ -448,8 +449,6 @@ module.exports = {
     getTexture: "readonly",
     loadTexture: "readonly",
     CONST: "readonly",
-    toDegrees: "readonly",
-    normalizeDegrees: "readonly",
     toRadians: "readonly",
     normalizeRadians: "readonly",
     validateForm: "readonly",
@@ -472,6 +471,5 @@ module.exports = {
     TokenDocument: "readonly",
     DocumentSheet: "readonly",
     StringTerm: "readonly",
-    MeasuredTemplateDocument: "readonly",
   },
 };

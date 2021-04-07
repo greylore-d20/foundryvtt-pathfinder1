@@ -507,7 +507,7 @@ export const addDefaultChanges = function (changes) {
       let maximized = options.maximized;
       for (const hd of health_sources) {
         auto_health(hd, options, maximized);
-        maximized = Math.max(0, maximized - hd.data.level);
+        maximized = Math.max(0, maximized - hd.data.data.level);
       }
     } else health_sources.forEach((race) => manual_health(race));
   };

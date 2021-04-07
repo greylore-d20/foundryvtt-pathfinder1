@@ -197,8 +197,8 @@ export class ItemPF extends Item {
     }
   }
 
-  get parent() {
-    if (this.actor) return this.actor;
+  get parentActor() {
+    if (this.parent) return this.parent;
 
     let actor = null;
     let p = this.parentItem;
@@ -1024,7 +1024,7 @@ export class ItemPF extends Item {
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
-        const parentItem = parentInventory.find((o) => o._id === this._id);
+        const parentItem = parentInventory.find((o) => o.id === this.id);
         const idx = parentInventory.indexOf(parentItem);
 
         if (idx >= 0) {

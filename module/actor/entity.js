@@ -872,7 +872,6 @@ export class ActorPF extends Actor {
 
               const remaining = available - used;
               if (!remaining) {
-                console.log("just adding something that is not whitespace for testing");
                 continue;
               }
 

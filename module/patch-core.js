@@ -359,4 +359,16 @@ export async function PatchCore() {
 
   // Apply measurement patches
   patchMeasureTools();
+
+  // Patch StringTerm
+  StringTerm.prototype.evaluate = function (options = {}) {
+    const evalFn = new Function([], `return ${this.term};`);
+    this._total = evalFn();
+  };
+
+  Object.defineProperty(StringTerm.prototype, "total", {
+    get: function () {
+      return this._total ?? 0;
+    },
+  });
 }

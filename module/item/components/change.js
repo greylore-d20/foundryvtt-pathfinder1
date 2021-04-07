@@ -127,7 +127,7 @@ export class ItemChange {
           operator = result.operator;
         } else {
           value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData], {
-            suppressError: this.parent && !this.parent.hasPerm(game.user, "OWNER"),
+            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
           }).total;
         }
 

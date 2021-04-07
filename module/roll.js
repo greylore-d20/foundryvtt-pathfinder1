@@ -1,14 +1,10 @@
 export class RollPF extends Roll {
-  static get name() {
-    return "Roll";
-  }
-
   static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {
-      roll = this.create(formula, data).evaluate();
+      roll = this.create(formula, data).evaluate({ async: false });
     } catch (err) {
-      roll = this.create("0", data).evaluate();
+      roll = this.create("0", data).evaluate({ async: false });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
@@ -42,81 +38,92 @@ export class RollPF extends Roll {
     return terms;
   }
 
-  _splitParentheticalTerms(formula) {
-    // Augment parentheses with semicolons and split into terms
-    const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
+  // _splitParentheteses(_formula) {
+  // // Augment parentheses with semicolons and split into terms
+  // const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
 
-    // Match outer-parenthetical groups
-    let nOpen = 0;
-    const terms = split.split(";").reduce((arr, t, i, terms) => {
-      if (t === "") return arr;
+  // // Match outer-parenthetical groups
+  // let nOpen = 0;
+  // const terms = split.split(";").reduce((arr, t, i, terms) => {
+  // if (t === "") return arr;
 
-      // Identify whether the left-parentheses opens a math function
-      let mathFn = false;
-      if (t === "(") {
-        const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
-        mathFn = fn && !!RollPF.MATH_PROXY[fn[1]];
-      }
+  // // Identify whether the left-parentheses opens a math function
+  // let mathFn = false;
+  // if (t === "(") {
+  // const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
+  // mathFn = fn && !!RollPF.MATH_PROXY[fn[1]];
+  // }
 
-      // Combine terms using open parentheses and math expressions
-      if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
-      else arr.push(t);
+  // // Combine terms using open parentheses and math expressions
+  // if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
+  // else arr.push(t);
 
-      // Increment the count
-      if (t === "(") nOpen++;
-      else if (t === ")" && nOpen > 0) nOpen--;
-      return arr;
-    }, []);
+  // // Increment the count
+  // if (t === "(") nOpen++;
+  // else if (t === ")" && nOpen > 0) nOpen--;
+  // return arr;
+  // }, []);
 
-    // Close any un-closed parentheses
-    for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
+  // // Close any un-closed parentheses
+  // for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
 
-    // Substitute parenthetical dice rolls groups to inner Roll objects
-    return terms.reduce((terms, term) => {
-      const prior = terms.length ? terms[terms.length - 1] : null;
-      if (term[0] === "(") {
-        // Handle inner Roll parenthetical groups
-        if (/[dD]/.test(term)) {
-          terms.push(RollPF.fromTerm(term, this.data));
-          return terms;
-        }
+  // // Substitute parenthetical dice rolls groups to inner Roll objects
+  // return terms.reduce((terms, term) => {
+  // const prior = terms.length ? terms[terms.length - 1] : null;
+  // if (term[0] === "(") {
+  // // Handle inner Roll parenthetical groups
+  // if (/[dD]/.test(term)) {
+  // terms.push(RollPF.fromTerm(term, this.data));
+  // return terms;
+  // }
 
-        // Evaluate arithmetic-only parenthetical groups
-        term = this._safeEval(term);
-        /* Changed functionality */
-        /* Allow null/string/true/false as it used to be and crash on undefined */
-        if (typeof term !== "undefined" && typeof term !== "number") term += "";
-        else term = Number.isInteger(term) ? term : term.toFixed(2);
-        /* End changed functionality */
+  // // Evaluate arithmetic-only parenthetical groups
+  // term = this._safeEval(term);
+  // [> Changed functionality <]
+  // [> Allow null/string/true/false as it used to be and crash on undefined <]
+  // if (typeof term !== "undefined" && typeof term !== "number") term += "";
+  // else term = Number.isInteger(term) ? term : term.toFixed(2);
+  // [> End changed functionality <]
 
-        // Continue wrapping math functions
-        const priorMath = prior && prior.split(" ").pop() in Math;
-        if (priorMath) term = `(${term})`;
-      }
+  // // Continue wrapping math functions
+  // const priorMath = prior && prior.split(" ").pop() in Math;
+  // if (priorMath) term = `(${term})`;
+  // }
 
-      // Append terms to to non-Rolls
-      if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
-      else terms.push(term);
-      return terms;
-    }, []);
-  }
+  // // Append terms to to non-Rolls
+  // if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
+  // else terms.push(term);
+  // return terms;
+  // }, []);
+  // }
 
-  static replaceFormulaData(formula, data, { missing, warn = false }) {
-    let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-    var warned = false;
-    return [
-      formula.replace(dataRgx, (match, term) => {
-        let value = getProperty(data, term);
-        if (value === undefined) {
-          if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-          warned = true;
-          return missing !== undefined ? String(missing) : match;
-        }
-        return String(value).trim();
-      }),
-      warned,
-    ];
-  }
+  // static replaceFormulaData(formula, data, { missing, warn = false } = {}) {
+  // let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
+  // formula.replace(dataRgx, (match, term) => {
+  // let value = foundry.utils.getProperty(data, term);
+  // if (value === undefined) {
+  // if (warn && ui.notifications) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
+  // return missing !== undefined ? String(missing) : match;
+  // }
+  // return String(value).trim();
+  // });
+  // }
+
+  // let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
+  // var warned = false;
+  // return [
+  // formula.replace(dataRgx, (match, term) => {
+  // let value = getProperty(data, term);
+  // if (value === undefined) {
+  // if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
+  // warned = true;
+  // return missing !== undefined ? String(missing) : match;
+  // }
+  // return String(value).trim();
+  // }),
+  // warned,
+  // ];
+  // }
 
   static _preProcessDiceFormula(formula, data = {}) {
     // Replace parentheses with semicolons to use for splitting

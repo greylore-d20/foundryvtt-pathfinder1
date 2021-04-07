@@ -1,13 +1,16 @@
 /**
  * A helper class for building MeasuredTemplates for PF1 spells and abilities
- * @extends {MeasuredTemplate}
+ *
+ * @augments {MeasuredTemplate}
  */
 export class AbilityTemplate extends MeasuredTemplate {
   /**
    * A factory method to create an AbilityTemplate instance using provided data
+   *
    * @param {string} type -             The type of template ("cone", "circle", "rect" or "ray")
    * @param {number} distance -         The distance/size of the template
-   * @return {AbilityTemplate|null}     The template object, or null if the data does not produce a template
+   * @param options
+   * @returns {AbilityTemplate|null}     The template object, or null if the data does not produce a template
    */
   static fromData(options) {
     let type = options.type;
@@ -48,13 +51,15 @@ export class AbilityTemplate extends MeasuredTemplate {
     }
 
     // Return the template constructed from the item data
-    return new this(templateData);
+    const doc = new MeasuredTemplateDocument(templateData, { parent: canvas.scene });
+    return new this(doc);
   }
 
   /* -------------------------------------------- */
 
   /**
    * Creates a preview of the spell template
+   *
    * @param {Event} event   The initiating click event
    */
   async drawPreview(event) {
@@ -70,6 +75,7 @@ export class AbilityTemplate extends MeasuredTemplate {
 
   /**
    * Activate listeners for the template preview
+   *
    * @param {CanvasLayer} initialLayer  The initially active CanvasLayer to re-activate after the workflow is complete
    * @returns {Promise<boolean>} Returns true if placed, or false if cancelled
    */

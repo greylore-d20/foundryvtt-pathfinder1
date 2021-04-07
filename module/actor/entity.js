@@ -1207,7 +1207,7 @@ export class ActorPF extends ActorDataPF(Actor) {
               src.value != null
                 ? src.value
                 : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
-                    suppressError: !this.hasPerm(game.user, "OWNER"),
+                    suppressError: !this.testUserPermission(game.user, "OWNER"),
                   }).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
@@ -3072,11 +3072,11 @@ export class ActorPF extends ActorDataPF(Actor) {
   getCarriedWeight() {
     // Determine carried weight
     const physicalItems = this.data.items.filter((o) => {
-      return o.data.weight != null;
+      return o.data.data.weight != null;
     });
     const weight = physicalItems.reduce((cur, o) => {
-      if (!o.data.carried) return cur;
-      return cur + o.data.weight * o.data.quantity;
+      if (!o.data.data.carried) return cur;
+      return cur + o.data.data.weight * o.data.data.quantity;
     }, this._calculateCoinWeight());
 
     return convertWeight(weight);
@@ -3223,7 +3223,7 @@ export class ActorPF extends ActorDataPF(Actor) {
             : healthConfig.hitdice.NPC;
         const classType = cls.data.classType || "base";
         result.classes[tag] = {
-          level: cls.data.level,
+          level: cls.data.data.level,
           name: cls.name,
           hd: cls.data.hd,
           bab: cls.data.bab,
@@ -3234,16 +3234,16 @@ export class ActorPF extends ActorDataPF(Actor) {
             will: 0,
           },
           fc: {
-            hp: classType === "base" ? cls.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.fc.alt.value : 0,
+            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
+            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
+            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
           },
         };
 
         for (let k of Object.keys(result.classes[tag].savingThrows)) {
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
         }
       });
 

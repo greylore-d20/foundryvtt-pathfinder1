@@ -10,7 +10,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     /**
      * Track item updates from the actor sheet.
-     * @type {Object[]}
+     *
+     * @type {object[]}
      */
     this._itemUpdates = [];
   }
@@ -25,7 +26,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Return a dynamic reference to the HTML template path used to render this Item Sheet
-   * @return {string}
+   *
+   * @returns {string}
    */
   get template() {
     return "systems/pf1/templates/items/container.hbs";
@@ -71,7 +73,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         name: "data.baseWeight",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.weightConverted,
+        value: data.item.data.data.weightConverted,
         id: "data-baseWeight",
       });
 
@@ -83,7 +85,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.price,
+            value: data.item.data.data.price,
             id: "data-basePrice",
           },
           {
@@ -91,7 +93,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: getProperty(data.item, "data.unidentified.price"),
+            value: getProperty(data.item.data, "data.unidentified.price"),
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -122,7 +124,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         isBoolean: true,
         name: "data.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.data.carried,
+        value: data.item.data.data.carried,
       });
     }
 
@@ -527,6 +529,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemSummary(event) {
@@ -673,6 +677,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemRoll(event) {

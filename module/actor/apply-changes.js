@@ -1,5 +1,8 @@
 import { ItemChange } from "../item/components/change.js";
 
+/**
+ *
+ */
 export function applyChanges() {
   this.changeOverrides = {};
   const c = Array.from(this.changes);
@@ -485,13 +488,13 @@ export const addDefaultChanges = function (changes) {
       value: maxed_health + level_health,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.fc.hp.value > 0) {
+    if (health_source.data.data.fc.hp.value > 0) {
       getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
       getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -1600,6 +1603,7 @@ export const getSourceInfo = function (obj, key) {
 
 /**
  * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @param options
  * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
  */
 export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {

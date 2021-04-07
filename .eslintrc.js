@@ -471,5 +471,7 @@ module.exports = {
     foundry: "readonly",
     TokenDocument: "readonly",
     DocumentSheet: "readonly",
+    StringTerm: "readonly",
+    MeasuredTemplateDocument: "readonly",
   },
 };

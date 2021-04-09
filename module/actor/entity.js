@@ -10,85 +10,117 @@ import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
- * Extend the base Actor class to implement additional logic specialized for D&D5e.
+ * Extend the base Actor class to implement additional logic specialized for Pathfinder 1e.
+ *
+ * @augments {Actor}
  */
 export class ActorPF extends Actor {
   constructor(...args) {
     super(...args);
 
-    /**
-     * A list of all the active items with changes.
-     *
-     * @property
-     * @type {Array}
-     */
-    if (this.changeItems === undefined) this.changeItems = [];
+    if (this.changeItems === undefined)
+      /**
+       * A list of all the active items with changes.
+       *
+       * @type {ItemPF[]}
+       */
+      this.changeItems = [];
 
-    /**
-     * Stores all ItemChanges from carried items.
-     *
-     * @property
-     * @public
-     * @type {object}
-     */
-    if (this.changes === undefined) this.changes = new Collection();
+    if (this.changes === undefined)
+      /**
+       * Stores all ItemChanges from carried items.
+       *
+       * @type {Collection<ItemChange>}
+       */
+      this.changes = new Collection();
 
-    /**
-     * Stores cancellable tokens for pending update promises.
-     *
-     * @property
-     * @private
-     * @type {Array.<object>}
-     */
-    if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
+    if (this._pendingUpdateTokens === undefined)
+      /**
+       * Stores cancellable tokens for pending update promises.
+       *
+       * @private
+       * @type {Array.<object>}
+       */
+      this._pendingUpdateTokens = [];
 
-    /**
-     * @property {object} _rollData
-     * Cached roll data for this item.
-     */
-    if (this._rollData === undefined) this._rollData = null;
+    if (this._rollData === undefined)
+      /**
+       * Cached roll data for this item.
+       *
+       * @type {object}
+       */
+      this._rollData = null;
 
-    /**
-     * @property {Array.<string>} _runningFunctions
-     * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
-     */
-    if (this._runningFunctions === undefined) this._runningFunctions = [];
+    if (this._runningFunctions === undefined)
+      /**
+       * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
+       *
+       * @type {Array.<string>}
+       */
+      this._runningFunctions = [];
 
-    /**
-     * @property {object} _queuedItemUpdates
-     * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
-     */
-    if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
+    if (this._queuedItemUpdates === undefined)
+      /**
+       * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
+       *
+       * @type {object}
+       */
+      this._queuedItemUpdates = {};
 
-    /**
-     * @property {ItemPF[]} containerItems
-     * All items this actor is holding in containers.
-     */
-    if (this.containerItems === undefined) this.containerItems = [];
+    if (this.containerItems === undefined)
+      /**
+       * All items this actor is holding in containers.
+       *
+       * @type {ItemPF[]}
+       */
+      this.containerItems = [];
+
+    if (this.sourceDetails === undefined)
+      /**
+       * A dictionary of data keys whose values are modified, and the sources
+       *
+       * @type {Object.<string, SourceDetail[]>}
+       */
+      this.sourceDetails = {};
   }
 
   /* -------------------------------------------- */
 
+  /**
+   * Activates chat card listeners triggering Actor relevant actions.
+   *
+   * @static
+   * @param {JQuery<HTMLElement>} html - A chat card's HTML
+   */
   static chatListeners(html) {
     html.on("click", "button[data-action], a[data-action]", this._onChatCardButtonAction.bind(this));
   }
 
+  /**
+   * Triggers the execution of Actor methods from chat cards
+   *
+   * @todo Is this necessary as static private method on the Actor class?
+   * @static
+   * @async
+   * @private
+   * @param {Event} event - The triggering event
+   */
   static async _onChatCardButtonAction(event) {
     event.preventDefault();
 
     // Extract card data
-    const button = event.currentTarget;
-    const card = button.closest(".chat-card");
+    const button = /** @type {HTMLElement} */ (event.currentTarget);
+    const card = /** @type {HTMLElement} */ (button.closest(".chat-card"));
     const action = button.dataset.action;
 
     // Roll saving throw
     if (action === "defense-save") {
       const actor = ItemPF._getChatCardActor(card);
-      const saveId = button.dataset.save;
+      const saveId = /** @type {SavingThrow} */ (button.dataset.save);
       if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt() });
     } else if (action === "save") {
       const actors = ActorPF.getSelectedActors();
-      const saveId = button.dataset.type;
+      const saveId = /** @type {SavingThrow} */ (button.dataset.type);
       let noSound = false;
       for (let a of actors) {
         a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt() });
@@ -107,6 +139,15 @@ export class ActorPF extends Actor {
     }
   }
 
+  /**
+   * Returns an Actor for the current Speaker
+   *
+   * @static
+   * @param {object} [options={}] - Optional Parameters to determine which Actor to return
+   * @param {string=} [options.actorName=null] - The Actor's name
+   * @param {string=} [options.actorId=null] - The Actor's identifier
+   * @returns {ActorPF} The Actor
+   */
   static getActiveActor({ actorName = null, actorId = null } = {}) {
     const speaker = ChatMessage.getSpeaker();
     let actor = game.actors.entities.filter((o) => {
@@ -123,9 +164,10 @@ export class ActorPF extends Actor {
   /**
    * Returns an array of all selected tokens, along with their actors.
    *
-   * @returns {Array.<ActorPF, Token>[]}
+   * @returns {[ActorPF, Token][]} An array of tuples containing an Actor and a Token
    */
   static getSelectedActors() {
+    /** @type {[ActorPF, Token][]} */
     let result = [];
     for (let t of canvas.tokens.controlled) {
       result.push([t.actor, t]);
@@ -135,6 +177,11 @@ export class ActorPF extends Actor {
 
   /* -------------------------------------------- */
 
+  /**
+   *  Returns the actor's arcane spell failure chance, summed up from the actor's equipment
+   *
+   * @returns {number} The arcane spell failure chance
+   */
   get spellFailure() {
     return this.items
       .filter((o) => {
@@ -146,15 +193,34 @@ export class ActorPF extends Actor {
       }, 0);
   }
 
+  /**
+   *  Returns the actor's race item
+   *
+   * @returns {ItemPF} The actor's race Item
+   */
   get race() {
     if (this.items == null) return null;
-    return this.items.filter((o) => o.type === "race")[0];
+    return /** @type {ItemPF} */ (this.items.filter((o) => o.type === "race")[0]);
   }
 
+  /**
+   *  Returns the color to be used for cards
+   *
+   * @returns {string} The color as hex string
+   */
   get typeColor() {
     return "#FDE600";
   }
 
+  /**
+   * Returns a localized source info string
+   *
+   * @static
+   * @param {import("../config.js").ItemType|"size"|"race"} type - The source's type
+   * @param {import("../config.js").FeatType|import("../config.js").BuffType} subtype - The source's subtype
+   * @param {string} name - The source name
+   * @returns {string} The translated source info to be displayed
+   */
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = game.i18n.localize("PF1.SourceInfoSize");
@@ -184,12 +250,26 @@ export class ActorPF extends Actor {
     return `${result} (${name})`;
   }
 
+  /**
+   * Returns an item's subtype e.g. for source info tracking
+   *
+   * @todo Make this a getter on ItemPF?
+   * @static
+   * @param {object} item - The item
+   * @returns {import("../config.js").BuffType|import("../config.js").FeatType|""} The item's subtype
+   */
   static _getChangeItemSubtype(item) {
     if (item.type === "buff") return item.data.buffType;
     if (item.type === "feat") return item.data.featType;
     return "";
   }
 
+  /**
+   * Returns an array of strings showing the valid skills to be targeted by changes and context notes.
+   * Main skills have a format of e.g. "skill.acr", whereas subskills have a format of "skill.art.subSkills.art1".
+   *
+   * @type {string[]} The array of skill targets
+   */
   get _skillTargets() {
     let skills = [];
     let subSkills = [];
@@ -214,6 +294,12 @@ export class ActorPF extends Actor {
     return this._visionPermissionSheet;
   }
 
+  /**
+   * Returns whether a data set or this actor is owned by a PC
+   *
+   * @param {object} data - A Dato object
+   * @returns {boolean} If the data or this actor has a PC owner
+   */
   _dataIsPC(data) {
     if (data.permission != null) {
       const nonGM = game.users.entities.filter((u) => !u.isGM);
@@ -226,6 +312,9 @@ export class ActorPF extends Actor {
     return hasPlayerOwner;
   }
 
+  /**
+   * Prepared this actor's embedded entities, including container items, item flags, and changes
+   */
   prepareEmbeddedEntities() {
     super.prepareEmbeddedEntities();
     this.containerItems = this._prepareContainerItems(this.items);
@@ -233,9 +322,18 @@ export class ActorPF extends Actor {
     this._prepareChanges();
   }
 
+  /**
+   * Prepares this actor's container items
+   *
+   * @param {Collection<Item>} items - An array of items
+   * @returns {ItemPF[]} An array containing all items in containers
+   */
   _prepareContainerItems(items) {
     let collection = [];
 
+    /**
+     * @param {Item} item - Item data
+     */
     const getContainerContents = function (item) {
       if (item.type !== "container") return;
 
@@ -252,6 +350,12 @@ export class ActorPF extends Actor {
     return collection;
   }
 
+  /**
+   * Prepares this actor's item flags
+   *
+   * @param {ItemPF[]} items - An array of items
+   * @returns {{boolean: Object.<string, {sources: ItemPF[]}>|{}}} An object containing boolean flags and their sources
+   */
   _prepareItemFlags(items) {
     let bFlags = {};
 
@@ -268,6 +372,9 @@ export class ActorPF extends Actor {
     };
   }
 
+  /**
+   * Prepares this actor's changes based on their changeItems, setting this.changes
+   */
   _prepareChanges() {
     this.changeItems = this.items
       .filter((obj) => {
@@ -289,7 +396,6 @@ export class ActorPF extends Actor {
     }
     addDefaultChanges.call(this, changes);
 
-    const prior = this.changes;
     const c = new Collection();
     for (let e of changes) {
       c.set(e._id, e);
@@ -297,12 +403,16 @@ export class ActorPF extends Actor {
     this.changes = c;
   }
 
+  /**
+   * Applies Active Effects and Changes
+   */
   applyActiveEffects() {
     super.applyActiveEffects();
 
     applyChanges.call(this);
   }
 
+  /** @inheritdoc */
   prepareData() {
     this._queuedUpdates = {};
     this._prevAttributes = {};
@@ -326,6 +436,7 @@ export class ActorPF extends Actor {
     this._setSourceDetails(this.sourceInfo);
   }
 
+  /** @inheritdoc */
   prepareBaseData() {
     // Refresh roll data
     this.getRollData({ refresh: true });
@@ -488,15 +599,15 @@ export class ActorPF extends Actor {
     }
 
     // Prepare Character data
-    if (this.data.type === "character") this._prepareCharacterData(this.data.data);
-    else if (this.data.type === "npc") this._prepareNPCData(this.data.data);
+    if (this.data.type === "character") this._prepareCharacterData();
+    else if (this.data.type === "npc") this._prepareNPCData();
 
     // Reset HD
     setProperty(this.data, "data.attributes.hd.total", getProperty(this.data, "data.details.level.value"));
 
     // Reset CR
     if (this.data.type === "npc") {
-      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
+      setProperty(this.data, "data.details.cr.total", this.getCR());
     }
 
     // Apply ACP and Max Dexterity Bonus
@@ -591,9 +702,7 @@ export class ActorPF extends Actor {
     }
   }
 
-  /**
-   * Augment the basic actor data with additional dynamic data.
-   */
+  /** @inheritdoc */
   prepareDerivedData() {
     super.prepareDerivedData();
     Hooks.callAll("pf1.prepareDerivedActorData", this);
@@ -1109,6 +1218,9 @@ export class ActorPF extends Actor {
     return result;
   }
 
+  /**
+   * Prepares this actor's item links
+   */
   prepareItemLinks() {
     if (!this.items) return;
 
@@ -1125,6 +1237,7 @@ export class ActorPF extends Actor {
 
   _setSourceDetails(extraData) {
     const actorData = this.data;
+    /** @type {Object.<string, SourceDetail[]>} */
     let sourceDetails = {};
     // Get empty source arrays
     for (let obj of Object.values(CONFIG.PF1.buffTargets)) {
@@ -1218,6 +1331,9 @@ export class ActorPF extends Actor {
     this.sourceDetails = sourceDetails;
   }
 
+  /**
+   * Resets data to its base value, e.g. AC to 10, or 0 for most values
+   */
   _resetInherentTotals() {
     const keys = {
       "data.attributes.ac.normal.total": 10,
@@ -1337,8 +1453,8 @@ export class ActorPF extends Actor {
   /**
    * Return the amount of experience required to gain a certain character level.
    *
-   * @param level {number}  The desired level
-   * @returns {number}       The XP required
+   * @param {number} level - The desired level
+   * @returns {number} The XP required
    */
   getLevelExp(level) {
     const expConfig = game.settings.get("pf1", "experienceConfig");
@@ -1366,8 +1482,9 @@ export class ActorPF extends Actor {
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
    *
-   * @param cr {number}     The creature's challenge rating
-   * @returns {number}       The amount of experience granted per kill
+   * @todo Make this static or reference this?
+   * @param {number} cr - The creature's challenge rating
+   * @returns {number} The amount of experience granted per kill
    */
   getCRExp(cr) {
     if (cr < 1.0) return Math.max(400 * cr, 10);
@@ -1378,6 +1495,13 @@ export class ActorPF extends Actor {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
+  /**
+   * Adjusts an updateData object before the update is sent
+   *
+   * @async
+   * @param {object} data - The preUpdate data
+   * @returns {Promise<object>} The edited preUpdate data
+   */
   async preUpdate(data) {
     const fullData = mergeObject(this.data, data, { inplace: false });
     data = flattenObject(data);
@@ -1478,7 +1602,7 @@ export class ActorPF extends Actor {
    *
    * @param {object} data     The data with which to update the Actor
    * @param {object} options  Additional options which customize the update workflow
-   * @returns {Promise}        A Promise which resolves to the updated Entity
+   * @returns {Promise<ActorPF>}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
     this._pendingUpdateTokens.forEach((token) => {
@@ -1591,6 +1715,7 @@ export class ActorPF extends Actor {
     });
   }
 
+  /** @inheritdoc */
   _onUpdate(data, options, userId, context) {
     for (let k of Object.keys(data)) {
       if (k.startsWith("data.attributes.vision")) {
@@ -1604,9 +1729,8 @@ export class ActorPF extends Actor {
   /**
    * Makes sure experience values are correct in update data.
    *
-   * @param {object} data - The update data, as per ActorPF.update()
-   * @param updateData
-   * @param fullData
+   * @param {object} updateData
+   * @param {object} fullData
    */
   _updateExp(updateData, fullData) {
     // Get total level
@@ -1649,12 +1773,19 @@ export class ActorPF extends Actor {
     }
   }
 
+  /** @inheritdoc */
   async _onCreate(data, options, userId, context) {
     if (data.type === "character") this.update({ "token.actorLink": true }, { updateChanges: false });
 
     super._onCreate(data, options, userId, context);
   }
 
+  /**
+   * Updates an actor's resource values according to the resource granting item's data
+   *
+   * @param {object} itemData - The data of the item granting the resource
+   * @returns {boolean} Whether the actor's resource was updated
+   */
   updateItemResources(itemData) {
     if (!this.hasPerm(game.user, "OWNER")) return;
 
@@ -1682,8 +1813,8 @@ export class ActorPF extends Actor {
   /**
    * See the base Actor class for API documentation of this method
    *
-   * @param itemData
-   * @param options
+   * @param {object} itemData - The raw data of the item to be created
+   * @param {object} [options] - Additional options for the creation process
    */
   async createOwnedItem(itemData, options) {
     let t = itemData.type;
@@ -1713,6 +1844,15 @@ export class ActorPF extends Actor {
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
+  /**
+   * Creates an attack item on this actor, based on a weapon item
+   *
+   * @todo Return the created attack?
+   * @async
+   * @param {ItemPF} item - The weapon
+   * @throws {Error} - If a non-weapon item is given
+   * @returns {Promise<void>} Absolutely nothing
+   */
   async createAttackFromWeapon(item) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -1821,6 +1961,24 @@ export class ActorPF extends Actor {
 
   /* -------------------------------------------- */
 
+  /**
+   * An object containing information on a skill
+   *
+   * @typedef {object} SkillInfo
+   * @property {string} id
+   * @property {string} name
+   * @property {boolean} isCustom
+   * @property {boolean} rt - Requires Training
+   * @property {number|null} rank - Ranks in this skill
+   * @property {number} bonus
+   * @property {SkillInfo} [parentSkill] - A subskill's parent
+   */
+  /**
+   * Returns information for one of this actor's skills
+   *
+   * @param {string} skillId - A skill's identifier, either as "per" or as "art.subSkills.art1"
+   * @returns {SkillInfo} Information on the skill
+   */
   getSkillInfo(skillId) {
     let skl,
       sklName,
@@ -1861,10 +2019,17 @@ export class ActorPF extends Actor {
 
   /**
    * Roll a Skill Check
-   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * Prompt the user for input regarding e.g. any Situational Bonus, Taking 10, or base die changes due to other effects
    *
-   * @param {string} skillId      The skill id (e.g. "ins")
-   * @param {object} options      Options which configure how the skill check is rolled
+   * @todo Check for Event
+   * @param {string} skillId - The skill id (e.g. "per", or "art.subSkills.art1")
+   * @param {object} [options] - Options which configure how the skill check is rolled
+   * @param {Event|null} [options.event=null] - The event triggering the roll
+   * @param {boolean} [options.skipDialog] - Whether to skip the display of a Dialog window
+   * @param {object} [options.staticRoll] - Skip dice rolling and use a static value, e.g. for Take 10
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} The skill roll, or void in case of missing permissions
    */
   rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -1934,13 +2099,25 @@ export class ActorPF extends Actor {
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
    *
-   * @param {string} abilityId     The ability id (e.g. "str")
-   * @param {object} options      Options which configure how ability tests or saving throws are rolled
+   * @todo Check for Event; add return value?
+   * @param {string} abilityId - The ability id (e.g. "str")
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
    */
   rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
     this.rollAbilityTest(abilityId, options);
   }
 
+  /**
+   * Roll a generic BAB check
+   *
+   * @todo Check for Event
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} The BAB roll, or void in case of missing permissions
+   */
   rollBAB(options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -1963,6 +2140,15 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Roll a generic combat maneuver check using the actor's CMB
+   *
+   * @todo Check for Event
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} The combat maneuver roll, or void in case of missing permissions
+   */
   rollCMB(options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2006,6 +2192,16 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Roll a generic attack
+   *
+   * @todo Check for Event
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.melee=true] - Whether the roll is for a melee or a ranged attack
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} The attack roll, or void in case of missing permissions
+   */
   rollAttack(options = { melee: true, noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2067,6 +2263,16 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Roll a generic Caster Level check
+   *
+   * @todo Check for Event
+   * @param {string} spellbookKey - The spellbook whose CL is to be used
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>} The Caster Level roll
+   */
   rollCL(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
@@ -2097,6 +2303,15 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Roll a generic Concentration check
+   *
+   * @todo Check for Event
+   * @param {string} spellbookKey - The spellbook whose CL is to be used
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   */
   rollConcentration(spellbookKey, options = { noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
@@ -2137,6 +2352,11 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * Returns additional headers for the Defense summary
+   *
+   * @returns {{header: string, value: string[]}[]} The headers
+   */
   getDefenseHeaders() {
     const data = this.data.data;
     const headers = [];
@@ -2197,6 +2417,11 @@ export class ActorPF extends Actor {
     return headers;
   }
 
+  /**
+   * Returns a tuple containing an array of context note contents and the eventual HTML to be shown for initiative rolls
+   *
+   * @returns {[notes: string[], html: string]} The context notes array, and the HTML string
+   */
   getInitiativeContextNotes() {
     let notes = this.getContextNotes("misc.init").reduce((arr, o) => {
       for (let n of o.notes) arr.push(...n.split(/[\n\r]+/));
@@ -2219,6 +2444,16 @@ export class ActorPF extends Actor {
     return [notes, notesHTML];
   }
 
+  /**
+   * Rolls initiative
+   *
+   * @async
+   * @param {object} [options] - Additional options to adjust the function's behaviour
+   * @param {boolean} [options.createCombatants] - Whether to create a combatant in the combat tracker with this roll
+   * @param {boolean} [options.rerollInitiative] - Whether to reroll an already existing initiative value
+   * @param {object} [options.initiativeOptions] - Additional options to be given to the roll
+   * @returns {Promise<Combat|null>} The updated combat, or null if the function had no effect
+   */
   async rollInitiative({ createCombatants = false, rerollInitiative = false, initiativeOptions = {} } = {}) {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
@@ -2252,6 +2487,18 @@ export class ActorPF extends Actor {
     return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
   }
 
+  /**
+   * Roll a saving throw
+   *
+   * @todo Check for Event, mix of Promise and sync return
+   * @param {SavingThrow} savingThrowId - The type of save to be rolled
+   * @param {object} [options] - Options which configure how ability tests or saving throws are rolled
+   * @param {Event} [options.event=null] - The event triggering the roll
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {boolean} [options.skipPrompt=true] - Whether to show a Dialog asking for additional input or not
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} The saving throw roll or void in case of missing permissions
+   */
   rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2289,7 +2536,6 @@ export class ActorPF extends Actor {
     let props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
-    const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
       parts: mods,
@@ -2312,8 +2558,11 @@ export class ActorPF extends Actor {
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    *
-   * @param {string} abilityId    The ability ID (e.g. "str")
+   * @param {import("../config.js").Ability} abilityId    The ability ID (e.g. "str")
    * @param {object} options      Options which configure how ability tests are rolled
+   * @param {boolean} [options.noSound=false] - Whether a dice sound should be played
+   * @param {string} [options.dice="1d20"] - The base die to be used, e.g. 2d20kl for a Misfortune effect
+   * @returns {Promise<RollPF>|void} - The ability check roll or void in case of missing permissions
    */
   rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -2371,6 +2620,8 @@ export class ActorPF extends Actor {
 
   /**
    * Show defenses in chat
+   *
+   * @returns {Promise<void>}
    */
   async rollDefenses() {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -2657,7 +2908,8 @@ export class ActorPF extends Actor {
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
-   * @param data
+   * @param {object} [data=null] Data to be used, defaults to this actor's data
+   * @returns {number} The multiplier
    */
   getWoundThresholdMultiplier(data = null) {
     data = data ?? this.data;
@@ -2671,8 +2923,8 @@ export class ActorPF extends Actor {
   /**
    * Returns Wound Threshold relevant data.
    *
-   * @param {*} rollData Provided valid rollData
-   * @param data
+   * @param {object} [data=null] Data to be used, defaults to this actor's data
+   * @returns {{level: number, multiplier: number, penalty: number, valid: boolean}} Wound Threshold data
    */
   getWoundThresholdData(data = null) {
     data = data ?? this.data;
@@ -2727,6 +2979,28 @@ export class ActorPF extends Actor {
     }
   }
 
+  /**
+   * Skill data
+   *
+   * @todo Check if SkillData and SkillInfo can be merged
+   * @typedef {object} SkillData
+   * @property {import("../config.js").Ability} ability - The skill's ability
+   * @property {boolean} acp - Whether armor check penalty should be applied to this skill
+   * @property {boolean} background - Whether this skill is a background skill
+   * @property {number} changeBonus - Bonus from changes
+   * @property {boolean} cs - Whether this skill is a class skill
+   * @property {number} mod - The resulting modifier
+   * @property {number=} rank - Ranks in this skill
+   * @property {boolean} rt - Whether this skill is Trained Only
+   * @property {SkillData[]} [subSkills] - This skill's subskills
+   * @property {number} value
+   */
+  /**
+   * Returns skill data
+   *
+   * @param {import("../config.js").SkillID} key - The skill ID
+   * @returns {SkillData} The skill's data
+   */
   getSkill(key) {
     for (let [k, s] of Object.entries(this.data.data.skills)) {
       if (k === key) return s;
@@ -2739,6 +3013,27 @@ export class ActorPF extends Actor {
     return null;
   }
 
+  /**
+   * A context note object, containing an array of notes as well as the object's source item
+   *
+   * @todo Different note contents?
+   * @typedef ContextNote
+   * @property {ItemPF} item - The item carrying the context notes
+   * @property {string[]|ContextNoteData[]} notes - An array of note data or their raw texts
+   */
+  /**
+   * A single context note's data
+   *
+   * @typedef ContextNoteData
+   * @property {string} text - The note's content
+   * @property {string} target - The note's {@link CONFIG.PF1.contextNoteTargets target}
+   * @property {string} subTarget - The note's {@link CONFIG.PF1.contextNoteTargets subTarget}
+   */
+  /**
+   * Returns an array of objects containing an array of notes and the source item
+   *
+   * @type {ContextNote[]}
+   */
   get allNotes() {
     let result = [];
 
@@ -2757,7 +3052,9 @@ export class ActorPF extends Actor {
   }
 
   /**
-   * @returns {ItemPF[]} All items on this actor, including those in containers.
+   * Returns all items, including those from containers
+   *
+   * @type {ItemPF[]} All items on this actor, including those in containers.
    */
   get allItems() {
     return [...this.containerItems, ...Array.from(this.items)];
@@ -2767,6 +3064,7 @@ export class ActorPF extends Actor {
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
    * @param {string} context - The context to draw from.
+   * @returns {ContextNote[]} Context Notes for the given context
    */
   getContextNotes(context) {
     let result = this.allNotes;
@@ -2789,7 +3087,7 @@ export class ActorPF extends Actor {
 
     // Skill
     if (context.match(/^skill\.(.+)/)) {
-      const skillKey = RegExp.$1;
+      const skillKey = /** @type import("../config.js").SkillID */ (RegExp.$1);
       const skill = this.getSkill(skillKey);
       const ability = skill.ability;
       for (let note of result) {
@@ -2934,6 +3232,7 @@ export class ActorPF extends Actor {
     }, []);
   }
 
+  /** @inheritdoc */
   async createEmbeddedEntity(embeddedName, createData, options = {}) {
     let noArray = false;
     if (!(createData instanceof Array)) {
@@ -3000,8 +3299,13 @@ export class ActorPF extends Actor {
     return result;
   }
 
+  /**
+   * Returns the weight of this actor's currency
+   *
+   * @returns {number} The weight
+   */
   _calculateCoinWeight() {
-    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
+    const coinWeightDivisor = /** @type {number} */ (game.settings.get("pf1", "coinWeight"));
     if (!coinWeightDivisor) return 0;
     return (
       Object.values(this.data.data.currency).reduce((cur, amount) => {
@@ -3010,6 +3314,11 @@ export class ActorPF extends Actor {
     );
   }
 
+  /**
+   * Returns an object containing the weight limits for the encumbrance levels
+   *
+   * @returns {{light: number, medium: number, heavy: number}} The weights for encumbrance levels
+   */
   getCarryCapacity() {
     // Determine carrying capacity
     const carryStr = this.data.data.abilities.str.total + this.data.data.abilities.str.carryBonus;
@@ -3033,6 +3342,11 @@ export class ActorPF extends Actor {
     };
   }
 
+  /**
+   * Returns the total weight carried
+   *
+   * @returns {number} The weight
+   */
   getCarriedWeight() {
     // Determine carried weight
     const physicalItems = this.data.items.filter((o) => {
@@ -3047,12 +3361,20 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * Returns the total amount of currency this actor has, in gold pieces
+   *
    * @returns {number} The total amount of currency this actor has, in gold pieces
    */
   mergeCurrency() {
     return this.getTotalCurrency("currency") + this.getTotalCurrency("altCurrency");
   }
 
+  /**
+   * Returns the amount of currency of a given category
+   *
+   * @param {"currency"|"altCurrency"} [category] - The category of currency to check
+   * @returns {number} The amount of currency in gold pieces
+   */
   getTotalCurrency(category = "currency") {
     const currencies = getProperty(this.data.data, category);
     return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
@@ -3061,8 +3383,8 @@ export class ActorPF extends Actor {
   /**
    * Converts currencies of the given category to the given currency type
    *
-   * @param {string} category - Either 'currency' or 'altCurrency'.
-   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   * @param {"currency"|"altCurrency"} [category="currency"] - The currency category
+   * @param {"pp"|"gp"|"sp"|"cp"} [type="pp"] - The type to which as much currency as possible is converted.
    */
   convertCurrency(category = "currency", type = "pp") {
     const totalValue =
@@ -3101,8 +3423,10 @@ export class ActorPF extends Actor {
    * Import a new owned Item from a compendium collection
    * The imported Item is then added to the Actor as an owned item.
    *
-   * @param collection {String}     The name of the pack from which to import
-   * @param entryId {String}        The ID of the compendium entry to import
+   * @todo Check return value
+   * @param collection {string}     The name of the pack from which to import
+   * @param entryId {string}        The ID of the compendium entry to import
+   * @returns {Promise} Some entity/document
    */
   importItemFromCollection(collection, entryId) {
     const pack = game.packs.find((p) => p.collection === collection);
@@ -3120,6 +3444,12 @@ export class ActorPF extends Actor {
     });
   }
 
+  /**
+   * @inheritdoc
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.refresh=false] Whether the rollData should be refreshed
+   * @returns {object} The rollData
+   */
   getRollData(options = { refresh: false }) {
     let result = this.data.data;
 
@@ -3327,6 +3657,11 @@ export class ActorPF extends Actor {
     return result;
   }
 
+  /**
+   * Returns an NPC's CR value, or 0 for PCs
+   *
+   * @returns {0|number} The CR
+   */
   getCR() {
     if (this.data.type !== "npc") return 0;
     const data = this.data.data;
@@ -3344,6 +3679,7 @@ export class ActorPF extends Actor {
     }, base);
   }
 
+  /** @inheritdoc */
   async deleteEmbeddedEntity(embeddedName, data, options = {}) {
     if (embeddedName === "OwnedItem") {
       if (!(data instanceof Array)) data = [data];
@@ -3374,6 +3710,11 @@ export class ActorPF extends Actor {
     super.deleteEmbeddedEntity(embeddedName, data, options);
   }
 
+  /**
+   * Returns an array of object detailing this actor's quick actions
+   *
+   * @returns {Array.<{item: object, color1: string, color2: string}>} The quick actions
+   */
   getQuickActions() {
     return this.data.items
       .filter(
@@ -3393,6 +3734,12 @@ export class ActorPF extends Actor {
       });
   }
 
+  /**
+   * Toggles condition status icons for a token
+   *
+   * @param {Token} token - The token
+   * @returns {Promise}
+   */
   toggleConditionStatusIcons(token) {
     if (this._runningFunctions.indexOf("toggleConditionStatusIcons") !== -1) return;
 
@@ -3451,7 +3798,11 @@ export class ActorPF extends Actor {
     });
   }
 
-  // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
+  /**
+   * Returns an object containing item UUIDs and their respective buff textures
+   *
+   * @returns {Object.<string, {active: boolean, icon: string, id: string, item: ItemPF, label: string}>} The dictionary of buff textures
+   */
   _calcBuffTextures() {
     const buffs = this.items.filter((o) => o.type === "buff");
     return buffs.reduce((acc, cur) => {
@@ -3465,6 +3816,9 @@ export class ActorPF extends Actor {
     }, {});
   }
 
+  /**
+   * Refreshes this actor's ability modifiers, respecting e.g. penalties or ability damage
+   */
   refreshAbilityModifiers() {
     for (let k of Object.keys(this.data.data.abilities)) {
       const total = getProperty(this.data, `data.abilities.${k}.total`);
@@ -3479,6 +3833,7 @@ export class ActorPF extends Actor {
     }
   }
 
+  /** @inheritdoc */
   importFromJSON(json) {
     // Set _initialized flag to prevent faults (such as HP changing incorrectly)
     this._initialized = false;
@@ -3491,12 +3846,9 @@ export class ActorPF extends Actor {
   }
 
   /**
-   * @typdef MaxAndValue
-   * @type {object}
-   * @property {number} max - The maximum value.
-   * @property {number} value - The current value.
+   * Returns an object containing the current and maximum number of feats for this actor
    *
-   * @returns {MaxAndValue} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
+   * @returns {{max: number, value: number}} An object in which `value` refers to the current used feats, and `max` which refers to the maximum available feats.
    */
   getFeatCount() {
     const result = { max: 0, value: 0 };
@@ -3536,6 +3888,8 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * Returns whether this actor has an owned item with the given flag
+   *
    * @param {string} flagName - The name/key of the flag to search for.
    * @returns {boolean} Whether this actor has any owned item with the given flag.
    */
@@ -3649,3 +4003,8 @@ export class ActorPF extends Actor {
     return this.update(updateData);
   }
 }
+
+// Type imports/definitions for module wide usage
+/** @typedef {import('../item/components/change').ItemChange} ItemChange */
+/** @typedef {{name: string, value: number|string}} SourceDetail */
+/** @typedef {import("../config.js").SavingThrow} SavingThrow */

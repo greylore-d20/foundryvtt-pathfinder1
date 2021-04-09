@@ -1,4 +1,3 @@
-// Namespace PF1 Configuration Values
 /**
  * PF1 Configuration Values
  *
@@ -7,15 +6,17 @@
  * assumed to get replaced by their proper translation when the system is loaded.
  *
  * The PF1 object may be adjusted to influence the system's behaviour during runtime.
- *
- * @global
- * @memberof CONFIG
  */
 export const PF1 = {
   re: {
     traitSeparator: /\s*[;]\s*/g,
   },
 
+  /**
+   * The set of Ability Scores used within the system
+   *
+   * @typedef {"str"|"dex"|"con"|"int"|"wis"|"cha"} Ability
+   */
   /**
    * The set of Ability Scores used within the system
    */
@@ -58,6 +59,11 @@ export const PF1 = {
     18: 17,
   },
 
+  /**
+   * Saving Throws available in PF1
+   *
+   * @typedef {"fort"|"ref"|"will"} SavingThrow
+   */
   /**
    * The set of Saving Throws
    */
@@ -532,6 +538,11 @@ export const PF1 = {
   /* -------------------------------------------- */
 
   /**
+   * Available item types
+   *
+   * @typedef {"equipment"|"weapon"|"loot"|"consumable"|"class"|"buff"|"spell"|"feat"|"attack"} ItemType
+   */
+  /**
    * The types for Items
    */
   itemTypes: {
@@ -670,6 +681,14 @@ export const PF1 = {
     misc: "PF1.Misc",
   },
 
+  /**
+   * The possible item subtypes for feat items
+   *
+   * @typedef {"feat"|"classFeat"|"trait"|"racial"|"misc"|"template"} FeatType
+   */
+  /**
+   * Feat types
+   */
   featTypes: {
     feat: "PF1.FeatTypeFeat",
     classFeat: "PF1.FeatTypeClassFeat",
@@ -715,6 +734,31 @@ export const PF1 = {
     natural: "Natural Armor",
   },
 
+  /**
+   * Possible types for bonus modifiers
+   *
+   * @typedef {
+     "untyped"|
+     "untypedPerm"|
+     "base"|
+     "enh"|
+     "dodge"|
+     "inherent"|
+     "deflection"|
+     "morale"|
+     "luck"|
+     "sacred"|
+     "insight"|
+     "resist"|
+     "profane"|
+     "trait"|
+     "racial"|
+     "size"|
+     "competence"|
+     "circumstance"|
+     "alchemical"|
+     "penalty" } BonusModifier
+   */
   /**
    * The types of bonus modifiers
    */
@@ -873,6 +917,7 @@ export const PF1 = {
 
   /* -------------------------------------------- */
 
+  /** @typedef {"acr"|"apr"|"art"|"blf"|"clm"|"crf"|"dip"|"dev"|"dis"|"esc"|"fly"|"han"|"hea"|"int"|"kar"|"kdu"|"ken"|"kge"|"khi"|"klo"|"kna"|"kno"|"kpl"|"kre"|"lin"|"lor"|"per"|"prf"|"pro"|"rid"|"sen"|"slt"|"spl"|"ste"|"sur"|"swm"|"umd"} SkillID */
   /**
    * The set of skill which can be trained in PF1
    */
@@ -1217,6 +1262,14 @@ export const PF1 = {
     dazed: "systems/pf1/icons/conditions/dazed.png",
   },
 
+  /**
+   * The possible item subtypes for buff items
+   *
+   * @typedef {"temp"|"perm"|"item"|"misc"} BuffType
+   */
+  /**
+   * The possible item subtypes for buff items
+   */
   buffTypes: {
     temp: "PF1.Temporary",
     perm: "PF1.Permanent",

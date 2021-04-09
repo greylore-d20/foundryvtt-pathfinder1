@@ -7,6 +7,10 @@
 - ACP from equipment and encumbrance incorrectly stacked
 - Shorthand deferred Damage/ Heal rolls (/d, /h) would prevent chatcard rendering
 
+### Changelog
+
+- Term specific flavor text can be included in formulas without causing errors in preparation for functionality to be added in 0.8.X
+
 ## 0.77.20
 
 ### Bug Fixes

@@ -704,7 +704,7 @@ export class ActorPF extends Actor {
 
       const safeTotal = (formula, data) => (isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula);
       const getAbilityBonus = (a) =>
-        typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
+        a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
       // Spell slots
       {
         const useAuto = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`);
@@ -734,7 +734,11 @@ export class ActorPF extends Actor {
           const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
-            const spellsForLevel = castsForLevels[classLevel - 1][a];
+            // 0 is special because it doesn't get bonus preps and can cast then indefinitely so can't use the "cast per day" value
+            const spellsForLevel =
+              a === 0
+                ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
+                : castsForLevels[classLevel - 1][a];
             setProperty(
               this.data,
               `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`,
@@ -861,7 +865,7 @@ export class ActorPF extends Actor {
                 CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
                   casterType === "null" ? "high" : casterType
                 ]?.[classLevel - 1][a];
-              if (spellPrepMode === "prepared" && a !== 0) {
+              if (spellPrepMode === "prepared") {
                 // for prepared casters, just use spell max because it already includes ability formula plus any custom changes
                 available = getProperty(
                   this.data,

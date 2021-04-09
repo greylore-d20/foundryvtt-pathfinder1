@@ -6,8 +6,14 @@ import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
 import { patchMeasureTools } from "./measure.js";
 
+/**
+ *
+ */
 export async function PatchCore() {
   // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
+  /**
+   * @param path
+   */
   async function PF1_getTemplate(path) {
     if (!Object.prototype.hasOwnProperty.call(_templateCache, path) || CONFIG.debug.template) {
       await new Promise((resolve) => {
@@ -232,7 +238,7 @@ export async function PatchCore() {
     ChatLog.parse = function (message) {
       const match = message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/),
         type = match?.[1];
-      if (["HEAL", "DAMAGE"].includes(type?.toUpperCase())) {
+      if (["HEAL", "H", "DAMAGE", "D"].includes(type?.toUpperCase())) {
         match[2] = match[0].slice(1);
         return ["custom", match];
       } else return origParse.call(this, message);

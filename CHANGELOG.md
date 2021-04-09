@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - ACP from equipment and encumbrance incorrectly stacked
+- Shorthand deferred Damage/ Heal rolls (/d, /h) would prevent chatcard rendering
 
 ## 0.77.20
 

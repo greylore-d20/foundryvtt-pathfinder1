@@ -846,7 +846,19 @@ export class ActorPF extends Actor {
               getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.casterType`) || "high";
             const classLevel = rollData.classes[spellbook.class].level;
 
+            let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
+
             for (let a = 0; a < 10; a++) {
+              if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
+                const message = game.i18n.localize("PF1.SpellScoreTooLow");
+                setProperty(
+                  this.data,
+                  `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.spellMessage`,
+                  message
+                );
+                continue;
+              }
+
               const used = spells.reduce((acc, i) => {
                 let prepared = 0;
                 const { data } = i.data;

@@ -843,7 +843,7 @@ export class ActorPF extends Actor {
             const classLevel = rollData.classes[spellbook.class].level;
 
             for (let a = 0; a < 10; a++) {
-              const spellLevelReducer = (acc, i) => {
+              const used = spells.reduce((acc, i) => {
                 let prepared = 0;
                 const { data } = i.data;
                 if (data.level === a && data.spellbook === spellbookKey) {
@@ -856,8 +856,7 @@ export class ActorPF extends Actor {
                 }
 
                 return acc + prepared;
-              };
-              const used = spells.reduce(spellLevelReducer, 0);
+              }, 0);
               let available =
                 CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
                   casterType === "null" ? "high" : casterType

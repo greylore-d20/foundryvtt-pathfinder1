@@ -558,6 +558,11 @@ export const PF1 = {
   },
 
   /**
+   * Possible action types
+   *
+   * @typedef {"mwak"|"rwak"|"msak"|"rsak"|"mcman"|"rcman"|"spellsave"|"save"|"heal"|"other"} ActionType
+   */
+  /**
    * Classification types for item action types
    */
   itemActionTypes: {

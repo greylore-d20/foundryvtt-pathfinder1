@@ -4,7 +4,6 @@ import { createTag, linkData, convertDistance, convertWeight, convertWeightBack 
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
-import { SemanticVersion } from "../semver.js";
 import { ItemChange } from "./components/change.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
@@ -16,25 +15,38 @@ export class ItemPF extends Item {
   constructor(...args) {
     super(...args);
 
-    /**
-     * @property {object} _prevData
-     * When an item gets updated, certain data is stored here for use in _onUpdate.
-     */
-    if (this._prevData === undefined) this._prevData = {};
+    if (this._prevData === undefined)
+      /**
+       * When an item gets updated, certain data is stored here for use in _onUpdate.
+       *
+       * @type {object}
+       */
+      this._prevData = {};
 
-    /**
-     * @property {object} links
-     * Links are stored here during runtime.
-     */
-    if (this.links === undefined) this.links = {};
+    if (this.links === undefined)
+      /**
+       * Links are stored here during runtime.
+       *
+       * @type {object}
+       */
+      this.links = {};
 
-    /**
-     * @property {object} _rollData
-     * Cached roll data for this item.
-     */
-    if (this._rollData === undefined) this._rollData = null;
+    if (this._rollData === undefined)
+      /**
+       * Cached roll data for this item.
+       *
+       * @type {object}
+       */
+      this._rollData = null;
   }
 
+  /**
+   * Returns whether Items of a given type should be shown in inventories.
+   *
+   * @static
+   * @param {import("../config.js").ItemType} type - The item type
+   * @returns {boolean} Whether the item type should be shown in the inventory
+   */
   static isInventoryItem(type) {
     return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
   }
@@ -43,12 +55,17 @@ export class ItemPF extends Item {
   /*  Item Properties                             */
   /* -------------------------------------------- */
 
+  /**
+   * Returns whether this Item has an owner.
+   *
+   * @type {boolean}
+   */
   get isOwned() {
     return super.isOwned || this.parentItem != null;
   }
 
   /**
-   * Does the Item implement an attack roll as part of its usage
+   * Returns whether this Item implements an attack roll as part of its usage.
    *
    * @type {boolean}
    */
@@ -56,6 +73,11 @@ export class ItemPF extends Item {
     return ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(this.data.data.actionType);
   }
 
+  /**
+   * Returns whether this item's attack features multiple attack rolls.
+   *
+   * @type {boolean}
+   */
   get hasMultiAttack() {
     return (
       this.hasAttack &&
@@ -64,6 +86,11 @@ export class ItemPF extends Item {
     );
   }
 
+  /**
+   * Returns whether this item has a Measure Template configured.
+   *
+   * @type {boolean}
+   */
   get hasTemplate() {
     const v = getProperty(this.data, "data.measureTemplate.type");
     const s = getProperty(this.data, "data.measureTemplate.size");
@@ -72,30 +99,60 @@ export class ItemPF extends Item {
     );
   }
 
+  /**
+   * Returns whether this Item has a sound configured for its usage.
+   *
+   * @type {boolean}
+   */
   get hasSound() {
     return !!this.data.data.soundEffect;
   }
 
+  /**
+   * Returns whether this Item has an action that can be executed.
+   *
+   * @type {boolean}
+   */
   get hasAction() {
     return this.hasAttack || this.hasDamage || this.hasEffect || this.hasSave || this.hasTemplate || this.hasSound;
   }
 
+  /**
+   * Returns whether this Item is configured to be usable only once.
+   *
+   * @type {boolean}
+   */
   get isSingleUse() {
     return getProperty(this.data, "data.uses.per") === "single" || !hasProperty(this.data, "data.uses.per");
   }
 
+  /**
+   * Returns whether this Item makes use of charges, e.g. due to being a spell, a consumable item.
+   *
+   * @type {boolean}
+   */
   get isCharged() {
     if (this.type === "spell" && this.maxCharges > 0 && this.chargeCost > 0) return true;
     if (this.type === "consumable" && getProperty(this.data, "data.uses.per") === "single") return true;
     return ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
   }
 
+  /**
+   * Returns whether using this Item should reduce its charges.
+   *
+   * @type {boolean}
+   */
   get autoDeductCharges() {
     return this.type === "spell"
       ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
       : this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true;
   }
 
+  /**
+   * Returns the current number of charges this item's charge pool has.
+   *
+   * @type {number}
+   */
   get charges() {
     // No actor? No charges!
     if (!this.parentActor) return 0;
@@ -110,6 +167,11 @@ export class ItemPF extends Item {
     return getProperty(this.data, "data.uses.value") || 0;
   }
 
+  /**
+   * Returns the maximum number of charges for this item's charge pool.
+   *
+   * @type {number}
+   */
   get maxCharges() {
     // No actor? No charges!
     if (!this.parentActor) return 0;
@@ -124,6 +186,11 @@ export class ItemPF extends Item {
     return getProperty(this.data, "data.uses.max") || 0;
   }
 
+  /**
+   * Returns the number of charges to be deducted from the charge pool when this item is used.
+   *
+   * @type {number}
+   */
   get chargeCost() {
     if (this.type === "spell") {
       if (this.useSpellPoints()) return this.getSpellPointCost();
@@ -136,6 +203,11 @@ export class ItemPF extends Item {
     return cost;
   }
 
+  /**
+   * Returns the data of the spellbook this item belongs to.
+   *
+   * @type {object|null}
+   */
   get spellbook() {
     if (this.type !== "spell") return null;
     if (this.parentActor == null) return null;
@@ -144,6 +216,11 @@ export class ItemPF extends Item {
     return this.parentActor.data.data.attributes.spells.spellbooks[spellbookIndex];
   }
 
+  /**
+   * Rturns the caster level this spell is cast with.
+   *
+   * @type {number|null}
+   */
   get casterLevel() {
     const spellbook = this.spellbook;
     if (!spellbook) return null;
@@ -151,12 +228,22 @@ export class ItemPF extends Item {
     return spellbook.cl.total + (this.data.data.clOffset || 0);
   }
 
+  /**
+   * Returns this spell's spell level, including a possibly configured offeset.
+   *
+   * @type {number}
+   */
   get spellLevel() {
     if (this.type !== "spell") return null;
 
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  /**
+   * Returns this Item's aura strength according to its caster level.
+   *
+   * @type {number}
+   */
   get auraStrength() {
     const cl = getProperty(this.data, "data.cl") || 0;
     if (cl < 1) {
@@ -4445,3 +4532,6 @@ export class ItemPF extends Item {
     return flag ? flag[1] : undefined;
   }
 }
+
+// Type definitions
+/** @typedef {"primary"|"secondary"|"tertiary"|"spelllike"} Spellbook */

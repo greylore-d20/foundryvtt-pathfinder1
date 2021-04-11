@@ -313,7 +313,7 @@ export class ActorPF extends Actor {
   }
 
   /**
-   * Prepared this actor's embedded entities, including container items, item flags, and changes
+   * Prepares this actor's embedded entities, including container items, item flags, and changes
    */
   prepareEmbeddedEntities() {
     super.prepareEmbeddedEntities();

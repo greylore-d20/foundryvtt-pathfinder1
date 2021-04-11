@@ -729,8 +729,7 @@ export class ActorPF extends Actor {
           rollData.classLevel = classLevel;
 
           const allLevelModFormula =
-            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.preparedLevelAllModFormula`) ||
-            "0";
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.preparedAllOffsetFormula`) || "0";
           const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {

@@ -6,7 +6,7 @@
       <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationFormula"
       value="{{spellbook.orig.concentrationFormula}}" placeholder="{{localize "PF1.ConcentrationBonusFormula"}}" />
     </div>
-    
+
     <div class="spellcasting-cl flexrow">
       <div class="rollable image-d20"></div>
       <label><h3>{{localize "PF1.CasterLevel"}}</h3></label>
@@ -23,7 +23,7 @@
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>
     </div>
-    
+
     <div class="flexrow">
       <div class="flexcol pf1-sheet-group">
         <div class="form-group spellcasting-class tooltip">
@@ -49,7 +49,7 @@
             {{/select}}
           </select>
         </div>
-        
+
         <div class="form-group spellcasting-ability">
           <label><h3>{{localize "PF1.SpellcastingAbility"}}</h3></label>
           <select name="data.attributes.spells.spellbooks.{{spellbookIndex}}.ability" data-dtype="String">
@@ -61,7 +61,7 @@
             {{/select}}
           </select>
         </div>
-        
+
         <div class="flexrow spell-failure">
           <label><h3>{{localize "PF1.ArcaneSpellFailure"}}</h3></label>
           <input type="text" disabled value="{{spellFailure}}%"/>
@@ -72,7 +72,7 @@
           <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.baseDCFormula"
           value="{{spellbook.orig.baseDCFormula}}" placeholder="{{localize "PF1.BaseDCFormula"}}" />
         </div>
-        
+
         <div class="flexrow spell-slot-ability-bonus">
           <label><h3>{{localize "PF1.SpellSlotAbilityBonus"}}</h3></label>
           <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellSlotAbilityBonusFormula"
@@ -105,7 +105,7 @@
         </div>
         {{/if}}
       </div>
-      
+
       <div class="flexcol pf1-sheet-group">
         <label class="checkbox">
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.arcaneSpellFailure"
@@ -153,42 +153,75 @@
 
           <section class="spell-level-mod-container">
             <label><h3>{{localize "Modify all spell levels"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.preparedLevelAllModFormula" value="{{spellbook.orig.preparedLevelAllModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.preparedAllOffsetFormula" value="{{spellbook.orig.preparedAllOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.castPerDayAllOffsetFormula" value="{{spellbook.orig.castPerDayAllOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             {{#if (eq spellbook.orig.casterType 'high')}}
             <label><h3>{{localize "PF1.SpellLevel0"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell0.preparedOffsetFormula" value="{{spellbook.orig.autoLevel0ModFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell0.preparedOffsetFormula" value="{{spellbook.orig.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell0.castPerDayOffsetFormula" value="{{spellbook.orig.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
             {{/if}}
 
             <label><h3>{{localize "PF1.SpellLevel1"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell1.preparedOffsetFormula" value="{{spellbook.orig.spells.spell1.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell1.preparedOffsetFormula" value="{{spellbook.orig.spells.spell1.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell1.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell1.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel2"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell2.preparedOffsetFormula" value="{{spellbook.orig.spells.spell2.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell2.preparedOffsetFormula" value="{{spellbook.orig.spells.spell2.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell2.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell2.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel3"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell3.preparedOffsetFormula" value="{{spellbook.orig.spells.spell3.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell3.preparedOffsetFormula" value="{{spellbook.orig.spells.spell3.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell3.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell3.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel4"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell4.preparedOffsetFormula" value="{{spellbook.orig.spells.spell4.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell4.preparedOffsetFormula" value="{{spellbook.orig.spells.spell4.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell4.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell4.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             {{#if (or (eq spellbook.orig.casterType 'med') (eq spellbook.orig.casterType 'high'))}}
             <label><h3>{{localize "PF1.SpellLevel5"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell5.preparedOffsetFormula" value="{{spellbook.orig.spells.spell5.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell5.preparedOffsetFormula" value="{{spellbook.orig.spells.spell5.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell5.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell5.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel6"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell6.preparedOffsetFormula" value="{{spellbook.orig.spells.spell6.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell6.preparedOffsetFormula" value="{{spellbook.orig.spells.spell6.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell6.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell6.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
             {{/if}}
 
             {{#if (eq spellbook.orig.casterType 'high')}}
             <label><h3>{{localize "PF1.SpellLevel7"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell7.preparedOffsetFormula" value="{{spellbook.orig.spells.spell7.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell7.preparedOffsetFormula" value="{{spellbook.orig.spells.spell7.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell7.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell7.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel8"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell8.preparedOffsetFormula" value="{{spellbook.orig.spells.spell8.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell8.preparedOffsetFormula" value="{{spellbook.orig.spells.spell8.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell8.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell8.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
 
             <label><h3>{{localize "PF1.SpellLevel9"}}</h3></label>
-            <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell9.preparedOffsetFormula" value="{{spellbook.orig.spells.spell9.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            <div class="spell-mod-formulas">
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell9.preparedOffsetFormula" value="{{spellbook.orig.spells.spell9.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+              <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell9.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell9.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+            </div>
             {{/if}}
 
           </section>
@@ -196,7 +229,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="flexrow spell-range">
     <table>
       <thead>
@@ -236,7 +269,7 @@
 </div>
 
 {{!-- Spellbook Navigation --}}
-<div class="inventory-filters flexrow">  
+<div class="inventory-filters flexrow">
   <ul class="filter-list flexrow" data-filter="spellbook-{{spellbookIndex}}">
     {{#each spellbook.data as |section sid|}}
     <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>
@@ -280,7 +313,7 @@
         <div class="item-name flexrow">
           <h3>{{section.name}}</h3>
         </div>
-        
+
         {{#unless ../spellbook.orig.spellPoints.useSystem}}
         <div class="item-detail spell-uses">
           {{#if section.usesSlots}}
@@ -310,15 +343,15 @@
           {{/if}}
         </div>
         {{/unless}}
-        
+
         <div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>
 
         <div class="item-detail spell-activation"><i class="icon icon-hand large" title="{{localize "PF1.Usage"}}"></i></div>
 
         <div class="item-detail spell-components"><i class="icon icon-expense large" title="{{localize "PF1.Components"}}"></i></div>
-        
+
         <div class="item-detail spell-school"><i class="icon icon-spell-book large" title="{{localize "PF1.SpellSchool"}}"></i></div>
-        
+
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
@@ -328,7 +361,7 @@
           <a data-action="compendium" data-action-target="spells" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
         </div>
       </li>
-      
+
       <ol class="item-list">
         {{#if section.message}}
           <h4 class="spell-level-message">{{section.message}}</h4>
@@ -340,7 +373,7 @@
             <div class="item-image" style="background-image: url({{item.img}})"></div>
             <h4>{{item.name}}</h4>
           </div>
-          
+
           {{#unless ../../spellbook.orig.spellPoints.useSystem}}
           <div class="item-detail spell-uses flexrow">
             {{#unless item.data.atWill}}
@@ -376,7 +409,7 @@
             {{/unless}}
           </div>
           {{/unless}}
-          
+
           <div class="item-detail item-actions">
             <div class="item-attack tooltip">
               <span class="tooltipcontent">
@@ -387,11 +420,11 @@
           </div>
 
           <div class="item-detail spell-activation"><span>{{labels.activation}}</span></div>
-          
+
           <div class="item-detail spell-components"><span>{{labels.components}}</span></div>
-          
+
           <div class="item-detail spell-school"><span>{{labels.school}}</span></div>
-          
+
           {{#if ../../owner}}
           <div class="item-controls">
             <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>

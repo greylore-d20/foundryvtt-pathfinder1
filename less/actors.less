@@ -1008,13 +1008,18 @@
     }
 
     .spell-level-mod-container {
+      column-gap: 4px;
       display: grid;
       grid-auto-rows: auto;
-      column-gap: 4px;
       grid-template-columns: min-content 1fr;
 
       > label h3 {
         white-space: nowrap;
+      }
+
+      .spell-mod-formulas {
+        display: flex;
+        flex-direction: row;
       }
     }
 

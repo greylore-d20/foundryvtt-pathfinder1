@@ -3669,4 +3669,110 @@ export class ActorPF extends Actor {
   hasItemBooleanFlag(flagName) {
     return getProperty(this, `itemFlags.boolean.${flagName}`) != null;
   }
+
+  async performRest({ restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = {}) {
+    const actorData = this.data.data;
+
+    const updateData = {};
+    // Restore health and ability damage
+    if (restoreHealth === true) {
+      const hd = actorData.attributes.hd.total;
+      let heal = {
+        hp: hd,
+        abl: 1,
+        nonlethal: hours * hd,
+      };
+      if (longTermCare === true) {
+        heal.hp *= 2;
+        heal.abl *= 2;
+      }
+
+      updateData["data.attributes.hp.value"] = Math.min(
+        actorData.attributes.hp.value + heal.hp,
+        actorData.attributes.hp.max
+      );
+      updateData["data.attributes.hp.nonlethal"] = Math.max(
+        0,
+        (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal
+      );
+      for (let [key, abl] of Object.entries(actorData.abilities)) {
+        let dmg = Math.abs(abl.damage);
+        updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
+      }
+    }
+
+    let itemUpdates = [];
+    let spellbookUses = {};
+    // Restore daily uses of spells, feats, etc.
+    if (restoreDailyUses === true) {
+      // Update spellbooks
+      for (let [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
+        for (let a = 0; a < 10; a++) {
+          updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] =
+            getProperty(sb, `spells.spell${a}.max`) || 0;
+        }
+      }
+
+      // Update charged items
+      for (let item of this.items) {
+        let itemUpdate = { _id: item.id };
+        const itemData = item.data.data;
+
+        if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
+          itemUpdate["data.uses.value"] = itemData.uses.max;
+          itemUpdates.push(itemUpdate);
+        } else if (item.type === "spell") {
+          const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
+            isSpontaneous = spellbook.spontaneous;
+          if (!isSpontaneous) {
+            if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
+              itemUpdate["data.preparation.preparedAmount"] = itemData.preparation.maxAmount;
+              itemUpdates.push(itemUpdate);
+            }
+            if (!getProperty(item.data, "data.domain")) {
+              let sbUses =
+                updateData[
+                  `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+                ] || 0;
+              sbUses -= itemData.preparation.maxAmount;
+              updateData[
+                `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+              ] = sbUses;
+            }
+          }
+        }
+      }
+
+      for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+        // Restore spellbooks using spell points
+        if (spellbook.spellPoints.useSystem) {
+          // Try to roll restoreFormula, fall back to restoring max spell points
+          let restorePoints = spellbook.spellPoints.max;
+          if (spellbook.spellPoints.restoreFormula) {
+            const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, this.getRollData());
+            if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
+            else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
+          }
+          updateData[`data.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;
+        }
+      }
+    }
+
+    const proceed = Hooks.call(
+      "actorRest",
+      this,
+      {
+        restoreHealth,
+        longTermCare,
+        restoreDailyUses,
+        hours,
+      },
+      updateData,
+      itemUpdates
+    );
+    if (proceed === false) return false;
+
+    await this.updateEmbeddedEntity("OwnedItem", itemUpdates);
+    return this.update(updateData);
+  }
 }

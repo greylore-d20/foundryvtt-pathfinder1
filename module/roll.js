@@ -37,6 +37,15 @@ export class RollPF extends Roll {
     // Step 4 - expand remaining arithmetic terms
     terms = this._splitDiceTerms(terms, step);
 
+    // Step 4.5 - Strip non-functional term flavor text
+    terms = terms.map((t) => {
+      if (typeof t !== "string") return t;
+      const stripped = t.replace(/\s*\[.*\]\s*/, ""),
+        num = parseFloat(stripped);
+      if (isNaN(num)) return stripped;
+      else return num;
+    });
+
     // Step 5 - clean and de-dupe terms
     terms = this.constructor.cleanTerms(terms);
     return terms;

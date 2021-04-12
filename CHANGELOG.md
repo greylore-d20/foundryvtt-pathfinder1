@@ -5,6 +5,15 @@
 ### Bug Fixes
 
 - ACP from equipment and encumbrance incorrectly stacked
+- Shorthand deferred Damage/ Heal rolls (/d, /h) would prevent chatcard rendering
+
+### Changelog
+
+- Term specific flavor text can be included in formulas without causing errors in preparation for functionality to be added in 0.8.X
+
+### API
+
+- The `actorRest` hook has been reworked slightly. It adds 2 new parameters: `updateData` and `itemUpdateData`. See the system's GitLab wiki for more information.
 
 ## 0.77.20
 

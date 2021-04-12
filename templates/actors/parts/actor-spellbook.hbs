@@ -152,7 +152,13 @@
           {{/unless}}
 
           <section class="spell-level-mod-container">
-            <label><h3>{{localize "Modify all spell levels"}}</h3></label>
+            <label><h3>Modifications</h3></label>
+            <div class="spell-mod-formulas">
+              <label><h3>Prepare per Day</h3></label>
+              <label><h3>Cast per Day</h3></label>
+            </div>
+
+            <label><h3>{{localize "all"}}</h3></label>
             <div class="spell-mod-formulas">
               <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.preparedAllOffsetFormula" value="{{spellbook.orig.preparedAllOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
               <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.castPerDayAllOffsetFormula" value="{{spellbook.orig.castPerDayAllOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />

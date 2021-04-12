@@ -729,11 +729,12 @@ export class ActorPF extends Actor {
           rollData.classLevel = classLevel;
 
           const allLevelModFormula =
-            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.preparedAllOffsetFormula`) || "0";
+            getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.castPerDayAllOffsetFormula`) ||
+            "0";
           const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
-            // 0 is special because it doesn't get bonus preps and can cast then indefinitely so can't use the "cast per day" value
+            // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
             const spellsForLevel =
               a === 0
                 ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
@@ -747,7 +748,7 @@ export class ActorPF extends Actor {
             const offsetFormula =
               getProperty(
                 this.data,
-                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.preparedOffsetFormula`
+                `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.castPerDayOffsetFormula`
               ) || "0";
 
             let max =
@@ -847,6 +848,11 @@ export class ActorPF extends Actor {
 
             let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
 
+            const allLevelModFormula =
+              getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.preparedAllOffsetFormula`) ||
+              "0";
+            const allLevelMod = safeTotal(allLevelModFormula, rollData);
+
             for (let a = 0; a < 10; a++) {
               if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
                 const message = game.i18n.localize("PF1.SpellScoreTooLow");
@@ -872,16 +878,29 @@ export class ActorPF extends Actor {
 
                 return acc + prepared;
               }, 0);
-              let available =
-                CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
-                  casterType === "null" ? "high" : casterType
-                ]?.[classLevel - 1][a];
+
+              let available;
               if (spellPrepMode === "prepared") {
                 // for prepared casters, just use spell max because it already includes ability formula plus any custom changes
                 available = getProperty(
                   this.data,
                   `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`
                 );
+              } else {
+                // if not prepared then base off of casts per day
+                available =
+                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
+                    casterType === "null" ? "high" : casterType
+                  ]?.[classLevel - 1][a];
+                available += allLevelMod;
+
+                const formula =
+                  getProperty(
+                    this.data,
+                    `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.preparedOffsetFormula`
+                  ) || "0";
+
+                available += safeTotal(formula, rollData);
               }
 
               const remaining = available - used;

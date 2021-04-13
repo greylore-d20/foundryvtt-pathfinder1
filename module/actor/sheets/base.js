@@ -649,9 +649,6 @@ export class ActorSheetPF extends ActorSheet {
           break;
       }
     }
-    const spontaneous =
-      (!book.autoSpellLevels && book.spontaneous) ||
-      (book.autoSpellLevels && (book.spellPreparationMode === "spontaneous" || book.spellPreparationMode === "hybrid"));
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
@@ -659,7 +656,7 @@ export class ActorSheetPF extends ActorSheet {
       spellbook[a] = {
         level: a,
         usesSlots: true,
-        spontaneous,
+        spontaneous: book.spontaneous,
         canCreate: owner === true,
         canPrepare: data.actor.type === "character",
         label: CONFIG.PF1.spellLevels[a],

@@ -717,11 +717,18 @@ export class ActorPF extends Actor {
             spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
               ? spellbook.spellPreparationMode
               : "prepared";
+
+          if (spellPrepMode === "hybrid" || spellPrepMode === "spontaneous") {
+            // if use auto progression, set base "spontaneous" based on spell prep mode
+            spellbook.spontaneous = true;
+            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spontaneous`, true);
+          }
           if (casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
             // todo find out if "null" check is actually necessary when going from good data
             casterType = "high";
             setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.casterType`, casterType);
           }
+
           const castsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
           rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
           rollData.ablMod = spellbookAbilityMod;
@@ -805,12 +812,9 @@ export class ActorPF extends Actor {
         const spells = this.items.filter((o) => o.type === "spell");
         for (let i of spells) {
           const sb = i.spellbook;
-          if (
-            !sb ||
-            (!sb.autoSpellLevels && sb.spontaneous) ||
-            (sb.autoSpellLevels && sb.spellPreparationMode === "spontaneous")
-          )
+          if (!sb || sb.spontaneous) {
             continue;
+          }
 
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;

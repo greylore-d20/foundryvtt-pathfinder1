@@ -41,7 +41,7 @@ export class RollPF extends Roll {
     terms = terms.map((t) => {
       if (typeof t !== "string") return t;
       const stripped = t.replace(/\s*\[.*\]\s*/, ""),
-        num = parseFloat(stripped);
+        num = /\D/.test(stripped) ? NaN : parseFloat(stripped);
       if (isNaN(num)) return stripped;
       else return num;
     });

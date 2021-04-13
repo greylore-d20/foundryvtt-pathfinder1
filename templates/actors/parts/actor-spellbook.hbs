@@ -337,7 +337,7 @@
           </div>
           <span class="sep"> / </span>
           <div class="tooltip spell-max">
-            <span class="text-box" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+            <span class="{{#if ../spellbook.orig.autoSpellLevels}}spell-max-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
             <span class="tooltipcontent">
               {{localize "PF1.SpellsTotalEachDay"}}
             </span>
@@ -369,8 +369,8 @@
       </li>
 
       <ol class="item-list">
-        {{#if section.message}}
-          <h4 class="spell-level-message">{{section.message}}</h4>
+        {{#if section.spellMessage}}
+          <h4 class="spell-level-message">{{section.spellMessage}}</h4>
         {{/if}}
 
         {{#each section.items as |item i|}}

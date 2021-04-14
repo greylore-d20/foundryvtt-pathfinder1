@@ -14,6 +14,7 @@
 ### API
 
 - The `actorRest` hook has been reworked slightly. It adds 2 new parameters: `updateData` and `itemUpdateData`. See the system's GitLab wiki for more information.
+- Added the `pf1.getRollData` hook. See the system's GitLab wiki for more information. (#769)
 
 ## 0.77.20
 

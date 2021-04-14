@@ -3153,7 +3153,11 @@ export class ActorPF extends Actor {
     }
 
     // Return cached data, if applicable
-    if (skipRefresh) return result;
+    if (skipRefresh) {
+      Hooks.callAll("pf1.getRollData", this, result, false);
+
+      return result;
+    }
 
     /* ----------------------------- */
     /* Set the following data on a refresh
@@ -3306,6 +3310,10 @@ export class ActorPF extends Actor {
     }
 
     this._rollData = result;
+
+    // Call hook
+    Hooks.callAll("pf1.getRollData", this, result, true);
+
     return result;
   }
 

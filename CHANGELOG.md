@@ -16,6 +16,7 @@
 - The `actorRest` hook has been reworked slightly. It adds 2 new parameters: `updateData` and `itemUpdateData`. See the system's GitLab wiki for more information.
 - Added the `pf1.getRollData` hook. See the system's GitLab wiki for more information. (#769)
 - The ItemPF methods `getItemDictionaryFlag` and `removeItemDictionaryFlag` defaulted to an empty object rather than an empty array, erroring out in certain cases (#761)
+- Setting a dictionary flag on an instance of ItemPF starting with numbers, but also containing alphabetical characters, incorrectly converted the value to a number (#763)
 
 ## 0.77.20
 

@@ -973,8 +973,15 @@ export class ItemPF extends Item {
       let flags = data["data.flags.dictionary"];
 
       for (let f of flags) {
-        let v = parseFloat(f[1]);
-        if (!Number.isNaN(v)) f[1] = v;
+        let value = f[1];
+        // Try to convert value to a number
+        if (typeof value === "string" && value.match(/^[0-9]+(?:\.[0-9]+)?$/)) {
+          const newValue = parseFloat(value);
+          if (!Number.isNaN(newValue)) {
+            value = newValue;
+          }
+          f[1] = value;
+        }
       }
     }
 

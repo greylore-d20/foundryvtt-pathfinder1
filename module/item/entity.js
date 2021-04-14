@@ -4405,7 +4405,7 @@ export class ItemPF extends Item {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName) {
-    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || {});
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
 
     let doUpdate = false;
     for (let a = 0; a < flags.length; a++) {
@@ -4430,14 +4430,11 @@ export class ItemPF extends Item {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+    const flags = getProperty(this.data, "data.flags.dictionary") || [];
 
-    for (let f of flags) {
-      if (f[0] === flagName) {
-        return f[1];
-      }
-    }
-
-    return undefined;
+    const flag = flags.find((f) => {
+      return f[0] === flagName;
+    });
+    return flag ? flag[1] : undefined;
   }
 }

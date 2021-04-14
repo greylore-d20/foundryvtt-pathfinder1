@@ -335,9 +335,9 @@ export class ActorPF extends Actor {
       this.updateItemResources(item);
     });
 
-    Hooks.callAll("pf1.prepareBaseActorData", this);
     super.prepareBaseData();
     this._resetInherentTotals();
+    Hooks.callAll("pf1.prepareBaseActorData", this);
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
@@ -595,8 +595,8 @@ export class ActorPF extends Actor {
    * Augment the basic actor data with additional dynamic data.
    */
   prepareDerivedData() {
-    Hooks.callAll("pf1.prepareDerivedActorData", this);
     super.prepareDerivedData();
+    Hooks.callAll("pf1.prepareDerivedActorData", this);
 
     const actorData = this.data;
     const data = actorData.data;

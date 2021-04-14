@@ -10,6 +10,7 @@
 ### Changelog
 
 - Term specific flavor text can be included in formulas without causing errors in preparation for functionality to be added in 0.8.X
+- Added `@attributes.savingThrows.X.base` to actor roll data (#760)
 
 ### API
 

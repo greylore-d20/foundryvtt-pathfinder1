@@ -3169,6 +3169,7 @@ export class ActorPF extends Actor {
     }
 
     // Set class data
+    const baseSavingThrows = {};
     result.classes = {};
     this.data.items
       .filter((obj) => {
@@ -3212,8 +3213,17 @@ export class ActorPF extends Actor {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
+
+          // Set base saving throws
+          baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
+          baseSavingThrows[k] += result.classes[tag].savingThrows[k];
         }
       });
+
+    // Set base saving throws
+    for (let [k, v] of Object.entries(baseSavingThrows)) {
+      setProperty(result, `attributes.savingThrows.${k}.base`, v);
+    }
 
     // Add more info for formulas
     if (this.data.items) {

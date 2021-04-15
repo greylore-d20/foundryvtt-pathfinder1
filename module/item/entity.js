@@ -17,19 +17,19 @@ export class ItemPF extends Item {
     super(...args);
 
     /**
-     * @property {Object} _prevData
+     * @property {object} _prevData
      * When an item gets updated, certain data is stored here for use in _onUpdate.
      */
     if (this._prevData === undefined) this._prevData = {};
 
     /**
-     * @property {Object} links
+     * @property {object} links
      * Links are stored here during runtime.
      */
     if (this.links === undefined) this.links = {};
 
     /**
-     * @property {Object} _rollData
+     * @property {object} _rollData
      * Cached roll data for this item.
      */
     if (this._rollData === undefined) this._rollData = null;
@@ -49,6 +49,7 @@ export class ItemPF extends Item {
 
   /**
    * Does the Item implement an attack roll as part of its usage
+   *
    * @type {boolean}
    */
   get hasAttack() {
@@ -228,8 +229,8 @@ export class ItemPF extends Item {
   }
 
   /**
-   * @param {Object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
-   * @returns {Number} The Difficulty Class for this item.
+   * @param {object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
+   * @returns {number} The Difficulty Class for this item.
    */
   getDC(rollData = null) {
     // No actor? No DC!
@@ -267,9 +268,9 @@ export class ItemPF extends Item {
   }
 
   /**
-   * @param {String} type - The item type (such as "attack" or "equipment")
-   * @param {Number} colorType - 0 for the primary color, 1 for the secondary color
-   * @returns {String} A color hex, in the format "#RRGGBB"
+   * @param {string} type - The item type (such as "attack" or "equipment")
+   * @param {number} colorType - 0 for the primary color, 1 for the secondary color
+   * @returns {string} A color hex, in the format "#RRGGBB"
    */
   static getTypeColor(type, colorType) {
     switch (colorType) {
@@ -359,6 +360,7 @@ export class ItemPF extends Item {
   /**
    * Generic charge addition (or subtraction) function that either adds charges
    * or quantity, based on item data.
+   *
    * @param {number} value       - The amount of charges to add.
    * @returns {Promise}
    */
@@ -384,6 +386,7 @@ export class ItemPF extends Item {
 
   /**
    * Does the Item implement a damage roll as part of its usage
+   *
    * @type {boolean}
    */
   get hasDamage() {
@@ -392,6 +395,7 @@ export class ItemPF extends Item {
 
   /**
    * Does the item have range defined.
+   *
    * @type {boolean}
    */
   get hasRange() {
@@ -402,7 +406,8 @@ export class ItemPF extends Item {
 
   /**
    * Does the item provide an amount of healing instead of conventional damage?
-   * @return {boolean}
+   *
+   * @returns {boolean}
    */
   get isHealing() {
     return this.data.data.actionType === "heal" && this.data.data.damage.parts.length;
@@ -416,6 +421,7 @@ export class ItemPF extends Item {
 
   /**
    * Does the Item implement a saving throw as part of its usage
+   *
    * @type {boolean}
    */
   get hasSave() {
@@ -424,6 +430,7 @@ export class ItemPF extends Item {
 
   /**
    * Should the item show unidentified data
+   *
    * @type {boolean}
    */
   get showUnidentifiedData() {
@@ -966,8 +973,15 @@ export class ItemPF extends Item {
       let flags = data["data.flags.dictionary"];
 
       for (let f of flags) {
-        let v = parseFloat(f[1]);
-        if (!Number.isNaN(v)) f[1] = v;
+        let value = f[1];
+        // Try to convert value to a number
+        if (typeof value === "string" && value.match(/^[0-9]+(?:\.[0-9]+)?$/)) {
+          const newValue = parseFloat(value);
+          if (!Number.isNaN(newValue)) {
+            value = newValue;
+          }
+          f[1] = value;
+        }
       }
     }
 
@@ -1161,7 +1175,11 @@ export class ItemPF extends Item {
 
   /**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @return {Promise}
+   *
+   * @param altChatData
+   * @param root0
+   * @param root0.addDC
+   * @returns {Promise}
    */
   async roll(altChatData = {}, { addDC = true } = {}) {
     const actor = this.parentActor;
@@ -1382,6 +1400,10 @@ export class ItemPF extends Item {
 
   /**
    * Prepare chat card data for equipment type items
+   *
+   * @param data
+   * @param labels
+   * @param props
    * @private
    */
   _equipmentChatData(data, labels, props) {
@@ -1392,6 +1414,10 @@ export class ItemPF extends Item {
 
   /**
    * Prepare chat card data for weapon type items
+   *
+   * @param data
+   * @param labels
+   * @param props
    * @private
    */
   _weaponChatData(data, labels, props) {
@@ -1405,6 +1431,10 @@ export class ItemPF extends Item {
 
   /**
    * Prepare chat card data for consumable type items
+   *
+   * @param data
+   * @param labels
+   * @param props
    * @private
    */
   _consumableChatData(data, labels, props) {
@@ -1420,7 +1450,11 @@ export class ItemPF extends Item {
 
   /**
    * Render a chat card for Spell type data
-   * @return {Object}
+   *
+   * @param data
+   * @param labels
+   * @param props
+   * @returns {object}
    * @private
    */
   _spellChatData(data, labels, props) {
@@ -1439,6 +1473,10 @@ export class ItemPF extends Item {
 
   /**
    * Prepare chat card data for items of the "Feat" type
+   *
+   * @param data
+   * @param labels
+   * @param props
    */
   _featChatData(data, labels, props) {
     const ad = this.parentActor.data.data;
@@ -1521,7 +1559,10 @@ export class ItemPF extends Item {
 
   /**
    * Cast a Spell, consuming a spell slot of a certain level
+   *
    * @param {MouseEvent} ev The click event
+   * @param root0
+   * @param root0.skipDialog
    */
   async useSpell(ev, { skipDialog = false } = {}) {
     if (!this.hasPerm(game.user, "OWNER")) {
@@ -2508,6 +2549,7 @@ export class ItemPF extends Item {
 
   /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
+   *
    * @param {string} [context="mattack"] - The given context. Either "mattack", "rattack", "wdamage", "sdamage".
    * @returns {ItemChange[]} The resulting changes.
    */
@@ -2582,6 +2624,12 @@ export class ItemPF extends Item {
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
+   *
+   * @param root0
+   * @param root0.data
+   * @param root0.extraParts
+   * @param root0.bonus
+   * @param root0.primaryAttack
    */
   rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
     const rollData = duplicate(data ?? this.getRollData());
@@ -2684,6 +2732,10 @@ export class ItemPF extends Item {
 
   /**
    * Only roll the item's effect.
+   *
+   * @param root0
+   * @param root0.critical
+   * @param root0.primaryAttack
    */
   rollEffect({ critical = false, primaryAttack = true } = {}) {
     const rollData = this.getRollData();
@@ -2730,6 +2782,8 @@ export class ItemPF extends Item {
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.d20Roll logic for the core implementation
+   *
+   * @param options
    */
   async rollFormula(options = {}) {
     const itemData = this.data.data;
@@ -2753,6 +2807,13 @@ export class ItemPF extends Item {
   /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
+   *
+   * @param root0
+   * @param root0.data
+   * @param root0.critical
+   * @param root0.extraParts
+   * @param root0.conditionalParts
+   * @param root0.primaryAttack
    */
   rollDamage({ data = null, critical = false, extraParts = [], conditionalParts = {}, primaryAttack = true } = {}) {
     const rollData = duplicate(data ?? this.getRollData());
@@ -2863,6 +2924,8 @@ export class ItemPF extends Item {
 
   /**
    * Use a consumable item
+   *
+   * @param options
    */
   async useConsumable(options = {}) {
     let itemData = this.data.data;
@@ -2939,7 +3002,7 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   /**
-   * @returns {Object} An object with data to be used in rolls in relation to this item.
+   * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
     const result = this.parentActor != null ? this.parentActor.getRollData() : {};
@@ -2967,6 +3030,9 @@ export class ItemPF extends Item {
     setProperty(result, "item.auraStrength", this.auraStrength);
 
     this._rollData = result.item;
+
+    Hooks.callAll("pf1.getRollData", this, result, true);
+
     return result;
   }
 
@@ -3076,6 +3142,7 @@ export class ItemPF extends Item {
 
   /**
    * Handle toggling the visibility of chat card content when the name is clicked
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -3095,8 +3162,9 @@ export class ItemPF extends Item {
 
   /**
    * Get the Actor which is the author of a chat card
+   *
    * @param {HTMLElement} card    The chat card being used
-   * @return {Actor|null}         The Actor entity or null
+   * @returns {Actor|null}         The Actor entity or null
    * @private
    */
   static _getChatCardActor(card) {
@@ -3309,8 +3377,9 @@ export class ItemPF extends Item {
 
   /**
    * Get the Actor which is the author of a chat card
+   *
    * @param {HTMLElement} card    The chat card being used
-   * @return {Array.<Actor>}      The Actor entity or null
+   * @returns {Array.<Actor>}      The Actor entity or null
    * @private
    */
   static _getChatCardTargets(card) {
@@ -3627,7 +3696,7 @@ export class ItemPF extends Item {
   /**
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {Object} targetItem - The target item to link to.
+   * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
    * @returns {boolean} Whether a link to the item is possible here.
    */
@@ -3673,7 +3742,7 @@ export class ItemPF extends Item {
   /**
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {Object} targetItem - The target item to link to.
+   * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
    * @returns {Array} An array to insert into this item's link data.
    */
@@ -3699,14 +3768,15 @@ export class ItemPF extends Item {
 
   /**
    * Creates a link to another item.
+   *
    * @param {string} linkType - The type of link.
    * e.g. "children", "charges", "classAssociations" or "ammunition".
    * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {Object} targetItem - The target item to link to.
+   * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
    * e.g. "world.NExqvEMCMbDuDxv5" (world item), "pf1.feats.NExqvEMCMbDuDxv5" (compendium item) or
    * "NExqvEMCMbDuDxv5" (item on same actor)
-   * @returns {Boolean} Whether a link was created.
+   * @returns {boolean} Whether a link was created.
    */
   async createItemLink(linkType, dataType, targetItem, itemLink) {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
@@ -3773,7 +3843,8 @@ export class ItemPF extends Item {
 
   /**
    * Removes all link references to an item.
-   * @param {String} id - The id of the item to remove links to.
+   *
+   * @param {string} id - The id of the item to remove links to.
    */
   async removeItemLink(id) {
     const updateData = {};
@@ -3852,8 +3923,9 @@ export class ItemPF extends Item {
 
   /**
    * Generates lists of change subtargets this item can have.
+   *
    * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
-   * @returns {Object.<string, string>} A list of changes
+   * @returns {object.<string, string>} A list of changes
    */
   getChangeSubTargets(target) {
     let result = {};
@@ -3889,8 +3961,9 @@ export class ItemPF extends Item {
 
   /**
    * Generates a list of targets this modifier can have.
+   *
    * @param {ItemPF} item - The item for which the modifier is to be created.
-   * @returns {Object.<string, string>} A list of targets
+   * @returns {object.<string, string>} A list of targets
    */
   getConditionalTargets() {
     let result = {};
@@ -3907,8 +3980,9 @@ export class ItemPF extends Item {
 
   /**
    * Generates lists of conditional subtargets this attack can have.
+   *
    * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
-   * @returns {Object.<string, string>} A list of conditionals
+   * @returns {object.<string, string>} A list of conditionals
    */
   getConditionalSubTargets(target) {
     let result = {};
@@ -3988,8 +4062,9 @@ export class ItemPF extends Item {
 
   /**
    * Generates lists of context note subtargets this item can have.
+   *
    * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
-   * @returns {Object.<string, string>} A list of changes
+   * @returns {object.<string, string>} A list of changes
    */
   getContextNoteSubTargets(target) {
     let result = {};
@@ -4206,6 +4281,7 @@ export class ItemPF extends Item {
 
   /**
    * Converts currencies of the given category to the given currency type
+   *
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
   convertCurrency(type = "pp") {
@@ -4252,6 +4328,7 @@ export class ItemPF extends Item {
 
   /**
    * Sets a boolean flag on this item.
+   *
    * @param {string} flagName - The name/key of the flag to set.
    * @returns {Promise<boolean>} Whether something was changed.
    */
@@ -4268,6 +4345,7 @@ export class ItemPF extends Item {
 
   /**
    * Removes a boolean flag from this item.
+   *
    * @param {string} flagName - The name/key of the flag to remove.
    * @returns {Promise<boolean>} Whether something was changed.
    */
@@ -4295,6 +4373,7 @@ export class ItemPF extends Item {
 
   /**
    * Sets a dictionary flag value on this item.
+   *
    * @param {string} flagName - The name/key of the flag to set.
    * @param {number|string} value - The flag's new value.
    * @returns {Promise<boolean>} Whether something was changed.
@@ -4328,11 +4407,12 @@ export class ItemPF extends Item {
 
   /**
    * Removes a dictionary flag from this item.
+   *
    * @param {string} flagName - The name/key of the flag to remove.
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName) {
-    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || {});
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
 
     let doUpdate = false;
     for (let a = 0; a < flags.length; a++) {
@@ -4357,14 +4437,11 @@ export class ItemPF extends Item {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+    const flags = getProperty(this.data, "data.flags.dictionary") || [];
 
-    for (let f of flags) {
-      if (f[0] === flagName) {
-        return f[1];
-      }
-    }
-
-    return undefined;
+    const flag = flags.find((f) => {
+      return f[0] === flagName;
+    });
+    return flag ? flag[1] : undefined;
   }
 }

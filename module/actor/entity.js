@@ -335,9 +335,9 @@ export class ActorPF extends Actor {
       this.updateItemResources(item);
     });
 
-    Hooks.callAll("pf1.prepareBaseActorData", this);
     super.prepareBaseData();
     this._resetInherentTotals();
+    Hooks.callAll("pf1.prepareBaseActorData", this);
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
@@ -595,8 +595,8 @@ export class ActorPF extends Actor {
    * Augment the basic actor data with additional dynamic data.
    */
   prepareDerivedData() {
-    Hooks.callAll("pf1.prepareDerivedActorData", this);
     super.prepareDerivedData();
+    Hooks.callAll("pf1.prepareDerivedActorData", this);
 
     const actorData = this.data;
     const data = actorData.data;
@@ -3296,7 +3296,11 @@ export class ActorPF extends Actor {
     }
 
     // Return cached data, if applicable
-    if (skipRefresh) return result;
+    if (skipRefresh) {
+      Hooks.callAll("pf1.getRollData", this, result, false);
+
+      return result;
+    }
 
     /* ----------------------------- */
     /* Set the following data on a refresh
@@ -3308,6 +3312,7 @@ export class ActorPF extends Actor {
     }
 
     // Set class data
+    const baseSavingThrows = {};
     result.classes = {};
     this.data.items
       .filter((obj) => {
@@ -3351,8 +3356,17 @@ export class ActorPF extends Actor {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
+
+          // Set base saving throws
+          baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
+          baseSavingThrows[k] += result.classes[tag].savingThrows[k];
         }
       });
+
+    // Set base saving throws
+    for (let [k, v] of Object.entries(baseSavingThrows)) {
+      setProperty(result, `attributes.savingThrows.${k}.base`, v);
+    }
 
     // Add more info for formulas
     if (this.data.items) {
@@ -3449,6 +3463,10 @@ export class ActorPF extends Actor {
     }
 
     this._rollData = result;
+
+    // Call hook
+    Hooks.callAll("pf1.getRollData", this, result, true);
+
     return result;
   }
 

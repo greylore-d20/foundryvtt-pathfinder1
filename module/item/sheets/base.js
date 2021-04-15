@@ -7,6 +7,7 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
+ *
  * @type {ItemSheet}
  */
 export class ItemSheetPF extends ItemSheet {
@@ -17,6 +18,7 @@ export class ItemSheetPF extends ItemSheet {
 
     /**
      * Track the set of item filters which are applied
+     *
      * @type {Set}
      */
     this._filters = {};
@@ -30,7 +32,7 @@ export class ItemSheetPF extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       width: 580,
       classes: ["pf1", "sheet", "item"],
-      scrollY: [".tab.details", ".buff-flags"],
+      scrollY: [".tab.details", ".buff-flags", '.tab[data-tab="changes"]'],
     });
   }
 
@@ -38,7 +40,8 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Return a dynamic reference to the HTML template path used to render this Item Sheet
-   * @return {string}
+   *
+   * @returns {string}
    */
   get template() {
     const path = "systems/pf1/templates/items/";
@@ -457,7 +460,9 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Get the text item type which is shown in the top-right corner of the sheet
-   * @return {string}
+   *
+   * @param item
+   * @returns {string}
    * @private
    */
   _getItemType(item) {
@@ -469,7 +474,9 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet
-   * @return {string}
+   *
+   * @param item
+   * @returns {string}
    * @private
    */
   _getItemStatus(item) {
@@ -496,7 +503,9 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Get the Array of item properties which are used in the small sidebar of the description tab
-   * @return {Array}
+   *
+   * @param item
+   * @returns {Array}
    * @private
    */
   _getItemProperties(item) {
@@ -553,6 +562,9 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Extend the parent class _updateObject method to ensure that damage ends up in an Array
+   *
+   * @param event
+   * @param formData
    * @private
    */
   async _updateObject(event, formData) {
@@ -652,6 +664,8 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Activate listeners for interactive item sheet events
+   *
+   * @param html
    */
   activateListeners(html) {
     super.activateListeners(html);
@@ -880,6 +894,7 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Handle spawning the ActorTraitSelector application which allows a checkbox of multiple trait options
+   *
    * @param {Event} event   The click event which originated the selection
    * @private
    */
@@ -898,9 +913,9 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {Object} itemData - The (new) item's data.
+   * @param {object} itemData - The (new) item's data.
    * @param {string} itemLink - The link identifier for the item.
-   * @param {Object} [data] - The raw data from a drop event.
+   * @param {object} [data] - The raw data from a drop event.
    * @returns {boolean} Whether a link to the item is possible here.
    */
   canCreateLink(linkType, dataType, itemData, itemLink, data = null) {
@@ -925,9 +940,9 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {Object} itemData - The (new) item's data.
+   * @param {object} itemData - The (new) item's data.
    * @param {string} itemLink - The link identifier for the item.
-   * @param {Object} [data] - The raw data from a drop event.
+   * @param {object} [data] - The raw data from a drop event.
    * @returns {Array} An array to insert into this item's link data.
    */
   generateInitialLinkData(linkType, dataType, itemData, itemLink, data = null) {
@@ -952,8 +967,9 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Add or remove a damage part from the damage formula
+   *
    * @param {Event} event     The original click event
-   * @return {Promise}
+   * @returns {Promise}
    * @private
    */
   async _onDamageControl(event) {
@@ -1147,6 +1163,8 @@ export class ItemSheetPF extends ItemSheet {
 
   /**
    * Makes a readonly text input editable, and focus it.
+   *
+   * @param event
    * @private
    */
   _onInputText(event) {

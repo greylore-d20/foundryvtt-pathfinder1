@@ -13,6 +13,10 @@
 - Term specific flavor text can be included in formulas without causing errors in preparation for functionality to be added in 0.8.X
 - Added `@attributes.savingThrows.X.base` to actor roll data (#760)
 
+### Compendium
+
+- The Create Loot Sheet macro was borked
+
 ### API
 
 - The `actorRest` hook has been reworked slightly. It adds 2 new parameters: `updateData` and `itemUpdateData`. See the system's GitLab wiki for more information.

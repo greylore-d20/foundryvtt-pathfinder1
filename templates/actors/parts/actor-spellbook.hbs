@@ -323,12 +323,12 @@
         {{#unless ../spellbook.orig.spellPoints.useSystem}}
         <div class="item-detail spell-uses">
           {{#if section.usesSlots}}
-          <div class="tooltip spell-slots{{#if (or section.spontaneous ../spellbook.orig.spontaneous)}} spontaneous{{/if}}">
-            <span class="text-box" data-dtype="Number" {{#if (or section.spontaneous ../spellbook.orig.spontaneous)}}name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value"{{/if}}>
+          <div class="tooltip spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}">
+            <span class="{{#unless ../spellbook.orig.spontaneous}}spell-input-readonly{{else}}text-box{{/unless}}" data-dtype="Number" {{#if ../spellbook.orig.spontaneous}}name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value"{{/if}}>
               {{section.uses}}
             </span>
             <span class="tooltipcontent">
-              {{#unless (or section.spontaneous ../spellbook.orig.spontaneous)}}
+              {{#unless ../spellbook.orig.spontaneous}}
               {{localize "PF1.LeftToPrepare"}}
               {{else}}
               {{localize "PF1.CastsLeft"}}
@@ -337,7 +337,7 @@
           </div>
           <span class="sep"> / </span>
           <div class="tooltip spell-max">
-            <span class="{{#if ../spellbook.orig.autoSpellLevels}}spell-max-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+            <span class="{{#if ../spellbook.orig.autoSpellLevels}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
             <span class="tooltipcontent">
               {{localize "PF1.SpellsTotalEachDay"}}
             </span>

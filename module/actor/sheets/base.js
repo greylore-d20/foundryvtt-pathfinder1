@@ -32,6 +32,7 @@ export class ActorSheetPF extends ActorSheet {
 
     /**
      * The scroll position on the active tab
+     *
      * @type {number}
      */
     this._scrollTab = {};
@@ -39,6 +40,7 @@ export class ActorSheetPF extends ActorSheet {
 
     /**
      * Track the set of item filters which are applied
+     *
      * @type {Set}
      */
     this._filters = {
@@ -54,32 +56,37 @@ export class ActorSheetPF extends ActorSheet {
 
     /**
      * Track item updates from the actor sheet.
+     *
      * @property
      * @private
-     * @type {Object[]}
+     * @type {object[]}
      */
     this._itemUpdates = [];
 
     /**
      * Track hidden elements of the sheet.
+     *
      * @property
      */
     this._hiddenElems = {};
 
     /**
      * Whether a submit has been queued in any way.
+     *
      * @property
      */
     this._submitQueued = false;
 
     /**
      * Whether inner part of this sheet has been rendered already.
+     *
      * @property
      */
     this._renderedInner = false;
 
     /**
      * A dictionary of additional queued updates, to be added on top of the form's data (and cleared afterwards).
+     *
      * @property
      * @private
      */
@@ -614,9 +621,10 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Insert a spell into the spellbook object when rendering the character sheet
-   * @param {Object} data     The Actor data being prepared
+   *
+   * @param {object} data     The Actor data being prepared
    * @param {Array} spells    The spell data being prepared
-   * @param {String} bookKey  The key of the spellbook being prepared
+   * @param {string} bookKey  The key of the spellbook being prepared
    * @private
    */
   _prepareSpellbook(data, spells, bookKey) {
@@ -678,7 +686,9 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Returns the amount of type filters currently active.
-   * @return {Number}
+   *
+   * @param filters
+   * @returns {number}
    * @private
    */
   _typeFilterCount(filters) {
@@ -689,7 +699,10 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Determine whether an Owned Item will be shown based on the current set of filters
-   * @return {boolean}
+   *
+   * @param items
+   * @param filters
+   * @returns {boolean}
    * @private
    */
   _filterItems(items, filters) {
@@ -750,6 +763,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Get the font-awesome icon used to display a certain level of skill proficiency
+   *
+   * @param level
    * @private
    */
   _getProficiencyIcon(level) {
@@ -767,8 +782,8 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Compute the level and percentage of encumbrance for an Actor.
    *
-   * @param {Object} actorData      The data object for the Actor being rendered
-   * @return {Object}               An object describing the character's encumbrance level
+   * @param {object} actorData      The data object for the Actor being rendered
+   * @returns {object}               An object describing the character's encumbrance level
    * @private
    */
   _computeEncumbrance(actorData) {
@@ -818,6 +833,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Activate event listeners using the prepared sheet HTML
+   *
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
@@ -1300,6 +1316,9 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Initialize Item list filters by activating the set of filters which are currently applied
+   *
+   * @param i
+   * @param ul
    * @private
    */
   _initializeFilterItemList(i, ul) {
@@ -1327,6 +1346,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemRoll(event) {
@@ -1542,6 +1563,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemSummary(event) {
@@ -1567,6 +1590,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Makes a readonly text input editable, and focus it.
+   *
+   * @param event
    * @private
    */
   _onInputText(event) {
@@ -1868,6 +1893,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+   *
+   * @param event
    * @private
    */
   _onItemCreate(event) {
@@ -1888,6 +1915,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle editing an existing Owned Item for the Actor
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -1905,6 +1933,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle deleting an existing Owned Item for the Actor
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -1983,6 +2012,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle rolling an Ability check, either a test or a saving throw
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -2027,6 +2057,8 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Organize and classify Owned Items
+   *
+   * @param data
    * @private
    */
   _prepareItems(data) {
@@ -2365,6 +2397,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle rolling a Skill check
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -2383,6 +2416,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle opening a skill's compendium entry
+   *
    * @param {Event} event   The originating click event
    * @private
    */
@@ -2400,6 +2434,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle toggling of filters to display a different set of owned items
+   *
    * @param {Event} event     The click event which triggered the toggle
    * @private
    */
@@ -2431,6 +2466,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /**
    * Handle spawning the ActorTraitSelector application which allows a checkbox of multiple trait options
+   *
    * @param {Event} event   The click event which originated the selection
    * @private
    */
@@ -2587,8 +2623,13 @@ export class ActorSheetPF extends ActorSheet {
     let result = {};
 
     // Set spellbook for spell
-    if (getProperty(origData, "type") === "spell") setProperty(result, "data.spellbook", this.currentSpellbookKey);
-
+    if (getProperty(origData, "type") === "spell") {
+      setProperty(result, "data.spellbook", this.currentSpellbookKey);
+      let matchedClass = origData.data.learnedAt.class.find((c) => {
+        return c[0].toLowerCase().indexOf(this.actor.data.data.spells["primary"].class.toLowerCase()) > -1;
+      });
+      if (matchedClass) setProperty(result, "data.level", matchedClass[1]);
+    }
     return result;
   }
 

@@ -7,6 +7,7 @@
 - ACP from equipment and encumbrance incorrectly stacked
 - Shorthand deferred Damage/ Heal rolls (/d, /h) would prevent chatcard rendering
 - Scroll position incorrectly reset between changes to an item sheet while on the changes tab (#764)
+- "Learned At" property of spells was not respected when adding to sheet (#299)
 
 ### Changelog
 

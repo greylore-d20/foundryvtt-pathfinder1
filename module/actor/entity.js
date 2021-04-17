@@ -711,21 +711,21 @@ export class ActorPF extends Actor {
         const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevels`);
 
         if (useAuto && rollData.classes[spellbook.class]) {
-          const classLevel = rollData.classes[spellbook.class].level;
-          let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
           const spellPrepMode =
             spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
               ? spellbook.spellPreparationMode
               : "prepared";
 
+          // set base "spontaneous" based on spell prep mode
           if (spellPrepMode === "hybrid" || spellPrepMode === "spontaneous") {
-            // if use auto progression, set base "spontaneous" based on spell prep mode
             spellbook.spontaneous = true;
             setProperty(this.data, `${bookPath}.spontaneous`, true);
           } else {
             spellbook.spontaneous = false;
             setProperty(this.data, `${bookPath}.spontaneous`, false);
           }
+
+          let casterType = getProperty(this.data, `${bookPath}.casterType`);
           if (casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
             // todo find out if "null" check is actually necessary when going from good data
             casterType = "high";
@@ -736,6 +736,7 @@ export class ActorPF extends Actor {
           rollData.cl = getProperty(this.data, `${bookPath}.cl.total`);
           rollData.ablMod = spellbookAbilityMod;
 
+          const classLevel = rollData.classes[spellbook.class].level;
           rollData.classLevel = classLevel;
 
           const allLevelModFormula = getProperty(this.data, `${bookPath}.castPerDayAllOffsetFormula`) || "0";

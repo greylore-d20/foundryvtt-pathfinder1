@@ -2643,8 +2643,13 @@ export class ActorSheetPF extends ActorSheet {
     let result = {};
 
     // Set spellbook for spell
-    if (getProperty(origData, "type") === "spell") setProperty(result, "data.spellbook", this.currentSpellbookKey);
-
+    if (getProperty(origData, "type") === "spell") {
+      setProperty(result, "data.spellbook", this.currentSpellbookKey);
+      let matchedClass = origData.data.learnedAt.class.find((c) => {
+        return c[0].toLowerCase().indexOf(this.actor.data.data.spells["primary"].class.toLowerCase()) > -1;
+      });
+      if (matchedClass) setProperty(result, "data.level", matchedClass[1]);
+    }
     return result;
   }
 

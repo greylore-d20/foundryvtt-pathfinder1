@@ -3,13 +3,15 @@ import { ActorSheetPFNPC } from "./npc.js";
 export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
   /**
    * Define default rendering options for the NPC sheet
-   * @return {Object}
+   *
+   * @returns {object}
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc", "lite"],
       width: 440,
-      height: "auto",
+      height: 640,
+      tabs: [{ navSelector: ".tabs", contentSelector: "primary", initial: "summary" }],
     });
   }
 
@@ -17,10 +19,6 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
     if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
     return "systems/pf1/templates/actors/npc-sheet-lite.hbs";
   }
-
-  // static get name() {
-  //   return game.i18n.localize("PF1.ActorSheetPFNPCLite");
-  // }
 
   _prepareItems(data) {
     const [attacks] = data.items.reduce(

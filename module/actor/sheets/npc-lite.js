@@ -37,7 +37,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
 
     const attackSections = {
       all: {
-        label: game.i18n.localize("PF1.Attacks"),
+        label: game.i18n.localize("PF1.ActionPlural"),
         items: [],
         canCreate: true,
         initial: true,

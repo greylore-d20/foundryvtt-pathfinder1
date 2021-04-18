@@ -737,11 +737,9 @@ export class ActorPF extends Actor {
           }
 
           const castsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
-          rollData.cl = getProperty(this.data, `${bookPath}.cl.total`);
+          const classLevel = Math.min(Math.max(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
+          rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
-
-          const classLevel = rollData.classes[spellbook.class].level;
-          rollData.classLevel = classLevel;
 
           const allLevelModFormula = getProperty(this.data, `${bookPath}.castPerDayAllOffsetFormula`) || "0";
           const allLevelMod = safeTotal(allLevelModFormula, rollData);
@@ -845,7 +843,7 @@ export class ActorPF extends Actor {
                 ? spellbook.spellPreparationMode
                 : "prepared";
             let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
-            const classLevel = rollData.classes[spellbook.class].level;
+            const classLevel = Math.min(Math.max(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
 
             let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
 

@@ -112,20 +112,24 @@
           {{checked spellbook.orig.arcaneSpellFailure}}/> {{localize "PF1.ArcaneSpellFailure"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.useSystem"
-          {{checked spellbook.orig.spellPoints.useSystem}}/> {{localize "PF1.UseSpellPoints"}}
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevelCalculation"
+          {{checked spellbook.orig.autoSpellLevelCalculation}}/> {{localize "Auto Calculate Spell Slots"}}
+        </label>
+        {{#unless spellbook.orig.autoSpellLevelCalculation}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"
+          {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
         </label>
         <label class="checkbox">
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevels"
           {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
         </label>
-        {{#unless spellbook.orig.autoSpellLevels}}
         <label class="checkbox">
-          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"
-          {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPoints.useSystem"
+          {{checked spellbook.orig.spellPoints.useSystem}}/> {{localize "PF1.UseSpellPoints"}}
         </label>
         {{/unless}}
-        {{#if spellbook.orig.autoSpellLevels}}
+        {{#if spellbook.orig.autoSpellLevelCalculation}}
           <div class="radios">
             <label class="checkbox">
               <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.orig.spellPreparationMode 'prepared')}} /> prepared
@@ -337,7 +341,7 @@
           </div>
           <span class="sep"> / </span>
           <div class="tooltip spell-max">
-            <span class="{{#if ../spellbook.orig.autoSpellLevels}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+            <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
             <span class="tooltipcontent">
               {{localize "PF1.SpellsTotalEachDay"}}
             </span>
@@ -390,7 +394,7 @@
               {{/if}}
             </div>
 
-            {{#unless (or section.spontaneous ../../spellbook.orig.spontaneous)}}
+            {{#unless section.spontaneous}}
             <div class="tooltip">
               <span class="tooltipcontent">
                 {{localize "PF1.Prepared"}}

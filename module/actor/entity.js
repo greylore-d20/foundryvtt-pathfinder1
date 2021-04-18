@@ -708,13 +708,18 @@ export class ActorPF extends Actor {
       // Spell slots
       {
         const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
-        const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevels`);
 
-        if (useAuto && rollData.classes[spellbook.class]) {
-          const spellPrepMode =
-            spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
-              ? spellbook.spellPreparationMode
-              : "prepared";
+        const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
+        if (useAuto) {
+          let spellPrepMode = spellbook.spellPreparationMode;
+          if (!spellPrepMode || spellPrepMode === "null" || spellPrepMode === "spontanous") {
+            // to do get rid of 'spontanous' check when not using broken test actors
+            spellPrepMode = "spontaneous";
+            setProperty(this.data, `${bookPath}.spellPreparationMode`, spellPrepMode);
+          }
+
+          // turn off spell points
+          setProperty(this.data, `${bookPath}.spellPoints.useSystem`, false);
 
           // set base "spontaneous" based on spell prep mode
           if (spellPrepMode === "hybrid" || spellPrepMode === "spontaneous") {
@@ -726,8 +731,7 @@ export class ActorPF extends Actor {
           }
 
           let casterType = getProperty(this.data, `${bookPath}.casterType`);
-          if (casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
-            // todo find out if "null" check is actually necessary when going from good data
+          if (!casterType || casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
             casterType = "high";
             setProperty(this.data, `${bookPath}.casterType`, casterType);
           }
@@ -765,7 +769,7 @@ export class ActorPF extends Actor {
             if (Number.isNaN(base)) {
               setProperty(this.data, `${bookPath}.spells.spell${a}.base`, null);
               setProperty(this.data, `${bookPath}.spells.spell${a}.max`, 0);
-            } else if (useAuto) {
+            } else if (getProperty(this.data, `${bookPath}.autoSpellLevels`)) {
               base += getAbilityBonus(a);
               setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
             } else {
@@ -834,7 +838,7 @@ export class ActorPF extends Actor {
         // Spells available hint text if auto spell levels is enabled
         {
           const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
-          const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevels`);
+          const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
           if (useAuto && rollData.classes[spellbook.class]) {
             const spellPrepMode =
               spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"

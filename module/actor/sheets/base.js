@@ -633,7 +633,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let min = 0;
     let max = 9;
-    if (book.autoSpellLevels) {
+    if (book.autoSpellLevelCalculation) {
       switch (book.casterType) {
         case "low":
           min = 1;

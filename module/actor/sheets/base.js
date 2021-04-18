@@ -1440,7 +1440,10 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event.originalEvent, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
+    this.setItemUpdate(item._id, "data.preparation.maxAmount", Math.max(0, value));
+    if (value < 0) {
+      el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
+    }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {

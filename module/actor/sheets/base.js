@@ -637,7 +637,7 @@ export class ActorSheetPF extends ActorSheet {
       min = book.hasCantrips ? 0 : 1;
 
       const castsPerDay =
-        CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][book.cl.total];
+        CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][book.cl.total - 1];
       max = castsPerDay.length - 1;
     }
 

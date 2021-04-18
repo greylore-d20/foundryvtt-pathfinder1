@@ -634,17 +634,15 @@ export class ActorSheetPF extends ActorSheet {
     let min = 0;
     let max = 9;
     if (book.autoSpellLevelCalculation) {
+      min = book.hasCantrips ? 0 : 1;
       switch (book.casterType) {
         case "low":
-          min = 1;
           max = 4;
           break;
         case "med":
-          min = 1;
           max = 6;
           break;
         default:
-          min = 0;
           max = 9;
           break;
       }

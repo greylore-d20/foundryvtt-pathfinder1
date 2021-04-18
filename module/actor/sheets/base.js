@@ -635,37 +635,32 @@ export class ActorSheetPF extends ActorSheet {
     let max = 9;
     if (book.autoSpellLevelCalculation) {
       min = book.hasCantrips ? 0 : 1;
-      switch (book.casterType) {
-        case "low":
-          max = 4;
-          break;
-        case "med":
-          max = 6;
-          break;
-        default:
-          max = 9;
-          break;
-      }
+
+      const castsPerDay =
+        CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][book.cl.total];
+      max = castsPerDay.length - 1;
     }
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
     for (let a = min; a <= max; a++) {
-      spellbook[a] = {
-        level: a,
-        usesSlots: true,
-        spontaneous: book.spontaneous,
-        canCreate: owner === true,
-        canPrepare: data.actor.type === "character",
-        label: CONFIG.PF1.spellLevels[a],
-        items: [],
-        uses: getProperty(book, `spells.spell${a}.value`) || 0,
-        baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
-        slots: getProperty(book, `spells.spell${a}.max`) || 0,
-        dataset: { type: "spell", level: a, spellbook: bookKey },
-        name: game.i18n.localize(`PF1.SpellLevel${a}`),
-        spellMessage: getProperty(book, `spells.spell${a}.spellMessage`),
-      };
+      if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
+        spellbook[a] = {
+          level: a,
+          usesSlots: true,
+          spontaneous: book.spontaneous,
+          canCreate: owner === true,
+          canPrepare: data.actor.type === "character",
+          label: CONFIG.PF1.spellLevels[a],
+          items: [],
+          uses: getProperty(book, `spells.spell${a}.value`) || 0,
+          baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
+          slots: getProperty(book, `spells.spell${a}.max`) || 0,
+          dataset: { type: "spell", level: a, spellbook: bookKey },
+          name: game.i18n.localize(`PF1.SpellLevel${a}`),
+          spellMessage: getProperty(book, `spells.spell${a}.spellMessage`),
+        };
+      }
     }
     spells.forEach((spell) => {
       const spellBookKey = getProperty(spell, "data.spellbook");

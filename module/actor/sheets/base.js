@@ -2626,7 +2626,9 @@ export class ActorSheetPF extends ActorSheet {
     if (getProperty(origData, "type") === "spell") {
       setProperty(result, "data.spellbook", this.currentSpellbookKey);
       let matchedClass = origData.data.learnedAt.class.find((c) => {
-        return c[0].toLowerCase().indexOf(this.actor.data.data.spells["primary"].class.toLowerCase()) > -1;
+        return (
+          c[0].toLowerCase().indexOf(this.actor.data.data.spells[this.currentSpellbookKey]?.class.toLowerCase()) > -1
+        );
       });
       if (matchedClass) setProperty(result, "data.level", matchedClass[1]);
     }

@@ -1352,6 +1352,7 @@ export const PF1 = {
       ranged: "PF1.Ranged",
       rangedWeapon: "PF1.RangedWeapon",
       rangedSpell: "PF1.RangedSpell",
+      cmb: "PF1.CMBAbbr",
     },
     savingThrows: {
       _label: "PF1.SavingThrowPlural",
@@ -1392,7 +1393,6 @@ export const PF1 = {
     misc: {
       _label: "PF1.MiscShort",
       ac: "PF1.ACNormal",
-      cmb: "PF1.CMBAbbr",
       cmd: "PF1.CMDAbbr",
       sr: "PF1.SpellResistance",
       init: "PF1.Initiative",

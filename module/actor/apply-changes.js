@@ -1,5 +1,8 @@
 import { ItemChange } from "../item/components/change.js";
 
+/**
+ *
+ */
 export function applyChanges() {
   this.changeOverrides = {};
   const c = Array.from(this.changes);
@@ -103,7 +106,10 @@ const getSortChangePriority = function () {
       "aac",
       "sac",
       "nac",
+      "tac",
+      "ffac",
       "attack",
+      "bab",
       "~attackCore",
       "mattack",
       "rattack",
@@ -116,6 +122,7 @@ const getSortChangePriority = function () {
       "will",
       "cmb",
       "cmd",
+      "ffcmd",
       "init",
       "mhp",
       "wounds",
@@ -221,6 +228,14 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
+    case "tac":
+      return "data.attributes.ac.touch.total";
+    case "ffac":
+      return "data.attributes.ac.flatFooted.total";
+    case "ffcmd":
+      return "data.attributes.cmd.flatFootedTotal";
+    case "bab":
+      return "data.attributes.bab.total";
     case "~attackCore":
       return "data.attributes.attack.shared";
     case "allSavingThrows":
@@ -1600,6 +1615,7 @@ export const getSourceInfo = function (obj, key) {
 
 /**
  * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @param options
  * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
  */
 export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {

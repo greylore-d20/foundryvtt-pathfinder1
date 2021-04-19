@@ -1258,12 +1258,15 @@ export const PF1 = {
       aac: "PF1.BuffTarACArmor",
       sac: "PF1.BuffTarACShield",
       nac: "PF1.BuffTarACNatural",
+      tac: "PF1.ACTouch",
+      ffac: "PF1.ACFlatFooted",
     },
     attack: {
       _label: "PF1.AttackRollPlural",
       attack: "PF1.All",
       mattack: "PF1.Melee",
       rattack: "PF1.Ranged",
+      bab: "PF1.BABAbbr",
       "~attackCore": "", // hidden
     },
     damage: {
@@ -1325,6 +1328,7 @@ export const PF1 = {
       _label: "PF1.MiscShort",
       cmb: "PF1.CMBAbbr",
       cmd: "PF1.CMDAbbr",
+      ffcmd: "PF1.CMDFlatFooted",
       init: "PF1.Initiative",
       mhp: "PF1.HitPoints",
       wounds: "PF1.Wounds",

@@ -1259,11 +1259,17 @@ export const PF1 = {
       sac: "PF1.BuffTarACShield",
       nac: "PF1.BuffTarACNatural",
     },
+    defense: {
+      _label: "PF1.Defense",
+      cmd: "PF1.CMDAbbr",
+      spellResist: "PF1.SpellResistance",
+    },
     attack: {
       _label: "PF1.AttackRollPlural",
       attack: "PF1.All",
       mattack: "PF1.Melee",
       rattack: "PF1.Ranged",
+      cmb: "PF1.CMBAbbr",
       "~attackCore": "", // hidden
     },
     damage: {
@@ -1323,7 +1329,6 @@ export const PF1 = {
     },
     misc: {
       _label: "PF1.MiscShort",
-      cmb: "PF1.CMBAbbr",
       cmd: "PF1.CMDAbbr",
       init: "PF1.Initiative",
       mhp: "PF1.HitPoints",
@@ -1333,7 +1338,6 @@ export const PF1 = {
       acpS: "PF1.ACPShield",
       mDexA: "PF1.MaxDexArmor",
       mDexS: "PF1.MaxDexShield",
-      spellResist: "PF1.SpellResistance",
       bonusFeats: "PF1.BuffTarBonusFeats",
     },
   },

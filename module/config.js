@@ -1263,6 +1263,10 @@ export const PF1 = {
       _label: "PF1.Defense",
       cmd: "PF1.CMDAbbr",
       spellResist: "PF1.SpellResistance",
+      acpA: "PF1.ACPArmor",
+      acpS: "PF1.ACPShield",
+      mDexA: "PF1.MaxDexArmor",
+      mDexS: "PF1.MaxDexShield",
     },
     attack: {
       _label: "PF1.AttackRollPlural",
@@ -1332,13 +1336,6 @@ export const PF1 = {
       mhp: "PF1.HitPoints",
       wounds: "PF1.Wounds",
       vigor: "PF1.Vigor",
-    },
-    acpMdex: {
-      _label: "PF1.ACPAndMDex",
-      acpA: "PF1.ACPArmor",
-      acpS: "PF1.ACPShield",
-      mDexA: "PF1.MaxDexArmor",
-      mDexS: "PF1.MaxDexShield",
     },
     misc: {
       _label: "PF1.MiscShort",

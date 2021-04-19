@@ -1327,18 +1327,23 @@ export const PF1 = {
       burrowSpeed: "PF1.SpeedBurrow",
       flySpeed: "PF1.SpeedFly",
     },
-    misc: {
-      _label: "PF1.MiscShort",
-      cmd: "PF1.CMDAbbr",
-      init: "PF1.Initiative",
+    health: {
+      _label: "PF1.Health",
       mhp: "PF1.HitPoints",
       wounds: "PF1.Wounds",
       vigor: "PF1.Vigor",
+    },
+    acpMdex: {
+      _label: "PF1.ACPAndMDex",
       acpA: "PF1.ACPArmor",
       acpS: "PF1.ACPShield",
       mDexA: "PF1.MaxDexArmor",
       mDexS: "PF1.MaxDexShield",
+    },
+    misc: {
+      _label: "PF1.MiscShort",
       bonusFeats: "PF1.BuffTarBonusFeats",
+      init: "PF1.Initiative",
     },
   },
 

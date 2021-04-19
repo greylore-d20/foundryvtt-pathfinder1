@@ -736,23 +736,36 @@ export class ActorPF extends Actor {
             setProperty(this.data, `${bookPath}.casterType`, casterType);
           }
 
-          const castsForLevels = CONFIG.PF1.casterProgression.castsPerDay[spellPrepMode][casterType];
+          const castsForLevels =
+            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
+              casterType
+            ];
           const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
           rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
 
-          const allLevelModFormula = getProperty(this.data, `${bookPath}.castPerDayAllOffsetFormula`) || "0";
+          const allLevelModFormula =
+            getProperty(
+              this.data,
+              `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
+            ) || "0";
           const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
             // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
             const spellsForLevel =
-              a === 0
+              a === 0 && spellbook.spontaneous
                 ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
                 : castsForLevels[classLevel - 1][a];
             setProperty(this.data, `${bookPath}.spells.spell${a}.base`, spellsForLevel);
 
-            const offsetFormula = getProperty(this.data, `${bookPath}.spells.spell${a}.castPerDayOffsetFormula`) || "0";
+            const offsetFormula =
+              getProperty(
+                this.data,
+                `${bookPath}.spells.spell${a}.${[
+                  spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula",
+                ]}`
+              ) || "0";
 
             let max =
               typeof spellsForLevel === "number"
@@ -838,16 +851,17 @@ export class ActorPF extends Actor {
           const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
           const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
           if (useAuto && rollData.classes[spellbook.class]) {
-            const spellPrepMode =
-              spellbook.spellPreparationMode && spellbook.spellPreparationMode !== "null"
-                ? spellbook.spellPreparationMode
-                : "prepared";
+            const spellPrepMode = spellbook.spellPreparationMode;
             let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
             const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
 
             let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
 
-            const allLevelModFormula = getProperty(this.data, `${bookPath}.preparedAllOffsetFormula`) || "0";
+            const allLevelModFormula =
+              getProperty(
+                this.data,
+                `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
+              ) || "0";
             const allLevelMod = safeTotal(allLevelModFormula, rollData);
 
             for (let a = 0; a < 10; a++) {
@@ -879,13 +893,10 @@ export class ActorPF extends Actor {
               } else {
                 // if not prepared then base off of casts per day
                 available =
-                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][
-                    casterType === "null" ? "high" : casterType
-                  ]?.[classLevel - 1][a];
+                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
                 available += allLevelMod;
 
                 const formula = getProperty(this.data, `${bookPath}.spells.spell${a}.preparedOffsetFormula`) || "0";
-
                 available += safeTotal(formula, rollData);
               }
 

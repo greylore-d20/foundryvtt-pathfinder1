@@ -1,5 +1,8 @@
 import { ItemChange } from "../item/components/change.js";
 
+/**
+ *
+ */
 export function applyChanges() {
   this.changeOverrides = {};
   const c = Array.from(this.changes);
@@ -425,7 +428,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: value.toString(),
-        target: "misc",
+        target: "health",
         subTarget: "mhp",
         modifier: "untypedPerm",
         source: source.name,
@@ -434,7 +437,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: value.toString(),
-        target: "misc",
+        target: "health",
         subTarget: "vigor",
         modifier: "untypedPerm",
         source: source.name,
@@ -567,7 +570,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`,
-        target: "misc",
+        target: "health",
         subTarget: "mhp",
         modifier: "base",
       })
@@ -581,7 +584,7 @@ export const addDefaultChanges = function (changes) {
       changes.push(
         ItemChange.create({
           formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
-          target: "misc",
+          target: "health",
           subTarget: "wounds",
           modifier: "base",
         })
@@ -664,7 +667,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "@attributes.bab.total",
-        target: "misc",
+        target: "attack",
         subTarget: "cmb",
         modifier: "untypedPerm",
       })
@@ -680,7 +683,7 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           ItemChange.create({
             formula: `@abilities.${abl}.mod`,
-            target: "misc",
+            target: "attack",
             subTarget: "cmb",
             modifier: "untypedPerm",
           })
@@ -695,7 +698,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "-@attributes.energyDrain",
-        target: "misc",
+        target: "attack",
         subTarget: "cmb",
         modifier: "untypedPerm",
       })
@@ -708,7 +711,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "@attributes.bab.total",
-        target: "misc",
+        target: "defense",
         subTarget: "cmd",
         modifier: "untypedPerm",
       })
@@ -723,7 +726,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "@abilities.str.mod",
-        target: "misc",
+        target: "defense",
         subTarget: "cmd",
         modifier: "untypedPerm",
       })
@@ -738,7 +741,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "-@attributes.energyDrain",
-        target: "misc",
+        target: "defense",
         subTarget: "cmd",
         modifier: "untypedPerm",
         source: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -862,7 +865,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: sr.toString(),
-        target: "misc",
+        target: "defense",
         subTarget: "spellResist",
         modifier: "base",
         priority: 1000,
@@ -1034,7 +1037,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
-        target: "misc",
+        target: "attack",
         subTarget: "cmb",
         modifier: "size",
       })
@@ -1047,7 +1050,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
-        target: "misc",
+        target: "defense",
         subTarget: "cmd",
         modifier: "size",
       })
@@ -1185,7 +1188,7 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           ItemChange.create({
             formula: "-2",
-            target: "misc",
+            target: "attack",
             subTarget: "cmb",
             modifier: "penalty",
           })
@@ -1279,7 +1282,7 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           ItemChange.create({
             formula: "-4",
-            target: "misc",
+            target: "defense",
             subTarget: "cmd",
             modifier: "penalty",
           })
@@ -1534,7 +1537,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "-(@attributes.energyDrain * 5)",
-        target: "misc",
+        target: "health",
         subTarget: "mhp",
         modifier: "untyped",
         priority: -750,
@@ -1548,7 +1551,7 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       ItemChange.create({
         formula: "-(@attributes.energyDrain * 5)",
-        target: "misc",
+        target: "health",
         subTarget: "vigor",
         modifier: "untyped",
         priority: -750,
@@ -1600,6 +1603,7 @@ export const getSourceInfo = function (obj, key) {
 
 /**
  * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @param options
  * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
  */
 export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {

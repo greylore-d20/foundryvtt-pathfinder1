@@ -1390,11 +1390,14 @@ export const PF1 = {
       concentration: "PF1.Concentration",
       cl: "PF1.CasterLevel",
     },
-    misc: {
-      _label: "PF1.MiscShort",
+    defense: {
+      _label: "PF1.Defense",
       ac: "PF1.ACNormal",
       cmd: "PF1.CMDAbbr",
       sr: "PF1.SpellResistance",
+    },
+    misc: {
+      _label: "PF1.MiscShort",
       init: "PF1.Initiative",
     },
   },

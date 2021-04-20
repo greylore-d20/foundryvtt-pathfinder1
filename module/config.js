@@ -1259,11 +1259,21 @@ export const PF1 = {
       sac: "PF1.BuffTarACShield",
       nac: "PF1.BuffTarACNatural",
     },
+    defense: {
+      _label: "PF1.Defense",
+      cmd: "PF1.CMDAbbr",
+      spellResist: "PF1.SpellResistance",
+      acpA: "PF1.ACPArmor",
+      acpS: "PF1.ACPShield",
+      mDexA: "PF1.MaxDexArmor",
+      mDexS: "PF1.MaxDexShield",
+    },
     attack: {
       _label: "PF1.AttackRollPlural",
       attack: "PF1.All",
       mattack: "PF1.Melee",
       rattack: "PF1.Ranged",
+      cmb: "PF1.CMBAbbr",
       "~attackCore": "", // hidden
     },
     damage: {
@@ -1321,20 +1331,16 @@ export const PF1 = {
       burrowSpeed: "PF1.SpeedBurrow",
       flySpeed: "PF1.SpeedFly",
     },
-    misc: {
-      _label: "PF1.MiscShort",
-      cmb: "PF1.CMBAbbr",
-      cmd: "PF1.CMDAbbr",
-      init: "PF1.Initiative",
+    health: {
+      _label: "PF1.Health",
       mhp: "PF1.HitPoints",
       wounds: "PF1.Wounds",
       vigor: "PF1.Vigor",
-      acpA: "PF1.ACPArmor",
-      acpS: "PF1.ACPShield",
-      mDexA: "PF1.MaxDexArmor",
-      mDexS: "PF1.MaxDexShield",
-      spellResist: "PF1.SpellResistance",
+    },
+    misc: {
+      _label: "PF1.MiscShort",
       bonusFeats: "PF1.BuffTarBonusFeats",
+      init: "PF1.Initiative",
     },
   },
 
@@ -1352,6 +1358,7 @@ export const PF1 = {
       ranged: "PF1.Ranged",
       rangedWeapon: "PF1.RangedWeapon",
       rangedSpell: "PF1.RangedSpell",
+      cmb: "PF1.CMBAbbr",
     },
     savingThrows: {
       _label: "PF1.SavingThrowPlural",
@@ -1389,12 +1396,14 @@ export const PF1 = {
       concentration: "PF1.Concentration",
       cl: "PF1.CasterLevel",
     },
-    misc: {
-      _label: "PF1.MiscShort",
+    defense: {
+      _label: "PF1.Defense",
       ac: "PF1.ACNormal",
-      cmb: "PF1.CMBAbbr",
       cmd: "PF1.CMDAbbr",
       sr: "PF1.SpellResistance",
+    },
+    misc: {
+      _label: "PF1.MiscShort",
       init: "PF1.Initiative",
     },
   },

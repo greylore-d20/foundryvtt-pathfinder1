@@ -906,7 +906,7 @@ export class ActorPF extends Actor {
 
               let remainingMessage = "";
               if (remaining < 0) {
-                remainingMessage = game.i18n.localize("PF1.TooManySpells", { quantity: remaining });
+                remainingMessage = game.i18n.localize("PF1.TooManySpells", { quantity: Math.abs(remaining) });
               } else if (remaining > 0) {
                 if (spellPrepMode === "spontaneous") {
                   remainingMessage =

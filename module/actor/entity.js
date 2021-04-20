@@ -712,8 +712,7 @@ export class ActorPF extends Actor {
         const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
         if (useAuto) {
           let spellPrepMode = spellbook.spellPreparationMode;
-          if (!spellPrepMode || spellPrepMode === "null" || spellPrepMode === "spontanous") {
-            // to do get rid of 'spontanous' check when not using broken test actors
+          if (!spellPrepMode || spellPrepMode === "null") {
             spellPrepMode = "spontaneous";
             setProperty(this.data, `${bookPath}.spellPreparationMode`, spellPrepMode);
           }
@@ -850,7 +849,7 @@ export class ActorPF extends Actor {
         {
           const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
           const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
-          if (useAuto && rollData.classes[spellbook.class]) {
+          if (useAuto) {
             const spellPrepMode = spellbook.spellPreparationMode;
             let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
             const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);

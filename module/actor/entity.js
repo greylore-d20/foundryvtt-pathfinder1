@@ -816,7 +816,7 @@ export class ActorPF extends Actor {
           }
         }
 
-        const spells = this.items.filter((o) => o.type === "spell");
+        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
         for (let i of spells) {
           const sb = i.spellbook;
           if (!sb || sb.spontaneous) {

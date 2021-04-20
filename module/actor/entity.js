@@ -906,19 +906,19 @@ export class ActorPF extends Actor {
 
               let remainingMessage = "";
               if (remaining < 0) {
-                remainingMessage = game.i18n.localize("PF1.TooManySpells").format(Math.abs(remaining));
+                remainingMessage = game.i18n.localize("PF1.TooManySpells", { quantity: remaining });
               } else if (remaining > 0) {
                 if (spellPrepMode === "spontaneous") {
                   remainingMessage =
                     remaining === 1
                       ? game.i18n.localize("PF1.LearnMoreSpell")
-                      : game.i18n.localize("PF1.LearnMoreSpells").format(remaining);
+                      : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
                 } else {
                   // hybrid or prepared
                   remainingMessage =
                     remaining === 1
                       ? game.i18n.localize("PF1.PrepareMoreSpell")
-                      : game.i18n.localize("PF1.PrepareMoreSpells").format(remaining);
+                      : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
                 }
               }
 

@@ -1021,8 +1021,19 @@
         display: flex;
         flex-direction: row;
 
-        > label {
+        .ppdoffset,
+        .cpdoffset {
+          overflow: none;
           width: 50%;
+        }
+      }
+
+      &.hide-cpd {
+        .ppdoffset {
+          width: 100%;
+        }
+        .cpdoffset {
+          display: none;
         }
       }
     }

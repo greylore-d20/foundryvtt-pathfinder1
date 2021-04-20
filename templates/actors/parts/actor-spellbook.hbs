@@ -339,6 +339,7 @@
         {{#unless ../spellbook.orig.spellPoints.useSystem}}
         <div class="item-detail spell-uses">
           {{#if section.usesSlots}}
+          {{#unless (and (eq section.level 0) ../spellbook.orig.autoSpellLevelCalculation)}}
           <div class="tooltip spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}">
             <span class="{{#unless ../spellbook.orig.spontaneous}}spell-input-readonly{{else}}text-box{{/unless}}" data-dtype="Number" {{#if ../spellbook.orig.spontaneous}}name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value"{{/if}}>
               {{section.uses}}
@@ -352,6 +353,7 @@
             </span>
           </div>
           <span class="sep"> / </span>
+          {{/unless}}
           <div class="tooltip spell-max">
             <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
             <span class="tooltipcontent">

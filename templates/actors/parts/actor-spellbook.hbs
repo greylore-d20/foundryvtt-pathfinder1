@@ -136,30 +136,30 @@
         </label>
         <div class="radios">
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.orig.spellPreparationMode 'prepared')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prepared" {{checked (eq spellbook.orig.spellPreparationMode "prepared")}} />
             {{localize "PF1.SpellPrepPrepared"}}
           </label>
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="spontaneous" {{checked (eq spellbook.orig.spellPreparationMode 'spontaneous')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="spontaneous" {{checked (eq spellbook.orig.spellPreparationMode "spontaneous")}} />
             {{localize "PF1.SpellPrepSpontaneous"}}
           </label>
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode 'hybrid')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode "hybrid")}} />
             {{localize "PF1.SpellPrepHybrid"}}
           </label>
         </div>
-        {{#unless (eq spellbook.orig.spellPreparationMode 'hybrid')}}
+        {{#unless (eq spellbook.orig.spellPreparationMode "hybrid")}}
         <div class="radios">
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="low" {{checked (eq spellbook.orig.casterType 'low')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="low" {{checked (eq spellbook.orig.casterType "low")}} />
             {{localize "PF1.Low"}}
           </label>
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="med" {{checked (eq spellbook.orig.casterType 'med')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="med" {{checked (eq spellbook.orig.casterType "med")}} />
             {{localize "PF1.Medium"}}
           </label>
           <label class="checkbox">
-            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="high" {{checked (eq spellbook.orig.casterType 'high')}} />
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="high" {{checked (eq spellbook.orig.casterType "high")}} />
             {{localize "PF1.High"}}
           </label>
         </div>
@@ -168,7 +168,9 @@
         <section class="spell-level-mod-container">
           <label><h3>{{localize "PF1.Modifications"}}</h3></label>
           <div class="spell-mod-formulas">
-            <label><h3>{{localize "PF1.PreparePerDay"}}</h3></label>
+            <label><h3>
+              {{#if (eq spellbook.orig.spellPreparationMode "spontaneous")}}{{localize "PF1.SpellsKnown"}}{{else}}{{localize "PF1.PreparePerDay"}}{{/if}}
+            </h3></label>
             <label><h3>{{localize "PF1.CastPerDay"}}</h3></label>
           </div>
 
@@ -210,7 +212,7 @@
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell4.castPerDayOffsetFormula" value="{{spellbook.orig.spells.spell4.castPerDayOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
           </div>
 
-          {{#if (or (eq spellbook.orig.casterType 'med') (eq spellbook.orig.casterType 'high'))}}
+          {{#if (or (eq spellbook.orig.casterType "med") (eq spellbook.orig.casterType "high"))}}
           <label><h3>{{localize "PF1.SpellLevel5"}}</h3></label>
           <div class="spell-mod-formulas">
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell5.preparedOffsetFormula" value="{{spellbook.orig.spells.spell5.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />
@@ -224,7 +226,7 @@
           </div>
           {{/if}}
 
-          {{#if (eq spellbook.orig.casterType 'high')}}
+          {{#if (eq spellbook.orig.casterType "high")}}
           <label><h3>{{localize "PF1.SpellLevel7"}}</h3></label>
           <div class="spell-mod-formulas">
             <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spells.spell7.preparedOffsetFormula" value="{{spellbook.orig.spells.spell7.preparedOffsetFormula}}" placeholder="{{localize "PF1.Formula"}}" />

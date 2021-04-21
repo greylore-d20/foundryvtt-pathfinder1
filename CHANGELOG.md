@@ -10,6 +10,7 @@
 
 - Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone
 - Added a compendium browser for buffs
+- Tell Drag Ruler to use metric system if system is metric (thanks Nico Weichbrodt!)
 
 ## 0.77.21
 

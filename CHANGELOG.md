@@ -2,6 +2,10 @@
 
 ## 0.77.22
 
+### Bug Fixes
+
+- Rolling untrained skills requiring training sometimes didn't show a note saying it's untrained (#780)
+
 ### Changelog
 
 - Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone

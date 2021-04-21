@@ -1903,7 +1903,7 @@ export class ActorPF extends Actor {
       }
     }
     // Add untrained note
-    if (skl.rt && skl.rank === 0) {
+    if (skl.rt && !skl.rank) {
       notes.push(game.i18n.localize("PF1.Untrained"));
     }
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.77.22
+
+### Changelog
+
+- Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone
+
 ## 0.77.21
 
 ### Bug Fixes

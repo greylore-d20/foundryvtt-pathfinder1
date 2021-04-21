@@ -7,6 +7,20 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     });
   }
 
+  getData(options) {
+    let data = super.getData(options);
+
+    for (let p of Object.values(data.packs)) {
+      for (let pack of p.packs) {
+        const config = game.settings.get("core", Compendium.CONFIG_SETTING)[pack.collection];
+        const disabled = getProperty(config, "pf1.disabled") === true;
+        setProperty(pack, "pf1.disabled", disabled);
+      }
+    }
+
+    return data;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 

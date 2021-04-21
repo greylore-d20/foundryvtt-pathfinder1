@@ -39,31 +39,36 @@ export class CompendiumBrowser extends Application {
 
     /**
      * The bottom scroll treshold (in pixels) at which the browser should start lazy loading some more items.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyLoadTreshold = 80;
     /**
      * The maximum number of items initially visible in regards to lazy loading.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyStart = 80;
     /**
      * The current amount of items visible in regards to lazy loading.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyIndex = 0;
     /**
      * The amount of new items to lazy load when triggered.
-     * @type {Number}
+     *
+     * @type {number}
      * @property
      */
     this.lazyAdd = 20;
 
     /**
      * A list of packs used, for filtering purposes.
+     *
      * @type {Compendium{}}
      * @property
      */
@@ -133,7 +138,9 @@ export class CompendiumBrowser extends Application {
       this._currentCompendiums = game.packs
         .filter((o) => {
           if (o.metadata.entity !== this.entityType) return false;
-          if (o.private && !game.user.isGM) return false;
+
+          if (this.shouldSkip(o)) return false;
+
           return true;
         })
         .map((o) => {
@@ -256,6 +263,23 @@ export class CompendiumBrowser extends Application {
     return COMPENDIUM_TYPES[this.type];
   }
 
+  /**
+   * @param {Compendium} p - The compendium in question.
+   * @returns {boolean} Whether the compendium should be skipped.
+   */
+  shouldSkip(p) {
+    // Check disabled status
+    const config = game.settings.get("core", Compendium.CONFIG_SETTING)[p.collection];
+    const disabled = getProperty(config, "pf1.disabled") === true;
+    if (disabled) return true;
+
+    // Skip if set to private and the user is not a GM
+    if (p.private && !game.user.isGM) return true;
+
+    // Don't skip the compendium
+    return false;
+  }
+
   _onProgress(progress) {
     progress.loaded++;
     progress.pct = Math.round((progress.loaded * 10) / progress.total) * 10;
@@ -265,9 +289,8 @@ export class CompendiumBrowser extends Application {
   async loadCompendium(p) {
     const progress = this._data.progress;
 
-    if ((p.private && !game.user.isGM) || p.metadata.system != "pf1") {
-      if (p.metadata.system != "pf1")
-        console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
+    if (p.metadata.system != "pf1") {
+      console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
       this._onProgress(progress);
       return;
     }
@@ -301,11 +324,22 @@ export class CompendiumBrowser extends Application {
       let packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
       for (let p of game.packs.values()) {
-        if (p.entity === this.entityType) {
+        if (p.entity === this.entityType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
+        } else {
+          if (Object.hasOwnProperty.call(this.packs, p.collection)) {
+            delete this.packs[p.collection];
+          }
         }
       }
+
+      // Clear filters without applicable packs
+      if (packs.length === 0) {
+        this.filters = [];
+        return;
+      }
+
       this._data.progress = progress;
       this._onProgress(progress);
 
@@ -1068,6 +1102,9 @@ export class CompendiumBrowser extends Application {
 
   /**
    * Handle opening a single compendium entry by invoking the configured entity class and its sheet
+   *
+   * @param collectionKey
+   * @param entryId
    * @private
    */
   async _onEntry(collectionKey, entryId) {
@@ -1078,6 +1115,8 @@ export class CompendiumBrowser extends Application {
 
   /**
    * Handle a new drag event from the compendium, create a placeholder token for dropping the item
+   *
+   * @param event
    * @private
    */
   _onDragStart(event) {

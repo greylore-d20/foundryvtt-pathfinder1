@@ -145,10 +145,14 @@
           </label>
           <label class="checkbox">
             <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="hybrid" {{checked (eq spellbook.orig.spellPreparationMode "hybrid")}} />
-            {{localize "PF1.SpellPrepHybrid"}}
+            {{localize "PF1.Arcanist"}}
+          </label>
+          <label class="checkbox">
+            <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spellPreparationMode" value="prestige" {{checked (eq spellbook.orig.spellPreparationMode "prestige")}} />
+            {{localize "PF1.RedMantisAssassin"}}
           </label>
         </div>
-        {{#unless (eq spellbook.orig.spellPreparationMode "hybrid")}}
+        {{#unless (or (eq spellbook.orig.spellPreparationMode "hybrid") (eq spellbook.orig.spellPreparationMode "prestige"))}}
         <div class="radios">
           <label class="checkbox">
             <input type="radio" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.casterType" value="low" {{checked (eq spellbook.orig.casterType "low")}} />
@@ -169,7 +173,7 @@
           <label><h3>{{localize "PF1.Modifications"}}</h3></label>
           <div class="spell-mod-formulas">
             <label class="ppdoffset"><h3>
-              {{#if (eq spellbook.orig.spellPreparationMode "spontaneous")}}{{localize "PF1.SpellsKnown"}}{{else}}{{localize "PF1.PreparePerDay"}}{{/if}}
+              {{#if (or (eq spellbook.orig.spellPreparationMode "spontaneous") (eq spellbook.orig.spellPreparationMode "prestige"))}}{{localize "PF1.SpellsKnown"}}{{else}}{{localize "PF1.PreparePerDay"}}{{/if}}
             </h3></label>
             <label class="cpdoffset"><h3>{{localize "PF1.CastPerDay"}}</h3></label>
           </div>

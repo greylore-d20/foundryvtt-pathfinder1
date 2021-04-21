@@ -721,7 +721,7 @@ export class ActorPF extends Actor {
           setProperty(this.data, `${bookPath}.spellPoints.useSystem`, false);
 
           // set base "spontaneous" based on spell prep mode
-          if (spellPrepMode === "hybrid" || spellPrepMode === "spontaneous") {
+          if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
             spellbook.spontaneous = true;
             setProperty(this.data, `${bookPath}.spontaneous`, true);
           } else {
@@ -732,6 +732,10 @@ export class ActorPF extends Actor {
           let casterType = getProperty(this.data, `${bookPath}.casterType`);
           if (!casterType || casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
             casterType = "high";
+            setProperty(this.data, `${bookPath}.casterType`, casterType);
+          }
+          if (spellPrepMode === "prestige" && casterType !== "low") {
+            casterType = "low";
             setProperty(this.data, `${bookPath}.casterType`, casterType);
           }
 
@@ -767,7 +771,7 @@ export class ActorPF extends Actor {
               ) || "0";
 
             let max =
-              typeof spellsForLevel === "number"
+              typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
                 ? spellsForLevel + getAbilityBonus(a) + allLevelMod + safeTotal(offsetFormula, rollData)
                 : null;
 

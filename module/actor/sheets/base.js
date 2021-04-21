@@ -667,7 +667,7 @@ export class ActorSheetPF extends ActorSheet {
       const spellBookKey = getProperty(spell, "data.spellbook");
       if (spellBookKey === bookKey) {
         const lvl = spell.data.level || min;
-        spellbook[lvl].items.push(spell);
+        spellbook[lvl]?.items.push(spell);
       }
     });
 

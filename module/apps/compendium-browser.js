@@ -9,6 +9,7 @@ const NEED_NEW_VERSION = {
   feats: "0.77.16",
   classes: "0.77.15",
   races: "0.77.15",
+  buffs: "0.77.22",
 };
 
 export const COMPENDIUM_TYPES = {
@@ -18,6 +19,7 @@ export const COMPENDIUM_TYPES = {
   feats: "Item",
   classes: "Item",
   races: "Item",
+  buffs: "Item",
 };
 
 export class CompendiumBrowser extends Application {
@@ -389,6 +391,9 @@ export class CompendiumBrowser extends Application {
       case "races":
         this._fetchRaceFilters();
         break;
+      case "buffs":
+        this._fetchBuffFilters();
+        break;
     }
 
     // Create an empty active filters object
@@ -422,6 +427,7 @@ export class CompendiumBrowser extends Application {
     if (this.type === "feats" && item.type !== "feat") return false;
     if (this.type === "classes" && item.type !== "class") return false;
     if (this.type === "races" && item.type !== "race") return false;
+    if (this.type === "buffs" && item.type !== "buff") return false;
     return true;
   }
 
@@ -610,6 +616,15 @@ export class CompendiumBrowser extends Application {
     });
   }
 
+  _mapBuffs(result, item) {
+    this.extraFilters = this.extraFilters || {
+      types: {},
+    };
+
+    // Get types
+    this.extraFilters.types[item.data.buffType] = true;
+  }
+
   _mapEntry(pack, item) {
     const result = {
       collection: {
@@ -644,6 +659,9 @@ export class CompendiumBrowser extends Application {
         break;
       case "races":
         this._mapRaces(result, item);
+        break;
+      case "buffs":
+        this._mapBuffs(result, item);
         break;
     }
 
@@ -1047,6 +1065,24 @@ export class CompendiumBrowser extends Application {
           items: naturalSort(
             Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
               cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+      ]
+    );
+  }
+
+  _fetchBuffFilters() {
+    this.filters.push(
+      ...[
+        {
+          path: "data.buffType",
+          label: game.i18n.localize("PF1.Type"),
+          items: naturalSort(
+            Object.entries(CONFIG.PF1.buffTypes).reduce((cur, o) => {
+              cur.push({ key: o[0], name: o[1] });
               return cur;
             }, []),
             "name"

@@ -30,6 +30,7 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     html.find(".compendium-footer .compendium.feats").click((e) => this._onBrowseCompendium(e, "feats"));
     html.find(".compendium-footer .compendium.classes").click((e) => this._onBrowseCompendium(e, "classes"));
     html.find(".compendium-footer .compendium.races").click((e) => this._onBrowseCompendium(e, "races"));
+    html.find(".compendium-footer .compendium.buffs").click((e) => this._onBrowseCompendium(e, "buffs"));
   }
 
   _onBrowseCompendium(event, type) {

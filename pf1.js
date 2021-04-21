@@ -399,6 +399,7 @@ Hooks.once("ready", async function () {
     feats: new CompendiumBrowser({ type: "feats" }),
     classes: new CompendiumBrowser({ type: "classes" }),
     races: new CompendiumBrowser({ type: "races" }),
+    buffs: new CompendiumBrowser({ type: "buffs" }),
   };
 
   // Show changelog

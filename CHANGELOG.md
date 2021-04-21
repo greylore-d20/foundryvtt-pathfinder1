@@ -5,6 +5,7 @@
 ### Changelog
 
 - Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone
+- Added a compendium browser for buffs
 
 ## 0.77.21
 

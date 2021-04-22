@@ -12,6 +12,10 @@
 - Added a compendium browser for buffs
 - Tell Drag Ruler to use metric system if system is metric (thanks Nico Weichbrodt!)
 
+### API
+
+- Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.
+
 ## 0.77.21
 
 ### Bug Fixes

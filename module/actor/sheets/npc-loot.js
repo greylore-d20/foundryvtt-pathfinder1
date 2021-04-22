@@ -4,7 +4,8 @@ import { createTabs } from "../../lib.js";
 export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   /**
    * Define default rendering options for the NPC sheet
-   * @return {Object}
+   *
+   * @returns {object}
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -30,7 +31,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
     // Get total value
     const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
-    const sellValue = this.calculateSellItemValue();
+    const sellValue = this.calculateSellItemValue() + this.actor.mergeCurrency();
     data.totalValue = {
       gp: Math.max(0, Math.floor(gpValue)),
       sp: Math.max(0, Math.floor(gpValue * 10 - Math.floor(gpValue) * 10)),

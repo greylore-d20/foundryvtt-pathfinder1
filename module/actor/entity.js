@@ -664,6 +664,23 @@ export class ActorPF extends Actor {
             value: value,
           });
         }
+
+        // set auto spell level calculation offset
+        {
+          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelCalculationLevel`;
+          const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
+          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+          setProperty(this.data, autoKey, autoTotal);
+          if (autoBonus !== 0) {
+            const sign = autoBonus < 0 ? "negative" : "positive";
+            getSourceInfo(this.sourceInfo, key)[sign].push({
+              name: game.i18n.localize("PF1.AutoSpellLevelCalculationFormula"),
+              value: autoBonus,
+            });
+          }
+        }
+
         // Add from bonus formula
         const clBonus = RollPF.safeRoll(formula, rollData).total;
         total += clBonus;
@@ -702,7 +719,6 @@ export class ActorPF extends Actor {
         setProperty(this.data, key, total);
       }
 
-      const safeTotal = (formula, data) => (isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula);
       const getAbilityBonus = (a) =>
         a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
       // Spell slots
@@ -752,7 +768,7 @@ export class ActorPF extends Actor {
               this.data,
               `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
             ) || "0";
-          const allLevelMod = safeTotal(allLevelModFormula, rollData);
+          const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
             // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
@@ -772,7 +788,7 @@ export class ActorPF extends Actor {
 
             let max =
               typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
-                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + safeTotal(offsetFormula, rollData)
+                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
                 : null;
 
             setProperty(this.data, `${bookPath}.spells.spell${a}.max`, max);
@@ -865,7 +881,7 @@ export class ActorPF extends Actor {
                 this.data,
                 `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
               ) || "0";
-            const allLevelMod = safeTotal(allLevelModFormula, rollData);
+            const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
             for (let a = 0; a < 10; a++) {
               if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
@@ -900,7 +916,7 @@ export class ActorPF extends Actor {
                 available += allLevelMod;
 
                 const formula = getProperty(this.data, `${bookPath}.spells.spell${a}.preparedOffsetFormula`) || "0";
-                available += safeTotal(formula, rollData);
+                available += RollPF.safeTotal(formula, rollData);
               }
 
               const remaining = available - used;

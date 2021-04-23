@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.77.22
+
+### Bug Fixes
+
+- Rolling untrained skills requiring training sometimes didn't show a note saying it's untrained (#780)
+- Custom styles ("not implemented"/ "steps required") for TinyMCE editors would fail to load
+
+### Changelog
+
+- Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone
+- Added a compendium browser for buffs
+- Tell Drag Ruler to use metric system if system is metric (thanks Nico Weichbrodt!)
+- Loot sheets now add coinage to the total sell value at the bottom
+- Added a world setting for an alternative reach rule, which hides the outer corners of 10-ft reach measurements
+
+### API
+
+- Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.
+
 ## 0.77.21
 
 ### Bug Fixes

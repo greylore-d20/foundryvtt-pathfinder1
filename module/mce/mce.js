@@ -1,5 +1,5 @@
 export const tinyMCEInit = function () {
-  CONFIG.TinyMCE.content_css.push("/systems/pf1/module/mce/mce.css");
+  CONFIG.TinyMCE.content_css.push("/systems/pf1/ui/mce.css");
 
   CONFIG.TinyMCE.style_formats[0].items.push(
     {
@@ -26,6 +26,9 @@ export const tinyMCEInit = function () {
   });
 };
 
+/**
+ * @param editor
+ */
 function registerContextMenu(editor) {
   var isInfoElement = function (node) {
     if (node.nodeName.toLowerCase() !== "span") node = node.parentNode;

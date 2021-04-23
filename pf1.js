@@ -399,6 +399,7 @@ Hooks.once("ready", async function () {
     feats: new CompendiumBrowser({ type: "feats" }),
     classes: new CompendiumBrowser({ type: "classes" }),
     races: new CompendiumBrowser({ type: "races" }),
+    buffs: new CompendiumBrowser({ type: "buffs" }),
   };
 
   // Show changelog
@@ -523,6 +524,10 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
       }
     });
     if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+      // Call hook
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+
+      // Toggle status icons
       await actor.toggleConditionStatusIcons();
     }
   }
@@ -594,7 +599,7 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
 
-  const item = actor.items.find((o) => o._id === itemData._id);
+  const item = actor.items.get(itemData._id);
   if (!item) return;
 
   // Create class
@@ -606,6 +611,9 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
   item.update({});
   // Show buff if active
   if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
+    // Call hook
+    Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+
     actor.toggleConditionStatusIcons();
   }
 });
@@ -650,8 +658,10 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
     }
   }
 
-  // Refresh actor
-  actor.refresh();
+  // Call buff removal hook
+  if (itemData.type === "buff" && getProperty(itemData, "data.active") === true) {
+    Hooks.callAll("pf1.toggleActorBuff", actor, itemData, false);
+  }
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {
@@ -721,6 +731,21 @@ Hooks.on("renderSidebarTab", (app, html) => {
       new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs");
     });
   }
+});
+
+// Add compendium sidebar context options
+Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
+  // Add option to disable pack
+  entryOptions.push({
+    name: game.i18n.localize("PF1.Disable"),
+    icon: '<i class="fas fa-low-vision"></i>',
+    callback: (li) => {
+      const pack = game.packs.get(li.data("pack"));
+      const config = game.settings.get("core", Compendium.CONFIG_SETTING)[pack.collection];
+      const disabled = getProperty(config, "pf1.disabled") === true;
+      pack.configure({ "pf1.disabled": !disabled });
+    },
+  });
 });
 
 // Handle chat tooltips

@@ -167,6 +167,7 @@ export const registerSystemSettings = function () {
 
   /**
    * Experience rate
+   *
    * @deprecated
    */
   game.settings.register("pf1", "experienceRate", {
@@ -476,6 +477,18 @@ export const registerSystemSettings = function () {
     name: "SETTINGS.pf1DisplayIterativesN",
     hint: "SETTINGS.pf1DisplayIterativesH",
     scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  /**
+   * Alternative reach corner rule
+   */
+  game.settings.register("pf1", "alternativeReachCornerRule", {
+    name: "SETTINGS.pf1AlternativeReachCornerRuleN",
+    hint: "SETTINGS.pf1AlternativeReachCornerRuleH",
+    scope: "world",
     config: true,
     default: false,
     type: Boolean,

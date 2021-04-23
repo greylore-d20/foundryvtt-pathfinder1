@@ -52,6 +52,7 @@ export class SquareHighlight {
 
 /**
  * Highlights the reach of an attack for a token.
+ *
  * @param {Token} token
  * @param {ItemPF} attack
  * @returns SquareHighlight
@@ -88,10 +89,11 @@ export const showAttackReach = function (token, attack) {
     reach: [],
     extra: [],
   };
+  const useReachRule = game.settings.get("pf1", "alternativeReachCornerRule") !== true;
 
   if (["melee", "touch", "reach"].includes(rangeKey)) {
-    squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule: true });
-    squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule: true });
+    squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule });
+    squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule });
   } else if (rangeKey === "ft") {
     const r = RollPF.safeRoll(getProperty(attack.data, "data.range.value") || "0", rollData).total;
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
@@ -107,7 +109,7 @@ export const showAttackReach = function (token, attack) {
     const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
     for (let a = 1; a < rangeIncrements; a++) {
       if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
-        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule: true }));
+        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule }));
       }
     }
   } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
@@ -120,7 +122,7 @@ export const showAttackReach = function (token, attack) {
         r = RollPF.safeRoll("100 + @cl * 10", rollData).total;
         break;
     }
-    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
+    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule });
   }
 
   const result = {

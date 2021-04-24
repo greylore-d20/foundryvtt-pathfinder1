@@ -631,29 +631,43 @@ export class ActorSheetPF extends ActorSheet {
     const owner = this.actor.owner;
     const book = this.actor.data.data.attributes.spells.spellbooks[bookKey];
 
+    let min = 0;
+    let max = 9;
+    if (book.autoSpellLevelCalculation) {
+      min = book.hasCantrips ? 0 : 1;
+
+      const cl = Math.max(Math.min(book.cl.total, 20), 1);
+
+      const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
+      max = castsPerDay.length - 1;
+    }
+
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = 0; a < 10; a++) {
-      spellbook[a] = {
-        level: a,
-        usesSlots: true,
-        spontaneous: book.spontaneous,
-        canCreate: owner === true,
-        canPrepare: data.actor.type === "character",
-        label: CONFIG.PF1.spellLevels[a],
-        items: [],
-        uses: getProperty(book, `spells.spell${a}.value`) || 0,
-        baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
-        slots: getProperty(book, `spells.spell${a}.max`) || 0,
-        dataset: { type: "spell", level: a, spellbook: bookKey },
-        name: game.i18n.localize(`PF1.SpellLevel${a}`),
-      };
+    for (let a = min; a <= max; a++) {
+      if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
+        spellbook[a] = {
+          level: a,
+          usesSlots: true,
+          spontaneous: book.spontaneous,
+          canCreate: owner === true,
+          canPrepare: data.actor.type === "character",
+          label: CONFIG.PF1.spellLevels[a],
+          items: [],
+          uses: getProperty(book, `spells.spell${a}.value`) || 0,
+          baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
+          slots: getProperty(book, `spells.spell${a}.max`) || 0,
+          dataset: { type: "spell", level: a, spellbook: bookKey },
+          name: game.i18n.localize(`PF1.SpellLevel${a}`),
+          spellMessage: getProperty(book, `spells.spell${a}.spellMessage`),
+        };
+      }
     }
     spells.forEach((spell) => {
       const spellBookKey = getProperty(spell, "data.spellbook");
       if (spellBookKey === bookKey) {
-        const lvl = spell.data.level || 0;
-        spellbook[lvl].items.push(spell);
+        const lvl = spell.data.level || min;
+        spellbook[lvl]?.items.push(spell);
       }
     });
 
@@ -1427,7 +1441,10 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event.originalEvent, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
+    this.setItemUpdate(item._id, "data.preparation.maxAmount", Math.max(0, value));
+    if (value < 0) {
+      el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
+    }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {

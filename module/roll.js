@@ -19,6 +19,10 @@ export class RollPF extends Roll {
     return roll;
   }
 
+  static safeTotal(formula, data) {
+    return isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula;
+  }
+
   _identifyTerms(formula, { step = 0 } = {}) {
     if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
     formula = this.constructor._preProcessDiceFormula(formula, this.data);

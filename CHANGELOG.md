@@ -14,6 +14,7 @@
 - Tell Drag Ruler to use metric system if system is metric (thanks Nico Weichbrodt!)
 - Loot sheets now add coinage to the total sell value at the bottom
 - Added a world setting for an alternative reach rule, which hides the outer corners of 10-ft reach measurements
+- Added a new method of automatic spell slot calculation (thanks claudekennilol!)
 
 ### API
 

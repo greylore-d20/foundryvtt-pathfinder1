@@ -892,36 +892,28 @@ export class ActorPF extends Actor {
                 continue;
               }
 
-              const used = spells.reduce((acc, i) => {
-                let prepared = 0;
-                const { data } = i.data;
-                if (data.level === a && data.spellbook === spellbookKey) {
-                  if (spellPrepMode === "prepared") {
-                    prepared += data.preparation.maxAmount;
-                  } else if (data.preparation.spontaneousPrepared) {
-                    // spontaneous or hybrid
-                    prepared++;
-                  }
-                }
-
-                return acc + prepared;
-              }, 0);
-
-              let available;
+              let remaining;
               if (spellPrepMode === "prepared") {
-                // for prepared casters, just use spell max because it already includes ability formula plus any custom changes
-                available = getProperty(this.data, `${bookPath}.spells.spell${a}.max`);
+                // for prepared casters, just use the 'value' calculated above
+                remaining = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
               } else {
+                // spontaneous or hybrid
                 // if not prepared then base off of casts per day
-                available =
+                let available =
                   CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
                 available += allLevelMod;
 
                 const formula = getProperty(this.data, `${bookPath}.spells.spell${a}.preparedOffsetFormula`) || "0";
                 available += RollPF.safeTotal(formula, rollData);
+
+                const used = spells.reduce((acc, i) => {
+                  const { level, spellbook, preparation } = i.data.data;
+                  return level === a && spellbook === spellbookKey && preparation.spontaneousPrepared ? ++acc : acc;
+                }, 0);
+
+                remaining = available - used;
               }
 
-              const remaining = available - used;
               if (!remaining) {
                 continue;
               }

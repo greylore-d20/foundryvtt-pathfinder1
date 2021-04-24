@@ -666,16 +666,18 @@ export class ActorPF extends Actor {
         }
 
         // set auto spell level calculation offset
-        {
-          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelCalculationLevel`;
+        if (spellbook.autoSpellLevelCalculation) {
+          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
           const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
           const autoBonus = RollPF.safeTotal(autoFormula, rollData);
           const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
           setProperty(this.data, autoKey, autoTotal);
+
+          total += autoBonus;
           if (autoBonus !== 0) {
             const sign = autoBonus < 0 ? "negative" : "positive";
             getSourceInfo(this.sourceInfo, key)[sign].push({
-              name: game.i18n.localize("PF1.AutoSpellLevelCalculationFormula"),
+              name: game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
               value: autoBonus,
             });
           }
@@ -759,7 +761,7 @@ export class ActorPF extends Actor {
             CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
               casterType
             ];
-          const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
+          const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
           rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
 
@@ -872,7 +874,7 @@ export class ActorPF extends Actor {
           if (useAuto) {
             const spellPrepMode = spellbook.spellPreparationMode;
             let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
-            const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.total`), 20), 1);
+            const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
 
             let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
 

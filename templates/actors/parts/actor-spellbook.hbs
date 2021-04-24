@@ -104,6 +104,18 @@
           value="{{spellbook.orig.spellPoints.restoreFormula}}" placeholder="{{localize "PF1.SpellPointsMax"}}" title="{{localize "PF1.Formula"}}"/>
         </div>
         {{/if}}
+
+        {{#if spellbook.orig.autoSpellLevelCalculation}}
+        <div class="help-text">
+        <i class="help-icon fas fa-info-circle"></i> {{localize "PF1.AutoSpellClassLevelOffset.InfoBox"}}
+        </div>
+        <div class="flexrow">
+          <label><h3>{{localize "PF1.AutoSpellClassLevelOffset.Formula"}}</h3></label>
+          <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.autoSpellLevelCalculationFormula"
+            value="{{spellbook.orig.cl.autoSpellLevelCalculationFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+        </div>
+        {{/if}}
+
       </div>
 
       <div class="flexcol pf1-sheet-group">

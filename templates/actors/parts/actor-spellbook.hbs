@@ -403,9 +403,6 @@
       </li>
 
       <ol class="item-list">
-        {{#if section.spellMessage}}
-          <h4 class="spell-level-message">{{section.spellMessage}}</h4>
-        {{/if}}
 
         {{#each section.items as |item i|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
@@ -474,6 +471,11 @@
           {{/if}}
         </li>
         {{/each}}
+
+        {{#if section.spellMessage}}
+          <h4 class="spell-level-message">{{section.spellMessage}}</h4>
+        {{/if}}
+
       </ol>
       {{/unless}}
       {{/each}}

@@ -16,7 +16,6 @@ export class ItemChange {
       _id: randomID(8),
       formula: "",
       operator: "add",
-      target: "",
       subTarget: "",
       modifier: "",
       priority: 0,
@@ -32,9 +31,6 @@ export class ItemChange {
   }
   get operator() {
     return this.data.operator;
-  }
-  get target() {
-    return this.data.target;
   }
   get subTarget() {
     return this.data.subTarget;

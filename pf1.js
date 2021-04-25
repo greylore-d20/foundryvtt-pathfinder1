@@ -46,6 +46,8 @@ import {
   convertWeight,
   convertWeightBack,
   convertDistance,
+  getBuffTargets,
+  getBuffTargetDictionary,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
@@ -64,6 +66,7 @@ import * as macros from "./module/macros.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
+import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -110,6 +113,8 @@ Hooks.once("init", function () {
       ScriptEditor,
       SidebarPF,
       TooltipPF,
+      // Widgets
+      Widget_CategorizedItemPicker,
     },
     compendiums: {},
     // Rolling
@@ -155,6 +160,11 @@ Hooks.once("init", function () {
     config: PF1,
     tooltip: null,
     runUnitTests,
+    // Function library
+    functions: {
+      getBuffTargets,
+      getBuffTargetDictionary,
+    },
   };
 
   // Global exports
@@ -250,8 +260,8 @@ Hooks.once("setup", function () {
     "consumableTypes",
     "attackTypes",
     "buffTypes",
-    "buffTargets",
-    "contextNoteTargets",
+    // "buffTargets",
+    // "contextNoteTargets",
     "healingTypes",
     "divineFocus",
     "classSavingThrows",
@@ -274,10 +284,10 @@ Hooks.once("setup", function () {
 
   // Config (sub-)objects to be sorted
   const toSort = [
-    "buffTargets",
-    "buffTargets.misc",
-    "contextNoteTargets",
-    "contextNoteTargets.misc",
+    // "buffTargets",
+    // "buffTargets.misc",
+    // "contextNoteTargets",
+    // "contextNoteTargets.misc",
     "skills",
     "conditions",
     "conditionTypes",
@@ -326,6 +336,14 @@ Hooks.once("setup", function () {
   // Localize and sort CONFIG objects
   for (const o of toLocalize) {
     CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o], o);
+  }
+
+  // Localize buff targets
+  const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
+  for (let l of localizeLabels) {
+    for (let [k, v] of Object.entries(CONFIG.PF1[l])) {
+      CONFIG.PF1[l][k].label = game.i18n.localize(v.label);
+    }
   }
 
   // TinyMCE variables and commands

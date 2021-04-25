@@ -1,9 +1,10 @@
-import { createTabs } from "../../lib.js";
+import { createTabs, getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
+import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -24,6 +25,13 @@ export class ItemSheetPF extends ItemSheet {
     this._filters = {};
 
     this.items = [];
+
+    /**
+     * Tracks the application IDs associated with this sheet.
+     *
+     * @type {Application[]}
+     */
+    this._openApplications = [];
   }
 
   /* -------------------------------------------- */
@@ -62,6 +70,17 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   async close(options = {}) {
+    // Close open applications associated with this sheet
+    {
+      let promises = [];
+      for (let id of this._openApplications) {
+        if (ui.windows[id]) {
+          promises.push(ui.windows[id].close());
+        }
+      }
+      await Promise.all(promises);
+    }
+
     return super.close(mergeObject(options, { submit: true }, { inplace: false }));
   }
 
@@ -305,11 +324,12 @@ export class ItemSheetPF extends ItemSheet {
         if (typeof v === "object") data.changeGlobals.targets[k] = v._label;
       }
 
+      const buffTargets = getBuffTargets(this.item.actor);
       data.changes = data.item.data.changes.reduce((cur, o) => {
         const itemChange = this.item.changes.get(o._id);
         const obj = { data: o };
 
-        obj.subTargets = this.item.getChangeSubTargets(itemChange.target);
+        obj.subTargetLabel = buffTargets[o.subTarget]?.label;
         obj.isScript = obj.data.operator === "script";
 
         cur.push(obj);
@@ -335,12 +355,10 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare stuff for items with context notes
     if (data.item.data.contextNotes) {
-      data.contextNotes = { targets: {} };
-      for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets)) {
-        if (typeof v === "object") data.contextNotes.targets[k] = v._label;
-      }
-      data.item.data.contextNotes.forEach((item) => {
-        item.subNotes = this.item.getContextNoteSubTargets(item.target);
+      data.contextNotes = duplicate(data.item.data.contextNotes);
+      const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
+      data.contextNotes.forEach((o) => {
+        o.label = noteTargets[o.subTarget]?.label;
       });
     }
 
@@ -699,9 +717,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
+    html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
+    html.find(".context-note .context-note-target").click(this._onNoteTargetControl.bind(this));
 
     // Create attack
     if (["weapon"].includes(this.item.data.type)) {
@@ -1042,6 +1062,27 @@ export class ItemSheetPF extends ItemSheet {
       return this._onSubmit(event, { updateData: { "data.changes": changes } });
     }
   }
+  _onChangeTargetControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    // Prepare categories and changes to display
+    const change = this.item.changes.get(a.closest(".change").dataset.change);
+    const categories = getBuffTargetDictionary(this.item.actor);
+
+    // Show widget
+    const w = new Widget_CategorizedItemPicker(
+      { title: "PF1.Application.ChangeTargetSelector.Title" },
+      categories,
+      (key) => {
+        if (key) {
+          change.update({ subTarget: key });
+        }
+      }
+    );
+    this._openApplications.push(w.appId);
+    w.render(true);
+  }
 
   async _onConditionalControl(event) {
     event.preventDefault();
@@ -1104,6 +1145,32 @@ export class ItemSheetPF extends ItemSheet {
         updateData: { "data.contextNotes": contextNotes },
       });
     }
+  }
+
+  _onNoteTargetControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    // Prepare categories and changes to display
+    const li = a.closest(".context-note");
+    const noteIndex = Number(li.dataset.note);
+    const note = this.item.data.data.contextNotes[noteIndex];
+    const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
+
+    // Show widget
+    const w = new Widget_CategorizedItemPicker(
+      { title: "PF1.Application.ContextNoteTargetSelector.Title" },
+      categories,
+      (key) => {
+        if (key) {
+          const updateData = {};
+          updateData[`data.contextNotes.${noteIndex}.subTarget`] = key;
+          this.item.update(updateData);
+        }
+      }
+    );
+    this._openApplications.push(w.appId);
+    w.render(true);
   }
 
   async _onLinkControl(event) {

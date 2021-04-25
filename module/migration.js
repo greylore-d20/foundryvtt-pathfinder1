@@ -707,19 +707,6 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter change targets based on their subtargets (which are unique keys)
-    for (let c of newChanges) {
-      if (getProperty(CONFIG.PF1.buffTargets, `${c.target}.${c.subTarget}`) == null) {
-        // Find new target according to the change's subtarget
-        for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets)) {
-          if (v[c.subTarget] != null) {
-            c.target = k;
-            break;
-          }
-        }
-      }
-    }
-
     // Alter the changes list
     updateData["data.changes"] = newChanges;
   }
@@ -730,13 +717,18 @@ const _migrateItemChanges = function (ent, updateData) {
     let newNotes = [];
     for (let n of notes) {
       if (n instanceof Array) {
-        newNotes.push(
-          mergeObject(ItemPF.defaultChange, { text: n[0], target: n[1], subTarget: n[2] }, { inplace: false })
-        );
+        newNotes.push(mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false }));
       } else {
         newNotes.push(n);
       }
+
+      // Migrate old note targets
+      if (n.target === "spell" && n.subTarget === "effect") {
+        n.subTarget = "spellEffect";
+      }
     }
+
+    // Alter the context note list
     updateData["data.contextNotes"] = newNotes;
   }
 };

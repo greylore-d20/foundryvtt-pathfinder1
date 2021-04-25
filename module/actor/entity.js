@@ -1297,15 +1297,11 @@ export class ActorPF extends Actor {
     const actorData = this.data;
     let sourceDetails = {};
     // Get empty source arrays
-    for (let obj of Object.values(CONFIG.PF1.buffTargets)) {
-      for (let b of Object.keys(obj)) {
-        if (!b.startsWith("_")) {
-          let buffTargets = getChangeFlat.call(this, b, null);
-          if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
-          for (let bt of buffTargets) {
-            if (!sourceDetails[bt]) sourceDetails[bt] = [];
-          }
-        }
+    for (let b of Object.keys(CONFIG.PF1.buffTargets)) {
+      let buffTargets = getChangeFlat.call(this, b, null);
+      if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
+      for (let bt of buffTargets) {
+        if (!sourceDetails[bt]) sourceDetails[bt] = [];
       }
     }
     // Add additional source arrays not covered by changes
@@ -2947,7 +2943,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "attacks" && o.subTarget === key;
+            return o.subTarget === key;
           })
           .map((o) => {
             return o.text;
@@ -2966,10 +2962,11 @@ export class ActorPF extends Actor {
         note.notes = note.notes
           .filter((o) => {
             return (
-              (o.target === "skill" &&
-                // Check for skill.context or skill.xyz.subSkills.context
-                (o.subTarget === context || o.subTarget.split(".")?.[3] === context.split(".")?.[1])) ||
-              (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"))
+              // Check for skill.context or skill.xyz.subSkills.context
+              o.subTarget === context ||
+              o.subTarget.split(".")?.[3] === context.split(".")?.[1] ||
+              o.subTarget === `${ability}Skills` ||
+              o.subTarget === "skills"
             );
           })
           .map((o) => {
@@ -2986,7 +2983,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "savingThrows" && (o.subTarget === saveKey || o.subTarget === "allSavingThrows");
+            return o.subTarget === saveKey || o.subTarget === "allSavingThrows";
           })
           .map((o) => {
             return o.text;
@@ -3006,7 +3003,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "abilityChecks" && (o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks");
+            return o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks";
           })
           .map((o) => {
             return o.text;
@@ -3022,7 +3019,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "misc" && o.subTarget === miscKey;
+            return o.subTarget === miscKey;
           })
           .map((o) => {
             return o.text;
@@ -3037,7 +3034,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "spell" && o.subTarget === "concentration";
+            return o.subTarget === "concentration";
           })
           .map((o) => {
             return o.text;
@@ -3060,7 +3057,7 @@ export class ActorPF extends Actor {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "spell" && o.subTarget === "cl";
+            return o.subTarget === "cl";
           })
           .map((o) => {
             return o.text;
@@ -3077,7 +3074,7 @@ export class ActorPF extends Actor {
 
     if (context.match(/^spell\.effect$/)) {
       for (let note of result) {
-        note.notes = note.notes.filter((o) => o.target === "spell" && o.subTarget === "effect").map((o) => o.text);
+        note.notes = note.notes.filter((o) => o.subTarget === "spellEffect").map((o) => o.text);
       }
 
       return result;

@@ -5,6 +5,8 @@ import { ItemPF } from "./item/entity.js";
 /**
  * Creates a tag from a string.
  * For example, if you input the string "Wizard of Oz 2", you will get "wizardOfOz2"
+ *
+ * @param str
  */
 export const createTag = function (str) {
   if (str.length === 0) str = "tag";
@@ -21,6 +23,10 @@ export const createTag = function (str) {
 
 /**
  * Alters a roll in string form.
+ *
+ * @param str
+ * @param add
+ * @param multiply
  */
 export const alterRoll = function (str, add, multiply) {
   const rgx = /^([0-9]+)d([0-9]+)/;
@@ -36,6 +42,10 @@ export const alterRoll = function (str, add, multiply) {
 
 /**
  * Creates tabs for a sheet object
+ *
+ * @param html
+ * @param tabGroups
+ * @param existingTabs
  */
 export const createTabs = function (html, tabGroups, existingTabs = null) {
   // Create recursive activation/callback function
@@ -128,8 +138,8 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
 };
 
 /**
- * @param {String} version - A version string to unpack. Must be something like '0.5.1'.
- * @returns {Object} An object containing the keys 'release', 'major', and 'minor', which are numbers.
+ * @param {string} version - A version string to unpack. Must be something like '0.5.1'.
+ * @returns {object} An object containing the keys 'release', 'major', and 'minor', which are numbers.
  */
 export const unpackVersion = function (version) {
   if (version.match(/^([0-9]+)\.([0-9]+)(?:\.([0-9]+))?$/)) {
@@ -142,8 +152,8 @@ export const unpackVersion = function (version) {
 };
 
 /**
- * @param {String} version - The minimum core version to compare to. Must be something like '0.5.1'.
- * @returns {Boolean} Whether the current core version is at least the given version.
+ * @param {string} version - The minimum core version to compare to. Must be something like '0.5.1'.
+ * @returns {boolean} Whether the current core version is at least the given version.
  */
 export const isMinimumCoreVersion = function (version) {
   const coreVersion = SemanticVersion.fromString(game.data.version);
@@ -315,6 +325,7 @@ export const normalDie = function (origCount, origSides, crit = 1) {
 
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
+ *
  * @param {number} origCount - The original number of die to roll.
  * @param {number} origSides - The original number of sides per die to roll.
  * @param {string|number} [targetSize="M"] - The target size to change the die to.
@@ -329,8 +340,10 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
 
 /**
  * Returns the result of a roll of die.
+ *
  * @param {number} count - The original number of die to roll.
  * @param {number} sides - The original number of sides per die to roll.
+ * @param crit
  * @returns {number} The result of the new roll.
  */
 export const normalRoll = function (count, sides, crit = 1) {
@@ -351,9 +364,10 @@ export const getActorFromId = function (id) {
 
 /**
  * Converts feet to what the world is using as a measurement unit.
- * @param {Number} value - The value (in feet) to convert.
- * @param {String} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
- * @returns {Array.<Number, String>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
+ *
+ * @param {number} value - The value (in feet) to convert.
+ * @param {string} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
+ * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
  */
 export const convertDistance = function (value, type = "ft") {
   switch (game.settings.get("pf1", "units")) {
@@ -371,8 +385,9 @@ export const convertDistance = function (value, type = "ft") {
 
 /**
  * Converts lbs to what the world is using as a measurement unit.
- * @param {Number} value - The value (in lbs) to convert.
- * @returns {Number} The converted value. In the case of the metric system, converts to kg.
+ *
+ * @param {number} value - The value (in lbs) to convert.
+ * @returns {number} The converted value. In the case of the metric system, converts to kg.
  */
 export const convertWeight = function (value) {
   switch (game.settings.get("pf1", "units")) {
@@ -385,8 +400,9 @@ export const convertWeight = function (value) {
 
 /**
  * Converts back to lbs from what the world is using as a measurement unit.
- * @param {Number} value - The value to convert back to lbs.
- * @returns {Number} The converted value. In the case of the metric system, converts from kg.
+ *
+ * @param {number} value - The value to convert back to lbs.
+ * @returns {number} The converted value. In the case of the metric system, converts from kg.
  */
 export const convertWeightBack = function (value) {
   switch (game.settings.get("pf1", "units")) {
@@ -399,6 +415,10 @@ export const convertWeightBack = function (value) {
 
 /**
  * Like Foundry's default expandObject function, except it can make arrays
+ *
+ * @param obj
+ * @param options
+ * @param _d
  */
 export const expandObjectExt = function (obj, options = { makeArrays: true }, _d = 0) {
   const setPropertyExt = function (object, key, value) {
@@ -614,4 +634,92 @@ export const colorToInt = function (color) {
   let integer = ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
 
   return integer;
+};
+
+/**
+ * @typedef {object} BuffTargetItem
+ * @property {string} [label] - The buff target's label.
+ * @property {string} category - The buff target's category.
+ * @property {string} [icon] - The URL to an icon.
+ */
+/**
+ * Assembles an array of all possible buff targets.
+ *
+ * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
+ * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @returns {object.<string, BuffTargetItem>} The resulting array of buff targets.
+ */
+export const getBuffTargets = function (actor, type = "buffs") {
+  const buffTargets = duplicate(
+    {
+      buffs: CONFIG.PF1.buffTargets,
+      contextNotes: CONFIG.PF1.contextNoteTargets,
+    }[type]
+  );
+
+  // Append individual skills to buff targets
+  if (actor) {
+    for (let s of actor._skillTargets) {
+      const sId = s.split(".").slice(1).join(".");
+      const skill = actor.getSkillInfo(sId);
+      buffTargets[s] = { label: skill.name, category: "skill" };
+    }
+  } else {
+    for (let [k, v] of Object.entries(CONFIG.PF1.skills)) {
+      buffTargets[k] = { label: v, category: "skill" };
+    }
+  }
+
+  return buffTargets;
+};
+
+/**
+ * @typedef {object} BuffTargetCategory
+ * @property {string} label - The category's label.
+ */
+/**
+ * Assembles an array of buff targets and their categories, ready to be inserted into a Widget_CategorizedItemPicker.
+ *
+ * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
+ * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @returns {Widget_CategorizedItemPicker~Category[]}
+ */
+export const getBuffTargetDictionary = function (actor, type = "buffs") {
+  const buffTargets = getBuffTargets(actor, type);
+
+  // Assemble initial categories and items
+  const targetCategories = duplicate(
+    {
+      buffs: CONFIG.PF1.buffTargetCategories,
+      contextNotes: CONFIG.PF1.contextNoteCategories,
+    }[type]
+  );
+  let categories = Object.entries(buffTargets).reduce((cur, o) => {
+    const key = o[0];
+    const label = o[1].label;
+    const category = o[1].category;
+    const icon = o[1].icon;
+
+    if (!key.startsWith("~")) {
+      cur[category] = cur[category] || {
+        label: targetCategories[category].label,
+        items: [],
+      };
+      cur[category].items.push({ key, label, icon });
+    }
+    return cur;
+  }, {});
+
+  // Turn result into a usable format, and sort
+  categories = Object.entries(categories).reduce((cur, o) => {
+    const key = o[0];
+    const label = o[1].label;
+    const items = o[1].items;
+    cur.push({ key, label, items });
+    return cur;
+  }, []);
+  categories = naturalSort(categories, "label");
+
+  // Return result
+  return categories;
 };

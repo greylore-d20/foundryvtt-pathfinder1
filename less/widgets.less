@@ -26,7 +26,59 @@
         text-align: center;
       }
       .item:hover {
-        border-color: #da0000;
+        border-color: @colorRed;
+      }
+    }
+  }
+
+  &.categorized-item-picker {
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+    justify-content: space-evenly;
+
+    .hidden {
+      display: none;
+    }
+
+    .item-picker-categories {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      margin-right: 8px;
+      display: flex;
+
+      .category {
+        &.active {
+          text-shadow: 0 0 8px blue;
+        }
+
+        a {
+          h2 {
+            font-weight: bold;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .item-picker-items {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      .item {
+        border: 1px solid @colorDark;
+        background: rgba(0, 0, 0, 0.05);
+        height: 20px;
+        line-height: 20px;
+        margin-bottom: 1px;
+        cursor: pointer;
+
+        &:hover {
+          border-color: @colorRed;
+          color: @colorRust;
+        }
       }
     }
   }

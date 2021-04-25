@@ -39,25 +39,11 @@
       {{else}}
       <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
       {{/unless}}
-      <select class="change-target" name="data.changes.{{a}}.target" required>
-        {{#select (lookup this.data "target") }}
-        <option value=""></option>
-        {{#each ../changeGlobals.targets as |target type|}}
-        <option value="{{type}}">{{target}}</option>
-        {{/each}}
-        {{/select}}
-      </select>
-      <select class="change-sub-target" name="data.changes.{{a}}.subTarget">
-        {{#select (lookup this.data "subTarget") }}
-        {{#if (lookup this.data "target") }}
-        {{#each (lookup this "subTargets") as |target type|}}
-        <option value="{{type}}">{{target}}</option>
-        {{/each}}
-        {{else}}
-        <option value=""></option>
-        {{/if}}
-        {{/select}}
-      </select>
+
+      {{!-- Target --}}
+      <span class="change-target">{{subTargetLabel}}</span>
+
+      {{!-- Modifier type --}}
       <select class="change-modifier" name="data.changes.{{a}}.modifier">
         {{#select (lookup this.data "modifier") }}
         {{#each ../changeGlobals.modifiers as |name type|}}

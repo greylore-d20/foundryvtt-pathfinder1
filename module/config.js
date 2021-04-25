@@ -1636,13 +1636,17 @@ export const PF1 = {
     aac: { label: "PF1.BuffTarACArmor", category: "defense" },
     sac: { label: "PF1.BuffTarACShield", category: "defense" },
     nac: { label: "PF1.BuffTarACNatural", category: "defense" },
+    tac: { label: "PF1.BuffTarACTouch", category: "defense" },
+    ffac: { label: "PF1.BuffTarACFlatFooted", category: "defense" },
     cmd: { label: "PF1.CMD", category: "defense" },
+    ffcmd: { label: "PF1.CMDFlatFooted", category: "defense" },
     spellResist: { label: "PF1.SpellResistance", category: "defense" },
     attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack" },
     mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack" },
     rattack: { label: "PF1.BuffTarRangedAttack", category: "attack" },
     "~attackCore": { label: "", category: "attack" },
     cmb: { label: "PF1.CMB", category: "attack" },
+    bab: { label: "PF1.BAB", category: "attack" },
     damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage" },
     wdamage: { label: "PF1.WeaponDamage", category: "damage" },
     sdamage: { label: "PF1.SpellDamage", category: "damage" },
@@ -1702,9 +1706,6 @@ export const PF1 = {
     misc: { label: "PF1.Misc" },
   },
 
-  /**
-   * Dictionaries of context note targets, each with a label and associated cateogry.
-   */
   contextNoteTargets: {
     attack: { label: "PF1.AttackRollPlural", category: "attacks" },
     effect: { label: "PF1.Effects", category: "attacks" },

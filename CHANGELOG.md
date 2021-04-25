@@ -16,6 +16,11 @@
 - Added a world setting for an alternative reach rule, which hides the outer corners of 10-ft reach measurements
 - Added a new method of automatic spell slot calculation (thanks claudekennilol!)
 - Added a new way of choosing change and context note targets
+- Added more targets for changes (thanks mkahvi!)
+  - BAB
+  - Touch AC
+  - Flat-footed AC
+  - Flat-footed CMD
 
 ### API
 

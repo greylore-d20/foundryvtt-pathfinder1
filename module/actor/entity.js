@@ -1822,8 +1822,6 @@ export class ActorPF extends Actor {
   }
 
   updateItemResources(itemData) {
-    if (!this.hasPerm(game.user, "OWNER")) return;
-
     const activationType = game.settings.get("pf1", "unchainedActionEconomy")
       ? itemData.data.unchainedAction?.activation?.type
       : itemData.data.activation?.type;

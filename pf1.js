@@ -551,7 +551,17 @@ Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId
   }
 });
 
-Hooks.on("createToken", async (scene, token, options, userId) => {
+Hooks.on("updateActor", (actor, data, options, userId) => {
+  // Call hook for toggling conditions
+  {
+    const conditions = getProperty(data, "data.attributes.conditions") || {};
+    for (let [k, v] of Object.entries(conditions)) {
+      Hooks.callAll("pf1.toggleActorCondition", actor, k, v);
+    }
+  }
+});
+
+Hooks.on("createToken", (scene, token, options, userId) => {
   if (userId !== game.user._id) return;
 
   const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);

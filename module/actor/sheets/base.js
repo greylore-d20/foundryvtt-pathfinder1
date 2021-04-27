@@ -1176,7 +1176,6 @@ export class ActorSheetPF extends ActorSheet {
       .on("click", (event) => {
         this._onSpanTextInput(event, this._setBuffLevel.bind(this));
       });
-    // html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
 

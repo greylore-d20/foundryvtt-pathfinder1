@@ -27,6 +27,7 @@
 ### API
 
 - Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.
+- Added a hook for activating and deactivating of conditions on actors keyed `pf1.toggleActorCondition`. See the system's GitLab wiki for more information.
 
 ## 0.77.21
 

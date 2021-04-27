@@ -22,6 +22,7 @@
   - Touch AC
   - Flat-footed AC
   - Flat-footed CMD
+- Made the action type column for certain types of items on actor sheets more compact (#785)
 
 ### API
 

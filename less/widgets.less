@@ -36,6 +36,7 @@
     flex-direction: row;
     font-family: sans-serif;
     justify-content: flex-end;
+    background: linear-gradient(90deg, rgba(155, 155, 155, 0.2) 47%, transparent 50%);
 
     .hidden {
       display: none;
@@ -44,21 +45,40 @@
     .item-picker-categories {
       position: absolute;
       left: 8px;
-      width: 45%;
+      width: 47%;
       display: flex;
       flex: 1;
       flex-direction: column;
       margin-right: 8px;
+      border-right: 2px groove rgba(155, 155, 155, 0.5);
 
       .category {
         &.active {
-          text-shadow: 0 0 8px blue;
+          a > h2 {
+            background: rgba(155, 155, 155, 0.5);
+            text-shadow: 0 0 8px red;
+          }
+        }
+
+        &:hover {
+          a > h2 {
+            background: rgba(155, 155, 155, 0.2);
+            text-shadow: 0 0 8px red;
+          }
         }
 
         a {
           h2 {
+            border: 1px solid rgba(0, 0, 0, 0);
+            border-radius: 10px 0 0 10px;
             font-weight: bold;
             font-size: 16px;
+            text-indent: 10px;
+            margin-right: -1px;
+            margin-bottom: 1px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            border-bottom: unset;
           }
         }
       }
@@ -71,18 +91,19 @@
       max-width: 50%;
 
       .item {
-        border: 1px solid @colorDark;
+        border: 1px solid @colorTan;
         border-radius: 2px 2px 2px 0px;
         background: rgba(0, 0, 0, 0.05);
         height: 20px;
         line-height: 20px;
         padding: 0 10px;
-        margin: 1px 0;
+        margin: 1.5px 0;
         cursor: pointer;
 
         &:hover {
-          border-color: @colorRed;
-          color: @colorRust;
+          box-shadow: 0 0 6px @colorRed;
+          border: 1px solid black;
+          text-shadow: 0 0 black;
         }
       }
     }

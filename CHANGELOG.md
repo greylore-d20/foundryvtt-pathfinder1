@@ -25,6 +25,10 @@
 - Made the action type column for certain types of items on actor sheets more compact (#785)
 - Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
 
+### Compendium
+
+- Added a macro to calculate spell book cost
+
 ### API
 
 - Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.

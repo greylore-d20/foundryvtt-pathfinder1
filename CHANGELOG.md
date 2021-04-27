@@ -24,6 +24,7 @@
   - Flat-footed CMD
 - Made the action type column for certain types of items on actor sheets more compact (#785)
 - Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
+- Enhanced the conditions list on Actors' buffs tab with icons
 
 ### Compendium
 

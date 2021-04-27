@@ -1179,6 +1179,9 @@ export class ActorSheetPF extends ActorSheet {
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
 
+    // Toggle condition
+    html.find(".condition .checkbox").click(this._onToggleCondition.bind(this));
+
     /* -------------------------------------------- */
     /*  Links
     /* -------------------------------------------- */
@@ -1529,6 +1532,16 @@ export class ActorSheetPF extends ActorSheet {
 
       this._hiddenElems[a.dataset.for] = true;
     }
+  }
+
+  _onToggleCondition(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const key = a.name;
+
+    const updateData = {};
+    updateData[key] = !getProperty(this.actor.data, key);
+    this.actor.update(updateData);
   }
 
   _onOpenCompendium(event) {

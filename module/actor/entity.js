@@ -3435,59 +3435,66 @@ export class ActorPF extends Actor {
     }
 
     // Add range info
-    result.range = {
-      melee: 5,
-      reach: 10,
-    };
-    switch (result.traits.size) {
-      case "fine":
-      case "dim":
-        result.range.melee = 0;
-        result.range.reach = 0;
-        break;
-      case "tiny":
-        result.range.melee = 0;
-        result.range.reach = 5;
-        break;
-      case "lg":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 10;
-          result.range.reach = 20;
-        }
-        break;
-      case "huge":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 15;
-          result.range.reach = 30;
-        } else {
-          result.range.melee = 10;
-          result.range.reach = 20;
-        }
-        break;
-      case "grg":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 20;
-          result.range.reach = 40;
-        } else {
-          result.range.melee = 15;
-          result.range.reach = 30;
-        }
-        break;
-      case "col":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 30;
-          result.range.reach = 60;
-        } else {
-          result.range.melee = 20;
-          result.range.reach = 40;
-        }
-        break;
-    }
+    result.range = this.constructor.getReach(this.data.data.traits.size, this.data.data.traits.stature);
 
     this._rollData = result;
 
     // Call hook
     Hooks.callAll("pf1.getRollData", this, result, true);
+
+    return result;
+  }
+
+  static getReach(size = "med", stature = "tall") {
+    let result = {
+      melee: 5,
+      reach: 10,
+    };
+
+    switch (size) {
+      case "fine":
+      case "dim":
+        result.melee = 0;
+        result.reach = 0;
+        break;
+      case "tiny":
+        result.melee = 0;
+        result.reach = 5;
+        break;
+      case "lg":
+        if (stature === "tall") {
+          result.melee = 10;
+          result.reach = 20;
+        }
+        break;
+      case "huge":
+        if (stature === "tall") {
+          result.melee = 15;
+          result.reach = 30;
+        } else {
+          result.melee = 10;
+          result.reach = 20;
+        }
+        break;
+      case "grg":
+        if (stature === "tall") {
+          result.melee = 20;
+          result.reach = 40;
+        } else {
+          result.melee = 15;
+          result.reach = 30;
+        }
+        break;
+      case "col":
+        if (stature === "tall") {
+          result.melee = 30;
+          result.reach = 60;
+        } else {
+          result.melee = 20;
+          result.reach = 40;
+        }
+        break;
+    }
 
     return result;
   }

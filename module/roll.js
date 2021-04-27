@@ -171,6 +171,16 @@ export class RollPF extends Roll {
                 return cur;
               }, [])
               .map((o) => {
+                // Return raw string
+                if ((o.startsWith('"') && o.endsWith('"')) || (o.startsWith("'") && o.endsWith("'"))) {
+                  return o.slice(1, -1);
+                }
+                // Return data string
+                else if (o.match(/^@([a-zA-Z0-9.]+)$/)) {
+                  const value = getProperty(data, RegExp.$1);
+                  if (typeof value === "string") return value;
+                }
+                // Return roll result
                 return RollPF.safeRoll(o, data).total;
               })
               .filter((o) => o !== "" && o != null);

@@ -39,6 +39,7 @@ import { RollPF } from "./module/roll.js";
 import {
   getItemOwner,
   sizeDieExt,
+  sizeReach,
   normalDie,
   getActorFromId,
   createTag,
@@ -121,6 +122,7 @@ Hooks.once("init", function () {
     DicePF,
     rollPreProcess: {
       sizeRoll: sizeDieExt,
+      sizeReach: sizeReach,
       roll: normalDie,
     },
     //Chat

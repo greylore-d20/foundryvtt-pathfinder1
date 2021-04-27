@@ -1,6 +1,7 @@
 import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
 import { ItemPF } from "./item/entity.js";
+import { ActorPF } from "./actor/entity.js";
 
 /**
  * Creates a tag from a string.
@@ -321,6 +322,13 @@ export const normalDie = function (origCount, origSides, crit = 1) {
   }
 
   return formula;
+};
+
+export const sizeReach = function (size = "M", reach = false, stature = "tall") {
+  if (typeof size === "number") size = Object.values(CONFIG.PF1.sizeChart)[size];
+  size = Object.entries(CONFIG.PF1.sizeChart).find((o) => o[1] === size)[0];
+
+  return ActorPF.getReach(size, stature)[reach ? "reach" : "melee"];
 };
 
 /**

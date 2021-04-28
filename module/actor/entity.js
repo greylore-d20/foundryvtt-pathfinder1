@@ -328,7 +328,8 @@ export class ActorPF extends Actor {
 
   prepareBaseData() {
     // Refresh roll data
-    this.getRollData({ refresh: true });
+    // Furyspark: Not sure why this was necessary, so I commented it out, for now
+    // if (game.debug.pf1bla) this.getRollData({ refresh: true });
 
     // Update item resource values
     this.data.items.forEach((item) => {

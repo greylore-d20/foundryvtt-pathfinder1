@@ -90,9 +90,15 @@
       flex-direction: column;
       overflow-y: auto;
       padding-top: 2px;
-      padding-bottom: 2px;
       padding-left: 8px;
       margin-right: -3px;
+
+      // This padding-bottom replacement is necessary due to Firefox Bug 748518
+      &:after {
+        content: "";
+        display: flex;
+        flex: 0 0 3px;
+      }
 
       .item {
         border: 1px solid @colorTan;

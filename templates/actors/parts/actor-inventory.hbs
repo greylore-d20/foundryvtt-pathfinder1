@@ -18,7 +18,7 @@
       <!-- <a class="currency-convert" title="Convert Currency"><i class="fas fa-coins"></i></a> -->
     </h3>
     {{#each data.altCurrency as |v k|}}
-    <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
+    <label class="denomination {{k}} alt-currency">{{ lookup ../config.currencies k }}</label>
     <span class="text-box direct allow-relative" name="data.altCurrency.{{k}}">{{v}}</span>
     <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
     {{/each}}

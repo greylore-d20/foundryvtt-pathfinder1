@@ -25,6 +25,7 @@
 - Made the action type column for certain types of items on actor sheets more compact (#785)
 - Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
 - Enhanced the conditions list on Actors' buffs tab with icons
+- Added ability to drag currency between sheets (or to the same sheet)
 
 ### Compendium
 
@@ -34,6 +35,7 @@
 
 - Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.
 - Added a hook for activating and deactivating of conditions on actors keyed `pf1.toggleActorCondition`. See the system's GitLab wiki for more information.
+- Added `CurrencyTransfer.transfer` and `CurrencyTransfer.convert` to application API
 
 ## 0.77.21
 

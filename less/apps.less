@@ -895,12 +895,22 @@
     h3 {
       flex: 0 0 160px;
     }
-    label {
+    label.denomination {
       flex: 0;
-      margin-left: 8px;
+      margin-left: 4px;
       text-align: right;
       line-height: 20px;
       color: @colorTan;
+      cursor: grab;
+      &::before {
+        content: "\f58e";
+        font-weight: 900;
+        font-family: "Font Awesome 5 Free";
+        visibility: hidden;
+      }
+      &:hover::before {
+        visibility: visible;
+      }
     }
     input[type="text"],
     span.text-box {
@@ -1097,6 +1107,54 @@
         flex: 0 0 32px;
         padding: 0 1px 0 1px;
       }
+    }
+  }
+}
+
+.pf1 .currency-transfer {
+  .form-group:nth-child(5) {
+    background-color: rgba(170, 170, 170, 0.3);
+    border-top: 1px dashed #aaa;
+  }
+
+  .form-group > label {
+    flex: 0 0 150px;
+  }
+
+  .form-fields {
+    input,
+    span {
+      flex: 2;
+
+      font-weight: bold;
+
+      &.text-box {
+        line-height: 22px;
+        border: 1px dotted #777;
+        color: #333;
+      }
+
+      &:not(.text-box) {
+        color: black;
+        border: initial;
+        border-bottom: 2px groove #eeede0;
+      }
+    }
+
+    button > i:only-child {
+      margin: 0;
+    }
+  }
+
+  .form-group.currency-total .form-fields {
+    label:nth-child(1) {
+      text-align: right;
+    }
+    label:nth-child(2) {
+      flex: initial;
+    }
+    label:nth-child(3) {
+      text-align: left;
     }
   }
 }

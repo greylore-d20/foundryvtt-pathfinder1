@@ -3,6 +3,7 @@ import { ItemPF } from "../entity.js";
 import { convertWeight } from "../../lib.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { createConsumableSpellDialog } from "../../lib.js";
+import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 
 export class ItemSheetPF_Container extends ItemSheetPF {
   constructor(...args) {
@@ -10,7 +11,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     /**
      * Track item updates from the actor sheet.
-     * @type {Object[]}
+     *
+     * @type {object[]}
      */
     this._itemUpdates = [];
   }
@@ -25,7 +27,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Return a dynamic reference to the HTML template path used to render this Item Sheet
-   * @return {string}
+   *
+   * @returns {string}
    */
   get template() {
     return "systems/pf1/templates/items/container.hbs";
@@ -291,6 +294,14 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       li.addEventListener("dragstart", handler, false);
     });
 
+    // Currency Dragging
+    if (this.item.permission >= 3) {
+      html.find("label.denomination").each((i, label) => {
+        label.setAttribute("draggable", true);
+        label.addEventListener("dragstart", handler, false);
+      });
+    }
+
     html.find('.tab[data-tab="contents"]').each((i, li) => {
       li.addEventListener("drop", (ev) => this._onDrop(ev));
     });
@@ -404,13 +415,23 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (event.target.classList.contains("entity-link")) return;
 
     // Create drag data for an owned item
-    const li = event.currentTarget;
-    const item = this.item.getContainerContent(li.dataset.itemId);
-    const dragData = {
-      type: "Item",
-      containerId: this.item.id,
-      data: item.data,
-    };
+    const elem = event.currentTarget;
+    let dragData = { containerId: this.item.id };
+    if (elem.classList.contains("denomination")) {
+      dragData = {
+        type: "Currency",
+        alt: elem.classList.contains("alt-currency"),
+        currency: [...elem.classList].find((o) => /[pgsc]p/.test(o)),
+        containerId: this.item.id,
+        amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
+      };
+    } else {
+      const item = this.item.getContainerContent(elem.dataset.itemId);
+      dragData = {
+        type: "Item",
+        data: item.data,
+      };
+    }
 
     // Add actor to drag data
     const actor = this.item.parentActor;
@@ -442,6 +463,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     switch (data.type) {
       case "Item":
         return this._onDropItem(event, data);
+      case "Currency": {
+        let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+        return new CurrencyTransfer(
+          { actor: sourceActor, container: data.containerId, alt: data.alt },
+          {
+            actor: this.actor,
+            container: this.item.id,
+            amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]),
+          }
+        ).render(true);
+      }
     }
   }
 
@@ -527,6 +559,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemSummary(event) {
@@ -673,6 +707,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   *
+   * @param event
    * @private
    */
   _onItemRoll(event) {

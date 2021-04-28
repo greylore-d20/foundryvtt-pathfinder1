@@ -17,6 +17,7 @@ import { ItemPF } from "../../item/entity.js";
 import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
 import { LevelUpForm } from "../../apps/level-up.js";
+import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -889,6 +890,14 @@ export class ActorSheetPF extends ActorSheet {
       li.setAttribute("draggable", true);
       li.addEventListener("dragstart", handler, false);
     });
+
+    // Currency Dragging
+    if (this.actor.permission >= 3) {
+      html.find("label.denomination").each((i, label) => {
+        label.setAttribute("draggable", true);
+        label.addEventListener("dragstart", handler, false);
+      });
+    }
 
     // Race Dragging
     html.find(".race-container").each((i, el) => {
@@ -2585,7 +2594,7 @@ export class ActorSheetPF extends ActorSheet {
     let data;
     try {
       data = JSON.parse(event.dataTransfer.getData("text/plain"));
-      if (data.type !== "Item") return;
+      if (!["Item", "Currency"].includes(data.type)) return;
     } catch (err) {
       return false;
     }
@@ -2593,9 +2602,19 @@ export class ActorSheetPF extends ActorSheet {
     let itemData = {};
     let dataType = "";
     let fromContainer = false;
+    const actor = this.actor;
+
+    // Case 0 - Non-item currency transfer
+    if (data.currency) {
+      let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+      dataType = "currency";
+      return new CurrencyTransfer(
+        { actor: sourceActor, container: data.containerId, alt: data.alt },
+        { actor: this.actor, amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]) }
+      ).render(true);
+    }
 
     // Case 1 - Import from a Compendium pack
-    const actor = this.actor;
     if (data.pack) {
       dataType = "compendium";
       const pack = game.packs.find((p) => p.collection === data.pack);
@@ -2759,6 +2778,22 @@ export class ActorSheetPF extends ActorSheet {
       let fullItem = actorRef.items.get(createdItem._id);
       return fullItem;
     });
+  }
+
+  _onDragStart(event) {
+    const elem = event.target;
+    if (elem.classList.contains("denomination")) {
+      const dragData = {
+        actorId: this.actor.id,
+        sceneId: this.actor.isToken ? canvas.scene?.id : null,
+        tokenId: this.actor.isToken ? this.actor.token.id : null,
+        type: "Currency",
+        alt: elem.classList.contains("alt-currency"),
+        currency: [...elem.classList].find((o) => /[pgsc]p/.test(o)),
+        amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
+      };
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    } else super._onDragStart(event);
   }
 
   async _onConfigControl(event) {

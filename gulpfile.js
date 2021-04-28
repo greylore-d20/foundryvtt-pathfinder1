@@ -134,7 +134,7 @@ function watchUpdates() {
 /**
  * Gets the current system version
  *
- * @return {string} The current version
+ * @returns {string} The current version
  */
 function getTagVersion() {
   try {

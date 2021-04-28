@@ -68,6 +68,7 @@ import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
+import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -116,6 +117,7 @@ Hooks.once("init", function () {
       TooltipPF,
       // Widgets
       Widget_CategorizedItemPicker,
+      CurrencyTransfer,
     },
     compendiums: {},
     // Rolling
@@ -697,6 +699,18 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
 Hooks.on("chatMessage", (log, message, chatData) => {
   const result = customRolls(message, chatData.speaker);
   return !result;
+});
+
+Hooks.on("renderActorDirectory", (app, html, data) => {
+  html.find("li.actor").each((i, li) => {
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+  });
+});
+
+Hooks.on("renderItemDirectory", (app, html, data) => {
+  html.find("li.item").each((i, li) => {
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+  });
 });
 
 /* -------------------------------------------- */

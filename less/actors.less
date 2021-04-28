@@ -842,6 +842,29 @@
       }
     }
 
+    a.checkbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      color: @colorTan;
+
+      img {
+        border: none;
+      }
+
+      &:not(.active) > img {
+        filter: brightness(50%);
+      }
+
+      &.active {
+        color: @colorDark;
+      }
+
+      & > :first-child {
+        margin-right: 4px;
+      }
+    }
+
     .buffs-conditions {
       flex: 0;
     }

@@ -30,6 +30,10 @@
 
 - Added a macro to calculate spell book cost
 
+### Localization
+
+- Updated the French localization (thanks rectulo!)
+
 ### API
 
 - Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.

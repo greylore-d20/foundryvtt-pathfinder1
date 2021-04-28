@@ -802,9 +802,6 @@ export class ActorPF extends Actor {
             if (Number.isNaN(base)) {
               setProperty(this.data, `${bookPath}.spells.spell${a}.base`, null);
               setProperty(this.data, `${bookPath}.spells.spell${a}.max`, 0);
-            } else if (getProperty(this.data, `${bookPath}.autoSpellLevels`)) {
-              base += getAbilityBonus(a);
-              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
             } else {
               setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
             }

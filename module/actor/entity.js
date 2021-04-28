@@ -328,8 +328,9 @@ export class ActorPF extends Actor {
 
   prepareBaseData() {
     // Refresh roll data
-    // Furyspark: Not sure why this was necessary, so I commented it out, for now
-    // if (game.debug.pf1bla) this.getRollData({ refresh: true });
+    // Some changes act wonky without this
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    if (game.actors) this.getRollData({ refresh: true });
 
     // Update item resource values
     this.data.items.forEach((item) => {

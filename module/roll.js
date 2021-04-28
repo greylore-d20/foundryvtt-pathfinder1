@@ -176,7 +176,7 @@ export class RollPF extends Roll {
                   return o.slice(1, -1);
                 }
                 // Return data string
-                else if (o.match(/^@([a-zA-Z0-9.]+)$/)) {
+                else if (o.match(/^@([a-zA-Z0-9-.]+)$/)) {
                   const value = getProperty(data, RegExp.$1);
                   if (typeof value === "string") return value;
                 }

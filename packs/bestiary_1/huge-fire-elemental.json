@@ -102,21 +102,25 @@
         "max": {
           "_deprecated": true,
           "value": 0
+        },
+        "base": {
+          "_deprecated": true,
+          "value": 0
         }
       },
       "naturalAC": 5,
       "ac": {
         "normal": {
           "value": 0,
-          "total": 10
+          "total": 21
         },
         "touch": {
           "value": 0,
-          "total": 10
+          "total": 16
         },
         "flatFooted": {
           "value": 0,
-          "total": 10
+          "total": 13
         }
       },
       "bab": {
@@ -125,15 +129,15 @@
       },
       "cmd": {
         "value": "16",
-        "total": 10,
-        "flatFootedTotal": 10
+        "total": 34,
+        "flatFootedTotal": 26
       },
       "cmb": {
         "value": 34,
-        "total": 0
+        "total": 16
       },
       "sr": {
-        "formula": 0,
+        "formula": "",
         "total": 0
       },
       "saveNotes": "",
@@ -142,7 +146,7 @@
       "srNotes": "",
       "attack": {
         "general": 0,
-        "shared": 0,
+        "shared": 8,
         "melee": 0,
         "ranged": 0,
         "meleeAbility": "str",
@@ -151,7 +155,8 @@
       "damage": {
         "general": 0,
         "weapon": 0,
-        "spell": 0
+        "spell": 0,
+        "shared": 0
       },
       "maxDexBonus": null,
       "mDex": {
@@ -171,45 +176,52 @@
       "savingThrows": {
         "fort": {
           "total": 10,
-          "ability": "con"
+          "ability": "con",
+          "base": 3
         },
         "ref": {
           "total": 14,
-          "ability": "dex"
+          "ability": "dex",
+          "base": 7
         },
         "will": {
           "total": 5,
-          "ability": "wis"
+          "ability": "wis",
+          "base": 7
         }
       },
       "hp": {
         "value": 85,
-        "max": 0,
+        "max": 85,
         "temp": null,
         "nonlethal": null,
-        "min": -100
+        "min": -100,
+        "base": 0
       },
       "wounds": {
         "min": 0,
         "value": 32,
-        "max": 32
+        "max": 16,
+        "base": 0
       },
       "vigor": {
         "min": 0,
         "value": 55,
         "temp": 0,
-        "max": 55
+        "max": 55,
+        "base": 0
       },
       "woundThresholds": {
         "penalty": 0,
         "mod": 0,
         "level": 0,
-        "override": -1
+        "override": -1,
+        "penaltyBase": 0
       },
       "init": {
         "value": 0,
         "bonus": 0,
-        "total": 0,
+        "total": 4,
         "ability": ""
       },
       "prof": 2,
@@ -255,7 +267,12 @@
         "fear": false,
         "sickened": false,
         "staggered": false,
-        "stunned": false
+        "stunned": false,
+        "dazed": false,
+        "frightened": false,
+        "nauseated": false,
+        "panicked": false,
+        "shaken": false
       },
       "spells": {
         "usedSpellbooks": [],
@@ -291,53 +308,85 @@
               "spell0": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell1": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell2": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell3": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell4": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell5": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell6": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell7": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell8": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell9": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               }
+            },
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
+            "casterType": "high",
+            "autoSpellLevelCalculation": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "secondary": {
@@ -371,53 +420,85 @@
               "spell0": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell1": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell2": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell3": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell4": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell5": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell6": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell7": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell8": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell9": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               }
+            },
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
+            "casterType": "high",
+            "autoSpellLevelCalculation": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "tertiary": {
@@ -451,53 +532,85 @@
               "spell0": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell1": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell2": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell3": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell4": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell5": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell6": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell7": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell8": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell9": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               }
+            },
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
+            "casterType": "high",
+            "autoSpellLevelCalculation": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "spelllike": {
@@ -506,7 +619,7 @@
             "cl": {
               "base": 0,
               "value": 0,
-              "total": 1,
+              "total": 10,
               "formula": ""
             },
             "concentration": 0,
@@ -531,53 +644,85 @@
               "spell0": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell1": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell2": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell3": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell4": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell5": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell6": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell7": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell8": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               },
               "spell9": {
                 "value": 0,
                 "max": 0,
-                "base": null
+                "base": null,
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": ""
               }
+            },
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
+            "casterType": "high",
+            "autoSpellLevelCalculation": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
+            "range": {
+              "close": 50,
+              "medium": 200,
+              "long": 800
             }
           }
         },
@@ -597,7 +742,11 @@
       "mods": {
         "skills": {}
       },
-      "creatureType": "humanoid"
+      "creatureType": "humanoid",
+      "vision": {
+        "lowLight": false,
+        "darkvision": 0
+      }
     },
     "details": {
       "level": {
@@ -624,8 +773,22 @@
         "total": 7
       },
       "xp": {
-        "value": "3200"
-      }
+        "value": 3200
+      },
+      "tooltip": {
+        "name": "",
+        "hideHeld": false,
+        "hideArmor": false,
+        "hideBuffs": false,
+        "hideConditions": false,
+        "hideClothing": false,
+        "hideName": false
+      },
+      "gender": "",
+      "deity": "",
+      "age": "",
+      "height": "",
+      "weight": ""
     },
     "skills": {
       "acr": {
@@ -760,7 +923,7 @@
         "background": false,
         "notes": "",
         "cs": false,
-        "changeBonus": 0
+        "changeBonus": -4
       },
       "han": {
         "value": 0,
@@ -1039,7 +1202,7 @@
         "background": false,
         "notes": "",
         "cs": true,
-        "changeBonus": 0
+        "changeBonus": -8
       },
       "sur": {
         "value": 0,
@@ -1081,7 +1244,7 @@
     "customSkills": {},
     "traits": {
       "size": "huge",
-      "senses": "darkvision 60 ft.; Perception +13 \n",
+      "senses": "darkvision 60 ft.; Perception +13",
       "dr": "5/",
       "eres": "",
       "cres": "",
@@ -1095,7 +1258,6 @@
       },
       "di": {
         "value": [
-          "cold",
           "fire"
         ],
         "custom": ""
@@ -1108,7 +1270,7 @@
       },
       "ci": {
         "value": [],
-        "custom": "elemental traits,  Weaknesses vulnerability to "
+        "custom": "elemental traits"
       },
       "perception": {
         "_deprecated": true
@@ -1127,7 +1289,377 @@
       "sp": 0,
       "cp": 0
     },
-    "classes": {}
+    "classes": {
+      "outsider": {
+        "level": 10,
+        "name": "Outsider",
+        "hd": 10,
+        "bab": "high",
+        "hp": false,
+        "savingThrows": {
+          "fort": 3,
+          "ref": 7,
+          "will": 7
+        },
+        "fc": {
+          "hp": 0,
+          "skill": 0,
+          "alt": 0
+        }
+      }
+    },
+    "armor": {
+      "type": 0
+    },
+    "shield": {
+      "type": 0
+    },
+    "spells": {
+      "primary": {
+        "name": "Primary",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": ""
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": false,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "spells": {
+          "spell0": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell1": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell2": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell3": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell4": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell5": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell6": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell7": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell8": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell9": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          }
+        },
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "secondary": {
+        "name": "Secondary",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": ""
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": false,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "spells": {
+          "spell0": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell1": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell2": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell3": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell4": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell5": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell6": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell7": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell8": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell9": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          }
+        },
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "tertiary": {
+        "name": "Tertiary",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": ""
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": false,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "spells": {
+          "spell0": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell1": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell2": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell3": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell4": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell5": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell6": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell7": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell8": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell9": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          }
+        },
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "spelllike": {
+        "name": "Spell-likes",
+        "class": "_hd",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 10,
+          "formula": ""
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "cha",
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": false,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "spells": {
+          "spell0": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell1": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell2": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell3": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell4": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell5": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell6": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell7": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell8": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          },
+          "spell9": {
+            "value": 0,
+            "max": 0,
+            "base": null
+          }
+        },
+        "range": {
+          "close": 50,
+          "medium": 200,
+          "long": 800
+        }
+      }
+    },
+    "range": {
+      "melee": 15,
+      "reach": 30
+    }
   },
   "sort": 100001,
   "flags": {
@@ -1186,14 +1718,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "links": {
           "children": []
@@ -1207,6 +1739,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "classType": "racial",
         "levels": 1,
@@ -1359,6 +1895,16 @@
             "Additional Attack: 1"
           ]
         ],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "str",
@@ -1381,6 +1927,10 @@
         },
         "tag": "",
         "useCustomTag": false,
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "attackType": "natural",
         "masterwork": false,
         "nonlethal": false,
@@ -1466,6 +2016,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "str",
@@ -1488,6 +2048,10 @@
         },
         "tag": "",
         "useCustomTag": false,
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "attackType": "weapon",
         "masterwork": false,
         "nonlethal": false,
@@ -1568,6 +2132,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -1587,14 +2161,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1610,6 +2184,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -1689,6 +2267,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -1708,14 +2296,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1731,6 +2319,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -1810,6 +2402,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -1829,14 +2431,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1852,6 +2454,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -1931,6 +2537,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -1950,14 +2566,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1973,6 +2589,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -2052,6 +2672,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2071,14 +2701,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2094,6 +2724,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -2173,6 +2807,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2192,14 +2836,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2215,6 +2859,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -2294,6 +2942,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2313,14 +2971,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2336,6 +2994,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "featType": "feat",
         "associations": {
@@ -2419,14 +3081,14 @@
         ],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2434,6 +3096,10 @@
         },
         "tag": "",
         "useCustomTag": false,
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "buffType": "perm",
         "active": true,
         "level": "",

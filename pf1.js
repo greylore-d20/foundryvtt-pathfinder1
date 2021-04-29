@@ -639,8 +639,6 @@ Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
     item._onLevelChange(0, item.data.data.level);
   }
 
-  // Refresh item
-  item.update({});
   // Show buff if active
   if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
     // Call hook

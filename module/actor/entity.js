@@ -226,13 +226,6 @@ export class ActorPF extends Actor {
     return hasPlayerOwner;
   }
 
-  prepareEmbeddedEntities() {
-    super.prepareEmbeddedEntities();
-    this.containerItems = this._prepareContainerItems(this.items);
-    this.itemFlags = this._prepareItemFlags(this.allItems);
-    this._prepareChanges();
-  }
-
   _prepareContainerItems(items) {
     let collection = [];
 
@@ -308,6 +301,15 @@ export class ActorPF extends Actor {
   applyActiveEffects() {
     super.applyActiveEffects();
 
+    this.containerItems = this._prepareContainerItems(this.items);
+    this.itemFlags = this._prepareItemFlags(this.allItems);
+    this._prepareChanges();
+
+    // Refresh roll data
+    // Some changes act wonky without this
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    this.getRollData({ refresh: true });
+
     applyChanges.call(this);
   }
 
@@ -335,11 +337,6 @@ export class ActorPF extends Actor {
   }
 
   prepareBaseData() {
-    // Refresh roll data
-    // Some changes act wonky without this
-    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    if (game.actors) this.getRollData({ refresh: true });
-
     // Update item resource values
     this.data.items.forEach((item) => {
       this.updateItemResources(item);

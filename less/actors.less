@@ -473,8 +473,8 @@
     li.skill,
     li.sub-skill {
       height: 28px;
-      padding: 3px 0;
-      align-items: end;
+      display: flex;
+      flex-direction: row;
 
       background-color: rgba(170, 170, 170, 0.3);
       &:nth-child(even) {
@@ -503,7 +503,7 @@
         flex: 180px;
         margin: 0;
         font-size: 14px;
-        align-items: start;
+        align-items: center;
 
         .untrained-label {
           vertical-align: super;
@@ -512,7 +512,8 @@
         }
 
         .rollable {
-          display: inline-block;
+          display: flex;
+          flex-direction: row;
           flex: 0 0 16px;
           margin-right: 2px;
 

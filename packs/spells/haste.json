@@ -32,6 +32,8 @@
     "range": {
       "value": null,
       "units": "close",
+      "maxIncrements": 1,
+      "minValue": null,
       "minUnits": ""
     },
     "uses": {
@@ -49,6 +51,7 @@
       "overrideTexture": false,
       "customTexture": ""
     },
+    "attackName": "",
     "actionType": "spellsave",
     "attackBonus": "",
     "critConfirmBonus": "",
@@ -58,6 +61,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": "",
@@ -76,6 +89,10 @@
     "soundEffect": "",
     "links": {
       "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "learnedAt": {
       "class": [
@@ -135,6 +152,7 @@
     "school": "trs",
     "subschool": "",
     "types": "",
+    "nonlethal": false,
     "conditionals": [],
     "components": {
       "value": "",
@@ -169,9 +187,7 @@
       "cost": "1 + @sl"
     },
     "domain": false,
-    "slotCost": 1,
-    "nonlethal": false,
-    "identifiedName": "Haste"
+    "slotCost": 1
   },
   "flags": {},
   "img": "systems/pf1/icons/misc/magic-swirl.png",

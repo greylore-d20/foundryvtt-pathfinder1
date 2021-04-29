@@ -7,6 +7,7 @@
 - Rolling untrained skills requiring training sometimes didn't show a note saying it's untrained (#780)
 - Custom styles ("not implemented"/ "steps required") for TinyMCE editors would fail to load
 - Resources weren't updated for unowned actors (#788)
+- Creating characters while other players are connected would cause errors on their clients
 
 ### Changelog
 

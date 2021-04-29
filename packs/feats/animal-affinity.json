@@ -85,7 +85,28 @@
     "effectNotes": "",
     "attackNotes": "",
     "soundEffect": "",
-    "changes": [],
+    "changes": [
+      {
+        "_id": "s2itjonf",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.han",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "eqwqfte8",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.rid",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
     "changeFlags": {
       "loseDexToAC": false,
       "noStr": false,
@@ -102,7 +123,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "animalAffinity",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -135,6 +156,20 @@
     },
     "attack": {
       "parts": []
+    },
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     }
   },
   "flags": {},

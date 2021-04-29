@@ -842,6 +842,29 @@
       }
     }
 
+    a.checkbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      color: @colorTan;
+
+      img {
+        border: none;
+      }
+
+      &:not(.active) > img {
+        filter: brightness(50%);
+      }
+
+      &.active {
+        color: @colorDark;
+      }
+
+      & > :first-child {
+        margin-right: 4px;
+      }
+    }
+
     .buffs-conditions {
       flex: 0;
     }
@@ -966,6 +989,13 @@
       margin: 0;
     }
 
+    .spell-settings > .flexcol {
+      height: min-content;
+      > *:not(:last-child) > {
+        margin-bottom: 2px;
+      }
+    }
+
     .spell-points-current {
       flex: 0;
 
@@ -984,6 +1014,61 @@
 
       .sep {
         flex: 0;
+      }
+    }
+
+    .radios {
+      display: flex;
+      justify-content: space-evenly;
+
+      label {
+        white-space: nowrap;
+      }
+
+      label.checkbox {
+        display: flex;
+        &:first-child {
+          margin-top: unset;
+        }
+      }
+
+      input {
+        margin-inline-end: 4px;
+      }
+
+      *:not(:last-child) {
+        margin-inline-end: 4px;
+      }
+    }
+
+    .spell-level-mod-container {
+      column-gap: 12px;
+      display: grid;
+      grid-auto-rows: auto;
+      grid-template-columns: min-content 1fr;
+
+      > label h3 {
+        white-space: nowrap;
+      }
+
+      .spell-mod-formulas {
+        display: flex;
+        flex-direction: row;
+
+        .ppdoffset,
+        .cpdoffset {
+          overflow: none;
+          width: 50%;
+        }
+      }
+
+      &.hide-cpd {
+        .ppdoffset {
+          width: 100%;
+        }
+        .cpdoffset {
+          display: none;
+        }
       }
     }
 
@@ -1013,6 +1098,10 @@
         -moz-user-select: text;
         -ms-user-select: text;
         user-select: text;
+      }
+
+      .spell-input-readonly {
+        color: black;
       }
 
       input[type="text"].base,
@@ -1080,6 +1169,12 @@
       input[type="text"] {
         flex: 1;
       }
+    }
+
+    .spell-level-message {
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
     }
 
     .spell-range {

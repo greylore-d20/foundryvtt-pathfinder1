@@ -234,10 +234,10 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   prepareEmbeddedEntities() {
+    this._prepareChanges();
     super.prepareEmbeddedEntities();
     this.containerItems = this._prepareContainerItems(this.items);
     this.itemFlags = this._prepareItemFlags(this.allItems);
-    this._prepareChanges();
     this.containerItems = this._prepareContainerItems(this.items);
   }
 
@@ -304,6 +304,12 @@ export class ActorPF extends ActorDataPF(Actor) {
     this.changes = c;
   }
 
+  applyActiveEffects() {
+    super.applyActiveEffects();
+
+    applyChanges.call(this);
+  }
+
   prepareData() {
     this._queuedUpdates = {};
     this.sourceInfo = {};
@@ -326,16 +332,18 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   prepareBaseData() {
     // Refresh roll data
-    this.getRollData({ refresh: true });
+    // Some changes act wonky without thi:
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    if (game.actors) this.getRollData({ refresh: true });
 
     // Update item resource values
     this.data.items.forEach((item) => {
       this.updateItemResources(item);
     });
 
-    Hooks.callAll("pf1.prepareBaseActorData", this);
     super.prepareBaseData();
     this._resetInherentTotals();
+    Hooks.callAll("pf1.prepareBaseActorData", this);
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
@@ -597,10 +605,8 @@ export class ActorPF extends ActorDataPF(Actor) {
    * Augment the basic actor data with additional dynamic data.
    */
   prepareDerivedData() {
-    applyChanges.call(this);
-
-    Hooks.callAll("pf1.prepareDerivedActorData", this);
     super.prepareDerivedData();
+    Hooks.callAll("pf1.prepareDerivedActorData", this);
 
     const actorData = this.data;
     const data = actorData.data;
@@ -670,6 +676,25 @@ export class ActorPF extends ActorDataPF(Actor) {
             value: value,
           });
         }
+
+        // set auto spell level calculation offset
+        if (spellbook.autoSpellLevelCalculation) {
+          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
+          const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
+          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+          setProperty(this.data, autoKey, autoTotal);
+
+          total += autoBonus;
+          if (autoBonus !== 0) {
+            const sign = autoBonus < 0 ? "negative" : "positive";
+            getSourceInfo(this.sourceInfo, key)[sign].push({
+              name: game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
+              value: autoBonus,
+            });
+          }
+        }
+
         // Add from bonus formula
         const clBonus = RollPF.safeRoll(formula, rollData).total;
         total += clBonus;
@@ -708,30 +733,102 @@ export class ActorPF extends ActorDataPF(Actor) {
         setProperty(this.data, key, total);
       }
 
+      const getAbilityBonus = (a) =>
+        a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
       // Spell slots
-      for (let a = 0; a < 10; a++) {
-        let base = parseInt(
-          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`)
-        );
-        if (Number.isNaN(base)) {
-          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.base`, null);
-          setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, 0);
-        } else {
-          if (getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.autoSpellLevels`)) {
-            const value =
-              typeof spellbookAbilityMod === "number"
-                ? base + ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a)
-                : base;
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, value);
+      {
+        const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
+
+        const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
+        if (useAuto) {
+          let spellPrepMode = spellbook.spellPreparationMode;
+          if (!spellPrepMode || spellPrepMode === "null") {
+            spellPrepMode = "spontaneous";
+            setProperty(this.data, `${bookPath}.spellPreparationMode`, spellPrepMode);
+          }
+
+          // turn off spell points
+          setProperty(this.data, `${bookPath}.spellPoints.useSystem`, false);
+
+          // set base "spontaneous" based on spell prep mode
+          if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
+            spellbook.spontaneous = true;
+            setProperty(this.data, `${bookPath}.spontaneous`, true);
           } else {
-            setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.max`, base);
+            spellbook.spontaneous = false;
+            setProperty(this.data, `${bookPath}.spontaneous`, false);
+          }
+
+          let casterType = getProperty(this.data, `${bookPath}.casterType`);
+          if (!casterType || casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
+            casterType = "high";
+            setProperty(this.data, `${bookPath}.casterType`, casterType);
+          }
+          if (spellPrepMode === "prestige" && casterType !== "low") {
+            casterType = "low";
+            setProperty(this.data, `${bookPath}.casterType`, casterType);
+          }
+
+          const castsForLevels =
+            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
+              casterType
+            ];
+          const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
+          rollData.cl = classLevel;
+          rollData.ablMod = spellbookAbilityMod;
+
+          const allLevelModFormula =
+            getProperty(
+              this.data,
+              `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
+            ) || "0";
+          const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+
+          for (let a = 0; a < 10; a++) {
+            // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
+            const spellsForLevel =
+              a === 0 && spellbook.spontaneous
+                ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
+                : castsForLevels[classLevel - 1][a];
+            setProperty(this.data, `${bookPath}.spells.spell${a}.base`, spellsForLevel);
+
+            const offsetFormula =
+              getProperty(
+                this.data,
+                `${bookPath}.spells.spell${a}.${[
+                  spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula",
+                ]}`
+              ) || "0";
+
+            let max =
+              typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
+                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
+                : null;
+
+            setProperty(this.data, `${bookPath}.spells.spell${a}.max`, max);
+          }
+        } else {
+          for (let a = 0; a < 10; a++) {
+            let base = parseInt(getProperty(this.data, `${bookPath}.spells.spell${a}.base`));
+            if (Number.isNaN(base)) {
+              setProperty(this.data, `${bookPath}.spells.spell${a}.base`, null);
+              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, 0);
+            } else if (getProperty(this.data, `${bookPath}.autoSpellLevels`)) {
+              base += getAbilityBonus(a);
+              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
+            } else {
+              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
+            }
           }
         }
+      }
 
-        // Set spontaneous spell slots to something sane
-        {
+      // Set spontaneous spell slots to something sane
+      {
+        for (let a = 0; a < 10; a++) {
           const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
-          setProperty(this.data, k, getProperty(this.data, k) || 0);
+          const current = getProperty(this.data, k);
+          setProperty(this.data, k, current || 0);
         }
       }
 
@@ -753,10 +850,13 @@ export class ActorPF extends ActorDataPF(Actor) {
           }
         }
 
-        const spells = this.items.filter((o) => o.type === "spell");
+        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
         for (let i of spells) {
           const sb = i.spellbook;
-          if (!sb || (sb && sb.spontaneous)) continue;
+          if (!sb || sb.spontaneous) {
+            continue;
+          }
+
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;
@@ -777,6 +877,82 @@ export class ActorPF extends ActorDataPF(Actor) {
           setProperty(slots, `${sbKey}.${a}.value`, uses);
           setProperty(slots, `${sbKey}.${a}.domainSlots`, dSlots);
           setProperty(this.data, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
+        }
+
+        // Spells available hint text if auto spell levels is enabled
+        {
+          const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
+          const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
+          if (useAuto) {
+            const spellPrepMode = spellbook.spellPreparationMode;
+            let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
+            const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
+
+            let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
+
+            const allLevelModFormula =
+              getProperty(
+                this.data,
+                `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
+              ) || "0";
+            const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+
+            for (let a = 0; a < 10; a++) {
+              if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
+                const message = game.i18n.localize("PF1.SpellScoreTooLow");
+                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, message);
+                continue;
+              }
+
+              let remaining;
+              if (spellPrepMode === "prepared") {
+                // for prepared casters, just use the 'value' calculated above
+                remaining = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
+              } else {
+                // spontaneous or hybrid
+                // if not prepared then base off of casts per day
+                let available =
+                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
+                available += allLevelMod;
+
+                const formula = getProperty(this.data, `${bookPath}.spells.spell${a}.preparedOffsetFormula`) || "0";
+                available += RollPF.safeTotal(formula, rollData);
+
+                const used = spells.reduce((acc, i) => {
+                  const { level, spellbook, preparation } = i.data.data;
+                  return level === a && spellbook === spellbookKey && preparation.spontaneousPrepared ? ++acc : acc;
+                }, 0);
+
+                remaining = available - used;
+              }
+
+              if (!remaining) {
+                continue;
+              }
+
+              let remainingMessage = "";
+              if (remaining < 0) {
+                remainingMessage = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
+              } else if (remaining > 0) {
+                if (spellPrepMode === "spontaneous") {
+                  remainingMessage =
+                    remaining === 1
+                      ? game.i18n.localize("PF1.LearnMoreSpell")
+                      : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
+                } else {
+                  // hybrid or prepared
+                  remainingMessage =
+                    remaining === 1
+                      ? game.i18n.localize("PF1.PrepareMoreSpell")
+                      : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
+                }
+              }
+
+              if (remainingMessage) {
+                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, remainingMessage);
+              }
+            }
+          }
         }
       }
 
@@ -1133,15 +1309,11 @@ export class ActorPF extends ActorDataPF(Actor) {
     const actorData = this.data;
     let sourceDetails = {};
     // Get empty source arrays
-    for (let obj of Object.values(CONFIG.PF1.buffTargets)) {
-      for (let b of Object.keys(obj)) {
-        if (!b.startsWith("_")) {
-          let buffTargets = getChangeFlat.call(this, b, null);
-          if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
-          for (let bt of buffTargets) {
-            if (!sourceDetails[bt]) sourceDetails[bt] = [];
-          }
-        }
+    for (let b of Object.keys(CONFIG.PF1.buffTargets)) {
+      let buffTargets = getChangeFlat.call(this, b, null);
+      if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
+      for (let bt of buffTargets) {
+        if (!sourceDetails[bt]) sourceDetails[bt] = [];
       }
     }
     // Add additional source arrays not covered by changes
@@ -1416,6 +1588,21 @@ export class ActorPF extends ActorDataPF(Actor) {
       linkData(fullData, data, "data.attributes.spells.usedSpellbooks", usedSpellbooks);
     }
 
+    // Apply changes in Actor size to Token width/height
+    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
+      let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
+      let tokens = this.isToken ? [this.token] : this.getActiveTokens();
+      tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
+      tokens.forEach((o) => {
+        o.document.update({ width: size.w, height: size.h, scale: size.scale });
+      });
+      if (!this.isToken) {
+        linkData(fullData, data, "token.width", size.w);
+        linkData(fullData, data, "token.height", size.h);
+        linkData(fullData, data, "token.scale", size.scale);
+      }
+    }
+
     // Make certain variables absolute
     const _absoluteKeys = Object.keys(this.data.data.abilities)
       .reduce((arr, abl) => {
@@ -1428,21 +1615,6 @@ export class ActorPF extends ActorDataPF(Actor) {
       });
     for (const k of _absoluteKeys) {
       linkData(fullData, data, k, Math.abs(data[k]));
-    }
-
-    // Apply changes in Actor size to Token width/height
-    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
-      let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      let tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
-      tokens.forEach((o) => {
-        o.update({ width: size.w, height: size.h, scale: size.scale });
-      });
-      if (!this.isToken) {
-        linkData(fullData, data, "token.width", size.w);
-        linkData(fullData, data, "token.height", size.h);
-        linkData(fullData, data, "token.scale", size.scale);
-      }
     }
 
     // Apply changes in resources
@@ -1612,11 +1784,10 @@ export class ActorPF extends ActorDataPF(Actor) {
    *
    * @param {object} data - The update data, as per ActorPF.update()
    * @param updateData
-   * @param fullData
    */
-  _updateExp(updateData, fullData) {
+  _updateExp(updateData) {
     // Get total level
-    const classes = fullData.items._source.filter((o) => o.type === "class");
+    const classes = this.items.filter((o) => o.type === "class");
     const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
 
     // The following is not for NPCs
@@ -1662,8 +1833,6 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   updateItemResources(itemData) {
-    if (!this.isOwner) return;
-
     const activationType = game.settings.get("pf1", "unchainedActionEconomy")
       ? itemData.data.unchainedAction?.activation?.type
       : itemData.data.activation?.type;
@@ -1939,7 +2108,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
     // Add untrained note
-    if (skl.rt && skl.rank === 0) {
+    if (skl.rt && !skl.rank) {
       notes.push(game.i18n.localize("PF1.Untrained"));
     }
 
@@ -2813,7 +2982,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "attacks" && o.subTarget === key;
+            return o.subTarget === key;
           })
           .map((o) => {
             return o.text;
@@ -2832,10 +3001,11 @@ export class ActorPF extends ActorDataPF(Actor) {
         note.notes = note.notes
           .filter((o) => {
             return (
-              (o.target === "skill" &&
-                // Check for skill.context or skill.xyz.subSkills.context
-                (o.subTarget === context || o.subTarget.split(".")?.[3] === context.split(".")?.[1])) ||
-              (o.target === "skills" && (o.subTarget === `${ability}Skills` || o.subTarget === "skills"))
+              // Check for skill.context or skill.xyz.subSkills.context
+              o.subTarget === context ||
+              o.subTarget.split(".")?.[3] === context.split(".")?.[1] ||
+              o.subTarget === `${ability}Skills` ||
+              o.subTarget === "skills"
             );
           })
           .map((o) => {
@@ -2852,7 +3022,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "savingThrows" && (o.subTarget === saveKey || o.subTarget === "allSavingThrows");
+            return o.subTarget === saveKey || o.subTarget === "allSavingThrows";
           })
           .map((o) => {
             return o.text;
@@ -2872,7 +3042,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "abilityChecks" && (o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks");
+            return o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks";
           })
           .map((o) => {
             return o.text;
@@ -2888,7 +3058,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "misc" && o.subTarget === miscKey;
+            return o.subTarget === miscKey;
           })
           .map((o) => {
             return o.text;
@@ -2903,7 +3073,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "spell" && o.subTarget === "concentration";
+            return o.subTarget === "concentration";
           })
           .map((o) => {
             return o.text;
@@ -2926,7 +3096,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       for (let note of result) {
         note.notes = note.notes
           .filter((o) => {
-            return o.target === "spell" && o.subTarget === "cl";
+            return o.subTarget === "cl";
           })
           .map((o) => {
             return o.text;
@@ -2943,7 +3113,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     if (context.match(/^spell\.effect$/)) {
       for (let note of result) {
-        note.notes = note.notes.filter((o) => o.target === "spell" && o.subTarget === "effect").map((o) => o.text);
+        note.notes = note.notes.filter((o) => o.subTarget === "spellEffect").map((o) => o.text);
       }
 
       return result;
@@ -3071,7 +3241,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   getCarriedWeight() {
     // Determine carried weight
-    const physicalItems = this.data.items.filter((o) => {
+    const physicalItems = this.items.filter((o) => {
       return o.data.data.weight != null;
     });
     const weight = physicalItems.reduce((cur, o) => {
@@ -3189,7 +3359,11 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Return cached data, if applicable
-    if (skipRefresh) return result;
+    if (skipRefresh) {
+      Hooks.callAll("pf1.getRollData", this, result, false);
+
+      return result;
+    }
 
     /* ----------------------------- */
     /* Set the following data on a refresh
@@ -3201,6 +3375,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Set class data
+    const baseSavingThrows = {};
     result.classes = {};
     this.data.items
       .filter((obj) => {
@@ -3244,8 +3419,17 @@ export class ActorPF extends ActorDataPF(Actor) {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
+
+          // Set base saving throws
+          baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
+          baseSavingThrows[k] += result.classes[tag].savingThrows[k];
         }
       });
+
+    // Set base saving throws
+    for (let [k, v] of Object.entries(baseSavingThrows)) {
+      setProperty(result, `attributes.savingThrows.${k}.base`, v);
+    }
 
     // Add more info for formulas
     if (this.data.items) {
@@ -3292,56 +3476,67 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Add range info
-    result.range = {
+    result.range = this.constructor.getReach(this.data.data.traits.size, this.data.data.traits.stature);
+
+    this._rollData = result;
+
+    // Call hook
+    Hooks.callAll("pf1.getRollData", this, result, true);
+
+    return result;
+  }
+
+  static getReach(size = "med", stature = "tall") {
+    let result = {
       melee: 5,
       reach: 10,
     };
-    switch (result.traits.size) {
+
+    switch (size) {
       case "fine":
       case "dim":
-        result.range.melee = 0;
-        result.range.reach = 0;
+        result.melee = 0;
+        result.reach = 0;
         break;
       case "tiny":
-        result.range.melee = 0;
-        result.range.reach = 5;
+        result.melee = 0;
+        result.reach = 5;
         break;
       case "lg":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 10;
-          result.range.reach = 20;
+        if (stature === "tall") {
+          result.melee = 10;
+          result.reach = 20;
         }
         break;
       case "huge":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 15;
-          result.range.reach = 30;
+        if (stature === "tall") {
+          result.melee = 15;
+          result.reach = 30;
         } else {
-          result.range.melee = 10;
-          result.range.reach = 20;
+          result.melee = 10;
+          result.reach = 20;
         }
         break;
       case "grg":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 20;
-          result.range.reach = 40;
+        if (stature === "tall") {
+          result.melee = 20;
+          result.reach = 40;
         } else {
-          result.range.melee = 15;
-          result.range.reach = 30;
+          result.melee = 15;
+          result.reach = 30;
         }
         break;
       case "col":
-        if (result.traits.stature === "tall") {
-          result.range.melee = 30;
-          result.range.reach = 60;
+        if (stature === "tall") {
+          result.melee = 30;
+          result.reach = 60;
         } else {
-          result.range.melee = 20;
-          result.range.reach = 40;
+          result.melee = 20;
+          result.reach = 40;
         }
         break;
     }
 
-    this._rollData = result;
     return result;
   }
 
@@ -3559,5 +3754,111 @@ export class ActorPF extends ActorDataPF(Actor) {
    */
   hasItemBooleanFlag(flagName) {
     return getProperty(this, `itemFlags.boolean.${flagName}`) != null;
+  }
+
+  async performRest({ restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = {}) {
+    const actorData = this.data.data;
+
+    const updateData = {};
+    // Restore health and ability damage
+    if (restoreHealth === true) {
+      const hd = actorData.attributes.hd.total;
+      let heal = {
+        hp: hd,
+        abl: 1,
+        nonlethal: hours * hd,
+      };
+      if (longTermCare === true) {
+        heal.hp *= 2;
+        heal.abl *= 2;
+      }
+
+      updateData["data.attributes.hp.value"] = Math.min(
+        actorData.attributes.hp.value + heal.hp,
+        actorData.attributes.hp.max
+      );
+      updateData["data.attributes.hp.nonlethal"] = Math.max(
+        0,
+        (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal
+      );
+      for (let [key, abl] of Object.entries(actorData.abilities)) {
+        let dmg = Math.abs(abl.damage);
+        updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
+      }
+    }
+
+    let itemUpdates = [];
+    let spellbookUses = {};
+    // Restore daily uses of spells, feats, etc.
+    if (restoreDailyUses === true) {
+      // Update spellbooks
+      for (let [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
+        for (let a = 0; a < 10; a++) {
+          updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] =
+            getProperty(sb, `spells.spell${a}.max`) || 0;
+        }
+      }
+
+      // Update charged items
+      for (let item of this.items) {
+        let itemUpdate = { _id: item.id };
+        const itemData = item.data.data;
+
+        if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
+          itemUpdate["data.uses.value"] = itemData.uses.max;
+          itemUpdates.push(itemUpdate);
+        } else if (item.type === "spell") {
+          const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
+            isSpontaneous = spellbook.spontaneous;
+          if (!isSpontaneous) {
+            if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
+              itemUpdate["data.preparation.preparedAmount"] = itemData.preparation.maxAmount;
+              itemUpdates.push(itemUpdate);
+            }
+            if (!getProperty(item.data, "data.domain")) {
+              let sbUses =
+                updateData[
+                  `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+                ] || 0;
+              sbUses -= itemData.preparation.maxAmount;
+              updateData[
+                `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
+              ] = sbUses;
+            }
+          }
+        }
+      }
+
+      for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+        // Restore spellbooks using spell points
+        if (spellbook.spellPoints.useSystem) {
+          // Try to roll restoreFormula, fall back to restoring max spell points
+          let restorePoints = spellbook.spellPoints.max;
+          if (spellbook.spellPoints.restoreFormula) {
+            const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, this.getRollData());
+            if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
+            else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
+          }
+          updateData[`data.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;
+        }
+      }
+    }
+
+    const proceed = Hooks.call(
+      "actorRest",
+      this,
+      {
+        restoreHealth,
+        longTermCare,
+        restoreDailyUses,
+        hours,
+      },
+      updateData,
+      itemUpdates
+    );
+    if (proceed === false) return false;
+
+    await this.updateEmbeddedEntity("OwnedItem", itemUpdates);
+    return this.update(updateData);
   }
 }

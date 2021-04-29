@@ -1,3 +1,5 @@
+import { convertDistance } from "./lib.js";
+
 /**
  * Initialize module compatibility/integration code.
  *
@@ -18,7 +20,7 @@ export function initializeModules() {
         }
 
         getRanges(token) {
-          const baseSpeed = token.actor.data.data.attributes.speed.land.total;
+          const baseSpeed = convertDistance(token.actor.data.data.attributes.speed.land.total)[0];
           // Search through items for pieces of heavy armor that is equipped
           const heavyArmor = token.actor.items.find(
             (item) =>

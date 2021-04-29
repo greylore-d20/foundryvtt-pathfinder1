@@ -7,6 +7,20 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     });
   }
 
+  getData(options) {
+    let data = super.getData(options);
+
+    for (let p of Object.values(data.packs)) {
+      for (let pack of p.packs) {
+        const config = game.settings.get("core", "compendiumConfiguration")[pack.collection];
+        const disabled = getProperty(config, "pf1.disabled") === true;
+        setProperty(pack, "pf1.disabled", disabled);
+      }
+    }
+
+    return data;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -16,6 +30,7 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     html.find(".compendium-footer .compendium.feats").click((e) => this._onBrowseCompendium(e, "feats"));
     html.find(".compendium-footer .compendium.classes").click((e) => this._onBrowseCompendium(e, "classes"));
     html.find(".compendium-footer .compendium.races").click((e) => this._onBrowseCompendium(e, "races"));
+    html.find(".compendium-footer .compendium.buffs").click((e) => this._onBrowseCompendium(e, "buffs"));
   }
 
   _onBrowseCompendium(event, type) {

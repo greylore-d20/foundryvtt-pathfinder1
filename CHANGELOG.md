@@ -1,10 +1,71 @@
 # Changelog
 
+## 0.77.22
+
+### Bug Fixes
+
+- Rolling untrained skills requiring training sometimes didn't show a note saying it's untrained (#780)
+- Custom styles ("not implemented"/ "steps required") for TinyMCE editors would fail to load
+- Resources weren't updated for unowned actors (#788)
+
+### Changelog
+
+- Added an option to disable compendiums, preventing them from showing up in compendium browsers for anyone
+- Added a compendium browser for buffs
+- Tell Drag Ruler to use metric system if system is metric (thanks Nico Weichbrodt!)
+- Loot sheets now add coinage to the total sell value at the bottom
+- Added a world setting for an alternative reach rule, which hides the outer corners of 10-ft reach measurements
+- Added a new method of automatic spell slot calculation (thanks claudekennilol!)
+- Added a new way of choosing change and context note targets
+- Added more targets for changes (thanks mkahvi!)
+  - BAB
+  - Touch AC
+  - Flat-footed AC
+  - Flat-footed CMD
+- Made the action type column for certain types of items on actor sheets more compact (#785)
+- Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
+- Enhanced the conditions list on Actors' buffs tab with icons
+- Added ability to drag currency between sheets (or to the same sheet)
+
+### Compendium
+
+- Added a macro to calculate spell book cost
+
+### Localization
+
+- Updated the French localization (thanks rectulo!)
+
+### API
+
+- Added a hook for activating and deactivating of buffs which are active on actors keyed `pf1.toggleActorBuff`. See the system's GitLab wiki for more information.
+- Added a hook for activating and deactivating of conditions on actors keyed `pf1.toggleActorCondition`. See the system's GitLab wiki for more information.
+- Added `CurrencyTransfer.transfer` and `CurrencyTransfer.convert` to application API
+
 ## 0.77.21
 
 ### Bug Fixes
 
 - ACP from equipment and encumbrance incorrectly stacked
+- Shorthand deferred Damage/ Heal rolls (/d, /h) would prevent chatcard rendering
+- Scroll position incorrectly reset between changes to an item sheet while on the changes tab (#764)
+- "Learned At" property of spells was not respected when adding to sheet (#299)
+
+### Changelog
+
+- Term specific flavor text can be included in formulas without causing errors in preparation for functionality to be added in 0.8.X
+- Added `@attributes.savingThrows.X.base` to actor roll data (#760)
+- Added a notes tab to NPC Lite sheets (#774, #244)
+
+### Compendium
+
+- The Create Loot Sheet macro was borked
+
+### API
+
+- The `actorRest` hook has been reworked slightly. It adds 2 new parameters: `updateData` and `itemUpdateData`. See the system's GitLab wiki for more information.
+- Added the `pf1.getRollData` hook. See the system's GitLab wiki for more information. (#769)
+- The ItemPF methods `getItemDictionaryFlag` and `removeItemDictionaryFlag` defaulted to an empty object rather than an empty array, erroring out in certain cases (#761)
+- Setting a dictionary flag on an instance of ItemPF starting with numbers, but also containing alphabetical characters, incorrectly converted the value to a number (#763)
 
 ## 0.77.20
 

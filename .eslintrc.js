@@ -471,5 +471,7 @@ module.exports = {
     TokenDocument: "readonly",
     DocumentSheet: "readonly",
     StringTerm: "readonly",
+    ParentheticalTerm: "readonly",
+    MathTerm: "readonly",
   },
 };

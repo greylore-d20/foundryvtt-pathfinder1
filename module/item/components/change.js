@@ -17,7 +17,6 @@ export class ItemChange {
       _id: randomID(8),
       formula: "",
       operator: "add",
-      target: "",
       subTarget: "",
       modifier: "",
       priority: 0,
@@ -33,9 +32,6 @@ export class ItemChange {
   }
   get operator() {
     return this.data.operator;
-  }
-  get target() {
-    return this.data.target;
   }
   get subTarget() {
     return this.data.subTarget;
@@ -115,7 +111,7 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (let t of targets) {
-      if (overrides[t]) {
+      if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";

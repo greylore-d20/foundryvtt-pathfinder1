@@ -5,6 +5,7 @@ export class ChatMessagePF extends ChatMessage {
 
   /**
    * Return linked item or falsey
+   *
    * @type {ItemPF}
    */
   get itemSource() {
@@ -21,7 +22,7 @@ export const customRolls = function (message, speaker, rollData) {
     const type = RegExp.$1?.toUpperCase();
     const value = RegExp.$2;
     const flavor = RegExp.$3;
-    const cMsg = CONFIG.ChatMessage.entityClass;
+    const cMsg = CONFIG.ChatMessage.documentClass;
 
     speaker = speaker ?? cMsg.getSpeaker();
     const actor = cMsg.getSpeakerActor(speaker);

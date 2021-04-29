@@ -9,6 +9,7 @@ const NEED_NEW_VERSION = {
   feats: "0.77.16",
   classes: "0.77.15",
   races: "0.77.15",
+  buffs: "0.77.22",
 };
 
 export const COMPENDIUM_TYPES = {
@@ -18,6 +19,7 @@ export const COMPENDIUM_TYPES = {
   feats: "Item",
   classes: "Item",
   races: "Item",
+  buffs: "Item",
 };
 
 export class CompendiumBrowser extends Application {
@@ -138,7 +140,9 @@ export class CompendiumBrowser extends Application {
       this._currentCompendiums = game.packs
         .filter((o) => {
           if (o.metadata.entity !== this.entityType) return false;
-          if (o.private && !game.user.isGM) return false;
+
+          if (this.shouldSkip(o)) return false;
+
           return true;
         })
         .map((o) => {
@@ -259,6 +263,23 @@ export class CompendiumBrowser extends Application {
     return COMPENDIUM_TYPES[this.type];
   }
 
+  /**
+   * @param {Compendium} p - The compendium in question.
+   * @returns {boolean} Whether the compendium should be skipped.
+   */
+  shouldSkip(p) {
+    // Check disabled status
+    const config = game.settings.get("core", "compendiumConfiguration")[p.collection];
+    const disabled = getProperty(config, "pf1.disabled") === true;
+    if (disabled) return true;
+
+    // Skip if set to private and the user is not a GM
+    if (p.private && !game.user.isGM) return true;
+
+    // Don't skip the compendium
+    return false;
+  }
+
   _onProgress(progress) {
     progress.loaded++;
     progress.pct = Math.round((progress.loaded * 10) / progress.total) * 10;
@@ -268,9 +289,8 @@ export class CompendiumBrowser extends Application {
   async loadCompendium(p) {
     const progress = this._data.progress;
 
-    if ((p.private && !game.user.isGM) || p.metadata.system != "pf1") {
-      if (p.metadata.system != "pf1")
-        console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
+    if (p.metadata.system != "pf1") {
+      console.warn(p.metadata.label + " is incompatible with this browser and has been skipped.");
       this._onProgress(progress);
       return;
     }
@@ -297,11 +317,22 @@ export class CompendiumBrowser extends Application {
       let packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
       for (let p of game.packs.values()) {
-        if (p.documentClass.documentName === this.entityType) {
+        if (p.documentClass.documentName === this.entityType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
+        } else {
+          if (Object.hasOwnProperty.call(this.packs, p.collection)) {
+            delete this.packs[p.collection];
+          }
         }
       }
+
+      // Clear filters without applicable packs
+      if (packs.length === 0) {
+        this.filters = [];
+        return;
+      }
+
       this._data.progress = progress;
       this._onProgress(progress);
 
@@ -351,6 +382,9 @@ export class CompendiumBrowser extends Application {
       case "races":
         this._fetchRaceFilters();
         break;
+      case "buffs":
+        this._fetchBuffFilters();
+        break;
     }
 
     // Create an empty active filters object
@@ -384,6 +418,7 @@ export class CompendiumBrowser extends Application {
     if (this.type === "feats" && item.type !== "feat") return false;
     if (this.type === "classes" && item.type !== "class") return false;
     if (this.type === "races" && item.type !== "race") return false;
+    if (this.type === "buffs" && item.type !== "buff") return false;
     return true;
   }
 
@@ -572,6 +607,15 @@ export class CompendiumBrowser extends Application {
     });
   }
 
+  _mapBuffs(result, item) {
+    this.extraFilters = this.extraFilters || {
+      types: {},
+    };
+
+    // Get types
+    this.extraFilters.types[item.data.buffType] = true;
+  }
+
   _mapEntry(pack, item) {
     const result = {
       collection: {
@@ -606,6 +650,9 @@ export class CompendiumBrowser extends Application {
         break;
       case "races":
         this._mapRaces(result, item);
+        break;
+      case "buffs":
+        this._mapBuffs(result, item);
         break;
     }
 
@@ -1009,6 +1056,24 @@ export class CompendiumBrowser extends Application {
           items: naturalSort(
             Object.keys(this.extraFilters["subTypes"]).reduce((cur, o) => {
               cur.push({ key: o, name: o });
+              return cur;
+            }, []),
+            "name"
+          ),
+        },
+      ]
+    );
+  }
+
+  _fetchBuffFilters() {
+    this.filters.push(
+      ...[
+        {
+          path: "data.buffType",
+          label: game.i18n.localize("PF1.Type"),
+          items: naturalSort(
+            Object.entries(CONFIG.PF1.buffTypes).reduce((cur, o) => {
+              cur.push({ key: o[0], name: o[1] });
               return cur;
             }, []),
             "name"

@@ -106,7 +106,10 @@ const getSortChangePriority = function () {
       "aac",
       "sac",
       "nac",
+      "tac",
+      "ffac",
       "attack",
+      "bab",
       "~attackCore",
       "mattack",
       "rattack",
@@ -119,6 +122,7 @@ const getSortChangePriority = function () {
       "will",
       "cmb",
       "cmd",
+      "ffcmd",
       "init",
       "mhp",
       "wounds",
@@ -224,6 +228,14 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "temp.ac.shield";
     case "nac":
       return "temp.ac.natural";
+    case "tac":
+      return "data.attributes.ac.touch.total";
+    case "ffac":
+      return "data.attributes.ac.flatFooted.total";
+    case "ffcmd":
+      return "data.attributes.cmd.flatFootedTotal";
+    case "bab":
+      return "data.attributes.bab.total";
     case "~attackCore":
       return "data.attributes.attack.shared";
     case "allSavingThrows":

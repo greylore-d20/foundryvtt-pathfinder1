@@ -7,7 +7,8 @@ import { SemanticVersion } from "./semver.js";
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
- * @return {Promise}      A Promise which resolves once the migration is completed
+ *
+ * @returns {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function () {
   if (!game.user.isGM) {
@@ -25,7 +26,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Actors
   console.log("Migrating Actor entities");
-  for (let a of game.actors.entities) {
+  for (let a of game.actors.contents) {
     try {
       const updateData = await migrateActorData(a);
       await a.update(updateData);
@@ -36,7 +37,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Items
   console.log("Migrating Item entities.");
-  for (let i of game.items.entities) {
+  for (let i of game.items.contents) {
     try {
       const updateData = migrateItemData(i);
       await i.update(updateData, { enforceTypes: false });
@@ -47,7 +48,7 @@ export const migrateWorld = async function () {
 
   // Migrate Actor Override Tokens
   console.log("Migrating scene entities.");
-  for (let s of game.scenes.entities) {
+  for (let s of game.scenes.contents) {
     try {
       const updateData = await migrateSceneData(s.data);
       await s.update(updateData);
@@ -87,8 +88,9 @@ export const migrateWorld = async function () {
 
 /**
  * Apply migration rules to all Entities within a single Compendium pack
+ *
  * @param pack
- * @return {Promise}
+ * @returns {Promise}
  */
 export const migrateCompendium = async function (pack) {
   const entity = pack.metadata.entity;
@@ -139,8 +141,9 @@ const _migrateWorldSettings = async function () {
 /**
  * Migrate a single Actor entity to incorporate latest data model changes
  * Return an Object of updateData to be applied
+ *
  * @param {Actor} actor   The actor to Update
- * @return {Object}       The updateData to apply
+ * @returns {object}       The updateData to apply
  */
 export const migrateActorData = async function (actor) {
   if (!(actor instanceof Actor)) return {};
@@ -189,6 +192,7 @@ export const migrateActorData = async function (actor) {
 
 /**
  * Migrate a single Item entity to incorporate latest data model changes
+ *
  * @param item
  */
 export const migrateItemData = function (item) {
@@ -228,13 +232,14 @@ export const migrateItemData = function (item) {
 /**
  * Migrate a single Scene entity to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
- * @param {Object} scene  The Scene data to Update
- * @return {Object}       The updateData to apply
+ *
+ * @param {object} scene  The Scene data to Update
+ * @returns {object}       The updateData to apply
  */
 export const migrateSceneData = async function (scene) {
   const result = { tokens: duplicate(scene.tokens) };
   for (let t of result.tokens) {
-    const token = new Token(t);
+    const token = new TokenDocument(t, { parent: scene });
 
     migrateTokenVision(token, t);
     migrateTokenStatuses(token, t);
@@ -252,7 +257,7 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else {
-      const a = Actor.fromToken(token);
+      const a = token.getActor();
       const updateData = await migrateActorData(a.data);
       t.actorData = mergeObject(a.data, updateData);
     }
@@ -267,6 +272,9 @@ export const migrateSceneData = async function (scene) {
 
 /**
  * Migrate string format traits with a comma separator to an array of strings
+ *
+ * @param actor
+ * @param updateData
  * @private
  */
 const _migrateActorTraits = function (actor, updateData) {
@@ -294,6 +302,10 @@ const _migrateActorTraits = function (actor, updateData) {
 
 /**
  * Flatten several attributes which currently have an unnecessarily nested {value} object
+ *
+ * @param ent
+ * @param updateData
+ * @param toFlatten
  * @private
  */
 const _migrateFlattenValues = function (ent, updateData, toFlatten) {
@@ -694,6 +706,8 @@ const _migrateItemChanges = function (ent, updateData) {
         newChanges.push(nc.data);
       }
     }
+
+    // Alter the changes list
     updateData["data.changes"] = newChanges;
   }
 
@@ -703,13 +717,18 @@ const _migrateItemChanges = function (ent, updateData) {
     let newNotes = [];
     for (let n of notes) {
       if (n instanceof Array) {
-        newNotes.push(
-          mergeObject(ItemPF.defaultChange, { text: n[0], target: n[1], subTarget: n[2] }, { inplace: false })
-        );
+        newNotes.push(mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false }));
       } else {
         newNotes.push(n);
       }
+
+      // Migrate old note targets
+      if (n.target === "spell" && n.subTarget === "effect") {
+        n.subTarget = "spellEffect";
+      }
     }
+
+    // Alter the context note list
     updateData["data.contextNotes"] = newNotes;
   }
 };
@@ -985,6 +1004,9 @@ const migrateTokenStatuses = function (token, updateData) {
 
 /**
  * Migrate from a string spell casting time like "1 Bonus Action" to separate fields for activation type and numeric cost
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateCastTime = function (item, updateData) {
@@ -1006,6 +1028,9 @@ const _migrateCastTime = function (item, updateData) {
 /**
  * Migrate from a string based damage formula like "2d6 + 4 + 1d4" and a single string damage type like "slash" to
  * separated damage parts with associated damage type per part.
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateDamage = function (item, updateData) {
@@ -1027,6 +1052,9 @@ const _migrateDamage = function (item, updateData) {
 
 /**
  * Migrate from a string duration field like "1 Minute" to separate fields for duration units and numeric value
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateDuration = function (item, updateData) {
@@ -1045,6 +1073,9 @@ const _migrateDuration = function (item, updateData) {
 
 /**
  * Migrate from a string range field like "150 ft." to separate fields for units and numeric distance value
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateRange = function (item, updateData) {
@@ -1080,6 +1111,10 @@ const _migrateRarity = function (item, updateData) {
 
 /**
  * A general migration to remove all fields from the data model which are flagged with a _deprecated tag
+ *
+ * @param ent
+ * @param updateData
+ * @param toFlatten
  * @private
  */
 const _migrateRemoveDeprecated = function (ent, updateData, toFlatten) {
@@ -1126,6 +1161,9 @@ const _migrateRemoveDeprecated = function (ent, updateData, toFlatten) {
 
 /**
  * Migrate from a target string like "15 ft. Radius" to a more explicit data model with a value, units, and type
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateTarget = function (item, updateData) {
@@ -1161,6 +1199,9 @@ const _migrateTarget = function (item, updateData) {
 /**
  * Migrate from string based components like "V,S,M" to boolean flags for each component
  * Move concentration and ritual flags into the components object
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateSpellComponents = function (item, updateData) {
@@ -1181,6 +1222,9 @@ const _migrateSpellComponents = function (item, updateData) {
 
 /**
  * Migrate from a simple object with save.value to an expanded object where the DC is also configured
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateSpellAction = function (item, updateData) {
@@ -1209,6 +1253,9 @@ const _migrateSpellAction = function (item, updateData) {
 
 /**
  * Migrate spell preparation data to the new preparation object
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateSpellPreparation = function (item, updateData) {
@@ -1223,6 +1270,9 @@ const _migrateSpellPreparation = function (item, updateData) {
 
 /**
  * Migrate from a string based weapon properties like "Heavy, Two-Handed" to an object of boolean flags
+ *
+ * @param item
+ * @param updateData
  * @private
  */
 const _migrateWeaponProperties = function (item, updateData) {

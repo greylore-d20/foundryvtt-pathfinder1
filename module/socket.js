@@ -1,5 +1,9 @@
+/**
+ *
+ */
 export function initializeSocket() {
   game.socket.on("system.pf1", async (args) => {
+    const isFirstGM = game.user === game.users.find((u) => u.isGM && u.active);
     try {
       switch (args.eventType) {
         case "cleanItemLink": {
@@ -18,6 +22,25 @@ export function initializeSocket() {
         case "redrawCanvas":
           canvas.draw();
           break;
+        case "currencyTransfer": {
+          if (!isFirstGM) return;
+          let source = await fromUuid(args.data.sourceActor);
+          let dest = await fromUuid(args.data.destActor);
+
+          if (args.data.sourceContainer) source = source.items.get(args.data.sourceContainer);
+          if (args.data.destContainer) dest = dest.items.get(args.data.destContainer);
+          const amount = args.data.amount;
+
+          game.pf1.applications.CurrencyTransfer.transfer(
+            source,
+            dest,
+            amount,
+            args.data.sourceAlt,
+            args.data.destAlt,
+            false
+          );
+          break;
+        }
       }
     } catch (err) {
       console.log("PF1 | Socket Error: ", err);

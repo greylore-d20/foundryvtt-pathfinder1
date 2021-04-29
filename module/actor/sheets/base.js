@@ -18,6 +18,7 @@ import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
 import { LevelUpForm } from "../../apps/level-up.js";
 import { getSourceInfo } from "../apply-changes.js";
+import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -529,7 +530,7 @@ export class ActorSheetPF extends ActorSheet {
 
           data.name = o.name;
           data.img = o.img;
-          data._id = o.id;
+          data.id = o.id;
           data.cl = getProperty(o.data, "data.cl");
           data.school = getProperty(o.data, "data.aura.school");
           if (CONFIG.PF1.spellSchools[data.school] != null) {
@@ -634,29 +635,43 @@ export class ActorSheetPF extends ActorSheet {
     const owner = this.document.isOwner;
     const book = this.document.data.data.attributes.spells.spellbooks[bookKey];
 
+    let min = 0;
+    let max = 9;
+    if (book.autoSpellLevelCalculation) {
+      min = book.hasCantrips ? 0 : 1;
+
+      const cl = Math.max(Math.min(book.cl.total, 20), 1);
+
+      const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
+      max = castsPerDay.length - 1;
+    }
+
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = 0; a < 10; a++) {
-      spellbook[a] = {
-        level: a,
-        usesSlots: true,
-        spontaneous: book.spontaneous,
-        canCreate: owner === true,
-        canPrepare: data.actor.type === "character",
-        label: CONFIG.PF1.spellLevels[a],
-        items: [],
-        uses: getProperty(book, `spells.spell${a}.value`) || 0,
-        baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
-        slots: getProperty(book, `spells.spell${a}.max`) || 0,
-        dataset: { type: "spell", level: a, spellbook: bookKey },
-        name: game.i18n.localize(`PF1.SpellLevel${a}`),
-      };
+    for (let a = min; a <= max; a++) {
+      if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
+        spellbook[a] = {
+          level: a,
+          usesSlots: true,
+          spontaneous: book.spontaneous,
+          canCreate: owner === true,
+          canPrepare: data.actor.type === "character",
+          label: CONFIG.PF1.spellLevels[a],
+          items: [],
+          uses: getProperty(book, `spells.spell${a}.value`) || 0,
+          baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
+          slots: getProperty(book, `spells.spell${a}.max`) || 0,
+          dataset: { type: "spell", level: a, spellbook: bookKey },
+          name: game.i18n.localize(`PF1.SpellLevel${a}`),
+          spellMessage: getProperty(book, `spells.spell${a}.spellMessage`),
+        };
+      }
     }
     spells.forEach((spell) => {
       const spellBookKey = getProperty(spell, "data.spellbook");
       if (spellBookKey === bookKey) {
-        const lvl = spell.data.level || 0;
-        spellbook[lvl].items.push(spell);
+        const lvl = spell.data.level || min;
+        spellbook[lvl]?.items.push(spell);
       }
     });
 
@@ -878,6 +893,14 @@ export class ActorSheetPF extends ActorSheet {
       li.setAttribute("draggable", true);
       li.addEventListener("dragstart", handler, false);
     });
+
+    // Currency Dragging
+    if (this.actor.permission >= 3) {
+      html.find("label.denomination").each((i, label) => {
+        label.setAttribute("draggable", true);
+        label.addEventListener("dragstart", handler, false);
+      });
+    }
 
     // Race Dragging
     html.find(".race-container").each((i, el) => {
@@ -1165,9 +1188,11 @@ export class ActorSheetPF extends ActorSheet {
       .on("click", (event) => {
         this._onSpanTextInput(event, this._setBuffLevel.bind(this));
       });
-    // html.find(".item-detail.item-level input[type='text']").off("change").on("change", this._setBuffLevel.bind(this));
 
     html.find("a.hide-show").click(this._hideShowElement.bind(this));
+
+    // Toggle condition
+    html.find(".condition .checkbox").click(this._onToggleCondition.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -1280,12 +1305,12 @@ export class ActorSheetPF extends ActorSheet {
 
     const result = {
       type: "skill",
-      actor: this.document._id,
+      actor: this.document.id,
       skill: subSkill ? `${mainSkill}.subSkills.${subSkill}` : mainSkill,
     };
     if (this.document.isToken) {
-      result.sceneId = canvas.scene._id;
-      result.tokenId = this.document.token._id;
+      result.sceneId = canvas.scene.id;
+      result.tokenId = this.document.token.id;
     }
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
@@ -1294,11 +1319,11 @@ export class ActorSheetPF extends ActorSheet {
   _onDragMiscStart(event, type) {
     const result = {
       type: type,
-      actor: this.document._id,
+      actor: this.document.id,
     };
     if (this.document.isToken) {
-      result.sceneId = canvas.scene._id;
-      result.tokenId = this.document.token._id;
+      result.sceneId = canvas.scene.id;
+      result.tokenId = this.document.token.id;
     }
 
     switch (type) {
@@ -1352,7 +1377,7 @@ export class ActorSheetPF extends ActorSheet {
   _onItemRoll(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.getOwnedItem(itemId);
+    const item = this.document.items.get(itemId);
 
     if (item == null) return;
     return item.roll();
@@ -1401,12 +1426,12 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const el = event.currentTarget;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.getOwnedItem(itemId);
+    const item = this.document.items.get(itemId);
 
     this._mouseWheelAdd(event.originalEvent, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item._id, "data.preparation.preparedAmount", value);
+    this.setItemUpdate(item.id, "data.preparation.preparedAmount", value);
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
@@ -1421,12 +1446,15 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.document.getOwnedItem(itemId);
+    const item = this.document.items.get(itemId);
 
     this._mouseWheelAdd(event.originalEvent, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item._id, "data.preparation.maxAmount", value);
+    this.setItemUpdate(item.id, "data.preparation.maxAmount", Math.max(0, value));
+    if (value < 0) {
+      el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
+    }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
@@ -1475,7 +1503,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
-    const item = this.document.getOwnedItem(itemId);
+    const item = this.document.items.get(itemId);
 
     this._mouseWheelAdd(event.originalEvent, el);
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -1484,7 +1512,7 @@ export class ActorSheetPF extends ActorSheet {
       this._pendingUpdates[name] = value;
     }
 
-    this.setItemUpdate(item._id, "data.level", value);
+    this.setItemUpdate(item.id, "data.level", value);
     if (event.originalEvent instanceof MouseEvent) {
       if (!this._submitQueued) {
         $(el).one("mouseleave", (event) => {
@@ -1512,6 +1540,16 @@ export class ActorSheetPF extends ActorSheet {
 
       this._hiddenElems[a.dataset.for] = true;
     }
+  }
+
+  _onToggleCondition(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const key = a.name;
+
+    const updateData = {};
+    updateData[key] = !getProperty(this.actor.data, key);
+    this.actor.update(updateData);
   }
 
   _onOpenCompendium(event) {
@@ -1542,14 +1580,14 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     const value = $(event.currentTarget).prop("checked");
-    this.setItemUpdate(item.data._id, "data.active", value);
+    this.setItemUpdate(item.data.id, "data.active", value);
     this._updateItems();
   }
 
   _onLevelUp(event) {
     event.preventDefault;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
+    const item = this.actor.items.get(itemId);
 
     const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof LevelUpForm && o._element && o.object === item;
@@ -1569,7 +1607,7 @@ export class ActorSheetPF extends ActorSheet {
   _onItemSummary(event) {
     event.preventDefault();
     let li = $(event.currentTarget).parents(".item"),
-      item = this.document.getOwnedItem(li.attr("data-item-id")),
+      item = this.document.items.get(li.attr("data-item-id")),
       chatData = item.getChatData({ secrets: this.document.isOwner });
 
     // Toggle summary
@@ -1605,7 +1643,6 @@ export class ActorSheetPF extends ActorSheet {
     }
     if (!elem || (elem && elem.attr("disabled"))) return;
 
-    const [prevName, prevValue] = [elem.attr("name"), elem.attr("value")];
     elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
     let value = getProperty(this.document.data, event.currentTarget.dataset.attrName);
@@ -1861,10 +1898,10 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
 
     const itemId = $(a).parents(".item").attr("data-item-id");
-    const item = this.document.getOwnedItem(itemId);
+    const item = this.document.items.get(itemId);
     const data = duplicate(item.data);
 
-    delete data._id;
+    delete data.id;
     data.name = `${data.name} (Copy)`;
     if (data.links) data.links = {};
 
@@ -1967,7 +2004,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.find((o) => o._id === itemId);
+    const item = this.document.items.find((o) => o.id === itemId);
 
     const targets = game.actors.entities.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
     targets.push(...this.document.items.filter((o) => o.type === "container"));
@@ -1979,11 +2016,11 @@ export class ActorSheetPF extends ActorSheet {
     if (!targetData) return;
     let target;
     if (targetData.type === "actor") {
-      target = game.actors.entities.find((o) => o._id === targetData.id);
+      target = game.actors.entities.find((o) => o.id === targetData.id);
     } else if (targetData.type === "item") {
-      target = this.document.items.find((o) => o._id === targetData.id);
+      target = this.document.items.find((o) => o.id === targetData.id);
       if (!target) {
-        target = game.items.entities.find((o) => o._id === targetData.id);
+        target = game.items.entities.find((o) => o.id === targetData.id);
       }
     }
 
@@ -1994,7 +2031,7 @@ export class ActorSheetPF extends ActorSheet {
       } else if (target instanceof Item) {
         await target.createContainerContent(itemData);
       }
-      await this.document.deleteOwnedItem(item._id);
+      await this.document.deleteOwnedItem(item.id);
     }
   }
 
@@ -2067,7 +2104,7 @@ export class ActorSheetPF extends ActorSheet {
     // Set item tags
     for (let [key, res] of Object.entries(getProperty(data, "data.resources"))) {
       if (!res) continue;
-      const id = res._id;
+      const id = res.id;
       if (!id) continue;
       const item = this.document.items.find((o) => o.id === id);
       if (!item) continue;
@@ -2491,10 +2528,10 @@ export class ActorSheetPF extends ActorSheet {
 
   setItemUpdate(id, key, value) {
     let obj = this._itemUpdates.filter((o) => {
-      return o._id === id;
+      return o.id === id;
     })[0];
     if (obj == null) {
-      obj = { _id: id };
+      obj = { id: id };
       this._itemUpdates.push(obj);
     }
 
@@ -2536,12 +2573,10 @@ export class ActorSheetPF extends ActorSheet {
     this._itemUpdates = [];
 
     for (const data of updates) {
-      const item = this.document.items.filter((o) => {
-        return o.data._id === data._id;
-      })[0];
+      const item = this.document.items.get(data.id);
       if (item == null) continue;
 
-      delete data._id;
+      delete data.id;
       if (item.testUserPermission(game.user, "OWNER")) promises.push(item.update(data));
     }
 
@@ -2564,7 +2599,7 @@ export class ActorSheetPF extends ActorSheet {
     if (data.containerId) {
       const container = this.actor.allItems.find((o) => o.id === data.containerId);
 
-      if (container) container.deleteContainerContent(itemData._id);
+      if (container) container.deleteContainerContent(itemData.id);
     }
 
     // Create the owned item
@@ -2586,14 +2621,14 @@ export class ActorSheetPF extends ActorSheet {
     if (this.document.isToken) return;
 
     // Get the drag source and its siblings
-    const source = this.document.getEmbeddedDocument("Item", itemData._id);
+    const source = this.document.getEmbeddedDocument("Item", itemData.id);
     const siblings = this._getSortSiblings(source);
 
     // Get the drop target
     const dropTarget = event.target.closest(".item");
     const targetId = dropTarget ? dropTarget.dataset.itemId : null;
     if (targetId === source.id) return; // Don't sort if item is dropped onto itself
-    const target = siblings.find((s) => s.data._id === targetId);
+    const target = siblings.find((s) => s.data.id === targetId);
 
     // Ensure we are only sorting like-types
     // if (target && (source.data.type !== target.data.type)) return;
@@ -2602,7 +2637,7 @@ export class ActorSheetPF extends ActorSheet {
     const sortUpdates = SortingHelpers.performIntegerSort(source, { target: target, siblings });
     const updateData = sortUpdates.map((u) => {
       const update = u.update;
-      update._id = u.target.data._id;
+      update.id = u.target.data.id;
       return update;
     });
 
@@ -2616,7 +2651,7 @@ export class ActorSheetPF extends ActorSheet {
   _getSortSiblings(source) {
     return this.document.items.filter((i) => {
       if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);
-      return i.data.type === source.data.type && i.data._id !== source.data._id;
+      return i.data.type === source.data.type && i.data.id !== source.data.id;
     });
   }
 
@@ -2667,12 +2702,28 @@ export class ActorSheetPF extends ActorSheet {
       if (doReturn) return false;
     }
 
-    if (itemData._id) delete itemData._id;
+    if (itemData.id) delete itemData.id;
     let actorRef = this.document;
     return this.document.createEmbeddedDocuments("Item", [itemData]).then((createdItem) => {
-      let fullItem = actorRef.items.get(createdItem._id);
+      let fullItem = actorRef.items.get(createdItem.id);
       return fullItem;
     });
+  }
+
+  _onDragStart(event) {
+    const elem = event.target;
+    if (elem.classList.contains("denomination")) {
+      const dragData = {
+        actorId: this.actor.id,
+        sceneId: this.actor.isToken ? canvas.scene?.id : null,
+        tokenId: this.actor.isToken ? this.actor.token.id : null,
+        type: "Currency",
+        alt: elem.classList.contains("alt-currency"),
+        currency: [...elem.classList].find((o) => /[pgsc]p/.test(o)),
+        amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
+      };
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    } else super._onDragStart(event);
   }
 
   async _onConfigControl(event) {
@@ -2706,17 +2757,6 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const el = event.currentTarget;
     el.select();
-  }
-
-  _onWheelChange(event) {
-    event.preventDefault();
-    const el = event.currentTarget;
-    const value = parseFloat(el.value);
-    if (Number.isNaN(value)) return;
-
-    const increase = -Math.sign(event.originalEvent.deltaY);
-    const amount = parseFloat(el.dataset.wheelStep) || 1;
-    el.value = value + amount * increase;
   }
 
   _updateObject(event, formData) {

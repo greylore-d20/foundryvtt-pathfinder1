@@ -58,6 +58,7 @@ export class ChatAttack {
 
   /**
    * Sets the attack's item reference.
+   *
    * @param {ItemPF} item - The item to reference.
    */
   setItem(item) {
@@ -156,7 +157,7 @@ export class ChatAttack {
       primaryAttack: this.primaryAttack,
     });
     data.roll = roll;
-    let d20 = roll.results[0];
+    let d20 = roll.dice[0].result;
     let critType = 0;
     const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
     if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
@@ -245,18 +246,9 @@ export class ChatAttack {
 
     // Consolidate damage parts based on damage type
     let tooltips = "";
-    let consolidatedParts = data.parts.reduce((cur, o) => {
-      if (!cur[o.damageType]) {
-        cur[o.damageType] = new DamagePart(o.amount, o.damageType, o.roll, critical ? "critical" : o.type);
-      } else {
-        cur[o.damageType].amount += o.amount;
-        cur[o.damageType].rolls.push(...o.rolls);
-      }
-      return cur;
-    }, {});
 
     // Add tooltip
-    for (let p of Object.values(consolidatedParts)) {
+    for (let p of Object.values(data.parts)) {
       tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.hbs", {
         part: p,
       });
@@ -423,16 +415,5 @@ export class DamagePart {
       formula: roll.formula,
       total: roll.total,
     };
-    // this.rolls = [];
-
-    // if (rolls != null) {
-    // if (!(rolls instanceof Array)) rolls = [rolls];
-    // this.rolls = rolls.map((o) => {
-    // return {
-    // roll: o,
-    // json: escape(JSON.stringify(o)),
-    // };
-    // });
-    // }
   }
 }

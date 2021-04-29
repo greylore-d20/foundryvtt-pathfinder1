@@ -39,6 +39,7 @@ import { RollPF } from "./module/roll.js";
 import {
   getItemOwner,
   sizeDieExt,
+  sizeReach,
   normalDie,
   getActorFromId,
   createTag,
@@ -46,6 +47,8 @@ import {
   convertWeight,
   convertWeightBack,
   convertDistance,
+  getBuffTargets,
+  getBuffTargetDictionary,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
@@ -64,6 +67,8 @@ import * as macros from "./module/macros.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
+import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
+import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -110,12 +115,16 @@ Hooks.once("init", function () {
       ScriptEditor,
       SidebarPF,
       TooltipPF,
+      // Widgets
+      Widget_CategorizedItemPicker,
+      CurrencyTransfer,
     },
     compendiums: {},
     // Rolling
     DicePF,
     rollPreProcess: {
       sizeRoll: sizeDieExt,
+      sizeReach: sizeReach,
       roll: normalDie,
     },
     //Chat
@@ -155,6 +164,11 @@ Hooks.once("init", function () {
     config: PF1,
     tooltip: null,
     runUnitTests,
+    // Function library
+    functions: {
+      getBuffTargets,
+      getBuffTargetDictionary,
+    },
   };
 
   // Global exports
@@ -249,8 +263,8 @@ Hooks.once("setup", function () {
     "consumableTypes",
     "attackTypes",
     "buffTypes",
-    "buffTargets",
-    "contextNoteTargets",
+    // "buffTargets",
+    // "contextNoteTargets",
     "healingTypes",
     "divineFocus",
     "classSavingThrows",
@@ -273,10 +287,10 @@ Hooks.once("setup", function () {
 
   // Config (sub-)objects to be sorted
   const toSort = [
-    "buffTargets",
-    "buffTargets.misc",
-    "contextNoteTargets",
-    "contextNoteTargets.misc",
+    // "buffTargets",
+    // "buffTargets.misc",
+    // "contextNoteTargets",
+    // "contextNoteTargets.misc",
     "skills",
     "conditions",
     "conditionTypes",
@@ -327,6 +341,14 @@ Hooks.once("setup", function () {
     CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o], o);
   }
 
+  // Localize buff targets
+  const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
+  for (let l of localizeLabels) {
+    for (let [k, v] of Object.entries(CONFIG.PF1[l])) {
+      CONFIG.PF1[l][k].label = game.i18n.localize(v.label);
+    }
+  }
+
   // TinyMCE variables and commands
   tinyMCEInit();
 });
@@ -370,7 +392,7 @@ Hooks.once("ready", async function () {
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.10";
+  const NEEDS_MIGRATION_VERSION = "0.77.22";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -398,6 +420,7 @@ Hooks.once("ready", async function () {
     feats: new CompendiumBrowser({ type: "feats" }),
     classes: new CompendiumBrowser({ type: "classes" }),
     races: new CompendiumBrowser({ type: "races" }),
+    buffs: new CompendiumBrowser({ type: "buffs" }),
   };
 
   // Show changelog
@@ -501,45 +524,63 @@ Hooks.on("renderLightConfig", (app, html) => {
   addLowLightVisionToLightConfig(app, html);
 });
 
-Hooks.on("preUpdateItem", (actor, item, changedData, options, userId) => {
-  // Update level
-  {
-    if (item.type === "class" && hasProperty(changedData, "data.level")) {
-      const prevLevel = getProperty(item.data, "data.level");
-      // const newLevel = getProperty(changedData, "data.level");
-      // item._onLevelChange(prevLevel, newLevel);
-      item._prevLevel = prevLevel;
-    }
-  }
-});
+Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
 
-Hooks.on("updateItem", async (actor, item, changedData, options, userId) => {
-  if (userId !== game.user.id) return;
-  if (!(actor instanceof Actor)) return;
-  if (item == null) return;
-
-  // Update level
-  {
-    await new Promise((resolve) => {
+  if (actor) {
+    // Update level
+    {
       if (item.type === "class" && hasProperty(changedData, "data.level")) {
-        const newLevel = getProperty(changedData, "data.level");
-        const prevLevel = item._prevLevel ?? newLevel;
-        if (item._prevLevel !== undefined) delete item._prevLevel;
-        item._onLevelChange(prevLevel, newLevel).then(() => {
-          resolve();
-        });
-      } else {
-        resolve();
+        const prevLevel = getProperty(item.data, "data.level");
+        // const newLevel = getProperty(changedData, "data.level");
+        // item._onLevelChange(prevLevel, newLevel);
+        item._prevLevel = prevLevel;
       }
-    });
-    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-      await actor.toggleConditionStatusIcons();
     }
   }
 });
 
-Hooks.on("createToken", async (scene, token, options, userId) => {
-  if (userId !== game.user.id) return;
+Hooks.on("updateItem", async (item, changedData, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
+
+  if (actor) {
+    // Update level
+    {
+      await new Promise((resolve) => {
+        if (item.type === "class" && hasProperty(changedData, "data.level")) {
+          const newLevel = getProperty(changedData, "data.level");
+          const prevLevel = item._prevLevel ?? newLevel;
+          if (item._prevLevel !== undefined) delete item._prevLevel;
+          item._onLevelChange(prevLevel, newLevel).then(() => {
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      });
+      if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+        // Call hook
+        Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+
+        // Toggle status icons
+        await actor.toggleConditionStatusIcons();
+      }
+    }
+  }
+});
+
+Hooks.on("updateActor", (actor, data, options, userId) => {
+  // Call hook for toggling conditions
+  {
+    const conditions = getProperty(data, "data.attributes.conditions") || {};
+    for (let [k, v] of Object.entries(conditions)) {
+      Hooks.callAll("pf1.toggleActorCondition", actor, k, v);
+    }
+  }
+});
+
+Hooks.on("createToken", (scene, token, options, userId) => {
+  if (userId !== game.user._id) return;
 
   const actor = game.actors.tokens[token.data._id] ?? game.actors.get(token.actorId);
 
@@ -586,74 +627,87 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
 });
 
 // Create race on actor
-Hooks.on("preCreateItem", (actor, item, options, userId) => {
-  if (userId !== game.user.id) return;
-  if (!(actor instanceof Actor)) return;
-  if (actor.race == null) return;
+Hooks.on("preCreateItem", (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
 
-  if (item.type === "race") {
-    actor.race.update(item);
+  if (actor && actor.race && item.type === "race") {
+    actor.race.update(item.data._source);
     return false;
   }
 });
 
-Hooks.on("createItem", (actor, item, options, userId) => {
+Hooks.on("createItem", (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
   if (userId !== game.user.id) return;
-  if (!(actor instanceof Actor)) return;
-  if (!item) return;
 
   // Create class
-  if (item.type === "class") {
+  if (item.type === "class" && actor) {
     item._onLevelChange(0, item.data.data.level);
   }
 
-  // Refresh item
-  item.update({});
   // Show buff if active
-  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+  if (item.type === "buff" && getProperty(item.data, "data.active") === true && actor) {
+    // Call hook
+    Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+
     actor.toggleConditionStatusIcons();
   }
 });
 
-Hooks.on("deleteItem", async (actor, item, options, userId) => {
-  if (userId !== game.user.id) return;
-  if (!(actor instanceof Actor)) return;
+Hooks.on("deleteItem", async (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
 
-  // Remove token effects for deleted buff
-  const isLinkedToken = getProperty(actor.data, "token.actorLink");
-  if (isLinkedToken) {
-    let promises = [];
-    if (item.data.type === "buff" && item.data.data.active) {
-      actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
-      const tokens = actor.getActiveTokens();
-      for (const token of tokens) {
-        promises.push(token.toggleEffect(item.data.img, { active: false }));
+  if (actor) {
+    // Remove token effects for deleted buff
+    const isLinkedToken = getProperty(actor.data, "token.actorLink");
+    if (isLinkedToken) {
+      let promises = [];
+      if (item.data.type === "buff" && item.data.data.active) {
+        actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
+        const tokens = actor.getActiveTokens();
+        for (const token of tokens) {
+          promises.push(token.toggleEffect(item.data.img, { active: false }));
+        }
       }
+      await Promise.all(promises);
     }
-    await Promise.all(promises);
-  }
 
-  // Remove links
-  const itemLinks = getProperty(item.data, "data.links");
-  if (itemLinks) {
-    for (let [linkType, links] of Object.entries(itemLinks)) {
-      for (let link of links) {
-        const item = actor.items.find((o) => o.id === link.id);
-        let otherItemLinks = item?.links || {};
-        if (otherItemLinks[linkType]) {
-          delete otherItemLinks[linkType];
+    // Remove links
+    const itemLinks = getProperty(item.data, "data.links");
+    if (itemLinks) {
+      for (let [linkType, links] of Object.entries(itemLinks)) {
+        for (let link of links) {
+          const item = actor.items.find((o) => o.id === link.id);
+          let otherItemLinks = item?.links || {};
+          if (otherItemLinks[linkType]) {
+            delete otherItemLinks[linkType];
+          }
         }
       }
     }
-  }
 
-  // Refresh actor
-  actor.refresh();
+    // Call buff removal hook
+    if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, false);
+    }
+  }
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {
   const result = customRolls(message, chatData.speaker);
   return !result;
+});
+
+Hooks.on("renderActorDirectory", (app, html, data) => {
+  html.find("li.actor").each((i, li) => {
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+  });
+});
+
+Hooks.on("renderItemDirectory", (app, html, data) => {
+  html.find("li.item").each((i, li) => {
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+  });
 });
 
 /* -------------------------------------------- */
@@ -718,6 +772,21 @@ Hooks.on("renderSidebarTab", (app, html) => {
       new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs");
     });
   }
+});
+
+// Add compendium sidebar context options
+Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
+  // Add option to disable pack
+  entryOptions.push({
+    name: game.i18n.localize("PF1.Disable"),
+    icon: '<i class="fas fa-low-vision"></i>',
+    callback: (li) => {
+      const pack = game.packs.get(li.data("pack"));
+      const config = game.settings.get("core", "compendiumConfiguration")[pack.collection];
+      const disabled = getProperty(config, "pf1.disabled") === true;
+      pack.configure({ "pf1.disabled": !disabled });
+    },
+  });
 });
 
 // Handle chat tooltips

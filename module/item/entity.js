@@ -242,14 +242,13 @@ export class ItemPF extends Item {
       if (spellbook != null) {
         let formula = spellbook.baseDCFormula;
         if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
-        console.log(formula, data.save.dc);
         result = RollPF.safeRoll(formula, rollData).total + dcBonus;
       }
       return result;
     }
     const dcFormula = getProperty(data, "save.dc")?.toString() || "0";
     try {
-      result = Roll.create(dcFormula, rollData).roll().total + dcBonus;
+      result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
     } catch (e) {
       console.error(e, dcFormula);
     }
@@ -341,7 +340,6 @@ export class ItemPF extends Item {
   static get defaultContextNote() {
     return {
       text: "",
-      target: "",
       subTarget: "",
     };
   }
@@ -590,7 +588,7 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = Roll.create(rng.value, this.getRollData()).evaluate().total.toString();
+          rng.value = RollPF.safeRoll(rng.value, this.getRollData()).toString();
         } catch (err) {
           console.error(err);
         }
@@ -870,18 +868,6 @@ export class ItemPF extends Item {
             delete data[entry[0]];
           });
 
-          // Special case for context notes
-          if (kArr.key === "data.contextNotes") {
-            for (let obj of arr) {
-              if (obj.target) {
-                const subTargets = Object.keys(this.getContextNoteSubTargets(obj.target));
-                if (!subTargets.includes(obj.subTarget)) {
-                  obj.subTarget = subTargets[0];
-                }
-              }
-            }
-          }
-
           linkData(srcData, data, kArr.key, arr);
         }
       }
@@ -962,8 +948,15 @@ export class ItemPF extends Item {
       let flags = data["data.flags.dictionary"];
 
       for (let f of flags) {
-        let v = parseFloat(f[1]);
-        if (!Number.isNaN(v)) f[1] = v;
+        let value = f[1];
+        // Try to convert value to a number
+        if (typeof value === "string" && value.match(/^[0-9]+(?:\.[0-9]+)?$/)) {
+          const newValue = parseFloat(value);
+          if (!Number.isNaN(newValue)) {
+            value = newValue;
+          }
+          f[1] = value;
+        }
       }
     }
 
@@ -1221,7 +1214,7 @@ export class ItemPF extends Item {
     if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0) {
       const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = Roll.create("1d100").evaluate().total;
+        templateData.spellFailure = RollPF.safeRoll("1d100").total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
@@ -1522,7 +1515,7 @@ export class ItemPF extends Item {
     try {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
-        Roll.create(exAtkBonusFormula, rollData).evaluate().total;
+        RollPF.safeRoll(exAtkBonusFormula, rollData);
       }
     } catch (err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
@@ -2391,7 +2384,7 @@ export class ItemPF extends Item {
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = Roll.create("1d100").evaluate().total;
+            templateData.spellFailure = RollPF.safeRoll("1d100");
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }
@@ -2928,7 +2921,7 @@ export class ItemPF extends Item {
     });
     // Submit the roll to chat
     if (effectStr === "") {
-      Roll.create(parts.join("+")).toMessage({
+      RollPF.safeRoll(parts.join(" + ")).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
@@ -3011,6 +3004,9 @@ export class ItemPF extends Item {
     setProperty(result, "item.auraStrength", this.auraStrength);
 
     this._rollData = result.item;
+
+    Hooks.callAll("pf1.getRollData", this, result, true);
+
     return result;
   }
 
@@ -4039,44 +4035,6 @@ export class ItemPF extends Item {
     return result;
   }
 
-  /**
-   * Generates lists of context note subtargets this item can have.
-   *
-   * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
-   * @returns {object.<string, string>} A list of changes
-   */
-  getContextNoteSubTargets(target) {
-    let result = {};
-    // Add specific skills
-    if (target === "skill") {
-      if (this.parent == null) {
-        for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
-          result[`skill.${s}`] = skl;
-        }
-      } else {
-        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parent.data.data.skills);
-        for (let [s, skl] of Object.entries(actorSkills)) {
-          if (!skl.subSkills) {
-            if (skl.custom) result[`skill.${s}`] = skl.name;
-            else result[`skill.${s}`] = CONFIG.PF1.skills[s];
-          } else {
-            for (let [s2, skl2] of Object.entries(skl.subSkills)) {
-              result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
-            }
-          }
-        }
-      }
-    }
-    // Add static subtargets
-    else if (hasProperty(CONFIG.PF1.contextNoteTargets, target)) {
-      for (let [k, v] of Object.entries(CONFIG.PF1.contextNoteTargets[target])) {
-        if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
-      }
-    }
-
-    return result;
-  }
-
   async addChange() {
     const change = new ItemChange();
     this.changes.push(change);
@@ -4398,7 +4356,7 @@ export class ItemPF extends Item {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName) {
-    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || {});
+    let flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
 
     let doUpdate = false;
     for (let a = 0; a < flags.length; a++) {
@@ -4423,14 +4381,11 @@ export class ItemPF extends Item {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+    const flags = getProperty(this.data, "data.flags.dictionary") || [];
 
-    for (let f of flags) {
-      if (f[0] === flagName) {
-        return f[1];
-      }
-    }
-
-    return undefined;
+    const flag = flags.find((f) => {
+      return f[0] === flagName;
+    });
+    return flag ? flag[1] : undefined;
   }
 }

@@ -1,6 +1,7 @@
 import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
 import { ItemPF } from "./item/entity.js";
+import { ActorPF } from "./actor/entity.js";
 
 /**
  * Creates a tag from a string.
@@ -323,6 +324,13 @@ export const normalDie = function (origCount, origSides, crit = 1) {
   return formula;
 };
 
+export const sizeReach = function (size = "M", reach = false, stature = "tall") {
+  if (typeof size === "number") size = Object.values(CONFIG.PF1.sizeChart)[size];
+  size = Object.entries(CONFIG.PF1.sizeChart).find((o) => o[1] === size)[0];
+
+  return ActorPF.getReach(size, stature)[reach ? "reach" : "melee"];
+};
+
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
  *
@@ -634,4 +642,92 @@ export const colorToInt = function (color) {
   let integer = ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
 
   return integer;
+};
+
+/**
+ * @typedef {object} BuffTargetItem
+ * @property {string} [label] - The buff target's label.
+ * @property {string} category - The buff target's category.
+ * @property {string} [icon] - The URL to an icon.
+ */
+/**
+ * Assembles an array of all possible buff targets.
+ *
+ * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
+ * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @returns {object.<string, BuffTargetItem>} The resulting array of buff targets.
+ */
+export const getBuffTargets = function (actor, type = "buffs") {
+  const buffTargets = duplicate(
+    {
+      buffs: CONFIG.PF1.buffTargets,
+      contextNotes: CONFIG.PF1.contextNoteTargets,
+    }[type]
+  );
+
+  // Append individual skills to buff targets
+  if (actor) {
+    for (let s of actor._skillTargets) {
+      const sId = s.split(".").slice(1).join(".");
+      const skill = actor.getSkillInfo(sId);
+      buffTargets[s] = { label: skill.name, category: "skill" };
+    }
+  } else {
+    for (let [k, v] of Object.entries(CONFIG.PF1.skills)) {
+      buffTargets[k] = { label: v, category: "skill" };
+    }
+  }
+
+  return buffTargets;
+};
+
+/**
+ * @typedef {object} BuffTargetCategory
+ * @property {string} label - The category's label.
+ */
+/**
+ * Assembles an array of buff targets and their categories, ready to be inserted into a Widget_CategorizedItemPicker.
+ *
+ * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
+ * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
+ * @returns {Widget_CategorizedItemPicker~Category[]}
+ */
+export const getBuffTargetDictionary = function (actor, type = "buffs") {
+  const buffTargets = getBuffTargets(actor, type);
+
+  // Assemble initial categories and items
+  const targetCategories = duplicate(
+    {
+      buffs: CONFIG.PF1.buffTargetCategories,
+      contextNotes: CONFIG.PF1.contextNoteCategories,
+    }[type]
+  );
+  let categories = Object.entries(buffTargets).reduce((cur, o) => {
+    const key = o[0];
+    const label = o[1].label;
+    const category = o[1].category;
+    const icon = o[1].icon;
+
+    if (!key.startsWith("~")) {
+      cur[category] = cur[category] || {
+        label: targetCategories[category].label,
+        items: [],
+      };
+      cur[category].items.push({ key, label, icon });
+    }
+    return cur;
+  }, {});
+
+  // Turn result into a usable format, and sort
+  categories = Object.entries(categories).reduce((cur, o) => {
+    const key = o[0];
+    const label = o[1].label;
+    const items = o[1].items;
+    cur.push({ key, label, items });
+    return cur;
+  }, []);
+  categories = naturalSort(categories, "label");
+
+  // Return result
+  return categories;
 };

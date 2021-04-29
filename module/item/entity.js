@@ -47,6 +47,14 @@ export class ItemPF extends Item {
     return super.isOwned || this.parentItem != null;
   }
 
+  get isActive() {
+    if (this.type === "buff") return this.data.data.active;
+    if (this.type === "equipment" || this.type === "weapon") return this.data.data.equipped;
+    if (this.type === "loot" && this.data.data.subType === "gear") return this.data.data.equipped;
+    if (this.type === "feat") return !this.data.data.disabled;
+    return true;
+  }
+
   /**
    * Does the Item implement an attack roll as part of its usage
    *
@@ -3018,6 +3026,11 @@ export class ItemPF extends Item {
       result.ablMod = ablMod;
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
+
+    // Add dictionary flag
+    if (this.data.data.tag) {
+      result.item.dFlags = getProperty(result, `dFlags.${this.data.data.tag}`);
+    }
 
     // Set aura strength
     setProperty(result, "item.auraStrength", this.auraStrength);

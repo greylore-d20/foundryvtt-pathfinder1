@@ -210,11 +210,6 @@
   "PF1.FlagsSave": "Update Special Traits",
   "PF1.FlagsBoolean": "Boolean Flags",
   "PF1.FlagsDictionary": "Dictionary Flags",
-  "PF1.AdvancedInfo": {
-    "Flags": {
-      "InfoBox": "Flags can be used by modules and macros, and don't do anything by themselves."
-    }
-  },
 
   "PF1.AbilityDamage": "Ability Damage",
   "PF1.AbilityDrain": "Ability Drain",
@@ -1819,6 +1814,15 @@
                 "Name": "result",
                 "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
               }
+            }
+          }
+        },
+        "Flags": {
+          "Label": "Flags",
+          "Desc": {
+            "Basic": "Flags can be used by modules and macros. Boolean Flags don't do anything by themselves, but Dictionary Flags can be used in rolls, in addition to their use in macros and modules.",
+            "DictionaryFlags": {
+              "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
             }
           }
         }

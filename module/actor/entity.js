@@ -254,17 +254,30 @@ export class ActorPF extends Actor {
 
   _prepareItemFlags(items) {
     let bFlags = {};
+    let dFlags = {};
 
     for (let i of items) {
-      const flags = getProperty(i.data, "data.flags.boolean") || [];
-      for (let f of flags) {
-        bFlags[f] = bFlags[f] || { sources: [] };
-        bFlags[f].sources.push(i);
+      // Process boolean flags
+      if (i.isActive) {
+        const flags = getProperty(i.data, "data.flags.boolean") || [];
+        for (let f of flags) {
+          bFlags[f] = bFlags[f] || { sources: [] };
+          bFlags[f].sources.push(i);
+        }
+      }
+
+      // Process dictionary flags
+      if (i.data.data.tag) {
+        const flags = getProperty(i.data, "data.flags.dictionary") || [];
+        for (let f of flags) {
+          setProperty(dFlags, `${i.data.data.tag}.${f[0]}`, i.isActive ? f[1] : 0);
+        }
       }
     }
 
     return {
       boolean: bFlags,
+      dictionary: dFlags,
     };
   }
 
@@ -276,13 +289,7 @@ export class ActorPF extends Actor {
           (obj.data.data.changeFlags && Object.values(obj.data.data.changeFlags).filter((o) => o === true).length)
         );
       })
-      .filter((obj) => {
-        if (obj.type === "buff") return obj.data.data.active;
-        if (obj.type === "equipment" || obj.type === "weapon") return obj.data.data.equipped;
-        if (obj.type === "loot" && obj.data.data.subType === "gear") return obj.data.data.equipped;
-        if (obj.type === "feat") return !obj.data.data.disabled;
-        return true;
-      });
+      .filter((obj) => obj.isActive);
 
     let changes = [];
     for (let i of this.changeItems) {
@@ -329,7 +336,7 @@ export class ActorPF extends Actor {
 
   prepareBaseData() {
     // Refresh roll data
-    // Some changes act wonky without thi:
+    // Some changes act wonky without this
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
     if (game.actors) this.getRollData({ refresh: true });
 
@@ -3443,6 +3450,9 @@ export class ActorPF extends Actor {
         keyedBooks.push(book.class);
       }
     }
+
+    // Add item dictionary flags
+    if (this.itemFlags) result.dFlags = this.itemFlags.dictionary;
 
     // Add range info
     result.range = this.constructor.getReach(this.data.data.traits.size, this.data.data.traits.stature);

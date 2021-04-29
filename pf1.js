@@ -115,6 +115,7 @@ Hooks.once("init", function () {
       ScriptEditor,
       SidebarPF,
       TooltipPF,
+      PF1_HelpBrowser,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,

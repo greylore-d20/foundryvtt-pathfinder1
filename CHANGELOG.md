@@ -27,6 +27,7 @@
 - Enhanced the conditions list on Actors' buffs tab with icons
 - Added ability to drag currency between sheets (or to the same sheet)
 - Allow feats to be disabled (#570)
+- Dictionary Flags from items' advanced tabs can now be used in roll formulas. See the in-game help browser for more information.
 
 ### Compendium
 

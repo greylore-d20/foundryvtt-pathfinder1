@@ -1595,11 +1595,6 @@ export class ActorPF extends Actor {
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      let tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
-      tokens.forEach((o) => {
-        o.update({ width: size.w, height: size.h, scale: size.scale });
-      });
       if (!this.isToken) {
         linkData(fullData, data, "token.width", size.w);
         linkData(fullData, data, "token.height", size.h);
@@ -1763,6 +1758,19 @@ export class ActorPF extends Actor {
     for (let k of Object.keys(data)) {
       if (k.startsWith("data.attributes.vision")) {
         canvas.sight.initializeTokens();
+      }
+    }
+
+    // Resize token(s)
+    {
+      const sizeKey = getProperty(data, "data.traits.size");
+      if (sizeKey) {
+        let size = CONFIG.PF1.tokenSizes[sizeKey];
+        let tokens = this.isToken ? [this.token] : this.getActiveTokens();
+        tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
+        tokens.forEach((o) => {
+          o.update({ width: size.w, height: size.h, scale: size.scale });
+        });
       }
     }
 

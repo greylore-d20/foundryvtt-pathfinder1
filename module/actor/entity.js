@@ -280,6 +280,7 @@ export class ActorPF extends Actor {
         if (obj.type === "buff") return obj.data.data.active;
         if (obj.type === "equipment" || obj.type === "weapon") return obj.data.data.equipped;
         if (obj.type === "loot" && obj.data.data.subType === "gear") return obj.data.data.equipped;
+        if (obj.type === "feat") return !obj.data.data.disabled;
         return true;
       });
 
@@ -496,11 +497,6 @@ export class ActorPF extends Actor {
     // Reset HD
     setProperty(this.data, "data.attributes.hd.total", getProperty(this.data, "data.details.level.value"));
 
-    // Reset CR
-    if (this.data.type === "npc") {
-      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
-    }
-
     // Apply ACP and Max Dexterity Bonus
     this._applyArmorPenalties();
 
@@ -624,6 +620,19 @@ export class ActorPF extends Actor {
 
     // Update wound threshold
     this.updateWoundThreshold();
+
+    // Reset CR
+    if (this.data.type === "npc") {
+      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
+
+      // Reset experience value
+      try {
+        const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
+        this.data.data.details.xp.value = this.getCRExp(crTotal);
+      } catch (e) {
+        this.data.data.details.xp.value = this.getCRExp(1);
+      }
+    }
 
     // Reset spell slots and spell points
     for (let spellbookKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
@@ -1454,16 +1463,7 @@ export class ActorPF extends Actor {
   /**
    * Prepare NPC type specific data
    */
-  _prepareNPCData() {
-    setProperty(this.data, "data.details.cr.total", this.getCR());
-    // Kill Experience
-    try {
-      const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
-      this.data.data.details.xp.value = this.getCRExp(crTotal);
-    } catch (e) {
-      this.data.data.details.xp.value = this.getCRExp(1);
-    }
-  }
+  _prepareNPCData() {}
 
   /**
    * Return reduced movement speed.
@@ -3517,7 +3517,9 @@ export class ActorPF extends Actor {
     if (this.items == null) return base;
 
     // Gather CR from templates
-    const templates = this.items.filter((o) => o.type === "feat" && o.data.data.featType === "template");
+    const templates = this.items.filter(
+      (o) => o.type === "feat" && o.data.data.featType === "template" && !o.data.data.disabled
+    );
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
@@ -3560,7 +3562,7 @@ export class ActorPF extends Actor {
     return this.data.items
       .filter(
         (o) =>
-          (o.type === "attack" || o.type === "spell" || o.type === "feat") &&
+          (o.type === "attack" || o.type === "spell" || (o.type === "feat" && !o.data.disabled)) &&
           getProperty(o, "data.showInQuickbar") === true
       )
       .sort((a, b) => {
@@ -3683,7 +3685,7 @@ export class ActorPF extends Actor {
   getFeatCount() {
     const result = { max: 0, value: 0 };
     result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.data.data.featType === "feat";
+      return o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled;
     }).length;
 
     // Add feat count by level

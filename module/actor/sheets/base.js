@@ -447,7 +447,7 @@ export class ActorSheetPF extends ActorSheet {
       // Feats
       data.featCount = {};
       data.featCount.value = this.actor.items.filter(
-        (o) => o.type === "feat" && o.data.data.featType === "feat"
+        (o) => o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled
       ).length;
 
       // Feat count

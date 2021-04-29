@@ -42,7 +42,7 @@
       
       <ol class="item-list">
         {{#each section.items as |item iid|}}
-        <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
+        <li class="item flexrow{{#unless isCharged}} uncharged{{/unless}}{{#if item.data.disabled}} disabled{{/if}}" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style="background-image: url({{item.img}})"></div>
             <h4>{{item.name}}</h4>
@@ -57,12 +57,14 @@
           {{#if section.hasActions}}
           <div class="item-detail item-actions">
             <div class="item-attack tooltip">
+              {{#unless item.data.disabled}}
               {{#if item.hasAction}}
               <span class="tooltipcontent">
                 {{localize "PF1.UseFeat"}}
               </span>
               <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
               {{/if}}
+              {{/unless}}
             </div>
           </div>
           

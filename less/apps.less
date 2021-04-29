@@ -382,6 +382,15 @@
         background-color: rgba(64, 64, 192, 0.3);
       }
 
+      &.disabled {
+        .item-name {
+          h4 {
+            text-decoration: line-through;
+            color: @colorTan;
+          }
+        }
+      }
+
       // Item Header Name
       .item-name {
         cursor: pointer;
@@ -704,8 +713,15 @@
   .sheet-header {
     flex: 0 0 @headerHeight;
     border-bottom: @borderGroove;
-    .nodesto();
     align-items: center;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      .nodesto();
+    }
 
     /* Character Name */
     h1 {

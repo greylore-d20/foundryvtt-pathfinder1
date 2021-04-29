@@ -1582,8 +1582,11 @@ export class ItemPF extends Item {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
-    if (allowed === false) return;
+    if (this.type === "feat" && this.data.data.disabled) {
+      const msg = game.i18n.localize("PF1.ErrorFeatDisabled");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     const itemQuantity = getProperty(this.data, "data.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
@@ -1614,6 +1617,9 @@ export class ItemPF extends Item {
         }
       }
     }
+
+    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
+    if (allowed === false) return;
 
     const rollData = duplicate(this.getRollData());
     rollData.d20 = dice !== "1d20" ? dice : "";

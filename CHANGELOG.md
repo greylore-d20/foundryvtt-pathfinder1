@@ -26,6 +26,7 @@
 - Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
 - Enhanced the conditions list on Actors' buffs tab with icons
 - Added ability to drag currency between sheets (or to the same sheet)
+- Allow feats to be disabled (#570)
 
 ### Compendium
 

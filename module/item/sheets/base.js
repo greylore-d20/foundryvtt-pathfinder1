@@ -327,7 +327,6 @@ export class ItemSheetPF extends ItemSheet {
 
       const buffTargets = getBuffTargets(this.item.actor);
       data.changes = data.item.data.changes.reduce((cur, o) => {
-        const itemChange = this.item.changes.get(o._id);
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;

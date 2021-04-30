@@ -637,7 +637,7 @@ export class ActorSheetPF extends ActorSheet {
     if (book.autoSpellLevelCalculation) {
       min = book.hasCantrips ? 0 : 1;
 
-      const cl = Math.max(Math.min(book.cl.total, 20), 1);
+      const cl = book.cl.autoSpellLevelTotal;
 
       const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
       max = castsPerDay.length - 1;
@@ -645,7 +645,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = min; a <= max; a++) {
+    for (let a = min; a <= 9; a++) {
       if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
         spellbook[a] = {
           level: a,
@@ -671,6 +671,10 @@ export class ActorSheetPF extends ActorSheet {
         spellbook[lvl]?.items.push(spell);
       }
     });
+
+    for (let a = min; a <= 9; a++) {
+      if (!spellbook[a].items.length && a > max) delete spellbook[a];
+    }
 
     return spellbook;
   }

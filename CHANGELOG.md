@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.77.23
+
+### Bug Fixes
+
+- Energy drain was incorrectly hiding spell slots (#792)
+- Spells outside of level requirements were inaccessible on the sheet
+
 ## 0.77.22
 
 ### Bug Fixes

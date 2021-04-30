@@ -1158,12 +1158,18 @@ export class ItemPF extends Item {
     if (existing || noCreate) return existing;
 
     // Add a new effect
-    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
-    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    const effect = ActiveEffect.create(createData, this.parentActor);
+    const effect = ActiveEffect.create(this.getRawEffectData(), this.parentActor);
     await effect.create();
 
     return effect;
+  }
+
+  // Determines the starting data for an ActiveEffect based off this item
+  getRawEffectData() {
+    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.isActive };
+    if (this.type === "buff")
+      createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    return createData;
   }
 
   /* -------------------------------------------- */

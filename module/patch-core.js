@@ -54,12 +54,21 @@ export async function PatchCore() {
       data,
       mergeObject(options, { recursive: true, skipUpdate: true })
     );
-    if (Object.keys(diff).length) {
+    if (!isObjectEmpty(diff)) {
       await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
       await this.toggleConditionStatusIcons();
       await this.refreshItems();
     }
     return diff;
+  };
+  // Patch ActorTokenHelpers.updateEmbeddedEntity
+  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
+  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
+    await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
+
+    if (embeddedName === "OwnedItem") {
+      this.doQueuedUpdates();
+    }
   };
   // Patch ActorTokenHelpers.deleteEmbeddedEntity
   const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
@@ -83,80 +92,7 @@ export async function PatchCore() {
     // Delete item
     const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, data, options);
 
-    // Remove token effects for deleted buff
-    for (let item of items) {
-      let promises = [];
-      if (item.type === "buff" && item.data.data.active) {
-        const isLinkedToken = getProperty(this.data, "token.actorLink");
-        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
-        for (const token of tokens) {
-          promises.push(token.toggleEffect(item.data.img, { active: false }));
-        }
-      }
-      await Promise.all(promises);
-    }
-
     return deleted;
-  };
-
-  const ActorTokenHelpers_createEmbeddedEntity = ActorTokenHelpers.prototype.createEmbeddedEntity;
-  ActorTokenHelpers.prototype.createEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    let created = await ActorTokenHelpers_createEmbeddedEntity.call(this, embeddedName, data, options);
-    created = created instanceof Array ? created : [created];
-
-    if (embeddedName === "OwnedItem") {
-      for (let i of created) {
-        const item = this.items.get(i._id);
-
-        // Show new buff icon
-        if (item.data.type === "buff" && getProperty(item.data, "data.active") === true) {
-          await this.toggleConditionStatusIcons();
-        }
-
-        // Add class features
-        if (item.data.type === "class") {
-          await item._onLevelChange(0, item.data.data.level);
-        }
-      }
-    }
-
-    return created;
-  };
-
-  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
-  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    data = data instanceof Array ? data : [data];
-    const prevData = data.reduce((cur, o) => {
-      const obj = duplicate(this.items.get(o._id));
-      cur.set(o._id, obj);
-      return cur;
-    }, new Map());
-    let updates = await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
-    updates = updates instanceof Array ? updates : [updates];
-
-    if (embeddedName === "OwnedItem") {
-      for (let i of updates) {
-        const item = this.items.get(i._id);
-        const prev = prevData.get(i._id);
-        const d = data.find((o) => o._id === i._id);
-
-        // Show updated buff icon
-        if (item.data.type === "buff" && d["data.active"] !== undefined) {
-          await this.toggleConditionStatusIcons();
-        }
-
-        // Add or remove class features
-        if (item.data.type === "class") {
-          const prevLevel = getProperty(prev, "data.level");
-          const newLevel = getProperty(item.data, "data.level");
-          if (prevLevel !== newLevel) {
-            await item._onLevelChange(prevLevel, newLevel);
-          }
-        }
-      }
-    }
-
-    return updates;
   };
 
   // Token patch for shared vision

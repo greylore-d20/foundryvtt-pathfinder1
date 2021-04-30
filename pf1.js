@@ -408,7 +408,7 @@ Hooks.once("ready", async function () {
     SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
   );
   if (needMigration && game.user.isGM) {
-    await migrations.migrateWorld();
+    // await migrations.migrateWorld();
   }
 
   // Migrate system settings
@@ -469,6 +469,13 @@ Hooks.on("canvasInit", function () {
       const results = addReachCallback(m.data, elem);
       callbacks.push(...results);
     });
+
+    // Toggle token condition icons
+    if (game.user.isGM) {
+      canvas.tokens.placeables.forEach((t) => {
+        if (t.actor) t.actor.toggleConditionStatusIcons();
+      });
+    }
   });
 
   Hooks.on("renderChatMessage", (app, html, data) => {
@@ -526,34 +533,28 @@ Hooks.on("renderLightConfig", (app, html) => {
   addLowLightVisionToLightConfig(app, html);
 });
 
-Hooks.on("updateOwnedItem", async (actor, itemData, changedData, options, userId) => {
-  if (userId !== game.user._id) return;
+Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
   if (!(actor instanceof Actor)) return;
-
   const item = actor.getOwnedItem(changedData._id);
   if (item == null) return;
 
-  // Update level
-  {
-    await new Promise((resolve) => {
-      if (item.type === "class" && hasProperty(changedData, "data.level")) {
-        const prevLevel = getProperty(item.data, "data.level");
-        const newLevel = getProperty(changedData, "data.level");
-        item._onLevelChange(prevLevel, newLevel).then(() => {
-          resolve();
-        });
-      } else {
-        resolve();
-      }
-    });
-    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-      // Call hook
-      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
-
-      // Toggle status icons
-      await actor.toggleConditionStatusIcons();
-    }
+  // Toggle buff
+  if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+    // Call hook
+    Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
   }
+
+  if (userId !== game.user.id) return;
+
+  // Update level
+  (async () => {
+    // Alter level-based class data
+    if (item.type === "class" && hasProperty(changedData, "data.level")) {
+      const prevLevel = getProperty(item.data, "data.level");
+      const newLevel = getProperty(changedData, "data.level");
+      await item._onLevelChange(prevLevel, newLevel);
+    }
+  })();
 });
 
 Hooks.on("updateActor", (actor, data, options, userId) => {
@@ -629,23 +630,21 @@ Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
 });
 
 Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
-  if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
-
   const item = actor.items.get(itemData._id);
   if (!item) return;
-
-  // Create class
-  if (item.type === "class") {
-    item._onLevelChange(0, item.data.data.level);
-  }
 
   // Show buff if active
   if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
     // Call hook
     Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+  }
 
-    actor.toggleConditionStatusIcons();
+  if (userId !== game.user._id) return;
+
+  // Create class
+  if (item.type === "class") {
+    item._onLevelChange(0, item.data.data.level);
   }
 });
 
@@ -657,23 +656,14 @@ Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
   if (item.type === "class") item._onLevelChange(item.data.data.level, 0);
 });
 
-Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
+Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
+  // Call buff removal hook
+  if (itemData.type === "buff" && getProperty(itemData, "data.active") === true) {
+    Hooks.callAll("pf1.toggleActorBuff", actor, itemData, false);
+  }
+
   if (userId !== game.user._id) return;
   if (!(actor instanceof Actor)) return;
-
-  // Remove token effects for deleted buff
-  const isLinkedToken = getProperty(actor.data, "token.actorLink");
-  if (isLinkedToken) {
-    let promises = [];
-    if (itemData.type === "buff" && itemData.data.active) {
-      actor.effects.find((e) => e.data.origin?.indexOf(itemData._id) > 0)?.delete();
-      const tokens = actor.getActiveTokens();
-      for (const token of tokens) {
-        promises.push(token.toggleEffect(itemData.img, { active: false }));
-      }
-    }
-    await Promise.all(promises);
-  }
 
   // Remove links
   const itemLinks = getProperty(itemData, "data.links");
@@ -689,10 +679,21 @@ Hooks.on("deleteOwnedItem", async (actor, itemData, options, userId) => {
     }
   }
 
-  // Call buff removal hook
-  if (itemData.type === "buff" && getProperty(itemData, "data.active") === true) {
-    Hooks.callAll("pf1.toggleActorBuff", actor, itemData, false);
-  }
+  (async () => {
+    // Remove token effects for deleted buff
+    const isLinkedToken = getProperty(actor.data, "token.actorLink");
+    if (isLinkedToken) {
+      let promises = [];
+      if (itemData.type === "buff" && itemData.data.active) {
+        actor.effects.find((e) => e.data.origin?.indexOf(itemData._id) > 0)?.delete();
+        const tokens = actor.getActiveTokens();
+        for (const token of tokens) {
+          promises.push(token.toggleEffect(itemData.img, { active: false }));
+        }
+      }
+      await Promise.all(promises);
+    }
+  })();
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {

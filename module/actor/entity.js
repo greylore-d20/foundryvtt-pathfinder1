@@ -43,6 +43,15 @@ export class ActorPF extends Actor {
     if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
 
     /**
+     * Stores updates to be applied to the actor near the end of the _onUpdate method.
+     *
+     * @property
+     * @private
+     * @type {object.<string, any>}
+     */
+    if (this._queuedUpdates === undefined) this._queuedUpdates = {};
+
+    /**
      * @property {object} _rollData
      * Cached roll data for this item.
      */
@@ -314,7 +323,6 @@ export class ActorPF extends Actor {
   }
 
   prepareData() {
-    this._queuedUpdates = {};
     this._prevAttributes = {};
     for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
       this._prevAttributes[k] = getProperty(this.data, `${k}.max`);
@@ -325,13 +333,6 @@ export class ActorPF extends Actor {
     // Prepare data
     super.prepareData();
 
-    // Send queued updates
-    if (this._initialized && this.hasPerm(game.user, "OWNER")) {
-      const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
-      if (!isObjectEmpty(diff)) {
-        this.update(diff);
-      }
-    }
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
   }
@@ -1682,15 +1683,6 @@ export class ActorPF extends Actor {
             this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
             let promises = [];
             let tokens = [];
-
-            // Toggle condition status icons
-            {
-              const token = {};
-              this._pendingUpdateTokens.push(token);
-              tokens.push(token);
-              const p = this.toggleConditionStatusIcons(token);
-              promises.push(p);
-            }
             // Refresh items
             {
               const token = {};
@@ -1777,8 +1769,40 @@ export class ActorPF extends Actor {
         });
       }
     }
+    // Send queued updates
+    // if (this._initialized && this.hasPerm(game.user, "OWNER") && userId === game.user.id) {
+    // const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    // if (!isObjectEmpty(diff)) {
+    // this.update(diff).then(() => {
+    // this._queuedUpdates = {};
+    // });
+    // }
+    // }
 
     super._onUpdate(data, options, userId, context);
+
+    if (userId === game.user.id) {
+      this.doQueuedUpdates();
+    }
+  }
+
+  _onModifyEmbeddedEntity(embeddedName, changes, options, userId, context = {}) {
+    super._onModifyEmbeddedEntity(embeddedName, changes, options, userId, context);
+
+    if (embeddedName === "OwnedItem" && userId === game.user.id) {
+      this.doQueuedUpdates();
+    }
+  }
+
+  async doQueuedUpdates() {
+    if (!this.hasPerm(game.user, "OWNER")) return;
+
+    const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    this._queuedUpdates = {};
+    await this.toggleConditionStatusIcons();
+    if (!isObjectEmpty(diff)) {
+      await this.update(diff);
+    }
   }
 
   /**
@@ -2927,8 +2951,7 @@ export class ActorPF extends Actor {
     });
 
     for (let o of noteItems) {
-      if (o.type === "buff" && !o.data.data.active) continue;
-      if ((o.type === "equipment" || o.type === "weapon") && !o.data.data.equipped) continue;
+      if (!o.isActive) continue;
       if (!o.data.data.contextNotes || o.data.data.contextNotes.length === 0) continue;
       result.push({ notes: o.data.data.contextNotes, item: o });
     }
@@ -3586,62 +3609,50 @@ export class ActorPF extends Actor {
       });
   }
 
-  toggleConditionStatusIcons(token) {
-    if (this._runningFunctions.indexOf("toggleConditionStatusIcons") !== -1) return;
+  async toggleConditionStatusIcons() {
+    const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
+    const buffTextures = this._calcBuffTextures();
 
-    return new Promise((resolve) => {
-      this._runningFunctions.push("toggleConditionStatusIcons");
-      if (token) {
-        token.cancel = function () {
-          resolve();
-        };
+    let promises = [];
+    for (let t of tokens) {
+      // const isLinkedToken = getProperty(this.data, "token.actorLink");
+      const actor = t.actor ? t.actor : this;
+      if (!actor.hasPerm(game.user, "OWNER")) continue;
+      const fx = [...actor.effects];
+
+      // Create and delete ActiveEffects
+      let toCreate = [];
+      let toDelete = [];
+      for (let [id, obj] of Object.entries(buffTextures)) {
+        const existing = fx.find((f) => f.data.origin === id);
+        if (obj.active && !existing) toCreate.push(obj.item.getRawEffectData());
+        else if (!obj.active && existing) toDelete.push(existing.id);
       }
+      promises.push(
+        (async () => {
+          if (toDelete.length) await actor.deleteEmbeddedEntity("ActiveEffect", toDelete);
+          if (toCreate.length) await actor.createEmbeddedEntity("ActiveEffect", toCreate);
+        })()
+      );
 
-      (async () => {
-        const isLinkedToken = getProperty(this.data, "token.actorLink");
-        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
-        const buffTextures = this._calcBuffTextures();
+      for (let con of CONFIG.statusEffects) {
+        // Don't toggle non-condition effects
+        if (CONFIG.PF1.conditions[con.id] == null) continue;
 
-        let promises = [];
-        const fx = [...this.effects];
+        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
+        const hasCondition = actor.data.data.attributes.conditions[con.id] === true;
+        const hasEffectIcon = idx >= 0;
 
-        for (let [id, obj] of Object.entries(buffTextures)) {
-          if (obj.active) await obj.item.toEffect();
-          else await fx.find((f) => f.data.origin === id)?.delete();
+        if (hasCondition !== hasEffectIcon) {
+          promises.push(
+            t.toggleEffect(con, {
+              midUpdate: true,
+            })
+          );
         }
-
-        for (let ae of fx) {
-          let item = this.items.get(ae.data.origin?.split(".")[3]);
-          if (!item && ae.data.origin) await ae.delete();
-        }
-
-        let token = tokens[0];
-        if (!token) return;
-        for (let con of CONFIG.statusEffects) {
-          // Don't toggle non-condition effects
-          if (CONFIG.PF1.conditions[con.id] == null) continue;
-
-          const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
-          const hasCondition = this.data.data.attributes.conditions[con.id] === true;
-          const hasEffectIcon = idx >= 0;
-
-          if (hasCondition !== hasEffectIcon) {
-            promises.push(
-              token.toggleEffect(con, {
-                midUpdate: true,
-              })
-            );
-          }
-        }
-        await Promise.all(promises);
-      })().then(() => {
-        if (token) {
-          this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
-        }
-        this._runningFunctions.splice(this._runningFunctions.indexOf("toggleConditionStatusIcons"), 1);
-        resolve();
-      });
-    });
+      }
+    }
+    await Promise.all(promises);
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }

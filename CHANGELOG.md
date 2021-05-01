@@ -6,6 +6,7 @@
 
 - Energy drain was incorrectly hiding spell slots (#792)
 - Spells outside of level requirements were inaccessible on the sheet
+- Players could not open items inside containers (#794)
 
 ## 0.77.22
 

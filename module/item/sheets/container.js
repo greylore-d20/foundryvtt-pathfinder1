@@ -295,7 +295,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     });
 
     // Currency Dragging
-    if (this.item.permission >= 3) {
+    if (this.item.hasPerm(game.user, 3)) {
       html.find("label.denomination").each((i, label) => {
         label.setAttribute("draggable", true);
         label.addEventListener("dragstart", handler, false);

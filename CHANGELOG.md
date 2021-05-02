@@ -8,6 +8,7 @@
 - Spells outside of level requirements were inaccessible on the sheet
 - Players could not open items inside containers (#794)
 - Caster Level bonus increase incorrectly affected spell progression
+- Currency transfer of containers did not work as a player
 
 ## 0.77.22
 

@@ -778,7 +778,7 @@ export class ActorPF extends Actor {
               casterType
             ];
           const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
-          rollData.cl = classLevel;
+          // rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
 
           const allLevelModFormula =

@@ -661,9 +661,6 @@
 
   .condition {
     flex: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     align-content: center;
     margin: 2px;
     flex-basis: calc(20% - 4px);
@@ -847,18 +844,20 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      color: @colorTan;
+      color: @colorDark;
 
       img {
         border: none;
       }
 
       &:not(.active) > img {
-        filter: brightness(50%);
+        filter: @filterParchment;
       }
 
       &.active {
-        color: @colorDark;
+        outline: 2px solid black;
+        outline-offset: -1px;
+        font-weight: 600;
       }
 
       & > :first-child {

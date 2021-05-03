@@ -2,6 +2,10 @@
 
 ## 0.77.24
 
+### Changelog
+
+- Improve display of condition icons in buff tab (#795)
+
 ### Bug Fixes
 
 - Actors could fail to render with some spellbook configurations (#797)

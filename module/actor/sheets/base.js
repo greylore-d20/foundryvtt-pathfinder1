@@ -645,7 +645,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = min; a <= 9; a++) {
+    for (let a = 0; a < 10; a++) {
       if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
         spellbook[a] = {
           level: a,
@@ -667,13 +667,13 @@ export class ActorSheetPF extends ActorSheet {
     spells.forEach((spell) => {
       const spellBookKey = getProperty(spell, "data.spellbook");
       if (spellBookKey === bookKey) {
-        const lvl = spell.data.level || min;
+        const lvl = spell.data.level ?? min;
         spellbook[lvl]?.items.push(spell);
       }
     });
 
-    for (let a = min; a <= 9; a++) {
-      if (!spellbook[a].items.length && a > max) delete spellbook[a];
+    for (let a = 0; a < 10; a++) {
+      if (spellbook[a]?.items.length === 0 && (a > max || a < min)) delete spellbook[a];
     }
 
     return spellbook;

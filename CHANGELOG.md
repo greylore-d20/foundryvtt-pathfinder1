@@ -2,6 +2,11 @@
 
 ## 0.77.24
 
+### Bug Fixes
+
+- Actors could fail to render with some spellbook configurations (#797)
+- Cantrips would never display on spell sheet if setting was off
+
 ### Compendium
 
 - Applied migration to all compendia. Initial loading will be slow
@@ -19,7 +24,6 @@
   - Feats: Extra Rogue Talent
   - Spells: Admonishing Ray
 - Thanks to earlgrey, apetina, fadeshadow589, websterguy, Chris|Lyka, LePheel, SleepyWizard, and Mana!
-
 
 ## 0.77.23
 

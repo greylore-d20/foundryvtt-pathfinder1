@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.77.24
+
+### Compendium
+
+- Applied migration to all compendia. Initial loading will be slow
+- Updated
+  - Bestiary: Fire Elementals, Mudlord, Attic Whisperer, Wraith Spawn, Giant Phantom Armor, Werebear
+  - Class Abilities: Fast Movement (UMK), Rage (UC), Rage
+  - Classes: Investigator, Unchained Monk, Unchained Rogue [linked features above]
+  - Feats: Animal Affinity, Athletic, Deft Hands, Precise Shot, Scribe Scroll
+  - Items: Alchemist's Lab (X), Cloak of Resistance +X, Disguise Kit, Ring of Protection +X, Thieves Tools (X), Wrist Sheath
+  - Spells: Burning Disarm, Burning Entanglement, Campfire Wall, Confusion, Cure X Wounds, Ear-Piercing Scream, Fire Snake, Flame Strike, Flurry of Snowballs, Ice Spears, Ice Storm, Magic Missile, Rejuvenate Eidolon X, Restoration X, Thundering Drums, Thunderstomp X, Volcanic Storm, Scorching Ray, Stone Discus, Infernal Healing X
+  - Weapons: Lantern Staff
+- Added
+  - Class Abilities: Trapfinding (INV), Trapfinding (UC), Bonus Feat (UMK)
+  - Common Buffs: Fighting Defensively, Mutagaen con/dex/str, Total Defense
+  - Feats: Extra Rogue Talent
+  - Spells: Admonishing Ray
+- Thanks to earlgrey, apetina, fadeshadow589, websterguy, Chris|Lyka, LePheel, SleepyWizard, and Mana!
+
+
 ## 0.77.23
 
 ### Bug Fixes

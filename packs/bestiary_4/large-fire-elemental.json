@@ -102,25 +102,21 @@
         "max": {
           "_deprecated": true,
           "value": 0
-        },
-        "base": {
-          "_deprecated": true,
-          "value": 0
         }
       },
       "naturalAC": 4,
       "ac": {
         "normal": {
           "value": 0,
-          "total": 19
+          "total": 10
         },
         "touch": {
           "value": 0,
-          "total": 15
+          "total": 10
         },
         "flatFooted": {
           "value": 0,
-          "total": 13
+          "total": 10
         }
       },
       "bab": {
@@ -129,12 +125,12 @@
       },
       "cmd": {
         "value": "11",
-        "total": 27,
-        "flatFootedTotal": 21
+        "total": 10,
+        "flatFootedTotal": 10
       },
       "cmb": {
         "value": 27,
-        "total": 11
+        "total": 0
       },
       "sr": {
         "formula": "",
@@ -192,17 +188,16 @@
       },
       "hp": {
         "value": 60,
-        "max": 60,
+        "max": 0,
         "temp": null,
         "nonlethal": null,
-        "min": -100,
-        "base": 0
+        "min": -100
       },
       "wounds": {
         "min": 0,
-        "value": 28,
         "max": 14,
-        "base": 0
+        "base": 0,
+        "value": 28
       },
       "vigor": {
         "min": 0,
@@ -221,7 +216,7 @@
       "init": {
         "value": 0,
         "bonus": 0,
-        "total": 4,
+        "total": 0,
         "ability": ""
       },
       "prof": 2,
@@ -252,33 +247,37 @@
         "bleed": false,
         "blind": false,
         "confused": false,
+        "dazed": false,
         "dazzled": false,
         "deaf": false,
         "entangled": false,
         "fatigued": false,
+        "frightened": false,
         "exhausted": false,
         "grappled": false,
         "helpless": false,
         "incorporeal": false,
         "invisible": false,
+        "nauseated": false,
+        "panicked": false,
         "paralyzed": false,
         "pinned": false,
         "prone": false,
-        "fear": false,
+        "shaken": false,
         "sickened": false,
         "staggered": false,
         "stunned": false,
-        "dazed": false,
-        "frightened": false,
-        "nauseated": false,
-        "panicked": false,
-        "shaken": false
+        "fear": false
       },
       "spells": {
         "usedSpellbooks": [],
         "spellbooks": {
           "primary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Primary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
@@ -291,8 +290,11 @@
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
             "spontaneous": false,
             "spellPoints": {
@@ -302,87 +304,80 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               }
             },
-            "altName": "",
-            "castPerDayAllOffsetFormula": "",
-            "preparedAllOffsetFormula": "",
-            "casterType": "high",
-            "autoSpellLevelCalculation": true,
-            "hasCantrips": true,
-            "spellPreparationMode": "spontaneous",
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
             "range": {
               "close": 25,
               "medium": 100,
@@ -390,7 +385,11 @@
             }
           },
           "secondary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Secondary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
@@ -403,8 +402,11 @@
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
             "spontaneous": false,
             "spellPoints": {
@@ -414,87 +416,80 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               }
             },
-            "altName": "",
-            "castPerDayAllOffsetFormula": "",
-            "preparedAllOffsetFormula": "",
-            "casterType": "high",
-            "autoSpellLevelCalculation": true,
-            "hasCantrips": true,
-            "spellPreparationMode": "spontaneous",
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
             "range": {
               "close": 25,
               "medium": 100,
@@ -502,7 +497,11 @@
             }
           },
           "tertiary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Tertiary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
@@ -515,8 +514,11 @@
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
             "spontaneous": false,
             "spellPoints": {
@@ -526,87 +528,80 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               }
             },
-            "altName": "",
-            "castPerDayAllOffsetFormula": "",
-            "preparedAllOffsetFormula": "",
-            "casterType": "high",
-            "autoSpellLevelCalculation": true,
-            "hasCantrips": true,
-            "spellPreparationMode": "spontaneous",
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
             "range": {
               "close": 25,
               "medium": 100,
@@ -614,7 +609,11 @@
             }
           },
           "spelllike": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Spell-likes",
+            "casterType": "high",
             "class": "_hd",
             "cl": {
               "base": 0,
@@ -627,8 +626,11 @@
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "cha",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
             "spontaneous": false,
             "spellPoints": {
@@ -638,87 +640,80 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": null
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
                 "max": 0,
-                "base": null,
-                "castPerDayOffsetFormula": "",
-                "preparedOffsetFormula": ""
+                "base": ""
               }
             },
-            "altName": "",
-            "castPerDayAllOffsetFormula": "",
-            "preparedAllOffsetFormula": "",
-            "casterType": "high",
-            "autoSpellLevelCalculation": true,
-            "hasCantrips": true,
-            "spellPreparationMode": "spontaneous",
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
             "range": {
               "close": 45,
               "medium": 180,
@@ -742,11 +737,7 @@
       "mods": {
         "skills": {}
       },
-      "creatureType": "humanoid",
-      "vision": {
-        "lowLight": false,
-        "darkvision": 0
-      }
+      "creatureType": "humanoid"
     },
     "details": {
       "level": {
@@ -766,15 +757,6 @@
         "public": ""
       },
       "bonusSkillRankFormula": "",
-      "type": "",
-      "environment": "",
-      "cr": {
-        "base": 5,
-        "total": 5
-      },
-      "xp": {
-        "value": 1600
-      },
       "tooltip": {
         "name": "",
         "hideHeld": false,
@@ -783,6 +765,15 @@
         "hideConditions": false,
         "hideClothing": false,
         "hideName": false
+      },
+      "type": "",
+      "environment": "",
+      "cr": {
+        "base": 5,
+        "total": 5
+      },
+      "xp": {
+        "value": 1600
       },
       "gender": "",
       "deity": "",
@@ -923,7 +914,7 @@
         "background": false,
         "notes": "",
         "cs": false,
-        "changeBonus": -2
+        "changeBonus": 0
       },
       "han": {
         "value": 0,
@@ -1202,7 +1193,7 @@
         "background": false,
         "notes": "",
         "cs": true,
-        "changeBonus": -4
+        "changeBonus": 0
       },
       "sur": {
         "value": 0,
@@ -2197,6 +2188,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2332,6 +2324,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2467,6 +2460,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2602,6 +2596,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2737,6 +2732,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2872,6 +2868,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2897,51 +2894,51 @@
             "_id": "96il1xxv",
             "formula": "4",
             "operator": "+",
-            "target": "misc",
             "subTarget": "init",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": 0,
+            "target": "misc"
           },
           {
             "_id": "wcj6suix",
             "formula": "1",
             "operator": "+",
-            "target": "ac",
             "subTarget": "ac",
             "modifier": "dodge",
             "priority": 1,
-            "value": 0
+            "value": 0,
+            "target": "ac"
           },
           {
             "_id": "r536x1yv",
             "formula": "4",
             "operator": "+",
-            "target": "savingThrows",
             "subTarget": "fort",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": 0,
+            "target": "savingThrows"
           },
           {
             "_id": "g1n4809b",
             "formula": "0",
             "operator": "+",
-            "target": "savingThrows",
             "subTarget": "ref",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": 0,
+            "target": "savingThrows"
           },
           {
             "_id": "72u1ee14",
             "formula": "-2",
             "operator": "+",
-            "target": "savingThrows",
             "subTarget": "will",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": 0,
+            "target": "savingThrows"
           }
         ],
         "changeFlags": {

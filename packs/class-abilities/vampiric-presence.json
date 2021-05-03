@@ -63,6 +63,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -84,23 +94,23 @@
         "_id": "fq56hp94",
         "formula": "@classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)",
         "operator": "add",
-        "target": "ability",
         "subTarget": "cha",
         "modifier": "enh",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -117,6 +127,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
     "associations": {
       "classes": [
@@ -129,6 +143,7 @@
     "nonlethal": false,
     "abilityType": "su",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
     }

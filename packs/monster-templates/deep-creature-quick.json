@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,103 +93,103 @@
         "_id": "6u0vi6v1",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.swm",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "v1a13431",
         "formula": "1",
         "operator": "+",
-        "target": "ac",
         "subTarget": "ac",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       },
       {
         "_id": "k2ub2q6d",
         "formula": "@attributes.hd.total",
         "operator": "+",
-        "target": "misc",
         "subTarget": "mhp",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "misc"
       },
       {
         "_id": "j2tr4cku",
         "formula": "1",
         "operator": "+",
-        "target": "savingThrows",
         "subTarget": "fort",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "savingThrows"
       },
       {
         "_id": "wfmlcav1",
         "formula": "1",
         "operator": "+",
-        "target": "skills",
         "subTarget": "conSkills",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skills"
       },
       {
         "_id": "bt91n5q2",
         "formula": "1",
         "operator": "+",
-        "target": "abilityChecks",
         "subTarget": "conChecks",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "abilityChecks"
       },
       {
         "_id": "v0rcoojz",
         "formula": "1",
         "operator": "+",
-        "target": "savingThrows",
         "subTarget": "will",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "savingThrows"
       },
       {
         "_id": "61kwdc6e",
         "formula": "1",
         "operator": "+",
-        "target": "abilityChecks",
         "subTarget": "wisChecks",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "abilityChecks"
       },
       {
         "_id": "ffh0o6yt",
         "formula": "1",
         "operator": "+",
-        "target": "skills",
         "subTarget": "wisSkills",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skills"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -196,6 +206,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -204,6 +218,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "1",
+    "disabled": false,
     "attack": {
       "parts": []
     }

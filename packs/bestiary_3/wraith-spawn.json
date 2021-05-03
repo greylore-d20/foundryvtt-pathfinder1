@@ -8,8 +8,8 @@
   "data": {
     "abilities": {
       "str": {
-        "total": 0,
-        "mod": -5,
+        "total": null,
+        "mod": 0,
         "value": null,
         "carryBonus": 0,
         "carryMultiplier": 0.75,
@@ -34,8 +34,8 @@
         "baseMod": 0
       },
       "con": {
-        "total": 0,
-        "mod": -5,
+        "total": null,
+        "mod": 0,
         "value": null,
         "checkMod": 0,
         "damage": 0,
@@ -102,21 +102,25 @@
         "max": {
           "_deprecated": true,
           "value": 0
+        },
+        "base": {
+          "_deprecated": true,
+          "value": 0
         }
       },
       "naturalAC": null,
       "ac": {
         "normal": {
           "value": 0,
-          "total": 10
+          "total": 15
         },
         "touch": {
           "value": 0,
-          "total": 10
+          "total": 15
         },
         "flatFooted": {
           "value": 0,
-          "total": 10
+          "total": 14
         }
       },
       "bab": {
@@ -125,15 +129,15 @@
       },
       "cmd": {
         "value": "3",
-        "total": 10,
-        "flatFootedTotal": 10
+        "total": 16,
+        "flatFootedTotal": 15
       },
       "cmb": {
         "value": 16,
-        "total": 0
+        "total": 2
       },
       "sr": {
-        "formula": 0,
+        "formula": "",
         "total": 0
       },
       "saveNotes": "",
@@ -142,7 +146,7 @@
       "srNotes": "",
       "attack": {
         "general": 0,
-        "shared": 0,
+        "shared": 4,
         "melee": 0,
         "ranged": 0,
         "meleeAbility": "str",
@@ -151,7 +155,8 @@
       "damage": {
         "general": 0,
         "weapon": 0,
-        "spell": 0
+        "spell": 0,
+        "shared": 0
       },
       "maxDexBonus": null,
       "mDex": {
@@ -170,46 +175,53 @@
       "quadruped": false,
       "savingThrows": {
         "fort": {
-          "total": null,
-          "ability": "cha"
+          "total": 4,
+          "ability": "cha",
+          "base": 1
         },
         "ref": {
           "total": 2,
-          "ability": "dex"
+          "ability": "dex",
+          "base": 1
         },
         "will": {
           "total": 4,
-          "ability": "wis"
+          "ability": "wis",
+          "base": 4
         }
       },
       "hp": {
-        "value": 15,
-        "max": 0,
+        "value": 5,
+        "max": 37,
         "temp": null,
         "nonlethal": null,
-        "min": -100
+        "min": -100,
+        "base": 0
       },
       "wounds": {
         "min": 0,
-        "value": 34,
-        "max": 34
+        "max": 17,
+        "base": 0,
+        "value": 34
       },
       "vigor": {
         "min": 0,
         "value": 22,
         "temp": 0,
-        "max": 22
+        "max": 22,
+        "base": 0
       },
       "woundThresholds": {
         "penalty": 0,
         "mod": 0,
         "level": 0,
-        "override": -1
+        "override": -1,
+        "penaltyBase": 0
       },
       "init": {
         "value": 0,
         "bonus": 0,
-        "total": 0,
+        "total": 4,
         "ability": ""
       },
       "prof": 2,
@@ -240,44 +252,57 @@
         "bleed": false,
         "blind": false,
         "confused": false,
+        "dazed": false,
         "dazzled": false,
         "deaf": false,
         "entangled": false,
         "fatigued": false,
+        "frightened": false,
         "exhausted": false,
         "grappled": false,
         "helpless": false,
         "incorporeal": false,
         "invisible": false,
+        "nauseated": false,
+        "panicked": false,
         "paralyzed": false,
         "pinned": false,
         "prone": false,
-        "fear": false,
+        "shaken": false,
         "sickened": false,
         "staggered": false,
-        "stunned": false
+        "stunned": false,
+        "fear": false
       },
       "spells": {
         "usedSpellbooks": [],
         "spellbooks": {
           "primary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Primary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
               "value": 0,
               "total": 0,
-              "formula": ""
+              "formula": "",
+              "autoSpellLevelTotal": 1
             },
             "concentration": 0,
             "concentrationFormula": "",
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
-            "spontaneous": false,
+            "spontaneous": true,
             "spellPoints": {
               "useSystem": false,
               "value": 0,
@@ -285,79 +310,119 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 4,
+                "spellMessage": "You can learn 4 more spells"
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 3,
+                "spellMessage": "You can learn 2 more spells"
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               }
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "secondary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Secondary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
               "value": 0,
               "total": 0,
-              "formula": ""
+              "formula": "",
+              "autoSpellLevelTotal": 1
             },
             "concentration": 0,
             "concentrationFormula": "",
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
-            "spontaneous": false,
+            "spontaneous": true,
             "spellPoints": {
               "useSystem": false,
               "value": 0,
@@ -365,79 +430,119 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 4,
+                "spellMessage": "You can learn 4 more spells"
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 3,
+                "spellMessage": "You can learn 2 more spells"
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               }
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "tertiary": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Tertiary",
+            "casterType": "high",
             "class": "",
             "cl": {
               "base": 0,
               "value": 0,
               "total": 0,
-              "formula": ""
+              "formula": "",
+              "autoSpellLevelTotal": 1
             },
             "concentration": 0,
             "concentrationFormula": "",
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "int",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
-            "spontaneous": false,
+            "spontaneous": true,
             "spellPoints": {
               "useSystem": false,
               "value": 0,
@@ -445,79 +550,119 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 4,
+                "spellMessage": "You can learn 4 more spells"
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 4,
+                "base": 3,
+                "spellMessage": "You can learn 2 more spells"
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               }
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "range": {
+              "close": 25,
+              "medium": 100,
+              "long": 400
             }
           },
           "spelllike": {
+            "altName": "",
+            "castPerDayAllOffsetFormula": "",
+            "preparedAllOffsetFormula": "",
             "name": "Spell-likes",
+            "casterType": "high",
             "class": "_hd",
             "cl": {
               "base": 0,
               "value": 0,
-              "total": 1,
-              "formula": ""
+              "total": 5,
+              "formula": "",
+              "autoSpellLevelTotal": 5
             },
             "concentration": 0,
             "concentrationFormula": "",
             "concentrationNotes": "",
             "clNotes": "",
             "ability": "cha",
+            "autoSpellLevelCalculation": true,
             "autoSpellLevels": true,
             "arcaneSpellFailure": true,
+            "hasCantrips": true,
+            "spellPreparationMode": "spontaneous",
             "baseDCFormula": "10 + @sl + @ablMod",
-            "spontaneous": false,
+            "spontaneous": true,
             "spellPoints": {
               "useSystem": false,
               "value": 0,
@@ -525,59 +670,89 @@
               "maxFormula": "",
               "restoreFormula": ""
             },
-            "spellSlotAbilityBonusFormula": "",
-            "domainSlotValue": 1,
             "spells": {
               "spell0": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 6,
+                "base": 6,
+                "spellMessage": "You can learn 6 more spells"
               },
               "spell1": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 7,
+                "base": 6,
+                "spellMessage": "You can learn 4 more spells"
               },
               "spell2": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": 5,
+                "base": 4,
+                "spellMessage": "You can learn 2 more spells"
               },
               "spell3": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell4": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell5": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell6": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell7": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": ""
               },
               "spell8": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               },
               "spell9": {
+                "castPerDayOffsetFormula": "",
+                "preparedOffsetFormula": "",
                 "value": 0,
-                "max": 0,
-                "base": null
+                "max": null,
+                "base": "",
+                "spellMessage": "Your ability score is too low to cast spells of this level"
               }
+            },
+            "spellSlotAbilityBonusFormula": "",
+            "domainSlotValue": 1,
+            "range": {
+              "close": 35,
+              "medium": 150,
+              "long": 600
             }
           }
         },
@@ -597,7 +772,11 @@
       "mods": {
         "skills": {}
       },
-      "creatureType": "humanoid"
+      "creatureType": "humanoid",
+      "vision": {
+        "lowLight": false,
+        "darkvision": 0
+      }
     },
     "details": {
       "level": {
@@ -617,6 +796,15 @@
         "public": ""
       },
       "bonusSkillRankFormula": "",
+      "tooltip": {
+        "name": "",
+        "hideHeld": false,
+        "hideArmor": false,
+        "hideBuffs": false,
+        "hideConditions": false,
+        "hideClothing": false,
+        "hideName": false
+      },
       "type": "",
       "environment": "",
       "cr": {
@@ -624,8 +812,13 @@
         "total": 4
       },
       "xp": {
-        "value": "1200"
-      }
+        "value": 1200
+      },
+      "gender": "",
+      "deity": "",
+      "age": "",
+      "height": "",
+      "weight": ""
     },
     "skills": {
       "acr": {
@@ -683,7 +876,7 @@
         "rt": false,
         "acp": true,
         "rank": 0,
-        "mod": -5,
+        "mod": 0,
         "background": false,
         "notes": "",
         "cs": true,
@@ -760,7 +953,7 @@
         "background": false,
         "notes": "",
         "cs": true,
-        "changeBonus": 0
+        "changeBonus": 2
       },
       "han": {
         "value": 0,
@@ -1039,7 +1232,7 @@
         "background": false,
         "notes": "",
         "cs": true,
-        "changeBonus": 0
+        "changeBonus": 4
       },
       "sur": {
         "value": 0,
@@ -1059,7 +1252,7 @@
         "rt": false,
         "acp": true,
         "rank": 0,
-        "mod": -5,
+        "mod": 0,
         "background": false,
         "notes": "",
         "cs": false,
@@ -1122,7 +1315,485 @@
       "sp": 0,
       "cp": 0
     },
-    "classes": {}
+    "classes": {
+      "undead": {
+        "level": 5,
+        "name": "Undead",
+        "hd": 8,
+        "bab": "med",
+        "hp": false,
+        "savingThrows": {
+          "fort": 1,
+          "ref": 1,
+          "will": 4
+        },
+        "fc": {
+          "hp": 0,
+          "skill": 0,
+          "alt": 0
+        }
+      }
+    },
+    "armor": {
+      "type": 0
+    },
+    "shield": {
+      "type": 0
+    },
+    "spells": {
+      "primary": {
+        "altName": "",
+        "castPerDayAllOffsetFormula": "",
+        "preparedAllOffsetFormula": "",
+        "name": "Primary",
+        "casterType": "high",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": "",
+          "autoSpellLevelTotal": 1
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevelCalculation": true,
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "hasCantrips": true,
+        "spellPreparationMode": "spontaneous",
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": true,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spells": {
+          "spell0": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 4,
+            "spellMessage": "You can learn 4 more spells"
+          },
+          "spell1": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 3,
+            "spellMessage": "You can learn 2 more spells"
+          },
+          "spell2": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell3": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell4": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell5": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell6": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell7": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell8": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell9": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          }
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "secondary": {
+        "altName": "",
+        "castPerDayAllOffsetFormula": "",
+        "preparedAllOffsetFormula": "",
+        "name": "Secondary",
+        "casterType": "high",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": "",
+          "autoSpellLevelTotal": 1
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevelCalculation": true,
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "hasCantrips": true,
+        "spellPreparationMode": "spontaneous",
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": true,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spells": {
+          "spell0": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 4,
+            "spellMessage": "You can learn 4 more spells"
+          },
+          "spell1": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 3,
+            "spellMessage": "You can learn 2 more spells"
+          },
+          "spell2": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell3": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell4": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell5": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell6": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell7": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell8": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell9": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          }
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "tertiary": {
+        "altName": "",
+        "castPerDayAllOffsetFormula": "",
+        "preparedAllOffsetFormula": "",
+        "name": "Tertiary",
+        "casterType": "high",
+        "class": "",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 0,
+          "formula": "",
+          "autoSpellLevelTotal": 1
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "int",
+        "autoSpellLevelCalculation": true,
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "hasCantrips": true,
+        "spellPreparationMode": "spontaneous",
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": true,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spells": {
+          "spell0": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 4,
+            "spellMessage": "You can learn 4 more spells"
+          },
+          "spell1": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 4,
+            "base": 3,
+            "spellMessage": "You can learn 2 more spells"
+          },
+          "spell2": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell3": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell4": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell5": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell6": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell7": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell8": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell9": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          }
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "range": {
+          "close": 25,
+          "medium": 100,
+          "long": 400
+        }
+      },
+      "spelllike": {
+        "altName": "",
+        "castPerDayAllOffsetFormula": "",
+        "preparedAllOffsetFormula": "",
+        "name": "Spell-likes",
+        "casterType": "high",
+        "class": "_hd",
+        "cl": {
+          "base": 0,
+          "value": 0,
+          "total": 5,
+          "formula": "",
+          "autoSpellLevelTotal": 5
+        },
+        "concentration": 0,
+        "concentrationFormula": "",
+        "concentrationNotes": "",
+        "clNotes": "",
+        "ability": "cha",
+        "autoSpellLevelCalculation": true,
+        "autoSpellLevels": true,
+        "arcaneSpellFailure": true,
+        "hasCantrips": true,
+        "spellPreparationMode": "spontaneous",
+        "baseDCFormula": "10 + @sl + @ablMod",
+        "spontaneous": true,
+        "spellPoints": {
+          "useSystem": false,
+          "value": 0,
+          "max": 0,
+          "maxFormula": "",
+          "restoreFormula": ""
+        },
+        "spells": {
+          "spell0": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 6,
+            "base": 6,
+            "spellMessage": "You can learn 6 more spells"
+          },
+          "spell1": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 7,
+            "base": 6,
+            "spellMessage": "You can learn 4 more spells"
+          },
+          "spell2": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": 5,
+            "base": 4,
+            "spellMessage": "You can learn 2 more spells"
+          },
+          "spell3": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell4": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell5": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell6": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell7": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null
+          },
+          "spell8": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          },
+          "spell9": {
+            "castPerDayOffsetFormula": "",
+            "preparedOffsetFormula": "",
+            "value": 0,
+            "max": null,
+            "spellMessage": "Your ability score is too low to cast spells of this level"
+          }
+        },
+        "spellSlotAbilityBonusFormula": "",
+        "domainSlotValue": 1,
+        "range": {
+          "close": 35,
+          "medium": 150,
+          "long": 600
+        }
+      }
+    },
+    "range": {
+      "melee": 5,
+      "reach": 10
+    },
+    "dFlags": {}
   },
   "sort": 100001,
   "flags": {
@@ -1228,6 +1899,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "",
@@ -1247,14 +1928,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1271,6 +1952,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "misc",
         "associations": {
           "classes": []
@@ -1279,6 +1964,7 @@
         "nonlethal": false,
         "abilityType": "",
         "crOffset": "0",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -1349,6 +2035,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "",
@@ -1368,14 +2064,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1392,6 +2088,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "misc",
         "associations": {
           "classes": []
@@ -1400,6 +2100,7 @@
         "nonlethal": false,
         "abilityType": "",
         "crOffset": "0",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -1423,14 +2124,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "links": {
           "children": []
@@ -1444,6 +2145,10 @@
         "weaponProf": {
           "value": [],
           "custom": ""
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
         },
         "classType": "racial",
         "levels": 1,
@@ -1586,6 +2291,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "",
@@ -1605,14 +2320,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1629,6 +2344,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "misc",
         "associations": {
           "classes": []
@@ -1637,6 +2356,7 @@
         "nonlethal": false,
         "abilityType": "",
         "crOffset": "0",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -1707,6 +2427,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "",
@@ -1726,14 +2456,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1750,6 +2480,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "misc",
         "associations": {
           "classes": []
@@ -1758,6 +2492,7 @@
         "nonlethal": false,
         "abilityType": "",
         "crOffset": "0",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -1828,6 +2563,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": "",
@@ -1847,14 +2592,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -1871,6 +2616,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "misc",
         "associations": {
           "classes": []
@@ -1879,6 +2628,7 @@
         "nonlethal": false,
         "abilityType": "",
         "crOffset": "0",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -1941,19 +2691,29 @@
         },
         "attackName": "",
         "actionType": "mwak",
-        "attackBonus": "NaN",
+        "attackBonus": "0",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
-              "sizeRoll(1, 4, @size, 3) + NaN",
-              ""
+              "sizeRoll(1, 2, @size, 3) + 0",
+              "con drain"
             ]
           ],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
         "formula": "",
         "ability": {
           "attack": "str",
@@ -1976,6 +2736,10 @@
         },
         "tag": "",
         "useCustomTag": false,
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "attackType": "weapon",
         "masterwork": false,
         "nonlethal": false,
@@ -1988,7 +2752,8 @@
         "conditionals": [],
         "attack": {
           "parts": []
-        }
+        },
+        "identifiedName": "incorporeal touch"
       },
       "sort": 100000,
       "flags": {},
@@ -2056,6 +2821,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2075,14 +2850,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2099,6 +2874,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "feat",
         "associations": {
           "classes": []
@@ -2107,6 +2886,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2177,6 +2957,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2196,14 +2986,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2220,6 +3010,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "feat",
         "associations": {
           "classes": []
@@ -2228,6 +3022,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2298,6 +3093,16 @@
           "nonCritParts": []
         },
         "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "",
+            "value": null
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
         "formula": "",
         "ability": {
           "attack": null,
@@ -2317,14 +3122,14 @@
         "changes": [],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2341,6 +3146,10 @@
           "value": [],
           "custom": ""
         },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "featType": "feat",
         "associations": {
           "classes": []
@@ -2349,6 +3158,7 @@
         "nonlethal": false,
         "abilityType": "none",
         "crOffset": "",
+        "disabled": false,
         "attack": {
           "parts": []
         }
@@ -2372,75 +3182,45 @@
         "changes": [
           {
             "_id": "dnjo4d27",
-            "formula": "NaN",
-            "operator": "+",
-            "target": "misc",
+            "formula": "-2 * @attributes.hd.total",
+            "operator": "add",
             "subTarget": "mhp",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": -10,
+            "target": "misc"
           },
           {
             "_id": "f6hys8gg",
-            "formula": "4",
-            "operator": "+",
-            "target": "misc",
+            "formula": "5",
+            "operator": "add",
             "subTarget": "init",
             "modifier": "untyped",
             "priority": 1,
-            "value": 0
+            "value": 5,
+            "target": "misc"
           },
           {
             "_id": "84hps831",
-            "formula": "3",
-            "operator": "+",
-            "target": "ac",
+            "formula": "6",
+            "operator": "add",
             "subTarget": "ac",
             "modifier": "deflection",
             "priority": 1,
-            "value": 0
-          },
-          {
-            "_id": "4t6c0upn",
-            "formula": "NaN",
-            "operator": "+",
-            "target": "savingThrows",
-            "subTarget": "fort",
-            "modifier": "untyped",
-            "priority": 1,
-            "value": 0
-          },
-          {
-            "_id": "bfcrjoyq",
-            "formula": "0",
-            "operator": "+",
-            "target": "savingThrows",
-            "subTarget": "ref",
-            "modifier": "untyped",
-            "priority": 1,
-            "value": 0
-          },
-          {
-            "_id": "fa26nwt3",
-            "formula": "0",
-            "operator": "+",
-            "target": "savingThrows",
-            "subTarget": "will",
-            "modifier": "untyped",
-            "priority": 1,
-            "value": 0
+            "value": 6,
+            "target": "ac"
           }
         ],
         "changeFlags": {
           "loseDexToAC": false,
+          "noEncumbrance": false,
+          "mediumArmorFullSpeed": false,
+          "heavyArmorFullSpeed": false,
           "noStr": false,
           "noDex": false,
           "oneInt": false,
           "oneWis": false,
-          "oneCha": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
+          "oneCha": false
         },
         "contextNotes": [],
         "links": {
@@ -2448,6 +3228,10 @@
         },
         "tag": "",
         "useCustomTag": false,
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
         "buffType": "perm",
         "active": true,
         "level": "",
@@ -2457,6 +3241,12 @@
         },
         "range": {
           "maxIncrements": 1
+        },
+        "conditionals": [],
+        "identifiedName": "sbc | Conversion Changes",
+        "uses": {
+          "value": 0,
+          "max": 0
         }
       },
       "sort": 100001,

@@ -1,4 +1,5 @@
 {
+  "_id": "OhHKCLQXoMlYNodk",
   "name": "Trapfinding (UC)",
   "permission": {
     "default": 0
@@ -92,7 +93,7 @@
         "_id": "vhodw42z",
         "formula": "@classes.rogueUnchained.level < 4 ? 1 : (floor(@classes.rogueUnchained.level / 2))",
         "operator": "add",
-        "subTarget": "dev",
+        "subTarget": "skill.dev",
         "modifier": "untyped",
         "priority": 0,
         "value": 0,
@@ -114,7 +115,7 @@
       {
         "text": "+[[@classes.rogueUnchained.level < 4 ? 1 : (floor(@classes.rogueUnchained.level / 2))]] vs Traps",
         "target": "skill",
-        "subTarget": "per"
+        "subTarget": "skill.per"
       }
     ],
     "links": {
@@ -147,12 +148,14 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Trapfinding (UC)"
   },
   "flags": {},
   "img": "systems/pf1/icons/items/inventory/lockpick.jpg",
-  "effects": [],
-  "_id": "OhHKCLQXoMlYNodk"
+  "effects": []
 }

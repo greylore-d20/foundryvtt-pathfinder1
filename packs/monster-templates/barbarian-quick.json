@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,53 +93,53 @@
         "_id": "jom5kuh0",
         "formula": "2",
         "operator": "+",
-        "target": "attack",
         "subTarget": "mattack",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "attack"
       },
       {
         "_id": "15lozryn",
         "formula": "2",
         "operator": "+",
-        "target": "damage",
         "subTarget": "wdamage",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "damage"
       },
       {
         "_id": "tdyzbynh",
         "formula": "2",
         "operator": "+",
-        "target": "abilityChecks",
         "subTarget": "strChecks",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "abilityChecks"
       },
       {
         "_id": "wcl5ykjc",
         "formula": "2",
         "operator": "+",
-        "target": "skills",
         "subTarget": "strSkills",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skills"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -146,6 +156,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -154,6 +168,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "@attributes.hd.total >= 10 ? 3 : 2",
+    "disabled": false,
     "attack": {
       "parts": []
     }

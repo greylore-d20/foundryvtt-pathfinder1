@@ -43,7 +43,7 @@
       "per": "day",
       "autoDeductCharges": true,
       "autoDeductChargesCost": "1",
-      "maxFormula": "4 + @abilities.con.mod + (2*@classes.barbarian.level)"
+      "maxFormula": "4 + @abilities.con.mod + (2*(@classes.barbarian.level - 1))"
     },
     "measureTemplate": {
       "type": "",
@@ -63,6 +63,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -82,21 +92,21 @@
     "changes": [],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "rage",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -105,6 +115,10 @@
     "weaponProf": {
       "value": [],
       "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "featType": "classFeat",
     "associations": {
@@ -118,6 +132,7 @@
     "nonlethal": false,
     "abilityType": "ex",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
     },

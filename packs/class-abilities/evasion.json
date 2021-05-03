@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -81,21 +91,27 @@
     "changes": [],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "ref",
+        "target": "savingThrows",
+        "text": "Evasion"
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "evasion",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -104,6 +120,10 @@
     "weaponProf": {
       "value": [],
       "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "featType": "classFeat",
     "associations": {
@@ -120,9 +140,12 @@
     "nonlethal": false,
     "abilityType": "ex",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Evasion"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/blue_06.jpg",

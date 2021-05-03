@@ -13,6 +13,7 @@ const json = require("@rollup/plugin-json");
 const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 const changed = require("gulp-changed");
+const { exec } = require("child_process");
 
 // Dependencies for compendium tasks.
 const Datastore = require("nedb");
@@ -46,6 +47,7 @@ const SYSTEM_FILES = [
 const DESTINATION = "dist";
 const PACK_SRC = "packs";
 const PACK_DEST = path.join(DESTINATION, "packs");
+const IS_WIN = process.platform === "win32";
 
 /* ----------------------------------------- */
 /*  Build steps
@@ -108,6 +110,21 @@ function rollup() {
  * In watch mode, only changed files will get copied.
  */
 function copyFiles() {
+  if (IS_WIN) {
+    let promises = [],
+      args = "/R:5 /W:15 /MT:32 /NFL /NDL /NJH /NJS /nc /ns /np";
+    SYSTEM_FILES.forEach((sf) => {
+      promises.push(
+        new Promise((resolve) => {
+          if (sf.indexOf("**") > -1) {
+            let folder = sf.replace("/**/*", "");
+            exec(`robocopy ${folder} ${DESTINATION}/${folder} /mir ${args}`, null, resolve);
+          } else exec(`robocopy . ${DESTINATION} ${sf} ${args}`, null, resolve);
+        })
+      );
+    });
+    return Promise.all(promises);
+  }
   return gulp.src(SYSTEM_FILES, { base: "." }).pipe(changed(DESTINATION)).pipe(gulp.dest(DESTINATION));
 }
 

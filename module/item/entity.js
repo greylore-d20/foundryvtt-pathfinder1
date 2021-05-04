@@ -2368,10 +2368,12 @@ export class ItemPF extends Item {
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
         const saveDC = this.getDC(rollData);
+        const token = this.parentActor?.token;
 
         const templateData = mergeObject(
           chatTemplateData,
           {
+            tokenId: token ? `${token.scene._id}.${token.id}` : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,

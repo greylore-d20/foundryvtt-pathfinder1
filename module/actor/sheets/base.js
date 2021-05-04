@@ -2644,6 +2644,9 @@ export class ActorSheetPF extends ActorSheet {
       itemData = game.items.get(data.id).data;
     }
 
+    // Remove item links
+    if (itemData?.data?.links) itemData.data.links = {};
+
     return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), { event: event })
       .then((item) => {
         // Try to remove from container

@@ -10,6 +10,7 @@
 
 - Actors could fail to render with some spellbook configurations (#797)
 - Cantrips would never display on spell sheet if setting was off
+- Copying an attack with linked ammunition to another actor made it behave strangely (#801)
 
 ### Compendium
 

@@ -1620,6 +1620,9 @@ export const PF1 = {
       hasteDamage: "PF1.Haste",
       rapidShotDamage: "PF1.RapidShot",
     },
+    size: {
+      _label: "PF1.Size",
+    },
     effect: {
       _label: "PF1.Effects",
     },

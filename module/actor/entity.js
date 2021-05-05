@@ -643,7 +643,7 @@ export class ActorPF extends Actor {
     for (let spellbookKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
       const spellbook = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
       const spellbookAbilityKey = spellbook.ability;
-      let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
+      let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`) ?? 10;
 
       // Add spell slots based on ability bonus slot formula
       {
@@ -865,7 +865,7 @@ export class ActorPF extends Actor {
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;
           const slotCost = i.data.data.slotCost ?? 1;
-          let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`);
+          let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`); // `
           let uses = getProperty(slots, `${sbKey}.${a}.value`);
           if (Number.isFinite(i.maxCharges)) {
             let subtract = { domain: 0, uses: 0 };

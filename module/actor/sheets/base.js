@@ -2964,6 +2964,8 @@ export class ActorSheetPF extends ActorSheet {
     }
     this._pendingUpdates = {};
 
+    this.searchRefresh = true;
+
     return super._updateObject(event, formData);
   }
 

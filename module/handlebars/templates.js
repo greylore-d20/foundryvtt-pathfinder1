@@ -1,7 +1,8 @@
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
- * @return {Promise}
+ *
+ * @returns {Promise}
  */
 export const preloadHandlebarsTemplates = async function () {
   // Define template paths to load
@@ -20,6 +21,8 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/actors/parts/actor-buffs.hbs",
     "systems/pf1/templates/actors/parts/actor-attributes.hbs",
     "systems/pf1/templates/actors/parts/actor-settings.hbs",
+
+    "systems/pf1/templates/internal/item-search.hbs",
 
     // Item Sheet Partials
     "systems/pf1/templates/items/parts/item-action.hbs",

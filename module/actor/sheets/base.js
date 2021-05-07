@@ -2568,19 +2568,20 @@ export class ActorSheetPF extends ActorSheet {
     this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
 
     // Accept input only while not compositioning
-    if (this.searchCompositioning) return;
 
     const search = event.target.value;
     const category = event.target.dataset.category;
     const changed = this._filters.search[category] !== search;
+
+    if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset
+    if (this.searchCompositioning) return;
+
     //if (unchanged) return; // nothing changed
     this._filters.search[category] = search;
 
-    if (changed) clearTimeout(this.searchDelayEvent); // reset
-
     if (event.type === "keyup") {
       // Delay search
-      if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), 500); // 500ms is arbitrary
+      if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
     } else {
       this._searchFilterCommit(event);
     }

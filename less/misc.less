@@ -147,10 +147,9 @@ input.text-box {
 
   .item-list-search {
     display: flex;
-    flex-direction: row;
-    flex: 0 1 120px;
     flex-wrap: nowrap;
     max-height: 1.8em;
+    max-width: 120px;
 
     & ~ .currency {
       margin-left: 1em;
@@ -158,6 +157,7 @@ input.text-box {
     .search-input {
       border: 1px solid @colorTan;
       background-color: rgba(0, 0, 0, 0.01);
+      max-width: 120px;
 
       & ~  .clear-search {
         margin-left: -1.45em;

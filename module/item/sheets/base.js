@@ -23,7 +23,16 @@ export class ItemSheetPF extends ItemSheet {
      *
      * @type {Set}
      */
-    this._filters = {};
+    this._filters = {
+      search: "",
+    };
+
+    /** Item search */
+    this.searchCompositioning = false; // for IME
+    this.searchRefresh = true; // Lock out same term search unless sheet also refreshes
+    this.searchDelay = 250; // arbitrary ?ms for arbitrarily decent reactivity; MMke this configurable?
+    this.searchDelayEvent = null; // setTimeout id
+    this.effectiveSearch = ""; // prevent searching the same thing
 
     this.items = [];
 
@@ -765,6 +774,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
+
+    // Search box
+    if (["container"].includes(this.item.data.type)) {
+      const sb = html.find(".search-input");
+      sb.on("keyup change", this._searchFilterChange.bind(this));
+      sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
+      this.searchRefresh = true;
+      // Filter tabs on followup refreshes
+      sb.each(function () {
+        if (this.value.length > 0) $(this).change();
+      });
+    }
   }
 
   /* -------------------------------------------- */
@@ -1298,5 +1319,58 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const el = event.currentTarget;
     el.select();
+  }
+
+  /** Item Search */
+
+  _searchFilterCommit(event) {
+    const container = this.item;
+    const search = this._filters.search.toLowerCase();
+
+    // TODO: Do not refresh if same search term, unless the sheet has updated.
+    if (this.effectiveSearch === search && !this.searchRefresh) return;
+    this.effectiveSearch = search;
+    this.searchRefresh = false;
+
+    const matchSearch = (name) => name.toLowerCase().includes(search); // MKAhvi: Bad method for i18n support.
+
+    $(event.target)
+      .closest(".tab")
+      .find(".item-list .item")
+      .each(function () {
+        const jq = $(this);
+        if (search?.length > 0) {
+          const item = container.items.get(this.dataset.itemId);
+          if (matchSearch(item.name)) jq.show();
+          else jq.hide();
+        } else jq.show();
+      });
+  }
+
+  // IME related
+  _searchFilterCompositioning(event) {
+    this.searchCompositioning = event.type === "compositionstart";
+  }
+
+  _searchFilterChange(event) {
+    event.preventDefault();
+    this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
+
+    // Accept input only while not compositioning
+
+    const search = event.target.value;
+    const category = event.target.dataset.category;
+    const changed = this._filters.search !== search;
+
+    if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset
+    if (this.searchCompositioning) return;
+
+    //if (unchanged) return; // nothing changed
+    this._filters.search = search;
+
+    if (event.type === "keyup") {
+      // Delay search
+      if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
+    } else this._searchFilterCommit(event);
   }
 }

@@ -785,6 +785,7 @@ export class ItemSheetPF extends ItemSheet {
       sb.each(function () {
         if (this.value.length > 0) $(this).change();
       });
+      html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
   }
 
@@ -1328,7 +1329,10 @@ export class ItemSheetPF extends ItemSheet {
     const search = this._filters.search.toLowerCase();
 
     // TODO: Do not refresh if same search term, unless the sheet has updated.
-    if (this.effectiveSearch === search && !this.searchRefresh) return;
+    if (this.effectiveSearch === search && !this.searchRefresh) {
+      console.log(this.effectiveSearch, "===", search, this.searchRefresh);
+      return;
+    }
     this.effectiveSearch = search;
     this.searchRefresh = false;
 
@@ -1347,6 +1351,11 @@ export class ItemSheetPF extends ItemSheet {
       });
   }
 
+  _clearSearch(event) {
+    this._filters.search = "";
+    $(event.target).prev(".search-input").val("").change();
+  }
+
   // IME related
   _searchFilterCompositioning(event) {
     this.searchCompositioning = event.type === "compositionstart";
@@ -1359,7 +1368,6 @@ export class ItemSheetPF extends ItemSheet {
     // Accept input only while not compositioning
 
     const search = event.target.value;
-    const category = event.target.dataset.category;
     const changed = this._filters.search !== search;
 
     if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset

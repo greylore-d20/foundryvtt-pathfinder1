@@ -905,6 +905,7 @@ export class ActorSheetPF extends ActorSheet {
       sb.each(function () {
         if (this.value.length > 0) $(this).change();
       });
+      html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
 
     // Item summaries
@@ -2556,6 +2557,12 @@ export class ActorSheetPF extends ActorSheet {
           else jq.hide();
         } else jq.show();
       });
+  }
+
+  _clearSearch(event) {
+    const sb = $(event.target).prev(".search-input");
+    this._filters.search[sb.get(0).dataset.category] = "";
+    sb.val("").change();
   }
 
   // IME related

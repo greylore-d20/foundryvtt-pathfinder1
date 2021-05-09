@@ -156,15 +156,18 @@ input.text-box {
       margin-left: 1em;
     }
     .search-input {
+      border: 1px solid @colorTan;
+      background-color: rgba(0, 0, 0, 0.01);
+
       & ~  .clear-search {
         margin-left: -1.45em;
         margin-right: 0.1em;
         margin-top: 1px;
-        color: rgba(127, 127, 127, 0.5);
+        color: @colorTan;
         align-self: center;
         padding: 2px;
         &:hover {
-          text-shadow: 0 0 3px red;
+          text-shadow: 0 0 5px rgba(255, 70, 70, 0.8);
           color: black;
         }
       }

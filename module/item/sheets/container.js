@@ -509,7 +509,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         if (actor.items.get(data.data._id)) {
           await actor.deleteEmbeddedDocuments("Item", [data.data._id]);
         } else {
-          const containerItem = actor.containerItems.find((i) => i._id === data.data._id);
+          const containerItem = actor.containerItems.find((i) => i.id === data.data._id);
           if (containerItem) {
             await containerItem.parentItem.deleteContainerContent(data.data._id);
           }

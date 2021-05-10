@@ -735,7 +735,7 @@ export class ItemPF extends Item {
     if (options.recursive === false) {
       return super.update(data, options);
     }
-    const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+    const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
@@ -1025,7 +1025,7 @@ export class ItemPF extends Item {
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
-        const parentItem = parentInventory.find((o) => o.id === this.id);
+        const parentItem = parentInventory.find((o) => o._id === this.id);
         const idx = parentInventory.indexOf(parentItem);
 
         if (idx >= 0) {
@@ -1037,7 +1037,7 @@ export class ItemPF extends Item {
 
           // Set parent weight
           const contentsWeight = parentInventory.reduce((cur, i) => {
-            if (i._id === this._id)
+            if (i._id === this.id)
               return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
             return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
           }, 0);
@@ -4070,7 +4070,7 @@ export class ItemPF extends Item {
   }
 
   async createContainerContent(data, options = { raw: false }) {
-    let embeddedName = "ContainerContent";
+    let embeddedName = "Item";
     const user = game.user;
     const itemOptions = { temporary: false, renderSheet: false };
 
@@ -4163,20 +4163,20 @@ export class ItemPF extends Item {
     const pending = new Map();
     data = data instanceof Array ? data : [data];
     for (let d of data) {
-      if (!d._id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
-      pending.set(d._id, d);
+      if (!d.id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
+      pending.set(d.id, d);
     }
 
     // Difference each update against existing data
     const updates = this.items.reduce((arr, d) => {
-      if (!pending.has(d._id)) return arr;
-      let update = pending.get(d._id);
+      if (!pending.has(d.id)) return arr;
+      let update = pending.get(d.id);
 
       // Diff the update against current data
       if (options.diff) {
         update = diffObject(d, expandObject(update));
         if (isObjectEmpty(update)) return arr;
-        update["_id"] = d._id;
+        update["_id"] = d.id;
       }
 
       // Call pre-update hooks to ensure the update is allowed to proceed
@@ -4195,7 +4195,7 @@ export class ItemPF extends Item {
     if (!updates.length) return [];
     let inventory = duplicate(this.data.data.inventoryItems).map((o) => {
       for (let u of updates) {
-        if (u._id === o._id) return mergeObject(o, u);
+        if (u.id === o.id) return mergeObject(o, u);
       }
       return o;
     });
@@ -4204,8 +4204,8 @@ export class ItemPF extends Item {
     {
       let ids = [];
       inventory = inventory.filter((i) => {
-        if (ids.includes(i._id)) return false;
-        ids.push(i._id);
+        if (ids.includes(i.id)) return false;
+        ids.push(i.id);
         return true;
       });
     }

@@ -2596,15 +2596,16 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = item.toJSON();
 
     // Handle item sorting within the same actor
-    let sameActor = data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id);
-    console.log(data, sameActor);
+    let sameActor =
+      (data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id)) &&
+      !data.containerId;
     if (sameActor) return this._onSortItem(event, itemData);
 
     // Remove from container
     if (data.containerId) {
       const container = this.actor.allItems.find((o) => o.id === data.containerId);
 
-      if (container) container.deleteContainerContent(itemData.id);
+      if (container) container.deleteContainerContent(itemData._id);
     }
 
     // Create the owned item

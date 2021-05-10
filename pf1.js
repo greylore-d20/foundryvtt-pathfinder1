@@ -665,7 +665,7 @@ Hooks.on("createItem", (item, options, userId) => {
     Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
   }
 
-  if (userId !== game.user._id) return;
+  if (userId !== game.user.id) return;
 
   // Create class
   if (item.type === "class") {

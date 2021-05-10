@@ -674,7 +674,7 @@ export const getBuffTargets = function (actor, type = "buffs") {
     }
   } else {
     for (let [k, v] of Object.entries(CONFIG.PF1.skills)) {
-      buffTargets[k] = { label: v, category: "skill" };
+      buffTargets[`skill.${k}`] = { label: v, category: "skill" };
     }
   }
 

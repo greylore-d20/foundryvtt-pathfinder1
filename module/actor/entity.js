@@ -44,6 +44,15 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
 
     /**
+     * Stores updates to be applied to the actor near the end of the _onUpdate method.
+     *
+     * @property
+     * @private
+     * @type {object.<string, any>}
+     */
+    if (this._queuedUpdates === undefined) this._queuedUpdates = {};
+
+    /**
      * @property {object} _rollData
      * Cached roll data for this item.
      */
@@ -233,14 +242,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     return hasPlayerOwner;
   }
 
-  prepareEmbeddedEntities() {
-    this._prepareChanges();
-    super.prepareEmbeddedEntities();
-    this.containerItems = this._prepareContainerItems(this.items);
-    this.itemFlags = this._prepareItemFlags(this.allItems);
-    this.containerItems = this._prepareContainerItems(this.items);
-  }
-
   _prepareContainerItems(items) {
     let collection = [];
 
@@ -262,17 +263,30 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   _prepareItemFlags(items) {
     let bFlags = {};
+    let dFlags = {};
 
     for (let i of items) {
-      const flags = getProperty(i.data, "data.flags.boolean") || [];
-      for (let f of flags) {
-        bFlags[f] = bFlags[f] || { sources: [] };
-        bFlags[f].sources.push(i);
+      // Process boolean flags
+      if (i.isActive) {
+        const flags = getProperty(i.data, "data.flags.boolean") || [];
+        for (let f of flags) {
+          bFlags[f] = bFlags[f] || { sources: [] };
+          bFlags[f].sources.push(i);
+        }
+      }
+
+      // Process dictionary flags
+      if (i.data.data.tag) {
+        const flags = getProperty(i.data, "data.flags.dictionary") || [];
+        for (let f of flags) {
+          setProperty(dFlags, `${i.data.data.tag}.${f[0]}`, i.isActive ? f[1] : 0);
+        }
       }
     }
 
     return {
       boolean: bFlags,
+      dictionary: dFlags,
     };
   }
 
@@ -284,12 +298,7 @@ export class ActorPF extends ActorDataPF(Actor) {
           (obj.data.data.changeFlags && Object.values(obj.data.data.changeFlags).filter((o) => o === true).length)
         );
       })
-      .filter((obj) => {
-        if (obj.type === "buff") return obj.data.data.active;
-        if (obj.type === "equipment" || obj.type === "weapon") return obj.data.data.equipped;
-        if (obj.type === "loot" && obj.data.data.subType === "gear") return obj.data.data.equipped;
-        return true;
-      });
+      .filter((obj) => obj.isActive);
 
     let changes = [];
     for (let i of this.changeItems) {
@@ -307,11 +316,23 @@ export class ActorPF extends ActorDataPF(Actor) {
   applyActiveEffects() {
     super.applyActiveEffects();
 
+    this.containerItems = this._prepareContainerItems(this.items);
+    this.itemFlags = this._prepareItemFlags(this.allItems);
+    this._prepareChanges();
+
+    // Refresh roll data
+    // Some changes act wonky without this
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    this.getRollData({ refresh: true });
+
     applyChanges.call(this);
   }
 
   prepareData() {
-    this._queuedUpdates = {};
+    this._prevAttributes = {};
+    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+      this._prevAttributes[k] = getProperty(this.data, `${k}.max`);
+    }
     this.sourceInfo = {};
     this.flags = {};
     this._trackPreviousAttributes();
@@ -319,23 +340,11 @@ export class ActorPF extends ActorDataPF(Actor) {
     // Prepare data
     super.prepareData();
 
-    // Send queued updates
-    if (this._initialized && this.isOwner) {
-      const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
-      if (!isObjectEmpty(diff)) {
-        this.update(diff);
-      }
-    }
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
   }
 
   prepareBaseData() {
-    // Refresh roll data
-    // Some changes act wonky without thi:
-    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    if (game.actors) this.getRollData({ refresh: true });
-
     // Update item resource values
     this.data.items.forEach((item) => {
       this.updateItemResources(item);
@@ -504,11 +513,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     // Reset HD
     setProperty(this.data, "data.attributes.hd.total", getProperty(this.data, "data.details.level.value"));
 
-    // Reset CR
-    if (this.data.type === "npc") {
-      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
-    }
-
     // Apply ACP and Max Dexterity Bonus
     this._applyArmorPenalties();
 
@@ -634,6 +638,19 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     // Update wound threshold
     this.updateWoundThreshold();
+
+    // Reset CR
+    if (this.data.type === "npc") {
+      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
+
+      // Reset experience value
+      try {
+        const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
+        this.data.data.details.xp.value = this.getCRExp(crTotal);
+      } catch (e) {
+        this.data.data.details.xp.value = this.getCRExp(1);
+      }
+    }
 
     // Reset spell slots and spell points
     for (let spellbookKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
@@ -774,7 +791,7 @@ export class ActorPF extends ActorDataPF(Actor) {
               casterType
             ];
           const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
-          rollData.cl = classLevel;
+          // rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
 
           const allLevelModFormula =
@@ -1464,16 +1481,7 @@ export class ActorPF extends ActorDataPF(Actor) {
   /**
    * Prepare NPC type specific data
    */
-  _prepareNPCData() {
-    setProperty(this.data, "data.details.cr.total", this.getCR());
-    // Kill Experience
-    try {
-      const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
-      this.data.data.details.xp.value = this.getCRExp(crTotal);
-    } catch (e) {
-      this.data.data.details.xp.value = this.getCRExp(1);
-    }
-  }
+  _prepareNPCData() {}
 
   /**
    * Return reduced movement speed.
@@ -1591,11 +1599,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      let tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
-      tokens.forEach((o) => {
-        o.document.update({ width: size.w, height: size.h, scale: size.scale });
-      });
       if (!this.isToken) {
         linkData(fullData, data, "token.width", size.w);
         linkData(fullData, data, "token.height", size.h);
@@ -1693,15 +1696,6 @@ export class ActorPF extends ActorDataPF(Actor) {
             this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
             let promises = [];
             let tokens = [];
-
-            // Toggle condition status icons
-            {
-              const token = {};
-              this._pendingUpdateTokens.push(token);
-              tokens.push(token);
-              const p = this.toggleConditionStatusIcons(token);
-              promises.push(p);
-            }
             // Refresh items
             {
               const token = {};
@@ -1776,7 +1770,52 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
 
+    // Resize token(s)
+    {
+      const sizeKey = getProperty(data, "data.traits.size");
+      if (sizeKey) {
+        let size = CONFIG.PF1.tokenSizes[sizeKey];
+        let tokens = this.isToken ? [this.token] : this.getActiveTokens();
+        tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
+        tokens.forEach((o) => {
+          o.update({ width: size.w, height: size.h, scale: size.scale });
+        });
+      }
+    }
+    // Send queued updates
+    // if (this._initialized && this.hasPerm(game.user, "OWNER") && userId === game.user.id) {
+    // const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    // if (!isObjectEmpty(diff)) {
+    // this.update(diff).then(() => {
+    // this._queuedUpdates = {};
+    // });
+    // }
+    // }
+
     super._onUpdate(data, options, userId, context);
+
+    if (userId === game.user.id) {
+      this.doQueuedUpdates();
+    }
+  }
+
+  _onModifyEmbeddedEntity(embeddedName, changes, options, userId, context = {}) {
+    super._onModifyEmbeddedEntity(embeddedName, changes, options, userId, context);
+
+    if (embeddedName === "OwnedItem" && userId === game.user.id) {
+      this.doQueuedUpdates();
+    }
+  }
+
+  async doQueuedUpdates() {
+    if (!this.hasPerm(game.user, "OWNER")) return;
+
+    const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    this._queuedUpdates = {};
+    await this.toggleConditionStatusIcons();
+    if (!isObjectEmpty(diff)) {
+      await this.update(diff);
+    }
   }
 
   /**
@@ -1827,7 +1866,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   async _onCreate(data, options, userId, context) {
-    if (data.type === "character") this.update({ "token.actorLink": true }, { updateChanges: false });
+    if (game.userId === userId) {
+      if (data.type === "character") this.update({ "token.actorLink": true }, { updateChanges: false });
+    }
 
     super._onCreate(data, options, userId, context);
   }
@@ -2952,8 +2993,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     });
 
     for (let o of noteItems) {
-      if (o.type === "buff" && !o.data.data.active) continue;
-      if ((o.type === "equipment" || o.type === "weapon") && !o.data.data.equipped) continue;
+      if (!o.isActive) continue;
       if (!o.data.data.contextNotes || o.data.data.contextNotes.length === 0) continue;
       result.push({ notes: o.data.data.contextNotes, item: o });
     }
@@ -3475,6 +3515,9 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
 
+    // Add item dictionary flags
+    if (this.itemFlags) result.dFlags = this.itemFlags.dictionary;
+
     // Add range info
     result.range = this.constructor.getReach(this.data.data.traits.size, this.data.data.traits.stature);
 
@@ -3548,7 +3591,9 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (this.items == null) return base;
 
     // Gather CR from templates
-    const templates = this.items.filter((o) => o.type === "feat" && o.data.data.featType === "template");
+    const templates = this.items.filter(
+      (o) => o.type === "feat" && o.data.data.featType === "template" && !o.data.data.disabled
+    );
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
@@ -3591,7 +3636,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     return this.data.items
       .filter(
         (o) =>
-          (o.type === "attack" || o.type === "spell" || o.type === "feat") &&
+          (o.type === "attack" || o.type === "spell" || (o.type === "feat" && !o.data.disabled)) &&
           getProperty(o, "data.showInQuickbar") === true
       )
       .sort((a, b) => {
@@ -3606,62 +3651,50 @@ export class ActorPF extends ActorDataPF(Actor) {
       });
   }
 
-  toggleConditionStatusIcons(token) {
-    if (this._runningFunctions.indexOf("toggleConditionStatusIcons") !== -1) return;
+  async toggleConditionStatusIcons() {
+    const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
+    const buffTextures = this._calcBuffTextures();
 
-    return new Promise((resolve) => {
-      this._runningFunctions.push("toggleConditionStatusIcons");
-      if (token) {
-        token.cancel = function () {
-          resolve();
-        };
+    let promises = [];
+    for (let t of tokens) {
+      // const isLinkedToken = getProperty(this.data, "token.actorLink");
+      const actor = t.actor ? t.actor : this;
+      if (!actor.testUserPermission(game.user, "OWNER")) continue;
+      const fx = [...actor.effects];
+
+      // Create and delete ActiveEffects
+      let toCreate = [];
+      let toDelete = [];
+      for (let [id, obj] of Object.entries(buffTextures)) {
+        const existing = fx.find((f) => f.data.origin === id);
+        if (obj.active && !existing) toCreate.push(obj.item.getRawEffectData());
+        else if (!obj.active && existing) toDelete.push(existing.id);
       }
+      promises.push(
+        (async () => {
+          if (toDelete.length) await actor.deleteEmbeddedEntity("ActiveEffect", toDelete);
+          if (toCreate.length) await actor.createEmbeddedEntity("ActiveEffect", toCreate);
+        })()
+      );
 
-      (async () => {
-        const isLinkedToken = getProperty(this.data, "token.actorLink");
-        const tokens = isLinkedToken ? this.getActiveTokens() : [this.token].filter((o) => o != null);
-        const buffTextures = this._calcBuffTextures();
+      for (let con of CONFIG.statusEffects) {
+        // Don't toggle non-condition effects
+        if (CONFIG.PF1.conditions[con.id] == null) continue;
 
-        let promises = [];
-        const fx = [...this.effects];
+        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
+        const hasCondition = actor.data.data.attributes.conditions[con.id] === true;
+        const hasEffectIcon = idx >= 0;
 
-        for (let [id, obj] of Object.entries(buffTextures)) {
-          if (obj.active) await obj.item.toEffect();
-          else await fx.find((f) => f.data.origin === id)?.delete();
+        if (hasCondition !== hasEffectIcon) {
+          promises.push(
+            t.toggleEffect(con, {
+              midUpdate: true,
+            })
+          );
         }
-
-        for (let ae of fx) {
-          let item = this.items.get(ae.data.origin?.split(".")[3]);
-          if (!item && ae.data.origin) await ae.delete();
-        }
-
-        let token = tokens[0];
-        if (!token) return;
-        for (let con of CONFIG.statusEffects) {
-          // Don't toggle non-condition effects
-          if (CONFIG.PF1.conditions[con.id] == null) continue;
-
-          const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
-          const hasCondition = this.data.data.attributes.conditions[con.id] === true;
-          const hasEffectIcon = idx >= 0;
-
-          if (hasCondition !== hasEffectIcon) {
-            promises.push(
-              token.toggleEffect(con, {
-                midUpdate: true,
-              })
-            );
-          }
-        }
-        await Promise.all(promises);
-      })().then(() => {
-        if (token) {
-          this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
-        }
-        this._runningFunctions.splice(this._runningFunctions.indexOf("toggleConditionStatusIcons"), 1);
-        resolve();
-      });
-    });
+      }
+    }
+    await Promise.all(promises);
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
@@ -3714,7 +3747,7 @@ export class ActorPF extends ActorDataPF(Actor) {
   getFeatCount() {
     const result = { max: 0, value: 0 };
     result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.data.data.featType === "feat";
+      return o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled;
     }).length;
 
     // Add feat count by level

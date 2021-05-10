@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -81,32 +91,32 @@
     "changes": [
       {
         "_id": "wvgstkuo",
-        "formula": "@classes.sorcerer.level > 14 ? 4 : (@classes.sorcerer.level < 15 && @classes.sorcerer.level < 8 ? 2 : 1)",
+        "formula": "@classes.sorcerer.level > 14 ? 4 : @classes.sorcerer.level > 8 ? 2 : 1",
         "operator": "add",
-        "target": "ac",
         "subTarget": "nac",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "dragonResistances",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -115,6 +125,10 @@
     "weaponProf": {
       "value": [],
       "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "featType": "classFeat",
     "associations": {
@@ -128,9 +142,12 @@
     "nonlethal": false,
     "abilityType": "ex",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Dragon Resistances"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/ice_11.jpg",

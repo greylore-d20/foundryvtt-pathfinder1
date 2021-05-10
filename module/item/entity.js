@@ -47,6 +47,14 @@ export class ItemPF extends Item {
     return super.isOwned || this.parentItem != null;
   }
 
+  get isActive() {
+    if (this.type === "buff") return this.data.data.active;
+    if (this.type === "equipment" || this.type === "weapon") return this.data.data.equipped;
+    if (this.type === "loot" && this.data.data.subType === "gear") return this.data.data.equipped;
+    if (this.type === "feat") return !this.data.data.disabled;
+    return true;
+  }
+
   /**
    * Does the Item implement an attack roll as part of its usage
    *
@@ -1146,6 +1154,14 @@ export class ItemPF extends Item {
     return effect;
   }
 
+  // Determines the starting data for an ActiveEffect based off this item
+  getRawEffectData() {
+    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.isActive };
+    if (this.type === "buff")
+      createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    return createData;
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -1567,8 +1583,11 @@ export class ItemPF extends Item {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
-    if (allowed === false) return;
+    if (this.type === "feat" && this.data.data.disabled) {
+      const msg = game.i18n.localize("PF1.ErrorFeatDisabled");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
 
     const itemQuantity = getProperty(this.data, "data.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
@@ -1599,6 +1618,9 @@ export class ItemPF extends Item {
         }
       }
     }
+
+    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
+    if (allowed === false) return;
 
     const rollData = duplicate(this.getRollData());
     rollData.d20 = dice !== "1d20" ? dice : "";
@@ -2333,10 +2355,12 @@ export class ItemPF extends Item {
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
         const saveDC = this.getDC(rollData);
+        const token = this.parentActor?.token;
 
         const templateData = mergeObject(
           chatTemplateData,
           {
+            tokenId: token ? `${token.scene._id}.${token.id}` : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,
@@ -2999,6 +3023,11 @@ export class ItemPF extends Item {
       }
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
+
+    // Add dictionary flag
+    if (this.data.data.tag) {
+      result.item.dFlags = getProperty(result, `dFlags.${this.data.data.tag}`);
+    }
 
     // Set aura strength
     setProperty(result, "item.auraStrength", this.auraStrength);

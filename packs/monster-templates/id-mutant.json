@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,103 +93,103 @@
         "_id": "awyl915s",
         "formula": "2",
         "operator": "+",
-        "target": "ac",
         "subTarget": "nac",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       },
       {
         "_id": "47a3n170",
         "formula": "10",
         "operator": "+",
-        "target": "speed",
         "subTarget": "landSpeed",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "eu0hml3k",
         "formula": "4",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.per",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "96cuxn7p",
         "formula": "4",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.ste",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "1qmxdwxz",
         "formula": "4",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.sur",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "tl1xjkqv",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "str",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "ufn5qkau",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "con",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "m6u4efkm",
         "formula": "-6",
         "operator": "+",
-        "target": "ability",
         "subTarget": "int",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "3oupo46k",
         "formula": "-4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "cha",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -196,6 +206,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -204,6 +218,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "1",
+    "disabled": false,
     "attack": {
       "parts": []
     }

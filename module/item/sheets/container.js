@@ -295,7 +295,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     });
 
     // Currency Dragging
-    if (this.item.permission >= 3) {
+    if (this.item.testUserPermission(game.user, 3)) {
       html.find("label.denomination").each((i, label) => {
         label.setAttribute("draggable", true);
         label.addEventListener("dragstart", handler, false);
@@ -416,7 +416,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Create drag data for an owned item
     const elem = event.currentTarget;
-    let dragData = { containerId: this.item.id };
+    let dragData;
     if (elem.classList.contains("denomination")) {
       dragData = {
         type: "Currency",
@@ -430,6 +430,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       dragData = {
         type: "Item",
         data: item.data,
+        containerId: this.item.id,
       };
     }
 
@@ -630,7 +631,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       if (item == null) continue;
 
       delete data._id;
-      if (item.hasPerm(game.user, "OWNER")) promises.push(item.update(data));
+      if (item.testUserPermission(game.user, "OWNER")) promises.push(item.update(data));
     }
 
     return Promise.all(promises);

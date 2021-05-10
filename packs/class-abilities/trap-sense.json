@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -81,21 +91,32 @@
     "changes": [],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "ref",
+        "target": "savingThrows",
+        "text": "+[[floor(@classes.rogue.level/3)]] vs. traps"
+      },
+      {
+        "subTarget": "ac",
+        "target": "misc",
+        "text": "+[[floor(@classes.rogue.level/3)]] dodge vs. traps"
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "trapSense",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -104,6 +125,10 @@
     "weaponProf": {
       "value": [],
       "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "featType": "classFeat",
     "associations": {
@@ -117,9 +142,12 @@
     "nonlethal": false,
     "abilityType": "ex",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Trap Sense"
   },
   "flags": {},
   "img": "systems/pf1/icons/items/inventory/hook-hand.jpg",

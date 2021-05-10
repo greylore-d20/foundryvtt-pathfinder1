@@ -69,6 +69,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -85,24 +95,45 @@
     "effectNotes": "",
     "attackNotes": "",
     "soundEffect": "",
-    "changes": [],
+    "changes": [
+      {
+        "_id": "s2itjonf",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.han",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "eqwqfte8",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.rid",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "animalAffinity",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -112,6 +143,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "feat",
     "associations": {
       "classes": []
@@ -120,6 +155,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "",
+    "disabled": false,
     "recharge": {
       "value": null,
       "charged": false,

@@ -17,97 +17,103 @@
         "_id": "kvfxvcqw",
         "formula": "1",
         "operator": "add",
-        "target": "attack",
         "subTarget": "attack",
         "modifier": "untyped",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "attack"
       },
       {
         "_id": "i5jeb69f",
         "formula": "1",
         "operator": "add",
-        "target": "ac",
         "subTarget": "ac",
         "modifier": "dodge",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "ac"
       },
       {
         "_id": "uv25ffcw",
         "formula": "1",
         "operator": "add",
-        "target": "savingThrows",
         "subTarget": "ref",
         "modifier": "untyped",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "savingThrows"
       },
       {
         "_id": "t7kdmcvh",
         "formula": "min(@attributes.speed.land.base, 30)",
         "operator": "add",
-        "target": "speed",
         "subTarget": "landSpeed",
         "modifier": "enh",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "8chno7s8",
         "formula": "min(@attributes.speed.climb.base, 30)",
         "operator": "add",
-        "target": "speed",
         "subTarget": "climbSpeed",
         "modifier": "enh",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "o3i44my7",
         "formula": "min(@attributes.speed.swim.base, 30)",
         "operator": "add",
-        "target": "speed",
         "subTarget": "swimSpeed",
         "modifier": "enh",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "4iimhrzg",
         "formula": "min(@attributes.speed.burrow.base, 30)",
         "operator": "add",
-        "target": "speed",
         "subTarget": "burrowSpeed",
         "modifier": "enh",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "uog1v33r",
         "formula": "min(@attributes.speed.fly.base, 30)",
         "operator": "add",
-        "target": "speed",
         "subTarget": "flySpeed",
         "modifier": "enh",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "speed"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
       "children": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "buffType": "temp",
     "active": false,
@@ -118,9 +124,6 @@
       "critParts": [],
       "nonCritParts": []
     },
-    "attackParts": [],
-    "conditionals": [],
-    "identifiedName": "Haste",
     "uses": {
       "value": 0,
       "max": 0

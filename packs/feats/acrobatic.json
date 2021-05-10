@@ -69,6 +69,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -90,33 +100,33 @@
         "_id": "15f8vfh2",
         "formula": "@skills.acr.rank>=10?4:2",
         "operator": "add",
-        "target": "skill",
         "subTarget": "skill.acr",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "i9kjn7dm",
         "formula": "@skills.fly.rank>=10?4:2",
         "operator": "add",
-        "target": "skill",
         "subTarget": "skill.fly",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -133,6 +143,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "feat",
     "associations": {
       "classes": []
@@ -141,6 +155,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "",
+    "disabled": false,
     "recharge": {
       "value": null,
       "charged": false,
@@ -156,9 +171,7 @@
     },
     "attack": {
       "parts": []
-    },
-    "conditionals": [],
-    "identifiedName": "Acrobatic"
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/acrobatic.jpg",

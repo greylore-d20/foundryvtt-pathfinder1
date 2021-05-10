@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,23 +93,23 @@
         "_id": "8v5u4pi6",
         "formula": "max(1, floor(@classes.mesmerist.level / 2))",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.blf",
         "modifier": "untyped",
         "priority": "0",
-        "value": 0
+        "value": 0,
+        "target": "skill"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -116,6 +126,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
     "associations": {
       "classes": [
@@ -128,6 +142,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
     }

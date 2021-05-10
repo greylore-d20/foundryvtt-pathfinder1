@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,113 +93,113 @@
         "_id": "a6zrvg6a",
         "formula": "2",
         "operator": "+",
-        "target": "attack",
         "subTarget": "attack",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "attack"
       },
       {
         "_id": "hm9l51ql",
         "formula": "2",
         "operator": "+",
-        "target": "damage",
         "subTarget": "damage",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "damage"
       },
       {
         "_id": "q7a4j6ty",
         "formula": "2",
         "operator": "+",
-        "target": "savingThrows",
         "subTarget": "allSavingThrows",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "savingThrows"
       },
       {
         "_id": "wfk7ommm",
         "formula": "2",
         "operator": "+",
-        "target": "skills",
         "subTarget": "skills",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skills"
       },
       {
         "_id": "szl2ybmw",
         "formula": "2",
         "operator": "+",
-        "target": "abilityChecks",
         "subTarget": "allChecks",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "abilityChecks"
       },
       {
         "_id": "ngn45chi",
         "formula": "2",
         "operator": "+",
-        "target": "misc",
         "subTarget": "cmb",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "misc"
       },
       {
         "_id": "dt624sxt",
         "formula": "2",
         "operator": "+",
-        "target": "misc",
         "subTarget": "init",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "misc"
       },
       {
         "_id": "fanw1vex",
         "formula": "4",
         "operator": "+",
-        "target": "ac",
         "subTarget": "nac",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       },
       {
         "_id": "iespqmig",
         "formula": "4",
         "operator": "+",
-        "target": "misc",
         "subTarget": "cmd",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "misc"
       },
       {
         "_id": "rdnbl17l",
         "formula": "2*@attributes.hd.total",
         "operator": "+",
-        "target": "misc",
         "subTarget": "mhp",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "misc"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -206,6 +216,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -214,6 +228,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "1",
+    "disabled": false,
     "attack": {
       "parts": []
     }

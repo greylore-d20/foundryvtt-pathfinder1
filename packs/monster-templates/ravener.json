@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,93 +93,93 @@
         "_id": "kem72dqu",
         "formula": "max(1, floor(@abilities.cha.mod/2))",
         "operator": "+",
-        "target": "ac",
         "subTarget": "ac",
         "modifier": "deflection",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       },
       {
         "_id": "urb48k3j",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "str",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "u756fjkn",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "int",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "vzhv5trc",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "wis",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "pxtfhxte",
         "formula": "6",
         "operator": "+",
-        "target": "ability",
         "subTarget": "cha",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "6hpqpwg4",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.int",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "nl0cgkra",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.per",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "wl2oeh93",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.ste",
         "modifier": "racial",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -186,6 +196,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -194,6 +208,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "2",
+    "disabled": false,
     "attack": {
       "parts": []
     }

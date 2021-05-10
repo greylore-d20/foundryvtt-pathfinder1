@@ -452,8 +452,8 @@ export class ActorSheetPF extends ActorSheet {
       // Feat count
       // By level
       data.featCount = {};
-      data.featCount.value = this.document.items.filter(
-        (o) => o.type === "feat" && o.data.data.featType === "feat"
+      data.featCount.value = this.actor.items.filter(
+        (o) => o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled
       ).length;
       const totalLevels = this.document.items
         .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
@@ -640,7 +640,7 @@ export class ActorSheetPF extends ActorSheet {
     if (book.autoSpellLevelCalculation) {
       min = book.hasCantrips ? 0 : 1;
 
-      const cl = Math.max(Math.min(book.cl.total, 20), 1);
+      const cl = book.cl.autoSpellLevelTotal;
 
       const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
       max = castsPerDay.length - 1;
@@ -648,7 +648,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Reduce spells to the nested spellbook structure
     let spellbook = {};
-    for (let a = min; a <= max; a++) {
+    for (let a = 0; a < 10; a++) {
       if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
         spellbook[a] = {
           level: a,
@@ -670,10 +670,14 @@ export class ActorSheetPF extends ActorSheet {
     spells.forEach((spell) => {
       const spellBookKey = getProperty(spell, "data.spellbook");
       if (spellBookKey === bookKey) {
-        const lvl = spell.data.level || min;
+        const lvl = spell.data.level ?? min;
         spellbook[lvl]?.items.push(spell);
       }
     });
+
+    for (let a = 0; a < 10; a++) {
+      if (spellbook[a]?.items.length === 0 && (a > max || a < min)) delete spellbook[a];
+    }
 
     return spellbook;
   }
@@ -2593,6 +2597,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Handle item sorting within the same actor
     let sameActor = data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id);
+    console.log(data, sameActor);
     if (sameActor) return this._onSortItem(event, itemData);
 
     // Remove from container
@@ -2617,11 +2622,8 @@ export class ActorSheetPF extends ActorSheet {
    * @override
    */
   _onSortItem(event, itemData) {
-    // TODO - for now, don't allow sorting for Token Actor ovrrides
-    if (this.document.isToken) return;
-
     // Get the drag source and its siblings
-    const source = this.document.getEmbeddedDocument("Item", itemData.id);
+    const source = this.document.getEmbeddedDocument("Item", itemData._id);
     const siblings = this._getSortSiblings(source);
 
     // Get the drop target

@@ -62,6 +62,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -83,63 +93,63 @@
         "_id": "1e7gm9uk",
         "formula": "30",
         "operator": "+",
-        "target": "speed",
         "subTarget": "flySpeed",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "speed"
       },
       {
         "_id": "fhebigus",
         "formula": "4",
         "operator": "+",
-        "target": "ability",
         "subTarget": "cha",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ability"
       },
       {
         "_id": "gonae9gj",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.int",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "019g9izf",
         "formula": "8",
         "operator": "+",
-        "target": "skill",
         "subTarget": "skill.per",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "skill"
       },
       {
         "_id": "f0hb9axm",
         "formula": "@abilities.cha.mod",
         "operator": "+",
-        "target": "ac",
         "subTarget": "ac",
         "modifier": "deflection",
         "priority": 0,
-        "value": 0
+        "value": 0,
+        "target": "ac"
       }
     ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
     "contextNotes": [],
     "links": {
@@ -156,6 +166,10 @@
       "value": [],
       "custom": ""
     },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "template",
     "associations": {
       "classes": []
@@ -164,6 +178,7 @@
     "nonlethal": false,
     "abilityType": "none",
     "crOffset": "2",
+    "disabled": false,
     "attack": {
       "parts": []
     }

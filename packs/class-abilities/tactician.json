@@ -32,7 +32,7 @@
     "range": {
       "value": "30",
       "units": "ft",
-      "maxIncrements": 1,
+      "maxIncrements": "1",
       "minValue": null,
       "minUnits": "",
       "long": null
@@ -63,6 +63,16 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "",
+        "value": null
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
     "formula": "",
     "ability": {
       "attack": null,
@@ -79,24 +89,41 @@
     "effectNotes": "",
     "attackNotes": "",
     "soundEffect": "",
-    "changes": [],
+    "changes": [
+      {
+        "_id": "9v2eqx97",
+        "formula": "1",
+        "operator": "add",
+        "subTarget": "init",
+        "modifier": "trait",
+        "priority": 0,
+        "value": 1,
+        "target": "misc"
+      }
+    ],
     "changeFlags": {
       "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false,
       "noStr": false,
       "noDex": false,
       "oneInt": false,
       "oneWis": false,
-      "oneCha": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
+      "oneCha": false
     },
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "attack",
+        "target": "attacks",
+        "text": "1/day, +[[2]] trait bonus on AoO"
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "",
+    "tag": "tactician",
     "useCustomTag": false,
     "armorProf": {
       "value": [],
@@ -105,6 +132,10 @@
     "weaponProf": {
       "value": [],
       "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
     },
     "featType": "classFeat",
     "associations": {
@@ -118,9 +149,12 @@
     "nonlethal": false,
     "abilityType": "ex",
     "crOffset": "",
+    "disabled": false,
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Tactician"
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/strike-back.jpg",

@@ -3,13 +3,13 @@ import { ItemPF } from "../item/entity.js";
 import { SemanticVersion } from "../semver.js";
 
 const NEED_NEW_VERSION = {
-  spells: "0.77.15",
-  items: "0.77.15",
-  bestiary: "0.77.17",
-  feats: "0.77.16",
-  classes: "0.77.15",
-  races: "0.77.15",
-  buffs: "0.77.22",
+  spells: "0.77.24",
+  items: "0.77.24",
+  bestiary: "0.77.24",
+  feats: "0.77.24",
+  classes: "0.77.24",
+  races: "0.77.24",
+  buffs: "0.77.24",
 };
 
 export const COMPENDIUM_TYPES = {

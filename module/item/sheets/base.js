@@ -5,6 +5,7 @@ import { ItemChange } from "../components/change.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
+import { PF1_HelpBrowser } from "../../apps/help-browser.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
@@ -326,8 +327,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.data.changes.reduce((cur, o) => {
-        const itemChange = this.item.changes.get(o._id);
+      data.changes = data.item.data.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -710,6 +710,9 @@ export class ItemSheetPF extends ItemSheet {
     // Add drop handler to textareas
     html.find("textarea").on("drop", this._onTextAreaDrop.bind(this));
 
+    // Open help browser
+    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 
@@ -804,6 +807,23 @@ export class ItemSheetPF extends ItemSheet {
       elem.value = !elem.value ? link : elem.value + "\n" + link;
     }
     return this._onSubmit(event);
+  }
+
+  _openHelpBrowser(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    let browser = null;
+    for (let w of Object.values(ui.windows)) {
+      if (w instanceof PF1_HelpBrowser) {
+        browser = w;
+        browser.bringToTop();
+        break;
+      }
+    }
+    if (!browser) browser = new PF1_HelpBrowser();
+
+    browser.openURL(a.dataset.url);
   }
 
   async _onLinksDrop(event) {

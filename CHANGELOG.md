@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.77.24
+
+### Changelog
+
+- Improve display of condition icons in buff tab (#795)
+
+### Bug Fixes
+
+- Actors could fail to render with some spellbook configurations (#797)
+- Cantrips would never display on spell sheet if setting was off
+- Copying an attack with linked ammunition to another actor made it behave strangely (#801)
+
+### Compendium
+
+- Applied migration to all compendia. Initial loading will be slow
+- Updated
+  - Bestiary: Fire Elementals, Mudlord, Attic Whisperer, Wraith Spawn, Giant Phantom Armor, Werebear
+  - Class Abilities: Fast Movement (UMK), Rage (UC), Rage
+  - Classes: Investigator, Unchained Monk, Unchained Rogue [linked features above]
+  - Feats: Animal Affinity, Athletic, Deft Hands, Precise Shot, Scribe Scroll
+  - Items: Alchemist's Lab (X), Cloak of Resistance +X, Disguise Kit, Ring of Protection +X, Thieves Tools (X), Wrist Sheath
+  - Spells: Burning Disarm, Burning Entanglement, Campfire Wall, Confusion, Cure X Wounds, Ear-Piercing Scream, Fire Snake, Flame Strike, Flurry of Snowballs, Ice Spears, Ice Storm, Magic Missile, Rejuvenate Eidolon X, Restoration X, Thundering Drums, Thunderstomp X, Volcanic Storm, Scorching Ray, Stone Discus, Infernal Healing X
+  - Weapons: Lantern Staff
+- Added
+  - Class Abilities: Trapfinding (INV), Trapfinding (UC), Bonus Feat (UMK)
+  - Common Buffs: Fighting Defensively, Mutagaen con/dex/str, Total Defense
+  - Feats: Extra Rogue Talent
+  - Spells: Admonishing Ray
+- Thanks to earlgrey, apetina, fadeshadow589, websterguy, Chris|Lyka, LePheel, SleepyWizard, and Mana!
+
+## 0.77.23
+
+### Bug Fixes
+
+- Energy drain was incorrectly hiding spell slots (#792)
+- Spells outside of level requirements were inaccessible on the sheet
+- Players could not open items inside containers (#794)
+- Caster Level bonus increase incorrectly affected spell progression
+- Currency transfer of containers did not work as a player
+
 ## 0.77.22
 
 ### Bug Fixes
@@ -7,6 +47,8 @@
 - Rolling untrained skills requiring training sometimes didn't show a note saying it's untrained (#780)
 - Custom styles ("not implemented"/ "steps required") for TinyMCE editors would fail to load
 - Resources weren't updated for unowned actors (#788)
+- Creating characters while other players are connected would cause errors on their clients
+- Fixed an issue with duplicate buff effects when multiple players who owned the actor were connected and the buff adjusted max health
 
 ### Changelog
 
@@ -26,6 +68,8 @@
 - Added a new function for formulas: `sizeReach`. See the in-game help browser for more information.
 - Enhanced the conditions list on Actors' buffs tab with icons
 - Added ability to drag currency between sheets (or to the same sheet)
+- Allow feats to be disabled (#570)
+- Dictionary Flags from items' advanced tabs can now be used in roll formulas. See the in-game help browser for more information.
 
 ### Compendium
 

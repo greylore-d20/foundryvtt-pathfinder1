@@ -115,6 +115,7 @@ Hooks.once("init", function () {
       ScriptEditor,
       SidebarPF,
       TooltipPF,
+      PF1_HelpBrowser,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,
@@ -406,7 +407,7 @@ Hooks.once("ready", async function () {
     SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
   );
   if (needMigration && game.user.isGM) {
-    await migrations.migrateWorld();
+    // await migrations.migrateWorld();
   }
 
   // Migrate system settings
@@ -467,6 +468,13 @@ Hooks.on("canvasInit", function () {
       const results = addReachCallback(m.data, elem);
       callbacks.push(...results);
     });
+
+    // Toggle token condition icons
+    if (game.user.isGM) {
+      canvas.tokens.placeables.forEach((t) => {
+        if (t.actor) t.actor.toggleConditionStatusIcons();
+      });
+    }
   });
 
   Hooks.on("renderChatMessage", (app, html, data) => {
@@ -544,6 +552,12 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
 
   if (actor) {
+    // Toggle buff
+    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+      // Call hook
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+    }
+
     // Update level
     {
       await new Promise((resolve) => {
@@ -649,8 +663,13 @@ Hooks.on("createItem", (item, options, userId) => {
   if (item.type === "buff" && getProperty(item.data, "data.active") === true && actor) {
     // Call hook
     Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+  }
 
-    actor.toggleConditionStatusIcons();
+  if (userId !== game.user._id) return;
+
+  // Create class
+  if (item.type === "class") {
+    item._onLevelChange(0, item.data.data.level);
   }
 });
 

@@ -666,11 +666,6 @@ Hooks.on("createItem", (item, options, userId) => {
   }
 
   if (userId !== game.user.id) return;
-
-  // Create class
-  if (item.type === "class") {
-    item._onLevelChange(0, item.data.data.level);
-  }
 });
 
 Hooks.on("deleteItem", async (item, options, userId) => {

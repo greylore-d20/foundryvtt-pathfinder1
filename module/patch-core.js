@@ -33,8 +33,8 @@ export async function PatchCore() {
   const TokenHUD_getData = TokenHUD.prototype.getData;
   TokenHUD.prototype.getData = function () {
     const data = TokenHUD_getData.call(this);
-    const bar1 = this.object.getBarAttribute("bar1");
-    const bar2 = this.object.getBarAttribute("bar2");
+    const bar1 = this.object.document.getBarAttribute("bar1");
+    const bar2 = this.object.document.getBarAttribute("bar2");
     return mergeObject(data, {
       displayBar1: bar1 != null && bar1.attribute != null && bar1.value != null,
       displayBar2: bar2 != null && bar2.attribute != null && bar2.value != null,

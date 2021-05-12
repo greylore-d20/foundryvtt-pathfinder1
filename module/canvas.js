@@ -1,6 +1,9 @@
 /**
  * Measure the distance between two pixel coordinates
  * See BaseGrid.measureDistance for more details
+ *
+ * @param segments
+ * @param options
  */
 export const measureDistances = function (segments, options = {}) {
   if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
@@ -101,7 +104,7 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
       buffs[buff.icon] = {
         id: buff.id,
         title: buff.label,
-        src: idx,
+        src: buff.icon,
         isActive: buff.active,
         isOverlay: false,
         cssClass: buff.active ? "active" : "",

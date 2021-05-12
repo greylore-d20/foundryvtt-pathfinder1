@@ -578,7 +578,7 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
 
         // Toggle status icons
         if (userId === game.user.id) {
-          await actor.toggleConditionStatusIcons();
+          // await actor.toggleConditionStatusIcons();
         }
       }
     }
@@ -596,7 +596,7 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
 });
 
 Hooks.on("createToken", (scene, token, options, userId) => {
-  if (userId !== game.user._id) return;
+  if (userId !== game.user.id) return;
 
   const actor = game.actors.tokens[token.data._id] ?? game.actors.get(token.actorId);
 

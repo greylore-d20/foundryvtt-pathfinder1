@@ -59,10 +59,10 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (this._rollData === undefined) this._rollData = null;
 
     /**
-     * @property {Array.<string>} _runningFunctions
+     * @property {object.<string>} _runningFunctions
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
-    if (this._runningFunctions === undefined) this._runningFunctions = [];
+    if (this._runningFunctions === undefined) this._runningFunctions = {};
 
     /**
      * @property {object} _queuedItemUpdates
@@ -1655,7 +1655,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     });
     this._pendingUpdateTokens = [];
 
-    // console.log("UPDATE", this.data.data.attributes.hp.max);
     this._trackPreviousAttributes();
 
     // Avoid regular update flow for explicitly non-recursive update calls
@@ -1774,6 +1773,10 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
 
+    if (userId === game.user.id) {
+      this.toggleConditionStatusIcons();
+    }
+
     super._onUpdate(data, options, userId, context);
   }
 
@@ -1785,6 +1788,12 @@ export class ActorPF extends ActorDataPF(Actor) {
     this._queuedUpdates = {};
     if (!isObjectEmpty(diff)) {
       await this.update(diff);
+    }
+  }
+
+  _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+    if (userId === game.user.id) {
+      this.toggleConditionStatusIcons();
     }
   }
 
@@ -3622,6 +3631,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   async toggleConditionStatusIcons() {
+    if (this._runningFunctions["toggleConditionStatusIcons"]) return;
+    this._runningFunctions["toggleConditionStatusIcons"] = {};
+
     const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
     const buffTextures = this._calcBuffTextures();
 
@@ -3665,6 +3677,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
     await Promise.all(promises);
+    delete this._runningFunctions["toggleConditionStatusIcons"];
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }

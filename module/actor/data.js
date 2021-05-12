@@ -6,7 +6,9 @@ export const ActorDataPF = (Base) =>
       if (!this._prevAttributes) {
         this._prevAttributes = {};
         for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-          this._prevAttributes[k] = getProperty(this.data, `${k}.max`);
+          const max = getProperty(this.data, `${k}.max`);
+          if (max === 0 || max == null) continue;
+          this._prevAttributes[k] = max;
         }
       }
     }
@@ -18,6 +20,7 @@ export const ActorDataPF = (Base) =>
           const newMax = getProperty(this.data, `${k}.max`) || 0;
           const prevValue = getProperty(this.data, `${k}.value`);
           const newValue = prevValue + (newMax - prevMax);
+          // if (k === "data.attributes.hp") console.log(prevMax, newMax, prevValue, newValue);
           if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
         }
       }

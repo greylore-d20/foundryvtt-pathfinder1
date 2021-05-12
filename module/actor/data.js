@@ -11,9 +11,16 @@ export const ActorDataPF = (Base) =>
       }
     }
 
-    update(data = {}, options = {}) {
-      this._trackPreviousAttributes();
-
-      return super.update(data, options);
+    _applyPreviousAttributes() {
+      if (this._prevAttributes && !game.pf1.isMigrating && this._initialized) {
+        for (const [k, prevMax] of Object.entries(this._prevAttributes)) {
+          if (prevMax == null) continue;
+          const newMax = getProperty(this.data, `${k}.max`) || 0;
+          const prevValue = getProperty(this.data, `${k}.value`);
+          const newValue = prevValue + (newMax - prevMax);
+          if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
+        }
+      }
+      this._prevAttributes = null;
     }
   };

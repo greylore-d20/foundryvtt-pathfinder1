@@ -1584,7 +1584,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     const value = $(event.currentTarget).prop("checked");
-    this.setItemUpdate(item.data.id, "data.active", value);
+    this.setItemUpdate(item.data._id, "data.active", value);
     this._updateItems();
   }
 

@@ -329,19 +329,17 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   prepareData() {
-    this._prevAttributes = {};
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      this._prevAttributes[k] = getProperty(this.data, `${k}.max`);
-    }
+    this._trackPreviousAttributes();
     this.sourceInfo = {};
     this.flags = {};
-    this._trackPreviousAttributes();
 
     // Prepare data
     super.prepareData();
 
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
+
+    this.doQueuedUpdates();
   }
 
   prepareBaseData() {
@@ -624,17 +622,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Refresh HP
-    if (!game.pf1.isMigrating && this._initialized) {
-      for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-        const prevMax = this._prevAttributes[k];
-        if (prevMax == null) continue;
-        const newMax = getProperty(this.data, `${k}.max`) || 0;
-        const prevValue = getProperty(this.data, `${k}.value`);
-        const newValue = prevValue + (newMax - prevMax);
-        if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
-      }
-    }
-    this._prevAttributes = null;
+    this._applyPreviousAttributes();
 
     // Update wound threshold
     this.updateWoundThreshold();
@@ -1667,6 +1655,9 @@ export class ActorPF extends ActorDataPF(Actor) {
     });
     this._pendingUpdateTokens = [];
 
+    // console.log("UPDATE", this.data.data.attributes.hp.max);
+    this._trackPreviousAttributes();
+
     // Avoid regular update flow for explicitly non-recursive update calls
     if (options.recursive === false) {
       return super.update(data, options);
@@ -1782,37 +1773,20 @@ export class ActorPF extends ActorDataPF(Actor) {
         });
       }
     }
-    // Send queued updates
-    // if (this._initialized && this.hasPerm(game.user, "OWNER") && userId === game.user.id) {
-    // const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
-    // if (!isObjectEmpty(diff)) {
-    // this.update(diff).then(() => {
-    // this._queuedUpdates = {};
-    // });
-    // }
-    // }
 
     super._onUpdate(data, options, userId, context);
 
     if (userId === game.user.id) {
-      this.doQueuedUpdates();
-    }
-  }
-
-  _onModifyEmbeddedEntity(embeddedName, changes, options, userId, context = {}) {
-    super._onModifyEmbeddedEntity(embeddedName, changes, options, userId, context);
-
-    if (embeddedName === "OwnedItem" && userId === game.user.id) {
-      this.doQueuedUpdates();
+      this.toggleConditionStatusIcons();
     }
   }
 
   async doQueuedUpdates() {
-    if (!this.hasPerm(game.user, "OWNER")) return;
+    if (!this.testUserPermission(game.user, "OWNER")) return;
+    if (this._queuedUpdates == null) return;
 
-    const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
     this._queuedUpdates = {};
-    await this.toggleConditionStatusIcons();
     if (!isObjectEmpty(diff)) {
       await this.update(diff);
     }
@@ -3672,8 +3646,8 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
       promises.push(
         (async () => {
-          if (toDelete.length) await actor.deleteEmbeddedEntity("ActiveEffect", toDelete);
-          if (toCreate.length) await actor.createEmbeddedEntity("ActiveEffect", toCreate);
+          if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
+          if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);
         })()
       );
 

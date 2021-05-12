@@ -1,7 +1,7 @@
 export const LinkFunctions = {
   charges: function (item, links) {
     for (let l of links) {
-      const otherItem = this.items.find((o) => o._id === l.id);
+      const otherItem = this.items.find((o) => o.id === l.id);
       if (!otherItem) continue;
 
       otherItem.links.charges = item;

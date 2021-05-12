@@ -176,8 +176,10 @@ export async function PatchCore() {
 
   // Patch StringTerm
   StringTerm.prototype.evaluate = function (options = {}) {
-    const evalFn = new Function([], `return ${this.term};`);
-    this._total = evalFn();
+    // console.log(this.term);
+    const src = `with (sandbox) { return ${this.term}; }`;
+    const evalFn = new Function("sandbox", src);
+    this._total = evalFn(RollPF.MATH_PROXY);
   };
 
   Object.defineProperty(StringTerm.prototype, "total", {
@@ -185,4 +187,19 @@ export async function PatchCore() {
       return this._total ?? 0;
     },
   });
+
+  // Patch OperatorTerm
+  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...[">=", "<=", ">", "<", "==", "!=", "?", ":"]].filter(
+    (value, idx, self) => {
+      return self.indexOf(value) === idx;
+    }
+  );
+  OperatorTerm.REGEXP = new RegExp(
+    OperatorTerm.OPERATORS.map((o) => {
+      return Array.from(o).reduce((cur, o) => {
+        return cur + "\\" + o;
+      }, "");
+    }).join("|"),
+    "g"
+  );
 }

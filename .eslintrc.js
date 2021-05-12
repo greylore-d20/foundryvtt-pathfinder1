@@ -473,5 +473,7 @@ module.exports = {
     StringTerm: "readonly",
     ParentheticalTerm: "readonly",
     MathTerm: "readonly",
+    OperatorTerm: "readonly",
+    NumericTerm: "readonly",
   },
 };

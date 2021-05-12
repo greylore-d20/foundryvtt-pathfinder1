@@ -489,7 +489,8 @@ export class ActorPF extends ActorDataPF(Actor) {
           this.data,
           k,
           classes.reduce((cur, obj) => {
-            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }).total;
+            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.data.bab], { level: obj.data.data.level })
+              .total;
 
             if (v !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({

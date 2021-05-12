@@ -2639,43 +2639,42 @@ export class ItemPF extends Item {
 
     // Define Roll parts
     let parts = [];
-    // Add ability modifier
-    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
-      parts.push(`@abilities.${abl}.mod`);
-    }
-    // Add bonus parts
-    parts = parts.concat(extraParts);
-    // Add attack bonus
-    if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
-      let attackBonus = RollPF.safeRoll(itemData.attackBonus, rollData).total;
-      rollData.item.attackBonus = attackBonus;
-      parts.push("@item.attackBonus");
-    }
-    // Backwards compatibility
-    else if (typeof itemData.attackBonus === "number") {
-      rollData.item.attackBonus = itemData.attackBonus;
-      parts.push("@item.attackBonus");
-    }
 
     // Special handling for combat maneuvers
     if (["mcman", "rcman"].includes(itemData.actionType)) {
       // Add CMB without general ability
       // This already includes BAB, size, energy drain
       rollData.attributes.cmb.total -= rollData.abilities[rollData.attributes.cmbAbility]?.mod ?? 0;
-      if (rollData.attributes.cmb.total) parts.push("@attributes.cmb.total");
+      if (rollData.attributes.cmb.total) parts.push(`@attributes.cmb.total[${game.i18n.localize("PF1.CMBAbbr")}]`);
     } else {
       // Handle regular attacks
 
       // Add size bonus
-      if (rollData.sizeBonus !== 0) parts.push("@sizeBonus");
+      if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
       // Add BAB
       if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
-        parts.push("@attributes.bab.total");
+        parts.push(`@attributes.bab.total[${game.i18n.localize("PF1.BABAbbr")}]`);
       }
       // Subtract energy drain
       if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
-        parts.push("- max(0, abs(@attributes.energyDrain))");
+        parts.push(`- @attributes.energyDrain[${game.i18n.localize("PF1.CondTypeEnergyDrain")}]`);
       }
+    }
+
+    // Add ability modifier
+    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
+      parts.push(`@abilities.${abl}.mod[${CONFIG.PF1.abilities[abl]}]`);
+    }
+    // Add bonus parts
+    parts = parts.concat(extraParts);
+    // Add attack bonus
+    if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
+      parts.push(itemData.attackBonus);
+    }
+    // Backwards compatibility
+    else if (typeof itemData.attackBonus === "number") {
+      rollData.item.attackBonus = itemData.attackBonus;
+      parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
     }
 
     // Add change bonus
@@ -2691,22 +2690,32 @@ export class ItemPF extends Item {
         }),
         { ignoreTarget: true }
       ).reduce((cur, c) => {
-        return cur + c.value;
-      }, 0);
+        cur.push({
+          value: c.value,
+          source: c.parent ? c.parent.name : c.data.modifier,
+        });
+        return cur;
+      }, []);
     }
-    if (changeBonus) parts.push(changeBonus.toString());
+    for (let c of changeBonus) {
+      parts.push(`${c.value}[${c.source}]`);
+    }
 
     // Add wound thresholds penalties
     if (rollData.attributes.woundThresholds?.penalty > 0) {
-      parts.push("- @attributes.woundThresholds.penalty");
+      parts.push(
+        `- @attributes.woundThresholds.penalty${
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.penalty]
+        }`
+      );
     }
 
     // Add proficiency penalty
     if (this.data.type === "attack" && !itemData.proficient) {
-      parts.push("@item.proficiencyPenalty");
+      parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty
-    if (primaryAttack === false) parts.push("-5");
+    if (primaryAttack === false) parts.push(`-5[${game.i18n.localize("PF1.SecondaryAttack")}]`);
     // Add bonus
     if (bonus) {
       rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
@@ -2714,7 +2723,8 @@ export class ItemPF extends Item {
     }
 
     // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
-    if (rollData.attributes.acp.attackPenalty > 0) parts.push("-@attributes.acp.attackPenalty");
+    if (rollData.attributes.acp.attackPenalty > 0)
+      parts.push(`-@attributes.acp.attackPenalty[${game.i18n.localize("PF1.ACP")}]`);
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 

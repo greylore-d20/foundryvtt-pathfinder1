@@ -648,14 +648,14 @@ export const addDefaultChanges = function (changes) {
     // Energy drain to attack
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
       })
     );
     getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").negative.push({
-      formula: "-@attributes.energyDrain",
+      formula: "0-@attributes.energyDrain",
       name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
     });
     // ACP to attack
@@ -709,14 +709,14 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain to CMB
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         target: "misc",
         subTarget: "cmb",
         modifier: "untypedPerm",
       })
     );
     getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").negative.push({
-      formula: `-@attributes.energyDrain`,
+      formula: `0-@attributes.energyDrain`,
       name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
     });
     // BAB to CMD
@@ -752,7 +752,7 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain to CMD
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -761,7 +761,7 @@ export const addDefaultChanges = function (changes) {
     );
     for (const k of ["total", "flatFootedTotal"]) {
       getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).negative.push({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       });
     }
@@ -858,7 +858,7 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
@@ -866,7 +866,7 @@ export const addDefaultChanges = function (changes) {
     );
     for (let k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {
       getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).positive.push({
-        formula: "-@attributes.energyDrain",
+        formula: "0-@attributes.energyDrain",
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       });
     }
@@ -1564,7 +1564,7 @@ export const addDefaultChanges = function (changes) {
   if (!Number.isNaN(this.data.data.attributes.energyDrain) && this.data.data.attributes.energyDrain > 0) {
     changes.push(
       ItemChange.create({
-        formula: "-(@attributes.energyDrain * 5)",
+        formula: "0-(@attributes.energyDrain * 5)",
         target: "misc",
         subTarget: "mhp",
         modifier: "untyped",
@@ -1572,13 +1572,13 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").negative.push({
-      formula: "-(@attributes.energyDrain * 5)",
+      formula: "0-(@attributes.energyDrain * 5)",
       name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
     });
 
     changes.push(
       ItemChange.create({
-        formula: "-(@attributes.energyDrain * 5)",
+        formula: "0-(@attributes.energyDrain * 5)",
         target: "misc",
         subTarget: "vigor",
         modifier: "untyped",
@@ -1586,7 +1586,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").negative.push({
-      formula: "-(@attributes.energyDrain * 5)",
+      formula: "0-(@attributes.energyDrain * 5)",
       name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
     });
   }

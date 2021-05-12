@@ -1226,6 +1226,22 @@ export const addDefaultChanges = function (changes) {
           value: game.i18n.localize("PF1.ChangeFlagNoDex"),
         });
         break;
+      case "sleep":
+        changes.push(
+          ItemChange.create({
+            formula: "0",
+            target: "ability",
+            subTarget: "dex",
+            modifier: "untypedPerm",
+            operator: "set",
+            priority: -1000,
+          })
+        );
+        getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
+          name: game.i18n.localize("PF1.CondSleep"),
+          value: game.i18n.localize("PF1.ChangeFlagNoDex"),
+        });
+        break;
       case "paralyzed":
         changes.push(
           ItemChange.create({

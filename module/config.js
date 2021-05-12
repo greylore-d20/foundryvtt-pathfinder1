@@ -1569,6 +1569,7 @@ export const PF1 = {
     sickened: "PF1.CondSickened",
     nauseated: "PF1.CondNauseated",
     dazed: "PF1.CondDazed",
+    sleep: "PF1.CondSleep",
   },
 
   conditionTextures: {
@@ -1595,6 +1596,7 @@ export const PF1 = {
     panicked: "systems/pf1/icons/conditions/fear.png",
     nauseated: "systems/pf1/icons/conditions/nauseated.png",
     dazed: "systems/pf1/icons/conditions/dazed.png",
+    sleep: "systems/pf1/icons/conditions/sleep.png",
   },
 
   buffTypes: {

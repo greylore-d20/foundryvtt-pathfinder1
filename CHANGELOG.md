@@ -5,6 +5,7 @@
 ### Changelog
 
 - Improve display of condition icons in buff tab (#795)
+- Added sleep condition (works the same as helpless)
 
 ### Bug Fixes
 

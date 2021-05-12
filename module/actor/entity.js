@@ -1775,10 +1775,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     super._onUpdate(data, options, userId, context);
-
-    if (userId === game.user.id) {
-      this.toggleConditionStatusIcons();
-    }
   }
 
   async doQueuedUpdates() {

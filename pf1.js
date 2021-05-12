@@ -577,7 +577,9 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
         Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
 
         // Toggle status icons
-        await actor.toggleConditionStatusIcons();
+        if (userId === game.user.id) {
+          await actor.toggleConditionStatusIcons();
+        }
       }
     }
   }

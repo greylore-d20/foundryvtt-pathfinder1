@@ -8,6 +8,7 @@
 - Add charge counters to actor/token quick actions (thanks mkahvi!)
 - Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
 - Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
+- Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
 
 ### Bug Fixes
 

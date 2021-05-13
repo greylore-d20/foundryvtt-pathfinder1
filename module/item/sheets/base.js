@@ -787,9 +787,23 @@ export class ItemSheetPF extends ItemSheet {
       });
       html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
+
+    /* -------------------------------------------- */
+    /*  Links
+    /* -------------------------------------------- */
+
+    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
   }
 
   /* -------------------------------------------- */
+
+  _onOpenCompendium(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const target = a.dataset.actionTarget;
+
+    game.pf1.compendiums[target].render(true);
+  }
 
   _moveTooltips(event) {
     const elem = $(event.currentTarget);

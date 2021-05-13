@@ -475,5 +475,6 @@ module.exports = {
     MathTerm: "readonly",
     OperatorTerm: "readonly",
     NumericTerm: "readonly",
+    RollTerm: "readonly",
   },
 };

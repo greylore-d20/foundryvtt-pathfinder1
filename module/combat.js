@@ -7,6 +7,8 @@ import { ActorPF } from "./actor/entity.js";
  * Apply advantage, proficiency, or bonuses where appropriate
  * Apply the dexterity score as a decimal tiebreaker if requested
  * See Combat._getInitiativeFormula for more detail.
+ *
+ * @param actor
  */
 export const _getInitiativeFormula = function (actor) {
   if (CONFIG.Combat.initiative.formula) var parts = CONFIG.Combat.initiative.formula.split(/\s*\+\s*/);
@@ -56,7 +58,7 @@ Combat.showInitiativeDialog = function (formula = null) {
 export const _rollInitiative = async function (ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
   // Structure input data
   ids = typeof ids === "string" ? [ids] : ids;
-  const currentId = this.combatant._id;
+  const currentId = this.combatant.id;
   if (!formula) formula = _getInitiativeFormula(this.combatant.actor);
 
   let overrideRollMode = null,
@@ -78,7 +80,7 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
       let [updates, messages] = result;
 
       // Get Combatant data
-      const c = this.getCombatant(id);
+      const c = this.combatants.get(id);
       if (!c) return results;
       const actorData = c.actor ? c.actor.data.data : {};
       formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
@@ -105,7 +107,7 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
       // Create roll template data
       const rollData = mergeObject(
         {
-          user: game.user._id,
+          user: game.user.id,
           formula: roll.formula,
           tooltip: await roll.getTooltip(),
           total: roll.total,
@@ -116,14 +118,14 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
       // Create chat data
       let chatData = mergeObject(
         {
-          user: game.user._id,
+          user: game.user.id,
           type: CONST.CHAT_MESSAGE_TYPES.CHAT,
           rollMode: rollMode,
           sound: CONFIG.sounds.dice,
           speaker: {
-            scene: canvas.scene._id,
-            actor: c.actor ? c.actor._id : null,
-            token: c.token._id,
+            scene: canvas.scene.id,
+            actor: c.actor ? c.actor.id : null,
+            token: c.token.id,
             alias: c.token.name,
           },
           flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
@@ -136,13 +138,13 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
       // Handle different roll modes
       switch (chatData.rollMode) {
         case "gmroll":
-          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u.id);
           break;
         case "selfroll":
           chatData["whisper"] = [game.user._id];
           break;
         case "blindroll":
-          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u.id);
           chatData["blind"] = true;
       }
 
@@ -157,10 +159,10 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
   if (!updates.length) return this;
 
   // Update multiple combatants
-  await this.updateEmbeddedEntity("Combatant", updates);
+  await this.updateEmbeddedDocuments("Combatant", updates);
 
   // Ensure the turn order remains with the same combatant
-  if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t._id === currentId) });
+  if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
 
   // Create multiple chat messages
   await ChatMessage.create(messages);
@@ -178,7 +180,7 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
  * @param {HTMLElement} html    The Chat Message being rendered
  * @param {Array} options       The Array of Context Menu options
  *
- * @return {Array}              The extended options Array including new context choices
+ * @returns {Array}              The extended options Array including new context choices
  */
 export const addChatMessageContextOptions = function (html, options) {
   let canApply = (li) => canvas.tokens.controlled.length && li.find(".damage-roll .dice-total").length;

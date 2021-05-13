@@ -329,7 +329,6 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   prepareData() {
-    this._trackPreviousAttributes();
     this.sourceInfo = {};
     this.flags = {};
 
@@ -1792,10 +1791,30 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
   }
 
+  _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preCreateEmbeddedDocuments(...arguments);
+  }
+
+  _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preDeleteEmbeddedDocuments(...arguments);
+  }
+
+  _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preUpdateEmbeddedDocuments(...arguments);
+  }
+
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     if (userId === game.user.id) {
       this.toggleConditionStatusIcons();
     }
+
+    super._preUpdateEmbeddedDocuments(...arguments);
   }
 
   /**
@@ -2179,7 +2198,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod"],
+      parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.bab.total },
       title: game.i18n.localize("PF1.BAB"),
@@ -2220,7 +2239,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod"],
+      parts: [`@mod[${game.i18n.localize("PF1.CMBAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.cmb.total },
       title: game.i18n.localize("PF1.CMB"),
@@ -2259,7 +2278,11 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
     rollData.item = {};
 
-    let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+    let changes = sources
+      .filter((item) => Number.isInteger(item.value))
+      .map((i) => {
+        return `${i.value}[${i.name}]`;
+      });
 
     // Add attack bonuses from changes
     const attackTargets = ["attack"].concat(options.melee ? ["mattack"] : ["rattack"]);
@@ -2269,13 +2292,13 @@ export class ActorPF extends ActorDataPF(Actor) {
     changes.push(
       ...attackChanges.map((c) => {
         c.applyChange(this);
-        return c.value;
+        return `${c.value}[${c.parent ? c.parent.name : c.data.modifier}}]`;
       })
     );
 
     // Add ability modifier
     const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
-    changes.push(getProperty(this.data, `data.abilities.${atkAbl}.mod`));
+    changes.push(`${getProperty(this.data, `data.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -2450,7 +2473,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     let combat = game.combat;
     if (!combat) {
       if (game.user.isGM && canvas.scene) {
-        combat = await game.combats.object.create({ scene: canvas.scene._id, active: true });
+        combat = await game.combats.documentClass.create({ scene: canvas.scene.id, active: true });
       } else {
         ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
         return null;
@@ -2465,14 +2488,14 @@ export class ActorPF extends ActorDataPF(Actor) {
         arr.push({ tokenId: t.id, hidden: t.data.hidden });
         return arr;
       }, []);
-      await combat.createEmbeddedEntity("Combatant", createData);
+      await combat.createEmbeddedDocuments("Combatant", createData);
     }
 
     // Iterate over combatants to roll for
     const combatantIds = combat.combatants.reduce((arr, c) => {
       if (c.actor.id !== this.id || (this.isToken && c.tokenId !== this.token.id)) return arr;
       if (c.initiative && !rerollInitiative) return arr;
-      arr.push(c._id);
+      arr.push(c.id);
       return arr;
     }, []);
     return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
@@ -2504,7 +2527,9 @@ export class ActorPF extends ActorDataPF(Actor) {
     const changes = this.sourceDetails[`data.attributes.savingThrows.${savingThrowId}.total`];
     const abl = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.ability`);
     const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);
-    let mods = changes.map((item) => item.value);
+    let mods = changes.map((c) => {
+      return `${c.value}[${RollPF.cleanFlavor(c.name)}]`;
+    });
     if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
 
     // Wound Threshold penalty

@@ -2653,7 +2653,7 @@ export class ItemPF extends Item {
       if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
       // Add BAB
       if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
-        parts.push(`@attributes.bab.total[${game.i18n.localize("PF1.BABAbbr")}]`);
+        parts.push(`@attributes.bab.total[${game.i18n.localize("PF1.BAB")}]`);
       }
       // Subtract energy drain
       if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
@@ -2668,7 +2668,7 @@ export class ItemPF extends Item {
     // Add bonus parts
     parts = parts.concat(extraParts);
     // Add attack bonus
-    if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
+    if (typeof itemData.attackBonus === "string" && !["", "0"].includes(itemData.attackBonus)) {
       parts.push(itemData.attackBonus);
     }
     // Backwards compatibility
@@ -2698,7 +2698,7 @@ export class ItemPF extends Item {
       }, []);
     }
     for (let c of changeBonus) {
-      parts.push(`${c.value}[${c.source}]`);
+      parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
     }
 
     // Add wound thresholds penalties
@@ -2719,7 +2719,7 @@ export class ItemPF extends Item {
     // Add bonus
     if (bonus) {
       rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
-      parts.push("@bonus");
+      parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
     // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.

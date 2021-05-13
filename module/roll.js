@@ -141,4 +141,19 @@ export class RollPF extends Roll {
       },
     });
   }
+
+  static cleanFlavor(flavor) {
+    return flavor.replace(/\[\];/, "");
+  }
+
+  /**
+   * Render the tooltip HTML for a RollPF instance
+   *
+   * @returns {Promise<string>} The rendered HTML tooltip as a string
+   */
+  async getTooltip() {
+    const parts = this.dice.map((d) => d.getTooltipData());
+    const numericParts = this.terms.filter((t) => t instanceof NumericTerm).map((t) => t.getTooltipData());
+    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
+  }
 }

@@ -34,7 +34,7 @@ export class LevelUpForm extends DocumentSheet {
     setProperty(rawData, "data.level", 0);
 
     // Add class item
-    let itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
+    let itemData = await actor.createEmbeddedDocuments("Item", [rawData]);
     itemData = itemData instanceof Array ? itemData : [itemData];
     const item = actor.items.get(itemData[0]._id);
     if (!item) {
@@ -47,7 +47,7 @@ export class LevelUpForm extends DocumentSheet {
       Hooks.on("closeLevelUpForm", function _onClose(app) {
         if (app === _app) {
           if (getProperty(item.data, "data.level") === 0) {
-            actor.deleteEmbeddedEntity("OwnedItem", [item.id]);
+            actor.deleteEmbeddedDocuments("Item", [item.id]);
           }
           Hooks.off("closeLevelUpForm", _onClose);
           resolve();

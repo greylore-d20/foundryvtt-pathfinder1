@@ -2658,7 +2658,7 @@ export class ActorSheetPF extends ActorSheet {
     });
   }
 
-  async importItem(itemData, { event } = {}) {
+  async _onDropItemCreate(itemData) {
     // Import spell as consumable
     if (itemData.type === "spell" && this.currentPrimaryTab === "inventory") {
       let resultData = await createConsumableSpellDialog(itemData);

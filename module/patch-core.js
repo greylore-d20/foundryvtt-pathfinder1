@@ -202,4 +202,16 @@ export async function PatchCore() {
     }).join("|"),
     "g"
   );
+
+  // Patch NumericTerm
+  NumericTerm.prototype.getTooltipData = function () {
+    return {
+      formula: this.expression,
+      total: this.total,
+      flavor: this.flavor,
+    };
+  };
+
+  // Patch ParentheticalTerm
+  ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
 }

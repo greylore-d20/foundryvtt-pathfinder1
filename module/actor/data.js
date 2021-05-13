@@ -3,13 +3,11 @@
 export const ActorDataPF = (Base) =>
   class extends Base {
     _trackPreviousAttributes() {
-      if (!this._prevAttributes) {
-        this._prevAttributes = {};
-        for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-          const max = getProperty(this.data, `${k}.max`);
-          if (max === 0 || max == null) continue;
-          this._prevAttributes[k] = max;
-        }
+      this._prevAttributes = this._prevAttributes || {};
+      for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+        const max = getProperty(this.data, `${k}.max`);
+        if (this._prevAttributes[k] != null) continue;
+        this._prevAttributes[k] = max;
       }
     }
 

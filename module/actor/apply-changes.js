@@ -187,7 +187,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "wis":
     case "cha":
       if (changeType === "penalty") return `data.abilities.${changeTarget}.penalty`;
-      if (CONFIG.PF1.stackingBonusModifiers.indexOf(changeType) !== -1)
+      if (["base", "untypedPerm"].includes(changeType))
         return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
       return `data.abilities.${changeTarget}.total`;
     case "ac":

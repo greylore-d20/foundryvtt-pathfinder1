@@ -432,6 +432,8 @@ export class ActorPF extends Actor {
         const value = getProperty(this.data, `data.abilities.${ab}.value`);
         if (value == null) {
           setProperty(this.data, `data.abilities.${ab}.total`, null);
+          setProperty(this.data, `data.abilities.${ab}.base`, null);
+          setProperty(this.data, `data.abilities.${ab}.baseMod`, 0);
         } else {
           setProperty(
             this.data,
@@ -444,6 +446,7 @@ export class ActorPF extends Actor {
             (getProperty(this.data, `data.abilities.${ab}.penalty`) || 0) +
               (getProperty(this.data, `data.abilities.${ab}.userPenalty`) || 0)
           );
+          setProperty(this.data, `data.abilities.${ab}.base`, getProperty(this.data, `data.abilities.${ab}.total`));
         }
       }
       this.refreshAbilityModifiers();
@@ -600,6 +603,15 @@ export class ActorPF extends Actor {
   prepareDerivedData() {
     super.prepareDerivedData();
     Hooks.callAll("pf1.prepareDerivedActorData", this);
+
+    // Set base ability modifier
+    for (const ab of Object.keys(this.data.data.abilities)) {
+      setProperty(
+        this.data,
+        `data.abilities.${ab}.baseMod`,
+        Math.floor((getProperty(this.data, `data.abilities.${ab}.base`) - 10) / 2)
+      );
+    }
 
     const actorData = this.data;
     const data = actorData.data;

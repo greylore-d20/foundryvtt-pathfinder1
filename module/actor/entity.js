@@ -2305,7 +2305,7 @@ export class ActorPF extends Actor {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
-    rollData.mod = this.data.data.abilities[spellbook.ability].mod;
+    rollData.mod = this.data.data.abilities[spellbook.ability]?.mod ?? 0;
     rollData.concentrationBonus = spellbook.concentration;
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);

@@ -10,6 +10,8 @@ export function initializeModules() {
   // Drag Ruler
   {
     Hooks.once("dragRuler.ready", (SpeedProvider) => {
+      const enhancedTerrain = game.modules.get("enhanced-terrain-layer")?.active;
+
       class Pf1SpeedProvider extends SpeedProvider {
         get colors() {
           return [
@@ -20,7 +22,7 @@ export function initializeModules() {
         }
 
         getRanges(token) {
-          const baseSpeed = convertDistance(token.actor.data.data.attributes.speed.land.total)[0];
+          const baseSpeed = convertDistance(this.getBaseSpeed(token))[0];
           // Search through items for pieces of heavy armor that is equipped
           const heavyArmor = token.actor.items.find(
             (item) =>
@@ -39,6 +41,36 @@ export function initializeModules() {
             { range: baseSpeed * 2, color: "dash" },
             { range: baseSpeed * runMultiplier, color: "run" },
           ];
+        }
+
+        getBaseSpeed(token) {
+          const [y, x] = canvas.grid.grid.getGridPositionFromPixels(token.x, token.y);
+
+          if (token.data.elevation > 0) {
+            const flySpeed = token.actor.data.data.attributes.speed.fly.total;
+            if (flySpeed > 0) {
+              return flySpeed;
+            }
+          }
+
+          if (
+            enhancedTerrain &&
+            canvas.terrain.terrainAt(x, y).some((terrain) => terrain.data.environment === "water")
+          ) {
+            const swimSpeed = token.actor.data.data.attributes.speed.swim.total;
+            if (swimSpeed > 0) {
+              return swimSpeed;
+            }
+          }
+
+          if (token.data.elevation < 0) {
+            const burrowSpeed = token.actor.data.data.attributes.speed.burrow.total;
+            if (burrowSpeed > 0) {
+              return burrowSpeed;
+            }
+          }
+
+          return token.actor.data.data.attributes.speed.land.total;
         }
       }
       dragRuler.registerSystem("pf1", Pf1SpeedProvider);

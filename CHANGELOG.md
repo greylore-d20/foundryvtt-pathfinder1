@@ -6,6 +6,7 @@
 
 - Improve display of condition icons in buff tab (#795)
 - Add charge counters to actor/token quick actions (thanks mkahvi!)
+- Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
 
 ### Bug Fixes
 

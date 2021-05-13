@@ -474,6 +474,19 @@
       <li class="item" data-item-id="{{i.item._id}}" data-type="{{i.item.type}}" style="border-color: {{i.color1}};" title="{{i.item.name}}">
         <img src="{{i.item.img}}">
         <span class="icon-label">{{i.item.name}}</span>
+        {{#if i.haveAnyCharges}}
+        <charges>
+          {{#if i.recharging}}
+          <span class="recharge">+{{i.charges}}</span>
+          {{else}}
+          <span class="remaining">{{i.charges}}</span>
+          {{#if i.maxCharge}}
+          <span class="delimiter">/</span>
+          <span class="max">{{i.maxCharge}}</span>
+          {{/if}}
+          {{/if}}
+        </charges>
+        {{/if}}
       </li>
       {{/each}}
     </ol>

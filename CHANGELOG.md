@@ -5,6 +5,7 @@
 ### Changelog
 
 - Improve display of condition icons in buff tab (#795)
+- Add charge counters to actor/token quick actions (thanks mkahvi!)
 
 ### Bug Fixes
 

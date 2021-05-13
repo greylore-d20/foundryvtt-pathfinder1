@@ -144,4 +144,33 @@ input.text-box {
       }
     }
   }
+
+  .item-list-search {
+    display: flex;
+    flex-wrap: nowrap;
+    max-height: 1.8em;
+    max-width: 120px;
+
+    & ~ .currency {
+      margin-left: 1em;
+    }
+    .search-input {
+      border: 1px solid @colorTan;
+      background-color: rgba(0, 0, 0, 0.01);
+      max-width: 120px;
+
+      & ~  .clear-search {
+        margin-left: -1.45em;
+        margin-right: 0.1em;
+        margin-top: 1px;
+        color: @colorTan;
+        align-self: center;
+        padding: 2px;
+        &:hover {
+          text-shadow: 0 0 5px rgba(255, 70, 70, 0.8);
+          color: black;
+        }
+      }
+    }
+  }
 }

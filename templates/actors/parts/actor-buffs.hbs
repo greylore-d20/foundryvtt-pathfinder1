@@ -13,6 +13,8 @@
 
 <hr>
 <div class="inventory-filters flexrow">  
+  {{~> "systems/pf1/templates/internal/item-search.hbs" category="buffs"}}
+
   <ul class="filter-list flexrow" data-filter="buffs">
     {{#each sections as |section sid|}}
     <li class="filter-item" data-filter="type-{{sid}}">{{section.label}}</li>

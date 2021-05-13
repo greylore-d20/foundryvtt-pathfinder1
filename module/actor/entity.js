@@ -3603,18 +3603,37 @@ export class ActorPF extends Actor {
   }
 
   getQuickActions() {
-    return this.data.items
+    const actualChargeCost = (i) => Math.floor(i.charges / i.chargeCost),
+      actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);
+    return this.items
       .filter(
         (o) =>
-          (o.type === "attack" || o.type === "spell" || (o.type === "feat" && !o.data.disabled)) &&
-          getProperty(o, "data.showInQuickbar") === true
+          (o.data.type === "attack" || o.data.type === "spell" || (o.data.type === "feat" && !o.data.data.disabled)) &&
+          getProperty(o.data, "data.showInQuickbar") === true
       )
       .sort((a, b) => {
-        return a.data.sort - b.data.sort;
+        return a.data.data.sort - b.data.data.sort;
       })
       .map((o) => {
         return {
           item: o,
+          get haveAnyCharges() {
+            return (this.item.isCharged && this.item.chargeCost !== 0) || this.hasAmmo;
+          },
+          maxCharge: o.isCharged ? actualMaxCharge(o) : 0,
+          get charges() {
+            return this.item.isCharged
+              ? this.recharging
+                ? -this.item.chargeCost
+                : actualChargeCost(this.item)
+              : this.ammoValue;
+          },
+          hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
+          ammoValue:
+            o.data.data.links?.ammunition
+              ?.map((l) => actualChargeCost(this.items.get(l.id)))
+              .reduce((a, b) => a + b, 0) ?? 0,
+          recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),
           color2: ItemPF.getTypeColor(o.type, 1),
         };

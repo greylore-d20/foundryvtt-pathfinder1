@@ -2735,7 +2735,13 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Remove item links
-    if (itemData?.data?.links) itemData.data.links = {};
+    if (itemData?.data?.links) {
+      for (const k of Object.keys(itemData.data.links)) {
+        if (!CONFIG.PF1.keepItemLinksOnCopy.includes(k)) {
+          delete itemData.data.links[k];
+        }
+      }
+    }
 
     return this.importItem(mergeObject(itemData, this.getDropData(itemData), { inplace: false }), { event: event })
       .then((item) => {

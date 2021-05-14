@@ -6,12 +6,19 @@
 
 - Improve display of condition icons in buff tab (#795)
 - Added sleep condition (works the same as helpless)
+- Add charge counters to actor/token quick actions (thanks mkahvi!)
+- Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
+- Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
+- Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
+- Start container type items on their contents tab
 
 ### Bug Fixes
 
 - Actors could fail to render with some spellbook configurations (#797)
 - Cantrips would never display on spell sheet if setting was off
 - Copying an attack with linked ammunition to another actor made it behave strangely (#801)
+- Fix error on rolling concentration with no ability associated with the spellbook (#825)
+- `@abilities.<abl>.base` and `@abilities.<abl>.baseMod` weren't being updated properly (#824)
 
 ### Compendium
 

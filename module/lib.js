@@ -111,6 +111,7 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
       tabs = new cls({
         navSelector: `.tabs[data-group="${group}"]`,
         contentSelector: `.${group}-body`,
+        initial,
         callback: (_, tabs) => {
           _recursiveActivate.call(this, tabs);
         },

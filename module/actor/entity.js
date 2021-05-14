@@ -440,6 +440,8 @@ export class ActorPF extends ActorDataPF(Actor) {
         const value = getProperty(this.data, `data.abilities.${ab}.value`);
         if (value == null) {
           setProperty(this.data, `data.abilities.${ab}.total`, null);
+          setProperty(this.data, `data.abilities.${ab}.base`, null);
+          setProperty(this.data, `data.abilities.${ab}.baseMod`, 0);
         } else {
           setProperty(
             this.data,
@@ -452,6 +454,7 @@ export class ActorPF extends ActorDataPF(Actor) {
             (getProperty(this.data, `data.abilities.${ab}.penalty`) || 0) +
               (getProperty(this.data, `data.abilities.${ab}.userPenalty`) || 0)
           );
+          setProperty(this.data, `data.abilities.${ab}.base`, getProperty(this.data, `data.abilities.${ab}.total`));
         }
       }
       this.refreshAbilityModifiers();
@@ -609,6 +612,15 @@ export class ActorPF extends ActorDataPF(Actor) {
   prepareDerivedData() {
     super.prepareDerivedData();
     Hooks.callAll("pf1.prepareDerivedActorData", this);
+
+    // Set base ability modifier
+    for (const ab of Object.keys(this.data.data.abilities)) {
+      setProperty(
+        this.data,
+        `data.abilities.${ab}.baseMod`,
+        Math.floor((getProperty(this.data, `data.abilities.${ab}.base`) - 10) / 2)
+      );
+    }
 
     const actorData = this.data;
     const data = actorData.data;
@@ -2350,7 +2362,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
-    rollData.mod = this.data.data.abilities[spellbook.ability].mod;
+    rollData.mod = this.data.data.abilities[spellbook.ability]?.mod ?? 0;
     rollData.concentrationBonus = spellbook.concentration;
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
@@ -3638,18 +3650,37 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   getQuickActions() {
-    return this.data.items
+    const actualChargeCost = (i) => Math.floor(i.charges / i.chargeCost),
+      actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);
+    return this.items
       .filter(
         (o) =>
-          (o.type === "attack" || o.type === "spell" || (o.type === "feat" && !o.data.disabled)) &&
-          getProperty(o, "data.showInQuickbar") === true
+          (o.data.type === "attack" || o.data.type === "spell" || (o.data.type === "feat" && !o.data.data.disabled)) &&
+          getProperty(o.data, "data.showInQuickbar") === true
       )
       .sort((a, b) => {
-        return a.data.sort - b.data.sort;
+        return a.data.data.sort - b.data.data.sort;
       })
       .map((o) => {
         return {
           item: o,
+          get haveAnyCharges() {
+            return (this.item.isCharged && this.item.chargeCost !== 0) || this.hasAmmo;
+          },
+          maxCharge: o.isCharged ? actualMaxCharge(o) : 0,
+          get charges() {
+            return this.item.isCharged
+              ? this.recharging
+                ? -this.item.chargeCost
+                : actualChargeCost(this.item)
+              : this.ammoValue;
+          },
+          hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
+          ammoValue:
+            o.data.data.links?.ammunition
+              ?.map((l) => actualChargeCost(this.items.get(l.id)))
+              .reduce((a, b) => a + b, 0) ?? 0,
+          recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),
           color2: ItemPF.getTypeColor(o.type, 1),
         };

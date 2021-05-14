@@ -10,6 +10,7 @@
 - Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
 - Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
 - Start container type items on their contents tab
+- Add bonus feat count from changes to the feat table (#803)
 
 ### Bug Fixes
 

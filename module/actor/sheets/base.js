@@ -18,6 +18,7 @@ import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
 import { LevelUpForm } from "../../apps/level-up.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
+import { getHighestChanges } from "../apply-changes.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -482,7 +483,17 @@ export class ActorSheetPF extends ActorSheet {
 
       // Bonus feat formula
       const featCountRoll = RollPF.safeRoll(this.actor.data.data.details.bonusFeatFormula || "0", rollData);
-      data.featCount.byFormula = featCountRoll.total;
+      const changes = this.actor.changes.filter((c) => c.subTarget === "bonusFeats");
+      const changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.actor);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        return cur + c.value;
+      }, 0);
+      data.featCount.byFormula = featCountRoll.total + changeBonus;
       if (featCountRoll.err) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
@@ -490,10 +501,10 @@ export class ActorSheetPF extends ActorSheet {
         console.error(msg);
         ui.notifications.error(msg);
       }
-      if (data.featCount.byFormula !== 0) {
+      if (featCountRoll.total !== 0) {
         sourceData.push({
           name: game.i18n.localize("PF1.BonusFeatFormula"),
-          value: data.featCount.byFormula,
+          value: featCountRoll.total,
         });
       }
 

@@ -517,7 +517,7 @@
       {{#if classes.length}}
       <ol class="item-list">
         {{#each classes as |item iid|}}
-        <div class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
+        <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style="background-image: url({{item.img}})"></div>
             <h4>{{item.name}}</h4>
@@ -543,7 +543,7 @@
             <a class="item-control item-delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
           </div>
           {{/if}}
-        </div>
+        </li>
         {{/each}}
       </ol>
       {{else}}

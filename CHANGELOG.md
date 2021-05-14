@@ -9,6 +9,7 @@
 - Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
 - Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
 - Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
+- Start container type items on their contents tab
 
 ### Bug Fixes
 

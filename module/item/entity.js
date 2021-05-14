@@ -1172,7 +1172,7 @@ export class ItemPF extends Item {
    */
   async roll(altChatData = {}, { addDC = true } = {}) {
     const actor = this.parent;
-    if (actor && !actor.document.isOwner) {
+    if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -1239,13 +1239,13 @@ export class ItemPF extends Item {
 
     // Determine metadata
     const metadata = {};
-    metadata.item = this._id;
+    metadata.item = this.id;
 
     // Basic chat message data
     const chatData = flattenObject(
       mergeObject(
         {
-          user: game.user._id,
+          user: game.user.id,
           type: CONST.CHAT_MESSAGE_TYPES.OTHER,
           speaker: ChatMessage.getSpeaker({ actor: this.parent }),
           flags: {
@@ -3082,7 +3082,7 @@ export class ItemPF extends Item {
     }
 
     // Get the Item
-    const item = actor.getOwnedItem(card.dataset.itemId);
+    const item = actor.items.get(card.dataset.itemId);
 
     // Perform action
     if (!(await this._onChatCardAction(action, { button: button, item: item }))) {

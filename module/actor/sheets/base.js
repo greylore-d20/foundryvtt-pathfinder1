@@ -517,7 +517,6 @@ export class ActorSheetPF extends ActorSheet {
         .forEach((o) => {
           if (!o.value) return;
 
-          data.featCount.total += o.value;
           sourceData.push({
             name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
             value: o.value,

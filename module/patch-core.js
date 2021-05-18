@@ -189,19 +189,19 @@ export async function PatchCore() {
   });
 
   // Patch OperatorTerm
-  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...[">=", "<=", ">", "<", "==", "!=", "?", ":"]].filter(
-    (value, idx, self) => {
-      return self.indexOf(value) === idx;
-    }
-  );
-  OperatorTerm.REGEXP = new RegExp(
-    OperatorTerm.OPERATORS.map((o) => {
-      return Array.from(o).reduce((cur, o) => {
-        return cur + "\\" + o;
-      }, "");
-    }).join("|"),
-    "g"
-  );
+  // OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...[">=", "<=", ">", "<", "==", "!=", "?", ":"]].filter(
+  //   (value, idx, self) => {
+  //     return self.indexOf(value) === idx;
+  //   }
+  // );
+  // OperatorTerm.REGEXP = new RegExp(
+  //   OperatorTerm.OPERATORS.map((o) => {
+  //     return Array.from(o).reduce((cur, o) => {
+  //       return cur + "\\" + o;
+  //     }, "");
+  //   }).join("|"),
+  //   "g"
+  // );
 
   // Patch NumericTerm
   NumericTerm.prototype.getTooltipData = function () {

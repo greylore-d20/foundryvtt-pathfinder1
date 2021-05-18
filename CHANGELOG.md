@@ -11,6 +11,7 @@
 - Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
 - Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
 - Start container type items on their contents tab
+- Add bonus feat count from changes to the feat table (#803)
 
 ### Bug Fixes
 
@@ -19,6 +20,7 @@
 - Copying an attack with linked ammunition to another actor made it behave strangely (#801)
 - Fix error on rolling concentration with no ability associated with the spellbook (#825)
 - `@abilities.<abl>.base` and `@abilities.<abl>.baseMod` weren't being updated properly (#824)
+- Class Associations weren't being copied over anymore
 
 ### Compendium
 

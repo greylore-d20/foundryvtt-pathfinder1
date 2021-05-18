@@ -1997,6 +1997,8 @@ export const PF1 = {
       "mod",
     ],
   },
+
+  keepItemLinksOnCopy: ["classAssociations"],
 };
 
 /**

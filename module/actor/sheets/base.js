@@ -19,6 +19,7 @@ import { applyAccessibilitySettings } from "../../chat.js";
 import { LevelUpForm } from "../../apps/level-up.js";
 import { getSourceInfo } from "../apply-changes.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
+import { getHighestChanges } from "../apply-changes.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -170,7 +171,7 @@ export class ActorSheetPF extends ActorSheet {
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.document.spellFailure,
       isGM: game.user.isGM,
-      race: this.document.race != null ? duplicate(this.document.race.data) : null,
+      race: this.document.race != null ? this.document.race.data : null,
       usesAnySpellbook: (getProperty(this.document.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
       sourceData: {},
     });
@@ -485,7 +486,17 @@ export class ActorSheetPF extends ActorSheet {
 
       // Bonus feat formula
       const featCountRoll = RollPF.safeRoll(this.document.data.data.details.bonusFeatFormula || "0", rollData);
-      data.featCount.byFormula = featCountRoll.total;
+      const changes = this.document.changes.filter((c) => c.subTarget === "bonusFeats");
+      const changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.document);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        return cur + c.value;
+      }, 0);
+      data.featCount.byFormula = featCountRoll.total + changeBonus;
       if (featCountRoll.err) {
         const msg = game.i18n
           .localize("PF1.ErrorActorFormula")
@@ -493,10 +504,10 @@ export class ActorSheetPF extends ActorSheet {
         console.error(msg);
         ui.notifications.error(msg);
       }
-      if (data.featCount.byFormula !== 0) {
+      if (featCountRoll.total !== 0) {
         sourceData.push({
           name: game.i18n.localize("PF1.BonusFeatFormula"),
-          value: data.featCount.byFormula,
+          value: featCountRoll.total,
         });
       }
 

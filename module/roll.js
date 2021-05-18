@@ -19,6 +19,57 @@ export class RollPF extends Roll {
     return isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula;
   }
 
+  /**
+   * @override
+   */
+  static simplifyTerms(terms) {
+    // Simplify terms by combining with pending strings
+    let simplified = terms.reduce((terms, term) => {
+      const prior = terms[terms.length - 1];
+      const isOperator = term instanceof OperatorTerm;
+
+      // Combine a non-operator term with prior StringTerm
+      if (!isOperator && prior instanceof StringTerm) {
+        prior.term += term.total;
+        foundry.utils.mergeObject(prior.options, term.options);
+        return terms;
+      }
+
+      // Attach string terms as flavor texts to numeric terms, if appropriate
+      const priorNumeric = prior instanceof NumericTerm;
+      if (prior && priorNumeric && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
+        prior.options.flavor = RegExp.$1;
+        return terms;
+      }
+
+      // Combine StringTerm with a prior non-operator term
+      const priorOperator = prior instanceof OperatorTerm;
+      if (prior && !priorOperator && term instanceof StringTerm) {
+        term.term = String(prior.total) + term.term;
+        foundry.utils.mergeObject(term.options, prior.options);
+        terms[terms.length - 1] = term;
+        return terms;
+      }
+
+      // Otherwise continue
+      terms.push(term);
+      return terms;
+    }, []);
+
+    // Convert remaining String terms to a RollTerm which can be evaluated
+    simplified = simplified.map((term) => {
+      if (!(term instanceof StringTerm)) return term;
+      const t = this._classifyStringTerm(term.formula, { intermediate: false });
+      t.options = term.options;
+      return t;
+    });
+
+    // Eliminate leading or trailing arithmetic
+    if (simplified[0] instanceof OperatorTerm && simplified[0].operator !== "-") simplified.shift();
+    if (simplified[terms.length - 1] instanceof OperatorTerm) simplified.pop();
+    return simplified;
+  }
+
   static _preProcessDiceFormula(formula, data = {}) {
     // Replace parentheses with semicolons to use for splitting
     let toSplit = formula

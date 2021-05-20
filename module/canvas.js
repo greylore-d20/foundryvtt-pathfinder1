@@ -77,6 +77,10 @@ TokenDocument.prototype.getBarAttribute = function (barName, { alternative = nul
   if (data != null && data.attribute === "attributes.hp") {
     data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
   }
+
+  // Make resources editable
+  if (data?.attribute.startsWith("resources.")) data.editable = true;
+
   return data;
 };
 

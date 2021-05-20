@@ -968,31 +968,37 @@ export class ItemPF extends Item {
 
       if (this.type === "spell") {
         if (data["data.preparation.maxAmount"] != null) target = "max";
-        charges = getProperty(srcData, "data.preparation.preparedAmount");
-        maxCharges = getProperty(srcData, "data.preparation.maxAmount");
+        charges = data["data.preparation.preparedAmount"];
+        maxCharges = data["data.preparation.maxAmount"];
+        // charges = getProperty(srcData, "data.preparation.preparedAmount");
+        // maxCharges = getProperty(srcData, "data.preparation.maxAmount");
       } else {
         if (data["data.uses.max"] != null) target = "max";
-        charges = getProperty(srcData, "data.uses.value") || 0;
-        maxCharges = getProperty(srcData, "data.uses.max") || 0;
+        charges = data["data.uses.value"];
+        maxCharges = data["data.uses.max"];
+        // charges = getProperty(srcData, "data.uses.value") || 0;
+        // maxCharges = getProperty(srcData, "data.uses.max") || 0;
       }
 
       if (target === "value" && charges > maxCharges) maxCharges = charges;
       else if (target === "max" && maxCharges < charges) charges = maxCharges;
 
-      if (this.type === "spell") {
-        linkData(srcData, data, "data.preparation.preparedAmount", charges);
-        linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
-      } else {
-        linkData(srcData, data, "data.uses.value", charges);
-        linkData(srcData, data, "data.uses.max", maxCharges);
-      }
-    }
-
-    // Update charges for linked items
-    if (data["data.uses.value"] != null) {
       const link = getProperty(this, "links.charges");
-      if (link && getProperty(link, "links.charges") == null) {
-        await link.update({ "data.uses.value": data["data.uses.value"] });
+      if (!link) {
+        if (this.type === "spell") {
+          linkData(srcData, data, "data.preparation.preparedAmount", charges);
+          linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+        } else {
+          linkData(srcData, data, "data.uses.value", charges);
+          linkData(srcData, data, "data.uses.max", maxCharges);
+        }
+      } else {
+        // Update charges for linked items
+        if (data["data.uses.value"] != null) {
+          if (link && getProperty(link, "links.charges") == null) {
+            await link.update({ "data.uses.value": data["data.uses.value"] });
+          }
+        }
       }
     }
 
@@ -1084,7 +1090,7 @@ export class ItemPF extends Item {
         }
 
         if (!isObjectEmpty(tokenUpdateData)) {
-          promises.push(token.update(tokenUpdateData));
+          promises.push(token.document.update(tokenUpdateData));
         }
       }
       if (promises.length) await Promise.all(promises);
@@ -3931,7 +3937,7 @@ export class ItemPF extends Item {
   _cleanLink(oldLink, linkType) {
     if (!this.parent) return;
 
-    const otherItem = this.parent.items.find((o) => o._id === oldLink.id);
+    const otherItem = this.parent.items.find((o) => o.id === oldLink.id);
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }

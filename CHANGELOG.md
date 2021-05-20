@@ -8,6 +8,8 @@
 - Item activation data was hidden
 - Context notes weren't showing up on item sheets
 - Items couldn't be sorted on actors or containers
+- Items with linked charges were behaving oddly
+- Token bars targeting charged items were incorrectly read-only
 
 ## 0.78.0
 

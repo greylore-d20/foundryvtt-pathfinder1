@@ -1,13 +1,16 @@
 /**
  * A helper class for building MeasuredTemplates for PF1 spells and abilities
- * @extends {MeasuredTemplate}
+ *
+ * @augments {MeasuredTemplate}
  */
 export class AbilityTemplate extends MeasuredTemplate {
   /**
    * A factory method to create an AbilityTemplate instance using provided data
+   *
    * @param {string} type -             The type of template ("cone", "circle", "rect" or "ray")
    * @param {number} distance -         The distance/size of the template
-   * @return {AbilityTemplate|null}     The template object, or null if the data does not produce a template
+   * @param options
+   * @returns {AbilityTemplate|null}     The template object, or null if the data does not produce a template
    */
   static fromData(options) {
     let type = options.type;
@@ -20,7 +23,7 @@ export class AbilityTemplate extends MeasuredTemplate {
     // Prepare template data
     const templateData = {
       t: type,
-      user: game.user._id,
+      user: game.user.id,
       distance: distance || 5,
       direction: 0,
       x: 0,
@@ -48,13 +51,17 @@ export class AbilityTemplate extends MeasuredTemplate {
     }
 
     // Return the template constructed from the item data
-    return new this(templateData);
+    const cls = CONFIG.MeasuredTemplate.documentClass;
+    const template = new cls(templateData, { parent: canvas.scene });
+    const object = new this(template);
+    return object;
   }
 
   /* -------------------------------------------- */
 
   /**
    * Creates a preview of the spell template
+   *
    * @param {Event} event   The initiating click event
    */
   async drawPreview(event) {
@@ -70,6 +77,7 @@ export class AbilityTemplate extends MeasuredTemplate {
 
   /**
    * Activate listeners for the template preview
+   *
    * @param {CanvasLayer} initialLayer  The initially active CanvasLayer to re-activate after the workflow is complete
    * @returns {Promise<boolean>} Returns true if placed, or false if cancelled
    */
@@ -115,12 +123,10 @@ export class AbilityTemplate extends MeasuredTemplate {
         handlers.rc(event, false);
 
         // Confirm final snapped position
-        const destination = canvas.grid.getSnappedPosition(this.x, this.y, 2);
-        this.data.x = destination.x;
-        this.data.y = destination.y;
+        this.data.update(this.data);
 
         // Create the template
-        const result = await canvas.scene.createEmbeddedEntity("MeasuredTemplate", this.data);
+        const result = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data]);
         resolve(result);
       };
 

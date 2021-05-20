@@ -100,6 +100,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   async getData() {
     const data = await super.getData();
+    data.data = data.data.data;
     const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
@@ -120,11 +121,11 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = Object.prototype.hasOwnProperty.call(data.item.data, "quantity");
+    data.isPhysical = hasProperty(data.item.data, "data.quantity");
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
-    data.owner = this.item.hasPerm(game.user, "OWNER");
+    data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
@@ -185,7 +186,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true;
+      data.isRanged = data.item.data.data.weaponSubtype === "ranged" || data.item.data.data.properties["thr"] === true;
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
@@ -208,7 +209,7 @@ export class ItemSheetPF extends ItemSheet {
       for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
-      const type = data.item.data.equipmentType;
+      const type = data.item.data.data.equipmentType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
         for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
@@ -302,7 +303,7 @@ export class ItemSheetPF extends ItemSheet {
       weaponProf: CONFIG.PF1.weaponProficiencies,
     };
     for (let [t, choices] of Object.entries(profs)) {
-      if (hasProperty(data.item.data, t)) {
+      if (hasProperty(data.item.data.data, t)) {
         const trait = data.data[t];
         if (!trait) continue;
         let values = [];
@@ -324,7 +325,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Prepare stuff for items with changes
+    // Prepare stuff for active effects on items
     if (this.item.changes) {
       data.changeGlobals = {
         targets: {},
@@ -335,7 +336,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.changes.reduce((cur, o) => {
+      data.changes = data.item.data.data.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -509,12 +510,12 @@ export class ItemSheetPF extends ItemSheet {
   _getItemStatus(item) {
     if (item.type === "spell") {
       const spellbook = this.item.spellbook;
-      if (item.data.preparation.mode === "prepared") {
-        if (item.data.preparation.preparedAmount > 0) {
+      if (item.data.data.preparation.mode === "prepared") {
+        if (item.data.data.preparation.preparedAmount > 0) {
           if (spellbook != null && spellbook.spontaneous) {
             return game.i18n.localize("PF1.SpellPrepPrepared");
           } else {
-            return game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount);
+            return game.i18n.localize("PF1.AmountPrepared").format(item.data.data.preparation.preparedAmount);
           }
         }
         return game.i18n.localize("PF1.Unprepared");
@@ -541,14 +542,14 @@ export class ItemSheetPF extends ItemSheet {
 
     if (item.type === "weapon") {
       props.push(
-        ...Object.entries(item.data.properties)
+        ...Object.entries(item.data.data.properties)
           .filter((e) => e[1] === true)
           .map((e) => CONFIG.PF1.weaponProperties[e[0]])
       );
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
-      props.push(CONFIG.PF1.equipmentTypes[item.data.armor.type]);
+      props.push(CONFIG.PF1.equipmentTypes[item.data.data.equipmentType]);
       props.push(labels.armor);
     } else if (item.type === "feat") {
       props.push(labels.featType);
@@ -556,18 +557,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Action type
     if (item.data.actionType) {
-      props.push(CONFIG.PF1.itemActionTypes[item.data.actionType]);
+      props.push(CONFIG.PF1.itemActionTypes[item.data.data.actionType]);
     }
 
     // Action usage
-    if (item.type !== "weapon" && item.data.activation && !isObjectEmpty(item.data.activation)) {
+    if (item.type !== "weapon" && item.data.data.activation && !isObjectEmpty(item.data.data.activation)) {
       props.push(labels.activation, labels.range, labels.target, labels.duration);
     }
 
     // Tags
-    if (getProperty(item, "data.tags") != null) {
+    if (getProperty(item.data, "data.tags") != null) {
       props.push(
-        ...getProperty(item, "data.tags").map((o) => {
+        ...getProperty(item.data, "data.tags").map((o) => {
           return o[0];
         })
       );

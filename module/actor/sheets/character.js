@@ -109,6 +109,18 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     return item.update({ "data.preparation.prepared": !item.data.data.preparation.prepared });
   }
 
+  _onLevelUp(event) {
+    event.preventDefault;
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+
+    const app = Object.values(this.actor.apps).find((o) => {
+      return o instanceof LevelUpForm && o._element;
+    });
+    if (app) app.bringToTop();
+    else new LevelUpForm(item).render(true);
+  }
+
   /* -------------------------------------------- */
 
   async _onConvertCurrency(event) {

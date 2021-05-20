@@ -160,14 +160,14 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
  */
 export const rollItemMacro = function (itemName, { itemId, itemType, actorId } = {}) {
   let actor = getActorFromId(actorId);
-  if (actor && !actor.hasPerm(game.user, "OWNER")) {
+  if (actor && !actor.testUserPermission(game.user, "OWNER")) {
     const msg = game.i18n.localize("PF1.ErrorNoActorPermission");
     console.warn(msg);
     return ui.notifications.warn(msg);
   }
   const item = actor
     ? actor.items.find((i) => {
-        if (itemId != null && i._id !== itemId) return false;
+        if (itemId != null && i.id !== itemId) return false;
         if (itemType != null && i.type !== itemType) return false;
         return i.name === itemName;
       })

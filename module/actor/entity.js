@@ -5,14 +5,15 @@ import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
-import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo } from "./apply-changes.js";
+import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo, getHighestChanges } from "./apply-changes.js";
+import { ActorDataPF } from "./data.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
-export class ActorPF extends Actor {
+export class ActorPF extends ActorDataPF(Actor) {
   constructor(...args) {
     super(...args);
 
@@ -58,10 +59,10 @@ export class ActorPF extends Actor {
     if (this._rollData === undefined) this._rollData = null;
 
     /**
-     * @property {Array.<string>} _runningFunctions
+     * @property {object.<string>} _runningFunctions
      * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
      */
-    if (this._runningFunctions === undefined) this._runningFunctions = [];
+    if (this._runningFunctions === undefined) this._runningFunctions = {};
 
     /**
      * @property {object} _queuedItemUpdates
@@ -74,6 +75,12 @@ export class ActorPF extends Actor {
      * All items this actor is holding in containers.
      */
     if (this.containerItems === undefined) this.containerItems = [];
+
+    /**
+     * @property {object} _prevAttributes
+     * A list of attributes to remember between updates.
+     */
+    if (this._prevAttributes === undefined) this._prevAttributes = null;
   }
 
   /* -------------------------------------------- */
@@ -118,10 +125,10 @@ export class ActorPF extends Actor {
 
   static getActiveActor({ actorName = null, actorId = null } = {}) {
     const speaker = ChatMessage.getSpeaker();
-    let actor = game.actors.entities.filter((o) => {
+    let actor = game.actors.contents.filter((o) => {
       if (!actorName && !actorId) return false;
       if (actorName && o.name !== actorName) return false;
-      if (actorId && o._id !== actorId) return false;
+      if (actorId && o.id !== actorId) return false;
       return true;
     })[0];
     if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
@@ -299,7 +306,6 @@ export class ActorPF extends Actor {
     }
     addDefaultChanges.call(this, changes);
 
-    const prior = this.changes;
     const c = new Collection();
     for (let e of changes) {
       c.set(e._id, e);
@@ -323,10 +329,6 @@ export class ActorPF extends Actor {
   }
 
   prepareData() {
-    this._prevAttributes = {};
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      this._prevAttributes[k] = getProperty(this.data, `${k}.max`);
-    }
     this.sourceInfo = {};
     this.flags = {};
 
@@ -335,6 +337,8 @@ export class ActorPF extends Actor {
 
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
+
+    this.doQueuedUpdates();
   }
 
   prepareBaseData() {
@@ -349,10 +353,14 @@ export class ActorPF extends Actor {
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const level = classes
+      .filter((o) => o.data.data.classType !== "mythic")
+      .reduce((cur, o) => cur + o.data.data.level, 0);
     setProperty(this.data, "data.details.level.value", level);
 
-    const mythicTier = classes.filter((o) => o.data.classType === "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const mythicTier = classes
+      .filter((o) => o.data.data.classType === "mythic")
+      .reduce((cur, o) => cur + o.data.data.level, 0);
     setProperty(this.data, "data.details.mythicTier", mythicTier);
 
     // The following is not for NPCs
@@ -376,7 +384,7 @@ export class ActorPF extends Actor {
           const proficiencies = this.data.items.reduce(
             (profs, item) => {
               // Check only items able to grant proficiencies
-              if (hasProperty(item, `data.${prof}`)) {
+              if (hasProperty(item.data, `data.${prof}`)) {
                 // Get existing sourceInfo for item with this name, create sourceInfo if none is found
                 // Remember whether sourceInfo can be modified or has to be pushed at the end
                 let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
@@ -387,7 +395,7 @@ export class ActorPF extends Actor {
                 else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
                 // Regular proficiencies
-                for (const proficiency of item.data[prof].value) {
+                for (const proficiency of item.data.data[prof].value) {
                   // Add localized source info if item's info does not have this proficiency already
                   if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
                   // Add raw proficiency key
@@ -396,7 +404,7 @@ export class ActorPF extends Actor {
 
                 // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
                 const customProfs =
-                  item.data[prof].custom
+                  item.data.data[prof].custom
                     ?.split(CONFIG.PF1.re.traitSeparator)
                     .map((i) => i.trim())
                     .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
@@ -483,7 +491,8 @@ export class ActorPF extends Actor {
           this.data,
           k,
           classes.reduce((cur, obj) => {
-            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.bab], { level: obj.data.level }).total;
+            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.data.bab], { level: obj.data.data.level })
+              .total;
 
             if (v !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -512,7 +521,7 @@ export class ActorPF extends Actor {
     for (let [k, s] of Object.entries(getProperty(this.data, "data.skills"))) {
       if (!s) continue;
       const isClassSkill = classes.reduce((cur, o) => {
-        if ((getProperty(o, "data.classSkills") || {})[k] === true) return true;
+        if ((getProperty(o.data, "data.classSkills") || {})[k] === true) return true;
         return cur;
       }, false);
       setProperty(this.data, `data.skills.${k}.cs`, isClassSkill);
@@ -625,15 +634,7 @@ export class ActorPF extends Actor {
     }
 
     // Refresh HP
-    if (!game.pf1.isMigrating && this._initialized) {
-      for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-        const prevMax = this._prevAttributes[k] || 0;
-        const newMax = getProperty(this.data, `${k}.max`) || 0;
-        const prevValue = getProperty(this.data, `${k}.value`);
-        const newValue = prevValue + (newMax - prevMax);
-        this._queuedUpdates[`${k}.value`] = newValue;
-      }
-    }
+    this._applyPreviousAttributes();
 
     // Update wound threshold
     this.updateWoundThreshold();
@@ -1154,7 +1155,7 @@ export class ActorPF extends Actor {
 
     // Update item resources
     this.items.forEach((item) => {
-      item.prepareDerivedData();
+      item.prepareDerivedItemData();
       this.updateItemResources(item.data);
 
       // Update tokens for resources
@@ -1196,15 +1197,15 @@ export class ActorPF extends Actor {
 
     this.data.items
       .filter((obj) => {
-        return obj.type === "equipment" && obj.data.equipped;
+        return obj.type === "equipment" && obj.data.data.equipped;
       })
       .forEach((obj) => {
-        let itemACP = Math.abs(obj.data.armor.acp);
-        if (obj.data.masterwork === true && ["armor", "shield"].includes(obj.data.equipmentType)) {
+        let itemACP = Math.abs(obj.data.data.armor.acp);
+        if (obj.data.data.masterwork === true && ["armor", "shield"].includes(obj.data.data.equipmentType)) {
           itemACP = Math.max(0, itemACP - 1);
         }
 
-        switch (obj.data.equipmentType) {
+        switch (obj.data.data.equipmentType) {
           case "armor":
             itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.armorBonus"));
             break;
@@ -1213,7 +1214,7 @@ export class ActorPF extends Actor {
             break;
         }
 
-        if (obj.data.broken) {
+        if (obj.data.data.broken) {
           itemACP *= 2;
         }
 
@@ -1230,22 +1231,22 @@ export class ActorPF extends Actor {
           }
         }
 
-        switch (obj.data.equipmentType) {
+        switch (obj.data.data.equipmentType) {
           case "armor":
             if (itemACP > armorACP) armorACP = itemACP;
-            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.equipmentSubtype]))
+            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.data.equipmentSubtype]))
               attackACPPenalty += armorACP;
             break;
           case "shield":
             if (itemACP > shieldACP) shieldACP = itemACP;
-            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.equipmentSubtype]))
+            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.data.equipmentSubtype]))
               attackACPPenalty += shieldACP;
             break;
         }
 
-        if (obj.data.armor.dex !== null) {
-          const mDex = Number.parseInt(obj.data.armor.dex);
-          switch (obj.data.equipmentType) {
+        if (obj.data.data.armor.dex !== null) {
+          const mDex = Number.parseInt(obj.data.data.armor.dex);
+          switch (obj.data.data.equipmentType) {
             case "armor":
               if (Number.isInteger(mDex)) {
                 const armorMDex = mDex + getProperty(this.data, "data.attributes.mDex.armorBonus");
@@ -1395,7 +1396,7 @@ export class ActorPF extends Actor {
               src.value != null
                 ? src.value
                 : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
-                    suppressError: !this.hasPerm(game.user, "OWNER"),
+                    suppressError: !this.testUserPermission(game.user, "OWNER"),
                   }).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0)) {
@@ -1456,7 +1457,7 @@ export class ActorPF extends Actor {
   }
 
   async refresh() {
-    if (this.hasPerm(game.user, "OWNER")) {
+    if (this.isOwner) {
       return this.update({});
     }
   }
@@ -1564,7 +1565,6 @@ export class ActorPF extends Actor {
   /* -------------------------------------------- */
 
   async preUpdate(data) {
-    const fullData = mergeObject(this.data, data, { inplace: false });
     data = flattenObject(data);
 
     // Apply settings
@@ -1592,7 +1592,17 @@ export class ActorPF extends Actor {
         else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
           usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
       }
-      linkData(fullData, data, "data.attributes.spells.usedSpellbooks", usedSpellbooks);
+      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+    }
+
+    // Apply changes in Actor size to Token width/height
+    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
+      let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
+      if (!this.isToken) {
+        data["token.width"] = size.w;
+        data["token.height"] = size.h;
+        data["token.scale"] = size.scale;
+      }
     }
 
     // Make certain variables absolute
@@ -1606,17 +1616,7 @@ export class ActorPF extends Actor {
         return data[k] != null;
       });
     for (const k of _absoluteKeys) {
-      linkData(fullData, data, k, Math.abs(data[k]));
-    }
-
-    // Apply changes in Actor size to Token width/height
-    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
-      let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      if (!this.isToken) {
-        linkData(fullData, data, "token.width", size.w);
-        linkData(fullData, data, "token.height", size.h);
-        linkData(fullData, data, "token.scale", size.scale);
-      }
+      data[k] = Math.abs(data[k]);
     }
 
     // Apply changes in resources
@@ -1647,7 +1647,7 @@ export class ActorPF extends Actor {
     }
 
     // Update experience
-    this._updateExp(data, fullData);
+    this._updateExp(data);
 
     return data;
   }
@@ -1665,6 +1665,8 @@ export class ActorPF extends Actor {
       token.cancel();
     });
     this._pendingUpdateTokens = [];
+
+    this._trackPreviousAttributes();
 
     // Avoid regular update flow for explicitly non-recursive update calls
     if (options.recursive === false) {
@@ -1718,7 +1720,7 @@ export class ActorPF extends Actor {
                 cur.push(obj);
                 return cur;
               }, []);
-              this.updateEmbeddedEntity("OwnedItem", itemUpdates).then(() => {
+              this.updateEmbeddedDocuments("Item", itemUpdates).then(() => {
                 this._queuedItemUpdates = {};
                 resolve();
               });
@@ -1781,40 +1783,51 @@ export class ActorPF extends Actor {
         });
       }
     }
-    // Send queued updates
-    // if (this._initialized && this.hasPerm(game.user, "OWNER") && userId === game.user.id) {
-    // const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
-    // if (!isObjectEmpty(diff)) {
-    // this.update(diff).then(() => {
-    // this._queuedUpdates = {};
-    // });
-    // }
-    // }
-
-    super._onUpdate(data, options, userId, context);
 
     if (userId === game.user.id) {
-      this.doQueuedUpdates();
+      this.toggleConditionStatusIcons();
     }
-  }
 
-  _onModifyEmbeddedEntity(embeddedName, changes, options, userId, context = {}) {
-    super._onModifyEmbeddedEntity(embeddedName, changes, options, userId, context);
-
-    if (embeddedName === "OwnedItem" && userId === game.user.id) {
-      this.doQueuedUpdates();
-    }
+    super._onUpdate(data, options, userId, context);
   }
 
   async doQueuedUpdates() {
-    if (!this.hasPerm(game.user, "OWNER")) return;
+    if (!this.testUserPermission(game.user, "OWNER")) return;
+    if (this._queuedUpdates == null) return;
 
-    const diff = diffObject(duplicate(this._data), expandObject(this._queuedUpdates), { inner: true });
+    const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
     this._queuedUpdates = {};
-    await this.toggleConditionStatusIcons();
     if (!isObjectEmpty(diff)) {
       await this.update(diff);
     }
+  }
+
+  _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preCreateEmbeddedDocuments(...arguments);
+  }
+
+  _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preDeleteEmbeddedDocuments(...arguments);
+  }
+
+  _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
+    this._trackPreviousAttributes();
+
+    super._preUpdateEmbeddedDocuments(...arguments);
+  }
+
+  _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+    if (userId === game.user.id) {
+      this.toggleConditionStatusIcons();
+    }
+
+    super._preUpdateEmbeddedDocuments(...arguments);
+
+    if (this.sheet) this.sheet.render();
   }
 
   /**
@@ -1822,12 +1835,13 @@ export class ActorPF extends Actor {
    *
    * @param {object} data - The update data, as per ActorPF.update()
    * @param updateData
-   * @param fullData
    */
-  _updateExp(updateData, fullData) {
+  _updateExp(updateData) {
     // Get total level
-    const classes = fullData.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const classes = this.items.filter((o) => o.type === "class");
+    const level = classes
+      .filter((o) => o.data.data.classType !== "mythic")
+      .reduce((cur, o) => cur + o.data.data.level, 0);
 
     // The following is not for NPCs
     if (this.data.type !== "character") return;
@@ -1922,15 +1936,45 @@ export class ActorPF extends Actor {
     }
 
     mergeObject(itemData, initial);
-    return super.createOwnedItem(itemData, options);
+    return ItemPF.create(itemData, { parent: this });
   }
 
   /* -------------------------------------------- */
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
+  /**
+   * Cast a Spell, consuming a spell slot of a certain level
+   *
+   * @param {ItemPF} item   The spell being cast by the actor
+   * @param {MouseEvent} ev The click event
+   * @param root0
+   * @param root0.skipDialog
+   */
+  async useSpell(item, ev, { skipDialog = false } = {}) {
+    if (!this.isOwner) {
+      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+    if (item.data.type !== "spell") throw new Error("Wrong Item type");
+
+    if (
+      getProperty(item.data, "data.preparation.mode") !== "atwill" &&
+      item.getSpellUses() < item.chargeCost &&
+      item.autoDeductCharges
+    ) {
+      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
+      console.warn(msg);
+      return ui.notifications.warn(msg);
+    }
+
+    // Invoke the Item roll
+    return item.useAttack({ ev: ev, skipDialog: skipDialog });
+  }
+
   async createAttackFromWeapon(item) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2026,9 +2070,9 @@ export class ActorPF extends Actor {
     // Create link
     if (itemData.type === "attack") {
       // check for correct itemData, Foundry #3419
-      const newItem = this.items.find((o) => o._id === itemData._id);
+      const newItem = this.items.find((o) => o.id === itemData.id);
       if (newItem) {
-        await item.createItemLink("children", "data", newItem, itemData._id);
+        await item.createItemLink("children", "data", newItem, itemData.id);
       }
     }
 
@@ -2083,7 +2127,7 @@ export class ActorPF extends Actor {
    * @param {object} options      Options which configure how the skill check is rolled
    */
   rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2123,8 +2167,33 @@ export class ActorPF extends Actor {
       notes.push(game.i18n.localize("PF1.Untrained"));
     }
 
-    // Build base modifiers, but don't include all if they're zeroed.
-    let mods = [skl.mod];
+    // Gather changes
+    let parts = [];
+    const changes = this.changes.filter((c) => {
+      let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
+      if (!(cf instanceof Array)) cf = [cf];
+
+      return cf.includes(`data.skills.${skillParts.join(".")}.changeBonus`);
+    });
+
+    // Add ability modifier
+    if (skl.ability) {
+      parts.push(`@abilities.${skl.ability}.mod[${CONFIG.PF1.abilities[skl.ability]}]`);
+    }
+
+    // Add rank
+    if (skl.rank > 0) {
+      parts.push(`${skl.rank}[${game.i18n.localize("PF1.SkillRankPlural")}]`);
+      if (skl.cs) {
+        parts.push(`3[${game.i18n.localize("PF1.CSTooltip")}]`);
+      }
+    }
+
+    // Add changes
+    for (let c of changes) {
+      if (!c.value) continue;
+      parts.push(`${c.value}[${c.flavor}]`);
+    }
 
     let props = [];
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
@@ -2132,9 +2201,9 @@ export class ActorPF extends Actor {
       event: options.event,
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
-      parts: mods.filter((m) => !!m),
+      parts,
       dice: options.dice,
-      data: {},
+      data: rollData,
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
@@ -2158,7 +2227,7 @@ export class ActorPF extends Actor {
   }
 
   rollBAB(options = { noSound: false, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2169,7 +2238,7 @@ export class ActorPF extends Actor {
 
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod"],
+      parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.bab.total },
       title: game.i18n.localize("PF1.BAB"),
@@ -2180,7 +2249,7 @@ export class ActorPF extends Actor {
   }
 
   rollCMB(options = { noSound: false, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2210,7 +2279,7 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
-      parts: ["@mod"],
+      parts: [`@mod[${game.i18n.localize("PF1.CMBAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.cmb.total },
       title: game.i18n.localize("PF1.CMB"),
@@ -2223,7 +2292,7 @@ export class ActorPF extends Actor {
   }
 
   rollAttack(options = { melee: true, noSound: false, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2249,7 +2318,11 @@ export class ActorPF extends Actor {
     }
     rollData.item = {};
 
-    let changes = sources.map((item) => item.value).filter((item) => Number.isInteger(item));
+    let changes = sources
+      .filter((item) => Number.isInteger(item.value))
+      .map((i) => {
+        return `${i.value}[${i.name}]`;
+      });
 
     // Add attack bonuses from changes
     const attackTargets = ["attack"].concat(options.melee ? ["mattack"] : ["rattack"]);
@@ -2259,13 +2332,13 @@ export class ActorPF extends Actor {
     changes.push(
       ...attackChanges.map((c) => {
         c.applyChange(this);
-        return c.value;
+        return `${c.value}[${c.parent ? c.parent.name : c.data.modifier}}]`;
       })
     );
 
     // Add ability modifier
     const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
-    changes.push(getProperty(this.data, `data.abilities.${atkAbl}.mod`));
+    changes.push(`${getProperty(this.data, `data.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -2302,7 +2375,7 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: event,
-      parts: [`@cl`],
+      parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
       data: rollData,
       title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -2341,7 +2414,11 @@ export class ActorPF extends Actor {
 
     return DicePF.d20Roll({
       event: event,
-      parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
+      parts: [
+        `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
+          CONFIG.PF1.abilities[spellbook.ability]
+        }] + (@concentrationBonus + @formulaBonus)[${game.i18n.localize("PF1.ByBonus")}]`,
+      ],
       dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.ConcentrationCheck"),
@@ -2440,7 +2517,7 @@ export class ActorPF extends Actor {
     let combat = game.combat;
     if (!combat) {
       if (game.user.isGM && canvas.scene) {
-        combat = await game.combats.object.create({ scene: canvas.scene._id, active: true });
+        combat = await game.combats.documentClass.create({ scene: canvas.scene.id, active: true });
       } else {
         ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
         return null;
@@ -2455,21 +2532,21 @@ export class ActorPF extends Actor {
         arr.push({ tokenId: t.id, hidden: t.data.hidden });
         return arr;
       }, []);
-      await combat.createEmbeddedEntity("Combatant", createData);
+      await combat.createEmbeddedDocuments("Combatant", createData);
     }
 
     // Iterate over combatants to roll for
     const combatantIds = combat.combatants.reduce((arr, c) => {
       if (c.actor.id !== this.id || (this.isToken && c.tokenId !== this.token.id)) return arr;
       if (c.initiative && !rerollInitiative) return arr;
-      arr.push(c._id);
+      arr.push(c.id);
       return arr;
     }, []);
     return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
   }
 
   rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2491,11 +2568,30 @@ export class ActorPF extends Actor {
       }
     }
 
-    const changes = this.sourceDetails[`data.attributes.savingThrows.${savingThrowId}.total`];
-    const abl = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.ability`);
-    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);
-    let mods = changes.map((item) => item.value);
-    if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
+    let parts = [];
+    // Add changes
+    let changeBonus = [];
+    const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.subTarget));
+    {
+      // Get damage bonus
+      changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        if (c.value)
+          cur.push({
+            value: c.value,
+            source: c.flavor,
+          });
+        return cur;
+      }, []);
+    }
+    for (let c of changeBonus) {
+      parts.push(`${c.value}[${c.source}]`);
+    }
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0)
@@ -2508,10 +2604,10 @@ export class ActorPF extends Actor {
     const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: mods,
+      parts,
       dice: options.dice,
       situational: true,
-      data: {},
+      data: rollData,
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2532,7 +2628,7 @@ export class ActorPF extends Actor {
    * @param {object} options      Options which configure how ability tests are rolled
    */
   rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2589,7 +2685,7 @@ export class ActorPF extends Actor {
    * Show defenses in chat
    */
   async rollDefenses() {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -2681,7 +2777,7 @@ export class ActorPF extends Actor {
     const data = {
       actor: this,
       name: this.name,
-      tokenId: this.token ? `${this.token.scene._id}.${this.token.id}` : null,
+      tokenId: this.token ? `${this.token.uuid}` : null,
       ac: {
         normal: d.attributes.ac.normal.total,
         touch: d.attributes.ac.touch.total,
@@ -2766,7 +2862,7 @@ export class ActorPF extends Actor {
         // Temp HP adjustment
         let dt = value > 0 ? Math.min(tmp, value) : 0;
 
-        if (!a.hasPerm(game.user, "OWNER")) {
+        if (!a.isOwner) {
           const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
           console.warn(msg);
           ui.notifications.warn(msg);
@@ -3150,21 +3246,14 @@ export class ActorPF extends Actor {
     }, []);
   }
 
-  async createEmbeddedEntity(embeddedName, createData, options = {}) {
+  async createEmbeddedDocuments(embeddedName, createData, options = {}) {
     let noArray = false;
     if (!(createData instanceof Array)) {
       createData = [createData];
       noArray = true;
     }
 
-    for (let obj of createData) {
-      // Don't auto-equip transferred items
-      if (obj._id != null && ["weapon", "equipment"].includes(obj.type)) {
-        obj.data.equipped = false;
-      }
-    }
-
-    return super.createEmbeddedEntity(embeddedName, noArray ? createData[0] : createData, options);
+    return super.createEmbeddedDocuments(embeddedName, noArray ? createData[0] : createData, options);
   }
 
   /**
@@ -3251,12 +3340,12 @@ export class ActorPF extends Actor {
 
   getCarriedWeight() {
     // Determine carried weight
-    const physicalItems = this.data.items.filter((o) => {
-      return o.data.weight != null;
+    const physicalItems = this.items.filter((o) => {
+      return o.data.data.weight != null;
     });
     const weight = physicalItems.reduce((cur, o) => {
-      if (!o.data.carried) return cur;
-      return cur + o.data.weight * o.data.quantity;
+      if (!o.data.data.carried) return cur;
+      return cur + o.data.data.weight * o.data.data.quantity;
     }, this._calculateCoinWeight());
 
     return convertWeight(weight);
@@ -3408,7 +3497,7 @@ export class ActorPF extends Actor {
             : healthConfig.hitdice.NPC;
         const classType = cls.data.classType || "base";
         result.classes[tag] = {
-          level: cls.data.level,
+          level: cls.data.data.level,
           name: cls.name,
           hd: cls.data.hd,
           bab: cls.data.bab,
@@ -3419,16 +3508,16 @@ export class ActorPF extends Actor {
             will: 0,
           },
           fc: {
-            hp: classType === "base" ? cls.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.fc.alt.value : 0,
+            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
+            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
+            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
           },
         };
 
         for (let k of Object.keys(result.classes[tag].savingThrows)) {
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.savingThrows[k].value];
+          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.level }).total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
 
           // Set base saving throws
           baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
@@ -3573,7 +3662,7 @@ export class ActorPF extends Actor {
   }
 
   async deleteEmbeddedEntity(embeddedName, data, options = {}) {
-    if (embeddedName === "OwnedItem") {
+    if (embeddedName === "Item") {
       if (!(data instanceof Array)) data = [data];
 
       // Add children to list of items to be deleted
@@ -3641,6 +3730,9 @@ export class ActorPF extends Actor {
   }
 
   async toggleConditionStatusIcons() {
+    if (this._runningFunctions["toggleConditionStatusIcons"]) return;
+    this._runningFunctions["toggleConditionStatusIcons"] = {};
+
     const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
     const buffTextures = this._calcBuffTextures();
 
@@ -3648,7 +3740,7 @@ export class ActorPF extends Actor {
     for (let t of tokens) {
       // const isLinkedToken = getProperty(this.data, "token.actorLink");
       const actor = t.actor ? t.actor : this;
-      if (!actor.hasPerm(game.user, "OWNER")) continue;
+      if (!actor.testUserPermission(game.user, "OWNER")) continue;
       const fx = [...actor.effects];
 
       // Create and delete ActiveEffects
@@ -3661,8 +3753,8 @@ export class ActorPF extends Actor {
       }
       promises.push(
         (async () => {
-          if (toDelete.length) await actor.deleteEmbeddedEntity("ActiveEffect", toDelete);
-          if (toCreate.length) await actor.createEmbeddedEntity("ActiveEffect", toCreate);
+          if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
+          if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);
         })()
       );
 
@@ -3684,6 +3776,7 @@ export class ActorPF extends Actor {
       }
     }
     await Promise.all(promises);
+    delete this._runningFunctions["toggleConditionStatusIcons"];
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
@@ -3880,7 +3973,7 @@ export class ActorPF extends Actor {
     );
     if (proceed === false) return false;
 
-    await this.updateEmbeddedEntity("OwnedItem", itemUpdates);
+    await this.updateEmbeddedDocuments("Item", itemUpdates);
     return this.update(updateData);
   }
 }

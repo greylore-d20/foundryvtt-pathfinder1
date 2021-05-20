@@ -306,7 +306,11 @@ export const sizeDieExt = function (origCount, origSides, targetSize = "M", init
     ui.notifications.warn(msg);
   }
 
-  return formula;
+  const result = formula.split("d");
+  if (result.length === 1) {
+    return [new NumericTerm({ number: parseInt(result[0]) })];
+  }
+  return [new Die({ number: parseInt(result[0]), faces: parseInt(result[1]) })];
 };
 
 export const sizeDie = function (origCount, origSides, targetSize = "M") {
@@ -314,22 +318,14 @@ export const sizeDie = function (origCount, origSides, targetSize = "M") {
 };
 
 export const normalDie = function (origCount, origSides, crit = 1) {
-  let formula = `${origCount}d${origSides}`;
-
-  if (crit !== 1 && formula.match(/^([0-9]+)d([0-9]+)(.*)/)) {
-    const count = parseInt(RegExp.$1);
-    const sides = parseInt(RegExp.$2);
-    formula = `${count * crit}d${sides}${RegExp.$3}`;
-  }
-
-  return formula;
+  return [new Die({ number: origCount * crit, faces: origSides })];
 };
 
 export const sizeReach = function (size = "M", reach = false, stature = "tall") {
   if (typeof size === "number") size = Object.values(CONFIG.PF1.sizeChart)[size];
   size = Object.entries(CONFIG.PF1.sizeChart).find((o) => o[1] === size)[0];
 
-  return ActorPF.getReach(size, stature)[reach ? "reach" : "melee"];
+  return [new NumericTerm({ number: ActorPF.getReach(size, stature)[reach ? "reach" : "melee"] })];
 };
 
 /**

@@ -26,7 +26,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Actors
   console.log("Migrating Actor entities");
-  for (let a of game.actors.entities) {
+  for (let a of game.actors.contents) {
     try {
       const updateData = await migrateActorData(a);
       await a.update(updateData);
@@ -37,7 +37,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Items
   console.log("Migrating Item entities.");
-  for (let i of game.items.entities) {
+  for (let i of game.items.contents) {
     try {
       const updateData = migrateItemData(i);
       await i.update(updateData, { enforceTypes: false });
@@ -48,7 +48,7 @@ export const migrateWorld = async function () {
 
   // Migrate Actor Override Tokens
   console.log("Migrating scene entities.");
-  for (let s of game.scenes.entities) {
+  for (let s of game.scenes.contents) {
     try {
       const updateData = await migrateSceneData(s.data);
       await s.update(updateData);
@@ -239,7 +239,7 @@ export const migrateItemData = function (item) {
 export const migrateSceneData = async function (scene) {
   const result = { tokens: duplicate(scene.tokens) };
   for (let t of result.tokens) {
-    const token = new Token(t);
+    const token = new TokenDocument(t, { parent: scene });
 
     migrateTokenVision(token, t);
     migrateTokenStatuses(token, t);
@@ -257,7 +257,7 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else {
-      const a = Actor.fromToken(token);
+      const a = token.getActor();
       const updateData = await migrateActorData(a.data);
       t.actorData = mergeObject(a.data, updateData);
     }

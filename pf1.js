@@ -177,12 +177,11 @@ Hooks.once("init", function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
-  mergeObject(CONFIG, CONFIG_OVERRIDES);
-  CONFIG.Actor.entityClass = ActorPF;
-  CONFIG.ActiveEffect.entityClass = ActiveEffectPF;
-  CONFIG.Item.entityClass = ItemPF;
+  CONFIG.Actor.documentClass = ActorPF;
+  CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
+  CONFIG.Item.documentClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
-  CONFIG.ChatMessage.entityClass = ChatMessagePF;
+  CONFIG.ChatMessage.documentClass = ChatMessagePF;
   CONFIG.Dice.rolls[0] = RollPF;
 
   // Register System Settings
@@ -533,28 +532,57 @@ Hooks.on("renderLightConfig", (app, html) => {
   addLowLightVisionToLightConfig(app, html);
 });
 
-Hooks.on("updateOwnedItem", (actor, itemData, changedData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
-  const item = actor.getOwnedItem(changedData._id);
-  if (item == null) return;
+Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
 
-  // Toggle buff
-  if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-    // Call hook
-    Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
-  }
-
-  if (userId !== game.user.id) return;
-
-  // Update level
-  (async () => {
-    // Alter level-based class data
-    if (item.type === "class" && hasProperty(changedData, "data.level")) {
-      const prevLevel = getProperty(item.data, "data.level");
-      const newLevel = getProperty(changedData, "data.level");
-      await item._onLevelChange(prevLevel, newLevel);
+  if (actor) {
+    // Update level
+    {
+      if (item.type === "class" && hasProperty(changedData, "data.level")) {
+        const prevLevel = getProperty(item.data, "data.level");
+        // const newLevel = getProperty(changedData, "data.level");
+        // item._onLevelChange(prevLevel, newLevel);
+        item._prevLevel = prevLevel;
+      }
     }
-  })();
+  }
+});
+
+Hooks.on("updateItem", async (item, changedData, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
+
+  if (actor) {
+    // Toggle buff
+    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+      // Call hook
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+    }
+
+    // Update level
+    {
+      await new Promise((resolve) => {
+        if (item.type === "class" && hasProperty(changedData, "data.level")) {
+          const newLevel = getProperty(changedData, "data.level");
+          const prevLevel = item._prevLevel ?? newLevel;
+          if (item._prevLevel !== undefined) delete item._prevLevel;
+          item._onLevelChange(prevLevel, newLevel).then(() => {
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      });
+      if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+        // Call hook
+        Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+
+        // Toggle status icons
+        if (userId === game.user.id) {
+          // await actor.toggleConditionStatusIcons();
+        }
+      }
+    }
+  }
 });
 
 Hooks.on("updateActor", (actor, data, options, userId) => {
@@ -568,9 +596,9 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
 });
 
 Hooks.on("createToken", (scene, token, options, userId) => {
-  if (userId !== game.user._id) return;
+  if (userId !== game.user.id) return;
 
-  const actor = game.actors.tokens[token._id] ?? game.actors.get(token.actorId);
+  const actor = game.actors.tokens[token.data._id] ?? game.actors.get(token.actorId);
 
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) {
@@ -598,16 +626,13 @@ Hooks.on("hoverToken", (token, hovering) => {
   else game.pf1.tooltip.unbind(token);
 });
 
-Hooks.on("preDeleteToken", (scene, data, options, userId) => {
-  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
-  if (!token) return;
-
+Hooks.on("preDeleteToken", (scene, token, options, userId) => {
   // Hide token tooltip on token deletion
   game.pf1.tooltip.unbind(token);
 });
 
 Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
-  const token = canvas.tokens.placeables.find((t) => t.data._id === data._id);
+  const token = canvas.tokens.placeables.find((t) => t.data.id === data.id);
   if (!token) return;
 
   // Hide token tooltip on token update
@@ -617,83 +642,76 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
   token.actor?.sheet?.render();
 });
 
-// Create race on actor
-Hooks.on("preCreateOwnedItem", (actor, item, options, userId) => {
-  if (userId !== game.user._id) return;
-  if (!(actor instanceof Actor)) return;
-  if (actor.race == null) return;
+Hooks.on("controlToken", (token, selected) => {
+  // Refresh canvas sight
+  canvas.lighting.initializeSources();
+});
 
-  if (item.type === "race") {
-    actor.race.update(item);
+// Create race on actor
+Hooks.on("preCreateItem", (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
+
+  if (actor && actor.race && item.type === "race") {
+    actor.race.update(item.data._source);
     return false;
   }
 });
 
-Hooks.on("createOwnedItem", (actor, itemData, options, userId) => {
-  if (!(actor instanceof Actor)) return;
-  const item = actor.items.get(itemData._id);
-  if (!item) return;
+Hooks.on("createItem", (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
+  if (userId !== game.user.id) return;
+
+  // Create class
+  if (item.type === "class" && actor) {
+    item._onLevelChange(0, item.data.data.level);
+  }
 
   // Show buff if active
-  if (item.type === "buff" && getProperty(itemData, "data.active") === true) {
+  if (item.type === "buff" && getProperty(item.data, "data.active") === true && actor) {
     // Call hook
     Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
   }
 
-  if (userId !== game.user._id) return;
-
-  // Create class
-  if (item.type === "class") {
-    item._onLevelChange(0, item.data.data.level);
-  }
+  if (userId !== game.user.id) return;
 });
 
-Hooks.on("preDeleteOwnedItem", (actor, itemData, options, userId) => {
-  const item = actor.items.get(itemData._id);
-  if (!item) return;
+Hooks.on("deleteItem", async (item, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
 
-  // Delete class assocations
-  if (item.type === "class") item._onLevelChange(item.data.data.level, 0);
-});
-
-Hooks.on("deleteOwnedItem", (actor, itemData, options, userId) => {
-  // Call buff removal hook
-  if (itemData.type === "buff" && getProperty(itemData, "data.active") === true) {
-    Hooks.callAll("pf1.toggleActorBuff", actor, itemData, false);
-  }
-
-  if (userId !== game.user._id) return;
-  if (!(actor instanceof Actor)) return;
-
-  // Remove links
-  const itemLinks = getProperty(itemData, "data.links");
-  if (itemLinks) {
-    for (let [linkType, links] of Object.entries(itemLinks)) {
-      for (let link of links) {
-        const item = actor.items.find((o) => o._id === link.id);
-        let otherItemLinks = item?.links || {};
-        if (otherItemLinks[linkType]) {
-          delete otherItemLinks[linkType];
-        }
-      }
-    }
-  }
-
-  (async () => {
+  if (actor) {
     // Remove token effects for deleted buff
     const isLinkedToken = getProperty(actor.data, "token.actorLink");
     if (isLinkedToken) {
       let promises = [];
-      if (itemData.type === "buff" && itemData.data.active) {
-        actor.effects.find((e) => e.data.origin?.indexOf(itemData._id) > 0)?.delete();
+      if (item.data.type === "buff" && item.data.data.active) {
+        actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
         const tokens = actor.getActiveTokens();
         for (const token of tokens) {
-          promises.push(token.toggleEffect(itemData.img, { active: false }));
+          promises.push(token.toggleEffect(item.data.img, { active: false }));
         }
       }
       await Promise.all(promises);
     }
-  })();
+
+    // Remove links
+    const itemLinks = getProperty(item.data, "data.links");
+    if (itemLinks) {
+      for (let [linkType, links] of Object.entries(itemLinks)) {
+        for (let link of links) {
+          const item = actor.items.find((o) => o.id === link.id);
+          let otherItemLinks = item?.links || {};
+          if (otherItemLinks[linkType]) {
+            delete otherItemLinks[linkType];
+          }
+        }
+      }
+    }
+
+    // Call buff removal hook
+    if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, false);
+    }
+  }
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {
@@ -785,7 +803,7 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
     icon: '<i class="fas fa-low-vision"></i>',
     callback: (li) => {
       const pack = game.packs.get(li.data("pack"));
-      const config = game.settings.get("core", Compendium.CONFIG_SETTING)[pack.collection];
+      const config = game.settings.get("core", "compendiumConfiguration")[pack.collection];
       const disabled = getProperty(config, "pf1.disabled") === true;
       pack.configure({ "pf1.disabled": !disabled });
     },

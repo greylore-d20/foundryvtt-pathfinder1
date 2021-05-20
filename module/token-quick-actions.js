@@ -39,7 +39,7 @@ export class TokenQuickActions {
       else if (item.type === "feat") title = game.i18n.localize("PF1.AttackWithFeat").format(item.name);
       const type = item.type;
       quickActions +=
-        `<div id="${type}-${item._id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
+        `<div id="${type}-${item.id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
         `<img src="${icon}" width="36" height="36" title="${title}">`;
       if (item.isCharged || item.data.data.links?.ammunition?.length > 0) quickActions += chargeDisplay(item);
       quickActions += "</div >";
@@ -48,9 +48,9 @@ export class TokenQuickActions {
     html.find(".col.middle").after(quickActions + "</div></div>");
 
     items.forEach(function (i) {
-      const item = actor.items.find((o) => o._id === i.item._id);
+      const item = actor.items.find((o) => o.id === i.item.id);
       const type = item.type;
-      const elem = html.find(`#${type}-${item._id}`);
+      const elem = html.find(`#${type}-${item.id}`);
 
       // Add click handler
       elem.on("click", (event) => {

@@ -14,7 +14,7 @@ export const createCustomChatMessage = async function (
   chatData = mergeObject(
     {
       rollMode: rollMode,
-      user: game.user._id,
+      user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.CHAT,
     },
     chatData
@@ -49,7 +49,7 @@ export const createCustomChatMessage = async function (
 export const hideRollInfo = function (app, html, data) {
   const whisper = app.data.whisper || [];
   const isBlind = whisper.length && app.data.blind;
-  const isVisible = whisper.length ? whisper.includes(game.user._id) || (app.isAuthor && !isBlind) : true;
+  const isVisible = whisper.length ? whisper.includes(game.user.id) || (app.isAuthor && !isBlind) : true;
   if (!isVisible) {
     html.find(".dice-formula").text("???");
     html.find(".dice-total").text("?");
@@ -84,7 +84,7 @@ export const addChatCardTitleGradient = function (app, html, data) {
   if (!card) return;
   const actor = ItemPF._getChatCardActor(card);
   if (!actor) return;
-  const item = actor.getOwnedItem(card.dataset.itemId);
+  const item = actor.items.get(card.dataset.itemId);
   if (!item) return;
   const title = $(card).find(".card-header");
   if (!title.length) return;

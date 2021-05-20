@@ -1,10 +1,19 @@
 # Changelog
 
+## 0.78.0
+
+Initial release for Foundry 0.8.x
+
+### Changelog
+
+- Added an option for low-light vision multiplier on tokens
+
 ## 0.77.24
 
 ### Changelog
 
 - Improve display of condition icons in buff tab (#795)
+- Added sleep condition (works the same as helpless)
 - Add charge counters to actor/token quick actions (thanks mkahvi!)
 - Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
 - Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)

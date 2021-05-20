@@ -166,7 +166,6 @@ export class CompendiumBrowser extends Application {
 
     // Create function for lazy loading
     const lazyLoad = () => {
-      let newItems = 0;
       const initialIndex = this.lazyIndex;
       for (let a = 0; a < elems.length && this.lazyIndex < initialIndex + this.lazyAdd; a++) {
         const elem = elems[a];
@@ -175,7 +174,6 @@ export class CompendiumBrowser extends Application {
 
         if (this._passesFilters(item)) {
           $(elem).fadeIn(500);
-          newItems++;
           this.lazyIndex++;
         }
       }
@@ -271,7 +269,7 @@ export class CompendiumBrowser extends Application {
    */
   shouldSkip(p) {
     // Check disabled status
-    const config = game.settings.get("core", Compendium.CONFIG_SETTING)[p.collection];
+    const config = game.settings.get("core", "compendiumConfiguration")[p.collection];
     const disabled = getProperty(config, "pf1.disabled") === true;
     if (disabled) return true;
 
@@ -297,14 +295,7 @@ export class CompendiumBrowser extends Application {
       return;
     }
 
-    let items = (
-      await SocketInterface.dispatch("modifyCompendium", {
-        type: p.collection,
-        action: "get",
-        data: {},
-        options: { returnType: "content" },
-      })
-    ).result;
+    let items = await p.getDocuments();
 
     if (p.translated) {
       items = items.map((item) => p.translate(item));
@@ -313,7 +304,7 @@ export class CompendiumBrowser extends Application {
     for (let i of items) {
       if (!this._filterItems(i)) continue;
       this.packs[p.collection] = p;
-      this.items.push(this._mapEntry(p, i));
+      this.items.push(this._mapEntry(p, i.data));
     }
     this._onProgress(progress);
   }
@@ -326,7 +317,7 @@ export class CompendiumBrowser extends Application {
       let packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
       for (let p of game.packs.values()) {
-        if (p.entity === this.entityType && !this.shouldSkip(p)) {
+        if (p.documentClass.documentName === this.entityType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
         } else {
@@ -353,7 +344,7 @@ export class CompendiumBrowser extends Application {
       await Promise.all(promises);
 
       // Sort items
-      this.items = naturalSort(this.items, "name");
+      this.items = naturalSort(this.items, "item.name");
 
       // Return if no appropriate items were found
       if (this.items.length === 0) {
@@ -1170,7 +1161,7 @@ export class CompendiumBrowser extends Application {
     event.dataTransfer.setData(
       "text/plain",
       JSON.stringify({
-        type: pack.entity,
+        type: pack.documentClass.documentName,
         pack: pack.collection,
         id: li.getAttribute("data-entry-id"),
       })

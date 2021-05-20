@@ -1,7 +1,7 @@
 import { createInlineRollString } from "../chat.js";
 import { createCustomChatMessage } from "../chat.js";
 
-export class LevelUpForm extends BaseEntitySheet {
+export class LevelUpForm extends DocumentSheet {
   constructor(...args) {
     super(...args);
 
@@ -34,9 +34,9 @@ export class LevelUpForm extends BaseEntitySheet {
     setProperty(rawData, "data.level", 0);
 
     // Add class item
-    let itemData = await actor.createEmbeddedEntity("OwnedItem", rawData);
+    let itemData = await actor.createEmbeddedDocuments("Item", [rawData]);
     itemData = itemData instanceof Array ? itemData : [itemData];
-    const item = actor.items.get(itemData[0]._id);
+    const item = actor.items.get(itemData[0].id);
     if (!item) {
       throw new Error("No class was created at class initialization wizard");
     }
@@ -47,7 +47,7 @@ export class LevelUpForm extends BaseEntitySheet {
       Hooks.on("closeLevelUpForm", function _onClose(app) {
         if (app === _app) {
           if (getProperty(item.data, "data.level") === 0) {
-            actor.deleteEmbeddedEntity("OwnedItem", [item.id]);
+            actor.deleteEmbeddedDocuments("Item", [item.id]);
           }
           Hooks.off("closeLevelUpForm", _onClose);
           resolve();
@@ -190,7 +190,7 @@ export class LevelUpForm extends BaseEntitySheet {
   }
 
   async createChatMessage(formData) {
-    const chatMessageClass = CONFIG.ChatMessage.entityClass;
+    const chatMessageClass = CONFIG.ChatMessage.documentClass;
     const speaker = chatMessageClass.getSpeaker({ actor: this.actor });
 
     const templateData = {
@@ -200,7 +200,9 @@ export class LevelUpForm extends BaseEntitySheet {
       actor: duplicate(this.actor.data),
     };
 
-    await createCustomChatMessage("systems/pf1/templates/chat/level-up.hbs", templateData, {
+    await chatMessageClass.create({
+      content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
+      user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       speaker,
     });

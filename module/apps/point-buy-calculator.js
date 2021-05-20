@@ -1,4 +1,4 @@
-export class PointBuyCalculator extends BaseEntitySheet {
+export class PointBuyCalculator extends DocumentSheet {
   constructor(...args) {
     super(...args);
 
@@ -29,7 +29,7 @@ export class PointBuyCalculator extends BaseEntitySheet {
   }
 
   get actor() {
-    return this.entity;
+    return this.document;
   }
 
   getData() {

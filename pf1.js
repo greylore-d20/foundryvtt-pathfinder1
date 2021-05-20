@@ -642,6 +642,12 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
   token.actor?.sheet?.render();
 });
 
+Hooks.on("controlToken", (token, selected) => {
+  // Refresh canvas sight
+  canvas.lighting.initializeSources();
+  canvas.sight.initialize();
+});
+
 // Create race on actor
 Hooks.on("preCreateItem", (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;

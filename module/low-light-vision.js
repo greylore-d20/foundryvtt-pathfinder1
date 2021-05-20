@@ -141,7 +141,8 @@ export function patchLowLightVision() {
     await Token__onUpdate.call(this, data, options, ...args);
 
     if (hasProperty(data, "flags.pf1.disableLowLight") || hasProperty(data, "flags.pf1.lowLightVision")) {
-      canvas.initializeSources();
+      canvas.lighting.initializeSources();
+      canvas.sight.initialize();
     }
   };
 }

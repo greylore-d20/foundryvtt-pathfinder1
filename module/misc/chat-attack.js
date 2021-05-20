@@ -158,7 +158,7 @@ export class ChatAttack {
       primaryAttack: this.primaryAttack,
     });
     data.roll = roll;
-    let d20 = roll.dice[0].result;
+    let d20 = roll.dice.length ? roll.dice[0].result : roll.terms[0].total;
     let critType = 0;
     const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
     if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;

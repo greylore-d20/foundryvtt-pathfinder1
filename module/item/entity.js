@@ -2559,7 +2559,7 @@ export class ItemPF extends Item {
           return true;
         });
         // Add masterwork bonus
-        if (getProperty(this.data, "data.masterwork") === true) {
+        if (getProperty(this.data, "data.masterwork") === true && !getProperty(this.data, "data.enh")) {
           result.push(
             ItemChange.create({
               formula: "1",
@@ -2568,11 +2568,12 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: 1,
+              flavor: game.i18n.localize("PF1.Masterwork"),
             })
           );
         }
         // Add enhancement bonus
-        if (getProperty(this.data, "data.enh") != null) {
+        if (getProperty(this.data, "data.enh")) {
           const enh = getProperty(this.data, "data.enh");
           result.push(
             ItemChange.create({
@@ -2582,6 +2583,7 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: enh,
+              flavor: game.i18n.localize("PF1.EnhancementBonus"),
             })
           );
         }
@@ -2595,7 +2597,7 @@ export class ItemPF extends Item {
           return true;
         });
         // Add enhancement bonus
-        if (getProperty(this.data, "data.enh") != null) {
+        if (getProperty(this.data, "data.enh")) {
           const enh = getProperty(this.data, "data.enh");
           result.push(
             ItemChange.create({
@@ -2605,6 +2607,7 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: enh,
+              flavor: game.i18n.localize("PF1.EnhancementBonus"),
             })
           );
         }

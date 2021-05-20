@@ -2715,35 +2715,6 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * @override
    */
-  _onSortItem(event, itemData) {
-    // Get the drag source and its siblings
-    const source = this.document.getEmbeddedDocument("Item", itemData._id);
-    const siblings = this._getSortSiblings(source);
-
-    // Get the drop target
-    const dropTarget = event.target.closest(".item");
-    const targetId = dropTarget ? dropTarget.dataset.itemId : null;
-    if (targetId === source.id) return; // Don't sort if item is dropped onto itself
-    const target = siblings.find((s) => s.data.id === targetId);
-
-    // Ensure we are only sorting like-types
-    // if (target && (source.data.type !== target.data.type)) return;
-
-    // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(source, { target: target, siblings });
-    const updateData = sortUpdates.map((u) => {
-      const update = u.update;
-      update.id = u.target.data.id;
-      return update;
-    });
-
-    // Perform the update
-    return this.document.updateEmbeddedDocuments("Item", updateData);
-  }
-
-  /**
-   * @override
-   */
   _getSortSiblings(source) {
     return this.document.items.filter((i) => {
       if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);

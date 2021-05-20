@@ -7,6 +7,7 @@
 - Some rolls using math functions could cause errors
 - Item activation data was hidden
 - Context notes weren't showing up on item sheets
+- Items couldn't be sorted on actors or containers
 
 ## 0.78.0
 

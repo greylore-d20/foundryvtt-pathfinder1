@@ -672,9 +672,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    * @override
    */
   _onSortItem(event, itemData) {
-    // TODO - for now, don't allow sorting for Token Actor ovrrides
-    if (this.actor && this.actor.isToken) return;
-
     // Get the drag source and its siblings
     const source = this.item.getContainerContent(itemData._id);
     const siblings = this._getSortSiblings(source);

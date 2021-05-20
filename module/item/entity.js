@@ -4175,8 +4175,8 @@ export class ItemPF extends Item {
     const pending = new Map();
     data = data instanceof Array ? data : [data];
     for (let d of data) {
-      if (!d.id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
-      pending.set(d.id, d);
+      if (!d._id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
+      pending.set(d._id, d);
     }
 
     // Difference each update against existing data
@@ -4186,14 +4186,14 @@ export class ItemPF extends Item {
 
       // Diff the update against current data
       if (options.diff) {
-        update = diffObject(d, expandObject(update));
+        update = diffObject(d.data, expandObject(update));
         if (isObjectEmpty(update)) return arr;
         update["_id"] = d.id;
       }
 
       // Call pre-update hooks to ensure the update is allowed to proceed
       if (!options.noHook) {
-        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user._id);
+        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user.id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
           return arr;
@@ -4207,7 +4207,7 @@ export class ItemPF extends Item {
     if (!updates.length) return [];
     let inventory = duplicate(this.data.data.inventoryItems).map((o) => {
       for (let u of updates) {
-        if (u.id === o.id) return mergeObject(o, u);
+        if (u._id === o._id) return mergeObject(o, u);
       }
       return o;
     });
@@ -4216,8 +4216,8 @@ export class ItemPF extends Item {
     {
       let ids = [];
       inventory = inventory.filter((i) => {
-        if (ids.includes(i.id)) return false;
-        ids.push(i.id);
+        if (ids.includes(i._id)) return false;
+        ids.push(i._id);
         return true;
       });
     }

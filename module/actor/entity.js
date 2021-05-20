@@ -521,7 +521,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     for (let [k, s] of Object.entries(getProperty(this.data, "data.skills"))) {
       if (!s) continue;
       const isClassSkill = classes.reduce((cur, o) => {
-        if ((getProperty(o, "data.classSkills") || {})[k] === true) return true;
+        if ((getProperty(o.data, "data.classSkills") || {})[k] === true) return true;
         return cur;
       }, false);
       setProperty(this.data, `data.skills.${k}.cs`, isClassSkill);
@@ -2166,8 +2166,33 @@ export class ActorPF extends ActorDataPF(Actor) {
       notes.push(game.i18n.localize("PF1.Untrained"));
     }
 
-    // Build base modifiers, but don't include all if they're zeroed.
-    let mods = [skl.mod];
+    // Gather changes
+    let parts = [];
+    const changes = this.changes.filter((c) => {
+      let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
+      if (!(cf instanceof Array)) cf = [cf];
+
+      return cf.includes(`data.skills.${skillParts.join(".")}.changeBonus`);
+    });
+
+    // Add ability modifier
+    if (skl.ability) {
+      parts.push(`@abilities.${skl.ability}.mod[${CONFIG.PF1.abilities[skl.ability]}]`);
+    }
+
+    // Add rank
+    if (skl.rank > 0) {
+      parts.push(`${skl.rank}[${game.i18n.localize("PF1.SkillRankPlural")}]`);
+      if (skl.cs) {
+        parts.push(`3[${game.i18n.localize("PF1.CSTooltip")}]`);
+      }
+    }
+
+    // Add changes
+    for (let c of changes) {
+      if (!c.value) continue;
+      parts.push(`${c.value}[${c.flavor}]`);
+    }
 
     let props = [];
     if (notes.length > 0) props.push({ header: "Notes", value: notes });
@@ -2175,9 +2200,9 @@ export class ActorPF extends ActorDataPF(Actor) {
       event: options.event,
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
-      parts: mods.filter((m) => !!m),
+      parts,
       dice: options.dice,
-      data: {},
+      data: rollData,
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",

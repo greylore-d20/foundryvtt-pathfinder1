@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.78.0
+
+Initial release for Foundry 0.8.x
+
 ## 0.77.24
 
 ### Changelog

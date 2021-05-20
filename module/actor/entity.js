@@ -2374,7 +2374,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: event,
-      parts: [`@cl`],
+      parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
       data: rollData,
       title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -2413,7 +2413,11 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     return DicePF.d20Roll({
       event: event,
-      parts: ["@cl + @mod + @concentrationBonus + @formulaBonus"],
+      parts: [
+        `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
+          CONFIG.PF1.abilities[spellbook.ability]
+        }] + (@concentrationBonus + @formulaBonus)[${game.i18n.localize("PF1.ByBonus")}]`,
+      ],
       dice: options.dice,
       data: rollData,
       title: game.i18n.localize("PF1.ConcentrationCheck"),

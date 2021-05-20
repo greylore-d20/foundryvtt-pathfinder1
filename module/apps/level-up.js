@@ -36,7 +36,7 @@ export class LevelUpForm extends DocumentSheet {
     // Add class item
     let itemData = await actor.createEmbeddedDocuments("Item", [rawData]);
     itemData = itemData instanceof Array ? itemData : [itemData];
-    const item = actor.items.get(itemData[0]._id);
+    const item = actor.items.get(itemData[0].id);
     if (!item) {
       throw new Error("No class was created at class initialization wizard");
     }

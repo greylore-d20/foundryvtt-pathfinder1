@@ -2397,7 +2397,7 @@ export class ItemPF extends Item {
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = RollPF.safeRoll("1d100");
+            templateData.spellFailure = RollPF.safeRoll("1d100").total;
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }

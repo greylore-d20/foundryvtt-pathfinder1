@@ -125,10 +125,10 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   static getActiveActor({ actorName = null, actorId = null } = {}) {
     const speaker = ChatMessage.getSpeaker();
-    let actor = game.actors.entities.filter((o) => {
+    let actor = game.actors.contents.filter((o) => {
       if (!actorName && !actorId) return false;
       if (actorName && o.name !== actorName) return false;
-      if (actorId && o._id !== actorId) return false;
+      if (actorId && o.id !== actorId) return false;
       return true;
     })[0];
     if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
@@ -2747,7 +2747,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     const data = {
       actor: this,
       name: this.name,
-      tokenId: this.token ? `${this.token.scene._id}.${this.token.id}` : null,
+      tokenId: this.token ? `${this.token.uuid}` : null,
       ac: {
         normal: d.attributes.ac.normal.total,
         touch: d.attributes.ac.touch.total,
@@ -3950,7 +3950,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     );
     if (proceed === false) return false;
 
-    await this.updateEmbeddedEntity("OwnedItem", itemUpdates);
+    await this.updateEmbeddedDocuments("Item", itemUpdates);
     return this.update(updateData);
   }
 }

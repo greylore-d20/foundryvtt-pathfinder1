@@ -515,7 +515,7 @@ export class ItemSheetPF extends ItemSheet {
           if (spellbook != null && spellbook.spontaneous) {
             return game.i18n.localize("PF1.SpellPrepPrepared");
           } else {
-            return game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount);
+            return game.i18n.localize("PF1.AmountPrepared").format(item.data.data.preparation.preparedAmount);
           }
         }
         return game.i18n.localize("PF1.Unprepared");

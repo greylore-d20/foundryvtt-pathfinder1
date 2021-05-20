@@ -4,6 +4,10 @@
 
 Initial release for Foundry 0.8.x
 
+### Changelog
+
+- Added an option for low-light vision multiplier on tokens
+
 ## 0.77.24
 
 ### Changelog

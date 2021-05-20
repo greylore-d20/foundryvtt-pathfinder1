@@ -8,6 +8,7 @@ export function patchLowLightVision() {
       get() {
         return {
           lowLight: getProperty(this.data, "flags.pf1.lowLightVision"),
+          lowLightMultiplier: getProperty(this.data, "flags.pf1.lowLightVisionMultiplier"),
         };
       },
     },
@@ -19,6 +20,8 @@ export function patchLowLightVision() {
   });
 
   SightLayer.prototype.hasLowLight = function () {
+    console.warn("SightLayer#hasLowLight is deprecated in favor of SightLayer#lowLightMultiplier");
+
     const relevantTokens = canvas.tokens.placeables.filter((o) => {
       return o.actor && o.actor.testUserPermission(game.user, "OBSERVER");
     });
@@ -35,11 +38,37 @@ export function patchLowLightVision() {
     );
   };
 
+  SightLayer.prototype.lowLightMultiplier = function () {
+    let result = 1;
+
+    const relevantTokens = canvas.tokens.placeables.filter((o) => {
+      return o.actor && o.actor.testUserPermission(game.user, "OBSERVER");
+    });
+    const lowLightTokens = relevantTokens.filter((o) => getProperty(o, "actorVision.lowLight"));
+
+    if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
+      for (let t of lowLightTokens.filter((o) => o._controlled)) {
+        const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
+        result = Math.max(result, multiplier);
+      }
+    } else {
+      const hasControlledTokens = lowLightTokens.filter((t) => t._controlled).length > 0;
+      if (hasControlledTokens) {
+        for (let t of lowLightTokens) {
+          const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
+          result = Math.max(result, multiplier);
+        }
+      }
+    }
+
+    return result;
+  };
+
   const Token__getLightRadius = Token.prototype.getLightRadius;
   Token.prototype.getLightRadius = function (units) {
     const radius = Token__getLightRadius.call(this, units);
-    if (canvas.sight.hasLowLight() && !this.disableLowLight) {
-      return radius * 2;
+    if (!this.disableLowLight) {
+      return radius * canvas.sight.lowLightMultiplier();
     }
     return radius;
   };
@@ -87,10 +116,8 @@ export function patchLowLightVision() {
       //-Override token vision sources to not receive low-light bonus-
       let dim = maxR ?? this.getLightRadius(this.data.dimSight);
       let bright = this.getLightRadius(this.data.brightSight);
-      if (canvas.sight.hasLowLight()) {
-        dim = dim / 2;
-        bright = bright / 2;
-      }
+      dim = dim / (canvas.sight.lowLightMultiplier() || 1);
+      bright = bright / (canvas.sight.lowLightMultiplier() || 1);
       //-End change-
       if (dim === 0 && bright === 0) dim = d.size * 0.6;
       this.vision.initialize({
@@ -122,7 +149,7 @@ export function patchLowLightVision() {
   Object.defineProperty(AmbientLight.prototype, "dimRadius", {
     get: function () {
       let result = AmbientLight__get__dimRadius.call(this);
-      if (canvas.sight.hasLowLight() && !this.disableLowLight) return result * 2;
+      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier();
       return result;
     },
   });
@@ -131,7 +158,7 @@ export function patchLowLightVision() {
   Object.defineProperty(AmbientLight.prototype, "brightRadius", {
     get: function () {
       let result = AmbientLight__get__brightRadius.call(this);
-      if (canvas.sight.hasLowLight() && !this.disableLowLight) return result * 2;
+      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier();
       return result;
     },
   });
@@ -140,7 +167,11 @@ export function patchLowLightVision() {
   Token.prototype._onUpdate = async function (data, options, ...args) {
     await Token__onUpdate.call(this, data, options, ...args);
 
-    if (hasProperty(data, "flags.pf1.disableLowLight") || hasProperty(data, "flags.pf1.lowLightVision")) {
+    if (
+      hasProperty(data, "flags.pf1.disableLowLight") ||
+      hasProperty(data, "flags.pf1.lowLightVision") ||
+      hasProperty(data, "flags.pf1.lowLightVisionMultiplier")
+    ) {
       canvas.lighting.initializeSources();
     }
   };

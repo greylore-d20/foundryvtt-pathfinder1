@@ -156,7 +156,10 @@ export class RollPF extends Roll {
       closeSymbol: ")",
       onClose: (group) => {
         const fn = group.open.slice(0, -1);
+        const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
         const term = group.terms.join("");
+        const terms = [];
+
         if (fn in game.pf1.rollPreProcess) {
           let fnParams = group.terms
             // .slice(2, -1)
@@ -181,20 +184,19 @@ export class RollPF extends Roll {
 
           return game.pf1.rollPreProcess[fn](...fnParams);
         } else if (fn in Math) {
-          const terms = term.split(",").filter((t) => !!t);
-          return [new MathTerm({ fn, terms })];
+          const args = this._splitMathArgs(term);
+          terms.push(new MathTerm({ fn, terms: args, options }));
         } else {
-          const terms = [];
           if (fn) terms.push(new StringTerm({ term: fn }));
-          terms.push(new ParentheticalTerm({ term }));
-          return terms;
+          terms.push(new ParentheticalTerm({ term, options }));
         }
+        return terms;
       },
     });
   }
 
   static cleanFlavor(flavor) {
-    return flavor.replace(/\[\];/, "");
+    return flavor.replace(/\[\];/g, "");
   }
 
   /**

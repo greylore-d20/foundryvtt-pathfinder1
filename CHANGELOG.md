@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.1
+
+### Bug Fixes
+
+- Some rolls using math functions could cause errors
+
 ## 0.78.0
 
 Initial release for Foundry 0.8.x

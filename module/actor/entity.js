@@ -384,7 +384,7 @@ export class ActorPF extends ActorDataPF(Actor) {
           const proficiencies = this.data.items.reduce(
             (profs, item) => {
               // Check only items able to grant proficiencies
-              if (hasProperty(item, `data.${prof}`)) {
+              if (hasProperty(item.data, `data.${prof}`)) {
                 // Get existing sourceInfo for item with this name, create sourceInfo if none is found
                 // Remember whether sourceInfo can be modified or has to be pushed at the end
                 let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
@@ -395,7 +395,7 @@ export class ActorPF extends ActorDataPF(Actor) {
                 else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
                 // Regular proficiencies
-                for (const proficiency of item.data[prof].value) {
+                for (const proficiency of item.data.data[prof].value) {
                   // Add localized source info if item's info does not have this proficiency already
                   if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
                   // Add raw proficiency key
@@ -404,7 +404,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
                 // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
                 const customProfs =
-                  item.data[prof].custom
+                  item.data.data[prof].custom
                     ?.split(CONFIG.PF1.re.traitSeparator)
                     .map((i) => i.trim())
                     .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];

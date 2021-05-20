@@ -303,7 +303,7 @@ export class ItemSheetPF extends ItemSheet {
       weaponProf: CONFIG.PF1.weaponProficiencies,
     };
     for (let [t, choices] of Object.entries(profs)) {
-      if (hasProperty(data.item.data, t)) {
+      if (hasProperty(data.item.data.data, t)) {
         const trait = data.data[t];
         if (!trait) continue;
         let values = [];

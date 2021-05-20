@@ -1565,7 +1565,6 @@ export class ActorPF extends ActorDataPF(Actor) {
   /* -------------------------------------------- */
 
   async preUpdate(data) {
-    const fullData = mergeObject(this.data, data, { inplace: false });
     data = flattenObject(data);
 
     // Apply settings
@@ -1593,16 +1592,16 @@ export class ActorPF extends ActorDataPF(Actor) {
         else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
           usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
       }
-      linkData(fullData, data, "data.attributes.spells.usedSpellbooks", usedSpellbooks);
+      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
     }
 
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
       if (!this.isToken) {
-        linkData(fullData, data, "token.width", size.w);
-        linkData(fullData, data, "token.height", size.h);
-        linkData(fullData, data, "token.scale", size.scale);
+        data["token.width"] = size.w;
+        data["token.height"] = size.h;
+        data["token.scale"] = size.scale;
       }
     }
 
@@ -1617,7 +1616,7 @@ export class ActorPF extends ActorDataPF(Actor) {
         return data[k] != null;
       });
     for (const k of _absoluteKeys) {
-      linkData(fullData, data, k, Math.abs(data[k]));
+      data[k] = Math.abs(data[k]);
     }
 
     // Apply changes in resources
@@ -1648,7 +1647,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Update experience
-    this._updateExp(data, fullData);
+    this._updateExp(data);
 
     return data;
   }
@@ -1840,7 +1839,9 @@ export class ActorPF extends ActorDataPF(Actor) {
   _updateExp(updateData) {
     // Get total level
     const classes = this.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.data.classType !== "mythic").reduce((cur, o) => cur + o.data.level, 0);
+    const level = classes
+      .filter((o) => o.data.data.classType !== "mythic")
+      .reduce((cur, o) => cur + o.data.data.level, 0);
 
     // The following is not for NPCs
     if (this.data.type !== "character") return;

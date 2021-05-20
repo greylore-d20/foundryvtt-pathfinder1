@@ -645,7 +645,6 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
 Hooks.on("controlToken", (token, selected) => {
   // Refresh canvas sight
   canvas.lighting.initializeSources();
-  canvas.sight.initialize();
 });
 
 // Create race on actor

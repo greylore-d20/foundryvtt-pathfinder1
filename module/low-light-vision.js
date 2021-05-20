@@ -142,7 +142,6 @@ export function patchLowLightVision() {
 
     if (hasProperty(data, "flags.pf1.disableLowLight") || hasProperty(data, "flags.pf1.lowLightVision")) {
       canvas.lighting.initializeSources();
-      canvas.sight.initialize();
     }
   };
 }

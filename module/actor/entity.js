@@ -1197,15 +1197,15 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     this.data.items
       .filter((obj) => {
-        return obj.type === "equipment" && obj.data.equipped;
+        return obj.type === "equipment" && obj.data.data.equipped;
       })
       .forEach((obj) => {
-        let itemACP = Math.abs(obj.data.armor.acp);
-        if (obj.data.masterwork === true && ["armor", "shield"].includes(obj.data.equipmentType)) {
+        let itemACP = Math.abs(obj.data.data.armor.acp);
+        if (obj.data.data.masterwork === true && ["armor", "shield"].includes(obj.data.data.equipmentType)) {
           itemACP = Math.max(0, itemACP - 1);
         }
 
-        switch (obj.data.equipmentType) {
+        switch (obj.data.data.equipmentType) {
           case "armor":
             itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.armorBonus"));
             break;
@@ -1214,7 +1214,7 @@ export class ActorPF extends ActorDataPF(Actor) {
             break;
         }
 
-        if (obj.data.broken) {
+        if (obj.data.data.broken) {
           itemACP *= 2;
         }
 
@@ -1231,22 +1231,22 @@ export class ActorPF extends ActorDataPF(Actor) {
           }
         }
 
-        switch (obj.data.equipmentType) {
+        switch (obj.data.data.equipmentType) {
           case "armor":
             if (itemACP > armorACP) armorACP = itemACP;
-            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.equipmentSubtype]))
+            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.data.equipmentSubtype]))
               attackACPPenalty += armorACP;
             break;
           case "shield":
             if (itemACP > shieldACP) shieldACP = itemACP;
-            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.equipmentSubtype]))
+            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.data.equipmentSubtype]))
               attackACPPenalty += shieldACP;
             break;
         }
 
-        if (obj.data.armor.dex !== null) {
-          const mDex = Number.parseInt(obj.data.armor.dex);
-          switch (obj.data.equipmentType) {
+        if (obj.data.data.armor.dex !== null) {
+          const mDex = Number.parseInt(obj.data.data.armor.dex);
+          switch (obj.data.data.equipmentType) {
             case "armor":
               if (Number.isInteger(mDex)) {
                 const armorMDex = mDex + getProperty(this.data, "data.attributes.mDex.armorBonus");
@@ -3246,13 +3246,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     if (!(createData instanceof Array)) {
       createData = [createData];
       noArray = true;
-    }
-
-    for (let obj of createData) {
-      // Don't auto-equip transferred items
-      if (obj._id != null && ["weapon", "equipment"].includes(obj.type)) {
-        obj.data.equipped = false;
-      }
     }
 
     return super.createEmbeddedDocuments(embeddedName, noArray ? createData[0] : createData, options);

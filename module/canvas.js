@@ -170,7 +170,7 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     if (!this.object) return;
     const actor = this.object.actor;
     let entity = actor;
-    const data = this.object.getBarAttribute(bar);
+    const data = this.object.document.getBarAttribute(bar);
     if (data.attribute.startsWith("resources.")) {
       const itemTag = data.attribute.split(".").slice(-1)[0];
       entity = actor.items.find((item) => item.data.data.tag === itemTag);
@@ -210,7 +210,7 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     }
 
     entity.update(updateData);
-    this.object.update({ [input.name]: value });
+    this.object.document.update({ [input.name]: value });
   }
 
   // Otherwise update the Token

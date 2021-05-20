@@ -1827,6 +1827,8 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     super._preUpdateEmbeddedDocuments(...arguments);
+
+    if (this.sheet) this.sheet.render();
   }
 
   /**

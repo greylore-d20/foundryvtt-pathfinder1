@@ -17,12 +17,6 @@ export class ItemPF extends Item {
     super(...args);
 
     /**
-     * @property {object} _prevData
-     * When an item gets updated, certain data is stored here for use in _onUpdate.
-     */
-    if (this._prevData === undefined) this._prevData = {};
-
-    /**
      * @property {object} links
      * Links are stored here during runtime.
      */
@@ -965,9 +959,6 @@ export class ItemPF extends Item {
         }
       }
     }
-
-    // Set previous data
-    this._prevData["level"] = getProperty(this.data, "data.level");
 
     // Make sure charges doesn't exceed max charges, and vice versa
     {

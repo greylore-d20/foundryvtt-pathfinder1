@@ -519,11 +519,14 @@ export class ItemSheetPF extends ItemSheet {
           }
         }
         return game.i18n.localize("PF1.Unprepared");
-      } else if (item.data.preparation.mode) {
-        return item.data.preparation.mode.titleCase();
+      } else if (item.data.data.preparation.mode) {
+        return item.data.data.preparation.mode.titleCase();
       } else return "";
-    } else if (["weapon", "equipment"].includes(item.type) || (item.type === "loot" && item.data.subType === "gear")) {
-      return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+    } else if (
+      ["weapon", "equipment"].includes(item.type) ||
+      (item.type === "loot" && item.data.data.subType === "gear")
+    ) {
+      return item.data.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
     }
   }
 

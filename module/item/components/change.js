@@ -21,9 +21,13 @@ export class ItemChange {
       modifier: "",
       priority: 0,
       value: 0,
+      flavor: undefined,
     };
   }
 
+  get id() {
+    return this.data._id;
+  }
   get _id() {
     return this.data._id;
   }
@@ -44,6 +48,9 @@ export class ItemChange {
   }
   get value() {
     return this.data.value;
+  }
+  get flavor() {
+    return this.data.flavor ?? this.parent?.name ?? this.modifier;
   }
 
   get source() {

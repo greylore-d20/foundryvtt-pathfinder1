@@ -457,23 +457,24 @@ export const addDefaultChanges = function (changes) {
     );
   };
   const manual_health = (health_source) => {
-    let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+    let health =
+      health_source.data.data.hp + (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
 
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-      value: health_source.data.hp,
+      value: health_source.data.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
     getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-      value: health_source.data.hp,
+      value: health_source.data.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.fc.hp.value > 0) {
+    if (health_source.data.data.fc.hp.value > 0) {
       getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
       getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -531,47 +532,59 @@ export const addDefaultChanges = function (changes) {
   const allClasses = [...classes, ...racialHD];
   for (let a of Object.keys(this.data.data.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
+    setProperty(this.data, k, 0);
     // Using Fractional Base Bonuses
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
       let highStart = false;
-      setProperty(
-        this.data,
-        k,
-        Math.floor(
-          allClasses.reduce((cur, obj) => {
-            const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
-            if (saveScale === "high") {
-              const acc = highStart ? 0 : 2;
-              highStart = true;
-              return cur + obj.data.level / 2 + acc;
-            }
-            if (saveScale === "low") return cur + obj.data.level / 3;
-            return cur;
-          }, 0)
-        )
-      );
-
-      const v = getProperty(this.data, k);
-      if (v !== 0) {
-        getSourceInfo(this.sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: v });
-      }
-    } else {
-      setProperty(
-        this.data,
-        k,
+      const total = Math.floor(
         allClasses.reduce((cur, obj) => {
-          const classType = getProperty(obj.data, "classType") || "base";
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.data.savingThrows[a].value];
-          if (formula == null) formula = "0";
-          const v = Math.floor(RollPF.safeRoll(formula, { level: obj.data.level }).total);
-
-          if (v !== 0) {
-            getSourceInfo(this.sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
+          const saveScale = getProperty(obj.data, `data.savingThrows.${a}.value`) || "";
+          if (saveScale === "high") {
+            const acc = highStart ? 0 : 2;
+            highStart = true;
+            return cur + obj.data.data.level / 2 + acc;
           }
-
-          return cur + v;
+          if (saveScale === "low") return cur + obj.data.data.level / 3;
+          return cur;
         }, 0)
       );
+
+      // Add change
+      changes.push(
+        ItemChange.create({
+          formula: total.toString(),
+          target: "savingThrows",
+          subTarget: a,
+          modifier: "untypedPerm",
+          flavor: game.i18n.localize("PF1.Base"),
+        })
+      );
+      getSourceInfo(this.sourceInfo, k).positive.push({
+        value: total,
+        name: game.i18n.localize("PF1.Base"),
+      });
+    } else {
+      for (let c of allClasses) {
+        const classType = getProperty(c.data, "classType") || "base";
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
+        if (formula == null) formula = "0";
+        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);
+
+        // Add change
+        changes.push(
+          ItemChange.create({
+            formula: total.toString(),
+            target: "savingThrows",
+            subTarget: a,
+            modifier: "untypedPerm",
+            flavor: getProperty(c, "name"),
+          })
+        );
+        getSourceInfo(this.sourceInfo, k).positive.push({
+          value: total,
+          name: getProperty(c, "name"),
+        });
+      }
     }
   }
 
@@ -648,7 +661,7 @@ export const addDefaultChanges = function (changes) {
     // Energy drain to attack
     changes.push(
       ItemChange.create({
-        formula: "0-@attributes.energyDrain",
+        formula: "-@attributes.energyDrain",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
@@ -816,6 +829,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "fort",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.fort.total").positive.push({
@@ -832,6 +846,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "ref",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.ref.total").positive.push({
@@ -848,6 +863,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "will",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.will.total").positive.push({
@@ -858,10 +874,11 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain
     changes.push(
       ItemChange.create({
-        formula: "0-@attributes.energyDrain",
+        formula: "-@attributes.energyDrain",
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
     for (let k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {

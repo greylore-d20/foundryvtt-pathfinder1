@@ -2680,7 +2680,7 @@ export class ItemPF extends Item {
     // Add change bonus
     const isRanged = ["rwak", "rsak"].includes(this.data.data.actionType);
     const changes = this.getContextChanges(isRanged ? "rattack" : "mattack");
-    let changeBonus = 0;
+    let changeBonus = [];
     {
       // Get attack bonus
       changeBonus = getHighestChanges(
@@ -2692,7 +2692,7 @@ export class ItemPF extends Item {
       ).reduce((cur, c) => {
         cur.push({
           value: c.value,
-          source: c.parent ? c.parent.name : c.data.modifier,
+          source: c.flavor,
         });
         return cur;
       }, []);
@@ -2876,7 +2876,7 @@ export class ItemPF extends Item {
     if (!this.isHealing) {
       const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
       const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
-      let changeBonus = 0;
+      let changeBonus = [];
       {
         // Get damage bonus
         changeBonus = getHighestChanges(
@@ -2886,25 +2886,37 @@ export class ItemPF extends Item {
           }),
           { ignoreTarget: true }
         ).reduce((cur, c) => {
-          return cur + c.value;
-        }, 0);
+          if (c.value)
+            cur.push({
+              value: c.value,
+              source: c.flavor,
+            });
+          return cur;
+        }, []);
       }
-      if (changeBonus) parts[0].extra.push(changeBonus.toString());
+      for (let c of changeBonus) {
+        parts[0].extra.push(`${c.value}[${c.source}]`);
+      }
 
       // Add broken penalty
       if (this.data.data.broken) {
-        parts[0].extra.push("-2");
+        const label = game.i18n.localize("PF1.Broken");
+        parts[0].extra.push(`-2[${label}]`);
       }
     }
 
     // Determine ability score modifier
     let abl = this.data.data.ability.damage;
     if (typeof abl === "string" && abl !== "") {
+      // Determine ability score bonus
       rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
-      if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
-      else if (critical === true) parts[0].extra.push("@ablDamage");
-      else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
+
+      // Determine ability score label
+      const ablLabel = CONFIG.PF1.abilities[abl];
+
+      // Add ability score
+      parts[0].extra.push(`@ablDamage[${ablLabel}]`);
     }
 
     // Create roll
@@ -2914,7 +2926,7 @@ export class ItemPF extends Item {
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: RollPF.safeRoll([part.base, ...rollParts].join("+"), rollData),
+        roll: RollPF.safeRoll([part.base, ...rollParts].join(" + "), rollData),
         damageType: part.damageType,
         type: part.type,
       };

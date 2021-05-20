@@ -146,7 +146,8 @@ export class ChatAttack {
 
     // Add broken penalty
     if (this.item.data.data.broken && !critical) {
-      extraParts.push("-2");
+      const label = game.i18n.localize("PF1.Broken");
+      extraParts.push(`-2[${label}]`);
     }
 
     // Roll attack

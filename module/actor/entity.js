@@ -5,7 +5,7 @@ import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
-import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo } from "./apply-changes.js";
+import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo, getHighestChanges } from "./apply-changes.js";
 import { ActorDataPF } from "./data.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
@@ -2536,13 +2536,30 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
 
-    const changes = this.sourceDetails[`data.attributes.savingThrows.${savingThrowId}.total`];
-    const abl = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.ability`);
-    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`);
-    let mods = changes.map((c) => {
-      return `${c.value}[${RollPF.cleanFlavor(c.name)}]`;
-    });
-    if (ablMod === 0) mods.unshift(0); // Include missing 0 ability modifier in front
+    let parts = [];
+    // Add changes
+    let changeBonus = [];
+    const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.subTarget));
+    {
+      // Get damage bonus
+      changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        if (c.value)
+          cur.push({
+            value: c.value,
+            source: c.flavor,
+          });
+        return cur;
+      }, []);
+    }
+    for (let c of changeBonus) {
+      parts.push(`${c.value}[${c.source}]`);
+    }
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0)
@@ -2555,10 +2572,10 @@ export class ActorPF extends ActorDataPF(Actor) {
     const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
-      parts: mods,
+      parts,
       dice: options.dice,
       situational: true,
-      data: {},
+      data: rollData,
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,

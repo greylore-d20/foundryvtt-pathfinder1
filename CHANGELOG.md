@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Some rolls using math functions could cause errors
+- Item activation data was hidden
 
 ## 0.78.0
 

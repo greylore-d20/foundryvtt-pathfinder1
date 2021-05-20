@@ -133,7 +133,7 @@ export class ItemSheetPF extends ItemSheet {
     data.hasActivationType =
       (game.settings.get("pf1", "unchainedActionEconomy") &&
         getProperty(data.item, "data.unchainedAction.activation.type")) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.activation.type"));
+      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item.data, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;
@@ -164,15 +164,15 @@ export class ItemSheetPF extends ItemSheet {
     data.isCombatManeuver = ["mcman", "rcman"].includes(data.item.data.actionType);
 
     data.isCharged = false;
-    if (data.item.data.uses != null) {
-      data.isCharged = ["day", "week", "charges"].includes(data.item.data.uses.per);
+    if (data.item.data.data.uses != null) {
+      data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses.per);
     }
-    if (data.item.data.range != null) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.range.minUnits);
+    if (data.item.data.data.range != null) {
+      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.units);
+      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.minUnits);
     }
-    if (data.item.data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.duration.units);
+    if (data.item.data.data.duration != null) {
+      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.data.duration.units);
     }
 
     // Show additional ranged properties

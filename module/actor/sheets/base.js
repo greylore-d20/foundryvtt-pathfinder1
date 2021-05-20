@@ -388,9 +388,10 @@ export class ActorSheetPF extends ActorSheet {
     }
     // Count allowed skill ranks
     const sourceData = getSourceInfo(this.document.sourceInfo, "data.skillRanks").positive;
+    setProperty(data.sourceData, "skillRanks", sourceData);
     this.document.data.items
       .filter((obj) => {
-        return obj.type === "class" && obj.data.classType !== "mythic";
+        return obj.type === "class" && obj.data.data.classType !== "mythic";
       })
       .forEach((cls) => {
         const clsLevel = cls.data.data.level;
@@ -398,7 +399,8 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.data.data.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.data.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.data.classType))
+          skillRanks.bgAllowed += clsLevel * 2;
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
@@ -410,54 +412,44 @@ export class ActorSheetPF extends ActorSheet {
             value: fcSkills,
           });
         }
-
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
       });
-    if (this.document.data.data.details.bonusSkillRankFormula !== "") {
-      try {
-        let roll = new Roll(this.document.data.data.details.bonusSkillRankFormula, rollData).roll();
-        skillRanks.allowed += roll.total;
-      } catch (e) {
-        console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.document.name}.`);
-      }
-      // Count from intelligence
-      if (getProperty(this.actor.data, "data.abilities.int.mod") !== 0) {
-        sourceData.push({
-          name: game.i18n.localize("PF1.AbilityInt"),
-          value:
-            getProperty(this.actor.data, "data.abilities.int.mod") *
-            getProperty(this.actor.data, "data.attributes.hd.total"),
-        });
-      }
-      // Count from bonus skill rank formula
-      if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-        let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
-        if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
-        skillRanks.allowed += roll.total;
-        sourceData.push({
-          name: game.i18n.localize("PF1.SkillBonusRankFormula"),
-          value: roll.total,
-        });
-      }
-      // Calculate from changes
-      this.actor.changes
-        .filter((o) => o.subTarget === "bonusSkillRanks")
-        .forEach((o) => {
-          if (!o.value) return;
+    // Count from intelligence
+    if (getProperty(this.actor.data, "data.abilities.int.mod") !== 0) {
+      sourceData.push({
+        name: game.i18n.localize("PF1.AbilityInt"),
+        value:
+          getProperty(this.actor.data, "data.abilities.int.mod") *
+          getProperty(this.actor.data, "data.attributes.hd.total"),
+      });
+    }
+    // Count from bonus skill rank formula
+    if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
+      let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
+      if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+      skillRanks.allowed += roll.total;
+      sourceData.push({
+        name: game.i18n.localize("PF1.SkillBonusRankFormula"),
+        value: roll.total,
+      });
+    }
+    // Calculate from changes
+    this.actor.changes
+      .filter((o) => o.subTarget === "bonusSkillRanks")
+      .forEach((o) => {
+        if (!o.value) return;
 
-          skillRanks.allowed += o.value;
-          sourceData.push({
-            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
-            value: o.value,
-          });
+        skillRanks.allowed += o.value;
+        sourceData.push({
+          name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+          value: o.value,
         });
-      // Calculate used background skills
-      if (data.useBGSkills) {
-        if (skillRanks.bgUsed > skillRanks.bgAllowed) {
-          skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
-          skillRanks.allowed -= skillRanks.sentToBG;
-          skillRanks.bgAllowed += skillRanks.sentToBG;
-        }
+      });
+    // Calculate used background skills
+    if (data.useBGSkills) {
+      if (skillRanks.bgUsed > skillRanks.bgAllowed) {
+        skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
+        skillRanks.allowed -= skillRanks.sentToBG;
+        skillRanks.bgAllowed += skillRanks.sentToBG;
       }
     }
     data.skillRanks = skillRanks;

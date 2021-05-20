@@ -364,8 +364,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for items with context notes
-    if (data.item.data.contextNotes) {
-      data.contextNotes = duplicate(data.item.data.contextNotes);
+    if (data.item.data.data.contextNotes) {
+      data.contextNotes = duplicate(data.item.data.data.contextNotes);
       const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
       data.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;

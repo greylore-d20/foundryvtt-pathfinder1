@@ -468,8 +468,8 @@ export class CompendiumBrowser extends Application {
     if (item.items) {
       const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
-        result.item.creatureType = race.data.creatureType;
-        result.item.subTypes = race.data.subTypes.map((o) => {
+        result.item.creatureType = race.data.data.creatureType;
+        result.item.subTypes = race.data.data.subTypes.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Weapon type list was incorrectly empty
+- The bestiary browser wouldn't open
 
 ## 0.78.2
 

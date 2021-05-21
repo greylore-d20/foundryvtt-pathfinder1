@@ -193,7 +193,7 @@ export class ItemSheetPF extends ItemSheet {
       for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
-      const type = data.item.data.weaponType;
+      const type = data.item.data.data.weaponType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
         for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets

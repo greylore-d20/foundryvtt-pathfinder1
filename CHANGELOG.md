@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.3
+
+### Bug Fixes
+
+- Weapon type list was incorrectly empty
+
 ## 0.78.2
 
 ### Bug Fixes

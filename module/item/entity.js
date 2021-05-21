@@ -970,14 +970,10 @@ export class ItemPF extends Item {
         if (data["data.preparation.maxAmount"] != null) target = "max";
         charges = data["data.preparation.preparedAmount"];
         maxCharges = data["data.preparation.maxAmount"];
-        // charges = getProperty(srcData, "data.preparation.preparedAmount");
-        // maxCharges = getProperty(srcData, "data.preparation.maxAmount");
       } else {
         if (data["data.uses.max"] != null) target = "max";
         charges = data["data.uses.value"];
         maxCharges = data["data.uses.max"];
-        // charges = getProperty(srcData, "data.uses.value") || 0;
-        // maxCharges = getProperty(srcData, "data.uses.max") || 0;
       }
 
       if (target === "value" && charges > maxCharges) maxCharges = charges;

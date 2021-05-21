@@ -1454,8 +1454,12 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event.originalEvent, el);
 
+    const prevValue = getProperty(item.data, "data.preparation.preparedAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "data.preparation.preparedAmount", value);
+    if (prevValue < value) {
+      this.setItemUpdate(item.id, "data.preparation.maxAmount", Math.max(prevValue, value));
+    }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
@@ -1474,8 +1478,12 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event.originalEvent, el);
 
+    const prevValue = getProperty(item.data, "data.preparation.maxAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "data.preparation.maxAmount", Math.max(0, value));
+    if (prevValue > value) {
+      this.setItemUpdate(item.id, "data.preparation.preparedAmount", Math.min(prevValue, value));
+    }
     if (value < 0) {
       el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
     }
@@ -2612,10 +2620,10 @@ export class ActorSheetPF extends ActorSheet {
 
   setItemUpdate(id, key, value) {
     let obj = this._itemUpdates.filter((o) => {
-      return o.id === id;
+      return o._id === id;
     })[0];
     if (obj == null) {
-      obj = { id: id };
+      obj = { _id: id };
       this._itemUpdates.push(obj);
     }
 
@@ -2656,15 +2664,7 @@ export class ActorSheetPF extends ActorSheet {
     const updates = duplicate(this._itemUpdates);
     this._itemUpdates = [];
 
-    for (const data of updates) {
-      const item = this.document.items.get(data.id);
-      if (item == null) continue;
-
-      delete data.id;
-      if (item.testUserPermission(game.user, "OWNER")) promises.push(item.update(data));
-    }
-
-    return Promise.all(promises);
+    return this.document.updateEmbeddedDocuments("Item", updates);
   }
 
   /**

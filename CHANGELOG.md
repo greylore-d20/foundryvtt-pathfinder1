@@ -6,6 +6,7 @@
 
 - Weapon type list was incorrectly empty
 - The bestiary browser wouldn't open
+- Bonus feats from changes were doubled on the total feat count
 
 ## 0.78.2
 

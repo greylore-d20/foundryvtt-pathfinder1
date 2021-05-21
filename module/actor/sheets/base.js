@@ -505,19 +505,6 @@ export class ActorSheetPF extends ActorSheet {
 
       // Count total
       data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
-
-      // Changes
-      this.actor.changes
-        .filter((o) => o.subTarget === "bonusFeats")
-        .forEach((o) => {
-          if (!o.value) return;
-
-          data.featCount.total += o.value;
-          sourceData.push({
-            name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
-            value: o.value,
-          });
-        });
     }
 
     // Fetch the game settings relevant to sheet rendering.

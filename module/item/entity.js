@@ -2355,7 +2355,7 @@ export class ItemPF extends Item {
         const templateData = mergeObject(
           chatTemplateData,
           {
-            tokenId: token ? `${token.scene._id}.${token.id}` : null,
+            tokenId: token ? `${token.uuid}` : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,

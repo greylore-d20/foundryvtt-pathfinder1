@@ -6,6 +6,7 @@
 
 - Combatant duplication wasn't working
 - Custom class tags weren't working
+- Attacks for unlinked tokens were not working
 
 ## 0.78.1
 

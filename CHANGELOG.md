@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Combatant duplication wasn't working
+- Custom class tags weren't working
 
 ## 0.78.1
 

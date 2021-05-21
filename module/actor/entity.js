@@ -3481,9 +3481,9 @@ export class ActorPF extends ActorDataPF(Actor) {
         return obj.type === "class";
       })
       .forEach((cls) => {
-        let tag = cls.data.tag;
+        let tag = cls.data.data.tag;
         if (!tag) {
-          if (cls.data["useCustomTag"] !== true) tag = createTag(cls.name);
+          if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
           else return;
         }
 

@@ -7,6 +7,7 @@
 - Combatant duplication wasn't working
 - Custom class tags weren't working
 - Attacks for unlinked tokens were not working
+- ACP wasn't being subtracted from appropriate skill checks
 
 ## 0.78.1
 

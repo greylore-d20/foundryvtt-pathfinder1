@@ -2189,6 +2189,11 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
 
+    // Add armor check penalty
+    if (skl.acp) {
+      parts.push(`-@attributes.acp.total[${game.i18n.localize("PF1.ACPLong")}]`);
+    }
+
     // Add changes
     for (let c of changes) {
       if (!c.value) continue;

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.2
+
+### Bug Fixes
+
+- Combatant duplication wasn't working
+
 ## 0.78.1
 
 ### Bug Fixes

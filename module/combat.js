@@ -214,8 +214,13 @@ export const addChatMessageContextOptions = function (html, options) {
   return options;
 };
 
-const duplicateCombatantInitiativeDialog = function (combat, combatantId) {
-  const combatant = combat.combatants.filter((o) => o._id === combatantId)[0];
+const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
+  const combat = combats.find((c) => c.combatants.filter((o) => o.id === combatantId).length > 0);
+  if (!combat) {
+    ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
+    return;
+  }
+  const combatant = combat.combatants.filter((o) => o.id === combatantId)[0];
   if (!combatant) {
     ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
     return;
@@ -247,13 +252,15 @@ const duplicateCombatantInitiativeDialog = function (combat, combatantId) {
 
 export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
   console.debug("Duplicating combatant:", combatant);
-  combat.createEmbeddedEntity("Combatant", mergeObject(combatant, { initiative: initiative }, { inplace: false }));
+  combat.createEmbeddedDocuments("Combatant", [
+    mergeObject(duplicate(combatant.data), { initiative: initiative }, { inplace: false }),
+  ]);
 };
 
 export const addCombatTrackerContextOptions = function (result) {
   result.push({
     name: "PF1.DuplicateInitiative",
     icon: '<i class="fas fa-dice-d20"></i>',
-    callback: (li) => duplicateCombatantInitiativeDialog.call(this, this.combat, li.data("combatant-id")),
+    callback: (li) => duplicateCombatantInitiativeDialog.call(this, this.combats, li.data("combatant-id")),
   });
 };

@@ -2,6 +2,10 @@
 
 ## 0.78.4
 
+### Bug Fixes
+
+- AC bonuses from armor and shields weren't being applied
+
 ### Translations
 
 - Updated the French translation (thanks rectulo!)

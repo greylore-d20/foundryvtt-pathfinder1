@@ -926,16 +926,16 @@ export const addDefaultChanges = function (changes) {
   // Add armor bonuses from equipment
   this.data.items
     .filter((obj) => {
-      return obj.type === "equipment" && obj.data.equipped;
+      return obj.type === "equipment" && obj.data.data.equipped;
     })
     .forEach((item) => {
       let armorTarget = "aac";
-      if (item.data.equipmentType === "shield") armorTarget = "sac";
+      if (item.data.data.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
-      if (item.data.armor.value) {
-        let ac = item.data.armor.value;
-        if (item.data.broken) ac = Math.floor(ac / 2);
-        ac += item.data.armor.enh;
+      if (item.data.data.armor.value) {
+        let ac = item.data.data.armor.value;
+        if (item.data.data.broken) ac = Math.floor(ac / 2);
+        ac += item.data.data.armor.enh;
         changes.push(
           ItemChange.create({
             formula: ac.toString(),

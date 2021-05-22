@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - AC bonuses from armor and shields weren't being applied
+- Certain kinds of roll formulas weren't working, such as `/r 1d100cs>=50` (#838)
 
 ### Translations
 

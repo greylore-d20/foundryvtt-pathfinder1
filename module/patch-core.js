@@ -189,11 +189,9 @@ export async function PatchCore() {
   });
 
   // Patch OperatorTerm
-  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...[">=", "<=", ">", "<", "==", "!=", "?", ":"]].filter(
-    (value, idx, self) => {
-      return self.indexOf(value) === idx;
-    }
-  );
+  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...["?", ":"]].filter((value, idx, self) => {
+    return self.indexOf(value) === idx;
+  });
   OperatorTerm.REGEXP = new RegExp(
     OperatorTerm.OPERATORS.map((o) => {
       return Array.from(o).reduce((cur, o) => {

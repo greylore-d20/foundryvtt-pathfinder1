@@ -182,7 +182,7 @@ Hooks.once("init", function () {
   CONFIG.Item.documentClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
-  CONFIG.Dice.rolls[0] = RollPF;
+  CONFIG.Dice.rolls.splice(0, 0, RollPF);
 
   // Register System Settings
   registerSystemSettings();

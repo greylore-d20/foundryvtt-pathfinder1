@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.4
+
+### Translations
+
+- Updated the French translation (thanks rectulo!)
+
 ## 0.78.3
 
 ### Bug Fixes

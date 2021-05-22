@@ -108,11 +108,6 @@
     "AddNonCriticalDamage": "Ajouter la formule des dégâts de base",
     "AddNote": "Ajouter une note",
     "Advanced": "Avancé",
-    "AdvancedInfo": {
-      "Flags": {
-        "InfoBox": "Les flags peuvent être utilisés par des modules et des macros et ne font rien par elles-mêmes"
-      }
-    },
     "AdventureRanksToBG": "rangs d’aventure de Background",
     "Age": "Âge",
     "Alignment": "Alignement",
@@ -375,6 +370,7 @@
     "CondProne": "À terre",
     "CondShaken": "Secouée(e)",
     "CondSickened": "Fiévreux(se)",
+    "CondSleep": "Endormi",
     "CondStaggered": "Hors de combat",
     "CondStunned": "Étourdi(e)",
     "CondTypeBleed": "Saignement",
@@ -442,9 +438,17 @@
     "CriticalThreatRange": "Facteur de critique",
     "Currency": "Monnaie",
     "CurrencyCP": "PC",
+    "CurrencyCopperP": "Pièces de cuivre",
+    "CurrencyFailed": "Échec tranfert de monnaie:",
+    "CurrencyGMRequired": "Un MJ doit finir le transfert.",
     "CurrencyGP": "PO",
+    "CurrencyGoldP": "Pièces d'or",
+    "CurrencyInsufficient": "Monnaie insuffisante",
     "CurrencyPP": "PP",
+    "CurrencyPlatinumP": "Pièces de platine",
     "CurrencySP": "PA",
+    "CurrencySend": "Envoyer la monnaie",
+    "CurrencySilverP": "Pièces d'argent",
     "Current": "Actuel",
     "Custom": "Personnalisé",
     "CustomColor": "Couleur personnalisée",
@@ -563,6 +567,7 @@
     "ErrorActorNotFound": "Pas trouvé l'acteur avec l'ID {0}",
     "ErrorCantIdentify": "Vous n’êtes pas autorisé à identifier les objets",
     "ErrorCouldNotFindActorByName": "Ne peut pas trouver l’acteur par nom '{0}'",
+    "ErrorFeatDisabled": "Ce don est désactivé",
     "ErrorGenericPermission": "Vous n’êtes pas autorisé à entreprendre cette action",
     "ErrorInsufficientCharges": "Il n’y a plus suffisamment de charges dans {0}",
     "ErrorItemFormula": "Il y a une erreur de formule dans l’objet {0} sur l’acteur {1}",
@@ -767,6 +772,15 @@
             "Type": "Type",
             "TypeDesc": "la taille de l’armure ou du bouclier ou un autre type d’objet (vêtement, objet merveilleux...)"
           },
+          "Flags": {
+            "Desc": {
+              "Basic": "Les flags peuvent être utilisés par des modules et des macros. Les flags boléens ne font rien par eux-mêmes, mais les flags Dictionnaire peuvent être utilisés dans les jets, en plus de leur utilisation dans les macros et les modules.",
+              "DictionaryFlags": {
+                "Basic": "ous pouvez accéder aux Flags dictionnaire à l'intérieur des jets en utilisant  <code>@dFlags.(itemTag).(flagName)</code> ou avec <code>@item.dFlags.(flagName)</code> au sein de l'objet actuel."
+              }
+            },
+            "Label": "Flags"
+          },
           "Generic": {
             "Broken": "Brisé",
             "BrokenDesc": "Si l’objet est brisé comme dans les règles de base",
@@ -881,6 +895,7 @@
                 }
               },
               "SizeReach": {
+                "Desc": "Génère un nombre égal à la portée d'une créature d'une certaine taille et stature.",
                 "Examples": {
                   "0": "Revient à l'allonge au corps à corps normale si l'acteur était d'une catégorie de taille supérieure",
                   "1": "Revient à l'allonge qu'un Très grand et long acteur devrait avoir avec une arme d'allonge"
@@ -1233,6 +1248,7 @@
     "PrimaryAttack": "Attaque principale",
     "Priority": "Priorité",
     "Proficiency": "Compétence",
+    "ProficiencyPenalty": "Malus de compétence",
     "Proficient": "Expérimenté",
     "Quadruped": "Quadrupède",
     "Quantity": "Quantité",
@@ -1289,6 +1305,8 @@
     "SavingThrowRoll": "{0} Jet de sauvegarde",
     "SavingThrowWill": "Volonté",
     "School": "École",
+    "SearchFilterPlaceholder": "Filtre de recherche...",
+    "SecondaryAttack": "Attaque secondaire",
     "SeeText": "Voir texte",
     "SenseBS": "Vision aveugle",
     "SenseDV": "Vision dans le noir",
@@ -1717,6 +1735,7 @@
   },
   "TOKEN": {
     "VisionDarkvision": "Vision dans le noir",
-    "VisionLowLight": "vision nocturne"
+    "VisionLowLight": "vision nocturne",
+    "VisionLowLightMultiplier": "Multiplicateur vision nocturne"
   }
 }

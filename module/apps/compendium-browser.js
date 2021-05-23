@@ -247,6 +247,8 @@ export class CompendiumBrowser extends Application {
         return game.i18n.localize("PF1.Classes");
       case "races":
         return game.i18n.localize("PF1.Races");
+      case "buffs":
+        return game.i18n.localize("PF1.Buffs");
     }
     return this.type;
   }

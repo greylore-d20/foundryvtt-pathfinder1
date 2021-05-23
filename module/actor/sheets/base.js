@@ -20,6 +20,7 @@ import { LevelUpForm } from "../../apps/level-up.js";
 import { getSourceInfo } from "../apply-changes.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 import { getHighestChanges } from "../apply-changes.js";
+import { PF1 } from "../../config.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -131,6 +132,20 @@ export class ActorSheetPF extends ActorSheet {
         ".editor-content[data-edit='data.details.biography.value']",
       ],
     });
+  }
+
+  /**
+   * Returns an object containing feature type specific data relevant to feature organization.
+   *
+   * @static
+   * @type {object.<string, any>}
+   */
+  static get featTypeData() {
+    return {
+      template: {
+        hasActions: false,
+      },
+    };
   }
 
   get currentPrimaryTab() {
@@ -2271,52 +2286,23 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Organize Features
-    const features = {
-      // classes: { label: game.i18n.localize("PF1.ClassPlural"), items: [], canCreate: true, hasActions: false, dataset: { type: "class" }, isClass: true },
-      feat: {
-        label: game.i18n.localize("PF1.FeatPlural"),
-        items: [],
-        canCreate: true,
-        hasActions: true,
-        showFeatCount: true,
-        dataset: { type: "feat", "feat-type": "feat" },
-      },
-      classFeat: {
-        label: game.i18n.localize("PF1.ClassFeaturePlural"),
-        items: [],
-        canCreate: true,
-        hasActions: true,
-        dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeClassFeat"), "feat-type": "classFeat" },
-      },
-      trait: {
-        label: game.i18n.localize("PF1.TraitPlural"),
-        items: [],
-        canCreate: true,
-        hasActions: true,
-        dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTraits"), "feat-type": "trait" },
-      },
-      racial: {
-        label: game.i18n.localize("PF1.RacialTraitPlural"),
-        items: [],
-        canCreate: true,
-        hasActions: true,
-        dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeRacial"), "feat-type": "racial" },
-      },
-      misc: {
-        label: game.i18n.localize("PF1.Misc"),
-        items: [],
-        canCreate: true,
-        hasActions: true,
-        dataset: { type: "feat", "type-name": game.i18n.localize("PF1.Misc"), "feat-type": "misc" },
-      },
-      template: {
-        label: game.i18n.localize("PF1.TemplatePlural"),
-        items: [],
-        canCreate: true,
-        hasActions: false,
-        dataset: { type: "feat", "type-name": game.i18n.localize("PF1.FeatTypeTemplate"), "feat-type": "template" },
-      },
-    };
+    const features = {};
+    const featureDefaults = { items: [], canCreate: true, hasActions: true };
+    const featData = this.constructor.featTypeData;
+    for (const [featKey, featValue] of Object.entries(PF1.featTypes)) {
+      // Merge type specific data into common data template
+      features[featKey] = mergeObject(
+        featureDefaults,
+        {
+          // Fist generic data derived from the config object
+          label: PF1.featTypesPlurals[featKey] ?? featValue,
+          dataset: { type: "feat", "type-name": game.i18n.localize(featValue), "feat-type": featKey },
+          // Then any specific data explicitly set to override defaults
+          ...featData[featKey],
+        },
+        { inplace: false }
+      );
+    }
 
     for (let f of feats) {
       let k = f.data.featType;
@@ -2327,7 +2313,7 @@ export class ActorSheetPF extends ActorSheet {
         f.abilityType = "";
         f.abilityTypeShort = "";
       }
-      features[k].items.push(f);
+      features[k]?.items?.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
     classes.forEach((item) => {

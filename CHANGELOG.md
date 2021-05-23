@@ -8,10 +8,13 @@
 - Roll data wasn't available in TinyMCE editors (#840)
 - Item flags were no longer directly visible on items (#835)
 
-
 ### Changelog
 
 - Added roll flavor text for default attack modifiers (such as power attack)
+
+### API
+
+- Changed the actor sheet's handling of feature types, enabling features of non-default types to be displayed.
 
 ## 0.78.4
 

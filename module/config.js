@@ -679,6 +679,14 @@ export const PF1 = {
     template: "PF1.FeatTypeTemplate",
   },
 
+  featTypesPlurals: {
+    feat: "PF1.FeatPlural",
+    classFeat: "PF1.ClassFeaturePlural",
+    trait: "PF1.TraitPlural",
+    racial: "PF1.RacialTraitPlural",
+    template: "PF1.TemplatePlural",
+  },
+
   /**
    * Ability types, each with their short and their long form
    */

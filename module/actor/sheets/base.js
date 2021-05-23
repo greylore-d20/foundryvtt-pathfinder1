@@ -960,9 +960,9 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // CMB dragging
-    html.find("li.attribute.cmb").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "cmb"), false);
+    html.find("th.attribute.cmb").each((i, th) => {
+      th.setAttribute("draggable", true);
+      th.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "cmb"), false);
     });
 
     // Defenses dragging
@@ -984,9 +984,9 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Base Attack Bonus dragging
-    html.find("li.attribute.bab").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "bab"), false);
+    html.find("th.attribute.bab").each((i, th) => {
+      th.setAttribute("draggable", true);
+      th.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "bab"), false);
     });
 
     // Everything below here is only needed if the sheet is editable

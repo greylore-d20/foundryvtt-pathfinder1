@@ -7,6 +7,7 @@
 - Critical hits weren't rolling naturally (#842)
 - Roll data wasn't available in TinyMCE editors (#840)
 - Item flags were no longer directly visible on items (#835)
+- Drag and drop for CMB and BAB table headers was not enabled, preventing the creation of their respective macros.
 
 ### Changelog
 

@@ -1475,7 +1475,7 @@ export class ItemPF extends Item {
 
   async use({ ev = null, skipDialog = false } = {}) {
     if (this.type === "spell") {
-      return this.useSpell(this, ev, { skipDialog: skipDialog });
+      return this.useSpell(ev, { skipDialog: skipDialog });
     } else if (this.hasAction) {
       return this.useAttack({ ev: ev, skipDialog: skipDialog });
     }
@@ -1539,9 +1539,10 @@ export class ItemPF extends Item {
   /**
    * Cast a Spell, consuming a spell slot of a certain level
    *
-   * @param {MouseEvent} ev The click event
-   * @param root0
-   * @param root0.skipDialog
+   * @param {MouseEvent} ev - The click event
+   * @param {object} options - Additional options
+   * @param {boolean} options.skipDialog - Whether to skip the roll dialog
+   * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
   async useSpell(ev, { skipDialog = false } = {}) {
     if (!this.testUserPermission(game.user, "OWNER")) {

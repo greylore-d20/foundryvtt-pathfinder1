@@ -9,6 +9,7 @@
 - Item flags were no longer directly visible on items (#835)
 - Drag and drop for CMB and BAB table headers was not enabled, preventing the creation of their respective macros.
 - Conditional modifiers had no valid (sub-)targets
+- Spells could not be used (#844) (thanks websterguy!)
 
 ### Changelog
 

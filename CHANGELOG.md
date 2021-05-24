@@ -8,6 +8,11 @@
 - Roll data wasn't available in TinyMCE editors (#840)
 - Item flags were no longer directly visible on items (#835)
 
+
+### Changelog
+
+- Added roll flavor text for default attack modifiers (such as power attack)
+
 ## 0.78.4
 
 ### Bug Fixes

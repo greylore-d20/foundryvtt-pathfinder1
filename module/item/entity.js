@@ -1641,8 +1641,8 @@ export class ItemPF extends Item {
         // Point-Blank Shot
         if (form.find('[name="point-blank-shot"]').prop("checked")) {
           rollData.pointBlankBonus = 1;
-          attackExtraParts.push("@pointBlankBonus");
-          damageExtraParts.push("@pointBlankBonus");
+          attackExtraParts.push(`@pointBlankBonus[${game.i18n.localize("PF1.PointBlankShot")}]`);
+          damageExtraParts.push(`@pointBlankBonus[${game.i18n.localize("PF1.PointBlankShot")}]`);
         }
 
         // Haste
@@ -1655,7 +1655,7 @@ export class ItemPF extends Item {
         rapidShotAttackRequired = fullAttack && form.find('[name="rapid-shot"]').prop("checked");
         if (rapidShotAttackRequired) {
           rollData.rapidShotPenalty = -2;
-          attackExtraParts.push("@rapidShotPenalty");
+          attackExtraParts.push(`@rapidShotPenalty[${game.i18n.localize("PF1.RapidShot")}]`);
         }
 
         // Primary Attack (for natural attacks)
@@ -1690,9 +1690,12 @@ export class ItemPF extends Item {
             if (getProperty(rollData, "item.held") === "2h") rollData.powerAttackBonus *= 1.5;
             else if (getProperty(rollData, "item.held") === "oh") rollData.powerAttackBonus *= 0.5;
           }
-          damageExtraParts.push("@powerAttackBonus");
+          const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+            ? game.i18n.localize("PF1.DeadlyAim")
+            : game.i18n.localize("PF1.PowerAttack");
+          damageExtraParts.push(`@powerAttackBonus[${label}]`);
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
-          attackExtraParts.push("@powerAttackPenalty");
+          attackExtraParts.push(`@powerAttackPenalty[${label}]`);
         }
 
         // Conditionals

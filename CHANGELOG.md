@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.5
+
+### Bug Fixes
+
+- Critical hits weren't rolling naturally (#842)
+
 ## 0.78.4
 
 ### Bug Fixes

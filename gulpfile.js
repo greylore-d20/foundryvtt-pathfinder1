@@ -22,6 +22,9 @@ const fs = require("fs");
 const path = require("path");
 const { Transform } = require("stream");
 
+// BrowserSync for reloads
+const browserSync = require("browser-sync").create();
+
 /* ----------------------------------------- */
 /*  Constants
 /* ----------------------------------------- */
@@ -68,7 +71,8 @@ function compileLESS() {
       })
     )
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(DESTINATION));
+    .pipe(gulp.dest(DESTINATION))
+    .pipe(browserSync.stream());
 }
 
 /* ----------------------------------------- */
@@ -102,7 +106,8 @@ function rollup() {
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(DESTINATION));
+    .pipe(gulp.dest(DESTINATION))
+    .pipe(browserSync.stream());
 }
 
 /**
@@ -135,6 +140,10 @@ function deleteFiles() {
   return del(`${DESTINATION}/*`, { force: true });
 }
 
+/* ----------------------------------------- */
+/*  Watch and Reload
+/* ----------------------------------------- */
+
 /**
  * Watches for updates to less, js, and system files
  */
@@ -143,6 +152,31 @@ function watchUpdates() {
   gulp.watch(SYSTEM_FILES, copyFiles);
   gulp.watch(SYSTEM_MODULES, rollup);
 }
+
+/**
+ * Initialises browserSync
+ *
+ * @param {gulpCallback} done - Callback to signal task completion
+ */
+function serve(done) {
+  browserSync.init({
+    server: false,
+    proxy: {
+      target: "localhost:30000",
+      ws: true,
+      proxyOptions: {
+        changeOrigin: false,
+      },
+    },
+  });
+  done();
+}
+
+/**
+ * This callback signals gulp that a task is completed.
+ *
+ * @callback gulpCallback
+ */
 
 /* ----------------------------------------- */
 /*  Version management
@@ -387,6 +421,7 @@ function cleanPacks() {
 const watchTask = gulp.series(
   deleteFiles,
   gulp.parallel(compileLESS, copyFiles, rollup, gulp.series(cleanPacks, compilePacks)),
+  serve,
   watchUpdates
 );
 

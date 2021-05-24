@@ -6,6 +6,7 @@
 
 - Critical hits weren't rolling naturally (#842)
 - Roll data wasn't available in TinyMCE editors (#840)
+- Item flags were no longer directly visible on items (#835)
 
 ## 0.78.4
 

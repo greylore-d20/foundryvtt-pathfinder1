@@ -469,13 +469,13 @@ export class ItemSheetPF extends ItemSheet {
   _prepareItemFlags(data) {
     // Add boolean flags
     {
-      const flags = getProperty(data.item, "data.flags.boolean") || [];
+      const flags = getProperty(data.item.data, "data.flags.boolean") || [];
       setProperty(data, "flags.boolean", flags);
     }
 
     // Add dictionary flags
     {
-      const flags = getProperty(data.item, "data.flags.dictionary") || [];
+      const flags = getProperty(data.item.data, "data.flags.dictionary") || [];
       let result = [];
       for (let [k, v] of flags) {
         result.push({ key: k, value: v });

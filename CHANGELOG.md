@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Critical hits weren't rolling naturally (#842)
+- Roll data wasn't available in TinyMCE editors (#840)
 
 ## 0.78.4
 

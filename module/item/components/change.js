@@ -213,7 +213,7 @@ export class ItemChange {
         }
 
         // Reset ability modifiers
-        if (t.startsWith("data.abilities")) {
+        if (t.match(/^data\.abilities\.(?:[a-zA-Z0-9]+)\.(?:total|penalty|base)$/)) {
           actor.refreshAbilityModifiers();
         }
       }

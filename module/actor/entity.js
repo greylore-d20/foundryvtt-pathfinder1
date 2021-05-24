@@ -3806,8 +3806,18 @@ export class ActorPF extends ActorDataPF(Actor) {
       } else {
         const penalty = Math.abs(getProperty(this.data, `data.abilities.${k}.penalty`) || 0);
         const damage = getProperty(this.data, `data.abilities.${k}.damage`);
-        const result = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
-        setProperty(this.data, `data.abilities.${k}.mod`, result);
+        const newMod = Math.max(-5, Math.floor((total - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
+        setProperty(this.data, `data.abilities.${k}.mod`, newMod);
+
+        // Store previous ability score
+        if (!game.pf1.isMigrating && this._initialized && this._prevAbilityScores) {
+          const prevMod = this._prevAbilityScores?.[k].mod ?? 0;
+          const diffMod = newMod - prevMod;
+          const result = getProperty(this.data, `data.abilities.${k}.mod`) + diffMod;
+
+          setProperty(this._prevAbilityScores, `${k}.total`, total);
+          setProperty(this._prevAbilityScores, `${k}.mod`, result);
+        }
       }
     }
   }

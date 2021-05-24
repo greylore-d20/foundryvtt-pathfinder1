@@ -81,6 +81,12 @@ const getSortChangePriority = function () {
       "int",
       "wis",
       "cha",
+      "strMod",
+      "dexMod",
+      "conMod",
+      "intMod",
+      "wisMod",
+      "chaMod",
       "skills",
       "strSkills",
       "dexSkills",
@@ -190,6 +196,13 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       if (["base", "untypedPerm"].includes(changeType))
         return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
       return `data.abilities.${changeTarget}.total`;
+    case "strMod":
+    case "dexMod":
+    case "conMod":
+    case "intMod":
+    case "wisMod":
+    case "chaMod":
+      return `data.abilities.${changeTarget.slice(0, 3)}.mod`;
     case "ac":
       switch (changeType) {
         case "dodge":
@@ -1324,7 +1337,22 @@ export const addDefaultChanges = function (changes) {
         });
         break;
       case "pinned":
+        changes.push(
+          ItemChange.create({
+            formula: "min(0, @abilities.dex.mod)",
+            target: "ability",
+            subTarget: "dexMod",
+            modifier: "untyped",
+            operator: "set",
+            flavor: game.i18n.localize("PF1.CondPinned"),
+            priority: -1001,
+          })
+        );
         this.flags["loseDexToAC"] = true;
+        getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
+          name: game.i18n.localize("PF1.CondPinned"),
+          value: game.i18n.localize("PF1.DenyDexBonus"),
+        });
         for (const k of [
           "data.attributes.ac.normal.total",
           "data.attributes.ac.touch.total",

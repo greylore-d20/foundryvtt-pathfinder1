@@ -358,6 +358,7 @@ export class ItemSheetPF extends ItemSheet {
           modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
           modifier.isAttack = modifier.target === "attack";
           modifier.isDamage = modifier.target === "damage";
+          modifier.isSize = modifier.target === "size";
           modifier.isSpell = modifier.target === "spell";
         }
       }

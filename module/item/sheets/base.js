@@ -348,9 +348,9 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for attacks with conditionals
-    if (data.item.data.conditionals) {
+    if (data.data.conditionals) {
       data.conditionals = { targets: {}, conditionalModifierTypes: {} };
-      for (const conditional of data.item.data.conditionals) {
+      for (const conditional of data.data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.item.getConditionalTargets();
           modifier.subTargets = this.item.getConditionalSubTargets(modifier.target);

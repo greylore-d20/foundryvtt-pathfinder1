@@ -8,10 +8,12 @@
 - Roll data wasn't available in TinyMCE editors (#840)
 - Item flags were no longer directly visible on items (#835)
 - Drag and drop for CMB and BAB table headers was not enabled, preventing the creation of their respective macros.
+- Conditional modifiers had no valid (sub-)targets
 
 ### Changelog
 
 - Added roll flavor text for default attack modifiers (such as power attack)
+- Conditional modifiers can now adjust the size used for the roll (thanks Krzysztof Gutkowski!)
 
 ### API
 

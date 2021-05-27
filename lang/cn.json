@@ -60,6 +60,8 @@
   "SETTINGS.pf1HideReachMeasurementsH": "不显示触及范围，例如悬停在快捷操作上时",
   "SETTINGS.pf1DisplayIterativesN": "显示迭代数",
   "SETTINGS.pf1DisplayIterativesH": "将BAB拆分成迭代显示，而不是显示总值",
+  "SETTINGS.pf1AlternativeReachCornerRuleN":"替换触及规则",
+  "SETTINGS.pf1AlternativeReachCornerRuleH":"10尺触及范围不包括外围角落",
 
   "SETTINGS.pf1HealthConfigName": "设置生命值",
   "SETTINGS.pf1HealthConfigLabel": "设置生命值",
@@ -110,6 +112,7 @@
   "SETTINGS.pf1UnitsL": "游戏世界中使用的单位制",
 
   "TOKEN.VisionLowLight": "昏暗视觉",
+  "TOKEN.VisionLowLightMultiplier":"昏暗视觉乘数",
   "TOKEN.VisionDarkvision": "黑暗视觉",
 
   "PF1.ExperienceConfigName": "设置经验",
@@ -208,11 +211,6 @@
   "PF1.FlagsSave": "更新特质",
   "PF1.FlagsBoolean": "布尔标志",
   "PF1.FlagsDictionary": "字典标志",
-  "PF1.AdvancedInfo": {
-    "Flags": {
-      "InfoBox": "标志可以被模组或宏使用，而它们自己并不做任何事情。"
-    }
-  },
 
   "PF1.AbilityDamage": "属性伤害",
   "PF1.AbilityDrain": "属性吸取",
@@ -253,6 +251,13 @@
   "PF1.AbilityInt": "智力",
   "PF1.AbilityWis": "感知",
   "PF1.AbilityCha": "魅力",
+
+  "PF1.AbilityStrMod":"力量调整值",
+  "PF1.AbilityDexMod":"敏捷调整值",
+  "PF1.AbilityConMod":"体质调整值",
+  "PF1.AbilityIntMod":"智力调整值",
+  "PF1.AbilityWisMod":"感知调整值",
+  "PF1.AbilityChaMod":"魅力调整值",
 
   "PF1.AbilityShortStr": "力",
   "PF1.AbilityShortDex": "敏",
@@ -302,6 +307,7 @@
   "PF1.CondStunned": "震慑",
   "PF1.CondNauseated": "反胃",
   "PF1.CondDazed": "晕眩",
+  "PF1.CondSleep":"睡眠",
 
   "PF1.CondTypeBleed": "流血",
   "PF1.CondTypeBlind": "目盲",
@@ -370,6 +376,14 @@
   "PF1.CurrencyGP": "GP",
   "PF1.CurrencySP": "SP",
   "PF1.CurrencyCP": "CP",
+  "PF1.CurrencySend":"给钱",
+  "PF1.CurrencyPlatinumP":"白金币",
+  "PF1.CurrencyGoldP":"金币",
+  "PF1.CurrencySilverP":"银币",
+  "PF1.CurrencyCopperP":"铜币",
+  "PF1.CurrencyFailed":"现金转移失败:",
+  "PF1.CurrencyGMRequired":"需要一个GM来完成转移。",
+  "PF1.CurrencyInsufficient":"余额不足",
 
   "PF1.DistPersonal": "个人",
   "PF1.DistTouch": "接触",
@@ -426,9 +440,11 @@
 
   "PF1.BuffTarAC": "AC",
   "PF1.BuffTarACGeneric": "泛型",
-  "PF1.BuffTarACArmor": "护甲",
-  "PF1.BuffTarACShield": "盾牌",
-  "PF1.BuffTarACNatural": "天生护甲",
+  "PF1.BuffTarACArmor": "护甲AC",
+  "PF1.BuffTarACShield": "盾牌AC",
+  "PF1.BuffTarACNatural": "天生护甲AC",
+  "PF1.BuffTarACTouch":"接触AC",
+  "PF1.BuffTarACFlatFooted":"措手不及AC",
   "PF1.BuffTarStrSkills": "力量技能",
   "PF1.BuffTarDexSkills": "敏捷技能",
   "PF1.BuffTarConSkills": "体质技能",
@@ -445,6 +461,14 @@
   "PF1.BuffTarChaChecks": "魅力检定",
   "PF1.BuffTarBonusSkillRanks": "奖励技能等级",
   "PF1.BuffTarBonusFeats": "奖励专长",
+  "PF1.BuffTarAllAttackRolls":"所有攻击骰",
+  "PF1.BuffTarAllDamageRolls":"所有伤害骰",
+  "PF1.BuffTarAllSavingThrows":"所有豁免骰",
+  "PF1.BuffTarAllSkills":"所有技能",
+  "PF1.BuffTarAllAbilityChecks":"所有属性检定",
+  "PF1.BuffTarAllSpeeds":"所有速度",
+  "PF1.BuffTarMeleeAttack":"近战攻击骰",
+  "PF1.BuffTarRangedAttack":"远程攻击骰",
 
   "PF1.BuffTarSpells": "法术",
   "PF1.SpellBuffEffect": "效果",
@@ -519,6 +543,11 @@
   "PF1.SpellPrepPrepared": "准备",
   "PF1.SpellPrepSpontaneous": "自发",
 
+  "PF1.SpellsKnown":"已知法术",
+
+  "PF1.Arcanist":"奥能师",
+  "PF1.RedMantisAssassin":"红螳螂杀手",
+
   "PF1.SpellComponentVerbal": "言语",
   "PF1.SpellComponentSomatic": "姿势",
   "PF1.SpellComponentMaterial": "材料",
@@ -528,6 +557,18 @@
   "PF1.SpellComponentDivineFocusAlone": "DF",
   "PF1.SpellComponentDivineFocusMaterial": "M/DF",
   "PF1.SpellComponentDivineFocusFocus": "F/DF",
+
+  "PF1.AutoSpellClassLevelOffset": {
+    "Formula": "职业等级调整",
+    "InfoBox": "如果你有可以替换你职业等级的进阶职业，将其加在这里(例如 @classes.mysticTheurge.level)"
+  },
+
+  "PF1.LearnMoreSpell": "你可以再学1个法术",
+  "PF1.LearnMoreSpells": "你可以再学{quantity}个法术",
+  "PF1.PrepareMoreSpell": "你可以再准备1个法术",
+  "PF1.PrepareMoreSpells": "你可以再准备{quantity}个法术",
+  "PF1.SpellScoreTooLow": "你的属性值不足以施放该环级的法术",
+  "PF1.TooManySpells": "你多学了{quantity}个法术",
 
   "PF1.MeasureTemplateCone": "锥形",
   "PF1.MeasureTemplateCircle": "圆形",
@@ -742,6 +783,7 @@
   "PF1.ErrorCantIdentify": "你不能鉴定物品",
   "PF1.ErrorNoApplicableActorFoundForAction": "没有适用的角色来执行'{0}'",
   "PF1.ErrorCouldNotFindActorByName": "找不到名为'{0}'的角色",
+  "PF1.ErrorFeatDisabled":"该专长已禁用",
   "PF1.WarningNoSizeDie": "无法确定适合 {0} 的骰子大小，默认投掷 {1}",
   "PF1.WarningNoDiceAllowedInFormula": "{1}的公式'{0}'中不允许投骰",
   "PF1.WarningInsufficientAmmunition": "{0}类弹药不足",
@@ -786,6 +828,7 @@
   "PF1.BrowseFeats": "浏览特性",
   "PF1.BrowseClasses": "浏览职业",
   "PF1.BrowseRaces": "浏览种族",
+  "PF1.BrowseBuffs":"浏览增益",
 
   "PF1.LanguageAboleth": "底栖魔鱼语",
   "PF1.LanguageAbyssal": "深渊语",
@@ -986,6 +1029,7 @@
   "PF1.MinimumDamage": "最小伤害",
   "PF1.Drain": "汲取",
   "PF1.Penalty": "减值",
+  "PF1.Defense":"防御",
   "PF1.Defenses": "防御",
   "PF1.Description": "描述",
   "PF1.Details": "详情",
@@ -1020,6 +1064,7 @@
   "PF1.None": "无",
   "PF1.Notes": "备注",
   "PF1.Proficiency": "熟练",
+  "PF1.ProficiencyPenalty":"熟练减值",
   "PF1.Quadruped": "四足型",
   "PF1.ResourcePrimary": "资源 1",
   "PF1.ResourceSecondary": "资源 2",
@@ -1129,6 +1174,7 @@
   "PF1.CMB": "战技加值",
   "PF1.CMDAbbr": "CMD",
   "PF1.CMDFFAbbr": "失敏CMD",
+  "PF1.CMD":"战技防御",
   "PF1.Untrained": "未受训",
   "PF1.DeleteItemConfirmation": "你确定要删除该物品吗？",
   "PF1.UnsavedTinyMCE": "你有未保存的文本<br>你想要在关闭前保存吗?",
@@ -1206,6 +1252,11 @@
   "PF1.MaxDexterityModifier": "最大敏捷加值",
   "PF1.ArmorCheckPenalty": "防具检定减值",
   "PF1.ArcaneSpellFailure": "奥术失败率",
+  "PF1.AutoCalculateSpellSlots":"自动计算法术位",
+  "PF1.HasCantrips":"拥有戏法/祷念",
+  "PF1.Modifications":"调整",
+  "PF1.PreparePerDay":"每日可准备",
+  "PF1.CastPerDay":"每日可施放",
   "PF1.SkillsPerLevel": "技能/等级",
   "PF1.Source": "来源",
   "PF1.Unlimited": "无限",
@@ -1276,8 +1327,11 @@
   "PF1.PowerAttack": "猛力攻击",
   "PF1.DeadlyAim": "致命瞄准",
   "PF1.PrimaryAttack": "主要攻击",
-  "PF1.Enabled": "启用",
-  "PF1.Disabled": "禁用",
+  "PF1.SecondaryAttack":"次要攻击",
+  "PF1.Enabled": "已启用",
+  "PF1.Disabled": "已禁用",
+  "PF1.Enable":"启用",
+  "PF1.Disable":"禁用",
   "PF1.AttackPenalty": "攻击减值",
   "PF1.Low": "低",
   "PF1.Medium": "中",
@@ -1348,6 +1402,7 @@
   "PF1.Value": "总值",
   "PF1.TotalItems": "{0}总物品",
   "PF1.FilteredItems": "{0}筛选后物品",
+  "PF1.SearchFilterPlaceholder":"搜索...",
   "PF1.QuickInfo": "预览",
   "PF1.QuickActions": "快捷操作",
   "PF1.ConvertCurrency": "货币兑换",
@@ -1420,6 +1475,7 @@
   "PF1.Settings": "设置",
   "PF1.SpellbookUsage": "使用的法术书",
   "PF1.SpellSlotAbilityBonus": "法术位属性加值",
+  "PF1.AlternativeSpellbookName":"法术书名称",
   "PF1.StaticSize": "静态大小",
   "PF1.DomainSlotValue": "领域/学派法术位",
   "PF1.DomainSlotValueDesc": "领域/学派法术每环提供多少额外法术位?",
@@ -1436,6 +1492,17 @@
   "PF1.Migration.Start": "为PF1系统版本：{version}执行迁移中。 请稍等。",
   "PF1.Migration.Ongoing": "迁移进行中，请等待其完成。",
   "PF1.Migration.End": "PF1升级至版本：{version}成功!",
+  
+  "PF1.DenyDexBonus": "拒绝敏捷加值",
+
+  "PF1.Application": {
+    "ChangeTargetSelector": {
+      "Title": "选择改变目标"
+    },
+    "ContextNoteTargetSelector": {
+      "Title": "选择备注目标"
+    }
+  },
 
   "PF1.Info": {
     "AddClassDialog": "你可以按住Shift来跳过该对话。",
@@ -1482,6 +1549,12 @@
             },
             "HitDie": {
               "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
+            },
+            "SavingThrows": {
+              "Desc": "The total bonus of the appropriate saving throw for that actor. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
+            },
+            "SavingThrowsBase": {
+              "Desc": "The total base bonus of the appropriate saving throw for that actor, as given by class levels. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
             },
             "EncumbranceLevel": {
               "Desc": "The current encumbrance level of the actor.",
@@ -1565,6 +1638,27 @@
                 "0": "Rolls 1d8 for medium actors, and alters the damage formula according to the calling actor's current size.",
                 "1": "Translates a damage roll of 1d4 from a tiny actor (size '2') to a huge actor (size '6')<br/>Output: 3d6"
               }
+            },
+            "SizeReach": {
+              "Desc": "Generates a number equal to the reach of a creature of a certain size and stature.",
+              "Examples": {
+                "0": "Returns the normal melee reach as if the actor was 1 size category higher.",
+                "1": "Returns the reach a huge, long actor would have with a reach weapon."
+              }
+            }
+          }
+        },
+        "CompendiumBrowsers": {
+          "Label": "Compendium Browsers",
+          "Properties": {
+            "Label": "Compendium Properties",
+            "Hidden": {
+              "Label": "Hidden",
+              "Description": "Hidden compendiums will not show up for players in compendium browsers."
+            },
+            "Disabled": {
+              "Label": "Disabled",
+              "Description": "Disabled compendiums will not show up for anyone (including GMs) in compendium browsers."
             }
           }
         }
@@ -1734,6 +1828,15 @@
                 "Name": "result",
                 "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
               }
+            }
+          }
+        },
+        "Flags": {
+          "Label": "Flags",
+          "Desc": {
+            "Basic": "Flags can be used by modules and macros. Boolean Flags don't do anything by themselves, but Dictionary Flags can be used in rolls, in addition to their use in macros and modules.",
+            "DictionaryFlags": {
+              "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
             }
           }
         }

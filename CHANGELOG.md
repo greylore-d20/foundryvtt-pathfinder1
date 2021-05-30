@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.6
+
+### Changelog
+
+- Added saving throws to the NPC Lite sheet
+
 ## 0.78.5
 
 ### Bug Fixes

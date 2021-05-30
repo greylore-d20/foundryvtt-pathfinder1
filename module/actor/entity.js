@@ -1413,7 +1413,8 @@ export class ActorPF extends ActorDataPF(Actor) {
     this.sourceDetails = sourceDetails;
   }
 
-  _resetInherentTotals() {
+  _getInherentTotalsKeys() {
+    // Determine base keys
     const keys = {
       "data.attributes.ac.normal.total": 10,
       "data.attributes.ac.touch.total": 10,
@@ -1442,6 +1443,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       "data.attributes.woundThresholds.penalty": 0,
     };
 
+    // Determine skill keys
     try {
       const skillKeys = getChangeFlat.call(this, "skills", "skills");
       for (let k of skillKeys) {
@@ -1451,6 +1453,13 @@ export class ActorPF extends ActorDataPF(Actor) {
       console.warn("Could not determine skills for an unknown actor in the creation process", this);
     }
 
+    return keys;
+  }
+
+  _resetInherentTotals() {
+    const keys = this._getInherentTotalsKeys();
+
+    // Reset totals
     for (const [k, v] of Object.entries(keys)) {
       setProperty(this.data, k, v);
     }
@@ -2574,6 +2583,11 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     let parts = [];
+
+    // Get base
+    const base = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.base`);
+    if (base) parts.push(`${base}[${game.i18n.localize("PF1.Base")}]`);
+
     // Add changes
     let changeBonus = [];
     const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.subTarget));
@@ -2606,7 +2620,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     let props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
-    const savingThrow = this.data.data.attributes.savingThrows[savingThrowId];
     return DicePF.d20Roll({
       event: options.event,
       parts,
@@ -3532,7 +3545,11 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     // Set base saving throws
     for (let [k, v] of Object.entries(baseSavingThrows)) {
-      setProperty(result, `attributes.savingThrows.${k}.base`, v);
+      setProperty(
+        result,
+        `attributes.savingThrows.${k}.base`,
+        getProperty(this.data, `data.attributes.savingThrows.${k}.base`) || 0 + v
+      );
     }
 
     // Add more info for formulas

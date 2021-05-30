@@ -21,6 +21,7 @@
   
   <section class="primary-body">
     <div class="tab summary" data-group="primary" data-tab="summary">
+      {{!-- HD/XP reward --}}
       <div class="hd-level npc tooltip flexrow">
         <table>
           <thead>
@@ -128,6 +129,29 @@
       {{/unless}}
 
       <table>
+          <thead>
+              <tr>
+                  {{#each data.attributes.savingThrows as |savingThrow id|}}
+                  <th class="saving-throw" data-savingthrow="{{id}}">
+                      <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
+                  </th>
+                  {{/each}}
+              </tr>
+          </thead>
+
+          <tbody>
+              <tr>
+                  {{#each data.attributes.savingThrows as |savingThrow id|}}
+                  <td>
+                      <span class="text-box direct savingthrow-{{id}}-input" name="data.attributes.savingThrows.{{id}}.base">{{savingThrow.total}}</span>
+                  </td>
+                  {{/each}}
+              </tr>
+          </tbody>
+      </table>
+
+      <table>
+        {{!-- Initiative --}}
         <thead>
           <tr>
             <th class="attribute initiative">
@@ -142,6 +166,7 @@
           </tr>
         </thead>
 
+        {{!-- Size/Stature --}}
         <tbody>
           <tr>
             <td>
@@ -169,6 +194,7 @@
         </tbody>
       </table>
 
+      {{!-- Actions --}}
       <div class="combat-attacks">
         <section class="attacks-body">
           {{#each attacks as |section sid|}}

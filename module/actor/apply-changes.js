@@ -545,7 +545,7 @@ export const addDefaultChanges = function (changes) {
   const allClasses = [...classes, ...racialHD];
   for (let a of Object.keys(this.data.data.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
-    setProperty(this.data, k, 0);
+    setProperty(this.data, k, getProperty(this.data, `data.attributes.savingThrows.${a}.base`) || 0);
     // Using Fractional Base Bonuses
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
       let highStart = false;

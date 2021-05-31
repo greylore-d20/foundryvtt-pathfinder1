@@ -1402,6 +1402,7 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondFear"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({
@@ -1467,6 +1468,7 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondSickened"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({

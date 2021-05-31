@@ -2,6 +2,10 @@
 
 ## 0.78.6
 
+### Bug Fixes
+
+- The Sickend and Shaken condition showed a non-descript 'penalty' roll flavor (#854)
+
 ### Changelog
 
 - Added saving throws to the NPC Lite sheet

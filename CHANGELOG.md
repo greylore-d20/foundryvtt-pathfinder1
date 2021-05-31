@@ -12,6 +12,11 @@
 
 - Added saving throws to the NPC Lite sheet
 
+### Compendiums
+
+- Updated all weapon descriptions (thanks fadedshadow589!)
+- Added eastern weapons (thanks fadedshadow589!)
+
 ### Localization
 
 - Update the Chinese localization (thanks bnp800!)

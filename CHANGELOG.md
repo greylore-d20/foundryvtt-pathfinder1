@@ -9,6 +9,7 @@
 - Fixed an issue some users had with missing images (thanks mkahvi!)
 - Wound Thresholds weren't working correctly (#853)
 - Fixed showing [object Object] tags in items (#851)
+- Condition icons wouldn't show up on unlinked tokens
 
 ### Changelog
 

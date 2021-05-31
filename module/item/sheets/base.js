@@ -553,7 +553,7 @@ export class ItemSheetPF extends ItemSheet {
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
-      props.push(CONFIG.PF1.equipmentTypes[item.data.data.equipmentType]);
+      props.push(CONFIG.PF1.equipmentTypes[item.data.data.equipmentType][item.data.data.equipmentSubtype]);
       props.push(labels.armor);
     } else if (item.type === "feat") {
       props.push(labels.featType);

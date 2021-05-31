@@ -8,6 +8,7 @@
 - Fixed not working Fractional Base Bonuses (#856) (thanks mkahvi!)
 - Fixed an issue some users had with missing images (thanks mkahvi!)
 - Wound Thresholds weren't working correctly (#853)
+- Fixed showing [object Object] tags in items (#851)
 
 ### Changelog
 

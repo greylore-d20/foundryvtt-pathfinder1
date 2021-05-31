@@ -246,12 +246,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-      });
+      window.location.reload();
     },
   });
 

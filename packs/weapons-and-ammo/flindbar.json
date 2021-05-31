@@ -7,7 +7,7 @@
   "type": "weapon",
   "data": {
     "description": {
-      "value": "<p><em>This one-handed weapon is similar to a nunchaku in that it consists of a pair of bars linked with heavy chain. However, a flindbar’s bars are made of iron and are capped with a ring of spikes or studs. Since it’s much heaver than a nunchaku, it is not a light weapon.</em></p>",
+      "value": "<p><strong>Source</strong> <em>Monster Codex pg. 93</em>, <em>Classic Monsters Revisited pg. 14</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 9 gp <strong>Weight</strong> 6 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B and P; <strong>Special</strong> disarm, trip</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This one-handed weapon is similar to a nunchaku in that it consists of a pair of bars linked with heavy chain. However, a flindbar's bars are made of iron and are capped with a ring of spikes or studs. Since it's much heaver than a nunchaku, it is not a light weapon.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -17,8 +17,8 @@
     "price": 9,
     "identified": true,
     "hp": {
-      "max": 10,
-      "value": 10
+      "max": 5,
+      "value": 5
     },
     "hardness": 10,
     "carried": true,
@@ -26,7 +26,7 @@
       "price": 0,
       "name": ""
     },
-    "identifiedName": "",
+    "identifiedName": "Flindbar",
     "cl": 0,
     "aura": {
       "custom": false,
@@ -48,7 +48,7 @@
     "links": {
       "children": []
     },
-    "tag": "",
+    "tag": "flindbar",
     "useCustomTag": false,
     "flags": {
       "boolean": [],
@@ -72,15 +72,19 @@
       "prf": false,
       "rch": false,
       "thr": false,
-      "trp": true
+      "trp": true,
+      "grp": false,
+      "snd": false,
+      "dea": false,
+      "dst": false
     },
     "enh": null,
     "weaponData": {
       "damageRoll": "1d8",
       "damageType": "B and P",
-      "critRange": "20",
-      "critMult": "2",
-      "range": null,
+      "critRange": 20,
+      "critMult": 2,
+      "range": 0,
       "attackFormula": "",
       "damageFormula": "",
       "size": "med",
@@ -105,6 +109,10 @@
     },
     "damage": {
       "parts": []
+    },
+    "uses": {
+      "value": 0,
+      "max": 0
     }
   },
   "flags": {},

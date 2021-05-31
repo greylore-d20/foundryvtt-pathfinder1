@@ -7,7 +7,7 @@
   "type": "weapon",
   "data": {
     "description": {
-      "value": "<p>This heavy, reinforced helmet can be used to make melee attacks. The wearer may use the helmet when attempting&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Bull-Rush\">bull rush</a>&nbsp;maneuvers, granting a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Circumstance-Bonus\">circumstance bonus</a>&nbsp;on the check, but after completing the maneuver (whether successful or not), the wearer is&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Staggered\">staggered</a>&nbsp;until the end of his next turn.</p>\n<p>In addition, a dwarven boulder helmet grants a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Circumstance-Bonus\">circumstance bonus</a>&nbsp;to the wearer’s AC against&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Critical-Hits\">critical hit</a>&nbsp;confirmation rolls. A dwarven boulder helmet can be enchanted as a weapon (not as&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, despite providing some protection).</p>\n<p>A dwarven boulder helmet adds 20% to the wearer’s arcane spell failure chance. It occupies the head slot and is made of metal, not stone, meaning that it can be crafted from unusual materials as a metal weapon.</p>",
+      "value": "<p><strong>Source</strong> <em>Advanced Race Guide pg. 17</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 20 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> see text</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This heavy, reinforced helmet can be used to make melee attacks. The wearer may also use the helmet when attempting bull rush maneuvers, granting a +2 circumstance bonus on the check, but after completing the maneuver (whether successful or not), the wearer is staggered until the end of his next turn. In addition, the helmet grants a +2 circumstance bonus to the wearer's AC against critical hit confirmation rolls. A dwarven boulder helmet adds 20% to the wearer's arcane spell failure chance. It occupies the head slot and is made of metal, not stone, meaning that it can be crafted from unusual materials as a metal weapon. A dwarven boulder helmet can be enchanted as a weapon (not as armor, despite providing some protection). </p>",
       "chat": "",
       "unidentified": ""
     },
@@ -17,8 +17,8 @@
     "price": 20,
     "identified": true,
     "hp": {
-      "max": 10,
-      "value": 10
+      "max": 2,
+      "value": 2
     },
     "hardness": 10,
     "carried": true,
@@ -26,7 +26,7 @@
       "price": 0,
       "name": ""
     },
-    "identifiedName": "",
+    "identifiedName": "Dwarven Boulder Helmet",
     "cl": 0,
     "aura": {
       "custom": false,
@@ -48,7 +48,7 @@
     "links": {
       "children": []
     },
-    "tag": "",
+    "tag": "dwarvenBoulderHelmet",
     "useCustomTag": false,
     "flags": {
       "boolean": [],
@@ -72,15 +72,19 @@
       "prf": false,
       "rch": false,
       "thr": false,
-      "trp": false
+      "trp": false,
+      "grp": false,
+      "snd": false,
+      "dea": false,
+      "dst": false
     },
     "enh": null,
     "weaponData": {
       "damageRoll": "1d4",
       "damageType": "B",
-      "critRange": "20",
-      "critMult": "2",
-      "range": null,
+      "critRange": 20,
+      "critMult": 2,
+      "range": 0,
       "attackFormula": "",
       "damageFormula": "",
       "size": "med",
@@ -105,6 +109,10 @@
     },
     "damage": {
       "parts": []
+    },
+    "uses": {
+      "value": 0,
+      "max": 0
     }
   },
   "flags": {},

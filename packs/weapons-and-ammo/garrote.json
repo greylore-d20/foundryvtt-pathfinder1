@@ -7,7 +7,7 @@
   "type": "weapon",
   "data": {
     "description": {
-      "value": "<p>In order to use a garrote, your opponent must be helpless or unaware of you. You must make a grapple check (though you avoid the &ndash;4 penalty for not having two hands free) to successfully begin garroting your opponent. Sneak attack damage does not apply to a garrote. Your garroted opponent must make a concentration check (DC 20 + your CMB + level of the spell he&rsquo;s casting) to cast a spell with a verbal component, use a command word item, or use any magic requiring speech. You gain the following additional option when grappling with a garrote.</p>\n<p><strong>Choke</strong>: You cut off your target&rsquo;s air supply so he has to hold his breath (see Suffocation, and the Swim skill for additional information). Any round you do not maintain the choke, your opponent can take a breath and restart when he has to begin making Constitution checks.</p>",
+      "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 3</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 3 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> grapple, see text</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>A garrote is a length of wire or thin rope with wooden handles at both ends. The wire is placed across a victim's throat and crossed behind the neck; when the handles are pulled tight, the garrote strangles him. In order for you to use a garrote, your opponent must be helpless or unaware of you. You must make a grapple check (though you avoid the -4 penalty for not having two hands free) to successfully begin garroting your opponent. Sneak attack damage does not apply to a garrote. Your garroted opponent must make a concentration check (DC 20 + your CMB + level of the spell he's casting) to cast a spell with a verbal component, use a command word item, or use any magic requiring speech. You gain the following additional option when grappling with a garrote.</p><p></p><p><em>Choke</em>: You cut off your target's air supply so he has to hold his breath (see Suffocation on page 445 of the <em>Pathfinder RPG Core Rulebook</em>, and the Swim skill on page 108). Any round you do not maintain the choke, your opponent can take a breath and restart when he has to begin making Constitution checks.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -17,10 +17,10 @@
     "price": 3,
     "identified": true,
     "hp": {
-      "max": 2,
-      "value": 2
+      "max": 10,
+      "value": 10
     },
-    "hardness": 2,
+    "hardness": 10,
     "carried": true,
     "unidentified": {
       "price": 0,
@@ -48,7 +48,7 @@
     "links": {
       "children": []
     },
-    "tag": "",
+    "tag": "garrote",
     "useCustomTag": false,
     "flags": {
       "boolean": [],
@@ -74,15 +74,17 @@
       "thr": false,
       "trp": false,
       "grp": true,
-      "snd": false
+      "snd": false,
+      "dea": false,
+      "dst": false
     },
     "enh": null,
     "weaponData": {
       "damageRoll": "1d6",
       "damageType": "S",
-      "critRange": "20",
-      "critMult": "2",
-      "range": null,
+      "critRange": 20,
+      "critMult": 2,
+      "range": 0,
       "attackFormula": "",
       "damageFormula": "",
       "size": "med",
@@ -107,6 +109,10 @@
     },
     "damage": {
       "parts": []
+    },
+    "uses": {
+      "value": 0,
+      "max": 0
     }
   },
   "flags": {},

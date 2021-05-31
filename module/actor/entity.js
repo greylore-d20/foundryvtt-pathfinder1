@@ -3543,15 +3543,6 @@ export class ActorPF extends ActorDataPF(Actor) {
         }
       });
 
-    // Set base saving throws
-    for (let [k, v] of Object.entries(baseSavingThrows)) {
-      setProperty(
-        result,
-        `attributes.savingThrows.${k}.base`,
-        getProperty(this.data, `data.attributes.savingThrows.${k}.base`) || 0 + v
-      );
-    }
-
     // Add more info for formulas
     if (this.data.items) {
       result.armor = { type: 0 };

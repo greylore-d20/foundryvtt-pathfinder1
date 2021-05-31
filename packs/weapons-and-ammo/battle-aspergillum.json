@@ -7,7 +7,7 @@
   "type": "weapon",
   "data": {
     "description": {
-      "value": "<p>Named for the common aspergillum, a mace-like tool used by priests to sprinkle holy water, this light mace has a hollow head and a metal plug to fit the hollow’s neck.</p>\n<p><strong>Benefit</strong>: When the mace strikes a creature, holy water sprinkles out through tiny holes throughout the weapon’s head; creatures subject to damage from holy water take 1 point of damage in addition to the normal effect of being struck by the mace (a nonmagical aspergillum can deal holy water damage to an incorporeal creature in this manner, even if the mace itself deals no damage). After 5 hits, the battle aspergillum is empty and needs to be refilled.</p>\n<p>Filling it with holy water is a standard action that provokes an attack of opportunity (like drinking a potion). A filled aspergillum is normally carried upright, otherwise the holy water leaks out as the weapon moves.</p>",
+      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 17</em>, <em>Advanced Player's Guide pg. 176</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> see text</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><p><strong>Weapon Groups</strong> Hammers</p><h3 class=\"framing\">Description</h3><p>Named for the common aspergillum, a macelike tool used by priests to sprinkle holy water, this light mace has a hollow head and a metal plug closing off the hole through which the head is filled. When the mace strikes a creature, holy water sprinkles out through tiny holes throughout the weapon's head; creatures subject to damage from holy water take 1 point of damage in addition to the normal effect of being struck by the mace (a nonmagical aspergillum can deal holy water damage to an incorporeal creature in this manner, even if the mace itself deals no damage). After 5 hits, the battle aspergillum is empty and needs to be refilled. Filling it with holy water is a standard action that provokes attacks of opportunity (like drinking a potion). A filled aspergillum is normally carried upright, to prevent the holy water from leaking out as the weapon moves.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -17,8 +17,8 @@
     "price": 5,
     "identified": true,
     "hp": {
-      "max": 10,
-      "value": 10
+      "max": 2,
+      "value": 2
     },
     "hardness": 10,
     "carried": true,
@@ -26,7 +26,7 @@
       "price": 0,
       "name": ""
     },
-    "identifiedName": "",
+    "identifiedName": "Battle Aspergillum",
     "cl": 0,
     "aura": {
       "custom": false,
@@ -48,7 +48,7 @@
     "links": {
       "children": []
     },
-    "tag": "",
+    "tag": "battleAspergillum",
     "useCustomTag": false,
     "flags": {
       "boolean": [],
@@ -72,15 +72,19 @@
       "prf": false,
       "rch": false,
       "thr": false,
-      "trp": false
+      "trp": false,
+      "grp": false,
+      "snd": false,
+      "dea": false,
+      "dst": false
     },
-    "enh": "",
+    "enh": null,
     "weaponData": {
       "damageRoll": "1d6",
       "damageType": "B",
-      "critRange": "20",
-      "critMult": "2",
-      "range": "",
+      "critRange": 20,
+      "critMult": 2,
+      "range": 0,
       "attackFormula": "",
       "damageFormula": "",
       "size": "med",
@@ -105,6 +109,10 @@
     },
     "damage": {
       "parts": []
+    },
+    "uses": {
+      "value": 0,
+      "max": 0
     }
   },
   "flags": {},

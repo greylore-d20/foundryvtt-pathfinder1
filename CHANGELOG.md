@@ -11,6 +11,10 @@
 
 - Added saving throws to the NPC Lite sheet
 
+### Localization
+
+- Update the Chinese localization (thanks bnp800!)
+
 ## 0.78.5
 
 ### Bug Fixes

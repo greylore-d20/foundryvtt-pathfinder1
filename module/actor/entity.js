@@ -639,6 +639,15 @@ export class ActorPF extends ActorDataPF(Actor) {
     // Update wound threshold
     this.updateWoundThreshold();
 
+    // Apply wound thresholds to skills
+    const woundPenalty = this.data.data.attributes.woundThresholds?.penalty ?? 0;
+    if (woundPenalty) {
+      for (let k of this.allSkills) {
+        const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
+        setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
+      }
+    }
+
     // Reset CR
     if (this.data.type === "npc") {
       setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
@@ -791,7 +800,6 @@ export class ActorPF extends ActorDataPF(Actor) {
               casterType
             ];
           const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
-          // rollData.cl = classLevel;
           rollData.ablMod = spellbookAbilityMod;
 
           const allLevelModFormula =
@@ -2203,6 +2211,15 @@ export class ActorPF extends ActorDataPF(Actor) {
       parts.push(`-@attributes.acp.total[${game.i18n.localize("PF1.ACPLong")}]`);
     }
 
+    // Add Wound Thresholds info
+    if (rollData.attributes.woundThresholds?.penalty > 0) {
+      parts.push(
+        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+        )}]`
+      );
+    }
+
     // Add changes
     for (let c of changes) {
       if (!c.value) continue;
@@ -2613,8 +2630,14 @@ export class ActorPF extends ActorDataPF(Actor) {
     }
 
     // Wound Threshold penalty
-    if (rollData.attributes.woundThresholds.penalty > 0)
+    if (rollData.attributes.woundThresholds.penalty > 0) {
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
+      parts.push(
+        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+        )}]`
+      );
+    }
 
     // Roll saving throw
     let props = this.getDefenseHeaders();
@@ -3067,6 +3090,19 @@ export class ActorPF extends ActorDataPF(Actor) {
       }
     }
     return null;
+  }
+
+  get allSkills() {
+    let result = [];
+    for (let [k, s] of Object.entries(this.data.data.skills)) {
+      result.push(k);
+      if (s.subSkills) {
+        for (let k2 of Object.keys(s.subSkills)) {
+          result.push(`${k}.subSkills.${k2}`);
+        }
+      }
+    }
+    return result;
   }
 
   get allNotes() {

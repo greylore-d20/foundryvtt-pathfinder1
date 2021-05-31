@@ -2708,9 +2708,9 @@ export class ItemPF extends Item {
     // Add wound thresholds penalties
     if (rollData.attributes.woundThresholds?.penalty > 0) {
       parts.push(
-        `- @attributes.woundThresholds.penalty${
-          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.penalty]
-        }`
+        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+        )}]`
       );
     }
 

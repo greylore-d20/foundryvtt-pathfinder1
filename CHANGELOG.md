@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - The Sickend and Shaken condition showed a non-descript 'penalty' roll flavor (#854)
+- Fixed not working Fractional Base Bonuses (#856) (thanks mkahvi!)
 
 ### Changelog
 

@@ -470,10 +470,10 @@ export class ActorPF extends ActorDataPF(Actor) {
           k,
           Math.floor(
             classes.reduce((cur, obj) => {
-              const babScale = getProperty(obj, "data.bab") || "";
-              if (babScale === "high") return cur + obj.data.level;
-              if (babScale === "med") return cur + obj.data.level * 0.75;
-              if (babScale === "low") return cur + obj.data.level * 0.5;
+              const babScale = getProperty(obj, "data.data.bab") || "";
+              if (babScale === "high") return cur + obj.data.data.level;
+              if (babScale === "med") return cur + obj.data.data.level * 0.75;
+              if (babScale === "low") return cur + obj.data.data.level * 0.5;
               return cur;
             }, 0)
           )

@@ -319,8 +319,6 @@
         background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
       }
       select {
-        flex: 0 0 112px;
-        width: 112px;
         background: rgba(0, 0, 0, 0.05);
       }
       select:invalid {
@@ -347,7 +345,6 @@
       }
       .change-target,
       .context-note-target {
-        flex: 0 0 160px;
         border: 1px solid @colorTan;
         background: rgba(0, 0, 0, 0.05);
         white-space: nowrap;
@@ -361,6 +358,11 @@
 
         &:hover {
           box-shadow: 0 0 8px @colorRed;
+        }
+
+        &.invalid {
+          border: 2px solid @colorRust;
+          background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
         }
       }
       .conditional-default {

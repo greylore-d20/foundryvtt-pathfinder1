@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.7
+
+### Changelog
+
+- Made items' changes tabs look a bit prettier
+
 ## 0.78.6
 
 ### Bug Fixes

@@ -2,6 +2,10 @@
 
 ## 0.78.7
 
+### Bug Fixes
+
+- Fixed not being able to alter activation data with the Unchained Action Economy rules (#857)
+
 ### Changelog
 
 - Made items' changes tabs look a bit prettier

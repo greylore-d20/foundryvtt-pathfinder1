@@ -222,7 +222,7 @@ export class CurrencyTransfer extends FormApplication {
 
     if (!amount || Object.values(sourceCurrency).find((c) => c < 0)) return false;
 
-    if (!sourceDoc.hasPerm(game.user, 3) || !destDoc.hasPerm(game.user, 3)) {
+    if (!sourceDoc.testUserPermission(game.user, 3) || !destDoc.testUserPermission(game.user, 3)) {
       if (!game.users.find((o) => o.active && o.isGM)) return this._failed("PF1.CurrencyGMRequired"), false;
       game.socket.emit("system.pf1", {
         eventType: "currencyTransfer",

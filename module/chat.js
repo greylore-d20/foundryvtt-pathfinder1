@@ -73,7 +73,7 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     }
   }
 
-  if (!actor || (actor && actor.hasPerm(game.user, "LIMITED"))) return;
+  if (!actor || (actor && actor.testUserPermission(game.user, "LIMITED"))) return;
 
   // Hide info
   html.find(".gm-sensitive").remove();

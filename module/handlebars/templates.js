@@ -29,7 +29,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/items/parts/item-activation.hbs",
     "systems/pf1/templates/items/parts/item-description.hbs",
     "systems/pf1/templates/items/parts/item-changes.hbs",
-    "systems/pf1/templates/items/parts/item-notes.hbs",
     "systems/pf1/templates/items/parts/item-template.hbs",
     "systems/pf1/templates/items/parts/item-links.hbs",
     "systems/pf1/templates/items/parts/item-aura.hbs",

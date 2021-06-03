@@ -497,6 +497,12 @@ export class ActorSheetPF extends ActorSheet {
       const changeBonus = getHighestChanges(
         changes.filter((c) => {
           c.applyChange(this.document);
+          if (c.parent || c.flavor) {
+            sourceData.push({
+              name: c.parent?.name ?? c.flavor,
+              value: c.value,
+            });
+          }
           return !["set", "="].includes(c.operator);
         }),
         { ignoreTarget: true }

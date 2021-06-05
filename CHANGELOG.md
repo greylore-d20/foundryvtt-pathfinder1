@@ -7,6 +7,7 @@
 - Fixed not being able to alter activation data with the Unchained Action Economy rules (#857)
 - Bonus feats from changes weren't showing in the sources list
 - Condition icons wouldn't show up on linked tokens (#867)
+- Fine creatures were too small, and thus made changes to token presets below Medium size (may need manual alterations to previous tokens, if desired) (#864)
 
 ### Changelog
 

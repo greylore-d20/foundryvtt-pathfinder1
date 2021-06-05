@@ -346,10 +346,10 @@ export const PF1 = {
    * The size values for Tokens according to the creature's size
    */
   tokenSizes: {
-    fine: { w: 1, h: 1, scale: 0.2 },
-    dim: { w: 1, h: 1, scale: 0.4 },
-    tiny: { w: 1, h: 1, scale: 0.6 },
-    sm: { w: 1, h: 1, scale: 0.8 },
+    fine: { w: 1, h: 1, scale: 0.45 },
+    dim: { w: 1, h: 1, scale: 0.6 },
+    tiny: { w: 1, h: 1, scale: 0.75 },
+    sm: { w: 1, h: 1, scale: 0.9 },
     med: { w: 1, h: 1, scale: 1 },
     lg: { w: 2, h: 2, scale: 1 },
     huge: { w: 3, h: 3, scale: 1 },

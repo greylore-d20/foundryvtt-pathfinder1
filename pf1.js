@@ -579,7 +579,7 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
 
         // Toggle status icons
         if (userId === game.user.id) {
-          // await actor.toggleConditionStatusIcons();
+          await actor.toggleConditionStatusIcons();
         }
       }
     }

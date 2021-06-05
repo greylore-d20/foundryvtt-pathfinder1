@@ -1140,7 +1140,6 @@ export class ItemPF extends Item {
     const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
     createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
     const effect = ActiveEffect.create(createData, { parent: this.parent });
-    // await effect.create();
 
     return effect;
   }

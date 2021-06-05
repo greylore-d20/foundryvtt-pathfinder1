@@ -36,6 +36,7 @@ import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
 import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { RollPF } from "./module/roll.js";
+import { AbilityTemplate } from "./module/pixi/ability-template.js";
 import {
   getItemOwner,
   sizeDieExt,

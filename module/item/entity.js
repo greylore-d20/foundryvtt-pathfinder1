@@ -2356,12 +2356,14 @@ export class ItemPF extends Item {
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
         const saveDC = this.getDC(rollData);
-        const token = this.parentActor?.token;
+        const token =
+          this.parentActor?.token ??
+          canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
 
         const templateData = mergeObject(
           chatTemplateData,
           {
-            tokenId: token ? token.uuid : null,
+            tokenUuid: token ? token.document.uuid : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,
@@ -3198,9 +3200,9 @@ export class ItemPF extends Item {
    */
   static async _getChatCardActor(card) {
     // Case 1 - a synthetic actor from a Token
-    const tokenKey = card.dataset.tokenId;
-    if (tokenKey) {
-      return (await fromUuid(tokenKey))?.actor;
+    const tokenUuid = card.dataset.tokenId;
+    if (tokenUuid) {
+      return (await fromUuid(tokenUuid))?.actor;
     }
 
     // Case 2 - use Actor ID directory

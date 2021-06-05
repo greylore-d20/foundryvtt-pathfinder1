@@ -160,20 +160,21 @@ export const showAttackReach = function (token, attack) {
   return result;
 };
 
-export const addReachCallback = function (data, html) {
+export const addReachCallback = async function (data, html) {
   let results = [];
 
   // Don't do anything under certain circumstances
-  const itemID = getProperty(data, "flags.pf1.metadata.item");
-  if (!itemID) return results;
+  const itemId = getProperty(data, "flags.pf1.metadata.item");
+  if (!itemId) return results;
 
-  const speakerData = data.speaker;
-  if (!canvas.scene || canvas.scene.id !== speakerData.scene) return results;
-
-  const token = canvas.tokens.placeables.find((o) => o.id === speakerData.token);
+  const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
+  let token;
+  if (tokenUuid) {
+    token = (await fromUuid(tokenUuid))?.object;
+  }
   if (!token || !token.actor) return results;
 
-  const item = token.actor.items.find((o) => o.id === itemID);
+  const item = token.actor.items.find((o) => o.id === itemId);
   if (!item) return results;
 
   let highlight;

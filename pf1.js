@@ -465,10 +465,11 @@ Hooks.on("canvasInit", function () {
     }
 
     // Add reach measurements
-    game.messages.forEach((m) => {
+    game.messages.forEach(async (m) => {
       const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
       if (!elem || (elem && !elem.length)) return;
-      const results = addReachCallback(m.data, elem);
+      const results = await addReachCallback(m.data, elem);
+      console.log(results);
       callbacks.push(...results);
     });
 
@@ -480,12 +481,12 @@ Hooks.on("canvasInit", function () {
     }
   });
 
-  Hooks.on("renderChatMessage", (app, html, data) => {
+  Hooks.on("renderChatMessage", async (app, html, data) => {
     // Wait for setup after this
     if (!game.ready) return;
 
     // Add reach measurements on hover
-    const results = addReachCallback(data.message, html);
+    const results = await addReachCallback(data.message, html);
     callbacks.push(...results);
   });
 }

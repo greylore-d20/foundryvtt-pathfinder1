@@ -79,10 +79,10 @@ export const hideGMSensitiveInfo = function (app, html, data) {
   html.find(".gm-sensitive").remove();
 };
 
-export const addChatCardTitleGradient = function (app, html, data) {
+export const addChatCardTitleGradient = async function (app, html, data) {
   const card = html.find(".chat-card")[0];
   if (!card) return;
-  const actor = ItemPF._getChatCardActor(card);
+  const actor = await ItemPF._getChatCardActor(card);
   if (!actor) return;
   const item = actor.items.get(card.dataset.itemId);
   if (!item) return;

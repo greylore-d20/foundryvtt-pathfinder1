@@ -99,7 +99,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     // Roll saving throw
     if (action === "defense-save") {
-      const actor = ItemPF._getChatCardActor(card);
+      const actor = await ItemPF._getChatCardActor(card);
       const saveId = button.dataset.save;
       if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt() });
     } else if (action === "save") {
@@ -2812,6 +2812,9 @@ export class ActorPF extends ActorDataPF(Actor) {
       cmdNotes.push(wTlabel);
     }
 
+    // Get actor's token
+    const token = this.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.id);
+
     // Create message
     const d = this.data.data;
     const data = {
@@ -2835,6 +2838,7 @@ export class ActorPF extends ActorDataPF(Actor) {
         drNotes: drNotes,
         energyResistance: energyResistance,
       },
+      tokenUuid: token?.document.uuid,
     };
     // Add regeneration and fast healing
     if ((getProperty(d, "traits.fastHealing") || "").length || (getProperty(d, "traits.regen") || "").length) {
@@ -2843,6 +2847,7 @@ export class ActorPF extends ActorDataPF(Actor) {
         fastHealing: d.traits.fastHealing,
       };
     }
+
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
       speaker: ChatMessage.getSpeaker({ actor: this }),
     });

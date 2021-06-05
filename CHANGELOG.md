@@ -10,6 +10,7 @@
 ### Changelog
 
 - Made items' changes tabs look a bit prettier
+- Name iterative attacks in roll flavors (old extra attacks may need to manually receive a flavor) (#866)
 
 ## 0.78.6
 

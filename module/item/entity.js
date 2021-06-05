@@ -1761,7 +1761,7 @@ export class ItemPF extends Item {
               frollData["formulaicAttack"] = i + 1; // Add and update attack counter
               const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
               allAttacks.push({
-                bonus: bonus.toString(),
+                bonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
                 label: fatlabel.format(i + 2),
               });
             }
@@ -1920,7 +1920,10 @@ export class ItemPF extends Item {
           let attack = new ChatAttack(this, { label: atk.label, primaryAttack: primaryAttack, rollData: rollData });
 
           // Add attack roll
-          await attack.addAttack({ bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts });
+          await attack.addAttack({
+            extraParts: duplicate(attackExtraParts).concat([atk.bonus]),
+            conditionalParts,
+          });
 
           // Add damage
           if (this.hasDamage) {

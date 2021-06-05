@@ -16,6 +16,7 @@
 
 - Made items' changes tabs look a bit prettier
 - Name iterative attacks in roll flavors (old extra attacks may need to manually receive a flavor) (#866)
+- Allow users with permission to modify world settings to reach world tooltip settings (#847)
 
 ### API
 

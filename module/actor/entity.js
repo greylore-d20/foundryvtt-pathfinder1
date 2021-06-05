@@ -3791,7 +3791,7 @@ export class ActorPF extends ActorDataPF(Actor) {
       if (!actor.testUserPermission(game.user, "OWNER")) continue;
       const fx = [...actor.effects];
 
-      // Create and delete ActiveEffects
+      // Create and delete buff ActiveEffects
       let toCreate = [];
       let toDelete = [];
       for (let [id, obj] of Object.entries(buffTextures)) {
@@ -3799,32 +3799,31 @@ export class ActorPF extends ActorDataPF(Actor) {
         if (obj.active && !existing) toCreate.push(obj.item.getRawEffectData());
         else if (!obj.active && existing) toDelete.push(existing.id);
       }
-      promises.push(
-        (async () => {
-          if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
-          if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);
-        })()
-      );
 
-      for (let con of CONFIG.statusEffects) {
-        // Don't toggle non-condition effects
-        if (CONFIG.PF1.conditions[con.id] == null) continue;
-
-        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === con.id);
-        const hasCondition = actor.data.data.attributes.conditions[con.id] === true;
+      // Create and delete condition ActiveEffects
+      for (let k of Object.keys(CONFIG.PF1.conditions)) {
+        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === k);
+        const hasCondition = actor.data.data.attributes.conditions[k] === true;
         const hasEffectIcon = idx >= 0;
+        const obj = t.object ?? t;
 
-        if (hasCondition !== hasEffectIcon) {
-          const obj = t.object ?? t;
-          promises.push(
-            obj.toggleEffect(con, {
-              midUpdate: true,
-            })
-          );
+        if (hasCondition && !hasEffectIcon) {
+          toCreate.push({
+            "flags.core.statusId": k,
+            name: CONFIG.PF1.conditions[k],
+            icon: CONFIG.PF1.conditionTextures[k],
+          });
+        } else if (!hasCondition && hasEffectIcon) {
+          const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === k);
+          toDelete.push(...removeEffects.map((e) => e.id));
         }
       }
+
+      console.log(toCreate, toDelete);
+
+      if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
+      if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);
     }
-    await Promise.all(promises);
     delete this._runningFunctions["toggleConditionStatusIcons"];
   }
 

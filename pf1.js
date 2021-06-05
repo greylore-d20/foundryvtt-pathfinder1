@@ -166,6 +166,7 @@ Hooks.once("init", function () {
     config: PF1,
     tooltip: null,
     runUnitTests,
+    AbilityTemplate,
     // Function library
     functions: {
       getBuffTargets,

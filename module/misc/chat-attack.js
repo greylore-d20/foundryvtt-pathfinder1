@@ -83,7 +83,7 @@ export class ChatAttack {
     data.critMult = 1;
     data.critCount = 0;
     // Add critical confirmation bonus
-    data.critConfirmBonus = data.item.critConfirmBonus;
+    data.critConfirmBonus = RollPF.safeTotal(data.item.critConfirmBonus || "0") ?? 0;
     // Determine ability multiplier
     if (data.item.ability.damageMult != null) data.ablMult = data.item.ability.damageMult;
     // Lower ability multiplier for secondary attacks
@@ -136,7 +136,9 @@ export class ChatAttack {
     let data = this.attack;
     if (critical === true) {
       data = this.critConfirm;
-      extraParts.push("@critConfirmBonus");
+      if (this.rollData.critConfirmBonus !== 0) {
+        extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
+      }
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
     } else {
@@ -158,6 +160,7 @@ export class ChatAttack {
       primaryAttack: this.primaryAttack,
     });
     data.roll = roll;
+    if (critical) console.log(bonus, extraParts);
     let d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
     let critType = 0;
     const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);

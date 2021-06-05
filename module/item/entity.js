@@ -2736,7 +2736,7 @@ export class ItemPF extends Item {
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
-    let roll = RollPF.safeRoll([rollData.d20, ...parts].join("+"), rollData);
+    let roll = RollPF.safeRoll([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData);
     return roll;
   }
 

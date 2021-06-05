@@ -3821,8 +3821,9 @@ export class ActorPF extends ActorDataPF(Actor) {
         const hasEffectIcon = idx >= 0;
 
         if (hasCondition !== hasEffectIcon) {
+          const obj = t.object ?? t;
           promises.push(
-            t.object.toggleEffect(con, {
+            obj.toggleEffect(con, {
               midUpdate: true,
             })
           );

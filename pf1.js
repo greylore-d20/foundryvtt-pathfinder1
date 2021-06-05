@@ -469,7 +469,6 @@ Hooks.on("canvasInit", function () {
       const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
       if (!elem || (elem && !elem.length)) return;
       const results = await addReachCallback(m.data, elem);
-      console.log(results);
       callbacks.push(...results);
     });
 

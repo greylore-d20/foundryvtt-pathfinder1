@@ -302,6 +302,12 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
+    onChange: () => {
+      // Refresh canvas sight
+      canvas.lighting.initializeSources();
+      canvas.lighting.refresh();
+      canvas.sight.refresh();
+    },
   });
 
   game.settings.register("pf1", "sharedVisionMode", {

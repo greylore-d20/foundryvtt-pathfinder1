@@ -1782,12 +1782,6 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   _onUpdate(data, options, userId, context) {
-    for (let k of Object.keys(data)) {
-      if (k.startsWith("data.attributes.vision")) {
-        canvas.sight.initializeTokens();
-      }
-    }
-
     // Resize token(s)
     {
       const sizeKey = getProperty(data, "data.traits.size");

@@ -32,10 +32,11 @@ export function patchLowLightVision() {
     if (game.settings.get("pf1", "lowLightVisionMode")) {
       return lowLightTokens.filter((o) => o._controlled).length > 0;
     }
-    return (
-      (!relevantTokens.filter((o) => o._controlled).length && lowLightTokens.length) ||
-      lowLightTokens.filter((o) => o._controlled).length > 0
-    );
+
+    const hasControlledTokens = relevantTokens.filter((o) => o._controlled).length > 0;
+    const hasControlledLowLightTokens = lowLightTokens.filter((o) => o._controlled).length > 0;
+    const hasLowLightTokens = lowLightTokens.length > 0;
+    return (!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens;
   };
 
   SightLayer.prototype.lowLightMultiplier = function () {
@@ -52,8 +53,10 @@ export function patchLowLightVision() {
         result = Math.max(result, multiplier);
       }
     } else {
-      const hasControlledTokens = lowLightTokens.filter((t) => t._controlled).length > 0;
-      if (hasControlledTokens) {
+      const hasControlledTokens = relevantTokens.filter((o) => o._controlled).length > 0;
+      const hasControlledLowLightTokens = lowLightTokens.filter((o) => o._controlled).length > 0;
+      const hasLowLightTokens = lowLightTokens.length > 0;
+      if ((!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens) {
         for (let t of lowLightTokens) {
           const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
           result = Math.max(result, multiplier);

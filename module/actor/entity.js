@@ -3784,7 +3784,6 @@ export class ActorPF extends ActorDataPF(Actor) {
     const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
     const buffTextures = this._calcBuffTextures();
 
-    let promises = [];
     for (let t of tokens) {
       // const isLinkedToken = getProperty(this.data, "token.actorLink");
       const actor = t.actor ? t.actor : this;
@@ -3818,8 +3817,6 @@ export class ActorPF extends ActorDataPF(Actor) {
           toDelete.push(...removeEffects.map((e) => e.id));
         }
       }
-
-      console.log(toCreate, toDelete);
 
       if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
       if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);

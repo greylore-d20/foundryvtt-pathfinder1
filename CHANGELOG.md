@@ -10,6 +10,7 @@
 - Fine creatures were too small, and thus made changes to token presets below Medium size (may need manual alterations to previous tokens, if desired) (#864)
 - The setting for when low light vision should be applied was not working (#849)
 - Fixed conditions visibility weirdnesses (#859)
+- Formulaic action ranges were showing as [object Object]
 
 ### Changelog
 

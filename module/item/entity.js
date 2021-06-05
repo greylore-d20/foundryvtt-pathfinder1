@@ -590,13 +590,13 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = RollPF.safeRoll(rng.value, this.getRollData()).toString();
+          rng.value = RollPF.safeTotal(rng.value, this.getRollData()).toString();
         } catch (err) {
           console.error(err);
         }
       }
       labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
-      if (labels.range.length > 0) labels.range = [game.i18n.localize("PF1.Range") + ":", labels.range].join(" ");
+      if (labels.range.length > 0) labels.range = [`${game.i18n.localize("PF1.Range")}:`, labels.range].join(" ");
 
       // Duration Label
       let dur = duplicate(data.duration || {});
@@ -1179,7 +1179,7 @@ export class ItemPF extends Item {
     const saveDC = this.getDC();
     const templateData = {
       actor: this.parent,
-      tokenId: token ? `${token.scene._id}.${token.id}` : null,
+      tokenId: token ? token.uuid : null,
       item: this.data,
       data: this.getChatData(),
       labels: this.labels,
@@ -2361,7 +2361,7 @@ export class ItemPF extends Item {
         const templateData = mergeObject(
           chatTemplateData,
           {
-            tokenId: token ? `${token.uuid}` : null,
+            tokenId: token ? token.uuid : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,
@@ -3090,7 +3090,7 @@ export class ItemPF extends Item {
     if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
     // Get the Actor from a synthetic Token
-    const actor = this._getChatCardActor(card);
+    const actor = await this._getChatCardActor(card);
     if (!actor) {
       if (action === "applyDamage") {
         await this._onChatCardAction(action, { button: button });
@@ -3196,15 +3196,11 @@ export class ItemPF extends Item {
    * @returns {Actor|null}         The Actor entity or null
    * @private
    */
-  static _getChatCardActor(card) {
+  static async _getChatCardActor(card) {
     // Case 1 - a synthetic actor from a Token
     const tokenKey = card.dataset.tokenId;
     if (tokenKey) {
-      const [sceneId, tokenId] = tokenKey.split(".");
-      const scene = game.scenes.get(sceneId);
-      if (!scene) return null;
-      const tokenData = scene.getEmbeddedDocument("Token", tokenId);
-      return tokenData.actor;
+      return (await fromUuid(tokenKey))?.actor;
     }
 
     // Case 2 - use Actor ID directory

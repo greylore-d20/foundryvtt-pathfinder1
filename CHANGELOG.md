@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.8 (hotfix)
+
+### Bug Fixes
+
+- Attack rolls from unlinked tokens didn't work
+
 ## 0.78.7
 
 ### Bug Fixes

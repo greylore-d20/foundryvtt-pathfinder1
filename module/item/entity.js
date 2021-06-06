@@ -2363,7 +2363,7 @@ export class ItemPF extends Item {
         const templateData = mergeObject(
           chatTemplateData,
           {
-            tokenUuid: token ? token.document.uuid : null,
+            tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,

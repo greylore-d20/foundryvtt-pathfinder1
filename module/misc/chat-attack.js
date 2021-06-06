@@ -160,7 +160,6 @@ export class ChatAttack {
       primaryAttack: this.primaryAttack,
     });
     data.roll = roll;
-    if (critical) console.log(bonus, extraParts);
     let d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
     let critType = 0;
     const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);

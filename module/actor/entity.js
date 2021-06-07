@@ -3746,7 +3746,7 @@ export class ActorPF extends ActorDataPF(Actor) {
 
   getQuickActions() {
     const actualChargeCost = (i) => (i != null ? Math.floor(i.charges / i.chargeCost) : 0),
-      actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);
+      actualMaxCharge = (i) => (i != null ? Math.floor(i.maxCharges / i.chargeCost) : 0);
     return this.items
       .filter(
         (o) =>

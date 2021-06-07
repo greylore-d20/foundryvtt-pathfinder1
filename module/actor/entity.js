@@ -3745,7 +3745,7 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   getQuickActions() {
-    const actualChargeCost = (i) => Math.floor(i.charges / i.chargeCost),
+    const actualChargeCost = (i) => (i != null ? Math.floor(i.charges / i.chargeCost) : 0),
       actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);
     return this.items
       .filter(
@@ -3773,7 +3773,9 @@ export class ActorPF extends ActorDataPF(Actor) {
           hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
           ammoValue:
             o.data.data.links?.ammunition
-              ?.map((l) => actualChargeCost(this.items.get(l.id)))
+              ?.map((l) => this.items.get(l.id))
+              .filter((l) => l != null)
+              .map((l) => actualChargeCost(l))
               .reduce((a, b) => a + b, 0) ?? 0,
           recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),

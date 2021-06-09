@@ -1594,7 +1594,7 @@ export class ItemPF extends Item {
     const chatData = {};
     if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
 
-    return this.executeScriptCalls("use");
+    return this.executeScriptCalls("use", { attacks: [] });
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
@@ -2565,7 +2565,10 @@ export class ItemPF extends Item {
 
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
-      await this.executeScriptCalls("use");
+
+      // Execute script call
+      await this.executeScriptCalls("use", { attacks });
+
       return result;
     };
 

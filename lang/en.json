@@ -784,6 +784,7 @@
   "PF1.ErrorNoApplicableActorFoundForAction": "No applicable actor found for action '{0}'",
   "PF1.ErrorCouldNotFindActorByName": "Could not find actor by name '{0}'",
   "PF1.ErrorFeatDisabled": "This feat is disabled",
+  "PF1.ErrorNoMacroID": "No macro with id '{id}' was found",
   "PF1.WarningNoSizeDie": "Could not determine size-appropriate die for {0}, defaulting to rolling {1}",
   "PF1.WarningNoDiceAllowedInFormula": "No dice rolls are allowed in formula '{0}' for {1}",
   "PF1.WarningInsufficientAmmunition": "You have insufficient ammunition of type {0}",
@@ -977,6 +978,26 @@
 
   "PF1.CombatInfo_Header": "Combat",
   "PF1.CombatInfo_Round": "Round {0}",
+
+  "PF1.ScriptCalls": {
+    "Name": "Script Calls",
+    "NewName": "New Script Call",
+
+    "Use": {
+      "Name": "Use",
+      "Info": "Called when the item has been 'used' (attack, drink potion, etc.)"
+    },
+
+    "Equip": {
+      "Name": "Equip",
+      "Info": "Called when the item has been equipped or unequipped. Has the extra variable `equipped`, which is either `true` or `false`."
+    },
+
+    "Toggle": {
+      "Name": "Toggle",
+      "Info": "Called when the item has been enabled or disabled. Has the extra variable `state`, which is either `true` or `false`."
+    }
+  },
 
   "PF1.AddClass": "Add Class",
   "PF1.Horizontal": "Horizontal",

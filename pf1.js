@@ -65,6 +65,7 @@ import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
+import { Registry } from "./module/registry.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -152,6 +153,8 @@ Hooks.once("init", function () {
     documentComponents: {
       ItemChange,
     },
+    // API
+    registry: Registry,
     // Macros
     macros,
     rollItemMacro: macros.rollItemMacro,
@@ -211,6 +214,29 @@ Hooks.once("init", function () {
     makeDefault: true,
   });
   Items.registerSheet("PF1", ItemSheetPF_Container, { types: ["container"], makeDefault: true });
+
+  // Register item categories
+  game.pf1.registry.registerItemScriptCategory(
+    "pf1",
+    "use",
+    "PF1.ScriptCalls.Use.Name",
+    ["attack", "feat", "equipment", "consumable", "spell"],
+    "PF1.ScriptCalls.Use.Info"
+  );
+  game.pf1.registry.registerItemScriptCategory(
+    "pf1",
+    "equip",
+    "PF1.ScriptCalls.Equip.Name",
+    ["weapon", "equipment", "loot"],
+    "PF1.ScriptCalls.Equip.Info"
+  );
+  game.pf1.registry.registerItemScriptCategory(
+    "pf1",
+    "toggle",
+    "PF1.ScriptCalls.Toggle.Name",
+    ["buff", "feat"],
+    "PF1.ScriptCalls.Toggle.Info"
+  );
 
   // Initialize socket listener
   initializeSocket();
@@ -576,9 +602,6 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
         }
       });
       if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-        // Call hook
-        Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
-
         // Toggle status icons
         if (userId === game.user.id) {
           await actor.toggleConditionStatusIcons();

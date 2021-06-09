@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.9
+
+### Changelog
+
+- Added item script and macro calls to their advanced tabs, for users familiar with JavaScript
+
 ## 0.78.8 (hotfix)
 
 ### Bug Fixes

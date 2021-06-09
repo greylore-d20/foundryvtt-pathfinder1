@@ -9,6 +9,10 @@
 /* ----------------------------------------- */
 
 .pf1 {
+  header {
+    flex: 0;
+  }
+
   .switch-check {
     display: none;
   }
@@ -363,7 +367,7 @@
     padding: 0 0;
     overflow-y: auto;
 
-    .inventor-header,
+    .inventory-header,
     .items-header,
     .items-list {
       .fas {
@@ -371,12 +375,19 @@
       }
 
       .item-name {
+        align-items: baseline;
+
         .change-formula {
           margin: 0 2px;
         }
 
         > textarea {
           margin: 0 2px;
+        }
+
+        .item-info {
+          flex: 0 0 16px;
+          margin-right: 4px;
         }
       }
       .item-enabled {
@@ -442,12 +453,14 @@
         cursor: pointer;
         white-space: nowrap;
         overflow: hidden;
+        align-items: center;
 
         &.flag-name {
           cursor: initial;
         }
 
         .item-image {
+          height: 24px;
           flex: 0 0 24px;
           background-size: 24px;
           margin-right: 5px;
@@ -458,7 +471,7 @@
           min-width: 0;
         }
 
-        .item-image:hover {
+        .item-image:hover:not(.no-hover) {
           background-image: url("/icons/svg/d20-black.svg") !important;
         }
       }

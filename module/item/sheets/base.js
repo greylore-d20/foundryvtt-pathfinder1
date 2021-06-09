@@ -2,6 +2,7 @@ import { createTabs, getBuffTargetDictionary, getBuffTargets } from "../../lib.j
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
+import { ItemScriptCall } from "../components/script-call.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
@@ -384,6 +385,9 @@ export class ItemSheetPF extends ItemSheet {
     // Add item flags
     this._prepareItemFlags(data);
 
+    // Add script calls
+    this._prepareScriptCalls(data);
+
     // Add links
     await this._prepareLinks(data);
 
@@ -482,6 +486,43 @@ export class ItemSheetPF extends ItemSheet {
         result.push({ key: k, value: v });
       }
       setProperty(data, "flags.dictionary", result);
+    }
+  }
+
+  _prepareScriptCalls(data) {
+    const categories = game.pf1.registry
+      .getItemScriptCategories()
+      .filter((o) => o.itemTypes.includes(this.document.type));
+    if (!categories.length) {
+      data.scriptCalls = null;
+      return;
+    }
+    data.scriptCalls = {};
+
+    for (const c of categories) {
+      data.scriptCalls[c.key] = {
+        name: game.i18n.localize(c.name),
+        info: c.info ? game.i18n.localize(c.info) : null,
+        items: Object.hasOwnProperty.call(this.document, "scriptCalls")
+          ? this.document.scriptCalls
+              .filter((o) => o.category === c.key)
+              .map((o) => o.data)
+              .reduce((cur, o) => {
+                o = duplicate(o);
+                if (o.type === "macro") {
+                  const m = game.macros.get(o.value);
+                  o.name = m.data.name;
+                  o.img = m.data.img;
+                }
+
+                cur.push(o);
+                return cur;
+              }, [])
+          : [],
+        dataset: {
+          category: c.key,
+        },
+      };
     }
   }
 
@@ -798,6 +839,16 @@ export class ItemSheetPF extends ItemSheet {
     /* -------------------------------------------- */
 
     html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
+
+    /* -------------------------------------------- */
+    /*  Script Calls
+    /* -------------------------------------------- */
+
+    html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
+
+    html.find(".script-calls .items-list .item").contextmenu(this._onScriptCallEdit.bind(this));
+
+    html.find(".script-calls").on("drop", this._onScriptCallDrop.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -808,6 +859,42 @@ export class ItemSheetPF extends ItemSheet {
     const target = a.dataset.actionTarget;
 
     game.pf1.compendiums[target].render(true);
+  }
+
+  _onScriptCallControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
+    const group = a.closest(".inventory-list");
+    const category = group.dataset.category;
+
+    // Create item
+    if (a.classList.contains("item-create")) {
+      const list = this.document.data.data.scriptCalls || [];
+      const item = ItemScriptCall.create({}, null);
+      item.data.category = category;
+      item.data.type = "script";
+      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+    }
+    // Delete item
+    else if (item && a.classList.contains("item-delete")) {
+      const list = (this.document.data.data.scriptCalls || []).filter((o) => o._id !== item.id);
+      return this._onSubmit(event, { updateData: { "data.scriptCalls": list } });
+    }
+    // Edit item
+    else if (item && a.classList.contains("item-edit")) {
+      item.edit();
+    }
+  }
+
+  _onScriptCallEdit(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.dataset.itemId) : null;
+
+    if (item) {
+      item.edit();
+    }
   }
 
   _moveTooltips(event) {
@@ -847,6 +934,22 @@ export class ItemSheetPF extends ItemSheet {
       elem.value = !elem.value ? link : elem.value + "\n" + link;
     }
     return this._onSubmit(event);
+  }
+
+  async _onScriptCallDrop(event) {
+    event.preventDefault();
+    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+    if (!data) return;
+
+    const elem = event.currentTarget;
+    const header = elem.querySelector(".inventory-list");
+    const category = header.dataset.category;
+
+    if (data.type === "Macro") {
+      const list = this.document.data.data.scriptCalls ?? [];
+      const item = ItemScriptCall.create({ type: "macro", value: data.id, category });
+      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+    }
   }
 
   _openHelpBrowser(event) {
@@ -967,9 +1070,9 @@ export class ItemSheetPF extends ItemSheet {
     if (!change) return;
 
     const scriptEditor = new ScriptEditor({ command: change.formula }).render(true);
-    const command = await scriptEditor.awaitResult();
-    if (typeof command === "string") {
-      return change.update({ formula: command });
+    const result = await scriptEditor.awaitResult();
+    if (typeof result.command === "string") {
+      return change.update({ formula: result.command });
     }
   }
 

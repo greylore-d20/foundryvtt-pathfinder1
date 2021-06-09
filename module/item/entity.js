@@ -4,8 +4,8 @@ import { createTag, linkData, convertDistance, convertWeight, convertWeightBack 
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
-import { SemanticVersion } from "../semver.js";
 import { ItemChange } from "./components/change.js";
+import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
 
@@ -79,7 +79,15 @@ export class ItemPF extends Item {
   }
 
   get hasAction() {
-    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasSave || this.hasTemplate || this.hasSound;
+    return (
+      this.hasAttack ||
+      this.hasDamage ||
+      this.hasEffect ||
+      this.hasSave ||
+      this.hasTemplate ||
+      this.hasSound ||
+      this.getScriptCalls("use").length > 0
+    );
   }
 
   get isSingleUse() {
@@ -639,6 +647,11 @@ export class ItemPF extends Item {
       this.changes = this._prepareChanges(this.data.data.changes);
     }
 
+    // Update script calls
+    if (this.data.data.scriptCalls instanceof Array) {
+      this.scriptCalls = this._prepareScriptCalls(this.data.data.scriptCalls);
+    }
+
     // Update contained items
     if (this.data.data.inventoryItems instanceof Array) {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
@@ -702,6 +715,20 @@ export class ItemPF extends Item {
     return collection;
   }
 
+  _prepareScriptCalls(scriptCalls) {
+    const prior = this.scriptCalls;
+    const collection = new Collection();
+    for (let s of scriptCalls) {
+      let scriptCall = null;
+      if (prior && prior.has(s.id)) {
+        scriptCall = prior.get(s.id);
+        scriptCall.data = s;
+      } else scriptCall = ItemScriptCall.create(s, this);
+      collection.set(s._id || scriptCall.data._id, scriptCall);
+    }
+    return collection;
+  }
+
   _prepareInventory(inventory) {
     const prior = this.items;
     const collection = new Collection();
@@ -720,6 +747,23 @@ export class ItemPF extends Item {
       collection.set(o._id || item.data._id, item);
     }
     return collection;
+  }
+
+  /**
+   * Executes all script calls on this item of a specified category.
+   *
+   * @param {string} category - The category of script calls to call.
+   * @param {object.<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
+   * @returns {Promise.<void>} A promise to await.
+   */
+  async executeScriptCalls(category, extraParams = {}) {
+    const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
+
+    let promises = [];
+    for (let s of scripts) {
+      promises.push(s.execute(extraParams));
+    }
+    await Promise.all(promises);
   }
 
   async update(data, options = {}) {
@@ -835,6 +879,7 @@ export class ItemPF extends Item {
         { key: "data.damage.critParts" },
         { key: "data.damage.nonCritParts" },
         { key: "data.contextNotes" },
+        { key: "data.scriptCalls" },
       ];
 
       for (let kArr of keepArray) {
@@ -1093,6 +1138,28 @@ export class ItemPF extends Item {
     }
   }
 
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+
+    // Call 'toggle' script calls
+    {
+      let state = null;
+      if (this.data.type === "buff") state = getProperty(changed, "data.active");
+      if (this.data.type === "feat") state = getProperty(changed, "data.disabled") === true ? false : true;
+      if (state != null) {
+        this.executeScriptCalls("toggle", { state });
+      }
+    }
+
+    // Call 'equip' script calls
+    {
+      const equipped = getProperty(changed, "data.equipped");
+      if (equipped != null) {
+        this.executeScriptCalls("equip", { equipped });
+      }
+    }
+  }
+
   _updateContentsWeight(data, { srcData = null } = {}) {
     if (!srcData) srcData = duplicate(this.data);
 
@@ -1150,6 +1217,11 @@ export class ItemPF extends Item {
     if (this.type === "buff")
       createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
     return createData;
+  }
+
+  // Fetches all this item's script calls of a specified category
+  getScriptCalls(category) {
+    return this.scriptCalls?.filter((s) => s.category === category) ?? [];
   }
 
   /* -------------------------------------------- */
@@ -1497,6 +1569,7 @@ export class ItemPF extends Item {
     const chatData = {};
     if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
     this.roll();
+    await this.executeScriptCalls("use");
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
@@ -2467,6 +2540,7 @@ export class ItemPF extends Item {
 
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
+      await this.executeScriptCalls("use");
       return result;
     };
 
@@ -4090,8 +4164,8 @@ export class ItemPF extends Item {
   }
 
   async addChange() {
-    const change = new ItemChange();
-    this.changes.push(change);
+    const change = new ItemChange({}, this);
+    return change;
   }
 
   async createContainerContent(data, options = { raw: false }) {

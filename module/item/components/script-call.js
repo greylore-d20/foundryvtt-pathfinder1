@@ -95,7 +95,7 @@ export class ItemScriptCall {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.parentActor;
-    const token = actor.token;
+    const token = actor?.token;
 
     // Attempt script execution
     const body = `(async () => {

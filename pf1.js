@@ -693,9 +693,28 @@ Hooks.on("createItem", (item, options, userId) => {
   }
 
   // Show buff if active
-  if (item.type === "buff" && getProperty(item.data, "data.active") === true && actor) {
+  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
     // Call hook
-    Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+    if (actor) {
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+    }
+
+    // Execute script calls
+    item.executeScriptCalls("toggle", { state: true });
+  }
+  // Simulate toggling a feature on
+  if (item.type === "feat") {
+    const disabled = getProperty(item.data, "data.disabled");
+    if (disabled === false) {
+      item.executeScriptCalls("toggle", { state: true });
+    }
+  }
+  // Simulate equipping items
+  {
+    const equipped = getProperty(item.data, "data.equipped");
+    if (equipped === true) {
+      item.executeScriptCalls("equip", { equipped: true });
+    }
   }
 
   if (userId !== game.user.id) return;
@@ -736,6 +755,24 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     // Call buff removal hook
     if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
       Hooks.callAll("pf1.toggleActorBuff", actor, item.data, false);
+    }
+  }
+
+  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+    item.executeScriptCalls("toggle", { state: false });
+  }
+  // Simulate toggling a feature on
+  if (item.type === "feat") {
+    const disabled = getProperty(item.data, "data.disabled");
+    if (disabled === false) {
+      item.executeScriptCalls("toggle", { state: false });
+    }
+  }
+  // Simulate equipping items
+  {
+    const equipped = getProperty(item.data, "data.equipped");
+    if (equipped === true) {
+      item.executeScriptCalls("equip", { equipped: false });
     }
   }
 });

@@ -79,15 +79,7 @@ export class ItemPF extends Item {
   }
 
   get hasAction() {
-    return (
-      this.hasAttack ||
-      this.hasDamage ||
-      this.hasEffect ||
-      this.hasSave ||
-      this.hasTemplate ||
-      this.hasSound ||
-      this.getScriptCalls("use").length > 0
-    );
+    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasSave || this.hasTemplate || this.hasSound;
   }
 
   get isSingleUse() {
@@ -1568,8 +1560,8 @@ export class ItemPF extends Item {
     }
     const chatData = {};
     if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
-    this.roll();
-    await this.executeScriptCalls("use");
+
+    return this.executeScriptCalls("use");
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {

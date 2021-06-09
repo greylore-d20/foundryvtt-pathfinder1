@@ -6,9 +6,14 @@ module.exports = {
     node: true,
   },
   extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
+  parser: "@babel/eslint-parser",
+  ecmaFeatures: {
+    classes: true,
+  },
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
+    requireConfigFile: false,
   },
   rules: {
     // Required for Foundry compatibility

@@ -33,6 +33,13 @@ export class ItemPF extends Item {
     return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
   }
 
+  /**
+   * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
+   */
+  get memoryVariables() {
+    return ["data.quantity"];
+  }
+
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */
@@ -1035,6 +1042,8 @@ export class ItemPF extends Item {
       }
     }
 
+    this.memorizeVariables();
+
     let diff = diffObject(flattenObject(this.data), data);
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (let d in diff) {
@@ -1130,6 +1139,16 @@ export class ItemPF extends Item {
     }
   }
 
+  memorizeVariables() {
+    const memKeys = this.memoryVariables;
+    this._memoryVariables = {};
+    for (let k of memKeys) {
+      if (hasProperty(this.data, k)) {
+        this._memoryVariables[k] = getProperty(this.data, k);
+      }
+    }
+  }
+
   _onUpdate(changed, options, userId) {
     super._onUpdate(changed, options, userId);
 
@@ -1150,6 +1169,20 @@ export class ItemPF extends Item {
         this.executeScriptCalls("equip", { equipped });
       }
     }
+
+    // Call 'changeQuantity' script calls
+    if (this._memoryVariables?.["data.quantity"]) {
+      const quantity = {
+        previous: this._memoryVariables["data.quantity"],
+        new: getProperty(this.data, "data.quantity"),
+      };
+      if (quantity.new != null && quantity.new !== quantity.previous) {
+        this.executeScriptCalls("changeQuantity", { quantity });
+      }
+    }
+
+    // Forget memory variables
+    this._memoryVariables = null;
   }
 
   _updateContentsWeight(data, { srcData = null } = {}) {

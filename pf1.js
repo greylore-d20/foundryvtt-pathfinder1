@@ -237,6 +237,13 @@ Hooks.once("init", function () {
     ["buff", "feat"],
     "PF1.ScriptCalls.Toggle.Info"
   );
+  game.pf1.registry.registerItemScriptCategory(
+    "pf1",
+    "changeQuantity",
+    "PF1.ScriptCalls.ChangeQuantity.Name",
+    ["loot", "equipment", "weapon", "consumable", "container"],
+    "PF1.ScriptCalls.ChangeQuantity.Info"
+  );
 
   // Initialize socket listener
   initializeSocket();
@@ -577,40 +584,6 @@ Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
   }
 });
 
-Hooks.on("updateItem", async (item, changedData, options, userId) => {
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
-
-  if (actor) {
-    // Toggle buff
-    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-      // Call hook
-      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
-    }
-
-    // Update level
-    {
-      await new Promise((resolve) => {
-        if (item.type === "class" && hasProperty(changedData, "data.level")) {
-          const newLevel = getProperty(changedData, "data.level");
-          const prevLevel = item._prevLevel ?? newLevel;
-          if (item._prevLevel !== undefined) delete item._prevLevel;
-          item._onLevelChange(prevLevel, newLevel).then(() => {
-            resolve();
-          });
-        } else {
-          resolve();
-        }
-      });
-      if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-        // Toggle status icons
-        if (userId === game.user.id) {
-          await actor.toggleConditionStatusIcons();
-        }
-      }
-    }
-  }
-});
-
 Hooks.on("updateActor", (actor, data, options, userId) => {
   // Call hook for toggling conditions
   {
@@ -716,6 +689,13 @@ Hooks.on("createItem", (item, options, userId) => {
       item.executeScriptCalls("equip", { equipped: true });
     }
   }
+  // Quantity change
+  {
+    const quantity = getProperty(item.data, "data.quantity");
+    if (typeof quantity === "number" && quantity > 0) {
+      item.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
+    }
+  }
 
   if (userId !== game.user.id) return;
 });
@@ -773,6 +753,47 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     const equipped = getProperty(item.data, "data.equipped");
     if (equipped === true) {
       item.executeScriptCalls("equip", { equipped: false });
+    }
+  }
+  // Quantity change
+  {
+    const quantity = getProperty(item.data, "data.quantity");
+    if (typeof quantity === "number" && quantity > 0) {
+      item.executeScriptCalls("changeQuantity", { quantity: { previous: quantity, new: 0 } });
+    }
+  }
+});
+
+Hooks.on("updateItem", async (item, changedData, options, userId) => {
+  const actor = item.parent instanceof ActorPF ? item.parent : null;
+
+  if (actor) {
+    // Toggle buff
+    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+      // Call hook
+      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+    }
+
+    // Update level
+    {
+      await new Promise((resolve) => {
+        if (item.type === "class" && hasProperty(changedData, "data.level")) {
+          const newLevel = getProperty(changedData, "data.level");
+          const prevLevel = item._prevLevel ?? newLevel;
+          if (item._prevLevel !== undefined) delete item._prevLevel;
+          item._onLevelChange(prevLevel, newLevel).then(() => {
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      });
+      if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+        // Toggle status icons
+        if (userId === game.user.id) {
+          await actor.toggleConditionStatusIcons();
+        }
+      }
     }
   }
 });

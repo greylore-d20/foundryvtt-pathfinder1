@@ -2,6 +2,10 @@
 
 ## 0.78.9
 
+### Bug Fixes
+
+- Fix armor and shield type roll data not working (#873)
+
 ### Changelog
 
 - Added item script and macro calls to their advanced tabs, for users familiar with JavaScript

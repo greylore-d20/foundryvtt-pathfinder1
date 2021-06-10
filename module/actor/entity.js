@@ -3590,10 +3590,10 @@ export class ActorPF extends ActorDataPF(Actor) {
 
       // Determine equipped armor type
       const armor = this.data.items.filter(
-        (o) => o.type === "equipment" && o.data.equipmentType === "armor" && o.data.equipped
+        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
       );
       for (let o of armor) {
-        const subtype = o.data.equipmentSubtype;
+        const subtype = o.data.data.equipmentSubtype;
         if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
         else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
         else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
@@ -3601,10 +3601,10 @@ export class ActorPF extends ActorDataPF(Actor) {
 
       // Determine equipped shield type
       const shields = this.data.items.filter(
-        (o) => o.type === "equipment" && o.data.equipmentType === "shield" && o.data.equipped
+        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
       );
       for (let o of shields) {
-        const subtype = o.data.equipmentSubtype;
+        const subtype = o.data.data.equipmentSubtype;
         if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
         else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
         else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;

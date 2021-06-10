@@ -52,6 +52,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/consumable-description.hbs",
     "systems/pf1/templates/internal/damage-tooltip.hbs",
     "systems/pf1/templates/internal/token-config_vision.hbs",
+    "systems/pf1/templates/internal/compendium-browser_entry.hbs",
 
     // Tooltip
     "systems/pf1/templates/hud/tooltip.hbs",

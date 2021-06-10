@@ -77,6 +77,14 @@ export class CompendiumBrowser extends Application {
     this.packs = {};
 
     /**
+     * The RegExp to filter item names by.
+     *
+     * @type {RegExp}
+     * @property
+     */
+    this.filterQuery = /.*/;
+
+    /**
      * Load cached items
      */
     {
@@ -158,24 +166,64 @@ export class CompendiumBrowser extends Application {
     }
   }
 
-  _initLazyLoad() {
+  async _createInitialElements() {
+    let items = [];
+    for (let a = 0; items.length < this.lazyLoadTreshold && a < this.items.length; a++) {
+      const item = this.items[a];
+      if (this._passesFilters(item.item)) {
+        items.push(item);
+      }
+      this.lazyIndex = a + 1;
+    }
+
+    for (let item of items) {
+      await this._addEntryElement(item);
+    }
+  }
+  async _addEntryElement(item) {
+    const elem = $(await renderTemplate("systems/pf1/templates/internal/compendium-browser_entry.hbs", item));
     const rootElem = this.element.find(".directory-list");
-    const elems = rootElem.find(".directory-item");
-    this.lazyIndex = Math.min(this.lazyStart, elems.length);
-    elems.slice(this.lazyIndex).hide();
+    rootElem.append(elem);
+    this.activateEntryListeners(elem);
+    return elem;
+  }
+  _removeEntryElements(ids = []) {
+    const rootElem = this.element.find(".directory-list");
+    for (let id of ids) {
+      rootElem.find(`.directory-item[data-entry-id="${id}"]`).remove();
+    }
+  }
+  _clearEntryElements() {
+    this.element.find(".directory-list").empty();
+  }
+
+  activateEntryListeners(elem) {
+    // Open sheet
+    elem.find(".entry-name").click((ev) => {
+      let li = ev.currentTarget.parentElement;
+      this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
+    });
+
+    // Make compendium item draggable
+    elem[0].setAttribute("draggable", true);
+    elem[0].addEventListener("dragstart", this._onDragStart, false);
+  }
+
+  _initLazyLoad() {
+    this._createInitialElements();
+    const rootElem = this.element.find(".directory-list");
 
     // Create function for lazy loading
-    const lazyLoad = () => {
-      const initialIndex = this.lazyIndex;
-      for (let a = 0; a < elems.length && this.lazyIndex < initialIndex + this.lazyAdd; a++) {
-        const elem = elems[a];
-        if (elem.style.display !== "none") continue;
-        const item = this._data.data.collection[elem.dataset.entryId].item;
-
-        if (this._passesFilters(item)) {
+    const lazyLoad = async () => {
+      let createdItems = 0;
+      for (let a = this.lazyIndex; a < this.items.length && createdItems < this.lazyAdd; a++) {
+        const item = this.items[a];
+        if (this._passesFilters(item.item)) {
+          createdItems++;
+          const elem = await this._addEntryElement(item);
           $(elem).fadeIn(500);
-          this.lazyIndex++;
         }
+        this.lazyIndex++;
       }
     };
 
@@ -321,12 +369,12 @@ export class CompendiumBrowser extends Application {
       items.push(...(await p.getDocuments(filter)));
     }
 
-    // Flush full compendium contents from memory
-    p.clear();
-
     if (p.translated) {
       items = items.map((item) => p.translate(item));
     }
+
+    // Flush full compendium contents from memory
+    p.clear();
 
     for (let i of items) {
       if (!this._filterItems(i)) continue;
@@ -1111,7 +1159,6 @@ export class CompendiumBrowser extends Application {
   async _render(...args) {
     await super._render(...args);
 
-    this.filterQuery = /.*/;
     {
       const elems = this.element.find(".filter-content");
       for (const e of elems) {
@@ -1122,23 +1169,10 @@ export class CompendiumBrowser extends Application {
         }
       }
     }
-    this._filterResults();
   }
 
   activateListeners(html) {
     super.activateListeners(html);
-
-    // Open sheets
-    html.find(".entry-name").click((ev) => {
-      let li = ev.currentTarget.parentElement;
-      this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
-    });
-
-    // Make compendium items draggable
-    html.find(".directory-item").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", this._onDragStart, false);
-    });
 
     html.find('input[name="search"]').keyup(this._onFilterResults.bind(this));
 
@@ -1161,7 +1195,7 @@ export class CompendiumBrowser extends Application {
    */
   async _onEntry(collectionKey, entryId) {
     const pack = game.packs.find((o) => o.collection === collectionKey);
-    const entity = await pack.getEntity(entryId);
+    const entity = await pack.getDocument(entryId);
     entity.sheet.render(true);
   }
 
@@ -1259,28 +1293,39 @@ export class CompendiumBrowser extends Application {
 
   _filterResults() {
     this.lazyIndex = 0;
-    // Hide items that don't match the filters, and show items that DO match the filters
-    let itemCount = 0;
-    this.element.find("li.directory-item").each((a, li) => {
-      const id = li.dataset.entryId;
-      const item = this._data.data.collection[id].item;
-      if (this._passesFilters(item)) {
-        // Show item
-        if (this.lazyIndex < this.lazyStart) {
-          $(li).show();
-          this.lazyIndex++;
-        }
-        // Set item count
-        itemCount++;
-      } else $(li).hide();
-    });
-    this.element
-      .find('span[data-type="filterItemCount"]')
-      .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
+    // Clear entry elements
+    this._clearEntryElements();
+    // Create new elements
+    this._createInitialElements();
 
-    // Scroll up a bit to prevent a lot of 'lazy' loading at once
-    const rootElem = this.element[0].querySelector(".directory-list");
-    rootElem.scrollTop = Math.max(0, rootElem.scrollTop - this.lazyLoadTreshold);
+    // Scroll up
+    const rootElem = this.element.find(".directory-list")[0];
+    rootElem.scrollTop = 0;
+
+    // this._initLazyLoad();
+
+    // Hide items that don't match the filters, and show items that DO match the filters
+    // let itemCount = 0;
+    // this.element.find("li.directory-item").each((a, li) => {
+    //   const id = li.dataset.entryId;
+    //   const item = this._data.data.collection[id].item;
+    //   if (this._passesFilters(item)) {
+    //     // Show item
+    //     if (this.lazyIndex < this.lazyStart) {
+    //       $(li).show();
+    //       this.lazyIndex++;
+    //     }
+    //     // Set item count
+    //     itemCount++;
+    //   } else $(li).hide();
+    // });
+    // this.element
+    //   .find('span[data-type="filterItemCount"]')
+    //   .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
+
+    // // Scroll up a bit to prevent a lot of 'lazy' loading at once
+    // const rootElem = this.element[0].querySelector(".directory-list");
+    // rootElem.scrollTop = Math.max(0, rootElem.scrollTop - this.lazyLoadTreshold);
   }
 
   _passesFilters(item) {

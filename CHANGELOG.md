@@ -6,6 +6,7 @@
 
 - Added item script and macro calls to their advanced tabs, for users familiar with JavaScript
 - Sped up the loading of compendium browsers
+- Reduces memory usage of compendium browsers (at least client side, probably also partially server side)
 
 ## 0.78.8 (hotfix)
 

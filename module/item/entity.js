@@ -15,7 +15,6 @@ import { RollPF } from "../roll.js";
 export class ItemPF extends Item {
   constructor(...args) {
     super(...args);
-    console.log(args[0].name, args[0]._id);
 
     /**
      * @property {object} links

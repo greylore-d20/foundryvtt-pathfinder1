@@ -77,6 +77,14 @@ export class CompendiumBrowser extends Application {
     this.packs = {};
 
     /**
+     * A list containing all the IDs of the currently visible items.
+     *
+     * @type {string[]}
+     * @property
+     */
+    this.visibleItems = [];
+
+    /**
      * The RegExp to filter item names by.
      *
      * @type {RegExp}
@@ -181,19 +189,17 @@ export class CompendiumBrowser extends Application {
     }
   }
   async _addEntryElement(item) {
+    this.visibleItems.push(item.item._id);
+
     const elem = $(await renderTemplate("systems/pf1/templates/internal/compendium-browser_entry.hbs", item));
     const rootElem = this.element.find(".directory-list");
     rootElem.append(elem);
     this.activateEntryListeners(elem);
+
     return elem;
   }
-  _removeEntryElements(ids = []) {
-    const rootElem = this.element.find(".directory-list");
-    for (let id of ids) {
-      rootElem.find(`.directory-item[data-entry-id="${id}"]`).remove();
-    }
-  }
   _clearEntryElements() {
+    this.visibleItems = [];
     this.element.find(".directory-list").empty();
   }
 
@@ -209,8 +215,8 @@ export class CompendiumBrowser extends Application {
     elem[0].addEventListener("dragstart", this._onDragStart, false);
   }
 
-  _initLazyLoad() {
-    this._createInitialElements();
+  async _initLazyLoad() {
+    await this._createInitialElements();
     const rootElem = this.element.find(".directory-list");
 
     // Create function for lazy loading
@@ -1291,41 +1297,30 @@ export class CompendiumBrowser extends Application {
     this._filterResults();
   }
 
-  _filterResults() {
+  async _filterResults() {
     this.lazyIndex = 0;
     // Clear entry elements
     this._clearEntryElements();
-    // Create new elements
-    this._createInitialElements();
 
     // Scroll up
     const rootElem = this.element.find(".directory-list")[0];
     rootElem.scrollTop = 0;
 
-    // this._initLazyLoad();
+    // Create new elements
+    await this._createInitialElements();
 
-    // Hide items that don't match the filters, and show items that DO match the filters
-    // let itemCount = 0;
-    // this.element.find("li.directory-item").each((a, li) => {
-    //   const id = li.dataset.entryId;
-    //   const item = this._data.data.collection[id].item;
-    //   if (this._passesFilters(item)) {
-    //     // Show item
-    //     if (this.lazyIndex < this.lazyStart) {
-    //       $(li).show();
-    //       this.lazyIndex++;
-    //     }
-    //     // Set item count
-    //     itemCount++;
-    //   } else $(li).hide();
-    // });
-    // this.element
-    //   .find('span[data-type="filterItemCount"]')
-    //   .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
-
-    // // Scroll up a bit to prevent a lot of 'lazy' loading at once
-    // const rootElem = this.element[0].querySelector(".directory-list");
-    // rootElem.scrollTop = Math.max(0, rootElem.scrollTop - this.lazyLoadTreshold);
+    // Determine filtered item count
+    {
+      let itemCount = 0;
+      for (let item of this.items) {
+        if (this._passesFilters(item.item)) {
+          itemCount++;
+        }
+      }
+      this.element
+        .find('span[data-type="filterItemCount"]')
+        .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
+    }
   }
 
   _passesFilters(item) {

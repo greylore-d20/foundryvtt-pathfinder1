@@ -386,7 +386,7 @@ export class ItemSheetPF extends ItemSheet {
     this._prepareItemFlags(data);
 
     // Add script calls
-    this._prepareScriptCalls(data);
+    await this._prepareScriptCalls(data);
 
     // Add links
     await this._prepareLinks(data);
@@ -489,7 +489,7 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
-  _prepareScriptCalls(data) {
+  async _prepareScriptCalls(data) {
     const categories = game.pf1.registry.getItemScriptCategories().filter((o) => {
       if (!o.itemTypes.includes(this.document.type)) return false;
       if (o.hidden === true && !game.user.isGM) return false;
@@ -512,31 +512,37 @@ export class ItemSheetPF extends ItemSheet {
     const checkYes = '<i class="fas fa-check"></i>';
     const checkNo = '<i class="fas fa-times"></i>';
 
+    // Iterate over all script calls, and adjust data
+    let scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
+      ? duplicate(Array.from(this.document.scriptCalls).map((o) => o.data))
+      : [];
+    {
+      let promises = [];
+      for (let o of scriptCalls) {
+        promises.push(
+          (async () => {
+            // Obtain macro info
+            if (o.type === "macro") {
+              const m = await fromUuid(o.value);
+              o.name = m.data.name;
+              o.img = m.data.img;
+            }
+
+            // Add data
+            o.hiddenIcon = o.hidden ? checkYes : checkNo;
+            o.hide = o.hidden && !game.user.isGM;
+          })()
+        );
+      }
+      await Promise.all(promises);
+    }
+
     // Create categories, and assign items to them
     for (const c of categories) {
       data.scriptCalls[c.key] = {
         name: game.i18n.localize(c.name),
         info: c.info ? game.i18n.localize(c.info) : null,
-        items: Object.hasOwnProperty.call(this.document, "scriptCalls")
-          ? this.document.scriptCalls
-              .filter((o) => o.category === c.key)
-              .map((o) => o.data)
-              .reduce((cur, o) => {
-                o = duplicate(o);
-                if (o.type === "macro") {
-                  const m = game.macros.get(o.value);
-                  o.name = m.data.name;
-                  o.img = m.data.img;
-                }
-
-                // Add data
-                o.hiddenIcon = o.hidden ? checkYes : checkNo;
-                o.hide = o.hidden && !game.user.isGM;
-
-                cur.push(o);
-                return cur;
-              }, [])
-          : [],
+        items: scriptCalls.filter((o) => o.category === c.key),
         dataset: {
           category: c.key,
         },
@@ -866,7 +872,7 @@ export class ItemSheetPF extends ItemSheet {
 
     html.find(".script-calls .items-list .item").contextmenu(this._onScriptCallEdit.bind(this));
 
-    html.find(".script-calls").on("drop", this._onScriptCallDrop.bind(this));
+    html.find(".script-calls .inventory-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -966,13 +972,28 @@ export class ItemSheetPF extends ItemSheet {
     if (!data) return;
 
     const elem = event.currentTarget;
-    const header = elem.querySelector(".inventory-list");
-    const category = header.dataset.category;
+    const category = elem.dataset.category;
 
     if (data.type === "Macro") {
-      const list = this.document.data.data.scriptCalls ?? [];
-      const item = ItemScriptCall.create({ type: "macro", value: data.id, category });
-      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+      let uuid;
+      // Get from compendium
+      if (data.pack) {
+        const pack = game.packs.get(data.pack);
+        const document = await pack.getDocument(data.id);
+        uuid = document.uuid;
+      }
+      // Get from world
+      else if (data.id) {
+        const document = game.macros.get(data.id);
+        uuid = document.uuid;
+      }
+
+      // Submit data
+      if (uuid) {
+        const list = this.document.data.data.scriptCalls ?? [];
+        const item = ItemScriptCall.create({ type: "macro", value: uuid, category });
+        return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+      }
     }
   }
 

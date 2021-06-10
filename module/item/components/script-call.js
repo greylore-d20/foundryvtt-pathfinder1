@@ -41,8 +41,8 @@ export class ItemScriptCall {
     return this.data.hidden;
   }
 
-  get scriptBody() {
-    return this.type === "script" ? this.value : game.macros.get(this.value)?.data.command ?? "";
+  async getScriptBody() {
+    return this.type === "script" ? this.value : (await fromUuid(this.value))?.data.command ?? "";
   }
 
   async update(data, options = {}) {
@@ -63,7 +63,7 @@ export class ItemScriptCall {
   async edit() {
     // For Macros
     if (this.type === "macro") {
-      const macro = game.macros.get(this.value);
+      const macro = await fromUuid(this.value);
       let err;
       if (macro) {
         if (macro.testUserPermission(game.user, "OBSERVER")) {
@@ -95,7 +95,7 @@ export class ItemScriptCall {
    *
    * @param {object.<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
    */
-  execute(extraParams = {}) {
+  async execute(extraParams = {}) {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.parentActor;
@@ -103,7 +103,7 @@ export class ItemScriptCall {
 
     // Attempt script execution
     const body = `(async () => {
-      ${this.scriptBody}
+      ${await this.getScriptBody()}
     })()`;
     const fn = Function("item", "actor", "token", ...Object.keys(extraParams), body);
     try {

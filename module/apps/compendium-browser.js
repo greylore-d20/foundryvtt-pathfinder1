@@ -313,7 +313,13 @@ export class CompendiumBrowser extends Application {
       case "spells":
         return [{ type: "spell" }];
       case "items":
-        return [{ type: "equipment" }, { type: "item" }, { type: "weapon" }, { type: "consumable" }];
+        return [
+          { type: "equipment" },
+          { type: "weapon" },
+          { type: "consumable" },
+          { type: "loot" },
+          { type: "container" },
+        ];
       case "feats":
         return [{ type: "feat" }];
       case "classes":

@@ -5,6 +5,7 @@
 ### Changelog
 
 - Added item script and macro calls to their advanced tabs, for users familiar with JavaScript
+- Sped up the loading of compendium browsers
 
 ## 0.78.8 (hotfix)
 

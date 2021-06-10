@@ -265,6 +265,24 @@ export class CompendiumBrowser extends Application {
     return COMPENDIUM_TYPES[this.type];
   }
 
+  getBasicFilters() {
+    switch (this.type) {
+      case "spells":
+        return [{ type: "spell" }];
+      case "items":
+        return [{ type: "equipment" }, { type: "item" }, { type: "weapon" }];
+      case "feats":
+        return [{ type: "feat" }];
+      case "classes":
+        return [{ type: "class" }];
+      case "races":
+        return [{ type: "race" }];
+      case "buffs":
+        return [{ type: "buff" }];
+    }
+    return [null];
+  }
+
   /**
    * @param {Compendium} p - The compendium in question.
    * @returns {boolean} Whether the compendium should be skipped.
@@ -288,7 +306,7 @@ export class CompendiumBrowser extends Application {
     SceneNavigation._onLoadProgress(progress.message, progress.pct);
   }
 
-  async loadCompendium(p) {
+  async loadCompendium(p, filters = [null]) {
     const progress = this._data.progress;
 
     if (p.metadata.system != "pf1") {
@@ -297,7 +315,14 @@ export class CompendiumBrowser extends Application {
       return;
     }
 
-    let items = await p.getDocuments();
+    // Retrieve compendium contents
+    let items = [];
+    for (let filter of filters) {
+      items.push(...(await p.getDocuments(filter)));
+    }
+
+    // Flush full compendium contents from memory
+    p.clear();
 
     if (p.translated) {
       items = items.map((item) => p.translate(item));
@@ -339,11 +364,9 @@ export class CompendiumBrowser extends Application {
       this._onProgress(progress);
 
       // Load compendiums
-      let promises = [];
       for (let p of packs) {
-        promises.push(this.loadCompendium(p));
+        await this.loadCompendium(p, this.getBasicFilters());
       }
-      await Promise.all(promises);
 
       // Sort items
       this.items = naturalSort(this.items, "item.name");

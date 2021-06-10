@@ -77,20 +77,13 @@ export class CompendiumBrowser extends Application {
     this.packs = {};
 
     /**
-     * A list containing all the IDs of the currently visible items.
-     *
-     * @type {string[]}
-     * @property
-     */
-    this.visibleItems = [];
-
-    /**
      * The RegExp to filter item names by.
      *
      * @type {RegExp}
      * @property
      */
     this.filterQuery = /.*/;
+    this.searchString = "";
 
     /**
      * Load cached items
@@ -189,8 +182,6 @@ export class CompendiumBrowser extends Application {
     }
   }
   async _addEntryElement(item) {
-    this.visibleItems.push(item.item._id);
-
     const elem = $(await renderTemplate("systems/pf1/templates/internal/compendium-browser_entry.hbs", item));
     const rootElem = this.element.find(".directory-list");
     rootElem.append(elem);
@@ -199,7 +190,6 @@ export class CompendiumBrowser extends Application {
     return elem;
   }
   _clearEntryElements() {
-    this.visibleItems = [];
     this.element.find(".directory-list").empty();
   }
 
@@ -282,7 +272,6 @@ export class CompendiumBrowser extends Application {
       }, {}),
       labels: {
         itemCount: game.i18n.localize("PF1.TotalItems").format(this.items.length),
-        filteredItemCount: game.i18n.localize("PF1.FilteredItems").format(this.items.length),
       },
     };
   }
@@ -324,7 +313,7 @@ export class CompendiumBrowser extends Application {
       case "spells":
         return [{ type: "spell" }];
       case "items":
-        return [{ type: "equipment" }, { type: "item" }, { type: "weapon" }];
+        return [{ type: "equipment" }, { type: "item" }, { type: "weapon" }, { type: "consumable" }];
       case "feats":
         return [{ type: "feat" }];
       case "classes":
@@ -743,7 +732,10 @@ export class CompendiumBrowser extends Application {
     if (this.shouldForceRefresh() || !this._data.loaded) await this.loadData();
     await this.updateForceRefreshData({ save: true, refresh: false });
 
-    return this._data.data;
+    const data = duplicate(this._data.data);
+    data.searchString = this.searchString;
+
+    return data;
   }
 
   async refresh() {
@@ -1162,9 +1154,10 @@ export class CompendiumBrowser extends Application {
     );
   }
 
-  async _render(...args) {
-    await super._render(...args);
+  async _render(force, ...args) {
+    await super._render(force, ...args);
 
+    // Collapse filter displays
     {
       const elems = this.element.find(".filter-content");
       for (const e of elems) {
@@ -1175,6 +1168,9 @@ export class CompendiumBrowser extends Application {
         }
       }
     }
+
+    // Determine filtered item count
+    this._determineFilteredItemCount();
   }
 
   activateListeners(html) {
@@ -1247,13 +1243,14 @@ export class CompendiumBrowser extends Application {
     let input = event.currentTarget;
 
     // Define filtering function
-    let filter = (query) => {
+    let filter = async (query) => {
       this.filterQuery = query;
-      this._filterResults();
+      await this._filterResults();
     };
 
     // Filter if we are done entering keys
     let query = new RegExp(RegExp.escape(input.value), "i");
+    this.searchString = input.value;
     if (this._filterTimeout) {
       clearTimeout(this._filterTimeout);
       this._filterTimeout = null;
@@ -1294,7 +1291,7 @@ export class CompendiumBrowser extends Application {
       game.settings.set("pf1", "compendiumFilters", settings);
     }
 
-    this._filterResults();
+    return this._filterResults();
   }
 
   async _filterResults() {
@@ -1310,17 +1307,19 @@ export class CompendiumBrowser extends Application {
     await this._createInitialElements();
 
     // Determine filtered item count
-    {
-      let itemCount = 0;
-      for (let item of this.items) {
-        if (this._passesFilters(item.item)) {
-          itemCount++;
-        }
+    this._determineFilteredItemCount();
+  }
+
+  _determineFilteredItemCount() {
+    let itemCount = 0;
+    for (let item of this.items) {
+      if (this._passesFilters(item.item)) {
+        itemCount++;
       }
-      this.element
-        .find('span[data-type="filterItemCount"]')
-        .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
     }
+    this.element
+      .find('span[data-type="filterItemCount"]')
+      .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
   }
 
   _passesFilters(item) {

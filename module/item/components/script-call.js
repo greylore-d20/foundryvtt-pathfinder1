@@ -18,6 +18,7 @@ export class ItemScriptCall {
       type: "script",
       value: "",
       category: "",
+      hidden: false,
     };
   }
 
@@ -35,6 +36,9 @@ export class ItemScriptCall {
   }
   get name() {
     return this.data.name;
+  }
+  get hidden() {
+    return this.data.hidden;
   }
 
   get scriptBody() {

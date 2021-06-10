@@ -812,24 +812,6 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Get the font-awesome icon used to display a certain level of skill proficiency
-   *
-   * @param level
-   * @private
-   */
-  _getProficiencyIcon(level) {
-    const icons = {
-      0: '<i class="far fa-circle"></i>',
-      0.5: '<i class="fas fa-adjust"></i>',
-      1: '<i class="fas fa-check"></i>',
-      2: '<i class="fas fa-check-double"></i>',
-    };
-    return icons[level];
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * Compute the level and percentage of encumbrance for an Actor.
    *
    * @param {object} actorData      The data object for the Actor being rendered

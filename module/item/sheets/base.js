@@ -490,15 +490,29 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareScriptCalls(data) {
-    const categories = game.pf1.registry
-      .getItemScriptCategories()
-      .filter((o) => o.itemTypes.includes(this.document.type));
+    const categories = game.pf1.registry.getItemScriptCategories().filter((o) => {
+      if (!o.itemTypes.includes(this.document.type)) return false;
+      if (o.hidden === true && !game.user.isGM) return false;
+      return true;
+    });
+    // Don't show the Script Calls section if there are no categories for this item type
     if (!categories.length) {
       data.scriptCalls = null;
       return;
     }
+    // Don't show the Script Calls section if players are not allowed to edit script macros
+    if (!game.user.can("MACRO_SCRIPT")) {
+      data.scriptCalls = null;
+      return;
+    }
+
     data.scriptCalls = {};
 
+    // Prepare data to add
+    const checkYes = '<i class="fas fa-check"></i>';
+    const checkNo = '<i class="fas fa-times"></i>';
+
+    // Create categories, and assign items to them
     for (const c of categories) {
       data.scriptCalls[c.key] = {
         name: game.i18n.localize(c.name),
@@ -514,6 +528,10 @@ export class ItemSheetPF extends ItemSheet {
                   o.name = m.data.name;
                   o.img = m.data.img;
                 }
+
+                // Add data
+                o.hiddenIcon = o.hidden ? checkYes : checkNo;
+                o.hide = o.hidden && !game.user.isGM;
 
                 cur.push(o);
                 return cur;
@@ -884,6 +902,12 @@ export class ItemSheetPF extends ItemSheet {
     // Edit item
     else if (item && a.classList.contains("item-edit")) {
       item.edit();
+    }
+    // Toggle hidden
+    else if (item && a.classList.contains("item-hide")) {
+      item.update({
+        hidden: !item.data.hidden,
+      });
     }
   }
 

@@ -9,6 +9,7 @@ export function patchLowLightVision() {
         return {
           lowLight: getProperty(this.data, "flags.pf1.lowLightVision"),
           lowLightMultiplier: getProperty(this.data, "flags.pf1.lowLightVisionMultiplier"),
+          lowLightMultiplierBright: getProperty(this.data, "flags.pf1.lowLightVisionMultiplierBright"),
         };
       },
     },
@@ -40,7 +41,10 @@ export function patchLowLightVision() {
   };
 
   SightLayer.prototype.lowLightMultiplier = function () {
-    let result = 1;
+    let result = {
+      dim: 1,
+      bright: 1,
+    };
 
     const relevantTokens = canvas.tokens.placeables.filter((o) => {
       return o.actor && o.actor.testUserPermission(game.user, "OBSERVER");
@@ -50,7 +54,9 @@ export function patchLowLightVision() {
     if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
       for (let t of lowLightTokens.filter((o) => o._controlled)) {
         const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
-        result = Math.max(result, multiplier);
+        const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
+        result.dim = Math.max(result.dim, multiplier);
+        result.bright = Math.max(result.bright, multiplierBright);
       }
     } else {
       const hasControlledTokens = relevantTokens.filter((o) => o._controlled).length > 0;
@@ -59,21 +65,14 @@ export function patchLowLightVision() {
       if ((!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens) {
         for (let t of lowLightTokens) {
           const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
-          result = Math.max(result, multiplier);
+          const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
+          result.dim = Math.max(result.dim, multiplier);
+          result.bright = Math.max(result.bright, multiplierBright);
         }
       }
     }
 
     return result;
-  };
-
-  const Token__getLightRadius = Token.prototype.getLightRadius;
-  Token.prototype.getLightRadius = function (units) {
-    const radius = Token__getLightRadius.call(this, units);
-    if (!this.disableLowLight) {
-      return radius * canvas.sight.lowLightMultiplier();
-    }
-    return radius;
   };
 
   Token.prototype.updateSource = function ({ defer = false, deleted = false, noUpdateFog = false } = {}) {
@@ -86,12 +85,14 @@ export function patchLowLightVision() {
     const sourceId = this.sourceId;
     const d = canvas.dimensions;
     const maxR = canvas.lighting.globalLight ? Math.hypot(d.sceneWidth, d.sceneHeight) : null;
+    const lowLightMultiplier = canvas.sight.lowLightMultiplier();
 
     // Update light source
     const isLightSource = this.emitsLight && !this.data.hidden;
     if (isLightSource && !deleted) {
-      const bright = this.getLightRadius(this.data.brightLight);
-      const dim = this.getLightRadius(this.data.dimLight);
+      const bright =
+        this.getLightRadius(this.data.brightLight) * (!this.disableLowLight ? lowLightMultiplier.bright : 1);
+      const dim = this.getLightRadius(this.data.dimLight) * (!this.disableLowLight ? lowLightMultiplier.dim : 1);
       this.light.initialize({
         x: origin.x,
         y: origin.y,
@@ -119,8 +120,8 @@ export function patchLowLightVision() {
       //-Override token vision sources to not receive low-light bonus-
       let dim = maxR ?? this.getLightRadius(this.data.dimSight);
       let bright = this.getLightRadius(this.data.brightSight);
-      dim = dim / (canvas.sight.lowLightMultiplier() || 1);
-      bright = bright / (canvas.sight.lowLightMultiplier() || 1);
+      dim = dim / (canvas.sight.lowLightMultiplier().dim || 1);
+      bright = bright / (canvas.sight.lowLightMultiplier().bright || 1);
       //-End change-
       if (dim === 0 && bright === 0) dim = d.size * 0.6;
       this.vision.initialize({
@@ -152,7 +153,7 @@ export function patchLowLightVision() {
   Object.defineProperty(AmbientLight.prototype, "dimRadius", {
     get: function () {
       let result = AmbientLight__get__dimRadius.call(this);
-      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier();
+      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().dim;
       return result;
     },
   });
@@ -161,7 +162,7 @@ export function patchLowLightVision() {
   Object.defineProperty(AmbientLight.prototype, "brightRadius", {
     get: function () {
       let result = AmbientLight__get__brightRadius.call(this);
-      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier();
+      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().bright;
       return result;
     },
   });
@@ -173,9 +174,11 @@ export function patchLowLightVision() {
     if (
       hasProperty(data, "flags.pf1.disableLowLight") ||
       hasProperty(data, "flags.pf1.lowLightVision") ||
-      hasProperty(data, "flags.pf1.lowLightVisionMultiplier")
+      hasProperty(data, "flags.pf1.lowLightVisionMultiplier") ||
+      hasProperty(data, "flags.pf1.lowLightVisionMultiplierBright")
     ) {
       canvas.lighting.initializeSources();
+      canvas.perception.initialize();
     }
   };
 }

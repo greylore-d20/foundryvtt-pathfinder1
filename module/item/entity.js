@@ -753,16 +753,17 @@ export class ItemPF extends Item {
    *
    * @param {string} category - The category of script calls to call.
    * @param {object.<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
-   * @returns {Promise.<void>} A promise to await.
+   * @returns {Promise.<object>} The shared object between calls which may have been given data.
    */
   async executeScriptCalls(category, extraParams = {}) {
     const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
+    const shared = {};
 
-    let promises = [];
     for (let s of scripts) {
-      promises.push(s.execute(extraParams));
+      await s.execute(shared, extraParams);
     }
-    await Promise.all(promises);
+
+    return shared;
   }
 
   async update(data, options = {}) {

@@ -93,21 +93,21 @@ export class ItemScriptCall {
   /**
    * Executes the script.
    *
+   * @param {object} shared - An object passed between script calls, and which is passed back as a result of ItemPF.executeScriptCalls.
    * @param {object.<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
    */
-  async execute(extraParams = {}) {
+  async execute(shared, extraParams = {}) {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.parentActor;
-    const token = actor?.token;
 
     // Attempt script execution
     const body = `(async () => {
       ${await this.getScriptBody()}
     })()`;
-    const fn = Function("item", "actor", "token", ...Object.keys(extraParams), body);
+    const fn = Function("item", "actor", "shared", ...Object.keys(extraParams), body);
     try {
-      return fn.call(this, item, actor, token, ...Object.values(extraParams));
+      return fn.call(this, item, actor, shared, ...Object.values(extraParams));
     } catch (err) {
       ui.notifications.error(`There was an error in your script/macro syntax. See the console (F12) for details`);
       console.error(err);

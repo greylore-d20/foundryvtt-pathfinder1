@@ -1868,6 +1868,67 @@
               "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
             }
           }
+        },
+        "ScriptCalls": {
+          "Label": "Script Calls",
+          "Desc": {
+            "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
+          },
+          "Macros": {
+            "Label": "Using Macros as Script Calls",
+            "Desc": {
+              "Basic": "In order to use Macros as Script Calls, simply drag a macro over from somewhere to the category of Script Calls you wish to run them on."
+            }
+          },
+          "Variables": {
+            "Label": "Variables",
+            "Desc": {
+              "Basic": "The variable availability differs somewhat from what's available in regular Macros. Below you will find a list of variables which are present within Script Calls."
+            },
+            "List": {
+              "Item": {
+                "Desc": "The item from which this event was called."
+              },
+              "Actor": {
+                "Desc": "The actor which owns the calling item. Can be <code>null</code> if the item is not on an actor."
+              },
+              "Shared": {
+                "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
+              }
+            }
+          },
+
+          "Categories": {
+            "Label": "Categories",
+
+            "Use": {
+              "Name": "Use",
+              "Desc": {
+                "Basic": "Called when an item has been used. If an item has at least one script call under this category, it's usable no matter what."
+              }
+            },
+
+            "Equip": {
+              "Name": "Equip",
+              "Desc": {
+                "Basic": "Called when an item has been equipped or unequipped. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been equipped, or <code>false</code> if it has just been unequipped."
+              }
+            },
+
+            "Toggle": {
+              "Name": "Toggle",
+              "Desc": {
+                "Basic": "Called when a buff or feature has been toggled on/off. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been enabled or <code>false</code> if it has just been disabled."
+              }
+            },
+
+            "ChangeQuantity": {
+              "Name": "Change Quantity",
+              "Desc": {
+                "Basic": "Called when the quantity of a physical item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the quantity numbers before and after the update respectively."
+              }
+            }
+          }
         }
       }
     }

@@ -1001,6 +1001,11 @@
     "ChangeQuantity": {
       "Name": "Change Quantity",
       "Info": "Called when the quantity of the item has been changed. Has the extra variables `quantity.previous` and `quantity.new`, which are both numbers."
+    },
+
+    "ChangeLevel": {
+      "Name": "Change Level",
+      "Info": "Called when the level of the item has been changed. Has the extra variables `quantity.previous` and `quantity.new`, which are both numbers."
     }
   },
 
@@ -1928,6 +1933,13 @@
               "Name": "Change Quantity",
               "Desc": {
                 "Basic": "Called when the quantity of a physical item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the quantity numbers before and after the update respectively."
+              }
+            },
+
+            "ChangeLevel": {
+              "Name": "Change Level",
+              "Desc": {
+                "Basic": "Called when the level of a item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the numbers before and after the update respectively."
               }
             }
           }

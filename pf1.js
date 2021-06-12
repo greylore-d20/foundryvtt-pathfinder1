@@ -244,6 +244,13 @@ Hooks.once("init", function () {
     ["loot", "equipment", "weapon", "consumable", "container"],
     "PF1.ScriptCalls.ChangeQuantity.Info"
   );
+  game.pf1.registry.registerItemScriptCategory(
+    "pf1",
+    "changeLevel",
+    "PF1.ScriptCalls.ChangeLevel.Name",
+    ["buff", "class"],
+    "PF1.ScriptCalls.ChangeLevel.Info"
+  );
 
   // Initialize socket listener
   initializeSocket();

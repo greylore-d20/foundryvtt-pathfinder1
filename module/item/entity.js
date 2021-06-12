@@ -37,7 +37,7 @@ export class ItemPF extends Item {
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
-    return ["data.quantity"];
+    return ["data.quantity", "data.level"];
   }
 
   /* -------------------------------------------- */
@@ -1172,13 +1172,27 @@ export class ItemPF extends Item {
     }
 
     // Call 'changeQuantity' script calls
-    if (this._memoryVariables?.["data.quantity"]) {
+    if (this._memoryVariables?.["data.quantity"] !== undefined) {
       const quantity = {
         previous: this._memoryVariables["data.quantity"],
         new: getProperty(this.data, "data.quantity"),
       };
       if (quantity.new != null && quantity.new !== quantity.previous) {
         this.executeScriptCalls("changeQuantity", { quantity });
+      }
+    }
+
+    // Call 'changeLevel' script calls
+    if (this._memoryVariables?.["data.level"] !== undefined) {
+      const level = {
+        previous: parseInt(this._memoryVariables["data.level"]),
+        new: parseInt(getProperty(this.data, "data.level")),
+      };
+      for (let [k, v] of Object.entries(level)) {
+        if (Number.isNaN(v)) level[k] = null;
+      }
+      if (level.new !== undefined && level.new !== level.previous) {
+        this.executeScriptCalls("changeLevel", { level });
       }
     }
 

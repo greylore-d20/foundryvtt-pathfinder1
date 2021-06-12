@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.10
+
+### Changelog
+
+- Added script calls for changing buff and class levels
+
 ## 0.78.9
 
 ### Bug Fixes

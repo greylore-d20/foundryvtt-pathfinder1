@@ -6,6 +6,7 @@
 
 - Fix armor and shield type roll data not working (#873)
 - The Primary Attack checkbox was hidden from natural attacks (#875)
+- Fixed not being able to adjust action charges on the NPC Lite sheet (#876)
 
 ### Changelog
 

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fix armor and shield type roll data not working (#873)
+- The Primary Attack checkbox was hidden from natural attacks (#875)
 
 ### Changelog
 

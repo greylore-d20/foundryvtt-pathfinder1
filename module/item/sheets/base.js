@@ -230,8 +230,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.attackType === "natural";
+      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
+      data.isNaturalAttack = data.item.data.data.attackType === "natural";
     }
 
     // Prepare spell specific stuff

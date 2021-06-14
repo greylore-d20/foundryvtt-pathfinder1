@@ -2635,8 +2635,14 @@ export class ActorSheetPF extends ActorSheet {
   async _updateItems() {
     let promises = [];
 
-    const updates = duplicate(this._itemUpdates);
+    const updates = this._itemUpdates;
     this._itemUpdates = [];
+
+    // Memorize variables in document
+    for (let d of updates) {
+      const item = this.document.items.find((o) => o.id === d._id);
+      item?.memorizeVariables();
+    }
 
     if (updates.length > 0) {
       return this.document.updateEmbeddedDocuments("Item", updates);

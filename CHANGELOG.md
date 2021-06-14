@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fix token deletion not hiding the tooltip
+- Changing actor size didn't save it on its token(s)
 
 ### Changelog
 

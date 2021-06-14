@@ -20,6 +20,7 @@ import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { TokenDocumentPF } from "./module/token/document.js";
 import { EntrySelector } from "./module/apps/entry-selector.js";
 import { LevelUpForm } from "./module/apps/level-up.js";
 import { PointBuyCalculator } from "./module/apps/point-buy-calculator.js";
@@ -93,8 +94,8 @@ Hooks.once("init", function () {
 
   // Create a PF1 namespace within the game global
   game.pf1 = {
-    documents: { ActorPF, ItemPF },
-    entities: { ActorPF, ItemPF },
+    documents: { ActorPF, ItemPF, TokenDocumentPF },
+    entities: { ActorPF, ItemPF, TokenDocumentPF },
     applications: {
       // Actors
       ActorSheetPF,
@@ -183,6 +184,7 @@ Hooks.once("init", function () {
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Actor.documentClass = ActorPF;
+  CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
   CONFIG.Item.documentClass = ItemPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
@@ -859,7 +861,10 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   newHTML = `<div class="form-group"><label>${game.i18n.localize(
     "PF1.StaticSize"
   )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
-  if (getProperty(app.object.data, "flags.pf1.staticSize")) newHTML += " checked";
+  if (
+    getProperty(app.object instanceof TokenDocument ? app.object.data : app.object.data.token, "flags.pf1.staticSize")
+  )
+    newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
 
@@ -918,6 +923,7 @@ const handleChatTooltips = function (event) {
 export {
   ActorPF,
   ItemPF,
+  TokenDocumentPF,
   ActorSheetPF,
   ActorSheetPFCharacter,
   ActorSheetPFNPC,

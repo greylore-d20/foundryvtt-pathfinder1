@@ -2638,7 +2638,9 @@ export class ActorSheetPF extends ActorSheet {
     const updates = duplicate(this._itemUpdates);
     this._itemUpdates = [];
 
-    return this.document.updateEmbeddedDocuments("Item", updates);
+    if (updates.length > 0) {
+      return this.document.updateEmbeddedDocuments("Item", updates);
+    }
   }
 
   /**

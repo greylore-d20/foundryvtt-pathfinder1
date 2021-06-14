@@ -6,14 +6,13 @@ import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
 import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo, getHighestChanges } from "./apply-changes.js";
-import { ActorDataPF } from "./data.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
  * Extend the base Actor class to implement additional logic specialized for D&D5e.
  */
-export class ActorPF extends ActorDataPF(Actor) {
+export class ActorPF extends Actor {
   constructor(...args) {
     super(...args);
 
@@ -1615,7 +1614,7 @@ export class ActorPF extends ActorDataPF(Actor) {
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
       let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      if (!this.isToken) {
+      if (!this.isToken && !getProperty(this.data, "token.flags.pf1.staticSize")) {
         data["token.width"] = size.w;
         data["token.height"] = size.h;
         data["token.scale"] = size.scale;
@@ -1642,9 +1641,12 @@ export class ActorPF extends ActorDataPF(Actor) {
         const resKey = RegExp.$1;
         const itemId = getProperty(this.data, `data.resources.${resKey}._id`);
         if (itemId && itemId.length) {
-          this._queuedItemUpdates[itemId] = mergeObject(this._queuedItemUpdates[itemId] ?? {}, {
+          const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, {
             "data.uses.value": v,
           });
+          if (!isObjectEmpty(updateData)) {
+            this._queuedItemUpdates[itemId] = updateData;
+          }
         }
       }
     }
@@ -1737,10 +1739,14 @@ export class ActorPF extends ActorDataPF(Actor) {
                 cur.push(obj);
                 return cur;
               }, []);
-              this.updateEmbeddedDocuments("Item", itemUpdates).then(() => {
-                this._queuedItemUpdates = {};
+              if (!isObjectEmpty(this._queuedItemUpdates)) {
+                this.updateEmbeddedDocuments("Item", itemUpdates).then(() => {
+                  this._queuedItemUpdates = {};
+                  resolve();
+                });
+              } else {
                 resolve();
-              });
+              }
             });
           });
         });
@@ -1782,24 +1788,27 @@ export class ActorPF extends ActorDataPF(Actor) {
   }
 
   _onUpdate(data, options, userId, context) {
-    // Resize token(s)
-    {
-      const sizeKey = getProperty(data, "data.traits.size");
-      if (sizeKey) {
-        let size = CONFIG.PF1.tokenSizes[sizeKey];
-        let tokens = this.isToken ? [this.token] : this.getActiveTokens();
-        tokens = tokens.filter((o) => !getProperty(o.data, "flags.pf1.staticSize"));
-        tokens.forEach((o) => {
-          o.update({ width: size.w, height: size.h, scale: size.scale });
-        });
-      }
-    }
-
     if (userId === game.user.id) {
       this.toggleConditionStatusIcons();
     }
 
     super._onUpdate(data, options, userId, context);
+
+    // Resize token(s)
+    {
+      const sizeKey = getProperty(data, "data.traits.size");
+      if (sizeKey) {
+        let size = CONFIG.PF1.tokenSizes[sizeKey];
+        let tokens = this.getActiveTokens(false, true).filter((o) => {
+          if (getProperty(o.data, "flags.pf1.staticSize")) return false;
+          if (!getProperty(o.data, "actorLink")) return false;
+          return true;
+        });
+        tokens.forEach((o) => {
+          o.update({ width: size.w, height: size.h, scale: size.scale });
+        });
+      }
+    }
   }
 
   async doQueuedUpdates() {
@@ -4037,5 +4046,44 @@ export class ActorPF extends ActorDataPF(Actor) {
 
     await this.updateEmbeddedDocuments("Item", itemUpdates);
     return this.update(updateData);
+  }
+
+  _trackPreviousAttributes() {
+    // Track HP, Wounds and Vigor
+    this._prevAttributes = this._prevAttributes || {};
+    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+      const max = getProperty(this.data, `${k}.max`);
+      if (this._prevAttributes[k] != null) continue;
+      this._prevAttributes[k] = max;
+    }
+
+    // Track ability scores
+    this._prevAbilityScores = this._prevAbilityScores || {};
+    for (const k of Object.keys(this.data.data.abilities)) {
+      this._prevAbilityScores[k] = {
+        total: this.data.data.abilities[k].total,
+        mod: this.data.data.abilities[k].mod,
+      };
+    }
+  }
+
+  _applyPreviousAttributes() {
+    if (!game.pf1.isMigrating && this._initialized) {
+      // Apply HP, Wounds and Vigor
+      if (this._prevAttributes) {
+        for (const [k, prevMax] of Object.entries(this._prevAttributes)) {
+          if (prevMax == null) continue;
+          const newMax = getProperty(this.data, `${k}.max`) || 0;
+          const prevValue = getProperty(this.data, `${k}.value`);
+          const newValue = prevValue + (newMax - prevMax);
+          // if (k === "data.attributes.hp") console.log(prevMax, newMax, prevValue, newValue);
+          if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
+        }
+      }
+      this._prevAttributes = null;
+
+      // Clear previous ability score tracking
+      this._prevAbilityScores = null;
+    }
   }
 }

@@ -1183,7 +1183,6 @@ export class ItemPF extends Item {
     }
 
     // Call 'changeLevel' script calls
-    console.log(this._memoryVariables);
     if (this._memoryVariables?.["data.level"] !== undefined) {
       const level = {
         previous: parseInt(this._memoryVariables["data.level"]),

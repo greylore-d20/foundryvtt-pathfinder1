@@ -2,6 +2,10 @@
 
 ## 0.78.10
 
+### Bug Fixes
+
+- Fix token deletion not hiding the tooltip
+
 ### Changelog
 
 - Added script calls for changing buff and class levels

@@ -632,9 +632,9 @@ Hooks.on("hoverToken", (token, hovering) => {
   else game.pf1.tooltip.unbind(token);
 });
 
-Hooks.on("preDeleteToken", (scene, token, options, userId) => {
+Hooks.on("preDeleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
-  game.pf1.tooltip.unbind(token);
+  game.pf1.tooltip.unbind(token.object);
 });
 
 Hooks.on("updateToken", (scene, data, updateData, options, userId) => {

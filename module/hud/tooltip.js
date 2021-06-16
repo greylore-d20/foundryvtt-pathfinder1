@@ -106,7 +106,10 @@ export class TooltipPF extends Application {
     if (!data) return null;
 
     data.name = token.data.name;
-    if ((game.user.isGM && this.forceHideGMInfo) || (!game.user.isGM && !token.actor.hasPerm(game.user, "OBSERVER"))) {
+    if (
+      (game.user.isGM && this.forceHideGMInfo) ||
+      (!game.user.isGM && !token.actor.testUserPermission(game.user, "OBSERVER"))
+    ) {
       const tooltipName = getProperty(token.actor.data, "data.details.tooltip.name");
       data.name = tooltipName || token.data.name;
 
@@ -133,14 +136,14 @@ export class TooltipPF extends Application {
       data.name = getProperty(actor.data, "data.details.tooltip.name") || actor.data.name;
     }
 
-    data.isOwner = game.user.isGM || actor.owner;
+    data.isOwner = game.user.isGM || actor.isOwner;
     if (!data.isOwner) data.name = "???";
     this.getPortrait(data, actor.img);
 
     // Get conditions
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.owner ||
+      actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideConditions") &&
         !getProperty(this.worldConfig, "hideConditions"))
     ) {
@@ -159,7 +162,7 @@ export class TooltipPF extends Application {
     // Get buffs
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.owner ||
+      actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
     ) {
       const buffs = actor.items.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
@@ -176,7 +179,7 @@ export class TooltipPF extends Application {
     // Get held items
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.owner ||
+      actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
     ) {
       const held = actor.items.filter((i) => {
@@ -200,7 +203,7 @@ export class TooltipPF extends Application {
     // Get armor
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.owner ||
+      actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
     ) {
       const armor = actor.items.filter((i) => {
@@ -222,7 +225,7 @@ export class TooltipPF extends Application {
     // Get clothing
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.owner ||
+      actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
     ) {
       const clothing = actor.items.filter((i) => {

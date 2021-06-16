@@ -4,8 +4,8 @@ import { createTag, linkData, convertDistance, convertWeight, convertWeightBack 
 import { ActorPF } from "../actor/entity.js";
 import { AbilityTemplate } from "../pixi/ability-template.js";
 import { ChatAttack } from "../misc/chat-attack.js";
-import { SemanticVersion } from "../semver.js";
 import { ItemChange } from "./components/change.js";
+import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
 
@@ -15,12 +15,6 @@ import { RollPF } from "../roll.js";
 export class ItemPF extends Item {
   constructor(...args) {
     super(...args);
-
-    /**
-     * @property {object} _prevData
-     * When an item gets updated, certain data is stored here for use in _onUpdate.
-     */
-    if (this._prevData === undefined) this._prevData = {};
 
     /**
      * @property {object} links
@@ -37,6 +31,13 @@ export class ItemPF extends Item {
 
   static isInventoryItem(type) {
     return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
+  }
+
+  /**
+   * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
+   */
+  get memoryVariables() {
+    return ["data.quantity", "data.level"];
   }
 
   /* -------------------------------------------- */
@@ -106,7 +107,7 @@ export class ItemPF extends Item {
 
   get charges() {
     // No actor? No charges!
-    if (!this.parentActor) return 0;
+    if (!this.parent) return 0;
 
     // Get linked charges
     const link = getProperty(this, "links.charges");
@@ -120,7 +121,7 @@ export class ItemPF extends Item {
 
   get maxCharges() {
     // No actor? No charges!
-    if (!this.parentActor) return 0;
+    if (!this.parent) return 0;
 
     // Get linked charges
     const link = getProperty(this, "links.charges");
@@ -146,10 +147,10 @@ export class ItemPF extends Item {
 
   get spellbook() {
     if (this.type !== "spell") return null;
-    if (this.parentActor == null) return null;
+    if (this.parent == null) return null;
 
     const spellbookIndex = this.data.data.spellbook;
-    return this.parentActor.data.data.attributes.spells.spellbooks[spellbookIndex];
+    return this.parent?.data?.data.attributes.spells.spellbooks[spellbookIndex];
   }
 
   get casterLevel() {
@@ -206,7 +207,7 @@ export class ItemPF extends Item {
   }
 
   get parentActor() {
-    if (this.actor) return this.actor;
+    if (this.parent) return this.parent;
 
     let actor = null;
     let p = this.parentItem;
@@ -222,13 +223,6 @@ export class ItemPF extends Item {
     return super.limited;
   }
 
-  hasPerm(user, permission, exact = false) {
-    // Return true if the object is contained by another object
-    if (this.parentItem) return true;
-
-    return super.hasPerm(user, permission, exact);
-  }
-
   getName(forcePlayerPerspective = false) {
     if (game.user.isGM && !forcePlayerPerspective) return this.name;
     if (getProperty(this.data, "data.identified") === false && getProperty(this.data, "data.unidentified.name"))
@@ -242,7 +236,7 @@ export class ItemPF extends Item {
    */
   getDC(rollData = null) {
     // No actor? No DC!
-    if (!this.parentActor) return 0;
+    if (!this.parent) return 0;
 
     rollData = rollData ?? this.getRollData();
     const data = rollData.item;
@@ -255,20 +249,15 @@ export class ItemPF extends Item {
     if (this.type === "spell") {
       const spellbook = this.spellbook;
       if (spellbook != null) {
-        try {
-          result =
-            Roll.create(spellbook.baseDCFormula, rollData).evaluate().total +
-            Roll.create(data.save.dc.length > 0 ? data.save.dc : "0", rollData).evaluate().total +
-            dcBonus;
-        } catch (e) {
-          console.error(e, spellbook.baseDCFormula, data.save.dc.length > 0 ? data.save.dc : "0");
-        }
+        let formula = spellbook.baseDCFormula;
+        if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
+        result = RollPF.safeRoll(formula, rollData).total + dcBonus;
       }
       return result;
     }
     const dcFormula = getProperty(data, "save.dc")?.toString() || "0";
     try {
-      result = Roll.create(dcFormula, rollData).roll().total + dcBonus;
+      result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
     } catch (e) {
       console.error(e, dcFormula);
     }
@@ -498,7 +487,7 @@ export class ItemPF extends Item {
         const equipmentType = getProperty(this.data, "data.equipmentType") || null;
         if (equipmentType != null) {
           const equipmentSlot = getProperty(this.data, "data.slot") || null;
-          labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType][equipmentSlot];
+          labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
         } else labels.slot = null;
       }
     }
@@ -608,21 +597,19 @@ export class ItemPF extends Item {
         rng.long = null;
       } else if (typeof rng.value === "string" && rng.value.length) {
         try {
-          rng.value = Roll.create(rng.value, this.getRollData()).evaluate().total.toString();
+          rng.value = RollPF.safeTotal(rng.value, this.getRollData()).toString();
         } catch (err) {
           console.error(err);
         }
       }
       labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
-      if (labels.range.length > 0) labels.range = [game.i18n.localize("PF1.Range") + ":", labels.range].join(" ");
+      if (labels.range.length > 0) labels.range = [`${game.i18n.localize("PF1.Range")}:`, labels.range].join(" ");
 
       // Duration Label
       let dur = duplicate(data.duration || {});
       if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
       else if (typeof dur.value === "string" && this.parentActor) {
-        dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"], {
-          suppressError: !this.hasPerm(game.user, "OWNER"),
-        }).total.toString();
+        dur.value = RollPF.safeRoll(dur.value || "0", this.getRollData(), [this.name, "Duration"]).total.toString();
       }
       labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
     }
@@ -659,6 +646,11 @@ export class ItemPF extends Item {
       this.changes = this._prepareChanges(this.data.data.changes);
     }
 
+    // Update script calls
+    if (this.data.data.scriptCalls instanceof Array) {
+      this.scriptCalls = this._prepareScriptCalls(this.data.data.scriptCalls);
+    }
+
     // Update contained items
     if (this.data.data.inventoryItems instanceof Array) {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
@@ -674,13 +666,13 @@ export class ItemPF extends Item {
     }
 
     if (!this.actor) {
-      this.prepareDerivedData();
+      this.prepareDerivedItemData();
     }
 
     return itemData;
   }
 
-  prepareDerivedData() {
+  prepareDerivedItemData() {
     // Parse formulaic attacks
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
@@ -688,6 +680,9 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses();
+
+    // Re-render sheet, if open
+    this.sheet?.render();
   }
 
   prepareLinks() {
@@ -722,6 +717,20 @@ export class ItemPF extends Item {
     return collection;
   }
 
+  _prepareScriptCalls(scriptCalls) {
+    const prior = this.scriptCalls;
+    const collection = new Collection();
+    for (let s of scriptCalls) {
+      let scriptCall = null;
+      if (prior && prior.has(s.id)) {
+        scriptCall = prior.get(s.id);
+        scriptCall.data = s;
+      } else scriptCall = ItemScriptCall.create(s, this);
+      collection.set(s._id || scriptCall.data._id, scriptCall);
+    }
+    return collection;
+  }
+
   _prepareInventory(inventory) {
     const prior = this.items;
     const collection = new Collection();
@@ -729,11 +738,11 @@ export class ItemPF extends Item {
       let item = null;
       if (prior && prior.has(o._id)) {
         item = prior.get(o._id);
-        item._data = o;
-        item.data = item._data;
+        // item.data = o;
+        item.data.update(o);
         item.prepareData();
       } else {
-        item = new CONFIG.Item.entityClass(o);
+        item = new CONFIG.Item.documentClass(o);
         item.parentItem = this;
       }
 
@@ -742,12 +751,30 @@ export class ItemPF extends Item {
     return collection;
   }
 
+  /**
+   * Executes all script calls on this item of a specified category.
+   *
+   * @param {string} category - The category of script calls to call.
+   * @param {object.<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
+   * @returns {Promise.<object>} The shared object between calls which may have been given data.
+   */
+  async executeScriptCalls(category, extraParams = {}) {
+    const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
+    const shared = {};
+
+    for (let s of scripts) {
+      await s.execute(shared, extraParams);
+    }
+
+    return shared;
+  }
+
   async update(data, options = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
     if (options.recursive === false) {
       return super.update(data, options);
     }
-    const srcData = mergeObject(this.data, expandObject(data), { inplace: false });
+    const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
@@ -855,6 +882,7 @@ export class ItemPF extends Item {
         { key: "data.damage.critParts" },
         { key: "data.damage.nonCritParts" },
         { key: "data.contextNotes" },
+        { key: "data.scriptCalls" },
       ];
 
       for (let kArr of keepArray) {
@@ -980,9 +1008,6 @@ export class ItemPF extends Item {
       }
     }
 
-    // Set previous data
-    this._prevData["level"] = getProperty(this.data, "data.level");
-
     // Make sure charges doesn't exceed max charges, and vice versa
     {
       let charges = 0;
@@ -991,33 +1016,37 @@ export class ItemPF extends Item {
 
       if (this.type === "spell") {
         if (data["data.preparation.maxAmount"] != null) target = "max";
-        charges = getProperty(srcData, "data.preparation.preparedAmount");
-        maxCharges = getProperty(srcData, "data.preparation.maxAmount");
+        charges = data["data.preparation.preparedAmount"];
+        maxCharges = data["data.preparation.maxAmount"];
       } else {
         if (data["data.uses.max"] != null) target = "max";
-        charges = getProperty(srcData, "data.uses.value") || 0;
-        maxCharges = getProperty(srcData, "data.uses.max") || 0;
+        charges = data["data.uses.value"];
+        maxCharges = data["data.uses.max"];
       }
 
       if (target === "value" && charges > maxCharges) maxCharges = charges;
       else if (target === "max" && maxCharges < charges) charges = maxCharges;
 
-      if (this.type === "spell") {
-        linkData(srcData, data, "data.preparation.preparedAmount", charges);
-        linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+      const link = getProperty(this, "links.charges");
+      if (!link) {
+        if (this.type === "spell") {
+          linkData(srcData, data, "data.preparation.preparedAmount", charges);
+          linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+        } else {
+          linkData(srcData, data, "data.uses.value", charges);
+          linkData(srcData, data, "data.uses.max", maxCharges);
+        }
       } else {
-        linkData(srcData, data, "data.uses.value", charges);
-        linkData(srcData, data, "data.uses.max", maxCharges);
+        // Update charges for linked items
+        if (data["data.uses.value"] != null) {
+          if (link && getProperty(link, "links.charges") == null) {
+            await link.update({ "data.uses.value": data["data.uses.value"] });
+          }
+        }
       }
     }
 
-    // Update charges for linked items
-    if (data["data.uses.value"] != null) {
-      const link = getProperty(this, "links.charges");
-      if (link && getProperty(link, "links.charges") == null) {
-        await link.update({ "data.uses.value": data["data.uses.value"] });
-      }
-    }
+    this.memorizeVariables();
 
     let diff = diffObject(flattenObject(this.data), data);
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
@@ -1037,7 +1066,7 @@ export class ItemPF extends Item {
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
-        const parentItem = parentInventory.find((o) => o._id === this._id);
+        const parentItem = parentInventory.find((o) => o._id === this.id);
         const idx = parentInventory.indexOf(parentItem);
 
         if (idx >= 0) {
@@ -1049,7 +1078,7 @@ export class ItemPF extends Item {
 
           // Set parent weight
           const contentsWeight = parentInventory.reduce((cur, i) => {
-            if (i._id === this._id)
+            if (i._id === this.id)
               return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
             return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
           }, 0);
@@ -1061,11 +1090,11 @@ export class ItemPF extends Item {
         }
       }
     } else if (options.skipUpdate) {
-      diff["_id"] = this._id;
+      diff["_id"] = this.id;
     }
 
     // Update tokens and the actor using this item
-    const actor = this.parentActor;
+    const actor = this.parent;
     if (actor) {
       // Update actor
       {
@@ -1087,19 +1116,19 @@ export class ItemPF extends Item {
           cur.push(obj);
           return cur;
         }, []);
-        if (effectUpdates.length) await actor.updateEmbeddedEntity("ActiveEffect", effectUpdates);
+        if (effectUpdates.length) await actor.updateEmbeddedDocuments("ActiveEffect", effectUpdates);
       }
 
       // Update tokens
       let promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor?._id === actor._id);
+      const tokens = canvas.tokens.placeables.filter((token) => token.actor?.id === actor.id);
       for (const token of tokens) {
         const tokenUpdateData = {};
 
         // Update tokens with this item as a resource bar
         if (diff["data.uses.value"] != null) {
           for (const barKey of ["bar1", "bar2"]) {
-            const bar = token.getBarAttribute(barKey);
+            const bar = token.document.getBarAttribute(barKey);
             if (bar && bar.attribute === `resources.${this.data.data.tag}`) {
               tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
             }
@@ -1107,11 +1136,71 @@ export class ItemPF extends Item {
         }
 
         if (!isObjectEmpty(tokenUpdateData)) {
-          promises.push(token.update(tokenUpdateData));
+          promises.push(token.document.update(tokenUpdateData));
         }
       }
       if (promises.length) await Promise.all(promises);
     }
+  }
+
+  memorizeVariables() {
+    const memKeys = this.memoryVariables;
+    this._memoryVariables = {};
+    for (let k of memKeys) {
+      if (hasProperty(this.data, k)) {
+        this._memoryVariables[k] = getProperty(this.data, k);
+      }
+    }
+  }
+
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+
+    // Call 'toggle' script calls
+    {
+      let state = null;
+      if (this.data.type === "buff") state = getProperty(changed, "data.active");
+      if (this.data.type === "feat") state = getProperty(changed, "data.disabled") === true ? false : true;
+      if (state != null) {
+        this.executeScriptCalls("toggle", { state });
+      }
+    }
+
+    // Call 'equip' script calls
+    {
+      const equipped = getProperty(changed, "data.equipped");
+      if (equipped != null) {
+        this.executeScriptCalls("equip", { equipped });
+      }
+    }
+
+    // Call 'changeQuantity' script calls
+    if (this._memoryVariables?.["data.quantity"] !== undefined) {
+      const quantity = {
+        previous: this._memoryVariables["data.quantity"],
+        new: getProperty(this.data, "data.quantity"),
+      };
+      if (quantity.new != null && quantity.new !== quantity.previous) {
+        this.executeScriptCalls("changeQuantity", { quantity });
+      }
+    }
+
+    // Call 'changeLevel' script calls
+    if (this._memoryVariables?.["data.level"] !== undefined) {
+      const level = {
+        previous: parseInt(this._memoryVariables["data.level"]),
+        new: parseInt(getProperty(this.data, "data.level")),
+      };
+      for (let [k, v] of Object.entries(level)) {
+        if (Number.isNaN(v)) level[k] = null;
+      }
+      if (level.new !== undefined && level.new !== level.previous) {
+        this.executeScriptCalls("changeLevel", { level });
+      }
+    }
+
+    // Forget memory variables
+    this._memoryVariables = null;
   }
 
   _updateContentsWeight(data, { srcData = null } = {}) {
@@ -1128,7 +1217,7 @@ export class ItemPF extends Item {
 
   _updateMaxUses() {
     // No actor? No charges!
-    if (!this.parentActor) return;
+    if (!this.parent) return;
 
     // No charges? No charges!
     if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
@@ -1152,14 +1241,15 @@ export class ItemPF extends Item {
 
   //Creates a simple ActiveEffect from a buff item. Returns the effect
   async toEffect({ noCreate = false } = {}) {
-    if (!this.parentActor || this.type !== "buff") return;
+    if (!this.parent || this.type !== "buff") return;
 
-    const existing = this.parentActor.effects.find((e) => e.data.origin == this.uuid);
+    const existing = this.parent.effects.find((e) => e.data.origin == this.uuid);
     if (existing || noCreate) return existing;
 
     // Add a new effect
-    const effect = ActiveEffect.create(this.getRawEffectData(), this.parentActor);
-    await effect.create();
+    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
+    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    const effect = ActiveEffect.create(createData, { parent: this.parent });
 
     return effect;
   }
@@ -1170,6 +1260,11 @@ export class ItemPF extends Item {
     if (this.type === "buff")
       createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
     return createData;
+  }
+
+  // Fetches all this item's script calls of a specified category
+  getScriptCalls(category) {
+    return this.scriptCalls?.filter((s) => s.category === category) ?? [];
   }
 
   /* -------------------------------------------- */
@@ -1183,8 +1278,8 @@ export class ItemPF extends Item {
    * @returns {Promise}
    */
   async roll(altChatData = {}, { addDC = true } = {}) {
-    const actor = this.parentActor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) {
+    const actor = this.parent;
+    if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -1194,12 +1289,12 @@ export class ItemPF extends Item {
     if (allowed === false) return;
 
     // Basic template rendering data
-    const token = this.parentActor.token;
+    const token = this.parent.token;
     const saveType = getProperty(this.data, "data.save.type");
     const saveDC = this.getDC();
     const templateData = {
-      actor: this.parentActor,
-      tokenId: token ? `${token.scene._id}.${token.id}` : null,
+      actor: this.parent,
+      tokenId: token ? token.uuid : null,
       item: this.data,
       data: this.getChatData(),
       labels: this.labels,
@@ -1237,13 +1332,10 @@ export class ItemPF extends Item {
     }
 
     // Roll spell failure chance
-    if (templateData.isSpell && this.parentActor != null && this.parentActor.spellFailure > 0) {
-      const spellbook = getProperty(
-        this.parentActor.data,
-        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
-      );
+    if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0) {
+      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = Roll.create("1d100").evaluate().total;
+        templateData.spellFailure = RollPF.safeRoll("1d100").total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
       }
     }
@@ -1254,15 +1346,15 @@ export class ItemPF extends Item {
 
     // Determine metadata
     const metadata = {};
-    metadata.item = this._id;
+    metadata.item = this.id;
 
     // Basic chat message data
     const chatData = flattenObject(
       mergeObject(
         {
-          user: game.user._id,
+          user: game.user.id,
           type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-          speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+          speaker: ChatMessage.getSpeaker({ actor: this.parent }),
           flags: {
             core: {
               canPopout: true,
@@ -1459,7 +1551,7 @@ export class ItemPF extends Item {
    * @private
    */
   _spellChatData(data, labels, props) {
-    const ad = this.parentActor.data.data;
+    const ad = this.parent.data.data;
 
     // Spell saving throw text
     // const abl = data.ability || ad.attributes.spellcasting || "int";
@@ -1480,7 +1572,7 @@ export class ItemPF extends Item {
    * @param props
    */
   _featChatData(data, labels, props) {
-    const ad = this.parentActor.data.data;
+    const ad = this.parent.data.data;
 
     // Spell saving throw text
     // const abl = data.ability || ad.attributes.spellcasting || "str";
@@ -1519,7 +1611,8 @@ export class ItemPF extends Item {
     }
     const chatData = {};
     if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
-    this.roll();
+
+    return this.executeScriptCalls("use", { attacks: [] });
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
@@ -1544,7 +1637,7 @@ export class ItemPF extends Item {
     try {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
-        Roll.create(exAtkBonusFormula, rollData).evaluate().total;
+        RollPF.safeRoll(exAtkBonusFormula, rollData);
       }
     } catch (err) {
       const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
@@ -1561,12 +1654,13 @@ export class ItemPF extends Item {
   /**
    * Cast a Spell, consuming a spell slot of a certain level
    *
-   * @param {MouseEvent} ev The click event
-   * @param root0
-   * @param root0.skipDialog
+   * @param {MouseEvent} ev - The click event
+   * @param {object} options - Additional options
+   * @param {boolean} options.skipDialog - Whether to skip the roll dialog
+   * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
   async useSpell(ev, { skipDialog = false } = {}) {
-    if (!this.hasPerm(game.user, "OWNER")) {
+    if (!this.testUserPermission(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -1589,8 +1683,8 @@ export class ItemPF extends Item {
 
   async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
-    const actor = this.parentActor;
-    if (actor && !actor.hasPerm(game.user, "OWNER")) {
+    const actor = this.parent;
+    if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
@@ -1663,8 +1757,8 @@ export class ItemPF extends Item {
         // Point-Blank Shot
         if (form.find('[name="point-blank-shot"]').prop("checked")) {
           rollData.pointBlankBonus = 1;
-          attackExtraParts.push("@pointBlankBonus");
-          damageExtraParts.push("@pointBlankBonus");
+          attackExtraParts.push(`@pointBlankBonus[${game.i18n.localize("PF1.PointBlankShot")}]`);
+          damageExtraParts.push(`@pointBlankBonus[${game.i18n.localize("PF1.PointBlankShot")}]`);
         }
 
         // Haste
@@ -1677,7 +1771,7 @@ export class ItemPF extends Item {
         rapidShotAttackRequired = fullAttack && form.find('[name="rapid-shot"]').prop("checked");
         if (rapidShotAttackRequired) {
           rollData.rapidShotPenalty = -2;
-          attackExtraParts.push("@rapidShotPenalty");
+          attackExtraParts.push(`@rapidShotPenalty[${game.i18n.localize("PF1.RapidShot")}]`);
         }
 
         // Primary Attack (for natural attacks)
@@ -1712,9 +1806,12 @@ export class ItemPF extends Item {
             if (getProperty(rollData, "item.held") === "2h") rollData.powerAttackBonus *= 1.5;
             else if (getProperty(rollData, "item.held") === "oh") rollData.powerAttackBonus *= 0.5;
           }
-          damageExtraParts.push("@powerAttackBonus");
+          const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+            ? game.i18n.localize("PF1.DeadlyAim")
+            : game.i18n.localize("PF1.PowerAttack");
+          damageExtraParts.push(`@powerAttackBonus[${label}]`);
           rollData.powerAttackPenalty = -(1 + Math.floor(getProperty(rollData, "attributes.bab.total") / 4));
-          attackExtraParts.push("@powerAttackPenalty");
+          attackExtraParts.push(`@powerAttackPenalty[${label}]`);
         }
 
         // Conditionals
@@ -1779,7 +1876,7 @@ export class ItemPF extends Item {
               frollData["formulaicAttack"] = i + 1; // Add and update attack counter
               const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
               allAttacks.push({
-                bonus: bonus.toString(),
+                bonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
                 label: fatlabel.format(i + 2),
               });
             }
@@ -1841,6 +1938,10 @@ export class ItemPF extends Item {
                   ? [modifier.formula, modifier.type, true]
                   : [modifier.formula, localizeType(modifier.target, modifier.type), false],
               ];
+            }
+            // Add formula to the size property
+            else if (modifier.target === "size") {
+              rollData.size += conditionalRoll.total;
             }
           }
         }
@@ -1934,7 +2035,10 @@ export class ItemPF extends Item {
           let attack = new ChatAttack(this, { label: atk.label, primaryAttack: primaryAttack, rollData: rollData });
 
           // Add attack roll
-          await attack.addAttack({ bonus: atk.bonus, extraParts: duplicate(attackExtraParts), conditionalParts });
+          await attack.addAttack({
+            extraParts: duplicate(attackExtraParts).concat([atk.bonus]),
+            conditionalParts,
+          });
 
           // Add damage
           if (this.hasDamage) {
@@ -2180,11 +2284,11 @@ export class ItemPF extends Item {
         // Create template
         template = AbilityTemplate.fromData(templateOptions);
         if (template) {
-          const sheetRendered = this.parentActor?.sheet?._element != null;
-          if (sheetRendered) this.parentActor.sheet.minimize();
+          const sheetRendered = this.parent?.sheet?._element != null;
+          if (sheetRendered) this.parent.sheet.minimize();
           template = await template.drawPreview(ev);
           if (!template) {
-            if (sheetRendered) this.parentActor.sheet.maximize();
+            if (sheetRendered) this.parent.sheet.maximize();
             return;
           }
         }
@@ -2192,7 +2296,7 @@ export class ItemPF extends Item {
 
       // Set chat data
       let chatData = {
-        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+        speaker: ChatMessage.getSpeaker({ actor: this.parent }),
         rollMode: rollMode,
         "flags.pf1.noRollRender": true,
       };
@@ -2354,8 +2458,8 @@ export class ItemPF extends Item {
         }
 
         // Add CL notes
-        if (this.data.type === "spell" && this.parentActor) {
-          const clNotes = this.parentActor.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
+        if (this.data.type === "spell" && this.parent) {
+          const clNotes = this.parent.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
 
           if (clNotes.length) {
             props.push({
@@ -2368,19 +2472,21 @@ export class ItemPF extends Item {
         // Get saving throw data
         const save = getProperty(this.data, "data.save.type");
         const saveDC = this.getDC(rollData);
-        const token = this.parentActor?.token;
+        const token =
+          this.parentActor?.token ??
+          canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
 
         const templateData = mergeObject(
           chatTemplateData,
           {
-            tokenId: token ? `${token.scene._id}.${token.id}` : null,
+            tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
             extraText: extraText,
             data: itemChatData,
             hasExtraText: extraText.length > 0,
             properties: props,
             hasProperties: props.length > 0,
             item: this.data,
-            actor: this.parentActor.data,
+            actor: this.parent.data,
             hasSave: this.hasSave,
             save: {
               dc: saveDC,
@@ -2415,20 +2521,20 @@ export class ItemPF extends Item {
         }
 
         // Spell failure
-        if (this.type === "spell" && this.parentActor != null && this.parentActor.spellFailure > 0) {
+        if (this.type === "spell" && this.parent != null && this.parent.spellFailure > 0) {
           const spellbook = getProperty(
-            this.parentActor.data,
+            this.parent.data,
             `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
           );
           if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = Roll.create("1d100").evaluate().total;
+            templateData.spellFailure = RollPF.safeRoll("1d100").total;
             templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
           }
         }
         // Add metadata
         const metadata = {};
-        metadata.item = this._id;
-        metadata.template = template ? template._id : null;
+        metadata.item = this.id;
+        metadata.template = template ? template.id : null;
         metadata.rolls = {
           attacks: {},
         };
@@ -2477,6 +2583,10 @@ export class ItemPF extends Item {
 
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
+
+      // Execute script call
+      await this.executeScriptCalls("use", { attacks });
+
       return result;
     };
 
@@ -2574,7 +2684,7 @@ export class ItemPF extends Item {
           return true;
         });
         // Add masterwork bonus
-        if (getProperty(this.data, "data.masterwork") === true) {
+        if (getProperty(this.data, "data.masterwork") === true && !getProperty(this.data, "data.enh")) {
           result.push(
             ItemChange.create({
               formula: "1",
@@ -2583,11 +2693,12 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: 1,
+              flavor: game.i18n.localize("PF1.Masterwork"),
             })
           );
         }
         // Add enhancement bonus
-        if (getProperty(this.data, "data.enh") != null) {
+        if (getProperty(this.data, "data.enh")) {
           const enh = getProperty(this.data, "data.enh");
           result.push(
             ItemChange.create({
@@ -2597,6 +2708,7 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: enh,
+              flavor: game.i18n.localize("PF1.EnhancementBonus"),
             })
           );
         }
@@ -2610,7 +2722,7 @@ export class ItemPF extends Item {
           return true;
         });
         // Add enhancement bonus
-        if (getProperty(this.data, "data.enh") != null) {
+        if (getProperty(this.data, "data.enh")) {
           const enh = getProperty(this.data, "data.enh");
           result.push(
             ItemChange.create({
@@ -2620,6 +2732,7 @@ export class ItemPF extends Item {
               subTarget: "attack",
               modifier: "enh",
               value: enh,
+              flavor: game.i18n.localize("PF1.EnhancementBonus"),
             })
           );
         }
@@ -2654,49 +2767,48 @@ export class ItemPF extends Item {
 
     // Define Roll parts
     let parts = [];
-    // Add ability modifier
-    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
-      parts.push(`@abilities.${abl}.mod`);
-    }
-    // Add bonus parts
-    parts = parts.concat(extraParts);
-    // Add attack bonus
-    if (typeof itemData.attackBonus === "string" && itemData.attackBonus !== "") {
-      let attackBonus = RollPF.safeRoll(itemData.attackBonus, rollData).total;
-      rollData.item.attackBonus = attackBonus;
-      parts.push("@item.attackBonus");
-    }
-    // Backwards compatibility
-    else if (typeof itemData.attackBonus === "number") {
-      rollData.item.attackBonus = itemData.attackBonus;
-      parts.push("@item.attackBonus");
-    }
 
     // Special handling for combat maneuvers
     if (["mcman", "rcman"].includes(itemData.actionType)) {
       // Add CMB without general ability
       // This already includes BAB, size, energy drain
       rollData.attributes.cmb.total -= rollData.abilities[rollData.attributes.cmbAbility]?.mod ?? 0;
-      if (rollData.attributes.cmb.total) parts.push("@attributes.cmb.total");
+      if (rollData.attributes.cmb.total) parts.push(`@attributes.cmb.total[${game.i18n.localize("PF1.CMBAbbr")}]`);
     } else {
       // Handle regular attacks
 
       // Add size bonus
-      if (rollData.sizeBonus !== 0) parts.push("@sizeBonus");
+      if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
       // Add BAB
       if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
-        parts.push("@attributes.bab.total");
+        parts.push(`@attributes.bab.total[${game.i18n.localize("PF1.BAB")}]`);
       }
       // Subtract energy drain
       if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
-        parts.push("- max(0, abs(@attributes.energyDrain))");
+        parts.push(`- @attributes.energyDrain[${game.i18n.localize("PF1.CondTypeEnergyDrain")}]`);
       }
+    }
+
+    // Add ability modifier
+    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
+      parts.push(`@abilities.${abl}.mod[${CONFIG.PF1.abilities[abl]}]`);
+    }
+    // Add bonus parts
+    parts = parts.concat(extraParts);
+    // Add attack bonus
+    if (typeof itemData.attackBonus === "string" && !["", "0"].includes(itemData.attackBonus)) {
+      parts.push(itemData.attackBonus);
+    }
+    // Backwards compatibility
+    else if (typeof itemData.attackBonus === "number") {
+      rollData.item.attackBonus = itemData.attackBonus;
+      parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
     }
 
     // Add change bonus
     const isRanged = ["rwak", "rsak"].includes(this.data.data.actionType);
     const changes = this.getContextChanges(isRanged ? "rattack" : "mattack");
-    let changeBonus = 0;
+    let changeBonus = [];
     {
       // Get attack bonus
       changeBonus = getHighestChanges(
@@ -2706,34 +2818,45 @@ export class ItemPF extends Item {
         }),
         { ignoreTarget: true }
       ).reduce((cur, c) => {
-        return cur + c.value;
-      }, 0);
+        cur.push({
+          value: c.value,
+          source: c.flavor,
+        });
+        return cur;
+      }, []);
     }
-    if (changeBonus) parts.push(changeBonus.toString());
+    for (let c of changeBonus) {
+      parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
+    }
 
     // Add wound thresholds penalties
     if (rollData.attributes.woundThresholds?.penalty > 0) {
-      parts.push("- @attributes.woundThresholds.penalty");
+      parts.push(
+        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+        )}]`
+      );
     }
 
     // Add proficiency penalty
     if (this.data.type === "attack" && !itemData.proficient) {
-      parts.push("@item.proficiencyPenalty");
+      parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty
-    if (primaryAttack === false) parts.push("-5");
+    if (primaryAttack === false) parts.push(`-5[${game.i18n.localize("PF1.SecondaryAttack")}]`);
     // Add bonus
     if (bonus) {
       rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
-      parts.push("@bonus");
+      parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
     // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
-    if (rollData.attributes.acp.attackPenalty > 0) parts.push("-@attributes.acp.attackPenalty");
+    if (rollData.attributes.acp.attackPenalty > 0)
+      parts.push(`-@attributes.acp.attackPenalty[${game.i18n.localize("PF1.ACP")}]`);
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
-    let roll = RollPF.safeRoll([rollData.d20, ...parts].join("+"), rollData);
+    let roll = RollPF.safeRoll([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData);
     return roll;
   }
 
@@ -2761,7 +2884,7 @@ export class ItemPF extends Item {
     if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
 
     // Create effect string
-    let effectNotes = this.parentActor.getContextNotes("attacks.effect").reduce((cur, o) => {
+    let effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
       o.notes
         .reduce((cur2, n) => {
           cur2.push(...n.split(/[\n\r]+/));
@@ -2801,13 +2924,13 @@ export class ItemPF extends Item {
     }
 
     // Define Roll Data
-    const rollData = this.parentActor.getRollData();
+    const rollData = this.parent.getRollData();
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
     const roll = RollPF.safeRoll(itemData.formula, rollData);
     return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+      speaker: ChatMessage.getSpeaker({ actor: this.parent }),
       flavor: itemData.chatFlavor || title,
       rollMode: game.settings.get("core", "rollMode"),
     });
@@ -2881,7 +3004,7 @@ export class ItemPF extends Item {
     if (!this.isHealing) {
       const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
       const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
-      let changeBonus = 0;
+      let changeBonus = [];
       {
         // Get damage bonus
         changeBonus = getHighestChanges(
@@ -2891,25 +3014,37 @@ export class ItemPF extends Item {
           }),
           { ignoreTarget: true }
         ).reduce((cur, c) => {
-          return cur + c.value;
-        }, 0);
+          if (c.value)
+            cur.push({
+              value: c.value,
+              source: c.flavor,
+            });
+          return cur;
+        }, []);
       }
-      if (changeBonus) parts[0].extra.push(changeBonus.toString());
+      for (let c of changeBonus) {
+        parts[0].extra.push(`${c.value}[${c.source}]`);
+      }
 
       // Add broken penalty
       if (this.data.data.broken) {
-        parts[0].extra.push("-2");
+        const label = game.i18n.localize("PF1.Broken");
+        parts[0].extra.push(`-2[${label}]`);
       }
     }
 
     // Determine ability score modifier
     let abl = this.data.data.ability.damage;
     if (typeof abl === "string" && abl !== "") {
+      // Determine ability score bonus
       rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
-      if (rollData.ablDamage < 0) parts[0].extra.push("@ablDamage");
-      else if (critical === true) parts[0].extra.push("@ablDamage");
-      else if (rollData.ablDamage !== 0) parts[0].extra.push("@ablDamage");
+
+      // Determine ability score label
+      const ablLabel = CONFIG.PF1.abilities[abl];
+
+      // Add ability score
+      parts[0].extra.push(`@ablDamage[${ablLabel}]`);
     }
 
     // Create roll
@@ -2919,7 +3054,7 @@ export class ItemPF extends Item {
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: RollPF.safeRoll([part.base, ...rollParts].join("+"), rollData),
+        roll: RollPF.safeRoll([part.base, ...rollParts].join(" + "), rollData),
         damageType: part.damageType,
         type: part.type,
       };
@@ -2958,7 +3093,7 @@ export class ItemPF extends Item {
     });
     // Submit the roll to chat
     if (effectStr === "") {
-      Roll.create(parts.join("+")).toMessage({
+      RollPF.safeRoll(parts.join(" + ")).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
@@ -2985,7 +3120,7 @@ export class ItemPF extends Item {
         type: CONST.CHAT_MESSAGE_TYPES.CHAT,
         rollMode: game.settings.get("core", "rollMode"),
         sound: CONFIG.sounds.dice,
-        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
+        speaker: ChatMessage.getSpeaker({ actor: this.parent }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
         roll: roll,
         content: await renderTemplate(chatTemplate, rollData),
@@ -3014,24 +3149,26 @@ export class ItemPF extends Item {
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const result = this.parentActor != null ? this.parentActor.getRollData() : {};
+    const result = this.parent != null && this.parent.data ? this.parent.getRollData() : {};
 
     result.item = this.data.data;
-    if (this.type === "spell" && this.parentActor != null) {
+    if (this.type === "spell" && this.parent != null) {
       const spellbook = this.spellbook;
-      const spellAbility = spellbook.ability;
-      let ablMod = "";
-      if (spellAbility !== "") ablMod = getProperty(this.parentActor.data, `data.abilities.${spellAbility}.mod`);
+      if (spellbook != null) {
+        const spellAbility = spellbook.ability;
+        let ablMod = "";
+        if (spellAbility !== "") ablMod = getProperty(this.parent.data, `data.abilities.${spellAbility}.mod`);
 
-      result.cl = this.casterLevel || 0;
-      result.sl = this.spellLevel || 0;
-      result.classLevel =
-        spellbook.class === "_hd"
-          ? result.attributes.hd.total
-          : spellbook.class?.length > 0
-          ? getProperty(result, `classes.${spellbook.class}.level`) || 0 // `
-          : 0;
-      result.ablMod = ablMod;
+        result.cl = this.casterLevel || 0;
+        result.sl = this.spellLevel || 0;
+        result.classLevel =
+          spellbook.class === "_hd"
+            ? result.attributes.hd.total
+            : spellbook.class?.length > 0
+            ? getProperty(result, `classes.${spellbook.class}.level`) || 0 // `
+            : 0;
+        result.ablMod = ablMod;
+      }
     }
     if (this.type === "buff") result.item.level = this.data.data.level;
 
@@ -3075,7 +3212,7 @@ export class ItemPF extends Item {
     if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
     // Get the Actor from a synthetic Token
-    const actor = this._getChatCardActor(card);
+    const actor = await this._getChatCardActor(card);
     if (!actor) {
       if (action === "applyDamage") {
         await this._onChatCardAction(action, { button: button });
@@ -3085,7 +3222,7 @@ export class ItemPF extends Item {
     }
 
     // Get the Item
-    const item = actor.getOwnedItem(card.dataset.itemId);
+    const item = actor.items.get(card.dataset.itemId);
 
     // Perform action
     if (!(await this._onChatCardAction(action, { button: button, item: item }))) {
@@ -3181,17 +3318,11 @@ export class ItemPF extends Item {
    * @returns {Actor|null}         The Actor entity or null
    * @private
    */
-  static _getChatCardActor(card) {
+  static async _getChatCardActor(card) {
     // Case 1 - a synthetic actor from a Token
-    const tokenKey = card.dataset.tokenId;
-    if (tokenKey) {
-      const [sceneId, tokenId] = tokenKey.split(".");
-      const scene = game.scenes.get(sceneId);
-      if (!scene) return null;
-      const tokenData = scene.getEmbeddedEntity("Token", tokenId);
-      if (!tokenData) return null;
-      const token = new Token(tokenData);
-      return token.actor;
+    const tokenUuid = card.dataset.tokenId;
+    if (tokenUuid) {
+      return (await fromUuid(tokenUuid))?.actor;
     }
 
     // Case 2 - use Actor ID directory
@@ -3406,11 +3537,11 @@ export class ItemPF extends Item {
   }
 
   useSpellPoints() {
-    if (!this.parentActor) return false;
+    if (!this.parent) return false;
     if (this.data.type !== "spell") return false;
 
     const spellbookKey = this.data.data.spellbook;
-    const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
+    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
     return getProperty(spellbook, "spellPoints.useSystem") || false;
   }
 
@@ -3422,13 +3553,10 @@ export class ItemPF extends Item {
   }
 
   async addSpellUses(value, data = null) {
-    if (!this.parentActor) return;
+    if (!this.parent) return;
     if (this.data.data.atWill) return;
 
-    const spellbook = getProperty(
-        this.parentActor.data,
-        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
-      ),
+    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
@@ -3437,7 +3565,7 @@ export class ItemPF extends Item {
       const curUses = this.getSpellUses();
       const updateData = {};
       updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
-      return this.parentActor.update(updateData);
+      return this.parent.update(updateData);
     } else {
       const newCharges = isSpontaneous
         ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
@@ -3456,7 +3584,7 @@ export class ItemPF extends Item {
         const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
-        return this.parentActor.update(actorUpdateData);
+        return this.parent.update(actorUpdateData);
       }
     }
 
@@ -3464,13 +3592,10 @@ export class ItemPF extends Item {
   }
 
   getSpellUses(max = false) {
-    if (!this.parentActor) return 0;
+    if (!this.parent) return 0;
     if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
 
-    const spellbook = getProperty(
-        this.parentActor.data,
-        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
-      ),
+    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
       isSpontaneous = spellbook.spontaneous,
       spellLevel = getProperty(this.data, "data.level");
 
@@ -3637,7 +3762,7 @@ export class ItemPF extends Item {
   }
 
   async _onLevelChange(curLevel, newLevel) {
-    if (!this.parentActor) return;
+    if (!this.parent) return;
 
     // Add items associated to this class
     if (newLevel > curLevel) {
@@ -3651,7 +3776,7 @@ export class ItemPF extends Item {
         const collection = co.id.split(".").slice(0, 2).join(".");
         const itemId = co.id.split(".")[2];
         const pack = game.packs.get(collection);
-        const item = await pack.getEntity(itemId);
+        const item = await pack.getDocument(itemId);
 
         const itemData = duplicate(item.data);
 
@@ -3663,24 +3788,31 @@ export class ItemPF extends Item {
       }
 
       if (newItems.length) {
-        let items = await this.actor.createEmbeddedEntity(
-          "OwnedItem",
-          newItems.map((o) => o.data)
+        const items = await CONFIG.Item.documentClass.create(
+          newItems.map((o) => o.data),
+          { parent: this.parentActor }
         );
-        if (!(items instanceof Array)) items = [items];
 
         let updateData = [];
         const classUpdateData = { _id: this.data._id };
         updateData.push(classUpdateData);
         for (let i of items) {
-          const co = getProperty(i, "flags.pf1.__co");
+          const co = i.getFlag("pf1", "__co");
           // Set class association flags
-          classUpdateData[`flags.pf1.links.classAssociations.${i._id}`] = co.level;
+          classUpdateData[`flags.pf1.links.classAssociations.${i.id}`] = co.level;
           // Remove temporary flag
-          updateData.push({ _id: i._id, "flags.pf1.-=__co": null });
+          updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
         }
-        if (updateData.length) await this.actor.updateEmbeddedEntity("OwnedItem", updateData);
+        if (updateData.length)
+          await CONFIG.Item.documentClass.updateDocuments(updateData, { parent: this.parentActor });
       }
+      // const newItemData = await ItemPF.create(itemData, { parent: this.parent });
+      // const newItem = this.parent.items.find((o) => o.id === newItemData.id);
+
+      // // await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
+      // selfUpdateData[`flags.pf1.links.classAssociations.${newItemData.id}`] = co.level;
+      // await this.createItemLink("children", "data", newItem, newItem.id);
+      // }
     }
 
     // Remove items associated to this class
@@ -3688,19 +3820,19 @@ export class ItemPF extends Item {
       let associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
       let itemIds = [];
       for (let [id, level] of Object.entries(associations)) {
-        const item = this.parentActor.items.find((o) => o._id === id);
+        const item = this.parent.items.find((o) => o.id === id);
         if (!item) {
           delete associations[id];
           continue;
         }
 
         if (level > newLevel) {
-          itemIds.push(id);
+          itemIds.push(item.id);
           delete associations[id];
         }
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
-      await this.actor.deleteEmbeddedEntity("OwnedItem", itemIds);
+      await CONFIG.Item.documentClass.deleteDocuments(itemIds, { parent: this.parent });
     }
 
     // Call level change hook
@@ -3715,12 +3847,12 @@ export class ItemPF extends Item {
    * @returns {boolean} Whether a link to the item is possible here.
    */
   canCreateItemLink(linkType, dataType, targetItem, itemLink) {
-    const actor = this.parentActor;
-    const sameActor = actor && targetItem.actor && targetItem.actor._id === actor._id;
+    const actor = this.parent;
+    const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
 
     // Don't create link to self
     const itemId = itemLink.split(".").slice(-1)[0];
-    if (itemId === this._id) return false;
+    if (itemId === this.id) return false;
 
     // Don't create existing links
     const links = getProperty(this.data, `data.links.${linkType}`) || [];
@@ -3809,7 +3941,7 @@ export class ItemPF extends Item {
        * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
        */
       window.setTimeout(() => {
-        if (this.parentActor) this.parentActor.sheet.render();
+        if (this.parent) this.parent.sheet.render();
       }, 50);
 
       return true;
@@ -3820,8 +3952,8 @@ export class ItemPF extends Item {
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
       if (getProperty(itemData, "type") === "spell") setProperty(itemData, "data.spellbook", "spelllike");
 
-      const newItemData = await this.parentActor.createOwnedItem(itemData);
-      const newItem = this.parentActor.items.get(newItemData._id);
+      const newItemData = await this.parent.createOwnedItem(itemData);
+      const newItem = this.parent.items.get(newItemData._id);
 
       await this.createItemLink("children", "data", newItem, newItem._id);
     }
@@ -3890,15 +4022,15 @@ export class ItemPF extends Item {
     if (l.dataType === "compendium") {
       const pack = game.packs.get(id.slice(0, 2).join("."));
       if (!pack) return null;
-      item = await pack.getEntity(id[2]);
+      item = await pack.getDocument(id[2]);
     }
     // World entry
     else if (l.dataType === "world") {
       item = game.items.get(id[1]);
     }
     // Same actor's item
-    else if (this.parentActor != null && this.parentActor.items != null) {
-      item = this.parentActor.items.find((o) => o._id === id[0]);
+    else if (this.parent != null && this.parent.items != null) {
+      item = this.parent.items.find((o) => o.id === id[0]);
     }
 
     // Package extra data
@@ -3927,9 +4059,9 @@ export class ItemPF extends Item {
   }
 
   _cleanLink(oldLink, linkType) {
-    if (!this.parentActor) return;
+    if (!this.parent) return;
 
-    const otherItem = this.parentActor.items.find((o) => o._id === oldLink.id);
+    const otherItem = this.parent.items.find((o) => o.id === oldLink.id);
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }
@@ -3945,12 +4077,12 @@ export class ItemPF extends Item {
     let result = {};
     // Add specific skills
     if (target === "skill") {
-      if (this.parentActor == null) {
+      if (this.parent == null) {
         for (let [s, skl] of Object.entries(CONFIG.PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parentActor.data.data.skills);
+        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parent.data.data.skills);
         for (let [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -3983,6 +4115,9 @@ export class ItemPF extends Item {
     let result = {};
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
+    if (this.type === "attack") {
+      result["size"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.size._label);
+    }
     if (this.type === "spell" || this.hasSave)
       result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
@@ -4075,12 +4210,12 @@ export class ItemPF extends Item {
   }
 
   async addChange() {
-    const change = new ItemChange();
-    this.changes.push(change);
+    const change = new ItemChange({}, this);
+    return change;
   }
 
   async createContainerContent(data, options = { raw: false }) {
-    let embeddedName = "ContainerContent";
+    let embeddedName = "Item";
     const user = game.user;
     const itemOptions = { temporary: false, renderSheet: false };
 
@@ -4089,7 +4224,7 @@ export class ItemPF extends Item {
     data = data instanceof Array ? data : [data];
     if (!(itemOptions.temporary || itemOptions.noHook)) {
       for (let d of data) {
-        const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user._id);
+        const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user.id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} creation prevented by preCreate hook`);
           return null;
@@ -4149,7 +4284,7 @@ export class ItemPF extends Item {
 
       // Call pre-update hooks to ensure the update is allowed to proceed
       if (!options.noHook) {
-        const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user._id);
+        const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user.id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
           return true;
@@ -4179,19 +4314,19 @@ export class ItemPF extends Item {
 
     // Difference each update against existing data
     const updates = this.items.reduce((arr, d) => {
-      if (!pending.has(d._id)) return arr;
-      let update = pending.get(d._id);
+      if (!pending.has(d.id)) return arr;
+      let update = pending.get(d.id);
 
       // Diff the update against current data
       if (options.diff) {
-        update = diffObject(d, expandObject(update));
+        update = diffObject(d.data, expandObject(update));
         if (isObjectEmpty(update)) return arr;
-        update["_id"] = d._id;
+        update["_id"] = d.id;
       }
 
       // Call pre-update hooks to ensure the update is allowed to proceed
       if (!options.noHook) {
-        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user._id);
+        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user.id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
           return arr;
@@ -4302,6 +4437,13 @@ export class ItemPF extends Item {
     );
   }
 
+  async delete(context = {}) {
+    if (this.data.type === "class") {
+      await this._onLevelChange(this.data.data.level, 0);
+    }
+
+    return super.delete(context);
+  }
   /**
    * Sets a boolean flag on this item.
    *

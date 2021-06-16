@@ -1,6 +1,9 @@
 /**
  * Measure the distance between two pixel coordinates
  * See BaseGrid.measureDistance for more details
+ *
+ * @param segments
+ * @param options
  */
 export const measureDistances = function (segments, options = {}) {
   if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
@@ -63,8 +66,8 @@ export const measureDistance = function (p0, p1, { gridSpaces = true } = {}) {
  * Hijack Token health bar rendering to include temporary and temp-max health in the bar display
  * TODO: This should probably be replaced with a formal Token class extension
  */
-const _TokenGetBarAttribute = Token.prototype.getBarAttribute;
-Token.prototype.getBarAttribute = function (barName, { alternative = null } = {}) {
+const _TokenGetBarAttribute = TokenDocument.prototype.getBarAttribute;
+TokenDocument.prototype.getBarAttribute = function (barName, { alternative = null } = {}) {
   let data;
   try {
     data = _TokenGetBarAttribute.call(this, barName, { alternative: alternative });
@@ -74,6 +77,10 @@ Token.prototype.getBarAttribute = function (barName, { alternative = null } = {}
   if (data != null && data.attribute === "attributes.hp") {
     data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
   }
+
+  // Make resources editable
+  if (data?.attribute.startsWith("resources.")) data.editable = true;
+
   return data;
 };
 
@@ -83,7 +90,8 @@ Token.prototype.getBarAttribute = function (barName, { alternative = null } = {}
 export const getConditions = function () {
   var core = CONFIG.statusEffects,
     sys = Object.keys(CONFIG.PF1.conditions).map((c) => {
-      return { id: c, label: CONFIG.PF1.conditions[c], icon: CONFIG.PF1.conditionTextures[c] };
+      const id = core.find((o) => o.id === c) != null ? `pf1_${c}` : c;
+      return { id, label: CONFIG.PF1.conditions[c], icon: CONFIG.PF1.conditionTextures[c] };
     });
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else sys = [core[0]].concat(sys);
@@ -101,7 +109,7 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
       buffs[buff.icon] = {
         id: buff.id,
         title: buff.label,
-        src: idx,
+        src: buff.icon,
         isActive: buff.active,
         isOverlay: false,
         cssClass: buff.active ? "active" : "",
@@ -167,7 +175,7 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     if (!this.object) return;
     const actor = this.object.actor;
     let entity = actor;
-    const data = this.object.getBarAttribute(bar);
+    const data = this.object.document.getBarAttribute(bar);
     if (data.attribute.startsWith("resources.")) {
       const itemTag = data.attribute.split(".").slice(-1)[0];
       entity = actor.items.find((item) => item.data.data.tag === itemTag);
@@ -207,7 +215,7 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     }
 
     entity.update(updateData);
-    this.object.update({ [input.name]: value });
+    this.object.document.update({ [input.name]: value });
   }
 
   // Otherwise update the Token

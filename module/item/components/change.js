@@ -1,4 +1,5 @@
 import { getChangeFlat, getSourceInfo } from "../../actor/apply-changes.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemChange {
   static create(data, parent) {
@@ -20,9 +21,13 @@ export class ItemChange {
       modifier: "",
       priority: 0,
       value: 0,
+      flavor: undefined,
     };
   }
 
+  get id() {
+    return this.data._id;
+  }
   get _id() {
     return this.data._id;
   }
@@ -43,6 +48,9 @@ export class ItemChange {
   }
   get value() {
     return this.data.value;
+  }
+  get flavor() {
+    return this.data.flavor ?? this.parent?.name ?? this.modifier;
   }
 
   get source() {
@@ -110,7 +118,7 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (let t of targets) {
-      if (overrides[t]) {
+      if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";
@@ -123,7 +131,7 @@ export class ItemChange {
           operator = result.operator;
         } else {
           value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData], {
-            suppressError: this.parent && !this.parent.hasPerm(game.user, "OWNER"),
+            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
           }).total;
         }
 
@@ -205,7 +213,7 @@ export class ItemChange {
         }
 
         // Reset ability modifiers
-        if (t.startsWith("data.abilities")) {
+        if (t.match(/^data\.abilities\.(?:[a-zA-Z0-9]+)\.(?:total|penalty|base)$/)) {
           actor.refreshAbilityModifiers();
         }
       }

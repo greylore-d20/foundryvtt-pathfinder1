@@ -112,6 +112,7 @@
   "SETTINGS.pf1UnitsL": "System of units to be used in the world",
 
   "TOKEN.VisionLowLight": "Low-light Vision",
+  "TOKEN.VisionLowLightMultiplier": "Low-light Multiplier",
   "TOKEN.VisionDarkvision": "Darkvision",
 
   "PF1.ExperienceConfigName": "Experience Configuration",
@@ -251,6 +252,13 @@
   "PF1.AbilityWis": "Wisdom",
   "PF1.AbilityCha": "Charisma",
 
+  "PF1.AbilityStrMod": "Strength Modifier",
+  "PF1.AbilityDexMod": "Dexterity Modifier",
+  "PF1.AbilityConMod": "Constitution Modifier",
+  "PF1.AbilityIntMod": "Intelligence Modifier",
+  "PF1.AbilityWisMod": "Wisdom Modifier",
+  "PF1.AbilityChaMod": "Charisma Modifier",
+
   "PF1.AbilityShortStr": "Str",
   "PF1.AbilityShortDex": "Dex",
   "PF1.AbilityShortCon": "Con",
@@ -299,6 +307,7 @@
   "PF1.CondStunned": "Stunned",
   "PF1.CondNauseated": "Nauseated",
   "PF1.CondDazed": "Dazed",
+  "PF1.CondSleep": "Sleep",
 
   "PF1.CondTypeBleed": "Bleed",
   "PF1.CondTypeBlind": "Blind",
@@ -775,6 +784,7 @@
   "PF1.ErrorNoApplicableActorFoundForAction": "No applicable actor found for action '{0}'",
   "PF1.ErrorCouldNotFindActorByName": "Could not find actor by name '{0}'",
   "PF1.ErrorFeatDisabled": "This feat is disabled",
+  "PF1.ErrorNoMacroID": "No macro with id '{id}' was found",
   "PF1.WarningNoSizeDie": "Could not determine size-appropriate die for {0}, defaulting to rolling {1}",
   "PF1.WarningNoDiceAllowedInFormula": "No dice rolls are allowed in formula '{0}' for {1}",
   "PF1.WarningInsufficientAmmunition": "You have insufficient ammunition of type {0}",
@@ -969,6 +979,36 @@
   "PF1.CombatInfo_Header": "Combat",
   "PF1.CombatInfo_Round": "Round {0}",
 
+  "PF1.ScriptCalls": {
+    "Name": "Script Calls",
+    "NewName": "New Script Call",
+
+    "Use": {
+      "Name": "Use",
+      "Info": "Called when the item has been 'used' (attack, drink potion, etc.). Has the extra variable `attacks`, which is an array containing the action's attack rolls, if any."
+    },
+
+    "Equip": {
+      "Name": "Equip",
+      "Info": "Called when the item has been equipped or unequipped. Has the extra variable `equipped`, which is either `true` or `false`."
+    },
+
+    "Toggle": {
+      "Name": "Toggle",
+      "Info": "Called when the item has been enabled or disabled. Has the extra variable `state`, which is either `true` or `false`."
+    },
+
+    "ChangeQuantity": {
+      "Name": "Change Quantity",
+      "Info": "Called when the quantity of the item has been changed. Has the extra variables `quantity.previous` and `quantity.new`, which are both numbers."
+    },
+
+    "ChangeLevel": {
+      "Name": "Change Level",
+      "Info": "Called when the level of the item has been changed. Has the extra variables `quantity.previous` and `quantity.new`, which are both numbers."
+    }
+  },
+
   "PF1.AddClass": "Add Class",
   "PF1.Horizontal": "Horizontal",
   "PF1.Vertical": "Vertical",
@@ -1031,6 +1071,7 @@
   "PF1.NotEquipped": "Not Equipped",
   "PF1.Carried": "Carried",
   "PF1.Identified": "Identified",
+  "PF1.Iterative": "Iterative",
   "PF1.Unidentified": "Unidentified",
   "PF1.Exhaustion": "Exhaustion",
   "PF1.FlyManeuverability": "Fly Maneuverability",
@@ -1054,7 +1095,9 @@
   "PF1.LevelDrain": "Level Drain",
   "PF1.None": "None",
   "PF1.Notes": "Notes",
+  "PF1.Operator": "Operator",
   "PF1.Proficiency": "Proficiency",
+  "PF1.ProficiencyPenalty": "Proficiency Penalty",
   "PF1.Quadruped": "Quadruped",
   "PF1.ResourcePrimary": "Resource 1",
   "PF1.ResourceSecondary": "Resource 2",
@@ -1317,6 +1360,7 @@
   "PF1.PowerAttack": "Power Attack",
   "PF1.DeadlyAim": "Deadly Aim",
   "PF1.PrimaryAttack": "Primary Attack",
+  "PF1.SecondaryAttack": "Secondary Attack",
   "PF1.Enabled": "Enabled",
   "PF1.Disabled": "Disabled",
   "PF1.Enable": "Enable",
@@ -1391,6 +1435,7 @@
   "PF1.Value": "Value",
   "PF1.TotalItems": "{0} Total Items",
   "PF1.FilteredItems": "{0} Filtered Items",
+  "PF1.SearchFilterPlaceholder": "Search filter...",
   "PF1.QuickInfo": "Quick Info",
   "PF1.QuickActions": "Quick Actions",
   "PF1.ConvertCurrency": "Convert Currency",
@@ -1476,10 +1521,15 @@
   "PF1.StepsRequired": "Steps Required",
   "PF1.RemoveInfo": "Remove Info",
   "PF1.CustomRollDesc": "This roll uses a non-default formula",
+  "PF1.Hidden": "Hidden",
+  "PF1.Bright": "Bright",
+  "PF1.Dim": "Dim",
 
   "PF1.Migration.Start": "Applying PF1 System Migration for version {version}. Please stand by.",
   "PF1.Migration.Ongoing": "Migration is ongoing. Please wait until it finishes.",
   "PF1.Migration.End": "PF1 System Migration to version {version} succeeded!",
+
+  "PF1.DenyDexBonus": "Deny Dexterity bonus",
 
   "PF1.Application": {
     "ChangeTargetSelector": {
@@ -1823,6 +1873,74 @@
             "Basic": "Flags can be used by modules and macros. Boolean Flags don't do anything by themselves, but Dictionary Flags can be used in rolls, in addition to their use in macros and modules.",
             "DictionaryFlags": {
               "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
+            }
+          }
+        },
+        "ScriptCalls": {
+          "Label": "Script Calls",
+          "Desc": {
+            "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
+          },
+          "Macros": {
+            "Label": "Using Macros as Script Calls",
+            "Desc": {
+              "Basic": "In order to use Macros as Script Calls, simply drag a macro over from somewhere to the category of Script Calls you wish to run them on."
+            }
+          },
+          "Variables": {
+            "Label": "Variables",
+            "Desc": {
+              "Basic": "The variable availability differs somewhat from what's available in regular Macros. Below you will find a list of variables which are present within Script Calls."
+            },
+            "List": {
+              "Item": {
+                "Desc": "The item from which this event was called."
+              },
+              "Actor": {
+                "Desc": "The actor which owns the calling item. Can be <code>null</code> if the item is not on an actor."
+              },
+              "Shared": {
+                "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
+              }
+            }
+          },
+
+          "Categories": {
+            "Label": "Categories",
+
+            "Use": {
+              "Name": "Use",
+              "Desc": {
+                "Basic": "Called when an item has been used. If an item has at least one script call under this category, it's usable no matter what."
+              }
+            },
+
+            "Equip": {
+              "Name": "Equip",
+              "Desc": {
+                "Basic": "Called when an item has been equipped or unequipped. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been equipped, or <code>false</code> if it has just been unequipped."
+              }
+            },
+
+            "Toggle": {
+              "Name": "Toggle",
+              "Desc": {
+                "Basic": "Called when a buff or feature has been toggled on/off. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been enabled or <code>false</code> if it has just been disabled."
+              }
+            },
+
+            "ChangeQuantity": {
+              "Name": "Change Quantity",
+              "Desc": {
+                "Basic": "Called when the quantity of a physical item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the quantity numbers before and after the update respectively."
+              }
+            },
+
+            "ChangeLevel": {
+              "Name": "Change Level",
+              "Desc": {
+                "Basic": "Called when the level of a item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the numbers before and after the update respectively."
+              }
             }
           }
         }

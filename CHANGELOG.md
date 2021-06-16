@@ -1,16 +1,174 @@
 # Changelog
 
+## 0.78.10
+
+### Bug Fixes
+
+- Fix token deletion not hiding the tooltip
+- Changing actor size didn't save it on its token(s)
+- Resource values were no longer able to be referenced in formulas (#885)
+
+### Changelog
+
+- Added script calls for changing buff and class levels
+
+## 0.78.9
+
+### Bug Fixes
+
+- Fix armor and shield type roll data not working (#873)
+- The Primary Attack checkbox was hidden from natural attacks (#875)
+- Fixed not being able to adjust action charges on the NPC Lite sheet (#876)
+
+### Changelog
+
+- Added item script and macro calls to their advanced tabs, for users familiar with JavaScript
+- Sped up the loading of compendium browsers
+- Reduces memory usage of compendium browsers (at least client side, probably also partially server side)
+- Separated optional low-light vision multipliers on token configurations into dim and bright
+
+## 0.78.8 (hotfix)
+
+### Bug Fixes
+
+- Attack rolls from unlinked tokens didn't work
+
+## 0.78.7
+
+### Bug Fixes
+
+- Fixed not being able to alter activation data with the Unchained Action Economy rules (#857)
+- Bonus feats from changes weren't showing in the sources list
+- Condition icons wouldn't show up on linked tokens (#867)
+- Fine creatures were too small, and thus made changes to token presets below Medium size (may need manual alterations to previous tokens, if desired) (#864)
+- The setting for when low light vision should be applied was not working (#849)
+- Fixed conditions visibility weirdnesses (#859)
+- Formulaic action ranges were showing as [object Object]
+
+### Changelog
+
+- Made items' changes tabs look a bit prettier
+- Name iterative attacks in roll flavors (old extra attacks may need to manually receive a flavor) (#866)
+- Allow users with permission to modify world settings to reach world tooltip settings (#847)
+
+### API
+
+- Started using token UUIDs in chat cards (partially implements #868)
+
+## 0.78.6
+
+### Bug Fixes
+
+- The Sickened and Shaken condition showed a non-descript 'penalty' roll flavor (#854)
+- Fixed not working Fractional Base Bonuses (#856) (thanks mkahvi!)
+- Fixed an issue some users had with missing images (thanks mkahvi!)
+- Wound Thresholds weren't working correctly (#853)
+- Fixed showing [object Object] tags in items (#851)
+- Condition icons wouldn't show up on unlinked tokens
+
+### Changelog
+
+- Added saving throws to the NPC Lite sheet
+
+### Compendiums
+
+- Updated all weapon descriptions (thanks fadedshadow589!)
+- Added eastern weapons (thanks fadedshadow589!)
+
+### Localization
+
+- Update the Chinese localization (thanks bnp800!)
+
+## 0.78.5
+
+### Bug Fixes
+
+- Critical hits weren't rolling naturally (#842)
+- Roll data wasn't available in TinyMCE editors (#840)
+- Item flags were no longer directly visible on items (#835)
+- Drag and drop for CMB and BAB table headers was not enabled, preventing the creation of their respective macros.
+- Conditional modifiers had no valid (sub-)targets
+- Spells could not be used (#844) (thanks websterguy!)
+- Apply Dexterity restrictions from the Pinned condition RAW (#845)
+
+### Changelog
+
+- Added roll flavor text for default attack modifiers (such as power attack)
+- Conditional modifiers can now adjust the size used for the roll (thanks Krzysztof Gutkowski!)
+- Added change targets that alter ability modifiers only
+
+### API
+
+- Changed the actor sheet's handling of feature types, enabling features of non-default types to be displayed.
+
+## 0.78.4
+
+### Bug Fixes
+
+- AC bonuses from armor and shields weren't being applied
+- Certain kinds of roll formulas weren't working, such as `/r 1d100cs>=50` (#838)
+
+### Translations
+
+- Updated the French translation (thanks rectulo!)
+
+## 0.78.3
+
+### Bug Fixes
+
+- Weapon type list was incorrectly empty
+- The bestiary browser wouldn't open
+- Bonus feats from changes were doubled on the total feat count
+
+## 0.78.2
+
+### Bug Fixes
+
+- Combatant duplication wasn't working
+- Custom class tags weren't working
+- Attacks for unlinked tokens were not working
+- ACP wasn't being subtracted from appropriate skill checks
+
+## 0.78.1
+
+### Bug Fixes
+
+- Some rolls using math functions could cause errors
+- Item activation data was hidden
+- Context notes weren't showing up on item sheets
+- Items couldn't be sorted on actors or containers
+- Items with linked charges were behaving oddly
+- Token bars targeting charged items were incorrectly read-only
+
+## 0.78.0
+
+Initial release for Foundry 0.8.x
+
+### Changelog
+
+- Added an option for low-light vision multiplier on tokens
+
 ## 0.77.24
 
 ### Changelog
 
 - Improve display of condition icons in buff tab (#795)
+- Added sleep condition (works the same as helpless)
+- Add charge counters to actor/token quick actions (thanks mkahvi!)
+- Added special movement types to the Drag Ruler integration (thanks Manuel Vögele!)
+- Added a search bar in inventory, feats, buffs and spells lists (thanks mkahvi!)
+- Added quick link to compendium browsers on actors' buffs tabs and on container items' inventory tabs
+- Start container type items on their contents tab
+- Add bonus feat count from changes to the feat table (#803)
 
 ### Bug Fixes
 
 - Actors could fail to render with some spellbook configurations (#797)
 - Cantrips would never display on spell sheet if setting was off
 - Copying an attack with linked ammunition to another actor made it behave strangely (#801)
+- Fix error on rolling concentration with no ability associated with the spellbook (#825)
+- `@abilities.<abl>.base` and `@abilities.<abl>.baseMod` weren't being updated properly (#824)
+- Class Associations weren't being copied over anymore
 
 ### Compendium
 

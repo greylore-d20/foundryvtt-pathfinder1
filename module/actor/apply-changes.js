@@ -81,6 +81,12 @@ const getSortChangePriority = function () {
       "int",
       "wis",
       "cha",
+      "strMod",
+      "dexMod",
+      "conMod",
+      "intMod",
+      "wisMod",
+      "chaMod",
       "skills",
       "strSkills",
       "dexSkills",
@@ -187,9 +193,16 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "wis":
     case "cha":
       if (changeType === "penalty") return `data.abilities.${changeTarget}.penalty`;
-      if (CONFIG.PF1.stackingBonusModifiers.indexOf(changeType) !== -1)
+      if (["base", "untypedPerm"].includes(changeType))
         return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
       return `data.abilities.${changeTarget}.total`;
+    case "strMod":
+    case "dexMod":
+    case "conMod":
+    case "intMod":
+    case "wisMod":
+    case "chaMod":
+      return `data.abilities.${changeTarget.slice(0, 3)}.mod`;
     case "ac":
       switch (changeType) {
         case "dodge":
@@ -457,23 +470,24 @@ export const addDefaultChanges = function (changes) {
     );
   };
   const manual_health = (health_source) => {
-    let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+    let health =
+      health_source.data.data.hp + (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
 
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-      value: health_source.data.hp,
+      value: health_source.data.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
     getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-      value: health_source.data.hp,
+      value: health_source.data.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.fc.hp.value > 0) {
+    if (health_source.data.data.fc.hp.value > 0) {
       getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
       getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -484,12 +498,12 @@ export const addDefaultChanges = function (changes) {
   const auto_health = (health_source, options, maximized = 0) => {
     if (health_source.data.hd === 0) return;
 
-    let die_health = 1 + (health_source.data.hd - 1) * options.rate;
+    let die_health = 1 + (health_source.data.data.hd - 1) * options.rate;
     if (!continuous) die_health = round(die_health);
 
-    const maxed_health = Math.min(health_source.data.level, maximized) * health_source.data.hd;
-    const level_health = Math.max(0, health_source.data.level - maximized) * die_health;
-    const favor_health = (health_source.data.classType === "base") * health_source.data.fc.hp.value;
+    const maxed_health = Math.min(health_source.data.data.level, maximized) * health_source.data.data.hd;
+    const level_health = Math.max(0, health_source.data.data.level - maximized) * die_health;
+    const favor_health = (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
     let health = maxed_health + level_health + favor_health;
 
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
@@ -500,13 +514,13 @@ export const addDefaultChanges = function (changes) {
       value: maxed_health + level_health,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.fc.hp.value > 0) {
+    if (health_source.data.data.fc.hp.value > 0) {
       getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
       getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.fc.hp.value,
+        value: health_source.data.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -519,7 +533,7 @@ export const addDefaultChanges = function (changes) {
       let maximized = options.maximized;
       for (const hd of health_sources) {
         auto_health(hd, options, maximized);
-        maximized = Math.max(0, maximized - hd.data.level);
+        maximized = Math.max(0, maximized - hd.data.data.level);
       }
     } else health_sources.forEach((race) => manual_health(race));
   };
@@ -531,47 +545,59 @@ export const addDefaultChanges = function (changes) {
   const allClasses = [...classes, ...racialHD];
   for (let a of Object.keys(this.data.data.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
+    setProperty(this.data, k, getProperty(this.data, `data.attributes.savingThrows.${a}.base`) || 0);
     // Using Fractional Base Bonuses
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
       let highStart = false;
-      setProperty(
-        this.data,
-        k,
-        Math.floor(
-          allClasses.reduce((cur, obj) => {
-            const saveScale = getProperty(obj, `data.savingThrows.${a}.value`) || "";
-            if (saveScale === "high") {
-              const acc = highStart ? 0 : 2;
-              highStart = true;
-              return cur + obj.data.level / 2 + acc;
-            }
-            if (saveScale === "low") return cur + obj.data.level / 3;
-            return cur;
-          }, 0)
-        )
-      );
-
-      const v = getProperty(this.data, k);
-      if (v !== 0) {
-        getSourceInfo(this.sourceInfo, k).positive.push({ name: game.i18n.localize("PF1.Base"), value: v });
-      }
-    } else {
-      setProperty(
-        this.data,
-        k,
+      const total = Math.floor(
         allClasses.reduce((cur, obj) => {
-          const classType = getProperty(obj.data, "classType") || "base";
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][obj.data.savingThrows[a].value];
-          if (formula == null) formula = "0";
-          const v = Math.floor(RollPF.safeRoll(formula, { level: obj.data.level }).total);
-
-          if (v !== 0) {
-            getSourceInfo(this.sourceInfo, k).positive.push({ name: getProperty(obj, "name"), value: v });
+          const saveScale = getProperty(obj.data, `data.savingThrows.${a}.value`) || "";
+          if (saveScale === "high") {
+            const acc = highStart ? 0 : 2;
+            highStart = true;
+            return cur + obj.data.data.level / 2 + acc;
           }
-
-          return cur + v;
+          if (saveScale === "low") return cur + obj.data.data.level / 3;
+          return cur;
         }, 0)
       );
+
+      // Add change
+      changes.push(
+        ItemChange.create({
+          formula: total.toString(),
+          target: "savingThrows",
+          subTarget: a,
+          modifier: "untypedPerm",
+          flavor: game.i18n.localize("PF1.Base"),
+        })
+      );
+      getSourceInfo(this.sourceInfo, k).positive.push({
+        value: total,
+        name: game.i18n.localize("PF1.Base"),
+      });
+    } else {
+      for (let c of allClasses) {
+        const classType = getProperty(c.data, "classType") || "base";
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
+        if (formula == null) formula = "0";
+        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);
+
+        // Add change
+        changes.push(
+          ItemChange.create({
+            formula: total.toString(),
+            target: "savingThrows",
+            subTarget: a,
+            modifier: "untypedPerm",
+            flavor: getProperty(c, "name"),
+          })
+        );
+        getSourceInfo(this.sourceInfo, k).positive.push({
+          value: total,
+          name: getProperty(c, "name"),
+        });
+      }
     }
   }
 
@@ -816,6 +842,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "fort",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.fort.total").positive.push({
@@ -832,6 +859,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "ref",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.ref.total").positive.push({
@@ -848,6 +876,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "will",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.savingThrows.will.total").positive.push({
@@ -862,6 +891,7 @@ export const addDefaultChanges = function (changes) {
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
     for (let k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {
@@ -909,16 +939,16 @@ export const addDefaultChanges = function (changes) {
   // Add armor bonuses from equipment
   this.data.items
     .filter((obj) => {
-      return obj.type === "equipment" && obj.data.equipped;
+      return obj.type === "equipment" && obj.data.data.equipped;
     })
     .forEach((item) => {
       let armorTarget = "aac";
-      if (item.data.equipmentType === "shield") armorTarget = "sac";
+      if (item.data.data.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
-      if (item.data.armor.value) {
-        let ac = item.data.armor.value;
-        if (item.data.broken) ac = Math.floor(ac / 2);
-        ac += item.data.armor.enh;
+      if (item.data.data.armor.value) {
+        let ac = item.data.data.armor.value;
+        if (item.data.data.broken) ac = Math.floor(ac / 2);
+        ac += item.data.data.armor.enh;
         changes.push(
           ItemChange.create({
             formula: ac.toString(),
@@ -986,6 +1016,26 @@ export const addDefaultChanges = function (changes) {
       formula: "@attributes.speed.swim.total > 0 ? 8 : 0",
       name: game.i18n.localize("PF1.SpeedSwim"),
     });
+  }
+
+  // Add energy drain to skills
+  {
+    changes.push(
+      ItemChange.create({
+        formula: "-@attributes.energyDrain",
+        target: "skills",
+        subTarget: "skills",
+        modifier: "untypedPerm",
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+      })
+    );
+    const flats = getChangeFlat.call(this, "skills", "untyped");
+    for (let f of flats) {
+      getSourceInfo(this.sourceInfo, f).positive.push({
+        formula: "-@attributes.energyDrain",
+        name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+      });
+    }
   }
 
   // Add size bonuses to various attributes
@@ -1226,6 +1276,22 @@ export const addDefaultChanges = function (changes) {
           value: game.i18n.localize("PF1.ChangeFlagNoDex"),
         });
         break;
+      case "sleep":
+        changes.push(
+          ItemChange.create({
+            formula: "0",
+            target: "ability",
+            subTarget: "dex",
+            modifier: "untypedPerm",
+            operator: "set",
+            priority: -1000,
+          })
+        );
+        getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
+          name: game.i18n.localize("PF1.CondSleep"),
+          value: game.i18n.localize("PF1.ChangeFlagNoDex"),
+        });
+        break;
       case "paralyzed":
         changes.push(
           ItemChange.create({
@@ -1271,7 +1337,22 @@ export const addDefaultChanges = function (changes) {
         });
         break;
       case "pinned":
+        changes.push(
+          ItemChange.create({
+            formula: "min(0, @abilities.dex.mod)",
+            target: "ability",
+            subTarget: "dexMod",
+            modifier: "untyped",
+            operator: "set",
+            flavor: game.i18n.localize("PF1.CondPinned"),
+            priority: -1001,
+          })
+        );
         this.flags["loseDexToAC"] = true;
+        getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
+          name: game.i18n.localize("PF1.CondPinned"),
+          value: game.i18n.localize("PF1.DenyDexBonus"),
+        });
         for (const k of [
           "data.attributes.ac.normal.total",
           "data.attributes.ac.touch.total",
@@ -1321,6 +1402,7 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondFear"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({
@@ -1386,6 +1468,7 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondSickened"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({
@@ -1578,7 +1661,6 @@ export const addDefaultChanges = function (changes) {
 
 const resetSkills = function () {
   const skills = this.data.data.skills;
-  const energyDrain = Math.abs(this.data.data.attributes.energyDrain);
 
   for (const [sklKey, skl] of Object.entries(skills)) {
     if (!skl) continue;
@@ -1588,7 +1670,7 @@ const resetSkills = function () {
     let specificSkillBonus = skl.changeBonus || 0;
 
     // Parse main skills
-    let sklValue = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrain;
+    let sklValue = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
     setProperty(this.data, `data.skills.${sklKey}.mod`, sklValue);
 
     // Parse sub-skills
@@ -1599,8 +1681,7 @@ const resetSkills = function () {
       acpPenalty = subSkl.acp ? this.data.data.attributes.acp.total : 0;
       ablMod = this.data.data.abilities[subSkl.ability].mod || 0;
       specificSkillBonus = subSkl.changeBonus || 0;
-      sklValue =
-        subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty - energyDrain;
+      sklValue = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
       setProperty(this.data, `data.skills.${sklKey}.subSkills.${subSklKey}.mod`, sklValue);
     }
   }

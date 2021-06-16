@@ -11,28 +11,8 @@ export const registerHandlebarsHelpers = function () {
    * Render a MCE editor container with an optional toggle button
    */
   Handlebars.registerHelper("roll-editor", function (options) {
-    // Find item and/or actor
-    const _id = (getProperty(options, "data.root.entity") || getProperty(options, "data.root.actor") || {})._id;
-    let actor = null,
-      item = null;
-    const actors = [...Array.from(game.actors.entities), ...Array.from(game.actors.tokens)];
-    const items = [...Array.from(game.items.entities)];
-    if (_id != null) {
-      // Find actor or item on actor
-      for (let a of actors) {
-        if (a._id === _id) {
-          actor = a;
-        } else {
-          if (item == null) item = a.items.find((o) => o._id === _id);
-        }
-      }
-      // Find item
-      if (item == null) {
-        for (let i of items) {
-          if (i._id === _id) item = i;
-        }
-      }
-    }
+    const item = getProperty(options, "data.root.item");
+    const actor = getProperty(options, "data.root.actor");
     const rollData = item != null ? item.getRollData() : actor != null ? actor.getRollData() : {};
 
     // Create editor

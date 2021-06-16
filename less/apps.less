@@ -9,6 +9,10 @@
 /* ----------------------------------------- */
 
 .pf1 {
+  header {
+    flex: 0;
+  }
+
   .switch-check {
     display: none;
   }
@@ -356,11 +360,63 @@
     }
   }
 
-  .inventory-list {
+  .inventory-list,
+  .items-list {
     list-style: none;
     margin: 0;
-    padding: 0 5px;
+    padding: 0 0;
     overflow-y: auto;
+
+    .inventory-header,
+    .items-header,
+    .items-list {
+      .fas {
+        text-align: center;
+      }
+
+      .item-name {
+        align-items: baseline;
+
+        .change-formula {
+          margin: 0 2px;
+        }
+
+        > textarea {
+          margin: 0 2px;
+        }
+
+        .item-info {
+          flex: 0 0 16px;
+          margin-right: 4px;
+        }
+      }
+      .item-enabled {
+        flex: 0 0 48px;
+      }
+      .item-operator {
+        flex: 0 0 56px;
+      }
+      .item-target {
+        flex: 0 0 160px;
+
+        .change-target,
+        .context-note-target {
+          flex: 0 0 156px;
+          width: 156px;
+        }
+      }
+      .item-modifier {
+        flex: 0 0 112px;
+
+        .change-modifier {
+          flex: 0 0 108px;
+          width: 108px;
+        }
+      }
+      .item-priority {
+        flex: 0 0 32px;
+      }
+    }
 
     &.flexcol {
       height: 100%;
@@ -397,8 +453,14 @@
         cursor: pointer;
         white-space: nowrap;
         overflow: hidden;
+        align-items: center;
+
+        &.flag-name {
+          cursor: initial;
+        }
 
         .item-image {
+          height: 24px;
           flex: 0 0 24px;
           background-size: 24px;
           margin-right: 5px;
@@ -409,8 +471,8 @@
           min-width: 0;
         }
 
-        .item-image:hover {
-          background-image: url("/icons/svg/d20-black.svg") !important;
+        .item-image:hover:not(.no-hover) {
+          background-image: url("../../icons/svg/d20-black.svg") !important;
         }
       }
 
@@ -448,7 +510,8 @@
     }
 
     // Inventory Header
-    .inventory-header {
+    .inventory-header,
+    .items-header {
       margin: 2px 0;
       padding: 0;
       background: rgba(0, 0, 0, 0.05);
@@ -468,6 +531,18 @@
       }
     }
 
+    .inventory-header,
+    .items-header,
+    .item {
+      > *:not(:last-child) {
+        border-right: 1px solid @colorBeige;
+      }
+
+      > *:not(.item-name) {
+        justify-content: space-evenly;
+      }
+    }
+
     // Item Detail Sections
     .item-detail {
       height: 24px;
@@ -475,7 +550,6 @@
       font-size: 14px;
       color: @colorTan;
       text-align: center;
-      border-right: 1px solid @colorBeige;
       overflow: hidden;
       white-space: nowrap;
       .flexrow();
@@ -521,6 +595,11 @@
         padding: 0 1px 0 1px;
       }
 
+      &.item-hidden {
+        flex: 0 0 32px;
+        padding: 0 1px 0 1px;
+      }
+
       &.item-identified {
         flex: 0 0 32px;
         padding: 0 1px 0 1px;
@@ -563,13 +642,6 @@
           line-height: 24px;
         }
       }
-
-      &:nth-child(2) {
-        border-left: 1px solid @colorBeige;
-      }
-      &:last-child {
-        border-right: none;
-      }
     }
 
     a.item-control {
@@ -586,17 +658,14 @@
 
     .item-level {
       flex: 0 0 40px;
-      border-right: 1px solid @colorFaint;
     }
 
     .item-feat-level {
       flex: 0 0 60px;
-      border-right: 1px solid @colorFaint;
     }
 
     .item-active {
       flex: 0 0 60px;
-      border-right: 1px solid @colorFaint;
     }
 
     .item-list {
@@ -607,7 +676,7 @@
 
     // Item Control Buttons
     .item-controls {
-      flex: 0 0 96px;
+      flex: 0 0 100px;
       .flexrow();
       overflow-x: hidden;
       white-space: nowrap;
@@ -618,6 +687,10 @@
         font-size: 14px;
         text-align: center;
         color: #666;
+      }
+
+      &.basic {
+        flex: 0 0 48px;
       }
     }
 
@@ -808,11 +881,9 @@
       white-space: nowrap;
       border: 1px solid rgba(0, 0, 0, 0);
       border-radius: 12px 12px 0 0;
-      // border-bottom: 3px solid @colorBeige;
 
       &.active {
         background: rgba(155, 155, 155, 0.5);
-        //   border-bottom: 3px solid @colorCrimson;
       }
       &:hover {
         background: rgba(155, 155, 155, 0.2);

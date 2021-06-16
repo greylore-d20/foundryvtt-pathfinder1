@@ -6,9 +6,14 @@ module.exports = {
     node: true,
   },
   extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
+  parser: "@babel/eslint-parser",
+  ecmaFeatures: {
+    classes: true,
+  },
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
+    requireConfigFile: false,
   },
   rules: {
     // Required for Foundry compatibility
@@ -167,6 +172,7 @@ module.exports = {
     Note: "readonly",
     AmbientSound: "readonly",
     MeasuredTemplate: "readonly",
+    MeasuredTemplateDocument: "readonly",
     Tile: "readonly",
     Token: "readonly",
     Wall: "readonly",
@@ -448,8 +454,6 @@ module.exports = {
     getTexture: "readonly",
     loadTexture: "readonly",
     CONST: "readonly",
-    toDegrees: "readonly",
-    normalizeDegrees: "readonly",
     toRadians: "readonly",
     normalizeRadians: "readonly",
     validateForm: "readonly",
@@ -468,5 +472,15 @@ module.exports = {
     DiceTerm: "readonly",
     GRID_TYPES: "readonly",
     dragRuler: "readonly",
+    foundry: "readonly",
+    TokenDocument: "readonly",
+    DocumentSheet: "readonly",
+    StringTerm: "readonly",
+    ParentheticalTerm: "readonly",
+    MathTerm: "readonly",
+    OperatorTerm: "readonly",
+    NumericTerm: "readonly",
+    RollTerm: "readonly",
+    getDocumentClass: "readonly",
   },
 };

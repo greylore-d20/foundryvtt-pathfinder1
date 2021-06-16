@@ -13,18 +13,18 @@ export class DicePF {
    *
    * @param {Event} event           The triggering event which initiated the roll
    * @param {Array} parts           The dice roll component parts, excluding the initial d20
-   * @param {String} dice           The initial d20
+   * @param {string} dice           The initial d20
    * @param {Actor} actor           The Actor making the d20 roll
-   * @param {Object} data           Actor or item data against which to parse the roll
-   * @param {String} template       The HTML template used to render the roll dialog
-   * @param {String} title          The dice roll UI window title
-   * @param {Object} speaker        The ChatMessage speaker to pass when creating the chat
+   * @param {object} data           Actor or item data against which to parse the roll
+   * @param {string} template       The HTML template used to render the roll dialog
+   * @param {string} title          The dice roll UI window title
+   * @param {object} speaker        The ChatMessage speaker to pass when creating the chat
    * @param {Function} flavor       A callable function for determining the chat message flavor given parts and data
-   * @param {Boolean} takeTwenty    Allow rolling with take twenty (and therefore also with take ten)
-   * @param {Boolean} situational   Allow for an arbitrary situational bonus field
-   * @param {Boolean} fastForward   Allow fast-forward advantage selection
-   * @param {Number} critical       The value of d20 result which represents a critical success
-   * @param {Number} fumble         The value of d20 result which represents a critical failure
+   * @param {boolean} takeTwenty    Allow rolling with take twenty (and therefore also with take ten)
+   * @param {boolean} situational   Allow for an arbitrary situational bonus field
+   * @param {boolean} fastForward   Allow fast-forward advantage selection
+   * @param {number} critical       The value of d20 result which represents a critical success
+   * @param {number} fumble         The value of d20 result which represents a critical failure
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
    * @param {Object} dialogOptions  Modal dialog options
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
@@ -91,7 +91,7 @@ export class DicePF {
           const d20 = roll.terms[0];
           const rollData = mergeObject(
             {
-              user: game.user._id,
+              user: game.user.id,
               formula: roll.formula,
               tooltip: await roll.getTooltip(),
               total: roll.total,
@@ -105,20 +105,20 @@ export class DicePF {
 
           // Create chat data
           let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: noSound ? null : a === 0 ? CONFIG.sounds.dice : null,
             speaker: speaker,
             content: await renderTemplate(chatTemplate, rollData),
             rollMode: rollMode,
+            roll: roll.toJSON(),
             "flags.pf1.noRollRender": true,
           };
 
           // Send message
           rolled = true;
-          chatData = mergeObject(roll.toMessage({}, { create: false }), chatData);
 
-          await ChatMessagePF.create(chatData);
+          return await ChatMessagePF.create(chatData);
         } else {
           rolled = true;
           await roll.toMessage({
@@ -191,14 +191,14 @@ export class DicePF {
    * @param {Event} event           The triggering event which initiated the roll
    * @param {Array} parts           The dice roll component parts, excluding the initial d20
    * @param {Actor} actor           The Actor making the damage roll
-   * @param {Object} data           Actor or item data against which to parse the roll
-   * @param {String} template       The HTML template used to render the roll dialog
-   * @param {String} title          The dice roll UI window title
-   * @param {Object} speaker        The ChatMessage speaker to pass when creating the chat
+   * @param {object} data           Actor or item data against which to parse the roll
+   * @param {string} template       The HTML template used to render the roll dialog
+   * @param {string} title          The dice roll UI window title
+   * @param {object} speaker        The ChatMessage speaker to pass when creating the chat
    * @param {Function} flavor       A callable function for determining the chat message flavor given parts and data
-   * @param {Boolean} critical      Allow critical hits to be chosen
+   * @param {boolean} critical      Allow critical hits to be chosen
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
-   * @param {Object} dialogOptions  Modal dialog options
+   * @param {object} dialogOptions  Modal dialog options
    */
   static async damageRoll({
     event = {},

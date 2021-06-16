@@ -64,11 +64,11 @@ export class VisionPermissionSheet extends FormApplication {
  * Check if a Token can be a vison source for the current user (due to shared vision).
  *
  * @param {Token} token - The Token
- * @return {boolean} Whether token is a possible vision source
+ * @returns {boolean} Whether token is a possible vision source
  */
 export const hasTokenVision = function (token) {
   if (!token.actor) return false;
-  if (token.actor.hasPerm(game.user, "OWNER")) return true;
+  if (token.actor.testUserPermission(game.user, "OWNER")) return true;
 
   const visionFlag = token.actor.getFlag("pf1", "visionPermission");
   if (!visionFlag || !visionFlag.users[game.user._id]) return false;

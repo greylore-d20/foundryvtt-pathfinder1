@@ -74,7 +74,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         name: "data.baseWeight",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.weightConverted,
+        value: data.item.data.data.weightConverted,
         id: "data-baseWeight",
       });
 
@@ -86,7 +86,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.price,
+            value: data.item.data.data.price,
             id: "data-basePrice",
           },
           {
@@ -94,7 +94,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: getProperty(data.item, "data.unidentified.price"),
+            value: getProperty(data.item.data, "data.unidentified.price"),
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -125,7 +125,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         isBoolean: true,
         name: "data.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.data.carried,
+        value: data.item.data.data.carried,
       });
     }
 
@@ -295,7 +295,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     });
 
     // Currency Dragging
-    if (this.item.hasPerm(game.user, 3)) {
+    if (this.item.testUserPermission(game.user, 3)) {
       html.find("label.denomination").each((i, label) => {
         label.setAttribute("draggable", true);
         label.addEventListener("dragstart", handler, false);
@@ -416,7 +416,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Create drag data for an owned item
     const elem = event.currentTarget;
-    let dragData = { containerId: this.item.id };
+    let dragData;
     if (elem.classList.contains("denomination")) {
       dragData = {
         type: "Currency",
@@ -430,6 +430,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       dragData = {
         type: "Item",
         data: item.data,
+        containerId: this.item.id,
       };
     }
 
@@ -478,20 +479,20 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropItem(event, data) {
-    if (!this.item.owner) return false;
+    if (!this.item.isOwner) return false;
 
     let actor;
     if (data.tokenId) {
       actor = game.actors.tokens[data.tokenId];
     } else if (data.actorId) {
-      actor = game.actors.entities.find((o) => o._id === data.actorId);
+      actor = game.actors.contents.find((o) => o.id === data.actorId);
     }
 
     const item = await ItemPF.fromDropData(data);
     const itemData = duplicate(item.data);
 
     // Sort item
-    if (data.containerId === this.item._id) return this._onSortItem(event, itemData);
+    if (data.containerId === this.item.id) return this._onSortItem(event, itemData);
 
     // Create consumable from spell
     if (itemData.type === "spell") {
@@ -506,9 +507,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
       if (actor && actor === this.item.parentActor) {
         if (actor.items.get(data.data._id)) {
-          await actor.deleteOwnedItem(data.data._id);
+          await actor.deleteEmbeddedDocuments("Item", [data.data._id]);
         } else {
-          const containerItem = actor.containerItems.find((i) => i._id === data.data._id);
+          const containerItem = actor.containerItems.find((i) => i.id === data.data._id);
           if (containerItem) {
             await containerItem.parentItem.deleteContainerContent(data.data._id);
           }
@@ -630,7 +631,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       if (item == null) continue;
 
       delete data._id;
-      if (item.hasPerm(game.user, "OWNER")) promises.push(item.update(data));
+      if (item.testUserPermission(game.user, "OWNER")) promises.push(item.update(data));
     }
 
     return Promise.all(promises);
@@ -671,9 +672,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    * @override
    */
   _onSortItem(event, itemData) {
-    // TODO - for now, don't allow sorting for Token Actor ovrrides
-    if (this.actor && this.actor.isToken) return;
-
     // Get the drag source and its siblings
     const source = this.item.getContainerContent(itemData._id);
     const siblings = this._getSortSiblings(source);

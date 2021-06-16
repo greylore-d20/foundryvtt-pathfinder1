@@ -3,6 +3,7 @@ export class ScriptEditor extends FormApplication {
     super(options);
 
     this.command = options.command || "";
+    this.name = options.name || null;
 
     this._promises = {
       submit: [],
@@ -22,6 +23,11 @@ export class ScriptEditor extends FormApplication {
     const data = {};
 
     data.command = this.command || "";
+    data.name = this.name;
+
+    data.canEdit = {
+      name: data.name != null,
+    };
 
     return data;
   }
@@ -41,8 +47,14 @@ export class ScriptEditor extends FormApplication {
 
   _updateObject(event, formData) {
     this.command = formData["command"];
+    this.name = formData["name"] || null;
 
-    this.resolvePromises("submit", this.command);
+    const result = {
+      command: this.command,
+      name: this.name,
+    };
+
+    this.resolvePromises("submit", result);
   }
 
   resolvePromises(type, result) {

@@ -22,6 +22,7 @@
           <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
             <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
           </a>
+          <a data-action="compendium" data-action-target="items" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
           {{/if}}
         </div>
         {{/if}}

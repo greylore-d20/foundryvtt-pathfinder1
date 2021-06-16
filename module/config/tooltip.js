@@ -118,7 +118,7 @@ export class TooltipConfig extends FormApplication {
   }
 
   _openWorldSettings(event) {
-    if (!game.user.isGM) {
+    if (!game.user.can("SETTINGS_MODIFY")) {
       ui.notifications.error("PF1.ErrorGenericPermission");
       return;
     }

@@ -77,6 +77,15 @@ export class CompendiumBrowser extends Application {
     this.packs = {};
 
     /**
+     * The RegExp to filter item names by.
+     *
+     * @type {RegExp}
+     * @property
+     */
+    this.filterQuery = /.*/;
+    this.searchString = "";
+
+    /**
      * Load cached items
      */
     {
@@ -158,26 +167,59 @@ export class CompendiumBrowser extends Application {
     }
   }
 
-  _initLazyLoad() {
+  async _createInitialElements() {
+    let items = [];
+    for (let a = 0; items.length < this.lazyLoadTreshold && a < this.items.length; a++) {
+      const item = this.items[a];
+      if (this._passesFilters(item.item)) {
+        items.push(item);
+      }
+      this.lazyIndex = a + 1;
+    }
+
+    for (let item of items) {
+      await this._addEntryElement(item);
+    }
+  }
+  async _addEntryElement(item) {
+    const elem = $(await renderTemplate("systems/pf1/templates/internal/compendium-browser_entry.hbs", item));
     const rootElem = this.element.find(".directory-list");
-    const elems = rootElem.find(".directory-item");
-    this.lazyIndex = Math.min(this.lazyStart, elems.length);
-    elems.slice(this.lazyIndex).hide();
+    rootElem.append(elem);
+    this.activateEntryListeners(elem);
+
+    return elem;
+  }
+  _clearEntryElements() {
+    this.element.find(".directory-list").empty();
+  }
+
+  activateEntryListeners(elem) {
+    // Open sheet
+    elem.find(".entry-name").click((ev) => {
+      let li = ev.currentTarget.parentElement;
+      this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
+    });
+
+    // Make compendium item draggable
+    elem[0].setAttribute("draggable", true);
+    elem[0].addEventListener("dragstart", this._onDragStart, false);
+  }
+
+  async _initLazyLoad() {
+    await this._createInitialElements();
+    const rootElem = this.element.find(".directory-list");
 
     // Create function for lazy loading
-    const lazyLoad = () => {
-      let newItems = 0;
-      const initialIndex = this.lazyIndex;
-      for (let a = 0; a < elems.length && this.lazyIndex < initialIndex + this.lazyAdd; a++) {
-        const elem = elems[a];
-        if (elem.style.display !== "none") continue;
-        const item = this._data.data.collection[elem.dataset.entryId].item;
-
-        if (this._passesFilters(item)) {
+    const lazyLoad = async () => {
+      let createdItems = 0;
+      for (let a = this.lazyIndex; a < this.items.length && createdItems < this.lazyAdd; a++) {
+        const item = this.items[a];
+        if (this._passesFilters(item.item)) {
+          createdItems++;
+          const elem = await this._addEntryElement(item);
           $(elem).fadeIn(500);
-          newItems++;
-          this.lazyIndex++;
         }
+        this.lazyIndex++;
       }
     };
 
@@ -230,7 +272,6 @@ export class CompendiumBrowser extends Application {
       }, {}),
       labels: {
         itemCount: game.i18n.localize("PF1.TotalItems").format(this.items.length),
-        filteredItemCount: game.i18n.localize("PF1.FilteredItems").format(this.items.length),
       },
     };
   }
@@ -249,6 +290,8 @@ export class CompendiumBrowser extends Application {
         return game.i18n.localize("PF1.Classes");
       case "races":
         return game.i18n.localize("PF1.Races");
+      case "buffs":
+        return game.i18n.localize("PF1.Buffs");
     }
     return this.type;
   }
@@ -265,13 +308,37 @@ export class CompendiumBrowser extends Application {
     return COMPENDIUM_TYPES[this.type];
   }
 
+  getBasicFilters() {
+    switch (this.type) {
+      case "spells":
+        return [{ type: "spell" }];
+      case "items":
+        return [
+          { type: "equipment" },
+          { type: "weapon" },
+          { type: "consumable" },
+          { type: "loot" },
+          { type: "container" },
+        ];
+      case "feats":
+        return [{ type: "feat" }];
+      case "classes":
+        return [{ type: "class" }];
+      case "races":
+        return [{ type: "race" }];
+      case "buffs":
+        return [{ type: "buff" }];
+    }
+    return [null];
+  }
+
   /**
    * @param {Compendium} p - The compendium in question.
    * @returns {boolean} Whether the compendium should be skipped.
    */
   shouldSkip(p) {
     // Check disabled status
-    const config = game.settings.get("core", Compendium.CONFIG_SETTING)[p.collection];
+    const config = game.settings.get("core", "compendiumConfiguration")[p.collection];
     const disabled = getProperty(config, "pf1.disabled") === true;
     if (disabled) return true;
 
@@ -288,7 +355,7 @@ export class CompendiumBrowser extends Application {
     SceneNavigation._onLoadProgress(progress.message, progress.pct);
   }
 
-  async loadCompendium(p) {
+  async loadCompendium(p, filters = [null]) {
     const progress = this._data.progress;
 
     if (p.metadata.system != "pf1") {
@@ -297,23 +364,23 @@ export class CompendiumBrowser extends Application {
       return;
     }
 
-    let items = (
-      await SocketInterface.dispatch("modifyCompendium", {
-        type: p.collection,
-        action: "get",
-        data: {},
-        options: { returnType: "content" },
-      })
-    ).result;
+    // Retrieve compendium contents
+    let items = [];
+    for (let filter of filters) {
+      items.push(...(await p.getDocuments(filter)));
+    }
 
     if (p.translated) {
       items = items.map((item) => p.translate(item));
     }
 
+    // Flush full compendium contents from memory
+    p.clear();
+
     for (let i of items) {
       if (!this._filterItems(i)) continue;
       this.packs[p.collection] = p;
-      this.items.push(this._mapEntry(p, i));
+      this.items.push(this._mapEntry(p, i.data));
     }
     this._onProgress(progress);
   }
@@ -326,7 +393,7 @@ export class CompendiumBrowser extends Application {
       let packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
       for (let p of game.packs.values()) {
-        if (p.entity === this.entityType && !this.shouldSkip(p)) {
+        if (p.documentClass.documentName === this.entityType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
         } else {
@@ -346,14 +413,12 @@ export class CompendiumBrowser extends Application {
       this._onProgress(progress);
 
       // Load compendiums
-      let promises = [];
       for (let p of packs) {
-        promises.push(this.loadCompendium(p));
+        await this.loadCompendium(p, this.getBasicFilters());
       }
-      await Promise.all(promises);
 
       // Sort items
-      this.items = naturalSort(this.items, "name");
+      this.items = naturalSort(this.items, "item.name");
 
       // Return if no appropriate items were found
       if (this.items.length === 0) {
@@ -477,8 +542,8 @@ export class CompendiumBrowser extends Application {
     if (item.items) {
       const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
-        result.item.creatureType = race.data.creatureType;
-        result.item.subTypes = race.data.subTypes.map((o) => {
+        result.item.creatureType = race.data.data.creatureType;
+        result.item.subTypes = race.data.data.subTypes.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });
@@ -673,7 +738,10 @@ export class CompendiumBrowser extends Application {
     if (this.shouldForceRefresh() || !this._data.loaded) await this.loadData();
     await this.updateForceRefreshData({ save: true, refresh: false });
 
-    return this._data.data;
+    const data = duplicate(this._data.data);
+    data.searchString = this.searchString;
+
+    return data;
   }
 
   async refresh() {
@@ -1092,10 +1160,10 @@ export class CompendiumBrowser extends Application {
     );
   }
 
-  async _render(...args) {
-    await super._render(...args);
+  async _render(force, ...args) {
+    await super._render(force, ...args);
 
-    this.filterQuery = /.*/;
+    // Collapse filter displays
     {
       const elems = this.element.find(".filter-content");
       for (const e of elems) {
@@ -1106,23 +1174,13 @@ export class CompendiumBrowser extends Application {
         }
       }
     }
-    this._filterResults();
+
+    // Determine filtered item count
+    this._determineFilteredItemCount();
   }
 
   activateListeners(html) {
     super.activateListeners(html);
-
-    // Open sheets
-    html.find(".entry-name").click((ev) => {
-      let li = ev.currentTarget.parentElement;
-      this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
-    });
-
-    // Make compendium items draggable
-    html.find(".directory-item").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", this._onDragStart, false);
-    });
 
     html.find('input[name="search"]').keyup(this._onFilterResults.bind(this));
 
@@ -1145,7 +1203,7 @@ export class CompendiumBrowser extends Application {
    */
   async _onEntry(collectionKey, entryId) {
     const pack = game.packs.find((o) => o.collection === collectionKey);
-    const entity = await pack.getEntity(entryId);
+    const entity = await pack.getDocument(entryId);
     entity.sheet.render(true);
   }
 
@@ -1170,7 +1228,7 @@ export class CompendiumBrowser extends Application {
     event.dataTransfer.setData(
       "text/plain",
       JSON.stringify({
-        type: pack.entity,
+        type: pack.documentClass.documentName,
         pack: pack.collection,
         id: li.getAttribute("data-entry-id"),
       })
@@ -1191,13 +1249,14 @@ export class CompendiumBrowser extends Application {
     let input = event.currentTarget;
 
     // Define filtering function
-    let filter = (query) => {
+    let filter = async (query) => {
       this.filterQuery = query;
-      this._filterResults();
+      await this._filterResults();
     };
 
     // Filter if we are done entering keys
     let query = new RegExp(RegExp.escape(input.value), "i");
+    this.searchString = input.value;
     if (this._filterTimeout) {
       clearTimeout(this._filterTimeout);
       this._filterTimeout = null;
@@ -1238,33 +1297,35 @@ export class CompendiumBrowser extends Application {
       game.settings.set("pf1", "compendiumFilters", settings);
     }
 
-    this._filterResults();
+    return this._filterResults();
   }
 
-  _filterResults() {
+  async _filterResults() {
     this.lazyIndex = 0;
-    // Hide items that don't match the filters, and show items that DO match the filters
+    // Clear entry elements
+    this._clearEntryElements();
+
+    // Scroll up
+    const rootElem = this.element.find(".directory-list")[0];
+    rootElem.scrollTop = 0;
+
+    // Create new elements
+    await this._createInitialElements();
+
+    // Determine filtered item count
+    this._determineFilteredItemCount();
+  }
+
+  _determineFilteredItemCount() {
     let itemCount = 0;
-    this.element.find("li.directory-item").each((a, li) => {
-      const id = li.dataset.entryId;
-      const item = this._data.data.collection[id].item;
-      if (this._passesFilters(item)) {
-        // Show item
-        if (this.lazyIndex < this.lazyStart) {
-          $(li).show();
-          this.lazyIndex++;
-        }
-        // Set item count
+    for (let item of this.items) {
+      if (this._passesFilters(item.item)) {
         itemCount++;
-      } else $(li).hide();
-    });
+      }
+    }
     this.element
       .find('span[data-type="filterItemCount"]')
       .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
-
-    // Scroll up a bit to prevent a lot of 'lazy' loading at once
-    const rootElem = this.element[0].querySelector(".directory-list");
-    rootElem.scrollTop = Math.max(0, rootElem.scrollTop - this.lazyLoadTreshold);
   }
 
   _passesFilters(item) {

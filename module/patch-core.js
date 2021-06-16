@@ -33,66 +33,12 @@ export async function PatchCore() {
   const TokenHUD_getData = TokenHUD.prototype.getData;
   TokenHUD.prototype.getData = function () {
     const data = TokenHUD_getData.call(this);
-    const bar1 = this.object.getBarAttribute("bar1");
-    const bar2 = this.object.getBarAttribute("bar2");
+    const bar1 = this.object.document.getBarAttribute("bar1");
+    const bar2 = this.object.document.getBarAttribute("bar2");
     return mergeObject(data, {
       displayBar1: bar1 != null && bar1.attribute != null && bar1.value != null,
       displayBar2: bar2 != null && bar2.attribute != null && bar2.value != null,
     });
-  };
-
-  // Patch ActorTokenHelpers.update
-  const ActorTokenHelpers_update = ActorTokenHelpers.prototype.update;
-  ActorTokenHelpers.prototype.update = async function (data, options = {}) {
-    // Avoid regular update flow for explicitly non-recursive update calls
-    if (getProperty(options, "recursive") === false) {
-      return ActorTokenHelpers_update.call(this, data, options);
-    }
-
-    const diff = await ActorPF.prototype.update.call(
-      this,
-      data,
-      mergeObject(options, { recursive: true, skipUpdate: true })
-    );
-    if (!isObjectEmpty(diff)) {
-      await ActorTokenHelpers_update.call(this, diff, mergeObject(options, { recursive: true }));
-      await this.toggleConditionStatusIcons();
-      await this.refreshItems();
-    }
-    return diff;
-  };
-  // Patch ActorTokenHelpers.updateEmbeddedEntity
-  const ActorTokenHelpers_updateEmbeddedEntity = ActorTokenHelpers.prototype.updateEmbeddedEntity;
-  ActorTokenHelpers.prototype.updateEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    await ActorTokenHelpers_updateEmbeddedEntity.call(this, embeddedName, data, options);
-
-    if (embeddedName === "OwnedItem") {
-      this.doQueuedUpdates();
-    }
-  };
-  // Patch ActorTokenHelpers.deleteEmbeddedEntity
-  const ActorTokenHelpers_deleteEmbeddedEntity = ActorTokenHelpers.prototype.deleteEmbeddedEntity;
-  ActorTokenHelpers.prototype.deleteEmbeddedEntity = async function (embeddedName, data, options = {}) {
-    data = data instanceof Array ? data : [data];
-    const ids = data.map((o) => {
-      if (typeof o === "string") return o;
-      return o._id;
-    });
-    const items = this.items.filter((o) => {
-      return ids.includes(o.id);
-    });
-
-    // Remove class associations
-    for (let item of items) {
-      if (item.data.type === "class") {
-        await item._onLevelChange(getProperty(item.data, "data.level"), 0);
-      }
-    }
-
-    // Delete item
-    const deleted = await ActorTokenHelpers_deleteEmbeddedEntity.call(this, embeddedName, data, options);
-
-    return deleted;
   };
 
   // Token patch for shared vision
@@ -147,16 +93,6 @@ export async function PatchCore() {
       },
     ]);
   };
-
-  // Workaround for unlinked token in first initiative on reload problem. No core issue number at the moment.
-  if (Actor.config.collection && Object.keys(Actor.collection.tokens).length > 0) {
-    Object.keys(Actor.collection.tokens).forEach((tokenId) => {
-      let actor = Actor.collection.tokens[tokenId];
-      for (let m of ["update", "createEmbeddedEntity", "updateEmbeddedEntity", "deleteEmbeddedEntity"]) {
-        actor[m] = ActorTokenHelpers.prototype[m].bind(actor);
-      }
-    });
-  }
 
   // Add combat tracker context menu options
   {
@@ -227,4 +163,43 @@ export async function PatchCore() {
 
   // Apply measurement patches
   patchMeasureTools();
+
+  // Patch StringTerm
+  StringTerm.prototype.evaluate = function (options = {}) {
+    // console.log(this.term);
+    const src = `with (sandbox) { return ${this.term}; }`;
+    const evalFn = new Function("sandbox", src);
+    this._total = evalFn(RollPF.MATH_PROXY);
+  };
+
+  Object.defineProperty(StringTerm.prototype, "total", {
+    get: function () {
+      return this._total ?? 0;
+    },
+  });
+
+  // Patch OperatorTerm
+  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...["?", ":"]].filter((value, idx, self) => {
+    return self.indexOf(value) === idx;
+  });
+  OperatorTerm.REGEXP = new RegExp(
+    OperatorTerm.OPERATORS.map((o) => {
+      return Array.from(o).reduce((cur, o) => {
+        return cur + "\\" + o;
+      }, "");
+    }).join("|"),
+    "g"
+  );
+
+  // Patch NumericTerm
+  NumericTerm.prototype.getTooltipData = function () {
+    return {
+      formula: this.expression,
+      total: this.total,
+      flavor: this.flavor,
+    };
+  };
+
+  // Patch ParentheticalTerm
+  ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
 }

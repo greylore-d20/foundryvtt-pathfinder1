@@ -8,6 +8,26 @@ export class TokenQuickActions {
 
     if (actor == null) return;
 
+    const actualChargeCost = (i) => Math.floor(i.charges / i.chargeCost),
+      actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);
+    const chargeDisplay = (item) => {
+      let r = "<charges>";
+      const max = item.isCharged ? actualMaxCharge(item) : 0;
+      const recharging = item.isCharged && item.chargeCost < 0;
+      const uses = item.isCharged
+        ? !recharging
+          ? actualChargeCost(item)
+          : -item.chargeCost
+        : item.data.data.links?.ammunition
+            ?.map((l) => actualChargeCost(actor.items.get(l.id)))
+            .reduce((a, b) => a + b, 0) ?? 0;
+      if (!recharging) r += `<span class='remaining'>${uses}</span >`;
+      else r += `<span class='recharge'>+${uses}</span>`;
+      if (!recharging && max !== 0) r += `<span class='delimiter' >/</span ><span class='max'>${max}</span>`;
+      r += "</charges>";
+      return r;
+    };
+
     let quickActions = '<div class="col actions"><div class="below">';
     let items = actor.getQuickActions();
     items.forEach(function (i) {
@@ -19,16 +39,18 @@ export class TokenQuickActions {
       else if (item.type === "feat") title = game.i18n.localize("PF1.AttackWithFeat").format(item.name);
       const type = item.type;
       quickActions +=
-        `<div id="${type}-${item._id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
-        `<img src="${icon}" width="36" height="36" title="${title}"></div>`;
+        `<div id="${type}-${item.id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
+        `<img src="${icon}" width="36" height="36" title="${title}">`;
+      if (item.isCharged || item.data.data.links?.ammunition?.length > 0) quickActions += chargeDisplay(item);
+      quickActions += "</div >";
     });
 
     html.find(".col.middle").after(quickActions + "</div></div>");
 
     items.forEach(function (i) {
-      const item = actor.items.find((o) => o._id === i.item._id);
+      const item = actor.items.find((o) => o.id === i.item.id);
       const type = item.type;
-      const elem = html.find(`#${type}-${item._id}`);
+      const elem = html.find(`#${type}-${item.id}`);
 
       // Add click handler
       elem.on("click", (event) => {

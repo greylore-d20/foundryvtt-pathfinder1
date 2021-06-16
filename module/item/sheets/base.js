@@ -2,6 +2,7 @@ import { createTabs, getBuffTargetDictionary, getBuffTargets } from "../../lib.j
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
+import { ItemScriptCall } from "../components/script-call.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
@@ -23,7 +24,16 @@ export class ItemSheetPF extends ItemSheet {
      *
      * @type {Set}
      */
-    this._filters = {};
+    this._filters = {
+      search: "",
+    };
+
+    /** Item search */
+    this.searchCompositioning = false; // for IME
+    this.searchRefresh = true; // Lock out same term search unless sheet also refreshes
+    this.searchDelay = 250; // arbitrary ?ms for arbitrarily decent reactivity; MMke this configurable?
+    this.searchDelayEvent = null; // setTimeout id
+    this.effectiveSearch = ""; // prevent searching the same thing
 
     this.items = [];
 
@@ -91,6 +101,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   async getData() {
     const data = await super.getData();
+    data.data = data.data.data;
     const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
@@ -111,19 +122,19 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = Object.prototype.hasOwnProperty.call(data.item.data, "quantity");
+    data.isPhysical = hasProperty(data.item.data, "data.quantity");
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
-    data.owner = this.item.hasPerm(game.user, "OWNER");
+    data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
     data.hasActivationType =
       (game.settings.get("pf1", "unchainedActionEconomy") &&
-        getProperty(data.item, "data.unchainedAction.activation.type")) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item, "data.activation.type"));
+        getProperty(data.item.data, "data.unchainedAction.activation.type")) ||
+      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item.data, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;
@@ -154,15 +165,15 @@ export class ItemSheetPF extends ItemSheet {
     data.isCombatManeuver = ["mcman", "rcman"].includes(data.item.data.actionType);
 
     data.isCharged = false;
-    if (data.item.data.uses != null) {
-      data.isCharged = ["day", "week", "charges"].includes(data.item.data.uses.per);
+    if (data.item.data.data.uses != null) {
+      data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses.per);
     }
-    if (data.item.data.range != null) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.range.minUnits);
+    if (data.item.data.data.range != null) {
+      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.units);
+      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.minUnits);
     }
-    if (data.item.data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.duration.units);
+    if (data.item.data.data.duration != null) {
+      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.data.duration.units);
     }
 
     // Show additional ranged properties
@@ -176,14 +187,14 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true;
+      data.isRanged = data.item.data.data.weaponSubtype === "ranged" || data.item.data.data.properties["thr"] === true;
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
       for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
-      const type = data.item.data.weaponType;
+      const type = data.item.data.data.weaponType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
         for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
@@ -199,7 +210,7 @@ export class ItemSheetPF extends ItemSheet {
       for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
-      const type = data.item.data.equipmentType;
+      const type = data.item.data.data.equipmentType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
         for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
@@ -219,8 +230,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.attackType === "natural";
+      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
+      data.isNaturalAttack = data.item.data.data.attackType === "natural";
     }
 
     // Prepare spell specific stuff
@@ -293,7 +304,7 @@ export class ItemSheetPF extends ItemSheet {
       weaponProf: CONFIG.PF1.weaponProficiencies,
     };
     for (let [t, choices] of Object.entries(profs)) {
-      if (hasProperty(data.item.data, t)) {
+      if (hasProperty(data.item.data.data, t)) {
         const trait = data.data[t];
         if (!trait) continue;
         let values = [];
@@ -315,7 +326,7 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Prepare stuff for items with changes
+    // Prepare stuff for active effects on items
     if (this.item.changes) {
       data.changeGlobals = {
         targets: {},
@@ -326,7 +337,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.changes.reduce((cur, o) => {
+      data.changes = data.item.data.data.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -338,9 +349,9 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for attacks with conditionals
-    if (data.item.data.conditionals) {
+    if (data.data.conditionals) {
       data.conditionals = { targets: {}, conditionalModifierTypes: {} };
-      for (const conditional of data.item.data.conditionals) {
+      for (const conditional of data.data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.item.getConditionalTargets();
           modifier.subTargets = this.item.getConditionalSubTargets(modifier.target);
@@ -348,14 +359,15 @@ export class ItemSheetPF extends ItemSheet {
           modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
           modifier.isAttack = modifier.target === "attack";
           modifier.isDamage = modifier.target === "damage";
+          modifier.isSize = modifier.target === "size";
           modifier.isSpell = modifier.target === "spell";
         }
       }
     }
 
     // Prepare stuff for items with context notes
-    if (data.item.data.contextNotes) {
-      data.contextNotes = duplicate(data.item.data.contextNotes);
+    if (data.item.data.data.contextNotes) {
+      data.contextNotes = duplicate(data.item.data.data.contextNotes);
       const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
       data.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;
@@ -372,6 +384,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add item flags
     this._prepareItemFlags(data);
+
+    // Add script calls
+    await this._prepareScriptCalls(data);
 
     // Add links
     await this._prepareLinks(data);
@@ -459,18 +474,79 @@ export class ItemSheetPF extends ItemSheet {
   _prepareItemFlags(data) {
     // Add boolean flags
     {
-      const flags = getProperty(data.item, "data.flags.boolean") || [];
+      const flags = getProperty(data.item.data, "data.flags.boolean") || [];
       setProperty(data, "flags.boolean", flags);
     }
 
     // Add dictionary flags
     {
-      const flags = getProperty(data.item, "data.flags.dictionary") || [];
+      const flags = getProperty(data.item.data, "data.flags.dictionary") || [];
       let result = [];
       for (let [k, v] of flags) {
         result.push({ key: k, value: v });
       }
       setProperty(data, "flags.dictionary", result);
+    }
+  }
+
+  async _prepareScriptCalls(data) {
+    const categories = game.pf1.registry.getItemScriptCategories().filter((o) => {
+      if (!o.itemTypes.includes(this.document.type)) return false;
+      if (o.hidden === true && !game.user.isGM) return false;
+      return true;
+    });
+    // Don't show the Script Calls section if there are no categories for this item type
+    if (!categories.length) {
+      data.scriptCalls = null;
+      return;
+    }
+    // Don't show the Script Calls section if players are not allowed to edit script macros
+    if (!game.user.can("MACRO_SCRIPT")) {
+      data.scriptCalls = null;
+      return;
+    }
+
+    data.scriptCalls = {};
+
+    // Prepare data to add
+    const checkYes = '<i class="fas fa-check"></i>';
+    const checkNo = '<i class="fas fa-times"></i>';
+
+    // Iterate over all script calls, and adjust data
+    let scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
+      ? duplicate(Array.from(this.document.scriptCalls).map((o) => o.data))
+      : [];
+    {
+      let promises = [];
+      for (let o of scriptCalls) {
+        promises.push(
+          (async () => {
+            // Obtain macro info
+            if (o.type === "macro") {
+              const m = await fromUuid(o.value);
+              o.name = m.data.name;
+              o.img = m.data.img;
+            }
+
+            // Add data
+            o.hiddenIcon = o.hidden ? checkYes : checkNo;
+            o.hide = o.hidden && !game.user.isGM;
+          })()
+        );
+      }
+      await Promise.all(promises);
+    }
+
+    // Create categories, and assign items to them
+    for (const c of categories) {
+      data.scriptCalls[c.key] = {
+        name: game.i18n.localize(c.name),
+        info: c.info ? game.i18n.localize(c.info) : null,
+        items: scriptCalls.filter((o) => o.category === c.key),
+        dataset: {
+          category: c.key,
+        },
+      };
     }
   }
 
@@ -500,20 +576,23 @@ export class ItemSheetPF extends ItemSheet {
   _getItemStatus(item) {
     if (item.type === "spell") {
       const spellbook = this.item.spellbook;
-      if (item.data.preparation.mode === "prepared") {
-        if (item.data.preparation.preparedAmount > 0) {
+      if (item.data.data.preparation.mode === "prepared") {
+        if (item.data.data.preparation.preparedAmount > 0) {
           if (spellbook != null && spellbook.spontaneous) {
             return game.i18n.localize("PF1.SpellPrepPrepared");
           } else {
-            return game.i18n.localize("PF1.AmountPrepared").format(item.data.preparation.preparedAmount);
+            return game.i18n.localize("PF1.AmountPrepared").format(item.data.data.preparation.preparedAmount);
           }
         }
         return game.i18n.localize("PF1.Unprepared");
-      } else if (item.data.preparation.mode) {
-        return item.data.preparation.mode.titleCase();
+      } else if (item.data.data.preparation.mode) {
+        return item.data.data.preparation.mode.titleCase();
       } else return "";
-    } else if (["weapon", "equipment"].includes(item.type) || (item.type === "loot" && item.data.subType === "gear")) {
-      return item.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+    } else if (
+      ["weapon", "equipment"].includes(item.type) ||
+      (item.type === "loot" && item.data.data.subType === "gear")
+    ) {
+      return item.data.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
     }
   }
 
@@ -532,14 +611,14 @@ export class ItemSheetPF extends ItemSheet {
 
     if (item.type === "weapon") {
       props.push(
-        ...Object.entries(item.data.properties)
+        ...Object.entries(item.data.data.properties)
           .filter((e) => e[1] === true)
           .map((e) => CONFIG.PF1.weaponProperties[e[0]])
       );
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
-      props.push(CONFIG.PF1.equipmentTypes[item.data.armor.type]);
+      props.push(CONFIG.PF1.equipmentTypes[item.data.data.equipmentType][item.data.data.equipmentSubtype]);
       props.push(labels.armor);
     } else if (item.type === "feat") {
       props.push(labels.featType);
@@ -547,18 +626,18 @@ export class ItemSheetPF extends ItemSheet {
 
     // Action type
     if (item.data.actionType) {
-      props.push(CONFIG.PF1.itemActionTypes[item.data.actionType]);
+      props.push(CONFIG.PF1.itemActionTypes[item.data.data.actionType]);
     }
 
     // Action usage
-    if (item.type !== "weapon" && item.data.activation && !isObjectEmpty(item.data.activation)) {
+    if (item.type !== "weapon" && item.data.data.activation && !isObjectEmpty(item.data.data.activation)) {
       props.push(labels.activation, labels.range, labels.target, labels.duration);
     }
 
     // Tags
-    if (getProperty(item, "data.tags") != null) {
+    if (getProperty(item.data, "data.tags") != null) {
       props.push(
-        ...getProperty(item, "data.tags").map((o) => {
+        ...getProperty(item.data, "data.tags").map((o) => {
           return o[0];
         })
       );
@@ -765,9 +844,88 @@ export class ItemSheetPF extends ItemSheet {
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
+
+    // Search box
+    if (["container"].includes(this.item.data.type)) {
+      const sb = html.find(".search-input");
+      sb.on("keyup change", this._searchFilterChange.bind(this));
+      sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
+      this.searchRefresh = true;
+      // Filter tabs on followup refreshes
+      sb.each(function () {
+        if (this.value.length > 0) $(this).change();
+      });
+      html.find(".clear-search").on("click", this._clearSearch.bind(this));
+    }
+
+    /* -------------------------------------------- */
+    /*  Links
+    /* -------------------------------------------- */
+
+    html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
+
+    /* -------------------------------------------- */
+    /*  Script Calls
+    /* -------------------------------------------- */
+
+    html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
+
+    html.find(".script-calls .items-list .item").contextmenu(this._onScriptCallEdit.bind(this));
+
+    html.find(".script-calls .inventory-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
   }
 
   /* -------------------------------------------- */
+
+  _onOpenCompendium(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const target = a.dataset.actionTarget;
+
+    game.pf1.compendiums[target].render(true);
+  }
+
+  _onScriptCallControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
+    const group = a.closest(".inventory-list");
+    const category = group.dataset.category;
+
+    // Create item
+    if (a.classList.contains("item-create")) {
+      const list = this.document.data.data.scriptCalls || [];
+      const item = ItemScriptCall.create({}, null);
+      item.data.category = category;
+      item.data.type = "script";
+      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+    }
+    // Delete item
+    else if (item && a.classList.contains("item-delete")) {
+      const list = (this.document.data.data.scriptCalls || []).filter((o) => o._id !== item.id);
+      return this._onSubmit(event, { updateData: { "data.scriptCalls": list } });
+    }
+    // Edit item
+    else if (item && a.classList.contains("item-edit")) {
+      item.edit();
+    }
+    // Toggle hidden
+    else if (item && a.classList.contains("item-hide")) {
+      item.update({
+        hidden: !item.data.hidden,
+      });
+    }
+  }
+
+  _onScriptCallEdit(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.dataset.itemId) : null;
+
+    if (item) {
+      item.edit();
+    }
+  }
 
   _moveTooltips(event) {
     const elem = $(event.currentTarget);
@@ -806,6 +964,37 @@ export class ItemSheetPF extends ItemSheet {
       elem.value = !elem.value ? link : elem.value + "\n" + link;
     }
     return this._onSubmit(event);
+  }
+
+  async _onScriptCallDrop(event) {
+    event.preventDefault();
+    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+    if (!data) return;
+
+    const elem = event.currentTarget;
+    const category = elem.dataset.category;
+
+    if (data.type === "Macro") {
+      let uuid;
+      // Get from compendium
+      if (data.pack) {
+        const pack = game.packs.get(data.pack);
+        const document = await pack.getDocument(data.id);
+        uuid = document.uuid;
+      }
+      // Get from world
+      else if (data.id) {
+        const document = game.macros.get(data.id);
+        uuid = document.uuid;
+      }
+
+      // Submit data
+      if (uuid) {
+        const list = this.document.data.data.scriptCalls ?? [];
+        const item = ItemScriptCall.create({ type: "macro", value: uuid, category });
+        return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+      }
+    }
   }
 
   _openHelpBrowser(event) {
@@ -926,9 +1115,9 @@ export class ItemSheetPF extends ItemSheet {
     if (!change) return;
 
     const scriptEditor = new ScriptEditor({ command: change.formula }).render(true);
-    const command = await scriptEditor.awaitResult();
-    if (typeof command === "string") {
-      return change.update({ formula: command });
+    const result = await scriptEditor.awaitResult();
+    if (typeof result.command === "string") {
+      return change.update({ formula: result.command });
     }
   }
 
@@ -1298,5 +1487,65 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const el = event.currentTarget;
     el.select();
+  }
+
+  /** Item Search */
+
+  _searchFilterCommit(event) {
+    const container = this.item;
+    const search = this._filters.search.toLowerCase();
+
+    // TODO: Do not refresh if same search term, unless the sheet has updated.
+    if (this.effectiveSearch === search && !this.searchRefresh) {
+      console.log(this.effectiveSearch, "===", search, this.searchRefresh);
+      return;
+    }
+    this.effectiveSearch = search;
+    this.searchRefresh = false;
+
+    const matchSearch = (name) => name.toLowerCase().includes(search); // MKAhvi: Bad method for i18n support.
+
+    $(event.target)
+      .closest(".tab")
+      .find(".item-list .item")
+      .each(function () {
+        const jq = $(this);
+        if (search?.length > 0) {
+          const item = container.items.get(this.dataset.itemId);
+          if (matchSearch(item.name)) jq.show();
+          else jq.hide();
+        } else jq.show();
+      });
+  }
+
+  _clearSearch(event) {
+    this._filters.search = "";
+    $(event.target).prev(".search-input").val("").change();
+  }
+
+  // IME related
+  _searchFilterCompositioning(event) {
+    this.searchCompositioning = event.type === "compositionstart";
+  }
+
+  _searchFilterChange(event) {
+    event.preventDefault();
+    this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
+
+    // Accept input only while not compositioning
+
+    const search = event.target.value;
+    const changed = this._filters.search !== search;
+
+    if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset
+    if (this.searchCompositioning) return;
+
+    //if (unchanged) return; // nothing changed
+    this._filters.search = search;
+
+    if (event.type === "keyup") {
+      // Delay search
+      if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
+    } else this._searchFilterCommit(event);
   }
 }

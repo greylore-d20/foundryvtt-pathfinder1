@@ -1,14 +1,10 @@
 export class RollPF extends Roll {
-  static get name() {
-    return "Roll";
-  }
-
   static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {
-      roll = this.create(formula, data).evaluate();
+      roll = this.create(formula, data).evaluate({ async: false });
     } catch (err) {
-      roll = this.create("0", data).evaluate();
+      roll = this.create("0", data).evaluate({ async: false });
       roll.err = err;
     }
     if (roll.warning) roll.err = Error("This formula had a value replaced with null.");
@@ -23,112 +19,55 @@ export class RollPF extends Roll {
     return isNaN(+formula) ? RollPF.safeRoll(formula, data).total : +formula;
   }
 
-  _identifyTerms(formula, { step = 0 } = {}) {
-    if (typeof formula !== "string") throw new Error("The formula provided to a Roll instance must be a string");
-    formula = this.constructor._preProcessDiceFormula(formula, this.data);
-    var warned;
+  /**
+   * @override
+   */
+  static simplifyTerms(terms) {
+    // Simplify terms by combining with pending strings
+    let simplified = terms.reduce((terms, term) => {
+      const prior = terms[terms.length - 1];
+      const isOperator = term instanceof OperatorTerm;
 
-    // Step 1 - Update the Roll formula using provided data
-    [formula, warned] = this.constructor.replaceFormulaData(formula, this.data, { missing: "0", warn: false });
-    if (warned) this.warning = true;
-
-    // Step 2 - identify separate parenthetical terms
-    let terms = this._splitParentheticalTerms(formula);
-
-    // Step 3 - expand pooled terms
-    terms = this._splitPooledTerms(terms);
-
-    // Step 4 - expand remaining arithmetic terms
-    terms = this._splitDiceTerms(terms, step);
-
-    // Step 4.5 - Strip non-functional term flavor text
-    terms = terms.map((t) => {
-      if (typeof t !== "string") return t;
-      const stripped = t.replace(/\s*\[.*\]\s*/, ""),
-        num = /\D/.test(stripped) ? NaN : parseFloat(stripped);
-      if (isNaN(num)) return stripped;
-      else return num;
-    });
-
-    // Step 5 - clean and de-dupe terms
-    terms = this.constructor.cleanTerms(terms);
-    return terms;
-  }
-
-  _splitParentheticalTerms(formula) {
-    // Augment parentheses with semicolons and split into terms
-    const split = formula.replace(/\(/g, ";(;").replace(/\)/g, ";);");
-
-    // Match outer-parenthetical groups
-    let nOpen = 0;
-    const terms = split.split(";").reduce((arr, t, i, terms) => {
-      if (t === "") return arr;
-
-      // Identify whether the left-parentheses opens a math function
-      let mathFn = false;
-      if (t === "(") {
-        const fn = terms[i - 1].match(/(?:\s)?([A-z0-9]+)$/);
-        mathFn = fn && !!RollPF.MATH_PROXY[fn[1]];
+      // Combine a non-operator term with prior StringTerm
+      if (!isOperator && prior instanceof StringTerm) {
+        prior.term += term.total;
+        foundry.utils.mergeObject(prior.options, term.options);
+        return terms;
       }
 
-      // Combine terms using open parentheses and math expressions
-      if (nOpen > 0 || mathFn) arr[arr.length - 1] += t;
-      else arr.push(t);
-
-      // Increment the count
-      if (t === "(") nOpen++;
-      else if (t === ")" && nOpen > 0) nOpen--;
-      return arr;
-    }, []);
-
-    // Close any un-closed parentheses
-    for (let i = 0; i < nOpen; i++) terms[terms.length - 1] += ")";
-
-    // Substitute parenthetical dice rolls groups to inner Roll objects
-    return terms.reduce((terms, term) => {
-      const prior = terms.length ? terms[terms.length - 1] : null;
-      if (term[0] === "(") {
-        // Handle inner Roll parenthetical groups
-        if (/[dD]/.test(term)) {
-          terms.push(RollPF.fromTerm(term, this.data));
-          return terms;
-        }
-
-        // Evaluate arithmetic-only parenthetical groups
-        term = this._safeEval(term);
-        /* Changed functionality */
-        /* Allow null/string/true/false as it used to be and crash on undefined */
-        if (typeof term !== "undefined" && typeof term !== "number") term += "";
-        else term = Number.isInteger(term) ? term : term.toFixed(2);
-        /* End changed functionality */
-
-        // Continue wrapping math functions
-        const priorMath = prior && prior.split(" ").pop() in Math;
-        if (priorMath) term = `(${term})`;
+      // Attach string terms as flavor texts to numeric terms, if appropriate
+      const priorNumeric = prior instanceof NumericTerm;
+      if (prior && priorNumeric && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
+        prior.options.flavor = RegExp.$1;
+        return terms;
       }
 
-      // Append terms to to non-Rolls
-      if (prior !== null && !(prior instanceof Roll)) terms[terms.length - 1] += term;
-      else terms.push(term);
+      // Combine StringTerm with a prior non-operator term
+      const priorOperator = prior instanceof OperatorTerm;
+      if (prior && !priorOperator && term instanceof StringTerm) {
+        term.term = String(prior.total) + term.term;
+        foundry.utils.mergeObject(term.options, prior.options);
+        terms[terms.length - 1] = term;
+        return terms;
+      }
+
+      // Otherwise continue
+      terms.push(term);
       return terms;
     }, []);
-  }
 
-  static replaceFormulaData(formula, data, { missing, warn = false }) {
-    let dataRgx = new RegExp(/@([a-z.0-9_-]+)/gi);
-    var warned = false;
-    return [
-      formula.replace(dataRgx, (match, term) => {
-        let value = getProperty(data, term);
-        if (value === undefined) {
-          if (warn) ui.notifications.warn(game.i18n.format("DICE.WarnMissingData", { match }));
-          warned = true;
-          return missing !== undefined ? String(missing) : match;
-        }
-        return String(value).trim();
-      }),
-      warned,
-    ];
+    // Convert remaining String terms to a RollTerm which can be evaluated
+    simplified = simplified.map((term) => {
+      if (!(term instanceof StringTerm)) return term;
+      const t = this._classifyStringTerm(term.formula, { intermediate: false });
+      t.options = term.options;
+      return t;
+    });
+
+    // Eliminate leading or trailing arithmetic
+    if (simplified[0] instanceof OperatorTerm && simplified[0].operator !== "-") simplified.shift();
+    if (simplified[terms.length - 1] instanceof OperatorTerm) simplified.pop();
+    return simplified;
   }
 
   static _preProcessDiceFormula(formula, data = {}) {
@@ -199,5 +138,85 @@ export class RollPF extends Roll {
     }, []);
 
     return terms.join("");
+  }
+
+  /**
+   * @override
+   *
+   * Split a formula by identifying its outer-most parenthetical and math terms
+   * @param {string} _formula      The raw formula to split
+   * @returns {string[]}          An array of terms, split on parenthetical terms
+   * @private
+   */
+  static _splitParentheses(_formula) {
+    return this._splitGroup(_formula, {
+      openRegexp: ParentheticalTerm.OPEN_REGEXP,
+      closeRegexp: ParentheticalTerm.CLOSE_REGEXP,
+      openSymbol: "(",
+      closeSymbol: ")",
+      onClose: (group) => {
+        const fn = group.open.slice(0, -1);
+        const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
+        const term = group.terms.join("");
+        const terms = [];
+
+        if (fn in game.pf1.rollPreProcess) {
+          let fnParams = group.terms
+            // .slice(2, -1)
+            .reduce((cur, s) => {
+              cur.push(...s.split(/\s*,\s*/));
+              return cur;
+            }, [])
+            .map((o) => {
+              // Return raw string
+              if ((o.startsWith('"') && o.endsWith('"')) || (o.startsWith("'") && o.endsWith("'"))) {
+                return o.slice(1, -1);
+              }
+              // Return data string
+              else if (o.match(/^@([a-zA-Z0-9-.]+)$/)) {
+                const value = getProperty(this.data, RegExp.$1);
+                if (typeof value === "string") return value;
+              }
+              // Return roll result
+              return RollPF.safeRoll(o, this.data).total;
+            })
+            .filter((o) => o !== "" && o != null);
+
+          return game.pf1.rollPreProcess[fn](...fnParams);
+        } else if (fn in Math) {
+          const args = this._splitMathArgs(term);
+          terms.push(new MathTerm({ fn, terms: args, options }));
+        } else {
+          if (fn) terms.push(new StringTerm({ term: fn }));
+          terms.push(new ParentheticalTerm({ term, options }));
+        }
+        return terms;
+      },
+    });
+  }
+
+  static cleanFlavor(flavor) {
+    return flavor.replace(/\[\];/g, "");
+  }
+
+  /**
+   * Render the tooltip HTML for a RollPF instance
+   *
+   * @returns {Promise<string>} The rendered HTML tooltip as a string
+   */
+  async getTooltip() {
+    const parts = this.dice.map((d) => d.getTooltipData());
+    const numericParts = this.terms.reduce((cur, t, idx, arr) => {
+      const result = t instanceof NumericTerm ? t.getTooltipData() : undefined;
+
+      const prior = arr[idx - 1];
+      if (t instanceof NumericTerm && prior && prior instanceof OperatorTerm && prior.operator === "-") {
+        result.total = -result.total;
+      }
+
+      if (result !== undefined) cur.push(result);
+      return cur;
+    }, []);
+    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
   }
 }

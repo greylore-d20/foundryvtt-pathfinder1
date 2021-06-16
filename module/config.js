@@ -346,10 +346,10 @@ export const PF1 = {
    * The size values for Tokens according to the creature's size
    */
   tokenSizes: {
-    fine: { w: 1, h: 1, scale: 0.2 },
-    dim: { w: 1, h: 1, scale: 0.4 },
-    tiny: { w: 1, h: 1, scale: 0.6 },
-    sm: { w: 1, h: 1, scale: 0.8 },
+    fine: { w: 1, h: 1, scale: 0.45 },
+    dim: { w: 1, h: 1, scale: 0.6 },
+    tiny: { w: 1, h: 1, scale: 0.75 },
+    sm: { w: 1, h: 1, scale: 0.9 },
     med: { w: 1, h: 1, scale: 1 },
     lg: { w: 2, h: 2, scale: 1 },
     huge: { w: 3, h: 3, scale: 1 },
@@ -677,6 +677,14 @@ export const PF1 = {
     racial: "PF1.FeatTypeRacial",
     misc: "PF1.Misc",
     template: "PF1.FeatTypeTemplate",
+  },
+
+  featTypesPlurals: {
+    feat: "PF1.FeatPlural",
+    classFeat: "PF1.ClassFeaturePlural",
+    trait: "PF1.TraitPlural",
+    racial: "PF1.RacialTraitPlural",
+    template: "PF1.TemplatePlural",
   },
 
   /**
@@ -1569,6 +1577,7 @@ export const PF1 = {
     sickened: "PF1.CondSickened",
     nauseated: "PF1.CondNauseated",
     dazed: "PF1.CondDazed",
+    sleep: "PF1.CondSleep",
   },
 
   conditionTextures: {
@@ -1595,6 +1604,7 @@ export const PF1 = {
     panicked: "systems/pf1/icons/conditions/fear.png",
     nauseated: "systems/pf1/icons/conditions/nauseated.png",
     dazed: "systems/pf1/icons/conditions/dazed.png",
+    sleep: "systems/pf1/icons/conditions/sleep.png",
   },
 
   buffTypes: {
@@ -1619,6 +1629,9 @@ export const PF1 = {
       allDamage: "PF1.All",
       hasteDamage: "PF1.Haste",
       rapidShotDamage: "PF1.RapidShot",
+    },
+    size: {
+      _label: "PF1.Size",
     },
     effect: {
       _label: "PF1.Effects",
@@ -1656,6 +1669,12 @@ export const PF1 = {
     int: { label: "PF1.AbilityInt", category: "ability" },
     wis: { label: "PF1.AbilityWis", category: "ability" },
     cha: { label: "PF1.AbilityCha", category: "ability" },
+    strMod: { label: "PF1.AbilityStrMod", category: "ability" },
+    dexMod: { label: "PF1.AbilityDexMod", category: "ability" },
+    conMod: { label: "PF1.AbilityConMod", category: "ability" },
+    intMod: { label: "PF1.AbilityIntMod", category: "ability" },
+    wisMod: { label: "PF1.AbilityWisMod", category: "ability" },
+    chaMod: { label: "PF1.AbilityChaMod", category: "ability" },
     allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows" },
     fort: { label: "PF1.SavingThrowFort", category: "savingThrows" },
     ref: { label: "PF1.SavingThrowRef", category: "savingThrows" },
@@ -1995,6 +2014,8 @@ export const PF1 = {
       "mod",
     ],
   },
+
+  keepItemLinksOnCopy: ["classAssociations"],
 };
 
 /**

@@ -1,13 +1,5 @@
 export class ActiveEffectPF extends ActiveEffect {
-  constructor(...args) {
-    super(...args);
-  }
-
-  async update(data, options) {
-    return super.update(data, options);
-  }
-
-  async create(options) {
+  async create(data, context) {
     const statusId = this.data["flags.core.statusId"],
       origin = this.data.origin,
       updates = {};
@@ -21,14 +13,14 @@ export class ActiveEffectPF extends ActiveEffect {
       let buffItem = this.parent.items.get(origin.split(".")[3]);
       if (buffItem && !buffItem.data.data.active) await buffItem.update({ "data.active": true });
     }
-    return super.create(options);
+    return super.create(data, context);
   }
 
-  async delete(options) {
+  async delete(context) {
     const statusId = this.getFlag("core", "statusId"),
       origin = this.data.origin?.split(".")?.[3] ?? null,
       parentActor = this.parent,
-      returnVal = await super.delete(options),
+      returnVal = await super.delete(context),
       updates = {};
     if (statusId && parentActor.data.data.attributes.conditions[statusId]) {
       updates[`data.attributes.conditions.${statusId}`] = false;

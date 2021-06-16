@@ -1,7 +1,8 @@
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
- * @return {Promise}
+ *
+ * @returns {Promise}
  */
 export const preloadHandlebarsTemplates = async function () {
   // Define template paths to load
@@ -21,12 +22,13 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/actors/parts/actor-attributes.hbs",
     "systems/pf1/templates/actors/parts/actor-settings.hbs",
 
+    "systems/pf1/templates/internal/item-search.hbs",
+
     // Item Sheet Partials
     "systems/pf1/templates/items/parts/item-action.hbs",
     "systems/pf1/templates/items/parts/item-activation.hbs",
     "systems/pf1/templates/items/parts/item-description.hbs",
     "systems/pf1/templates/items/parts/item-changes.hbs",
-    "systems/pf1/templates/items/parts/item-notes.hbs",
     "systems/pf1/templates/items/parts/item-template.hbs",
     "systems/pf1/templates/items/parts/item-links.hbs",
     "systems/pf1/templates/items/parts/item-aura.hbs",
@@ -50,6 +52,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/consumable-description.hbs",
     "systems/pf1/templates/internal/damage-tooltip.hbs",
     "systems/pf1/templates/internal/token-config_vision.hbs",
+    "systems/pf1/templates/internal/compendium-browser_entry.hbs",
 
     // Tooltip
     "systems/pf1/templates/hud/tooltip.hbs",

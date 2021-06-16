@@ -185,6 +185,7 @@ module.exports = {
     ChatLog: "readonly",
     CombatTracker: "readonly",
     CompendiumDirectory: "readonly",
+    CompendiumCollection: "readonly",
     ItemDirectory: "readonly",
     JournalDirectory: "readonly",
     MacroDirectory: "readonly",

@@ -728,3 +728,128 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
   // Return result
   return categories;
 };
+
+/**
+ * A locale-safe sort of an Array of Objects, not in place. Ignores punctuation and capitalization.
+ *
+ * @param {Array.<{name: string}>} inputArr - Array to be sorted. Each element must have a name property set
+ * @returns {Array} - New sorted Array
+ */
+export const sortArrayByName = function (inputArr) {
+  let n = inputArr.length;
+  inputArr = duplicate(inputArr).map((o) => {
+    o.name = o.name.toLocaleLowerCase();
+    return o;
+  });
+  for (let i = 1; i < n; i++) {
+    let current = inputArr[i],
+      j = i - 1,
+      currentLower = current.name;
+    while (j > -1 && currentLower.localeCompare(inputArr[j].name, undefined, { ignorePunctuation: true }) < 0) {
+      inputArr[j + 1] = inputArr[j];
+      j--;
+    }
+    inputArr[j + 1] = current;
+  }
+  return inputArr;
+};
+
+/**
+ * A simple binary search to be used on sorted arrays
+ *
+ * @param {Array} ar - Sorted Array to be searched
+ * @param {*} el - Element to be compared to array values
+ * @param {Function} compare_fn - Comparison function to be apply el to every element in ar. Should return an positive/ negative integer or 0 if matching.
+ * @returns {number} - Index where search is found or negative index indicating where it would be inserted
+ */
+export const binarySearch = function (ar, el, compare_fn) {
+  var m = 0,
+    n = ar.length - 1;
+  while (m <= n) {
+    var k = (n + m) >> 1,
+      cmp = compare_fn(el, ar[k]);
+    if (cmp > 0) {
+      m = k + 1;
+    } else if (cmp < 0) {
+      n = k - 1;
+    } else {
+      return k;
+    }
+  }
+  return -m - 1;
+};
+
+//
+/**
+ * Generate permutations of an array. Complexity is O(n!).
+ * Should be safe up to 8, though you should probably consider something else if you're reaching that high often.
+ *
+ * @param {Array} perm - The Array to be generated upon
+ * @returns {Array.<Array>|false} An Array containing all Array permutations or false if failed.
+ */
+function uniquePermutations(perm) {
+  let ret = new Set();
+  if (perm.length > 8) return console.error("Array too large. Not attempting."), false;
+
+  for (let i = 0; i < perm.length; i = i + 1) {
+    let rest = uniquePermutations(perm.slice(0, i).concat(perm.slice(i + 1)));
+
+    if (!rest.length) {
+      ret.add([perm[i]]);
+    } else {
+      for (let j = 0; j < rest.length; j = j + 1) {
+        ret.add([perm[i]].concat(rest[j]));
+      }
+    }
+  }
+  return [...ret];
+}
+
+/**
+ * Searches through compendia quickly using the system generated index caches.
+ * Exact matches excluding punctuation and case are prioritized before searching word order permutations.
+ *
+ * @param {string} searchTerm - The name of the Document being searched for
+ * @param {{packs: Array.<string>, type: string}} [options] - Provides a filter to limit search to specific packs or Document types
+ * @returns {Document|false} The first Document found or false if no match is found
+ */
+export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
+  let packs = game.packs.filter((o) => {
+    return (
+      (!options?.type || o.metadata.entity == options.type) &&
+      (!options?.packs || !options?.packs.length || options.packs.includes(o.collection))
+    );
+  });
+
+  searchTerm = searchTerm.toLocaleLowerCase();
+  let found, foundDoc, foundPack;
+  for (let pack of packs) {
+    found = binarySearch(pack.fuzzyIndex, searchTerm, (sp, it) =>
+      sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
+    );
+    if (found > -1) {
+      foundDoc = pack.index.get(pack.fuzzyIndex[found]._id);
+      foundPack = pack;
+      break;
+    }
+  }
+  if (foundDoc) return foundPack.getDocument(foundDoc._id);
+
+  const searchMutations = uniquePermutations(searchTerm.split(/[ _-]/)).map((o) => o.join(" "));
+  for (let pack of packs) {
+    for (let mut = 0; mut < searchMutations.length; mut++) {
+      found = binarySearch(pack.fuzzyIndex, searchMutations[mut], (sp, it) =>
+        sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
+      );
+      if (found > -1) {
+        foundDoc = pack.index.get(pack.fuzzyIndex[found]._id);
+        foundPack = pack;
+        break;
+      }
+    }
+    if (foundDoc) break;
+  }
+
+  if (foundDoc) return foundPack.getDocument(foundDoc._id);
+  return false;
+};

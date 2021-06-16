@@ -15,6 +15,12 @@
 
 - Added script calls for changing buff and class levels
 
+## API
+
+- Added `utils.findInCompendia` to fuzzy search loaded compendia by name as fast as possible
+- Added `utils.sortArrayByName` to sort compendium index arrays for localization
+- Added `utils.binarySearch` to quickly find an object in a sorted array
+
 ### Compendiums
 
 - Most armor in the compendium didn't have an initial slot type set (#883)

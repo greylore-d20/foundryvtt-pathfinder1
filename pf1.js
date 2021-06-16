@@ -51,6 +51,9 @@ import {
   convertDistance,
   getBuffTargets,
   getBuffTargetDictionary,
+  binarySearch,
+  sortArrayByName,
+  findInCompendia,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
@@ -149,6 +152,9 @@ Hooks.once("init", function () {
       dialogGetActor,
       dialogGetNumber,
       SemanticVersion,
+      binarySearch,
+      sortArrayByName,
+      findInCompendia,
     },
     // Components
     documentComponents: {

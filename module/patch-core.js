@@ -5,6 +5,7 @@ import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
 import { patchMeasureTools } from "./measure.js";
+import { sortArrayByName } from "./lib.js";
 
 /**
  *
@@ -202,4 +203,14 @@ export async function PatchCore() {
 
   // Patch ParentheticalTerm
   ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
+
+  // Add secondary indexing to compendium collections
+  {
+    const origFunc = CompendiumCollection.prototype.getIndex;
+    CompendiumCollection.prototype.getIndex = async function () {
+      let index = await origFunc.call(this);
+      this.fuzzyIndex = sortArrayByName([...index]);
+      return this.index;
+    };
+  }
 }

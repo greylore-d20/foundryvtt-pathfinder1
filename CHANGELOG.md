@@ -12,6 +12,10 @@
 
 - Added script calls for changing buff and class levels
 
+### Compendiums
+
+- Most armor in the compendium didn't have an initial slot type set (#883)
+
 ## 0.78.9
 
 ### Bug Fixes

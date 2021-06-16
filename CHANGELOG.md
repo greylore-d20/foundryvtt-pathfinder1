@@ -8,6 +8,7 @@
 - Changing actor size didn't save it on its token(s)
 - Resource values were no longer able to be referenced in formulas (#885)
 - Deleting an actor or item with an open sheet caused the sheet to be uncloseable
+- Magic items couldn't be identified from actors' notes tabs (#879)
 
 ### Changelog
 

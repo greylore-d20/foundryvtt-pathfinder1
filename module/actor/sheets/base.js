@@ -1901,7 +1901,8 @@ export class ActorSheetPF extends ActorSheet {
       console.error(msg);
       return ui.notifications.error(msg);
     }
-    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    // const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
     if (hasProperty(item.data, "data.identified")) {

@@ -533,6 +533,10 @@ export class ActorPF extends Actor {
     {
       setProperty(this.data, "data.attributes.init.total", getProperty(this.data, "data.attributes.init.value"));
     }
+
+    this.items.forEach((item) => {
+      this.updateItemResources(item.data);
+    });
   }
 
   /**
@@ -1163,7 +1167,6 @@ export class ActorPF extends Actor {
     // Update item resources
     this.items.forEach((item) => {
       item.prepareDerivedItemData();
-      this.updateItemResources(item.data);
 
       // Update tokens for resources
       const tokens = this.isToken ? [this.token] : this.getActiveTokens();

@@ -680,6 +680,9 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses();
+
+    // Re-render sheet, if open
+    this.sheet?.render();
   }
 
   prepareLinks() {

@@ -6,6 +6,7 @@
 
 - Fix token deletion not hiding the tooltip
 - Changing actor size didn't save it on its token(s)
+- Resource values were no longer able to be referenced in formulas (#885)
 
 ### Changelog
 

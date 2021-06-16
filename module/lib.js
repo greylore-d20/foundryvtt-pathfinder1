@@ -759,17 +759,17 @@ export const sortArrayByName = function (inputArr) {
  * A simple binary search to be used on sorted arrays
  *
  * @template T
- * @param {T[]} ar - Sorted Array to be searched
+ * @param {T[]} searchArr - Sorted Array to be searched
  * @param {T} el - Element to be compared to array values
  * @param {function(T, T): number} compare_fn - Comparison function to be apply el to every element in ar. Should return an positive/ negative integer or 0 if matching.
  * @returns {number} Index where search is found or negative index indicating where it would be inserted
  */
-export const binarySearch = function (ar, el, compare_fn) {
+export const binarySearch = function (searchArr, el, compare_fn) {
   var m = 0,
-    n = ar.length - 1;
+    n = searchArr.length - 1;
   while (m <= n) {
     var k = (n + m) >> 1,
-      cmp = compare_fn(el, ar[k]);
+      cmp = compare_fn(el, searchArr[k]);
     if (cmp > 0) {
       m = k + 1;
     } else if (cmp < 0) {
@@ -790,21 +790,24 @@ export const binarySearch = function (ar, el, compare_fn) {
  * @returns {Array.<T[]>|false} An Array containing all Array permutations or false if failed.
  */
 function uniquePermutations(perm) {
-  let ret = new Set();
-  if (perm.length > 8) return console.error("Array too large. Not attempting."), false;
+  let total = new Set();
+  if (perm.length > 8) {
+    console.warn("Array too large. Not attempting.");
+    return false;
+  }
 
   for (let i = 0; i < perm.length; i = i + 1) {
     let rest = uniquePermutations(perm.slice(0, i).concat(perm.slice(i + 1)));
 
     if (!rest.length) {
-      ret.add([perm[i]]);
+      total.add([perm[i]]);
     } else {
       for (let j = 0; j < rest.length; j = j + 1) {
-        ret.add([perm[i]].concat(rest[j]));
+        total.add([perm[i]].concat(rest[j]));
       }
     }
   }
-  return [...ret];
+  return [...total];
 }
 
 /**
@@ -815,7 +818,7 @@ function uniquePermutations(perm) {
  * @param {object} [options] - Provides a filter to limit search to specific packs or Document types
  * @param {string[]} [options.packs] - An array of packs to search in
  * @param {"Actor"|"Item"|"Scene"|"JournalEntry"|"Macro"|"RollTable"|"Playlist"} [options.type] - A Document type to limit which packs are searched in
- * @returns {Document|false} The first Document found or false if no match is found
+ * @returns {{pack: CompendiumCollection, index: object}|undefined} The index and pack containing it or undefined if no match is found
  */
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
   let packs = game.packs.filter((o) => {
@@ -837,11 +840,25 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
       break;
     }
   }
-  if (foundDoc) return foundPack.getDocument(foundDoc._id);
+  if (foundDoc) return { pack: foundPack, index: foundDoc };
 
-  const searchMutations = uniquePermutations(searchTerm.split(/[ _-]/)).map((o) => o.join(" "));
+  let searchMutations = uniquePermutations(searchTerm.split(/[ _-]/));
+  if (searchMutations) searchMutations = searchMutations.map((o) => o.join(" "));
+  else {
+    // If array is too long, search for just a reversed version and one that pivots around commas/ semicolons
+    searchMutations = [null];
+    searchMutations.push(searchTerm.split(/[ _-]/).reverse());
+    searchMutations.push(
+      searchTerm
+        .split(/[,;] ?/)
+        .reverse()
+        .flatMap((o) => o.split(" "))
+    );
+  }
+
   for (let pack of packs) {
-    for (let mut = 0; mut < searchMutations.length; mut++) {
+    // Skip first mutation since it is already searched for manually before computing mutations
+    for (let mut = 1; mut < searchMutations.length; mut++) {
       found = binarySearch(pack.fuzzyIndex, searchMutations[mut], (sp, it) =>
         sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
       );
@@ -854,6 +871,6 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
     if (foundDoc) break;
   }
 
-  if (foundDoc) return foundPack.getDocument(foundDoc._id);
+  if (foundDoc) return { pack: foundPack, index: foundDoc };
   return false;
 };

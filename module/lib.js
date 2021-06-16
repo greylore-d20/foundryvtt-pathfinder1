@@ -732,8 +732,9 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
 /**
  * A locale-safe sort of an Array of Objects, not in place. Ignores punctuation and capitalization.
  *
- * @param {Array.<{name: string}>} inputArr - Array to be sorted. Each element must have a name property set
- * @returns {Array} - New sorted Array
+ * @template T
+ * @param {Array.<T & {name: string}>} inputArr - Array to be sorted. Each element must have a name property set
+ * @returns {T[]} - New sorted Array
  */
 export const sortArrayByName = function (inputArr) {
   let n = inputArr.length;
@@ -757,10 +758,11 @@ export const sortArrayByName = function (inputArr) {
 /**
  * A simple binary search to be used on sorted arrays
  *
- * @param {Array} ar - Sorted Array to be searched
- * @param {*} el - Element to be compared to array values
- * @param {Function} compare_fn - Comparison function to be apply el to every element in ar. Should return an positive/ negative integer or 0 if matching.
- * @returns {number} - Index where search is found or negative index indicating where it would be inserted
+ * @template T
+ * @param {T[]} ar - Sorted Array to be searched
+ * @param {T} el - Element to be compared to array values
+ * @param {function(T, T): number} compare_fn - Comparison function to be apply el to every element in ar. Should return an positive/ negative integer or 0 if matching.
+ * @returns {number} Index where search is found or negative index indicating where it would be inserted
  */
 export const binarySearch = function (ar, el, compare_fn) {
   var m = 0,
@@ -779,13 +781,13 @@ export const binarySearch = function (ar, el, compare_fn) {
   return -m - 1;
 };
 
-//
 /**
  * Generate permutations of an array. Complexity is O(n!).
  * Should be safe up to 8, though you should probably consider something else if you're reaching that high often.
  *
- * @param {Array} perm - The Array to be generated upon
- * @returns {Array.<Array>|false} An Array containing all Array permutations or false if failed.
+ * @template T
+ * @param {T[]} perm - The Array to be generated upon
+ * @returns {Array.<T[]>|false} An Array containing all Array permutations or false if failed.
  */
 function uniquePermutations(perm) {
   let ret = new Set();
@@ -810,7 +812,9 @@ function uniquePermutations(perm) {
  * Exact matches excluding punctuation and case are prioritized before searching word order permutations.
  *
  * @param {string} searchTerm - The name of the Document being searched for
- * @param {{packs: Array.<string>, type: string}} [options] - Provides a filter to limit search to specific packs or Document types
+ * @param {object} [options] - Provides a filter to limit search to specific packs or Document types
+ * @param {string[]} [options.packs] - An array of packs to search in
+ * @param {"Actor"|"Item"|"Scene"|"JournalEntry"|"Macro"|"RollTable"|"Playlist"} [options.type] - A Document type to limit which packs are searched in
  * @returns {Document|false} The first Document found or false if no match is found
  */
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {

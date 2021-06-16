@@ -33,7 +33,9 @@ module.exports = {
     "valid-jsdoc": "off",
   },
   settings: {
-    mode: "typescript",
+    jsdoc: {
+      mode: "typescript",
+    },
   },
   globals: {
     AudioHelper: "readonly",

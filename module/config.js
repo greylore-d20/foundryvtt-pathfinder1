@@ -1555,10 +1555,10 @@ export const PF1 = {
 
   conditions: {
     bleed: "PF1.CondBleed",
-    blind: "PF1.CondBlind",
+    pf1_blind: "PF1.CondBlind",
     confused: "PF1.CondConfused",
     dazzled: "PF1.CondDazzled",
-    deaf: "PF1.CondDeaf",
+    pf1_deaf: "PF1.CondDeaf",
     entangled: "PF1.CondEntangled",
     fatigued: "PF1.CondFatigued",
     exhausted: "PF1.CondExhausted",
@@ -1568,7 +1568,7 @@ export const PF1 = {
     invisible: "PF1.CondInvisible",
     paralyzed: "PF1.CondParalyzed",
     pinned: "PF1.CondPinned",
-    prone: "PF1.CondProne",
+    pf1_prone: "PF1.CondProne",
     staggered: "PF1.CondStaggered",
     stunned: "PF1.CondStunned",
     shaken: "PF1.CondShaken",
@@ -1577,15 +1577,15 @@ export const PF1 = {
     sickened: "PF1.CondSickened",
     nauseated: "PF1.CondNauseated",
     dazed: "PF1.CondDazed",
-    sleep: "PF1.CondSleep",
+    pf1_sleep: "PF1.CondSleep",
   },
 
   conditionTextures: {
     bleed: "systems/pf1/icons/conditions/bleed.png",
-    blind: "systems/pf1/icons/conditions/blind.png",
+    pf1_blind: "systems/pf1/icons/conditions/blind.png",
     confused: "systems/pf1/icons/conditions/confused.png",
     dazzled: "systems/pf1/icons/conditions/dazzled.png",
-    deaf: "systems/pf1/icons/conditions/deaf.png",
+    pf1_deaf: "systems/pf1/icons/conditions/deaf.png",
     entangled: "systems/pf1/icons/conditions/entangled.png",
     fatigued: "systems/pf1/icons/conditions/fatigued.png",
     exhausted: "systems/pf1/icons/conditions/exhausted.png",
@@ -1595,7 +1595,7 @@ export const PF1 = {
     invisible: "systems/pf1/icons/conditions/invisible.png",
     paralyzed: "systems/pf1/icons/conditions/paralyzed.png",
     pinned: "systems/pf1/icons/conditions/pinned.png",
-    prone: "systems/pf1/icons/conditions/prone.png",
+    pf1_prone: "systems/pf1/icons/conditions/prone.png",
     sickened: "systems/pf1/icons/conditions/sickened.png",
     staggered: "systems/pf1/icons/conditions/staggered.png",
     stunned: "systems/pf1/icons/conditions/stunned.png",
@@ -1604,7 +1604,7 @@ export const PF1 = {
     panicked: "systems/pf1/icons/conditions/fear.png",
     nauseated: "systems/pf1/icons/conditions/nauseated.png",
     dazed: "systems/pf1/icons/conditions/dazed.png",
-    sleep: "systems/pf1/icons/conditions/sleep.png",
+    pf1_sleep: "systems/pf1/icons/conditions/sleep.png",
   },
 
   buffTypes: {

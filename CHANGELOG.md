@@ -9,6 +9,7 @@
 - Resource values were no longer able to be referenced in formulas (#885)
 - Deleting an actor or item with an open sheet caused the sheet to be uncloseable
 - Magic items couldn't be identified from actors' notes tabs (#879)
+- Certain token status conditions weren't linked to their actor (#871)
 
 ### Changelog
 

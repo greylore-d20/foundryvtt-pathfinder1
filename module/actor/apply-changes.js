@@ -1130,7 +1130,7 @@ export const addDefaultChanges = function (changes) {
     if (!v) continue;
 
     switch (con) {
-      case "blind":
+      case "pf1_blind":
         changes.push(
           ItemChange.create({
             formula: "-2",
@@ -1179,7 +1179,7 @@ export const addDefaultChanges = function (changes) {
           name: game.i18n.localize("PF1.CondDazzled"),
         });
         break;
-      case "deaf":
+      case "pf1_deaf":
         changes.push(
           ItemChange.create({
             formula: "-4",
@@ -1276,7 +1276,7 @@ export const addDefaultChanges = function (changes) {
           value: game.i18n.localize("PF1.ChangeFlagNoDex"),
         });
         break;
-      case "sleep":
+      case "pf1_sleep":
         changes.push(
           ItemChange.create({
             formula: "0",
@@ -1322,7 +1322,7 @@ export const addDefaultChanges = function (changes) {
           value: game.i18n.localize("PF1.ChangeFlagNoStr"),
         });
         break;
-      case "prone":
+      case "pf1_prone":
         changes.push(
           ItemChange.create({
             formula: "-4",

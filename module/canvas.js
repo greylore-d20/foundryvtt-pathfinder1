@@ -88,10 +88,9 @@ TokenDocument.prototype.getBarAttribute = function (barName, { alternative = nul
  * Condition/ status effects section
  */
 export const getConditions = function () {
-  var core = CONFIG.statusEffects,
+  let core = CONFIG.statusEffects,
     sys = Object.keys(CONFIG.PF1.conditions).map((c) => {
-      const id = core.find((o) => o.id === c) != null ? `pf1_${c}` : c;
-      return { id, label: CONFIG.PF1.conditions[c], icon: CONFIG.PF1.conditionTextures[c] };
+      return { id: c, label: CONFIG.PF1.conditions[c], icon: CONFIG.PF1.conditionTextures[c] };
     });
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else sys = [core[0]].concat(sys);

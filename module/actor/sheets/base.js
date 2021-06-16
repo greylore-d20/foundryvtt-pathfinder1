@@ -32,8 +32,6 @@ export class ActorSheetPF extends ActorSheet {
   constructor(...args) {
     super(...args);
 
-    this.options.submitOnClose = false;
-
     /**
      * The scroll position on the active tab
      *
@@ -163,10 +161,6 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /* -------------------------------------------- */
-
-  async close(options = {}) {
-    return super.close(mergeObject(options, { submit: true }, { inplace: false }));
-  }
 
   /**
    * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.

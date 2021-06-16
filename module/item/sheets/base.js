@@ -17,8 +17,6 @@ export class ItemSheetPF extends ItemSheet {
   constructor(...args) {
     super(...args);
 
-    this.options.submitOnClose = false;
-
     /**
      * Track the set of item filters which are applied
      *
@@ -79,21 +77,6 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   /* -------------------------------------------- */
-
-  async close(options = {}) {
-    // Close open applications associated with this sheet
-    {
-      let promises = [];
-      for (let id of this._openApplications) {
-        if (ui.windows[id]) {
-          promises.push(ui.windows[id].close());
-        }
-      }
-      await Promise.all(promises);
-    }
-
-    return super.close(mergeObject(options, { submit: true }, { inplace: false }));
-  }
 
   /**
    * Prepare item sheet data

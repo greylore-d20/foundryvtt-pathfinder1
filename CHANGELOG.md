@@ -14,6 +14,7 @@
 ### Changelog
 
 - Added script calls for changing buff and class levels
+- Reimported Bestiaries with updated SBC. Missing ones will be added in future updates.
 
 ## API
 

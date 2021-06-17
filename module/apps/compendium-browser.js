@@ -5,7 +5,7 @@ import { SemanticVersion } from "../semver.js";
 const NEED_NEW_VERSION = {
   spells: "0.77.24",
   items: "0.77.24",
-  bestiary: "0.77.24",
+  bestiary: "0.78.10",
   feats: "0.77.24",
   classes: "0.77.24",
   races: "0.77.24",

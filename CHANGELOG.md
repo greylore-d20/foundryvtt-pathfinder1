@@ -14,7 +14,6 @@
 ### Changelog
 
 - Added script calls for changing buff and class levels
-- Reimported Bestiaries with updated SBC. Missing ones will be added in future updates.
 
 ## API
 
@@ -25,6 +24,7 @@
 ### Compendiums
 
 - Most armor in the compendium didn't have an initial slot type set (#883)
+- Reimported Bestiaries with updated SBC. Missing ones will be added in future updates.
 
 ## 0.78.9
 

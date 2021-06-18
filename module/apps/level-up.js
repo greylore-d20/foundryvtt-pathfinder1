@@ -1,5 +1,6 @@
 import { createInlineRollString } from "../chat.js";
 import { createCustomChatMessage } from "../chat.js";
+import { RollPF } from "../roll.js";
 
 export class LevelUpForm extends DocumentSheet {
   constructor(...args) {
@@ -97,6 +98,7 @@ export class LevelUpForm extends DocumentSheet {
       chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Manual",
         add: hp,
+        roll: RollPF.safeRoll(`${hp}`),
       };
       if (!Number.isNaN(hp)) {
         updateData["data.hp"] = item.data.data.hp + hp;
@@ -108,6 +110,7 @@ export class LevelUpForm extends DocumentSheet {
       chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
         add: createInlineRollString(roll),
+        roll: roll,
       };
       if (!Number.isNaN(roll.total)) {
         updateData["data.hp"] = item.data.data.hp + roll.total;
@@ -203,8 +206,9 @@ export class LevelUpForm extends DocumentSheet {
     await chatMessageClass.create({
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
       user: game.user.id,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       speaker,
+      roll: formData.hp.roll ?? RollPF.safeRoll("0"),
     });
   }
 

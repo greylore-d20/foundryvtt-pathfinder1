@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.11
+
+### Bug Fixes
+
+- Level Up messages did not respect roll mode settings
+
 ## 0.78.10
 
 ### Bug Fixes

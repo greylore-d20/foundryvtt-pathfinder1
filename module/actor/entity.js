@@ -115,14 +115,18 @@ export class ActorPF extends Actor {
 
   static getActiveActor({ actorName = null, actorId = null } = {}) {
     const speaker = ChatMessage.getSpeaker();
-    let actor = game.actors.contents.filter((o) => {
-      if (!actorName && !actorId) return false;
-      if (actorName && o.name !== actorName) return false;
-      if (actorId && o.id !== actorId) return false;
-      return true;
-    })[0];
-    if (speaker.token && !actor) actor = game.actors.tokens[speaker.token];
+    let actor;
+
+    if (actorName || actorId) {
+      actor = game.actors.contents.find((o) => {
+        if (actorName && o.name !== actorName) return false;
+        if (actorId && o.id !== actorId) return false;
+        return true;
+      });
+    }
+    if (speaker.token && !actor) actor = canvas.tokens.placeables.find((o) => o.id === speaker.token)?.actor;
     if (!actor) actor = game.actors.get(speaker.actor);
+
     return actor;
   }
 
@@ -332,11 +336,6 @@ export class ActorPF extends Actor {
   }
 
   prepareBaseData() {
-    // Update item resource values
-    this.data.items.forEach((item) => {
-      this.updateItemResources(item);
-    });
-
     super.prepareBaseData();
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
@@ -1153,7 +1152,10 @@ export class ActorPF extends Actor {
 
     // Update item resources
     this.items.forEach((item) => {
-      item.prepareDerivedItemData();
+      let iteration = 0;
+      while (item.prepareDerivedItemData() && iteration < 10) {
+        iteration++;
+      }
       this.updateItemResources(item.data);
 
       // Update tokens for resources
@@ -2732,7 +2734,10 @@ export class ActorPF extends Actor {
     }
 
     // Get actor's token
-    const token = this.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.id);
+    const token =
+      this.token instanceof TokenDocument
+        ? this.token.object
+        : this.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.id);
 
     // Create message
     const d = this.data.data;

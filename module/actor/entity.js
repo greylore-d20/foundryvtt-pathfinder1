@@ -34,15 +34,6 @@ export class ActorPF extends Actor {
     if (this.changes === undefined) this.changes = new Collection();
 
     /**
-     * Stores cancellable tokens for pending update promises.
-     *
-     * @property
-     * @private
-     * @type {Array.<object>}
-     */
-    if (this._pendingUpdateTokens === undefined) this._pendingUpdateTokens = [];
-
-    /**
      * Stores updates to be applied to the actor near the end of the _onUpdate method.
      *
      * @property
@@ -533,10 +524,6 @@ export class ActorPF extends Actor {
     {
       setProperty(this.data, "data.attributes.init.total", getProperty(this.data, "data.attributes.init.value"));
     }
-
-    this.items.forEach((item) => {
-      this.updateItemResources(item.data);
-    });
   }
 
   /**
@@ -1167,6 +1154,7 @@ export class ActorPF extends Actor {
     // Update item resources
     this.items.forEach((item) => {
       item.prepareDerivedItemData();
+      this.updateItemResources(item.data);
 
       // Update tokens for resources
       const tokens = this.isToken ? [this.token] : this.getActiveTokens();
@@ -1683,11 +1671,6 @@ export class ActorPF extends Actor {
    * @returns {Promise}        A Promise which resolves to the updated Entity
    */
   async update(data, options = {}) {
-    this._pendingUpdateTokens.forEach((token) => {
-      token.cancel();
-    });
-    this._pendingUpdateTokens = [];
-
     this._trackPreviousAttributes();
 
     // Avoid regular update flow for explicitly non-recursive update calls
@@ -1707,87 +1690,11 @@ export class ActorPF extends Actor {
 
     let result = diff;
     if (options.skipUpdate !== true) {
-      const token = {};
-      this._pendingUpdateTokens.push(token);
       if (Object.keys(diff).length) {
-        result = new Promise((resolve) => {
-          token.cancel = function () {
-            resolve();
-          };
-
-          super.update(diff, mergeObject(options, { recursive: true })).then((...args) => {
-            this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
-            let promises = [];
-            let tokens = [];
-            // Refresh items
-            {
-              const token = {};
-              this._pendingUpdateTokens.push(token);
-              tokens.push(token);
-              const p = this.refreshItems(token);
-              promises.push(p);
-            }
-
-            Promise.all(promises).then(() => {
-              for (let t of tokens) {
-                this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(t), 1);
-              }
-
-              // Update items
-              let itemUpdates = Object.entries(this._queuedItemUpdates).reduce((cur, o) => {
-                const obj = { _id: o[0] };
-                for (let [k, v] of Object.entries(o[1])) {
-                  obj[k] = v;
-                }
-                cur.push(obj);
-                return cur;
-              }, []);
-              if (!isObjectEmpty(this._queuedItemUpdates)) {
-                this.updateEmbeddedDocuments("Item", itemUpdates).then(() => {
-                  this._queuedItemUpdates = {};
-                  resolve();
-                });
-              } else {
-                resolve();
-              }
-            });
-          });
-        });
+        return super.update(diff, mergeObject(options, { recursive: true }));
       }
     }
     return result;
-  }
-
-  refreshItems(token) {
-    return new Promise((resolve) => {
-      if (token) {
-        token.cancel = function () {
-          resolve();
-        };
-      }
-
-      const items = Array.from(this.items);
-      const updates = items.map((o) => o.update({}, { skipUpdate: true }));
-      Promise.all(updates).then((results) => {
-        const values = results.filter((o) => {
-          return o != null ? Object.keys(o).length > 1 : false;
-        });
-
-        if (values.length > 0) {
-          this.updateOwnedItem(values).then(() => {
-            if (token) {
-              this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
-            }
-            resolve();
-          });
-        } else {
-          if (token) {
-            this._pendingUpdateTokens.splice(this._pendingUpdateTokens.indexOf(token), 1);
-          }
-          resolve();
-        }
-      });
-    });
   }
 
   _onUpdate(data, options, userId, context) {

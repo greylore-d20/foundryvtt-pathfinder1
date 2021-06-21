@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Level Up messages did not respect roll mode settings
+- Resource maximums were out of sync (#892)
 
 ## 0.78.10
 

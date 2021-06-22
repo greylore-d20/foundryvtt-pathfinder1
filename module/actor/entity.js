@@ -1683,7 +1683,7 @@ export class ActorPF extends Actor {
     data = await this.preUpdate(data);
 
     // Update changes
-    let diff = data;
+    let diff = diffObject(flattenObject(this.data), data);
 
     // Diff token data
     if (data.token != null) {
@@ -1691,10 +1691,8 @@ export class ActorPF extends Actor {
     }
 
     let result = diff;
-    if (options.skipUpdate !== true) {
-      if (Object.keys(diff).length) {
-        return super.update(diff, mergeObject(options, { recursive: true }));
-      }
+    if (!isObjectEmpty(diff) && options.skipUpdate !== true) {
+      return super.update(diff, mergeObject(options, { recursive: true }));
     }
     return result;
   }

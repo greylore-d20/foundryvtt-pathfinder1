@@ -1614,7 +1614,14 @@ export class ItemPF extends Item {
     const chatData = {};
     if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
 
-    return this.executeScriptCalls("use", { attacks: [] });
+    const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
+    if (useScriptCalls.length > 0) {
+      return this.executeScriptCalls("use", { attacks: [] });
+    }
+    // Show a chat card if this item doesn't have 'use' type script call(s)
+    else {
+      return this.roll();
+    }
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {

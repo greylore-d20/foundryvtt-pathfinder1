@@ -8,6 +8,10 @@
 - Resource maximums were out of sync (#892)
 - Fix rolling defenses on unlinked tokens (#782)
 
+### Changelog
+
+- Made items without use script calls always show a chat card on use (#891)
+
 ## 0.78.10
 
 ### Bug Fixes

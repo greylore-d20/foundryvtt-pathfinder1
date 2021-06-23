@@ -783,7 +783,7 @@ export const binarySearch = function (searchArr, el, compare_fn) {
 
 /**
  * Generate permutations of an array. Complexity is O(n!).
- * Should be safe up to 8, though you should probably consider something else if you're reaching that high often.
+ * Should be safe up to 7, though you should probably consider something else if you're reaching that high often.
  *
  * @template T
  * @param {T[]} perm - The Array to be generated upon
@@ -791,7 +791,7 @@ export const binarySearch = function (searchArr, el, compare_fn) {
  */
 function uniquePermutations(perm) {
   let total = new Set();
-  if (perm.length > 8) {
+  if (perm.length > 7) {
     console.warn("Array too large. Not attempting.");
     return false;
   }
@@ -822,7 +822,7 @@ function uniquePermutations(perm) {
  */
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
   let packs;
-  if (options?.pack && options.pack.length) packs = options.packs.map((o) => game.packs.get(o));
+  if (options?.pack && options.pack.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
   else packs = game.packs.filter((o) => !options?.type || o.metadata.entity == options.type);
 
   searchTerm = searchTerm.toLocaleLowerCase();

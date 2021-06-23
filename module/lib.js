@@ -730,7 +730,7 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
 };
 
 /**
- * A locale-safe sort of an Array of Objects, not in place. Ignores punctuation and capitalization.
+ * A locale-safe insertion sort of an Array of Objects, not in place. Ignores punctuation and capitalization.
  *
  * @template T
  * @param {Array.<T & {name: string}>} inputArr - Array to be sorted. Each element must have a name property set
@@ -821,12 +821,9 @@ function uniquePermutations(perm) {
  * @returns {{pack: CompendiumCollection, index: object}|undefined} The index and pack containing it or undefined if no match is found
  */
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
-  let packs = game.packs.filter((o) => {
-    return (
-      (!options?.type || o.metadata.entity == options.type) &&
-      (!options?.packs || !options?.packs.length || options.packs.includes(o.collection))
-    );
-  });
+  let packs;
+  if (options?.pack && options.pack.length) packs = options.packs.map((o) => game.packs.get(o));
+  else packs = game.packs.filter((o) => !options?.type || o.metadata.entity == options.type);
 
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;

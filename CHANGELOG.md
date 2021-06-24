@@ -9,6 +9,7 @@
 - Fix rolling defenses on unlinked tokens (#782)
 - Data parsing within roll preprocess functions was returning incorrect values
 - /damage and /heal roll functions were broken (#901)
+- CL wasn't getting the appropriate value in roll data for changes
 
 ### Changelog
 

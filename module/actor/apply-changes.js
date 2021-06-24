@@ -1694,6 +1694,19 @@ export const getSourceInfo = function (obj, key) {
   return obj[key];
 };
 
+export const setSourceInfoByName = function (obj, key, name, value, positive = true) {
+  const target = positive ? "positive" : "negative";
+  const sourceInfo = getSourceInfo(obj, key)[target];
+  const data = sourceInfo.find((o) => o.name === name);
+  if (data) data.value = value;
+  else {
+    sourceInfo.push({
+      name: name,
+      value: value,
+    });
+  }
+};
+
 /**
  * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
  * @param options

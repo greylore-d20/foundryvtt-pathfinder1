@@ -1,11 +1,18 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, linkData, convertDistance, convertWeight } from "../lib.js";
+import { createTag, convertDistance, convertWeight } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
-import { applyChanges, addDefaultChanges, getChangeFlat, getSourceInfo, getHighestChanges } from "./apply-changes.js";
+import {
+  applyChanges,
+  addDefaultChanges,
+  getChangeFlat,
+  getSourceInfo,
+  setSourceInfoByName,
+  getHighestChanges,
+} from "./apply-changes.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
@@ -313,13 +320,6 @@ export class ActorPF extends Actor {
     this.containerItems = this._prepareContainerItems(this.items);
     this.itemFlags = this._prepareItemFlags(this.allItems);
     this._prepareChanges();
-
-    // Refresh roll data
-    // Some changes act wonky without this
-    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    this.getRollData({ refresh: true });
-
-    applyChanges.call(this);
   }
 
   prepareData() {
@@ -559,8 +559,122 @@ export class ActorPF extends Actor {
    * Sets additional variables (such as spellbook range)
    */
   refreshDerivedData() {
+    const rollData = this.getRollData();
+
     // Set spellbook info
-    for (let spellbook of Object.values(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
+    for (let [spellbookKey, spellbook] of Object.entries(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
+      const spellbookAbilityKey = spellbook.ability;
+      let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`) ?? 10;
+
+      // Add spell slots based on ability bonus slot formula
+      {
+        const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
+        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
+      }
+
+      const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
+
+      // Set CL
+      {
+        const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
+        const formula = getProperty(spellbook, "cl.formula") || "0";
+        let total = 0;
+
+        // Add NPC base
+        if (this.data.type === "npc") {
+          const value = getProperty(spellbook, "cl.base") || 0;
+          total += value;
+          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
+        }
+        // Add HD
+        if (spellbook.class === "_hd") {
+          const value = getProperty(this.data, "data.attributes.hd.total");
+          total += value;
+          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
+        }
+        // Add class levels
+        else if (spellbook.class && rollData.classes[spellbook.class]) {
+          const value = rollData.classes[spellbook.class].level;
+          total += value;
+
+          setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
+        }
+
+        // set auto spell level calculation offset
+        if (spellbook.autoSpellLevelCalculation) {
+          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
+          const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
+          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+          setProperty(this.data, autoKey, autoTotal);
+
+          total += autoBonus;
+          if (autoBonus !== 0) {
+            const sign = autoBonus < 0 ? "negative" : "positive";
+            setSourceInfoByName(
+              this.sourceInfo,
+              key,
+              game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
+              autoBonus
+            );
+          }
+        }
+
+        // Add from bonus formula
+        const clBonus = RollPF.safeRoll(formula, rollData).total;
+        total += clBonus;
+        if (clBonus > 0) {
+          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
+        } else if (clBonus < 0) {
+          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
+        }
+
+        if (getProperty(rollData, "attributes.woundThresholds.penalty") != null) {
+          // Subtract Wound Thresholds penalty. Can't reduce below 1.
+          if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
+            total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+            setSourceInfoByName(
+              this.sourceInfo,
+              key,
+              game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+              -rollData.attributes.woundThresholds.penalty
+            );
+          }
+        }
+
+        // Subtract energy drain
+        if (rollData.attributes.energyDrain) {
+          total = Math.max(0, total - rollData.attributes.energyDrain);
+          setSourceInfoByName(
+            this.sourceInfo,
+            key,
+            game.i18n.localize("PF1.CondTypeEnergyDrain"),
+            -Math.abs(rollData.attributes.energyDrain),
+            false
+          );
+        }
+
+        setProperty(this.data, key, total);
+      }
+
+      // Spell points
+      {
+        const formula =
+          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
+        rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
+        rollData.ablMod = spellbookAbilityMod;
+        const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
+        rollData.classLevel =
+          spellClass === "_hd"
+            ? rollData.attributes.hd.total
+            : spellClass?.length > 0
+            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
+            : 0;
+        const roll = RollPF.safeRoll(formula, rollData);
+        setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
+      }
+
+      // Set spellbook range
       const cl = spellbook.cl.total;
       spellbook.range = {
         close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
@@ -600,6 +714,41 @@ export class ActorPF extends Actor {
    */
   prepareDerivedData() {
     super.prepareDerivedData();
+
+    // Refresh roll data
+    // Some changes act wonky without this
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    this.getRollData({ refresh: true });
+
+    applyChanges.call(this);
+
+    // Prepare specific derived data
+    this.prepareSpecificDerivedData();
+
+    // Setup links
+    this.prepareItemLinks();
+
+    // Update item resources
+    this.items.forEach((item) => {
+      let iteration = 0;
+      while (item.prepareDerivedItemData() && iteration < 10) {
+        iteration++;
+      }
+      this.updateItemResources(item.data);
+
+      // Update tokens for resources
+      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
+      tokens.forEach((t) => {
+        try {
+          t.drawBars();
+        } catch (err) {
+          // Drop the harmless error
+        }
+      });
+    });
+  }
+
+  prepareSpecificDerivedData() {
     Hooks.callAll("pf1.prepareDerivedActorData", this);
 
     // Set base ability modifier
@@ -651,8 +800,7 @@ export class ActorPF extends Actor {
     }
 
     // Reset spell slots and spell points
-    for (let spellbookKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
-      const spellbook = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
+    for (let [spellbookKey, spellbook] of Object.entries(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
       const spellbookAbilityKey = spellbook.ability;
       let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`) ?? 10;
 
@@ -663,90 +811,6 @@ export class ActorPF extends Actor {
       }
 
       const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
-
-      // Set CL
-      {
-        const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
-        const formula = getProperty(spellbook, "cl.formula") || "0";
-        let total = 0;
-
-        // Add NPC base
-        if (this.data.type === "npc") {
-          const value = getProperty(spellbook, "cl.base") || 0;
-          total += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
-        }
-        // Add HD
-        if (spellbook.class === "_hd") {
-          const value = getProperty(this.data, "data.attributes.hd.total");
-          total += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
-        }
-        // Add class levels
-        else if (spellbook.class && rollData.classes[spellbook.class]) {
-          const value = rollData.classes[spellbook.class].level;
-          total += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({
-            name: rollData.classes[spellbook.class].name,
-            value: value,
-          });
-        }
-
-        // set auto spell level calculation offset
-        if (spellbook.autoSpellLevelCalculation) {
-          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
-          const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
-          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
-          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
-          setProperty(this.data, autoKey, autoTotal);
-
-          total += autoBonus;
-          if (autoBonus !== 0) {
-            const sign = autoBonus < 0 ? "negative" : "positive";
-            getSourceInfo(this.sourceInfo, key)[sign].push({
-              name: game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
-              value: autoBonus,
-            });
-          }
-        }
-
-        // Add from bonus formula
-        const clBonus = RollPF.safeRoll(formula, rollData).total;
-        total += clBonus;
-        if (clBonus > 0) {
-          getSourceInfo(this.sourceInfo, key).positive.push({
-            name: game.i18n.localize("PF1.CasterLevelBonusFormula"),
-            value: clBonus,
-          });
-        } else if (clBonus < 0) {
-          getSourceInfo(this.sourceInfo, key).negative.push({
-            name: game.i18n.localize("PF1.CasterLevelBonusFormula"),
-            value: clBonus,
-          });
-        }
-
-        if (getProperty(rollData, "attributes.woundThresholds.penalty") != null) {
-          // Subtract Wound Thresholds penalty. Can't reduce below 1.
-          if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
-            total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
-            getSourceInfo(this.sourceInfo, key).negative.push({
-              name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
-              value: -rollData.attributes.woundThresholds.penalty,
-            });
-          }
-        }
-
-        // Subtract energy drain
-        if (rollData.attributes.energyDrain) {
-          total = Math.max(0, total - rollData.attributes.energyDrain);
-          getSourceInfo(this.sourceInfo, key).negative.push({
-            name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-            value: -Math.abs(rollData.attributes.energyDrain),
-          });
-        }
-
-        setProperty(this.data, key, total);
-      }
 
       const getAbilityBonus = (a) =>
         a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
@@ -969,23 +1033,6 @@ export class ActorPF extends Actor {
           }
         }
       }
-
-      // Spell points
-      {
-        const formula =
-          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
-        rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
-        rollData.ablMod = spellbookAbilityMod;
-        const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
-        rollData.classLevel =
-          spellClass === "_hd"
-            ? rollData.attributes.hd.total
-            : spellClass?.length > 0
-            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
-            : 0;
-        const roll = RollPF.safeRoll(formula, rollData);
-        setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
-      }
     }
 
     // Shared attack bonuses
@@ -1146,28 +1193,6 @@ export class ActorPF extends Actor {
     }
 
     this.refreshDerivedData();
-
-    // Setup links
-    this.prepareItemLinks();
-
-    // Update item resources
-    this.items.forEach((item) => {
-      let iteration = 0;
-      while (item.prepareDerivedItemData() && iteration < 10) {
-        iteration++;
-      }
-      this.updateItemResources(item.data);
-
-      // Update tokens for resources
-      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens.forEach((t) => {
-        try {
-          t.drawBars();
-        } catch (err) {
-          // Drop the harmless error
-        }
-      });
-    });
   }
 
   /**

@@ -70,76 +70,6 @@ export class RollPF extends Roll {
     return simplified;
   }
 
-  static _preProcessDiceFormula(formula, data = {}) {
-    // Replace parentheses with semicolons to use for splitting
-    let toSplit = formula
-      .replace(/([A-z]+)?\(/g, (match, prefix) => {
-        return prefix in game.pf1.rollPreProcess || prefix in Math ? `;${prefix};(;` : ";(;";
-      })
-      .replace(/\)/g, ";);");
-    let terms = toSplit.split(";");
-
-    // Match parenthetical groups
-    let nOpen = 0,
-      nOpenPreProcess = [];
-    terms = terms.reduce((arr, t) => {
-      // Handle cases where the prior term is a math function
-      const beginPreProcessFn = t[0] === "(" && arr[arr.length - 1] in game.pf1.rollPreProcess;
-      if (beginPreProcessFn) nOpenPreProcess.push([arr.length - 1, nOpen]);
-      const beginMathFn = t[0] === "(" && arr[arr.length - 1] in Math;
-      if (beginMathFn && nOpenPreProcess.length > 0) nOpenPreProcess.push([arr.length - 1, nOpen]);
-
-      // Add terms to the array
-      arr.push(t);
-
-      // Increment the number of open parentheses
-      if (t === "(") nOpen++;
-      if (nOpen > 0 && t === ")") {
-        nOpen--;
-        for (let a = 0; a < nOpenPreProcess.length; a++) {
-          let obj = nOpenPreProcess[a];
-          // End pre process function
-          if (obj[1] === nOpen) {
-            const sliceLen = arr.length - obj[0];
-            let fnData = arr.splice(obj[0], sliceLen),
-              fn = fnData[0];
-            let fnParams = fnData
-              .slice(2, -1)
-              .reduce((cur, s) => {
-                cur.push(...s.split(/\s*,\s*/));
-                return cur;
-              }, [])
-              .map((o) => {
-                // Return raw string
-                if ((o.startsWith('"') && o.endsWith('"')) || (o.startsWith("'") && o.endsWith("'"))) {
-                  return o.slice(1, -1);
-                }
-                // Return data string
-                else if (o.match(/^@([a-zA-Z0-9-.]+)$/)) {
-                  const value = getProperty(data, RegExp.$1);
-                  if (typeof value === "string") return value;
-                }
-                // Return roll result
-                return RollPF.safeRoll(o, data).total;
-              })
-              .filter((o) => o !== "" && o != null);
-            if (fn in Math) {
-              arr.push(Math[fn](...fnParams).toString());
-            } else {
-              arr.push(game.pf1.rollPreProcess[fn](...fnParams).toString());
-            }
-
-            nOpenPreProcess.splice(a, 1);
-            a--;
-          }
-        }
-      }
-      return arr;
-    }, []);
-
-    return terms.join("");
-  }
-
   /**
    * @override
    *
@@ -172,10 +102,13 @@ export class RollPF extends Roll {
               if ((o.startsWith('"') && o.endsWith('"')) || (o.startsWith("'") && o.endsWith("'"))) {
                 return o.slice(1, -1);
               }
-              // Return data string
-              else if (o.match(/^@([a-zA-Z0-9-.]+)$/)) {
-                const value = getProperty(this.data, RegExp.$1);
-                if (typeof value === "string") return value;
+              // Return raw string without quotes
+              if (o.match(/^[a-zA-Z0-9]+$/)) {
+                if (o === "false") return false;
+                if (o === "true") return true;
+                const value = parseFloat(o);
+                if (Number.isNaN(value)) return o;
+                return value;
               }
               // Return roll result
               return RollPF.safeRoll(o, this.data).total;

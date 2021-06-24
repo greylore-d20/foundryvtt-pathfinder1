@@ -7,6 +7,7 @@
 - Level Up messages did not respect roll mode settings
 - Resource maximums were out of sync (#892)
 - Fix rolling defenses on unlinked tokens (#782)
+- Data parsing within roll preprocess functions was returning incorrect values
 
 ### Changelog
 

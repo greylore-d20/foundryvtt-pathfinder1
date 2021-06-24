@@ -1616,7 +1616,7 @@ export class ItemPF extends Item {
 
     const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
     if (useScriptCalls.length > 0) {
-      return this.executeScriptCalls("use", { attacks: [] });
+      return this.executeScriptCalls("use", { attacks: [], template: undefined });
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
@@ -1741,7 +1741,8 @@ export class ItemPF extends Item {
     const rollData = duplicate(this.getRollData());
     rollData.d20 = dice !== "1d20" ? dice : "";
 
-    let rolled = false;
+    let rolled = false,
+      template;
     const _roll = async function (fullAttack, form) {
       let attackExtraParts = [],
         damageExtraParts = [],
@@ -2269,7 +2270,6 @@ export class ItemPF extends Item {
       chatTemplateData.attacks = attacks.map((o) => o.finalize());
 
       // Prompt measure template
-      let template;
       if (useMeasureTemplate) {
         // Determine size
         let dist = getProperty(this.data, "data.measureTemplate.size");
@@ -2594,7 +2594,7 @@ export class ItemPF extends Item {
       await subtractAmmo(ammoUsed);
 
       // Execute script call
-      await this.executeScriptCalls("use", { attacks });
+      await this.executeScriptCalls("use", { attacks, template });
 
       return result;
     };
@@ -2603,7 +2603,7 @@ export class ItemPF extends Item {
     if (skipDialog) return _roll.call(this, true);
 
     // Render modal dialog
-    let template = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
+    let htmlTemplate = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
     let dialogData = {
       data: rollData,
       item: this.data.data,
@@ -2621,7 +2621,7 @@ export class ItemPF extends Item {
       isSpell: this.type === "spell",
       hasTemplate: this.hasTemplate,
     };
-    const html = await renderTemplate(template, dialogData);
+    const html = await renderTemplate(htmlTemplate, dialogData);
 
     let result = await new Promise((resolve) => {
       let roll;

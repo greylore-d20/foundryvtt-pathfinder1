@@ -16,6 +16,7 @@
 
 - Made items without use script calls always show a chat card on use (#891)
 - Added `token` to the variables of Script Calls
+- Added `template` to the variables of "use"-type Script Calls
 
 ### Compendium
 

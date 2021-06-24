@@ -29,7 +29,6 @@ export const customRolls = function (message, speaker, rollData) {
     const scene = speaker.scene ? game.scenes.get(speaker.scene) : canvas.scene;
     const tokenDocument = scene.tokens.get(speaker.token);
     const tokenUuid = tokenDocument?.uuid;
-    console.log(actor, tokenUuid);
 
     switch (type) {
       case "D":

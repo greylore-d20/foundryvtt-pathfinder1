@@ -10,10 +10,15 @@
 - Data parsing within roll preprocess functions was returning incorrect values
 - /damage and /heal roll functions were broken (#901)
 - CL wasn't getting the appropriate value in roll data for changes
+- Nullish operator didn't work in roll formulas (#903)
 
 ### Changelog
 
 - Made items without use script calls always show a chat card on use (#891)
+
+### Compendium
+
+- The formula for Agile Maneuvers was changed in compliance with the nullish operator fix (see above), and will need to be adjusted or re-imported on any actors making use of it
 
 ## 0.78.10
 

@@ -104,16 +104,11 @@ export class RollPF extends Roll {
               }
               // Return raw string without quotes
               if (o.match(/^[a-zA-Z0-9]+$/)) {
-                if (o === "false") return false;
-                if (o === "true") return true;
-                const value = parseFloat(o);
-                if (Number.isNaN(value)) return o;
-                return value;
+                return parseRollStringVariable(o);
               }
               // Return roll result
               return RollPF.safeRoll(o, this.data).total;
-            })
-            .filter((o) => o !== "" && o != null);
+            });
 
           return game.pf1.rollPreProcess[fn](...fnParams);
         } else if (fn in Math) {
@@ -140,6 +135,7 @@ export class RollPF extends Roll {
   async getTooltip() {
     const parts = this.dice.map((d) => d.getTooltipData());
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
+      if (!t?.flavor) return cur;
       const result = t instanceof NumericTerm ? t.getTooltipData() : undefined;
 
       const prior = arr[idx - 1];
@@ -153,3 +149,15 @@ export class RollPF extends Roll {
     return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
   }
 }
+
+export const parseRollStringVariable = function (value) {
+  if (value === "false") return false;
+  if (value === "true") return true;
+  if (value === "null") return null;
+  if (value === "undefined") return undefined;
+
+  if (value.match(/^(?:[0-9]+)?(?:\.[0-9]+)?$/)) {
+    return parseFloat(value);
+  }
+  return value;
+};

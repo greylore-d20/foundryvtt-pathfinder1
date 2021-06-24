@@ -1,10 +1,8 @@
 {
   "_id": "lxDJhpqwtR3J4UXx",
   "name": "Agile Maneuvers",
-  "permission": {
-    "default": 0
-  },
   "type": "feat",
+  "img": "systems/pf1/icons/feats/agile-maneuvers.jpg",
   "data": {
     "description": {
       "value": "\n                <i>You've learned to use your quickness in place of brute force when performing combat maneuvers.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You add your Dexterity bonus to your base attack bonus and size bonus when determining your Combat Maneuver Bonus (see Combat) instead of your Strength bonus.</p></p>\n                \n            <br />\n                <p><b>Normal</b></p>\n                <p><p class=\"stat-block-1\"> You add your Strength bonus to your base attack bonus and size bonus when determining your Combat Maneuver Bonus.</p></p>\n                \n            \n            ",
@@ -95,7 +93,7 @@
     "changes": [
       {
         "_id": "t7xzgayi",
-        "formula": "(@abilities.dex.mod > @abilities.str.mod ? @abilities.dex.mod - @abilities.str.mod : 0)",
+        "formula": "@abilities.dex.mod > @abilities.str.mod ? (@abilities.dex.mod - @abilities.str.mod) : 0",
         "operator": "add",
         "subTarget": "cmb",
         "modifier": "untyped",
@@ -134,6 +132,7 @@
       "boolean": [],
       "dictionary": []
     },
+    "scriptCalls": [],
     "featType": "feat",
     "associations": {
       "classes": []
@@ -158,9 +157,15 @@
     },
     "attack": {
       "parts": []
-    }
+    },
+    "conditionals": [],
+    "identifiedName": "Agile Maneuvers"
   },
-  "flags": {},
-  "img": "systems/pf1/icons/feats/agile-maneuvers.jpg",
-  "effects": []
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "permission": {
+    "default": 0
+  },
+  "flags": {}
 }

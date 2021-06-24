@@ -1,11 +1,11 @@
 import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { hasTokenVision } from "./misc/vision-permission.js";
-import { ActorPF } from "./actor/entity.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
 import { patchMeasureTools } from "./measure.js";
 import { sortArrayByName } from "./lib.js";
+import { parseRollStringVariable } from "./roll.js";
 
 /**
  *
@@ -167,30 +167,15 @@ export async function PatchCore() {
 
   // Patch StringTerm
   StringTerm.prototype.evaluate = function (options = {}) {
-    // console.log(this.term);
-    const src = `with (sandbox) { return ${this.term}; }`;
-    const evalFn = new Function("sandbox", src);
-    this._total = evalFn(RollPF.MATH_PROXY);
+    const result = parseRollStringVariable(this.term);
+    if (typeof result === "string") {
+      const src = `with (sandbox) { return ${this.term}; }`;
+      const evalFn = new Function("sandbox", src);
+      this._total = evalFn(RollPF.MATH_PROXY);
+    } else {
+      this._total = result;
+    }
   };
-
-  Object.defineProperty(StringTerm.prototype, "total", {
-    get: function () {
-      return this._total ?? 0;
-    },
-  });
-
-  // Patch OperatorTerm
-  OperatorTerm.OPERATORS = [...OperatorTerm.OPERATORS, ...["?", ":"]].filter((value, idx, self) => {
-    return self.indexOf(value) === idx;
-  });
-  OperatorTerm.REGEXP = new RegExp(
-    OperatorTerm.OPERATORS.map((o) => {
-      return Array.from(o).reduce((cur, o) => {
-        return cur + "\\" + o;
-      }, "");
-    }).join("|"),
-    "g"
-  );
 
   // Patch NumericTerm
   NumericTerm.prototype.getTooltipData = function () {

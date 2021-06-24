@@ -26,7 +26,10 @@ export const customRolls = function (message, speaker, rollData) {
 
     speaker = speaker ?? cMsg.getSpeaker();
     const actor = cMsg.getSpeakerActor(speaker);
-    const tokenId = speaker.token;
+    const scene = speaker.scene ? game.scenes.get(speaker.scene) : canvas.scene;
+    const tokenDocument = scene.tokens.get(speaker.token);
+    const tokenUuid = tokenDocument?.uuid;
+    console.log(actor, tokenUuid);
 
     switch (type) {
       case "D":
@@ -39,7 +42,7 @@ export const customRolls = function (message, speaker, rollData) {
 
         return (async () => {
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
-            tokenId: tokenId,
+            tokenId: tokenUuid,
             isHealing: type === "HEAL" || type === "H",
             roll: {
               value: total,

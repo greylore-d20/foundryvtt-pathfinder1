@@ -8,6 +8,7 @@
 - Resource maximums were out of sync (#892)
 - Fix rolling defenses on unlinked tokens (#782)
 - Data parsing within roll preprocess functions was returning incorrect values
+- /damage and /heal roll functions were broken (#901)
 
 ### Changelog
 

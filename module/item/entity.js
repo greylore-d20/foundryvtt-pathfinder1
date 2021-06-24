@@ -1875,7 +1875,8 @@ export class ItemPF extends Item {
 
       // Formulaic extra attacks
       if (fullAttack) {
-        const exAtkCount = getProperty(this.data, "data.formulaicAttacks.count.value"),
+        const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
+          exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
           exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
         if (exAtkCount > 0) {
           try {

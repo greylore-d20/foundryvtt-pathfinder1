@@ -18,7 +18,7 @@
 </div>
 
 <div class="form-group table">
-    <div class="flexcol" style="max-width: 32em;">
+    <div class="flexcol ability-scores">
         {{!-- Header --}}
         <div class="flexrow header">
             <label class="cell left-label">{{localize "PF1.Feature"}}</label>
@@ -96,10 +96,39 @@
             </select>
         </div>
 
+        {{!-- Defense --}}
+        <div class="flexrow sub-header">
+            <label class="cell">{{localize "PF1.Defense"}}</label>
+        </div>
+
         <div class="flexrow">
           <label class="cell left-label">{{localize "PF1.ArmorClass"}}</label>
-          <select name="data.attributes.abilityToAC" class="cell midsize">
-              {{#select data.attributes.abilityToAC}}
+          <select name="data.attributes.ac.normal.ability" class="cell midsize">
+              {{#select data.attributes.ac.normal.ability}}
+                  <option value=""></option>
+                  {{#each config.abilities as |label value|}}
+                      <option value="{{value}}">{{label}}</option>
+                  {{/each}}
+              {{/select}}
+          </select>
+        </div>
+
+        <div class="flexrow">
+          <label class="cell left-label">{{localize "PF1.ACTouch"}}</label>
+          <select name="data.attributes.ac.touch.ability" class="cell midsize">
+              {{#select data.attributes.ac.touch.ability}}
+                  <option value=""></option>
+                  {{#each config.abilities as |label value|}}
+                      <option value="{{value}}">{{label}}</option>
+                  {{/each}}
+              {{/select}}
+          </select>
+        </div>
+
+        <div class="flexrow">
+          <label class="cell left-label">{{localize "PF1.CMD"}}</label>
+          <select name="data.attributes.cmd.dexAbility" class="cell midsize">
+              {{#select data.attributes.cmd.dexAbility}}
                   <option value=""></option>
                   {{#each config.abilities as |label value|}}
                       <option value="{{value}}">{{label}}</option>

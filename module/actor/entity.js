@@ -1052,18 +1052,32 @@ export class ActorPF extends Actor {
 
     // Add Dexterity to AC
     {
-      const acAbl = this.data.data.attributes.abilityToAC ?? "dex"; // get configured AC ability
+      // get configured ability scores
+      const acAbl = this.data.data.attributes.ac.normal.ability ?? "dex";
+      const acTouchAbl = this.data.data.attributes.ac.touch.ability ?? "dex";
+      const cmdDexAbl = this.data.data.attributes.cmd.dexAbility ?? "dex";
       let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
-      if (this.flags["loseDexToAC"]) acAblMod = Math.min(acAblMod, 0);
+      let acTouchAblMod = getProperty(this.data, `data.abilities.${acTouchAbl}.mod`);
+      let cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`);
+
+      if (this.flags["loseDexToAC"]) {
+        acAblMod = Math.min(acAblMod, 0);
+        acTouchAblMod = Math.min(acTouchAbl, 0);
+      }
       const maxDex = this.data.data.attributes.maxDexBonus;
       const ac = {
         normal: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
-        touch: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
+        touch: maxDex !== null ? Math.min(maxDex, acTouchAblMod) : acTouchAblMod,
         flatFooted: Math.min(0, acAblMod),
       };
+      const acAblKey = {
+        normal: acAbl,
+        touch: acTouchAbl,
+        flatFooted: acAbl,
+      };
       const cmd = {
-        total: acAblMod,
-        flatFootedTotal: Math.min(0, acAblMod),
+        total: cmdDexAblMod,
+        flatFootedTotal: Math.min(0, cmdDexAblMod),
       };
       for (const [k, v] of Object.entries(ac)) {
         setProperty(
@@ -1073,14 +1087,14 @@ export class ActorPF extends Actor {
         );
         getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities[acAbl],
+          name: CONFIG.PF1.abilities[acAblKey[k]],
         });
       }
       for (const [k, v] of Object.entries(cmd)) {
         setProperty(this.data, `data.attributes.cmd.${k}`, getProperty(this.data, `data.attributes.cmd.${k}`) + v);
         getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities[acAbl],
+          name: CONFIG.PF1.abilities[cmdDexAbl],
         });
       }
     }

@@ -1052,17 +1052,18 @@ export class ActorPF extends Actor {
 
     // Add Dexterity to AC
     {
-      let dex = this.data.data.abilities.dex.mod;
-      if (this.flags["loseDexToAC"]) dex = Math.min(dex, 0);
+      const acAbl = this.data.data.attributes.abilityToAC ?? "dex"; // get configured AC ability
+      let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
+      if (this.flags["loseDexToAC"]) acAblMod = Math.min(acAblMod, 0);
       const maxDex = this.data.data.attributes.maxDexBonus;
       const ac = {
-        normal: maxDex !== null ? Math.min(maxDex, dex) : dex,
-        touch: maxDex !== null ? Math.min(maxDex, dex) : dex,
-        flatFooted: Math.min(0, dex),
+        normal: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
+        touch: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
+        flatFooted: Math.min(0, acAblMod),
       };
       const cmd = {
-        total: dex,
-        flatFootedTotal: Math.min(0, dex),
+        total: acAblMod,
+        flatFootedTotal: Math.min(0, acAblMod),
       };
       for (const [k, v] of Object.entries(ac)) {
         setProperty(
@@ -1072,14 +1073,14 @@ export class ActorPF extends Actor {
         );
         getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities["dex"],
+          name: CONFIG.PF1.abilities[acAbl],
         });
       }
       for (const [k, v] of Object.entries(cmd)) {
         setProperty(this.data, `data.attributes.cmd.${k}`, getProperty(this.data, `data.attributes.cmd.${k}`) + v);
         getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities["dex"],
+          name: CONFIG.PF1.abilities[acAbl],
         });
       }
     }

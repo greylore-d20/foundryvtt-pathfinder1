@@ -162,6 +162,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
   _migrateAttackAbility(actor, updateData);
+  _migrateActorACAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
@@ -928,6 +929,11 @@ const _migrateActorStatures = function (ent, updateData) {
   if (stature === undefined) {
     updateData["data.traits.stature"] = "tall";
   }
+};
+
+const _migrateActorACAbility = function (ent, updateData) {
+  const dexAbl = getProperty(ent.data, "data.attributes.abilityToAC");
+  if (dexAbl === undefined) updateData["data.attributes.abilityToAC"] = "dex";
 };
 
 const _migrateActorInitAbility = function (ent, updateData) {

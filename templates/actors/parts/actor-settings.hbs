@@ -96,6 +96,18 @@
             </select>
         </div>
 
+        <div class="flexrow">
+          <label class="cell left-label">{{localize "PF1.ACAbility"}}</label>
+          <select name="data.attributes.abilityToAC" class="cell midsize">
+              {{#select data.attributes.abilityToAC}}
+                  <option value=""></option>
+                  {{#each config.abilities as |label value|}}
+                      <option value="{{value}}">{{label}}</option>
+                  {{/each}}
+              {{/select}}
+          </select>
+        </div>
+
         {{!-- Saving Throws --}}
         <div class="flexrow sub-header">
             <label class="cell">{{localize "PF1.SavingThrowPlural"}}</label>

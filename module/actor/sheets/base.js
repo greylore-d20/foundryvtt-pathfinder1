@@ -2637,10 +2637,8 @@ export class ActorSheetPF extends ActorSheet {
     for (let d of updates) {
       const item = this.document.items.find((o) => o.id === d._id);
       item?.memorizeVariables();
-    }
-
-    if (updates.length > 0) {
-      return this.document.updateEmbeddedDocuments("Item", updates);
+      delete d._id;
+      await item.update(d);
     }
   }
 

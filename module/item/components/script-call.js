@@ -100,14 +100,16 @@ export class ItemScriptCall {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.parentActor;
+    const token =
+      actor?.token?.object ?? (actor ? canvas.tokens.placeables.find((t) => t.actor?.id === actor.id) : null);
 
     // Attempt script execution
     const body = `(async () => {
       ${await this.getScriptBody()}
     })()`;
-    const fn = Function("item", "actor", "shared", ...Object.keys(extraParams), body);
+    const fn = Function("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
     try {
-      return fn.call(this, item, actor, shared, ...Object.values(extraParams));
+      return fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
     } catch (err) {
       ui.notifications.error(`There was an error in your script/macro syntax. See the console (F12) for details`);
       console.error(err);

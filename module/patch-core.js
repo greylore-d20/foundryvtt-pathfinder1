@@ -192,8 +192,8 @@ export async function PatchCore() {
   // Add secondary indexing to compendium collections
   {
     const origFunc = CompendiumCollection.prototype.getIndex;
-    CompendiumCollection.prototype.getIndex = async function () {
-      let index = await origFunc.call(this);
+    CompendiumCollection.prototype.getIndex = async function ({ fields } = {}) {
+      let index = await origFunc.call(this, { fields });
       this.fuzzyIndex = sortArrayByName([...index]);
       return this.index;
     };

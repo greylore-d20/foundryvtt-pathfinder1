@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.12 (Hotfix)
+
+### Bug Fixes
+
+- The system could not load on certain server configurations (e.g. Forge hosting) (#909)
+
 ## 0.78.11
 
 ### Bug Fixes

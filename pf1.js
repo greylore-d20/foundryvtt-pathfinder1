@@ -487,10 +487,6 @@ Hooks.once("ready", async function () {
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
   }
-
-  Hooks.on("renderTokenHUD", (app, html, data) => {
-    TokenQuickActions.addTop3Attacks(app, html, data);
-  });
 });
 
 /* -------------------------------------------- */
@@ -581,6 +577,10 @@ Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
 Hooks.on("renderLightConfig", (app, html) => {
   addLowLightVisionToLightConfig(app, html);
+});
+
+Hooks.on("renderTokenHUD", (app, html, data) => {
+  TokenQuickActions.addTop3Attacks(app, html, data);
 });
 
 Hooks.on("preUpdateItem", (item, changedData, options, userId) => {

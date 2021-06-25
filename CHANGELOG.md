@@ -11,6 +11,7 @@
 - /damage and /heal roll functions were broken (#901)
 - CL wasn't getting the appropriate value in roll data for changes
 - Nullish operator didn't work in roll formulas (#903)
+- Low-light vision settings weren't read on prototype token configuration windows (#906)
 
 ### Changelog
 

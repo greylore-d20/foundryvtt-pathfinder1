@@ -75,6 +75,7 @@ import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
+import { TokenData } from "/common/data/data.mjs";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -859,7 +860,7 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
   let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {
-    object: duplicate(app.object.data),
+    object: duplicate(app.object.data instanceof TokenData ? app.object.data : app.object.data.token),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
 

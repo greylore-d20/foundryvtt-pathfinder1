@@ -444,7 +444,7 @@ Hooks.once("ready", async function () {
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.77.22";
+  const NEEDS_MIGRATION_VERSION = "0.78.12";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -458,7 +458,7 @@ Hooks.once("ready", async function () {
     SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
   );
   if (needMigration && game.user.isGM) {
-    // await migrations.migrateWorld();
+    await migrations.migrateWorld();
   }
 
   // Migrate system settings

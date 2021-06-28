@@ -14,7 +14,8 @@ export class ActorSheetFlags extends BaseEntitySheet {
 
   /**
    * Configure the title of the special traits selection window to include the Actor name
-   * @type {String}
+   *
+   * @type {string}
    */
   get title() {
     return `${game.i18n.localize("PF1.FlagsTitle")}: ${this.object.name}`;
@@ -24,7 +25,8 @@ export class ActorSheetFlags extends BaseEntitySheet {
 
   /**
    * Prepare data used to render the special Actor traits selection UI
-   * @return {Object}
+   *
+   * @returns {Object}
    */
   getData() {
     const data = super.getData();
@@ -37,7 +39,8 @@ export class ActorSheetFlags extends BaseEntitySheet {
   /**
    * Prepare an object of flags data which groups flags by section
    * Add some additional data for rendering
-   * @return {Object}
+   *
+   * @returns {Object}
    */
   _getFlags() {
     const flags = {};
@@ -58,6 +61,9 @@ export class ActorSheetFlags extends BaseEntitySheet {
   /**
    * Update the Actor using the configured flags
    * Remove/unset any flags which are no longer configured
+   *
+   * @param event
+   * @param formData
    */
   _updateObject(event, formData) {
     const actor = this.object;

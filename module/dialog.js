@@ -1,3 +1,10 @@
+/**
+ * @param root0
+ * @param root0.title
+ * @param root0.initial
+ * @param root0.min
+ * @param root0.max
+ */
 export function dialogGetNumber({
   title = "Input Number",
   initial = null,

@@ -4,12 +4,14 @@ import { CR } from "../../lib.js";
 /**
  * An Actor sheet for NPC type characters in the D&D5E system.
  * Extends the base ActorSheetPF class.
+ *
  * @type {ActorSheetPF}
  */
 export class ActorSheetPFNPC extends ActorSheetPF {
   /**
    * Define default rendering options for the NPC sheet
-   * @return {Object}
+   *
+   * @returns {Object}
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -25,7 +27,8 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
   /**
    * Get the correct HTML template path to use for rendering this particular sheet
-   * @type {String}
+   *
+   * @type {string}
    */
   get template() {
     if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
@@ -73,6 +76,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
   /**
    * Activate event listeners using the prepared sheet HTML
+   *
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
@@ -111,6 +115,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
   /**
    * Handle rolling NPC health values using the provided formula
+   *
    * @param {Event} event     The original click event
    * @private
    */

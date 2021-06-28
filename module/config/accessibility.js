@@ -38,6 +38,7 @@ export class AccessibilityConfig extends FormApplication {
 
   /**
    * Activate the default set of listeners for the Entity sheet These listeners handle basic stuff like form submission or updating images.
+   *
    * @override
    */
   activateListeners(html) {
@@ -51,6 +52,7 @@ export class AccessibilityConfig extends FormApplication {
 
   /**
    * This method is called upon form submission after form data is validated.
+   *
    * @override
    */
   async _updateObject(event, formData) {

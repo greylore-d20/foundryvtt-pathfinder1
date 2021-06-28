@@ -47,6 +47,7 @@ export class HealthConfig extends FormApplication {
 
   /**
    * Activate the default set of listeners for the Entity sheet These listeners handle basic stuff like form submission or updating images.
+   *
    * @override
    */
   activateListeners(html) {
@@ -57,6 +58,7 @@ export class HealthConfig extends FormApplication {
 
   /**
    * Handle button click to reset default settings
+   *
    * @param event {Event}   The initial button click event
    * @private
    */
@@ -73,6 +75,7 @@ export class HealthConfig extends FormApplication {
 
   /**
    * This method is called upon form submission after form data is validated.
+   *
    * @override
    */
   async _updateObject(event, formData) {

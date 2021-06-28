@@ -28,7 +28,7 @@ export class DicePF {
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
    * @param {Object} dialogOptions  Modal dialog options
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
-   * @param {Boolean} autoRender    Whether to automatically render the chat messages
+   * @param {boolean} autoRender    Whether to automatically render the chat messages
    */
   static async d20Roll({
     event,
@@ -50,7 +50,7 @@ export class DicePF {
     chatTemplate,
     chatTemplateData,
     staticRoll = null,
-	chatMessage = true,
+    chatMessage = true,
     noSound = false,
     compendiumEntry = null,
   }) {
@@ -119,18 +119,17 @@ export class DicePF {
           // Send message
           rolled = true;
 
-		  if(chatMessage)
-			return await ChatMessagePF.create(chatData);
+          if (chatMessage) return await ChatMessagePF.create(chatData);
         } else {
           rolled = true;
-		  if(chatMessage){
-			  await roll.toMessage({
-				speaker: speaker,
-				flavor: flavor,
-				rollMode: rollMode,
-				sound: a === 0 ? CONFIG.sounds.dice : null,
-			  });
-		  }
+          if (chatMessage) {
+            await roll.toMessage({
+              speaker: speaker,
+              flavor: flavor,
+              rollMode: rollMode,
+              sound: a === 0 ? CONFIG.sounds.dice : null,
+            });
+          }
         }
         return roll;
       }
@@ -218,7 +217,7 @@ export class DicePF {
     dialogOptions,
     chatTemplate,
     chatTemplateData,
-	chatMessage = true,
+    chatMessage = true,
     noSound = false,
   }) {
     flavor = flavor || title;
@@ -289,17 +288,16 @@ export class DicePF {
 
         // Send message
         rolled = true;
-		if(chatMessage)
-			ChatMessagePF.create(chatData);
+        if (chatMessage) ChatMessagePF.create(chatData);
       } else {
         rolled = true;
-		if(chatMessage){
-			roll.toMessage({
-			  speaker: speaker,
-			  flavor: flavor,
-			  rollMode: rollMode,
-			});
-		}
+        if (chatMessage) {
+          roll.toMessage({
+            speaker: speaker,
+            flavor: flavor,
+            rollMode: rollMode,
+          });
+        }
       }
 
       // Return the Roll object

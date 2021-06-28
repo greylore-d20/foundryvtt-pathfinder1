@@ -1,5 +1,6 @@
 /**
  * A specialized form used to select damage or condition types which apply to an Actor
+ *
  * @type {BaseEntitySheet}
  */
 export class ActorTraitSelector extends BaseEntitySheet {
@@ -17,7 +18,8 @@ export class ActorTraitSelector extends BaseEntitySheet {
 
   /**
    * Return a reference to the target attribute
-   * @type {String}
+   *
+   * @type {string}
    */
   get attribute() {
     return this.options.name;
@@ -27,6 +29,7 @@ export class ActorTraitSelector extends BaseEntitySheet {
 
   /**
    * Provide data to the HTML template for rendering
+   *
    * @type {Object}
    */
   getData() {
@@ -57,6 +60,9 @@ export class ActorTraitSelector extends BaseEntitySheet {
 
   /**
    * Update the Actor object with new trait data processed from the form
+   *
+   * @param event
+   * @param formData
    * @private
    */
   _updateObject(event, formData) {

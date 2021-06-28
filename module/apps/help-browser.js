@@ -137,7 +137,7 @@ export class PF1_HelpBrowser extends Application {
   }
 
   /**
-   * @param {Number} index - The specific index in history to go to. Larger values are further down history.
+   * @param {number} index - The specific index in history to go to. Larger values are further down history.
    */
   async goToHistory(index) {
     if (this.history[this._historyIndex]) {

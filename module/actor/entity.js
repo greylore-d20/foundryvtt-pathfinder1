@@ -3572,6 +3572,7 @@ export class ActorPF extends Actor {
     let keyedBooks = [];
     for (let [k, book] of spellbooks) {
       setProperty(result, `spells.${k}`, book);
+      setProperty(result, `spells.${k}.abilityMod`, result.abilities[book.ability].mod);
       keyedBooks.push(k);
     }
     const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");

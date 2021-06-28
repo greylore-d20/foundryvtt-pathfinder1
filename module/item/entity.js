@@ -1874,28 +1874,6 @@ export class ItemPF extends Item {
         : [{ bonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
 
-      // Formulaic extra attacks
-      if (fullAttack) {
-        const exAtkCount = getProperty(this.data, "data.formulaicAttacks.count.value"),
-          exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
-        if (exAtkCount > 0) {
-          try {
-            const frollData = duplicate(rollData); // temporary duplicate to avoid contaminating the actual rolldata
-            const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
-            for (let i = 0; i < exAtkCount; i++) {
-              frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-              const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
-              allAttacks.push({
-                bonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
-                label: fatlabel.format(i + 2),
-              });
-            }
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-
       const subtractAmmo = function (value = 1) {
         if (!ammoLinks.length) return;
         let promises = [];
@@ -1974,6 +1952,29 @@ export class ItemPF extends Item {
                 rollData.chargeCostBonus = roll;
                 break;
             }
+          }
+        }
+      }
+
+      // Formulaic extra attacks
+      if (fullAttack) {
+        const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
+          exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
+          exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
+        if (exAtkCount > 0) {
+          try {
+            const frollData = duplicate(rollData); // temporary duplicate to avoid contaminating the actual rolldata
+            const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
+            for (let i = 0; i < exAtkCount; i++) {
+              frollData["formulaicAttack"] = i + 1; // Add and update attack counter
+              const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
+              allAttacks.push({
+                bonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
+                label: fatlabel.format(i + 2),
+              });
+            }
+          } catch (err) {
+            console.error(err);
           }
         }
       }

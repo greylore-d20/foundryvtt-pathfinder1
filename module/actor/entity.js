@@ -2086,7 +2086,7 @@ export class ActorPF extends Actor {
    * @param {string} skillId      The skill id (e.g. "ins")
    * @param {object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, noSound: false, dice: "1d20" }) {
+  rollSkill(skillId, options = { event: null, skipDialog: false, staticRoll: null, chatMessage:true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2182,6 +2182,7 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
       compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
     });
@@ -2200,7 +2201,7 @@ export class ActorPF extends Actor {
     this.rollAbilityTest(abilityId, options);
   }
 
-  rollBAB(options = { noSound: false, dice: "1d20" }) {
+  rollBAB(options = { chatMessage:true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2218,11 +2219,12 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
 
-  rollCMB(options = { noSound: false, dice: "1d20" }) {
+  rollCMB(options = { chatMessage:true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2261,11 +2263,12 @@ export class ActorPF extends Actor {
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
 
-  rollAttack(options = { melee: true, noSound: false, dice: "1d20" }) {
+  rollAttack(options = { melee: true, chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2326,11 +2329,12 @@ export class ActorPF extends Actor {
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
 
-  rollCL(spellbookKey, options = { noSound: false, dice: "1d20" }) {
+  rollCL(spellbookKey, options = { chatMessage:true, noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
@@ -2356,11 +2360,12 @@ export class ActorPF extends Actor {
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
 
-  rollConcentration(spellbookKey, options = { noSound: false, dice: "1d20" }) {
+  rollConcentration(spellbookKey, options = { chatMessage:true, noSound: false, dice: "1d20" }) {
     const spellbook = this.data.data.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
@@ -2400,6 +2405,7 @@ export class ActorPF extends Actor {
       takeTwenty: false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
@@ -2519,7 +2525,7 @@ export class ActorPF extends Actor {
     return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
   }
 
-  rollSavingThrow(savingThrowId, options = { event: null, noSound: false, skipPrompt: true, dice: "1d20" }) {
+  rollSavingThrow(savingThrowId, options = { event: null, chatMessage:true, noSound: false, skipPrompt: true, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2598,6 +2604,7 @@ export class ActorPF extends Actor {
       fastForward: options.skipPrompt !== false ? true : false,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }
@@ -2611,7 +2618,7 @@ export class ActorPF extends Actor {
    * @param {string} abilityId    The ability ID (e.g. "str")
    * @param {object} options      Options which configure how ability tests are rolled
    */
-  rollAbilityTest(abilityId, options = { noSound: false, dice: "1d20" }) {
+  rollAbilityTest(abilityId, options = { chatMessage:true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2661,6 +2668,7 @@ export class ActorPF extends Actor {
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
+	  chatMessage: options.chatMessage, 
       noSound: options.noSound,
     });
   }

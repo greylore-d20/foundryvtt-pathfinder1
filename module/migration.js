@@ -98,7 +98,7 @@ export const migrateCompendium = async function (pack) {
 
   // Begin by requesting server-side data model migration and get the migrated content
   await pack.migrate();
-  const content = await pack.getContent();
+  const content = await pack.getDocuments();
 
   // Iterate over compendium entries - applying fine-tuned migration functions
   console.log(`Migrating ${entity} entities in Compendium ${pack.collection}`);
@@ -109,9 +109,9 @@ export const migrateCompendium = async function (pack) {
       else if (entity === "Actor") updateData = await migrateActorData(ent);
       else if (entity === "Scene") updateData = await migrateSceneData(ent);
       expandObject(updateData);
-      updateData["_id"] = ent._id;
-      await pack.updateEntity(updateData);
-      //console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
+      updateData["_id"] = ent.id;
+      await ent.update(updateData);
+      console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
     } catch (err) {
       console.error(`Error migrating ${entity} entity ${ent.name} in Compendium ${pack.collection}`, err);
     }
@@ -162,6 +162,7 @@ export const migrateActorData = async function (actor) {
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData);
   _migrateAttackAbility(actor, updateData);
+  _migrateActorDefenseAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData);
   _migrateActorNullValues(actor, updateData);
@@ -233,10 +234,10 @@ export const migrateItemData = function (item) {
  * Migrate a single Scene entity to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
  *
- * @param {object} scene  The Scene data to Update
- * @returns {object}       The updateData to apply
+ * @param {object} sceneData  The Scene data to Update
  */
-export const migrateSceneData = async function (scene) {
+export const migrateSceneData = async function (sceneData) {
+  const scene = game.scenes.get(sceneData._id);
   const result = { tokens: duplicate(scene.tokens) };
   for (let t of result.tokens) {
     const token = new TokenDocument(t, { parent: scene });
@@ -250,7 +251,7 @@ export const migrateSceneData = async function (scene) {
     }
     if (!token.actor) {
       t.actorId = null;
-      t.actordata = {};
+      t.actorData = {};
     }
     const originalActor = game.actors.get(token.actor?.id);
     if (!originalActor) {
@@ -258,11 +259,10 @@ export const migrateSceneData = async function (scene) {
       t.actorData = {};
     } else {
       const a = token.getActor();
-      const updateData = await migrateActorData(a.data);
+      const updateData = await migrateActorData(a);
       t.actorData = mergeObject(a.data, updateData);
     }
   }
-  // console.log(result);
   return result;
 };
 
@@ -928,6 +928,15 @@ const _migrateActorStatures = function (ent, updateData) {
   if (stature === undefined) {
     updateData["data.traits.stature"] = "tall";
   }
+};
+
+const _migrateActorDefenseAbility = function (ent, updateData) {
+  const normalACAbl = getProperty(ent.data, "data.attributes.ac.normal.ability");
+  if (normalACAbl === undefined) updateData["data.attributes.ac.normal.ability"] = "dex";
+  const touchACAbl = getProperty(ent.data, "data.attributes.ac.touch.ability");
+  if (touchACAbl === undefined) updateData["data.attributes.ac.touch.ability"] = "dex";
+  const cmdAbl = getProperty(ent.data, "data.attributes.cmd.dexAbility");
+  if (cmdAbl === undefined) updateData["data.attributes.cmd.dexAbility"] = "dex";
 };
 
 const _migrateActorInitAbility = function (ent, updateData) {

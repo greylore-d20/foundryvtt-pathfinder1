@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.78.13
+
+### Changelog
+
+- Made ability for AC, Touch AC and CMD configurable (thanks mkahvi!)
+- Implemented a rolldata variable for spellbooks' ability modifiers, using `@spells.primary.abilityMod` for example (thanks mkahvi!)
+- Added Attack of Opportunity and Nonaction to the list of available actions for items (thanks mkahvi!)
+
+### Compendiums
+
+- Fixed Magic Missile firing one missile too many early on (thanks @websterguy!)
+
+### API
+
+- Most rollable functions on actor and items (such as `actor.rollAbilityTest` received an extra variable for their options: `chatMessage`, which is a boolean defaulting to true, which determines if a chat message should be created (thanks Michael Weisner!)
+
 ## 0.78.12 (Hotfix)
 
 ### Bug Fixes

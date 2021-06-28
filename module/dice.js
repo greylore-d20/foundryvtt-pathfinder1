@@ -50,6 +50,7 @@ export class DicePF {
     chatTemplate,
     chatTemplateData,
     staticRoll = null,
+	chatMessage = true,
     noSound = false,
     compendiumEntry = null,
   }) {
@@ -118,15 +119,18 @@ export class DicePF {
           // Send message
           rolled = true;
 
-          return await ChatMessagePF.create(chatData);
+		  if(chatMessage)
+			return await ChatMessagePF.create(chatData);
         } else {
           rolled = true;
-          await roll.toMessage({
-            speaker: speaker,
-            flavor: flavor,
-            rollMode: rollMode,
-            sound: a === 0 ? CONFIG.sounds.dice : null,
-          });
+		  if(chatMessage){
+			  await roll.toMessage({
+				speaker: speaker,
+				flavor: flavor,
+				rollMode: rollMode,
+				sound: a === 0 ? CONFIG.sounds.dice : null,
+			  });
+		  }
         }
         return roll;
       }
@@ -214,6 +218,7 @@ export class DicePF {
     dialogOptions,
     chatTemplate,
     chatTemplateData,
+	chatMessage = true,
     noSound = false,
   }) {
     flavor = flavor || title;
@@ -284,14 +289,17 @@ export class DicePF {
 
         // Send message
         rolled = true;
-        ChatMessagePF.create(chatData);
+		if(chatMessage)
+			ChatMessagePF.create(chatData);
       } else {
         rolled = true;
-        roll.toMessage({
-          speaker: speaker,
-          flavor: flavor,
-          rollMode: rollMode,
-        });
+		if(chatMessage){
+			roll.toMessage({
+			  speaker: speaker,
+			  flavor: flavor,
+			  rollMode: rollMode,
+			});
+		}
       }
 
       // Return the Roll object

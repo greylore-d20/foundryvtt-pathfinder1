@@ -3081,7 +3081,7 @@ export class ItemPF extends Item {
    *
    * @param options
    */
-  async useConsumable(options = {}) {
+  async useConsumable(options = { chatMessage : true }) {
     let itemData = this.data.data;
     let parts = itemData.damage.parts;
     const data = this.getRollData();
@@ -3149,7 +3149,10 @@ export class ItemPF extends Item {
       }
 
       // Send message
-      ChatMessage.create(chatData);
+	  if(options.chatMessage)
+		ChatMessage.create(chatData);
+	  
+	  return roll;
     }
   }
 

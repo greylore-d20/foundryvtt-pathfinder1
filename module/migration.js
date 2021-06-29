@@ -50,7 +50,7 @@ export const migrateWorld = async function () {
   console.log("Migrating scene entities.");
   for (let s of game.scenes.contents) {
     try {
-      const updateData = await migrateSceneData(s.data);
+      const updateData = await migrateSceneData(s);
       await s.update(updateData);
     } catch (err) {
       console.error(`Error migrating scene entity ${s.name}`, err);
@@ -235,10 +235,9 @@ export const migrateItemData = function (item) {
  * Migrate a single Scene entity to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
  *
- * @param {object} sceneData  The Scene data to Update
+ * @param {object} scene - The Scene to Update
  */
-export const migrateSceneData = async function (sceneData) {
-  const scene = game.scenes.get(sceneData._id);
+export const migrateSceneData = async function (scene) {
   const result = { tokens: duplicate(scene.tokens) };
   for (let t of result.tokens) {
     const token = new TokenDocument(t, { parent: scene });

@@ -519,6 +519,8 @@ export class ActorPF extends Actor {
       }
     }
 
+    this.updateSpellbookInfo();
+
     // Add base initiative (for NPC Lite sheets)
     {
       setProperty(this.data, "data.attributes.init.total", getProperty(this.data, "data.attributes.init.value"));
@@ -554,11 +556,7 @@ export class ActorPF extends Actor {
     );
   }
 
-  /**
-   * Called just before the first change is applied, and after every change is applied.
-   * Sets additional variables (such as spellbook range)
-   */
-  refreshDerivedData() {
+  updateSpellbookInfo() {
     const rollData = this.getRollData();
 
     // Set spellbook info
@@ -656,161 +654,6 @@ export class ActorPF extends Actor {
 
         setProperty(this.data, key, total);
       }
-
-      // Spell points
-      {
-        const formula =
-          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
-        rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
-        rollData.ablMod = spellbookAbilityMod;
-        const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
-        rollData.classLevel =
-          spellClass === "_hd"
-            ? rollData.attributes.hd.total
-            : spellClass?.length > 0
-            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
-            : 0;
-        const roll = RollPF.safeRoll(formula, rollData);
-        setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
-      }
-
-      // Set spellbook range
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
-        medium: convertDistance(100 + 10 * cl)[0],
-        long: convertDistance(400 + 40 * cl)[0],
-      };
-    }
-
-    // Reset maximum dexterity bonus
-    setProperty(this.data, "data.attributes.maxDexBonus", null);
-
-    {
-      // Compute encumbrance
-      const encPen = this._computeEncumbrance();
-
-      // Apply armor penalties
-      const gearPen = this._applyArmorPenalties();
-
-      // Set armor check penalty
-      setProperty(this.data, "data.attributes.acp.encumbrance", encPen.acp);
-      setProperty(this.data, "data.attributes.acp.gear", gearPen.acp);
-      setProperty(this.data, "data.attributes.acp.total", Math.max(encPen.acp, gearPen.acp));
-
-      // Set maximum dexterity bonus
-      if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(encPen.maxDexBonus ?? Number.POSITIVE_INFINITY, gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY)
-        );
-      }
-    }
-  }
-
-  /**
-   * Augment the basic actor data with additional dynamic data.
-   */
-  prepareDerivedData() {
-    super.prepareDerivedData();
-
-    // Refresh roll data
-    // Some changes act wonky without this
-    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
-    this.getRollData({ refresh: true });
-
-    applyChanges.call(this);
-
-    // Prepare specific derived data
-    this.prepareSpecificDerivedData();
-
-    // Setup links
-    this.prepareItemLinks();
-
-    // Update item resources
-    this.items.forEach((item) => {
-      let iteration = 0;
-      while (item.prepareDerivedItemData() && iteration < 10) {
-        iteration++;
-      }
-      this.updateItemResources(item.data);
-
-      // Update tokens for resources
-      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens.forEach((t) => {
-        try {
-          t.drawBars();
-        } catch (err) {
-          // Drop the harmless error
-        }
-      });
-    });
-  }
-
-  prepareSpecificDerivedData() {
-    Hooks.callAll("pf1.prepareDerivedActorData", this);
-
-    // Set base ability modifier
-    for (const ab of Object.keys(this.data.data.abilities)) {
-      setProperty(
-        this.data,
-        `data.abilities.${ab}.baseMod`,
-        Math.floor((getProperty(this.data, `data.abilities.${ab}.base`) - 10) / 2)
-      );
-    }
-
-    const actorData = this.data;
-    const data = actorData.data;
-    const rollData = this.getRollData();
-
-    // Round health
-    const healthConfig = game.settings.get("pf1", "healthConfig");
-    const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
-    for (const k of ["data.attributes.hp.max", "data.attributes.vigor.max"]) {
-      setProperty(this.data, `${k}`, round(getProperty(this.data, `${k}`)));
-    }
-
-    // Refresh HP
-    this._applyPreviousAttributes();
-
-    // Update wound threshold
-    this.updateWoundThreshold();
-
-    // Apply wound thresholds to skills
-    const woundPenalty = this.data.data.attributes.woundThresholds?.penalty ?? 0;
-    if (woundPenalty) {
-      for (let k of this.allSkills) {
-        const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
-        setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
-      }
-    }
-
-    // Reset CR
-    if (this.data.type === "npc") {
-      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
-
-      // Reset experience value
-      try {
-        const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
-        this.data.data.details.xp.value = this.getCRExp(crTotal);
-      } catch (e) {
-        this.data.data.details.xp.value = this.getCRExp(1);
-      }
-    }
-
-    // Reset spell slots and spell points
-    for (let [spellbookKey, spellbook] of Object.entries(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
-      const spellbookAbilityKey = spellbook.ability;
-      let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`) ?? 10;
-
-      // Add spell slots based on ability bonus slot formula
-      {
-        const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
-        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
-      }
-
-      const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
 
       const getAbilityBonus = (a) =>
         a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
@@ -1033,6 +876,155 @@ export class ActorPF extends Actor {
           }
         }
       }
+
+      // Spell points
+      {
+        const formula =
+          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
+        rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
+        rollData.ablMod = spellbookAbilityMod;
+        const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
+        rollData.classLevel =
+          spellClass === "_hd"
+            ? rollData.attributes.hd.total
+            : spellClass?.length > 0
+            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
+            : 0;
+        const roll = RollPF.safeRoll(formula, rollData);
+        setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
+      }
+
+      // Set spellbook range
+      const cl = spellbook.cl.total;
+      spellbook.range = {
+        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
+        medium: convertDistance(100 + 10 * cl)[0],
+        long: convertDistance(400 + 40 * cl)[0],
+      };
+    }
+  }
+
+  /**
+   * Called just before the first change is applied, and after every change is applied.
+   * Sets additional variables (such as spellbook range)
+   */
+  refreshDerivedData() {
+    const rollData = this.getRollData();
+
+    // Reset maximum dexterity bonus
+    setProperty(this.data, "data.attributes.maxDexBonus", null);
+
+    {
+      // Compute encumbrance
+      const encPen = this._computeEncumbrance();
+
+      // Apply armor penalties
+      const gearPen = this._applyArmorPenalties();
+
+      // Set armor check penalty
+      setProperty(this.data, "data.attributes.acp.encumbrance", encPen.acp);
+      setProperty(this.data, "data.attributes.acp.gear", gearPen.acp);
+      setProperty(this.data, "data.attributes.acp.total", Math.max(encPen.acp, gearPen.acp));
+
+      // Set maximum dexterity bonus
+      if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
+        setProperty(
+          this.data,
+          "data.attributes.maxDexBonus",
+          Math.min(encPen.maxDexBonus ?? Number.POSITIVE_INFINITY, gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY)
+        );
+      }
+    }
+  }
+
+  /**
+   * Augment the basic actor data with additional dynamic data.
+   */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    // Refresh roll data
+    // Some changes act wonky without this
+    // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
+    this.getRollData({ refresh: true });
+
+    applyChanges.call(this);
+
+    // Prepare specific derived data
+    this.prepareSpecificDerivedData();
+
+    // Setup links
+    this.prepareItemLinks();
+
+    // Update item resources
+    this.items.forEach((item) => {
+      let iteration = 0;
+      while (item.prepareDerivedItemData() && iteration < 10) {
+        iteration++;
+      }
+      this.updateItemResources(item.data);
+
+      // Update tokens for resources
+      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
+      tokens.forEach((t) => {
+        try {
+          t.drawBars();
+        } catch (err) {
+          // Drop the harmless error
+        }
+      });
+    });
+  }
+
+  prepareSpecificDerivedData() {
+    Hooks.callAll("pf1.prepareDerivedActorData", this);
+
+    // Set base ability modifier
+    for (const ab of Object.keys(this.data.data.abilities)) {
+      setProperty(
+        this.data,
+        `data.abilities.${ab}.baseMod`,
+        Math.floor((getProperty(this.data, `data.abilities.${ab}.base`) - 10) / 2)
+      );
+    }
+
+    const actorData = this.data;
+    const data = actorData.data;
+    const rollData = this.getRollData();
+
+    // Round health
+    const healthConfig = game.settings.get("pf1", "healthConfig");
+    const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
+    for (const k of ["data.attributes.hp.max", "data.attributes.vigor.max"]) {
+      setProperty(this.data, `${k}`, round(getProperty(this.data, `${k}`)));
+    }
+
+    // Refresh HP
+    this._applyPreviousAttributes();
+
+    // Update wound threshold
+    this.updateWoundThreshold();
+
+    // Apply wound thresholds to skills
+    const woundPenalty = this.data.data.attributes.woundThresholds?.penalty ?? 0;
+    if (woundPenalty) {
+      for (let k of this.allSkills) {
+        const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
+        setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
+      }
+    }
+
+    // Reset CR
+    if (this.data.type === "npc") {
+      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
+
+      // Reset experience value
+      try {
+        const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
+        this.data.data.details.xp.value = this.getCRExp(crTotal);
+      } catch (e) {
+        this.data.data.details.xp.value = this.getCRExp(1);
+      }
     }
 
     // Shared attack bonuses
@@ -1206,6 +1198,8 @@ export class ActorPF extends Actor {
         });
         break;
     }
+
+    this.updateSpellbookInfo();
 
     this.refreshDerivedData();
   }

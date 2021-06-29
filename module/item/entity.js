@@ -885,6 +885,8 @@ export class ItemPF extends Item {
         { key: "data.damage.nonCritParts" },
         { key: "data.contextNotes" },
         { key: "data.scriptCalls" },
+        { key: "data.attackNotes" },
+        { key: "data.effectNotes" },
       ];
 
       for (let kArr of keepArray) {
@@ -898,8 +900,12 @@ export class ItemPF extends Item {
             let subKey2 = subKey.slice(1).join(".");
             if (!arr[i]) arr[i] = {};
 
+            // Single entry array
+            if (!subKey2) {
+              arr[i] = entry[1];
+            }
             // Remove property
-            if (subKey[subKey.length - 1].startsWith("-=")) {
+            else if (subKey[subKey.length - 1].startsWith("-=")) {
               const obj = flattenObject(arr[i]);
               subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
               const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
@@ -2905,7 +2911,7 @@ export class ItemPF extends Item {
         });
       return cur;
     }, []);
-    effectNotes.push(...(this.data.data.effectNotes || "").split(/[\n\r]+/));
+    effectNotes.push(...this.data.data.effectNotes);
     let effectContent = "";
     for (let fx of effectNotes) {
       if (fx.length > 0) {

@@ -206,7 +206,7 @@ export class ChatAttack {
         );
     }
     if (this.item != null && this.item.data.data.attackNotes) {
-      notes.push(...this.item.data.data.attackNotes.split(/[\n\r]+/));
+      notes.push(...this.item.data.data.attackNotes);
     }
     if (["mcman", "rcman"].includes(this.item?.data.data.actionType)) {
       notes.push(...this.item?.actor?.getContextNotesParsed("misc.cmb"));
@@ -375,7 +375,7 @@ export class ChatAttack {
     }
 
     if (this.item != null && this.item.data.data.effectNotes) {
-      notes.push(...this.item.data.data.effectNotes.split(/[\n\r]+/));
+      notes.push(...this.item.data.data.effectNotes);
     }
 
     this.effectNotes = notes;

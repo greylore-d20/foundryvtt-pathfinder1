@@ -1034,7 +1034,8 @@
   }
 }
 
-.pf1.entry {
+.pf1.entry,
+.notes {
   table {
     border: 1px solid rgb(136, 136, 136);
     font-weight: normal;
@@ -1047,19 +1048,21 @@
     tr {
       height: 16px;
     }
+  }
+}
 
-    thead {
-      background-color: #cfe2f3;
+.pf1.entry {
+  thead {
+    background-color: #cfe2f3;
+  }
+
+  tbody {
+    tr {
+      background-color: white;
     }
 
-    tbody {
-      tr {
-        background-color: white;
-      }
-
-      tr:nth-child(even) {
-        background-color: #f3f3f3;
-      }
+    tr:nth-child(even) {
+      background-color: #f3f3f3;
     }
   }
 }

@@ -365,6 +365,12 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Parse notes
+    if (data.item.data.data.attackNotes) {
+      const value = data.item.data.data.attackNotes;
+      setProperty(data, "notes.attack", value);
+    }
+
     // Add item flags
     this._prepareItemFlags(data);
 
@@ -769,7 +775,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find("textarea").change(this._onSubmit.bind(this));
 
     // Add drop handler to textareas
-    html.find("textarea").on("drop", this._onTextAreaDrop.bind(this));
+    html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
 
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
@@ -798,6 +804,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
+
+    html.find(".entry-control a").click(this._onEntryControl.bind(this));
 
     // Add drop handler to link tabs
     html.find('div[data-group="links"],a.item[data-tab="links"]').on("drop", this._onLinksDrop.bind(this));
@@ -1464,6 +1472,27 @@ export class ItemSheetPF extends ItemSheet {
       dtypes: a.dataset.dtypes,
     };
     new EntrySelector(this.item, options).render(true);
+  }
+
+  _onEntryControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const key = a.closest(".notes").dataset.name;
+
+    if (a.classList.contains("add-entry")) {
+      let notes = getProperty(this.document.data, key);
+      const updateData = {};
+      updateData[key] = notes.concat("");
+      return this._onSubmit(event, { updateData });
+    } else if (a.classList.contains("delete-entry")) {
+      const index = a.closest(".entry").dataset.index;
+      let notes = duplicate(getProperty(this.document.data, key));
+      notes.splice(index, 1);
+
+      const updateData = {};
+      updateData[key] = notes;
+      return this._onSubmit(event, { updateData });
+    }
   }
 
   _selectOnClick(event) {

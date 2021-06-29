@@ -151,7 +151,7 @@ export const migrateActorData = async function (actor) {
 
   _migrateCharacterLevel(actor, updateData);
   _migrateActorEncumbrance(actor, updateData);
-  _migrateActorDefenseNotes(actor, updateData);
+  _migrateActorNoteArrays(actor, updateData);
   _migrateActorSpeed(actor, updateData);
   _migrateSpellDivineFocus(actor, updateData);
   _migrateActorSpellbookCL(actor, updateData);
@@ -183,7 +183,7 @@ export const migrateActorData = async function (actor) {
     let itemUpdate = migrateItemData(i);
 
     // Update the Owned Item
-    items[a] = mergeObject(i, itemUpdate, { enforceTypes: false, inplace: false });
+    items[a] = mergeObject(i.data._source, itemUpdate, { enforceTypes: false, inplace: false });
   }
   updateData.items = items;
   return updateData;
@@ -223,6 +223,7 @@ export const migrateItemData = function (item) {
   _migrateItemRange(item, updateData);
   _migrateItemLinks(item, updateData);
   _migrateProficiencies(item, updateData);
+  _migrateItemNotes(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -356,12 +357,16 @@ const _migrateActorEncumbrance = function (ent, updateData) {
   }
 };
 
-const _migrateActorDefenseNotes = function (ent, updateData) {
-  const arr = ["attributes.acNotes", "attributes.cmdNotes", "attributes.srNotes"];
-  for (let k of arr) {
-    const value = getProperty(ent.data.data, k);
-    if (value == null) {
-      updateData["data." + k] = "";
+const _migrateActorNoteArrays = function (ent, updateData) {
+  const list = ["data.attributes.acNotes", "data.attributes.cmdNotes", "data.attributes.srNotes"];
+  for (let k of list) {
+    const value = getProperty(ent.data, k);
+    const hasValue = hasProperty(ent.data, k);
+    if (hasValue && !(value instanceof Array)) {
+      updateData[k] = [];
+      if (typeof value === "string") {
+        updateData[k] = value.split(/[\n\r]/);
+      }
     }
   }
 };
@@ -842,6 +847,20 @@ const _migrateProficiencies = function (ent, updateData) {
           value: [],
           custom: "",
         };
+    }
+  }
+};
+
+const _migrateItemNotes = function (ent, updateData) {
+  const list = ["data.attackNotes", "data.effectNotes"];
+  for (let k of list) {
+    const value = getProperty(ent.data, k);
+    const hasValue = hasProperty(ent.data, k);
+    if (hasValue && !(value instanceof Array)) {
+      updateData[k] = [];
+      if (typeof value === "string" && value.length > 0) {
+        updateData[k] = value.split(/[\n\r]/);
+      }
     }
   }
 };

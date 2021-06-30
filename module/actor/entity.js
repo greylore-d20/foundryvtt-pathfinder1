@@ -352,6 +352,11 @@ export class ActorPF extends Actor {
       .reduce((cur, o) => cur + o.data.data.level, 0);
     setProperty(this.data, "data.details.mythicTier", mythicTier);
 
+    // Populate conditions
+    for (const condition of Object.keys(CONFIG.PF1.conditions)) {
+      this.data.data.attributes.conditions[condition] ??= false;
+    }
+
     // The following is not for NPCs
     if (this.data.type === "character") {
       const maxExp = this.getLevelExp(level);

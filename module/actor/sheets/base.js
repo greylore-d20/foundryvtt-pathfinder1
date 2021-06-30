@@ -1576,8 +1576,10 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const key = a.name;
 
-    const updateData = {};
-    updateData[key] = !getProperty(this.actor.data, key);
+    // Delete the stored condition status if setting to false
+    const newStatus = !getProperty(this.actor.data, key);
+    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
     this.actor.update(updateData);
   }
 

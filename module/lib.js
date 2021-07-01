@@ -822,7 +822,7 @@ function uniquePermutations(perm) {
  */
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
   let packs;
-  if (options?.pack && options.pack.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
+  if (options?.packs && options.packs.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
   else packs = game.packs.filter((o) => !options?.type || o.metadata.entity == options.type);
 
   searchTerm = searchTerm.toLocaleLowerCase();

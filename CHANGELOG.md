@@ -2,6 +2,10 @@
 
 ## 0.78.13
 
+### Bug Fixes
+
+- Fixed the Bestiary Browser not loading in a lot of cases (thanks mkahvi!)
+
 ### Changelog
 
 - Made ability for AC, Touch AC and CMD configurable (thanks mkahvi!)

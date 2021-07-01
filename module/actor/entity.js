@@ -1021,9 +1021,9 @@ export class ActorPF extends Actor {
       // Reset experience value
       try {
         const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
-        this.data.data.details.xp.value = this.getCRExp(crTotal);
+        setProperty(this.data, "data.details.xp.value", this.getCRExp(crTotal));
       } catch (e) {
-        this.data.data.details.xp.value = this.getCRExp(1);
+        setProperty(this.data, "data.details.xp.value", this.getCRExp(1));
       }
     }
 
@@ -1033,9 +1033,9 @@ export class ActorPF extends Actor {
       const sizeMod = CONFIG.PF1.sizeMods[this.data.data.traits.size];
       // Total
       const totalAtk =
-        getProperty(this.data, "data.attributes.bab.total") -
-        getProperty(this.data, "data.attributes.acp.attackPenalty") -
-        getProperty(this.data, "data.attributes.energyDrain") +
+        (getProperty(this.data, "data.attributes.bab.total") ?? 0) -
+        (getProperty(this.data, "data.attributes.acp.attackPenalty") ?? 0) -
+        (getProperty(this.data, "data.attributes.energyDrain") ?? 0) +
         sizeMod;
       setProperty(this.data, "data.attributes.attack.shared", totalAtk);
     }
@@ -1103,7 +1103,7 @@ export class ActorPF extends Actor {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAbl, 0);
       }
-      const maxDex = this.data.data.attributes.maxDexBonus;
+      const maxDex = getProperty(this.data, "data.attributes.maxDexBonus") ?? null;
       const ac = {
         normal: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
         touch: maxDex !== null ? Math.min(maxDex, acTouchAblMod) : acTouchAblMod,
@@ -1241,10 +1241,10 @@ export class ActorPF extends Actor {
 
         switch (obj.data.data.equipmentType) {
           case "armor":
-            itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.armorBonus"));
+            itemACP = Math.max(0, itemACP + (getProperty(this.data, "data.attributes.acp.armorBonus") ?? 0));
             break;
           case "shield":
-            itemACP = Math.max(0, itemACP + getProperty(this.data, "data.attributes.acp.shieldBonus"));
+            itemACP = Math.max(0, itemACP + (getProperty(this.data, "data.attributes.acp.shieldBonus") ?? 0));
             break;
         }
 
@@ -1283,7 +1283,7 @@ export class ActorPF extends Actor {
           switch (obj.data.data.equipmentType) {
             case "armor":
               if (Number.isInteger(mDex)) {
-                const armorMDex = mDex + getProperty(this.data, "data.attributes.mDex.armorBonus");
+                const armorMDex = mDex + (getProperty(this.data, "data.attributes.mDex.armorBonus") ?? null);
                 armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
 
                 if (!Number.isNaN(armorMDex)) {
@@ -1302,7 +1302,7 @@ export class ActorPF extends Actor {
               break;
             case "shield":
               if (Number.isInteger(mDex)) {
-                const shieldMDex = mDex + getProperty(this.data, "data.attributes.mDex.shieldBonus");
+                const shieldMDex = mDex + (getProperty(this.data, "data.attributes.mDex.shieldBonus") ?? null);
                 shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
 
                 if (!Number.isNaN(shieldMDex)) {
@@ -3069,6 +3069,7 @@ export class ActorPF extends Actor {
   get allSkills() {
     let result = [];
     for (let [k, s] of Object.entries(this.data.data.skills)) {
+      if (!s) continue;
       result.push(k);
       if (s.subSkills) {
         for (let k2 of Object.keys(s.subSkills)) {

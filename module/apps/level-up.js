@@ -208,7 +208,7 @@ export class LevelUpForm extends DocumentSheet {
       user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       speaker,
-      roll: formData.hp.roll ?? RollPF.safeRoll("0"),
+      roll: formData.hp?.roll ?? RollPF.safeRoll("0"),
     });
   }
 

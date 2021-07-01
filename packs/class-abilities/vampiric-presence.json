@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>The vampire hunter gains a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Enhancement-Bonus\">enhancement bonus</a>&nbsp;to&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>. At 8th level, this bonus increases to +4, and he can cast @Compendium[pf1.spells.tjog6bufg5b08lvq]{Charm Person}&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like ability</a>&nbsp;a number of times per day equal to his adjusted&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier. At 16th level, the&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Enhancement-Bonus\">enhancement bonus</a>&nbsp;to&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;increases to +6, and the vampire hunter can cast @Compendium[pf1.spells.q070n0zoq3zojpas]{Dominate Person}&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like ability</a>&nbsp;a number of times per day equal to his adjusted&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier. The vampire hunter treats his level as his&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Caster-Level\">caster level</a>&nbsp;when using the&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like abilities</a>&nbsp;this ability grants.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The vampire hunter gains a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Enhancement-Bonus\">enhancement bonus</a>&nbsp;to&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>. At 8th level, this bonus increases to +4, and he can cast @Compendium[pf1.spells.tjog6bufg5b08lvq]{Charm Person}&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like ability</a>&nbsp;a number of times per day equal to his adjusted&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier. At 16th level, the&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Enhancement-Bonus\">enhancement bonus</a>&nbsp;to&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;increases to +6, and the vampire hunter can cast @Compendium[pf1.spells.q070n0zoq3zojpas]{Dominate Person}&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like ability</a>&nbsp;a number of times per day equal to his adjusted&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier. The vampire hunter treats his level as his&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Caster-Level\">caster level</a>&nbsp;when using the&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Spell-Like-Abilities-Sp-\">spell-like abilities</a>&nbsp;this ability grants.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -22,131 +18,17 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
-    },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "@abilities.cha.mod"
+      "per": "day"
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [
-      {
-        "_id": "fq56hp94",
-        "formula": "@classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)",
-        "operator": "add",
-        "subTarget": "cha",
-        "modifier": "enh",
-        "priority": 0,
-        "value": 0,
-        "target": "ability"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Vampire Hunter"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/beast_02.jpg",

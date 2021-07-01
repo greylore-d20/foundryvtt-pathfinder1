@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can unleash a ball of energy that explodes in a 5-foot-radius burst dealing 1d4 points of fire damage per level. A successful Reflex save halves this damage. This attack has a range of 60 feet.</p>\n<p>You can fire one explosive ball per day, plus one additional ball per day at 5th level and for every 5 levels thereafter. You can fire more than one ball at a time, but creatures caught inside more than one simultaneous explosions only take damage once.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action, you can unleash a ball of energy that explodes in a 5-foot-radius burst dealing 1d4 points of fire damage per level. A successful Reflex save halves this damage. This attack has a range of 60 feet.</p>\n<p>You can fire one explosive ball per day, plus one additional ball per day at 5th level and for every 5 levels thereafter. You can fire more than one ball at a time, but creatures caught inside more than one simultaneous explosions only take damage once.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,7 +19,6 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
@@ -31,116 +26,23 @@
     },
     "range": {
       "value": "60",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "ft"
     },
     "uses": {
-      "value": 0,
       "max": 1,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "1 + floor(@classes.oracle.level / 5)"
+      "per": "day"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(@classes.oracle.level)d6",
-          "Fire"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Oracle"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",

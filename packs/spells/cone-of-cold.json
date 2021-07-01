@@ -7,13 +7,9 @@
   "type": "spell",
   "data": {
     "description": {
-      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[cold];\n    <strong>Level</strong>&nbsp;magus 5, occultist 5, shaman 6, sorcerer/wizard 5, witch 6;\n    <strong>Domain</strong>&nbsp;Water 6;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Boreal 5, Oni 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a small crystal or glass cone)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Cone of cold</i> creates an area of extreme cold, originating at your hand and extending outward in a cone. It drains heat, dealing 1d6 points of cold damage per caster level (maximum 15d6).</p>\n</div>\n",
-      "chat": "",
-      "unidentified": ""
+      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[cold];\n    <strong>Level</strong>&nbsp;magus 5, occultist 5, shaman 6, sorcerer/wizard 5, witch 6;\n    <strong>Domain</strong>&nbsp;Water 6;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Boreal 5, Oni 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a small crystal or glass cone)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Cone of cold</i> creates an area of extreme cold, originating at your hand and extending outward in a cone. It drains heat, dealing 1d6 points of cold damage per caster level (maximum 15d6).</p>\n</div>\n"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -22,67 +18,21 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
     "range": {
       "value": "60",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "units": "ft"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
     "measureTemplate": {
       "type": "cone",
-      "size": "60",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "60"
     },
-    "attackName": "",
     "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(min(15, @cl))d6",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -91,98 +41,20 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          5
-        ],
-        [
-          "witch",
-          6
-        ],
-        [
-          "magus",
-          5
-        ],
-        [
-          "shaman",
-          6
-        ],
-        [
-          "occultist",
-          5
-        ]
-      ],
-      "domain": [
-        [
-          "Water",
-          6
-        ]
-      ],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": [
-        [
-          "Boreal",
-          5
-        ],
-        [
-          "Oni",
-          5
-        ]
-      ]
-    },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "cold",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a small crystal or glass cone",
-      "focus": "",
-      "gpValue": 0
+      "value": "a small crystal or glass cone"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true,
-      "mode": "prepared"
-    },
-    "atWill": false,
-    "sr": true,
     "shortDescription": "<p><i>Cone of cold</i> creates an area of extreme cold, originating at your hand and extending outward in a cone. It drains heat, dealing 1d6 points of cold damage per caster level (maximum 15d6).</p>",
     "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1
+    "spellArea": "cone-shaped burst"
   },
   "flags": {},
   "img": "systems/pf1/icons/misc/magic-swirl.png",

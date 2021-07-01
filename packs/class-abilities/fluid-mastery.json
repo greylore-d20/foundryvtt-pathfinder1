@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>The shaman gains a swim speed equal to her base land speed, as well as the ability to breathe underwater. In addition, she can unleash a torrent of ice and water from her hands in a 15-foot cone as a standard action. This torrent deals 1d4 points of cold damage per 2 shaman level she possesses, and pushes affected creatures back 5 feet directly away from the shaman.</p>\n<p>A successful Reflex saving throw halves the damage and negates the push.</p>\n<p>The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The shaman gains a swim speed equal to her base land speed, as well as the ability to breathe underwater. In addition, she can unleash a torrent of ice and water from her hands in a 15-foot cone as a standard action. This torrent deals 1d4 points of cold damage per 2 shaman level she possesses, and pushes affected creatures back 5 feet directly away from the shaman.</p>\n<p>A successful Reflex saving throw halves the damage and negates the push.</p>\n<p>The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,68 +19,18 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "15-ft. cone"
     },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
-    },
     "uses": {
-      "value": 0,
       "max": 3,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "3"
+      "per": "day"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(floor(@classes.shaman.level / 2))d4",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -93,65 +39,8 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [
-      {
-        "_id": "xzf6e83n",
-        "formula": "@attributes.speed.land.base",
-        "operator": "+",
-        "subTarget": "swimSpeed",
-        "modifier": "base",
-        "priority": 0,
-        "value": 0,
-        "target": "speed"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Shaman"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/violet_20.jpg",

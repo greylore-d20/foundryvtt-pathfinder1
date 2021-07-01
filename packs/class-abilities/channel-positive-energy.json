@@ -7,23 +7,17 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>When a paladin reaches 4th level, she gains the supernatural ability to&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/#Channel_Energy_Su\">channel positive energy</a>&nbsp;like a cleric. Using this ability consumes two uses of her lay on hands ability. A paladin uses her level as her effective cleric level when channeling positive energy. This is a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>-based ability.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>When a paladin reaches 4th level, she gains the supernatural ability to&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/#Channel_Energy_Su\">channel positive energy</a>&nbsp;like a cleric. Using this ability consumes two uses of her lay on hands ability. A paladin uses her level as her effective cleric level when channeling positive energy. This is a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>-based ability.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
         "type": "passive"
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
@@ -32,59 +26,19 @@
     "range": {
       "value": "30",
       "units": "ft",
-      "maxIncrements": "1",
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "maxIncrements": "1"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
       "per": "charges",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "2",
-      "maxFormula": ""
+      "autoDeductChargesCost": "2"
     },
     "measureTemplate": {
       "type": "circle",
-      "size": "30",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "30"
     },
-    "attackName": "",
     "actionType": "heal",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(ceil(@classes.paladin.level / 2))d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "10+floor(@classes.paladin.level / 2) + @abilities.cha.mod",
@@ -93,54 +47,9 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
     "tag": "channelPositiveEnergy",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Paladin"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/blinding-critical.jpg",

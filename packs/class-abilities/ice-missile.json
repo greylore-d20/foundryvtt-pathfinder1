@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>The arcanist can unleash a freezing projectile by expending 1 point from her arcane reservoir and making a ranged touch attack against any one target within 30 feet. If the attack hits, it deals 1d6 points of cold damage + the arcanist’s Charisma modifier, plus an additional 1d6 points of cold damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). In addition, the target is staggered for 1 round. It can attempt a Fortitude saving throw to negate the staggered condition.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The arcanist can unleash a freezing projectile by expending 1 point from her arcane reservoir and making a ranged touch attack against any one target within 30 feet. If the attack hits, it deals 1d6 points of cold damage + the arcanist’s Charisma modifier, plus an additional 1d6 points of cold damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). In addition, the target is staggered for 1 round. It can attempt a Fortitude saving throw to negate the staggered condition.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,7 +19,6 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
@@ -31,59 +26,15 @@
     },
     "range": {
       "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "ft"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "rsak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -92,54 +43,8 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Arcanist"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/runes-blue-2.jpg",

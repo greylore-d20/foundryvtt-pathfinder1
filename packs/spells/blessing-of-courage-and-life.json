@@ -7,13 +7,9 @@
   "type": "spell",
   "data": {
     "description": {
-      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing)&nbsp;[emotion];\n    <strong>Level</strong>&nbsp;cleric/oracle 2, paladin 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute/level (see below)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>With this prayer you provide long-lasting succor to a wounded creature. For as long as the effect lasts, the target receives a +2 morale bonus on saving throws against fear and death effects.</p><p>At any time while the spell is in effect, the target can choose to end the spell as a swift action for a burst of healing energy. The target loses the saving throw bonus, but is healed of 1d8 points of damage +1 point per caster level (maximum +10).</p>\n</div>\n",
-      "chat": "",
-      "unidentified": ""
+      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing)&nbsp;[emotion];\n    <strong>Level</strong>&nbsp;cleric/oracle 2, paladin 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute/level (see below)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>With this prayer you provide long-lasting succor to a wounded creature. For as long as the effect lasts, the target receives a +2 morale bonus on saving throws against fear and death effects.</p><p>At any time while the spell is in effect, the target can choose to end the spell as a swift action for a burst of healing energy. The target loses the saving throw bonus, but is healed of 1d8 points of damage +1 point per caster level (maximum +10).</p>\n</div>\n"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -22,62 +18,22 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "one living creature"
     },
     "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "units": "close"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "heal",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -86,72 +42,17 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "paladin",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "healing",
     "types": "emotion",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true,
-      "mode": "prepared"
-    },
-    "atWill": false,
-    "sr": true,
     "shortDescription": "<p>With this prayer you provide long-lasting succor to a wounded creature. For as long as the effect lasts, the target receives a +2 morale bonus on saving throws against fear and death effects.</p><p>At any time while the spell is in effect, the target can choose to end the spell as a swift action for a burst of healing energy. The target loses the saving throw bonus, but is healed of 1d8 points of damage +1 point per caster level (maximum +10).</p>",
-    "spellDuration": "1 minute/level (see below)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1
+    "spellDuration": "1 minute/level (see below)"
   },
   "flags": {},
   "img": "systems/pf1/icons/misc/magic-swirl.png",

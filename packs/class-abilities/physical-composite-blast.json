@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>Composite blasts combine elements to form a new blast. When a kineticist gains a new element through expanded element, she gains access to all composite blasts for which she qualifies. Most composite blasts are either physical or energy blasts, like simple blasts. Physical composite blasts deal an amount of damage equal to 2d6+2 + the kineticist’s Constitution modifier, increasing by 2d6+2 for every 2 kineticist levels beyond 1st; energy composite blasts deal an amount of damage equal to 2d6 + 1/2 the kineticist’s Constitution modifier, increasing by 2d6 for every 2 kineticist levels beyond 1st.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>Composite blasts combine elements to form a new blast. When a kineticist gains a new element through expanded element, she gains access to all composite blasts for which she qualifies. Most composite blasts are either physical or energy blasts, like simple blasts. Physical composite blasts deal an amount of damage equal to 2d6+2 + the kineticist’s Constitution modifier, increasing by 2d6+2 for every 2 kineticist levels beyond 1st; energy composite blasts deal an amount of damage equal to 2d6 + 1/2 the kineticist’s Constitution modifier, increasing by 2d6 for every 2 kineticist levels beyond 1st.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,123 +19,34 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
-    },
-    "target": {
-      "value": ""
     },
     "range": {
       "value": "30",
       "units": "ft",
-      "maxIncrements": "1",
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "maxIncrements": "1"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "rsak",
     "attackBonus": "min(@resources.burn.value, floor(@classes.kineticist.level / 3))",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(2 * ceil(@classes.kineticist.level/2))d6+2*(ceil(@classes.kineticist.level/2))+min(@resources.burn.value, floor(@classes.kineticist.level/3)) * 2 * @critMult",
-          "Physical"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
     "tag": "physicalCompositeBlast",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Kineticist"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
     "abilityType": "sp",
-    "crOffset": "0",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "crOffset": "0"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/fire_02.jpg",

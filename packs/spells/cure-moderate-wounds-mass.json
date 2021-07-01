@@ -7,13 +7,9 @@
   "type": "spell",
   "data": {
     "description": {
-      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;bard 6, cleric/oracle 6, druid 7, inquisitor 6, occultist 6, shaman 6, witch 7;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature/level, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless) or Will half; see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>mass cure light wounds</i>, except that it cures 2d8 points of damage + 1 point per caster level (maximum +30).</p>\n</div>\n",
-      "chat": "",
-      "unidentified": ""
+      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;bard 6, cleric/oracle 6, druid 7, inquisitor 6, occultist 6, shaman 6, witch 7;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature/level, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless) or Will half; see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>mass cure light wounds</i>, except that it cures 2d8 points of damage + 1 point per caster level (maximum +30).</p>\n</div>\n"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -22,67 +18,23 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "one creature/level, no two of which can be more than 30 ft. apart"
     },
     "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "units": "close"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
     "measureTemplate": {
       "type": "circle",
-      "size": "30",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "30"
     },
-    "attackName": "",
     "actionType": "heal",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "2d8 + min(30, @cl)",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -91,95 +43,16 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          6
-        ],
-        [
-          "druid",
-          7
-        ],
-        [
-          "bard",
-          6
-        ],
-        [
-          "witch",
-          7
-        ],
-        [
-          "inquisitor",
-          6
-        ],
-        [
-          "shaman",
-          6
-        ],
-        [
-          "occultist",
-          6
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "healing",
-    "types": "",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true,
-      "mode": "prepared"
-    },
-    "atWill": false,
-    "sr": true,
     "shortDescription": "<p>This spell functions like <i>mass cure light wounds</i>, except that it cures 2d8 points of damage + 1 point per caster level (maximum +30).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "attack": {
-      "parts": []
-    }
+    "spellDuration": "instantaneous"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/heal-sky-3.jpg",

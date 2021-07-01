@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>You can channel energy a number of times per day equal to 1 + your Charisma modifier. Choose whether you channel positive or negative energy each time you contact a hierophant spirit; this choice must match the spirit’s faith.</p>\n<p>If you choose positive energy, add&nbsp;cure&nbsp;spells of each level you can cast from the cleric list to your medium spell list and spells known. Otherwise, add&nbsp;inflict&nbsp;spells in the same way. These spells count as divine, as in the divine surge spirit power.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You can channel energy a number of times per day equal to 1 + your Charisma modifier. Choose whether you channel positive or negative energy each time you contact a hierophant spirit; this choice must match the spirit’s faith.</p>\n<p>If you choose positive energy, add&nbsp;cure&nbsp;spells of each level you can cast from the cleric list to your medium spell list and spells known. Otherwise, add&nbsp;inflict&nbsp;spells in the same way. These spells count as divine, as in the divine surge spirit power.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,124 +19,29 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "30-ft. radius burst"
     },
     "range": {
-      "value": null,
-      "units": "personal",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "personal"
     },
     "uses": {
-      "value": 0,
       "max": 1,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "1 + @abilities.cha.mod"
+      "per": "day"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "heal",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(ceil(@classes.medium.level / 2))d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Medium"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/light_04.jpg",

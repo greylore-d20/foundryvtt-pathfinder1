@@ -7,13 +7,9 @@
   "type": "spell",
   "data": {
     "description": {
-      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[earth];\n    <strong>Level</strong>&nbsp;bloodrager 2, druid 2, hunter 2, magus 2, sorcerer/wizard 2, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of earth or metal)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one or more stone discuses<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You create a stone discus, which flies at an enemy. You can create one discus, plus one additional discus at 7th and 11th caster levels. For each discus you create, you decide whether its edge is blunt (and deals bludgeoning damage) or sharp (and deals slashing damage). Each discus requires a ranged attack to hit and deals 4d6 points of damage. The discuses can be launched at more than one target, but all must be aimed at targets within 30 feet of each other and launched simultaneously.</p><p>At caster level 5th, the discuses count as magic and silver.</p><p>At caster level 10th, they also count as cold iron. At caster level 15th, they also count as adamantine.</p>\n</div>\n",
-      "chat": "",
-      "unidentified": ""
+      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[earth];\n    <strong>Level</strong>&nbsp;bloodrager 2, druid 2, hunter 2, magus 2, sorcerer/wizard 2, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of earth or metal)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one or more stone discuses<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You create a stone discus, which flies at an enemy. You can create one discus, plus one additional discus at 7th and 11th caster levels. For each discus you create, you decide whether its edge is blunt (and deals bludgeoning damage) or sharp (and deals slashing damage). Each discus requires a ranged attack to hit and deals 4d6 points of damage. The discuses can be launched at more than one target, but all must be aimed at targets within 30 feet of each other and launched simultaneously.</p><p>At caster level 5th, the discuses count as magic and silver.</p><p>At caster level 10th, they also count as cold iron. At caster level 15th, they also count as adamantine.</p>\n</div>\n"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -22,161 +18,49 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
     "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "units": "close"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
     "attackName": "Stone",
     "actionType": "rsak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "4d6",
-          "S or B"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
     "formulaicAttacks": {
       "count": {
-        "formula": "min(3, floor((@cl + 1) / 4)) - 1",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
+        "formula": "min(3, floor((@cl + 1) / 4)) - 1"
       },
       "label": "Stone #{0}"
     },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "druid",
-          2
-        ],
-        [
-          "witch",
-          2
-        ],
-        [
-          "magus",
-          2
-        ],
-        [
-          "bloodrager",
-          2
-        ],
-        [
-          "hunter",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
     "types": "earth",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a pinch of earth or metal",
-      "focus": "",
-      "gpValue": 0
+      "value": "a pinch of earth or metal"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true,
-      "mode": "prepared"
-    },
-    "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a stone discus, which flies at an enemy. You can create one discus, plus one additional discus at 7th and 11th caster levels. For each discus you create, you decide whether its edge is blunt (and deals bludgeoning damage) or sharp (and deals slashing damage). Each discus requires a ranged attack to hit and deals 4d6 points of damage. The discuses can be launched at more than one target, but all must be aimed at targets within 30 feet of each other and launched simultaneously.</p><p>At caster level 5th, the discuses count as magic and silver.</p><p>At caster level 10th, they also count as cold iron. At caster level 15th, they also count as adamantine.</p>",
     "spellDuration": "instantaneous",
-    "spellEffect": "one or more stone discuses",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "attack": {
-      "parts": []
-    },
-    "identifiedName": "Stone Discus"
+    "spellEffect": "one or more stone discuses"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/rock-orange-2.jpg",

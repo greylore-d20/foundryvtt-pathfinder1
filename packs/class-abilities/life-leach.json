@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>You can draw life force from the bodies of enemies and channel it into yourself. As a standard action, you can drain the life essence from one living target within 30 feet. The target takes 1d6 points of damage per two levels you possess (maximum 10d6). You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last a number of hours equal to your Charisma modifier. The target receives a Fortitude save to halve the damage (and the temporary hit points you gain).</p>\n<p>You may use this ability once per day at 7th level, plus one additional time per day for every 4 levels you possess beyond 7th.</p>\n<p>You must be at least 7th level before selecting this revelation.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You can draw life force from the bodies of enemies and channel it into yourself. As a standard action, you can drain the life essence from one living target within 30 feet. The target takes 1d6 points of damage per two levels you possess (maximum 10d6). You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last a number of hours equal to your Charisma modifier. The target receives a Fortitude save to halve the damage (and the temporary hit points you gain).</p>\n<p>You may use this ability once per day at 7th level, plus one additional time per day for every 4 levels you possess beyond 7th.</p>\n<p>You must be at least 7th level before selecting this revelation.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -31,60 +27,15 @@
     },
     "range": {
       "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "ft"
     },
     "uses": {
-      "value": 0,
-      "max": 0,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "per": "day"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(min(floor(@classes.oracle.level / 2),10))d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod",
@@ -93,54 +44,8 @@
     },
     "effectNotes": "Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]] hours",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Oracle"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",

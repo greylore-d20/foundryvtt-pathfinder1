@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>You can channel the hostile, unforgiving heat of the sun into your touch. This is a melee touch attack that deals 1d8 points of fire damage per 2 oracle levels (Fortitude half ). Against a plant creature, this touch heals or damages the creature (your choice) for 1d6 points of fire damage per oracle level.</p>\n<p>At 7th level, a creature that fails its save against this revelation becomes sickened for 1d4 hours in addition to taking fire damage.</p>\n<p>At 15th level, your touch is so intense that a creature that fails its save is also staggered for 1d6 rounds.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You can channel the hostile, unforgiving heat of the sun into your touch. This is a melee touch attack that deals 1d8 points of fire damage per 2 oracle levels (Fortitude half ). Against a plant creature, this touch heals or damages the creature (your choice) for 1d6 points of fire damage per oracle level.</p>\n<p>At 7th level, a creature that fails its save against this revelation becomes sickened for 1d4 hours in addition to taking fire damage.</p>\n<p>At 15th level, your touch is so intense that a creature that fails its save is also staggered for 1d6 rounds.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,68 +19,22 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "creature touched"
     },
     "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "touch"
     },
     "uses": {
-      "value": 0,
       "max": 1,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
+      "per": "day"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(floor(@classes.oracle.level / 2))d8",
-          "Fire"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -93,54 +43,8 @@
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Oracle"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",

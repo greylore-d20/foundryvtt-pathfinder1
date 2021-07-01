@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>As a standard action, the barbarian heals 1d8 points of damage + her Constitution modifier. For every 4 levels the barbarian has beyond 4th, the amount healed increases by 1d8 (to a maximum of 5d8 at 20th level).</p>\n<p>This ability can be used only once per day.</p>\n<p>The barbarian must be at least 4th level to select this rage power.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action, the barbarian heals 1d8 points of damage + her Constitution modifier. For every 4 levels the barbarian has beyond 4th, the amount healed increases by 1d8 (to a maximum of 5d8 at 20th level).</p>\n<p>This ability can be used only once per day.</p>\n<p>The barbarian must be at least 4th level to select this rage power.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,124 +19,30 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "self"
     },
     "range": {
-      "value": null,
-      "units": "personal",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "personal"
     },
     "uses": {
-      "value": 0,
       "max": 1,
       "per": "day",
-      "autoDeductCharges": false,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "1"
+      "autoDeductCharges": false
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
     "actionType": "heal",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(floor(@classes.barbarianUnchained.level / 4))d8 + @abilities.con.mod",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Barbarian (Unchained)"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "ex",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "ex"
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/deafening-critical.jpg",

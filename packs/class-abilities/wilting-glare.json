@@ -7,13 +7,9 @@
   "type": "feat",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can leach moisture and vitality from a living, corporeal creature you can see within 30 feet. The target takes an amount of nonlethal damage equal to 1d6 + 1 for every 2 cleric levels you have and becomes fatigued until the beginning of your next turn (Fortitude negates). Plant creatures and those with the aquatic or water subtype take lethal damage from this ability, and they are fatigued for a number of rounds equal to your Wisdom modifier. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Sun's Blessing power of the Sun Domain.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action, you can leach moisture and vitality from a living, corporeal creature you can see within 30 feet. The target takes an amount of nonlethal damage equal to 1d6 + 1 for every 2 cleric levels you have and becomes fatigued until the beginning of your next turn (Fortitude negates). Plant creatures and those with the aquatic or water subtype take lethal damage from this ability, and they are fatigued for a number of rounds equal to your Wisdom modifier. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Sun's Blessing power of the Sun Domain.</p>"
     },
-    "tags": [],
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -23,7 +19,6 @@
       }
     },
     "duration": {
-      "value": null,
       "units": "inst"
     },
     "target": {
@@ -31,116 +26,26 @@
     },
     "range": {
       "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": "",
-      "long": null
+      "units": "ft"
     },
     "uses": {
-      "value": 0,
       "max": 3,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "3 + @abilities.wis.mod"
+      "per": "day"
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "1d6 + floor(@classes.cleric.level / 2)",
-          "Nonlethal"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "",
-        "value": null
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": "",
     "attackNotes": "",
-    "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Cleric"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "attack": {
-      "parts": []
-    }
+    "abilityType": "su"
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/leaf-orange-1.jpg",

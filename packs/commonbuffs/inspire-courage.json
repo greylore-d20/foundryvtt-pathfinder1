@@ -7,73 +7,9 @@
   "type": "buff",
   "data": {
     "description": {
-      "value": "<p>Someone is inspiring you with courage. You gain a morale bonus on saves vs charm and fear effects, and a competence bonus on attack rolls and weapon damage rolls.</p>\n<p><strong>Usage</strong>: Set the buff's level to the bard level of the person using Inspire Courage.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>Someone is inspiring you with courage. You gain a morale bonus on saves vs charm and fear effects, and a competence bonus on attack rolls and weapon damage rolls.</p>\n<p><strong>Usage</strong>: Set the buff's level to the bard level of the person using Inspire Courage.</p>"
     },
-    "tags": [],
-    "changes": [
-      {
-        "_id": "o7gbtdbn",
-        "formula": "1 + max(0, floor((@item.level + 1) / 6))",
-        "operator": "add",
-        "subTarget": "attack",
-        "modifier": "competence",
-        "priority": 0,
-        "value": 0,
-        "target": "attack"
-      },
-      {
-        "_id": "rf8izhuw",
-        "formula": "1 + max(0, floor((@item.level + 1) / 6))",
-        "operator": "add",
-        "subTarget": "wdamage",
-        "modifier": "competence",
-        "priority": 0,
-        "value": 0,
-        "target": "damage"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false,
-      "noStr": false,
-      "noDex": false,
-      "oneInt": false,
-      "oneWis": false,
-      "oneCha": false
-    },
-    "contextNotes": [
-      {
-        "text": "+[[1 + max(0, floor((@item.level + 1) / 6))]] Morale vs Fear and Charm effects",
-        "target": "savingThrows",
-        "subTarget": "allSavingThrows"
-      }
-    ],
-    "links": {
-      "children": []
-    },
-    "tag": "",
-    "useCustomTag": false,
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "buffType": "temp",
-    "active": false,
-    "level": "1",
-    "hideFromToken": false,
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "uses": {
-      "value": 0,
-      "max": 0
-    }
+    "level": "1"
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/red_01.jpg",

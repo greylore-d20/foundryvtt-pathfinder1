@@ -21,6 +21,7 @@ const mergeStream = require("merge-stream");
 const fs = require("fs");
 const path = require("path");
 const { Transform } = require("stream");
+const streamFinished = require("stream/promises").finished;
 
 // BrowserSync for reloads
 const browserSync = require("browser-sync").create();
@@ -298,38 +299,157 @@ function sluggify(string) {
 }
 
 /**
+ * Removes keys from the first parameter which are not present in the second parameter.
+ *
+ * @param {object} object - The object to alter.
+ * @param {object} source - The source to compare with the first parameter.
+ * @param {object} [options] - Additional options to augment the behavior.
+ * @param {object} [options.keepDefaults=true] - Whether to keep entries which are identical to the source.
+ */
+function adhereTemplate(object, source, options = {}) {
+  const sourceKeys = Object.keys(source);
+
+  for (let k of Object.keys(object)) {
+    if (!sourceKeys.includes(k)) {
+      delete object[k];
+      continue;
+    }
+
+    if (typeof object[k] === "object" && object[k] != null && typeof source[k] === "object" && source[k] != null) {
+      adhereTemplate(object[k], source[k], options);
+      // Delete if empty object
+      if (Object.keys(object[k]).length === 0) delete object[k];
+    } else if (options.keepDefaults === false && object[k] === source[k]) {
+      delete object[k];
+    }
+  }
+}
+
+/**
+ * Merges the contents of the second object into the first object, recursively.
+ *
+ * @param {object} first - The object to insert values into.
+ * @param {object} second - The object to get values from.
+ * @returns {object} The merged result.
+ */
+function mergeObject(first, second) {
+  // Return non-object immediately
+  if (typeof second !== "object" || second === undefined || second === null) {
+    return second;
+  }
+  // Parse array
+  if (second instanceof Array) {
+    let result = [];
+    for (let a = 0; a < second.length; a++) {
+      result.push(mergeObject({}, second[a]));
+    }
+    return result;
+  }
+  // Parse object
+  let result = typeof first === "object" ? first : {};
+  for (let [k, v] of Object.entries(second)) {
+    result[k] = mergeObject(result[k], v);
+  }
+  return result;
+}
+
+/**
+ * @todo Test this function.
+ * Duplicates an object.
+ *
+ * @param {object} obj - The object to duplicate.
+ * @returns {object} The deeply cloned object.
+ */
+function duplicate(obj) {
+  return mergeObject({}, obj);
+}
+
+/**
+ * Loads the document templates file.
+ *
+ * @returns {object} The document templates object, merged with their respective templates.
+ */
+function loadDocumentTemplates() {
+  const f = fs.readFileSync(path.join(__dirname, "template.json"));
+  const templates = JSON.parse(f);
+
+  for (const doc of Object.values(templates)) {
+    if (doc.types) delete doc.types;
+
+    for (const [k, v] of Object.entries(doc)) {
+      if (k === "templates") continue;
+
+      if (v.templates instanceof Array) {
+        for (let templateKey of v.templates) {
+          doc[k] = mergeObject(v, doc.templates?.[templateKey] ?? {});
+        }
+        delete v.templates;
+      }
+    }
+
+    if (doc.templates) delete doc.templates;
+  }
+
+  return templates;
+}
+
+/**
+ * Loads the system manifest file.
+ *
+ * @returns {object} The system manifest file as an object.
+ */
+function loadManifest() {
+  const f = fs.readFileSync(path.join(__dirname, "system.json"));
+  return JSON.parse(f);
+}
+
+/**
  * Santize pack entries.
  *
- * This resets the entries' permissions to defaul and removes all non-pf1 flags.
+ * This resets the entries' permissions to default and removes all non-pf1 flags.
  *
  * @param {object} pack Loaded compendium content.
- * @returns {object} The sanitized content.
+ * @param {object} templateData Document template data, as loaded by {@link loadDocumentTemplates}.
+ * @returns {Promise.<object>} The sanitized content.
  */
-function sanitizePack(pack) {
-  // Reset permissions to default
-  pack.permission = { default: 0 };
+function sanitizePack(pack, templateData) {
   // Remove non-system/non-core flags
   for (const key of Object.keys(pack.flags)) {
     if (key !== "pf1") delete pack.flags[key];
   }
+  // Adhere to template data
+  if (templateData) {
+    adhereTemplate(pack.data, templateData[pack.type], { keepDefaults: false });
+  }
+
   return pack;
 }
 
 /**
  * Extract pack entries from DBs and into single files
  *
- * @returns {NodeJS.ReadableStream} The merged ReadableStream
+ * @returns {Promise.<void>} The merged ReadableStream
  */
 function extractPacks() {
+  const templateData = loadDocumentTemplates();
+  const manifest = loadManifest();
+
   const extract = new Transform({
     readableObjectMode: true,
     writableObjectMode: true,
-    transform(file, _, callback) {
+    async transform(file, _, callback) {
       // Create directory.
       let filename = path.parse(file.path).name;
       if (!fs.existsSync(`./${PACK_SRC}/${filename}`)) {
         fs.mkdirSync(`./${PACK_SRC}/${filename}`);
       }
+
+      // Find associated manifest pack data
+      const packData = manifest.packs.find((p) => {
+        const packFilename = path.parse(p.path).name;
+        return packFilename === filename;
+      });
+      if (!packData) console.warn(`No data found for package ${filename} within the system manifest.`);
 
       // Load the database.
       const db = new Datastore({ filename: file.path, autoload: true });
@@ -342,8 +462,8 @@ function extractPacks() {
         db.find({}, (_, packs) => {
           // Iterate through each compendium entry.
           packs.forEach((pack) => {
-            // Remove permissions and _id
-            pack = sanitizePack(pack);
+            // Remove permissions and _id, and adhere to template data
+            pack = sanitizePack(pack, templateData[packData?.entity]);
 
             let output = JSON.stringify(pack, null, 2);
 
@@ -444,3 +564,4 @@ exports.major = gulp.series(major, buildTask, commitTag);
 
 exports.compilePacks = gulp.series(cleanPacks, compilePacks);
 exports.extractPacks = extractPacks;
+exports.bla = loadDocumentTemplates;

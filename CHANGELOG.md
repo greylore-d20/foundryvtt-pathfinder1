@@ -16,6 +16,7 @@
 ### Compendiums
 
 - Fixed Magic Missile firing one missile too many early on (thanks @websterguy!)
+- Truncated compendium entry variables, reducing memory usage
 
 ### API
 

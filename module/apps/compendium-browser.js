@@ -543,13 +543,13 @@ export class CompendiumBrowser extends Application {
       const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
         result.item.creatureType = race.data.data.creatureType;
-        result.item.subTypes = race.data.data.subTypes.map((o) => {
+        result.item.subTypes = race.data.data.subTypes?.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });
       }
     } else {
-      item.subTypes.forEach((o) => {
+      item.subTypes?.forEach((o) => {
         this.extraFilters.subTypes[o] = true;
       });
       result.item.creatureType = item.creatureType;

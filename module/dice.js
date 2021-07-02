@@ -35,6 +35,7 @@ export class DicePF {
     parts,
     dice = "1d20",
     data,
+    subject,
     template,
     title,
     speaker,
@@ -115,6 +116,7 @@ export class DicePF {
             roll: roll.toJSON(),
             "flags.pf1.noRollRender": true,
           };
+          if (subject) setProperty(chatData, "flags.pf1.subject", subject);
 
           // Send message
           rolled = true;
@@ -123,12 +125,15 @@ export class DicePF {
         } else {
           rolled = true;
           if (chatMessage) {
-            await roll.toMessage({
+            let msgData = {
               speaker: speaker,
               flavor: flavor,
               rollMode: rollMode,
               sound: a === 0 ? CONFIG.sounds.dice : null,
-            });
+            };
+            if (subject) setProperty(msgData, "flags.pf1.subject", subject);
+
+            await roll.toMessage(msgData);
           }
         }
         return roll;
@@ -273,6 +278,8 @@ export class DicePF {
           content: await renderTemplate(chatTemplate, rollData),
           useCustomContent: true,
         };
+        setProperty(chatData, "flags.pf1.subject.core", "damage");
+
         // Handle different roll modes
         switch (chatData.rollMode) {
           case "gmroll":

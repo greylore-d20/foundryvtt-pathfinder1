@@ -2,6 +2,10 @@
 
 ## 0.78.14 (Hotfix)
 
+### Localization
+
+- Updated the Italian translation (thanks Davide Mascaretti!)
+
 ### Compendiums
 
 - Compendium items were missing a lot of details since last version

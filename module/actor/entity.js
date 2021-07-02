@@ -2195,7 +2195,7 @@ export class ActorPF extends Actor {
       parts,
       dice: options.dice,
       data: rollData,
-      subject: { skill: skillId },
+      subject: { skill: skillParts.join(".") },
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",

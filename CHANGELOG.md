@@ -5,6 +5,7 @@
 ### Compendiums
 
 - Compendium items were missing a lot of details since last version
+- Fix error on rolling defenses (#920)
 
 ## 0.78.13
 

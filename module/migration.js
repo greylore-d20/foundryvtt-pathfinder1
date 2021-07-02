@@ -318,11 +318,8 @@ const _migrateActorNoteArrays = function (ent, updateData) {
   for (let k of list) {
     const value = getProperty(ent, k);
     const hasValue = hasProperty(ent, k);
-    if (hasValue && !(value instanceof Array)) {
-      updateData[k] = [];
-      if (typeof value === "string") {
-        updateData[k] = value.split(/[\n\r]/);
-      }
+    if (hasValue && value instanceof Array) {
+      updateData[k] = value.join("\n");
     }
   }
 };

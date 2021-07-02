@@ -444,7 +444,7 @@ Hooks.once("ready", async function () {
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.78.13";
+  const NEEDS_MIGRATION_VERSION = "0.78.14";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";

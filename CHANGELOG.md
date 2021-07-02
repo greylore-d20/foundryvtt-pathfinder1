@@ -12,6 +12,7 @@
 - Implemented a rolldata variable for spellbooks' ability modifiers, using `@spells.primary.abilityMod` for example (thanks mkahvi!)
 - Added Attack of Opportunity and Nonaction to the list of available actions for items (thanks mkahvi!)
 - Slightly changed style of attack and effect note input
+- Added favoured class notes (thanks mkahvi!)
 
 ### Compendiums
 

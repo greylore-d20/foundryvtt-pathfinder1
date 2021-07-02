@@ -11,6 +11,10 @@
 - Compendium items were missing a lot of details since last version
 - Fix error on rolling defenses (#920)
 
+### API
+
+- Added `flags.pf1.subject` to chat message data to know what it's about (thanks mkahvi!)
+
 ## 0.78.13
 
 ### Bug Fixes

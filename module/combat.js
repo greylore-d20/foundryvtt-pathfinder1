@@ -134,6 +134,7 @@ export const _rollInitiative = async function (ids, { formula = null, updateTurn
         },
         messageOptions
       );
+      setProperty(chatData, "flags.pf1.subject.core", "init");
 
       // Handle different roll modes
       switch (chatData.rollMode) {

@@ -148,6 +148,10 @@
         <input type="text" name="data.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" />
       </div>
       {{/each}}
+      <div class="form-group">
+        <label>{{localize 'PF1.Notes'}}</label>
+        <input type="text" name="data.fc.alt.notes" value="{{data.fc.alt.notes}}" data-dtype="String" />
+      </div>
       {{/if}}
 
       <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>

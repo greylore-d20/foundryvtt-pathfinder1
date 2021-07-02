@@ -2195,6 +2195,7 @@ export class ActorPF extends Actor {
       parts,
       dice: options.dice,
       data: rollData,
+      subject: { skill: skillId },
       title: game.i18n.localize("PF1.SkillCheck").format(sklName),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
@@ -2233,6 +2234,7 @@ export class ActorPF extends Actor {
       parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.bab.total },
+      subject: { core: "bab" },
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2275,6 +2277,7 @@ export class ActorPF extends Actor {
       parts: [`@mod[${game.i18n.localize("PF1.CMBAbbr")}]`],
       dice: options.dice,
       data: { mod: this.data.data.attributes.cmb.total },
+      subject: { core: "cmb" },
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2341,6 +2344,7 @@ export class ActorPF extends Actor {
       parts: changes,
       dice: options.dice,
       data: rollData,
+      subject: { core: "attack" },
       title: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2372,6 +2376,7 @@ export class ActorPF extends Actor {
       event: event,
       parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
       data: rollData,
+      subject: { core: "cl" },
       title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2417,6 +2422,7 @@ export class ActorPF extends Actor {
       ],
       dice: options.dice,
       data: rollData,
+      subject: { core: "concentration" },
       title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2618,6 +2624,7 @@ export class ActorPF extends Actor {
       dice: options.dice,
       situational: true,
       data: rollData,
+      subject: { save: savingThrowId },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2684,6 +2691,7 @@ export class ActorPF extends Actor {
       parts: [formula],
       dice: options.dice,
       data: rollData,
+      subject: { ability: abilityId },
       title: game.i18n.localize("PF1.AbilityTest").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
@@ -2822,6 +2830,8 @@ export class ActorPF extends Actor {
         fastHealing: d.traits.fastHealing,
       };
     }
+
+    setProperty(data, "flags.pf1.subject", "defenses");
 
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
       speaker: ChatMessage.getSpeaker({ actor: this }),

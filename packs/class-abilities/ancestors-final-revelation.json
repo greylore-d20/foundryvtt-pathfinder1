@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Upon reaching 20th level, you become one with the spirits of your ancestors. You gain a bonus on Will saving throws equal to your Charisma modifier, blindsense out to a range of 60 feet, and a +4 bonus on your caster level for all divination spells. You can cast @Compendium[pf1.spells.lnahlmp5mih2ongh]{Astral Projection} as a spell-like ability once per day without requiring material components.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,13 +29,52 @@
       "units": "touch"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "featType": "classFeat"
+    "changes": [
+      {
+        "_id": "qmdrdwya",
+        "formula": "@abilities.cha.mod",
+        "operator": "+",
+        "subTarget": "will",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "savingThrows"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",

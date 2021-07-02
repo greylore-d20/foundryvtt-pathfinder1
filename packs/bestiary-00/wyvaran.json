@@ -31,6 +31,10 @@
         }
       },
       "spells": {
+        "usedSpellbooks": [
+          "spelllike",
+          "primary"
+        ],
         "spellbooks": {
           "primary": {
             "altName": "Inquisitor Spells Known",
@@ -73,6 +77,24 @@
     },
     "traits": {
       "senses": "darkvision 60 ft., low-light vision; Perception +7",
+      "languages": {
+        "value": [
+          "common",
+          "draconic"
+        ]
+      },
+      "di": {
+        "value": []
+      },
+      "dv": {
+        "value": []
+      },
+      "ci": {
+        "value": [
+          "paralyze",
+          "sleep"
+        ]
+      },
       "stature": ""
     }
   },
@@ -124,9 +146,7 @@
       "img": "systems/pf1/icons/races/creature-types/dragon.png",
       "data": {
         "description": {
-          "value": "<h2>Standard Racial Traits</h2>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Ability Score Modifiers</span>: Standard (+2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>, –2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>, +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>)</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Type</span>:&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Dragon\">Dragon</a>&nbsp;</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Size</span>: Medium</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Base Speed</span>: Normal&nbsp;</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Languages</span>: Standard&nbsp;</li>\n<li><strong>Fly:</strong>&nbsp;Wyvaran have a&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Flight-Ex-or-Su-\">fly</a>&nbsp;speed of 30 ft. (clumsy maneuverability) (4 RP)</li>\n</ul>\n<h3>Senses</h3>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Darkvision</span>: Wyvarans have&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">darkvision</a>&nbsp;and so can see perfectly in the dark up to 60 feet.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Low-Light Vision</span>: Wyvaran can see twice as far as&nbsp;<a href=\"https://www.d20pfsrd.com/races/core-races/human\">humans</a>&nbsp;in dim light (they have&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>).&nbsp;</li>\n</ul>\n<h3>Offensive Racial Traits</h3>\n<ul>\n<li><strong>Natural Attacks</strong>: Slapping tail</li>\n</ul>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<h2>Standard Racial Traits</h2>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Ability Score Modifiers</span>: Standard (+2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>, –2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>, +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>)</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Type</span>:&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Dragon\">Dragon</a>&nbsp;</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Size</span>: Medium</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Base Speed</span>: Normal&nbsp;</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Languages</span>: Standard&nbsp;</li>\n<li><strong>Fly:</strong>&nbsp;Wyvaran have a&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Flight-Ex-or-Su-\">fly</a>&nbsp;speed of 30 ft. (clumsy maneuverability) (4 RP)</li>\n</ul>\n<h3>Senses</h3>\n<ul>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Darkvision</span>: Wyvarans have&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">darkvision</a>&nbsp;and so can see perfectly in the dark up to 60 feet.</li>\n<li style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box; font-weight: bold;\">Low-Light Vision</span>: Wyvaran can see twice as far as&nbsp;<a href=\"https://www.d20pfsrd.com/races/core-races/human\">humans</a>&nbsp;in dim light (they have&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>).&nbsp;</li>\n</ul>\n<h3>Offensive Racial Traits</h3>\n<ul>\n<li><strong>Natural Attacks</strong>: Slapping tail</li>\n</ul>"
         },
         "tags": [],
         "changes": [
@@ -161,28 +181,15 @@
             "target": "ability"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": []
         },
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -190,16 +197,7 @@
         },
         "scriptCalls": [],
         "creatureType": "dragon",
-        "subTypes": [],
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "uses": {
-          "value": 0,
-          "max": 0
-        }
+        "subTypes": []
       },
       "effects": [],
       "folder": null,
@@ -216,23 +214,10 @@
       "img": "systems/pf1/icons/items/inventory/book-red.jpg",
       "data": {
         "description": {
-          "value": "<p>Grim and determined, the inquisitor roots out enemies of the faith, using trickery and guile when righteousness and purity is not enough. Although inquisitors are dedicated to a deity, they are above many of the normal rules and conventions of the church. They answer to their deity and their own sense of justice alone, and are willing to take extreme measures to meet their goals.</p>\n<p><strong>Role</strong>: Inquisitors tend to move from place to place, chasing down enemies and researching emerging threats. As a result, they often travel with others, if for no other reason than to mask their presence. Inquisitors work with members of their faith whenever possible, but even such allies are not above suspicion.</p>\n<p><strong>Alignment</strong>: An inquisitor’s alignment must be within one step of her deity’s, along either the law/chaos axis or the good/evil axis.</p>\n<p><strong>Hit Dice</strong>: d8.</p>\n<p><strong>Starting Wealth</strong>: 4d6 × 10 gp (average 140gp.) In addition, each character begins play with an outfit worth 10 gp or less.</p>\n<h2><span id=\"Class_Skills\">Class Skills</span></h2>\n<p>The inquisitor’s class skills are <a href=\"https://www.d20pfsrd.com/skills/bluff\">Bluff</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/climb\">Climb</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Str</a>), <a href=\"https://www.d20pfsrd.com/skills/craft\">Craft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/diplomacy\">Diplomacy</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/disguise\">Disguise</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/heal\">Heal</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/intimidate\">Intimidate</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(arcana) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(dungeoneering) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(nature) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(planes) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(religion) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/perception\">Perception</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/profession\">Profession</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/ride\">Ride</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>), <a href=\"https://www.d20pfsrd.com/skills/sense-motive\">Sense Motive</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/spellcraft\">Spellcraft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/stealth\">Stealth</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>), <a href=\"https://www.d20pfsrd.com/skills/survival\">Survival</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), and <a href=\"https://www.d20pfsrd.com/skills/swim\">Swim</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Str</a>).</p>\n<p><strong>Skill Ranks per Level</strong>: 6 +&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a> modifier.</p>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<p>Grim and determined, the inquisitor roots out enemies of the faith, using trickery and guile when righteousness and purity is not enough. Although inquisitors are dedicated to a deity, they are above many of the normal rules and conventions of the church. They answer to their deity and their own sense of justice alone, and are willing to take extreme measures to meet their goals.</p>\n<p><strong>Role</strong>: Inquisitors tend to move from place to place, chasing down enemies and researching emerging threats. As a result, they often travel with others, if for no other reason than to mask their presence. Inquisitors work with members of their faith whenever possible, but even such allies are not above suspicion.</p>\n<p><strong>Alignment</strong>: An inquisitor’s alignment must be within one step of her deity’s, along either the law/chaos axis or the good/evil axis.</p>\n<p><strong>Hit Dice</strong>: d8.</p>\n<p><strong>Starting Wealth</strong>: 4d6 × 10 gp (average 140gp.) In addition, each character begins play with an outfit worth 10 gp or less.</p>\n<h2><span id=\"Class_Skills\">Class Skills</span></h2>\n<p>The inquisitor’s class skills are <a href=\"https://www.d20pfsrd.com/skills/bluff\">Bluff</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/climb\">Climb</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Str</a>), <a href=\"https://www.d20pfsrd.com/skills/craft\">Craft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/diplomacy\">Diplomacy</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/disguise\">Disguise</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/heal\">Heal</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/intimidate\">Intimidate</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Cha</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(arcana) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(dungeoneering) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(nature) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(planes) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;(religion) (<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/perception\">Perception</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/profession\">Profession</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/ride\">Ride</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>), <a href=\"https://www.d20pfsrd.com/skills/sense-motive\">Sense Motive</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), <a href=\"https://www.d20pfsrd.com/skills/spellcraft\">Spellcraft</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a>), <a href=\"https://www.d20pfsrd.com/skills/stealth\">Stealth</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dex</a>), <a href=\"https://www.d20pfsrd.com/skills/survival\">Survival</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wis</a>), and <a href=\"https://www.d20pfsrd.com/skills/swim\">Swim</a>&nbsp;(<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Str</a>).</p>\n<p><strong>Skill Ranks per Level</strong>: 6 +&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Int</a> modifier.</p>"
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "links": {
           "children": [],
           "classAssociations": [
@@ -407,8 +392,7 @@
             "lgt",
             "med",
             "shl"
-          ],
-          "custom": ""
+          ]
         },
         "weaponProf": {
           "value": [
@@ -421,36 +405,14 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "classType": "base",
-        "levels": {
-          "value": 0,
-          "_deprecated": true
-        },
-        "level": 1,
-        "hd": 8,
-        "hp": 8,
         "bab": "med",
         "skillsPerLevel": 6,
         "savingThrows": {
           "fort": {
             "value": "high"
           },
-          "ref": {
-            "value": "low"
-          },
           "will": {
             "value": "high"
-          }
-        },
-        "fc": {
-          "hp": {
-            "value": 0
-          },
-          "skill": {
-            "value": 0
-          },
-          "alt": {
-            "value": 0
           }
         },
         "classSkills": {
@@ -491,27 +453,6 @@
           "sur": true,
           "swm": true,
           "umd": false
-        },
-        "extraDescription": {
-          "value": "<h2>Weapon and Armor Proficiency</h2>\n<p>An inquisitor is proficient with all simple weapons, plus the hand crossbow, longbow, repeating crossbow, shortbow, and the favored weapon of her deity. She is also proficient with light&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, medium&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, and shields (except tower shields).</p>\n<h2>Spells</h2>\n<p>An inquisitor casts divine spells drawn from the&nbsp;<a href=\"https://www.d20pfsrd.com/magic/spell-lists-and-domains/spell-lists-inquisitor\">inquisitor spell list</a>. She can cast any spell she knows at any time without preparing it ahead of time, assuming she has not yet used up her allotment of spells per day for the spell’s level.</p>\n<p>To learn or cast a spell, an inquisitor must have a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;score equal to at least 10 + the spell level. The Difficulty Class for a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Saving-Throws\">saving throw</a>&nbsp;against an inquisitor’s spell is 10 + the spell level + the inquisitor’s&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;modifier.</p>\n<p>An inquisitor can cast only a certain number of spells of each spell level each day. Her base daily spell allotment is given on&nbsp;Table: Inquisitor. In addition, she receives bonus spells per day if she has a high&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;score (see&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Abilities-and-Spellcasters\">Table: Ability Modifiers and Bonus Spells</a>).</p>\n<p>An inquisitor’s selection of spells is extremely limited. An inquisitor begins play knowing four 0-level spells and two 1st-level spells of the inquisitor’s choice. At each new inquisitor level, she gains one or more new spells as indicated on&nbsp;Table: Inquisitor Spells Known. (Unlike spells per day, the number of spells an inquisitor knows is not affected by her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;score. The numbers on&nbsp;Table: Inquisitor Spells Known&nbsp;are fixed.)</p>\n<p>Upon reaching 5th level, and at every third inquisitor level thereafter (8th, 11th, and so on), an inquisitor can choose to learn a new spell in place of one she already knows. In effect, the inquisitor “loses” the old spell in exchange for the new one. The new spell’s level must be the same as that of the spell being exchanged, and it must be at least one level lower than the highest-level inquisitor spell she can cast. The inquisitor may swap out only a single spell at any given level and must choose whether or not to swap the spell at the same time that she gains new spells known for the level.</p>\n<table style=\"box-sizing: border-box; border-spacing: 0px; background-color: #ffffff; margin: 10px; table-layout: fixed; border-color: #888888; min-width: 200px; color: #333333; font-family: Varela, sans-serif;\" border=\"1\" cellpadding=\"5\">\n<thead style=\"box-sizing: border-box; background-color: #cfe2f3;\">\n<tr style=\"box-sizing: border-box;\">\n<th class=\"text\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\" rowspan=\"2\">Level</th>\n<th class=\"text\" style=\"box-sizing: border-box; padding: 2px; text-align: left; border: 1px solid #888888;\" colspan=\"7\">Spells Known</th>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">0th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">1st</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">2nd</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">3rd</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">4th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">5th</th>\n<th class=\"number\" style=\"box-sizing: border-box; padding: 2px; text-align: left; background-color: #cfe2f3; border: 1px solid #888888;\">6th</th>\n</tr>\n</thead>\n<tbody style=\"box-sizing: border-box;\">\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">1st</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2nd</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3rd</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">7th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">8th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">9th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">10th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">11th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">12th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">13th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">14th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">15th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"marker\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">—</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">16th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">2</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">17th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">3</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">18th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n</tr>\n<tr style=\"box-sizing: border-box;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">19th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">4</td>\n</tr>\n<tr style=\"box-sizing: border-box; background-color: #f3f3f3;\">\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">20th</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">6</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n<td class=\"number\" style=\"box-sizing: border-box; padding: 2px; vertical-align: top; text-align: center; border: 1px solid #888888;\">5</td>\n</tr>\n</tbody>\n</table>\n<h2>Domain (or Inquisition)</h2>\n<p>Like a&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric’s</a>&nbsp;deity, an inquisitor’s deity influences her alignment, what magic she can perform, and her values. Although not as tied to the tenets of the deity as a&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric</a>, an inquisitor must still hold such guidelines in high regard, despite that fact she can go against them if it serves the greater good of the faith. An inquisitor can select one&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/domains\">domain</a>&nbsp;from among those belonging to her deity. She can select an alignment domain only if her alignment matches that domain. With the GM’s approval, an inquisitor can be devoted to an ideal instead of a deity, selecting one domain to represent her personal inclination and abilities. The restriction on alignment domains still applies.</p>\n<p>Each&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/domains\">domain</a>&nbsp;grants a number of domain powers, depending on the level of the inquisitor. An inquisitor does not gain the bonus spells listed for each domain, nor does she gain bonus spell slots. The inquisitor uses her level as her effective&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric</a>&nbsp;level when determining the power and effect of her domain powers. If the inquisitor has&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric</a>&nbsp;levels, one of her two domain selections must be the same domain selected as an inquisitor. Levels of&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">cleric</a>&nbsp;and inquisitor stack for the purpose of determining domain powers and abilities, but not for bonus spells.</p>\n<p>A complete listing of domains can be found here:&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/domains\">Domains</a>. Inquisitors also have access to Inquisitions, which are similar to Domains but do not include Domain spells. A complete listing of Inquisitions can be found here:&nbsp;<a href=\"https://www.d20pfsrd.com/classes/base-classes/inquisitor/inquisitions\">Inquisitions</a>.</p>\n<h2>Judgement (Su)</h2>\n<p>Starting at 1st level, an inquisitor can pronounce judgment upon her foes as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>. Starting when the judgment is made, the inquisitor receives a bonus or special ability based on the type of judgment made.</p>\n<p>At 1st level, an inquisitor can use this ability once per day. At 4th level and every three levels thereafter, the inquisitor can use this ability one additional time per day. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. The inquisitor must participate in the combat to gain these bonuses. If she is&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Frightened\">frightened</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Panicked\">panicked</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Paralyzed\">paralyzed</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Stunned\">stunned</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Unconscious\">unconscious</a>, or otherwise prevented from participating in the combat, the ability does not end, but the bonuses do not resume until she can participate in the combat again.</p>\n<p>When the inquisitor uses this ability, she must select one type of judgment to make. As a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>, she can change this judgment to another type. If the inquisitor is&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Evil\">evil</a>, she receives profane bonuses instead of sacred, as appropriate.&nbsp;<a href=\"https://www.d20pfsrd.com/alignment-description/additional-rules\">Neutral</a>&nbsp;inquisitors must select profane or sacred bonuses. Once made, this choice cannot be changed.</p>\n<div>\n<p><a name=\"judgment-destruction\"></a><strong>Destruction</strong>: The inquisitor is filled with divine wrath, gaining a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on all weapon damage rolls. This bonus increases by +1 for every three inquisitor levels she possesses.</p>\n<p><a name=\"judgment-healing\"></a><strong>Healing</strong>: The inquisitor is surrounded by a healing light, gaining fast healing 1. This causes the inquisitor to heal 1 point of damage each round as long as the inquisitor is alive and the judgment lasts. The amount of healing increases by 1 point for every three inquisitor levels she possesses.</p>\n<p><a name=\"judgment-justice\"></a><strong>Justice</strong>: This judgment spurs the inquisitor to seek justice, granting a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on all attack rolls. This bonus increases by +1 for every five inquisitor levels she possesses. At 10th level, this bonus is doubled on all attack rolls made to confirm critical hits.</p>\n<p><a name=\"judgment-piercing\"></a><strong>Piercing</strong>: This judgment gives the inquisitor great focus and makes her spells more potent. This benefit grants a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Concentration\">concentration</a>&nbsp;checks and&nbsp;<a href=\"https://www.d20pfsrd.com/magic#TOC-Caster-Level\">caster level</a>&nbsp;checks made to overcome a target’s&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Spell-Resistance\">spell resistance</a>. This bonus increases by +1 for every three inquisitor levels she possesses.</p>\n<p><a name=\"judgment-protection\"></a><strong>Protection</strong>: The inquisitor is surrounded by a protective aura, granting a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Armor-Class\">Armor Class</a>. This bonus increases by +1 for every five inquisitor levels she possesses. At 10th level, this bonus is doubled against attack rolls made to confirm critical hits against the inquisitor.</p>\n<p><a name=\"judgment-purity\"></a><strong>Purity</strong>: The inquisitor is protected from the vile taint of her foes, gaining a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on all&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Saving-Throws\">saving throws</a>. This bonus increases by +1 for every five inquisitor levels she possesses. At 10th level, the bonus is doubled against curses, diseases, and poisons.</p>\n<p><a name=\"judgment-resiliency\"></a><strong>Resiliency</strong>: This judgment makes the inquisitor resistant to harm, granting&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Damage-Reduction-Ex-or-Su-\">DR</a>&nbsp;1/magic. This&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Damage-Reduction-Ex-or-Su-\">DR</a>&nbsp;increases by 1 for every five levels she possesses. At 10th level, this&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Damage-Reduction-Ex-or-Su-\">DR</a>&nbsp;changes from magic to an alignment (<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Chaotic\">chaotic</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Evil\">evil</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Good\">good</a>, or&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Lawful\">lawful</a>) that is opposite the inquisitor’s. If she is&nbsp;<a href=\"https://www.d20pfsrd.com/alignment-description/additional-rules\">neutral</a>, the inquisitor does not receive this increase.</p>\n<p><a name=\"judgment-resistance\"></a><strong>Resistance</strong>: The inquisitor is shielded by a flickering aura, gaining 2 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Energy-Resistance\">energy resistance</a>&nbsp;against one energy type (acid, cold, electricity, fire, or sonic) chosen when the judgment is declared. The protection increases by 2 for every three inquisitor levels she possesses.</p>\n<p><a name=\"judgment-smiting\"></a><strong>Smiting</strong>: This judgment bathes the inquisitor’s weapons in a divine light. The inquisitor’s weapons count as magic for the purposes of bypassing&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Damage-Reduction\">damage reduction</a>. At 6th level, the inquisitor’s weapons also count as one alignment type (<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Chaotic\">chaotic</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Evil\">evil</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Good\">good</a>, or&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Lawful\">lawful</a>) for the purpose of bypassing&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Damage-Reduction\">damage reduction</a>. The type selected must match one of the inquisitor’s alignments. If the inquisitor is&nbsp;<a href=\"https://www.d20pfsrd.com/alignment-description/additional-rules\">neutral</a>, she does not receive this bonus. At 10th level, the inquisitor’s weapons also count as adamantine for the purpose of overcoming&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Damage-Reduction\">damage reduction</a>&nbsp;(but not for reducing hardness).</p>\n<h2>Monster Lore (Ex)</h2>\n<p>The inquisitor adds her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;modifier on&nbsp;<a href=\"https://www.d20pfsrd.com/skills/knowledge\">Knowledge</a>&nbsp;skill checks in addition to her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Intelligence</a>&nbsp;modifier, when making skill checks to identify the abilities and weaknesses of creatures.</p>\n<h2>Orisons</h2>\n<p>Inquisitors learn a number of orisons, or 0-level spells, as noted on&nbsp;Table: Inquisitor Spells Known. These spells are cast like any other spell, but they are not expended when cast and may be used again. Orisons prepared using other spell slots, such as those due to&nbsp;<a href=\"https://www.d20pfsrd.com/feats#TOC-Metamagic-Feats\">metamagic</a>&nbsp;feats, are expended normally.</p>\n<h2>Stern Gaze (Ex)</h2>\n<p>Inquisitors are skilled at sensing deception and intimidating their foes. An inquisitor receives a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Morale-Bonus\">morale bonus</a>&nbsp;on all&nbsp;<a href=\"https://www.d20pfsrd.com/skills/intimidate\">Intimidate</a>&nbsp;and&nbsp;<a href=\"https://www.d20pfsrd.com/skills/sense-motive\">Sense Motive</a>&nbsp;checks equal to 1/2 her inquisitor level (minimum +1).</p>\n<h2>Cunning Initiative (Ex)</h2>\n<p>At 2nd level, an inquisitor adds her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;modifier on&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Initiative\">initiative</a>&nbsp;checks, in addition to her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dexterity</a>&nbsp;modifier.</p>\n<h2>Detect Alignment (Sp)</h2>\n<p>At 2nd level, at will, an inquisitor can use&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/d/detect-chaos\">detect chaos</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/d/detect-evil\">detect evil</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/d/detect-good\">detect good</a>, or&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/d/detect-law\">detect law</a>. She can only use one of these at any given time.</p>\n<h2>Track (Ex)</h2>\n<p>At 2nd level, an inquisitor adds half her level on&nbsp;<a href=\"https://www.d20pfsrd.com/skills/survival\">Survival</a>&nbsp;skill checks made to follow or identify tracks.</p>\n<h2>Solo Tactics (Ex)</h2>\n<p>At 3rd level, all of the inquisitor’s allies are treated as if they possessed the same teamwork feats as the inquisitor for the purpose of determining whether the inquisitor receives a bonus from her teamwork feats. Her allies do not receive any bonuses from these feats unless they actually possess the feats themselves. The allies’ positioning and actions must still meet the prerequisites listed in the teamwork feat for the inquisitor to receive the listed bonus.</p>\n<h2>Teamwork Feat</h2>\n<p>At 3rd level, and every three levels thereafter, the inquisitor gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feats</a>. The inquisitor must meet the prerequisites of the selected bonus feat.</p>\n<p>As a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>, the inquisitor can choose to learn a new bonus&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>&nbsp;in place of the most recent bonus&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>&nbsp;she has already learned. In effect, the inquisitor loses the bonus feat in exchange for the new one. She can only change the most recent&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>&nbsp;gained. Whenever she gains a new&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>, the previous&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>&nbsp;becomes set and cannot be changed again. An inquisitor can change her most recent&nbsp;<a href=\"https://www.d20pfsrd.com/feats/teamwork-feats\">teamwork feat</a>&nbsp;a number of times per day equal to her&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Wisdom-Wis-\">Wisdom</a>&nbsp;modifier.</p>\n<h2>Bane (Su)</h2>\n<p>At 5th level, an inquisitor can imbue one of her weapons with the&nbsp;<a href=\"https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/\">bane weapon special ability</a>&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>. She must select one creature type when she uses this ability (and a subtype if the creature type selected is&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Humanoid\">humanoid</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Outsider\">outsider</a>). Once selected, the type can be changed as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>. This ability only functions while the inquisitor wields the weapon. If dropped or taken, the weapon resumes granting this ability if it is returned to the inquisitor before the duration expires. This ability lasts for a number of rounds per day equal to the inquisitor’s level. These rounds do not need to be consecutive.</p>\n<h2>Discern Lies (Sp)</h2>\n<p>At 5th level, an inquisitor can&nbsp;<a href=\"https://www.d20pfsrd.com/magic/all-spells/d/discern-lies\">discern lies</a>, as per the spell, for a number of rounds per day equal to her inquisitor level. These rounds do not need to be consecutive. Activating this ability is an immediate action.</p>\n<h2>Second Judgement (Ex)</h2>\n<p>At 8th level, whenever an inquisitor uses her judgment ability, she selects two different judgments, instead of one. This only consumes one use of her judgment ability. As a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>, she can change one of these judgments to another type.</p>\n<h2>Stalwart (Ex)</h2>\n<p>At 11th level, an inquisitor can use mental and physical resiliency to avoid certain attacks. If she makes a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Fortitude\">Fortitude</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\">Will</a>&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Saving-Throws\">saving throw</a>&nbsp;against an attack that has a reduced effect on a successful save, she instead avoids the effect entirely. This ability can only be used if the inquisitor is wearing light&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, medium&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Armor-Bonus\">armor</a>, or no armor. A&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Helpless\">helpless</a>&nbsp;inquisitor does not gain the benefit of the stalwart ability.</p>\n<h2>Greater Bane (Su)</h2>\n<p>At 12th level, whenever an inquisitor uses her bane ability, the amount of bonus damage dealt by the weapon against creatures of the selected type increases to 4d6.</p>\n<h2>Exploit Weakness (Ex)</h2>\n<p>At 14th level, the inquisitor learns to take advantage of any opportunity that presents itself. Whenever the inquisitor scores a critical hit, she ignores any&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Damage-Reduction\">damage reduction</a>&nbsp;the target might have. In addition, if the target has regeneration, the creature loses&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Regeneration-Ex-\">regeneration</a>&nbsp;on the round following the critical hit and can die normally during that round. Creatures whose&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Regeneration-Ex-\">regeneration</a>&nbsp;always functions are immune to this ability. Finally, if the inquisitor deals energy damage to a creature with&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Energy-Immunity-and-Vulnerability\">vulnerability</a>&nbsp;to that energy type, she deals +1 point of damage per die rolled.</p>\n<h2>Third Judgement (Ex)</h2>\n<p>At 16th level, whenever an inquisitor uses her judgment ability, she selects three different judgments, instead of just two. This only consumes one use of her judgment ability. As a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Swift-Actions\">swift action</a>, the inquisitor can change one of these judgments to another type.</p>\n<h2>Slayer (Ex)</h2>\n<p>At 17th level, an inquisitor learns to focus her judgment. Whenever an inquisitor uses her judgment ability, she must select one type of judgment. She is treated as if she were 5 levels higher for the purposes of determining the bonus granted by this judgment. Unlike other types of judgment, the one enhanced by this ability cannot be changed for the remainder of the judgment.</p>\n<h2>True Judgement (Su)</h2>\n<p>At 20th level, an inquisitor can call true judgment down upon a foe during combat. Whenever an inquisitor uses her judgment ability, the inquisitor can invoke true judgment on a foe as a swift action. Once declared, the inquisitor can make a single melee (or ranged attack, if the foe is within 30 feet) against the target. If the attack hits, it deals damage normally and the target must make a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat/#TOC-Fortitude\">Fortitude</a>&nbsp;save or die. The DC of this save is equal to 10 + 1/2 the inquisitor’s level + the inquisitor’s Wisdom modifier. Regardless of whether or not the save is made, the target creature is immune to the inquisitor’s true judgment ability for 24 hours. Once this ability has been used, it cannot be used again for 1d4 rounds.</p>\n</div>",
-          "chat": "",
-          "unidentified": ""
-        },
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "preparation": {
-          "maxAmount": 0
-        },
-        "weaponData": {
-          "critRange": 20,
-          "critMult": 2
-        },
-        "uses": {
-          "value": 0,
-          "max": 0
         }
       },
       "effects": [],
@@ -529,33 +470,18 @@
       "img": "systems/pf1/icons/skills/fire_05.jpg",
       "data": {
         "description": {
-          "value": "<p>A dragon is a reptile-like creature, usually winged, with magical or unusual abilities.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>A dragon has the following features.</p>\n<ul>\n<li>d12 Hit Die.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Good&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Fortitude\" rel=\"nofollow\">Fortitude</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>, and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\" rel=\"nofollow\">Will</a>&nbsp;Saves.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for dragons: <a href=\"https://www.d20pfsrd.com/skills/appraise\" rel=\"nofollow\">Appraise</a>, <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/climb\" rel=\"nofollow\">Climb</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/diplomacy\" rel=\"nofollow\">Diplomacy</a>, <a href=\"https://www.d20pfsrd.com/skills/fly\" rel=\"nofollow\">Fly</a>, <a href=\"https://www.d20pfsrd.com/skills/heal\" rel=\"nofollow\">Heal</a>, <a href=\"https://www.d20pfsrd.com/skills/intimidate\" rel=\"nofollow\">Intimidate</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a> (all), <a href=\"https://www.d20pfsrd.com/skills/linguistics\" rel=\"nofollow\">Linguistics</a>, <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, <a href=\"https://www.d20pfsrd.com/skills/spellcraft\" rel=\"nofollow\">Spellcraft</a>, <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>, <a href=\"https://www.d20pfsrd.com/skills/survival\" rel=\"nofollow\">Survival</a>, <a href=\"https://www.d20pfsrd.com/skills/swim\" rel=\"nofollow\">Swim</a>, and <a href=\"https://www.d20pfsrd.com/skills/use-magic-device\" rel=\"nofollow\">Use Magic Device</a>.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>A dragon possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li><a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">Darkvision</a>&nbsp;60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>.</li>\n<li>Immunity to magic sleep effects and paralysis effects.</li>\n<li>Proficient with its natural weapons only unless humanoid in form (or capable of assuming humanoid form), in which case proficient with all simple weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with no armor.</li>\n<li>Dragons breathe, eat, and sleep.</li>\n</ul>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<p>A dragon is a reptile-like creature, usually winged, with magical or unusual abilities.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>A dragon has the following features.</p>\n<ul>\n<li>d12 Hit Die.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Good&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Fortitude\" rel=\"nofollow\">Fortitude</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>, and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\" rel=\"nofollow\">Will</a>&nbsp;Saves.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for dragons: <a href=\"https://www.d20pfsrd.com/skills/appraise\" rel=\"nofollow\">Appraise</a>, <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/climb\" rel=\"nofollow\">Climb</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/diplomacy\" rel=\"nofollow\">Diplomacy</a>, <a href=\"https://www.d20pfsrd.com/skills/fly\" rel=\"nofollow\">Fly</a>, <a href=\"https://www.d20pfsrd.com/skills/heal\" rel=\"nofollow\">Heal</a>, <a href=\"https://www.d20pfsrd.com/skills/intimidate\" rel=\"nofollow\">Intimidate</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a> (all), <a href=\"https://www.d20pfsrd.com/skills/linguistics\" rel=\"nofollow\">Linguistics</a>, <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, <a href=\"https://www.d20pfsrd.com/skills/spellcraft\" rel=\"nofollow\">Spellcraft</a>, <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>, <a href=\"https://www.d20pfsrd.com/skills/survival\" rel=\"nofollow\">Survival</a>, <a href=\"https://www.d20pfsrd.com/skills/swim\" rel=\"nofollow\">Swim</a>, and <a href=\"https://www.d20pfsrd.com/skills/use-magic-device\" rel=\"nofollow\">Use Magic Device</a>.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>A dragon possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li><a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">Darkvision</a>&nbsp;60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>.</li>\n<li>Immunity to magic sleep effects and paralysis effects.</li>\n<li>Proficient with its natural weapons only unless humanoid in form (or capable of assuming humanoid form), in which case proficient with all simple weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with no armor.</li>\n<li>Dragons breathe, eat, and sleep.</li>\n</ul>"
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "links": "",
         "tag": "dragon",
         "useCustomTag": true,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -563,7 +489,6 @@
         },
         "scriptCalls": [],
         "classType": "racial",
-        "levels": 1,
         "level": 0,
         "hd": 12,
         "hp": 0,
@@ -578,17 +503,6 @@
           },
           "will": {
             "value": "high"
-          }
-        },
-        "fc": {
-          "hp": {
-            "value": 0
-          },
-          "skill": {
-            "value": 0
-          },
-          "alt": {
-            "value": 0
           }
         },
         "classSkills": {
@@ -629,9 +543,6 @@
           "sur": true,
           "swm": true,
           "umd": true
-        },
-        "damage": {
-          "parts": []
         }
       },
       "effects": [],
@@ -649,107 +560,29 @@
       "img": "systems/pf1/icons/skills/shadow_12.jpg",
       "data": {
         "description": {
-          "value": "Darkvision is the extraordinary ability to see with no light source at all, out to a range specified for the creature. Darkvision is black-and-white only (colors cannot be discerned). It does not allow characters to see anything that they could not see otherwise—invisible objects are still invisible, and illusions are still visible as what they seem to be. Likewise, darkvision subjects a creature to gaze attacks normally. The presence of light does not spoil darkvision.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Darkvision is the extraordinary ability to see with no light source at all, out to a range specified for the creature. Darkvision is black-and-white only (colors cannot be discerned). It does not allow characters to see anything that they could not see otherwise—invisible objects are still invisible, and illusions are still visible as what they seem to be. Likewise, darkvision subjects a creature to gaze attacks normally. The presence of light does not spoil darkvision."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "senseDarkvision60ft",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -760,14 +593,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false,
-        "attack": {
-          "parts": []
-        }
+        "abilityType": "ex"
       },
       "effects": [],
       "folder": null,
@@ -784,107 +610,29 @@
       "img": "systems/pf1/icons/skills/shadow_11.jpg",
       "data": {
         "description": {
-          "value": "A creature with low-light vision can see twice as far as a human in starlight, moonlight, torchlight, and similar conditions of dim light. It retains the ability to distinguish color and detail under these conditions.",
-          "chat": "",
-          "unidentified": ""
+          "value": "A creature with low-light vision can see twice as far as a human in starlight, moonlight, torchlight, and similar conditions of dim light. It retains the ability to distinguish color and detail under these conditions."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "senseLowlightVision",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -895,14 +643,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false,
-        "attack": {
-          "parts": []
-        }
+        "abilityType": "ex"
       },
       "effects": [],
       "folder": null,
@@ -919,9 +660,7 @@
       "img": "systems/pf1/icons/feats/weapon-focus.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Proficiency with selected weapon, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You gain a +1 bonus on all attack rolls you make using the selected weapon.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new type of weapon.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Proficiency with selected weapon, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You gain a +1 bonus on all attack rolls you make using the selected weapon.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new type of weapon.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -934,138 +673,38 @@
             "Offensive"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "weaponFocus",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1083,107 +722,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1193,12 +753,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1215,107 +770,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1325,12 +801,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1347,107 +818,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1457,12 +849,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1478,55 +865,20 @@
       "type": "attack",
       "img": null,
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Shortspear",
         "actionType": "mwak",
         "attackBonus": "1",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -1538,52 +890,22 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "",
         "attackNotes": "shortspear +1 (1d6 )",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "attackType": "weapon",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
         "primaryAttack": false,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -1600,55 +922,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-tail.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Slapping Tail",
         "actionType": "mwak",
         "attackBonus": "5",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -1660,52 +947,23 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "; attacks of opportunity only",
         "attackNotes": "slapping tail +0 (1d8 ; attacks of opportunity only)",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
         "primaryAttack": false,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -1723,13 +981,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[electricity];\n    <strong>Level</strong>&nbsp;sorcerer/wizard 5;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (fur and two glass figurines)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;two creatures or objects which must be no more than 60 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You generate an arc of lightning between two targets. The lightning deals 1d6 points of electricity damage per caster level (maximum 15d6) to both targets and any creatures in a line connecting them. The spell fails if there is no line of effect between the targets. <i>Lightning arc</i> sets fire to combustibles and damages objects in its path. It can melt metals that have a low melting point, such as lead, gold, copper, silver, or bronze.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[electricity];\n    <strong>Level</strong>&nbsp;sorcerer/wizard 5;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (fur and two glass figurines)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;two creatures or objects which must be no more than 60 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You generate an arc of lightning between two targets. The lightning deals 1d6 points of electricity damage per caster level (maximum 15d6) to both targets and any creatures in a line connecting them. The spell fails if there is no line of effect between the targets. <i>Lightning arc</i> sets fire to combustibles and damages objects in its path. It can melt metals that have a low melting point, such as lead, gold, copper, silver, or bronze.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -1738,62 +993,29 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "two creatures or objects which must be no more than 60 ft. apart"
         },
         "range": {
-          "value": null,
-          "units": "long",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "long"
         },
         "uses": {
           "value": 6,
-          "max": 6,
-          "per": "day",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": "day"
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -1802,7 +1024,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -1824,50 +1045,24 @@
           "bloodline": []
         },
         "level": 5,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "evo",
-        "subschool": "",
         "types": "electricity",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "fur and two glass figurines",
-          "focus": "",
-          "gpValue": 0
+          "value": "fur and two glass figurines"
         },
         "spellbook": "spelllike",
         "preparation": {
           "preparedAmount": 6,
-          "maxAmount": 6,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "maxAmount": 6
         },
-        "atWill": false,
-        "sr": true,
         "shortDescription": "<p>You generate an arc of lightning between two targets. The lightning deals 1d6 points of electricity damage per caster level (maximum 15d6) to both targets and any creatures in a line connecting them. The spell fails if there is no line of effect between the targets. <i>Lightning arc</i> sets fire to combustibles and damages objects in its path. It can melt metals that have a low melting point, such as lead, gold, copper, silver, or bronze.</p>",
-        "spellDuration": "instantaneous",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "instantaneous"
       },
       "effects": [],
       "folder": null,
@@ -1884,13 +1079,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[emotion, fear, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, bard 1, bloodrager 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, shaman 1, sorcerer/wizard 1, spiritualist 1, witch 1;\n    <strong>Domain</strong>&nbsp;Death 1;\n    <strong>Subdomain</strong>&nbsp;Daemon 1, Fear 1;\n    \n    <strong>Bloodline</strong>&nbsp;Abyssal 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature with 5 or fewer HD<br>\n    \n    <strong>Duration</strong>&nbsp;1d4 rounds or 1 round; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. Creatures with 6 or more HD are immune to this effect. Cause fear counters and dispels remove fear.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[emotion, fear, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, bard 1, bloodrager 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, shaman 1, sorcerer/wizard 1, spiritualist 1, witch 1;\n    <strong>Domain</strong>&nbsp;Death 1;\n    <strong>Subdomain</strong>&nbsp;Daemon 1, Fear 1;\n    \n    <strong>Bloodline</strong>&nbsp;Abyssal 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature with 5 or fewer HD<br>\n    \n    <strong>Duration</strong>&nbsp;1d4 rounds or 1 round; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. Creatures with 6 or more HD are immune to this effect. Cause fear counters and dispels remove fear.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -1899,62 +1091,29 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one living creature with 5 or fewer HD"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
           "value": 3,
-          "max": 3,
-          "per": "day",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": "day"
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "5",
@@ -1963,7 +1122,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2055,51 +1213,20 @@
             ]
           ]
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "nec",
-        "subschool": "",
         "types": "emotion, fear, mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
-          "maxAmount": 1,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "maxAmount": 1
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. Creatures with 6 or more HD are immune to this effect. Cause fear counters and dispels remove fear.</p>",
-        "spellDuration": "1d4 rounds or 1 round; see text",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1d4 rounds or 1 round; see text"
       },
       "effects": [],
       "folder": null,
@@ -2116,13 +1243,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, inquisitor 1;\n    <strong>Domain</strong>&nbsp;Glory 1;\n    <strong>Subdomain</strong>&nbsp;Agathion 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (parchment with a holy text written on it)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a shimmering, magical field around the target that averts and deflects attacks. The spell grants the subject a +2 deflection bonus to AC, with an additional +1 to the bonus for every six levels you have (maximum +5 deflection bonus at 18th level).</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, inquisitor 1;\n    <strong>Domain</strong>&nbsp;Glory 1;\n    <strong>Subdomain</strong>&nbsp;Agathion 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (parchment with a holy text written on it)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a shimmering, magical field around the target that averts and deflects attacks. The spell grants the subject a +2 deflection bonus to AC, with an additional +1 to the bonus for every six levels you have (maximum +5 deflection bonus at 18th level).</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2131,62 +1255,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "creature touched"
         },
         "range": {
-          "value": null,
-          "units": "touch",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "touch"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -2195,7 +1285,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2230,51 +1319,23 @@
           "elementalSchool": [],
           "bloodline": []
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "abj",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "parchment with a holy text written on it",
-          "focus": "",
-          "gpValue": 0
+          "value": "parchment with a holy text written on it"
         },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
-          "maxAmount": 1,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "maxAmount": 1
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>This spell creates a shimmering, magical field around the target that averts and deflects attacks. The spell grants the subject a +2 deflection bonus to AC, with an additional +1 to the bonus for every six levels you have (maximum +5 deflection bonus at 18th level).</p>",
-        "spellDuration": "1 min./level",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 min./level"
       },
       "effects": [],
       "folder": null,
@@ -2291,13 +1352,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[acid];\n    <strong>Level</strong>&nbsp;inquisitor 0, magus 0, sorcerer/wizard 0, summoner 0, unchained Summoner 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one missile of acid<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You fire a small orb of acid at the target. You must succeed on a ranged touch attack to hit your target. The orb deals 1d3 points of acid damage. This acid disappears after 1 round.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[acid];\n    <strong>Level</strong>&nbsp;inquisitor 0, magus 0, sorcerer/wizard 0, summoner 0, unchained Summoner 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one missile of acid<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You fire a small orb of acid at the target. You must succeed on a ranged touch attack to hit your target. The orb deals 1d3 points of acid damage. This acid disappears after 1 round.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2306,39 +1364,16 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "rsak",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2350,32 +1385,15 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "dex",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2413,50 +1431,24 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "con",
         "subschool": "creation",
         "types": "acid",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
           "maxAmount": 1,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
         "sr": false,
         "shortDescription": "<p>You fire a small orb of acid at the target. You must succeed on a ranged touch attack to hit your target. The orb deals 1d3 points of acid damage. This acid disappears after 1 round.</p>",
         "spellDuration": "instantaneous",
-        "spellEffect": "one missile of acid",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellEffect": "one missile of acid"
       },
       "effects": [],
       "folder": null,
@@ -2473,13 +1465,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of wool or similar substance)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature of 4 HD or less<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of wool or similar substance)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature of 4 HD or less<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2488,62 +1477,29 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one humanoid creature of 4 HD or less"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
           "value": 1,
-          "max": 1,
-          "per": "day",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": "day"
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "5",
@@ -2552,7 +1508,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2622,50 +1577,26 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "compulsion",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "a pinch of wool or similar substance",
-          "focus": "",
-          "gpValue": 0
+          "value": "a pinch of wool or similar substance"
         },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
           "maxAmount": 1,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>",
-        "spellDuration": "1 round",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round"
       },
       "effects": [],
       "folder": null,
@@ -2682,13 +1613,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;inquisitor 0, magus 0, sorcerer/wizard 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You direct a ray of positive energy. You must make a ranged touch attack to hit, and if the ray hits an undead creature, it deals 1d6 points of damage to it.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;inquisitor 0, magus 0, sorcerer/wizard 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You direct a ray of positive energy. You must make a ranged touch attack to hit, and if the ray hits an undead creature, it deals 1d6 points of damage to it.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2697,39 +1625,16 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "rsak",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2741,32 +1646,15 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "dex",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2796,50 +1684,19 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "nec",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>You direct a ray of positive energy. You must make a ranged touch attack to hit, and if the ray hits an undead creature, it deals 1d6 points of damage to it.</p>",
         "spellDuration": "instantaneous",
-        "spellEffect": "ray",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellEffect": "ray"
       },
       "effects": [],
       "folder": null,
@@ -2856,13 +1713,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, shaman 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, shaman 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2871,62 +1725,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "creature touched"
         },
         "range": {
-          "value": null,
-          "units": "touch",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "touch"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -2935,7 +1755,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3001,50 +1820,20 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "div",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
           "maxAmount": 1,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>",
-        "spellDuration": "1 minute or until discharged",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 minute or until discharged"
       },
       "effects": [],
       "folder": null,
@@ -3061,107 +1850,28 @@
       "img": "icons/environment/wilderness/tree-oak.webp",
       "data": {
         "description": {
-          "value": "<div><strong>Environment</strong>:  temperate mountains</div><div><strong>Organization</strong>:  solitary, wing (2-8), or flight (4-12)</div><div><strong>Treasure</strong>:  NPC gear (spear, scale mail, holy symbol, other treasure)</div>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div><strong>Environment</strong>:  temperate mountains</div><div><strong>Organization</strong>:  solitary, wing (2-8), or flight (4-12)</div><div><strong>Treasure</strong>:  NPC gear (spear, scale mail, holy symbol, other treasure)</div>"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -3171,12 +1881,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -3193,9 +1898,7 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually.",
-          "chat": "",
-          "unidentified": ""
+          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually."
         },
         "tags": [],
         "changes": [
@@ -3280,17 +1983,6 @@
             "id": "mk9tfh9h"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noDex": false,
-          "noStr": false,
-          "oneCha": false,
-          "oneInt": false,
-          "oneWis": false
-        },
         "contextNotes": [],
         "links": {
           "children": []
@@ -3304,12 +1996,7 @@
         "scriptCalls": [],
         "buffType": "perm",
         "active": true,
-        "level": 0,
-        "hideFromToken": true,
-        "uses": {
-          "value": 0,
-          "max": 0
-        }
+        "hideFromToken": true
       },
       "effects": [],
       "folder": null,

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The arcanist can unleash a blast of force by expending 1 point from her arcane reservoir. This attack automatically strikes one target within 30 feet (as @Compendium[pf1.spells.49yc9dpr4kvgki2s]{Magic Missile}) and deals 1d4 points of force damage, plus 1 point of damage per arcanist level. Spells and effects that negate @Compendium[pf1.spells.49yc9dpr4kvgki2s]{Magic Missile}&nbsp;also negate this effect.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "per": ""
     },
     "actionType": "other",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + @classes.arcanist.level",
+          "Force"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -40,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Arcanist"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

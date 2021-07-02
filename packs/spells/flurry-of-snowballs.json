@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[cold, water];\n    <strong>Level</strong>&nbsp;druid 2, hunter 2, magus 2, sorcerer/wizard 2, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;30 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You send a Flurry of Snowballs hurtling at your foes. Any creature in the area takes 4d6 points of cold damage from being pelted with the icy spheres.</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "size": "30"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "4d6",
+          "Cold"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -42,9 +54,45 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "druid",
+          2
+        ],
+        [
+          "witch",
+          2
+        ],
+        [
+          "magus",
+          2
+        ],
+        [
+          "hunter",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 2,
     "school": "evo",
     "types": "cold, water",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 2, sorcerer/wizard 3, witch 3;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a handful of knucklebones)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one undead creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You make an undead creature more difficult for necromancers and clerics to control via effects such as Command Undead or <i>control undead</i>. If the target fails its Will save, the target's effective number of Hit Dice is doubled for the purposes of determining whether it remains under the control of another creature.</p><p>Regardless of the target's actual Hit Dice, its effective HD cannot exceed twice your caster level. (For example, a 12th-level cleric could cast this spell to cause an undead creature with 15 HD to instead effectively have 24 HD for the purpose of controlling it.) If the targeted undead is under the control of another creature and this spell causes the target's effective Hit Dice to exceed the controller's maximum capability, the target creature is immediately freed from control. Any creature capable of controlling undead may attempt to control the target, provided the target's effective HD won't cause the would-be controller to exceed its HD limit. The target's former controller can attempt to regain control over the target by relinquishing command over other creatures until its HD limit is no longer exceeded (or the former controller can wait until the spell's duration expires to attempt this at the target's normal HD).</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "round"
     },
@@ -31,6 +32,12 @@
       "size": "0"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -42,8 +49,36 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          3
+        ],
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "witch",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 3,
     "school": "nec",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,

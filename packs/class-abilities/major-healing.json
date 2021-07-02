@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>By calling upon eerie powers, the witch's touch can mend even the most terrible wounds of those she touches. This acts as&nbsp;cure serious wounds, using the witch's caster level.</p>\n<p>Once a creature has benefited from the major healing hex, it cannot benefit from it again for 24 hours.</p>\n<p>At 15th level, this hex acts like&nbsp;cure critical wounds.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "per": ""
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.witch.level >= 15 ? 4 : 3)d8 + @classes.witch.level",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +51,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Witch"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

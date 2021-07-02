@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Once per day, when you are reduced to 0 or fewer hit points, you heal a number of hit points equal to your inquisitor level + your Wisdom modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "free"
     },
@@ -27,10 +28,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "@classes.inquisitor.level + @abilities.wis.mod",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +50,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Inquisitor"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

@@ -32,6 +32,9 @@
         "climb": {
           "base": 10
         }
+      },
+      "spells": {
+        "usedSpellbooks": []
       }
     },
     "details": {
@@ -53,7 +56,21 @@
     "traits": {
       "size": "sm",
       "senses": "blindsense 60 ft.; Perception +7",
+      "languages": {
+        "value": [
+          null
+        ]
+      },
+      "di": {
+        "value": []
+      },
+      "dv": {
+        "value": []
+      },
       "ci": {
+        "value": [
+          "mindAffecting"
+        ],
         "custom": "Ooze Traits;"
       },
       "stature": ""
@@ -103,33 +120,18 @@
       "img": "systems/pf1/icons/skills/green_30.jpg",
       "data": {
         "description": {
-          "value": "<p>An ooze is an amorphous or mutable creature, usually mindless.</p>\n<h2><span id=\"Features\"><a name=\"TOC-Features\"></a>Features</span></h2>\n<p>An ooze has the following features.</p>\n<ul>\n<li>d8 Hit Die.</li>\n<li>Base attack bonus equal to 3/4 total Hit Dice (medium progression).</li>\n<li>No good saving throws.</li>\n<li>Skill points equal to 2 + Int modifier (minimum 1) per Hit Die. However, most oozes are mindless and gain no skill points or feats. Oozes do not have any class skills.</li>\n</ul>\n<h2><span id=\"Traits\"><a name=\"TOC-Traits\"></a>Traits</span></h2>\n<p>An ooze possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li>Mindless: No&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Intelligence_Int\">Intelligence</a>&nbsp;score, and immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects). An ooze with an&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Intelligence_Int\">Intelligence</a>&nbsp;score loses this trait.</li>\n<li>Blind&nbsp;(but have the blindsight special quality), with immunity to gaze attacks, visual effects, illusions, and other attack forms that rely on sight.</li>\n<li>Immunity to poison, sleep effects, paralysis, polymorph, and stunning.</li>\n<li>Some oozes have the ability to deal acid damage to objects. In such a case, the amount of damage is equal to 10 + 1/2 ooze’s HD + ooze’s&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Constitution-Con-\">Con</a>&nbsp;modifier per full round of contact.</li>\n<li>Not subject to critical hits or flanking. Does not take additional damage from precision-based attacks, such as sneak attack.</li>\n<li>Proficient with its natural weapons only.</li>\n<li>Proficient with no armor.</li>\n<li>Oozes eat and breathe, but do not sleep.</li>\n</ul>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<p>An ooze is an amorphous or mutable creature, usually mindless.</p>\n<h2><span id=\"Features\"><a name=\"TOC-Features\"></a>Features</span></h2>\n<p>An ooze has the following features.</p>\n<ul>\n<li>d8 Hit Die.</li>\n<li>Base attack bonus equal to 3/4 total Hit Dice (medium progression).</li>\n<li>No good saving throws.</li>\n<li>Skill points equal to 2 + Int modifier (minimum 1) per Hit Die. However, most oozes are mindless and gain no skill points or feats. Oozes do not have any class skills.</li>\n</ul>\n<h2><span id=\"Traits\"><a name=\"TOC-Traits\"></a>Traits</span></h2>\n<p>An ooze possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li>Mindless: No&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Intelligence_Int\">Intelligence</a>&nbsp;score, and immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects). An ooze with an&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Intelligence_Int\">Intelligence</a>&nbsp;score loses this trait.</li>\n<li>Blind&nbsp;(but have the blindsight special quality), with immunity to gaze attacks, visual effects, illusions, and other attack forms that rely on sight.</li>\n<li>Immunity to poison, sleep effects, paralysis, polymorph, and stunning.</li>\n<li>Some oozes have the ability to deal acid damage to objects. In such a case, the amount of damage is equal to 10 + 1/2 ooze’s HD + ooze’s&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Constitution-Con-\">Con</a>&nbsp;modifier per full round of contact.</li>\n<li>Not subject to critical hits or flanking. Does not take additional damage from precision-based attacks, such as sneak attack.</li>\n<li>Proficient with its natural weapons only.</li>\n<li>Proficient with no armor.</li>\n<li>Oozes eat and breathe, but do not sleep.</li>\n</ul>"
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "links": "",
         "tag": "ooze",
         "useCustomTag": true,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -137,34 +139,10 @@
         },
         "scriptCalls": [],
         "classType": "racial",
-        "levels": 1,
         "level": 4,
-        "hd": 8,
         "hp": 26,
         "bab": "med",
         "skillsPerLevel": 2,
-        "savingThrows": {
-          "fort": {
-            "value": "low"
-          },
-          "ref": {
-            "value": "low"
-          },
-          "will": {
-            "value": "low"
-          }
-        },
-        "fc": {
-          "hp": {
-            "value": 0
-          },
-          "skill": {
-            "value": 0
-          },
-          "alt": {
-            "value": 0
-          }
-        },
         "classSkills": {
           "acr": false,
           "apr": false,
@@ -203,9 +181,6 @@
           "sur": false,
           "swm": false,
           "umd": false
-        },
-        "damage": {
-          "parts": []
         }
       },
       "effects": [],
@@ -223,29 +198,19 @@
       "img": "systems/pf1/icons/skills/green_30.jpg",
       "data": {
         "description": {
-          "value": "sbc | As no playable race was found a placeholder was generated.",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | As no playable race was found a placeholder was generated."
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": []
         },
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -274,107 +239,29 @@
       "img": "systems/pf1/icons/skills/light_01.jpg",
       "data": {
         "description": {
-          "value": "Using nonvisual senses, such as acute smell or hearing, a creature with blindsense notices things it cannot see.\n                The creature usually does not need to make Perception checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature.<br><br>\n                Any opponent the creature cannot see still has total concealment against the creature with blindsense, and the creature still has the normal miss chance when attacking foes that have concealment.<br><br>\n                Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Using nonvisual senses, such as acute smell or hearing, a creature with blindsense notices things it cannot see.\n                The creature usually does not need to make Perception checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature.<br><br>\n                Any opponent the creature cannot see still has total concealment against the creature with blindsense, and the creature still has the normal miss chance when attacking foes that have concealment.<br><br>\n                Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "senseBlindsense",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -385,13 +272,65 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false,
-        "attack": {
-          "parts": []
+        "abilityType": "ex"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "permission": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "7zJTztNW7hdaqjKc",
+      "name": "Skill Focus",
+      "type": "feat",
+      "img": "systems/pf1/icons/feats/skill-focus.jpg",
+      "data": {
+        "description": {
+          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            "
+        },
+        "tags": [
+          [
+            "General"
+          ],
+          [
+            "Skill"
+          ]
+        ],
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": "",
+        "attackNotes": "",
+        "changes": [],
+        "contextNotes": [],
+        "links": {
+          "children": [],
+          "charges": []
+        },
+        "tag": "skillFocus",
+        "armorProf": {
+          "value": []
+        },
+        "weaponProf": {
+          "value": []
+        },
+        "flags": {
+          "boolean": [],
+          "dictionary": []
+        },
+        "scriptCalls": [],
+        "associations": {
+          "classes": []
         }
       },
       "effects": [],
@@ -409,9 +348,7 @@
       "img": "systems/pf1/icons/feats/skill-focus.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -421,299 +358,38 @@
             "Skill"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "skillFocus",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
-        }
-      },
-      "effects": [],
-      "folder": null,
-      "sort": 0,
-      "permission": {
-        "default": 0
-      },
-      "flags": {}
-    },
-    {
-      "_id": "7zJTztNW7hdaqjKc",
-      "name": "Skill Focus",
-      "type": "feat",
-      "img": "systems/pf1/icons/feats/skill-focus.jpg",
-      "data": {
-        "description": {
-          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
-        },
-        "tags": [
-          [
-            "General"
-          ],
-          [
-            "Skill"
-          ]
-        ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
-        "effectNotes": "",
-        "attackNotes": "",
-        "soundEffect": "",
-        "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
-        "contextNotes": [],
-        "links": {
-          "children": [],
-          "charges": []
-        },
-        "tag": "skillFocus",
-        "useCustomTag": false,
-        "armorProf": {
-          "value": [],
-          "custom": ""
-        },
-        "weaponProf": {
-          "value": [],
-          "custom": ""
-        },
-        "flags": {
-          "boolean": [],
-          "dictionary": []
-        },
-        "scriptCalls": [],
-        "featType": "feat",
-        "associations": {
-          "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -731,107 +407,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -841,12 +438,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -862,55 +454,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-forearm.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Slams",
         "actionType": "mwak",
         "attackBonus": "0",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -927,52 +484,22 @@
             "Slams: 1"
           ]
         ],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "\ngrab\nparalysis",
         "attackNotes": "2 slams +7 (1d6+3 plus grab and paralysis)",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -990,106 +517,27 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "misc",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -1107,106 +555,27 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "misc",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -1224,107 +593,28 @@
       "img": "icons/environment/wilderness/tree-oak.webp",
       "data": {
         "description": {
-          "value": "<div><strong>Environment</strong>:  any ruins or underground</div><div><strong>Organization</strong>:  solitary or pair</div><div><strong>Treasure</strong>:  incidental</div>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div><strong>Environment</strong>:  any ruins or underground</div><div><strong>Organization</strong>:  solitary or pair</div><div><strong>Treasure</strong>:  incidental</div>"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1334,12 +624,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1356,107 +641,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "Any creature that is hit by a slithering tracker’s slam attack comes into contact with the anesthetizing slime it secretes. The opponent must succeed on a DC 18 Fortitude save or be paralyzed-at the end of each round thereafter, the paralyzed victim can attempt a new Fortitude save to recover from this paralysis. When a victim recovers from a slithering tracker’s paralysis, the victim is staggered for 1d6 rounds. This DC is Constitution-based.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Any creature that is hit by a slithering tracker’s slam attack comes into contact with the anesthetizing slime it secretes. The opponent must succeed on a DC 18 Fortitude save or be paralyzed-at the end of each round thereafter, the paralyzed victim can attempt a new Fortitude save to recover from this paralysis. When a victim recovers from a slithering tracker’s paralysis, the victim is staggered for 1d6 rounds. This DC is Constitution-based."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1467,11 +673,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false
+        "abilityType": "ex"
       },
       "effects": [],
       "folder": null,
@@ -1488,107 +690,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "Because of its lack of coloration, a slithering tracker is difficult to discern from its surroundings in most environments. The slithering tracker gains a +8 racial bonus on Stealth checks as a result, and can move at full speed without taking a penalty on Stealth checks. A creature that fails to notice a slithering tracker and walks into it automatically takes damage as if struck by the slithering tracker’s slam attack and is immediately subject to a grab attempt and paralysis by the ooze.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Because of its lack of coloration, a slithering tracker is difficult to discern from its surroundings in most environments. The slithering tracker gains a +8 racial bonus on Stealth checks as a result, and can move at full speed without taking a penalty on Stealth checks. A creature that fails to notice a slithering tracker and walks into it automatically takes damage as if struck by the slithering tracker’s slam attack and is immediately subject to a grab attempt and paralysis by the ooze."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1599,11 +722,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false
+        "abilityType": "ex"
       },
       "effects": [],
       "folder": null,
@@ -1620,9 +739,7 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually.",
-          "chat": "",
-          "unidentified": ""
+          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually."
         },
         "tags": [],
         "changes": [
@@ -1647,17 +764,6 @@
             "id": "10opbns1"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noDex": false,
-          "noStr": false,
-          "oneCha": false,
-          "oneInt": false,
-          "oneWis": false
-        },
         "contextNotes": [
           {
             "subTarget": "cmb",
@@ -1677,12 +783,7 @@
         "scriptCalls": [],
         "buffType": "perm",
         "active": true,
-        "level": 0,
-        "hideFromToken": true,
-        "uses": {
-          "value": 0,
-          "max": 0
-        }
+        "hideFromToken": true
       },
       "effects": [],
       "folder": null,

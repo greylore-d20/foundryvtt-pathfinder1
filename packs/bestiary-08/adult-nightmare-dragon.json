@@ -42,6 +42,9 @@
         }
       },
       "spells": {
+        "usedSpellbooks": [
+          "primary"
+        ],
         "spellbooks": {
           "primary": {
             "altName": "Psychic Spells Known",
@@ -99,6 +102,26 @@
       "size": "lg",
       "senses": "dragon senses, dreamsight, see in darkness; Perception +20",
       "dr": "5/magic",
+      "languages": {
+        "value": [
+          "aklo",
+          "common",
+          "draconic"
+        ]
+      },
+      "di": {
+        "value": []
+      },
+      "dv": {
+        "value": []
+      },
+      "ci": {
+        "value": [
+          "mindAffecting",
+          "paralyze",
+          "sleep"
+        ]
+      },
       "stature": ""
     }
   },
@@ -146,33 +169,18 @@
       "img": "systems/pf1/icons/skills/fire_05.jpg",
       "data": {
         "description": {
-          "value": "<p>A dragon is a reptile-like creature, usually winged, with magical or unusual abilities.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>A dragon has the following features.</p>\n<ul>\n<li>d12 Hit Die.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Good&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Fortitude\" rel=\"nofollow\">Fortitude</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>, and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\" rel=\"nofollow\">Will</a>&nbsp;Saves.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for dragons: <a href=\"https://www.d20pfsrd.com/skills/appraise\" rel=\"nofollow\">Appraise</a>, <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/climb\" rel=\"nofollow\">Climb</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/diplomacy\" rel=\"nofollow\">Diplomacy</a>, <a href=\"https://www.d20pfsrd.com/skills/fly\" rel=\"nofollow\">Fly</a>, <a href=\"https://www.d20pfsrd.com/skills/heal\" rel=\"nofollow\">Heal</a>, <a href=\"https://www.d20pfsrd.com/skills/intimidate\" rel=\"nofollow\">Intimidate</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a> (all), <a href=\"https://www.d20pfsrd.com/skills/linguistics\" rel=\"nofollow\">Linguistics</a>, <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, <a href=\"https://www.d20pfsrd.com/skills/spellcraft\" rel=\"nofollow\">Spellcraft</a>, <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>, <a href=\"https://www.d20pfsrd.com/skills/survival\" rel=\"nofollow\">Survival</a>, <a href=\"https://www.d20pfsrd.com/skills/swim\" rel=\"nofollow\">Swim</a>, and <a href=\"https://www.d20pfsrd.com/skills/use-magic-device\" rel=\"nofollow\">Use Magic Device</a>.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>A dragon possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li><a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">Darkvision</a>&nbsp;60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>.</li>\n<li>Immunity to magic sleep effects and paralysis effects.</li>\n<li>Proficient with its natural weapons only unless humanoid in form (or capable of assuming humanoid form), in which case proficient with all simple weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with no armor.</li>\n<li>Dragons breathe, eat, and sleep.</li>\n</ul>",
-          "chat": "",
-          "unidentified": ""
+          "value": "<p>A dragon is a reptile-like creature, usually winged, with magical or unusual abilities.</p>\n<h2><span id=\"Features\">Features</span></h2>\n<p>A dragon has the following features.</p>\n<ul>\n<li>d12 Hit Die.</li>\n<li>Base attack bonus equal to total Hit Dice (fast progression).</li>\n<li>Good&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Fortitude\" rel=\"nofollow\">Fortitude</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\" rel=\"nofollow\">Reflex</a>, and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\" rel=\"nofollow\">Will</a>&nbsp;Saves.</li>\n<li>Skill points equal to 6 + Int modifier (minimum 1) per Hit Die. The following are class skills for dragons: <a href=\"https://www.d20pfsrd.com/skills/appraise\" rel=\"nofollow\">Appraise</a>, <a href=\"https://www.d20pfsrd.com/skills/bluff\" rel=\"nofollow\">Bluff</a>, <a href=\"https://www.d20pfsrd.com/skills/climb\" rel=\"nofollow\">Climb</a>, <a href=\"https://www.d20pfsrd.com/skills/craft\" rel=\"nofollow\">Craft</a>, <a href=\"https://www.d20pfsrd.com/skills/diplomacy\" rel=\"nofollow\">Diplomacy</a>, <a href=\"https://www.d20pfsrd.com/skills/fly\" rel=\"nofollow\">Fly</a>, <a href=\"https://www.d20pfsrd.com/skills/heal\" rel=\"nofollow\">Heal</a>, <a href=\"https://www.d20pfsrd.com/skills/intimidate\" rel=\"nofollow\">Intimidate</a>, <a href=\"https://www.d20pfsrd.com/skills/knowledge\" rel=\"nofollow\">Knowledge</a> (all), <a href=\"https://www.d20pfsrd.com/skills/linguistics\" rel=\"nofollow\">Linguistics</a>, <a href=\"https://www.d20pfsrd.com/skills/perception\" rel=\"nofollow\">Perception</a>, <a href=\"https://www.d20pfsrd.com/skills/sense-motive\" rel=\"nofollow\">Sense Motive</a>, <a href=\"https://www.d20pfsrd.com/skills/spellcraft\" rel=\"nofollow\">Spellcraft</a>, <a href=\"https://www.d20pfsrd.com/skills/stealth\" rel=\"nofollow\">Stealth</a>, <a href=\"https://www.d20pfsrd.com/skills/survival\" rel=\"nofollow\">Survival</a>, <a href=\"https://www.d20pfsrd.com/skills/swim\" rel=\"nofollow\">Swim</a>, and <a href=\"https://www.d20pfsrd.com/skills/use-magic-device\" rel=\"nofollow\">Use Magic Device</a>.</li>\n</ul>\n<h2><span id=\"Traits\">Traits</span></h2>\n<p>A dragon possesses the following traits (unless otherwise noted in a creature’s entry).</p>\n<ul>\n<li><a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">Darkvision</a>&nbsp;60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>.</li>\n<li>Immunity to magic sleep effects and paralysis effects.</li>\n<li>Proficient with its natural weapons only unless humanoid in form (or capable of assuming humanoid form), in which case proficient with all simple weapons and any weapons mentioned in its entry.</li>\n<li>Proficient with no armor.</li>\n<li>Dragons breathe, eat, and sleep.</li>\n</ul>"
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "links": "",
         "tag": "dragon",
         "useCustomTag": true,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -180,7 +188,6 @@
         },
         "scriptCalls": [],
         "classType": "racial",
-        "levels": 1,
         "level": 13,
         "hd": 12,
         "hp": 96,
@@ -195,17 +202,6 @@
           },
           "will": {
             "value": "high"
-          }
-        },
-        "fc": {
-          "hp": {
-            "value": 0
-          },
-          "skill": {
-            "value": 0
-          },
-          "alt": {
-            "value": 0
           }
         },
         "classSkills": {
@@ -246,9 +242,6 @@
           "sur": true,
           "swm": true,
           "umd": true
-        },
-        "damage": {
-          "parts": []
         }
       },
       "effects": [],
@@ -266,29 +259,19 @@
       "img": "systems/pf1/icons/skills/fire_05.jpg",
       "data": {
         "description": {
-          "value": "sbc | As no playable race was found a placeholder was generated.",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | As no playable race was found a placeholder was generated."
         },
         "tags": [],
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": []
         },
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -317,107 +300,29 @@
       "img": "systems/pf1/icons/races/creature-types/dragon.png",
       "data": {
         "description": {
-          "value": "Dragons have darkvision 120 ft. and blindsense 60 ft. They see four times as well as a human in dim light and twice as well in normal light.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Dragons have darkvision 120 ft. and blindsense 60 ft. They see four times as well as a human in dim light and twice as well in normal light."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "senseDragonSenses",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -428,14 +333,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "ex",
-        "crOffset": "",
-        "disabled": false,
-        "attack": {
-          "parts": []
-        }
+        "abilityType": "ex"
       },
       "effects": [],
       "folder": null,
@@ -452,107 +350,29 @@
       "img": "systems/pf1/icons/skills/shadow_17.jpg",
       "data": {
         "description": {
-          "value": "Members of this race can see perfectly in darkness of any kind, including that created by spells such as deeper darkness.",
-          "chat": "",
-          "unidentified": ""
+          "value": "Members of this race can see perfectly in darkness of any kind, including that created by spells such as deeper darkness."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "senseSeeInDarkness",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -563,14 +383,7 @@
         "associations": {
           "classes": []
         },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "su",
-        "crOffset": "",
-        "disabled": false,
-        "attack": {
-          "parts": []
-        }
+        "abilityType": "su"
       },
       "effects": [],
       "folder": null,
@@ -586,24 +399,12 @@
       "type": "feat",
       "img": "systems/pf1/icons/spells/runes-blue-3.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
           "cost": null,
           "type": "passive"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "perm"
         },
         "target": {
@@ -611,83 +412,36 @@
         },
         "range": {
           "value": "180",
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "units": "ft"
         },
         "measureTemplate": {
           "type": "circle",
-          "size": "180",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "180"
         },
-        "attackName": "",
         "actionType": "save",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
         "save": {
-          "dc": "20",
-          "type": "",
-          "description": ""
+          "dc": "20"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "auraFrightfulPresence",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -697,15 +451,6 @@
         "featType": "racial",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "auraStrength": 0,
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -723,122 +468,37 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | As Flyby Attack could not be found in any compendium, a placeholder was generated.",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | As Flyby Attack could not be found in any compendium, a placeholder was generated."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -855,91 +515,25 @@
       "img": "systems/pf1/icons/feats/improved-initiative.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>Your quick reflexes allow you to react rapidly to danger.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +4 bonus on initiative checks.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>Your quick reflexes allow you to react rapidly to danger.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +4 bonus on initiative checks.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
             "Combat"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [
           {
             "_id": "ign7okhi",
@@ -952,61 +546,25 @@
             "target": "misc"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "improvedInitiative",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1024,9 +582,7 @@
       "img": "systems/pf1/icons/feats/iron-will.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>You are more resistant to mental effects.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +2 bonus on all Will saving throws.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>You are more resistant to mental effects.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +2 bonus on all Will saving throws.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -1036,82 +592,18 @@
             "Saving Throw"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [
           {
             "_id": "vafl2kz4",
@@ -1124,61 +616,25 @@
             "target": "savingThrows"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "ironWill",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1196,122 +652,37 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | As Multiattack could not be found in any compendium, a placeholder was generated.",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | As Multiattack could not be found in any compendium, a placeholder was generated."
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1328,9 +699,7 @@
       "img": "systems/pf1/icons/feats/power-attack.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Str 13, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You can choose to take a &ndash;1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (&ndash;50%) if you are making an attack with an off-hand weapon or secondary natural weapon. When your base attack bonus reaches +4, and every 4 points thereafter, the penalty increases by &ndash;1 and the bonus to damage increases by +2. You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Str 13, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You can choose to take a &ndash;1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (&ndash;50%) if you are making an attack with an off-hand weapon or secondary natural weapon. When your base attack bonus reaches +4, and every 4 points thereafter, the penalty increases by &ndash;1 and the bonus to damage increases by +2. You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -1340,138 +709,38 @@
             "Offensive"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "powerAttack",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1489,9 +758,7 @@
       "img": "systems/pf1/icons/feats/skill-focus.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>Choose a skill. You are particularly adept at that skill.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -1501,138 +768,38 @@
             "Skill"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "skillFocus",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1650,9 +817,7 @@
       "img": "systems/pf1/icons/feats/weapon-focus.jpg",
       "data": {
         "description": {
-          "value": "\n                <i>Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Proficiency with selected weapon, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You gain a +1 bonus on all attack rolls you make using the selected weapon.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new type of weapon.</p></p>\n                \n            \n            ",
-          "chat": "",
-          "unidentified": ""
+          "value": "\n                <i>Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Proficiency with selected weapon, base attack bonus +1.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You gain a +1 bonus on all attack rolls you make using the selected weapon.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new type of weapon.</p></p>\n                \n            \n            "
         },
         "tags": [
           [
@@ -1665,138 +830,38 @@
             "Offensive"
           ]
         ],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noStr": false,
-          "noDex": false,
-          "oneInt": false,
-          "oneWis": false,
-          "oneCha": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
         "tag": "weaponFocus",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
-        "featType": "feat",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false,
-        "recharge": {
-          "value": null,
-          "charged": false,
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attack": {
-          "parts": []
         }
       },
       "effects": [],
@@ -1814,107 +879,28 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Qualities, which in most statblocks are listed under SQ in the statistics block, but described in the Special Abilities. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "changes": [],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false
-        },
         "contextNotes": [],
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "armorProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "weaponProf": {
-          "value": [],
-          "custom": ""
+          "value": []
         },
         "flags": {
           "boolean": [],
@@ -1924,12 +910,7 @@
         "featType": "misc",
         "associations": {
           "classes": []
-        },
-        "showInQuickbar": false,
-        "nonlethal": false,
-        "abilityType": "none",
-        "crOffset": "",
-        "disabled": false
+        }
       },
       "effects": [],
       "folder": null,
@@ -1945,55 +926,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-head.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Bite",
         "actionType": "mwak",
         "attackBonus": "1",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2005,52 +951,22 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "",
         "attackNotes": "bite +22 (2d6+13 )",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2067,55 +983,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-paw-bear.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Claws",
         "actionType": "mwak",
         "attackBonus": "0",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2132,52 +1013,22 @@
             "Claws: 1"
           ]
         ],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "",
         "attackNotes": "2 claws +21 (1d8+9 )",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2194,55 +1045,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-demon-wing.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Wings",
         "actionType": "mwak",
         "attackBonus": "3",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2259,52 +1075,23 @@
             "Wings: 1"
           ]
         ],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "",
         "attackNotes": "2 wings +19 (1d6+4 )",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
         "primaryAttack": false,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2321,55 +1108,20 @@
       "type": "attack",
       "img": "systems/pf1/icons/items/inventory/monster-tail.jpg",
       "data": {
-        "description": {
-          "value": "",
-          "chat": "",
-          "unidentified": ""
-        },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "attack"
         },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
         "duration": {
-          "value": null,
           "units": "inst"
-        },
-        "target": {
-          "value": ""
         },
         "range": {
           "value": "",
-          "units": "melee",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "units": "melee"
         },
         "attackName": "Tail Slap",
         "actionType": "mwak",
         "attackBonus": "3",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
@@ -2381,52 +1133,23 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "str",
-          "damage": "str",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "damage": "str"
         },
         "effectNotes": "",
         "attackNotes": "tail slap +19 (1d8+13 )",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "natural",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
         "primaryAttack": false,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2444,106 +1167,27 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "misc",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2561,106 +1205,27 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!",
-          "chat": "",
-          "unidentified": ""
+          "value": "sbc | Placeholder for Special Attacks, which in most statblocks are listed under 'Special Attacks' in the statistics block, but are described in the 'Special Abilities' block. Remove duplicates as needed!"
         },
         "tags": [],
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": [],
           "charges": []
         },
-        "tag": "",
-        "useCustomTag": false,
         "flags": {
           "boolean": [],
           "dictionary": []
         },
         "scriptCalls": [],
         "attackType": "misc",
-        "masterwork": false,
-        "nonlethal": false,
-        "enh": null,
-        "proficient": true,
-        "primaryAttack": true,
-        "showInQuickbar": true,
-        "broken": false,
-        "held": "normal",
         "conditionals": []
       },
       "effects": [],
@@ -2678,13 +1243,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(figment);\n    <strong>Level</strong>&nbsp;adept 2, bard 2, bloodrager 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2;\n    \n    <strong>Subdomain</strong>&nbsp;Deception 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a number of illusory doubles of you that inhabit your square. These doubles make it difficult for enemies to precisely locate and attack you.</p><p>When <i>mirror image</i> is cast, 1d4 images plus one image per three caster levels (maximum eight images total) are created.</p><p>These images remain in your space and move with you, mimicking your movements, sounds, and actions exactly. Whenever you are attacked or are the target of a spell that requires an attack roll, there is a possibility that the attack targets one of your images instead. If the attack is a hit, roll randomly to see whether the selected target is real or a figment. If it is a figment, the figment is destroyed. If the attack misses by 5 or less, one of your figments is destroyed by the near miss. Area spells affect you normally and do not destroy any of your figments. Spells and effects that do not require an attack roll affect you normally and do not destroy any of your figments. Spells that require a touch attack are harmlessly discharged if used to destroy a figment.</p><p>An attacker must be able to see the figments to be fooled. If you are invisible or the attacker is blind, the spell has no effect (although the normal miss chances still apply).</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(figment);\n    <strong>Level</strong>&nbsp;adept 2, bard 2, bloodrager 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2;\n    \n    <strong>Subdomain</strong>&nbsp;Deception 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a number of illusory doubles of you that inhabit your square. These doubles make it difficult for enemies to precisely locate and attack you.</p><p>When <i>mirror image</i> is cast, 1d4 images plus one image per three caster levels (maximum eight images total) are created.</p><p>These images remain in your space and move with you, mimicking your movements, sounds, and actions exactly. Whenever you are attacked or are the target of a spell that requires an attack roll, there is a possibility that the attack targets one of your images instead. If the attack is a hit, roll randomly to see whether the selected target is real or a figment. If it is a figment, the figment is destroyed. If the attack misses by 5 or less, one of your figments is destroyed by the near miss. Area spells affect you normally and do not destroy any of your figments. Spells and effects that do not require an attack roll affect you normally and do not destroy any of your figments. Spells that require a touch attack are harmlessly discharged if used to destroy a figment.</p><p>An attacker must be able to see the figments to be fooled. If you are invisible or the attacker is blind, the spell has no effect (although the normal miss chances still apply).</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2693,72 +1255,35 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "you"
         },
         "range": {
-          "value": null,
-          "units": "personal",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": "",
-          "long": null
+          "units": "personal"
         },
         "uses": {
           "value": 3,
-          "max": 3,
-          "per": "day",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": "day"
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "other",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "[[min(8, (1d4 + floor(@cl / 3)))]] Images",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -2817,50 +1342,21 @@
           "bloodline": []
         },
         "level": 2,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "ill",
         "subschool": "figment",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 3,
-          "maxAmount": 3,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "maxAmount": 3
         },
         "atWill": true,
         "sr": false,
         "shortDescription": "<p>This spell creates a number of illusory doubles of you that inhabit your square. These doubles make it difficult for enemies to precisely locate and attack you.</p><p>When <i>mirror image</i> is cast, 1d4 images plus one image per three caster levels (maximum eight images total) are created.</p><p>These images remain in your space and move with you, mimicking your movements, sounds, and actions exactly. Whenever you are attacked or are the target of a spell that requires an attack roll, there is a possibility that the attack targets one of your images instead. If the attack is a hit, roll randomly to see whether the selected target is real or a figment. If it is a figment, the figment is destroyed. If the attack misses by 5 or less, one of your figments is destroyed by the near miss. Area spells affect you normally and do not destroy any of your figments. Spells and effects that do not require an attack roll affect you normally and do not destroy any of your figments. Spells that require a touch attack are harmlessly discharged if used to destroy a figment.</p><p>An attacker must be able to see the figments to be fooled. If you are invisible or the attacker is blind, the spell has no effect (although the normal miss chances still apply).</p>",
-        "spellDuration": "1 min./level",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 min./level"
       },
       "effects": [],
       "folder": null,
@@ -2877,13 +1373,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[fear, mind-affecting, emotion];\n    <strong>Level</strong>&nbsp;antipaladin 2, bard 2, medium 2, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, spiritualist 2, witch 2;\n    \n    <strong>Subdomain</strong>&nbsp;Fear 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a bone from an undead creature)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature per three levels, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level or 1 round; see text for cause fear<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>cause fear</i>, except that it causes all targeted creatures of less than 6 HD to become frightened.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[fear, mind-affecting, emotion];\n    <strong>Level</strong>&nbsp;antipaladin 2, bard 2, medium 2, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, spiritualist 2, witch 2;\n    \n    <strong>Subdomain</strong>&nbsp;Fear 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a bone from an undead creature)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature per three levels, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level or 1 round; see text for cause fear<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>cause fear</i>, except that it causes all targeted creatures of less than 6 HD to become frightened.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -2892,62 +1385,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one living creature per three levels, no two of which can be more than 30 ft. apart"
         },
         "range": {
-          "value": null,
-          "units": "medium",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "medium"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -2956,7 +1415,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3019,50 +1477,19 @@
           "bloodline": []
         },
         "level": 2,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "nec",
-        "subschool": "",
         "types": "fear, mind-affecting, emotion",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "a bone from an undead creature",
-          "focus": "",
-          "gpValue": 0
+          "value": "a bone from an undead creature"
         },
-        "spellbook": "primary",
-        "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
-        },
-        "atWill": false,
-        "sr": true,
         "shortDescription": "<p>This spell functions like <i>cause fear</i>, except that it causes all targeted creatures of less than 6 HD to become frightened.</p>",
-        "spellDuration": "1 round/level or 1 round; see text for cause fear",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round/level or 1 round; see text for cause fear"
       },
       "effects": [],
       "folder": null,
@@ -3079,13 +1506,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, witch 1;\n    \n    <strong>Subdomain</strong>&nbsp;Devil 1, Toil 1, Tyranny 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options.</p><p><i>Approach</i>: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Drop</i>: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn.</p><p><i>Fall</i>: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties.</p><p><i>Flee</i>: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Halt</i>: The subject stands in place for 1 round. It may not take any actions but is not considered helpless.</p><p>If the subject can't carry out your command on its next turn, the spell automatically fails.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, witch 1;\n    \n    <strong>Subdomain</strong>&nbsp;Devil 1, Toil 1, Tyranny 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options.</p><p><i>Approach</i>: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Drop</i>: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn.</p><p><i>Fall</i>: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties.</p><p><i>Flee</i>: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Halt</i>: The subject stands in place for 1 round. It may not take any actions but is not considered helpless.</p><p>If the subject can't carry out your command on its next turn, the spell automatically fails.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -3094,62 +1518,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one living creature"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -3158,7 +1548,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3224,51 +1613,19 @@
           "elementalSchool": [],
           "bloodline": []
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "compulsion",
         "types": "language-dependent, mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
-          "verbal": true,
-          "somatic": false,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "verbal": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
           "preparedAmount": 1,
-          "maxAmount": 1,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "maxAmount": 1
         },
-        "atWill": false,
-        "sr": true,
         "shortDescription": "<p>You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options.</p><p><i>Approach</i>: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Drop</i>: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn.</p><p><i>Fall</i>: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties.</p><p><i>Flee</i>: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Halt</i>: The subject stands in place for 1 round. It may not take any actions but is not considered helpless.</p><p>If the subject can't carry out your command on its next turn, the spell automatically fails.</p>",
-        "spellDuration": "1 round",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round"
       },
       "effects": [],
       "folder": null,
@@ -3285,13 +1642,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, inquisitor 2, medium 2, mesmerist 2, psychic 1, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2, witch 2;\n    <strong>Domain</strong>&nbsp;Knowledge 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a copper piece)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject.</p><p><i>1st Round</i>: Presence or absence of thoughts (from conscious creatures with Intelligence scores of 1 or higher).</p><p><i>2nd Round</i>: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher (and at least 10 points higher than your own Intelligence score), you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting.</p><p><i>3rd Round</i>: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast <i>detect thoughts</i> again to have another chance. Creatures of animal intelligence (Int 1 or 2) have simple, instinctual thoughts.</p><p>Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, inquisitor 2, medium 2, mesmerist 2, psychic 1, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2, witch 2;\n    <strong>Domain</strong>&nbsp;Knowledge 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a copper piece)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject.</p><p><i>1st Round</i>: Presence or absence of thoughts (from conscious creatures with Intelligence scores of 1 or higher).</p><p><i>2nd Round</i>: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher (and at least 10 points higher than your own Intelligence score), you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting.</p><p><i>3rd Round</i>: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast <i>detect thoughts</i> again to have another chance. Creatures of animal intelligence (Int 1 or 2) have simple, instinctual thoughts.</p><p>Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -3300,62 +1654,26 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
           "value": 60,
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "-1",
@@ -3364,7 +1682,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3430,51 +1747,22 @@
           "elementalSchool": [],
           "bloodline": []
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "div",
-        "subschool": "",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": false,
           "focus": true,
           "divineFocus": 3
         },
-        "castTime": "",
         "materials": {
-          "value": "",
-          "focus": "a copper piece",
-          "gpValue": 0
+          "focus": "a copper piece"
         },
-        "spellbook": "primary",
-        "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
-        },
-        "atWill": false,
         "sr": false,
         "shortDescription": "<p>You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject.</p><p><i>1st Round</i>: Presence or absence of thoughts (from conscious creatures with Intelligence scores of 1 or higher).</p><p><i>2nd Round</i>: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher (and at least 10 points higher than your own Intelligence score), you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting.</p><p><i>3rd Round</i>: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast <i>detect thoughts</i> again to have another chance. Creatures of animal intelligence (Int 1 or 2) have simple, instinctual thoughts.</p><p>Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>",
         "spellDuration": "concentration, up to 1 min./level",
-        "spellEffect": "",
-        "spellArea": "cone-shaped emanation",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellArea": "cone-shaped emanation"
       },
       "effects": [],
       "folder": null,
@@ -3491,13 +1779,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;medium 1, mesmerist 1, psychic 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Harrow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (hair from a black cat)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You afflict the target with bad luck. On the next d20 roll the target makes, it must roll twice and take the less favorable result. For every five caster levels you have, the target must roll twice on an additional d20 roll (to a maximum of five rolls at 20th level).</p><p>A target who can speak and has at least one free hand and who is aware of the spell and its effects (such as from a Spellcraft check to identify the spell as it is cast) can negate one reroll by spending a move action to utter a brief prayer or good luck charm to appease the spirits of ill fortune.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;medium 1, mesmerist 1, psychic 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Harrow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (hair from a black cat)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You afflict the target with bad luck. On the next d20 roll the target makes, it must roll twice and take the less favorable result. For every five caster levels you have, the target must roll twice on an additional d20 roll (to a maximum of five rolls at 20th level).</p><p>A target who can speak and has at least one free hand and who is aware of the spell and its effects (such as from a Spellcraft check to identify the spell as it is cast) can negate one reroll by spending a move action to utter a brief prayer or good luck charm to appease the spirits of ill fortune.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -3506,71 +1791,34 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one creature"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3608,51 +1856,20 @@
             ]
           ]
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "compulsion",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "hair from a black cat",
-          "focus": "",
-          "gpValue": 0
+          "value": "hair from a black cat"
         },
-        "spellbook": "primary",
-        "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": true,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
-        },
-        "atWill": false,
-        "sr": true,
         "shortDescription": "<p>You afflict the target with bad luck. On the next d20 roll the target makes, it must roll twice and take the less favorable result. For every five caster levels you have, the target must roll twice on an additional d20 roll (to a maximum of five rolls at 20th level).</p><p>A target who can speak and has at least one free hand and who is aware of the spell and its effects (such as from a Spellcraft check to identify the spell as it is cast) can negate one reroll by spending a move action to utter a brief prayer or good luck charm to appease the spirits of ill fortune.</p>",
-        "spellDuration": "1 round/level or until discharged",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round/level or until discharged"
       },
       "effects": [],
       "folder": null,
@@ -3669,13 +1886,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(charm)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, mesmerist 0, psychic 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You befuddle the target's mind. The target has difficulty telling friend from foe for a short period of time. The subject is considered your ally and not your enemies' ally while determining flanking. The subject takes no other hostile action against your enemies due to this spell's effect.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(charm)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, mesmerist 0, psychic 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You befuddle the target's mind. The target has difficulty telling friend from foe for a short period of time. The subject is considered your ally and not your enemies' ally while determining flanking. The subject takes no other hostile action against your enemies due to this spell's effect.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -3684,62 +1898,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one living creature"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -3748,7 +1928,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3777,51 +1956,19 @@
           "elementalSchool": [],
           "bloodline": []
         },
-        "level": 1,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "charm",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
-        "atWill": false,
-        "sr": true,
         "shortDescription": "<p>You befuddle the target's mind. The target has difficulty telling friend from foe for a short period of time. The subject is considered your ally and not your enemies' ally while determining flanking. The subject takes no other hostile action against your enemies due to this spell's effect.</p>",
-        "spellDuration": "1 round",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round"
       },
       "effects": [],
       "folder": null,
@@ -3838,13 +1985,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 0, inquisitor 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You cause a living creature that is below 0 hit points but stabilized to resume dying. Upon casting this spell, you target a living creature that has -1 or fewer hit points. That creature begins dying, taking 1 point of damage per round. The creature can be stabilized later normally. This spell causes a creature that is dying to take 1 point of damage.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 0, inquisitor 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You cause a living creature that is below 0 hit points but stabilized to resume dying. Upon casting this spell, you target a living creature that has -1 or fewer hit points. That creature begins dying, taking 1 point of damage per round. The creature can be stabilized later normally. This spell causes a creature that is dying to take 1 point of damage.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -3853,62 +1997,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one living creature"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -3917,7 +2027,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -3975,50 +2084,18 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "nec",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>You cause a living creature that is below 0 hit points but stabilized to resume dying. Upon casting this spell, you target a living creature that has -1 or fewer hit points. That creature begins dying, taking 1 point of damage per round. The creature can be stabilized later normally. This spell causes a creature that is dying to take 1 point of damage.</p>",
-        "spellDuration": "instantaneous",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "instantaneous"
       },
       "effects": [],
       "folder": null,
@@ -4035,13 +2112,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[light];\n    <strong>Level</strong>&nbsp;bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;Up to four lights, all within a 10-ft.-radius area<br>\n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Depending on the version selected, you create up to four lights that resemble lanterns or torches (and cast that amount of light), or up to four glowing spheres of light (which look like will-o'-wisps), or one faintly glowing, vaguely humanoid shape. The <i>dancing lights</i> must stay within a 10-foot-radius area in relation to each other but otherwise move as you desire (no concentration required): forward or back, up or down, straight or turning corners, or the like. The lights can move up to 100 feet per round. A light winks out if the distance between you and it exceeds the spell's range.</p><p>You can only have one <i>dancing lights</i> spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent, it does not count against this limit.</p><p><i>Dancing lights</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[light];\n    <strong>Level</strong>&nbsp;bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;Up to four lights, all within a 10-ft.-radius area<br>\n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Depending on the version selected, you create up to four lights that resemble lanterns or torches (and cast that amount of light), or up to four glowing spheres of light (which look like will-o'-wisps), or one faintly glowing, vaguely humanoid shape. The <i>dancing lights</i> must stay within a 10-foot-radius area in relation to each other but otherwise move as you desire (no concentration required): forward or back, up or down, straight or turning corners, or the like. The lights can move up to 100 feet per round. A light winks out if the distance between you and it exceeds the spell's range.</p><p>You can only have one <i>dancing lights</i> spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent, it does not count against this limit.</p><p><i>Dancing lights</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -4050,71 +2124,31 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
-          "value": null,
-          "units": "medium",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "medium"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "other",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -4168,50 +2202,21 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "evo",
-        "subschool": "",
         "types": "light",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
         "sr": false,
         "shortDescription": "<p>Depending on the version selected, you create up to four lights that resemble lanterns or torches (and cast that amount of light), or up to four glowing spheres of light (which look like will-o'-wisps), or one faintly glowing, vaguely humanoid shape. The <i>dancing lights</i> must stay within a 10-foot-radius area in relation to each other but otherwise move as you desire (no concentration required): forward or back, up or down, straight or turning corners, or the like. The lights can move up to 100 feet per round. A light winks out if the distance between you and it exceeds the spell's range.</p><p>You can only have one <i>dancing lights</i> spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent, it does not count against this limit.</p><p><i>Dancing lights</i> can be made permanent with a <i>permanency</i> spell.</p>",
         "spellDuration": "1 minute",
-        "spellEffect": "Up to four lights, all within a 10-ft.-radius area",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellEffect": "Up to four lights, all within a 10-ft.-radius area"
       },
       "effects": [],
       "folder": null,
@@ -4228,13 +2233,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of wool or similar substance)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature of 4 HD or less<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of wool or similar substance)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature of 4 HD or less<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -4243,62 +2245,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "one humanoid creature of 4 HD or less"
         },
         "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "close"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -4307,7 +2275,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -4377,50 +2344,24 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "compulsion",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
-          "material": true,
-          "focus": false,
-          "divineFocus": 0
+          "material": true
         },
-        "castTime": "",
         "materials": {
-          "value": "a pinch of wool or similar substance",
-          "focus": "",
-          "gpValue": 0
+          "value": "a pinch of wool or similar substance"
         },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>",
-        "spellDuration": "1 round",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 round"
       },
       "effects": [],
       "folder": null,
@@ -4437,13 +2378,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;medium 0, mesmerist 0, occultist 0, psychic 0, spiritualist 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;40 feet<br>\n    <strong>Area</strong>&nbsp;40-ft.-radius burst, centered on you<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect the presence of psychically significant items in your vicinity. Such items are those that might have significant psychic imprints or histories that can be read by the psychometry occult skill unlock (see page 196), or items under the effects of the <i>charge object</i> or <i>implant false reading</i> spells. Items within range that contain significant psychic energy spark a recognition in your mind's eye, but no other information is imparted. This spell doesn't automatically detect magic items or strongly aligned items, though such items often have storied histories and might have had previous owners who possessed psychic abilities.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;medium 0, mesmerist 0, occultist 0, psychic 0, spiritualist 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;40 feet<br>\n    <strong>Area</strong>&nbsp;40-ft.-radius burst, centered on you<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect the presence of psychically significant items in your vicinity. Such items are those that might have significant psychic imprints or histories that can be read by the psychometry occult skill unlock (see page 196), or items under the effects of the <i>charge object</i> or <i>implant false reading</i> spells. Items within range that contain significant psychic energy spark a recognition in your mind's eye, but no other information is imparted. This spell doesn't automatically detect magic items or strongly aligned items, though such items often have storied histories and might have had previous owners who possessed psychic abilities.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -4452,71 +2390,32 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
           "value": 40,
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "0"
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -4554,50 +2453,20 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "div",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
         "sr": false,
         "shortDescription": "<p>You detect the presence of psychically significant items in your vicinity. Such items are those that might have significant psychic imprints or histories that can be read by the psychometry occult skill unlock (see page 196), or items under the effects of the <i>charge object</i> or <i>implant false reading</i> spells. Items within range that contain significant psychic energy spark a recognition in your mind's eye, but no other information is imparted. This spell doesn't automatically detect magic items or strongly aligned items, though such items often have storied histories and might have had previous owners who possessed psychic abilities.</p>",
         "spellDuration": "instantaneous",
-        "spellEffect": "",
-        "spellArea": "40-ft.-radius burst, centered on you",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellArea": "40-ft.-radius burst, centered on you"
       },
       "effects": [],
       "folder": null,
@@ -4614,13 +2483,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, mesmerist 0, psychic 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;living creatures within a 10-ft.-radius burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration + 1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Any creature within the area that fails a Will save becomes drowsy and inattentive, taking a -5 penalty on Perception checks and a -2 penalty on Will saves against <i>sleep</i> effects while the <i>lullaby</i> is in effect. <i>Lullaby</i> lasts for as long as the caster concentrates, plus up to 1 round per caster level thereafter.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, mesmerist 0, psychic 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;living creatures within a 10-ft.-radius burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration + 1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Any creature within the area that fails a Will save becomes drowsy and inattentive, taking a -5 penalty on Perception checks and a -2 penalty on Will saves against <i>sleep</i> effects while the <i>lullaby</i> is in effect. <i>Lullaby</i> lasts for as long as the caster concentrates, plus up to 1 round per caster level thereafter.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -4629,62 +2495,25 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
         "range": {
-          "value": null,
-          "units": "medium",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "medium"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -4693,7 +2522,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -4723,50 +2551,21 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "enc",
         "subschool": "compulsion",
         "types": "mind-affecting",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
-          "somatic": true,
-          "material": false,
-          "focus": false,
-          "divineFocus": 0
+          "somatic": true
         },
-        "castTime": "",
-        "materials": {
-          "value": "",
-          "focus": "",
-          "gpValue": 0
-        },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>Any creature within the area that fails a Will save becomes drowsy and inattentive, taking a -5 penalty on Perception checks and a -2 penalty on Will saves against <i>sleep</i> effects while the <i>lullaby</i> is in effect. <i>Lullaby</i> lasts for as long as the caster concentrates, plus up to 1 round per caster level thereafter.</p>",
         "spellDuration": "concentration + 1 round/level",
-        "spellEffect": "",
-        "spellArea": "living creatures within a 10-ft.-radius burst",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellArea": "living creatures within a 10-ft.-radius burst"
       },
       "effects": [],
       "folder": null,
@@ -4783,13 +2582,10 @@
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
         "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;bard 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, paladin 1, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a miniature cloak)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.</p><p><i>Resistance</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n",
-          "chat": "",
-          "unidentified": ""
+          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;bard 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, paladin 1, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a miniature cloak)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.</p><p><i>Resistance</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
         },
         "tags": [],
         "activation": {
-          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -4798,62 +2594,28 @@
             "type": "action"
           }
         },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
         "target": {
           "value": "creature touched"
         },
         "range": {
-          "value": null,
-          "units": "touch",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
+          "units": "touch"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "per": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
+          "size": "0"
         },
-        "attackName": "",
         "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
         "damage": {
           "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
         "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "",
-            "value": null
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
         "ability": {
           "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
+          "damage": ""
         },
         "save": {
           "dc": "0",
@@ -4862,7 +2624,6 @@
         },
         "effectNotes": "",
         "attackNotes": "",
-        "soundEffect": "",
         "links": {
           "children": []
         },
@@ -4940,50 +2701,23 @@
           "bloodline": []
         },
         "level": 0,
-        "clOffset": 0,
-        "slOffset": 0,
         "school": "abj",
-        "subschool": "",
-        "types": "",
-        "nonlethal": false,
         "conditionals": [],
         "components": {
-          "value": "",
           "verbal": true,
           "somatic": true,
           "material": true,
-          "focus": false,
           "divineFocus": 2
         },
-        "castTime": "",
         "materials": {
-          "value": "a miniature cloak",
-          "focus": "",
-          "gpValue": 0
+          "value": "a miniature cloak"
         },
-        "spellbook": "primary",
         "preparation": {
-          "preparedAmount": 0,
-          "maxAmount": 0,
-          "autoDeductCharges": false,
-          "spontaneousPrepared": true,
-          "mode": "prepared"
+          "autoDeductCharges": false
         },
         "atWill": true,
-        "sr": true,
         "shortDescription": "<p>You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.</p><p><i>Resistance</i> can be made permanent with a <i>permanency</i> spell.</p>",
-        "spellDuration": "1 minute",
-        "spellEffect": "",
-        "spellArea": "",
-        "showInQuickbar": false,
-        "spellPoints": {
-          "cost": "1 + @sl"
-        },
-        "domain": false,
-        "slotCost": 1,
-        "attack": {
-          "parts": []
-        }
+        "spellDuration": "1 minute"
       },
       "effects": [],
       "folder": null,
@@ -5000,9 +2734,7 @@
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
         "description": {
-          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually.",
-          "chat": "",
-          "unidentified": ""
+          "value": "<h2>sbc | Conversion Buff</h2>\n                        This Buff was created by <strong>sbc</strong> to compensate for differences between the input and the values FoundryVTT calculates automatically.\n                        <br><br>\n                        Especially when the pathfinder system gets upgraded, entries in compendiums get updated or foundry changes in some way, this buff may become outdated.\n                        <br><br>\n                        For most mooks the conversion should more or less work, but for important NPCs or creatures it is adviced to double check the conversion manually."
         },
         "tags": [],
         "changes": [
@@ -5027,17 +2759,6 @@
             "id": "khvzf33e"
           }
         ],
-        "changeFlags": {
-          "loseDexToAC": false,
-          "noEncumbrance": false,
-          "mediumArmorFullSpeed": false,
-          "heavyArmorFullSpeed": false,
-          "noDex": false,
-          "noStr": false,
-          "oneCha": false,
-          "oneInt": false,
-          "oneWis": false
-        },
         "contextNotes": [],
         "links": {
           "children": []
@@ -5051,12 +2772,7 @@
         "scriptCalls": [],
         "buffType": "perm",
         "active": true,
-        "level": 0,
-        "hideFromToken": true,
-        "uses": {
-          "value": 0,
-          "max": 0
-        }
+        "hideFromToken": true
       },
       "effects": [],
       "folder": null,

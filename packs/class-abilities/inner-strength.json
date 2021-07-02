@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 6th level, once per day, you may heal yourself as a swift action, healing 1d6 hit points for every two inquisitor levels you possess. When you use this ability, you can also remove one of the following conditions from yourself: blinded, confused, dazzled, deafened, frightened, nauseated, shaken, sickened, or staggered.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "swift"
     },
@@ -27,10 +28,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(floor(@classes.inquisitor.level / 2))d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +50,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Inquisitor"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The shaman gains a swim speed equal to her base land speed, as well as the ability to breathe underwater. In addition, she can unleash a torrent of ice and water from her hands in a 15-foot cone as a standard action. This torrent deals 1d4 points of cold damage per 2 shaman level she possesses, and pushes affected creatures back 5 feet directly away from the shaman.</p>\n<p>A successful Reflex saving throw halves the damage and negates the push.</p>\n<p>The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -25,10 +26,20 @@
       "value": "15-ft. cone"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "(floor(@classes.shaman.level / 2))d4",
+          "Cold"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +50,41 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "xzf6e83n",
+        "formula": "@attributes.speed.land.base",
+        "operator": "+",
+        "subTarget": "swimSpeed",
+        "modifier": "base",
+        "priority": 0,
+        "value": 0,
+        "target": "speed"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

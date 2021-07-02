@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a swift action, you can cause waves of cold to radiate from your body. This cold deals 1d6 points of cold damage per 2 oracle levels to all creatures within 10 feet. A successful Fortitude save halves the damage. In addition, a flurry of snow momentarily surrounds you, granting you concealment until your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every 5 levels thereafter.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "swift"
     },
@@ -28,10 +29,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "(max(1, floor(@classes.oracle.level / 2)))d6",
+          "Cold"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -42,7 +53,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

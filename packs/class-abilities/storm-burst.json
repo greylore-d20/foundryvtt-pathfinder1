@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, you can create a storm burst targeting any foe within 30 feet as a ranged touch attack. The storm burst deals 1d6 points of nonlethal damage + 1 point for every two cleric levels you possess. In addition, the target is buffeted by winds and rain, causing it to take a –2 penalty on attack rolls for 1 round. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,13 +30,23 @@
       "units": "ft"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.cleric.level / 2)",
+          "Nonlethal"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -45,7 +56,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Cleric"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

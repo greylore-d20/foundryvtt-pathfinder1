@@ -9,10 +9,51 @@
     "description": {
       "value": "<p>The shaman relies on wisdom rather than intellect to gain and retain knowledge. She can use her Wisdom modifier instead of her Intelligence modifier on all Intelligence-based skill checks.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "rwkhgozs",
+        "formula": "@abilities.wis.mod - @abilities.int.mod",
+        "operator": "+",
+        "subTarget": "intSkills",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skills"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You can channel positive energy like a cleric, using your oracle level as your effective cleric level when determining the amount of damage healed (or caused to undead) and the DC. You can use this ability a number of times per day equal to 1 + your Charisma modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -30,7 +31,6 @@
       "maxIncrements": "1"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "measureTemplate": {
@@ -38,6 +38,17 @@
       "size": "30"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.oracle.level / 2))d6",
+          "Positive"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -48,8 +59,31 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "channel",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

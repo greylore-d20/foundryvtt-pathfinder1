@@ -9,13 +9,67 @@
     "description": {
       "value": "\n                <i>You possess inherent physical prowess.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +2 bonus on Climb and Swim skill checks. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill.</p></p>\n                \n            \n            "
     },
+    "tags": [
+      [
+        "General"
+      ],
+      [
+        "Skill"
+      ]
+    ],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "tag": "athletic"
+    "changes": [
+      {
+        "_id": "tlprarh8",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.clm",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "32ic3mmi",
+        "formula": "@skills.per.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.swm",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "athletic",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "associations": {
+      "classes": []
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/athletic.jpg",

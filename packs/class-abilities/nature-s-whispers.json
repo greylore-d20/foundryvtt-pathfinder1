@@ -9,10 +9,61 @@
     "description": {
       "value": "<p>You have become so attuned to the whispers of the natural world, from the croaking of frogs to the groaning of great boulders, that your surroundings constantly keep you preternaturally aware of danger. You may add your Charisma modifier, instead of your Dexterity modifier, to your Armor Class and CMD. Any condition that would cause you to lose your Dexterity modifier to your Armor Class instead causes you to lose your Charisma modifier to your Armor Class.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "6m5362vy",
+        "formula": "@abilities.cha.mod - @abilities.dex.mod",
+        "operator": "+",
+        "subTarget": "ac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      },
+      {
+        "_id": "t3bpvqhe",
+        "formula": "@abilities.cha.mod - @abilities.dex.mod",
+        "operator": "+",
+        "subTarget": "cmd",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

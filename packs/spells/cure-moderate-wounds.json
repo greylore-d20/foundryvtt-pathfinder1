@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;adept 2, alchemist 2, bard 2, cleric/oracle 2, druid 3, hunter 3, inquisitor 2, occultist 2, paladin 3, ranger 3, shaman 2, spiritualist 2, witch 2;\n    <strong>Domain</strong>&nbsp;Healing 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless); see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>cure light wounds</i>, except that it cures 2d8 points of damage + 1 point per caster level (maximum +10).</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "size": "0"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "2d8 + min(10, @cl)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -42,9 +54,82 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "druid",
+          3
+        ],
+        [
+          "ranger",
+          3
+        ],
+        [
+          "bard",
+          2
+        ],
+        [
+          "paladin",
+          3
+        ],
+        [
+          "alchemist",
+          2
+        ],
+        [
+          "witch",
+          2
+        ],
+        [
+          "inquisitor",
+          2
+        ],
+        [
+          "adept",
+          2
+        ],
+        [
+          "shaman",
+          2
+        ],
+        [
+          "occultist",
+          2
+        ],
+        [
+          "spiritualist",
+          2
+        ],
+        [
+          "hunter",
+          3
+        ]
+      ],
+      "domain": [
+        [
+          "Healing",
+          2
+        ]
+      ],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 2,
     "school": "con",
     "subschool": "healing",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

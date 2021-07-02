@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 3rd level, a monk uses his monk level in place of his&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Attack-Bonus\">base attack bonus</a>&nbsp;when calculating his&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Combat-Maneuver-Bonus\">Combat Maneuver Bonus</a>. Base attack bonuses granted from other classes are unaffected and are added normally.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,9 +25,49 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "0iguyvon",
+        "formula": "@classes.monk.level - @attributes.bab.total",
+        "operator": "+",
+        "subTarget": "cmb",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Monk"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

@@ -9,10 +9,51 @@
     "description": {
       "value": "<p>At 3rd level, a swashbuckler gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the swashbuckler to lose her Dexterity bonus to AC also causes her to lose this dodge bonus.</p>\n<p>This bonus increases by 1 for every 4 levels beyond 3rd (to a maximum of +5 at 19th level).</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "rivltfwf",
+        "formula": "floor((@classes.swashbuckler.level + 1) / 4)",
+        "operator": "+",
+        "subTarget": "ac",
+        "modifier": "dodge",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Swashbuckler"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

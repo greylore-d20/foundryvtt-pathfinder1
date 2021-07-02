@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The witch surrounds her target with oppressive heat, dealing a number of points of nonlethal damage equal to her witch level and causing the target to become fatigued. The target can attempt a Fortitude save to reduce this nonlethal damage by half and negate the fatigued condition.</p>\n<p>Whether or not the target succeeds at this save, it can’t be the target of this hex again for 1 day.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,6 +29,17 @@
       "per": ""
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "@classes.witch.level",
+          "Nonlethal"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -38,7 +50,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Witch"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

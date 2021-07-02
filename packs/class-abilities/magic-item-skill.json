@@ -9,10 +9,51 @@
     "description": {
       "value": "<p>At 2nd level, an occultist’s knowledge of magic items grants him a bonus when attempting to use them. He gains a bonus on all Use Magic Device checks equal to 1/2 his occultist level.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "4zwj3q9h",
+        "formula": "floor(@classes.occultist.level / 2)",
+        "operator": "+",
+        "subTarget": "skill.umd",
+        "modifier": "untyped",
+        "priority": "0",
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Occultist"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

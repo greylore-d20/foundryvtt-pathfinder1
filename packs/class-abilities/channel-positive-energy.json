@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>When a paladin reaches 4th level, she gains the supernatural ability to&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric/#Channel_Energy_Su\">channel positive energy</a>&nbsp;like a cleric. Using this ability consumes two uses of her lay on hands ability. A paladin uses her level as her effective cleric level when channeling positive energy. This is a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>-based ability.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -37,6 +38,17 @@
       "size": "30"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.paladin.level / 2))d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -47,8 +59,31 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "channelPositiveEnergy",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Paladin"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

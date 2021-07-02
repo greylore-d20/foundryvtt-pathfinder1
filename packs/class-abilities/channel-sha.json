@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The shaman can channel positive energy like a cleric, using her shaman level as her effective cleric level when determining the amount of damage healed (or dealt to undead) and the DC.</p>\n<p>The shaman can use this ability a number of times per day equal to 1 + her Charisma modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -30,7 +31,6 @@
       "maxIncrements": "1"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "measureTemplate": {
@@ -38,6 +38,17 @@
       "size": "30"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.shaman.level / 2))d6",
+          "Positive"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -48,8 +59,31 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "channelSha",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

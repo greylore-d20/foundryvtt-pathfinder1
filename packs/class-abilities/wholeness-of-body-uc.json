@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>A monk with this ki power can heal his own wounds as a standard action. By spending 2 points from his ki pool, he can heal an amount of damage equal to 1d8 + his monk level.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "autoDeductChargesCost": "2"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "1d8 + @classes.monkUnchained.level",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -40,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Monk (Unchained)"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

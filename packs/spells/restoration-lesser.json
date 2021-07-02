@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;alchemist 2, cleric/oracle 2, druid 2, hunter 2, inquisitor 2, investigator 2, mesmerist 2, paladin 1, shaman 2, spiritualist 2, warpriest 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;3 round<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Lesser restoration</i> dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores. It also eliminates any fatigue suffered by the character, and improves an exhausted condition to fatigued. It does not restore permanent ability drain.</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "cost": 3,
       "type": "round"
@@ -32,6 +33,17 @@
       "size": "0"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "1d4",
+          "Ability damage"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -43,9 +55,69 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "druid",
+          2
+        ],
+        [
+          "paladin",
+          1
+        ],
+        [
+          "alchemist",
+          2
+        ],
+        [
+          "inquisitor",
+          2
+        ],
+        [
+          "shaman",
+          2
+        ],
+        [
+          "mesmerist",
+          2
+        ],
+        [
+          "spiritualist",
+          2
+        ],
+        [
+          "hunter",
+          2
+        ],
+        [
+          "investigator",
+          2
+        ],
+        [
+          "warpriest",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 2,
     "school": "con",
     "subschool": "healing",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

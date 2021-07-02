@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action you can unleash a force missile that automatically strikes a foe, as @Compendium[pf1.spells.49yc9dpr4kvgki2s]{Magic Missile}. The force missile deals 1d4 points of damage plus the damage from your intense spells evocation power. This is a force effect. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\" rel=\"nofollow\">Intelligence</a>&nbsp;modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,13 +29,23 @@
       "units": "medium"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "1d4 + (floor(@classes.wizard.level / 2))",
+          "Force"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -44,7 +55,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Wizard"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

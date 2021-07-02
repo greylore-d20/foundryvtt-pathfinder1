@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a swift action, you can cause an enemy to take 1d6 points of nonlethal damage if you dealt damage to that enemy with a spell since the start of your previous turn. You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>\n<p>This damage increases to 2d6 at 8th level and to 3d6 at 15th level.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "swift"
     },
@@ -24,10 +25,20 @@
       "value": "creature damaged"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.psychic.level >= 15 ? 3 : ((@classes.psychic.level >= 8 && @classes.psychic.level < 15) ? 2 : 1)d6",
+          "Nonlethal"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -36,7 +47,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Psychic"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

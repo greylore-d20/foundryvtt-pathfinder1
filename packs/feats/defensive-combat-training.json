@@ -9,12 +9,59 @@
     "description": {
       "value": "\n                <i>You excel at defending yourself from all manner of combat maneuvers.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You treat your total Hit Dice as your base attack bonus when calculating your Combat Maneuver Defense (see Combat). </p></p>\n                \n            \n            "
     },
+    "tags": [
+      [
+        "Combat"
+      ],
+      [
+        "Defensive"
+      ],
+      [
+        "Combat Maneuver"
+      ]
+    ],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
-    "attackNotes": ""
+    "attackNotes": "",
+    "changes": [
+      {
+        "_id": "b7av1xlc",
+        "formula": "@attributes.hd.total - @attributes.bab.total",
+        "operator": "add",
+        "subTarget": "cmd",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "associations": {
+      "classes": []
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/defensive-combat-training.jpg",

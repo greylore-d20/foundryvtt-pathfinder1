@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The arcanist can loose a deafening blast of sonic energy by expending 1 point from her arcane reservoir and succeeding at a ranged touch attack against any one target within 30 feet. The blast deals an amount of sonic damage equal to 1d6 + the arcanist’s Charisma modifier, plus an additional 1d6 points of sonic damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). The target is also deafened for 1 minute. The target can attempt a Fortitude save to halve the damage and negate the deafness.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "per": ""
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod",
+          "Sonic"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -43,7 +55,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Arcanist"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

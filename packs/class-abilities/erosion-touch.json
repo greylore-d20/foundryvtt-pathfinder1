@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a melee touch attack, you can deal 1d6 points of damage per level to objects or constructs. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver.</p>\n<p>You can use this ability once per day, plus one time per day for every three levels you possess.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,10 +29,20 @@
       "units": "touch"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "msak",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.oracle.level)d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

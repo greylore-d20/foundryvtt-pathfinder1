@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You call upon the cleansing or searing fires of the Outer Rifts to burn your foes. As a standard action, one target within 30 feet is wreathed in screaming flames and takes 1d6 points of fire damage per level. A successful Reflex save halves this damage.</p>\n<p>At 10th level, the fire’s howls cause any creatures damaged by it to be staggered for 1 round.</p>\n<p>At 15th level, creatures who fail their saves against the balefire are staggered for 1d4 rounds and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.oracle.level)d6",
+          "Fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -44,7 +55,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

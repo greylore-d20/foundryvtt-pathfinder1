@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>The shaman can call upon her ancestors for lore and guidance. She can use her Wisdom modifier instead of her Intelligence modifier on all Intelligence-based skill checks.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "a3e502qq",
+        "formula": "@abilities.wis.mod - @abilities.int.mod",
+        "operator": "+",
+        "subTarget": "intSkills",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skills"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

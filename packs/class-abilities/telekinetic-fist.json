@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action you can strike with a telekinetic fist, targeting any foe within 30 feet as a ranged touch attack. The telekinetic fist deals 1d4 points of bludgeoning damage + 1 for every two wizard levels you possess. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\" rel=\"nofollow\">Intelligence</a>&nbsp;modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,13 +30,23 @@
       "units": "spec"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "1 + floor(@classes.wizard.level / 2)",
+          "Bludgeoning"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -45,7 +56,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Wizard"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

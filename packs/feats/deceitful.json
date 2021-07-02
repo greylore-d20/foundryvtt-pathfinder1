@@ -9,13 +9,67 @@
     "description": {
       "value": "\n                <i>You are skilled at deceiving others, both with the spoken word and with physical disguises.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +2 bonus on all Bluff and Disguise skill checks. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill.</p></p>\n                \n            \n            "
     },
+    "tags": [
+      [
+        "General"
+      ],
+      [
+        "Skill"
+      ]
+    ],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "tag": "deceitful"
+    "changes": [
+      {
+        "_id": "cnpcs7sz",
+        "formula": "@skills.blf.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.blf",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "dq9ghztn",
+        "formula": "@skills.dis.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.dis",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "deceitful",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "associations": {
+      "classes": []
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/deceitful.jpg",

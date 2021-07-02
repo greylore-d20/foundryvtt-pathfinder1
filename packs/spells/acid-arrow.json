@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[acid];\n    <strong>Level</strong>&nbsp;bloodrager 2, magus 2, sorcerer/wizard 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (rhubarb leaf and an adder&#x27;s stomach), F (a dart)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one arrow of acid<br>\n    <strong>Duration</strong>&nbsp;1 round + 1 round/3 levels<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>An arrow of acid springs from your hand and speeds to its target. You must succeed on a ranged touch attack to hit your target. The arrow deals 2d4 points of acid damage with no splash damage. For every three caster levels you possess, the acid, unless neutralized, lasts for another round (to a maximum of 6 additional rounds at 18th level), dealing another 2d4 points of damage in each round.</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,6 +29,17 @@
       "size": "0"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "2d4",
+          "Acid"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -37,10 +49,38 @@
     },
     "effectNotes": "Lasts [[min(6, floor(@cl / 3))]] Rounds",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "magus",
+          2
+        ],
+        [
+          "bloodrager",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 2,
     "school": "con",
     "subschool": "creation",
     "types": "acid",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,

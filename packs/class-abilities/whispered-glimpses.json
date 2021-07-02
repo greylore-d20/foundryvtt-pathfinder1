@@ -9,10 +9,61 @@
     "description": {
       "value": "<p>The whispers of intrigue sing to you with glimpses of insight into others’ presence and motives, granting you greater awareness than your own senses could manage. You can add your Charisma modifier instead of your Wisdom bonus on Perception and Sense Motive checks.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "5q4616nq",
+        "formula": "@abilities.cha.mod - @abilities.wis.mod",
+        "operator": "+",
+        "subTarget": "skill.per",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "wqkq7q2s",
+        "formula": "@abilities.cha.mod - @abilities.wis.mod",
+        "operator": "+",
+        "subTarget": "skill.sen",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

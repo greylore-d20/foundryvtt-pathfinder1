@@ -9,6 +9,7 @@
     "description": {
       "value": "<p><strong>Element&nbsp;</strong>aether, void, water, wood;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>4;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Prerequisite&nbsp;</strong>kinetic healer or void healer<br><strong>Saving Throw&nbsp;</strong>none;&nbsp;<strong>SR&nbsp;</strong>yes</p>\n<p>You use kinetic healer or void healer (whichever you have, or either if you have both) to heal all creatures in a 30-foot radius around you. Healing burst heals half as much damage as normal, unless your healing amount is based on positive blast, in which case it heals the full amount. Unlike kinetic healer, you must accept the burn yourself. This counts as kinetic healer for the purpose of the kinetic chirurgeon archetype (the 17th-level metahealer ability heals the kinetic chirurgeon twice—once for half and once for full).</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "per": ""
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "floor(((ceil(@classes.kineticist.level/2))d6 + floor(@abilities.con.mod/2) + min(@resources.burn.value, floor(@classes.kineticist.level/3) ) * 2 ) / 2 )",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -40,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Kineticist"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

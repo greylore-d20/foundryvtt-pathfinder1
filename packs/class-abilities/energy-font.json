@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You can channel energy a number of times per day equal to 1 + your Charisma modifier. Choose whether you channel positive or negative energy each time you contact a hierophant spirit; this choice must match the spirit’s faith.</p>\n<p>If you choose positive energy, add&nbsp;cure&nbsp;spells of each level you can cast from the cleric list to your medium spell list and spells known. Otherwise, add&nbsp;inflict&nbsp;spells in the same way. These spells count as divine, as in the divine surge spirit power.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,10 +29,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.medium.level / 2))d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -40,7 +51,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Medium"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

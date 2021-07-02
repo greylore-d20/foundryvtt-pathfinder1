@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You can unleash a blast of searing wind at a single target within 30 feet as a ranged touch attack with no range increment. Your solar wind deals 1d6 points of fire damage + 1 for every 2 oracle levels you possess.</p>\n<p>At 7th level, you can also knock an opponent back, treating the blast as a bull rush combat maneuver that uses your caster level + your Charisma modifier in place of your CMB.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.oracle.level / 2)",
+          "Fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -42,7 +53,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

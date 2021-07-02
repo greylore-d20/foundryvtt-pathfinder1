@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;bard 5, cleric/oracle 5, druid 6, hunter 6, inquisitor 5, occultist 5, shaman 5, witch 6;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature/level, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless) or Will half; see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You channel positive energy to cure 1d8 points of damage + 1 point per caster level (maximum +25) on each selected creature. Like other cure spells, <i>mass cure light wounds</i> deals damage to undead in its area rather than curing them. Each affected undead may attempt a Will save for half damage.</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "size": "30"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "1d8 + min(25, @cl)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -43,9 +55,57 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          5
+        ],
+        [
+          "druid",
+          6
+        ],
+        [
+          "bard",
+          5
+        ],
+        [
+          "witch",
+          6
+        ],
+        [
+          "inquisitor",
+          5
+        ],
+        [
+          "shaman",
+          5
+        ],
+        [
+          "occultist",
+          5
+        ],
+        [
+          "hunter",
+          6
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 5,
     "school": "con",
     "subschool": "healing",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

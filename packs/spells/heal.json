@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;adept 5, alchemist 6, cleric/oracle 6, druid 7, inquisitor 6, occultist 6, shaman 7, spiritualist 6, witch 7;\n    <strong>Domain</strong>&nbsp;Healing 6;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Heal</i> enables you to channel positive energy into a creature to wipe away injury and afflictions. It immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzled, deafened, diseased, exhausted, fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also cures 10 hit points of damage per level of the caster, to a maximum of 150 points at 15th level.</p><p><i>Heal</i> does not remove negative levels or restore permanently drained ability score points.</p><p>If used against an undead creature, <i>heal</i> instead acts like <i>harm</i>.</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "size": "0"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "min(150, @cl * 10)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -42,9 +54,66 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          6
+        ],
+        [
+          "druid",
+          7
+        ],
+        [
+          "alchemist",
+          6
+        ],
+        [
+          "witch",
+          7
+        ],
+        [
+          "inquisitor",
+          6
+        ],
+        [
+          "adept",
+          5
+        ],
+        [
+          "shaman",
+          7
+        ],
+        [
+          "occultist",
+          6
+        ],
+        [
+          "spiritualist",
+          6
+        ]
+      ],
+      "domain": [
+        [
+          "Healing",
+          6
+        ]
+      ],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 6,
     "school": "con",
     "subschool": "healing",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

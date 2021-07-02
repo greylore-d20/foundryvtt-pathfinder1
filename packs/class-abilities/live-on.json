@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 5th level, you can use lay on hands as though you were a paladin of 3 levels lower than your psychic level. You also gain access to mercies as though you were a paladin of 3 levels lower than your psychic level.</p>\n<p>You can target only yourself with lay on hands or mercies gained from this discipline. This stacks with lay on hands abilities gained from other sources.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "swift"
     },
@@ -27,10 +28,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": -2,
       "per": "day"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil((@classes.psychic.level - 3) / 2))d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +50,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Psychic"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, you can create a blast of air accompanied by a loud peal of thunder. The blast has a range of 100 feet and has a 20-foot radius, increasing by 5 feet for every 4 oracle levels after 7th. Creatures in the area take 1d6 points of bludgeoning damage per oracle level and are deafened for 1 hour, with a Fortitude save resulting in half damage and no deafness.</p>\n<p>You must be at least 7th level to select this revelation.</p>\n<p>You can use this ability once per day, plus one additional time per day at 11th level and every four levels thereafter.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": -1,
       "per": "day"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.oracle.level)d6",
+          "Bludgeoning"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -43,7 +54,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

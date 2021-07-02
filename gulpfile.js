@@ -52,6 +52,10 @@ const DESTINATION = "dist";
 const PACK_SRC = "packs";
 const PACK_DEST = path.join(DESTINATION, "packs");
 const IS_WIN = process.platform === "win32";
+const TEMPLATE_EXCEPTION_PATHS = {
+  Actor: [],
+  Item: ["classSkills"],
+};
 
 /* ----------------------------------------- */
 /*  Build steps
@@ -305,21 +309,39 @@ function sluggify(string) {
  * @param {object} source - The source to compare with the first parameter.
  * @param {object} [options] - Additional options to augment the behavior.
  * @param {object} [options.keepDefaults=true] - Whether to keep entries which are identical to the source.
+ * @param {string[]} [options.path] - A string containing the names of the parent objects from previous adhereTemplate calls.
  */
 function adhereTemplate(object, source, options = {}) {
+  if (!source) return;
   const sourceKeys = Object.keys(source);
+  const path = options.path ?? [];
 
   for (let k of Object.keys(object)) {
-    if (!sourceKeys.includes(k)) {
+    if (
+      !sourceKeys.includes(k) &&
+      (!options.documentType || !TEMPLATE_EXCEPTION_PATHS[options.documentType].includes(path.join(".")))
+    ) {
       delete object[k];
       continue;
     }
 
     if (typeof object[k] === "object" && object[k] != null && typeof source[k] === "object" && source[k] != null) {
-      adhereTemplate(object[k], source[k], options);
+      // Leave arrays alone
+      if (object[k] instanceof Array || source[k] instanceof Array) continue;
+      // Create new objects
+      // @TODO: Make this less painful
+      const newOptions = {};
+      mergeObject(newOptions, options);
+      mergeObject(newOptions, { path: (newOptions.path ?? []).slice().concat(k) });
+      // Adhere deeply to template
+      adhereTemplate(object[k], source[k], newOptions);
       // Delete if empty object
       if (Object.keys(object[k]).length === 0) delete object[k];
-    } else if (options.keepDefaults === false && object[k] === source[k]) {
+    } else if (
+      options.keepDefaults === false &&
+      object[k] === source[k] &&
+      (!options.documentType || !TEMPLATE_EXCEPTION_PATHS[options.documentType].includes(path.join(".")))
+    ) {
       delete object[k];
     }
   }
@@ -410,16 +432,23 @@ function loadManifest() {
  *
  * @param {object} pack Loaded compendium content.
  * @param {object} templateData Document template data, as loaded by {@link loadDocumentTemplates}.
+ * @param {string} [documentType] - The document type of the content.
  * @returns {Promise.<object>} The sanitized content.
  */
-function sanitizePack(pack, templateData) {
+function sanitizePack(pack, templateData, documentType = "") {
   // Remove non-system/non-core flags
   for (const key of Object.keys(pack.flags)) {
     if (key !== "pf1") delete pack.flags[key];
   }
   // Adhere to template data
   if (templateData) {
-    adhereTemplate(pack.data, templateData[pack.type], { keepDefaults: false });
+    adhereTemplate(pack.data, templateData[documentType]?.[pack.type], { keepDefaults: false, documentType });
+    // Adhere actor's items to template data
+    if (documentType === "Actor" && pack.items?.length > 0) {
+      for (let i of pack.items) {
+        adhereTemplate(i.data, templateData.Item[i.type], { keepDefaults: false, documentType: "Item" });
+      }
+    }
   }
 
   return pack;
@@ -463,7 +492,7 @@ function extractPacks() {
           // Iterate through each compendium entry.
           packs.forEach((pack) => {
             // Remove permissions and _id, and adhere to template data
-            pack = sanitizePack(pack, templateData[packData?.entity]);
+            pack = sanitizePack(pack, templateData, packData?.entity);
 
             let output = JSON.stringify(pack, null, 2);
 

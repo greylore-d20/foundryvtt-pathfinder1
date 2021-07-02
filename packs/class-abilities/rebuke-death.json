@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You can touch a living creature as a standard action, healing it for 1d4 points of damage plus 1 for every two cleric levels you possess. You can only use this ability on a creature that is below 0 hit points. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,13 +29,23 @@
       "units": "touch"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "1d4 + floor(@classes.cleric.level / 2)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -43,7 +54,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Cleric"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

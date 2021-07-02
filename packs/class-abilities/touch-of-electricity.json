@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, you can perform a melee touch attack that deals 1d6 points of electricity damage +1 point for every two oracle levels you possess.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>\n<p>At 11th level, any weapon that you wield is treated as a&nbsp;shock&nbsp;weapon.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,10 +29,20 @@
       "units": "touch"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "msak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.oracle.level / 2)",
+          "Electricity"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Once per day as a standard action, you can cause the weapons around you to shatter in their wielders’ hands. When you use this ability, attempt a single sunder combat maneuver, using your caster level in place of your base attack bonus and your Charisma modifier in place of Strength. Every creature except you in a 10-foot radius that is wielding a manufactured weapon is targeted by the same attempt. You deal an amount of damage to each weapon affected equal to 1d4 × your Charisma modifier (minimum 1d4). At 11th level, this damage increases to 1d6 × your Charisma modifier (minimum 1d6).</p>\n<p>At 10th level, you can use this ability twice per day.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "(@abilities.cha.mod)d4",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Inquisitors are skilled at sensing deception and intimidating their foes. An inquisitor receives a morale bonus on all Intimidate and Sense Motive checks equal to 1/2 her inquisitor level (minimum +1).</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,9 +25,59 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "9vo63x5i",
+        "formula": "max(1, floor(@classes.inquisitor.level / 2))",
+        "operator": "add",
+        "subTarget": "skill.int",
+        "modifier": "morale",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "cvwe4abv",
+        "formula": "max(1, floor(@classes.inquisitor.level / 2))",
+        "operator": "add",
+        "subTarget": "skill.sen",
+        "modifier": "morale",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Inquisitor"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

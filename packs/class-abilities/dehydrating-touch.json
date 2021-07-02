@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Starting at 1st level, you can make a melee&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Touch-Attacks\">touch attack</a>&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>&nbsp;that inflicts 1d6 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Nonlethal-Damage\">nonlethal damage</a>&nbsp;+ 1 for every two sorcerer levels you possess and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Sickened\" rel=\"nofollow\">sickens</a>&nbsp;the target for 1 round.&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Ooze\">Oozes</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Plant\">plants</a>, and creatures with the&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Aquatic\">aquatic</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Water\">water</a>&nbsp;subtypes suffer lethal damage instead. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,13 +29,23 @@
       "units": "touch"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "mwak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.sorcerer.level / 2)",
+          "Nonlethal"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -44,7 +55,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Sorcerer"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

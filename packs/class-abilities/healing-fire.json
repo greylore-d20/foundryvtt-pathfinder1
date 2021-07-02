@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 15th level, you can&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/cleric\">channel energy</a>&nbsp;twice per day as a cleric of half your level. Instead of using this ability to damage undead, you can convert the positive energy to flame and deal an equivalent amount of fire damage instead.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,13 +29,23 @@
       "units": "seeText"
     },
     "uses": {
-      "max": 2,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + (floor(@classes.sorcerer.level / 4))d6",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -43,7 +54,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Sorcerer"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

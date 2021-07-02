@@ -9,13 +9,54 @@
     "description": {
       "value": "<p>At 5th, 10th, 15th, and 20th level, a wizard gains a bonus feat. At each such opportunity, he can choose a&nbsp;<a href=\"https://www.d20pfsrd.com/feats/metamagic-feats\">metamagic feat</a>, an&nbsp;<a href=\"https://www.d20pfsrd.com/feats/item-creation-feats\">item creation</a>, or @Compendium[pf1.feats.KlE26ofz7uAkd0IJ]{Spell Mastery}. The wizard must still meet all prerequisites for a bonus feat, including caster level minimums. These bonus feats are in addition to the feats that a character of any class gets from advancing levels. The wizard is not limited to the categories of&nbsp;<a href=\"https://www.d20pfsrd.com/feats/item-creation-feats\">Item Creation Feats</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/feats/metamagic-feats\">Metamagic Feats</a>, or @Compendium[pf1.feats.KlE26ofz7uAkd0IJ]{Spell Mastery}&nbsp;when choosing those feats.</p>\n<p>A wizard may also choose an&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/wizard/arcane-discoveries/arcane-discoveries-paizo/\">Arcane Discovery</a>&nbsp;that he qualifies for in place of a bonus feat at these levels.</p>"
     },
+    "tags": [],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "featType": "classFeat"
+    "changes": [
+      {
+        "_id": "6l06zvcu",
+        "formula": "floor(@classes.wizard.level / 5)",
+        "operator": "add",
+        "subTarget": "bonusFeats",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Wizard"
+        ]
+      ]
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/items/inventory/book-tan.jpg",

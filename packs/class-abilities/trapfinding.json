@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>A rogue adds 1/2 her level to&nbsp;<a href=\"https://www.d20pfsrd.com/skills/perception\">Perception</a>&nbsp;<a href=\"https://www.d20pfsrd.com/skills#skill-checks\">skill checks</a>&nbsp;made to locate traps and to&nbsp;<a href=\"https://www.d20pfsrd.com/skills/disable-device\">Disable Device</a>&nbsp;<a href=\"https://www.d20pfsrd.com/skills#skill-checks\">skill checks</a>&nbsp;(minimum +1). A rogue can use&nbsp;<a href=\"https://www.d20pfsrd.com/skills/disable-device\">Disable Device</a>&nbsp;to disarm magic traps.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,10 +25,56 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "vhodw42z",
+        "formula": "@classes.rogue.level < 4 ? 1 : (floor(@classes.rogue.level / 2))",
+        "operator": "add",
+        "subTarget": "skill.dev",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [
+      {
+        "text": "+[[@classes.rogue.level < 4 ? 1 : (floor(@classes.rogue.level / 2))]] vs Traps",
+        "target": "skill",
+        "subTarget": "skill.per"
+      }
+    ],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "trapfinding",
-    "featType": "classFeat"
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Rogue"
+        ]
+      ]
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/items/inventory/lockpick.jpg",

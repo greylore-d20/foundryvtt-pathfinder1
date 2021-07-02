@@ -9,13 +9,54 @@
     "description": {
       "value": "<p>At 4th level, and every four levels thereafter, a gunslinger gains a bonus feat in addition to those gained by normal advancement. These bonus feats must be combat or grit feats.</p>"
     },
+    "tags": [],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "v70np67b",
+        "formula": "floor(@classes.gunslinger.level / 4)",
+        "operator": "add",
+        "subTarget": "bonusFeats",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Gunslinger"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

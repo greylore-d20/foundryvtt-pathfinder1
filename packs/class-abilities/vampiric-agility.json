@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>All of the vampire hunter’s movement speeds are increased by 5 feet. At 8th level, his movement speeds are increased by 10 feet and he gains&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Evasion-Ex-\">evasion</a>, as the&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue\">rogue</a>&nbsp;class feature. At 16th level, the vampire hunter gains&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Improved-Evasion-Ex-\">improved evasion</a>, as the&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue\">rogue</a>&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Rogue-Talents\">advanced talent</a>.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,9 +25,49 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "ue6vlwdv",
+        "formula": "@classes.vampirehunter.level >= 8 ? 10 : 5",
+        "operator": "add",
+        "subTarget": "allSpeeds",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "speed"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Vampire Hunter"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

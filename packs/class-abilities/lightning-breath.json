@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, you can breathe a 30-foot line of electricity. This line deals 1d4 points of electricity damage per oracle level. A Reflex save halves this damage.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.oracle.level)d4",
+          "Electricity"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -43,7 +54,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

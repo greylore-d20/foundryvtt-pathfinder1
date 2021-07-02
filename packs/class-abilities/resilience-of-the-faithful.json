@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 5th level, you gain a +2 resistance bonus on all saving throws. This bonus increases by 1 for every 5 levels you possess beyond 5th.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "150bn2je",
+        "formula": "1 + floor(@classes.psychic.level / 5)",
+        "operator": "+",
+        "subTarget": "allSavingThrows",
+        "modifier": "resist",
+        "priority": "0",
+        "value": 0,
+        "target": "savingThrows"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Psychic"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

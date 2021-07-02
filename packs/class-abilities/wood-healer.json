@@ -9,6 +9,7 @@
     "description": {
       "value": "<p><strong>Element&nbsp;</strong>wood;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>1;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Prerequisite&nbsp;</strong>positive blast<br><strong>Saving Throw&nbsp;</strong>none;&nbsp;<strong>SR&nbsp;</strong>yes</p>\n<p>This functions as kinetic healer, but you must base the amount of healing on your positive blast, not wood blast.</p>\n<p>A phytokineticist with positive blast as her first blast qualifies for the kinetic chirurgeon archetype and gains this utility talent instead of kinetic healer.</p>\n<p>This wild talent counts as kinetic healer for prerequisites for selecting other kineticist wild talents.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "per": ""
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.kineticist.level/2))d6 + floor(@abilities.con.mod/2) + min(@resources.burn.value, floor(@classes.kineticist.level/3) ) * 2 * @critMult",
+          "Positive"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +51,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Kineticist"
+        ]
+      ]
+    },
     "abilityType": "sp"
   },
   "flags": {},

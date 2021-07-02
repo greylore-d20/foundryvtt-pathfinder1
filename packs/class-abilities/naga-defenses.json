@@ -9,10 +9,51 @@
     "description": {
       "value": "<p>At 8th level, when entering a bloodrage, you gain a +2 enhancement bonus to your natural armor bonus and a +4 bonus on saves against poison.</p>\n<p>At 16th level, the bonus to your natural armor increases to +4 and the bonus on saves against poison increases to +8.</p>\n<p>At 20th level, the bonus to your natural armor increases to +6, and you gain immunity to poison.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "e6davhgp",
+        "formula": "@classes.bloodrager.level >= 20 ? 6 : ((@classes.bloodrager.level >= 16 && @classes.bloodrager.level < 20) ? 4 : 2)",
+        "operator": "+",
+        "subTarget": "nac",
+        "modifier": "enh",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Bloodrager"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

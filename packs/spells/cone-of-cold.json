@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[cold];\n    <strong>Level</strong>&nbsp;magus 5, occultist 5, shaman 6, sorcerer/wizard 5, witch 6;\n    <strong>Domain</strong>&nbsp;Water 6;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Boreal 5, Oni 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a small crystal or glass cone)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Cone of cold</i> creates an area of extreme cold, originating at your hand and extending outward in a cone. It drains heat, dealing 1d6 points of cold damage per caster level (maximum 15d6).</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -30,6 +31,17 @@
       "size": "60"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "(min(15, @cl))d6",
+          "Cold"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -41,9 +53,59 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          5
+        ],
+        [
+          "witch",
+          6
+        ],
+        [
+          "magus",
+          5
+        ],
+        [
+          "shaman",
+          6
+        ],
+        [
+          "occultist",
+          5
+        ]
+      ],
+      "domain": [
+        [
+          "Water",
+          6
+        ]
+      ],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": [
+        [
+          "Boreal",
+          5
+        ],
+        [
+          "Oni",
+          5
+        ]
+      ]
+    },
     "level": 5,
     "school": "evo",
     "types": "cold",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,

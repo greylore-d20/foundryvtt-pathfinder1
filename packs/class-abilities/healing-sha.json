@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>A shaman soothes the wounds of those she touches. This acts as&nbsp;cure light wounds, using the shaman’s caster level. Once a creature has benefited from the healing hex, it cannot benefit from it again for 24 hours.</p>\n<p>At 5th level, this acts as&nbsp;cure moderate wounds.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -31,6 +32,17 @@
       "per": ""
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "(@classes.shaman.level >= 5 ? 2 : 1)d8 + (min(10, @classes.shaman.level)",
+          "Positive"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -39,7 +51,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

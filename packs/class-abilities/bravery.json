@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Starting at 2nd level, a fighter gains a +1 bonus on&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\">Will</a>&nbsp;saves against fear. This bonus increases by +1 for every four levels beyond 2nd.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,10 +25,45 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [
+      {
+        "text": "+[[min(1,floor(@classes.fighter.level / 3))]] vs fear effects",
+        "target": "savingThrows",
+        "subTarget": "will"
+      }
+    ],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "bravery",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Fighter"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

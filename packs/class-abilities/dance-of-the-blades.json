@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Your base speed increases by 10 feet.</p>\n<p>At 7th level, you gain a +1 bonus on attack rolls with a metal weapon in any round in which you move at least 10 feet. This bonus increases by +1 at 11th level, and every four levels thereafter.</p>\n<p>At 11th level, as a move action, you can maneuver your weapon to create a shield of whirling steel around yourself until the start of your next turn; non-incorporeal melee and ranged attacks against you have a 20% miss chance while the shield is active.</p>\n<p>You must be wielding a metal weapon to use this ability.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "ldm02u6w",
+        "formula": "10",
+        "operator": "+",
+        "subTarget": "landSpeed",
+        "modifier": "base",
+        "priority": 0,
+        "value": 0,
+        "target": "speed"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

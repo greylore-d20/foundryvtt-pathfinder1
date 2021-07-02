@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;cleric/oracle 8, druid 9, shaman 8, witch 9;\n    <strong>Domain</strong>&nbsp;Community 8, Healing 8;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature/level, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless) or Will half; see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>mass cure light wounds</i>, except that it cures 4d8 points of damage + 1 point per caster level (maximum +40).</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -32,6 +33,17 @@
       "size": "30"
     },
     "actionType": "heal",
+    "damage": {
+      "parts": [
+        [
+          "4d8 + min(40, @cl)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -43,9 +55,50 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          8
+        ],
+        [
+          "druid",
+          9
+        ],
+        [
+          "witch",
+          9
+        ],
+        [
+          "shaman",
+          8
+        ]
+      ],
+      "domain": [
+        [
+          "Community",
+          8
+        ],
+        [
+          "Healing",
+          8
+        ]
+      ],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "level": 8,
     "school": "con",
     "subschool": "healing",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true

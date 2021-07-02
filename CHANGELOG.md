@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.14 (Hotfix)
+
+### Compendiums
+
+- Compendium items were missing a lot of details since last version
+
 ## 0.78.13
 
 ### Bug Fixes

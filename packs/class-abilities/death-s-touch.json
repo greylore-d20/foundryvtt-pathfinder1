@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>You can cause terrible wounds to appear on a creature with a melee touch attack. This attack deals 1d6 points of negative energy damage +1 point for every two oracle levels you possess. If used against an undead creature, it heals damage and grants a +2 channel resistance for 1 minute. You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,10 +29,20 @@
       "units": "touch"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "msak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.oracle.level / 2)",
+          "Negative"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

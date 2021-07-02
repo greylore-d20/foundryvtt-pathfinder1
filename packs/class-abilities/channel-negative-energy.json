@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>When an antipaladin reaches 4th level, he gains the supernatural ability to channel negative energy like a&nbsp;<a href=\"https://www.aonprd.com/ClassDisplay.aspx?ItemName=Cleric\">cleric</a>. Using this ability consumes two uses of his touch of corruption ability. An antipaladin uses his level as his effective cleric level when channeling negative energy. This is a Charisma-based ability.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -39,6 +40,17 @@
       "overrideColor": true
     },
     "actionType": "save",
+    "damage": {
+      "parts": [
+        [
+          "(ceil(@classes.antipaladin.level / 2))d6",
+          "Negative"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -49,8 +61,31 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
     "tag": "channelNegativeEnergy",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Antipaladin"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

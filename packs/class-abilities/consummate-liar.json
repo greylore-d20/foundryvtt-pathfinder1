@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>A mesmerist adds 1/2 his mesmerist level (minimum 1) as a bonus on all Bluff checks. In addition, the mesmerist qualifies for the Improved Feint and Greater Feint feats, even if he doesn’t have Combat Expertise or an Intelligence score of at least 13.</p>\n<p>He can also ignore Combat Expertise and an Intelligence score of 13 as prerequisites for other feats that require Improved Feint or Greater Feint.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "featType": "classFeat"
+    "changes": [
+      {
+        "_id": "8v5u4pi6",
+        "formula": "max(1, floor(@classes.mesmerist.level / 2))",
+        "operator": "+",
+        "subTarget": "skill.blf",
+        "modifier": "untyped",
+        "priority": "0",
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Mesmerist"
+        ]
+      ]
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/skills/light_07.jpg",

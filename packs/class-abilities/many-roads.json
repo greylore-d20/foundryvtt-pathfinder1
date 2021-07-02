@@ -9,10 +9,61 @@
     "description": {
       "value": "<p>You gain an insight bonus on Fly and Survival checks equal to 1/2 your oracle level. Further, you learn to speak and read three languages in addition to those you already know.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "dhxge9ww",
+        "formula": "floor(@classes.oracle.level / 2)",
+        "operator": "+",
+        "subTarget": "skill.fly",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "vmxlyitf",
+        "formula": "floor(@classes.oracle.level / 2)",
+        "operator": "+",
+        "subTarget": "skill.sur",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, you can make an unarmed touch attack against a creature. The target takes 1d4 points of fire damage + 1/2 your inquisitor level (minimum 1). If the target is currently the subject of a polymorph effect that changes its appearance (such as by&nbsp;alter self,&nbsp;shapechange, or an innate shapechanging ability such as that possessed by doppelgangers), it instead takes 1d6 points of fire damage + 1/2 your inquisitor level (minimum 1). You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -28,10 +29,20 @@
       "units": "touch"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "msak",
+    "damage": {
+      "parts": [
+        [
+          "1d4 + (max(1, floor(@classes.inquisitor.level / 2)))",
+          "Fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Inquisitor"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

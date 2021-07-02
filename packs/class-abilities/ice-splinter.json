@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a standard action, the shaman can shoot razor-sharp icicles at an enemy within 30 feet as a ranged touch attack. This barrage deals 1d6 points of piercing damage + 1 point for every 2 shaman levels she has.</p>\n<p>The shaman can use this ability a number of times per day equal to 3 + her Charisma modifier.</p>\n<p>At 11th level, any weapon she wields is treated as a&nbsp;<a href=\"https://aonprd.com/MagicWeaponsDisplay.aspx?ItemName=Frost\">frost</a>&nbsp;weapon.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,10 +30,20 @@
       "units": "ft"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "actionType": "rsak",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.shaman.level / 2)",
+          "Cold"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "dex",
       "damage": ""
@@ -42,7 +53,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Shaman"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Your mystical bond with wood is such that your weapons become an extension of your body. You gain a +1 competence bonus on attack rolls when wielding a weapon made of or mostly consisting of wood (such as a bow, club, quarterstaff, or spear).</p>\n<p>This bonus increases by +1 at 5th level and every five levels thereafter.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "z5ttwk4b",
+        "formula": "1 + floor(@classes.oracle.level / 5)",
+        "operator": "+",
+        "subTarget": "mattack",
+        "modifier": "competence",
+        "priority": 0,
+        "value": 0,
+        "target": "attack"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

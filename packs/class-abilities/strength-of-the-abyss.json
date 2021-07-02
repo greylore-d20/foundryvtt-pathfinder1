@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 9th level, you gain a +2 inherent bonus to your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\" rel=\"nofollow\">Strength</a>. This bonus increases to +4 at 13th level, and to +6 at 17th level.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -24,9 +25,49 @@
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "6wg7svns",
+        "formula": "@classes.sorcerer.level >= 17 ? 6 : ((@classes.sorcerer.level > 12 && @classes.sorcerer.level < 17) ? 4 : 2)",
+        "operator": "+",
+        "subTarget": "str",
+        "modifier": "inherent",
+        "priority": 0,
+        "value": 0,
+        "target": "ability"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Sorcerer"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

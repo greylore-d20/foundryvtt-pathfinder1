@@ -9,13 +9,67 @@
     "description": {
       "value": "\n                <i>You are good at avoiding unwanted attention and slipping out of bonds.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You get a +2 bonus on all Escape Artist and Stealth skill checks. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill.</p></p>\n                \n            \n            "
     },
+    "tags": [
+      [
+        "General"
+      ],
+      [
+        "Skill"
+      ]
+    ],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
-    "tag": "stealthy"
+    "changes": [
+      {
+        "_id": "sij49210",
+        "formula": "@skills.ste.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.ste",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "r8iwxuq0",
+        "formula": "@skills.esc.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.esc",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "stealthy",
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "associations": {
+      "classes": []
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/stealthy.jpg",

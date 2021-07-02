@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>As a swift action, you can cause sharp splinters of wood to explode outward from your body. These splinters deal 1d6 points of piercing damage per two oracle levels (minimum 1d6) to all creatures within a 10-foot burst. A Reflex save halves this damage. In addition, the sharp splinters count as caltrops in the area until your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "swift"
     },
@@ -27,10 +28,20 @@
       "units": "personal"
     },
     "uses": {
-      "max": 1,
       "per": "day"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "(max(1, floor(@classes.oracle.level / 2)))d6",
+          "Piercing"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -41,7 +52,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

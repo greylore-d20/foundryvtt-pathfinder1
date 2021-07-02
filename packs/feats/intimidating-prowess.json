@@ -9,12 +9,56 @@
     "description": {
       "value": "\n                <i>Your physical might is intimidating to others.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> Add your Strength modifier to Intimidate skill checks in addition to your Charisma modifier.</p></p>\n                \n            \n            "
     },
+    "tags": [
+      [
+        "General"
+      ],
+      [
+        "Skill"
+      ]
+    ],
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
-    "attackNotes": ""
+    "attackNotes": "",
+    "changes": [
+      {
+        "_id": "zy5pz0i8",
+        "formula": "max(0, @abilities.str.mod)",
+        "operator": "add",
+        "subTarget": "skill.int",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "associations": {
+      "classes": []
+    }
   },
   "flags": {},
   "img": "systems/pf1/icons/feats/intimidating-prowess.jpg",

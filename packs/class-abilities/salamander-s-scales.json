@@ -9,10 +9,51 @@
     "description": {
       "value": "<p>At 4th level, you gain fire resistance 5 and a +1 natural armor bonus to AC.</p>\n<p>At 8th level, your fire resistance increases to 10 and your natural armor bonus increases to +2.</p>\n<p>At 16th level, your fire resistance increases to 20 and your natural armor bonus increases to +3.</p>"
     },
+    "tags": [],
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "8v3tb846",
+        "formula": "@classes.bloodrager.level >= 20 ? 3 : ((@classes.bloodrager.level >= 8 && @classes.bloodrager.level < 20) ? 2 : 1)",
+        "operator": "+",
+        "subTarget": "nac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Bloodrager"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

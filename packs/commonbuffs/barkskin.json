@@ -9,6 +9,27 @@
     "description": {
       "value": "<p>Your skin is toughened, granting you an enhancement bonus to your natural armor as per the barkskin spell.</p>\n<p><strong>Usage</strong>: Set the buff's level to the caster level of Barkskin.</p>"
     },
+    "tags": [],
+    "changes": [
+      {
+        "_id": "zjfo24qt",
+        "formula": "min(5, 2 + max(0, floor((@item.level - 3) / 3)))",
+        "operator": "+",
+        "subTarget": "nac",
+        "modifier": "enh",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "level": "3"
   },
   "sort": 5700000,

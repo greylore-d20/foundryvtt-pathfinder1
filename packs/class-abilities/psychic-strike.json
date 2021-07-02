@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>At 1st level, you can overwhelm the minds of those nearby. You can target one creature within 30 feet that you can see; that creature must succeed at a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Will\">Will</a>&nbsp;saving throw (DC = 10 + 1/2 your&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;level + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier) or it takes 1d6 points of damage + 1 point for every 2&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;levels you possess and becomes&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Shaken\">shaken</a>&nbsp;for 1 round. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,13 +30,23 @@
       "units": "spec"
     },
     "uses": {
-      "max": 3,
       "per": "day"
     },
     "measureTemplate": {
       "size": "0"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "1d6 + floor(@classes.sorcerer.level / 2)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "damage": ""
     },
@@ -45,7 +56,30 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Sorcerer"
+        ]
+      ]
+    },
     "abilityType": "su"
   },
   "flags": {},

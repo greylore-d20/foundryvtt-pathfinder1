@@ -9,6 +9,7 @@
     "description": {
       "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[earth, fire];\n    <strong>Level</strong>&nbsp;druid 1, hunter 1, ranger 1, shaman 1, sorcerer/wizard 1, witch 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a handful of sand)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;20-ft. radius<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You cause sheets of hot sand to spread over the ground in the area of effect. This layer of sand is 1 foot deep and constantly shifts and churns, transforming the ground in the area into difficult terrain. The sand itself burns, and periodic flames rise from the grit. While these flames cannot ignite objects, they deal 1d4 points of fire damage to any creature that ends its turn in contact with the ground within the area of effect. At the end of the duration, the sand vanishes, leaving no aftereffects (other than damage dealt).</p>\n</div>\n"
     },
+    "tags": [],
     "activation": {
       "type": "standard"
     },
@@ -29,6 +30,17 @@
       "size": "20"
     },
     "actionType": "spellsave",
+    "damage": {
+      "parts": [
+        [
+          "1d4",
+          "Fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "ability": {
       "attack": "",
       "damage": ""
@@ -38,9 +50,49 @@
     },
     "effectNotes": "",
     "attackNotes": "",
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          1
+        ],
+        [
+          "druid",
+          1
+        ],
+        [
+          "ranger",
+          1
+        ],
+        [
+          "witch",
+          1
+        ],
+        [
+          "shaman",
+          1
+        ],
+        [
+          "hunter",
+          1
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
     "school": "con",
     "subschool": "creation",
     "types": "earth, fire",
+    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,

@@ -9,6 +9,7 @@
     "description": {
       "value": "<p>Like the great dragons, you are not easily harmed by common means of attack. You gain resistance 5 against your chosen energy type and a +1 natural armor bonus.</p>\n<p>At 9th level, your energy resistance increases to 10 and your natural armor bonus increases to +2.</p>\n<p>At 15th level, your energy resistance increases to 20 and your natural armor bonus increases to +4.</p>"
     },
+    "tags": [],
     "activation": {
       "type": "passive"
     },
@@ -21,9 +22,49 @@
       "per": ""
     },
     "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
     "effectNotes": "",
     "attackNotes": "",
+    "changes": [
+      {
+        "_id": "6u666ieo",
+        "formula": "@classes.oracle.level >= 15 ? 4 : ((@classes.oracle.level > 8 && @classes.oracle.level < 15) ? 2 : 1)",
+        "operator": "+",
+        "subTarget": "nac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
     "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
     "abilityType": "ex"
   },
   "flags": {},

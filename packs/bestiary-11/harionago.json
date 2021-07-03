@@ -1,4 +1,5 @@
 {
+  "_id": "9oqgn4TMoCgsCN2g",
   "name": "Harionago",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/undead.png",
@@ -280,8 +281,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -341,8 +342,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -465,8 +466,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -521,8 +522,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [
           {
             "_id": "ign7okhi",
@@ -580,8 +581,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -627,8 +628,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -685,8 +686,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -733,8 +734,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -776,6 +777,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -807,11 +813,16 @@
           "damage": "str",
           "critRange": "19"
         },
-        "effectNotes": "\nparalysis",
-        "attackNotes": "2 claws +15 (1d6+4/19-20 plus paralysis)",
+        "effectNotes": [
+          "paralysis"
+        ],
+        "attackNotes": [
+          "2 claws +15 (1d6+4/19-20 plus paralysis)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -838,6 +849,11 @@
         "tags": [],
         "activation": {
           "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
         },
         "duration": {
           "units": "inst"
@@ -878,11 +894,16 @@
           "damage": "str",
           "critRange": "19"
         },
-        "effectNotes": "\nbleed",
-        "attackNotes": "4 hair barbs +12 (1d6+2/19-20 plus bleed)",
+        "effectNotes": [
+          "bleed"
+        ],
+        "attackNotes": [
+          "4 hair barbs +12 (1d6+2/19-20 plus bleed)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -916,11 +937,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -954,11 +976,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -992,11 +1015,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1061,8 +1085,8 @@
           "type": "will",
           "description": "Will negates (harmless) or Will negates (object)"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1193,8 +1217,8 @@
         "save": {
           "dc": "0"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1338,8 +1362,10 @@
           "type": "fort",
           "description": "Fortitude half"
         },
-        "effectNotes": "[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty",
-        "attackNotes": "",
+        "effectNotes": [
+          "[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty"
+        ],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1468,8 +1494,8 @@
           "type": "will",
           "description": "Will negates"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1579,8 +1605,8 @@
           "type": "will",
           "description": "Will negates"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1714,8 +1740,8 @@
         "save": {
           "dc": "0"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1829,8 +1855,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1877,8 +1903,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1963,6 +1989,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "9oqgn4TMoCgsCN2g"
+  "flags": {}
 }

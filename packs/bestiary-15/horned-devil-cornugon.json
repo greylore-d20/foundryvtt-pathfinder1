@@ -1,4 +1,5 @@
 {
+  "_id": "rXQggIxon64aNs0h",
   "name": "Horned Devil (cornugon)",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/outsider.png",
@@ -313,8 +314,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -363,8 +364,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -408,6 +409,12 @@
           "cost": null,
           "type": "passive"
         },
+        "unchainedAction": {
+          "activation": {
+            "cost": null,
+            "type": "passive"
+          }
+        },
         "duration": {
           "units": "perm"
         },
@@ -432,8 +439,8 @@
         "save": {
           "dc": "23"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -495,8 +502,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -557,8 +564,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -616,8 +623,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -675,8 +682,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [
           {
             "_id": "vafl2kz4",
@@ -734,8 +741,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -792,8 +799,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -851,8 +858,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -913,8 +920,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -955,6 +962,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -989,11 +1001,16 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\nstun",
-        "attackNotes": "+1 unholy spiked chain +1/+10/+5 (2d6+11 plus stun)",
+        "effectNotes": [
+          "stun"
+        ],
+        "attackNotes": [
+          "+1 unholy spiked chain +1/+10/+5 (2d6+11 plus stun)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1023,6 +1040,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1048,11 +1070,14 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "",
-        "attackNotes": "bite +22 (2d8+5 )",
+        "effectNotes": [],
+        "attackNotes": [
+          "bite +22 (2d8+5 )"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1080,6 +1105,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1105,11 +1135,16 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\ninfernal wound",
-        "attackNotes": "tail +22 (2d6+5 plus infernal wound)",
+        "effectNotes": [
+          "infernal wound"
+        ],
+        "attackNotes": [
+          "tail +22 (2d6+5 plus infernal wound)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1137,6 +1172,11 @@
         "tags": [],
         "activation": {
           "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
         },
         "duration": {
           "units": "inst"
@@ -1168,11 +1208,14 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "",
-        "attackNotes": "2 claws +24 (2d6+10 )",
+        "effectNotes": [],
+        "attackNotes": [
+          "2 claws +24 (2d6+10 )"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1200,6 +1243,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1225,11 +1273,14 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "",
-        "attackNotes": "bite +24 (2d8+10 )",
+        "effectNotes": [],
+        "attackNotes": [
+          "bite +24 (2d8+10 )"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1257,6 +1308,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1282,11 +1338,16 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\ninfernal wound",
-        "attackNotes": "tail +22 (2d6+5 plus infernal wound)",
+        "effectNotes": [
+          "infernal wound"
+        ],
+        "attackNotes": [
+          "tail +22 (2d6+5 plus infernal wound)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1351,8 +1412,8 @@
           "dc": "0",
           "description": "see text"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1459,8 +1520,8 @@
           "dc": "0",
           "description": "see text"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1566,8 +1627,8 @@
           "type": "will",
           "description": "Will negates (harmless)"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1677,8 +1738,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1750,8 +1811,8 @@
           "type": "will",
           "description": "Will disbelief (if interacted with)"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1879,8 +1940,8 @@
           "type": "ref",
           "description": "Reflex half"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -2004,8 +2065,8 @@
           "type": "ref",
           "description": "Reflex half"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -2100,8 +2161,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -2148,8 +2209,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -2196,8 +2257,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -2245,8 +2306,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -2351,6 +2412,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "rXQggIxon64aNs0h"
+  "flags": {}
 }

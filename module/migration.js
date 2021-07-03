@@ -755,7 +755,7 @@ const _migrateUnchainedActionEconomy = function (ent, updateData) {
   }
   if (["swift", "attack"].includes(curAction.type)) {
     updateData["data.unchainedAction.activation.cost"] = 1;
-    updateData["data.unchainedAction.activation.type"] = "action";
+    updateData["data.unchainedAction.activation.type"] = curAction.type === "attack" ? "attack" : "action";
   }
   if (curAction.type === "standard") {
     updateData["data.unchainedAction.activation.cost"] = 2;
@@ -809,7 +809,7 @@ const _migrateItemNotes = function (ent, updateData) {
     if (hasValue && !(value instanceof Array)) {
       updateData[k] = [];
       if (typeof value === "string" && value.length > 0) {
-        updateData[k] = value.split(/[\n\r]/);
+        updateData[k] = value.trim().split(/[\n\r]/);
       }
     }
   }

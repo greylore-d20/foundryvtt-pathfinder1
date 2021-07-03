@@ -1,10 +1,8 @@
 {
   "_id": "dWmTFPAUcYqU9s1I",
   "name": "Life Leach",
-  "permission": {
-    "default": 0
-  },
   "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
       "value": "<p>You can draw life force from the bodies of enemies and channel it into yourself. As a standard action, you can drain the life essence from one living target within 30 feet. The target takes 1d6 points of damage per two levels you possess (maximum 10d6). You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last a number of hours equal to your Charisma modifier. The target receives a Fortitude save to halve the damage (and the temporary hit points you gain).</p>\n<p>You may use this ability once per day at 7th level, plus one additional time per day for every 4 levels you possess beyond 7th.</p>\n<p>You must be at least 7th level before selecting this revelation.</p>"
@@ -54,8 +52,10 @@
       "type": "fort",
       "description": "Fortitude half"
     },
-    "effectNotes": "Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]] hours",
-    "attackNotes": "",
+    "effectNotes": [
+      "Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]] hours"
+    ],
+    "attackNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {
@@ -72,6 +72,7 @@
       "boolean": [],
       "dictionary": []
     },
+    "scriptCalls": [],
     "featType": "classFeat",
     "associations": {
       "classes": [
@@ -82,7 +83,11 @@
     },
     "abilityType": "su"
   },
-  "flags": {},
-  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
-  "effects": []
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "permission": {
+    "default": 0
+  },
+  "flags": {}
 }

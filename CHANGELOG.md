@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.78.15
+
+### Bug Fixes
+
+- Rolling initiative from actor sheets did not actually roll anything
+
+### Compendiums
+
+- Attack and effect notes could not be added to items from compendiums. Their existing notes were displayed incorrectly on chat cards.
+
 ## 0.78.14 (Hotfix)
 
 ### Localization

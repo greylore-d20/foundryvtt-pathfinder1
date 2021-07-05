@@ -820,7 +820,7 @@ function uniquePermutations(perm) {
  * @param {"Actor"|"Item"|"Scene"|"JournalEntry"|"Macro"|"RollTable"|"Playlist"} [options.type] - A Document type to limit which packs are searched in
  * @returns {{pack: CompendiumCollection, index: object}|undefined} The index and pack containing it or undefined if no match is found
  */
-export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
+export const findInCompendia = async function (searchTerm, options = { packs: [], type: undefined }) {
   let packs;
   if (options?.packs && options.packs.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
   else packs = game.packs.filter((o) => !options?.type || o.metadata.entity == options.type);
@@ -828,6 +828,7 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;
   for (let pack of packs) {
+    if (!pack.indexed) await pack.getIndex();
     found = binarySearch(pack.fuzzyIndex, searchTerm, (sp, it) =>
       sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
     );

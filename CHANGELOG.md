@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.15
+
+### Bug Fixes
+
+- Spellbooks showed incorrect message on spell slots
+
 ## 0.78.14 (Hotfix)
 
 ### Localization

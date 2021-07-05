@@ -853,6 +853,7 @@ export class ActorPF extends Actor {
               }
 
               if (!remaining) {
+                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, "");
                 continue;
               }
 
@@ -914,8 +915,6 @@ export class ActorPF extends Actor {
    * Sets additional variables (such as spellbook range)
    */
   refreshDerivedData() {
-    const rollData = this.getRollData();
-
     // Reset maximum dexterity bonus
     setProperty(this.data, "data.attributes.maxDexBonus", null);
 

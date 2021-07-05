@@ -1,4 +1,5 @@
 {
+  "_id": "UuN6A9tlDZv2MNPv",
   "name": "Ghoul",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/undead.png",
@@ -254,8 +255,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -315,8 +316,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -363,8 +364,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -406,6 +407,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -431,11 +437,17 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\ndisease\nparalysis",
-        "attackNotes": "bite +3 (1d6+1 plus disease and paralysis)",
+        "effectNotes": [
+          "disease",
+          "paralysis"
+        ],
+        "attackNotes": [
+          "bite +3 (1d6+1 plus disease and paralysis)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -469,11 +481,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -507,8 +520,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -555,8 +568,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -641,6 +654,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "UuN6A9tlDZv2MNPv"
+  "flags": {}
 }

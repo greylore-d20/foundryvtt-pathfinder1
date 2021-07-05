@@ -1,4 +1,5 @@
 {
+  "_id": "HQvxGkQHVTZhrZs8",
   "name": "Aghasura",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/outsider.png",
@@ -316,8 +317,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -366,8 +367,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -411,6 +412,12 @@
           "cost": null,
           "type": "passive"
         },
+        "unchainedAction": {
+          "activation": {
+            "cost": null,
+            "type": "passive"
+          }
+        },
         "duration": {
           "units": "perm"
         },
@@ -434,8 +441,8 @@
         "save": {
           "dc": ""
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -478,6 +485,12 @@
           "cost": null,
           "type": "passive"
         },
+        "unchainedAction": {
+          "activation": {
+            "cost": null,
+            "type": "passive"
+          }
+        },
         "duration": {
           "units": "perm"
         },
@@ -501,8 +514,8 @@
         "save": {
           "dc": ""
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -561,8 +574,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -623,8 +636,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -682,8 +695,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -744,8 +757,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -803,8 +816,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [
           {
             "_id": "ni86uxwa",
@@ -873,8 +886,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -935,8 +948,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -977,6 +990,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1012,11 +1030,16 @@
           "damage": "str",
           "critRange": "15"
         },
-        "effectNotes": "\npoison",
-        "attackNotes": "mwk scimitar +26/+10/+5 (2d6+12/15-20 plus poison)",
+        "effectNotes": [
+          "poison"
+        ],
+        "attackNotes": [
+          "mwk scimitar +26/+10/+5 (2d6+12/15-20 plus poison)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1045,6 +1068,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1071,11 +1099,16 @@
           "damage": "str",
           "critRange": "15"
         },
-        "effectNotes": "\npoison",
-        "attackNotes": "mwk scimitar +26 (2d6+12/15-20 plus poison)",
+        "effectNotes": [
+          "poison"
+        ],
+        "attackNotes": [
+          "mwk scimitar +26 (2d6+12/15-20 plus poison)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1104,6 +1137,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -1129,11 +1167,17 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\ngrab\npoison",
-        "attackNotes": "bite +19 (2d8+6 plus grab and poison)",
+        "effectNotes": [
+          "grab",
+          "poison"
+        ],
+        "attackNotes": [
+          "bite +19 (2d8+6 plus grab and poison)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1167,11 +1211,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1205,11 +1250,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1243,11 +1289,12 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -1281,8 +1328,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1357,8 +1404,8 @@
         "save": {
           "dc": "0"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1480,8 +1527,8 @@
           "type": "fort",
           "description": "Fortitude partial; see text"
         },
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1574,8 +1621,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "links": {
           "children": []
         },
@@ -1622,8 +1669,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1670,8 +1717,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1719,8 +1766,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1768,8 +1815,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1817,8 +1864,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -1949,6 +1996,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "HQvxGkQHVTZhrZs8"
+  "flags": {}
 }

@@ -1,4 +1,5 @@
 {
+  "_id": "UBsMVA8JLeXzcGXj",
   "name": "Giant Scarab",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/vermin.png",
@@ -252,8 +253,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -296,6 +297,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -321,11 +327,17 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\ndisease\ngnaw",
-        "attackNotes": "bite +13 (2d4+12 plus disease and gnaw)",
+        "effectNotes": [
+          "disease",
+          "gnaw"
+        ],
+        "attackNotes": [
+          "bite +13 (2d4+12 plus disease and gnaw)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -359,8 +371,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -407,8 +419,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -456,8 +468,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -552,6 +564,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "UBsMVA8JLeXzcGXj"
+  "flags": {}
 }

@@ -1,13 +1,11 @@
 {
   "_id": "mczdgwo3xl8c6e26",
   "name": "Ray of Enfeeblement",
-  "permission": {
-    "default": 0
-  },
   "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;bloodrager 1, magus 1, mesmerist 1, sorcerer/wizard 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Accursed 1, Daemon 1, Ghoul 1, Oni 1, Shadow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A coruscating ray springs from your hand. You must succeed on a ranged touch attack to strike a target. The subject takes a penalty to Strength equal to 1d6+1 per two caster levels (maximum 1d6+5).</p><p>The subject's Strength score cannot drop below 1. A successful Fortitude save reduces this penalty by half. This penalty does not stack with itself. Apply the highest penalty instead.</p>\n</div>\n"
+      "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;bloodrager 1, magus 1, mesmerist 1, sorcerer/wizard 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Accursed 1, Daemon 1, Ghoul 1, Oni 1, Shadow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n      <strong>Saving Throw</strong>&nbsp;Fortitude half;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A coruscating ray springs from your hand. You must succeed on a ranged touch attack to strike a target. The subject takes a penalty to Strength equal to 1d6+1 per two caster levels (maximum 1d6+5).</p><p>The subject's Strength score cannot drop below 1. A successful Fortitude save reduces this penalty by half. This penalty does not stack with itself. Apply the highest penalty instead.</p>\n</div>\n"
     },
     "tags": [],
     "activation": {
@@ -44,8 +42,10 @@
       "type": "fort",
       "description": "Fortitude half"
     },
-    "effectNotes": "[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty",
-    "attackNotes": "",
+    "effectNotes": [
+      "[[1d6 + min(5, floor(@cl / 2))]] Strength Penalty"
+    ],
+    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -53,6 +53,7 @@
       "boolean": [],
       "dictionary": []
     },
+    "scriptCalls": [],
     "learnedAt": {
       "class": [
         [
@@ -112,7 +113,11 @@
     "spellDuration": "1 round/level",
     "spellEffect": "ray"
   },
-  "flags": {},
-  "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "effects": []
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "permission": {
+    "default": 0
+  },
+  "flags": {}
 }

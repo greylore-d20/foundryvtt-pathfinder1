@@ -1,4 +1,5 @@
 {
+  "_id": "hyybPvmk0cKwawSB",
   "name": "Giant Whiptail Centipede",
   "type": "npc",
   "img": "systems/pf1/icons/races/creature-types/vermin.png",
@@ -251,8 +252,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -301,8 +302,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -343,6 +344,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -368,11 +374,16 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "\npoison",
-        "attackNotes": "bite +8 (2d6+7 plus poison)",
+        "effectNotes": [
+          "poison"
+        ],
+        "attackNotes": [
+          "bite +8 (2d6+7 plus poison)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -400,6 +411,11 @@
         "activation": {
           "type": "attack"
         },
+        "unchainedAction": {
+          "activation": {
+            "type": "attack"
+          }
+        },
         "duration": {
           "units": "inst"
         },
@@ -425,11 +441,17 @@
           "attack": "str",
           "damage": "str"
         },
-        "effectNotes": "nonlethal\ntrip",
-        "attackNotes": "tail slap +3 (1d3 nonlethal plus trip)",
+        "effectNotes": [
+          "nonlethal",
+          "trip"
+        ],
+        "attackNotes": [
+          "tail slap +3 (1d3 nonlethal plus trip)"
+        ],
         "links": {
           "children": [],
-          "charges": []
+          "charges": [],
+          "ammunition": []
         },
         "flags": {
           "boolean": [],
@@ -464,8 +486,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -512,8 +534,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -561,8 +583,8 @@
           "nonCritParts": []
         },
         "attackParts": [],
-        "effectNotes": "",
-        "attackNotes": "",
+        "effectNotes": [],
+        "attackNotes": [],
         "changes": [],
         "contextNotes": [],
         "links": {
@@ -657,6 +679,5 @@
   "permission": {
     "default": 0
   },
-  "flags": {},
-  "_id": "hyybPvmk0cKwawSB"
+  "flags": {}
 }

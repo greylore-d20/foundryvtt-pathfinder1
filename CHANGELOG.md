@@ -6,6 +6,11 @@
 
 - Spellbooks showed incorrect message on spell slots
 - Rolling initiative from actor sheets did not actually roll anything
+- Fix `findInCompendia` failing if pack hasn't been initialized (#923)
+
+### API
+
+- Changed `utils.dialogGetNumber` to select input contents by default and use the Enter key for submission
 
 ### Compendiums
 

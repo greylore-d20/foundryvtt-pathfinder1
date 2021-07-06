@@ -32,6 +32,10 @@ export function dialogGetNumber({
           resolve(initial);
         }
       },
+      default: "ok",
+      render: (htm) => {
+        htm.find("input").select();
+      },
     }).render(true);
   });
 }

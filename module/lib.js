@@ -828,6 +828,7 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;
   for (let pack of packs) {
+    if (!pack.fuzzyIndex) pack.fuzzyIndex = sortArrayByName([...pack.index]);
     found = binarySearch(pack.fuzzyIndex, searchTerm, (sp, it) =>
       sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
     );

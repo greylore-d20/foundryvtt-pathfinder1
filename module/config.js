@@ -1358,7 +1358,7 @@ export const PF1 = {
   /**
    * An array of {@link skills} that are considered background skills.
    */
-  backgroundSkills: ["apr", "art", "crt", "han", "ken", "kge", "khi", "kno", "lin", "lor", "prf", "pro", "slt"],
+  backgroundSkills: ["apr", "art", "crf", "han", "ken", "kge", "khi", "kno", "lin", "lor", "prf", "pro", "slt"],
 
   /* -------------------------------------------- */
 

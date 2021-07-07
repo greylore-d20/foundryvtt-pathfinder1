@@ -50,7 +50,7 @@ export class ItemChange {
     return this.data.value;
   }
   get flavor() {
-    return this.data.flavor ?? this.parent?.name ?? this.modifier;
+    return this.data.flavor ?? this.parent?.name.replace(/\[|\]/g, "") ?? this.modifier;
   }
 
   get source() {

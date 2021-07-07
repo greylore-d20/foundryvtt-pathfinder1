@@ -7,6 +7,7 @@
 - Spellbooks showed incorrect message on spell slots
 - Rolling initiative from actor sheets did not actually roll anything
 - Fix `findInCompendia` failing if pack hasn't been initialized (#923)
+- Brackets in item names could prevent certain rolls and saves
 
 ### API
 

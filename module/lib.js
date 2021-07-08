@@ -845,12 +845,13 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
   else {
     // If array is too long, search for just a reversed version and one that pivots around commas/ semicolons
     searchMutations = [null];
-    searchMutations.push(searchTerm.split(/[ _-]/).reverse());
+    searchMutations.push(searchTerm.split(/[ _-]/).reverse().join(" "));
     searchMutations.push(
       searchTerm
         .split(/[,;] ?/)
         .reverse()
         .flatMap((o) => o.split(" "))
+        .join(" ")
     );
   }
 

@@ -10,6 +10,7 @@
 - Fix `findInCompendia` crashing if search is longer than 7 words (#937)
 - Brackets in item names could prevent certain rolls and saves
 - Fix inability to create custom background skills (#935)
+- Fix container user permissions (#938)
 
 ### API
 

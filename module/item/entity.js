@@ -230,6 +230,16 @@ export class ItemPF extends Item {
     return this.name;
   }
 
+  testUserPermission(user, permission, { exact = false } = {}) {
+    if (this.parentActor) return this.parentActor.testUserPermission(user, permission, { exact });
+    return super.testUserPermission(user, permission, { exact });
+  }
+
+  get permission() {
+    if (this.parentActor) return this.parentActor.permission;
+    return super.permission;
+  }
+
   /**
    * @param {object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {number} The Difficulty Class for this item.
@@ -740,7 +750,6 @@ export class ItemPF extends Item {
       let item = null;
       if (prior && prior.has(o._id)) {
         item = prior.get(o._id);
-        // item.data = o;
         item.data.update(o);
         item.prepareData();
       } else {

@@ -13,6 +13,7 @@
 - Fix container user permissions (#938)
 - Fix racial HD's hit points being calculated as NPC HD (#932)
 - Fix actor import process keeping old items
+- Craft was incorrectly listed as an adventure skill with the background skills optional rule (thanks mkahvi!)
 
 ### Changelog
 

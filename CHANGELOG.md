@@ -9,6 +9,7 @@
 - Fix `findInCompendia` failing if pack hasn't been initialized (#923)
 - Fix `findInCompendia` crashing if search is longer than 7 words (#937)
 - Brackets in item names could prevent certain rolls and saves
+- Fix inability to create custom background skills (#935)
 
 ### API
 

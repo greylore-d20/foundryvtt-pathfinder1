@@ -282,7 +282,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
       skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? null;
-      skl.background = CONFIG.PF1.backgroundSkills.includes(s);
+      skl.background = CONFIG.PF1.backgroundSkills.includes(s) || skl.background === true;
 
       // Add skill rank source
       if (skl.rank > 0) {

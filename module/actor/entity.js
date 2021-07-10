@@ -962,10 +962,7 @@ export class ActorPF extends Actor {
 
     // Update item resources
     this.items.forEach((item) => {
-      let iteration = 0;
-      while (item.prepareDerivedItemData() && iteration < 10) {
-        iteration++;
-      }
+      item.prepareDerivedItemData();
       this.updateItemResources(item.data);
 
       // Update tokens for resources
@@ -994,7 +991,6 @@ export class ActorPF extends Actor {
 
     const actorData = this.data;
     const data = actorData.data;
-    const rollData = this.getRollData();
 
     // Round health
     const healthConfig = game.settings.get("pf1", "healthConfig");

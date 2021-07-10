@@ -433,12 +433,12 @@ export const addDefaultChanges = function (changes) {
 
   // Class hit points
   const classes = this.data.items
-    .filter((o) => o.type === "class" && !["racial"].includes(getProperty(o.data, "classType")))
+    .filter((o) => o.type === "class" && !["racial"].includes(getProperty(o.data, "data.classType")))
     .sort((a, b) => {
       return a.sort - b.sort;
     });
   const racialHD = this.data.items
-    .filter((o) => o.type === "class" && getProperty(o.data, "classType") === "racial")
+    .filter((o) => o.type === "class" && getProperty(o.data, "data.classType") === "racial")
     .sort((a, b) => {
       return a.sort - b.sort;
     });

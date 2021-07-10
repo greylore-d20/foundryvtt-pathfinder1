@@ -11,6 +11,7 @@
 - Brackets in item names could prevent certain rolls and saves
 - Fix inability to create custom background skills (#935)
 - Fix container user permissions (#938)
+- Fix racial HD's hit points being calculated as NPC HD (#932)
 
 ### API
 

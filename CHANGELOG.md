@@ -14,6 +14,10 @@
 - Fix racial HD's hit points being calculated as NPC HD (#932)
 - Fix actor import process keeping old items
 
+### Changelog
+
+- Made base skills with the possibility for subskills (artistry, craft, lore, perform and profession) rollable (#934)
+
 ### API
 
 - Changed `utils.dialogGetNumber` to select input contents by default and use the Enter key for submission

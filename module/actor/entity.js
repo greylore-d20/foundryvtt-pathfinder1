@@ -2237,6 +2237,7 @@ export class ActorPF extends Actor {
       title: game.i18n.localize("PF1.BAB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
+      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatMessage: options.chatMessage,
       noSound: options.noSound,
     });

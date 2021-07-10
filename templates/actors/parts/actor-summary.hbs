@@ -211,7 +211,7 @@
             <span class="text-box direct wheel-change allow-relative hp-current-input" name="data.attributes.hp.value" data-dtype="Number">{{data.attributes.hp.value}}</span>
           </td>
           <td>
-            <span class="text-box readonly">{{data.attributes.hp.max}}</span>
+            <span class="text-box readonly hp-max">{{data.attributes.hp.max}}</span>
           </td>
           <td>
             <span class="text-box direct allow-relative hp-temp-input" name="data.attributes.hp.temp" data-dtype="Number">{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}</span>
@@ -427,7 +427,7 @@
 
         <tbody>
           <tr>
-            <td class="tooltip">
+            <td class="tooltip bab">
               <span class="tooltipcontent">
                 @attributes.bab.total : {{data.attributes.bab.total}}
                 {{#if sourceDetails.data.attributes.bab.total.length}}
@@ -439,7 +439,7 @@
               {{data.attributes.bab.total}}
             </td>
 
-            <td class="tooltip">
+            <td class="tooltip cmb">
               <span class="tooltipcontent">
                 @attributes.cmb.total : {{data.attributes.cmb.total}}
                 {{#if sourceDetails.data.attributes.cmb.total.length}}
@@ -451,7 +451,7 @@
               {{data.attributes.cmb.total}}
             </td>
 
-            <td class="tooltip">
+            <td class="tooltip initiative">
               <span class="tooltipcontent">
                 @attributes.init.total : {{data.attributes.init.total}}
                 {{#if sourceDetails.data.attributes.init.total.length}}

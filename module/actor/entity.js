@@ -3863,7 +3863,10 @@ export class ActorPF extends Actor {
     const data = JSON.parse(json);
     delete data._id;
     data.effects = [];
-    return this.update(data);
+
+    // Update data
+    this.data.update(data, { recursive: false });
+    return this.update(data, { diff: false, recursive: false });
   }
 
   /**

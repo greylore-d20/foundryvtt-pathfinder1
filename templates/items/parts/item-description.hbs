@@ -36,12 +36,12 @@
       {{else}}
       {{#if showUnidentifiedData}}
       <div class="form-group">
-        <label>{{localize "PF1.Price"}}</label>
+        <label>{{localize "PF1.Price"}} ({{data.priceUnits}})</label>
         <input class="select-on-click" type="text" name="data.unidentified.price" value="{{data.unidentified.price}}" data-dtype="Number"/>
       </div>
       {{else}}
       <div class="form-group">
-        <label>{{localize "PF1.Price"}}</label>
+        <label>{{localize "PF1.Price"}} ({{data.priceUnits}})</label>
         <input class="select-on-click" type="text" name="data.price" value="{{data.price}}" data-dtype="Number"/>
       </div>
       {{/if}}

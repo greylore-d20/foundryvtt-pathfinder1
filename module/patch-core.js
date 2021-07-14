@@ -174,7 +174,7 @@ export async function PatchCore() {
         const evalFn = new Function("sandbox", src);
         this._total = evalFn(RollPF.MATH_PROXY);
       } catch (err) {
-        err.message = `Failed to evaluate StringTerm: ${this.term}\n${err.message}`;
+        err.message = `Failed to evaluate: '${this.term}'\n${err.message}`;
         throw err;
       }
     } else {

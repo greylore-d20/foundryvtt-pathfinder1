@@ -1058,6 +1058,15 @@ export class ActorPF extends Actor {
       }
     }
 
+    // Mark background skills
+    for (let skillId of Object.keys(data.skills)) {
+      if (CONFIG.PF1.backgroundSkills.includes(skillId)) {
+        let skill = data.skills[skillId];
+        skill.background = true;
+        for (let subSkillId of Object.keys(skill.subSkills ?? {})) skill.subSkills[subSkillId].background = true;
+      }
+    }
+
     // Prepare modifier containers
     data.attributes.mods = data.attributes.mods || {};
     data.attributes.mods.skills = data.attributes.mods.skills || {};

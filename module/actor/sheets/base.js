@@ -295,7 +295,6 @@ export class ActorSheetPF extends ActorSheet {
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
       skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? null;
-      skl.background = CONFIG.PF1.backgroundSkills.includes(s) || skl.background === true;
 
       // Add skill rank source
       if (skl.rank > 0) {
@@ -394,7 +393,7 @@ export class ActorSheetPF extends ActorSheet {
     // Skill rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
     // Count used skill ranks
-    for (let skl of Object.values(this.document.data.data.skills)) {
+    for (let skl of Object.values(data.data.skills)) {
       if (skl.subSkills != null) {
         for (let subSkl of Object.values(skl.subSkills)) {
           if (data.useBGSkills && skl.background) {

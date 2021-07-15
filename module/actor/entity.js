@@ -1987,16 +1987,8 @@ export class ActorPF extends Actor {
     attackData["img"] = item.data.img;
 
     // Add additional attacks
-    let extraAttacks = [];
-    for (let a = 5; a < this.data.data.attributes.bab.total; a += 5) {
-      extraAttacks = extraAttacks.concat([
-        [
-          `-${a}[${game.i18n.localize("PF1.Iterative")}]`,
-          `${game.i18n.localize("PF1.Attack")} ${Math.floor((a + 5) / 5)}`,
-        ],
-      ]);
-    }
-    if (extraAttacks.length > 0) attackData["data.attackParts"] = extraAttacks;
+    attackData["data.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
+    attackData["data.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
 
     // Add damage formula
     if (item.data.data.weaponData.damageRoll) {

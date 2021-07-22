@@ -18,6 +18,7 @@
 ### Changelog
 
 - Made base skills with the possibility for subskills (artistry, craft, lore, perform and profession) rollable (#934)
+- Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
 
 ### API
 

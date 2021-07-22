@@ -1,5 +1,5 @@
 export class Widget_CategorizedItemPicker extends Application {
-  constructor(options, categories, callback) {
+  constructor(options, categories, callback, selected) {
     super(options);
 
     /**
@@ -20,6 +20,15 @@ export class Widget_CategorizedItemPicker extends Application {
      * @type {Widget_CategorizedItemPicker~Category[]}
      */
     this.categories = categories;
+
+    /**
+     * Previously selected category and item
+     *
+     * @type {object}
+     * @property {string} category Selected category.
+     * @property {string} item Selected item in that category.
+     */
+    this.selected = selected;
 
     /**
      * Callback fired when an item has been selected.
@@ -74,6 +83,17 @@ export class Widget_CategorizedItemPicker extends Application {
 
     // Expand/minimize category
     html.find(".category a").click(this._onClickCategory.bind(this));
+
+    // Pre-select old category
+    if (this.selected?.category) {
+      html.find(`.category a[data-category="${this.selected.category}"]`).click();
+      if (this.selected?.item) {
+        html
+          .find(`.item[data-category="${this.selected.category}"][data-value="${this.selected.item}"]`)
+          .first()
+          .addClass("pre-select");
+      }
+    }
 
     // Cancel widget
     window.setTimeout(() => {
@@ -136,3 +156,7 @@ export class Widget_CategorizedItemPicker extends Application {
     return super.close(...args);
   }
 }
+
+Hooks.on("renderWidget_CategorizedItemPicker", (app, html, data) => {
+  html.find(".pre-select")[0]?.scrollIntoView({ block: "nearest" });
+});

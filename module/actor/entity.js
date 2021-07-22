@@ -2325,7 +2325,7 @@ export class ActorPF extends Actor {
     changes.push(
       ...attackChanges.map((c) => {
         c.applyChange(this);
-        return `${c.value}[${c.parent ? c.parent.name : c.data.modifier}}]`;
+        return `${c.value}[${c.parent ? c.parent.name : c.data.modifier}]`;
       })
     );
 

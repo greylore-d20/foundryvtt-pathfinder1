@@ -1,13 +1,13 @@
 <div class="inventory-filters spellbook-filters">
   <div class="flexrow spellcasting-misc pf1-sheet-group">
-    <div class="spellcasting-concentration flexrow">
+    <div class="spellcasting-concentration flexrow" data-drag="concentration">
       <div class="rollable image-d20"></div>
       <label><h3>{{localize "PF1.Concentration"}}</h3></label>
       <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationFormula"
       value="{{spellbook.orig.concentrationFormula}}" placeholder="{{localize "PF1.ConcentrationBonusFormula"}}" />
     </div>
 
-    <div class="spellcasting-cl flexrow">
+    <div class="spellcasting-cl flexrow" data-drag="cl">
       <div class="rollable image-d20"></div>
       <label><h3>{{localize "PF1.CasterLevel"}}</h3></label>
       <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.formula"

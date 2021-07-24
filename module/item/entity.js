@@ -2609,8 +2609,11 @@ export class ItemPF extends Item {
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
 
+      // Extra options for script call
+      const data = { fullAttack };
+
       // Execute script call
-      await this.executeScriptCalls("use", { attacks, template });
+      await this.executeScriptCalls("use", { attacks, template, data });
 
       return result;
     };

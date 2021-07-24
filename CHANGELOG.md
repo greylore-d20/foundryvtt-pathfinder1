@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.78.16
+
+### Bug Fixes
+
+- An item's currency unit was not displayed to players in item sheets (thanks mkahvi!)
+- Checking "Lose Dex to AC" for an item broke the actor's touch AC (thanks mkahvi!)
+- Generic attack changes appeared with an extra curly brace in the bonus breakdown (thanks mkahvi!)
+
 ## 0.78.15
 
 ### Bug Fixes

@@ -1101,7 +1101,7 @@ export class ActorPF extends Actor {
 
       if (this.flags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
-        acTouchAblMod = Math.min(acTouchAbl, 0);
+        acTouchAblMod = Math.min(acTouchAblMod, 0);
       }
       const maxDex = getProperty(this.data, "data.attributes.maxDexBonus") ?? null;
       const ac = {

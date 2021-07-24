@@ -632,7 +632,7 @@ Hooks.on("hoverToken", (token, hovering) => {
     const p = game.pf1.tooltip.mousePos;
     const el = document.elementFromPoint(p.x, p.y);
     // This check is required to prevent hovering over tokens under application windows
-    if (el.id === "board") {
+    if (el?.id === "board") {
       game.pf1.tooltip.bind(token);
     }
   }

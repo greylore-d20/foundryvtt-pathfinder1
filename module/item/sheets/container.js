@@ -22,6 +22,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       width: 800,
       classes: ["pf1", "sheet", "item"],
       scrollY: ["section.inventory-body"],
+      dragDrop: [
+        { dragSelector: "li.item[data-item-id]", dropSelector: '.tab[data-tab="contents"]' },
+        { dragSelector: "label.denomination" },
+      ],
     });
   }
 
@@ -286,26 +290,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     /*  Inventory
     /* -------------------------------------------- */
 
-    // Item Dragging
-    let handler = (ev) => this._onDragStart(ev);
-    html.find("li.item").each((i, li) => {
-      if (li.classList.contains("inventory-header")) return;
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", handler, false);
-    });
-
-    // Currency Dragging
-    if (this.item.testUserPermission(game.user, 3)) {
-      html.find("label.denomination").each((i, label) => {
-        label.setAttribute("draggable", true);
-        label.addEventListener("dragstart", handler, false);
-      });
-    }
-
-    html.find('.tab[data-tab="contents"]').each((i, li) => {
-      li.addEventListener("drop", (ev) => this._onDrop(ev));
-    });
-
     // Owned Item management
     html.find(".item-create").click((ev) => this._onItemCreate(ev));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
@@ -418,6 +402,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const elem = event.currentTarget;
     let dragData;
     if (elem.classList.contains("denomination")) {
+      if (!this.item.testUserPermission(game.user, 3)) return;
       dragData = {
         type: "Currency",
         alt: elem.classList.contains("alt-currency"),
@@ -447,6 +432,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   _onDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     // Try to extract the data
     let data;
     try {

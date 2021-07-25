@@ -578,7 +578,7 @@ export const addDefaultChanges = function (changes) {
       });
     } else {
       for (let c of allClasses) {
-        const classType = getProperty(c.data, "classType") || "base";
+        const classType = getProperty(c.data.data, "classType") || "base";
         let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
         if (formula == null) formula = "0";
         const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);

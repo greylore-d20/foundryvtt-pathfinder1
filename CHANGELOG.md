@@ -8,6 +8,7 @@
 - Checking "Lose Dex to AC" for an item broke the actor's touch AC (thanks mkahvi!)
 - Generic attack changes appeared with an extra curly brace in the bonus breakdown (thanks mkahvi!)
 - Some data from classes was calculated incorrectly or missing in roll data (e.g. HD and BAB)
+- Prestige classes were using incorrect values for their base saves (thanks Rastafa!)
 
 ## 0.78.15
 

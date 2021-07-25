@@ -3530,17 +3530,17 @@ export class ActorPF extends Actor {
         let healthConfig = game.settings.get("pf1", "healthConfig");
         const hasPlayerOwner = this.hasPlayerOwner;
         healthConfig =
-          cls.data.classType === "racial"
+          cls.data.data.classType === "racial"
             ? healthConfig.hitdice.Racial
             : hasPlayerOwner
             ? healthConfig.hitdice.PC
             : healthConfig.hitdice.NPC;
-        const classType = cls.data.classType || "base";
+        const classType = cls.data.data.classType || "base";
         result.classes[tag] = {
           level: cls.data.data.level,
           name: cls.name,
-          hd: cls.data.hd,
-          bab: cls.data.bab,
+          hd: cls.data.data.hd,
+          bab: cls.data.data.bab,
           hp: healthConfig.auto,
           savingThrows: {
             fort: 0,

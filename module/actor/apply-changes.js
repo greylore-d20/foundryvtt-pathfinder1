@@ -122,6 +122,7 @@ const getSortChangePriority = function () {
       "damage",
       "wdamage",
       "sdamage",
+      "critConfirm",
       "allSavingThrows",
       "fort",
       "ref",
@@ -251,6 +252,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "data.attributes.bab.total";
     case "~attackCore":
       return "data.attributes.attack.shared";
+    case "critConfirm":
+      return "data.attributes.attack.critConfirm";
     case "allSavingThrows":
       return [
         "data.attributes.savingThrows.fort.total",

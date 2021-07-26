@@ -1468,6 +1468,7 @@ export class ActorPF extends Actor {
       "data.attributes.attack.general": 0,
       "data.attributes.attack.melee": 0,
       "data.attributes.attack.ranged": 0,
+      "data.attributes.attack.critConfirm": 0,
       "data.attributes.damage.general": 0,
       "data.attributes.damage.weapon": 0,
       "data.attributes.damage.spell": 0,

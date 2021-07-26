@@ -2627,7 +2627,11 @@ export class ActorSheetPF extends ActorSheet {
     let sameActor =
       (data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id)) &&
       !data.containerId;
-    if (sameActor) return this._onSortItem(event, itemData);
+    if (sameActor) {
+      const dropTarget = event.target.closest("li[data-item-id]");
+      if (dropTarget?.dataset?.itemId === item.id) return; // item dropped onto itself
+      return this._onSortItem(event, itemData);
+    }
 
     // Remove from container
     if (data.containerId) {

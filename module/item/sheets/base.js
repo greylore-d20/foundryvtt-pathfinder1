@@ -1270,6 +1270,9 @@ export class ItemSheetPF extends ItemSheet {
     const change = this.item.changes.get(a.closest(".change").dataset.change);
     const categories = getBuffTargetDictionary(this.item.actor);
 
+    const part1 = change?.subTarget?.split(".")[0];
+    const category = CONFIG.PF1.buffTargets[part1]?.category ?? part1;
+
     // Show widget
     const w = new Widget_CategorizedItemPicker(
       { title: "PF1.Application.ChangeTargetSelector.Title" },
@@ -1278,7 +1281,8 @@ export class ItemSheetPF extends ItemSheet {
         if (key) {
           change.update({ subTarget: key });
         }
-      }
+      },
+      { category, item: change?.subTarget }
     );
     this._openApplications.push(w.appId);
     w.render(true);
@@ -1357,6 +1361,9 @@ export class ItemSheetPF extends ItemSheet {
     const note = this.item.data.data.contextNotes[noteIndex];
     const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
 
+    const part1 = note?.subTarget?.split(".")[0];
+    const category = CONFIG.PF1.contextNoteTargets[part1]?.category ?? part1;
+
     // Show widget
     const w = new Widget_CategorizedItemPicker(
       { title: "PF1.Application.ContextNoteTargetSelector.Title" },
@@ -1367,7 +1374,8 @@ export class ItemSheetPF extends ItemSheet {
           updateData[`data.contextNotes.${noteIndex}.subTarget`] = key;
           this.item.update(updateData);
         }
-      }
+      },
+      { category, item: note?.subTarget }
     );
     this._openApplications.push(w.appId);
     w.render(true);

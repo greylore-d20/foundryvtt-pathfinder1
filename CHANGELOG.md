@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.78.16
+
+### Bug Fixes
+
+- An item's currency unit was not displayed to players in item sheets (thanks mkahvi!)
+- Checking "Lose Dex to AC" for an item broke the actor's touch AC (thanks mkahvi!)
+- Generic attack changes appeared with an extra curly brace in the bonus breakdown (thanks mkahvi!)
+- Some data from classes was calculated incorrectly or missing in roll data (e.g. HD and BAB)
+- Prestige classes were using incorrect values for their base saves (thanks Rastafa!)
+- Standardized drag/ drop functionality with core Foundry API (thanks mkahvi!)
+- Fix currency dragging between actor sheets
+- Fix background skills incorrectly using adventure skill points (#946, #951) (thanks mkahvi!)
+- Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
+
+### Changelog
+
+- Added ability to drag saves to macro bar to create macros
+- Make new attacks use iterative formula instead of hardcoded calculations (thanks mkahvi!)
+- Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
+
+### API
+
+- Deprecate `Actor#getSkill` in favor of `Actor#getSkillInfo()`
+
 ## 0.78.15
 
 ### Bug Fixes
@@ -14,14 +38,10 @@
 - Fix racial HD's hit points being calculated as NPC HD (#932)
 - Fix actor import process keeping old items
 - Craft was incorrectly listed as an adventure skill with the background skills optional rule (thanks mkahvi!)
-- Fix background skills incorrectly using adventure skill points (#946, #951) (thanks mkahvi!)
-- Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
 
 ### Changelog
 
 - Made base skills with the possibility for subskills (artistry, craft, lore, perform and profession) rollable (#934)
-- Make new attacks use iterative formula instead of hardcoded calculations (thanks mkahvi!)
-- Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
 
 ### API
 

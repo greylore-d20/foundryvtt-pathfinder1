@@ -129,6 +129,18 @@ export class ActorSheetPF extends ActorSheet {
         ".actor-notes",
         ".editor-content[data-edit='data.details.biography.value']",
       ],
+      dragDrop: [
+        { dragSelector: "li.item[data-item-id]" },
+        { dragSelector: "label.denomination" },
+        { dragSelector: ".race-container.item[data-item-id]" },
+        { dragSelector: "li.skill[data-skill]" },
+        { dragSelector: "li.sub-skill[data-skill]" },
+        { dragSelector: "th.attribute.cmb[data-attribute]" },
+        { dragSelector: "th.attribute.bab[data-attribute]" },
+        { dragSelector: "li.generic-defenses[data-drag]" },
+        { dragSelector: ".spellcasting-concentration[data-drag]" },
+        { dragSelector: ".spellcasting-cl" },
+      ],
     });
   }
 
@@ -907,70 +919,6 @@ export class ActorSheetPF extends ActorSheet {
     html
       .find('*[data-action="input-text"].wheel-change')
       .on("wheel", (event) => this._onInputText(event.originalEvent));
-
-    // Item Dragging
-    let handler = (ev) => this._onDragStart(ev);
-    html.find("li.item").each((i, li) => {
-      if (li.classList.contains("inventory-header")) return;
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", handler, false);
-    });
-
-    // Currency Dragging
-    if (this.actor.permission >= 3) {
-      html.find("label.denomination").each((i, label) => {
-        label.setAttribute("draggable", true);
-        label.addEventListener("dragstart", handler, false);
-      });
-    }
-
-    // Race Dragging
-    html.find(".race-container").each((i, el) => {
-      if (el.dataset?.itemId) {
-        el.setAttribute("draggable", true);
-        el.addEventListener("dragstart", handler, false);
-      }
-    });
-
-    // Skill dragging
-    html.find("li.skill[data-skill]").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragSkillStart(ev), false);
-    });
-    html.find("li.sub-skill[data-skill]").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragSkillStart(ev), false);
-    });
-
-    // CMB dragging
-    html.find("th.attribute.cmb").each((i, th) => {
-      th.setAttribute("draggable", true);
-      th.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "cmb"), false);
-    });
-
-    // Defenses dragging
-    html.find("li.generic-defenses").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "defenses"), false);
-    });
-
-    // Concentration dragging
-    html.find(".spellcasting-concentration").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "concentration"), false);
-    });
-
-    // Caster Level dragging
-    html.find(".spellcasting-cl").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "cl"), false);
-    });
-
-    // Base Attack Bonus dragging
-    html.find("th.attribute.bab").each((i, th) => {
-      th.setAttribute("draggable", true);
-      th.addEventListener("dragstart", (ev) => this._onDragMiscStart(ev, "bab"), false);
-    });
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -2650,6 +2598,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   async _onDropItem(event, data) {
     if (!this.document.isOwner) return false;
+
     const item = await ItemPF.implementation.fromDropData(data);
     const itemData = item.toJSON();
 
@@ -2745,6 +2694,7 @@ export class ActorSheetPF extends ActorSheet {
   _onDragStart(event) {
     const elem = event.target;
     if (elem.classList.contains("denomination")) {
+      if (this.actor.permission < 3) return;
       const dragData = {
         actorId: this.actor.id,
         sceneId: this.actor.isToken ? canvas.scene?.id : null,
@@ -2755,6 +2705,12 @@ export class ActorSheetPF extends ActorSheet {
         amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
       };
       event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    } else if (elem.dataset?.skill) {
+      this._onDragSkillStart(event);
+    } else if (elem.dataset?.attribute) {
+      this._onDragMiscStart(event, elem.dataset.attribute);
+    } else if (elem.dataset?.drag) {
+      this._onDragMiscStart(event, elem.dataset.drag);
     } else super._onDragStart(event);
   }
 

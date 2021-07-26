@@ -50,6 +50,12 @@ export class ItemSheetPF extends ItemSheet {
       width: 580,
       classes: ["pf1", "sheet", "item"],
       scrollY: [".tab.details", ".buff-flags", '.tab[data-tab="changes"]'],
+      dragDrop: [
+        {
+          dragSelector: "li.conditional",
+          dropSelector: 'div[data-tab="conditionals"]',
+        },
+      ],
     });
   }
 
@@ -821,15 +827,6 @@ export class ItemSheetPF extends ItemSheet {
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
-    // Conditional Dragging
-    html.find("li.conditional").each((i, li) => {
-      li.setAttribute("draggable", true);
-      li.addEventListener("dragstart", (ev) => this._onDragConditionalStart(ev), false);
-    });
-
-    // Conditional Dropping
-    html.find('div[data-tab="conditionals"]').on("drop", this._onConditionalDrop.bind(this));
-
     // Edit change script contents
     html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
 
@@ -1055,14 +1052,17 @@ export class ItemSheetPF extends ItemSheet {
     await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
   }
 
-  _onDragConditionalStart(event) {
+  _onDragStart(event) {
     const elem = event.currentTarget;
-    const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
-    event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+    if (elem.dataset?.conditional) {
+      const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
+      event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+    }
   }
 
-  async _onConditionalDrop(event) {
+  async _onDrop(event) {
     event.preventDefault();
+    event.stopPropagation();
 
     let data;
     try {

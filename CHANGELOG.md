@@ -14,7 +14,8 @@
 - Fix racial HD's hit points being calculated as NPC HD (#932)
 - Fix actor import process keeping old items
 - Craft was incorrectly listed as an adventure skill with the background skills optional rule (thanks mkahvi!)
-- Fix background skills incorrectly using adventure skill points (#941, #956)
+- Fix background skills incorrectly using adventure skill points (#946, #951) (thanks mkahvi!)
+- Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
 
 ### Changelog
 

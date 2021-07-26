@@ -19,6 +19,7 @@
 ### Changelog
 
 - Made base skills with the possibility for subskills (artistry, craft, lore, perform and profession) rollable (#934)
+- Make new attacks use iterative formula instead of hardcoded calculations (thanks mkahvi!)
 
 ### API
 

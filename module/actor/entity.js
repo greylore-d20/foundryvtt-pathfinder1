@@ -2060,8 +2060,8 @@ export class ActorPF extends Actor {
       isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
     if (isSubSkill) {
       skillId = skillParts[0];
-      if (!this.data.data.skills[skillId].subSkills[skillParts[2]]) return null;
       skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
+      if (!skl) return null;
       sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
       parentSkill = this.getSkillInfo(skillId);
     } else {
@@ -2073,20 +2073,21 @@ export class ActorPF extends Actor {
       } else sklName = CONFIG.PF1.skills[skillId];
     }
 
-    const result = {
-      id: skillId,
-      name: sklName,
-      isCustom: isCustom,
-      rt: skl.rt,
-      rank: skl.rank,
-      bonus: skl.mod,
-    };
+    const result = duplicate(skl);
+    result.id = skillId;
+    result.name = sklName;
+    result.bonus = skl.mod; // deprecated; backwards compatibility
 
-    if (parentSkill) {
-      result.parentSkill = parentSkill;
-    }
+    if (parentSkill) result.parentSkill = parentSkill;
 
     return result;
+  }
+
+  /** @deprecated */
+  getSkill(key) {
+    console.warn("ActorPF#getSkill() is deprecated; please use ActorPF#getSkillInfo() instead.");
+    if (/^([a-z]{3})\d+$/.test(key)) return this.getSkillInfo(`${RegExp.$1}.subSkills.${key}`);
+    else return this.getSkillInfo(key);
   }
 
   /**
@@ -3064,18 +3065,6 @@ export class ActorPF extends Actor {
         setProperty(this.data, k, curValue - penalty);
       }
     }
-  }
-
-  getSkill(key) {
-    for (let [k, s] of Object.entries(this.data.data.skills)) {
-      if (k === key) return s;
-      if (s.subSkills != null) {
-        for (let [k2, s2] of Object.entries(s.subSkills)) {
-          if (k2 === key) return s2;
-        }
-      }
-    }
-    return null;
   }
 
   get allSkills() {

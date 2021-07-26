@@ -91,9 +91,7 @@ export class Widget_CategorizedItemPicker extends Application {
         html
           .find(`.item[data-category="${this.selected.category}"][data-value="${this.selected.item}"]`)
           .first()
-          .addClass("pre-select")
-          .get(0)
-          ?.scrollIntoView({ block: "nearest" }); // BUG: Doesn't do anything
+          .addClass("pre-select");
       }
     }
 
@@ -158,3 +156,7 @@ export class Widget_CategorizedItemPicker extends Application {
     return super.close(...args);
   }
 }
+
+Hooks.on("renderWidget_CategorizedItemPicker", (app, html, data) => {
+  html.find(".pre-select")[0]?.scrollIntoView({ block: "nearest" });
+});

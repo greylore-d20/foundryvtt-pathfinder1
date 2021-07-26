@@ -1066,7 +1066,7 @@ export class ItemSheetPF extends ItemSheet {
 
     let data;
     try {
-      data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+      data = JSON.parse(event.dataTransfer.getData("text/plain"));
       // Surface-level check for conditional
       if (!(data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers))) return;
     } catch (e) {

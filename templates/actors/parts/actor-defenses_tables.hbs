@@ -70,7 +70,7 @@
     <thead>
         <tr>
             {{#each data.attributes.savingThrows as |savingThrow id|}}
-            <th class="saving-throw tooltip" data-savingthrow="{{id}}">
+            <th class="saving-throw tooltip" data-savingthrow="{{id}}" data-draggable="true">
                 <div class="tooltipcontent">
                 @attributes.savingThrows.{{id}}.total : {{savingThrow.total}}
 

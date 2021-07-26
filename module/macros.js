@@ -73,6 +73,40 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
 };
 
 /**
+ * Create a Macro from save data to roll an actor's save, or get an existing one.
+ *
+ * @async
+ * @param {string} saveId - The save's identifier
+ * @param {string} actorId - The actor's identifier
+ * @param {number} slot - The hotbar slot to use
+ * @returns {Promise<User>} The updated User
+ */
+export const createSaveMacro = async function (saveId, actorId, slot) {
+  const actor = getActorFromId(actorId);
+  let saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
+  if (!actor) return;
+
+  const command = `game.pf1.rollSaveMacro("${actorId}", "${saveId}");`;
+
+  const name = game.i18n.format("PF1.RollSaveMacroName", { 0: actor.name, 1: saveName });
+  let macro = game.macros.entities.find((m) => m.name === name && m.data.command === command);
+  if (!macro) {
+    macro = await Macro.create(
+      {
+        name: name,
+        type: "script",
+        img: "systems/pf1/icons/items/inventory/dice.jpg",
+        command: command,
+        flags: { "pf1.saveMacro": true },
+      },
+      { displaySheet: false }
+    );
+  }
+
+  return game.user.assignHotbarMacro(macro, slot);
+};
+
+/**
  * Create a Macro to roll one of various checks for an actor
  *
  * @async
@@ -204,8 +238,23 @@ export const rollSkillMacro = function (actorId, skillId) {
 };
 
 /**
- * Show an actor's defenses.
+ * Roll an actor's save
+ *
+ * @param {string} actorId - The actor's identifier
+ * @param {string} saveId - The save's identifier
+ * @returns {Promise|void} The save roll, or void if no save is found
  */
+export const rollSaveMacro = function (actorId, saveId) {
+  const actor = getActorFromId(actorId);
+  if (!actor) {
+    const msg = game.i18n.format("PF1.ErrorActorNotFound", { 0: actorId });
+    console.warn(msg);
+    return ui.notifications.error(msg);
+  }
+
+  return actor.rollSavingThrow(saveId, { skipDialog: getSkipActionPrompt() });
+};
+
 /**
  * Show an actor's defenses
  *

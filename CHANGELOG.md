@@ -9,6 +9,12 @@
 - Generic attack changes appeared with an extra curly brace in the bonus breakdown (thanks mkahvi!)
 - Some data from classes was calculated incorrectly or missing in roll data (e.g. HD and BAB)
 - Prestige classes were using incorrect values for their base saves (thanks Rastafa!)
+- Standardized drag/ drop functionality with core Foundry API (thanks mkahvi!)
+- Fix currency dragging between actor sheets
+
+### Changelog
+
+- Added ability to drag saves to macro bar to create macros
 
 ## 0.78.15
 

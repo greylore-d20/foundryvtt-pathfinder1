@@ -135,6 +135,7 @@ export class ActorSheetPF extends ActorSheet {
         { dragSelector: ".race-container.item[data-item-id]" },
         { dragSelector: "li.skill[data-skill]" },
         { dragSelector: "li.sub-skill[data-skill]" },
+        { dragSelector: "th.saving-throw[data-savingthrow]" },
         { dragSelector: "th.attribute.cmb[data-attribute]" },
         { dragSelector: "th.attribute.bab[data-attribute]" },
         { dragSelector: "li.generic-defenses[data-drag]" },
@@ -1303,6 +1304,20 @@ export class ActorSheetPF extends ActorSheet {
         result.altType = elem.dataset.tab;
         break;
       }
+    }
+
+    event.dataTransfer.setData("text/plain", JSON.stringify(result));
+  }
+
+  _onDragSaveStart(event, type) {
+    const result = {
+      type: "save",
+      altType: type,
+      actor: this.document.id,
+    };
+    if (this.document.isToken) {
+      result.sceneId = canvas.scene.id;
+      result.tokenId = this.document.token.id;
     }
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
@@ -2593,6 +2608,15 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
+  async _onDropCurrency(event, data) {
+    let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId,
+      dataType = "currency";
+    return new CurrencyTransfer(
+      { actor: sourceActor, container: data.containerId, alt: data.alt },
+      { actor: this.actor, amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]) }
+    ).render(true);
+  }
+
   /**
    * @override
    */
@@ -2711,6 +2735,8 @@ export class ActorSheetPF extends ActorSheet {
       this._onDragMiscStart(event, elem.dataset.attribute);
     } else if (elem.dataset?.drag) {
       this._onDragMiscStart(event, elem.dataset.drag);
+    } else if (elem.dataset?.savingthrow) {
+      this._onDragSaveStart(event, elem.dataset.savingthrow);
     } else super._onDragStart(event);
   }
 

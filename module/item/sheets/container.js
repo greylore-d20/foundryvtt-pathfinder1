@@ -453,17 +453,21 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       case "Item":
         return this._onDropItem(event, data);
       case "Currency": {
-        let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
-        return new CurrencyTransfer(
-          { actor: sourceActor, container: data.containerId, alt: data.alt },
-          {
-            actor: this.actor,
-            container: this.item.id,
-            amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]),
-          }
-        ).render(true);
+        return this._onDropCurrency(event, data);
       }
     }
+  }
+
+  async _onDropCurrency(event, data) {
+    let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+    return new CurrencyTransfer(
+      { actor: sourceActor, container: data.containerId, alt: data.alt },
+      {
+        actor: this.actor,
+        container: this.item.id,
+        amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]),
+      }
+    ).render(true);
   }
 
   async _onDropItem(event, data) {

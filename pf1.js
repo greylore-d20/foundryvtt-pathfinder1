@@ -166,6 +166,7 @@ Hooks.once("init", function () {
     macros,
     rollItemMacro: macros.rollItemMacro,
     rollSkillMacro: macros.rollSkillMacro,
+    rollSaveMacro: macros.rollSaveMacro,
     rollDefenses: macros.rollDefenses,
     rollActorAttributeMacro: macros.rollActorAttributeMacro,
     // Migrations
@@ -830,29 +831,23 @@ Hooks.on("renderItemDirectory", (app, html, data) => {
   });
 });
 
+Hooks.on("dropActorSheetData", (act, sheet, data) => {
+  if (data.type === "Currency") sheet._onDropCurrency(event, data);
+});
+
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
 
-// Create macro from item
 Hooks.on("hotbarDrop", (bar, data, slot) => {
-  if (data.type !== "Item") return true;
-  macros.createItemMacro(data.data, slot);
-  return false;
-});
+  let macro;
+  if (data.type === "Item") macro = macros.createItemMacro(data.data, slot);
+  if (data.type === "skill") macro = macros.createSkillMacro(data.skill, data.actor, slot);
+  if (data.type === "save") macro = macros.createSaveMacro(data.altType, data.actor, slot);
+  if (["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type))
+    macro = macros.createMiscActorMacro(data.type, data.actor, slot, data.altType);
 
-// Create macro from skill
-Hooks.on("hotbarDrop", (bar, data, slot) => {
-  if (data.type !== "skill") return true;
-  macros.createSkillMacro(data.skill, data.actor, slot);
-  return false;
-});
-
-// Create macro to roll miscellaneous attribute from an actor
-Hooks.on("hotbarDrop", (bar, data, slot) => {
-  if (!["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type)) return true;
-  macros.createMiscActorMacro(data.type, data.actor, slot, data.altType);
-  return false;
+  if (macro === undefined) return false;
 });
 
 // Render TokenConfig

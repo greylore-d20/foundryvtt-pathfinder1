@@ -3564,24 +3564,46 @@ export class ActorPF extends Actor {
       const armor = this.data.items.filter(
         (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
       );
+      let eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       for (let o of armor) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
         else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
         else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
+        const enhAC = o.data.data.armor.enh ?? 0,
+          baseAC = o.data.data.armor.value ?? 0,
+          fullAC = baseAC + enhAC;
+        if (eqArmor.total < fullAC) {
+          eqArmor.ac = baseAC;
+          eqArmor.total = fullAC;
+          eqArmor.enh = enhAC;
+        }
       }
+      if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
+      mergeObject(result.armor, eqArmor);
 
       // Determine equipped shield type
       const shields = this.data.items.filter(
         (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
       );
+      let eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       for (let o of shields) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
         else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
         else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;
         else if (subtype === "towerShield" && result.shield.type < 4) result.shield.type = 4;
+        const enhAC = o.data.data.armor.enh ?? 0,
+          baseAC = o.data.data.armor.value ?? 0,
+          fullAC = baseAC + enhAC;
+        if (eqShield.total < fullAC) {
+          eqShield.ac = baseAC;
+          eqShield.total = fullAC;
+          eqShield.enh = enhAC;
+        }
       }
+      if (!Number.isFinite(eqShield.total)) eqShield.total = 0;
+      mergeObject(result.shield, eqShield);
     }
 
     // Add spellbook info

@@ -573,9 +573,9 @@ export const naturalSort = function (arr, propertyKey = "") {
   });
 };
 
-export const createConsumableSpellDialog = function (itemData) {
+export const createConsumableSpellDialog = function (itemData, { allowSpell = true } = {}) {
   return new Promise((resolve) => {
-    new Dialog({
+    const dialogData = {
       title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
       content: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
       buttons: {
@@ -594,12 +594,19 @@ export const createConsumableSpellDialog = function (itemData) {
           label: game.i18n.localize("PF1.CreateItemWand"),
           callback: () => resolve(createConsumableSpell(itemData, "wand")),
         },
+        spell: {
+          icon: '<i class="fas fa-hand-sparkles"></i>',
+          label: game.i18n.localize("PF1.ItemTypeSpell"),
+          callback: () => resolve("spell"),
+        },
       },
       close: () => {
         resolve(false);
       },
       default: "potion",
-    }).render(true);
+    };
+    if (!allowSpell) delete dialogData.buttons.spell;
+    new Dialog(dialogData).render(true);
   });
 };
 

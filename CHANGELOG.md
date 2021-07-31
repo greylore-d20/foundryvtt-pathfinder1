@@ -13,6 +13,7 @@
 - Fix currency dragging between actor sheets
 - Fix background skills incorrectly using adventure skill points (#946, #951) (thanks mkahvi!)
 - Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
+- Fixed cantrips on new actors before rest (thanks mkahvi!)
 
 ### Changelog
 

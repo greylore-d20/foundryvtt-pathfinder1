@@ -124,6 +124,28 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         }
       }
 
+      // Add hit points
+      data.descriptionAttributes.push({
+        isRange: true,
+        label: game.i18n.localize("PF1.HPShort"),
+        value: {
+          name: "data.hp.value",
+          value: getProperty(data.item.data, "data.hp.value"),
+        },
+        max: {
+          name: "data.hp.max",
+          value: getProperty(data.item.data, "data.hp.max"),
+        },
+      });
+
+      // Add hardness
+      data.descriptionAttributes.push({
+        isNumber: true,
+        label: game.i18n.localize("PF1.Hardness"),
+        name: "data.hardness",
+        value: getProperty(data.item.data, "data.hardness"),
+      });
+
       // Add carried flag
       data.descriptionAttributes.push({
         isBoolean: true,

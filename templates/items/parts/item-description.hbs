@@ -82,7 +82,7 @@
           <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{attr.value}}"/>
         </div>
         {{else}}
-        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" type="number" data-dtype="Number" value="{{attr.value}}"/>
+        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}} select-on-click" name="{{attr.name}}" type="number" data-dtype="Number" value="{{attr.value}}"/>
         {{/if}}
       </div>
       {{/if}}
@@ -94,9 +94,31 @@
           <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" type="text" readonly value="{{attr.value}}"/>
         </div>
         {{else}}
-        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" type="text" value="{{attr.value}}"/>
+        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" name="{{attr.name}}" type="text" value="{{attr.value}}"/>
         {{/if}}
       </div>
+      {{/if}}
+      {{#if attr.isRange}}
+        <div class="form-group">
+          <label>{{attr.label}}</label>
+          {{!-- Value --}}
+          {{#if attr.value.fakeName}}
+            <div data-action="input-text" data-for=".{attr.value.id}}-description-input" data-attr-name="{{attr.value.name}}">
+              <input class="{{#if attr.value.id}}{{attr.value.name}}-description-input{{/if}}" type="text" readonly value="{{attr.value.value}}"/>
+            </div>
+          {{else}}
+            <input class="{{#if attr.value.id}}{{attr.value.name}}-description-input{{/if}} select-on-click" name="{{attr.value.name}}" type="text" value="{{attr.value.value}}"/>
+          {{/if}}
+          <span>/</span>
+          {{!-- Max --}}
+          {{#if attr.max.fakeName}}
+            <div data-action="input-text" data-for=".{attr.max.id}}-description-input" data-attr-name="{{attr.max.name}}">
+              <input class="{{#if attr.max.id}}{{attr.max.name}}-description-input{{/if}}" type="text" readonly value="{{attr.max.value}}"/>
+            </div>
+          {{else}}
+            <input class="{{#if attr.max.id}}{{attr.max.name}}-description-input{{/if}} select-on-click" name="{{attr.max.name}}" type="text" value="{{attr.max.value}}"/>
+          {{/if}}
+        </div>
       {{/if}}
       {{/each}}
       {{/unless}}

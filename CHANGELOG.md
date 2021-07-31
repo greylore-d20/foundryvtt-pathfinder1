@@ -26,6 +26,7 @@
 - Allow non-spells to have an area (thanks mkahvi!)
 - Added armor and shield info in roll data (e.g. @armor.ac, @shield.enh, @armor.total) (thanks mkahvi!)
 - Show create consumable dialog when a spell is dragged to any actor sheet tab other than spells (thanks mkahvi!)
+- Added hit points and hardness to containers (#978)
 
 ### API
 

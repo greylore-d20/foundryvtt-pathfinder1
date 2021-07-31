@@ -22,6 +22,7 @@
 - Make new attacks use iterative formula instead of hardcoded calculations (thanks mkahvi!)
 - Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
 - Added `chatMessage` parameter for use, useAttack and useSpell item functions (thanks mkahvi!)
+- Added `data` parameter to use script calls with miscellaneous variables (thanks mkahvi!)
 
 ### API
 

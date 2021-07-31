@@ -1670,6 +1670,7 @@ export const PF1 = {
     "~attackCore": { label: "", category: "attack" },
     cmb: { label: "PF1.CMB", category: "attack" },
     bab: { label: "PF1.BAB", category: "attack" },
+    critConfirm: { label: "PF1.CriticalConfirmation", category: "attack" },
     damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage" },
     wdamage: { label: "PF1.WeaponDamage", category: "damage" },
     sdamage: { label: "PF1.SpellDamage", category: "damage" },

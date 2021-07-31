@@ -14,13 +14,14 @@
 - Fix background skills incorrectly using adventure skill points (#946, #951) (thanks mkahvi!)
 - Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
 - Fixed cantrips on new actors before rest (thanks mkahvi!)
-- Fix overeager token variable migration (thanks mkahvi!)
+- Fixed overeager token variable migration (thanks mkahvi!)
 
 ### Changelog
 
 - Added ability to drag saves to macro bar to create macros
 - Make new attacks use iterative formula instead of hardcoded calculations (thanks mkahvi!)
 - Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
+- Added `chatMessage` parameter for use, useAttack and useSpell item functions (thanks mkahvi!)
 
 ### API
 

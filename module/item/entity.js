@@ -1682,6 +1682,7 @@ export class ItemPF extends Item {
    * @param {MouseEvent} ev - The click event
    * @param {object} options - Additional options
    * @param {boolean} options.skipDialog - Whether to skip the roll dialog
+   * @param options.chatMessage
    * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
   async useSpell(ev, { skipDialog = false, chatMessage = true } = {}) {
@@ -2612,8 +2613,11 @@ export class ItemPF extends Item {
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
 
+      // Extra options for script call
+      const data = { fullAttack };
+
       // Execute script call
-      await this.executeScriptCalls("use", { attacks, template, chatMessage });
+      await this.executeScriptCalls("use", { attacks, template, chatMessage, data });
 
       return result;
     };

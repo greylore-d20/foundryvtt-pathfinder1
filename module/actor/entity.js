@@ -732,6 +732,8 @@ export class ActorPF extends Actor {
                 : null;
 
             setProperty(this.data, `${bookPath}.spells.spell${a}.max`, max);
+            let oldval = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
+            if (!Number.isFinite(oldval)) setProperty(this.data, `${bookPath}.spells.spell${a}.value`, max);
           }
         } else {
           for (let a = 0; a < 10; a++) {
@@ -745,6 +747,10 @@ export class ActorPF extends Actor {
             } else {
               setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
             }
+
+            let max = getProperty(this.data, `${bookPath}.spells.spell${a}.max`);
+            let oldval = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
+            if (!Number.isFinite(oldval)) setProperty(this.data, `${bookPath}.spells.spell${a}.value`, max);
           }
         }
       }

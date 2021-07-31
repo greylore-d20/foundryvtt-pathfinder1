@@ -23,11 +23,15 @@
 - Past choice on change type selector is now auto-selected when opened (#861) (thanks mkahvi!)
 - Added `chatMessage` parameter for use, useAttack and useSpell item functions (thanks mkahvi!)
 - Added `data` parameter to use script calls with miscellaneous variables (thanks mkahvi!)
-- Allow non-spells to have an area (thansk mkahvi!)
+- Allow non-spells to have an area (thanks mkahvi!)
 
 ### API
 
 - Deprecate `Actor#getSkill` in favor of `Actor#getSkillInfo()`
+
+### Localization
+
+- Changed certain hard-coded bits of text to translatable strings (thanks mkahvi!)
 
 ## 0.78.15
 

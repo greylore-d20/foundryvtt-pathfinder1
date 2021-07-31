@@ -24,6 +24,7 @@
 - Added `chatMessage` parameter for use, useAttack and useSpell item functions (thanks mkahvi!)
 - Added `data` parameter to use script calls with miscellaneous variables (thanks mkahvi!)
 - Allow non-spells to have an area (thanks mkahvi!)
+- Added armor and shield info in roll data (e.g. @armor.ac, @shield.enh, @armor.total) (thanks mkahvi!)
 
 ### API
 

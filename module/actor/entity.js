@@ -2190,7 +2190,7 @@ export class ActorPF extends Actor {
     }
 
     let props = [];
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
       fastForward: options.skipDialog === true,
@@ -2688,7 +2688,7 @@ export class ActorPF extends Actor {
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
 
     let props = this.getDefenseHeaders();
-    if (notes.length > 0) props.push({ header: "Notes", value: notes });
+    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     return DicePF.d20Roll({
       event: options.event,

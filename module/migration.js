@@ -159,31 +159,31 @@ const _migrateWorldSettings = async function () {
  * @param {Actor} actor   The actor data to derive an update from
  * @returns {object}       The updateData to apply
  */
-export const migrateActorData = function (actor) {
+export const migrateActorData = function (actor, token) {
   const updateData = {};
-
-  _migrateCharacterLevel(actor, updateData);
-  _migrateActorEncumbrance(actor, updateData);
+  const linked = token?.isLinked ?? true;
+  _migrateCharacterLevel(actor, updateData, linked);
+  _migrateActorEncumbrance(actor, updateData, linked);
   _migrateActorNoteArrays(actor, updateData);
-  _migrateActorSpeed(actor, updateData);
+  _migrateActorSpeed(actor, updateData, linked);
   _migrateSpellDivineFocus(actor, updateData);
   _migrateActorSpellbookCL(actor, updateData);
-  _migrateActorSpellbookSlots(actor, updateData);
+  _migrateActorSpellbookSlots(actor, updateData, linked);
   _migrateActorBaseStats(actor, updateData);
-  _migrateActorCreatureType(actor, updateData);
-  _migrateActorSpellbookDCFormula(actor, updateData);
+  _migrateActorCreatureType(actor, updateData, linked);
+  _migrateActorSpellbookDCFormula(actor, updateData, linked);
   _migrateActorHPAbility(actor, updateData);
-  _migrateActorCR(actor, updateData);
-  _migrateAttackAbility(actor, updateData);
+  _migrateActorCR(actor, updateData, linked);
+  _migrateAttackAbility(actor, updateData, linked);
   _migrateActorDefenseAbility(actor, updateData);
   _migrateActorTokenVision(actor, updateData);
-  _migrateActorSpellbookUsage(actor, updateData);
+  _migrateActorSpellbookUsage(actor, updateData, linked);
   _migrateActorNullValues(actor, updateData);
   _migrateActorSpellbookDomainSlots(actor, updateData);
-  _migrateActorStatures(actor, updateData);
-  _migrateActorInitAbility(actor, updateData);
-  _migrateActorChangeRevamp(actor, updateData);
-  _migrateActorConditions(actor, updateData);
+  _migrateActorStatures(actor, updateData, linked);
+  _migrateActorInitAbility(actor, updateData, linked);
+  _migrateActorChangeRevamp(actor, updateData, linked);
+  _migrateActorConditions(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -265,7 +265,7 @@ export const migrateSceneData = function (scene) {
     } else if (!t.actorLink) {
       const actorData = duplicate(t.actorData);
       actorData.type = token.actor?.type;
-      const update = migrateActorData(actorData);
+      const update = migrateActorData(actorData, token);
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;
         const updates = new Map(update[embeddedName].map((u) => [u._id, u]));
@@ -285,8 +285,9 @@ export const migrateSceneData = function (scene) {
 
 /* -------------------------------------------- */
 
-const _migrateCharacterLevel = function (ent, updateData) {
+const _migrateCharacterLevel = function (ent, updateData, linked) {
   const arr = ["details.level.value", "details.level.min", "details.level.max", "details.mythicTier"];
+  if (!linked) return; // skip unlinked tokens
   for (let k of arr) {
     const value = getProperty(ent.data, k);
     if (value == null) {
@@ -295,7 +296,7 @@ const _migrateCharacterLevel = function (ent, updateData) {
   }
 };
 
-const _migrateActorEncumbrance = function (ent, updateData) {
+const _migrateActorEncumbrance = function (ent, updateData, linked) {
   const arr = [
     "attributes.encumbrance.level",
     "attributes.encumbrance.levels.light",
@@ -308,6 +309,7 @@ const _migrateActorEncumbrance = function (ent, updateData) {
   for (let k of arr) {
     const value = getProperty(ent.data, k);
     if (value == null) {
+      if (!linked) continue; // skip with unlinked tokens
       updateData["data." + k] = 0;
     }
   }
@@ -324,7 +326,7 @@ const _migrateActorNoteArrays = function (ent, updateData) {
   }
 };
 
-const _migrateActorSpeed = function (ent, updateData) {
+const _migrateActorSpeed = function (ent, updateData, linked) {
   const arr = [
     "attributes.speed.land",
     "attributes.speed.climb",
@@ -334,11 +336,12 @@ const _migrateActorSpeed = function (ent, updateData) {
   ];
   for (let k of arr) {
     let value = getProperty(ent.data, k);
+    if (!linked && value === undefined) continue; // skip with unlinked tokens
     if (typeof value === "string") value = parseInt(value);
     if (typeof value === "number") {
       updateData[`data.${k}.base`] = value;
       updateData[`data.${k}.total`] = value;
-    } else if (value == null) {
+    } else if (value === null) {
       updateData[`data.${k}.base`] = 0;
       updateData[`data.${k}.total`] = null;
     }
@@ -350,7 +353,7 @@ const _migrateActorSpeed = function (ent, updateData) {
   }
 };
 
-const _migrateActorSpellbookSlots = function (ent, updateData) {
+const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
   for (let spellbookSlot of Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {})) {
     if (getProperty(ent, `data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
       updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
@@ -361,10 +364,14 @@ const _migrateActorSpellbookSlots = function (ent, updateData) {
       const maxKey = `data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
       const base = getProperty(ent, baseKey);
       const max = getProperty(ent, maxKey);
-      if (base === undefined && typeof max === "number" && max > 0) {
-        updateData[baseKey] = max.toString();
-      } else if (base === undefined) {
-        updateData[baseKey] = "";
+
+      if (base === undefined) {
+        if (!linked) continue; // skip with unlinked tokens
+        if (typeof max === "number" && max > 0) {
+          updateData[baseKey] = max.toString();
+        } else {
+          updateData[baseKey] = "";
+        }
       }
     }
   }
@@ -389,18 +396,21 @@ const _migrateActorBaseStats = function (ent, updateData) {
   }
 };
 
-const _migrateActorCreatureType = function (ent, updateData) {
-  if (getProperty(ent, "data.attributes.creatureType") == null) {
+const _migrateActorCreatureType = function (ent, updateData, linked) {
+  const type = getProperty(ent, "data.attributes.creatureType");
+  if (!linked && type === undefined) return; // skip with unlinked tokens
+  if (type == null) {
     updateData["data.attributes.creatureType"] = "humanoid";
   }
 };
 
-const _migrateActorSpellbookDCFormula = function (ent, updateData) {
+const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
   const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
 
   for (let k of spellbooks) {
     const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = getProperty(ent, key);
+    if (!linked && curFormula === undefined) continue; // skip with unlinked tokens
     if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
   }
 };
@@ -815,9 +825,10 @@ const _migrateItemNotes = function (ent, updateData) {
   }
 };
 
-const _migrateActorCR = function (ent, updateData) {
+const _migrateActorCR = function (ent, updateData, linked) {
   // Migrate base CR
   const cr = getProperty(ent, "data.details.cr");
+  if (!linked && cr === undefined) return; // skip with unlinked tokens
   if (typeof cr === "number") {
     updateData["data.details.cr.base"] = cr;
     updateData["data.details.cr.total"] = cr;
@@ -827,15 +838,15 @@ const _migrateActorCR = function (ent, updateData) {
   }
 };
 
-const _migrateAttackAbility = function (ent, updateData) {
+const _migrateAttackAbility = function (ent, updateData, linked) {
   const cmbAbl = getProperty(ent, "data.attributes.cmbAbility");
-  if (cmbAbl == null) updateData["data.attributes.cmbAbility"] = "str";
+  if (cmbAbl == null && linked) updateData["data.attributes.cmbAbility"] = "str";
 
   const meleeAbl = getProperty(ent, "data.attributes.attack.meleeAbility");
-  if (meleeAbl == null) updateData["data.attributes.attack.meleeAbility"] = "str";
+  if (meleeAbl == null && linked) updateData["data.attributes.attack.meleeAbility"] = "str";
 
   const rangedAbl = getProperty(ent, "data.attributes.attack.rangedAbility");
-  if (rangedAbl == null) updateData["data.attributes.attack.rangedAbility"] = "dex";
+  if (rangedAbl == null && linked) updateData["data.attributes.attack.rangedAbility"] = "dex";
 };
 
 const _migrateActorTokenVision = function (ent, updateData) {
@@ -847,9 +858,10 @@ const _migrateActorTokenVision = function (ent, updateData) {
   if (!getProperty(ent, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision ?? 0;
 };
 
-const _migrateActorSpellbookUsage = function (ent, updateData) {
+const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
   const spellbookUsage = getProperty(ent, "data.attributes.spells.usedSpellbooks");
 
+  if (!linked && spellbookUsage === undefined) return; // skip with unlinked tokens
   if (spellbookUsage == null) {
     let usedSpellbooks = [];
     if (!ent.items) return;

@@ -139,9 +139,9 @@ export class ChatAttack {
       if (this.rollData.critConfirmBonus !== 0) {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
-      this.item.actor.changes
+      this.item.parentActor?.changes
         .filter((c) => c.subTarget === "critConfirm")
-        .forEach((c) => extraParts.push(`${c.formula}[${c.flavor}]`));
+        .forEach((c) => extraParts.push(`(${c.formula})[${c.flavor}]`));
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
     } else {

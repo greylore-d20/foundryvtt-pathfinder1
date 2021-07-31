@@ -163,16 +163,16 @@ export class DicePF {
           content: html,
           buttons: {
             normal: {
-              label: "Normal",
+              label: game.i18n.localize("PF1.Normal"),
               callback: (html) => resolve((roll = _roll(parts, staticRoll != null ? staticRoll : -1, html))),
             },
             takeTen: {
-              label: "Take 10",
+              label: game.i18n.localize("PF1.Take10"),
               condition: takeTwenty,
               callback: (html) => resolve((roll = _roll(parts, 10, html))),
             },
             takeTwenty: {
-              label: "Take 20",
+              label: game.i18n.localize("PF1.Take20"),
               condition: takeTwenty,
               callback: (html) => resolve((roll = _roll(parts, 20, html))),
             },

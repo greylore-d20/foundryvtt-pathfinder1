@@ -1631,7 +1631,9 @@ export class ItemPF extends Item {
 
     const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
     if (useScriptCalls.length > 0) {
-      return this.executeScriptCalls("use", { attacks: [], template: undefined, chatMessage });
+      const data = { chatMessage };
+
+      return this.executeScriptCalls("use", { attacks: [], template: undefined, data });
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
@@ -2614,10 +2616,10 @@ export class ItemPF extends Item {
       await subtractAmmo(ammoUsed);
 
       // Extra options for script call
-      const data = { fullAttack };
+      const data = { chatMessage, fullAttack };
 
       // Execute script call
-      await this.executeScriptCalls("use", { attacks, template, chatMessage, data });
+      await this.executeScriptCalls("use", { attacks, template, data });
 
       return result;
     };

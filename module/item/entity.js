@@ -1604,11 +1604,11 @@ export class ItemPF extends Item {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ ev = null, skipDialog = false } = {}) {
+  async use({ ev = null, skipDialog = false, chatMessage = true } = {}) {
     if (this.type === "spell") {
-      return this.useSpell(ev, { skipDialog: skipDialog });
+      return this.useSpell(ev, { skipDialog, chatMessage });
     } else if (this.hasAction) {
-      return this.useAttack({ ev: ev, skipDialog: skipDialog });
+      return this.useAttack({ ev, skipDialog, chatMessage });
     }
 
     if (this.isCharged) {
@@ -1631,11 +1631,12 @@ export class ItemPF extends Item {
 
     const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
     if (useScriptCalls.length > 0) {
-      return this.executeScriptCalls("use", { attacks: [], template: undefined });
+      return this.executeScriptCalls("use", { attacks: [], template: undefined, chatMessage });
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
-      return this.roll();
+      if (chatMessage) return this.roll();
+      else return { descriptionOnly: true }; // nothing to show for printing description
     }
   }
 
@@ -1683,7 +1684,7 @@ export class ItemPF extends Item {
    * @param {boolean} options.skipDialog - Whether to skip the roll dialog
    * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
-  async useSpell(ev, { skipDialog = false } = {}) {
+  async useSpell(ev, { skipDialog = false, chatMessage = true } = {}) {
     if (!this.testUserPermission(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -1702,10 +1703,10 @@ export class ItemPF extends Item {
     }
 
     // Invoke the Item roll
-    return this.useAttack({ ev: ev, skipDialog: skipDialog });
+    return this.useAttack({ ev: ev, skipDialog: skipDialog, chatMessage });
   }
 
-  async useAttack({ ev = null, skipDialog = false, dice = "1d20" } = {}) {
+  async useAttack({ ev = null, skipDialog = false, chatMessage = true, dice = "1d20" } = {}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
     const actor = this.parent;
     if (actor && !actor.isOwner) {
@@ -2599,18 +2600,20 @@ export class ItemPF extends Item {
         setProperty(chatData, "flags.core.canPopout", true);
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
-        result = await createCustomChatMessage(t, templateData, chatData);
+        if (chatMessage) result = await createCustomChatMessage(t, templateData, chatData);
+        else result = { template: t, data: templateData, chatData };
       }
       // Post chat card even without action
       else {
-        result = this.roll();
+        if (chatMessage) result = this.roll();
+        else result = { descriptionOnly: true };
       }
 
       // Subtract ammunition
       await subtractAmmo(ammoUsed);
 
       // Execute script call
-      await this.executeScriptCalls("use", { attacks, template });
+      await this.executeScriptCalls("use", { attacks, template, chatMessage });
 
       return result;
     };

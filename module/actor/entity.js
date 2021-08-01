@@ -1470,6 +1470,8 @@ export class ActorPF extends Actor {
       "data.attributes.ac.flatFooted.total": 10,
       "data.attributes.cmd.total": 10,
       "data.attributes.cmd.flatFootedTotal": 10,
+      "data.attributes.acp.armorBonus": 0,
+      "data.attributes.acp.shieldBonus": 0,
       "temp.ac.armor": 0,
       "temp.ac.shield": 0,
       "temp.ac.natural": 0,

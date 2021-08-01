@@ -1226,42 +1226,36 @@ export class ActorPF extends Actor {
    */
   _applyArmorPenalties() {
     // Item type to proficiency maps
-    const armorProficiencyMap = {
-      lightArmor: "lgt",
-      mediumArmor: "med",
-      heavyArmor: "hvy",
-    };
-    const shieldProficiencyMap = {
-      other: "shl", // buckler
-      lightShield: "shl",
-      heavyShield: "shl",
-      towerShield: "twr",
+    const proficiencyMaps = {
+      armor: {
+        lightArmor: "lgt",
+        mediumArmor: "med",
+        heavyArmor: "hvy",
+      },
+      shield: {
+        other: "shl", // buckler
+        lightShield: "shl",
+        heavyShield: "shl",
+        towerShield: "twr",
+      },
     };
 
-    let armorACP = 0;
-    let shieldACP = 0;
     let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
-    let armorMDexWorst = null;
-    let shieldMDexWorst = null;
+    const acp = { armor: 0, shield: 0 };
+    const mdex = { armor: null, shield: null };
 
     this.data.items
       .filter((obj) => {
         return obj.type === "equipment" && obj.data.data.equipped;
       })
       .forEach((obj) => {
+        const eqType = obj.data.data.equipmentType;
+        const isShieldOrArmor = ["armor", "shield"].includes(eqType);
         let itemACP = Math.abs(obj.data.data.armor.acp);
-        if (obj.data.data.masterwork === true && ["armor", "shield"].includes(obj.data.data.equipmentType)) {
-          itemACP = Math.max(0, itemACP - 1);
-        }
+        if (obj.data.data.masterwork === true && isShieldOrArmor) itemACP = Math.max(0, itemACP - 1);
 
-        switch (obj.data.data.equipmentType) {
-          case "armor":
-            itemACP = Math.max(0, itemACP + (getProperty(this.data, "data.attributes.acp.armorBonus") ?? 0));
-            break;
-          case "shield":
-            itemACP = Math.max(0, itemACP + (getProperty(this.data, "data.attributes.acp.shieldBonus") ?? 0));
-            break;
-        }
+        if (isShieldOrArmor)
+          itemACP = Math.max(0, itemACP + (getProperty(this.data, `data.attributes.acp.${eqType}Bonus`) ?? 0));
 
         if (obj.data.data.broken) {
           itemACP *= 2;
@@ -1280,76 +1274,41 @@ export class ActorPF extends Actor {
           }
         }
 
-        switch (obj.data.data.equipmentType) {
-          case "armor":
-            if (itemACP > armorACP) armorACP = itemACP;
-            if (!this.hasArmorProficiency(obj, armorProficiencyMap[obj.data.data.equipmentSubtype]))
-              attackACPPenalty += armorACP;
-            break;
-          case "shield":
-            if (itemACP > shieldACP) shieldACP = itemACP;
-            if (!this.hasArmorProficiency(obj, shieldProficiencyMap[obj.data.data.equipmentSubtype]))
-              attackACPPenalty += shieldACP;
-            break;
+        if (isShieldOrArmor) {
+          if (itemACP > acp[eqType]) acp[eqType] = itemACP;
+          if (!this.hasArmorProficiency(obj, proficiencyMaps[eqType][obj.data.data.equipmentSubtype]))
+            attackACPPenalty += itemACP;
         }
 
-        if (obj.data.data.armor.dex !== null) {
+        if (obj.data.data.armor.dex !== null && isShieldOrArmor) {
           const mDex = Number.parseInt(obj.data.data.armor.dex);
-          switch (obj.data.data.equipmentType) {
-            case "armor":
-              if (Number.isInteger(mDex)) {
-                const armorMDex = mDex + (getProperty(this.data, "data.attributes.mDex.armorBonus") ?? null);
-                armorMDexWorst = Math.min(armorMDex, armorMDexWorst ?? Number.POSITIVE_INFINITY);
+          if (Number.isInteger(mDex)) {
+            const itemMDex = mDex + (getProperty(this.data, `data.attributes.mDex.${eqType}Bonus`) ?? 0);
+            mdex[eqType] = Math.min(itemMDex, mdex[eqType] ?? Number.POSITIVE_INFINITY);
 
-                if (!Number.isNaN(armorMDex)) {
-                  const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
-                    (o) => o.name === obj.name
-                  );
-                  if (sInfo) sInfo.value = armorMDex;
-                  else {
-                    getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-                      name: obj.name,
-                      value: armorMDex,
-                    });
-                  }
-                }
-              }
-              break;
-            case "shield":
-              if (Number.isInteger(mDex)) {
-                const shieldMDex = mDex + (getProperty(this.data, "data.attributes.mDex.shieldBonus") ?? null);
-                shieldMDexWorst = Math.min(shieldMDex, shieldMDexWorst ?? Number.POSITIVE_INFINITY);
-
-                if (!Number.isNaN(shieldMDex)) {
-                  const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
-                    (o) => o.name === obj.name
-                  );
-                  if (sInfo) sInfo.value = shieldMDex;
-                  else {
-                    getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
-                      name: obj.name,
-                      value: shieldMDex,
-                    });
-                  }
-                }
-              }
-              break;
+            const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
+              (o) => o.name === obj.name
+            );
+            if (sInfo) sInfo.value = itemMDex;
+            else {
+              getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
+                name: obj.name,
+                value: itemMDex,
+              });
+            }
           }
         }
       });
 
     // Return result
+    const totalACP = acp.armor + acp.shield;
     let result = {
       maxDexBonus: null,
-      acp: (armorACP ?? 0) + (shieldACP ?? 0),
+      acp: totalACP,
     };
-    setProperty(this.data, "data.attributes.acp.gear", (armorACP ?? 0) + (shieldACP ?? 0));
-    if (armorMDexWorst !== null || shieldMDexWorst !== null) {
-      result.maxDexBonus = Math.min(
-        armorMDexWorst ?? Number.POSITIVE_INFINITY,
-        shieldMDexWorst ?? Number.POSITIVE_INFINITY
-      );
-    }
+    setProperty(this.data, "data.attributes.acp.gear", totalACP);
+    if (mdex.armor !== null || mdex.shield !== null)
+      result.maxDexBonus = Math.min(mdex.armor ?? Number.POSITIVE_INFINITY, mdex.shield ?? Number.POSITIVE_INFINITY);
 
     // Set armor penalty to attack rolls
     setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
@@ -1472,6 +1431,7 @@ export class ActorPF extends Actor {
       "data.attributes.cmd.flatFootedTotal": 10,
       "data.attributes.acp.armorBonus": 0,
       "data.attributes.acp.shieldBonus": 0,
+      "data.attributes.maxDexBonus": null,
       "temp.ac.armor": 0,
       "temp.ac.shield": 0,
       "temp.ac.natural": 0,
@@ -1486,6 +1446,7 @@ export class ActorPF extends Actor {
       "data.attributes.attack.melee": 0,
       "data.attributes.attack.ranged": 0,
       "data.attributes.attack.critConfirm": 0,
+      "data.attributes.mDex": { armorBonus: 0, shieldBonus: 0 },
       "data.attributes.damage.general": 0,
       "data.attributes.damage.weapon": 0,
       "data.attributes.damage.spell": 0,

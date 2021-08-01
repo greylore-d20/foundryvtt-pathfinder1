@@ -544,7 +544,7 @@ export class ActorPF extends Actor {
     if (this.data.type === "npc") return true;
 
     // Check for item type
-    if (item.type !== "equipment" || !["armor", "shield"].includes(item.data.equipmentType)) return true;
+    if (item.type !== "equipment" || !["armor", "shield"].includes(item.data.data.equipmentType)) return true;
 
     // Custom proficiencies
     const customProficiencies =

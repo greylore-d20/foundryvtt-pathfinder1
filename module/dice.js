@@ -85,7 +85,7 @@ export class DicePF {
         }
 
         // Execute the roll
-        let roll = Roll.create(curParts.join(" + "), data).evaluate();
+        let roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
 
         // Convert the roll to a chat message
         if (chatTemplate) {
@@ -251,7 +251,7 @@ export class DicePF {
         flavor = `${flavor} (Critical)`;
       }
 
-      roll.evaluate();
+      await roll.evaluate({ async: true });
 
       // Convert the roll to a chat message
       if (chatTemplate) {

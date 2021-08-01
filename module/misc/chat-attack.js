@@ -1,5 +1,3 @@
-import { getChangeFlat } from "../actor/apply-changes.js";
-
 export class ChatAttack {
   constructor(item, { label = "", primaryAttack = true, rollData = {} } = {}) {
     this.primaryAttack = primaryAttack;
@@ -142,7 +140,7 @@ export class ChatAttack {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
-      const ccKey = getChangeFlat.call(this.item, "critConfirm");
+      const ccKey = game.pf1.utils.getChangeFlat.call(this.item, "critConfirm");
       this.item.parentActor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
 
       // Add conditionals for critical confirmation

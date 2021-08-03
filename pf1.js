@@ -877,19 +877,18 @@ Hooks.on("renderTokenConfig", async (app, html) => {
 // Render Sidebar
 Hooks.on("renderSidebarTab", (app, html) => {
   if (app instanceof Settings) {
-    // Add changelog button
-    let button = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
-    html.find("#game-details").append(button);
-    button.click(() => {
-      new ChangeLogWindow().render(true);
-    });
+    // Add buttons
+    const chlogButton = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
+    const helpButton = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
+    html
+      .find("#game-details")
+      .after(
+        $(`<h2>${game.i18n.localize("PF1.title")}</h2>`),
+        $("<div id='pf1-details'>").append(chlogButton, helpButton)
+      );
 
-    // Add help button
-    button = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
-    html.find("#game-details").append(button);
-    button.click(() => {
-      new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs");
-    });
+    chlogButton.click(() => new ChangeLogWindow().render(true));
+    helpButton.click(() => new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs"));
   }
 });
 

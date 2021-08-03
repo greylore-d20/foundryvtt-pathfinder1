@@ -1466,16 +1466,6 @@ export class ItemPF extends Item {
       if (Object.prototype.hasOwnProperty.call(data, "activation")) {
         props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
-
-      // Add save DC
-      if (Object.prototype.hasOwnProperty.call(data, "actionType") && getProperty(data, "save.description")) {
-        let saveDC = this.getDC(rollData);
-        let saveDesc = data.save.description;
-        if (saveDC > 0 && saveDesc) {
-          props.push(`${game.i18n.localize("PF1.DC")} ${saveDC}`);
-          props.push(saveDesc);
-        }
-      }
     }
 
     // Add SR reminder

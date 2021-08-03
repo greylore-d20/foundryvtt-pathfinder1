@@ -30,6 +30,7 @@
 - Show create consumable dialog when a spell is dragged to any actor sheet tab other than spells (thanks mkahvi!)
 - Added hit points and hardness to containers (#978)
 - Add critical confirmation bonus to changes (#517) (thanks mkahvi!)
+- Hide DC from chat cards to non-owners (#957)
 
 ### API
 

@@ -16,6 +16,7 @@
 - Fixed cantrips on new actors before rest (thanks mkahvi!)
 - Fixed overeager token variable migration (thanks mkahvi!)
 - ACP and Max Dexterity Bonus limit adjustments through changes weren't working (thanks mkahvi!)
+- Fixed actors incorrectly always considered proficient (thanks mkahvi!)
 
 ### Changelog
 
@@ -37,6 +38,7 @@
 ### Localization
 
 - Changed certain hard-coded bits of text to translatable strings (thanks mkahvi!)
+- Updated Spanish localization (thanks Wharomaru Zhamal!)
 
 ## 0.78.15
 

@@ -40,6 +40,7 @@
 
 - Changed certain hard-coded bits of text to translatable strings (thanks mkahvi!)
 - Updated Spanish localization (thanks Wharomaru Zhamal!)
+- Updated Italian localization (thanks Davide Mascaretti!)
 
 ## 0.78.15
 

@@ -3101,7 +3101,7 @@ export class ActorPF extends Actor {
     // Skill
     if (context.match(/^skill\.(.+)/)) {
       const skillKey = RegExp.$1;
-      const skill = this.getSkill(skillKey);
+      const skill = this.getSkillInfo(skillKey);
       const ability = skill.ability;
       for (let note of result) {
         note.notes = note.notes

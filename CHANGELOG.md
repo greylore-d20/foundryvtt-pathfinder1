@@ -15,6 +15,7 @@
 - Dropping an item back onto itself caused it to resort in the list (#963) (thanks mkahvi!)
 - Fixed cantrips on new actors before rest (thanks mkahvi!)
 - Fixed overeager token variable migration (thanks mkahvi!)
+- ACP and Max Dexterity Bonus limit adjustments through changes weren't working (thanks mkahvi!)
 
 ### Changelog
 

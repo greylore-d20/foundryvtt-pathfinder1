@@ -198,11 +198,13 @@ export const CR = {
   },
 
   fromNumber(value) {
+    console.log(value);
     if (value === 0.125) return "1/8";
     if (value === 0.1625) return "1/6";
     if (value === 0.25) return "1/4";
     if (value === 0.3375) return "1/3";
     if (value === 0.5) return "1/2";
+    if (!Number.isNumeric(value)) return "0";
     return value.toString();
   },
 };

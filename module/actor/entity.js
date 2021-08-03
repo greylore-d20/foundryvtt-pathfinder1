@@ -1026,7 +1026,7 @@ export class ActorPF extends Actor {
 
       // Reset experience value
       try {
-        const crTotal = getProperty(this.data, "data.details.cr.total") || 1;
+        const crTotal = getProperty(this.data, "data.details.cr.total") || 0;
         setProperty(this.data, "data.details.xp.value", this.getCRExp(crTotal));
       } catch (e) {
         setProperty(this.data, "data.details.xp.value", this.getCRExp(1));
@@ -1574,11 +1574,11 @@ export class ActorPF extends Actor {
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
    *
-   * @param cr {number}     The creature's challenge rating
+   * @param cr {null | number}     The creature's challenge rating
    * @returns {number}       The amount of experience granted per kill
    */
   getCRExp(cr) {
-    if (cr < 1.0) return Math.max(400 * cr, 10);
+    if (cr < 1.0) return Math.max(400 * cr, 0);
     return CONFIG.PF1.CR_EXP_LEVELS[cr];
   }
 
@@ -2051,13 +2051,6 @@ export class ActorPF extends Actor {
     if (parentSkill) result.parentSkill = parentSkill;
 
     return result;
-  }
-
-  /** @deprecated */
-  getSkill(key) {
-    console.warn("ActorPF#getSkill() is deprecated; please use ActorPF#getSkillInfo() instead.");
-    if (/^([a-z]{3})\d+$/.test(key)) return this.getSkillInfo(`${RegExp.$1}.subSkills.${key}`);
-    else return this.getSkillInfo(key);
   }
 
   /**

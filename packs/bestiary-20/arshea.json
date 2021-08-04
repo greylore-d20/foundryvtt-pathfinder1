@@ -193,7 +193,7 @@
     },
     "flags": {
       "pf1": {
-        "lowLightVision": true
+        "lowLightVision": false
       }
     },
     "randomImg": false,
@@ -1907,7 +1907,8 @@
           "units": "personal"
         },
         "uses": {
-          "per": "day"
+          "per": "day",
+          "maxFormula": "3 + @abilities.wis.mod"
         },
         "measureTemplate": {
           "size": "0"

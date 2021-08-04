@@ -196,7 +196,7 @@
     },
     "flags": {
       "pf1": {
-        "lowLightVision": true
+        "lowLightVision": false
       }
     },
     "randomImg": false,
@@ -1964,7 +1964,8 @@
           "units": "seeText"
         },
         "uses": {
-          "per": "day"
+          "per": "day",
+          "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
         },
         "measureTemplate": {
           "size": "0"

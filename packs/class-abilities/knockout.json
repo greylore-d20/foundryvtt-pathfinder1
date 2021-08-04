@@ -27,7 +27,8 @@
       "units": "touch"
     },
     "uses": {
-      "per": "day"
+      "per": "day",
+      "maxFormula": "@classes.brawler.level >= 16 ? 3 : ((@classes.brawler.level >= 10 && @classes.brawler.level < 16) ? 2 : 1)"
     },
     "actionType": "save",
     "damage": {

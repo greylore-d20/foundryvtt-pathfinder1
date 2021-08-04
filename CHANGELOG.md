@@ -17,6 +17,7 @@
 - Fixed overeager token variable migration (thanks mkahvi!)
 - ACP and Max Dexterity Bonus limit adjustments through changes weren't working (thanks mkahvi!)
 - Fixed actors incorrectly always considered proficient (thanks mkahvi!)
+- Maximum charge formulas were missing from compendium items
 
 ### Changelog
 

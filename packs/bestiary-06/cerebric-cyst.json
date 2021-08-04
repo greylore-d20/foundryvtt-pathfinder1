@@ -134,7 +134,11 @@
     "bar2": {
       "attribute": null
     },
-    "flags": {},
+    "flags": {
+      "pf1": {
+        "lowLightVision": false
+      }
+    },
     "randomImg": false,
     "img": "systems/pf1/icons/skills/green_30.jpg"
   },
@@ -854,7 +858,8 @@
           "units": "personal"
         },
         "uses": {
-          "per": "day"
+          "per": "day",
+          "maxFormula": "3 + @abilities.int.mod"
         },
         "measureTemplate": {
           "size": "0"

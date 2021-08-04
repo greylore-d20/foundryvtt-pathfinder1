@@ -141,7 +141,11 @@
     "bar2": {
       "attribute": null
     },
-    "flags": {},
+    "flags": {
+      "pf1": {
+        "lowLightVision": false
+      }
+    },
     "randomImg": false,
     "img": "systems/pf1/icons/races/creature-types/undead.png"
   },
@@ -998,7 +1002,8 @@
           "units": "personal"
         },
         "uses": {
-          "per": "day"
+          "per": "day",
+          "maxFormula": "max(1, floor(@classes.oracle.level / 2))"
         },
         "actionType": "",
         "damage": {

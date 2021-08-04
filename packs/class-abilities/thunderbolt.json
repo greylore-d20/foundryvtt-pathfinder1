@@ -24,7 +24,8 @@
       "value": "5-ft. radius cylinder"
     },
     "uses": {
-      "per": "day"
+      "per": "day",
+      "maxFormula": "@classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level < 20 && @classes.sorcerer.level > 16) ? 2 : 1)"
     },
     "measureTemplate": {
       "size": "0"

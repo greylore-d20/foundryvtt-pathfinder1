@@ -198,7 +198,6 @@ export const CR = {
   },
 
   fromNumber(value) {
-    console.log(value);
     if (value === 0.125) return "1/8";
     if (value === 0.1625) return "1/6";
     if (value === 0.25) return "1/4";

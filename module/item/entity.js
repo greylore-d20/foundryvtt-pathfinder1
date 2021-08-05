@@ -1798,6 +1798,8 @@ export class ItemPF extends Item {
         if (typeof html.prop("checked") === "boolean") {
           primaryAttack = html.prop("checked");
         }
+        rollData.item.primaryAttack = primaryAttack;
+
         // Use measure template
         html = form.find('[name="measure-template"]');
         if (typeof html.prop("checked") === "boolean") {
@@ -2780,6 +2782,8 @@ export class ItemPF extends Item {
   rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
     const rollData = duplicate(data ?? this.getRollData());
     const itemData = rollData.item;
+
+    rollData.item.primaryAttack = primaryAttack;
 
     // Determine size bonus
     rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];

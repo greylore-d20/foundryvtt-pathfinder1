@@ -12,6 +12,7 @@
 ### Changelog
 
 - Entity Links can now define extra data attached to the enriched button via `{extra data::Button label}`
+- `@item.primaryAttack` now reflects if an attack is primary instead of the Item the attack is from (thanks mkahvi!)
 
 ### Compendium
 

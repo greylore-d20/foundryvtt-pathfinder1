@@ -3312,7 +3312,14 @@ export class ActorPF extends Actor {
 
     let heavy = Math.floor(table[carryStr] * carryMultiplier);
     if (carryStr >= table.length) {
-      heavy = Math.floor(table[table.length - 1] * (1 + 0.3 * (carryStr - (table.length - 1))));
+      let nextValidStrength = carryStr;
+      let multiplierCount = 0;
+      while (nextValidStrength >= table.length) {
+        nextValidStrength -= 10;
+        multiplierCount++;
+      }
+
+      heavy = Math.floor(table[nextValidStrength] * Math.pow(4, multiplierCount) * carryMultiplier);
     }
     // Convert to world unit system
     heavy = convertWeight(heavy);

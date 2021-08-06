@@ -7,6 +7,7 @@
 - Subskills (e.g. Performance skills) could no longer be rolled (#990)
 - Macros could no longer be reordered on the macro bar (#992) (thanks mkahvi!)
 - Resources don't correctly evaluate inside of a change (#908)
+- Encumbrance for strength scores over 30 was incorrect (thanks websterguy!)
 
 ### Changelog
 

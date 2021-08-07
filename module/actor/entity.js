@@ -958,6 +958,11 @@ export class ActorPF extends Actor {
     // Example: `@skills.hea.rank >= 10 ? 6 : 3` doesn't work well without this
     this.getRollData({ refresh: true });
 
+    this.items.forEach((item) => {
+      item.prepareDerivedItemData();
+      this.updateItemResources(item.data);
+    });
+
     applyChanges.call(this);
 
     // Prepare specific derived data

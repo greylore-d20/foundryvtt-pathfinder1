@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.17
+
+### Bug Fixes
+
+- Subskills (e.g. Performance skills) could no longer be rolled (#990)
+
 ## 0.78.16
 
 ### Bug Fixes

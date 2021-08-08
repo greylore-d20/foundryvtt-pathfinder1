@@ -2055,9 +2055,9 @@ export class ActorPF extends Actor {
 
   /**
    * Roll a Skill Check
-   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * Prompt the user for input regarding Take 10/Take 20 and any Situational Bonus
    *
-   * @param {string} skillId      The skill id (e.g. "ins")
+   * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
    * @param {object} options      Options which configure how the skill check is rolled
    */
   rollSkill(
@@ -2073,24 +2073,12 @@ export class ActorPF extends Actor {
     const allowed = Hooks.call("actorRoll", this, "skill", skillId, options);
     if (allowed === false) return;
 
-    let skl, sklName;
-    const data = this.data.data,
-      skillParts = skillId.split("."),
-      isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
-    if (isSubSkill) {
-      skillId = skillParts[0];
-      skl = data.skills[skillId].subSkills[skillParts[2]];
-      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
-    } else {
-      skl = data.skills[skillId];
-      if (skl.name != null) sklName = skl.name;
-      else sklName = CONFIG.PF1.skills[skillId];
-    }
+    const skl = this.getSkillInfo(skillId);
 
     // Add contextual attack string
     let notes = [];
     let rollData = this.getRollData();
-    const noteObjects = this.getContextNotes(`skill.${isSubSkill ? skillParts[2] : skillId}`);
+    const noteObjects = this.getContextNotes(`skill.${skillId}`);
     for (let noteObj of noteObjects) {
       rollData.item = {};
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
@@ -2110,7 +2098,7 @@ export class ActorPF extends Actor {
       let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
       if (!(cf instanceof Array)) cf = [cf];
 
-      return cf.includes(`data.skills.${skillParts.join(".")}.changeBonus`);
+      return cf.includes(`data.skills.${skillId}.changeBonus`);
     });
 
     // Add ability modifier
@@ -2155,8 +2143,8 @@ export class ActorPF extends Actor {
       parts,
       dice: options.dice,
       data: rollData,
-      subject: { skill: skillParts.join(".") },
-      title: game.i18n.localize("PF1.SkillCheck").format(sklName),
+      subject: { skill: skillId },
+      title: game.i18n.localize("PF1.SkillCheck").format(skl.name),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },

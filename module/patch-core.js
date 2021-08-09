@@ -203,4 +203,37 @@ export async function PatchCore() {
       return this.index;
     };
   }
+
+  // Entity link attribute stuffing
+  {
+    const origFunc = TextEditor._createContentLink;
+    TextEditor._createContentLink = function (match, type, target, name) {
+      let a = origFunc.call(this, match, type, target, name);
+      if (name.indexOf("::") > -1) {
+        let args = name.split("::"),
+          label = args.pop();
+        if (args.length) {
+          args.forEach((o) => {
+            let [key, value] = o.split(/(?<!\\):/);
+            if (!(key && value)) {
+              value = key;
+              key = "extra";
+            }
+            switch (key) {
+              case "icon":
+                a.firstChild.className = "fas fa-" + value;
+                break;
+              case "class":
+                a.classList.add(...value.split(" "));
+                break;
+              default:
+                a.setAttribute("data-" + key, value);
+            }
+          });
+          a.lastChild.textContent = label;
+        }
+      }
+      return a;
+    };
+  }
 }

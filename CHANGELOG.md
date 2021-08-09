@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Subskills (e.g. Performance skills) could no longer be rolled (#990)
+- Macros could no longer be reordered on the macro bar (#992) (thanks mkahvi!)
 
 ## 0.78.16
 

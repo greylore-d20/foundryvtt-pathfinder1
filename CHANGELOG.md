@@ -10,6 +10,7 @@
 - Encumbrance for strength scores over 30 was incorrect (thanks websterguy!)
 - Spells Known (All) behavior was mixed into Casts Per Day (#999) (thanks mkahvi!)
 - Items in containers could not be opened by non-gms if the container was not on a character (#972)
+- Preactivated buffs added to an actor didn't create token status icons (#970)
 
 ### Changelog
 

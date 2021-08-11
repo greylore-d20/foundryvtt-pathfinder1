@@ -1752,6 +1752,13 @@ export class ActorPF extends Actor {
     super._preCreateEmbeddedDocuments(...arguments);
   }
 
+  _onCreateEmbeddedDocuments(embeddedName, documents, results, options, userId) {
+    if (userId === game.user.id) {
+      this.toggleConditionStatusIcons();
+    }
+    super._onCreateEmbeddedDocuments(...arguments);
+  }
+
   _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
     this._trackPreviousAttributes();
 

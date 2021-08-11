@@ -822,11 +822,7 @@ export class ActorPF extends Actor {
 
             let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
 
-            const allLevelModFormula =
-              getProperty(
-                this.data,
-                `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
-              ) || "0";
+            const allLevelModFormula = getProperty(this.data, `${bookPath}.preparedAllOffsetFormula`) || "0";
             const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
             for (let a = 0; a < 10; a++) {

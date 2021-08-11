@@ -23,6 +23,10 @@
 - Some weapon critRanges were `NULL`
 - Contributions from Let's Contribute. Many thanks to fadedshadow, apetina, Mana, DiamondSentinel, Blabermouthe, Vormav, websterguy, Krystaline, erickira, Lyka, SleepyWizard, claudekennilol, Tarbarian, Frost
 
+### Localization
+
+- Updated the Chinese localization (thanks bnp800!)
+
 ## 0.78.16
 
 ### Bug Fixes

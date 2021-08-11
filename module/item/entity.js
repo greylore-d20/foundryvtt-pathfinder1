@@ -232,6 +232,7 @@ export class ItemPF extends Item {
 
   testUserPermission(user, permission, { exact = false } = {}) {
     if (this.parentActor) return this.parentActor.testUserPermission(user, permission, { exact });
+    if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });
     return super.testUserPermission(user, permission, { exact });
   }
 

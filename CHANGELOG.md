@@ -8,6 +8,8 @@
 - Macros could no longer be reordered on the macro bar (#992) (thanks mkahvi!)
 - Resources don't correctly evaluate inside of a change (#908)
 - Encumbrance for strength scores over 30 was incorrect (thanks websterguy!)
+- Spells Known (All) behavior was mixed into Casts Per Day (#999) (thanks mkahvi!)
+- Items in containers could not be opened by non-gms if the container was not on a character (#972)
 
 ### Changelog
 

@@ -31,19 +31,27 @@
     "attackParts": [],
     "effectNotes": [],
     "attackNotes": [],
-    "changes": [],
-    "contextNotes": [
+    "changes": [
       {
-        "subTarget": "ac",
-        "target": "misc",
-        "text": "Cannot be caught flat-footed\nDoes lose Dex bonus to AC if the attacker is invisible"
+        "_id": "1yiag0iu",
+        "formula": "@abilities.dex.mod",
+        "operator": "add",
+        "subTarget": "ffac",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 3
       },
       {
-        "subTarget": "cmd",
-        "target": "misc",
-        "text": "Cannot be caught flat-footed\nDoes lose Dex bonus to AC if the attacker is invisible"
+        "_id": "ub84g9h5",
+        "formula": "@abilities.dex.mod",
+        "operator": "add",
+        "subTarget": "ffcmd",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 3
       }
     ],
+    "contextNotes": [],
     "links": {
       "children": [],
       "charges": []

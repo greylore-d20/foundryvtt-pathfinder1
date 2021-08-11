@@ -5,18 +5,28 @@
   "img": "systems/pf1/icons/feats/combat-reflexes.jpg",
   "data": {
     "description": {
-      "value": "\n                <i>You can make additional attacks of opportunity.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You may make a number of additional attacks of opportunity per round equal to your Dexterity bonus. With this feat, you may also make attacks of opportunity while flat-footed.</p></p>\n                \n            <br />\n                <p><b>Normal</b></p>\n                <p><p class=\"stat-block-1\"> A character without this feat can make only one attack of opportunity per round and can't make attacks of opportunity while flat-footed.</p></p>\n                \n            <br />\n                <p><b>Special</b></p>\n                <p><p class=\"stat-block-1\"> The Combat Reflexes feat does not allow a rogue to use her opportunist ability more than once per round.</p></p>\n                \n            \n            "
+      "value": "<p><em>You can make additional attacks of opportunity.</em><br /><br /><strong>Benefits</strong><br />You may make a number of additional attacks of opportunity per round equal to your Dexterity bonus. With this feat, you may also make attacks of opportunity while flat-footed.<br /><br /><strong>Normal</strong><br />A character without this feat can make only one attack of opportunity per round and can't make attacks of opportunity while flat-footed.<br /><br /><strong>Special</strong><br />The Combat Reflexes feat does not allow a rogue to use her opportunist ability more than once per round.<br /><br /><strong>Combat Trick</strong><br />When you miss with an attack of opportunity, you can spend 5 stamina points to make a second attack for the same provoking action. That second attack of opportunity takes a -5 penalty on the attack roll and costs one of your attacks of opportunity for the round.</p>\n<p>&nbsp;</p>\n<p><strong>Usage</strong>: spend 1 charge after use.</p>"
     },
     "tags": [
       [
-        "Combat"
+        "PFS"
       ],
       [
-        "Offensive"
+        "Combat"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
+    "activation": {
+      "type": "passive"
+    },
+    "unchainedAction": {
+      "activation": {
+        "type": "passive"
+      }
+    },
+    "uses": {
+      "value": 1,
+      "per": "charges",
+      "maxFormula": "1 + @abilities.dex.mod"
     },
     "actionType": "",
     "damage": {
@@ -28,11 +38,17 @@
     "effectNotes": [],
     "attackNotes": [],
     "changes": [],
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "attack",
+        "text": "Combat Reflexes: [[@resources.combatReflexes.value]] AoO available."
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "combatReflexes",
     "armorProf": {
       "value": []
     },

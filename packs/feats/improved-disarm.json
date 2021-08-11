@@ -5,22 +5,16 @@
   "img": "systems/pf1/icons/feats/improved-disarm.png",
   "data": {
     "description": {
-      "value": "\n                <i>You are skilled at knocking weapons from a foe's grasp.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Int 13, Combat Expertise.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You do not provoke an attack of opportunity when performing a disarm combat maneuver. In addition, you receive a +2 bonus on checks made to disarm a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to disarm you.</p></p>\n                \n            <br />\n                <p><b>Normal</b></p>\n                <p><p class=\"stat-block-1\"> You provoke an attack of opportunity when performing a disarm combat maneuver.</p></p>\n                \n            \n            "
+      "value": "<em>You are skilled at knocking weapons from a foe's grasp.</em><br/><br/><b>Prerequisites</b><br/>Int 13, Combat Expertise.<br/><br/><b>Benefits</b><br/>You do not provoke an attack of opportunity when performing a disarm combat maneuver. In addition, you receive a +2 bonus on checks made to disarm a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to disarm you.<br/><br/><b>Normal</b><br/>You provoke an attack of opportunity when performing a disarm combat maneuver.<br/><br/><b>Combat Trick</b><br/>You can select this feat even if you don't meet the ability score prerequisite (Intelligence 13). You gain the benefit of this feat only as long as you have at least 1 stamina point in your stamina pool. When you are the target of a disarm combat maneuver, you can spend a number of stamina points up to your Strength or Dexterity bonus, whichever is greater. Your CMD against that disarm attempt increases by that number."
     },
     "tags": [
       [
+        "PFS"
+      ],
+      [
         "Combat"
-      ],
-      [
-        "Combat Maneuver"
-      ],
-      [
-        "Offensive"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
-    },
     "actionType": "",
     "damage": {
       "parts": [],
@@ -31,11 +25,21 @@
     "effectNotes": [],
     "attackNotes": [],
     "changes": [],
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "cmb",
+        "text": "No AoO from Disarm. +2 to Disarm foe."
+      },
+      {
+        "subTarget": "cmd",
+        "text": "+2 CMD vs Disarm"
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "improvedDisarm",
     "armorProf": {
       "value": []
     },

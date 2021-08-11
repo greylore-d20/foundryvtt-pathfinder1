@@ -11,6 +11,17 @@
 
 - Entity Links can now define extra data attached to the enriched button via `{extra data::Button label}`
 
+### Compendium
+
+- Firearms had weight 10x higher than expected (#968)
+- Fixed most bows having max range of 1 instead of 10 (#967)
+- Bravery feature incorrect (#958)
+- Removed Cone of Slime (#822)
+- Snowball updated (#811)
+- Inflict were spells missing damage
+- Some weapon critRanges were `NULL`
+- Contributions from Let's Contribute. Many thanks to fadedshadow, apetina, Mana, DiamondSentinel, Blabermouthe, Vormav, websterguy, Krystaline, erickira, Lyka, SleepyWizard, claudekennilol, Tarbarian, Frost
+
 ## 0.78.16
 
 ### Bug Fixes

@@ -5,22 +5,16 @@
   "img": "systems/pf1/icons/feats/greater-shield-focus.jpg",
   "data": {
     "description": {
-      "value": "\n                <i>You are skilled at deflecting blows with your shield.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Shield Focus, Shield Proficiency, base attack bonus +1, 8th-level fighter.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> Increase the AC bonus granted by any shield you are using by 1. This bonus stacks with the bonus granted by Shield Focus.</p></p>\n                \n            \n            "
+      "value": "<p><em>You are skilled at deflecting blows with your shield.</em><br /><br /><strong>Prerequisites</strong><br />Shield Focus, Shield Proficiency, base attack bonus +1, 8th-level fighter.<br /><br /><strong>Benefits</strong><br />Increase the AC bonus granted by any shield you are using by 1. This bonus stacks with the bonus granted by Shield Focus.<br /><br /><strong>Combat Trick</strong><br />When an attack is made against you while you are using a shield, you can spend up to 4 stamina points. For that attack, your shield bonus increases by an amount equal to the number of stamina points you spent. This increase does not stack with any gained from the Shield Focus combat trick.</p>\n<p>&nbsp;</p>\n<p><strong>Usage</strong>: add 1 to Armor Class to any shield in your inventory.</p>"
     },
     "tags": [
       [
+        "PFS"
+      ],
+      [
         "Combat"
-      ],
-      [
-        "Shield"
-      ],
-      [
-        "Defensive"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
-    },
     "actionType": "",
     "damage": {
       "parts": [],
@@ -32,14 +26,13 @@
     "attackNotes": [],
     "changes": [
       {
-        "_id": "u7naxmoj",
+        "_id": "qexjy8jn",
         "formula": "@shield.type > 0 ? 1 : 0",
         "operator": "add",
         "subTarget": "sac",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0,
-        "target": "ac"
+        "value": 1
       }
     ],
     "contextNotes": [],

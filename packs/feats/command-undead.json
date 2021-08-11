@@ -5,24 +5,51 @@
   "img": "systems/pf1/icons/feats/command-undead.png",
   "data": {
     "description": {
-      "value": "\n                <i>Using foul powers of necromancy, you can command undead creatures, making them into your servants.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Channel negative energy class feature.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> As a standard action, you can use one of your uses of channel negative energy to enslave undead within 30 feet. Undead receive a Will save to negate the effect. The DC for this Will save is equal to 10 + 1/2 your cleric level + your Charisma modifier. Undead that fail their saves fall under your control, obeying your commands to the best of their ability, as if under the effects of <i>control undead</i>. Intelligent undead receive a new saving throw each day to resist your command. You can control any number of undead, so long as their total Hit Dice do not exceed your cleric level. If you use channel energy in this way, it has no other effect (it does not heal or harm nearby creatures). If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict.</p></p>\n                \n            \n            "
+      "value": "<p><em>Using foul powers of necromancy, you can command undead creatures, making them into your servants.</em><br /><br /><strong>Prerequisites</strong><br />Channel negative energy class feature.<br /><br /><strong>Benefits</strong><br />As a standard action, you can use one of your uses of channel negative energy to enslave undead within 30 feet. Undead receive a Will save to negate the effect. The DC for this Will save is equal to 10 + 1/2 your cleric level + your Charisma modifier. Undead that fail their saves fall under your control, obeying your commands to the best of their ability, as if under the effects of control undead. Intelligent undead receive a new saving throw each day to resist your command. You can control any number of undead, so long as their total Hit Dice do not exceed your cleric level. If you use channel energy in this way, it has no other effect (it does not heal or harm nearby creatures). If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict.</p>\n<p>&nbsp;</p>\n<p><strong>Usage:</strong>&nbsp;link this feat to Channel Energy charges.</p>"
     },
     "tags": [
       [
-        "Channeling"
+        "PFS"
+      ],
+      [
+        "General"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
+    "activation": {
+      "type": "standard"
     },
-    "actionType": "",
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "measureTemplate": {
+      "type": "circle",
+      "size": "30"
+    },
+    "actionType": "save",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
-    "effectNotes": [],
+    "ability": {
+      "damage": ""
+    },
+    "save": {
+      "dc": "10 + floor( @classes.cleric.level / 2) + @abilities.cha.mod",
+      "type": "will",
+      "description": "Will negates"
+    },
+    "effectNotes": [
+      "Command Undead: as if under the effects of @Compendium[pf1.spells.wkp8u7xl1dgpk362]{Control Undead}."
+    ],
     "attackNotes": [],
     "changes": [],
     "contextNotes": [],
@@ -30,6 +57,7 @@
       "children": [],
       "charges": []
     },
+    "tag": "commandUndead",
     "armorProf": {
       "value": []
     },

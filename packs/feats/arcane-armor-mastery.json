@@ -5,22 +5,16 @@
   "img": "systems/pf1/icons/feats/arcane-armor-mastery.jpg",
   "data": {
     "description": {
-      "value": "\n                <i>You have mastered the ability to cast spells while wearing armor.</i>\n                <br />\n                <br />\n                \n                <p><b>Prerequisites</b></p>\n                <p> Arcane Armor Training, Medium Armor Proficiency, caster level 7th.</p>\n                \n            <br />\n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> As a swift action, reduce the arcane spell failure chance due to the armor you are wearing by 20% for any spells you cast this round. This bonus replaces, and does not stack with, the bonus granted by Arcane Armor Training.</p></p>\n                \n            \n            "
+      "value": "<p><em>You have mastered the ability to cast spells while wearing armor.</em><br /><br /><strong>Prerequisites</strong><br />Arcane Armor Training, Medium Armor Proficiency, caster level 7th.<br /><br /><strong>Benefits</strong><br />As a swift action, reduce the arcane spell failure chance due to the armor you are wearing by 20% for any spells you cast this round. This bonus replaces, and does not stack with, the bonus granted by Arcane Armor Training.<br /><br /><strong>Combat Trick</strong><br />When casting a spell while wearing armor, you can spend 1 stamina point to activate Arcane Armor Mastery as a free action, or spend a number of stamina points equal to the spell's level (minimum 1) to ignore your armor's arcane spell failure chance entirely for that casting.</p>"
     },
     "tags": [
       [
+        "PFS"
+      ],
+      [
         "Combat"
-      ],
-      [
-        "Armor"
-      ],
-      [
-        "Magic"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
-    },
     "actionType": "",
     "damage": {
       "parts": [],
@@ -31,11 +25,17 @@
     "effectNotes": [],
     "attackNotes": [],
     "changes": [],
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "spellEffect",
+        "text": "[[-20]]% arcane spell failure. This bonus replaces Arcane Armor Training."
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "arcaneArmorMastery",
     "armorProf": {
       "value": []
     },

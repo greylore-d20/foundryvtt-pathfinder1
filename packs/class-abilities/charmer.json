@@ -8,6 +8,18 @@
       "value": "<p>Once per day, the rogue can roll two dice while making a Diplomacy check, and take the better result. She must choose to use this talent before making the Diplomacy check. A rogue can use this ability one additional time per day for every 5 rogue levels she possesses.</p>"
     },
     "tags": [],
+    "activation": {
+      "type": "free"
+    },
+    "unchainedAction": {
+      "activation": {
+        "type": "free"
+      }
+    },
+    "uses": {
+      "per": "day",
+      "maxFormula": "ceil(@classes.rogue.level / 5)"
+    },
     "measureTemplate": {
       "size": "0"
     },
@@ -21,7 +33,12 @@
     "effectNotes": [],
     "attackNotes": [],
     "changes": [],
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "subTarget": "skill.dip",
+        "text": "Charmer: roll two dice and take the better result."
+      }
+    ],
     "links": {
       "children": [],
       "charges": []

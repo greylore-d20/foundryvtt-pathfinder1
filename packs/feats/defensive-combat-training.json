@@ -5,22 +5,16 @@
   "img": "systems/pf1/icons/feats/defensive-combat-training.jpg",
   "data": {
     "description": {
-      "value": "\n                <i>You excel at defending yourself from all manner of combat maneuvers.</i>\n                <br />\n                <br />\n                \n                <p><b>Benefits</b></p>\n                <p><p class=\"stat-block-1\"> You treat your total Hit Dice as your base attack bonus when calculating your Combat Maneuver Defense (see Combat). </p></p>\n                \n            \n            "
+      "value": "<em>You excel at defending yourself from all manner of combat maneuvers.</em><br/><br/><b>Benefits</b><br/>You treat your total Hit Dice as your base attack bonus when calculating your Combat Maneuver Defense (see Combat).<br/><br/><b>Combat Trick</b><br/>When targeted with a combat maneuver, you can spend any number of stamina points to gain a bonus to your CMD equal to the number of stamina points you spent."
     },
     "tags": [
       [
+        "PFS"
+      ],
+      [
         "Combat"
-      ],
-      [
-        "Defensive"
-      ],
-      [
-        "Combat Maneuver"
       ]
     ],
-    "measureTemplate": {
-      "size": "0"
-    },
     "actionType": "",
     "damage": {
       "parts": [],
@@ -32,14 +26,13 @@
     "attackNotes": [],
     "changes": [
       {
-        "_id": "b7av1xlc",
+        "_id": "jbhziqyk",
         "formula": "@attributes.hd.total - @attributes.bab.total",
         "operator": "add",
         "subTarget": "cmd",
         "modifier": "untyped",
         "priority": 0,
-        "value": 0,
-        "target": "misc"
+        "value": -2
       }
     ],
     "contextNotes": [],
@@ -47,6 +40,7 @@
       "children": [],
       "charges": []
     },
+    "tag": "defensiveCombatTraining",
     "armorProf": {
       "value": []
     },

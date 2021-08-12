@@ -28,6 +28,7 @@
 - Snowball updated (#811)
 - Inflict were spells missing damage
 - Some weapon critRanges were `NULL`
+- Wild Shape uses formula was incorrect
 - Contributions from Let's Contribute. Many thanks to fadedshadow, apetina, Mana, DiamondSentinel, Blabermouthe, Vormav, websterguy, Krystaline, erickira, Lyka, SleepyWizard, claudekennilol, Tarbarian, Frost
 
 ### API

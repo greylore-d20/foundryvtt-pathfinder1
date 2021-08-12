@@ -11,6 +11,7 @@
 - Spells Known (All) behavior was mixed into Casts Per Day (#999) (thanks mkahvi!)
 - Items in containers could not be opened by non-gms if the container was not on a character (#972)
 - Preactivated buffs added to an actor didn't create token status icons (#970)
+- Leveling up could cause the sheet and dialog to error and crash (#947)
 
 ### Changelog
 

@@ -3834,8 +3834,10 @@ export class ItemPF extends Item {
           // Remove temporary flag
           updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
         }
-        if (updateData.length)
+        if (updateData.length) {
+          await this.parentActor.refresh();
           await CONFIG.Item.documentClass.updateDocuments(updateData, { parent: this.parentActor });
+        }
       }
       // const newItemData = await ItemPF.create(itemData, { parent: this.parent });
       // const newItem = this.parent.items.find((o) => o.id === newItemData.id);

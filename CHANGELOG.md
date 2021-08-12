@@ -30,6 +30,10 @@
 - Some weapon critRanges were `NULL`
 - Contributions from Let's Contribute. Many thanks to fadedshadow, apetina, Mana, DiamondSentinel, Blabermouthe, Vormav, websterguy, Krystaline, erickira, Lyka, SleepyWizard, claudekennilol, Tarbarian, Frost
 
+### API
+
+- Added `ammo`, `spell`, `save` metadata to rolled ChatMessages (thanks mkahvi!)
+
 ### Localization
 
 - Updated the Chinese localization (thanks bnp800!)

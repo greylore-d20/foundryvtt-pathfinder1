@@ -1886,6 +1886,7 @@ export class ItemPF extends Item {
         : [{ bonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
       let attacks = [];
 
+      let ammoId = ammoLinks?.filter((l) => l.item.charges > 0).map((l) => l.item.id);
       const subtractAmmo = function (value = 1) {
         if (!ammoLinks.length) return;
         let promises = [];
@@ -2591,6 +2592,10 @@ export class ItemPF extends Item {
 
           metadata.rolls.attacks[a] = attackRolls;
         }
+
+        if (ammoId.length > 0) metadata.ammo = { id: ammoId, quantity: ammoUsed };
+        if (saveDC) metadata.save = { dc: saveDC, type: save };
+        if (this.type === "spell") metadata.spell = { cl: rollData.cl, sl: rollData.sl };
 
         setProperty(chatData, "flags.pf1.metadata", metadata);
         setProperty(chatData, "flags.core.canPopout", true);

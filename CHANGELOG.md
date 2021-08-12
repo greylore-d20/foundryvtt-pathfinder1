@@ -16,6 +16,7 @@
 
 - Entity Links can now define extra data attached to the enriched button via `{extra data::Button label}`
 - `@item.primaryAttack` now reflects if an attack is primary instead of the Item the attack is from (thanks mkahvi!)
+- Point Buy will default to current ability scores instead of resetting to 10 every time it is opened (thanks mkahvi!)
 
 ### Compendium
 

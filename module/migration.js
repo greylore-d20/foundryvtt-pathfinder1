@@ -170,7 +170,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorSpellbookCL(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData, linked);
   _migrateActorBaseStats(actor, updateData);
-  _migrateActorCreatureType(actor, updateData, linked);
+  _migrateUnusedActorCreatureType(actor, updateData);
   _migrateActorSpellbookDCFormula(actor, updateData, linked);
   _migrateActorHPAbility(actor, updateData);
   _migrateActorCR(actor, updateData, linked);
@@ -396,12 +396,9 @@ const _migrateActorBaseStats = function (ent, updateData) {
   }
 };
 
-const _migrateActorCreatureType = function (ent, updateData, linked) {
+const _migrateUnusedActorCreatureType = function (ent, updateData) {
   const type = getProperty(ent, "data.attributes.creatureType");
-  if (!linked && type === undefined) return; // skip with unlinked tokens
-  if (type == null) {
-    updateData["data.attributes.creatureType"] = "humanoid";
-  }
+  if (type != undefined) updateData["data.attributes.-=creatureType"] = null;
 };
 
 const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {

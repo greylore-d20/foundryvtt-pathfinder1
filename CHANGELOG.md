@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.18 (Hotfix)
+
+### Bug Fixes
+
+- Fixed an issue where unlabeled entity links could prevent sheets from opening
+
 ## 0.78.17
 
 ### Bug Fixes

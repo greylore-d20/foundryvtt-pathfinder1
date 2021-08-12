@@ -209,7 +209,7 @@ export async function PatchCore() {
     const origFunc = TextEditor._createContentLink;
     TextEditor._createContentLink = function (match, type, target, name) {
       let a = origFunc.call(this, match, type, target, name);
-      if (name.indexOf("::") > -1) {
+      if (name?.indexOf("::") > -1) {
         let args = name.split("::"),
           label = args.pop();
         if (args.length) {

@@ -127,10 +127,13 @@ export const registerHandlebarsHelpers = function () {
 
     // Include conditional damage that is enabled by default
     itemData.conditionals
-      .filter((c) => c.default && c.modifiers.find((m) => m.target === "damage" && m.subTarget === "allDamage"))
-      .map((m) => m.formula)
-      .forEach((f) => {
-        const [roll, formula] = reduceFormula(f);
+      .filter((c) => c.default)
+      .reduce((all, m) => {
+        all.push(...m.modifiers.filter((m) => m.target === "damage" && m.subTarget === "allDamage"));
+        return all;
+      }, [])
+      .forEach((m) => {
+        const [roll, formula] = reduceFormula(m.formula);
         if (roll.total == 0) return;
         rv.push(formula);
       });

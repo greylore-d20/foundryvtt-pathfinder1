@@ -91,44 +91,58 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("itemDamage", (item, rollData) => {
     if (!item.hasDamage) return null; // It was a mistake to call this
 
-    try {
-      // Get damage parts
-      const parts = [...(item.data.damage.parts ?? []), ...(item.data.damage.nonCritParts ?? [])].map(
-        (p) =>
-          // `${p[0]})[${p[1]}]` // includes damage type
-          p[0] // Discard damage type as it makes the output barely readable.
-      );
-      let hasMore = item.data.damage.critParts?.length > 0;
+    const actorData = item.document.parentActor.data.data,
+      itemData = item.data;
 
-      const ablMod = getProperty(rollData, `abilities.${item.data.ability.damage}.mod`), // `
-        ablMult = item.data.ability.damageMult;
+    const rv = [];
 
-      const rv = [],
-        cutOff = 1;
-      // TODO: Make this cut based on actual string length instead of part count. Or push adjustment to handlebars.
-      //slice(0, cutOff)
-      parts.forEach((r) => rv.push(Roll.create(r, rollData).formula));
-      const cutParts = []; // parts.length > cutOff ? parts.slice(cutOff - 1) : [];
+    const reduceFormula = (formula) => {
+      const roll = RollPF.safeRoll(formula, rollData);
+      formula = roll.formula.replace(/\[[^\]]+\]/g, ""); // remove flairs
+      return [roll, formula];
+    };
 
-      // Include ability score only if the string isn't too long yet
-      if (ablMod != null && cutParts.length === 0)
-        rv.push(RollPF.safeRoll("floor(@mod * @mult)", { mod: ablMod, mult: ablMult }).total);
-
-      // Include enhancement bonus
-      const enhBonus = item.data.enh ?? 0;
-      if (enhBonus && cutParts.length === 0) {
-        rv.push(enhBonus);
+    const handleParts = (parts) => {
+      for (let [formula, _] of parts) {
+        const [roll, newformula] = reduceFormula(formula);
+        if (roll.total == 0) continue;
+        rv.push(newformula);
       }
+    };
 
-      if (hasMore) rv.push("…"); // Too much detail or too complicated for display
+    // Normal damage parts
+    handleParts(itemData.damage.parts);
 
-      const out = rv.join("+").replace(/\s+/g, ""); // Combine and remove whitespace
-      return out;
-    } catch {
-      // ignore errors, they should be handled elsewhere
-    }
+    // Include ability score only if the string isn't too long yet
+    const dmgAbl = itemData.ability.damage;
+    const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (itemData.ability.damageMult || 1));
+    if (dmgAblMod != 0) rv.push(dmgAblMod);
 
-    return null;
+    // Include enhancement bonus
+    const enhBonus = item.data.enh ?? 0;
+    if (enhBonus != 0) rv.push(enhBonus);
+
+    // Include damage parts that don't happen on crits
+    handleParts(itemData.damage.nonCritParts);
+
+    // Include conditional damage that is enabled by default
+    itemData.conditionals
+      .filter((c) => c.default && c.modifiers.find((m) => m.target === "damage" && m.subTarget === "allDamage"))
+      .map((m) => m.formula)
+      .forEach((f) => {
+        const [roll, formula] = reduceFormula(f);
+        if (roll.total == 0) return;
+        rv.push(formula);
+      });
+
+    if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
+
+    return rv
+      .join("+")
+      .replace(/\s+/g, "") // remove whitespaces
+      .replace(/\+-/, "-") // simplify math logic pt.1
+      .replace(/--/g, "+") // simplify math logic pt.2
+      .replace(/\+\++/, "+"); // simplify math logic pt.3
   });
 
   Handlebars.registerHelper(

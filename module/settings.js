@@ -3,7 +3,8 @@ import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
 import { TooltipConfig } from "./config/tooltip.js";
 import { TooltipWorldConfig } from "./config/tooltip_world.js";
-import { CompendiumBrowser } from "./apps/compendium-browser.js";
+import { WorldDataConfig } from "./config/world-data.js";
+import { MaterialData } from "./config/world-data/materials.js";
 
 export const registerSystemSettings = function () {
   /**
@@ -492,6 +493,30 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
+  });
+
+  /**
+   * World Data
+   */
+  game.settings.registerMenu("pf1", "worldData", {
+    name: "SETTINGS.pf1WorldDataN",
+    hint: "SETTINGS.pf1WorldDataH",
+    scope: "world",
+    icon: "fas fa-book",
+    type: WorldDataConfig,
+    restricted: true,
+  });
+
+  /**
+   * Materials
+   */
+  game.settings.register("pf1", "materialData", {
+    name: "materials",
+    hint: "",
+    scope: "world",
+    config: false,
+    default: MaterialData.defaultSettings,
+    type: Object,
   });
 };
 

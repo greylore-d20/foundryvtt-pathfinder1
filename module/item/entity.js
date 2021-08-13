@@ -2617,7 +2617,12 @@ export class ItemPF extends Item {
       const data = { chatMessage, fullAttack };
 
       // Execute script call
-      await this.executeScriptCalls("use", { attacks, template, data });
+      await this.executeScriptCalls("use", {
+        attacks,
+        template,
+        data,
+        conditionals: conditionals.map((c) => this.data.data.conditionals[c]),
+      });
 
       return result;
     };

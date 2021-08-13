@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.19
+
+### Changelog
+
+- Added `conditionals` to the variables of "use"-type script calls of items that can have Conditional Modifiers
+
 ## 0.78.18 (Hotfix)
 
 ### Bug Fixes

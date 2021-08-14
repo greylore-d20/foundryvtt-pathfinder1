@@ -713,7 +713,7 @@ export const PF1 = {
   /* -------------------------------------------- */
 
   /**
-   * The valid currency denominations supported by the 5e system
+   * The valid currency denominations supported by the game system
    */
   currencies: {
     pp: "PF1.CurrencyPP",
@@ -821,7 +821,7 @@ export const PF1 = {
   /* -------------------------------------------- */
 
   /**
-   * This Object defines the types of single or area targets which can be applied in D&D5e
+   * This Object defines the types of single or area targets which can be applied in the game system.
    */
   targetTypes: {
     none: "PF1.None",

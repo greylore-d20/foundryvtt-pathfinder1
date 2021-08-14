@@ -2,7 +2,7 @@ import { ActorSheetPF } from "../sheets/base.js";
 import { CR } from "../../lib.js";
 
 /**
- * An Actor sheet for NPC type characters in the D&D5E system.
+ * An Actor sheet for NPC type characters in the game system.
  * Extends the base ActorSheetPF class.
  *
  * @type {ActorSheetPF}

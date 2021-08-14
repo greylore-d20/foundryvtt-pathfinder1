@@ -17,7 +17,7 @@ import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 
 /**
- * Extend the base Actor class to implement additional logic specialized for D&D5e.
+ * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends Actor {
   constructor(...args) {

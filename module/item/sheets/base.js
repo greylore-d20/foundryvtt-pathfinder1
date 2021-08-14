@@ -9,7 +9,7 @@ import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-pic
 import { PF1_HelpBrowser } from "../../apps/help-browser.js";
 
 /**
- * Override and extend the core ItemSheet implementation to handle D&D5E specific item types
+ * Override and extend the core ItemSheet implementation to handle game system specific item types
  *
  * @type {ItemSheet}
  */

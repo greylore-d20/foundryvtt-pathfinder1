@@ -6,7 +6,7 @@ export const formulaHasDice = function (formula) {
 
 export class DicePF {
   /**
-   * A standardized helper function for managing core 5e "d20 rolls"
+   * A standardized helper function for managing game system rolls.
    *
    * Holding SHIFT, ALT, or CTRL when the attack is rolled will "fast-forward".
    * This chooses the default options of a normal attack with no bonus, Advantage, or Disadvantage respectively
@@ -191,7 +191,7 @@ export class DicePF {
   /* -------------------------------------------- */
 
   /**
-   * A standardized helper function for managing core 5e "d20 rolls"
+   * A standardized helper function for managing damage rolls.
    *
    * Holding SHIFT, ALT, or CTRL when the attack is rolled will "fast-forward".
    * This chooses the default options of a normal attack with no bonus, Critical, or no bonus respectively

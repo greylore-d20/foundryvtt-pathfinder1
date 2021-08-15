@@ -5,6 +5,7 @@
 ### Changelog
 
 - Updated loot sheet creation macro (!238 by mkahvi)
+- Added damage immunity and vulnerability to the Apply Damage dialog (!236 by mkahvi) (#995)
 
 ## 0.78.19
 

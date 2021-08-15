@@ -2814,7 +2814,8 @@ export class ActorPF extends Actor {
     var controlled = canvas.tokens.controlled,
       healingInvert = 1,
       numReg = /(\d+)/g,
-      sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g;
+      sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
+      sliceReg2 = /[^,;\n]+/g;
 
     //if (!controlled) return;
 
@@ -2877,6 +2878,14 @@ export class ActorPF extends Actor {
           name: tok.name,
           dr: tok.actor.data.data.traits.dr.match(sliceReg),
           eres: tok.actor.data.data.traits.eres.match(sliceReg),
+          di: [
+            ...tok.actor.data.data.traits.di.value,
+            ...(tok.actor.data.data.traits.di.custom.match(sliceReg2) ?? []),
+          ],
+          dv: [
+            ...tok.actor.data.data.traits.dv.value,
+            ...(tok.actor.data.data.traits.dv.custom.match(sliceReg2) ?? []),
+          ],
           checked: true,
         };
       });

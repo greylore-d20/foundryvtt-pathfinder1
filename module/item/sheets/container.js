@@ -557,7 +557,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     delete data._id;
     data.name = `${data.name} (Copy)`;
-    if (data.links) data.links = {};
+    if (data.data.links) data.data.links = {};
 
     return this.item.createContainerContent(data);
   }

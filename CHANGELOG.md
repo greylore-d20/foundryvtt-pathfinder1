@@ -7,6 +7,10 @@
 - Updated loot sheet creation macro (!238 by mkahvi)
 - Added damage immunity and vulnerability to the Apply Damage dialog (!236 by mkahvi) (#995)
 
+### Bug Fixes
+
+- Duplicating an item duplicated the links as well (!243 by mkahvi) (#952)
+
 ## 0.78.19
 
 ### Changelog

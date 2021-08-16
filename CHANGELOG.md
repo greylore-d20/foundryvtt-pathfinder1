@@ -15,6 +15,7 @@
 - Ability checks were displaying unnecessary info on rolls (!235 by mkahvi) (#791)
 - Fix warnings about deprecated code in console (!228 by mkahvi)
 - Ability check changes were not working for new actors (!231 by mkahvi) (#1008)
+- Duplicating items sometimes did not label them as copies
 
 ## 0.78.19
 

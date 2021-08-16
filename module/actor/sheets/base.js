@@ -1896,6 +1896,7 @@ export class ActorSheetPF extends ActorSheet {
 
     delete data.id;
     data.name = `${data.name} (Copy)`;
+    data.data.identifiedName = data.name;
     if (data.data.links) data.data.links = {};
 
     this.document.createOwnedItem(data);

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.78.20
+
+### Changelog
+
+- Updated loot sheet creation macro (!238 by mkahvi)
+
 ## 0.78.19
 
 ### Changelog

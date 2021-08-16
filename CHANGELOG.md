@@ -11,6 +11,7 @@
 ### Bug Fixes
 
 - Duplicating an item duplicated the links as well (!243 by mkahvi) (#952)
+- Ability checks were displaying unnecessary info on rolls (!235 by mkahvi) (#791)
 
 ## 0.78.19
 

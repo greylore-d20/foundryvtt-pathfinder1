@@ -2647,7 +2647,7 @@ export class ActorPF extends Actor {
       );
     }
 
-    let props = this.getDefenseHeaders();
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     return DicePF.d20Roll({

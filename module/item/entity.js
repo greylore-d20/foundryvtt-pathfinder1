@@ -1763,7 +1763,9 @@ export class ItemPF extends Item {
         useMeasureTemplate = this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
         rollMode = game.settings.get("core", "rollMode"),
         conditionals,
-        result;
+        result,
+        casterLevelCheck = false,
+        concentrationCheck = false;
 
       // Get form data
       if (form) {
@@ -1856,6 +1858,14 @@ export class ItemPF extends Item {
         if (html.length > 0) {
           rollData.sl += parseInt(html.val());
         }
+
+        // CL check enabled
+        html = form.find('[name="cl-check"]:checked');
+        if (html.length > 0) casterLevelCheck = true;
+
+        // Concentration enabled
+        html = form.find('[name="concentration"]:checked');
+        if (html.length > 0) concentrationCheck = true;
       }
 
       // Prepare the chat message data
@@ -2543,16 +2553,25 @@ export class ItemPF extends Item {
           }
         }
 
-        // Spell failure
-        if (this.type === "spell" && this.parent != null && this.parent.spellFailure > 0) {
-          const spellbook = getProperty(
-            this.parent.data,
-            `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
-          );
-          if (spellbook && spellbook.arcaneSpellFailure) {
-            templateData.spellFailure = RollPF.safeRoll("1d100").total;
-            templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
+        // Spells
+        if (this.type === "spell" && this.parent != null) {
+          // Spell failure
+          if (this.parent.spellFailure > 0) {
+            const spellbook = getProperty(
+              this.parent.data,
+              `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+            );
+            if (spellbook && spellbook.arcaneSpellFailure) {
+              const roll = RollPF.safeRoll("1d100");
+              templateData.spellFailure = roll.total;
+              templateData.spellFailureRoll = roll;
+              templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
+            }
           }
+          // Caster Level Check
+          templateData.casterLevelCheck = casterLevelCheck;
+          // Concentration check
+          templateData.concentrationCheck = concentrationCheck;
         }
         // Add metadata
         const metadata = {};
@@ -3325,6 +3344,10 @@ export class ItemPF extends Item {
       await Promise.all(promises);
 
       return true;
+    } else if (action === "concentration") {
+      item.parentActor.rollConcentration(item.data.data.spellbook);
+    } else if (action === "caster-level-check") {
+      item.parentActor.rollCL(item.data.data.spellbook);
     }
 
     return false;

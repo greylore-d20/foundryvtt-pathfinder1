@@ -195,7 +195,20 @@
         </div>
       </div>
     {{/if}}
-
+    {{#if (or concentrationCheck casterLevelCheck)}}
+    <div class='card-buttons spell-buttons flexrow'>
+      {{#if concentrationCheck}}
+      <div class="concentration">
+          <button data-action="concentration">{{localize "PF1.ConcentrationCheck"}}</button>
+      </div>
+      {{/if}}
+      {{#if casterLevelCheck}}
+      <div class="caster-level-check">
+          <button data-action="caster-level-check">{{localize "PF1.CasterLevelCheck"}}</button>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
     {{#if hasProperties}}
       {{#each properties as |prop|}}
         <div class="flexcol property-group gm-sensitive">

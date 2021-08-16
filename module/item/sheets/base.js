@@ -934,7 +934,7 @@ export class ItemSheetPF extends ItemSheet {
     if (data.pack) {
       const pack = game.packs.get(data.pack);
       if (!pack) return;
-      const entity = await pack.getEntity(data.id);
+      const entity = await pack.getDocument(data.id);
       link = `@Compendium[${data.pack}.${data.id}]{${entity.name}}`;
     }
 
@@ -1026,7 +1026,7 @@ export class ItemSheetPF extends ItemSheet {
     if (data.pack) {
       dataType = "compendium";
       const pack = game.packs.find((p) => p.collection === data.pack);
-      const packItem = await pack.getEntity(data.id);
+      const packItem = await pack.getDocument(data.id);
       if (packItem != null) {
         targetItem = packItem;
         itemLink = `${pack.collection}.${packItem._id}`;

@@ -23,7 +23,7 @@ export const createItemMacro = async function (item, slot) {
     `  itemType: "${item.type}",\n` +
     (actor != null ? `  actorId: "${actor._id}",\n` : "") +
     `});`;
-  let macro = game.macros.entities.find((m) => m.name === item.name && m.data.command === command);
+  let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
       {
@@ -55,7 +55,7 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
   const skillInfo = actor.getSkillInfo(skillId);
   const command = `game.pf1.rollSkillMacro("${actorId}", "${skillId}");`;
   const name = game.i18n.format("PF1.RollSkillMacroName", { 0: actor.name, 1: skillInfo.name });
-  let macro = game.macros.entities.find((m) => m.name === name && m.data.command === command);
+  let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
       {
@@ -89,7 +89,7 @@ export const createSaveMacro = async function (saveId, actorId, slot) {
   const command = `game.pf1.rollSaveMacro("${actorId}", "${saveId}");`;
 
   const name = game.i18n.format("PF1.RollSaveMacroName", { 0: actor.name, 1: saveName });
-  let macro = game.macros.entities.find((m) => m.name === name && m.data.command === command);
+  let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
       {
@@ -165,7 +165,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
 
   if (!name) return;
 
-  let macro = game.macros.entities.find((o) => o.name === name && o.data.command === command);
+  let macro = game.macros.contents.find((o) => o.name === name && o.data.command === command);
   if (!macro) {
     macro = await Macro.create(
       {

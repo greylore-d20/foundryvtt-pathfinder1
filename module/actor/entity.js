@@ -115,7 +115,7 @@ export class ActorPF extends Actor {
       const packKey = parts.slice(0, 2).join(".");
       const entryId = parts.slice(-1)[0];
       const pack = game.packs.get(packKey);
-      const entry = await pack.getEntity(entryId);
+      const entry = await pack.getDocument(entryId);
       entry.sheet.render(true);
     }
   }
@@ -233,7 +233,7 @@ export class ActorPF extends Actor {
 
   _dataIsPC(data) {
     if (data.permission != null) {
-      const nonGM = game.users.entities.filter((u) => !u.isGM);
+      const nonGM = game.users.contents.filter((u) => !u.isGM);
       return nonGM.some((u) => {
         if (data.permission["default"] >= CONST.ENTITY_PERMISSIONS["OWNER"]) return true;
         return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
@@ -3425,7 +3425,7 @@ export class ActorPF extends Actor {
     const pack = game.packs.find((p) => p.collection === collection);
     if (pack.metadata.entity !== "Item") return;
 
-    return pack.getEntity(entryId).then((ent) => {
+    return pack.getDocument(entryId).then((ent) => {
       console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
 
       let data = duplicate(ent.data);

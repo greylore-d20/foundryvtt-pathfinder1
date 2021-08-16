@@ -1999,21 +1999,21 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.find((o) => o.id === itemId);
 
-    const targets = game.actors.entities.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
+    const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
     targets.push(...this.document.items.filter((o) => o.type === "container"));
     targets.push(
-      ...game.items.entities.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
+      ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
     );
     const targetData = await dialogGetActor(`Give item to actor`, targets);
 
     if (!targetData) return;
     let target;
     if (targetData.type === "actor") {
-      target = game.actors.entities.find((o) => o.id === targetData.id);
+      target = game.actors.contents.find((o) => o.id === targetData.id);
     } else if (targetData.type === "item") {
       target = this.document.items.find((o) => o.id === targetData.id);
       if (!target) {
-        target = game.items.entities.find((o) => o.id === targetData.id);
+        target = game.items.contents.find((o) => o.id === targetData.id);
       }
     }
 
@@ -2429,7 +2429,7 @@ export class ActorSheetPF extends ActorSheet {
     const packKey = parts.slice(0, 2).join(".");
     const entryId = parts.slice(-1)[0];
     const pack = game.packs.get(packKey);
-    const entry = await pack.getEntity(entryId);
+    const entry = await pack.getDocument(entryId);
     entry.sheet.render(true);
   }
 

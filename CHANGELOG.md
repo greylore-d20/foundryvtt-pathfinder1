@@ -12,6 +12,7 @@
 
 - Duplicating an item duplicated the links as well (!243 by mkahvi) (#952)
 - Ability checks were displaying unnecessary info on rolls (!235 by mkahvi) (#791)
+- Fix warnings about deprecated code in console (!228 by mkahvi)
 
 ## 0.78.19
 

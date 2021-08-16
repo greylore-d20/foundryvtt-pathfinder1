@@ -2338,13 +2338,13 @@ export class ItemPF extends Item {
             blind = false;
           switch (rollMode) {
             case "gmroll":
-              whisper = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+              whisper = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
               break;
             case "selfroll":
               whisper = [game.user._id];
               break;
             case "blindroll":
-              whisper = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+              whisper = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
               blind = true;
               break;
           }
@@ -3167,13 +3167,13 @@ export class ItemPF extends Item {
       // Handle different roll modes
       switch (chatData.rollMode) {
         case "gmroll":
-          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
           break;
         case "selfroll":
           chatData["whisper"] = [game.user._id];
           break;
         case "blindroll":
-          chatData["whisper"] = game.users.entities.filter((u) => u.isGM).map((u) => u._id);
+          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
           chatData["blind"] = true;
       }
 

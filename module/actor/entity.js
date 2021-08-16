@@ -2628,24 +2628,31 @@ export class ActorPF extends Actor {
     const label = CONFIG.PF1.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
 
-    let formula = `@abilities.${abilityId}.mod`;
-    if (abl.checkMod) {
-      formula += ` + @abilities.${abilityId}.checkMod`;
+    const parts = [`@abilities.${abilityId}.mod[${label}]`];
+    if (abl.checkMod != 0) {
+      const changes = this.sourceDetails[`data.abilities.${abilityId}.checkMod`];
+      for (let c of changes) parts.push(`${c.value}[${c.name}]`);
     }
     if (this.data.data.attributes.energyDrain) {
-      formula += " - @attributes.energyDrain";
+      parts.push("-@attributes.energyDrain");
     }
 
     // Wound Threshold penalty
-    if (rollData.attributes.woundThresholds.penalty > 0)
+    if (rollData.attributes.woundThresholds.penalty > 0) {
       notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
+      parts.push(
+        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
+          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+        )}]`
+      );
+    }
 
     let props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     return DicePF.d20Roll({
       event: options.event,
-      parts: [formula],
+      parts,
       dice: options.dice,
       data: rollData,
       subject: { ability: abilityId },

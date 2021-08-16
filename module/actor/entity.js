@@ -1455,6 +1455,12 @@ export class ActorPF extends Actor {
       "data.attributes.woundThresholds.level": 0,
       "data.attributes.woundThresholds.penaltyBase": 0,
       "data.attributes.woundThresholds.penalty": 0,
+      "data.abilities.str.checkMod": 0,
+      "data.abilities.dex.checkMod": 0,
+      "data.abilities.con.checkMod": 0,
+      "data.abilities.int.checkMod": 0,
+      "data.abilities.wis.checkMod": 0,
+      "data.abilities.cha.checkMod": 0,
     };
 
     // Determine skill keys

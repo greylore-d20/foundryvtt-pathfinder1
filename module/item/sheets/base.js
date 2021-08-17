@@ -1052,6 +1052,15 @@ export class ItemSheetPF extends ItemSheet {
     await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
   }
 
+  /**
+   * By default, returns true only for GM
+   *
+   * @override
+   */
+  _canDragStart(selector) {
+    return true;
+  }
+
   _onDragStart(event) {
     const elem = event.currentTarget;
     if (elem.dataset?.conditional) {

@@ -19,8 +19,8 @@ export class TokenQuickActions {
           ? actualChargeCost(item)
           : -item.chargeCost
         : item.data.data.links?.ammunition
-            ?.map((l) => actualChargeCost(actor.items.get(l.id)))
-            .reduce((a, b) => a + b, 0) ?? 0;
+            ?.flatMap((l) => actor.items.get(l.id) ?? [])
+            .reduce((a, b) => a + actualChargeCost(b), 0) ?? 0;
       if (!recharging) r += `<span class='remaining'>${uses}</span >`;
       else r += `<span class='recharge'>+${uses}</span>`;
       if (!recharging && max !== 0) r += `<span class='delimiter' >/</span ><span class='max'>${max}</span>`;

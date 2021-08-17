@@ -4628,4 +4628,153 @@ export class ItemPF extends Item {
     });
     return flag ? flag[1] : undefined;
   }
+
+  /**
+   * @returns {number[]} Simple array describing the individual guaranteed attacks.
+   */
+  get attackArray() {
+    const itemData = this.data.data,
+      rollData = this.getRollData(),
+      attacks = [0];
+
+    const appendAttack = (formula) => {
+      const bonus = RollPF.safeRoll(formula, rollData).total;
+      if (Number.isFinite(bonus)) attacks.push(bonus);
+    };
+
+    // Static extra attacks
+    const extraAttacks = itemData.attackParts.map((n) => n[0]?.trim()).filter((n) => n?.length > 0);
+    for (let formula of extraAttacks) appendAttack(formula);
+
+    // Formula-based extra attacks
+    const fmAtk = itemData.formulaicAttacks?.count?.formula?.trim();
+    if (fmAtk?.length > 0) {
+      const fmAtkBonus = itemData.formulaicAttacks?.bonus?.formula?.trim() ?? "0";
+      const count = RollPF.safeRoll(fmAtk, rollData);
+      for (let i = 0; i < count.total; i++) {
+        rollData.formulaicAttack = i + 1;
+        appendAttack(fmAtkBonus);
+      }
+    }
+
+    // Conditional modifiers
+    const condBonuses = new Array(attacks.length).fill(0);
+    itemData.conditionals
+      .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
+      .forEach((c) => {
+        c.modifiers.forEach((cc) => {
+          const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+          if (bonusRoll.total == 0) return;
+          if (cc.subTarget === "allAttack") {
+            condBonuses.forEach((_, i) => {
+              condBonuses[i] += bonusRoll.total;
+            });
+          } else if (cc.subTarget.match(/^attack\.(\d+)$/)) {
+            const atk = parseInt(RegExp.$1, 10);
+            if (atk in condBonuses) condBonuses[atk] += bonusRoll.total;
+          }
+        });
+      });
+
+    const sources = this.attackSources;
+    const totalBonus = sources.reduce((f, s) => f + s.value, 0);
+
+    return attacks.map((a, i) => a + totalBonus + condBonuses[i]);
+  }
+
+  /**
+   * @returns {object[]} Array of value and label pairs for attack bonus sources on the main attack.
+   */
+  get attackSources() {
+    const sources = [];
+
+    const actorData = this.parentActor?.data.data,
+      itemData = this.data.data;
+
+    if (!actorData) return sources;
+
+    const describePart = (value, label, sort = 0) => {
+      sources.push({ value, label, sort });
+    };
+
+    // BAB is last for some reason, array is reversed to try make it the first.
+    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
+    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
+    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
+
+    // Unreliable melee/ranged identification
+    const isMelee =
+      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
+      ["melee", "reach"].includes(this.data.data.range.units);
+    const isRanged =
+      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
+
+    const effectiveChanges =
+      isMelee || isRanged
+        ? getHighestChanges(
+            this.parentActor.changes.filter((c) => c.subTarget === (isMelee ? "mattack" : "rattack")),
+            { ignoreTarget: true }
+          )
+        : [];
+    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -100));
+
+    if (itemData.ability.attack) {
+      const ablMod = getProperty(actorData, `abilities.${itemData.ability.attack}.mod`) ?? 0;
+      describePart(ablMod, CONFIG.PF1.abilities[itemData.ability.attack], -50);
+    }
+
+    // Attack bonus formula
+    const bonusRoll = RollPF.safeRoll(itemData.attackBonus ?? "0");
+    if (bonusRoll.total != 0) {
+      bonusRoll.terms.forEach((t) => describePart(t.total, t.flavor, -100));
+    }
+
+    // Masterwork or enhancement bonus
+    // Only add them if there's no larger enhancement bonus from some other source
+    const virtualEnh = itemData.enh ?? (itemData.masterwork ? 1 : 0);
+    if (!effectiveChanges.find((i) => i.modifier === "enh" && i.value > virtualEnh)) {
+      if (Number.isFinite(itemData.enh) && itemData.enh != 0) {
+        describePart(itemData.enh, game.i18n.localize("PF1.EnhancementBonus"), -300);
+      } else if (itemData.masterwork) {
+        describePart(1, game.i18n.localize("PF1.Masterwork"), -300);
+      }
+    }
+
+    // Add wound thresholds penalty
+    const wtPen = actorData.attributes.woundThresholds.penalty;
+    if (wtPen > 0) {
+      describePart(-wtPen, game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtPen]), -1000);
+    }
+
+    // Add proficiency penalty
+    if (!itemData.proficient) {
+      describePart(this.proficiencyPenalty, game.i18n.localize("PF1.ProficiencyPenalty"), -500);
+    }
+
+    // Broken condition
+    if (itemData.broken) {
+      describePart(-2, game.i18n.localize("PF1.Broken"), -500);
+    }
+
+    // Add secondary natural attack penalty
+    if (!itemData.primaryAttack) {
+      describePart(-5, game.i18n.localize("PF1.SecondaryAttack"), -400);
+    }
+
+    // Conditional modifiers
+    const rollData = this.getRollData();
+    itemData.conditionals
+      .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
+      .forEach((c) => {
+        c.modifiers.forEach((cc) => {
+          if (cc.subTarget === "allAttack") {
+            const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
+            if (bonusRoll.total == 0) return;
+            describePart(bonusRoll.total, c.name, -5000);
+          }
+        });
+      });
+
+    return sources.sort((a, b) => b.sort - a.sort);
+  }
 }

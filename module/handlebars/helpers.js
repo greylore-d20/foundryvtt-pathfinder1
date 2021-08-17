@@ -131,10 +131,11 @@ export const registerHandlebarsHelpers = function () {
     return null;
   });
 
-  Handlebars.registerHelper(
-    "itemAttacks",
-    (item) => 1 + item.data.attackParts.length + (item.data.formulaicAttacks?.count?.value ?? 0)
-  );
+  Handlebars.registerHelper("itemAttacks", (item) => {
+    const attacks = item.document.attackArray;
+    const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
+    return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
+  });
 
   // Fetches ability mod value based on ability key.
   // Avoids contaminating rollData or item data with excess strings.

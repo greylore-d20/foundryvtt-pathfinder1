@@ -184,6 +184,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorInitAbility(actor, updateData, linked);
   _migrateActorChangeRevamp(actor, updateData, linked);
   _migrateActorConditions(actor, updateData, linked);
+  _migrateActorSkillRanks(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -966,6 +967,23 @@ const _migrateActorConditions = function (ent, updateData) {
     if (cond === true) {
       updateData["data.conditions.shaken"] = true;
       updateData["data.conditions.-=fear"] = null;
+    }
+  }
+};
+
+/**
+ * Migrate abnormal skill rank values to 0.
+ * Primarily changing nulls to 0 to match new actors.
+ */
+const _migrateActorSkillRanks = function (ent, updateData, linked) {
+  const skills = getProperty(ent, "data.skills");
+  if (!skills) return; // Unlinked with no skill overrides of any kind
+  for (let [key, data] of Object.entries(skills)) {
+    if (!linked && data.rank === undefined) continue; // Unlinked with no override
+    if (!Number.isFinite(data.rank)) updateData[`data.skills.${key}.rank`] = 0;
+    for (let [subKey, subData] of Object.entries(data.subSkills ?? {})) {
+      if (!linked && subData.rank === undefined) continue; // Unlinked with no override
+      if (!Number.isFinite(subData.rank)) updateData[`data.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }
   }
 };

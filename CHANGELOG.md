@@ -19,6 +19,7 @@
 - Ability check changes were not working for new actors (!231 by mkahvi) (#1008)
 - Duplicating items sometimes did not label them as copies
 - Non-GMs could not drag conditional modifiers (!242 by mkahvi)
+- Fix skill ranks allowing null values (!237 by mkahvi) (#933)
 
 ## 0.78.19
 

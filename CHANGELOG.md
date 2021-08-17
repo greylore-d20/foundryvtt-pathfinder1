@@ -10,6 +10,7 @@
 - Add toggleable caster level and concentration checks to spells and their chat cards (!230 by mkahvi) (#333)
 - Add unlock button to edit infrequently changed skill settings on an actor (!241 by mkahvi) (#807)
 - Better describe attack number and bonus in combat tab (!227 by mkahvi)
+- Conditionals and unlabeled bonuses appear in roll breakdowns now (!217, !223 by mkahvi) (#863, #977)
 
 ### Bug Fixes
 

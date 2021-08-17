@@ -1939,7 +1939,9 @@ export class ItemPF extends Item {
             }`;
             // Add formula in simple format
             if (["attack", "effect", "misc"].includes(modifier.target)) {
-              conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []), modifier.formula];
+              const hasFlavor = /\[.*\]/.test(modifier.formula);
+              const flavoredFormula = hasFlavor ? modifier.formula : `(${modifier.formula})[${conditional.name}]`;
+              conditionalPartsCommon[partString] = [...(conditionalPartsCommon[partString] ?? []), flavoredFormula];
             }
             // Add formula as array for damage
             else if (modifier.target === "damage") {

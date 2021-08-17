@@ -2972,7 +2972,7 @@ export class ActorPF extends Actor {
             },
           },
           {
-            classes: ["pf1", "apply-hit-points"],
+            classes: ["dialog", "pf1", "apply-hit-points"],
           }
         );
         d.render(true);

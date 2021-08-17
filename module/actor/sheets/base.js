@@ -2724,7 +2724,7 @@ export class ActorSheetPF extends ActorSheet {
             },
           },
           {
-            classes: ["pf1", "add-character-class"],
+            classes: ["dialog", "pf1", "add-character-class"],
           }
         ).render(true);
       });

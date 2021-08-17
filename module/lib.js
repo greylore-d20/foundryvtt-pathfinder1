@@ -607,7 +607,7 @@ export const createConsumableSpellDialog = function (itemData, { allowSpell = tr
       default: "potion",
     };
     if (!allowSpell) delete dialogData.buttons.spell;
-    new Dialog(dialogData, { classes: ["pf1", "create-consumable"] }).render(true);
+    new Dialog(dialogData, { classes: ["dialog", "pf1", "create-consumable"] }).render(true);
   });
 };
 

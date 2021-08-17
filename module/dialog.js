@@ -39,7 +39,7 @@ export function dialogGetNumber({
         },
       },
       {
-        classes: ["pf1", "get-number"],
+        classes: ["dialog", "pf1", "get-number"],
       }
     ).render(true);
   });
@@ -70,7 +70,7 @@ export const dialogGetActor = function (title = "", actors = []) {
         },
       },
       {
-        classes: ["pf1", "get-actor"],
+        classes: ["dialog", "pf1", "get-actor"],
       }
     );
 

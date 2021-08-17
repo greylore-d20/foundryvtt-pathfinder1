@@ -2721,7 +2721,7 @@ export class ItemPF extends Item {
           },
         },
         {
-          classes: ["pf1", "use-attack"],
+          classes: ["dialog", "pf1", "use-attack"],
         }
       ).render(true);
     });

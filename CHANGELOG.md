@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.78.20
+## 0.78.19
 
 ### Changelog
 
+- Added `conditionals` to the variables of "use"-type script calls of items that can have Conditional Modifiers
 - Updated loot sheet creation macro (!238 by mkahvi)
 - Added damage immunity and vulnerability to the Apply Damage dialog (!236 by mkahvi) (#995)
 - Add modifiers in breakdown to ability test rolls (!234 by mkahvi)
@@ -24,13 +25,7 @@
 
 ### API
 
-- Add classes to all pf1 dialogs. `add-character-class, apply-hit-points, use-attack, roll-initiative, duplicate-initiative, get-number, get-actor, die-roll, damage-roll, create-consumable`
-
-## 0.78.19
-
-### Changelog
-
-- Added `conditionals` to the variables of "use"-type script calls of items that can have Conditional Modifiers
+- Added classes to all pf1 dialogs: `add-character-class, apply-hit-points, use-attack, roll-initiative, duplicate-initiative, get-number, get-actor, die-roll, damage-roll, create-consumable`
 
 ## 0.78.18 (Hotfix)
 

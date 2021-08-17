@@ -14,29 +14,34 @@ export function dialogGetNumber({
   return new Promise((resolve) => {
     let cancelled = true;
 
-    new Dialog({
-      title: title,
-      content: `<input type="number" name="result" min="${min}" max="${max}" value="${initial || 0}">`,
-      buttons: {
-        ok: {
-          label: "Submit",
-          callback: (html) => {
-            cancelled = false;
-            const input = html.find('input[name="result"]');
-            resolve(input.val());
+    new Dialog(
+      {
+        title: title,
+        content: `<input type="number" name="result" min="${min}" max="${max}" value="${initial || 0}">`,
+        buttons: {
+          ok: {
+            label: "Submit",
+            callback: (html) => {
+              cancelled = false;
+              const input = html.find('input[name="result"]');
+              resolve(input.val());
+            },
           },
         },
+        close: () => {
+          if (!cancelled) {
+            resolve(initial);
+          }
+        },
+        default: "ok",
+        render: (htm) => {
+          htm.find("input").select();
+        },
       },
-      close: () => {
-        if (!cancelled) {
-          resolve(initial);
-        }
-      },
-      default: "ok",
-      render: (htm) => {
-        htm.find("input").select();
-      },
-    }).render(true);
+      {
+        classes: ["pf1", "get-number"],
+      }
+    ).render(true);
   });
 }
 
@@ -53,16 +58,21 @@ export const dialogGetActor = function (title = "", actors = []) {
       }
     });
 
-    const dialog = new Dialog({
-      title: title,
-      content: content,
-      buttons: {},
-      close: () => {
-        if (cancelled) {
-          resolve(null);
-        }
+    const dialog = new Dialog(
+      {
+        title: title,
+        content: content,
+        buttons: {},
+        close: () => {
+          if (cancelled) {
+            resolve(null);
+          }
+        },
       },
-    });
+      {
+        classes: ["pf1", "get-actor"],
+      }
+    );
 
     dialog.activateListeners = function (html) {
       Dialog.prototype.activateListeners.call(this, html);

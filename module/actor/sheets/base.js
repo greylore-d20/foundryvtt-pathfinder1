@@ -2693,35 +2693,40 @@ export class ActorSheetPF extends ActorSheet {
       !(event && event.shiftKey)
     ) {
       let doReturn = await new Promise((resolve) => {
-        new Dialog({
-          title: game.i18n.localize("PF1.AddClass"),
-          content: `<div class="pf1"><p>${game.i18n.localize(
-            "PF1.Info.AddClassDialog_Desc"
-          )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
-            "PF1.Info.AddClassDialog"
-          )}</div></div>`,
-          buttons: {
-            normal: {
-              icon: '<i class="fas fa-hat-wizard"></i>',
-              label: game.i18n.localize("PF1.Normal"),
-              callback: () => {
-                LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
-                  resolve(true);
-                });
+        new Dialog(
+          {
+            title: game.i18n.localize("PF1.AddClass"),
+            content: `<div class="pf1"><p>${game.i18n.localize(
+              "PF1.Info.AddClassDialog_Desc"
+            )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
+              "PF1.Info.AddClassDialog"
+            )}</div></div>`,
+            buttons: {
+              normal: {
+                icon: '<i class="fas fa-hat-wizard"></i>',
+                label: game.i18n.localize("PF1.Normal"),
+                callback: () => {
+                  LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
+                    resolve(true);
+                  });
+                },
+              },
+              raw: {
+                icon: '<i class="fas fa-file"></i>',
+                label: game.i18n.localize("PF1.Raw"),
+                callback: () => {
+                  resolve(false);
+                },
               },
             },
-            raw: {
-              icon: '<i class="fas fa-file"></i>',
-              label: game.i18n.localize("PF1.Raw"),
-              callback: () => {
-                resolve(false);
-              },
+            close: () => {
+              resolve(true);
             },
           },
-          close: () => {
-            resolve(true);
-          },
-        }).render(true);
+          {
+            classes: ["pf1", "add-character-class"],
+          }
+        ).render(true);
       });
       if (doReturn) return false;
     }

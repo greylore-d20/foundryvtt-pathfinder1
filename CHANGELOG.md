@@ -22,6 +22,10 @@
 - Non-GMs could not drag conditional modifiers (!242 by mkahvi)
 - Fix skill ranks allowing null values (!237 by mkahvi) (#933)
 
+### API
+
+- Add classes to all pf1 dialogs. `add-character-class, apply-hit-points, use-attack, roll-initiative, duplicate-initiative, get-number, get-actor, die-roll, damage-roll, create-consumable`
+
 ## 0.78.19
 
 ### Changelog

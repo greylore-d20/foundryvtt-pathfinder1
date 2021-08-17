@@ -49,7 +49,9 @@ Combat.showInitiativeDialog = function (formula = null) {
             resolve({ stop: true });
           },
         },
-        {}
+        {
+          classes: ["pf1", "roll-initiative"],
+        }
       ).render(true);
     });
   });
@@ -227,28 +229,33 @@ const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
     return;
   }
 
-  new Dialog({
-    title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.actor.name}`,
-    content: `<div class="flexrow form-group">
+  new Dialog(
+    {
+      title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.actor.name}`,
+      content: `<div class="flexrow form-group">
       <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
       <input type="number" name="initiativeOffset" value="0"/>
     </div>`,
-    buttons: {
-      confirm: {
-        label: game.i18n.localize("PF1.Confirm"),
-        callback: (html) => {
-          const offset = parseFloat(html.find('input[name="initiativeOffset"]').val());
-          const prevInitiative = combatant.initiative != null ? combatant.initiative : 0;
-          const newInitiative = prevInitiative + offset;
-          duplicateCombatantInitiative(combat, combatant, newInitiative);
+      buttons: {
+        confirm: {
+          label: game.i18n.localize("PF1.Confirm"),
+          callback: (html) => {
+            const offset = parseFloat(html.find('input[name="initiativeOffset"]').val());
+            const prevInitiative = combatant.initiative != null ? combatant.initiative : 0;
+            const newInitiative = prevInitiative + offset;
+            duplicateCombatantInitiative(combat, combatant, newInitiative);
+          },
+        },
+        cancel: {
+          label: game.i18n.localize("Cancel"),
         },
       },
-      cancel: {
-        label: game.i18n.localize("Cancel"),
-      },
+      default: "confirm",
     },
-    default: "confirm",
-  }).render(true);
+    {
+      classes: ["pf1", "duplicate-initiative"],
+    }
+  ).render(true);
 };
 
 export const duplicateCombatantInitiative = function (combat, combatant, initiative) {

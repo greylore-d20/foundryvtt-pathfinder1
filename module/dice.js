@@ -157,6 +157,9 @@ export class DicePF {
 
     let roll;
     return new Promise((resolve) => {
+      if (!(dialogOptions.classes instanceof Array)) dialogOptions.classes = [];
+      dialogOptions.classes.push("pf1", "die-roll");
+
       new Dialog(
         {
           title: title,
@@ -328,6 +331,9 @@ export class DicePF {
     // Render modal dialog
     let roll;
     return new Promise((resolve) => {
+      if (!(dialogOptions.classes instanceof Array)) dialogOptions.classes = [];
+      dialogOptions.classes.push("pf1", "damage-roll");
+
       new Dialog(
         {
           title: title,

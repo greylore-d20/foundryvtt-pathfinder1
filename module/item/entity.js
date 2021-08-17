@@ -2710,15 +2710,20 @@ export class ItemPF extends Item {
           callback: (html) => resolve((roll = _roll.call(this, false, html))),
         };
       }
-      new Dialog({
-        title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
-        content: html,
-        buttons: buttons,
-        default: buttons.multi != null ? "multi" : "normal",
-        close: (html) => {
-          resolve(rolled ? roll : false);
+      new Dialog(
+        {
+          title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
+          content: html,
+          buttons: buttons,
+          default: buttons.multi != null ? "multi" : "normal",
+          close: (html) => {
+            resolve(rolled ? roll : false);
+          },
         },
-      }).render(true);
+        {
+          classes: ["pf1", "use-attack"],
+        }
+      ).render(true);
     });
 
     return result;

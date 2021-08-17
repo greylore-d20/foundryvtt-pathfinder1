@@ -81,6 +81,19 @@
         flex: 3 1 0;
       }
     }
+
+    .skill-lock-button {
+      flex: 0;
+      &:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f023";
+        margin-right: 0.5em;
+      }
+      &.unlocked:before {
+        content: "\f3c1";
+      }
+    }
   }
 
   .counters {

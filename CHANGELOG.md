@@ -8,6 +8,7 @@
 - Added damage immunity and vulnerability to the Apply Damage dialog (!236 by mkahvi) (#995)
 - Add modifiers in breakdown to ability test rolls (!234 by mkahvi)
 - Add toggleable caster level and concentration checks to spells and their chat cards (!230 by mkahvi) (#333)
+- Add unlock button to edit infrequently changed skill settings on an actor (!241 by mkahvi) (#807)
 
 ### Bug Fixes
 

@@ -1163,6 +1163,12 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".condition .checkbox").click(this._onToggleCondition.bind(this));
 
     /* -------------------------------------------- */
+    /*  Skills
+    /* -------------------------------------------- */
+
+    html.find(".skill-lock-button").click(this._onToggleSkillLock.bind(this)).addClass("unlocked").click();
+
+    /* -------------------------------------------- */
     /*  Links
     /* -------------------------------------------- */
 
@@ -1542,6 +1548,15 @@ export class ActorSheetPF extends ActorSheet {
     const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
     const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
     this.actor.update(updateData);
+  }
+
+  _onToggleSkillLock(event) {
+    event.preventDefault();
+    const state = event.target.classList.toggle("unlocked");
+    const tab = event.target.closest(".tab.skills");
+    const rareInputs = $(tab).find(".skill-acp input,.skill-rt input, .skill-ability select");
+    rareInputs.prop("disabled", !state);
+    $(tab).find(".skill-controls .skill-delete").toggle();
   }
 
   _onOpenCompendium(event) {

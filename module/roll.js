@@ -135,7 +135,6 @@ export class RollPF extends Roll {
   async getTooltip() {
     const parts = this.dice.map((d) => d.getTooltipData());
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
-      if (!t?.flavor) return cur;
       const result = t instanceof NumericTerm ? t.getTooltipData() : undefined;
 
       const prior = arr[idx - 1];
@@ -143,7 +142,10 @@ export class RollPF extends Roll {
         result.total = -result.total;
       }
 
-      if (result !== undefined) cur.push(result);
+      if (result !== undefined) {
+        if (!result.flavor) result.flavor = game.i18n.localize("PF1.Undefined");
+        cur.push(result);
+      }
       return cur;
     }, []);
     return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });

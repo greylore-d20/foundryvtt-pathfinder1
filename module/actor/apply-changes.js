@@ -88,6 +88,8 @@ const getSortChangePriority = function () {
       "wisMod",
       "chaMod",
       "skills",
+      "carryStr",
+      "carryMult",
       "strSkills",
       "dexSkills",
       "conSkills",
@@ -204,6 +206,10 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "wisMod":
     case "chaMod":
       return `data.abilities.${changeTarget.slice(0, 3)}.mod`;
+    case "carryStr":
+      return "data.details.carryCapacity.bonus.total";
+    case "carryMult":
+      return "data.details.carryCapacity.multiplier.total";
     case "ac":
       switch (changeType) {
         case "dodge":
@@ -919,6 +925,51 @@ export const addDefaultChanges = function (changes) {
     getSourceInfo(this.sourceInfo, "data.attributes.sr.total").positive.push({
       formula: sr,
       name: game.i18n.localize("PF1.Base"),
+    });
+  }
+  {
+    // Carry capacity strength bonus
+    const cStr = getProperty(this.data, "data.details.carryCapacity.bonus.user") || 0;
+    changes.push(
+      ItemChange.create({
+        formula: cStr.toString(),
+        target: "misc",
+        subTarget: "carryStr",
+        modifier: "untyped",
+        priority: 1000,
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.details.carryCapacity.bonus.total").positive.push({
+      formula: cStr.toString(),
+      name: game.i18n.localize("PF1.Custom"),
+    });
+    // Carry capacity multiplier
+    changes.push(
+      ItemChange.create({
+        formula: "1",
+        target: "misc",
+        subTarget: "carryMult",
+        modifier: "base",
+        priority: 1000,
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.details.carryCapacity.multiplier.total").positive.push({
+      formula: "1",
+      name: game.i18n.localize("PF1.Base"),
+    });
+    const cMult = getProperty(this.data, "data.details.carryCapacity.multiplier.user") || 0;
+    changes.push(
+      ItemChange.create({
+        formula: cMult.toString(),
+        target: "misc",
+        subTarget: "carryMult",
+        modifier: "untyped",
+        priority: 1000,
+      })
+    );
+    getSourceInfo(this.sourceInfo, "data.details.carryCapacity.multiplier.total").positive.push({
+      formula: cMult.toString(),
+      name: game.i18n.localize("PF1.Custom"),
     });
   }
   // Natural armor

@@ -1461,6 +1461,8 @@ export class ActorPF extends Actor {
       "data.abilities.int.checkMod": 0,
       "data.abilities.wis.checkMod": 0,
       "data.abilities.cha.checkMod": 0,
+      "data.details.carryCapacity.bonus.total": 0,
+      "data.details.carryCapacity.multiplier.total": 0,
     };
 
     // Determine skill keys
@@ -3333,8 +3335,9 @@ export class ActorPF extends Actor {
 
   getCarryCapacity() {
     // Determine carrying capacity
-    const carryStr = this.data.data.abilities.str.total + this.data.data.abilities.str.carryBonus;
-    let carryMultiplier = this.data.data.abilities.str.carryMultiplier;
+    const carryCapacity = this.data.data.details.carryCapacity;
+    const carryStr = this.data.data.abilities.str.total + carryCapacity.bonus.total;
+    let carryMultiplier = carryCapacity.multiplier.total;
     const size = this.data.data.traits.size;
     if (this.data.data.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
     else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];

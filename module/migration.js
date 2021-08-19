@@ -225,7 +225,7 @@ export const migrateItemData = function (item) {
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
   _migrateEquipmentCategories(item, updateData);
-  _migrateWeaponSize(item, updateData);
+  _migrateItemSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
   _migrateSavingThrowTypes(item, updateData);
@@ -604,11 +604,21 @@ const _migrateEquipmentCategories = function (ent, updateData) {
   updateData["data.armor.-=type"] = null;
 };
 
-const _migrateWeaponSize = function (ent, updateData) {
-  if (ent.type !== "weapon") return;
-
-  if (!getProperty(ent, "data.weaponData.size")) {
-    updateData["data.weaponData.size"] = "med";
+const _migrateItemSize = function (ent, updateData, linked) {
+  // Convert custom sizing in weapons
+  if (ent.type === "weapon") {
+    const wdSize = getProperty(ent, "data.weaponData.size");
+    if (wdSize) {
+      // Move old
+      updateData["data.size"] = wdSize;
+      updateData["data.weaponData.-=size"] = null;
+      return;
+    }
+  }
+  // Convert any other instances
+  if (!getProperty(ent, "data.size")) {
+    // Fill in missing
+    updateData["data.size"] = "med";
   }
 };
 

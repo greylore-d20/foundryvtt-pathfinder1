@@ -2005,7 +2005,8 @@ export class ActorSheetPF extends ActorSheet {
           button.disabled = false;
         },
         no: () => (button.disabled = false),
-      });
+        rejectClose: true,
+      }).then(null, () => (button.disabled = false));
     }
   }
 

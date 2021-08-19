@@ -166,6 +166,25 @@
   }
 }
 
+#chat .chat-message {
+  .dice-roll {
+    .roll {
+      &.die.success,
+      &.fatedie.success,
+      &.coin.heads {
+        color: #18520b;
+        filter: sepia(0.5) hue-rotate(60deg);
+      }
+      &.die.failure,
+      &.fatedie.failure,
+      &.coin.tails {
+        color: #aa0200;
+        filter: sepia(0.5) hue-rotate(-60deg);
+      }
+    }
+  }
+}
+
 .message {
   .chat-attack {
     margin-bottom: 2px;

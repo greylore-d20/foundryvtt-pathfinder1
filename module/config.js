@@ -860,6 +860,12 @@ export const PF1 = {
     spec: "PF1.Special",
   },
 
+  timePeriodsShort: {
+    turn: "PF1.TimeTurnShort",
+    round: "PF1.TimeRoundShort",
+    minute: "PF1.TimeMinuteShort",
+  },
+
   /* -------------------------------------------- */
 
   /**

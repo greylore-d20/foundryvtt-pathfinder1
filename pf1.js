@@ -288,6 +288,7 @@ Hooks.once("setup", function () {
     "skills",
     "targetTypes",
     "timePeriods",
+    "timePeriodsShort",
     "savingThrows",
     "ac",
     "acValueLabels",

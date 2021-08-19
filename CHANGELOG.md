@@ -13,6 +13,7 @@
 - Better describe attack number and bonus in combat tab (!227 by mkahvi)
 - Conditionals and unlabeled bonuses appear in roll breakdowns now (!217, !223 by mkahvi) (#863, #977)
 - Add native language names to language selection (!250 by mkahvi) (#753)
+- Add duration field to buffs for future use (!249 by mkahvi) (#808)
 
 ### Bug Fixes
 

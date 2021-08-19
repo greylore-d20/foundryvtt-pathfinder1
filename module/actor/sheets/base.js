@@ -831,7 +831,9 @@ export class ActorSheetPF extends ActorSheet {
       heavy: actorData.data.attributes.encumbrance.levels.heavy,
     };
     let carryLabel;
-    switch (game.settings.get("pf1", "units")) {
+    let usystem = game.settings.get("pf1", "weightUnits"); // override
+    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+    switch (usystem) {
       case "metric":
         carryLabel = game.i18n.localize("PF1.CarryLabelKg").format(carriedWeight);
         break;
@@ -2237,13 +2239,15 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Organize Inventory
+    let usystem = game.settings.get("pf1", "weightUnits"); // override
+    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+
     for (let i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
       i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
-      i.units =
-        game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+      i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
     }

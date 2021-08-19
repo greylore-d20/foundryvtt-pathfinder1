@@ -188,6 +188,17 @@ export const registerSystemSettings = function () {
     },
   });
 
+  const reRenderSheets = () => {
+    [...game.actors.contents, ...Object.values(game.actors.tokens)]
+      .filter((o) => {
+        return o.data.type === "character";
+      })
+      .forEach((o) => {
+        o.prepareData();
+        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+      });
+  };
+
   /**
    * System of Units
    */
@@ -199,19 +210,40 @@ export const registerSystemSettings = function () {
     default: "imperial",
     type: String,
     choices: {
-      imperial: "Imperial (feet, lbs)",
-      metric: "Metric (meters, kg)",
+      imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
+      metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: () => {
-      [...game.actors.contents, ...Object.values(game.actors.tokens)]
-        .filter((o) => {
-          return o.data.type === "character";
-        })
-        .forEach((o) => {
-          o.prepareData();
-          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-        });
+    onChange: reRenderSheets,
+  });
+
+  game.settings.register("pf1", "distanceUnits", {
+    name: "SETTINGS.pf1DistanceUnitsN",
+    hint: "SETTINGS.pf1DistanceUnitsL",
+    scope: "world",
+    config: true,
+    default: "default",
+    type: String,
+    choices: {
+      default: game.i18n.localize("PF1.Default"),
+      imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
+      metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
+    onChange: reRenderSheets,
+  });
+
+  game.settings.register("pf1", "weightUnits", {
+    name: "SETTINGS.pf1WeightUnitsN",
+    hint: "SETTINGS.pf1WeightUnitsL",
+    scope: "world",
+    config: true,
+    default: "default",
+    type: String,
+    choices: {
+      default: game.i18n.localize("PF1.Default"),
+      imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
+      metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
+    },
+    onChange: reRenderSheets,
   });
 
   /**

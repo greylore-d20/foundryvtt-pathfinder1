@@ -465,9 +465,10 @@ export class ItemPF extends Item {
       if (!hasProperty(this.data, "data.unidentified.price")) setProperty(this.data, "data.unidentified.price", 0);
 
       // Convert weight according metric system (lb vs kg)
+      let usystem = game.settings.get("pf1", "weightUnits"); // override
+      if (usystem === "default") usystem = game.settings.get("pf1", "units");
       itemData.data.weightConverted = convertWeight(itemData.data.weight);
-      itemData.data.weightUnits =
-        game.settings.get("pf1", "units") === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+      itemData.data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       itemData.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
 
       // Set basic data
@@ -2551,10 +2552,9 @@ export class ItemPF extends Item {
               templateData.range = RollPF.safeRoll(range, rollData).total;
               templateData.rangeFormula = range;
             }
-            templateData.rangeLabel = `${templateData.range} ft.`;
-            if (game.settings.get("pf1", "units") === "metric") {
-              templateData.rangeLabel = `${templateData.range} m`;
-            }
+            let usystem = game.settings.get("pf1", "distanceUnits"); // override
+            if (usystem === "default") usystem = game.settings.get("pf1", "units");
+            templateData.rangeLabel = usystem === "metric" ? `${templateData.range} m` : `${templateData.range} ft.`;
 
             const rangeUnits = getProperty(this.data, "data.range.units");
             if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
@@ -3514,7 +3514,8 @@ export class ItemPF extends Item {
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
-        const units = game.settings.get("pf1", "units");
+        let units = game.settings.get("pf1", "distanceUnits"); // override
+        if (units === "default") units = game.settings.get("pf1", "units");
         if (rangeUnit === "close")
           label.range = `${label.range} ${game.i18n.localize(
             units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"

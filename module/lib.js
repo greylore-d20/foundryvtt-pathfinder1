@@ -376,7 +376,9 @@ export const getActorFromId = function (id) {
  * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
  */
 export const convertDistance = function (value, type = "ft") {
-  switch (game.settings.get("pf1", "units")) {
+  let system = game.settings.get("pf1", "distanceUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  switch (system) {
     case "metric":
       switch (type) {
         case "mi":
@@ -396,7 +398,9 @@ export const convertDistance = function (value, type = "ft") {
  * @returns {number} The converted value. In the case of the metric system, converts to kg.
  */
 export const convertWeight = function (value) {
-  switch (game.settings.get("pf1", "units")) {
+  let system = game.settings.get("pf1", "weightUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  switch (system) {
     case "metric":
       return Math.round((value / 2) * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
     default:
@@ -411,7 +415,9 @@ export const convertWeight = function (value) {
  * @returns {number} The converted value. In the case of the metric system, converts from kg.
  */
 export const convertWeightBack = function (value) {
-  switch (game.settings.get("pf1", "units")) {
+  let system = game.settings.get("pf1", "weightUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  switch (system) {
     case "metric":
       return Math.round(value * 2 * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
     default:

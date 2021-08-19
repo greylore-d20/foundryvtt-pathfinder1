@@ -79,6 +79,8 @@ export class RollPF extends Roll {
    * @private
    */
   static _splitParentheses(_formula) {
+    if (_formula.indexOf("?") > -1 && _formula.indexOf(":") > -1)
+      _formula = "(" + _formula.replace(/(\s*[?:]\s*)/g, ")$1(") + ")";
     return this._splitGroup(_formula, {
       openRegexp: ParentheticalTerm.OPEN_REGEXP,
       closeRegexp: ParentheticalTerm.CLOSE_REGEXP,

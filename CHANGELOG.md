@@ -22,6 +22,7 @@
 - Duplicating items sometimes did not label them as copies
 - Non-GMs could not drag conditional modifiers (!242 by mkahvi)
 - Fix skill ranks allowing null values (!237 by mkahvi) (#933)
+- Ternary operator terms could be broken by negative signs
 
 ### API
 

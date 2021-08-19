@@ -944,9 +944,10 @@ export const addDefaultChanges = function (changes) {
       name: game.i18n.localize("PF1.Custom"),
     });
     // Carry capacity multiplier
+    const cMultBase = getProperty(this.data, "data.details.carryCapacity.multiplier.base") ?? 1;
     changes.push(
       ItemChange.create({
-        formula: "1",
+        formula: cMultBase.toString(),
         target: "misc",
         subTarget: "carryMult",
         modifier: "base",
@@ -954,7 +955,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     getSourceInfo(this.sourceInfo, "data.details.carryCapacity.multiplier.total").positive.push({
-      formula: "1",
+      formula: cMultBase.toString(),
       name: game.i18n.localize("PF1.Base"),
     });
     const cMult = getProperty(this.data, "data.details.carryCapacity.multiplier.user") || 0;

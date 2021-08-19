@@ -622,16 +622,17 @@ export const addDefaultChanges = function (changes) {
     });
 
     if (!getProperty(this.data, "data.attributes.wounds.base")) {
+      const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
+          formula: woundFormula,
           target: "misc",
           subTarget: "wounds",
           modifier: "base",
         })
       );
       getSourceInfo(this.sourceInfo, "data.attributes.wounds.max").positive.push({
-        formula: `@abilities.${hpAbility}.total + @abilities.${hpAbility}.drain`,
+        formula: woundFormula,
         name: CONFIG.PF1.abilities[hpAbility],
       });
     }

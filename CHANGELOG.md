@@ -24,6 +24,7 @@
 - Non-GMs could not drag conditional modifiers (!242 by mkahvi)
 - Fix skill ranks allowing null values (!237 by mkahvi) (#933)
 - Ternary operator terms could be broken by negative signs
+- Maximum Wound Points were half of what they should be (!247 by mkahvi) (#1009)
 
 ### API
 

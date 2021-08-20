@@ -52,6 +52,9 @@
         </select>
       </div>
 
+      {{!-- Item Size --}}
+      {{> "systems/pf1/templates/items/parts/item-size.hbs"}}
+
       {{#if isGM}}
       <label class="checkbox">
         <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}

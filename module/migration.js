@@ -157,6 +157,7 @@ const _migrateWorldSettings = async function () {
  * Return an Object of updateData to be applied
  *
  * @param {Actor} actor   The actor data to derive an update from
+ * @param token
  * @returns {object}       The updateData to apply
  */
 export const migrateActorData = function (actor, token) {
@@ -226,7 +227,7 @@ export const migrateItemData = function (item) {
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
   _migrateEquipmentCategories(item, updateData);
-  _migrateWeaponSize(item, updateData);
+  _migrateItemSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
   _migrateSavingThrowTypes(item, updateData);
@@ -602,11 +603,21 @@ const _migrateEquipmentCategories = function (ent, updateData) {
   updateData["data.armor.-=type"] = null;
 };
 
-const _migrateWeaponSize = function (ent, updateData) {
-  if (ent.type !== "weapon") return;
-
-  if (!getProperty(ent, "data.weaponData.size")) {
-    updateData["data.weaponData.size"] = "med";
+const _migrateItemSize = function (ent, updateData, linked) {
+  // Convert custom sizing in weapons
+  if (ent.type === "weapon") {
+    const wdSize = getProperty(ent, "data.weaponData.size");
+    if (wdSize) {
+      // Move old
+      updateData["data.size"] = wdSize;
+      updateData["data.weaponData.-=size"] = null;
+      return;
+    }
+  }
+  // Convert any other instances
+  if (!getProperty(ent, "data.size")) {
+    // Fill in missing
+    updateData["data.size"] = "med";
   }
 };
 
@@ -972,6 +983,10 @@ const _migrateActorConditions = function (ent, updateData) {
 /**
  * Migrate abnormal skill rank values to 0.
  * Primarily changing nulls to 0 to match new actors.
+ *
+ * @param ent
+ * @param updateData
+ * @param linked
  */
 const _migrateActorSkillRanks = function (ent, updateData, linked) {
   const skills = getProperty(ent, "data.skills");

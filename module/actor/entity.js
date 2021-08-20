@@ -424,6 +424,21 @@ export class ActorPF extends Actor {
           setProperty(this.data, `data.traits.${prof}.total`, [...proficiencies]);
           setProperty(this.data, `data.traits.${prof}.customTotal`, customProficiencies.join(";"));
         }
+
+        // Add .total getter for languages
+        if (this.data.data.traits.languages.total === undefined) {
+          Object.defineProperty(this.data.data.traits.languages, "total", {
+            get: function () {
+              return [
+                ...this.value,
+                ...this.custom
+                  .split(";")
+                  .map((l) => l?.trim())
+                  .filter((l) => !!l),
+              ];
+            },
+          });
+        }
       }
     }
 

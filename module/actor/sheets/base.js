@@ -1949,12 +1949,43 @@ export class ActorSheetPF extends ActorSheet {
     const header = event.currentTarget;
     const type = header.dataset.type;
     const typeName = header.dataset.typeName || header.dataset.type;
+    const baseName = `New ${typeName.capitalize()}`;
     const itemData = {
-      name: `New ${typeName.capitalize()}`,
+      name: baseName,
       type: type,
       data: duplicate(header.dataset),
     };
     delete itemData.data["type"];
+
+    const getSubtype = (d) => getProperty(d, `data.${d.type}Type`);
+    const subtype = getSubtype(itemData);
+    const sameSubgroup = (oldItem) => {
+      if (subtype) return subtype === getSubtype(oldItem.data);
+      if (type === "spell") {
+        return (
+          itemData.data.spellbook === oldItem.data.data.spellbook && itemData.data.level === oldItem.data.data.level
+        );
+      }
+      // Assume everything else is only categorized by main type
+      return true;
+    };
+
+    // Get old items of same general category
+    const oldItems = this.document.items
+      .filter((i) => i.type === type && sameSubgroup(i))
+      .sort((a, b) => a.data.sort - b.data.sort);
+
+    if (oldItems.length) {
+      // Ensure new item is at top of the list instead of seemingly random position
+      itemData.sort = oldItems[0].data.sort - 10;
+
+      // Ensure no duplicate names occur
+      let i = 2;
+      while (oldItems.find((i) => i.name === itemData.name)) {
+        itemData.name = `${baseName} (${i++})`;
+      }
+    }
+
     return this.document.createOwnedItem(itemData);
   }
 

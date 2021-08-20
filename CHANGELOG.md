@@ -19,6 +19,7 @@
 - Added separate option for distance units (!253 by mkahvi) (#705)
 - Unify style of coin and fate rolls (!254 by mkahvi) (#675)
 - Improved tooltip performance (!255 by mkahvi)
+- Append numbers to additional items created on actors (!256 by mkahvi)
 
 ### Bug Fixes
 

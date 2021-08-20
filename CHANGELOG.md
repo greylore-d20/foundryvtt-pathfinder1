@@ -18,6 +18,7 @@
 - Added change targets for Carry Strength and Carry Multiplier (!248 by mkahvi) (#812)
 - Added separate option for distance units (!253 by mkahvi) (#705)
 - Unify style of coin and fate rolls (!254 by mkahvi) (#675)
+- Improved tooltip performance (!255 by mkahvi)
 
 ### Bug Fixes
 

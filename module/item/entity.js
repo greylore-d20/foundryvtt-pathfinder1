@@ -4744,9 +4744,8 @@ export class ItemPF extends Item {
 
     // Attack bonus formula
     const bonusRoll = RollPF.safeRoll(itemData.attackBonus ?? "0");
-    if (bonusRoll.total != 0) {
-      bonusRoll.terms.forEach((t) => describePart(t.total, t.flavor, -100));
-    }
+    if (bonusRoll.total != 0)
+      describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), -100);
 
     // Masterwork or enhancement bonus
     // Only add them if there's no larger enhancement bonus from some other source

@@ -1401,7 +1401,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "untyped",
             operator: "set",
             flavor: game.i18n.localize("PF1.CondPinned"),
-            priority: -1001,
+            priority: 1001,
           })
         );
         this.flags["loseDexToAC"] = true;

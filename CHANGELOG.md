@@ -35,6 +35,7 @@
 - Closing the item deletion confirmation dialog prevented reopening it (#1005)
 - `attributes.hp.temp/nonlethal` were missing from token resources selection
 - Dice So Nice rolled twice for attack rolls (#1015)
+- Reflex saves were unaffected by the pinned condition (!239 by mkahvi) (#878)
 
 ### API
 

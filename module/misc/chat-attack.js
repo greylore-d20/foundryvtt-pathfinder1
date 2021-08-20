@@ -105,7 +105,7 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize(
+    this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive attack-notes"><label>${game.i18n.localize(
       "PF1.AttackNotes"
     )}</label><div class="flexrow">${inner}</div></div>`;
   }
@@ -123,7 +123,7 @@ export class ChatAttack {
       }
     }
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
-    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive"><label>${game.i18n.localize(
+    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive effect-notes"><label>${game.i18n.localize(
       "PF1.EffectNotes"
     )}</label><div class="flexrow">${inner}</div></div>`;
   }

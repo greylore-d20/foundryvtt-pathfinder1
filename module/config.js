@@ -1726,6 +1726,8 @@ export const PF1 = {
     mDexA: { label: "PF1.MaxDexArmor", category: "misc" },
     mDexS: { label: "PF1.MaxDexShield", category: "misc" },
     bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc" },
+    carryStr: { label: "PF1.CarryStrength", category: "misc" },
+    carryMult: { label: "PF1.CarryMultiplier", category: "misc" },
   },
 
   buffTargetCategories: {

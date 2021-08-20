@@ -185,6 +185,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorChangeRevamp(actor, updateData, linked);
   _migrateActorConditions(actor, updateData, linked);
   _migrateActorSkillRanks(actor, updateData, linked);
+  _migrateCarryBonus(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -982,5 +983,24 @@ const _migrateActorSkillRanks = function (ent, updateData, linked) {
       if (!linked && subData.rank === undefined) continue; // Unlinked with no override
       if (!Number.isFinite(subData.rank)) updateData[`data.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }
+  }
+};
+
+const _migrateCarryBonus = function (ent, updateData, linked) {
+  if (getProperty("data.details.carryCapacity.bonus.user") === undefined) {
+    let bonus = getProperty(ent, "data.abilities.str.carryBonus");
+    if (bonus !== undefined || linked) {
+      bonus = bonus || 0;
+      updateData["data.details.carryCapacity.bonus.user"] = bonus;
+    }
+    updateData["data.abilities.str.-=carryBonus"] = null;
+  }
+  if (getProperty("data.details.carryCapacity.multiplier.user") === undefined) {
+    let mult = getProperty(ent, "data.abilities.str.carryMultiplier");
+    if (mult !== undefined || linked) {
+      mult = mult || 1;
+      updateData["data.details.carryCapacity.multiplier.user"] = mult - 1;
+    }
+    updateData["data.abilities.str.-=carryMultiplier"] = null;
   }
 };

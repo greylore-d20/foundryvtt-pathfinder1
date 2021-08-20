@@ -148,6 +148,7 @@ Token.prototype.toggleEffect = async function (effect, { active, overlay = false
   return call;
 };
 
+// Compatibility override for old pf1e absolute syntax as well as foundry default
 TokenHUD.prototype._onAttributeUpdate = function (event) {
   event.preventDefault();
 
@@ -166,66 +167,25 @@ TokenHUD.prototype._onAttributeUpdate = function (event) {
     value = parseFloat(RegExp.$1);
   } else return;
 
-  let bar = input.dataset.bar;
-
-  // For attribute bar values, update the associated Actor
-  // TODO: Switch to Actor#modifyTokenAttribute
-  if (bar) {
-    if (!this.object) return;
-    const actor = this.object.actor;
-    let entity = actor;
-    const data = this.object.document.getBarAttribute(bar);
-    if (data.attribute.startsWith("resources.")) {
-      const itemTag = data.attribute.split(".").slice(-1)[0];
-      entity = actor.items.find((item) => item.data.data.tag === itemTag);
+  if (operator == "--" || operator == "-") value *= -1;
+  const bar = input.dataset.bar;
+  const actor = this.object?.actor;
+  if (bar && actor) {
+    const attr = this.object.document.getBarAttribute(bar);
+    if (isDelta || attr.attribute !== value) {
+      actor.modifyTokenAttribute(attr.attribute, value, isDelta, attr.type === "bar");
     }
-    if (!actor || !entity) return;
-    const current = getProperty(actor.data.data, data.attribute);
-    const updateData = {};
-
-    // Set to specified negative value
-    if (operator === "--" || (!isDelta && operator == "-")) {
-      if (entity instanceof Actor) {
-        updateData[`data.${data.attribute}.value`] = -value;
-      } else {
-        updateData["data.uses.value"] = -value;
-      }
-    }
-
-    // Add relative value
-    else {
-      let dt = value;
-      if (data.attribute === "attributes.hp" && actor.data.data.attributes.hp.temp > 0 && operator === "-") {
-        dt = Math.min(0, actor.data.data.attributes.hp.temp - value);
-        updateData["data.attributes.hp.temp"] = Math.max(0, actor.data.data.attributes.hp.temp - value);
-        value = actor.data.data.attributes.hp.value + dt;
-      } else if (operator === "-") {
-        if (data.attribute === "attributes.hp") value = Math.min(current.value - dt, current.max);
-        else value = Math.clamped(current.min || 0, current.value - dt, current.max);
-      } else if (operator === "+") {
-        if (data.attribute === "attributes.hp") value = Math.min(current.value + dt, current.max);
-        else value = Math.clamped(current.min || 0, current.value + dt, current.max);
-      }
-      if (entity instanceof Actor) {
-        updateData[`data.${data.attribute}.value`] = value;
-      } else {
-        updateData["data.uses.value"] = value;
-      }
-    }
-
-    entity.update(updateData);
-    this.object.document.update({ [input.name]: value });
   }
 
-  // Otherwise update the Token
-  else if (this.object) {
+  // Otherwise update the Token directly
+  else {
     if (operator === "--" || (!isDelta && operator == "-")) value = -value;
     else if (isDelta && this.object) {
-      const current = getProperty(this.object.data, input.name);
+      const current = foundry.utils.getProperty(this.object.data, input.name);
       if (operator === "-") value = current - value;
       else if (operator === "+") value = current + value;
     }
-    this.object.update({ [input.name]: value });
+    this.object.document.update({ [input.name]: value });
   }
 
   // Clear the HUD

@@ -32,6 +32,7 @@
 - Ternary operator terms could be broken by negative signs
 - Maximum Wound Points were half of what they should be (!247 by mkahvi) (#1009)
 - Closing the item deletion confirmation dialog prevented reopening it (#1005)
+- `attributes.hp.temp/nonlethal` were missing from token resources selection
 
 ### API
 

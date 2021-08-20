@@ -4086,4 +4086,50 @@ export class ActorPF extends Actor {
       this._prevAbilityScores = null;
     }
   }
+
+  /**
+   * @override
+   */
+  async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
+    let entity = this,
+      current = getProperty(this.data.data, attribute),
+      updates = {};
+    if (attribute.startsWith("resources.")) {
+      const itemTag = attribute.split(".").slice(-1)[0];
+      entity = this.items.find((item) => item.data.data.tag === itemTag);
+    }
+    if (!entity) return;
+    const updateData = {};
+
+    // Special key
+    if (attribute === "attributes.hp") {
+      if (!isDelta) value = (current.temp + current.value - value) * -1;
+      let dt = value;
+      if (current.temp > 0 && value < 0) {
+        dt = Math.min(0, current.temp + value);
+        updates["data.attributes.hp.temp"] = Math.max(0, current.temp + value);
+      }
+      updates["data.attributes.hp.value"] = Math.min(current.value + dt, current.max);
+      // Absolute
+    } else if (!isDelta) {
+      if (entity instanceof Actor) {
+        if (typeof entity[`data.${attribute}.value`] === "undefined") updates[`data.${attribute}`] = value;
+        else updates[`data.${attribute}.value`] = value;
+      } else {
+        updates["data.uses.value"] = value;
+      }
+      // Relative
+    } else {
+      if (entity instanceof Actor) {
+        if (current.value !== undefined)
+          updates[`data.${attribute}.value`] = Math.clamped(current.min || 0, current.value + value, current.max);
+        else updates[`data.${attribute}`] = current + value;
+      } else {
+        updates["data.uses.value"] = current.value + value;
+      }
+    }
+
+    const allowed = Hooks.call("modifyTokenAttribute", { attribute, value, isDelta, isBar }, updates);
+    return allowed !== false ? entity.update(updates) : this;
+  }
 }

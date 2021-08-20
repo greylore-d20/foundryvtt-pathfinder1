@@ -30,18 +30,6 @@ export async function PatchCore() {
     return _templateCache[path];
   }
 
-  // Patch TokenHUD.getData to show resource bars even if their value is 0
-  const TokenHUD_getData = TokenHUD.prototype.getData;
-  TokenHUD.prototype.getData = function () {
-    const data = TokenHUD_getData.call(this);
-    const bar1 = this.object.document.getBarAttribute("bar1");
-    const bar2 = this.object.document.getBarAttribute("bar2");
-    return mergeObject(data, {
-      displayBar1: bar1 != null && bar1.attribute != null && bar1.value != null,
-      displayBar2: bar2 != null && bar2.attribute != null && bar2.value != null,
-    });
-  };
-
   // Token patch for shared vision
   const Token__isVisionSource = Token.prototype._isVisionSource;
   Token.prototype._isVisionSource = function () {
@@ -234,6 +222,16 @@ export async function PatchCore() {
         }
       }
       return a;
+    };
+  }
+
+  // Todo: Declare this in TokenDocumentPF when/ if TokenDocument.getData calls the constructor's method
+  {
+    const origFunc = TokenDocument.getTrackedAttributes;
+    TokenDocument.getTrackedAttributes = function (data, _path = []) {
+      let attr = origFunc.call(this, data, _path);
+      if (_path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
+      return attr;
     };
   }
 }

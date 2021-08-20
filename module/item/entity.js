@@ -527,13 +527,16 @@ export class ItemPF extends Item {
     // Buff Items
     else if (itemData.type === "buff") {
       labels.buffType = C.buffTypes[data.buffType];
-      const dur = this.data.data.duration;
-      const unit = C.timePeriodsShort[dur.units];
-      if (unit && dur.value) {
-        const val = RollPF.safeTotal(dur.value, this.getRollData());
-        labels.duration = [val, unit].filterJoin(" ");
-      } else {
-        labels.duration = null;
+
+      if (this.data.data.duration) {
+        const dur = this.data.data.duration;
+        const unit = C.timePeriodsShort[dur.units];
+        if (unit && dur.value) {
+          const val = RollPF.safeTotal(dur.value, this.getRollData());
+          labels.duration = [val, unit].filterJoin(" ");
+        } else {
+          labels.duration = null;
+        }
       }
     }
 

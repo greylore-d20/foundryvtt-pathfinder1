@@ -4662,7 +4662,7 @@ export class ItemPF extends Item {
     };
 
     // Static extra attacks
-    const extraAttacks = itemData.attackParts.map((n) => n[0]?.trim()).filter((n) => n?.length > 0);
+    const extraAttacks = itemData.attackParts.map((n) => n[0]?.toString().trim()).filter((n) => n?.length > 0);
     for (let formula of extraAttacks) appendAttack(formula);
 
     // Formula-based extra attacks

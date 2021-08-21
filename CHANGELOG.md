@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.78.19
+## 0.79.1
+
+### Bug Fixes
+
+- Fix attack display doubling sometimes in combat tab (!258 by mkahvi)
+
+## 0.79.0
 
 ### Changelog
 

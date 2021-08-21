@@ -4684,11 +4684,7 @@ export class ItemPF extends Item {
         c.modifiers.forEach((cc) => {
           const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
           if (bonusRoll.total == 0) return;
-          if (cc.subTarget === "allAttack") {
-            condBonuses.forEach((_, i) => {
-              condBonuses[i] += bonusRoll.total;
-            });
-          } else if (cc.subTarget.match(/^attack\.(\d+)$/)) {
+          if (cc.subTarget?.match(/^attack\.(\d+)$/)) {
             const atk = parseInt(RegExp.$1, 10);
             if (atk in condBonuses) condBonuses[atk] += bonusRoll.total;
           }

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fix attack display doubling sometimes in combat tab (!258 by mkahvi)
+- `/damage` and `/heal` still triggered Dice So Nice to roll dice twice (#1015)
 
 ### Changelog
 

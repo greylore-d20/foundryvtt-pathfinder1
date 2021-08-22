@@ -6,6 +6,10 @@
 
 - Fix attack display doubling sometimes in combat tab (!258 by mkahvi)
 
+### Changelog
+
+- Container item deletion confirmation dialog says what is being deleted (!259 by mkahvi) (#1004)
+
 ## 0.79.0
 
 ### Changelog

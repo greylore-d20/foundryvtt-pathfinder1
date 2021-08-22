@@ -393,16 +393,19 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     } else {
       button.disabled = true;
 
+      const item = this.document.items.get(li.dataset.itemId);
+
       const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteItem"),
+        title: game.i18n.localize("PF1.DeleteItemTitle").format(item.name),
         content: msg,
         yes: () => {
           this.item.deleteContainerContent(li.dataset.itemId);
           button.disabled = false;
         },
         no: () => (button.disabled = false),
-      });
+        rejectClose: true,
+      }).then(null, () => (button.disabled = false));
     }
   }
 

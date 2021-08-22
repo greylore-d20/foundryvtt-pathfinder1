@@ -38,6 +38,7 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
+  Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 
   Handlebars.registerHelper("itemRange", (item, rollData) => {
     // ItemPF.range is not accessible here and is thus largely duplicated here

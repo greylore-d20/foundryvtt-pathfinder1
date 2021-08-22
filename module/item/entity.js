@@ -206,6 +206,20 @@ export class ItemPF extends Item {
     }
   }
 
+  get minRange() {
+    const rng = this.data.data.range;
+    if (rng.minUnits !== "" && rng.minValue !== null) {
+      const rollData = this.getRollData();
+      const formula = { melee: "@range.melee", reach: "@range.reach" }[rng.minUnits] ?? (rng.minValue || "0");
+      return convertDistance(RollPF.safeRoll(formula, rollData).total)[0];
+    }
+    return 0;
+  }
+
+  get maxRange() {
+    return this.data.data.range.maxIncrements * this.range;
+  }
+
   get parentActor() {
     if (this.parent) return this.parent;
 

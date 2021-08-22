@@ -231,9 +231,17 @@
               {{/if}}
             </div>
 
-            <div class="item-detail item-range">
+            <div class="item-detail item-range tooltip">
               {{#if item.hasRange}}
-              <label>{{itemRange item ../../rollData}}</label>
+              <label>{{itemRange item @root.rollData}}</label>
+                {{#if (or (gt item.data.range.maxIncrements 1) (ne item.data.range.minUnits ""))}}
+                <span class="tooltipcontent">
+                  {{localize "PF1.MaximumRangeIncrements"}}: {{item.data.range.maxIncrements}}<br>
+                  <br>
+                  {{localize "PF1.Range"}}:
+                  {{item.document.minRange}} {{distanceUnit "ft"}} – {{item.document.maxRange}} {{distanceUnit item.data.range.units}}
+                </span>
+                {{/if}}
               {{/if}}
             </div>
 

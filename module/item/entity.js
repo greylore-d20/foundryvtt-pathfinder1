@@ -4727,8 +4727,8 @@ export class ItemPF extends Item {
       srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
     } else {
       srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
-      srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
     }
+    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
 
     const changeSources = ["attack"];
     if (isRanged) changeSources.push("rattack");

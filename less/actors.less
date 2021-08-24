@@ -1,5 +1,8 @@
 @import "./variables.less";
 .pf1.sheet.actor {
+  min-width: 672px;
+  min-height: 736px;
+
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
@@ -90,20 +93,6 @@
 
         .race-info {
           margin-left: 8px;
-        }
-      }
-
-      .hp-ability {
-        flex: 1;
-        justify-content: flex-end;
-
-        > label {
-          flex: 0;
-          margin-right: 4px;
-        }
-
-        > select {
-          flex: 0 0 96px;
         }
       }
     }
@@ -619,55 +608,6 @@
 
     li.sub-skill .skill-name input[type="text"] {
       padding-left: 8px;
-    }
-  }
-
-  /* ----------------------------------------- */
-  /*  Statuses                                 */
-  /* ----------------------------------------- */
-
-  .counters {
-    flex: 0 0 100%;
-    border-bottom: @borderGroove;
-    margin-bottom: 5px;
-
-    .counter {
-      padding: 0 3px;
-      line-height: 32px;
-
-      h4 {
-        flex: auto;
-        margin: 0;
-        .nodesto();
-        font-size: 16px;
-      }
-
-      .counter-value {
-        flex: 0 0 50px;
-        text-align: right;
-        > * {
-          display: inline;
-        }
-      }
-
-      input[type="text"] {
-        height: 20px;
-        max-width: 20px;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-      }
-
-      input[type="checkbox"] {
-        position: relative;
-        margin: 0;
-        top: 6px;
-      }
-
-      span.sep {
-        margin: 0 -2px;
-        font-size: 14px;
-      }
     }
   }
 

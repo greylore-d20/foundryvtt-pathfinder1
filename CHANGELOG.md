@@ -8,6 +8,7 @@
 - `/damage` and `/heal` still triggered Dice So Nice to roll dice twice (#1015)
 - Proficiency penalty was incorrect when rolling (!260 by mkahvi)
 - Wound thresholds were ignoring temp HP (!264 by mkahvi) (#1032)
+- Skill lock button was invisible on NPC sheets (!268 by mkahvi) (#1036)
 
 ### Changelog
 

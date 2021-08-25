@@ -3044,11 +3044,11 @@ export class ActorPF extends Actor {
       return;
     }
     const curHP = getProperty(this.data, "data.attributes.hp.value"),
+      tempHP = getProperty(this.data, "data.attributes.hp.temp") || 0,
       maxHP = getProperty(this.data, "data.attributes.hp.max");
 
-    let level = usage > 0 ? Math.min(3, 4 - Math.ceil((curHP / maxHP) * 4)) : 0;
-    if (Number.isNaN(level)) level = 0; // BUG: This shouldn't happen, but it does.
-    level = Math.max(0, level);
+    let level = usage > 0 ? Math.clamped(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
+    if (Number.isNaN(level)) level = 0; // Division by 0 due to max HP on new actors.
 
     const wtMult = this.getWoundThresholdMultiplier();
     const wtMod = getProperty(this.data, "data.attributes.woundThresholds.mod") ?? 0;

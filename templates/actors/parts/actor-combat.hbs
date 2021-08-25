@@ -57,9 +57,9 @@
             + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
             + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
             + @attributes.attack.melee : {{data.attributes.attack.melee}}<br/>
-            + @abilities.{{data.attributes.attack.meleeAbility}}.mod : {{data.attributes.attack.meleeAttackMod}}
-
-            <br/><br/>{{localize "PF1.FromSources"}}<br/>
+            + @abilities.{{data.attributes.attack.meleeAbility}}.mod : {{data.attributes.attack.meleeAttackMod}}<br/>
+            {{#if (ne @root.data.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.data.traits.size }}<br/>{{/if}}
+            <br/>{{localize "PF1.FromSources"}}<br/>
             {{#if sourceDetails.data.attributes.attack.shared.length}}
             {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
@@ -82,9 +82,9 @@
             + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
             + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
             + @attributes.attack.ranged : {{data.attributes.attack.ranged}}<br/>
-            + @abilities.{{data.attributes.attack.rangedAbility}}.mod : {{data.attributes.attack.rangedAttackMod}}
-
-            <br/><br/>{{localize "PF1.FromSources"}}<br/>
+            + @abilities.{{data.attributes.attack.rangedAbility}}.mod : {{data.attributes.attack.rangedAttackMod}}<br/>
+            {{#if (ne @root.data.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.data.traits.size }}<br/>{{/if}}
+            <br/>{{localize "PF1.FromSources"}}<br/>
             {{#if sourceDetails.data.attributes.attack.shared.length}}
             {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}

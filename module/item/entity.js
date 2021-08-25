@@ -4791,4 +4791,43 @@ export class ItemPF extends Item {
 
     return sources.sort((a, b) => b.sort - a.sort);
   }
+
+  /**
+   * Generic damage source retrieval
+   */
+  get damageSources() {
+    const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
+    const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
+    const highest = getHighestChanges(changes, { ignoreTarget: true });
+    return highest;
+  }
+
+  /**
+   * Generic damage source retrieval, includes default conditionals
+   */
+  get allDamageSources() {
+    const conds = this.data.data.conditionals
+      .filter((c) => c.default)
+      .filter((c) => c.modifiers.find((m) => m.target === "damage"));
+    const rollData = this.getRollData();
+
+    const mods = Object.keys(CONFIG.PF1.bonusModifiers);
+
+    // Turn relevant conditionals into structure accepted by getHighestChanges
+    const fakeCondChanges = [];
+    for (let c of conds) {
+      for (let m of c.modifiers) {
+        if (m.target !== "damage") continue;
+        const roll = RollPF.safeRoll(m.formula, rollData);
+        if (roll.err) continue;
+        fakeCondChanges.push({
+          flavor: c.name,
+          value: roll.total,
+          modifier: mods.includes(m.type) ? m.type : "untyped",
+          formula: m.formula,
+        });
+      }
+    }
+    return getHighestChanges([...this.damageSources, ...fakeCondChanges], { ignoreTarget: true });
+  }
 }

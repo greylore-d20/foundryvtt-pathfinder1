@@ -118,25 +118,12 @@ export const registerHandlebarsHelpers = function () {
     const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (itemData.ability.damageMult || 1));
     if (dmgAblMod != 0) rv.push(dmgAblMod);
 
-    // Include enhancement bonus
-    const enhBonus = item.data.enh ?? 0;
-    if (enhBonus != 0) rv.push(enhBonus);
-
     // Include damage parts that don't happen on crits
     handleParts(itemData.damage.nonCritParts);
 
-    // Include conditional damage that is enabled by default
-    itemData.conditionals
-      .filter((c) => c.default)
-      .reduce((all, m) => {
-        all.push(...m.modifiers.filter((m) => m.target === "damage" && m.subTarget === "allDamage"));
-        return all;
-      }, [])
-      .forEach((m) => {
-        const [roll, formula] = reduceFormula(m.formula);
-        if (roll.total == 0) return;
-        rv.push(formula);
-      });
+    // Include general sources. Item enhancement bonus is among these.
+    const sources = item.document.allDamageSources;
+    for (let s of sources) rv.push(s.value);
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 
@@ -152,6 +139,13 @@ export const registerHandlebarsHelpers = function () {
     const attacks = item.document.attackArray;
     const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
     return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
+  });
+
+  /**
+   * Returns true if there are conditionals disabled by default.
+   */
+  Handlebars.registerHelper("optionalConditionals", (item) => {
+    return item.data.conditionals.find((c) => !c.default);
   });
 
   // Fetches ability mod value based on ability key.

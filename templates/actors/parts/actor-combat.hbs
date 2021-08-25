@@ -218,14 +218,15 @@
                 {{#if item.data.ability.damage}}
                   {{abilityMod item.data.ability.damage ../../rollData item.data.ability.damageMult}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
                 {{/if}}
-                {{#if item.data.enh}}
-                  {{item.data.enh}} [{{localize "PF1.EnhancementBonus"}}]<br/>
+                {{#each item.document.allDamageSources}}
+                  {{#if @first}}<br>{{/if}}
+                  {{flavor}} : {{value}} [{{lookup @root.config.bonusModifiers modifier}}]<br>
+                {{/each}}
+                {{#if (optionalConditionals item)}}
+                  <br/>+ {{localize "PF1.Conditionals"}}<br/>
                 {{/if}}
                 {{#if item.data.damage.critParts}}
                   <br/>+ {{localize "PF1.CritDamageBonusFormula"}}<br/>
-                {{/if}}
-                {{#if item.data.conditionals}}
-                  <br/>+ {{localize "PF1.Conditionals"}}<br/>
                 {{/if}}
               </span>
               {{/if}}

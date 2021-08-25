@@ -11,6 +11,7 @@
 ### Changelog
 
 - Container item deletion confirmation dialog says what is being deleted (!259 by mkahvi) (#1004)
+- Add conditionals and buffs to damage preview on actor sheets (!262 by mkahvi)
 
 ## 0.79.0
 

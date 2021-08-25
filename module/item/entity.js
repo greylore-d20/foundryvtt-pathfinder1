@@ -2631,6 +2631,9 @@ export class ItemPF extends Item {
 
         setProperty(chatData, "flags.pf1.metadata", metadata);
         setProperty(chatData, "flags.core.canPopout", true);
+
+        Hooks.call("itemUse", this, "postAttack", { ev, skipDialog, chatData, templateData });
+
         // Create message
         const t = game.settings.get("pf1", "attackChatCardTemplate");
         if (chatMessage) result = await createCustomChatMessage(t, templateData, chatData);

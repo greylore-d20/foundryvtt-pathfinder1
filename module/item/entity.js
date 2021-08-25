@@ -4707,6 +4707,7 @@ export class ItemPF extends Item {
       itemData = this.data.data;
 
     if (!actorData) return sources;
+    const rollData = this.getRollData();
 
     const describePart = (value, label, sort = 0) => {
       sources.push({ value, label, sort });
@@ -4739,7 +4740,7 @@ export class ItemPF extends Item {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRoll(itemData.attackBonus ?? "0");
+    const bonusRoll = RollPF.safeRoll(itemData.attackBonus ?? "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), -100);
 
@@ -4762,7 +4763,7 @@ export class ItemPF extends Item {
 
     // Add proficiency penalty
     if (!itemData.proficient) {
-      describePart(this.proficiencyPenalty, game.i18n.localize("PF1.ProficiencyPenalty"), -500);
+      describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), -500);
     }
 
     // Broken condition
@@ -4776,7 +4777,6 @@ export class ItemPF extends Item {
     }
 
     // Conditional modifiers
-    const rollData = this.getRollData();
     itemData.conditionals
       .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
       .forEach((c) => {

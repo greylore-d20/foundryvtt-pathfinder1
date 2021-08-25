@@ -4,8 +4,9 @@
 
 ### Bug Fixes
 
-- Fix attack display doubling sometimes in combat tab (!258 by mkahvi)
+- Attack display doubling sometimes in combat tab (!258 by mkahvi)
 - `/damage` and `/heal` still triggered Dice So Nice to roll dice twice (#1015)
+- Proficiency penalty was incorrect when rolling (!260 by mkahvi)
 
 ### Changelog
 

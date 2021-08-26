@@ -30,6 +30,8 @@
         {{src.name}}: {{src.value}}<br/>
         {{/each}}
         {{/if}}
+
+        {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "skill." s ".subSkills." b)}}
       </span>
       <div class="rollable"><img src="icons/dice/d20black.svg"></div>
       <input type="text" name="data.skills.{{s}}.subSkills.{{b}}.name" value="{{subSkill.name}}" placeholder="{{localize "PF1.SkillName"}}"/>
@@ -72,6 +74,8 @@
         {{src.name}}: {{src.value}}<br/>
         {{/each}}
         {{/if}}
+
+        {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "skill." s)}}
       </span>
       <div class="rollable"><img src="icons/dice/d20black.svg"></div>
       {{#if skill.custom}}

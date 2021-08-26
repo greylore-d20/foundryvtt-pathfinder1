@@ -22,6 +22,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/actors/parts/actor-attributes.hbs",
     "systems/pf1/templates/actors/parts/actor-settings.hbs",
     "systems/pf1/templates/actors/parts/actor-cmb.hbs",
+    "systems/pf1/templates/actors/parts/actor-contextNotes.hbs",
 
     "systems/pf1/templates/internal/item-search.hbs",
 

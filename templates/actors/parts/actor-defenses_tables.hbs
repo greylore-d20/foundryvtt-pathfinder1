@@ -14,6 +14,8 @@
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
                 {{/if}}
+
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.ac"}}
                 </div>
 
                 {{ac.label}}
@@ -29,6 +31,8 @@
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
                 {{/if}}
+
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.cmd"}}
                 </div>
 
                 {{localize "PF1.CMDAbbr"}}
@@ -80,6 +84,7 @@
                 {{src.name}}: {{src.value}}<br/>
                 {{/each}}
                 {{/if}}
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "savingThrow." id)}}
                 </div>
 
                 <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
@@ -95,6 +100,8 @@
                     {{src.name}}: {{src.value}}<br/>
                   {{/each}}
                 {{/if}}
+
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.sr"}}
                 </div>
 
                 {{localize "PF1.SpellResistance"}}

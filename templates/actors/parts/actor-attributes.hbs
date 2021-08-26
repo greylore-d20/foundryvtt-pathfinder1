@@ -38,6 +38,8 @@
                         {{#each mod as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                         {{/if}}
                         {{/with}}
+
+                        {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "abilityChecks." id)}}
                     </span>
 
                     <a class="ability-name rollable">

@@ -415,6 +415,8 @@
                   <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                   {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
+
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
               </span>
               {{data.attributes.init.total}}
             </td>

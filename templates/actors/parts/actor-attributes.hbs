@@ -84,6 +84,15 @@
                     <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                     {{#each sourceDetails.data.attributes.acp.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                     {{/if}}
+
+                    {{#if sourceDetails.data.attributes.acp.armorBonus.length}}
+                    <br/>{{localize "PF1.EquipTypeArmor"}}:<br/>
+                    {{#each sourceDetails.data.attributes.acp.armorBonus as |src|}}{{src.name}}: {{numberFormat src.value decimals=0 sign=true}}<br/>{{/each}}
+                    {{/if}}
+                    {{#if sourceDetails.data.attributes.acp.shieldBonus.length}}
+                    <br/>{{localize "PF1.EquipTypeShield"}}:<br/>
+                    {{#each sourceDetails.data.attributes.acp.shieldBonus as |src|}}{{src.name}}: {{numberFormat src.value decimals=0 sign=true}}<br/>{{/each}}
+                    {{/if}}
                 </div>
             </th>
             <th class="tooltip">
@@ -94,6 +103,15 @@
                     {{#if sourceDetails.data.attributes.maxDexBonus.length}}
                     <br/><br/>{{localize "PF1.FromSources"}}:<br/>
                     {{#each sourceDetails.data.attributes.maxDexBonus as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                    {{/if}}
+
+                    {{#if sourceDetails.data.attributes.mDex.armorBonus.length}}
+                    <br/>{{localize "PF1.EquipTypeArmor"}}:<br/>
+                    {{#each sourceDetails.data.attributes.mDex.armorBonus as |src|}}{{src.name}}: {{numberFormat src.value decimals=0 sign=true}}<br/>{{/each}}
+                    {{/if}}
+                    {{#if sourceDetails.data.attributes.mDex.shieldBonus.length}}
+                    <br/>{{localize "PF1.EquipTypeShield"}}:<br/>
+                    {{#each sourceDetails.data.attributes.mDex.shieldBonus as |src|}}{{src.name}}: {{numberFormat src.value decimals=0 sign=true}}<br/>{{/each}}
                     {{/if}}
                 </div>
             </th>

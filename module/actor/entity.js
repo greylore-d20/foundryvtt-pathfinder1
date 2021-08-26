@@ -1258,6 +1258,7 @@ export class ActorPF extends Actor {
 
     let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
     const acp = { armor: 0, shield: 0 };
+    const broken = { armor: { value: 0, item: null }, shield: { value: 0, item: null } };
     const mdex = { armor: null, shield: null };
 
     this.data.items
@@ -1273,18 +1274,27 @@ export class ActorPF extends Actor {
         if (isShieldOrArmor)
           itemACP = Math.max(0, itemACP + (getProperty(this.data, `data.attributes.acp.${eqType}Bonus`) ?? 0));
 
+        let brokenACP = 0;
         if (obj.data.data.broken) {
+          brokenACP = itemACP;
           itemACP *= 2;
         }
 
         if (itemACP) {
           const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.find(
-            (o) => o.name === obj.name
+            (o) => o.itemId === obj.id
           );
+
+          if (brokenACP) {
+            broken[eqType].value = brokenACP;
+            broken[eqType].item = obj;
+          }
+
           if (sInfo) sInfo.value = itemACP;
           else {
             getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
               name: obj.name,
+              itemId: obj.id,
               value: itemACP,
             });
           }
@@ -1297,25 +1307,47 @@ export class ActorPF extends Actor {
         }
 
         if (obj.data.data.armor.dex !== null && isShieldOrArmor) {
-          const mDex = Number.parseInt(obj.data.data.armor.dex);
+          const mDex = Number.parseInt(obj.data.data.armor.dex, 10);
           if (Number.isInteger(mDex)) {
-            const itemMDex = mDex + (getProperty(this.data, `data.attributes.mDex.${eqType}Bonus`) ?? 0);
+            const mod = getProperty(this.data, `data.attributes.mDex.${eqType}Bonus`) ?? 0;
+            const itemMDex = mDex + mod;
             mdex[eqType] = Math.min(itemMDex, mdex[eqType] ?? Number.POSITIVE_INFINITY);
 
             const sInfo = getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.find(
-              (o) => o.name === obj.name
+              (o) => o.itemId === obj.id
             );
-            if (sInfo) sInfo.value = itemMDex;
+            if (sInfo) sInfo.value = mDex;
             else {
               getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
                 name: obj.name,
-                value: itemMDex,
+                itemId: obj.id,
+                value: mDex,
                 ignoreNull: false,
               });
             }
           }
         }
       });
+
+    // Add Broken to sources
+    {
+      const name = game.i18n.localize("PF1.Broken");
+      for (let eqType of Object.keys(broken)) {
+        const value = broken[eqType].value;
+        if (value == 0) continue;
+        const brokenId = broken[eqType].item.id;
+        const sInfo = getSourceInfo(this.sourceInfo, `data.attributes.acp.${eqType}Bonus`).negative.find(
+          (o) => o.brokenId === brokenId
+        );
+        if (sInfo) sInfo.value = value;
+        else
+          getSourceInfo(this.sourceInfo, `data.attributes.acp.${eqType}Bonus`).negative.push({
+            name,
+            brokenId,
+            value,
+          });
+      }
+    }
 
     // Return result
     const totalACP = acp.armor + acp.shield;

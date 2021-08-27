@@ -389,7 +389,7 @@ const _migrateActorBaseStats = function (ent, updateData) {
     "data.attributes.savingThrows.will.value",
   ];
   for (let k of keys) {
-    if (k === "attributes.hp.base" && !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length)
+    if (k === "data.attributes.hp.base" && !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length)
       continue;
     if (getProperty(ent, k) != null) {
       let kList = k.split(".");

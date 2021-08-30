@@ -21,6 +21,10 @@
 
 - Added Hook `itemUse`:`postAttack` before chat message is generated (!267 by mkahvi) (#487)
 
+### Localization
+
+- Updated the German localization (thanks Nico Weichbrodt!)
+
 ## 0.79.0
 
 ### Changelog

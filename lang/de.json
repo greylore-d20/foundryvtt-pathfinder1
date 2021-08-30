@@ -60,9 +60,11 @@
   "SETTINGS.pf1HideReachMeasurementsH": "Zeige nicht die Reichweitenmessschablonen welche beim Hovern über den Schnellen Aktionen angezeigt werden",
   "SETTINGS.pf1DisplayIterativesN": "Display iteratives",
   "SETTINGS.pf1DisplayIterativesH": "Breaks down BAB display to iteratives instead of only the total bonus",
+  "SETTINGS.pf1AlternativeReachCornerRuleN": "Alternative Reichweitenregeln",
+  "SETTINGS.pf1AlternativeReachCornerRuleH": "Verbiete die äußeren Ecken bei 3m Rechweitenmessungen",
 
   "SETTINGS.pf1HealthConfigName": "TP Konfiguration",
-  "SETTINGS.pf1HealthConfigLabel": "Configure Health",
+  "SETTINGS.pf1HealthConfigLabel": "TP Konfiguration",
   "SETTINGS.pf1HealthConfigHint": "Passe die TP Berechnung für Aktoren an.",
   "SETTINGS.pf1HealthConfigTabBase": "Grundregeln",
   "SETTINGS.pf1HealthConfigTabVariant": "Alternativregeln",
@@ -109,7 +111,21 @@
   "SETTINGS.pf1UnitsN": "Einheitensystem",
   "SETTINGS.pf1UnitsL": "Einheitensystem welches in der Welt verwendet werden soll",
 
+  "SETTINGS.pf1ImperialUnits": "Imperial (feet, lbs)",
+  "SETTINGS.pf1ImperialDistanceUnits": "Imperial (feet)",
+  "SETTINGS.pf1ImperialWeightUnits": "Imperial (lbs)",
+  "SETTINGS.pf1MetricUnits": "Metrisch (meters, kg)",
+  "SETTINGS.pf1MetricDistanceUnits": "Metrisch (meter)",
+  "SETTINGS.pf1MetricWeightUnits": "Metrisch (kg)",
+
+  "SETTINGS.pf1DistanceUnitsN": "Einheitensystem für Entfernungen",
+  "SETTINGS.pf1DistanceUnitsL": "Überschreibe des Einheitensystem welches für Entfernungen benutzt wird.",
+
+  "SETTINGS.pf1WeightUnitsN": "Einheitensystem für Gewicht",
+  "SETTINGS.pf1WeightUnitsL": "Überschreibe des Einheitensystem welches für Gewicht benutzt wird.",
+
   "TOKEN.VisionLowLight": "Dämmersicht",
+  "TOKEN.VisionLowLightMultiplier": "Dämmersicht Multiplikator",
   "TOKEN.VisionDarkvision": "Dunkelsicht",
 
   "PF1.ExperienceConfigName": "Erfahrungseinstellungen",
@@ -160,14 +176,14 @@
   "PF1.TooltipWorldConfigHideActorName_Hint": "Hide Actor names from all players",
   "PF1.TooltipWorldConfigHideActorNameReplacement": "Hidden Replacement Name",
 
-  "PF1.LevelUpForm_Title": "Level up {className}",
+  "PF1.LevelUpForm_Title": "Stufenaufstieg {className}",
   "PF1.LevelUpForm_Health": "Trefferpunkte",
   "PF1.LevelUpForm_Health_Roll": "Würfeln",
   "PF1.LevelUpForm_Health_Manual": "Manuell",
   "PF1.LevelUp": {
     "Label": "Stufenaufstieg",
     "Chat": {
-      "Header": "Level Up Report",
+      "Header": "Stufenaufstiegszusammenfassung",
       "Health": {
         "Header": "Trefferpunkte",
         "Roll": "Erwürfelte TP: {add}",
@@ -202,17 +218,15 @@
 
   "PF1.RollsForInitiative": "{0} würfelt Initiative!",
 
+  "PF1.Take10": "Nimm 10",
+  "PF1.Take20": "Nimm 20",
+
   "PF1.Flags": "Flags",
   "PF1.FlagsInstructions": "Konfiguration der Charakterfähigkeiten und -eigenschaften die das Verhalten des PF1-Systems fein abstimmen.",
   "PF1.FlagsTitle": "Konfiguriere Spezielle Fähigkeiten",
   "PF1.FlagsSave": "Update Spezielle Fähigkeiten",
   "PF1.FlagsBoolean": "Boolsche Flags",
   "PF1.FlagsDictionary": "Dictionary Flags",
-  "PF1.AdvancedInfo": {
-    "Flags": {
-      "InfoBox": "Flags können von Modulen und Makros verwendet werden, sie tuen nichts von selbst."
-    }
-  },
 
   "PF1.AbilityDamage": "Attributsschaden",
   "PF1.AbilityDrain": "Attributsentzug",
@@ -254,6 +268,13 @@
   "PF1.AbilityWis": "Weisheit",
   "PF1.AbilityCha": "Charisma",
 
+  "PF1.AbilityStrMod": "Stärkemodifikator",
+  "PF1.AbilityDexMod": "Geschicklichkeitsmodifikator",
+  "PF1.AbilityConMod": "Konstitutionsmodifikator",
+  "PF1.AbilityIntMod": "Intelligenzmodifikator",
+  "PF1.AbilityWisMod": "Weisheitsmodifikator",
+  "PF1.AbilityChaMod": "Charismamodifikator",
+
   "PF1.AbilityShortStr": "ST",
   "PF1.AbilityShortDex": "GE",
   "PF1.AbilityShortCon": "KO",
@@ -293,15 +314,16 @@
   "PF1.CondParalyzed": "Gelähmt",
   "PF1.CondPinned": "im Haltegriff",
   "PF1.CondProne": "Liegend",
-  "PF1.CondFear": "Angst (alle)",
+  "PF1.CondFear": "Angst (Erschüttert, Verängstigt, In Panik)",
   "PF1.CondShaken": "Erschüttert",
   "PF1.CondFrightened": "Verängstigt",
   "PF1.CondPanicked": "In Panik",
   "PF1.CondSickened": "Kränkelnd",
   "PF1.CondStaggered": "Wankend",
   "PF1.CondStunned": "Betäubt",
-  "PF1.CondNauseated": "Nauseated",
+  "PF1.CondNauseated": "Übelkeit",
   "PF1.CondDazed": "Benommen",
+  "PF1.CondSleep": "Schlaf",
 
   "PF1.CondTypeBleed": "Blutend",
   "PF1.CondTypeBlind": "Blindheit",
@@ -309,7 +331,7 @@
   "PF1.CondTypeDaze": "Benommen",
   "PF1.CondTypeDazzle": "Blenden",
   "PF1.CondTypeDeaf": "Taub",
-  "PF1.CondTypeDisease": "Übelkeit",
+  "PF1.CondTypeDisease": "Krankheit",
   "PF1.CondTypeEnergyDrain": "Energieentzug",
   "PF1.CondTypeFatigue": "Erschöpfung",
   "PF1.CondTypeFear": "Angst",
@@ -370,6 +392,14 @@
   "PF1.CurrencyGP": "GM",
   "PF1.CurrencySP": "SM",
   "PF1.CurrencyCP": "KM",
+  "PF1.CurrencySend": "Geld transferieren",
+  "PF1.CurrencyPlatinumP": "Platinmünzen",
+  "PF1.CurrencyGoldP": "Goldmünzen",
+  "PF1.CurrencySilverP": "Silvermünzen",
+  "PF1.CurrencyCopperP": "Kupfermünzen",
+  "PF1.CurrencyFailed": "Geldtransfer fehlgeschlagen: ",
+  "PF1.CurrencyGMRequired": "Ein GM muss den Transfer beenden.",
+  "PF1.CurrencyInsufficient": "Nicht genug Geld.",
 
   "PF1.DistPersonal": "Persönlich",
   "PF1.DistTouch": "Berührung",
@@ -394,7 +424,7 @@
   "PF1.ItemContainerContents": "Inhalt",
   "PF1.ItemContainerCapacity": "Kapazität",
   "PF1.ItemContainerCapacityItems": "Gegenstände",
-  "PF1.ItemContainerCapacityType": "Kapazitäts Typ",
+  "PF1.ItemContainerCapacityType": "Kapazitäts-Typ",
   "PF1.ItemContainerCapacityWeight": "Gewicht",
   "PF1.ItemContainerDetails": "Behälter Details",
   "PF1.ItemContainerHeader": "Behälter",
@@ -429,6 +459,8 @@
   "PF1.BuffTarACArmor": "Rüstung",
   "PF1.BuffTarACShield": "Schild",
   "PF1.BuffTarACNatural": "Natürliche Rüstung",
+  "PF1.BuffTarACTouch": "Berührung",
+  "PF1.BuffTarACFlatFooted": "AdfF",
   "PF1.BuffTarStrSkills": "Stärke Fertigkeiten",
   "PF1.BuffTarDexSkills": "Geschicklichkeit Fertigkeiten",
   "PF1.BuffTarConSkills": "Konstitution Fertigkeiten",
@@ -445,6 +477,14 @@
   "PF1.BuffTarChaChecks": "Charisma Proben",
   "PF1.BuffTarBonusSkillRanks": "Bonusfertigkeitsränge",
   "PF1.BuffTarBonusFeats": "Bonustalente",
+  "PF1.BuffTarAllAttackRolls": "Alle Angriffswürfe",
+  "PF1.BuffTarAllDamageRolls": "Alle Schadenswürfe",
+  "PF1.BuffTarAllSavingThrows": "Alle Rettungswürfe",
+  "PF1.BuffTarAllSkills": "Alle Fertigkeiten",
+  "PF1.BuffTarAllAbilityChecks": "Alle Attributswürfe",
+  "PF1.BuffTarAllSpeeds": "Alle Geschwindigkeiten",
+  "PF1.BuffTarMeleeAttack": "Nahkampfangriffswürfe",
+  "PF1.BuffTarRangedAttack": "Fernkampfangriffswürfe",
 
   "PF1.BuffTarSpells": "Zauber",
   "PF1.SpellBuffEffect": "Effekt",
@@ -504,8 +544,11 @@
 
   "PF1.TimeInst": "Sofort",
   "PF1.TimeTurn": "Züge",
+  "PF1.TimeTurnShort": "Züge",
   "PF1.TimeRound": "Runden",
+  "PF1.TimeRoundShort": "Runden",
   "PF1.TimeMinute": "Minuten",
+  "PF1.TimeMinuteShort": "min",
   "PF1.TimeHour": "Stunden",
   "PF1.TimeDay": "Tage",
   "PF1.TimeMonth": "Monate",
@@ -519,6 +562,11 @@
   "PF1.SpellPrepPrepared": "Vorbereitet",
   "PF1.SpellPrepSpontaneous": "Spontan",
 
+  "PF1.SpellsKnown": "Bekannte Zauber",
+
+  "PF1.Arcanist": "Arkanist",
+  "PF1.RedMantisAssassin": "Assassine der Roten Mantis",
+
   "PF1.SpellComponentVerbal": "Verbal",
   "PF1.SpellComponentSomatic": "Gesten",
   "PF1.SpellComponentMaterial": "Material",
@@ -528,6 +576,18 @@
   "PF1.SpellComponentDivineFocusAlone": "GF",
   "PF1.SpellComponentDivineFocusMaterial": "M/GF",
   "PF1.SpellComponentDivineFocusFocus": "F/GF",
+
+  "PF1.AutoSpellClassLevelOffset": {
+    "Formula": "Class Level Modification",
+    "InfoBox": "If you have a prestige class that alters your class level, add that here (e.g. @classes.mysticTheurge.level)"
+  },
+
+  "PF1.LearnMoreSpell": "Du kannst einen weiteren Zauber lernen",
+  "PF1.LearnMoreSpells": "Du kannst {quantity} weitere Zauber lernen",
+  "PF1.PrepareMoreSpell": "Du kannst noch einen Zauber vorbereiten",
+  "PF1.PrepareMoreSpells": "Du kannst noch {quantity} Zauber vorbereiten",
+  "PF1.SpellScoreTooLow": "Dein Attributswert ist nicht hoch genug um Zauber dieses Grades wirken zu können",
+  "PF1.TooManySpells": "Du hast {quantity} Zauber zu viel",
 
   "PF1.MeasureTemplateCone": "Kegel",
   "PF1.MeasureTemplateCircle": "Kreis",
@@ -641,6 +701,8 @@
   "PF1.ActivationTypeMinute": "Minute",
   "PF1.ActivationTypeHour": "Stunde",
   "PF1.ActivationTypeSpecial": "Speziell",
+  "PF1.ActivationTypeNonaction": "Nonaction",
+  "PF1.ActivationTypeAoO": "Gelegenheitsangriff",
   "PF1.ActivationTypeReaction": "Reaktion",
   "PF1.ActivationTypeAction": "Aktion",
 
@@ -726,6 +788,8 @@
   "PF1.ChangeFlagMediumArmorFullSpeed": "Bewegungsrate in Mittlerer Rüstung",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "Bewegungsrate in Schwerer Rüstung",
 
+  "PF1.Undefined": "Undefiniert",
+
   "PF1.ErrorGenericPermission": "Du hast keine Rechte diese Aktion auszuführen",
   "PF1.ErrorNoActorPermission": "Du hast keine Rechte den Aktor zu kontrollieren",
   "PF1.ErrorNoActorPermissionAlt": "Du hast keine Rechte den Aktor '{0}' zu kontrollieren",
@@ -741,6 +805,8 @@
   "PF1.ErrorActorNotFound": "Aktor mit ID {0} nicht gefunden",
   "PF1.ErrorCantIdentify": "Du bist nicht befugt Gegenstände zu identifizieren",
   "PF1.ErrorNoApplicableActorFoundForAction": "Kein passender Aktor für Aktion '{0}' gefunden",
+  "PF1.ErrorFeatDisabled": "Dieses Talent ist deaktiviert",
+  "PF1.ErrorNoMacroID": "Kein Makro mit ID '{id}' gefunden",
   "PF1.ErrorCouldNotFindActorByName": "Kein Aktor mit Namen '{0}' gefunden",
   "PF1.WarningNoSizeDie": "Konnte {0} nicht auf die gewünsche Größe anpassen, würfle stattdessen {1}",
   "PF1.WarningNoDiceAllowedInFormula": "In Formel '{0}' für {1} sind keine Würfelwürfe erlaubt",
@@ -786,6 +852,7 @@
   "PF1.BrowseFeats": "Fähigkeiten durchsuchen",
   "PF1.BrowseClasses": "Klassen durchsuchen",
   "PF1.BrowseRaces": "Völker durchsuchen",
+  "PF1.BrowseBuffs": "Buffs durchsuchen",
 
   "PF1.LanguageAboleth": "Abolethisch",
   "PF1.LanguageAbyssal": "Abyssisch",
@@ -892,6 +959,7 @@
   "PF1.RollCLMacroName": "{0}: Roll Caster Level ({1})",
   "PF1.RollConcentrationMacroName": "{0}: Roll Concentration ({1})",
   "PF1.RollBABMacroName": "{0}: Roll Base Attack Bonus",
+  "PF1.RollSaveMacroName": "{0}: Roll {1} Save",
 
   "PF1.DamageTypeBludgeoning": "Wucht",
   "PF1.DamageTypePiercing": "Stich",
@@ -934,6 +1002,36 @@
 
   "PF1.CombatInfo_Header": "Kampf",
   "PF1.CombatInfo_Round": "Runde {0}",
+
+  "PF1.ScriptCalls": {
+    "Name": "Script Calls",
+    "NewName": "Neuer Script Call",
+
+    "Use": {
+      "Name": "Benutzen",
+      "Info": "Wird aufgerufen, wenn das Item 'benutzt' wird (Angriff, Trank trinken, etc.). Hat die zusätzliche Variable `attacks`, welche alle Angriffswürfe der Aktion enthält (falls sie welche hat)."
+    },
+
+    "Equip": {
+      "Name": "Ausrüsten",
+      "Info": "Wird aufgerufen, wenn das Item ausgerüstet oder abgelegt wird. Hat die zusätzliche Variable `equipped`, welche entweder `true` oder `false` ist."
+    },
+
+    "Toggle": {
+      "Name": "Umschalten",
+      "Info": "Wird aufgerufen, wenn das Item ein- oder ausgeschaltet wird.  Hat die zusätzliche Variable `state`, welche entweder `true` oder `false` ist."
+    },
+
+    "ChangeQuantity": {
+      "Name": "Mengenänderung",
+      "Info": "Wird aufgerufen, wenn sich die Menge des Items ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+    },
+
+    "ChangeLevel": {
+      "Name": "Stufenänderung",
+      "Info": "Wird aufgerufen, wenn sich die Stufe des Items ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+    }
+  },
 
   "PF1.AddClass": "Klasse hinzufügen",
   "PF1.Horizontal": "Horizontal",
@@ -986,7 +1084,8 @@
   "PF1.MinimumDamage": "Minimalschaden",
   "PF1.Drain": "Entzug",
   "PF1.Penalty": "Malus",
-  "PF1.Defenses": "Verteidigung",
+  "PF1.Defense": "Verteidigung",
+  "PF1.Defenses": "Verteidigungen",
   "PF1.Description": "Beschreibung",
   "PF1.Details": "Details",
   "PF1.Edit": "Bearbeiten",
@@ -996,6 +1095,7 @@
   "PF1.NotEquipped": "Nicht ausgerüstet",
   "PF1.Carried": "Getragen",
   "PF1.Identified": "Identifiziert",
+  "PF1.Iterative": "Iterativ",
   "PF1.Unidentified": "Unidentifiziert",
   "PF1.Exhaustion": "Erschöpfung",
   "PF1.FlyManeuverability": "Flugmanöverfähigkeit",
@@ -1019,7 +1119,9 @@
   "PF1.LevelDrain": " Stufenentzug",
   "PF1.None": "Keine",
   "PF1.Notes": "Notizen",
-  "PF1.Proficiency": "Geübt",
+  "PF1.Operator": "Operator",
+  "PF1.Proficiency": "Geübtheit",
+  "PF1.ProficiencyPenalty": "Geübtheitsmalus",
   "PF1.Quadruped": "Vierbeiner",
   "PF1.ResourcePrimary": "Resource 1",
   "PF1.ResourceSecondary": "Resource 2",
@@ -1027,6 +1129,7 @@
   "PF1.Senses": "Sinne",
   "PF1.Save": "Speichern",
   "PF1.Size": "Größenkategorie",
+  "PF1.Resizing": "Größenänderung",
   "PF1.Special": "Speziell",
   "PF1.Speed": "Geschwindigkeit",
   "PF1.SpeedBurrow": "Grabend",
@@ -1129,6 +1232,7 @@
   "PF1.CMB": "Kampfmanöverbonus",
   "PF1.CMDAbbr": "KMV",
   "PF1.CMDFFAbbr": "AdfF KMV",
+  "PF1.CMD": "Kampfmanöververteidigung",
   "PF1.Untrained": "Ungeübt",
   "PF1.DeleteItemConfirmation": "Willst du dieses Item wirklich löschen?",
   "PF1.UnsavedTinyMCE": "Ungespeicherter Text in einem Feld<br>Vor dem Schließen speichern?",
@@ -1206,6 +1310,11 @@
   "PF1.MaxDexterityModifier": "Max. Geschicklichkeit Modifikator",
   "PF1.ArmorCheckPenalty": "Rüstungsmalus",
   "PF1.ArcaneSpellFailure": "Chance für arkanen Zauberpatzer",
+  "PF1.AutoCalculateSpellSlots": "Automatische Zauberslots",
+  "PF1.HasCantrips": "Hat Zaubertricks/Gebete",
+  "PF1.Modifications": "Veränderungen",
+  "PF1.PreparePerDay": "Vorbereiten/Tag",
+  "PF1.CastPerDay": "Wirken/Tag",
   "PF1.SkillsPerLevel": "Fertigkeiten/Level",
   "PF1.Source": "Quelle",
   "PF1.Unlimited": "Unlimitiert",
@@ -1248,6 +1357,9 @@
   "PF1.UpdateActor": "Aktor aktualisieren",
   "PF1.UpdateItem": "Gegenstand aktualisieren",
   "PF1.BonusCarryStrength": "Traglastbonus",
+  "PF1.BonusCarryMultiplier": "Traglastbonusmultiplikator",
+  "PF1.CarryStrength": "Traglast",
+  "PF1.CarryMultiplier": "Traglastmultiplikator",
   "PF1.Multiplier": "Multiplikator",
   "PF1.CarryLightLoad": "Leichte Last",
   "PF1.CarryMediumLoad": "Mittlere Last",
@@ -1258,6 +1370,7 @@
   "PF1.CarryLabel": "Aktuell {0} lbs. getragen",
   "PF1.CarryLabelKg": "Aktuell {0} kg getragen",
   "PF1.SkillBonusRankFormula": "Bonus Rang Formel",
+  "PF1.ToggleSkillLock": "Schalte die Bearbeitungssperre für selten benötigte Felder der Fertigkeitenliste ein/aus",
   "PF1.Rank": "Rang",
   "PF1.SkillRankPlural": "Fertigkeitsränge",
   "PF1.Used": "Benutzt",
@@ -1276,8 +1389,11 @@
   "PF1.PowerAttack": "Heftiger Angriff",
   "PF1.DeadlyAim": "Tödliche Zielgenauigkeit",
   "PF1.PrimaryAttack": "Primärer Angriff",
+  "PF1.SecondaryAttack": "Sekundärer Angriff",
   "PF1.Enabled": "Aktiviert",
   "PF1.Disabled": "Deaktiviert",
+  "PF1.Enable": "Aktivieren",
+  "PF1.Disable": "Deaktivieren",
   "PF1.AttackPenalty": "Angriffsmalus",
   "PF1.Low": "Wenig",
   "PF1.Medium": "Mittel",
@@ -1348,6 +1464,7 @@
   "PF1.Value": "Wert",
   "PF1.TotalItems": "{0} Gegenstände gesamt",
   "PF1.FilteredItems": "{0} Gegenstände gefiltert",
+  "PF1.SearchFilterPlaceholder": "Suche...",
   "PF1.QuickInfo": "Schnellinfo",
   "PF1.QuickActions": "Schnelle Aktionen",
   "PF1.ConvertCurrency": "Währung konvertieren",
@@ -1433,10 +1550,24 @@
   "PF1.StepsRequired": "Steps Required",
   "PF1.RemoveInfo": "Remove Info",
   "PF1.CustomRollDesc": "Dieser Wurf nutzt nicht die Standardformel",
+  "PF1.Hidden": "Versteckt",
+  "PF1.Bright": "Hell",
+  "PF1.Dim": "Dunkel",
 
   "PF1.Migration.Start": "Starte PF1 System-Migration für Version {version}. Bitte warten.",
   "PF1.Migration.Ongoing": "Migration läuft noch. Bitte warten bis diese abgeschlossen ist.",
   "PF1.Migration.End": "PF1 System-Migration auf Version {version} erfolgreich abgeschlossen!",
+
+  "PF1.DenyDexBonus": "Geschicklichkeitsbonus verbieten",
+
+  "PF1.Application": {
+    "ChangeTargetSelector": {
+      "Title": "Wähle Änderungsziel"
+    },
+    "ContextNoteTargetSelector": {
+      "Title": "Wähle Kontextnotizenziel"
+    }
+  },
 
   "PF1.Info": {
     "AddClassDialog": "Du kannst Shift gedrückt halten um diesen Dialog zu unterdrücken.",

@@ -31,6 +31,7 @@ module.exports = {
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
+    "jsdoc/no-undefined-types": ["warn", { definedTypes: ["Record"] }],
   },
   settings: {
     jsdoc: {

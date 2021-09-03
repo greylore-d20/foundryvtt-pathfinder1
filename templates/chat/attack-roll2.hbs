@@ -25,7 +25,7 @@
         <i class="fas fa-dice-d20" title="{{localize "PF1.CustomRollDesc"}}"></i>
         {{/if}}
       </h1>
-      <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isCrit}} success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
+      <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20{{/if}}{{#if atk.attack.isCrit}} critical-threat success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
          title="{{atk.attack.formula}}" data-roll="{{atk.attack.rollJSON}}">
         <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
       </a>

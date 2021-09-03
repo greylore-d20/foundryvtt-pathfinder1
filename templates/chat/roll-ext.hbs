@@ -16,7 +16,7 @@
 {{#if formula}}
 <div class="dice-roll">
   <div class="dice-result">
-      <h4 class="dice-total{{#if isCrit}} success{{/if}}{{#if isFumble}} failure{{/if}}">{{total}}</h4>
+      <h4 class="dice-total{{#if isNat20}} natural-20{{/if}}{{#if isCrit}} critical-threat success{{/if}}{{#if isFumble}} failure{{/if}}">{{total}}</h4>
       {{{tooltip}}}
   </div>
 </div>

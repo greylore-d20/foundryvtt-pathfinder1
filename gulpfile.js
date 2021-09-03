@@ -21,7 +21,6 @@ const mergeStream = require("merge-stream");
 const fs = require("fs");
 const path = require("path");
 const { Transform } = require("stream");
-const streamFinished = require("stream/promises").finished;
 
 // BrowserSync for reloads
 const browserSync = require("browser-sync").create();

@@ -2,7 +2,10 @@ const fs = require("fs");
 const git = require("simple-git");
 
 /**
- * @param writeFile
+ * Retrieves the latest changelog entry from the CHANGELOG.md file, and extracts it into a separate file.
+ *
+ * @param {boolean} writeFile - Whether a file containing the recent changes should be written.
+ * @returns {Promise<string>} The most recent changes
  */
 async function getCurrentLog(writeFile = true) {
   try {
@@ -23,8 +26,50 @@ async function getCurrentLog(writeFile = true) {
   }
 }
 
-/**
+/*
+ * The following code was written for the changelogify package and modified to this project's needs.
+ * The licensing terms of changelogify apply:
+ * Copyright (c) 2020, Wanadev <http://www.wanadev.fr/>
+ * All rights reserved.
  *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of Wanadev nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL WANADEV BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/**
+ * @typedef {object} ChangelogData
+ *
+ * @property {Record<"changelogsDir"|"unreleasedChangelogsDir"|"changelog"|"defaultConfig", string>} paths - Various paths
+ * @property {string} gitBranch - Current branch
+ * @property {number|undefined} branchNumber - Current branch/issue number
+ * @property {string} version - System version as per manifest
+ * @property {object} config - Changelogify config
+ * @property {string} currentDate - Current date
+ */
+
+/**
+ * Returns common data used for changelog operations.
+ *
+ * @returns {Promise<ChangelogData>} Changelog data
  */
 async function getChangelogData() {
   const base = process.cwd();
@@ -58,7 +103,9 @@ async function getChangelogData() {
 }
 
 /**
- * @param newVersion
+ * Compiles individual changelog entries into a version's overall changelog.
+ *
+ * @param {string} newVersion - The version used as header for this changelog
  */
 async function releaseLog(newVersion) {
   try {
@@ -76,7 +123,7 @@ async function releaseLog(newVersion) {
       beginningText = match[1];
       endText = match[3];
     } else {
-      beginningText = fs.readFileSync(paths.emptyChangelog, "utf8");
+      beginningText = fs.readFileSync("CHANGELOG.md", "utf8");
     }
 
     const hasUnreleasedDir = fs.existsSync(paths.unreleasedChangelogsDir);

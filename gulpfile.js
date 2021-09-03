@@ -26,6 +26,9 @@ const streamFinished = require("stream/promises").finished;
 // BrowserSync for reloads
 const browserSync = require("browser-sync").create();
 
+// Changelog handling
+const changelog = require("./changelog.js");
+
 /* ----------------------------------------- */
 /*  Constants
 /* ----------------------------------------- */
@@ -208,7 +211,7 @@ function getTagVersion() {
  *
  * @param {string} importance - The step by which the version should be increased
  */
-function inc(importance) {
+async function inc(importance) {
   const version = getTagVersion();
   if (version) {
     const oldVersion = version;
@@ -231,6 +234,7 @@ function inc(importance) {
         break;
     }
     newVersion = newVersion.join(".");
+    await changelog.releaseLog(newVersion, true);
     return (
       gulp
         .src(["./system.json"])
@@ -249,10 +253,10 @@ function inc(importance) {
 function commitTag() {
   const version = getTagVersion();
   if (version) {
-    return gulp
-      .src(["./system.json"])
-      .pipe(git.commit(`Release ${version}`))
-      .pipe(tagVersion({ prefix: "" }));
+    return gulp.src(["./system.json"]);
+    //TODO: RE-ENABLE THIS
+    //.pipe(git.commit(`Release ${version}`))
+    //.pipe(tagVersion({ prefix: "" }));
   } else {
     return gulp.src(["./system.json"]);
   }
@@ -594,3 +598,6 @@ exports.major = gulp.series(major, buildTask, commitTag);
 exports.compilePacks = gulp.series(cleanPacks, compilePacks);
 exports.extractPacks = extractPacks;
 exports.bla = loadDocumentTemplates;
+
+exports.releaseLog = changelog.releaseLog;
+exports.getCurrentLog = changelog.getCurrentLog;

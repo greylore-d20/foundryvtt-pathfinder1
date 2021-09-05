@@ -213,7 +213,11 @@ Hooks.once("init", function () {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("PF1", ActorSheetPFCharacter, { label: "PF1.Sheet.PC", ypes: ["character"], makeDefault: true });
+  Actors.registerSheet("PF1", ActorSheetPFCharacter, {
+    label: "PF1.Sheet.PC",
+    types: ["character"],
+    makeDefault: true,
+  });
   Actors.registerSheet("PF1", ActorSheetPFNPC, { label: "PF1.Sheet.NPC", types: ["npc"], makeDefault: true });
   Actors.registerSheet("PF1", ActorSheetPFNPCLite, { label: "PF1.Sheet.NPCLite", types: ["npc"], makeDefault: false });
   Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { label: "PF1.Sheet.NPCLoot", types: ["npc"], makeDefault: false });

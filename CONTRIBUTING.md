@@ -39,7 +39,7 @@ To create a development setup:
   - Optionally, you can configure your GitLab repository to mirror changes from this project.
   - This can be set up in the repository's settings, under "Repository" > "Mirroring repositories" and adding "Pull" mirroring.
 - Clone the forked repository into a local directory using `git clone` or another git client of your choice.
-- Install JavaScript dependencies with `npm install`.
+- Install JavaScript dependencies with `npm ci`.
 - Run `npm run build:watch` to watch for changes.
   - Do not change the `pf1.css` file directly; instead, always edit the less files and run the gulp task.
 - The file watcher will create a `dist` directory. Copy this to Foundry's `Data/systems` directory as `pf1`, or symlink it accordingly.

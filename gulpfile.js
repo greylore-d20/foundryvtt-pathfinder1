@@ -252,10 +252,10 @@ async function inc(importance) {
 function commitTag() {
   const version = getTagVersion();
   if (version) {
-    return gulp.src(["./system.json"]);
-    //TODO: RE-ENABLE THIS
-    //.pipe(git.commit(`Release ${version}`))
-    //.pipe(tagVersion({ prefix: "" }));
+    return gulp
+      .src(["./system.json"])
+      .pipe(git.commit(`Release ${version}`))
+      .pipe(tagVersion({ prefix: "" }));
   } else {
     return gulp.src(["./system.json"]);
   }
@@ -381,7 +381,6 @@ function mergeObject(first, second) {
 /**
  * @todo Test this function.
  * Duplicates an object.
- *
  * @param {object} obj - The object to duplicate.
  * @returns {object} The deeply cloned object.
  */

@@ -46,10 +46,16 @@ To create a development setup:
 
 This setup will compile files whenever necessary and activate a commit hook to automatically lint and format any JS, less or markdown files.
 
+All changes have to be documented in the [changelog](CHANGELOG.md).
+To add your changes to it, run `npm run addlog`.
+[Changelogify](https://github.com/wanadev/changelogify) will then prompt you for a message that will appear in the changelog, the type of change, and an issue number that will be used to create a link in the log.
+The issue number is optional – if there is no issue your merge request will close, you can leave the number out.
+This prompt will create a file in `changelogs/unreleased`, which you will have to commit alongside your changes.
+
 If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
 
 For commit messages, describe what the commit does in a very short summary in the first line, e.g. "Add BAB to combat tab".
-After the first line, reference issues or pull requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123").
+After the first line, reference issues or merge requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123").
 
 ### Opening merge requests
 

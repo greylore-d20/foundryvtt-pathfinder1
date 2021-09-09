@@ -57,7 +57,6 @@ async function getCurrentLog(writeFile = true) {
 
 /**
  * @typedef {object} ChangelogData
- *
  * @property {Record<"changelogsDir"|"unreleasedChangelogsDir"|"changelog"|"defaultConfig", string>} paths - Various paths
  * @property {string} gitBranch - Current branch
  * @property {number|undefined} branchNumber - Current branch/issue number

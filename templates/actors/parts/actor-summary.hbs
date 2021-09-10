@@ -229,17 +229,17 @@
         <ul class='flexrow'>
           <li class='flexcol current'>
             <h4 class='sub-header'>{{localize "PF1.Current"}}</h4>
-            <span class="text-box direct allow-relative vigor-current-input" name="data.attributes.vigor.value" data-dtype="Number">
+            <span class="value text-box direct allow-relative vigor-current-input" name="data.attributes.vigor.value" data-dtype="Number">
               {{data.attributes.vigor.value}}
             </span>
           </li>
           <li class='flexcol maximum'>
             <h4 class='sub-header'>{{localize "PF1.Maximum"}}</h4>
-            <span class="text-box readonly">{{data.attributes.vigor.max}}</span>
+            <span class="value text-box readonly">{{data.attributes.vigor.max}}</span>
           </li>
           <li class='flexcol temp'>
             <h4 class='sub-header'>{{localize "PF1.TempShort"}}</h4>
-            <span class="text-box direct allow-relative vigor-temp-input" name="data.attributes.vigor.temp" data-dtype="Number">
+            <span class="value text-box direct allow-relative vigor-temp-input" name="data.attributes.vigor.temp" data-dtype="Number">
               {{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}
             </span>
           </li>
@@ -262,13 +262,13 @@
         <ul class='flexrow'>
           <li class='flexcol current'>
             <h4 class='sub-header'>{{localize "PF1.Current"}}</h4>
-            <span class="text-box direct allow-relative wounds-current-input" name="data.attributes.wounds.value" data-dtype="Number">
+            <span class="value text-box direct allow-relative wounds-current-input" name="data.attributes.wounds.value" data-dtype="Number">
               {{data.attributes.wounds.value}}
             </span>
           </li>
           <li class='flexcol maximum'>
             <h4 class='sub-header'>{{localize "PF1.Maximum"}}</h4>
-            <span class="text-box readonly">{{data.attributes.wounds.max}}</span>
+            <span class="value text-box readonly">{{data.attributes.wounds.max}}</span>
           </li>
         </ul>
       </div>

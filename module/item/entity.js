@@ -3686,6 +3686,9 @@ export class ItemPF extends Item {
 
     // Set activation method
     data.data.activation.type = "standard";
+    // Set activation for unchained action economy
+    data.data.unchainedAction.activation.type = "action";
+    data.data.unchainedAction.activation.cost = 2;
 
     // Set measure template
     if (type !== "potion") {

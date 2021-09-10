@@ -197,8 +197,10 @@ export class ChatAttack {
     const typeMap = {
       rsak: ["ranged", /*"spell",*/ "rangedSpell"],
       rwak: ["ranged", /*"weapon",*/ "rangedWeapon"],
+      rcman: ["ranged"],
       mwak: ["melee", /*"weapon",*/ "meleeWeapon"],
       msak: ["melee", /*"spell",*/ "meleeSpell"],
+      mcman: ["melee"],
     };
 
     let notes = [];

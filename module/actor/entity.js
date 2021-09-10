@@ -1391,7 +1391,7 @@ export class ActorPF extends Actor {
         const wtData = this.getWoundThresholdData(actorData);
 
         if (wtData.level > 0) {
-          const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
+          const changeFlatKeys = ["~attackCore", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
           for (let fk of changeFlatKeys) {
             let flats = getChangeFlat.call(this, fk, "penalty", actorData.data);
             if (!(flats instanceof Array)) flats = [flats];
@@ -2223,7 +2223,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  rollCMB(options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  rollCMB(options = { ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2245,6 +2245,34 @@ export class ActorPF extends Actor {
         notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }
+
+    const parts = [];
+
+    const describePart = (value, label) => parts.push(`${value}[${label}]`);
+    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
+    srcDetails(this.sourceDetails["data.attributes.cmb.total"]);
+    srcDetails(this.sourceDetails["data.attributes.attack.shared"]);
+
+    // Unreliable melee/ranged identification
+    const isMelee =
+      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
+      ["melee", "reach"].includes(this.data.data.range.units);
+    const isRanged =
+      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
+
+    const changeSources = ["attack"];
+    if (isRanged) changeSources.push("rattack");
+    if (isMelee) changeSources.push("mattack");
+    const effectiveChanges = getHighestChanges(
+      this.changes.filter((c) => changeSources.includes(c.subTarget)),
+      { ignoreTarget: true }
+    );
+    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor));
+
+    const abl = options.ability ?? this.data.data.attributes.cmbAbility;
+    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`) ?? 0;
+    if (ablMod != 0) describePart(ablMod, CONFIG.PF1.abilities[abl]);
+
     // Add grapple note
     if (this.data.data.attributes.conditions.grappled) {
       notes.push("+2 to Grapple");
@@ -2254,9 +2282,9 @@ export class ActorPF extends Actor {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
-      parts: [`@mod[${game.i18n.localize("PF1.CMBAbbr")}]`],
+      parts,
       dice: options.dice,
-      data: { mod: this.data.data.attributes.cmb.total },
+      data: this.getRollData(),
       subject: { core: "cmb" },
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -2316,6 +2344,10 @@ export class ActorPF extends Actor {
     // Add ability modifier
     const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
     changes.push(`${getProperty(this.data, `data.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
+
+    const size = getProperty(this.data, "data.traits.size");
+    rollData.sizeBonus = CONFIG.PF1.sizeMods[getProperty(this.data, "data.traits.size") ?? "med"];
+    if (rollData.sizeBonus != 0) changes.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
     let props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -3897,7 +3929,6 @@ export class ActorPF extends Actor {
    * @type {object}
    * @property {number} max - The maximum value.
    * @property {number} value - The current value.
-   *
    * @returns {MaxAndValue} An object with a property `value` which refers to the current used feats, and `max` which refers to the maximum available feats.
    */
   getFeatCount() {

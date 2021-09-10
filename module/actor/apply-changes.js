@@ -258,6 +258,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "data.attributes.bab.total";
     case "~attackCore":
       return "data.attributes.attack.shared";
+    case "attack":
+      return "data.attributes.attack.general";
     case "critConfirm":
       return "data.attributes.attack.critConfirm";
     case "allSavingThrows":
@@ -709,52 +711,8 @@ export const addDefaultChanges = function (changes) {
     });
   }
 
-  // Add variables to CMD and CMD
+  // Add variables to CMD
   {
-    // BAB to CMB
-    changes.push(
-      ItemChange.create({
-        formula: "@attributes.bab.total",
-        target: "misc",
-        subTarget: "cmb",
-        modifier: "untypedPerm",
-      })
-    );
-    getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").positive.push({
-      formula: "@attributes.bab.total",
-      name: game.i18n.localize("PF1.BAB"),
-    });
-    // Ability to CMB
-    {
-      const abl = getProperty(this.data, "data.attributes.cmbAbility");
-      if (abl) {
-        changes.push(
-          ItemChange.create({
-            formula: `@abilities.${abl}.mod`,
-            target: "misc",
-            subTarget: "cmb",
-            modifier: "untypedPerm",
-          })
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").positive.push({
-          formula: `@abilities.${abl}.mod`,
-          name: CONFIG.PF1.abilities[abl],
-        });
-      }
-    }
-    // Energy Drain to CMB
-    changes.push(
-      ItemChange.create({
-        formula: "-@attributes.energyDrain",
-        target: "misc",
-        subTarget: "cmb",
-        modifier: "untypedPerm",
-      })
-    );
-    getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").negative.push({
-      formula: `-@attributes.energyDrain`,
-      name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-    });
     // BAB to CMD
     changes.push(
       ItemChange.create({
@@ -771,9 +729,10 @@ export const addDefaultChanges = function (changes) {
       });
     }
     // Strength to CMD
+    const abl = getProperty(this.data, "data.attributes.cmd.ability");
     changes.push(
       ItemChange.create({
-        formula: "@abilities.str.mod",
+        formula: `@abilities.${abl}.mod`,
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -1136,32 +1095,6 @@ export const addDefaultChanges = function (changes) {
     );
     getSourceInfo(this.sourceInfo, "data.skills.fly.changeBonus").positive.push({
       value: CONFIG.PF1.sizeFlyMods[sizeKey],
-      type: "size",
-    });
-    // Attack
-    changes.push(
-      ItemChange.create({
-        formula: CONFIG.PF1.sizeMods[sizeKey].toString(),
-        target: "attack",
-        subTarget: "~attackCore",
-        modifier: "size",
-      })
-    );
-    getSourceInfo(this.sourceInfo, "data.attributes.attack.shared").positive.push({
-      value: CONFIG.PF1.sizeMods[sizeKey],
-      type: "size",
-    });
-    // CMB
-    changes.push(
-      ItemChange.create({
-        formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
-        target: "misc",
-        subTarget: "cmb",
-        modifier: "size",
-      })
-    );
-    getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").positive.push({
-      value: CONFIG.PF1.sizeSpecialMods[sizeKey],
       type: "size",
     });
     // CMD

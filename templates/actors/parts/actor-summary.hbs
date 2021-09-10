@@ -440,15 +440,7 @@
             </td>
 
             <td class="tooltip cmb">
-              <span class="tooltipcontent">
-                @attributes.cmb.total : {{data.attributes.cmb.total}}
-                {{#if sourceDetails.data.attributes.cmb.total.length}}
-                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-              </span>
-
-              {{data.attributes.cmb.total}}
+              {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
             </td>
 
             <td class="tooltip initiative">

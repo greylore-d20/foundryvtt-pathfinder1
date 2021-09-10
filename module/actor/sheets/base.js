@@ -224,14 +224,19 @@ export class ActorSheetPF extends ActorSheet {
     // Generic melee and ranged attack bonuses, only present for sheet.
     const coreAttack = data.data.attributes.attack.shared + data.data.attributes.attack.general,
       meleeAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.meleeAbility}.mod`),
-      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`);
+      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`),
+      cmbAbl = getProperty(data, `data.abilities.${data.data.attributes.cmbAbility}.mod`);
+
+    const szMod = CONFIG.PF1.sizeMods[data.data.traits.size],
+      szCMBMod = CONFIG.PF1.sizeSpecialMods[data.data.traits.size];
 
     data.data.attributes.attack.meleeAttackMod = meleeAtkAbl;
     data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
-    data.meleeAttack = coreAttack + data.data.attributes.attack.melee + (meleeAtkAbl ?? 0);
-    data.rangedAttack = coreAttack + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
+    data.meleeAttack = coreAttack + szMod + data.data.attributes.attack.melee + (meleeAtkAbl ?? 0);
+    data.rangedAttack = coreAttack + szMod + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
     data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
     data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
+    data.cmbAttack = coreAttack + szCMBMod + data.data.attributes.cmb.total + (cmbAbl ?? 0);
 
     // Add inventory value
     {

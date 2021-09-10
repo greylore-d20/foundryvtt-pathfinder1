@@ -2850,8 +2850,14 @@ export class ItemPF extends Item {
 
     rollData.item.primaryAttack = primaryAttack;
 
+    const isRanged = ["rwak", "rsak", "rcman"].includes(itemData.actionType);
+    const isCMB = ["mcman", "rcman"].includes(itemData.actionType);
+
     // Determine size bonus
-    rollData.sizeBonus = CONFIG.PF1.sizeMods[rollData.traits.size];
+    rollData.sizeBonus = !isCMB
+      ? CONFIG.PF1.sizeMods[rollData.traits.size]
+      : CONFIG.PF1.sizeSpecialMods[rollData.traits.size];
+
     // Add misc bonuses/penalties
     rollData.item.proficiencyPenalty = -4;
 
@@ -2861,26 +2867,19 @@ export class ItemPF extends Item {
     // Define Roll parts
     let parts = [];
 
-    // Special handling for combat maneuvers
-    if (["mcman", "rcman"].includes(itemData.actionType)) {
-      // Add CMB without general ability
-      // This already includes BAB, size, energy drain
-      rollData.attributes.cmb.total -= rollData.abilities[rollData.attributes.cmbAbility]?.mod ?? 0;
-      if (rollData.attributes.cmb.total) parts.push(`@attributes.cmb.total[${game.i18n.localize("PF1.CMBAbbr")}]`);
-    } else {
-      // Handle regular attacks
+    this.parentActor.sourceDetails["data.attributes.attack.shared"]
+      ?.reverse()
+      .forEach((s) => parts.push(`${s.value}[${s.name}]`));
 
-      // Add size bonus
-      if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
-      // Add BAB
-      if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
-        parts.push(`@attributes.bab.total[${game.i18n.localize("PF1.BAB")}]`);
-      }
-      // Subtract energy drain
-      if (rollData.attributes.energyDrain != null && rollData.attributes.energyDrain !== 0) {
-        parts.push(`- @attributes.energyDrain[${game.i18n.localize("PF1.CondTypeEnergyDrain")}]`);
-      }
+    // CMB specific modifiers
+    if (isCMB) {
+      this.parentActor.sourceDetails["data.attributes.cmb.total"]
+        ?.reverse()
+        .forEach((s) => parts.push(`${s.value}[${s.name}]`));
     }
+
+    // Add size bonus
+    if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
     // Add ability modifier
     if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
@@ -2899,7 +2898,6 @@ export class ItemPF extends Item {
     }
 
     // Add change bonus
-    const isRanged = ["rwak", "rsak"].includes(this.data.data.actionType);
     const changes = this.getContextChanges(isRanged ? "rattack" : "mattack");
     let changeBonus = [];
     {
@@ -2922,15 +2920,6 @@ export class ItemPF extends Item {
       parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
     }
 
-    // Add wound thresholds penalties
-    if (rollData.attributes.woundThresholds?.penalty > 0) {
-      parts.push(
-        `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
-        )}]`
-      );
-    }
-
     // Add proficiency penalty
     if (this.data.type === "attack" && !itemData.proficient) {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
@@ -2943,9 +2932,11 @@ export class ItemPF extends Item {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
-    if (rollData.attributes.acp.attackPenalty > 0)
-      parts.push(`-@attributes.acp.attackPenalty[${game.i18n.localize("PF1.ACP")}]`);
+    if (!isCMB) {
+      // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
+      if (rollData.attributes.acp.attackPenalty > 0)
+        parts.push(`-@attributes.acp.attackPenalty[${game.i18n.localize("PF1.ACP")}]`);
+    }
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
@@ -4726,6 +4717,14 @@ export class ItemPF extends Item {
     if (!actorData) return sources;
     const rollData = this.getRollData();
 
+    // Attack type identification
+    const isMelee =
+      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
+      ["melee", "reach"].includes(this.data.data.range.units);
+    const isRanged =
+      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
+    const isManeuver = ["mcman", "rcman"].includes(this.data.data.actionType);
+
     const describePart = (value, label, sort = 0) => {
       sources.push({ value, label, sort });
     };
@@ -4734,12 +4733,12 @@ export class ItemPF extends Item {
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
 
     // Unreliable melee/ranged identification
-    const isMelee =
-      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
-      ["melee", "reach"].includes(this.data.data.range.units);
-    const isRanged =
-      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
-    const isManeuver = ["mcman", "rcman"].includes(this.data.data.actionType);
+    const sizeBonus = !isManeuver
+      ? CONFIG.PF1.sizeMods[rollData.traits.size]
+      : CONFIG.PF1.sizeSpecialMods[rollData.traits.size];
+
+    // Add size bonus
+    if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
 
     if (isManeuver) {
       srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
@@ -4775,14 +4774,6 @@ export class ItemPF extends Item {
         describePart(itemData.enh, game.i18n.localize("PF1.EnhancementBonus"), -300);
       } else if (itemData.masterwork) {
         describePart(1, game.i18n.localize("PF1.Masterwork"), -300);
-      }
-    }
-
-    // Add wound thresholds penalty
-    if (!isManeuver) {
-      const wtPen = actorData.attributes.woundThresholds.penalty;
-      if (wtPen > 0) {
-        describePart(-wtPen, game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtPen]), -1000);
       }
     }
 

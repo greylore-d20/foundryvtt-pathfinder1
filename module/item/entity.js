@@ -4732,8 +4732,6 @@ export class ItemPF extends Item {
 
     // BAB is last for some reason, array is reversed to try make it the first.
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
-    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
-    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
 
     // Unreliable melee/ranged identification
     const isMelee =
@@ -4741,15 +4739,23 @@ export class ItemPF extends Item {
       ["melee", "reach"].includes(this.data.data.range.units);
     const isRanged =
       ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
+    const isManeuver = ["mcman", "rcman"].includes(this.data.data.actionType);
 
-    const effectiveChanges =
-      isMelee || isRanged
-        ? getHighestChanges(
-            this.parentActor.changes.filter((c) => c.subTarget === (isMelee ? "mattack" : "rattack")),
-            { ignoreTarget: true }
-          )
-        : [];
-    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -100));
+    if (isManeuver) {
+      srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
+    } else {
+      srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
+    }
+    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
+
+    const changeSources = ["attack"];
+    if (isRanged) changeSources.push("rattack");
+    if (isMelee) changeSources.push("mattack");
+    const effectiveChanges = getHighestChanges(
+      this.parentActor.changes.filter((c) => changeSources.includes(c.subTarget)),
+      { ignoreTarget: true }
+    );
+    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));
 
     if (itemData.ability.attack) {
       const ablMod = getProperty(actorData, `abilities.${itemData.ability.attack}.mod`) ?? 0;
@@ -4773,9 +4779,11 @@ export class ItemPF extends Item {
     }
 
     // Add wound thresholds penalty
-    const wtPen = actorData.attributes.woundThresholds.penalty;
-    if (wtPen > 0) {
-      describePart(-wtPen, game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtPen]), -1000);
+    if (!isManeuver) {
+      const wtPen = actorData.attributes.woundThresholds.penalty;
+      if (wtPen > 0) {
+        describePart(-wtPen, game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtPen]), -1000);
+      }
     }
 
     // Add proficiency penalty
@@ -4789,7 +4797,7 @@ export class ItemPF extends Item {
     }
 
     // Add secondary natural attack penalty
-    if (!itemData.primaryAttack) {
+    if (!itemData.primaryAttack && itemData.attackType === "natural") {
       describePart(-5, game.i18n.localize("PF1.SecondaryAttack"), -400);
     }
 

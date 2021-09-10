@@ -800,8 +800,8 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
       Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
     }
 
-    // Update level
     {
+      // Update level
       await new Promise((resolve) => {
         if (item.type === "class" && hasProperty(changedData, "data.level")) {
           const newLevel = getProperty(changedData, "data.level");
@@ -814,12 +814,6 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
           resolve();
         }
       });
-      if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
-        // Toggle status icons
-        if (userId === game.user.id) {
-          await actor.toggleConditionStatusIcons();
-        }
-      }
     }
   }
 });

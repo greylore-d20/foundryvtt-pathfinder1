@@ -1775,8 +1775,8 @@ export class ActorPF extends Actor {
     super._preCreateEmbeddedDocuments(...arguments);
   }
 
-  _onCreateEmbeddedDocuments(embeddedName, documents, results, options, userId) {
-    if (userId === game.user.id) {
+  _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+    if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons();
     }
     super._onCreateEmbeddedDocuments(...arguments);
@@ -1795,13 +1795,27 @@ export class ActorPF extends Actor {
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
-    if (userId === game.user.id) {
+    // Work around the issue where updating embedded entities on Tokens used a parameter less
+    // NOTE: This is a dirty workaround which is a bug in core Foundry. Once this is fixed in Foundry, this should be undone.
+    if (!(documents instanceof Array && result instanceof Array)) {
+      userId = options;
+      options = result;
+      result = documents;
+    }
+
+    if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons();
     }
 
     super._preUpdateEmbeddedDocuments(...arguments);
 
     if (this.sheet) this.sheet.render();
+
+    // Redraw token effects
+    const tokens = this.getActiveTokens();
+    for (let t of tokens) {
+      t.drawEffects();
+    }
   }
 
   /**
@@ -3826,50 +3840,54 @@ export class ActorPF extends Actor {
   }
 
   async toggleConditionStatusIcons() {
-    if (this._runningFunctions["toggleConditionStatusIcons"]) return;
-    this._runningFunctions["toggleConditionStatusIcons"] = {};
-
-    const tokens = this.token ? [this.token] : this.getActiveTokens().filter((o) => o != null);
     const buffTextures = this._calcBuffTextures();
 
-    for (let t of tokens) {
-      // const isLinkedToken = getProperty(this.data, "token.actorLink");
-      const actor = t.actor ? t.actor : this;
-      if (!actor.testUserPermission(game.user, "OWNER")) continue;
-      const fx = [...actor.effects];
+    if (!this.testUserPermission(game.user, "OWNER")) return;
+    const fx = [...this.effects];
 
-      // Create and delete buff ActiveEffects
-      let toCreate = [];
-      let toDelete = [];
-      for (let [id, obj] of Object.entries(buffTextures)) {
-        const existing = fx.find((f) => f.data.origin === id);
-        if (obj.active && !existing) toCreate.push(obj.item.getRawEffectData());
-        else if (!obj.active && existing) toDelete.push(existing.id);
-      }
-
-      // Create and delete condition ActiveEffects
-      for (let k of Object.keys(CONFIG.PF1.conditions)) {
-        const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === k);
-        const hasCondition = actor.data.data.attributes.conditions[k] === true;
-        const hasEffectIcon = idx >= 0;
-        const obj = t.object ?? t;
-
-        if (hasCondition && !hasEffectIcon) {
-          toCreate.push({
-            "flags.core.statusId": k,
-            name: CONFIG.PF1.conditions[k],
-            icon: CONFIG.PF1.conditionTextures[k],
-          });
-        } else if (!hasCondition && hasEffectIcon) {
-          const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === k);
-          toDelete.push(...removeEffects.map((e) => e.id));
+    // Create and delete buff ActiveEffects
+    let toCreate = [];
+    let toDelete = [];
+    let toUpdate = [];
+    for (let [id, obj] of Object.entries(buffTextures)) {
+      const existing = fx.find((f) => f.data.origin === id);
+      if (!existing) {
+        if (obj.active) toCreate.push(obj.item.getRawEffectData());
+      } else {
+        if (!obj.active) toDelete.push(existing.id);
+        else {
+          const existingData = existing.data.toObject();
+          const mergedData = mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
+          const diffData = diffObject(existingData, mergedData);
+          if (!isObjectEmpty(diffData)) {
+            diffData._id = existing.id;
+            toUpdate.push(diffData);
+          }
         }
       }
-
-      if (toDelete.length) await actor.deleteEmbeddedDocuments("ActiveEffect", toDelete);
-      if (toCreate.length) await actor.createEmbeddedDocuments("ActiveEffect", toCreate);
     }
-    delete this._runningFunctions["toggleConditionStatusIcons"];
+
+    // Create and delete condition ActiveEffects
+    for (let condKey of Object.keys(CONFIG.PF1.conditions)) {
+      const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === condKey);
+      const hasCondition = this.data.data.attributes.conditions[condKey] === true;
+      const hasEffectIcon = idx >= 0;
+
+      if (hasCondition && !hasEffectIcon) {
+        toCreate.push({
+          "flags.core.statusId": condKey,
+          name: CONFIG.PF1.conditions[condKey],
+          icon: CONFIG.PF1.conditionTextures[condKey],
+        });
+      } else if (!hasCondition && hasEffectIcon) {
+        const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === condKey);
+        toDelete.push(...removeEffects.map((e) => e.id));
+      }
+    }
+
+    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete);
+    if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate);
+    if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate);
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
@@ -3879,7 +3897,7 @@ export class ActorPF extends Actor {
       const id = cur.uuid;
       if (cur.data.data.hideFromToken) return acc;
 
-      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.data.img, item: cur };
+      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur };
       if (cur.data.data.active) acc[id].active = true;
       else acc[id].active = false;
       return acc;

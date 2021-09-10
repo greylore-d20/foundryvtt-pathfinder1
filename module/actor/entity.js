@@ -1310,6 +1310,7 @@ export class ActorPF extends Actor {
               getSourceInfo(this.sourceInfo, "data.attributes.maxDexBonus").negative.push({
                 name: obj.name,
                 value: itemMDex,
+                ignoreNull: false,
               });
             }
           }
@@ -1417,13 +1418,13 @@ export class ActorPF extends Actor {
             if (!src.operator) src.operator = "add";
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
             let srcValue =
-              src.value != null
+              src.value !== null
                 ? src.value
                 : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
                     suppressError: !this.testUserPermission(game.user, "OWNER"),
                   }).total;
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
-            if (!(src.operator === "add" && srcValue === 0)) {
+            if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
               sourceDetails[changeTarget].push({
                 name: srcInfo,
                 value: srcValue,

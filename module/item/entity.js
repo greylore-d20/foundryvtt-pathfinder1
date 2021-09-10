@@ -1477,6 +1477,10 @@ export class ItemPF extends Item {
             ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue[0]} ${CONFIG.PF1.measureUnits[rangeValue[1]]}`)
             : null;
       }
+
+      // Add Difficulty Modifier (DC) label
+      props.push(labels.save);
+
       // Duration
       if (data.duration != null) {
         if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
@@ -1521,100 +1525,6 @@ export class ItemPF extends Item {
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
     return data;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for equipment type items
-   *
-   * @param data
-   * @param labels
-   * @param props
-   * @private
-   */
-  _equipmentChatData(data, labels, props) {
-    props.push(CONFIG.PF1.equipmentTypes[data.equipmentType][data.equipmentSubtype], labels.armor || null);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for weapon type items
-   *
-   * @param data
-   * @param labels
-   * @param props
-   * @private
-   */
-  _weaponChatData(data, labels, props) {
-    props.push(
-      CONFIG.PF1.weaponTypes[data.weaponType]._label,
-      CONFIG.PF1.weaponTypes[data.weaponType][data.weaponSubtype]
-    );
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for consumable type items
-   *
-   * @param data
-   * @param labels
-   * @param props
-   * @private
-   */
-  _consumableChatData(data, labels, props) {
-    props.push(CONFIG.PF1.consumableTypes[data.consumableType]);
-    // if (["day", "week", "charges"].includes(data.uses.per)) {
-    // props.push(data.uses.value + "/" + data.uses.max + " Charges");
-    // }
-    // else props.push(CONFIG.PF1.limitedUsePeriods[data.uses.per]);
-    data.hasCharges = data.uses.value >= 0;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Render a chat card for Spell type data
-   *
-   * @param data
-   * @param labels
-   * @param props
-   * @returns {object}
-   * @private
-   */
-  _spellChatData(data, labels, props) {
-    const ad = this.parent.data.data;
-
-    // Spell saving throw text
-    // const abl = data.ability || ad.attributes.spellcasting || "int";
-    // if ( this.hasSave && !data.save.dc ) data.save.dc = 8 + ad.abilities[abl].mod + ad.attributes.prof;
-    // labels.save = `DC ${data.save.dc} ${CONFIG.PF1.abilities[data.save.ability]}`;
-
-    // Spell properties
-    props.push(labels.level, labels.components);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for items of the "Feat" type
-   *
-   * @param data
-   * @param labels
-   * @param props
-   */
-  _featChatData(data, labels, props) {
-    const ad = this.parent.data.data;
-
-    // Spell saving throw text
-    // const abl = data.ability || ad.attributes.spellcasting || "str";
-    // if ( this.hasSave && !data.save.dc ) data.save.dc = 8 + ad.abilities[abl].mod + ad.attributes.prof;
-    // labels.save = `DC ${data.save.dc} ${CONFIG.PF1.abilities[data.save.ability]}`;
-
-    // Feat properties
-    props.push(CONFIG.PF1.featTypes[data.featType]);
   }
 
   /* -------------------------------------------- */

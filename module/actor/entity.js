@@ -3498,6 +3498,9 @@ export class ActorPF extends Actor {
       };
     }
 
+    // Add denied Dex to AC
+    setProperty(result, "conditions.loseDexToAC", this.flags.loseDexToAC);
+
     // Return cached data, if applicable
     if (skipRefresh) {
       Hooks.callAll("pf1.getRollData", this, result, false);

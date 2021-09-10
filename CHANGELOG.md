@@ -11,11 +11,16 @@
 - Skill lock button was invisible on NPC sheets (!268 by mkahvi) (#1036)
 - Dice modifiers could break if they had special characters `<>`
 - World migrations reset the max HP of lite sheet using actors to 0 (#1031)
+- Some attack bonuses/penalties weren't shown (!272 by mkahvi) (#784)
+- Some maneuver bonuses/penalties weren't shown (!271 by mkahvi) (#714, #481)
+- Various fixes to attack tooltips (!270 by mkahvi) (#1034)
 
 ### Changelog
 
 - Container item deletion confirmation dialog says what is being deleted (!259 by mkahvi) (#1004)
 - Add conditionals and buffs to damage preview on actor sheets (!262 by mkahvi)
+- Add more spell details (!277 by mkahvi)
+- Allow translating sheet names (!273 by mkahvi)
 
 ### API
 

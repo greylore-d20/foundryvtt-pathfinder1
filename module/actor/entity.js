@@ -2146,7 +2146,7 @@ export class ActorPF extends Actor {
     }
 
     // Add armor check penalty
-    if (skl.acp && getProperty(this.data, "data.attributes.acp.total") != 0) {
+    if (skl.acp && rollData.attributes.acp.total != 0) {
       parts.push(`-@attributes.acp.total[${game.i18n.localize("PF1.ACPLong")}]`);
     }
 

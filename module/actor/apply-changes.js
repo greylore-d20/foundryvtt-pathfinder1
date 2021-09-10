@@ -260,6 +260,10 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "data.attributes.attack.shared";
     case "attack":
       return "data.attributes.attack.general";
+    case "mattack":
+      return "data.attributes.attack.melee";
+    case "rattack":
+      return "data.attributes.attack.ranged";
     case "critConfirm":
       return "data.attributes.attack.critConfirm";
     case "allSavingThrows":

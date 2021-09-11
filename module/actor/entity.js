@@ -1409,6 +1409,7 @@ export class ActorPF extends Actor {
     }
 
     // Add extra data
+    console.log(this.name, extraData);
     const rollData = this.getRollData();
     for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
       for (let grp of Object.values(changeGrp)) {
@@ -1418,7 +1419,7 @@ export class ActorPF extends Actor {
             if (!src.operator) src.operator = "add";
             let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
             let srcValue =
-              src.value !== null
+              src.value != null
                 ? src.value
                 : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
                     suppressError: !this.testUserPermission(game.user, "OWNER"),
@@ -2161,7 +2162,7 @@ export class ActorPF extends Actor {
     }
 
     // Add armor check penalty
-    if (skl.acp && rollData.attributes.acp.total != 0) {
+    if (skl.acp && rollData.attributes.acp.total !== 0) {
       parts.push(`-@attributes.acp.total[${game.i18n.localize("PF1.ACPLong")}]`);
     }
 

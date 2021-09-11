@@ -27,6 +27,7 @@ import { PointBuyCalculator } from "./module/apps/point-buy-calculator.js";
 import { ScriptEditor } from "./module/apps/script-editor.js";
 import { SidebarPF } from "./module/apps/sidebar.js";
 import { ActorTraitSelector } from "./module/apps/trait-selector.js";
+import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
@@ -122,6 +123,7 @@ Hooks.once("init", function () {
       SidebarPF,
       TooltipPF,
       PF1_HelpBrowser,
+      ExperienceDistributor,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,
@@ -910,6 +912,23 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
       pack.configure({ "pf1.disabled": !disabled });
     },
   });
+});
+
+// Show experience distributor after combat
+Hooks.on("deleteCombat", (combat, options, userId) => {
+  if (
+    !game.keyboard.isDown("shift") &&
+    combat.started &&
+    !game.settings.get("pf1", "experienceConfig").disableExperienceTracking
+  ) {
+    const app = new ExperienceDistributor(combat);
+
+    if (app.getCharacters().length > 0) {
+      app.render(true);
+    } else {
+      app.close();
+    }
+  }
 });
 
 // Handle chat tooltips

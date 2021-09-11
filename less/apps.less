@@ -1418,3 +1418,72 @@
     }
   }
 }
+
+/* ----------------------------------------- */
+/* Experience Distributor
+/* ----------------------------------------- */
+.pf1.xp-distributor {
+  .character-selector,
+  .npc-selector {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+
+    .actor {
+      cursor: pointer;
+      width: 96px;
+      height: 160px;
+      padding: 4px;
+      align-items: center;
+
+      input[type="checkbox"] {
+        cursor: pointer;
+      }
+
+      img.portrait {
+        object-fit: contain;
+        width: 96px;
+        height: 96px;
+      }
+
+      span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: center;
+        width: 100%;
+      }
+
+      &.toggled {
+        background: rgba(155, 155, 155, 0.5);
+        span.name {
+          text-shadow: 0 0 10px red;
+        }
+      }
+
+      &:hover {
+        background: rgba(155, 155, 155, 0.2);
+        span.name {
+          text-shadow: 0 0 10px red;
+        }
+      }
+    }
+  }
+
+  .result {
+    border: 1px solid @colorTan;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 4px;
+
+    .property {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+
+      i {
+        flex: 0;
+        margin-right: 2px;
+      }
+    }
+  }
+}

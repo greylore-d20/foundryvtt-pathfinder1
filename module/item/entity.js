@@ -4644,11 +4644,8 @@ export class ItemPF extends Item {
     // Add size bonus
     if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
 
-    if (isManeuver) {
-      srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
-    } else {
-      srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
-    }
+    srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
+    if (isManeuver) srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
     srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
 
     const changeSources = ["attack"];

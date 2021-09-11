@@ -593,27 +593,27 @@ export class ActorPF extends Actor {
       const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
 
       // Set CL
+      let clTotal = 0;
       {
         const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
         const formula = getProperty(spellbook, "cl.formula") || "0";
-        let total = 0;
 
         // Add NPC base
         if (this.data.type === "npc") {
           const value = getProperty(spellbook, "cl.base") || 0;
-          total += value;
+          clTotal += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
         }
         // Add HD
         if (spellbook.class === "_hd") {
           const value = getProperty(this.data, "data.attributes.hd.total");
-          total += value;
+          clTotal += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
         }
         // Add class levels
         else if (spellbook.class && rollData.classes[spellbook.class]) {
           const value = rollData.classes[spellbook.class].level;
-          total += value;
+          clTotal += value;
 
           setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
         }
@@ -623,10 +623,10 @@ export class ActorPF extends Actor {
           const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
           const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
           const autoBonus = RollPF.safeTotal(autoFormula, rollData);
-          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+          const autoTotal = Math.max(1, Math.min(20, clTotal + autoBonus));
           setProperty(this.data, autoKey, autoTotal);
 
-          total += autoBonus;
+          clTotal += autoBonus;
           if (autoBonus !== 0) {
             const sign = autoBonus < 0 ? "negative" : "positive";
             setSourceInfoByName(
@@ -640,7 +640,7 @@ export class ActorPF extends Actor {
 
         // Add from bonus formula
         const clBonus = RollPF.safeRoll(formula, rollData).total;
-        total += clBonus;
+        clTotal += clBonus;
         if (clBonus > 0) {
           setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
         } else if (clBonus < 0) {
@@ -649,8 +649,8 @@ export class ActorPF extends Actor {
 
         if (getProperty(rollData, "attributes.woundThresholds.penalty") != null) {
           // Subtract Wound Thresholds penalty. Can't reduce below 1.
-          if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
-            total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
+          if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
+            clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
             setSourceInfoByName(
               this.sourceInfo,
               key,
@@ -662,7 +662,7 @@ export class ActorPF extends Actor {
 
         // Subtract energy drain
         if (rollData.attributes.energyDrain) {
-          total = Math.max(0, total - rollData.attributes.energyDrain);
+          clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
           setSourceInfoByName(
             this.sourceInfo,
             key,
@@ -672,7 +672,25 @@ export class ActorPF extends Actor {
           );
         }
 
-        setProperty(this.data, key, total);
+        setProperty(this.data, key, clTotal);
+      }
+
+      // Set concentration bonus
+      {
+        // Temp fix for old actors that fail migration
+        const key = `data.attributes.spells.spellbooks.${spellbookKey}.concentration`;
+        if (Number.isFinite(getProperty(this.data, key))) setProperty(this.data, key, {});
+
+        const concFormula = getProperty(
+          this.data,
+          `data.attributes.spells.spellbooks.${spellbookKey}.concentrationFormula`
+        );
+        let formulaRoll = 0;
+        if (concFormula.length) formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
+
+        let ablMod = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.mod`) ?? 0;
+        const concentration = clTotal + ablMod + formulaRoll - rollData.attributes.energyDrain;
+        setProperty(this.data, `${key}.total`, concentration);
       }
 
       const getAbilityBonus = (a) =>
@@ -1477,6 +1495,10 @@ export class ActorPF extends Actor {
       "data.abilities.int.checkMod": 0,
       "data.abilities.wis.checkMod": 0,
       "data.abilities.cha.checkMod": 0,
+      "data.attributes.spells.primary.concentration.total": 0,
+      "data.attributes.spells.secondary.concentration.total": 0,
+      "data.attributes.spells.tertiary.concentration.total": 0,
+      "data.attributes.spells.spelllike.concentration.total": 0,
       "data.details.carryCapacity.bonus.total": 0,
       "data.details.carryCapacity.multiplier.total": 0,
     };
@@ -2419,7 +2441,6 @@ export class ActorPF extends Actor {
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.data.data.abilities[spellbook.ability]?.mod ?? 0;
-    rollData.concentrationBonus = spellbook.concentration;
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
     if (allowed === false) return;
@@ -2445,7 +2466,7 @@ export class ActorPF extends Actor {
       parts: [
         `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
           CONFIG.PF1.abilities[spellbook.ability]
-        }] + (@concentrationBonus + @formulaBonus)[${game.i18n.localize("PF1.ByBonus")}]`,
+        }] + @formulaBonus[${game.i18n.localize("PF1.ByBonus")}]`,
       ],
       dice: options.dice,
       data: rollData,

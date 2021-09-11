@@ -1,28 +1,76 @@
 <div class="inventory-filters spellbook-filters">
-  <div class="flexrow spellcasting-misc pf1-sheet-group">
-    <div class="spellcasting-concentration flexrow" data-drag="concentration">
-      <div class="rollable image-d20"></div>
-      <label><h3>{{localize "PF1.Concentration"}}</h3></label>
+  <div class="flexrow spell-summary">
+    <table class="spellcasting-summary">
+      <thead>
+        <tr>
+          <th class="spellcasting-concentration rollable" data-drag="concentration"><i class="fas fa-dice"></i> {{localize "PF1.Concentration"}}</th>
+          <th class="spellcasting-cl rollable" data-drag="cl"><i class="fas fa-dice"></i> {{localize "PF1.CasterLevel"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="spellcasting-concentration-total">{{numberFormat spellbook.orig.concentration.total sign=true decimals=0}}</td>
+          <td class="spellcasting-casterlevel-total">{{numberFormat spellbook.orig.cl.total sign=true decimals=0}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="spell-range">
+      <thead>
+        <tr>
+          <th class="tooltip">
+            {{localize "PF1.DistClose"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.close : {{spellbook.orig.range.close}}
+            </div>
+          </th>
+          <th class="tooltip">
+            {{localize "PF1.DistMedium"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.medium : {{spellbook.orig.range.medium}}
+            </div>
+          </th>
+          <th class="tooltip">
+            {{localize "PF1.DistLong"}}
+
+            <div class="tooltipcontent">
+              @spells.{{spellbookIndex}}.range.long : {{spellbook.orig.range.long}}
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="range-close">{{spellbook.orig.range.close}}</td>
+          <td class="range-medium">{{spellbook.orig.range.medium}}</td>
+          <td class="range-long">{{spellbook.orig.range.long}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spellcasting-config">
+      <a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}"><i class="fas fa-cogs"></i></a>
+    </div>
+  </div>
+
+  <div class="hide spellbook-info_{{spellbookIndex}} {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}hidden{{/if}}">
+    <div class="flexrow">
+      <h3>{{localize "PF1.Concentration"}}</h3>
+      <h3>{{localize "PF1.CasterLevel"}}</h3>
+    </div>
+    <div class="flexrow spellcasting-bonus-formulas">
+      <h3>{{localize "PF1.BonusFormula"}}</h3>
       <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationFormula"
       value="{{spellbook.orig.concentrationFormula}}" placeholder="{{localize "PF1.ConcentrationBonusFormula"}}" />
-    </div>
-
-    <div class="spellcasting-cl flexrow" data-drag="cl">
-      <div class="rollable image-d20"></div>
-      <label><h3>{{localize "PF1.CasterLevel"}}</h3></label>
+      <h3>{{localize "PF1.BonusFormula"}}</h3>
       <input class="formula" type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.cl.formula"
       value="{{spellbook.orig.cl.formula}}" placeholder="{{localize "PF1.CasterLevelBonusFormula"}}" />
     </div>
-
-    <div class="spellcasting-config flexrow" style="flex: 0 5 5%; align-items: center; margin-left: auto; text-align: right;">
-      <label><a class="hide-show" data-for="spellbook-info_{{spellbookIndex}}"><i class="fas fa-cogs"></i></a></label>
-    </div>
-  </div>
-  <div class="hide spellbook-info_{{spellbookIndex}} {{#if (lookup hiddenElems (concat "spellbook-info_" spellbookIndex))}}hidden{{/if}}">
     <div class="flexrow spellcasting-notes pf1-sheet-group">
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.concentrationNotes" placeholder="{{localize "PF1.ConcentrationNotes"}}">{{spellbook.orig.concentrationNotes}}</textarea>
       <textarea name="data.attributes.spells.spellbooks.{{spellbookIndex}}.clNotes" placeholder="{{localize "PF1.CasterLevelNotes"}}">{{spellbook.orig.clNotes}}</textarea>
     </div>
+    <hr/>
 
     <div class="flexrow spell-settings">
       <div class="flexcol pf1-sheet-group">
@@ -266,43 +314,6 @@
         {{/if}}
       </div>
     </div>
-  </div>
-
-  <div class="flexrow spell-range">
-    <table>
-      <thead>
-        <tr>
-          <th class="tooltip">
-            {{localize "PF1.DistClose"}}
-
-            <div class="tooltipcontent">
-              @spells.{{spellbookIndex}}.range.close : {{spellbook.orig.range.close}}
-            </div>
-          </th>
-          <th class="tooltip">
-            {{localize "PF1.DistMedium"}}
-
-            <div class="tooltipcontent">
-              @spells.{{spellbookIndex}}.range.medium : {{spellbook.orig.range.medium}}
-            </div>
-          </th>
-          <th class="tooltip">
-            {{localize "PF1.DistLong"}}
-
-            <div class="tooltipcontent">
-              @spells.{{spellbookIndex}}.range.long : {{spellbook.orig.range.long}}
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="range-close">{{spellbook.orig.range.close}}</td>
-          <td class="range-medium">{{spellbook.orig.range.medium}}</td>
-          <td class="range-long">{{spellbook.orig.range.long}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
 

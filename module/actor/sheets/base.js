@@ -1144,9 +1144,9 @@ export class ActorSheetPF extends ActorSheet {
         this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this));
       });
 
-    html.find(".spellcasting-concentration .rollable").click(this._onRollConcentration.bind(this));
+    html.find(".spellcasting-concentration.rollable").click(this._onRollConcentration.bind(this));
 
-    html.find(".spellcasting-cl .rollable").click(this._onRollCL.bind(this));
+    html.find(".spellcasting-cl.rollable").click(this._onRollCL.bind(this));
 
     /* -------------------------------------------- */
     /*  Buffs

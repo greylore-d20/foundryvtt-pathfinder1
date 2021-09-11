@@ -2932,12 +2932,6 @@ export class ItemPF extends Item {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    if (!isCMB) {
-      // Add penalties for lacking shield and armor proficiencies. Push only if non-zero.
-      if (rollData.attributes.acp.attackPenalty > 0)
-        parts.push(`-@attributes.acp.attackPenalty[${game.i18n.localize("PF1.ACP")}]`);
-    }
-
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
     let roll = RollPF.safeRoll([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData);

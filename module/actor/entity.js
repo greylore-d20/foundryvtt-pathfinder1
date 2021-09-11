@@ -1409,7 +1409,6 @@ export class ActorPF extends Actor {
     }
 
     // Add extra data
-    console.log(this.name, extraData);
     const rollData = this.getRollData();
     for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
       for (let grp of Object.values(changeGrp)) {

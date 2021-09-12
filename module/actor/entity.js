@@ -2419,7 +2419,6 @@ export class ActorPF extends Actor {
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.data.data.abilities[spellbook.ability]?.mod ?? 0;
-    rollData.concentrationBonus = spellbook.concentration;
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
     if (allowed === false) return;
@@ -2445,7 +2444,7 @@ export class ActorPF extends Actor {
       parts: [
         `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
           CONFIG.PF1.abilities[spellbook.ability]
-        }] + (@concentrationBonus + @formulaBonus)[${game.i18n.localize("PF1.ByBonus")}]`,
+        }] + @formulaBonus[${game.i18n.localize("PF1.ByBonus")}]`,
       ],
       dice: options.dice,
       data: rollData,

@@ -14,6 +14,12 @@
 - Some attack bonuses/penalties weren't shown (!272 by mkahvi) (#784)
 - Some maneuver bonuses/penalties weren't shown (!271 by mkahvi) (#714, #481)
 - Various fixes to attack tooltips (!270 by mkahvi) (#1034)
+- Attack, Feat and Spell DC labels weren't being shown anymore (#988) (!292)
+- Token elevation handling was handling relative negative values as positive (#1047) (!295)
+- Item tags were visible to players while unidentified, possibly revealing its actual name (#1057) (!293)
+- Sources which set an actor's maximum dexterity bonus to 0 weren't being shown (#1039) (!289 by mkahvi)
+- Skills incorrectly added zero ACP values to their sources (!287 by mkahvi)
+- Changing a buff's icon didn't update the icon on tokens for that actor (!280)
 
 ### Changelog
 
@@ -21,6 +27,7 @@
 - Add conditionals and buffs to damage preview on actor sheets (!262 by mkahvi)
 - Add more spell details (!277 by mkahvi)
 - Allow translating sheet names (!273 by mkahvi)
+- Added a dialog for distributing experience points after a combat (!284)
 
 ### API
 
@@ -29,6 +36,10 @@
 ### Localization
 
 - Updated the German localization (thanks Nico Weichbrodt!)
+
+### Compendium
+
+- Wild Shape's casts per day formula was incorrect (!283 by scapegoat57)
 
 ## 0.79.0
 

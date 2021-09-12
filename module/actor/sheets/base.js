@@ -234,8 +234,6 @@ export class ActorSheetPF extends ActorSheet {
     data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
     data.meleeAttack = coreAttack + szMod + data.data.attributes.attack.melee + (meleeAtkAbl ?? 0);
     data.rangedAttack = coreAttack + szMod + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
-    data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
-    data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
     data.cmbAttack = coreAttack + szCMBMod + data.data.attributes.cmb.total + (cmbAbl ?? 0);
 
     // Add inventory value

@@ -3,6 +3,7 @@ export class ExperienceDistributor extends FormApplication {
     super(...args);
 
     this.combatants = this.getCombatants();
+    this.bonusXP = 0;
   }
 
   static get defaultOptions() {
@@ -10,8 +11,10 @@ export class ExperienceDistributor extends FormApplication {
       classes: ["pf1", "xp-distributor"],
       title: game.i18n.localize("PF1.Application.XPDistributor.Title"),
       template: "systems/pf1/templates/apps/xp-distributor.hbs",
-      width: 480,
-      height: "auto",
+      width: 430,
+      height: 794,
+      resizable: true,
+      scrollY: [".selectors"],
     });
   }
 
@@ -30,10 +33,12 @@ export class ExperienceDistributor extends FormApplication {
     // Add labels
     result.labels = {
       xp: {
-        total: `+${this.getTotalExperience()}`,
-        split: `+${this.getSplitExperience()}`,
+        total: `+ ${this.getTotalExperience().toLocaleString()}`,
+        split: `+ ${this.getSplitExperience().toLocaleString()}`,
       },
     };
+
+    result.bonusXP = this.bonusXP;
 
     return result;
   }
@@ -57,9 +62,13 @@ export class ExperienceDistributor extends FormApplication {
 
     addListener(".character-selector .actor, .npc-selector .actor", "click", this._onClickActor.bind(this));
 
-    addListener("input.bonus-xp", "change", (event) => {
+    addListener(".bonus-xp input", "change", (event) => {
       event.preventDefault();
-      return this.recalculateExperienceGain();
+
+      this.bonusXP = parseInt(event.currentTarget.value);
+      if (isNaN(this.bonusXP)) this.bonusXP = 0;
+
+      this.render();
     });
 
     addListener('button[name="split-evenly"], button[name="give-to-all"]', "click", this._onSubmit.bind(this));
@@ -117,12 +126,10 @@ export class ExperienceDistributor extends FormApplication {
 
   getTotalExperience() {
     const npcs = this.getNPCs().filter((o) => o.toggled);
-    let bonusXP = this.element?.length ? parseInt(this.element.find("input.bonus-xp")[0].value) : 0;
-    if (isNaN(bonusXP)) bonusXP = 0;
 
     return npcs.reduce((cur, o) => {
       return cur + o.xp;
-    }, bonusXP);
+    }, this.bonusXP);
   }
 
   getSplitExperience() {
@@ -146,12 +153,13 @@ export class ExperienceDistributor extends FormApplication {
       actorData: combatant.actor?.data ?? {},
       toggled: this.shouldCombatantBeToggled(combatant),
       xp,
+      xpString: xp.toLocaleString(),
     };
   }
 
   static shouldCombatantBeToggled(combatant) {
     const isPC = combatant.actor?.type === "character";
-    const isDefeated = combatant.data.defeated === true || combatant.actor.data?.attributes.hp.value < 0;
+    const isDefeated = combatant.data.defeated === true || combatant.actor?.data.data.attributes.hp.value < 0;
 
     if (!isPC && !isDefeated) return false;
 

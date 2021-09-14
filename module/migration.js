@@ -926,8 +926,12 @@ const _migrateActorDefenseAbility = function (ent, updateData) {
   if (normalACAbl === undefined) updateData["data.attributes.ac.normal.ability"] = "dex";
   const touchACAbl = getProperty(ent, "data.attributes.ac.touch.ability");
   if (touchACAbl === undefined) updateData["data.attributes.ac.touch.ability"] = "dex";
-  const cmdAbl = getProperty(ent, "data.attributes.cmd.dexAbility");
-  if (cmdAbl === undefined) updateData["data.attributes.cmd.dexAbility"] = "dex";
+
+  // CMD
+  const cmdDexAbl = getProperty(ent, "data.attributes.cmd.dexAbility");
+  if (cmdDexAbl === undefined) updateData["data.attributes.cmd.dexAbility"] = "dex";
+  const cmdStrAbl = getProperty(ent, "data.attributes.cmd.strAbility");
+  if (cmdStrAbl === undefined) updateData["data.attributes.cmd.strAbility"] = "str";
 };
 
 const _migrateActorInitAbility = function (ent, updateData) {

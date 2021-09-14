@@ -1128,8 +1128,7 @@ export class ActorPF extends Actor {
       const cmdDexAbl = this.data.data.attributes.cmd.dexAbility ?? "dex";
       let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
       let acTouchAblMod = getProperty(this.data, `data.abilities.${acTouchAbl}.mod`);
-      let cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`);
-
+      let cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`) ?? 0;
       if (this.flags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAblMod, 0);

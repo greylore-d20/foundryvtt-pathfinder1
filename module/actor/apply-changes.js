@@ -732,14 +732,12 @@ export const addDefaultChanges = function (changes) {
         name: game.i18n.localize("PF1.BAB"),
       });
     }
-    // Abilities to CMD
-    const dexAbl = getProperty(this.data, "data.attributes.cmd.dexAbility");
-    // Filter away empty and duplicate ability scores.
-    const abilities = [dexAbl, "str"].filter((a, i, abls) => !!a && abls.indexOf(a) === i);
-    for (let abl of abilities) {
+    // Strength or substitute to CMD
+    const strAbl = getProperty(this.data, "data.attributes.cmd.strAbility");
+    if (strAbl in CONFIG.PF1.abilities) {
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${abl}.mod`,
+          formula: `@abilities.${strAbl}.mod`,
           target: "misc",
           subTarget: "cmd",
           modifier: "untypedPerm",
@@ -747,8 +745,8 @@ export const addDefaultChanges = function (changes) {
       );
       for (const k of ["total", "flatFootedTotal"]) {
         getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
-          formula: `@abilities.${abl}.mod`,
-          name: CONFIG.PF1.abilities[abl],
+          formula: `@abilities.${strAbl}.mod`,
+          name: CONFIG.PF1.abilities[strAbl],
         });
       }
     }

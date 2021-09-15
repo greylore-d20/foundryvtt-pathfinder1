@@ -979,6 +979,19 @@ export class ActorPF extends Actor {
     // Prepare specific derived data
     this.prepareSpecificDerivedData();
 
+    // Prepare CMB total
+    {
+      const shrAtk = getProperty(this.data, "data.attributes.attack.shared") ?? 0,
+        genAtk = getProperty(this.data, "data.attributes.attack.general") ?? 0,
+        cmbAbl = getProperty(this.data, "data.attributes.cmbAbility"),
+        cmbAblMod = getProperty(this.data, `data.abilities.${cmbAbl}.mod`) ?? 0,
+        size = getProperty(this.data, "data.traits.size"),
+        szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
+        cmbBonus = getProperty(this.data, "data.attributes.cmb.bonus") ?? 0,
+        cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
+      setProperty(this.data, "data.attributes.cmb.total", cmb);
+    }
+
     // Setup links
     this.prepareItemLinks();
 
@@ -1455,6 +1468,7 @@ export class ActorPF extends Actor {
       "data.attributes.sr.total": 0,
       "data.attributes.init.bonus": 0,
       "data.attributes.init.total": 0,
+      "data.attributes.cmb.bonus": 0,
       "data.attributes.cmb.total": 0,
       "data.attributes.hp.max": getProperty(this.data, "data.attributes.hp.base") ?? 0,
       "data.attributes.vigor.max": getProperty(this.data, "data.attributes.vigor.base") ?? 0,
@@ -2265,7 +2279,7 @@ export class ActorPF extends Actor {
 
     const describePart = (value, label) => parts.push(`${value}[${label}]`);
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
-    srcDetails(this.sourceDetails["data.attributes.cmb.total"]);
+    srcDetails(this.sourceDetails["data.attributes.cmb.bonus"]);
     srcDetails(this.sourceDetails["data.attributes.attack.shared"]);
 
     // Unreliable melee/ranged identification

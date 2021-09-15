@@ -1,5 +1,7 @@
 <span class="tooltipcontent">
   @attributes.cmb.total : {{data.attributes.cmb.total}}<br/>
+  <br/>
+  @attributes.cmb.bonus : {{data.attributes.cmb.bonus}}<br/>
   + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
   + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
   + @abilities.{{data.attributes.cmbAbility}}.mod : {{abilityMod @root.data.attributes.cmbAbility @root.rollData 1}}<br/>
@@ -12,9 +14,9 @@
   {{#if sourceDetails.data.attributes.attack.general.length}}
   {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
   {{/if}}
-  {{#if sourceDetails.data.attributes.cmb.total.length}}
-  {{#each sourceDetails.data.attributes.cmb.total as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
+  {{#if sourceDetails.data.attributes.cmb.bonus.length}}
+  {{#each sourceDetails.data.attributes.cmb.bonus as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
   {{/if}}
 </span>
 
-{{numberFormat cmbAttack decimals=0 sign=true}}
+{{numberFormat data.attributes.cmb.total decimals=0 sign=true}}

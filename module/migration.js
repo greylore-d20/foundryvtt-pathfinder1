@@ -184,6 +184,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorStatures(actor, updateData, linked);
   _migrateActorInitAbility(actor, updateData, linked);
   _migrateActorChangeRevamp(actor, updateData, linked);
+  _migrateActorCMBRevamp(actor, updateData, linked);
   _migrateActorConditions(actor, updateData, linked);
   _migrateActorSkillRanks(actor, updateData, linked);
   _migrateCarryBonus(actor, updateData, linked);
@@ -938,6 +939,12 @@ const _migrateActorInitAbility = function (ent, updateData) {
   }
 };
 
+const _migrateActorCMBRevamp = function (ent, updateData, linked) {
+  if (getProperty(ent, "data.attributes.cmb.total") !== undefined) {
+    updateData["data.attributes.cmb.-=total"] = null;
+  }
+};
+
 const _migrateActorChangeRevamp = function (ent, updateData) {
   const keys = {
     "data.attributes.ac.normal.total": 10,
@@ -947,7 +954,6 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
     "data.attributes.cmd.flatFootedTotal": 10,
     "data.attributes.sr.total": 0,
     "data.attributes.init.total": 0,
-    "data.attributes.cmb.total": 0,
     "data.attributes.hp.max": 0,
   };
 

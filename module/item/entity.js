@@ -2783,7 +2783,7 @@ export class ItemPF extends Item {
 
     // CMB specific modifiers
     if (isCMB) {
-      this.parentActor.sourceDetails["data.attributes.cmb.total"]
+      this.parentActor.sourceDetails["data.attributes.cmb.bonus"]
         ?.reverse()
         .forEach((s) => parts.push(`${s.value}[${s.name}]`));
     }
@@ -4645,7 +4645,7 @@ export class ItemPF extends Item {
     if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
 
     srcDetails(this.parentActor.sourceDetails["data.attributes.attack.shared"]);
-    if (isManeuver) srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.total"]);
+    if (isManeuver) srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.bonus"]);
     srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
 
     const changeSources = ["attack"];

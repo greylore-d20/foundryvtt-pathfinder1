@@ -862,8 +862,10 @@ export class ActorPF extends Actor {
                 available += RollPF.safeTotal(formula, rollData);
 
                 const used = spells.reduce((acc, i) => {
-                  const { level, spellbook, preparation } = i.data.data;
-                  return level === a && spellbook === spellbookKey && preparation.spontaneousPrepared ? ++acc : acc;
+                  const { level, spellbook, preparation, atWill } = i.data.data;
+                  return level === a && spellbook === spellbookKey && !atWill && preparation.spontaneousPrepared
+                    ? ++acc
+                    : acc;
                 }, 0);
 
                 remaining = available - used;

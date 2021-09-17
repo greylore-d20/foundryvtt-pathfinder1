@@ -4737,10 +4737,12 @@ export class ItemPF extends Item {
         if (m.target !== "damage") continue;
         const roll = RollPF.safeRoll(m.formula, rollData);
         if (roll.err) continue;
+        const isModifier = mods.includes(m.type);
         fakeCondChanges.push({
           flavor: c.name,
           value: roll.total,
-          modifier: mods.includes(m.type) ? m.type : "untyped",
+          modifier: isModifier ? m.type : "untyped", // Turn unrecognized types to untyped
+          type: isModifier ? undefined : m.type, // Preserve damage type if present
           formula: m.formula,
         });
       }

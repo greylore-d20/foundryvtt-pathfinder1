@@ -289,6 +289,9 @@ export class ChatAttack {
       flavor = game.i18n.localize("PF1.Nonlethal");
     }
 
+    // Handle nonlethal attacks
+    if (this.item.data.data.nonlethal) flavor = game.i18n.localize("PF1.Nonlethal");
+
     // Add card
     if (critical) {
       if (!this.cards.critical)

@@ -1051,14 +1051,11 @@ export class ActorPF extends Actor {
 
     // Shared attack bonuses
     {
-      // Size
-      const sizeMod = CONFIG.PF1.sizeMods[this.data.data.traits.size];
       // Total
       const totalAtk =
         (getProperty(this.data, "data.attributes.bab.total") ?? 0) -
         (getProperty(this.data, "data.attributes.acp.attackPenalty") ?? 0) -
-        (getProperty(this.data, "data.attributes.energyDrain") ?? 0) +
-        sizeMod;
+        (getProperty(this.data, "data.attributes.energyDrain") ?? 0);
       setProperty(this.data, "data.attributes.attack.shared", totalAtk);
     }
 

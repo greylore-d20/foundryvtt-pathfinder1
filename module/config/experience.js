@@ -37,6 +37,7 @@ export class ExperienceConfig extends FormApplication {
     return {
       track: "medium",
       disableExperienceTracking: false,
+      openXpDistributor: true,
       custom: {
         formula: "",
       },

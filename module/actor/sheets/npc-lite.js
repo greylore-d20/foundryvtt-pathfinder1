@@ -23,7 +23,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
   _prepareItems(data) {
     const [attacks] = data.items.reduce(
       (arr, item) => {
-        item.img = item.img || DEFAULT_TOKEN;
+        item.img = item.img || foundry.data.ItemData.DEFAULT_ICON;
         item.hasUses = item.data.uses && item.data.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
 

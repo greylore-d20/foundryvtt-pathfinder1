@@ -7,9 +7,6 @@ module.exports = {
   },
   extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
   parser: "@babel/eslint-parser",
-  ecmaFeatures: {
-    classes: true,
-  },
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
@@ -26,11 +23,11 @@ module.exports = {
     "no-param-reassign": "off",
     "no-continue": "off",
     "no-console": "off",
-    //"brace-style": ["error"],
     "no-unused-vars": "off",
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
+    "jsdoc/no-undefined-types": ["warn", { definedTypes: ["Record"] }],
   },
   settings: {
     jsdoc: {

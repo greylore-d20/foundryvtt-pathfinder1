@@ -2835,7 +2835,9 @@ export class ItemPF extends Item {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty
-    if (primaryAttack === false) parts.push(`-5[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    if (this.data.data.attackType === "natural" && primaryAttack === false) {
+      parts.push(`-5[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    }
     // Add bonus
     if (bonus) {
       rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
@@ -2869,7 +2871,8 @@ export class ItemPF extends Item {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
-    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
+    if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
+      rollData.ablMult = 0.5;
 
     // Create effect string
     let effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
@@ -2947,7 +2950,8 @@ export class ItemPF extends Item {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (rollData.ablMult == null) rollData.ablMult = this.data.data.ability.damageMult;
-    if (primaryAttack === false && rollData.ablMult > 0) rollData.ablMult = 0.5;
+    if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
+      rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = this.data.data.damage.parts.map((p) => {

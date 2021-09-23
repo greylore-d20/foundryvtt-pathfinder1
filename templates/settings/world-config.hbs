@@ -1,0 +1,82 @@
+<form autocomplete="off">
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="damage-types"><i class="fas fa-fire"></i> {{localize "PF1.WorldConfig.Tabs.DamageTypes"}}</a>
+    <a class="item" data-tab="materials"><i class="fas fa-box-open"></i> {{localize "PF1.WorldConfig.Tabs.Materials"}}</a>
+    <a class="item" data-tab="dr-types"><i class="fas fa-shield-alt"></i> {{localize "PF1.WorldConfig.Tabs.DR"}}</a>
+  </nav>
+
+  <section class="tabs primary">
+    {{!-- Damage Types --}}
+    <div class="tab damage-types item-list flexcol" data-tab="damage-types" data-list-type="damageType">
+      <div class="header">
+        <span class="name">{{localize "PF1.Name"}}</span>
+        <div class="item-controls">
+          <a data-action="add"><i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+
+      <ul class="items">
+        {{#each damageTypes as |i|}}
+        <li class="item flexrow" data-key="{{i.key}}">
+          <div class="draggable" draggable="true"></div>
+          <img src="{{i.img}}" name="img" data-action="file-picker"></img>
+          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <div class="item-controls flexrow">
+            <a data-action="delete"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    {{!-- Materials --}}
+    <div class="tab materials item-list flexcol" data-tab="materials" data-list-type="material">
+      <div class="header">
+        <span class="name">{{localize "PF1.Name"}}</span>
+        <span class="hardness">{{localize "PF1.Hardness"}}</span>
+        <span class="hp-per">{{localize "PF1.HPPerInch"}}</span>
+        <div class="item-controls">
+          <a data-action="add"><i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+
+      <ul class="items">
+        {{#each materials as |i|}}
+        <li class="item flexrow" data-key="{{i.key}}">
+          <div class="draggable" draggable="true"></div>
+          <img src="{{i.img}}" name="img" data-action="file-picker"></img>
+          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <input class="hardness" type="text" name="hardness" value="{{i.hardness}}" placeholder="{{localize "PF1.Hardness"}}"/>
+          <input class="hp-per" type="text" name="hpPer" value="{{i.hpPer}}" placeholder="0"/>
+          <div class="item-controls flexrow">
+            <a data-action="delete"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    {{!-- DR types --}}
+    <div class="tab dr-types item-list flexcol" data-tab="dr-types" data-list-type="dr">
+      <div class="header">
+        <span class="name">{{localize "PF1.Name"}}</span>
+        <div class="item-controls">
+          <a data-action="add"><i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+
+      <ul class="items">
+        {{#each dr as |i|}}
+        <li class="item flexrow" data-key="{{i.key}}">
+          <div class="draggable" draggable="true"></div>
+          <img src="{{i.img}}" name="img" data-action="file-picker"></img>
+          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <div class="item-controls flexrow">
+            <a data-action="delete"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </section>
+</form>

@@ -3,6 +3,7 @@ import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
 import { TooltipConfig } from "./config/tooltip.js";
 import { TooltipWorldConfig } from "./config/tooltip_world.js";
+import { WorldConfig } from "./config/world-config.js";
 
 export const registerSystemSettings = function () {
   /**
@@ -31,6 +32,23 @@ export const registerSystemSettings = function () {
     config: false,
     type: Boolean,
     default: false,
+  });
+
+  // World configuration
+  game.settings.registerMenu("pf1", "worldConfig", {
+    name: "PF1.WorldConfig.Name",
+    label: "PF1.WorldConfig.Label",
+    hint: "PF1.WorldConfig.Hint",
+    icon: "fas fa-globe",
+    type: WorldConfig,
+    restricted: true,
+  });
+  game.settings.register("pf1", "worldConfig", {
+    name: "PF1.WorldConfig.Name",
+    scope: "world",
+    default: WorldConfig.defaultSettings,
+    type: Object,
+    config: false,
   });
 
   // Health configuration

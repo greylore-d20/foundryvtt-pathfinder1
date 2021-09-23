@@ -76,6 +76,7 @@ import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
+import { WorldConfig } from "./module/config/world-config.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -161,6 +162,10 @@ Hooks.once("init", function () {
     // Components
     documentComponents: {
       ItemChange,
+    },
+    // Settings
+    settings: {
+      WorldConfig,
     },
     // API
     registry: Registry,

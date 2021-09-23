@@ -210,6 +210,11 @@ export class WorldConfig extends FormApplication {
           img: "icons/weapons/hammers/hammer-double-steel-embossed.webp",
         },
         {
+          name: "Magic",
+          showAs: "",
+          img: "icons/magic/lightning/orb-ball-purple.webp",
+        },
+        {
           name: "Cold Iron",
           showAs: "",
           img: "icons/commodities/metal/ingot-worn-steel.webp",

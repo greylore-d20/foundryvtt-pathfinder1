@@ -20,7 +20,7 @@
         <li class="item flexrow" data-key="{{i.key}}">
           <div class="draggable" draggable="true"></div>
           <img src="{{i.img}}" name="img" data-action="file-picker"></img>
-          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <input class="name data-field" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
           <div class="item-controls flexrow">
             <a data-action="delete"><i class="fas fa-trash"></i></a>
           </div>
@@ -45,9 +45,9 @@
         <li class="item flexrow" data-key="{{i.key}}">
           <div class="draggable" draggable="true"></div>
           <img src="{{i.img}}" name="img" data-action="file-picker"></img>
-          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
-          <input class="hardness" type="text" name="hardness" value="{{i.hardness}}" placeholder="{{localize "PF1.Hardness"}}"/>
-          <input class="hp-per" type="text" name="hpPer" value="{{i.hpPer}}" placeholder="0"/>
+          <input class="name data-field" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <input class="hardness data-field" type="text" name="hardness" value="{{i.hardness}}" placeholder="{{localize "PF1.Hardness"}}"/>
+          <input class="hp-per data-field" type="text" name="hpPer" value="{{i.hpPer}}" placeholder="0"/>
           <div class="item-controls flexrow">
             <a data-action="delete"><i class="fas fa-trash"></i></a>
           </div>
@@ -60,6 +60,7 @@
     <div class="tab dr-types item-list flexcol" data-tab="dr-types" data-list-type="dr">
       <div class="header">
         <span class="name">{{localize "PF1.Name"}}</span>
+        <span class="show-as">{{localize "PF1.ShowAs"}}</span>
         <div class="item-controls">
           <a data-action="add"><i class="fas fa-plus"></i></a>
         </div>
@@ -70,7 +71,8 @@
         <li class="item flexrow" data-key="{{i.key}}">
           <div class="draggable" draggable="true"></div>
           <img src="{{i.img}}" name="img" data-action="file-picker"></img>
-          <input class="name" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <input class="name data-field" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
+          <input class="show-as data-field" type="text" name="showAs" value="{{i.showAs}}" placeholder="{{i.showAsPlaceholder}}"/>
           <div class="item-controls flexrow">
             <a data-action="delete"><i class="fas fa-trash"></i></a>
           </div>

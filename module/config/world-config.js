@@ -278,6 +278,7 @@ export class WorldConfig extends FormApplication {
     const settings = duplicate(this.settings);
 
     const { listKey } = this.getListVariables(type);
+    const hookArgs = [];
 
     // Alter slot data
     let hasChanges = false;
@@ -287,12 +288,16 @@ export class WorldConfig extends FormApplication {
         mergeObject(item, pair.data);
         hasChanges = true;
         updateData.splice(updateData.indexOf(pair), 1);
+        hookArgs.push([item, pair]);
       }
     }
 
     // Apply results
     if (hasChanges) {
       await game.settings.set("pf1", "worldConfig", settings);
+      for (let args of hookArgs) {
+        Hooks.callAll(`pf1.worldData.update.${type}`, ...args);
+      }
     }
     return settings;
   }
@@ -464,6 +469,7 @@ export class WorldConfig extends FormApplication {
           o,
           {
             key: slugify(o.name),
+            showAsPlaceholder: o.name.toLowerCase(),
           },
           { inplace: false }
         )
@@ -481,7 +487,7 @@ export class WorldConfig extends FormApplication {
     // ----------------------------- //
     //  Slots                        //
     // ----------------------------- //
-    html.find('.item-list .item input[name="name"]').on("change", this._onChangeListObjectName.bind(this));
+    html.find('.item-list .item input.data-field[type="text"]').on("change", this._onChangeListObjectText.bind(this));
     html.find('.item-list .item img[data-action="file-picker"]').on("click", this._onChangeListObjectImage.bind(this));
     html.find(".item-list .item .item-controls a").on("click", this._onListObjectControl.bind(this));
 
@@ -516,40 +522,42 @@ export class WorldConfig extends FormApplication {
     this.render();
   }
 
-  async _onChangeListObjectName(event) {
+  async _onChangeListObjectText(event) {
     const elem = event.currentTarget;
     const listType = elem.closest(".item-list").dataset.listType;
-    const { list, listKey } = this.constructor.getListVariables(listType);
+    const { list } = this.constructor.getListVariables(listType);
     const key = elem.closest(".item").dataset.key;
 
-    const prevName = this.constructor.settings[listKey].find((o) => slugify(o.name) === key)?.name;
-    if (!prevName) return;
+    const dataPath = elem.name;
+    const isName = dataPath === "name";
+    const listObj = this.constructor.getListObject(listType, key);
 
-    const newName = elem.value;
-    const newKey = slugify(newName);
+    const newValue = elem.value;
 
     // Abort if new name is empty
-    if (!newName) {
+    if (isName && !newValue) {
       this.render();
       return;
     }
 
     // Abort if it would create a duplicate key
-    if (list.filter((o) => slugify(o.name) === newKey).length > 0 && key !== newKey) {
-      this.render();
-      return;
+    if (isName) {
+      const newKey = slugify(newValue);
+      if (list.filter((o) => slugify(o.name) === newKey).length > 0 && key !== newKey) {
+        this.render();
+        return;
+      }
     }
 
     // Change name
     this.object = await this.constructor.updateListData(listType, [
       {
-        name: prevName,
+        name: listObj.name,
         data: {
-          name: newName,
+          [dataPath]: newValue,
         },
       },
     ]);
-    Hooks.callAll(`pf1.worldData.rename.${listType}`, prevName, newName);
     this.render();
   }
 

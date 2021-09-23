@@ -3770,7 +3770,7 @@ export class ActorPF extends Actor {
     }, base);
   }
 
-  async deleteEmbeddedEntity(embeddedName, data, options = {}) {
+  async deleteEmbeddedDocuments(embeddedName, data, options = {}) {
     if (embeddedName === "Item") {
       if (!(data instanceof Array)) data = [data];
 
@@ -3797,7 +3797,7 @@ export class ActorPF extends Actor {
       }
     }
 
-    super.deleteEmbeddedEntity(embeddedName, data, options);
+    await super.deleteEmbeddedDocuments(embeddedName, data, options);
   }
 
   getQuickActions() {

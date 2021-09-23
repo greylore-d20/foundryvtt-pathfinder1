@@ -3282,13 +3282,17 @@ export class ActorPF extends Actor {
   }
 
   async createEmbeddedDocuments(embeddedName, createData, options = {}) {
-    let noArray = false;
-    if (!(createData instanceof Array)) {
-      createData = [createData];
-      noArray = true;
+    createData = createData instanceof Array ? createData : [createData];
+    const rv = await super.createEmbeddedDocuments(embeddedName, createData, options);
+
+    // Create class
+    for (let item of rv) {
+      if (item.type === "class") {
+        await item._onLevelChange(0, item.data.data.level);
+      }
     }
 
-    return super.createEmbeddedDocuments(embeddedName, noArray ? createData[0] : createData, options);
+    return rv;
   }
 
   /**

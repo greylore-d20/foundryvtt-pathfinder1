@@ -818,6 +818,16 @@ export class ItemPF extends Item {
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
+    // Update class
+    {
+      const newLevel = data["data.level"];
+      if (this.type === "class" && newLevel !== undefined) {
+        const prevLevel = this._prevLevel ?? newLevel;
+        if (this._prevLevel !== undefined) delete this._prevLevel;
+        await this._onLevelChange(prevLevel, newLevel);
+      }
+    }
+
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
       const changeIndexes = [];
@@ -3780,14 +3790,14 @@ export class ItemPF extends Item {
         const itemData = duplicate(item.data);
 
         // Set temporary flag
-        setProperty(itemData, "flags.pf1.__co", duplicate(co));
+        setProperty(itemData, "flags.pf1.__co.level", duplicate(co.level));
 
         delete itemData._id;
         newItems.push({ data: itemData, co: co });
       }
 
       if (newItems.length) {
-        const items = await CONFIG.Item.documentClass.create(
+        const items = await Item.implementation.createDocuments(
           newItems.map((o) => o.data),
           { parent: this.parentActor }
         );
@@ -3803,8 +3813,7 @@ export class ItemPF extends Item {
           updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
         }
         if (updateData.length) {
-          await this.parentActor.refresh();
-          await CONFIG.Item.documentClass.updateDocuments(updateData, { parent: this.parentActor });
+          await Item.implementation.updateDocuments(updateData, { parent: this.parentActor });
         }
       }
       // const newItemData = await ItemPF.create(itemData, { parent: this.parent });
@@ -3833,7 +3842,7 @@ export class ItemPF extends Item {
         }
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
-      await CONFIG.Item.documentClass.deleteDocuments(itemIds, { parent: this.parent });
+      await Item.implementation.deleteDocuments(itemIds, { parent: this.parent });
     }
 
     // Call level change hook

@@ -137,8 +137,7 @@ export class LevelUpForm extends DocumentSheet {
 
     // Update class
     updateData["data.level"] = chatData.level.new;
-    this.object.update(updateData);
-    await new Promise((resolve) => {
+    const lup = new Promise((resolve) => {
       Hooks.on(
         "pf1.classLevelChange",
         function _waiter(actor, item) {
@@ -149,6 +148,8 @@ export class LevelUpForm extends DocumentSheet {
         }.bind(this)
       );
     });
+    const up = this.object.update(updateData);
+    await Promise.allSettled([up, lup]);
 
     // Add new class features to chat data
     {

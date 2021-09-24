@@ -887,3 +887,22 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
   if (foundDoc) return { pack: foundPack, index: foundDoc };
   return false;
 };
+
+/**
+ * Generates a unique name within a list of existing names.
+ *
+ * @param {string[]} nameList - All the current names to compare to.
+ * @param {string} name - The name to try to create. Will append a number if the key created from it is not unique.
+ * @returns {string} The actual new name to take.
+ */
+export const uniqueName = function (nameList, name = "New Item") {
+  let count = 2;
+  let result = name;
+
+  while (nameList.includes(result)) {
+    result = `${name} (${count})`;
+    count++;
+  }
+
+  return result;
+};

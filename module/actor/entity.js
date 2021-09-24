@@ -4188,7 +4188,7 @@ export class ActorPF extends Actor {
 
   /**
    * @typedef {object} ActorPF~EnergyResistance
-   * @property {string} type - The type (slugified name) of the energy resistance in question.
+   * @property {string} type - The type (ID) of the energy resistance in question.
    * @property {number} value - The actual value of the energy resistance.
    * @property {ItemChange} source - The source of the resistance.
    */
@@ -4227,7 +4227,7 @@ export class ActorPF extends Actor {
 
   /**
    * @typedef {object} ActorPF~DamageReduction
-   * @property {string[]} types - The types (slugified names) of the properties that will bypass this damage reduction.
+   * @property {string[]} types - The types (IDs) of the properties that will bypass this damage reduction.
    * @property {number} value - The actual value of the damage reduction.
    * @property {boolean} and - Whether the logical operator is 'and' (e.g. piercing and slashing) or 'or' (e.g. piercing or slashing).
    * @property {ItemChange} source - The source of the damage reduction.

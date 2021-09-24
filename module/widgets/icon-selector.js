@@ -1,6 +1,5 @@
 import { ItemChange } from "../../pf1.js";
 import { WorldConfig } from "../config/world-config.js";
-import { slugify } from "../data-lib.js";
 
 /**
  * @param {Widget_IconSelector~Items} [items] - A list of items to initialize this widget with.
@@ -217,7 +216,7 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
     if (list) {
       return list.map((o) => {
         return {
-          key: slugify(o.name),
+          key: o.id,
           img: o.img,
           tooltip: o.name,
         };

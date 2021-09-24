@@ -1,4 +1,4 @@
-import { slugify, uniqueKey } from "../data-lib.js";
+import { uniqueName } from "../lib.js";
 
 /**
  * A string identifying the type of list on the world configuration we are talking about.
@@ -14,6 +14,7 @@ export class WorldConfig extends FormApplication {
 
   static get defaultDamageTypeData() {
     return {
+      id: randomID(16),
       name: game.i18n.localize("PF1.WorldConfig.DamageType.NewName"),
       img: "icons/svg/sword.svg",
     };
@@ -21,6 +22,7 @@ export class WorldConfig extends FormApplication {
 
   static get defaultMaterialData() {
     return {
+      id: randomID(16),
       name: game.i18n.localize("PF1.WorldConfig.Material.NewName"),
       img: "icons/svg/coins.svg",
       hardness: 10,
@@ -31,6 +33,7 @@ export class WorldConfig extends FormApplication {
 
   static get defaultDRData() {
     return {
+      id: randomID(16),
       name: game.i18n.localize("PF1.WorldConfig.DR.NewName"),
       showAs: "",
       img: "icons/svg/statue.svg",
@@ -54,56 +57,69 @@ export class WorldConfig extends FormApplication {
     return {
       damageTypes: [
         {
+          id: randomID(16),
           name: "Untyped",
           img: "icons/skills/wounds/injury-body-pain-gray.webp",
         },
         {
+          id: randomID(16),
           name: "Slashing",
           img: "icons/weapons/axes/axe-battle-black.webp",
         },
         {
+          id: randomID(16),
           name: "Piercing",
           img: "icons/weapons/polearms/spear-flared-blue.webp",
         },
         {
+          id: randomID(16),
           name: "Bludgeoning",
           img: "icons/weapons/hammers/hammer-double-steel-embossed.webp",
         },
         {
+          id: randomID(16),
           name: "Fire",
           img: "icons/magic/fire/blast-jet-stream-splash.webp",
         },
         {
+          id: randomID(16),
           name: "Cold",
           img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
         },
         {
+          id: randomID(16),
           name: "Electricity",
           img: "icons/magic/lightning/bolt-blue.webp",
         },
         {
+          id: randomID(16),
           name: "Acid",
           img: "icons/magic/acid/dissolve-pool-bubbles.webp",
         },
         {
+          id: randomID(16),
           name: "Sonic",
           img: "icons/magic/sonic/explosion-shock-wave-teal.webp",
         },
         {
+          id: randomID(16),
           name: "Force",
           img: "icons/magic/lightning/orb-ball-purple.webp",
         },
         {
+          id: randomID(16),
           name: "Positive Energy",
           img: "icons/magic/light/beam-strike-orange-gold.webp",
         },
         {
+          id: randomID(16),
           name: "Negative Energy",
           img: "icons/magic/unholy/orb-rays-blue.webp",
         },
       ],
       materials: [
         {
+          id: randomID(16),
           name: "Steel",
           img: "icons/commodities/metal/ingot-plain-steel.webp",
           hardness: 10,
@@ -111,6 +127,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Cold Iron",
           img: "icons/commodities/metal/ingot-worn-steel.webp",
           hardness: 10,
@@ -118,6 +135,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: ["cold-iron"],
         },
         {
+          id: randomID(16),
           name: "Alchemical Silver",
           img: "icons/commodities/metal/ingot-engraved-silver.webp",
           hardness: 8,
@@ -125,6 +143,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: ["silver"],
         },
         {
+          id: randomID(16),
           name: "Mithral",
           img: "icons/commodities/metal/ingot-stamped-silver.webp",
           hardness: 15,
@@ -132,6 +151,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: ["silver"],
         },
         {
+          id: randomID(16),
           name: "Adamantine",
           img: "icons/commodities/metal/ingot-stamped-purple.webp",
           hardness: 20,
@@ -139,6 +159,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: ["adamantine"],
         },
         {
+          id: randomID(16),
           name: "Glass",
           img: "icons/tools/laboratory/alembic-glass-ball-blue.webp",
           hardness: 1,
@@ -146,6 +167,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Paper",
           img: "icons/sundries/documents/paper-plain-white.webp",
           hardness: 0,
@@ -153,6 +175,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Cloth",
           img: "icons/commodities/cloth/cloth-bolt-yellow.webp",
           hardness: 0,
@@ -160,6 +183,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Ice",
           img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
           hardness: 0,
@@ -167,6 +191,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Leather",
           img: "icons/commodities/leather/leather-bolt-tan.webp",
           hardness: 2,
@@ -174,6 +199,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Wood",
           img: "icons/commodities/wood/lumber-stack.webp",
           hardness: 5,
@@ -181,6 +207,7 @@ export class WorldConfig extends FormApplication {
           bypassesDR: [],
         },
         {
+          id: randomID(16),
           name: "Stone",
           img: "icons/commodities/stone/ore-chunk-grey.webp",
           hardness: 8,
@@ -190,66 +217,79 @@ export class WorldConfig extends FormApplication {
       ],
       dr: [
         {
+          id: randomID(16),
           name: "Untyped",
           showAs: "-",
           img: "icons/skills/wounds/injury-body-pain-gray.webp",
         },
         {
+          id: randomID(16),
           name: "Slashing",
           showAs: "",
           img: "icons/weapons/axes/axe-battle-black.webp",
         },
         {
+          id: randomID(16),
           name: "Piercing",
           showAs: "",
           img: "icons/weapons/polearms/spear-flared-blue.webp",
         },
         {
+          id: randomID(16),
           name: "Bludgeoning",
           showAs: "",
           img: "icons/weapons/hammers/hammer-double-steel-embossed.webp",
         },
         {
+          id: randomID(16),
           name: "Magic",
           showAs: "",
           img: "icons/magic/lightning/orb-ball-purple.webp",
         },
         {
+          id: randomID(16),
           name: "Cold Iron",
           showAs: "",
           img: "icons/commodities/metal/ingot-worn-steel.webp",
         },
         {
+          id: randomID(16),
           name: "Silver",
           showAs: "",
           img: "icons/commodities/metal/ingot-engraved-silver.webp",
         },
         {
+          id: randomID(16),
           name: "Adamantine",
           showAs: "",
           img: "icons/commodities/metal/ingot-stamped-purple.webp",
         },
         {
+          id: randomID(16),
           name: "Good",
           showAs: "",
           img: "icons/magic/holy/angel-winged-humanoid-blue.webp",
         },
         {
+          id: randomID(16),
           name: "Evil",
           showAs: "",
           img: "icons/magic/unholy/hand-claw-glow-orange.webp",
         },
         {
+          id: randomID(16),
           name: "Lawful",
           showAs: "",
           img: "icons/magic/symbols/cog-shield-white-blue.webp",
         },
         {
+          id: randomID(16),
           name: "Chaotic",
           showAs: "",
           img: "icons/magic/fire/projectile-fireball-purple.webp",
         },
         {
+          id: randomID(16),
           name: "Epic",
           showAs: "",
           img: "icons/magic/movement/trail-streak-pink.webp",
@@ -307,7 +347,7 @@ export class WorldConfig extends FormApplication {
    * @property {Object[]} list - The list in question.
    * @property {string} listKey - The key of the list object on the settings object.
    * @property {Object} defaultData - The default data of objects associated with the list.
-   * @property {string[]} itemKeys - All the keys (slugified names) of the items within the list.
+   * @property {string[]} itemIDs - All the IDs of the items within the list.
    */
   /**
    * Returns some variables about one of the world configuration's lists.
@@ -338,22 +378,22 @@ export class WorldConfig extends FormApplication {
 
     if (!list || !defaultData) return null;
 
-    const itemKeys = list.map((o) => slugify(o.name));
+    const itemIDs = list.map((o) => o.id);
 
-    return { list, listKey, defaultData, itemKeys };
+    return { list, listKey, defaultData, itemIDs };
   }
 
   /**
    * Finds an object from a list within the world data.
    *
    * @param {WorldConfig.ListType} type - The type of list to find an object in.
-   * @param {string} key - The key (slugified name) of the object to find.
+   * @param {string} id - The ID of the object to find.
    * @returns {Object} The data object, if found.
    */
-  static getListObject(type, key) {
+  static getListObject(type, id) {
     const { list } = this.getListVariables(type);
 
-    return list.find((o) => slugify(o.name) === key);
+    return list.find((o) => o.id === id);
   }
 
   /**
@@ -368,12 +408,12 @@ export class WorldConfig extends FormApplication {
     const { list, defaultData } = this.getListVariables(type, settings);
 
     const keys = list.reduce((cur, o) => {
-      cur.push(slugify(o.name));
+      cur.push(o.id);
       return cur;
     }, []);
 
     const newData = mergeObject(defaultData, data);
-    newData.name = uniqueKey(keys, newData.name);
+    newData.name = uniqueName(keys, newData.name);
 
     list.push(newData);
     await game.settings.set("pf1", "worldConfig", settings);
@@ -385,16 +425,18 @@ export class WorldConfig extends FormApplication {
    * Removes an object from one of the world configuration's lists.
    *
    * @param {WorldConfig.ListType} type - The type of list to remove from.
-   * @param {string} key - The key (slugified name) of the item to remove.
+   * @param {string} id - The id of the item to remove.
    * @returns {Object} The new world settings data object.
    */
-  static async removeListObject(type, key) {
+  static async removeListObject(type, id) {
     const settings = duplicate(this.settings);
     const { list, listKey } = this.getListVariables(type, settings);
-    settings[listKey] = list.filter((o) => slugify(o.name) !== key);
+    const obj = list.find((o) => o.id === id);
+    if (!obj) return settings;
 
+    settings[listKey].splice(settings[listKey].indexOf(obj), 1);
     await game.settings.set("pf1", "worldConfig", settings);
-    Hooks.callAll(`pf1.worldData.delete.${type}`, key);
+    Hooks.callAll(`pf1.worldData.delete.${type}`, obj);
     return settings;
   }
 
@@ -402,8 +444,8 @@ export class WorldConfig extends FormApplication {
    * Moves a list object within its list, reordering it.
    *
    * @param {WorldConfig.ListType} type - The type of list to move an object in.
-   * @param {string} from - The slugified name of the item to move around.
-   * @param {string} to - The slugified name of the item to move just above of (if earlier) of just below (if later).
+   * @param {string} from - The id of the item to move around.
+   * @param {string} to - The id of the item to move just above of (if earlier) of just below (if later).
    * @returns {Object} The new world settings data object.
    */
   static async moveListObject(type, from, to) {
@@ -412,8 +454,8 @@ export class WorldConfig extends FormApplication {
 
     if (from === to) return settings;
 
-    const fromObj = list.find((o) => slugify(o.name) === from);
-    const toObj = list.find((o) => slugify(o.name) === to);
+    const fromObj = list.find((o) => o.id === from);
+    const toObj = list.find((o) => o.id === to);
     const fromIdx = list.indexOf(fromObj);
     const toIdx = list.indexOf(toObj);
 
@@ -438,7 +480,7 @@ export class WorldConfig extends FormApplication {
         mergeObject(
           o,
           {
-            key: slugify(o.name),
+            key: o.id,
           },
           { inplace: false }
         )
@@ -453,7 +495,7 @@ export class WorldConfig extends FormApplication {
         mergeObject(
           o,
           {
-            key: slugify(o.name),
+            key: o.id,
           },
           { inplace: false }
         )
@@ -468,7 +510,7 @@ export class WorldConfig extends FormApplication {
         mergeObject(
           o,
           {
-            key: slugify(o.name),
+            key: o.id,
             showAsPlaceholder: o.name.toLowerCase(),
           },
           { inplace: false }
@@ -542,8 +584,7 @@ export class WorldConfig extends FormApplication {
 
     // Abort if it would create a duplicate key
     if (isName) {
-      const newKey = slugify(newValue);
-      if (list.filter((o) => slugify(o.name) === newKey).length > 0 && key !== newKey) {
+      if (list.filter((o) => o.name === newValue).length > 0) {
         this.render();
         return;
       }
@@ -566,8 +607,8 @@ export class WorldConfig extends FormApplication {
     const { listKey } = this.constructor.getListVariables(listType);
 
     return new Promise((resolve, reject) => {
-      const key = event.currentTarget.closest(".item").dataset.key;
-      const item = this.object[listKey].find((o) => slugify(o.name) === key);
+      const id = event.currentTarget.closest(".item").dataset.key;
+      const item = this.object[listKey].find((o) => o.id === id);
       if (!item) return;
 
       const fp = new FilePicker({

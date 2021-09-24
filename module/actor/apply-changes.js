@@ -7,6 +7,20 @@ export function applyChanges() {
   this.changeOverrides = {};
   const c = Array.from(this.changes);
 
+  const priority = getSortChangePriority.call(this);
+  const _sortChanges = function (a, b) {
+    const typeA = priority.types.indexOf(a.subTarget);
+    const typeB = priority.types.indexOf(b.subTarget);
+    const modA = priority.modifiers.indexOf(a.modifier);
+    const modB = priority.modifiers.indexOf(b.modifier);
+    let prioA = typeof a.priority === "string" ? parseInt(a.priority) : a.priority;
+    let prioB = typeof b.priority === "string" ? parseInt(b.priority) : b.priority;
+    prioA = (prioA || 0) + 1000;
+    prioB = (prioB || 0) + 1000;
+
+    return prioB - prioA || typeA - typeB || modA - modB;
+  };
+
   // Organize changes by priority
   c.sort((a, b) => _sortChanges.call(this, a, b));
 
@@ -160,20 +174,6 @@ const getSortChangePriority = function () {
       "penalty",
     ],
   };
-};
-
-const _sortChanges = function (a, b) {
-  const priority = getSortChangePriority.call(this);
-  const typeA = priority.types.indexOf(a.subTarget);
-  const typeB = priority.types.indexOf(b.subTarget);
-  const modA = priority.modifiers.indexOf(a.modifier);
-  const modB = priority.modifiers.indexOf(b.modifier);
-  let prioA = typeof a.priority === "string" ? parseInt(a.priority) : a.priority;
-  let prioB = typeof b.priority === "string" ? parseInt(b.priority) : b.priority;
-  prioA = (prioA || 0) + 1000;
-  prioB = (prioB || 0) + 1000;
-
-  return prioB - prioA || typeA - typeB || modA - modB;
 };
 
 export const getChangeFlat = function (changeTarget, changeType, curData = null) {

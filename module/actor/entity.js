@@ -628,7 +628,6 @@ export class ActorPF extends Actor {
 
           total += autoBonus;
           if (autoBonus !== 0) {
-            const sign = autoBonus < 0 ? "negative" : "positive";
             setSourceInfoByName(
               this.sourceInfo,
               key,
@@ -684,7 +683,7 @@ export class ActorPF extends Actor {
         const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
         if (useAuto) {
           let spellPrepMode = spellbook.spellPreparationMode;
-          if (!spellPrepMode || spellPrepMode === "null") {
+          if (!spellPrepMode) {
             spellPrepMode = "spontaneous";
             setProperty(this.data, `${bookPath}.spellPreparationMode`, spellPrepMode);
           }
@@ -695,14 +694,12 @@ export class ActorPF extends Actor {
           // set base "spontaneous" based on spell prep mode
           if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
             spellbook.spontaneous = true;
-            setProperty(this.data, `${bookPath}.spontaneous`, true);
           } else {
             spellbook.spontaneous = false;
-            setProperty(this.data, `${bookPath}.spontaneous`, false);
           }
 
           let casterType = getProperty(this.data, `${bookPath}.casterType`);
-          if (!casterType || casterType === "null" || (spellPrepMode === "hybrid" && casterType !== "high")) {
+          if (!casterType || (spellPrepMode === "hybrid" && casterType !== "high")) {
             casterType = "high";
             setProperty(this.data, `${bookPath}.casterType`, casterType);
           }
@@ -799,11 +796,6 @@ export class ActorPF extends Actor {
 
         const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
         for (let i of spells) {
-          const sb = i.spellbook;
-          if (!sb || sb.spontaneous) {
-            continue;
-          }
-
           const sbKey = i.data.data.spellbook;
           const isDomain = getProperty(i.data, "data.domain") === true;
           const a = i.data.data.level;

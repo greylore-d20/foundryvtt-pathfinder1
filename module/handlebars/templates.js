@@ -59,6 +59,10 @@ export const preloadHandlebarsTemplates = async function () {
     // Tooltip
     "systems/pf1/templates/hud/tooltip.hbs",
     "systems/pf1/templates/hud/tooltip_actor.hbs",
+
+    // Widget Signatures
+    "systems/pf1/templates/widgets/signatures/damage-reduction.hbs",
+    "systems/pf1/templates/widgets/signatures/energy-resistance.hbs",
   ];
 
   // Load the template parts

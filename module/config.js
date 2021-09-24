@@ -1,4 +1,8 @@
 // Namespace PF1 Configuration Values
+
+import { RollPF } from "./roll";
+import { Widget_WorldListSelector } from "./widgets/icon-selector";
+
 /**
  * PF1 Configuration Values
  *
@@ -1670,6 +1674,36 @@ export const PF1 = {
     cmd: { label: "PF1.CMD", category: "defense" },
     ffcmd: { label: "PF1.CMDFlatFooted", category: "defense" },
     spellResist: { label: "PF1.SpellResistance", category: "defense" },
+    eres: {
+      label: "PF1.EnResNoun",
+      category: "defense",
+      widget: Widget_WorldListSelector,
+      widgetParams: [{ type: "energyResistance" }],
+      defaultValue: {},
+      functions: {
+        prepare: function () {
+          // Calculate value
+          const rollData = this.parent?.getRollData() ?? {};
+          this.resistanceValue = RollPF.safeTotal(this.value.value, rollData);
+        },
+        apply: function () {},
+      },
+    },
+    dr: {
+      label: "PF1.DamRed",
+      category: "defense",
+      widget: Widget_WorldListSelector,
+      widgetParams: [{ type: "damageReduction" }],
+      defaultValue: {},
+      functions: {
+        prepare: function () {
+          // Calculate value
+          const rollData = this.parent?.getRollData() ?? {};
+          this.drValue = RollPF.safeTotal(this.value.value, rollData);
+        },
+        apply: function () {},
+      },
+    },
     attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack" },
     mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack" },
     rattack: { label: "PF1.BuffTarRangedAttack", category: "attack" },
@@ -2035,6 +2069,8 @@ export const PF1 = {
   },
 
   keepItemLinksOnCopy: ["classAssociations"],
+
+  unknownImage: "systems/pf1/icons/misc/hazard-sign.svg",
 };
 
 /**

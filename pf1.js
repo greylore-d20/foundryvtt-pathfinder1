@@ -75,6 +75,7 @@ import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
+import { Widget_IconSelector } from "./module/widgets/icon-selector.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 import { WorldConfig } from "./module/config/world-config.js";
 
@@ -127,6 +128,7 @@ Hooks.once("init", function () {
       ExperienceDistributor,
       // Widgets
       Widget_CategorizedItemPicker,
+      Widget_IconSelector,
       CurrencyTransfer,
     },
     compendiums: {},

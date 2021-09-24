@@ -1,0 +1,34 @@
+<form class="flexcol" autocomplete="off">
+  <div class="item-list">
+    {{#each items as |item|}}
+    <a class="item{{#if item.selected}} selected{{/if}}" data-key="{{item.key}}"{{#if item.tooltip}} title="{{item.tooltip}}"{{/if}}>
+      <div class="image" style="background-image: url({{item.img}});">
+        {{#if item.selected}}
+        <img class="check-mark" src="{{../checkImage}}">
+        {{/if}}
+      </div>
+    </a>
+    {{/each}}
+  </div>
+
+  {{#if usesLogicalOperator}}
+  <div class="switch" data-name="logicalOperator">
+    <span class="{{#if data.logicalOperator}}active{{/if}}">{{localize "PF1.Operators.And"}}</span>
+    <span class="{{#unless data.logicalOperator}}active{{/unless}}">{{localize "PF1.Operators.Or"}}</span>
+  </div>
+  {{/if}}
+
+  {{#if usesValueField}}
+  <div class="form-group">
+    <label>{{localize "PF1.Value"}}</label>
+    <div class="form-fields">
+      <input type="text" name="value" value="{{data.value}}" placeholder="{{localize "PF1.Formula"}}"/>
+    </div>
+  </div>
+  {{/if}}
+
+  <div class="form-group">
+    {{!-- Submit --}}
+    <button type="submit" name="submit"><i class="far fa-save"></i> {{localize "PF1.Submit"}}</button>
+  </div>
+</form>

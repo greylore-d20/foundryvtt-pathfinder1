@@ -326,15 +326,22 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.data.changes.reduce((cur, o) => {
-        const obj = { data: o };
 
-        obj.subTargetLabel = buffTargets[o.subTarget]?.label;
+      data.changes = [];
+      for (let change of data.item.changes) {
+        const obj = { data: change.data };
+
+        obj.subTargetLabel = buffTargets[change.subTarget]?.label;
         obj.isScript = obj.data.operator === "script";
 
-        cur.push(obj);
-        return cur;
-      }, []);
+        const widget = CONFIG.PF1.buffTargets[change.subTarget]?.widget;
+        obj.hasWidget = widget != null;
+        if (obj.hasWidget) {
+          obj.widgetSignature = await widget.getSignature(change);
+        }
+
+        data.changes.push(obj);
+      }
     }
 
     // Prepare stuff for attacks with conditionals
@@ -833,6 +840,9 @@ export class ItemSheetPF extends ItemSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
+    // Change widget
+    html.find(".change-widget").click(this._onChangeWidget.bind(this));
+
     // Search box
     if (["container"].includes(this.item.data.type)) {
       const sb = html.find(".search-input");
@@ -1137,6 +1147,31 @@ export class ItemSheetPF extends ItemSheet {
       choices: CONFIG.PF1[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
+  }
+
+  /**
+   * Handle spawning of a change's widget.
+   *
+   * @param {Event} event   The click event which originated the selection.
+   * @private
+   */
+  async _onChangeWidget(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const changeId = a.closest(".item").dataset.change;
+    const change = this.object.changes.get(changeId);
+    const subTarget = change.subTarget;
+    const configData = CONFIG.PF1.buffTargets[subTarget];
+    const widgetCls = configData.widget;
+    const widgetParams = configData.widgetParams ?? [];
+
+    const app = new widgetCls(change.value, ...widgetParams).render(true);
+    this._openApplications.push(app.appId);
+    const result = await app.awaitResult();
+
+    if (result != null) {
+      change.update({ value: result });
+    }
   }
 
   /**

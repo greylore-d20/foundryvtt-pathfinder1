@@ -45,10 +45,14 @@
   {{#each changes as |change a|}}
     <li class="item change flexrow" data-change="{{change.data._id}}">
       <div class="item-name item-formula flexrow">
+        {{#unless change.hasWidget}}
         {{#unless isScript}}
         <input class="change-formula formula" type="text" name="data.changes.{{a}}.formula" value="{{lookup this.data "formula"}}" placeholder="{{localize "PF1.Formula"}}" required/>
         {{else}}
         <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
+        {{/unless}}
+        {{else}}
+        <span class="change-widget">{{{change.widgetSignature}}}</span>
         {{/unless}}
       </div>
 

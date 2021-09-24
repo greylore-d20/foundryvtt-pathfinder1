@@ -4185,4 +4185,95 @@ export class ActorPF extends Actor {
     const allowed = Hooks.call("modifyTokenAttribute", { attribute, value, isDelta, isBar }, updates);
     return allowed !== false ? entity.update(updates) : this;
   }
+
+  /**
+   * @typedef {object} ActorPF~EnergyResistance
+   * @property {string} type - The type (slugified name) of the energy resistance in question.
+   * @property {number} value - The actual value of the energy resistance.
+   * @property {ItemChange} source - The source of the resistance.
+   */
+  /**
+   * Retrieves all sources of energy resistance from changes on this actor,
+   * ignoring duplicate resistances with a lower value.
+   *
+   * @returns {ActorPF~EnergyResistance[]} A list of energy resistances.
+   */
+  get energyResistance() {
+    const result = [];
+
+    const changes = this.changes.filter((o) => o.isActive).filter((o) => o.subTarget === "eres");
+
+    for (let c of changes) {
+      const key = c.value?.keys?.[0];
+      if (!key) continue;
+      const value = c.resistanceValue ?? 0;
+
+      const duplicate = result.find((o) => o.type === key);
+      if (duplicate && duplicate.value < value) {
+        result.splice(result.indexOf(duplicate), 1);
+      } else if (duplicate && duplicate.value >= value) {
+        continue;
+      }
+
+      result.push({
+        type: key,
+        value: value,
+        source: c,
+      });
+    }
+
+    return result;
+  }
+
+  /**
+   * @typedef {object} ActorPF~DamageReduction
+   * @property {string[]} types - The types (slugified names) of the properties that will bypass this damage reduction.
+   * @property {number} value - The actual value of the damage reduction.
+   * @property {boolean} and - Whether the logical operator is 'and' (e.g. piercing and slashing) or 'or' (e.g. piercing or slashing).
+   * @property {ItemChange} source - The source of the damage reduction.
+   */
+  /**
+   * Retrieves all sources of damage reduction from changes on this actor,
+   * ignoring duplicate damage reductions with a lower value and the same types and logical operator.
+   *
+   * @returns {ActorPF~DamageReduction[]} A list of damage reductions.
+   */
+  get damageReduction() {
+    const result = [];
+
+    const changes = this.changes.filter((o) => o.isActive).filter((o) => o.subTarget === "dr");
+
+    for (let c of changes) {
+      const keys = c.value?.keys ?? [];
+      if (keys.length === 0) continue;
+      const value = c.drValue ?? 0;
+      const and = c.value?.logicalOperator !== false;
+
+      const duplicate = result.find((o) => {
+        if (o.and !== and && keys.length > 1) return false;
+        if (o.types.length !== keys.length) return false;
+
+        for (const k of keys) {
+          if (!o.types.includes(k)) return false;
+        }
+
+        return true;
+      });
+
+      if (duplicate && duplicate.value < value) {
+        result.splice(result.indexOf(duplicate), 1);
+      } else if (duplicate && duplicate.value >= value) {
+        continue;
+      }
+
+      result.push({
+        types: keys,
+        value: value,
+        and: and,
+        source: c,
+      });
+    }
+
+    return result;
+  }
 }

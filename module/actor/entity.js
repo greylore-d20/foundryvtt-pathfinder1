@@ -580,13 +580,13 @@ export class ActorPF extends Actor {
     const rollData = this.getRollData();
 
     // Set spellbook info
-    for (let [spellbookKey, spellbook] of Object.entries(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
-      const spellbookAbilityKey = spellbook.ability;
-      let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`) ?? 10;
+    for (let [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
+      const spellbookAbility = this.data.data.abilities[spellbook.ability];
+      let spellbookAbilityScore = spellbookAbility?.total ?? 10;
 
       // Add spell slots based on ability bonus slot formula
       {
-        const formula = getProperty(spellbook, "spellSlotAbilityBonusFormula") || "0";
+        const formula = spellbook.spellSlotAbilityBonusFormula || "0";
         spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
       }
 
@@ -595,18 +595,18 @@ export class ActorPF extends Actor {
       // Set CL
       {
         const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
-        const formula = getProperty(spellbook, "cl.formula") || "0";
+        const formula = spellbook.cl.formula || "0";
         let total = 0;
 
         // Add NPC base
         if (this.data.type === "npc") {
-          const value = getProperty(spellbook, "cl.base") || 0;
+          const value = spellbook.cl.base || 0;
           total += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
         }
         // Add HD
         if (spellbook.class === "_hd") {
-          const value = getProperty(this.data, "data.attributes.hd.total");
+          const value = this.data.data.attributes.hd.total;
           total += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
         }
@@ -620,11 +620,10 @@ export class ActorPF extends Actor {
 
         // set auto spell level calculation offset
         if (spellbook.autoSpellLevelCalculation) {
-          const autoKey = `data.attributes.spells.spellbooks.${spellbookKey}.cl.autoSpellLevelTotal`;
-          const autoFormula = getProperty(spellbook, "cl.autoSpellLevelCalculationFormula") || "0";
+          const autoFormula = spellbook.cl.autoSpellLevelCalculationFormula || "0";
           const autoBonus = RollPF.safeTotal(autoFormula, rollData);
           const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
-          setProperty(this.data, autoKey, autoTotal);
+          spellbook.cl.autoSpellLevelTotal = autoTotal;
 
           total += autoBonus;
           if (autoBonus !== 0) {
@@ -646,7 +645,7 @@ export class ActorPF extends Actor {
           setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
         }
 
-        if (getProperty(rollData, "attributes.woundThresholds.penalty") != null) {
+        if (rollData.attributes.woundThresholds.penalty != null) {
           // Subtract Wound Thresholds penalty. Can't reduce below 1.
           if (rollData.attributes.woundThresholds.penalty > 0 && total > 1) {
             total = Math.max(1, total - rollData.attributes.woundThresholds.penalty);
@@ -678,18 +677,16 @@ export class ActorPF extends Actor {
         a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
       // Spell slots
       {
-        const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
-
-        const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
+        const useAuto = spellbook.autoSpellLevelCalculation;
         if (useAuto) {
           let spellPrepMode = spellbook.spellPreparationMode;
           if (!spellPrepMode) {
             spellPrepMode = "spontaneous";
-            setProperty(this.data, `${bookPath}.spellPreparationMode`, spellPrepMode);
+            spellbook.spellPreparationMode = spellPrepMode;
           }
 
           // turn off spell points
-          setProperty(this.data, `${bookPath}.spellPoints.useSystem`, false);
+          spellbook.spellPoints.useSystem = false;
 
           // set base "spontaneous" based on spell prep mode
           if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
@@ -698,71 +695,65 @@ export class ActorPF extends Actor {
             spellbook.spontaneous = false;
           }
 
-          let casterType = getProperty(this.data, `${bookPath}.casterType`);
+          let casterType = spellbook.casterType;
           if (!casterType || (spellPrepMode === "hybrid" && casterType !== "high")) {
             casterType = "high";
-            setProperty(this.data, `${bookPath}.casterType`, casterType);
+            spellbook.casterType = casterType;
           }
           if (spellPrepMode === "prestige" && casterType !== "low") {
             casterType = "low";
-            setProperty(this.data, `${bookPath}.casterType`, casterType);
+            spellbook.casterType = casterType;
           }
 
           const castsForLevels =
             CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
               casterType
             ];
-          const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
+          const classLevel = Math.max(Math.min(spellbook.cl.autoSpellLevelTotal, 20), 1);
           rollData.ablMod = spellbookAbilityMod;
 
           const allLevelModFormula =
-            getProperty(
-              this.data,
-              `${bookPath}.${spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"}`
-            ) || "0";
+            spellbook[spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
           const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
           for (let a = 0; a < 10; a++) {
+            const spellLevel = spellbook.spells[`spell${a}`];
             // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
             const spellsForLevel =
               a === 0 && spellbook.spontaneous
                 ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
                 : castsForLevels[classLevel - 1][a];
-            setProperty(this.data, `${bookPath}.spells.spell${a}.base`, spellsForLevel);
+            spellLevel.base = spellsForLevel;
 
             const offsetFormula =
-              getProperty(
-                this.data,
-                `${bookPath}.spells.spell${a}.${[
-                  spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula",
-                ]}`
-              ) || "0";
+              spellLevel[spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
 
             let max =
               typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
                 ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
                 : null;
 
-            setProperty(this.data, `${bookPath}.spells.spell${a}.max`, max);
-            let oldval = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
-            if (!Number.isFinite(oldval)) setProperty(this.data, `${bookPath}.spells.spell${a}.value`, max);
+            spellLevel.max = max;
+            let oldval = spellLevel.value;
+            if (!Number.isFinite(oldval)) spellLevel.value = max;
           }
         } else {
           for (let a = 0; a < 10; a++) {
-            let base = parseInt(getProperty(this.data, `${bookPath}.spells.spell${a}.base`));
+            const spellLevel = spellbook.spells[`spell${a}`];
+            let base = parseInt(spellLevel.base);
             if (Number.isNaN(base)) {
-              setProperty(this.data, `${bookPath}.spells.spell${a}.base`, null);
-              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, 0);
-            } else if (getProperty(this.data, `${bookPath}.autoSpellLevels`)) {
+              spellLevel.base = null;
+              spellLevel.max = 0;
+            } else if (spellbook.autoSpellLevels) {
               base += getAbilityBonus(a);
-              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
+              spellLevel.max = base;
             } else {
-              setProperty(this.data, `${bookPath}.spells.spell${a}.max`, base);
+              spellLevel.max = base;
             }
 
-            let max = getProperty(this.data, `${bookPath}.spells.spell${a}.max`);
-            let oldval = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
-            if (!Number.isFinite(oldval)) setProperty(this.data, `${bookPath}.spells.spell${a}.value`, max);
+            let max = spellLevel.max;
+            let oldval = spellLevel.value;
+            if (!Number.isFinite(oldval)) spellLevel.value = max;
           }
         }
       }
@@ -770,38 +761,30 @@ export class ActorPF extends Actor {
       // Set spontaneous spell slots to something sane
       {
         for (let a = 0; a < 10; a++) {
-          const k = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${a}.value`;
-          const current = getProperty(this.data, k);
-          setProperty(this.data, k, current || 0);
+          const spellLevel = spellbook.spells[`spell${a}`];
+          const current = spellLevel.value;
+          spellLevel.value = current || 0;
         }
       }
 
       // Update spellbook slots
       {
-        const slots = {};
-        for (let sbKey of Object.keys(getProperty(this.data, "data.attributes.spells.spellbooks"))) {
-          for (let a = 0; a < 10; a++) {
-            setProperty(
-              slots,
-              `${sbKey}.${a}.value`,
-              getProperty(this.data, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.max`) || 0
-            );
-            setProperty(
-              slots,
-              `${sbKey}.${a}.domainSlots`,
-              getProperty(this.data, `data.attributes.spells.spellbooks.${sbKey}.domainSlotValue`) || 0
-            );
-          }
+        const slots = [];
+        for (let a = 0; a < 10; a++) {
+          const spellLevel = spellbook.spells[`spell${a}`];
+          let currentLevel = {};
+          currentLevel.value = spellLevel.max;
+          currentLevel.domainSlots = spellLevel.domainSlotValue;
+          slots.push(currentLevel);
         }
 
         const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
         for (let i of spells) {
-          const sbKey = i.data.data.spellbook;
-          const isDomain = getProperty(i.data, "data.domain") === true;
+          const isDomain = i.data.data.domain === true;
           const a = i.data.data.level;
           const slotCost = i.data.data.slotCost ?? 1;
-          let dSlots = getProperty(slots, `${sbKey}.${a}.domainSlots`); // `
-          let uses = getProperty(slots, `${sbKey}.${a}.value`);
+          let dSlots = slots[a].domainSlots;
+          let uses = slots[a].value;
           if (Number.isFinite(i.maxCharges)) {
             let subtract = { domain: 0, uses: 0 };
             if (isDomain) {
@@ -813,36 +796,36 @@ export class ActorPF extends Actor {
             dSlots -= subtract.domain;
             uses -= subtract.uses;
           }
-          setProperty(slots, `${sbKey}.${a}.value`, uses);
-          setProperty(slots, `${sbKey}.${a}.domainSlots`, dSlots);
-          setProperty(this.data, `data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`, uses);
+          slots[a].value = uses;
+          slots[a].domainSlots = dSlots;
+          spellbook.spells[`spell${a}`].value = uses;
         }
 
         // Spells available hint text if auto spell levels is enabled
         {
-          const bookPath = `data.attributes.spells.spellbooks.${spellbookKey}`;
-          const useAuto = getProperty(this.data, `${bookPath}.autoSpellLevelCalculation`);
+          const useAuto = spellbook.autoSpellLevelCalculation;
           if (useAuto) {
             const spellPrepMode = spellbook.spellPreparationMode;
-            let casterType = getProperty(this.data, `${bookPath}.casterType`) || "high";
-            const classLevel = Math.max(Math.min(getProperty(this.data, `${bookPath}.cl.autoSpellLevelTotal`), 20), 1);
+            let casterType = spellbook.casterType || "high";
+            const classLevel = Math.max(Math.min(spellbook.cl.autoSpellLevelTotal, 20), 1);
 
-            let spellbookAbilityScore = getProperty(this.data, `data.abilities.${spellbookAbilityKey}.total`);
+            let spellbookAbilityScore = spellbookAbility?.total;
 
-            const allLevelModFormula = getProperty(this.data, `${bookPath}.preparedAllOffsetFormula`) || "0";
+            const allLevelModFormula = spellbook.preparedAllOffsetFormula || "0";
             const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
             for (let a = 0; a < 10; a++) {
+              const spellLevel = spellbook.spells[`spell${a}`];
               if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
                 const message = game.i18n.localize("PF1.SpellScoreTooLow");
-                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, message);
+                spellLevel.spellMessage = message;
                 continue;
               }
 
               let remaining;
               if (spellPrepMode === "prepared") {
                 // for prepared casters, just use the 'value' calculated above
-                remaining = getProperty(this.data, `${bookPath}.spells.spell${a}.value`);
+                remaining = spellLevel.value;
               } else {
                 // spontaneous or hybrid
                 // if not prepared then base off of casts per day
@@ -850,7 +833,7 @@ export class ActorPF extends Actor {
                   CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
                 available += allLevelMod;
 
-                const formula = getProperty(this.data, `${bookPath}.spells.spell${a}.preparedOffsetFormula`) || "0";
+                const formula = spellLevel.preparedOffsetFormula || "0";
                 available += RollPF.safeTotal(formula, rollData);
 
                 const used = spells.reduce((acc, i) => {
@@ -862,7 +845,7 @@ export class ActorPF extends Actor {
               }
 
               if (!remaining) {
-                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, "");
+                spellLevel.spellMessage = "";
                 continue;
               }
 
@@ -885,7 +868,7 @@ export class ActorPF extends Actor {
               }
 
               if (remainingMessage) {
-                setProperty(this.data, `${bookPath}.spells.spell${a}.spellMessage`, remainingMessage);
+                spellLevel.spellMessage = remainingMessage;
               }
             }
           }
@@ -894,19 +877,13 @@ export class ActorPF extends Actor {
 
       // Spell points
       {
-        const formula =
-          getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.maxFormula`) || "0";
-        rollData.cl = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`);
+        const formula = spellbook.spellPoints.maxFormula || "0";
+        rollData.cl = spellbook.cl.total;
         rollData.ablMod = spellbookAbilityMod;
-        const spellClass = getProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.class`) ?? "";
-        rollData.classLevel =
-          spellClass === "_hd"
-            ? rollData.attributes.hd.total
-            : spellClass?.length > 0
-            ? getProperty(rollData, `classes.${spellClass}.level`) || 0 // `
-            : 0;
+        const spellClass = spellbook.class ?? "";
+        rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
         const roll = RollPF.safeRoll(formula, rollData);
-        setProperty(this.data, `data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.max`, roll.total);
+        spellbook.spellPoints.max = roll.total;
       }
 
       // Set spellbook range

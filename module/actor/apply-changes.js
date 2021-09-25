@@ -440,6 +440,20 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
   return null;
 };
 
+const getBabTotal = function (d) {
+  return d.attributes.bab.total;
+};
+
+const getNegativeEngergyDrain = function (d) {
+  return -d.attributes.energyDrain;
+};
+
+const getAbilityMod = function (ability) {
+  return function (d) {
+    return d.abilities[ability]?.mod ?? 0;
+  };
+};
+
 export const addDefaultChanges = function (changes) {
   // Call hook
   let tempChanges = [];
@@ -467,7 +481,7 @@ export const addDefaultChanges = function (changes) {
   const push_health = (value, source) => {
     changes.push(
       ItemChange.create({
-        formula: value.toString(),
+        formula: value,
         target: "misc",
         subTarget: "mhp",
         modifier: "untypedPerm",
@@ -476,7 +490,7 @@ export const addDefaultChanges = function (changes) {
     );
     changes.push(
       ItemChange.create({
-        formula: value.toString(),
+        formula: value,
         target: "misc",
         subTarget: "vigor",
         modifier: "untypedPerm",
@@ -580,7 +594,7 @@ export const addDefaultChanges = function (changes) {
       // Add change
       changes.push(
         ItemChange.create({
-          formula: total.toString(),
+          formula: total,
           target: "savingThrows",
           subTarget: a,
           modifier: "untypedPerm",
@@ -601,7 +615,7 @@ export const addDefaultChanges = function (changes) {
         // Add change
         changes.push(
           ItemChange.create({
-            formula: total.toString(),
+            formula: total,
             target: "savingThrows",
             subTarget: a,
             modifier: "untypedPerm",
@@ -622,7 +636,8 @@ export const addDefaultChanges = function (changes) {
   if (hpAbility !== "") {
     changes.push(
       ItemChange.create({
-        formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`,
+        formula: (d) => d.abilities[hpAbility].mod * d.attributes.hd.total,
+        operator: "function",
         target: "misc",
         subTarget: "mhp",
         modifier: "base",
@@ -637,7 +652,8 @@ export const addDefaultChanges = function (changes) {
       const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
         ItemChange.create({
-          formula: woundFormula,
+          formula: (d) => d.abilities[hpAbility].total * 2 + d.abilities[hpAbility].drain,
+          operator: "function",
           target: "misc",
           subTarget: "wounds",
           modifier: "base",
@@ -656,7 +672,7 @@ export const addDefaultChanges = function (changes) {
     if (!base) base = 0;
     changes.push(
       ItemChange.create({
-        formula: base.toString(),
+        formula: base,
         target: "speed",
         subTarget: `${k}Speed`,
         modifier: "base",
@@ -677,7 +693,8 @@ export const addDefaultChanges = function (changes) {
     // BAB to attack
     changes.push(
       ItemChange.create({
-        formula: "@attributes.bab.total",
+        formula: getBabTotal,
+        operator: "function",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
@@ -690,7 +707,8 @@ export const addDefaultChanges = function (changes) {
     // Energy drain to attack
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: getNegativeEngergyDrain,
+        operator: "function",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
@@ -703,7 +721,8 @@ export const addDefaultChanges = function (changes) {
     // ACP to attack
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.acp.attackPenalty",
+        formula: (d) => -d.attributes.acp.attackPenalty,
+        operator: "function",
         target: "attack",
         subTarget: "~attackCore",
         modifier: "penalty",
@@ -720,7 +739,8 @@ export const addDefaultChanges = function (changes) {
     // BAB to CMD
     changes.push(
       ItemChange.create({
-        formula: "@attributes.bab.total",
+        formula: getBabTotal,
+        operator: "function",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -736,7 +756,8 @@ export const addDefaultChanges = function (changes) {
     const abl = getProperty(this.data, "data.attributes.cmd.ability");
     changes.push(
       ItemChange.create({
-        formula: `@abilities.${abl}.mod`,
+        formula: getAbilityMod(abl),
+        operator: "function",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -751,7 +772,8 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain to CMD
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: getNegativeEngergyDrain,
+        operator: "function",
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
@@ -772,7 +794,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${abl}.mod`,
+          formula: getAbilityMod(abl),
+          operator: "function",
           target: "misc",
           subTarget: "init",
           modifier: "untypedPerm",
@@ -789,7 +812,8 @@ export const addDefaultChanges = function (changes) {
     if (["str", "dex"].includes(abl)) {
       changes.push(
         ItemChange.create({
-          formula: "-@attributes.acp.attackPenalty",
+          formula: (d) => -d.attributes.acp.attackPenalty,
+          operator: "function",
           target: "misc",
           subTarget: "init",
           modifier: "penalty",
@@ -811,7 +835,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${abl}.mod`,
+          formula: getAbilityMod(abl),
+          operator: "function",
           target: "savingThrows",
           subTarget: "fort",
           modifier: "untypedPerm",
@@ -828,7 +853,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${abl}.mod`,
+          formula: getAbilityMod(abl),
+          operator: "function",
           target: "savingThrows",
           subTarget: "ref",
           modifier: "untypedPerm",
@@ -845,7 +871,8 @@ export const addDefaultChanges = function (changes) {
     if (abl) {
       changes.push(
         ItemChange.create({
-          formula: `@abilities.${abl}.mod`,
+          formula: getAbilityMod(abl),
+          operator: "function",
           target: "savingThrows",
           subTarget: "will",
           modifier: "untypedPerm",
@@ -860,7 +887,8 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: getNegativeEngergyDrain,
+        operator: "function",
         target: "savingThrows",
         subTarget: "allSavingThrows",
         modifier: "penalty",
@@ -879,7 +907,7 @@ export const addDefaultChanges = function (changes) {
     const sr = getProperty(this.data, "data.attributes.sr.formula") || 0;
     changes.push(
       ItemChange.create({
-        formula: sr.toString(),
+        formula: sr,
         target: "misc",
         subTarget: "spellResist",
         modifier: "base",
@@ -896,7 +924,7 @@ export const addDefaultChanges = function (changes) {
     const cStr = getProperty(this.data, "data.details.carryCapacity.bonus.user") || 0;
     changes.push(
       ItemChange.create({
-        formula: cStr.toString(),
+        formula: cStr,
         target: "misc",
         subTarget: "carryStr",
         modifier: "untyped",
@@ -911,7 +939,7 @@ export const addDefaultChanges = function (changes) {
     const cMultBase = getProperty(this.data, "data.details.carryCapacity.multiplier.base") ?? 1;
     changes.push(
       ItemChange.create({
-        formula: cMultBase.toString(),
+        formula: cMultBase,
         target: "misc",
         subTarget: "carryMult",
         modifier: "base",
@@ -925,7 +953,7 @@ export const addDefaultChanges = function (changes) {
     const cMult = getProperty(this.data, "data.details.carryCapacity.multiplier.user") || 0;
     changes.push(
       ItemChange.create({
-        formula: cMult.toString(),
+        formula: cMult,
         target: "misc",
         subTarget: "carryMult",
         modifier: "untyped",
@@ -942,7 +970,7 @@ export const addDefaultChanges = function (changes) {
     const ac = getProperty(this.data, "data.attributes.naturalAC") || 0;
     changes.push(
       ItemChange.create({
-        formula: ac.toString(),
+        formula: ac,
         target: "ac",
         subTarget: "nac",
         modifier: "base",
@@ -970,7 +998,7 @@ export const addDefaultChanges = function (changes) {
         ac += item.data.data.armor.enh;
         changes.push(
           ItemChange.create({
-            formula: ac.toString(),
+            formula: ac,
             target: "ac",
             subTarget: armorTarget,
             modifier: "base",
@@ -994,7 +1022,7 @@ export const addDefaultChanges = function (changes) {
     if (flyValue !== 0) {
       changes.push(
         ItemChange.create({
-          formula: flyValue.toString(),
+          formula: flyValue,
           target: "skill",
           subTarget: "skill.fly",
           modifier: "racial",
@@ -1010,7 +1038,8 @@ export const addDefaultChanges = function (changes) {
   {
     changes.push(
       ItemChange.create({
-        formula: "@attributes.speed.climb.total > 0 ? 8 : 0",
+        formula: (d) => (d.attributes.speed.climb.total > 0 ? 8 : 0),
+        operator: "function",
         target: "skill",
         subTarget: "skill.clm",
         modifier: "racial",
@@ -1024,7 +1053,8 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       ItemChange.create({
-        formula: "@attributes.speed.swim.total > 0 ? 8 : 0",
+        formula: (d) => (d.attributes.speed.swim.total > 0 ? 8 : 0),
+        operator: "function",
         target: "skill",
         subTarget: "skill.swm",
         modifier: "racial",
@@ -1041,7 +1071,8 @@ export const addDefaultChanges = function (changes) {
   {
     changes.push(
       ItemChange.create({
-        formula: "-@attributes.energyDrain",
+        formula: getNegativeEngergyDrain,
+        operator: "function",
         target: "skills",
         subTarget: "skills",
         modifier: "untypedPerm",
@@ -1063,7 +1094,7 @@ export const addDefaultChanges = function (changes) {
     // AC
     changes.push(
       ItemChange.create({
-        formula: CONFIG.PF1.sizeMods[sizeKey].toString(),
+        formula: CONFIG.PF1.sizeMods[sizeKey],
         target: "ac",
         subTarget: "ac",
         modifier: "size",
@@ -1078,7 +1109,7 @@ export const addDefaultChanges = function (changes) {
     // Stealth skill
     changes.push(
       ItemChange.create({
-        formula: CONFIG.PF1.sizeStealthMods[sizeKey].toString(),
+        formula: CONFIG.PF1.sizeStealthMods[sizeKey],
         target: "skill",
         subTarget: "skill.ste",
         modifier: "size",
@@ -1091,7 +1122,7 @@ export const addDefaultChanges = function (changes) {
     // Fly skill
     changes.push(
       ItemChange.create({
-        formula: CONFIG.PF1.sizeFlyMods[sizeKey].toString(),
+        formula: CONFIG.PF1.sizeFlyMods[sizeKey],
         target: "skill",
         subTarget: "skill.fly",
         modifier: "size",
@@ -1104,7 +1135,7 @@ export const addDefaultChanges = function (changes) {
     // CMD
     changes.push(
       ItemChange.create({
-        formula: CONFIG.PF1.sizeSpecialMods[sizeKey].toString(),
+        formula: CONFIG.PF1.sizeSpecialMods[sizeKey],
         target: "misc",
         subTarget: "cmd",
         modifier: "size",
@@ -1126,7 +1157,7 @@ export const addDefaultChanges = function (changes) {
       case "pf1_blind":
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "ac",
             subTarget: "ac",
             modifier: "penalty",
@@ -1161,7 +1192,7 @@ export const addDefaultChanges = function (changes) {
       case "dazzled":
         changes.push(
           ItemChange.create({
-            formula: "-1",
+            formula: -1,
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
@@ -1175,7 +1206,7 @@ export const addDefaultChanges = function (changes) {
       case "pf1_deaf":
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: -4,
             target: "misc",
             subTarget: "init",
             modifier: "penalty",
@@ -1189,7 +1220,7 @@ export const addDefaultChanges = function (changes) {
       case "entangled":
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: -4,
             target: "ability",
             subTarget: "dex",
             modifier: "penalty",
@@ -1202,7 +1233,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
@@ -1216,7 +1247,7 @@ export const addDefaultChanges = function (changes) {
       case "grappled":
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: -4,
             target: "ability",
             subTarget: "dex",
             modifier: "penalty",
@@ -1229,7 +1260,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
@@ -1242,7 +1273,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "misc",
             subTarget: "cmb",
             modifier: "penalty",
@@ -1256,7 +1287,7 @@ export const addDefaultChanges = function (changes) {
       case "helpless":
         changes.push(
           ItemChange.create({
-            formula: "0",
+            formula: 0,
             target: "ability",
             subTarget: "dex",
             modifier: "untypedPerm",
@@ -1272,7 +1303,7 @@ export const addDefaultChanges = function (changes) {
       case "pf1_sleep":
         changes.push(
           ItemChange.create({
-            formula: "0",
+            formula: 0,
             target: "ability",
             subTarget: "dex",
             modifier: "untypedPerm",
@@ -1288,7 +1319,7 @@ export const addDefaultChanges = function (changes) {
       case "paralyzed":
         changes.push(
           ItemChange.create({
-            formula: "0",
+            formula: 0,
             target: "ability",
             subTarget: "dex",
             modifier: "untypedPerm",
@@ -1298,7 +1329,7 @@ export const addDefaultChanges = function (changes) {
         );
         changes.push(
           ItemChange.create({
-            formula: "0",
+            formula: 0,
             target: "ability",
             subTarget: "str",
             modifier: "untypedPerm",
@@ -1318,7 +1349,7 @@ export const addDefaultChanges = function (changes) {
       case "pf1_prone":
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: -4,
             target: "attack",
             subTarget: "mattack",
             modifier: "penalty",
@@ -1359,7 +1390,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: 4,
             target: "ac",
             subTarget: "ac",
             modifier: "penalty",
@@ -1367,7 +1398,7 @@ export const addDefaultChanges = function (changes) {
         );
         changes.push(
           ItemChange.create({
-            formula: "-4",
+            formula: -4,
             target: "misc",
             subTarget: "cmd",
             modifier: "penalty",
@@ -1391,7 +1422,7 @@ export const addDefaultChanges = function (changes) {
       case "panicked":
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
@@ -1405,7 +1436,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "savingThrows",
             subTarget: "allSavingThrows",
             modifier: "penalty",
@@ -1421,7 +1452,7 @@ export const addDefaultChanges = function (changes) {
         {
           changes.push(
             ItemChange.create({
-              formula: "-2",
+              formula: -2,
               target: "skills",
               subTarget: "skills",
               modifier: "penalty",
@@ -1439,7 +1470,7 @@ export const addDefaultChanges = function (changes) {
         {
           changes.push(
             ItemChange.create({
-              formula: "-2",
+              formula: -2,
               target: "abilityChecks",
               subTarget: "allChecks",
               modifier: "penalty",
@@ -1457,7 +1488,7 @@ export const addDefaultChanges = function (changes) {
       case "sickened":
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
@@ -1471,7 +1502,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "damage",
             subTarget: "wdamage",
             modifier: "penalty",
@@ -1484,7 +1515,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "savingThrows",
             subTarget: "allSavingThrows",
             modifier: "penalty",
@@ -1500,7 +1531,7 @@ export const addDefaultChanges = function (changes) {
         {
           changes.push(
             ItemChange.create({
-              formula: "-2",
+              formula: -2,
               target: "skills",
               subTarget: "skills",
               modifier: "penalty",
@@ -1518,7 +1549,7 @@ export const addDefaultChanges = function (changes) {
         {
           changes.push(
             ItemChange.create({
-              formula: "-2",
+              formula: -2,
               target: "abilityChecks",
               subTarget: "allChecks",
               modifier: "penalty",
@@ -1536,7 +1567,7 @@ export const addDefaultChanges = function (changes) {
       case "stunned":
         changes.push(
           ItemChange.create({
-            formula: "-2",
+            formula: -2,
             target: "ac",
             subTarget: "ac",
             modifier: "penalty",
@@ -1569,7 +1600,7 @@ export const addDefaultChanges = function (changes) {
   if (this.data.data.attributes.conditions.exhausted) {
     changes.push(
       ItemChange.create({
-        formula: "-6",
+        formula: -6,
         target: "ability",
         subTarget: "str",
         modifier: "penalty",
@@ -1582,7 +1613,7 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       ItemChange.create({
-        formula: "-6",
+        formula: -6,
         target: "ability",
         subTarget: "dex",
         modifier: "penalty",
@@ -1595,7 +1626,7 @@ export const addDefaultChanges = function (changes) {
   } else if (this.data.data.attributes.conditions.fatigued) {
     changes.push(
       ItemChange.create({
-        formula: "-2",
+        formula: -2,
         target: "ability",
         subTarget: "str",
         modifier: "penalty",
@@ -1608,7 +1639,7 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       ItemChange.create({
-        formula: "-2",
+        formula: -2,
         target: "ability",
         subTarget: "dex",
         modifier: "penalty",
@@ -1624,7 +1655,8 @@ export const addDefaultChanges = function (changes) {
   if (!Number.isNaN(this.data.data.attributes.energyDrain) && this.data.data.attributes.energyDrain > 0) {
     changes.push(
       ItemChange.create({
-        formula: "-(@attributes.energyDrain * 5)",
+        formula: (d) => -d.attributes.energyDrain * 5,
+        operator: "function",
         target: "misc",
         subTarget: "mhp",
         modifier: "untyped",
@@ -1638,7 +1670,8 @@ export const addDefaultChanges = function (changes) {
 
     changes.push(
       ItemChange.create({
-        formula: "-(@attributes.energyDrain * 5)",
+        formula: (d) => -d.attributes.energyDrain * 5,
+        operator: "function",
         target: "misc",
         subTarget: "vigor",
         modifier: "untyped",

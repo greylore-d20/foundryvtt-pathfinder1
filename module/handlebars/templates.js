@@ -63,6 +63,7 @@ export const preloadHandlebarsTemplates = async function () {
     // Widget Signatures
     "systems/pf1/templates/widgets/signatures/damage-reduction.hbs",
     "systems/pf1/templates/widgets/signatures/energy-resistance.hbs",
+    "systems/pf1/templates/widgets/signatures/di-dv.hbs",
   ];
 
   // Load the template parts

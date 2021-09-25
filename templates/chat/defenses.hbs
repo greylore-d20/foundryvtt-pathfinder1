@@ -94,28 +94,6 @@
     {{/if}}
     {{/if}}
 
-    {{#if misc.drNotes}}
-    <div class="flexcol property-group">
-      <label>{{localize "PF1.DamRed"}}</label>
-      <div class="flexrow">
-        {{#each misc.drNotes as |v|}}
-        <span class="tag">{{{v}}}</span>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if misc.energyResistance}}
-    <div class="flexcol property-group">
-      <label>{{localize "PF1.EnRes"}}</label>
-      <div class="flexrow">
-        {{#each misc.energyResistance as |v|}}
-        <span class="tag">{{{v}}}</span>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
     {{#if regen}}
     <div class="defense regen">
       <table>
@@ -134,6 +112,17 @@
       </table>
     </div>
     {{/if}}
+
+    {{#each properties as |prop|}}
+    <div class="flexcol property-group gm-sensitive">
+      <label>{{prop.header}}</label>
+      <div class="flexrow">
+        {{#each prop.value as |v|}}
+        <span class="tag">{{{v}}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
 
     <div class="saving-throws flexrow">
       <button data-action="defense-save" data-save="fort">{{localize "PF1.SavingThrowFort"}}</button>

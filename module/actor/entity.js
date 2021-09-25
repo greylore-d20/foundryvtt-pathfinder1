@@ -2460,7 +2460,7 @@ export class ActorPF extends Actor {
     });
   }
 
-  getDefenseHeaders() {
+  async getDefenseHeaders() {
     const data = this.data.data;
     const headers = [];
 
@@ -2468,45 +2468,60 @@ export class ActorPF extends Actor {
     let misc = [];
 
     // Damage reduction
-    if (data.traits.dr.length) {
-      headers.push({ header: game.i18n.localize("PF1.DamRed"), value: data.traits.dr.split(reSplit) });
+    {
+      const list = this.damageReduction;
+      const items = [];
+      for (const item of list) {
+        const widget = item.source?.config?.widget;
+        if (!widget) continue;
+        items.push(await widget.getSignature(item.source));
+      }
+      if (items.length) {
+        headers.push({ header: game.i18n.localize("PF1.DamRed"), value: items });
+      }
     }
     // Energy resistance
-    if (data.traits.eres.length) {
-      headers.push({ header: game.i18n.localize("PF1.EnRes"), value: data.traits.eres.split(reSplit) });
+    {
+      const list = this.energyResistance;
+      const items = [];
+      for (const item of list) {
+        const widget = item.source?.config?.widget;
+        if (!widget) continue;
+        items.push(await widget.getSignature(item.source));
+      }
+      if (items.length) {
+        headers.push({ header: game.i18n.localize("PF1.EnRes"), value: items });
+      }
+    }
+    // Damage immunities
+    {
+      const list = this.damageImmunities;
+      const items = [];
+      for (const item of list) {
+        const widget = item.source?.config?.widget;
+        if (!widget) continue;
+        items.push(await widget.getSignature(item.source));
+      }
+      if (items.length) {
+        headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: items });
+      }
     }
     // Damage vulnerabilities
-    if (data.traits.dv.value.length || data.traits.dv.custom.length) {
-      const value = [].concat(
-        data.traits.dv.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
-        }),
-        data.traits.dv.custom.length > 0 ? data.traits.dv.custom.split(";") : []
-      );
-      headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
+    {
+      const list = this.damageVulnerabilities;
+      const items = [];
+      for (const item of list) {
+        const widget = item.source?.config?.widget;
+        if (!widget) continue;
+        items.push(await widget.getSignature(item.source));
+      }
+      if (items.length) {
+        headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: items });
+      }
     }
     // Condition resistance
     if (data.traits.cres.length) {
       headers.push({ header: game.i18n.localize("PF1.ConRes"), value: data.traits.cres.split(reSplit) });
-    }
-    // Immunities
-    if (
-      data.traits.di.value.length ||
-      data.traits.di.custom.length ||
-      data.traits.ci.value.length ||
-      data.traits.ci.custom.length
-    ) {
-      const value = [].concat(
-        data.traits.di.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
-        }),
-        data.traits.di.custom.length > 0 ? data.traits.di.custom.split(";") : [],
-        data.traits.ci.value.map((obj) => {
-          return CONFIG.PF1.conditionTypes[obj];
-        }),
-        data.traits.ci.custom.length > 0 ? data.traits.ci.custom.split(";") : []
-      );
-      headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
     // Spell Resistance
     if (data.attributes.sr.total > 0) {
@@ -2575,7 +2590,7 @@ export class ActorPF extends Actor {
     return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
   }
 
-  rollSavingThrow(
+  async rollSavingThrow(
     savingThrowId,
     options = { event: null, chatMessage: true, noSound: false, skipPrompt: true, dice: "1d20" }
   ) {
@@ -2642,7 +2657,7 @@ export class ActorPF extends Actor {
     }
 
     // Roll saving throw
-    let props = this.getDefenseHeaders();
+    let props = await this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
     return DicePF.d20Roll({
@@ -2737,6 +2752,8 @@ export class ActorPF extends Actor {
 
   /**
    * Show defenses in chat
+   *
+   * @returns {Promise.<void>}
    */
   async rollDefenses() {
     if (!this.isOwner) {
@@ -2785,39 +2802,6 @@ export class ActorPF extends Actor {
       }
     }
 
-    // Add misc data
-    const reSplit = CONFIG.PF1.re.traitSeparator;
-    // Damage Reduction
-    let drNotes = [];
-    if (this.data.data.traits.dr.length) {
-      drNotes = this.data.data.traits.dr.split(reSplit);
-    }
-    // Energy Resistance
-    let energyResistance = [];
-    if (this.data.data.traits.eres.length) {
-      energyResistance.push(...this.data.data.traits.eres.split(reSplit));
-    }
-    // Damage Immunity
-    if (this.data.data.traits.di.value.length || this.data.data.traits.di.custom.length) {
-      const values = [
-        ...this.data.data.traits.di.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
-        }),
-        ...(this.data.data.traits.di.custom.length > 0 ? this.data.data.traits.di.custom.split(reSplit) : []),
-      ];
-      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.ImmuneTo").format(o)));
-    }
-    // Damage Vulnerability
-    if (this.data.data.traits.dv.value.length || this.data.data.traits.dv.custom.length) {
-      const values = [
-        ...this.data.data.traits.dv.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
-        }),
-        ...(this.data.data.traits.dv.custom.length > 0 ? this.data.data.traits.dv.custom.split(reSplit) : []),
-      ];
-      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.VulnerableTo").format(o)));
-    }
-
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
     if (wT.valid) {
@@ -2852,10 +2836,9 @@ export class ActorPF extends Actor {
       misc: {
         sr: d.attributes.sr.total,
         srNotes: srNotes,
-        drNotes: drNotes,
-        energyResistance: energyResistance,
       },
       tokenUuid: token?.document.uuid,
+      properties: await this.getDefenseHeaders(),
     };
     // Add regeneration and fast healing
     if ((getProperty(d, "traits.fastHealing") || "").length || (getProperty(d, "traits.regen") || "").length) {
@@ -2867,7 +2850,7 @@ export class ActorPF extends Actor {
 
     setProperty(data, "flags.pf1.subject", "defenses");
 
-    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
+    await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
       speaker: ChatMessage.getSpeaker({ actor: this }),
     });
   }
@@ -4200,13 +4183,13 @@ export class ActorPF extends Actor {
    */
   get energyResistance() {
     const result = [];
-
-    const changes = this.changes.filter((o) => o.isActive).filter((o) => o.subTarget === "eres");
+    const changes = this.changes.filter((o) => o.subTarget === "eres");
 
     for (let c of changes) {
       const key = c.value?.keys?.[0];
       if (!key) continue;
       const value = c.resistanceValue ?? 0;
+      if (value <= 0) continue;
 
       const duplicate = result.find((o) => o.type === key);
       if (duplicate && duplicate.value < value) {
@@ -4240,13 +4223,13 @@ export class ActorPF extends Actor {
    */
   get damageReduction() {
     const result = [];
-
-    const changes = this.changes.filter((o) => o.isActive).filter((o) => o.subTarget === "dr");
+    const changes = this.changes.filter((o) => o.subTarget === "dr");
 
     for (let c of changes) {
       const keys = c.value?.keys ?? [];
       if (keys.length === 0) continue;
       const value = c.drValue ?? 0;
+      if (value <= 0) continue;
       const and = c.value?.logicalOperator !== false;
 
       const duplicate = result.find((o) => {
@@ -4270,6 +4253,63 @@ export class ActorPF extends Actor {
         types: keys,
         value: value,
         and: and,
+        source: c,
+      });
+    }
+
+    return result;
+  }
+
+  /**
+   * @typdef {object} ActorPF~SingleTypeChange
+   * @property {string} type - The type (ID) of the property.
+   * @property {ItemChange} source - The source of the property.
+   */
+  /**
+   * Retrieves all sources of damage immunity from changes on this actor,
+   * preventing duplicates.
+   *
+   * @returns {ActorPF~SingleTypeChange[]} A list of properties.
+   */
+  get damageImmunities() {
+    const result = [];
+    const changes = this.changes.filter((o) => o.subTarget === "di");
+
+    for (let c of changes) {
+      const key = c.value?.keys?.[0];
+      if (!key) continue;
+
+      const duplicate = result.find((o) => o.type === key);
+      if (duplicate) continue;
+
+      result.push({
+        type: key,
+        source: c,
+      });
+    }
+
+    return result;
+  }
+
+  /**
+   * Retrieves all sources of damage vulnerability from changes on this actor,
+   * preventing duplicates.
+   *
+   * @returns {ActorPF~SingleTypeChange[]} A list of properties.
+   */
+  get damageVulnerabilities() {
+    const result = [];
+    const changes = this.changes.filter((o) => o.subTarget === "dv");
+
+    for (let c of changes) {
+      const key = c.value?.keys?.[0];
+      if (!key) continue;
+
+      const duplicate = result.find((o) => o.type === key);
+      if (duplicate) continue;
+
+      result.push({
+        type: key,
         source: c,
       });
     }

@@ -1681,12 +1681,11 @@ export const PF1 = {
       widgetParams: [{ type: "energyResistance" }],
       defaultValue: {},
       functions: {
-        prepare: function () {
+        apply: function () {
           // Calculate value
           const rollData = this.parent?.getRollData() ?? {};
           this.resistanceValue = RollPF.safeTotal(this.value.value, rollData);
         },
-        apply: function () {},
       },
     },
     dr: {
@@ -1696,11 +1695,30 @@ export const PF1 = {
       widgetParams: [{ type: "damageReduction" }],
       defaultValue: {},
       functions: {
-        prepare: function () {
+        apply: function () {
           // Calculate value
           const rollData = this.parent?.getRollData() ?? {};
           this.drValue = RollPF.safeTotal(this.value.value, rollData);
         },
+      },
+    },
+    di: {
+      label: "PF1.DamImm",
+      category: "defense",
+      widget: Widget_WorldListSelector,
+      widgetParams: [{ type: "damageType", multiSelect: false, useLogicalOperator: false }],
+      defaultValue: {},
+      functions: {
+        apply: function () {},
+      },
+    },
+    dv: {
+      label: "PF1.DamVuln",
+      category: "defense",
+      widget: Widget_WorldListSelector,
+      widgetParams: [{ type: "damageType", multiSelect: false, useLogicalOperator: false }],
+      defaultValue: {},
+      functions: {
         apply: function () {},
       },
     },

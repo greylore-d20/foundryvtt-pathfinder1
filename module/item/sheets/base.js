@@ -337,7 +337,11 @@ export class ItemSheetPF extends ItemSheet {
         const widget = CONFIG.PF1.buffTargets[change.subTarget]?.widget;
         obj.hasWidget = widget != null;
         if (obj.hasWidget) {
-          obj.widgetSignature = await widget.getSignature(change);
+          const html = {
+            pre: '<div class="tag">',
+            post: "</div>",
+          };
+          obj.widgetSignature = `${html.pre}${await widget.getSignature(change)}${html.post}`;
         }
 
         data.changes.push(obj);

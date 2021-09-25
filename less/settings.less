@@ -102,6 +102,10 @@
           flex: 0 0 112px;
         }
 
+        .bypass-dr {
+          flex: 0 0 96px;
+        }
+
         .item-controls {
           display: flex;
           flex-flow: row nowrap;
@@ -132,7 +136,8 @@
           .name,
           .hardness,
           .hp-per,
-          .show-as {
+          .show-as,
+          .bypass-dr {
             border-right: 1px solid @colorTan;
           }
         }
@@ -165,6 +170,26 @@
             .name {
               font-size: 16px;
               text-align: left;
+            }
+
+            .bypass-dr {
+              img {
+                flex: 0 0 24px;
+                width: 24px;
+                height: 24px;
+              }
+            }
+
+            .widget {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              overflow: hidden;
+
+              &:hover {
+                box-shadow: 0 0 8px @colorRed;
+              }
             }
 
             .item-controls {

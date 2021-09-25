@@ -1,3 +1,7 @@
+/* ----------------------------------------- */
+/*  Widgets                                  */
+/* ----------------------------------------- */
+
 .widget {
   &.icon-selector {
     &:not(.signature) {
@@ -270,17 +274,16 @@
   }
 }
 
-.widget-signature {
-  min-width: 128px;
-  height: 24px;
+/* ----------------------------------------- */
+/*  Signatures                               */
+/* ----------------------------------------- */
 
+.widget-signature {
   &.damage-reduction,
-  &.energy-resistance {
+  &.energy-resistance,
+  &.di-dv {
     display: flex;
     flex-flow: row nowrap;
-    border: 1px solid @colorTan;
-    background-color: @colorFaint;
-    border-radius: 4px;
     align-items: center;
     justify-content: center;
 
@@ -288,6 +291,12 @@
       width: 16px;
       height: 16px;
       flex: 0 0 16px;
+      border: none;
+      margin: 0;
+    }
+
+    span {
+      margin: 0 2px;
     }
   }
 }

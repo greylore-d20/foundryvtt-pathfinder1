@@ -11,14 +11,14 @@
     {{/each}}
   </div>
 
-  {{#if usesLogicalOperator}}
+  {{#if useLogicalOperator}}
   <div class="switch" data-name="logicalOperator">
     <span class="{{#if data.logicalOperator}}active{{/if}}">{{localize "PF1.Operators.And"}}</span>
     <span class="{{#unless data.logicalOperator}}active{{/unless}}">{{localize "PF1.Operators.Or"}}</span>
   </div>
   {{/if}}
 
-  {{#if usesValueField}}
+  {{#if useValueField}}
   <div class="form-group">
     <label>{{localize "PF1.Value"}}</label>
     <div class="form-fields">

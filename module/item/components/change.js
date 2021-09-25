@@ -72,10 +72,17 @@ export class ItemChange {
   }
 
   /**
-   * @returns Whether this change should be applied, and the parent item is active.
+   * @returns {boolean} Whether this change should be applied, and the parent item is active.
    */
   get isActive() {
     return this.parent instanceof ItemPF ? this.parent.isActive : true;
+  }
+
+  /**
+   * @returns {object} The configuration object associated with this change's subtarget.
+   */
+  get config() {
+    return CONFIG.PF1.buffTargets[this.subTarget];
   }
 
   prepareData() {
@@ -146,120 +153,118 @@ export class ItemChange {
     // Get custom function
     const customFunction = CONFIG.PF1.buffTargets[this.subTarget]?.functions?.apply;
     if (customFunction != null) {
-      customFunction.call(this, actor);
+      return customFunction.call(this, actor);
     }
     // Do regular stuff
-    else {
-      // Prepare change targets
-      if (!targets) {
-        targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
-        if (!(targets instanceof Array)) targets = [targets];
-      }
-      const sourceInfoTargets = this.getSourceInfoTargets(actor);
-      let addedSourceInfo = false;
+    // Prepare change targets
+    if (!targets) {
+      targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
+      if (!(targets instanceof Array)) targets = [targets];
+    }
+    const sourceInfoTargets = this.getSourceInfoTargets(actor);
+    let addedSourceInfo = false;
 
-      const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
+    const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
 
-      const overrides = actor.changeOverrides;
-      for (let t of targets) {
-        if (!overrides || overrides[t]) {
-          let operator = this.operator;
-          if (operator === "+") operator = "add";
-          if (operator === "=") operator = "set";
+    const overrides = actor.changeOverrides;
+    for (let t of targets) {
+      if (!overrides || overrides[t]) {
+        let operator = this.operator;
+        if (operator === "+") operator = "add";
+        if (operator === "=") operator = "set";
 
-          let value = 0;
-          if (operator === "script") {
-            const fn = this.createFunction(this.formula, ["d", "item"]);
-            const result = fn(rollData, this.parent);
-            value = result.value;
-            operator = result.operator;
-          } else {
-            value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData], {
-              suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
-            }).total;
-          }
+        let value = 0;
+        if (operator === "script") {
+          const fn = this.createFunction(this.formula, ["d", "item"]);
+          const result = fn(rollData, this.parent);
+          value = result.value;
+          operator = result.operator;
+        } else {
+          value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData], {
+            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
+          }).total;
+        }
 
-          this.data.value = value;
+        this.data.value = value;
 
-          if (!t) continue;
-          const prior = overrides[t][operator][this.modifier];
+        if (!t) continue;
+        const prior = overrides[t][operator][this.modifier];
 
-          switch (operator) {
-            case "add":
-              {
-                const base = getProperty(actor.data, t);
-                if (typeof base === "number") {
-                  if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
-                    setProperty(actor.data, t, base + value);
-                    overrides[t][operator][this.modifier] = (prior ?? 0) + value;
+        switch (operator) {
+          case "add":
+            {
+              const base = getProperty(actor.data, t);
+              if (typeof base === "number") {
+                if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
+                  setProperty(actor.data, t, base + value);
+                  overrides[t][operator][this.modifier] = (prior ?? 0) + value;
 
-                    if (this.parent && !addedSourceInfo) {
-                      for (let si of sourceInfoTargets) {
-                        getSourceInfo(actor.sourceInfo, si).positive.push({
+                  if (this.parent && !addedSourceInfo) {
+                    for (let si of sourceInfoTargets) {
+                      getSourceInfo(actor.sourceInfo, si).positive.push({
+                        value: value,
+                        name: this.parent.name,
+                        type: this.parent.type,
+                      });
+                    }
+                    addedSourceInfo = true;
+                  }
+                } else {
+                  const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
+                  setProperty(actor.data, t, base + diff);
+                  overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
+
+                  if (this.parent) {
+                    for (let si of sourceInfoTargets) {
+                      const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
+
+                      let doAdd = true;
+                      sInfo.forEach((o) => {
+                        if (o.modifier === this.modifier) {
+                          if (o.value < value) {
+                            sInfo.splice(sInfo.indexOf(o), 1);
+                          } else {
+                            doAdd = false;
+                          }
+                        }
+                      });
+
+                      if (doAdd) {
+                        sInfo.push({
                           value: value,
                           name: this.parent.name,
                           type: this.parent.type,
+                          modifier: this.modifier,
                         });
-                      }
-                      addedSourceInfo = true;
-                    }
-                  } else {
-                    const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-                    setProperty(actor.data, t, base + diff);
-                    overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
-
-                    if (this.parent) {
-                      for (let si of sourceInfoTargets) {
-                        const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
-
-                        let doAdd = true;
-                        sInfo.forEach((o) => {
-                          if (o.modifier === this.modifier) {
-                            if (o.value < value) {
-                              sInfo.splice(sInfo.indexOf(o), 1);
-                            } else {
-                              doAdd = false;
-                            }
-                          }
-                        });
-
-                        if (doAdd) {
-                          sInfo.push({
-                            value: value,
-                            name: this.parent.name,
-                            type: this.parent.type,
-                            modifier: this.modifier,
-                          });
-                        }
                       }
                     }
                   }
                 }
               }
-              break;
+            }
+            break;
 
-            case "set":
-              setProperty(actor.data, t, value);
-              overrides[t][operator][this.modifier] = value;
+          case "set":
+            setProperty(actor.data, t, value);
+            overrides[t][operator][this.modifier] = value;
 
-              if (this.parent && !addedSourceInfo) {
-                for (let si of sourceInfoTargets) {
-                  getSourceInfo(actor.sourceInfo, si).positive.push({
-                    value: value,
-                    operator: "set",
-                    name: this.parent.name,
-                    type: this.parent.type,
-                  });
-                }
-                addedSourceInfo = true;
+            if (this.parent && !addedSourceInfo) {
+              for (let si of sourceInfoTargets) {
+                getSourceInfo(actor.sourceInfo, si).positive.push({
+                  value: value,
+                  operator: "set",
+                  name: this.parent.name,
+                  type: this.parent.type,
+                });
               }
-              break;
-          }
+              addedSourceInfo = true;
+            }
+            break;
+        }
 
-          // Reset ability modifiers
-          if (t.match(/^data\.abilities\.(?:[a-zA-Z0-9]+)\.(?:total|penalty|base)$/)) {
-            actor.refreshAbilityModifiers();
-          }
+        // Reset ability modifiers
+        if (t.match(/^data\.abilities\.(?:[a-zA-Z0-9]+)\.(?:total|penalty|base)$/)) {
+          actor.refreshAbilityModifiers();
         }
       }
     }

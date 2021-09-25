@@ -2,6 +2,12 @@ import { ItemChange } from "../../pf1.js";
 import { WorldConfig } from "../config/world-config.js";
 
 /**
+ * @typedef {object} Widget_IconSelector~Item
+ * @property {string} key - The key of the item.
+ * @property {string} img - The icon URL of the item.
+ * @property {string} [tooltip] - The tooltip text to show for the item.
+ */
+/**
  * @param {Widget_IconSelector~Items} [items] - A list of items to initialize this widget with.
  * @param {object} [options]
  * @param {boolean} [options.multiSelect = false] - Whether to allow the selection of multiple items.
@@ -12,12 +18,6 @@ export class Widget_IconSelector extends Application {
     super(applicationOptions);
 
     /**
-     * @typedef {object} Widget_IconSelector~Item
-     * @property {string} key - The key of the item.
-     * @property {string} icon - The icon URL of the item.
-     * @property {string} [tooltip] - The tooltip text to show for the item.
-     */
-    /**
      * @property {Widget_IconSelector~Item[]} items
      */
     this.items = items;
@@ -25,7 +25,7 @@ export class Widget_IconSelector extends Application {
     /**
      * @property {boolean} multiSelect
      */
-    this.multiSelect = options.multiSelect === true;
+    this.multiSelect = options.multiSelect;
 
     /**
      * Contains the currently selected key(s).
@@ -65,7 +65,7 @@ export class Widget_IconSelector extends Application {
     return "systems/pf1/icons/misc/check-mark.svg";
   }
 
-  static getSignature(items = []) {
+  static async getSignature(items = []) {
     return "";
   }
 
@@ -154,9 +154,12 @@ export class Widget_IconSelector extends Application {
 /**
  * Creates a widget to select data from world data.
  *
+ * @param {object} data - The data to supply this widget with.
  * @param {object} options
  * @param {"damageType"|"damageReduction"|"energyResistance"} options.type - The type of widget to create.
- * @param {object} data - The data to supply this widget with.
+ * @param {boolean} options.multiSelect - Override the widget's multi select option.
+ * @param {boolean} options.useLogicalOperator - Override whether to render the logical operator.
+ * @param {boolean} options.useValueField - Override whether to render the value field.
  * @param {object} [applicationOptions] - An object normally passed as options to the Application constructor.
  */
 export class Widget_WorldListSelector extends Widget_IconSelector {
@@ -169,6 +172,9 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
     super(items, undefined, applicationOptions);
 
     this.type = options.type;
+    this.multiSelect = options.multiSelect;
+    this.useLogicalOperator = options.useLogicalOperator;
+    this.useValueField = options.useValueField;
 
     /**
      * Contains the widget's data, which should be able to be used in JSON.stringify
@@ -225,7 +231,7 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
     return null;
   }
 
-  static async getSignature(change = null) {
+  static async getSignature(change = null, customArgs = {}) {
     if (!(change instanceof ItemChange)) return "";
 
     if (change.subTarget == null) return "";
@@ -259,11 +265,23 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
       template = "systems/pf1/templates/widgets/signatures/energy-resistance.hbs";
       const key = change.value.keys?.[0];
       const data = WorldConfig.getListObject("damageType", key);
+      if (!data) return "";
       templateData.value = change.resistanceValue ?? 0;
       templateData.img = data?.img ?? CONFIG.PF1.unknownImage;
-      templateData.tooltip = key != null ? `${data.name} ${templateData.value}` : null;
+      templateData.tooltip = `${data.name} ${templateData.value}`;
     }
 
+    // Damage Vulnerability/Immunity
+    else if (["di", "dv"].includes(change.subTarget)) {
+      template = "systems/pf1/templates/widgets/signatures/di-dv.hbs";
+      const key = change.value.keys?.[0];
+      const data = WorldConfig.getListObject("damageType", key);
+      if (!data) return "";
+      templateData.img = data?.img ?? CONFIG.PF1.unknownImage;
+      templateData.tooltip = `${data.name}`;
+    }
+
+    if (!template) return "";
     return await renderTemplate(template, templateData);
   }
 
@@ -276,19 +294,20 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
 
   prepareData() {
     // Set up logical operator switch
-    this.usesLogicalOperator = ["damageType", "damageReduction"].includes(this.type);
+    if (this.useLogicalOperator == null)
+      this.useLogicalOperator = ["damageType", "damageReduction"].includes(this.type);
     if (!hasProperty(this.data, "logicalOperator")) {
       setProperty(this.data, "logicalOperator", true);
     }
 
     // Set up number field
-    this.usesValueField = ["damageReduction", "energyResistance"].includes(this.type);
+    if (this.useValueField == null) this.useValueField = ["damageReduction", "energyResistance"].includes(this.type);
     if (!hasProperty(this.data, "value")) {
       setProperty(this.data, "value", 0);
     }
 
     // Set up multi select
-    if (this.usesLogicalOperator) {
+    if (this.useLogicalOperator) {
       this.multiSelect = true;
     }
 
@@ -302,8 +321,8 @@ export class Widget_WorldListSelector extends Widget_IconSelector {
     const data = super.getData();
 
     data.data = this.data;
-    data.usesLogicalOperator = this.usesLogicalOperator === true;
-    data.usesValueField = this.usesValueField === true;
+    data.useLogicalOperator = this.useLogicalOperator === true;
+    data.useValueField = this.useValueField === true;
     data.multiSelect = this.multiSelect === true;
 
     return data;

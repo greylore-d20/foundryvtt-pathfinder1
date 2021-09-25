@@ -5,10 +5,10 @@ import { ItemChange } from "../item/components/change.js";
  */
 export function applyChanges() {
   this.changeOverrides = {};
-  const c = Array.from(this.changes);
+  let c = Array.from(this.changes);
 
   // Organize changes by priority
-  c.sort((a, b) => _sortChanges.call(this, a, b));
+  c = c.sort((a, b) => _sortChanges.call(this, a, b));
 
   // Parse change flags
   for (let i of this.changeItems) {
@@ -136,6 +136,10 @@ const getSortChangePriority = function () {
       "mhp",
       "wounds",
       "vigor",
+      "dr",
+      "eres",
+      "di",
+      "dv",
     ],
     modifiers: [
       "untyped",

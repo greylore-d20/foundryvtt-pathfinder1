@@ -312,12 +312,6 @@
         border: 2px solid @colorRust;
         background: url(icons/misc/hazard-sign.svg) no-repeat 75% 50% rgba(0, 0, 0, 0.05);
       }
-      input[type="text"]:not(:first-child),
-      select:not(:first-child),
-      span:not(:first-child),
-      button:not(:first-child) {
-        margin-left: 5px;
-      }
 
       button.edit-change-contents {
         height: 24px;
@@ -336,8 +330,16 @@
         justify-content: center;
         align-items: center;
 
-        > *:hover {
-          box-shadow: 0 0 8px @colorRed;
+        .tag {
+          height: 20px;
+          flex: 1;
+          margin: 2px;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            box-shadow: 0 0 8px @colorRed;
+          }
         }
       }
       .change-target,

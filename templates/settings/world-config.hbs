@@ -35,6 +35,7 @@
         <span class="name">{{localize "PF1.Name"}}</span>
         <span class="hardness">{{localize "PF1.Hardness"}}</span>
         <span class="hp-per">{{localize "PF1.HPPerInch"}}</span>
+        <span class="bypass-dr">{{localize "PF1.BypassDR"}}</span>
         <div class="item-controls">
           <a data-action="add"><i class="fas fa-plus"></i></a>
         </div>
@@ -48,6 +49,11 @@
           <input class="name data-field" type="text" name="name" value="{{i.name}}" placeholder="{{localize "PF1.Name"}}"/>
           <input class="hardness data-field" type="text" name="hardness" value="{{i.hardness}}" placeholder="{{localize "PF1.Hardness"}}"/>
           <input class="hp-per data-field" type="text" name="hpPer" value="{{i.hpPer}}" placeholder="0"/>
+          <div class="bypass-dr widget">
+            {{#each i.bypassDRData as |drData|}}
+            <img src="{{drData.img}}" title="{{drData.name}}">
+            {{/each}}
+          </div>
           <div class="item-controls flexrow">
             <a data-action="delete"><i class="fas fa-trash"></i></a>
           </div>

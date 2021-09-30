@@ -732,21 +732,23 @@ export const addDefaultChanges = function (changes) {
         name: game.i18n.localize("PF1.BAB"),
       });
     }
-    // Strength to CMD
-    const abl = getProperty(this.data, "data.attributes.cmd.ability");
-    changes.push(
-      ItemChange.create({
-        formula: `@abilities.${abl}.mod`,
-        target: "misc",
-        subTarget: "cmd",
-        modifier: "untypedPerm",
-      })
-    );
-    for (const k of ["total", "flatFootedTotal"]) {
-      getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
-        formula: "@abilities.str.mod",
-        name: CONFIG.PF1.abilities["str"],
-      });
+    // Strength or substitute to CMD
+    const strAbl = getProperty(this.data, "data.attributes.cmd.strAbility");
+    if (strAbl in CONFIG.PF1.abilities) {
+      changes.push(
+        ItemChange.create({
+          formula: `@abilities.${strAbl}.mod`,
+          target: "misc",
+          subTarget: "cmd",
+          modifier: "untypedPerm",
+        })
+      );
+      for (const k of ["total", "flatFootedTotal"]) {
+        getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
+          formula: `@abilities.${strAbl}.mod`,
+          name: CONFIG.PF1.abilities[strAbl],
+        });
+      }
     }
     // Energy Drain to CMD
     changes.push(

@@ -126,7 +126,19 @@
         </div>
 
         <div class="flexrow">
-          <label class="cell left-label">{{localize "PF1.CMD"}}</label>
+          <label class="cell left-label">{{localize "PF1.CMDAbbr"}} ({{localize "PF1.AbilityStr"}})</label>
+          <select name="data.attributes.cmd.strAbility" class="cell midsize">
+              {{#select data.attributes.cmd.strAbility}}
+                  <option value=""></option>
+                  {{#each config.abilities as |label value|}}
+                      <option value="{{value}}">{{label}}</option>
+                  {{/each}}
+              {{/select}}
+          </select>
+        </div>
+
+        <div class="flexrow">
+          <label class="cell left-label">{{localize "PF1.CMDAbbr"}} ({{localize "PF1.AbilityDex"}})</label>
           <select name="data.attributes.cmd.dexAbility" class="cell midsize">
               {{#select data.attributes.cmd.dexAbility}}
                   <option value=""></option>

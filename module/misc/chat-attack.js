@@ -175,6 +175,7 @@ export class ChatAttack {
     data.total = roll.total;
     data.isCrit = critType === 1;
     data.isFumble = critType === 2;
+    data.isNat20 = d20 === 20;
     data.rollJSON = escape(JSON.stringify(roll));
     data.formula = roll.formula;
 

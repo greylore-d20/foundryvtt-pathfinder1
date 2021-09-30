@@ -99,6 +99,7 @@ export class DicePF {
               total: roll.total,
               isCrit: d20.total >= critical,
               isFumble: d20.total <= fumble,
+              isNat20: d20.total === 20,
               flavor: flavor,
               compendiumEntry: compendiumEntry,
             },

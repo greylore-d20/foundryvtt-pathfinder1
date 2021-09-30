@@ -124,7 +124,7 @@ export const registerHandlebarsHelpers = function () {
 
     // Include general sources. Item enhancement bonus is among these.
     const sources = item.document.allDamageSources;
-    for (let s of sources) rv.push(s.value);
+    for (let s of sources) rv.push(s.formula);
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 

@@ -142,10 +142,12 @@
     {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
   </h4>
   <ol class="damage-parts form-group tooltip">
-    {{#each data.damage.parts as |part i| }}
+    {{#each data.damage.parts as |part i|}}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      <input class="damage-type" type="text" name="data.damage.parts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <div class="widget outer" data-action="damageType" data-name="data.damage.parts.{{i}}.1">
+        {{{lookup (lookup ../widgets.damage.parts i) "1"}}}
+      </div>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -167,7 +169,9 @@
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      <input class="damage-type" type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <div class="widget outer" data-action="damageType" data-name="data.damage.critParts.{{i}}.1">
+        {{{lookup (lookup ../widgets.damage.critParts i) "1"}}}
+      </div>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -186,7 +190,9 @@
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      <input class="damage-type" type="text" name="data.damage.nonCritParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      <div class="widget outer" data-action="damageType" data-name="data.damage.nonCritParts.{{i}}.1">
+        {{{lookup (lookup ../widgets.damage.nonCritParts i) "1"}}}
+      </div>
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}

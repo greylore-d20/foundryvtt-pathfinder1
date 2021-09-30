@@ -2474,7 +2474,7 @@ export class ActorPF extends Actor {
       for (const item of list) {
         const widget = item.source?.config?.widget;
         if (!widget) continue;
-        items.push(await widget.getSignature(item.source));
+        items.push(await widget.getChangeSignature(item.source));
       }
       if (items.length) {
         headers.push({ header: game.i18n.localize("PF1.DamRed"), value: items });
@@ -2487,7 +2487,7 @@ export class ActorPF extends Actor {
       for (const item of list) {
         const widget = item.source?.config?.widget;
         if (!widget) continue;
-        items.push(await widget.getSignature(item.source));
+        items.push(await widget.getChangeSignature(item.source));
       }
       if (items.length) {
         headers.push({ header: game.i18n.localize("PF1.EnRes"), value: items });
@@ -2500,7 +2500,7 @@ export class ActorPF extends Actor {
       for (const item of list) {
         const widget = item.source?.config?.widget;
         if (!widget) continue;
-        items.push(await widget.getSignature(item.source));
+        items.push(await widget.getChangeSignature(item.source));
       }
       if (items.length) {
         headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: items });
@@ -2513,7 +2513,7 @@ export class ActorPF extends Actor {
       for (const item of list) {
         const widget = item.source?.config?.widget;
         if (!widget) continue;
-        items.push(await widget.getSignature(item.source));
+        items.push(await widget.getChangeSignature(item.source));
       }
       if (items.length) {
         headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: items });

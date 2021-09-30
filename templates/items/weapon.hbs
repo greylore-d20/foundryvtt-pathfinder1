@@ -139,7 +139,9 @@
         <label>{{localize "PF1.BaseWeaponDamage"}} ({{localize "PF1.ActorSizeMedium"}})</label>
         <div class="form-fields">
           <input type="text" name="data.weaponData.damageRoll" value="{{data.weaponData.damageRoll}}" placeholder="{{localize "PF1.DamageRoll"}}"/>
-          <input type="text" name="data.weaponData.damageType" value="{{data.weaponData.damageType}}" placeholder="{{localize "PF1.DamageType"}}"/>
+          <div class="widget outer" data-action="damageType" data-name="data.weaponData.damageType">
+            {{{widgets.weaponData.damageType}}}
+          </div>
         </div>
       </div>
 

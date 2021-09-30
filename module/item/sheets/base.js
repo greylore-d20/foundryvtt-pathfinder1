@@ -7,6 +7,9 @@ import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
 import { PF1_HelpBrowser } from "../../apps/help-browser.js";
+import { Widget_IconSelector, Widget_WorldListSelector } from "../../widgets/icon-selector.js";
+import { WorldConfig } from "../../config/world-config.js";
+import { Data_DamageType } from "../../misc/data.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -334,6 +337,7 @@ export class ItemSheetPF extends ItemSheet {
         obj.subTargetLabel = buffTargets[change.subTarget]?.label;
         obj.isScript = obj.data.operator === "script";
 
+        // Add widget info
         const widget = CONFIG.PF1.buffTargets[change.subTarget]?.widget;
         obj.hasWidget = widget != null;
         if (obj.hasWidget) {
@@ -341,8 +345,17 @@ export class ItemSheetPF extends ItemSheet {
             pre: '<div class="tag">',
             post: "</div>",
           };
-          obj.widgetSignature = `${html.pre}${await widget.getSignature(change)}${html.post}`;
+
+          // Set signature
+          obj.widgetSignature = `${html.pre}${html.post}`;
+          if (Object.hasOwnProperty.call(widget, "getChangeSignature")) {
+            obj.widgetSignature = `${html.pre}${await widget.getChangeSignature(change)}${html.post}`;
+          }
         }
+
+        // Deny fields
+        obj.allowOperator = CONFIG.PF1.buffTargets[change.subTarget]?.allowOperator !== false;
+        obj.allowModifier = CONFIG.PF1.buffTargets[change.subTarget]?.allowModifier !== false;
 
         data.changes.push(obj);
       }
@@ -388,6 +401,19 @@ export class ItemSheetPF extends ItemSheet {
       setProperty(data, "notes.attack", value);
     }
 
+    // Add world data
+    data.worldData = {};
+    for (const listType of ["damageTypes", "materials", "damageReduction"]) {
+      const list = game.settings.get("pf1", `worldData.${listType}`);
+      data.worldData[listType] = data.worldData[listType] ?? {};
+      list.forEach((o) => {
+        data.worldData[listType][o.id] = o;
+      });
+    }
+
+    // Add widgets
+    await this._addWidgets(data);
+
     // Add item flags
     this._prepareItemFlags(data);
 
@@ -398,6 +424,53 @@ export class ItemSheetPF extends ItemSheet {
     await this._prepareLinks(data);
 
     return data;
+  }
+
+  async _addWidgets(data) {
+    const widgets = {};
+
+    // Gather paths
+    let dtPaths = ["weaponData.damageType"];
+    {
+      const paths = ["parts", "critParts", "nonCritParts"];
+      for (const path of paths) {
+        for (let a = 0; a < (getProperty(data.data, `damage.${path}`) ?? []).length; a++) {
+          dtPaths.push(`damage.${path}.${a}.1`);
+        }
+      }
+    }
+
+    // Add damage type widgets
+    for (const path of dtPaths) {
+      if (!hasProperty(data.data, path)) continue;
+      const obj = getProperty(data.data, path);
+
+      const items = WorldConfig.getListVariables("damageTypes")
+        .list.filter((o) => obj.keys.includes(o.id))
+        .map((o) => {
+          return {
+            img: o.img,
+            name: o.name,
+          };
+        });
+
+      const extraItems = WorldConfig.getListVariables("damageTypes")
+        .list.filter((o) => obj.modifiers.includes(o.id))
+        .map((o) => {
+          return {
+            img: o.img,
+            name: o.name,
+          };
+        });
+
+      setProperty(
+        widgets,
+        path,
+        await Widget_IconSelector.getSignature(items, ["damage-type"], obj.logicalOperator, extraItems)
+      );
+    }
+
+    data.widgets = widgets;
   }
 
   async _prepareLinks(data) {
@@ -847,6 +920,9 @@ export class ItemSheetPF extends ItemSheet {
     // Change widget
     html.find(".change-widget").click(this._onChangeWidget.bind(this));
 
+    // Change damage type
+    html.find('.widget.outer[data-action="damageType"]').on("click", this._onChangeDamageType.bind(this));
+
     // Search box
     if (["container"].includes(this.item.data.type)) {
       const sb = html.find(".search-input");
@@ -1161,8 +1237,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   async _onChangeWidget(event) {
     event.preventDefault();
-    const a = event.currentTarget;
-    const changeId = a.closest(".item").dataset.change;
+    const changeId = event.currentTarget.closest(".item").dataset.change;
     const change = this.object.changes.get(changeId);
     const subTarget = change.subTarget;
     const configData = CONFIG.PF1.buffTargets[subTarget];
@@ -1175,6 +1250,34 @@ export class ItemSheetPF extends ItemSheet {
 
     if (result != null) {
       change.update({ value: result });
+    }
+  }
+
+  /**
+   * Changes a damage type attribute.
+   *
+   * @param {Event} event   The click event which originated the selection.
+   * @private
+   */
+  async _onChangeDamageType(event) {
+    event.preventDefault();
+    const elem = event.currentTarget;
+    const dataPath = elem.name ?? elem.dataset.name;
+    const curValue = getProperty(this.object.data, dataPath);
+
+    const app = new Widget_WorldListSelector(curValue, {
+      type: "damageType",
+      multiSelect: true,
+      useLogicalOperator: true,
+      useDamageRule: true,
+    });
+    app.render(true);
+    const result = await app.awaitResult();
+
+    if (result != null) {
+      this.object.update({
+        [dataPath]: duplicate(result.data),
+      });
     }
   }
 
@@ -1251,7 +1354,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
-      const initialData = ["", ""];
+      const initialData = ["", Data_DamageType.defaultData];
 
       // Add data
       const damage = getProperty(this.item.data, k2);

@@ -243,6 +243,7 @@ export const migrateItemData = function (item) {
   _migrateItemLinks(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
+  _migrateItemDamageTypes(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -833,6 +834,93 @@ const _migrateItemNotes = function (ent, updateData) {
       }
     }
   }
+};
+
+const _migrateItemDamageTypes = function (ent, updateData) {
+  // Migrate weapon damage types
+  if (ent.type === "weapon") {
+    const damageType = getProperty(ent, "data.weaponData.damageType");
+    if (typeof damageType === "string") {
+      const dt = _convertLegacyDamageTypeStringProperty(damageType);
+      updateData["data.weaponData.damageType"] = dt;
+    }
+  }
+
+  // Migrate action damage types
+  for (const partKey of ["parts", "critParts", "nonCritParts"]) {
+    const damageList = getProperty(ent, `data.damage.${partKey}`);
+    if (!(damageList instanceof Array)) continue;
+
+    let parts = [];
+    for (const part of damageList) {
+      const damageType = part[1];
+      parts.push([part[0], _convertLegacyDamageTypeStringProperty(damageType)]);
+    }
+    updateData[`data.damage.${partKey}`] = parts;
+  }
+};
+
+const _convertLegacyDamageTypeStringProperty = function (str) {
+  let logicalOperator = true;
+  if (str.match(/\s+or\s+/i)) logicalOperator = false;
+
+  const result = {
+    logicalOperator,
+    rule: "highest",
+    modifiers: [],
+    keys: [],
+  };
+
+  str
+    .split(/(?:and|or|\/)/i)
+    .map((s) => s.trim().toLowerCase())
+    .forEach((s) => {
+      result.keys.push(_convertLegacyDamageType(s));
+    });
+
+  return result;
+};
+
+const _convertLegacyDamageType = function (str) {
+  switch (str) {
+    case "slashing":
+    case "slash":
+    case "s":
+      return "dt-slashing";
+    case "piercing":
+    case "pierce":
+    case "p":
+      return "dt-piercing";
+    case "bludgeoning":
+    case "blunt":
+    case "b":
+      return "dt-bludgeoning";
+    case "fire":
+    case "f":
+      return "dt-fire";
+    case "cold":
+    case "c":
+      return "dt-cold";
+    case "electricity":
+    case "electric":
+    case "e":
+      return "dt-electricity";
+    case "acid":
+    case "a":
+      return "dt-acid";
+    case "sonic":
+      return "dt-sonic";
+    case "force":
+      return "dt-force";
+    case "negative":
+    case "negative energy":
+    case "neg":
+      return "dt-negative";
+    case "positive":
+    case "positive energy":
+      return "dt-positive";
+  }
+  return "dt-untyped";
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {

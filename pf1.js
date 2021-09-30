@@ -78,6 +78,7 @@ import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-
 import { Widget_IconSelector } from "./module/widgets/icon-selector.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 import { WorldConfig } from "./module/config/world-config.js";
+import { Data_DamageType } from "./module/misc/data.js";
 
 // Add String.format
 if (!String.prototype.format) {
@@ -168,6 +169,10 @@ Hooks.once("init", function () {
     // Settings
     settings: {
       WorldConfig,
+    },
+    // Data Descriptors
+    data: {
+      Data_DamageType,
     },
     // API
     registry: Registry,
@@ -335,8 +340,6 @@ Hooks.once("setup", function () {
     "consumableTypes",
     "attackTypes",
     "buffTypes",
-    // "buffTargets",
-    // "contextNoteTargets",
     "healingTypes",
     "divineFocus",
     "classSavingThrows",
@@ -355,14 +358,11 @@ Hooks.once("setup", function () {
     "abilityActivationTypes_unchained",
     "abilityActivationTypesPlurals_unchained",
     "actorStatures",
+    "damageRules",
   ];
 
   // Config (sub-)objects to be sorted
   const toSort = [
-    // "buffTargets",
-    // "buffTargets.misc",
-    // "contextNoteTargets",
-    // "contextNoteTargets.misc",
     "skills",
     "conditions",
     "conditionTypes",

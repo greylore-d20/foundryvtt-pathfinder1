@@ -1,44 +1,18 @@
-import { Widget_IconSelector } from "../widgets/icon-selector.js";
+import { Widget_WorldListSelector } from "../widgets/icon-selector.js";
 import { uniqueName } from "../lib.js";
+import { DamageType_Default } from "./world-data/damage-types.js";
+import { DamageReduction_Default } from "./world-data/damage-reduction.js";
+import { Material_Default } from "./world-data/materials.js";
 
 /**
  * A string identifying the type of list on the world configuration we are talking about.
  *
- * @typedef {("damageType"|"material"|"damageReduction")} WorldConfig.ListType
+ * @typedef {("damageTypes"|"materials"|"damageReduction")} WorldConfig.ListType
  */
 
 export class WorldConfig extends FormApplication {
-  constructor(object, options) {
-    if (!object) object = duplicate(WorldConfig.settings);
-    super(mergeObject(WorldConfig.defaultSettings, object ?? {}, { inplace: false }), options);
-  }
-
-  static get defaultDamageTypeData() {
-    return {
-      id: randomID(16),
-      name: game.i18n.localize("PF1.WorldConfig.DamageType.NewName"),
-      img: "icons/svg/sword.svg",
-    };
-  }
-
-  static get defaultMaterialData() {
-    return {
-      id: randomID(16),
-      name: game.i18n.localize("PF1.WorldConfig.Material.NewName"),
-      img: "icons/svg/coins.svg",
-      hardness: 10,
-      hpPer: 30,
-      bypassesDR: [],
-    };
-  }
-
-  static get defaultDRData() {
-    return {
-      id: randomID(16),
-      name: game.i18n.localize("PF1.WorldConfig.DR.NewName"),
-      showAs: "",
-      img: "icons/svg/statue.svg",
-    };
+  constructor(options) {
+    super(null, options);
   }
 
   static get defaultOptions() {
@@ -54,276 +28,31 @@ export class WorldConfig extends FormApplication {
     });
   }
 
-  static get defaultSettings() {
-    return {
-      damageTypes: [
-        {
-          id: "dt-untyped",
-          name: "Untyped",
-          img: "icons/skills/wounds/injury-body-pain-gray.webp",
-        },
-        {
-          id: "dt-slashing",
-          name: "Slashing",
-          img: "icons/weapons/axes/axe-battle-black.webp",
-        },
-        {
-          id: "dt-piercing",
-          name: "Piercing",
-          img: "icons/weapons/polearms/spear-flared-blue.webp",
-        },
-        {
-          id: "dr-bludgeoning",
-          name: "Bludgeoning",
-          img: "icons/weapons/hammers/hammer-double-steel-embossed.webp",
-        },
-        {
-          id: "dt-fire",
-          name: "Fire",
-          img: "icons/magic/fire/blast-jet-stream-splash.webp",
-        },
-        {
-          id: "dt-cold",
-          name: "Cold",
-          img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
-        },
-        {
-          id: "dt-electricity",
-          name: "Electricity",
-          img: "icons/magic/lightning/bolt-blue.webp",
-        },
-        {
-          id: "dt-acid",
-          name: "Acid",
-          img: "icons/magic/acid/dissolve-pool-bubbles.webp",
-        },
-        {
-          id: "dt-sonic",
-          name: "Sonic",
-          img: "icons/magic/sonic/explosion-shock-wave-teal.webp",
-        },
-        {
-          id: "dt-force",
-          name: "Force",
-          img: "icons/magic/lightning/orb-ball-purple.webp",
-        },
-        {
-          id: "dt-positive",
-          name: "Positive Energy",
-          img: "icons/magic/light/beam-strike-orange-gold.webp",
-        },
-        {
-          id: "dt-negative",
-          name: "Negative Energy",
-          img: "icons/magic/unholy/orb-rays-blue.webp",
-        },
-      ],
-      materials: [
-        {
-          id: "mt-steel",
-          name: "Steel",
-          img: "icons/commodities/metal/ingot-plain-steel.webp",
-          hardness: 10,
-          hpPer: 30,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-coldiron",
-          name: "Cold Iron",
-          img: "icons/commodities/metal/ingot-worn-steel.webp",
-          hardness: 10,
-          hpPer: 30,
-          bypassesDR: ["dr-coldiron"],
-        },
-        {
-          id: "mt-alchsilver",
-          name: "Alchemical Silver",
-          img: "icons/commodities/metal/ingot-engraved-silver.webp",
-          hardness: 8,
-          hpPer: 10,
-          bypassesDR: ["dr-silver"],
-        },
-        {
-          id: "mt-mithral",
-          name: "Mithral",
-          img: "icons/commodities/metal/ingot-stamped-silver.webp",
-          hardness: 15,
-          hpPer: 30,
-          bypassesDR: ["dr-silver"],
-        },
-        {
-          id: "mt-adamantine",
-          name: "Adamantine",
-          img: "icons/commodities/metal/ingot-stamped-purple.webp",
-          hardness: 20,
-          hpPer: 40,
-          bypassesDR: ["dr-adamantine"],
-        },
-        {
-          id: "mt-glass",
-          name: "Glass",
-          img: "icons/tools/laboratory/alembic-glass-ball-blue.webp",
-          hardness: 1,
-          hpPer: 1,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-paper",
-          name: "Paper",
-          img: "icons/sundries/documents/paper-plain-white.webp",
-          hardness: 0,
-          hpPer: 2,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-cloth",
-          name: "Cloth",
-          img: "icons/commodities/cloth/cloth-bolt-yellow.webp",
-          hardness: 0,
-          hpPer: 2,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-ice",
-          name: "Ice",
-          img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
-          hardness: 0,
-          hpPer: 3,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-leather",
-          name: "Leather",
-          img: "icons/commodities/leather/leather-bolt-tan.webp",
-          hardness: 2,
-          hpPer: 5,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-wood",
-          name: "Wood",
-          img: "icons/commodities/wood/lumber-stack.webp",
-          hardness: 5,
-          hpPer: 10,
-          bypassesDR: [],
-        },
-        {
-          id: "mt-stone",
-          name: "Stone",
-          img: "icons/commodities/stone/ore-chunk-grey.webp",
-          hardness: 8,
-          hpPer: 15,
-          bypassesDR: [],
-        },
-      ],
-      dr: [
-        {
-          id: "dr-untyped",
-          name: "Untyped",
-          showAs: "-",
-          img: "icons/skills/wounds/injury-body-pain-gray.webp",
-        },
-        {
-          id: "dr-slashing",
-          name: "Slashing",
-          showAs: "",
-          img: "icons/weapons/axes/axe-battle-black.webp",
-        },
-        {
-          id: "dr-piercing",
-          name: "Piercing",
-          showAs: "",
-          img: "icons/weapons/polearms/spear-flared-blue.webp",
-        },
-        {
-          id: "dr-bludgeoning",
-          name: "Bludgeoning",
-          showAs: "",
-          img: "icons/weapons/hammers/hammer-double-steel-embossed.webp",
-        },
-        {
-          id: "dr-magic",
-          name: "Magic",
-          showAs: "",
-          img: "icons/magic/lightning/orb-ball-purple.webp",
-        },
-        {
-          id: "dr-coldiron",
-          name: "Cold Iron",
-          showAs: "",
-          img: "icons/commodities/metal/ingot-worn-steel.webp",
-        },
-        {
-          id: "dr-silver",
-          name: "Silver",
-          showAs: "",
-          img: "icons/commodities/metal/ingot-engraved-silver.webp",
-        },
-        {
-          id: "dr-adamantine",
-          name: "Adamantine",
-          showAs: "",
-          img: "icons/commodities/metal/ingot-stamped-purple.webp",
-        },
-        {
-          id: "dr-good",
-          name: "Good",
-          showAs: "",
-          img: "icons/magic/holy/angel-winged-humanoid-blue.webp",
-        },
-        {
-          id: "dr-evil",
-          name: "Evil",
-          showAs: "",
-          img: "icons/magic/unholy/hand-claw-glow-orange.webp",
-        },
-        {
-          id: "dr-lawful",
-          name: "Lawful",
-          showAs: "",
-          img: "icons/magic/symbols/cog-shield-white-blue.webp",
-        },
-        {
-          id: "dr-chaotic",
-          name: "Chaotic",
-          showAs: "",
-          img: "icons/magic/fire/projectile-fireball-purple.webp",
-        },
-        {
-          id: "dr-epic",
-          name: "Epic",
-          showAs: "",
-          img: "icons/magic/movement/trail-streak-pink.webp",
-        },
-      ],
-    };
-  }
-
-  static get settings() {
-    return game.settings.get("pf1", "worldConfig");
+  static getSettings(type) {
+    return game.settings.get("pf1", `worldData.${type}`);
   }
 
   /**
-   * @typedef {Object} NameUpdateData
+   * @typedef {object} NameUpdateData
    * @property {string} name - The object's `name` property to find it by.
-   * @property {Object} data - The update data for the object.
+   * @property {object} data - The update data for the object.
    */
   /**
    * Changes list data
    *
    * @param {WorldConfig.ListType} type - The type of list to change objects for.
    * @param {NameUpdateData[]} updateData - The changes to push. An array containing an object for each slot.
-   * @returns {Promise.<Object>} A promise returning the new settings object.
+   * @returns {Promise.<object>} A promise returning the new settings object.
    */
   static async updateListData(type, updateData) {
-    const settings = duplicate(this.settings);
+    const settings = duplicate(this.getSettings(type));
 
     const { listKey } = this.getListVariables(type);
     const hookArgs = [];
 
     // Alter slot data
     let hasChanges = false;
-    for (const item of settings[listKey]) {
+    for (const item of settings) {
       const pair = updateData.find((o) => o.id === item.id);
       if (pair) {
         mergeObject(item, pair.data);
@@ -335,7 +64,7 @@ export class WorldConfig extends FormApplication {
 
     // Apply results
     if (hasChanges) {
-      await game.settings.set("pf1", "worldConfig", settings);
+      await game.settings.set("pf1", `worldData.${type}`, settings);
       for (let args of hookArgs) {
         Hooks.callAll(`pf1.worldData.update.${type}`, ...args);
       }
@@ -344,44 +73,43 @@ export class WorldConfig extends FormApplication {
   }
 
   /**
-   * @typedef {Object} WorldConfig.ListVariables
-   * @property {Object[]} list - The list in question.
+   * @typedef {object} WorldConfig.ListVariables
+   * @property {object[]} list - The list in question.
    * @property {string} listKey - The key of the list object on the settings object.
-   * @property {Object} defaultData - The default data of objects associated with the list.
+   * @property {object} defaultData - The default data of objects associated with the list.
    * @property {string[]} itemIDs - All the IDs of the items within the list.
    */
   /**
    * Returns some variables about one of the world configuration's lists.
    *
-   * @param {WorldConfig.ListType} type - The type of list to get variables from.
-   * @param {Object} [settings] - The optional settings object to provide, in case you need e.g. a duplicate to work with.
+   * @param {string} type - The type of list to get variables from.
+   * @param {object} [settings] - The optional settings object to provide, in case you need e.g. a duplicate to work with.
    * @returns {WorldConfig.ListVariables|null} The list's variables.
    */
   static getListVariables(type, settings = null) {
-    if (!settings) settings = this.settings;
+    if (!settings) settings = this.getSettings(type);
 
-    let listKey, defaultData;
-    switch (type) {
-      case "damageType":
-        listKey = "damageTypes";
-        defaultData = this.defaultDamageTypeData;
-        break;
-      case "material":
-        listKey = "materials";
-        defaultData = this.defaultMaterialData;
-        break;
-      case "dr":
-        listKey = "dr";
-        defaultData = this.defaultDRData;
-        break;
-    }
-    const list = settings[listKey];
+    const defaultData = this.getDefaultData(type);
+    const list = settings;
 
     if (!list || !defaultData) return null;
 
     const itemIDs = list.map((o) => o.id);
 
-    return { list, listKey, defaultData, itemIDs };
+    return { list, listKey: type, defaultData, itemIDs };
+  }
+
+  static getDefaultData(type) {
+    switch (type) {
+      case "damageTypes":
+        return DamageType_Default();
+      case "materials":
+        return Material_Default();
+      case "damageReduction":
+        return DamageReduction_Default();
+    }
+
+    return null;
   }
 
   /**
@@ -405,7 +133,7 @@ export class WorldConfig extends FormApplication {
    * @returns {Object} The new world settings data object.
    */
   static async addListObject(type, data = {}) {
-    const settings = duplicate(this.settings);
+    const settings = duplicate(this.getSettings(type));
     const { list, defaultData } = this.getListVariables(type, settings);
 
     const keys = list.reduce((cur, o) => {
@@ -417,7 +145,7 @@ export class WorldConfig extends FormApplication {
     newData.name = uniqueName(keys, newData.name);
 
     list.push(newData);
-    await game.settings.set("pf1", "worldConfig", settings);
+    await game.settings.set("pf1", `worldData.${type}`, settings);
     Hooks.callAll(`pf1.worldData.create.${type}`, newData);
     return settings;
   }
@@ -430,13 +158,13 @@ export class WorldConfig extends FormApplication {
    * @returns {Object} The new world settings data object.
    */
   static async removeListObject(type, id) {
-    const settings = duplicate(this.settings);
+    const settings = duplicate(this.getSettings(type));
     const { list, listKey } = this.getListVariables(type, settings);
     const obj = list.find((o) => o.id === id);
     if (!obj) return settings;
 
     settings[listKey].splice(settings[listKey].indexOf(obj), 1);
-    await game.settings.set("pf1", "worldConfig", settings);
+    await game.settings.set("pf1", `worldData.${type}`, settings);
     Hooks.callAll(`pf1.worldData.delete.${type}`, obj);
     return settings;
   }
@@ -450,7 +178,7 @@ export class WorldConfig extends FormApplication {
    * @returns {Object} The new world settings data object.
    */
   static async moveListObject(type, from, to) {
-    const settings = duplicate(this.settings);
+    const settings = duplicate(this.getSettings(type));
     const { list } = this.getListVariables(type, settings);
 
     if (from === to) return settings;
@@ -466,7 +194,7 @@ export class WorldConfig extends FormApplication {
     list.splice(fromIdx, 1);
     list.splice(toIdx, 0, fromObj);
 
-    await game.settings.set("pf1", "worldConfig", settings);
+    await game.settings.set("pf1", `worldData.${type}`, settings);
     return settings;
   }
 
@@ -476,7 +204,7 @@ export class WorldConfig extends FormApplication {
     };
 
     // Parse damage types
-    data.damageTypes = this.object.damageTypes.reduce((cur, o) => {
+    data.damageTypes = this.constructor.getSettings("damageTypes").reduce((cur, o) => {
       cur.push(
         mergeObject(
           o,
@@ -491,14 +219,14 @@ export class WorldConfig extends FormApplication {
     }, []);
 
     // Parse materials
-    data.materials = this.object.materials.reduce((cur, o) => {
+    data.materials = this.constructor.getSettings("materials").reduce((cur, o) => {
       cur.push(
         mergeObject(
           o,
           {
             key: o.id,
             bypassDRData: o.bypassesDR.map((o2) => {
-              const dr = this.constructor.getListObject("dr", o2);
+              const dr = this.constructor.getListObject("damageReduction", o2);
               return {
                 img: dr.img,
                 name: dr.name,
@@ -513,7 +241,7 @@ export class WorldConfig extends FormApplication {
     }, []);
 
     // Parse DR types
-    data.dr = this.object.dr.reduce((cur, o) => {
+    data.dr = this.constructor.getSettings("damageReduction").reduce((cur, o) => {
       cur.push(
         mergeObject(
           o,
@@ -536,6 +264,9 @@ export class WorldConfig extends FormApplication {
 
     // List objects
     html.find('.item-list .item input.data-field[type="text"]').on("change", this._onChangeListObjectText.bind(this));
+    html
+      .find('.item-list .item input.data-field[type="checkbox"]')
+      .on("change", this._onChangeListObjectCheckbox.bind(this));
     html.find('.item-list .item img[data-action="file-picker"]').on("click", this._onChangeListObjectImage.bind(this));
     html.find(".item-list .item .widget.bypass-dr").on("click", this._onClickBypassDR.bind(this));
     html.find(".item-list .item .item-controls a").on("click", this._onListObjectControl.bind(this));
@@ -602,7 +333,30 @@ export class WorldConfig extends FormApplication {
     }
 
     // Change name
-    this.object = await this.constructor.updateListData(listType, [
+    await this.constructor.updateListData(listType, [
+      {
+        id: listObj.id,
+        data: {
+          [dataPath]: newValue,
+        },
+      },
+    ]);
+    this.render();
+  }
+
+  async _onChangeListObjectCheckbox(event) {
+    event.preventDefault();
+    const elem = event.currentTarget;
+    const listType = elem.closest(".item-list").dataset.listType;
+    const key = elem.closest(".item").dataset.key;
+
+    const dataPath = elem.name;
+    const listObj = this.constructor.getListObject(listType, key);
+
+    const newValue = elem.checked === true;
+
+    // Change value
+    await this.constructor.updateListData(listType, [
       {
         id: listObj.id,
         data: {
@@ -620,7 +374,7 @@ export class WorldConfig extends FormApplication {
 
     return new Promise((resolve, reject) => {
       const id = event.currentTarget.closest(".item").dataset.key;
-      const item = this.object[listKey].find((o) => o.id === id);
+      const item = this.constructor.getSettings(listKey).find((o) => o.id === id);
       if (!item) return;
 
       const fp = new FilePicker({
@@ -646,26 +400,27 @@ export class WorldConfig extends FormApplication {
     event.preventDefault();
     const thisListType = event.currentTarget.closest(".item-list").dataset.listType;
     const { ...thisData } = this.constructor.getListVariables(thisListType);
-    const { ...drData } = this.constructor.getListVariables("dr");
 
     const id = event.currentTarget.closest(".item").dataset.key;
-    const item = this.object[thisData.listKey].find((o) => o.id === id);
+    const item = this.constructor.getSettings(thisData.listKey).find((o) => o.id === id);
     if (!item) return;
 
-    const items = drData.list.map((o) => {
-      return {
-        key: o.id,
-        img: o.img,
-        tooltip: o.name,
-      };
-    });
-    const app = new Widget_IconSelector(items, { multiSelect: true });
-    app.selectedKeys = item.bypassesDR;
+    const app = new Widget_WorldListSelector(
+      { keys: item.bypassesDR },
+      {
+        type: "damageReduction",
+        multiSelect: true,
+        useLogicalOperator: false,
+        useValueField: false,
+      }
+    );
     app.render(true);
     const result = await app.awaitResult();
 
     if (result != null) {
-      this.object = await this.constructor.updateListData(thisListType, [{ id: id, data: { bypassesDR: result } }]);
+      this.object = await this.constructor.updateListData(thisListType, [
+        { id: id, data: { bypassesDR: result.keys } },
+      ]);
       this.render();
     }
   }

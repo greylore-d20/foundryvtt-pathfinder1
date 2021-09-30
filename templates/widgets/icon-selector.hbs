@@ -1,13 +1,32 @@
 <form class="flexcol" autocomplete="off">
-  <div class="item-list">
-    {{#each items as |item|}}
-    <a class="item{{#if item.selected}} selected{{/if}}" data-key="{{item.key}}"{{#if item.tooltip}} title="{{item.tooltip}}"{{/if}}>
-      <div class="image" style="background-image: url({{item.img}});">
-        {{#if item.selected}}
-        <img class="check-mark" src="{{../checkImage}}">
-        {{/if}}
+  <div class="content">
+    <div class="item-list">
+      {{#each items as |item|}}
+      <a class="item{{#if item.selected}} selected{{/if}}" data-key="{{item.key}}"{{#if item.tooltip}} title="{{item.tooltip}}"{{/if}}>
+        <div class="image" style="background-image: url({{item.img}});">
+          {{#if item.selected}}
+          <img class="check-mark" src="{{../checkImage}}"/>
+          {{/if}}
+        </div>
+      </a>
+      {{/each}}
+    </div>
+
+    {{#each extraHeaders as |header headerKey|}}
+    <div class="form-group stacked">
+      <label>{{header.label}}</label>
+      <div class="item-list" data-header="{{headerKey}}">
+      {{#each header.items as |item|}}
+      <a class="item{{#if item.selected}} selected{{/if}}" data-key="{{item.key}}" title="{{item.name}}">
+        <div class="image" style="background-image: url({{item.img}});">
+          {{#if item.selected}}
+          <img class="check-mark" src="{{../../checkImage}}"/>
+          {{/if}}
+        </div>
+      </a>
+      {{/each}}
       </div>
-    </a>
+    </div>
     {{/each}}
   </div>
 
@@ -18,6 +37,13 @@
   </div>
   {{/if}}
 
+  {{#if useDamageRule}}
+  <div class="form-group stacked" data-name="rule">
+    <label>{{localize "PF1.DamageRules"}}</label>
+    {{radioBoxes "rule" config.damageRules checked=data.rule localize=true}}
+  </div>
+  {{/if}}
+
   {{#if useValueField}}
   <div class="form-group">
     <label>{{localize "PF1.Value"}}</label>
@@ -25,6 +51,10 @@
       <input type="text" name="value" value="{{data.value}}" placeholder="{{localize "PF1.Formula"}}"/>
     </div>
   </div>
+  {{/if}}
+
+  {{#if customOptionsHTML}}
+  {{{customOptionsHTML}}}
   {{/if}}
 
   <div class="form-group">

@@ -57,6 +57,7 @@
       </div>
 
       <div class="item-operator flexrow">
+        {{#if change.allowOperator}}
         <select class="change-operator" name="data.changes.{{a}}.operator">
           {{#select (lookup this.data "operator") }}
           <option value="add">+</option>
@@ -64,6 +65,7 @@
           <option value="script">S</option>
           {{/select}}
         </select>
+        {{/if}}
       </div>
 
       <div class="item-target flexrow">
@@ -71,6 +73,7 @@
       </div>
 
       <div class="item-modifier flexrow">
+        {{#if change.allowModifier}}
         <select class="change-modifier" name="data.changes.{{a}}.modifier">
           {{#select (lookup this.data "modifier") }}
           {{#each ../changeGlobals.modifiers as |name type|}}
@@ -78,6 +81,7 @@
           {{/each}}
           {{/select}}
         </select>
+        {{/if}}
       </div>
       
       <div class="item-priority flexrow">

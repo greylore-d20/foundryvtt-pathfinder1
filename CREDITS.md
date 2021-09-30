@@ -28,6 +28,7 @@ People and credits are listed in no particular order.
 - [Weight](https://game-icons.net/1x1/delapouite/weight.html)
 - [Coins](https://game-icons.net/1x1/delapouite/coins.html)
 - [Skills](https://game-icons.net/1x1/delapouite/skills.html)
+- [Check Mark](https://game-icons.net/1x1/delapouite/check-mark.html)
 
 ## sbed's icons ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/))
 

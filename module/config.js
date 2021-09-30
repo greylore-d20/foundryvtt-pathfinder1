@@ -782,6 +782,15 @@ export const PF1 = {
     positive: "PF1.DamageTypePositive",
   },
 
+  /**
+   * The damage rules
+   */
+  damageRules: {
+    highest: "PF1.Highest",
+    lowest: "PF1.Lowest",
+    split: "PF1.Split",
+  },
+
   /* -------------------------------------------- */
 
   /**
@@ -1680,6 +1689,8 @@ export const PF1 = {
       widget: Widget_WorldListSelector,
       widgetParams: [{ type: "energyResistance" }],
       defaultValue: {},
+      allowOperator: false,
+      allowModifier: false,
       functions: {
         apply: function () {
           // Calculate value
@@ -1694,6 +1705,8 @@ export const PF1 = {
       widget: Widget_WorldListSelector,
       widgetParams: [{ type: "damageReduction" }],
       defaultValue: {},
+      allowOperator: false,
+      allowModifier: false,
       functions: {
         apply: function () {
           // Calculate value
@@ -1706,8 +1719,10 @@ export const PF1 = {
       label: "PF1.DamImm",
       category: "defense",
       widget: Widget_WorldListSelector,
-      widgetParams: [{ type: "damageType", multiSelect: false, useLogicalOperator: false }],
+      widgetParams: [{ type: "singleDamageType", multiSelect: false, useLogicalOperator: false }],
       defaultValue: {},
+      allowOperator: false,
+      allowModifier: false,
       functions: {
         apply: function () {},
       },
@@ -1716,8 +1731,10 @@ export const PF1 = {
       label: "PF1.DamVuln",
       category: "defense",
       widget: Widget_WorldListSelector,
-      widgetParams: [{ type: "damageType", multiSelect: false, useLogicalOperator: false }],
+      widgetParams: [{ type: "singleDamageType", multiSelect: false, useLogicalOperator: false }],
       defaultValue: {},
+      allowOperator: false,
+      allowModifier: false,
       functions: {
         apply: function () {},
       },

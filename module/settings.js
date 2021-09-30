@@ -5,6 +5,11 @@ import { TooltipConfig } from "./config/tooltip.js";
 import { TooltipWorldConfig } from "./config/tooltip_world.js";
 import { WorldConfig } from "./config/world-config.js";
 
+// Default Data
+import { DefaultData_DamageTypes } from "./config/world-data/damage-types.js";
+import { DefaultData_DamageReduction } from "./config/world-data/damage-reduction.js";
+import { DefaultData_Materials } from "./config/world-data/materials.js";
+
 export const registerSystemSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
@@ -43,11 +48,25 @@ export const registerSystemSettings = function () {
     type: WorldConfig,
     restricted: true,
   });
-  game.settings.register("pf1", "worldConfig", {
-    name: "PF1.WorldConfig.Name",
+  game.settings.register("pf1", "worldData.damageTypes", {
+    name: "damageTypes",
     scope: "world",
-    default: WorldConfig.defaultSettings,
-    type: Object,
+    default: DefaultData_DamageTypes,
+    type: Array,
+    config: false,
+  });
+  game.settings.register("pf1", "worldData.damageReduction", {
+    name: "damageReduction",
+    scope: "world",
+    default: DefaultData_DamageReduction,
+    type: Array,
+    config: false,
+  });
+  game.settings.register("pf1", "worldData.materials", {
+    name: "materials",
+    scope: "world",
+    default: DefaultData_Materials,
+    type: Array,
     config: false,
   });
 

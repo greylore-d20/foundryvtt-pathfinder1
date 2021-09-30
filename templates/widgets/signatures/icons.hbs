@@ -1,0 +1,18 @@
+<div class="widget-signature{{#if classes}}{{#each classes as |cls|}} {{cls}}{{/each}}{{/if}}">
+  {{#each items as |item idx|}}
+  <img src="{{item.img}}" title="{{item.name}}"/>
+  {{#unless @last}}
+  {{#if ../logicalOperator}}
+  <span class="logical-operator">{{../logicalOperator}}</span>
+  {{/if}}
+  {{/unless}}
+  {{/each}}
+
+  {{#if extraItems.length}}
+  <div class="extra-items">
+    {{#each extraItems as |item idx|}}
+    <img src="{{item.img}}" title="{{item.name}}"/>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>

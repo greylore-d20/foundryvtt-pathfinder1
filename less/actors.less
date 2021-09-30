@@ -97,6 +97,48 @@
       }
     }
 
+    .pseudo-table {
+      background: rgba(0, 0, 0, 0.05);
+      border-top: 1px solid #7a7971;
+      border-bottom: 1px solid #7a7971;
+
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      .header,
+      .sub-header {
+        margin: 0;
+        color: #f0f0e0;
+        text-shadow: 1px 1px #000;
+      }
+      .header,
+      .sub-header,
+      .value {
+        width: 100%;
+        text-align: center;
+        line-height: 1.5;
+        flex: 0;
+      }
+      .header {
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      .sub-header {
+        background: rgba(0, 0, 0, 0.35);
+      }
+      &.maneuverability-details {
+        height: 100%;
+        .value {
+          flex: 1;
+          line-height: 3;
+          text-align: center;
+          text-align-last: center;
+        }
+      }
+    }
+
     .attributes > .attribute {
       margin: 0;
       border-left: none;
@@ -218,7 +260,31 @@
     }
 
     .attributes {
+      flex: 0;
       border-bottom: @borderGroove;
+
+      .health-details,
+      .speed-details {
+        flex: 4;
+        border-right: 1px solid black;
+        margin-right: 1px;
+
+        .vigor,
+        .wounds {
+          flex: 2;
+        }
+        .vigor {
+          border-right: 1px solid black;
+          margin-right: 1px;
+          flex: 3;
+        }
+        .speed-details {
+          flex: 3.5;
+        }
+      }
+      .maneuverability-details {
+        flex: 1;
+      }
 
       li {
         padding: 0;

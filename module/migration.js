@@ -168,6 +168,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorNoteArrays(actor, updateData);
   _migrateActorSpeed(actor, updateData, linked);
   _migrateSpellDivineFocus(actor, updateData);
+  _migrateActorConcentration(actor, updateData);
   _migrateActorSpellbookCL(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData, linked);
   _migrateActorBaseStats(actor, updateData);
@@ -426,6 +427,24 @@ const _migrateActorSpellbookCL = function (ent, updateData) {
       if (curFormula.length > 0) updateData[`${key}.formula`] = curFormula + " + " + curBase;
       else updateData[`${key}.formula`] = curFormula + curBase;
       updateData[`${key}.base`] = 0;
+    }
+  }
+};
+
+const _migrateActorConcentration = function (ent, updateData) {
+  const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  for (let k of spellbooks) {
+    // Delete unused .concentration from old actors
+    const key = `data.attributes.spells.spellbooks.${k}`;
+    const oldValue = getProperty(ent, `${key}.concentration`);
+    const isString = typeof oldValue === "string";
+    if (Number.isFinite(oldValue) || isString) updateData[`${key}.-=concentration`] = null;
+    if (isString) {
+      // Assume erroneous bonus formula location and combine it with existing bonus formula.
+      const formulaKey = `${key}.concentrationFormula`;
+      const formula = [oldValue];
+      formula.push(getProperty(ent, formulaKey) || "");
+      updateData[formulaKey] = formula.filter((f) => f !== 0 && f?.toString().trim().length).join(" + ");
     }
   }
 };

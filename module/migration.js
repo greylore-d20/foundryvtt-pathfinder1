@@ -171,6 +171,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorConcentration(actor, updateData);
   _migrateActorSpellbookCL(actor, updateData);
   _migrateActorSpellbookSlots(actor, updateData, linked);
+  _migrateActorConcentration(actor, updateData);
   _migrateActorBaseStats(actor, updateData);
   _migrateUnusedActorCreatureType(actor, updateData);
   _migrateActorSpellbookDCFormula(actor, updateData, linked);

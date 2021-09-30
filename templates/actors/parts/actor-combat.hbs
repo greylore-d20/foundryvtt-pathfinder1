@@ -214,7 +214,7 @@
                 {{/if}}
                 {{#each item.document.allDamageSources}}
                   {{#if @first}}<br>{{/if}}
-                  {{flavor}} : {{formula}} [{{lookup @root.config.bonusModifiers modifier}}]<br>
+                  {{flavor}} : {{value}} [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]<br>
                 {{/each}}
                 {{#if (optionalConditionals item)}}
                   <br/>+ {{localize "PF1.Conditionals"}}<br/>

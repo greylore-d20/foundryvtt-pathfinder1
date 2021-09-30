@@ -400,7 +400,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "flySpeed":
       return "data.attributes.speed.fly.total";
     case "cmb":
-      return "data.attributes.cmb.total";
+      return "data.attributes.cmb.bonus";
     case "cmd":
       if (changeType === "dodge") return "data.attributes.cmd.total";
       return ["data.attributes.cmd.total", "data.attributes.cmd.flatFootedTotal"];
@@ -1250,7 +1250,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        getSourceInfo(this.sourceInfo, "data.attributes.cmb.total").negative.push({
+        getSourceInfo(this.sourceInfo, "data.attributes.cmb.bonus").negative.push({
           value: -2,
           name: game.i18n.localize("PF1.CondGrappled"),
         });

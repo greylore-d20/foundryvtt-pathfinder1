@@ -227,8 +227,7 @@ export class ActorSheetPF extends ActorSheet {
       rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`),
       cmbAbl = getProperty(data, `data.abilities.${data.data.attributes.cmbAbility}.mod`);
 
-    const szMod = CONFIG.PF1.sizeMods[data.data.traits.size],
-      szCMBMod = CONFIG.PF1.sizeSpecialMods[data.data.traits.size];
+    const szMod = CONFIG.PF1.sizeMods[data.data.traits.size];
 
     data.data.attributes.attack.meleeAttackMod = meleeAtkAbl;
     data.data.attributes.attack.rangedAttackMod = rangedAtkAbl;
@@ -236,7 +235,6 @@ export class ActorSheetPF extends ActorSheet {
     data.rangedAttack = coreAttack + szMod + data.data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
     data.data.attributes.attack.meleeAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.meleeAbility];
     data.data.attributes.attack.rangedAttackLabel = CONFIG.PF1.abilities[data.data.attributes.attack.rangedAbility];
-    data.cmbAttack = coreAttack + szCMBMod + data.data.attributes.cmb.total + (cmbAbl ?? 0);
 
     // Add inventory value
     {

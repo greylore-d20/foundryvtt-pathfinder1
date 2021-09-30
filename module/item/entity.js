@@ -653,12 +653,6 @@ export class ItemPF extends Item {
 
     // Item Actions
     if (Object.prototype.hasOwnProperty.call(data, "actionType")) {
-      // Save DC
-      let save = data.save || {};
-      if (save.type) {
-        labels.save = `DC ${this.getDC()}`;
-      }
-
       // Damage
       let dam = data.damage || {};
       if (dam.parts && dam.parts instanceof Array) {
@@ -717,6 +711,14 @@ export class ItemPF extends Item {
 
     // Update maximum uses
     this._updateMaxUses();
+
+    // Add saving throw DC label
+    if (hasProperty(this.data, "data.actionType") && this.hasSave) {
+      // Save DC
+      if (this.hasSave) {
+        this.labels.save = `DC ${this.getDC()}`;
+      }
+    }
 
     // Re-render sheet, if open
     if (this.sheet?.rendered) {

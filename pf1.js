@@ -12,6 +12,7 @@ import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
+import { TemplateLayerPF } from "./module/measure.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -192,6 +193,8 @@ Hooks.once("init", function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
+  CONFIG.MeasuredTemplate.layerClass = TemplateLayerPF; // doesn't do anything?
+  CONFIG.Canvas.layers.templates = TemplateLayerPF;
   CONFIG.Actor.documentClass = ActorPF;
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;

@@ -3,13 +3,12 @@ import { degtorad } from "./lib.js";
 /**
  * Applies patches to core functions to integrate Pathfinder specific measurements.
  */
-export function patchMeasureTools() {
+export class TemplateLayerPF extends TemplateLayer {
   // Use 90 degrees cone in PF1 style
-  const TemplateLayer__onDragLeftStart = TemplateLayer.prototype._onDragLeftStart;
-  TemplateLayer.prototype._onDragLeftStart = function (event) {
-    if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragLeftStart.call(this, event);
+  async _onDragLeftStart(event) {
+    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
-    PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
+    await super._onDragLeftStart(event);
 
     // Create the new preview template
     const tool = game.activeTool;
@@ -39,13 +38,12 @@ export function patchMeasureTools() {
     const template = new MeasuredTemplate(doc);
     event.data.preview = this.preview.addChild(template);
     template.draw();
-  };
+  }
 
-  const TemplateLayer__onDragLeftMove = TemplateLayer.prototype._onDragLeftMove;
-  TemplateLayer.prototype._onDragLeftMove = function (event) {
-    if (!game.settings.get("pf1", "measureStyle")) return TemplateLayer__onDragLeftMove.call(this, event);
+  _onDragLeftMove(event) {
+    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
-    PlaceablesLayer.prototype._onDragLeftMove.call(this, event);
+    super._onDragLeftMove(event);
     if (event.data.createState >= 1) {
       // Snap the destination to the grid
       let dest = event.data.destination;
@@ -79,13 +77,12 @@ export function patchMeasureTools() {
       template.refresh();
       event.data.createState = 2;
     }
-  };
+  }
 
   // Highlight grid in PF1 style
-  const MeasuredTemplate_highlightGrid = MeasuredTemplate.prototype.highlightGrid;
-  MeasuredTemplate.prototype.highlightGrid = function () {
+  highlightGrid() {
     if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone"].includes(this.data.t))
-      return MeasuredTemplate_highlightGrid.call(this);
+      return super.highlightGrid();
 
     const grid = canvas.grid,
       d = canvas.dimensions,
@@ -184,5 +181,5 @@ export function patchMeasureTools() {
         }
       }
     }
-  };
+  }
 }

@@ -3,7 +3,6 @@ import { hasTokenVision } from "./misc/vision-permission.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
-import { patchMeasureTools } from "./measure.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";
 
@@ -149,9 +148,6 @@ export async function PatchCore() {
 
   // Apply low light vision patches
   patchLowLightVision();
-
-  // Apply measurement patches
-  patchMeasureTools();
 
   // Patch StringTerm
   StringTerm.prototype.evaluate = function (options = {}) {

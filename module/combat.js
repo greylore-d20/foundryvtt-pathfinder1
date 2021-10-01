@@ -3,180 +3,6 @@ import { ActorPF } from "./actor/entity.js";
 /* -------------------------------------------- */
 
 /**
- * Override the default Initiative formula to customize special behaviors of the game system.
- * Apply advantage, proficiency, or bonuses where appropriate
- * Apply the dexterity score as a decimal tiebreaker if requested
- * See Combat._getInitiativeFormula for more detail.
- *
- * @param actor
- */
-export const _getInitiativeFormula = function (actor) {
-  if (CONFIG.Combat.initiative.formula) var parts = CONFIG.Combat.initiative.formula.split(/\s*\+\s*/);
-  else parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
-  if (!actor) return parts[0] ?? "0";
-  return parts.filter((p) => p !== null).join(" + ");
-};
-
-Combat.showInitiativeDialog = function (formula = null) {
-  return new Promise((resolve) => {
-    let template = "systems/pf1/templates/chat/roll-dialog.hbs";
-    let rollMode = game.settings.get("core", "rollMode");
-    let dialogData = {
-      formula: formula ? formula : "",
-      rollMode: rollMode,
-      rollModes: CONFIG.Dice.rollModes,
-    };
-    // Create buttons object
-    let buttons = {
-      normal: {
-        label: "Roll",
-        callback: (html) => {
-          rollMode = html.find('[name="rollMode"]').val();
-          const bonus = html.find('[name="bonus"]').val();
-          resolve({ rollMode: rollMode, bonus: bonus });
-        },
-      },
-    };
-    // Show dialog
-    renderTemplate(template, dialogData).then((dlg) => {
-      new Dialog(
-        {
-          title: game.i18n.localize("PF1.InitiativeBonus"),
-          content: dlg,
-          buttons: buttons,
-          default: "normal",
-          close: (html) => {
-            resolve({ stop: true });
-          },
-        },
-        {
-          classes: ["dialog", "pf1", "roll-initiative"],
-        }
-      ).render(true);
-    });
-  });
-};
-
-export const _rollInitiative = async function (ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
-  // Structure input data
-  ids = typeof ids === "string" ? [ids] : ids;
-  const currentId = this.combatant.id;
-  if (!formula) formula = _getInitiativeFormula(this.combatant.actor);
-
-  let overrideRollMode = null,
-    bonus = "",
-    stop = false;
-  if (keyboard.isDown("Shift")) {
-    const dialogData = await Combat.showInitiativeDialog(formula);
-    overrideRollMode = dialogData.rollMode;
-    bonus = dialogData.bonus || "";
-    stop = dialogData.stop || false;
-  }
-
-  if (stop) return this;
-
-  // Iterate over Combatants, performing an initiative roll for each
-  const [updates, messages] = await ids.reduce(
-    async (results, id, i) => {
-      const result = await results;
-      let [updates, messages] = result;
-
-      // Get Combatant data
-      const c = this.combatants.get(id);
-      if (!c) return results;
-      const actorData = c.actor ? c.actor.data.data : {};
-      formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
-
-      actorData.bonus = bonus;
-      // Add bonus
-      if (bonus.length > 0 && i === 0) {
-        formula += " + @bonus";
-      }
-
-      // Roll initiative
-      const rollMode =
-        overrideRollMode != null
-          ? overrideRollMode
-          : messageOptions.rollMode || c.token.hidden || c.hidden
-          ? "gmroll"
-          : "roll";
-      const roll = RollPF.safeRoll(formula, actorData);
-      if (roll.err) ui.notifications.warn(roll.err.message);
-      updates.push({ _id: id, initiative: roll.total });
-
-      let [notes, notesHTML] = c.actor.getInitiativeContextNotes();
-
-      // Create roll template data
-      const rollData = mergeObject(
-        {
-          user: game.user.id,
-          formula: roll.formula,
-          tooltip: await roll.getTooltip(),
-          total: roll.total,
-        },
-        notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
-      );
-
-      // Create chat data
-      let chatData = mergeObject(
-        {
-          user: game.user.id,
-          type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-          rollMode: rollMode,
-          sound: CONFIG.sounds.dice,
-          speaker: {
-            scene: canvas.scene.id,
-            actor: c.actor ? c.actor.id : null,
-            token: c.token.id,
-            alias: c.token.name,
-          },
-          flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
-          roll: roll,
-          content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
-        },
-        messageOptions
-      );
-      setProperty(chatData, "flags.pf1.subject.core", "init");
-
-      // Handle different roll modes
-      switch (chatData.rollMode) {
-        case "gmroll":
-          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-          break;
-        case "selfroll":
-          chatData["whisper"] = [game.user._id];
-          break;
-        case "blindroll":
-          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-          chatData["blind"] = true;
-      }
-
-      if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
-      messages.push(chatData);
-
-      // Return the Roll and the chat data
-      return results;
-    },
-    [[], []]
-  );
-  if (!updates.length) return this;
-
-  // Update multiple combatants
-  await this.updateEmbeddedDocuments("Combatant", updates);
-
-  // Ensure the turn order remains with the same combatant
-  if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
-
-  // Create multiple chat messages
-  await ChatMessage.create(messages);
-
-  // Return the updated Combat
-  return this;
-};
-
-/* -------------------------------------------- */
-
-/**
  * This function is used to hook into the Chat Log context menu to add additional options to each message
  * These options make it easy to conveniently apply damage to controlled tokens based on the value of a Roll
  *
@@ -272,3 +98,177 @@ export const addCombatTrackerContextOptions = function (result) {
     callback: (li) => duplicateCombatantInitiativeDialog.call(this, this.combats, li.data("combatant-id")),
   });
 };
+
+export class CombatPF extends Combat {
+  /**
+   * Override the default Initiative formula to customize special behaviors of the game system.
+   * Apply advantage, proficiency, or bonuses where appropriate
+   * Apply the dexterity score as a decimal tiebreaker if requested
+   * See Combat._getInitiativeFormula for more detail.
+   *
+   * @param {ActorPF} actor
+   */
+  _getInitiativeFormula(actor) {
+    if (CONFIG.Combat.initiative.formula) var parts = CONFIG.Combat.initiative.formula.split(/\s*\+\s*/);
+    else parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
+    if (!actor) return parts[0] ?? "0";
+    return parts.filter((p) => p !== null).join(" + ");
+  }
+
+  async _rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
+    // Structure input data
+    ids = typeof ids === "string" ? [ids] : ids;
+    const currentId = this.combatant.id;
+    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor);
+
+    let overrideRollMode = null,
+      bonus = "",
+      stop = false;
+    if (keyboard.isDown("Shift")) {
+      const dialogData = await Combat.implementation.showInitiativeDialog(formula);
+      overrideRollMode = dialogData.rollMode;
+      bonus = dialogData.bonus || "";
+      stop = dialogData.stop || false;
+    }
+
+    if (stop) return this;
+
+    // Iterate over Combatants, performing an initiative roll for each
+    const [updates, messages] = await ids.reduce(
+      async (results, id, i) => {
+        const result = await results;
+        let [updates, messages] = result;
+
+        // Get Combatant data
+        const c = this.combatants.get(id);
+        if (!c) return results;
+        const actorData = c.actor ? c.actor.data.data : {};
+        formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
+
+        actorData.bonus = bonus;
+        // Add bonus
+        if (bonus.length > 0 && i === 0) {
+          formula += " + @bonus";
+        }
+
+        // Roll initiative
+        const rollMode =
+          overrideRollMode != null
+            ? overrideRollMode
+            : messageOptions.rollMode || c.token.hidden || c.hidden
+            ? "gmroll"
+            : "roll";
+        const roll = RollPF.safeRoll(formula, actorData);
+        if (roll.err) ui.notifications.warn(roll.err.message);
+        updates.push({ _id: id, initiative: roll.total });
+
+        let [notes, notesHTML] = c.actor.getInitiativeContextNotes();
+
+        // Create roll template data
+        const rollData = mergeObject(
+          {
+            user: game.user.id,
+            formula: roll.formula,
+            tooltip: await roll.getTooltip(),
+            total: roll.total,
+          },
+          notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
+        );
+
+        // Create chat data
+        let chatData = mergeObject(
+          {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.CHAT,
+            rollMode: rollMode,
+            sound: CONFIG.sounds.dice,
+            speaker: {
+              scene: canvas.scene.id,
+              actor: c.actor ? c.actor.id : null,
+              token: c.token.id,
+              alias: c.token.name,
+            },
+            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
+            roll: roll,
+            content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
+          },
+          messageOptions
+        );
+        setProperty(chatData, "flags.pf1.subject.core", "init");
+
+        // Handle different roll modes
+        switch (chatData.rollMode) {
+          case "gmroll":
+            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
+            break;
+          case "selfroll":
+            chatData["whisper"] = [game.user._id];
+            break;
+          case "blindroll":
+            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
+            chatData["blind"] = true;
+        }
+
+        if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
+        messages.push(chatData);
+
+        // Return the Roll and the chat data
+        return results;
+      },
+      [[], []]
+    );
+    if (!updates.length) return this;
+
+    // Update multiple combatants
+    await this.updateEmbeddedDocuments("Combatant", updates);
+
+    // Ensure the turn order remains with the same combatant
+    if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
+
+    // Create multiple chat messages
+    await ChatMessage.create(messages);
+
+    // Return the updated Combat
+    return this;
+  }
+
+  static showInitiativeDialog = function (formula = null) {
+    return new Promise((resolve) => {
+      let template = "systems/pf1/templates/chat/roll-dialog.hbs";
+      let rollMode = game.settings.get("core", "rollMode");
+      let dialogData = {
+        formula: formula ? formula : "",
+        rollMode: rollMode,
+        rollModes: CONFIG.Dice.rollModes,
+      };
+      // Create buttons object
+      let buttons = {
+        normal: {
+          label: "Roll",
+          callback: (html) => {
+            rollMode = html.find('[name="rollMode"]').val();
+            const bonus = html.find('[name="bonus"]').val();
+            resolve({ rollMode: rollMode, bonus: bonus });
+          },
+        },
+      };
+      // Show dialog
+      renderTemplate(template, dialogData).then((dlg) => {
+        new Dialog(
+          {
+            title: game.i18n.localize("PF1.InitiativeBonus"),
+            content: dlg,
+            buttons: buttons,
+            default: "normal",
+            close: (html) => {
+              resolve({ stop: true });
+            },
+          },
+          {
+            classes: ["dialog", "pf1", "roll-initiative"],
+          }
+        ).render(true);
+      });
+    });
+  };
+}

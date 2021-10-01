@@ -1,4 +1,3 @@
-import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { hasTokenVision } from "./misc/vision-permission.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
@@ -143,8 +142,6 @@ export async function PatchCore() {
   }
 
   // Patch, patch, patch
-  Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
-  Combat.prototype.rollInitiative = _rollInitiative;
   window.getTemplate = PF1_getTemplate;
 
   // Apply low light vision patches

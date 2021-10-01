@@ -126,10 +126,15 @@ export const applyAccessibilitySettings = function (app, html, data, conf) {
   }
 };
 
-export const createInlineRollString = function (roll) {
-  return (
-    `<a class="inline-roll inline-result" title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}">` +
-    `<i class="fas fa-dice-d20"></i> ${roll.total}` +
-    `</a>`
-  );
-};
+/**
+ * Returns an inline roll string suitable for chat messages.
+ *
+ * @param {Roll} roll - The roll to be stringified
+ * @param {object} [options] - Additional options affecting the inline roll
+ * @param {boolean} [options.hide3d] - Whether the roll should be hidden from DsN
+ * @returns {string} The inline roll string
+ */
+export const createInlineRollString = (roll, { hide3d = true } = {}) =>
+  `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
+  title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
+  <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;

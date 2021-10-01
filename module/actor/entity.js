@@ -599,7 +599,7 @@ export class ActorPF extends Actor {
         // Add class levels
         else if (spellbook.class && rollData.classes[spellbook.class]) {
           const value = rollData.classes[spellbook.class].level;
-          clTotal += value;
+          total += value;
 
           setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
         }
@@ -739,8 +739,7 @@ export class ActorPF extends Actor {
                 : null;
 
             spellLevel.max = max;
-            let oldval = spellLevel.value;
-            if (!Number.isFinite(oldval)) spellLevel.value = max;
+            if (!Number.isFinite(spellLevel.value)) spellLevel.value = max;
           }
         } else {
           for (let a = 0; a < 10; a++) {

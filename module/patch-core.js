@@ -1,4 +1,3 @@
-import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
@@ -10,25 +9,6 @@ import { parseRollStringVariable } from "./roll.js";
  *
  */
 export async function PatchCore() {
-  // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
-  /**
-   * @param path
-   */
-  async function PF1_getTemplate(path) {
-    if (!Object.prototype.hasOwnProperty.call(_templateCache, path) || CONFIG.debug.template) {
-      await new Promise((resolve) => {
-        game.socket.emit("template", path, (resp) => {
-          const compiled = Handlebars.compile(resp.html, { preventIndent: true });
-          Handlebars.registerPartial(path, compiled);
-          _templateCache[path] = compiled;
-          console.log(`Foundry VTT | Retrieved and compiled template ${path}`);
-          resolve(compiled);
-        });
-      });
-    }
-    return _templateCache[path];
-  }
-
   // Add Vision Permission sheet to ActorDirectory context options
   const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;
   ActorDirectory.prototype._getEntryContextOptions = function () {
@@ -111,9 +91,6 @@ export async function PatchCore() {
       if (!up) game.pf1.tooltip.lock.new = false;
     };
   }
-
-  // Patch, patch, patch
-  window.getTemplate = PF1_getTemplate;
 
   // Apply low light vision patches
   patchLowLightVision();

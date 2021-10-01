@@ -4,7 +4,6 @@
   @attributes.cmb.bonus : {{data.attributes.cmb.bonus}}<br/>
   + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
   + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
-  + @abilities.{{data.attributes.cmbAbility}}.mod : {{abilityMod @root.data.attributes.cmbAbility @root.rollData 1}}<br/>
   <br/>{{localize "PF1.FromSources"}}:<br/>
   {{#if (ne @root.data.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeSpecialMods @root.data.traits.size }}<br/>{{/if}}
   {{#if sourceDetails.data.attributes.attack.shared.length}}

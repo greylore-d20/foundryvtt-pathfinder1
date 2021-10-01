@@ -11,25 +11,6 @@ import { parseRollStringVariable } from "./roll.js";
  *
  */
 export async function PatchCore() {
-  // Patch getTemplate to prevent unwanted indentation in things things like <textarea> elements.
-  /**
-   * @param path
-   */
-  async function PF1_getTemplate(path) {
-    if (!Object.prototype.hasOwnProperty.call(_templateCache, path) || CONFIG.debug.template) {
-      await new Promise((resolve) => {
-        game.socket.emit("template", path, (resp) => {
-          const compiled = Handlebars.compile(resp.html, { preventIndent: true });
-          Handlebars.registerPartial(path, compiled);
-          _templateCache[path] = compiled;
-          console.log(`Foundry VTT | Retrieved and compiled template ${path}`);
-          resolve(compiled);
-        });
-      });
-    }
-    return _templateCache[path];
-  }
-
   // Token patch for shared vision
   const Token__isVisionSource = Token.prototype._isVisionSource;
   Token.prototype._isVisionSource = function () {
@@ -145,7 +126,6 @@ export async function PatchCore() {
   // Patch, patch, patch
   Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
   Combat.prototype.rollInitiative = _rollInitiative;
-  window.getTemplate = PF1_getTemplate;
 
   // Apply low light vision patches
   patchLowLightVision();

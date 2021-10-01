@@ -33,7 +33,7 @@
 
     {{!-- Combat Tab --}}
     <div class="tab combat flexcol" data-group="primary" data-tab="combat">
-      {{> "systems/pf1/templates/actors/parts/actor-combat.hbs" sections=attacks}}
+      {{~> "systems/pf1/templates/actors/parts/actor-combat.hbs" sections=attacks}}
     </div>
 
     {{!-- Inventory Tab --}}
@@ -59,7 +59,7 @@
     {{!-- Spellbook Tab --}}
     {{#if usesAnySpellbook}}
     <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-      {{> "systems/pf1/templates/actors/parts/actor-spellbook-front.hbs"}}
+      {{~> "systems/pf1/templates/actors/parts/actor-spellbook-front.hbs"}}
     </div>
     {{/if}}
 

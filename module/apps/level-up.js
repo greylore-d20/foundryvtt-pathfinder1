@@ -1,5 +1,4 @@
 import { createInlineRollString } from "../chat.js";
-import { createCustomChatMessage } from "../chat.js";
 import { RollPF } from "../roll.js";
 
 export class LevelUpForm extends DocumentSheet {
@@ -25,6 +24,7 @@ export class LevelUpForm extends DocumentSheet {
     return game.i18n.format("PF1.LevelUpForm_Title", { className: this.object.name });
   }
 
+  /** @type {Actor} */
   get actor() {
     return this.object.actor;
   }
@@ -60,8 +60,8 @@ export class LevelUpForm extends DocumentSheet {
   getData() {
     const result = {};
 
-    result.data = duplicate(this.object.data);
-    result.actor = duplicate(this.actor.data);
+    result.data = this.object.data.toObject();
+    result.actor = this.actor.data.toObject();
 
     // Add health data
     const hpSettings = game.settings.get("pf1", "healthConfig");
@@ -159,7 +159,7 @@ export class LevelUpForm extends DocumentSheet {
       chatData.newFeatures = [];
       for (let co of newAssociations) {
         const item = this.actor.items.get(co[0]);
-        if (item) chatData.newFeatures.push(duplicate(item.data));
+        if (item) chatData.newFeatures.push(item.toObject());
       }
     }
 
@@ -179,7 +179,7 @@ export class LevelUpForm extends DocumentSheet {
       }
 
       // Show new ability score
-      const hd = getProperty(this.actor.data, "data.attributes.hd.total");
+      const hd = this.actor.data.data.attributes.hd.total;
       if (typeof hd === "number" && hd % 4 === 0) {
         ex.enabled = true;
         ex.newAbilityScore = {
@@ -193,17 +193,16 @@ export class LevelUpForm extends DocumentSheet {
   }
 
   async createChatMessage(formData) {
-    const chatMessageClass = CONFIG.ChatMessage.documentClass;
-    const speaker = chatMessageClass.getSpeaker({ actor: this.actor });
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
     const templateData = {
       formData,
       config: CONFIG.PF1,
-      item: duplicate(this.object.data),
-      actor: duplicate(this.actor.data),
+      item: this.object.data.toObject(),
+      actor: this.actor.data.toObject(),
     };
 
-    await chatMessageClass.create({
+    return ChatMessage.create({
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
       user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,

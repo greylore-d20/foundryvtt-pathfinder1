@@ -46,9 +46,9 @@ export class VisionPermissionSheet extends FormApplication {
 
     data.users = game.users.reduce((cur, o) => {
       if (!o.isGM) {
-        cur[o._id] = {
+        cur[o.id] = {
           user: o,
-          level: data.users[o._id]?.level || "default",
+          level: data.users[o.id]?.level || "default",
           hidden: false,
         };
       }

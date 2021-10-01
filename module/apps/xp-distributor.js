@@ -1,8 +1,16 @@
 export class ExperienceDistributor extends FormApplication {
-  constructor(...args) {
-    super(...args);
-
-    this.combatants = this.getCombatants();
+  /**
+   * @constructs ExperienceDistributor
+   * @param {ActorPF[]} [actors] - Actors to add to this distributor.
+   * @param {object} [options] - Options for this application.
+   */
+  constructor(actors = [], options = {}) {
+    actors = actors
+      .map((o) => {
+        return ExperienceDistributor.getActorData(o);
+      })
+      .filter((o) => o != null);
+    super(actors, options);
     this.bonusXP = 0;
   }
 
@@ -21,11 +29,8 @@ export class ExperienceDistributor extends FormApplication {
   getData() {
     const result = super.getData();
 
-    // Add associated combat data
-    result.combat = this.object.data;
-
     // Add combatants
-    result.combatants = {
+    result.actors = {
       characters: this.getCharacters(),
       npcs: this.getNPCs(),
     };
@@ -43,16 +48,12 @@ export class ExperienceDistributor extends FormApplication {
     return result;
   }
 
-  getCombatants() {
-    return this.object.combatants.map((o) => this.constructor.getCombatantData(o));
-  }
-
   getCharacters() {
-    return this.combatants.filter((o) => o.actorData.type === "character");
+    return this.object.filter((o) => o.actor.type === "character");
   }
 
   getNPCs() {
-    return this.combatants.filter((o) => o.actorData.type === "npc");
+    return this.object.filter((o) => o.actor.type === "npc");
   }
 
   activateListeners(html) {
@@ -71,24 +72,44 @@ export class ExperienceDistributor extends FormApplication {
       this.render();
     });
 
+    // Allow dropping actors from the sidebar to add them to the list
+    html.addEventListener("drop", this._onDrop.bind(this));
+
     addListener('button[name="split-evenly"], button[name="give-to-all"]', "click", this._onSubmit.bind(this));
     addListener('button[name="cancel"]', "click", this._onCancel.bind(this));
+  }
+
+  _onDrop(event) {
+    event.preventDefault();
+    const data = JSON.parse(event.dataTransfer.getData("text/plain")) ?? {};
+
+    // Add actor
+    if (data.type === "Actor") {
+      const actor = game.actors.get(data.id);
+
+      // Prevent duplicate characters (not NPCs)
+      if (actor.type !== "character" || this.object.find((o) => o.actor === actor) == null) {
+        // Add actor to list
+        this.object.push(mergeObject(this.constructor.getActorData(actor), { toggled: true }));
+        this.render(true);
+      }
+    }
   }
 
   _onClickActor(event) {
     event.preventDefault();
 
     const a = event.currentTarget;
-    const combatantID = event.currentTarget.dataset.id;
-    const combatant = this.combatants.find((o) => o.id === combatantID);
+    const actorID = event.currentTarget.dataset.id;
+    const actor = this.object.find((o) => o.id === actorID);
 
-    if (!combatant) return;
+    if (!actor) return;
 
-    if (combatant.toggled) {
-      combatant.toggled = false;
+    if (actor.toggled) {
+      actor.toggled = false;
       a.classList.remove("toggled");
     } else {
-      combatant.toggled = true;
+      actor.toggled = true;
       a.classList.add("toggled");
     }
 
@@ -103,14 +124,18 @@ export class ExperienceDistributor extends FormApplication {
     const value = type === "split-evenly" ? this.getSplitExperience() : this.getTotalExperience();
 
     if (value > 0) {
-      for (let combatant of this.getCharacters()) {
-        const combatantActive = combatant.toggled;
-        const combatantHasActor = combatant.actor != null;
+      for (let actor of this.getCharacters()) {
+        const actorActive = actor.toggled;
 
-        if (combatantActive && combatantHasActor) {
-          await combatant.actor.update({
-            "data.details.xp.value": getProperty(combatant.actor.data, "data.details.xp.value") + value,
-          });
+        if (actorActive) {
+          const xpData = { value };
+          Hooks.callAll("pf1.gainXp", xpData, actor.actor);
+          if (xpData.value !== 0 && Number.isFinite(xpData.value)) {
+            await actor.actor.update({
+              "data.details.xp.value":
+                getProperty(actor.actor.data, "data.details.xp.value") + Math.floor(xpData.value),
+            });
+          }
         }
       }
     }
@@ -142,24 +167,23 @@ export class ExperienceDistributor extends FormApplication {
     return 0;
   }
 
-  static getCombatantData(combatant) {
-    const type = combatant.actor?.type;
-    const xp = type === "npc" ? combatant.actor?.data.data.details.xp.value ?? 0 : 0;
+  static getActorData(actor) {
+    if (!(actor instanceof Actor)) return null;
+    const type = actor.type;
+    const xp = type === "npc" ? actor.data.data.details.xp.value ?? 0 : 0;
 
     return {
-      id: combatant.id,
-      data: combatant.data,
-      actor: combatant.actor,
-      actorData: combatant.actor?.data ?? {},
-      toggled: this.shouldCombatantBeToggled(combatant),
+      id: randomID(16),
+      actor: actor,
+      toggled: this.shouldActorBeToggled(actor),
       xp,
       xpString: xp.toLocaleString(),
     };
   }
 
-  static shouldCombatantBeToggled(combatant) {
-    const isPC = combatant.actor?.type === "character";
-    const isDefeated = combatant.data.defeated === true || combatant.actor?.data.data.attributes.hp.value < 0;
+  static shouldActorBeToggled(actor) {
+    const isPC = actor.type === "character";
+    const isDefeated = actor.data.data.attributes.hp.value < 0;
 
     if (!isPC && !isDefeated) return false;
 

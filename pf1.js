@@ -938,7 +938,10 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
     combat.started &&
     ((openXpDistributor && !shiftPressed) || (!openXpDistributor && shiftPressed))
   ) {
-    const app = new ExperienceDistributor(combat);
+    const combatants = combat.combatants.map((o) => {
+      return o.actor;
+    });
+    const app = new ExperienceDistributor(combatants);
 
     if (app.getCharacters().length > 0) {
       app.render(true);

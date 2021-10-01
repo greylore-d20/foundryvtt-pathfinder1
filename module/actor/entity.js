@@ -2,7 +2,6 @@ import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
 import { createTag, convertDistance, convertWeight } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
-import { _getInitiativeFormula } from "../combat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
 import {

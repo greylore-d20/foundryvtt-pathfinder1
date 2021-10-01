@@ -20,6 +20,7 @@ import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { CombatPF } from "./module/combat.js";
 import { TokenDocumentPF } from "./module/token/document.js";
 import { EntrySelector } from "./module/apps/entry-selector.js";
 import { LevelUpForm } from "./module/apps/level-up.js";
@@ -196,6 +197,7 @@ Hooks.once("init", function () {
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
   CONFIG.Item.documentClass = ItemPF;
+  CONFIG.Combat.documentClass = CombatPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
   CONFIG.Dice.rolls.splice(0, 0, RollPF);

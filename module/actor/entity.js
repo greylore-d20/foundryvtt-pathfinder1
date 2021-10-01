@@ -778,31 +778,33 @@ export class ActorPF extends Actor {
           const spellLevel = spellbook.spells[`spell${a}`];
           let currentLevel = {};
           currentLevel.value = spellLevel.max;
-          currentLevel.domainSlots = spellLevel.domainSlotValue;
+          currentLevel.domainSlots = spellbook.domainSlotValue;
           slots.push(currentLevel);
         }
 
         const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
-        for (let i of spells) {
-          const isDomain = i.data.data.domain === true;
-          const a = i.data.data.level;
-          const slotCost = i.data.data.slotCost ?? 1;
-          let dSlots = slots[a].domainSlots;
-          let uses = slots[a].value;
-          if (Number.isFinite(i.maxCharges)) {
-            let subtract = { domain: 0, uses: 0 };
-            if (isDomain) {
-              subtract.domain = Math.min(i.maxCharges, dSlots);
-              subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
-            } else {
-              subtract.uses = i.maxCharges * slotCost;
+        if (!spellbook.spontaneous) {
+          for (let i of spells) {
+            const isDomain = i.data.data.domain === true;
+            const a = i.data.data.level;
+            const slotCost = i.data.data.slotCost ?? 1;
+            let dSlots = slots[a].domainSlots;
+            let uses = slots[a].value;
+            if (Number.isFinite(i.maxCharges)) {
+              let subtract = { domain: 0, uses: 0 };
+              if (isDomain) {
+                subtract.domain = Math.min(i.maxCharges, dSlots);
+                subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
+              } else {
+                subtract.uses = i.maxCharges * slotCost;
+              }
+              dSlots -= subtract.domain;
+              uses -= subtract.uses;
             }
-            dSlots -= subtract.domain;
-            uses -= subtract.uses;
+            slots[a].value = uses;
+            slots[a].domainSlots = dSlots;
+            spellbook.spells[`spell${a}`].value = uses;
           }
-          slots[a].value = uses;
-          slots[a].domainSlots = dSlots;
-          spellbook.spells[`spell${a}`].value = uses;
         }
 
         // Spells available hint text if auto spell levels is enabled

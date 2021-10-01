@@ -64,12 +64,14 @@ export class ChatAttack {
   setItem(item) {
     if (item == null) {
       this.rollData = this._rollData;
+      this.attackType = "";
       this.item = null;
       return;
     }
 
     this.item = item;
     this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
+    this.attackType = getProperty(item.data, "data.attackType") ?? "";
 
     this.setRollData();
   }
@@ -87,7 +89,7 @@ export class ChatAttack {
     // Determine ability multiplier
     if (data.item.ability.damageMult != null) data.ablMult = data.item.ability.damageMult;
     // Lower ability multiplier for secondary attacks
-    if (this.primaryAttack === false && getProperty(data.ablMult > 0)) {
+    if (this.attackType === "natural" && this.primaryAttack === false && getProperty(data.ablMult > 0)) {
       data.ablMult = 0.5;
     }
   }
@@ -161,7 +163,7 @@ export class ChatAttack {
       data: this.rollData,
       bonus: bonus,
       extraParts: extraParts,
-      primaryAttack: this.primaryAttack,
+      primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
     });
     data.roll = roll;
     let d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
@@ -242,7 +244,7 @@ export class ChatAttack {
       const rolls = this.item.rollDamage({
         data: rollData,
         extraParts: extraParts,
-        primaryAttack: this.primaryAttack,
+        primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
         critical: critical,
         conditionalParts,
       });

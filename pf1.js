@@ -206,6 +206,8 @@ Hooks.once("init", function () {
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
   CONFIG.Dice.rolls.splice(0, 0, RollPF);
 
+  CONFIG.time.roundTime = 6;
+
   // Register System Settings
   registerSystemSettings();
 

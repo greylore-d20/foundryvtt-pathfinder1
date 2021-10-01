@@ -2,24 +2,6 @@
  * Apply patches to Core Foundry to implement Pathfinder's Low-Light Vision rules
  */
 export function patchLowLightVision() {
-  // Patch Token's sheet template
-  Object.defineProperties(Token.prototype, {
-    actorVision: {
-      get() {
-        return {
-          lowLight: getProperty(this.data, "flags.pf1.lowLightVision"),
-          lowLightMultiplier: getProperty(this.data, "flags.pf1.lowLightVisionMultiplier"),
-          lowLightMultiplierBright: getProperty(this.data, "flags.pf1.lowLightVisionMultiplierBright"),
-        };
-      },
-    },
-    disableLowLight: {
-      get: function () {
-        return getProperty(this.data, "flags.pf1.disableLowLight") === true;
-      },
-    },
-  });
-
   SightLayer.prototype.hasLowLight = function () {
     console.warn("SightLayer#hasLowLight is deprecated in favor of SightLayer#lowLightMultiplier");
 
@@ -75,74 +57,6 @@ export function patchLowLightVision() {
     return result;
   };
 
-  Token.prototype.updateSource = function ({ defer = false, deleted = false, noUpdateFog = false } = {}) {
-    if (CONFIG.debug.sight) {
-      SightLayer._performance = { start: performance.now(), tests: 0, rays: 0 };
-    }
-
-    // Prepare some common data
-    const origin = this.getSightOrigin();
-    const sourceId = this.sourceId;
-    const d = canvas.dimensions;
-    const maxR = canvas.lighting.globalLight ? Math.hypot(d.sceneWidth, d.sceneHeight) : null;
-    const lowLightMultiplier = canvas.sight.lowLightMultiplier();
-
-    // Update light source
-    const isLightSource = this.emitsLight && !this.data.hidden;
-    if (isLightSource && !deleted) {
-      const bright =
-        this.getLightRadius(this.data.brightLight) * (!this.disableLowLight ? lowLightMultiplier.bright : 1);
-      const dim = this.getLightRadius(this.data.dimLight) * (!this.disableLowLight ? lowLightMultiplier.dim : 1);
-      this.light.initialize({
-        x: origin.x,
-        y: origin.y,
-        dim: dim,
-        bright: bright,
-        angle: this.data.lightAngle,
-        rotation: this.data.rotation,
-        color: this.data.lightColor,
-        alpha: this.data.lightAlpha,
-        animation: this.data.lightAnimation,
-      });
-      canvas.lighting.sources.set(sourceId, this.light);
-      if (!defer) {
-        this.light.drawLight();
-        this.light.drawColor();
-      }
-    } else {
-      canvas.lighting.sources.delete(sourceId);
-      if (isLightSource && !defer) canvas.lighting.refresh();
-    }
-
-    // Update vision source
-    const isVisionSource = this._isVisionSource();
-    if (isVisionSource && !deleted) {
-      //-Override token vision sources to not receive low-light bonus-
-      let dim = maxR ?? this.getLightRadius(this.data.dimSight);
-      let bright = this.getLightRadius(this.data.brightSight);
-      dim = dim / (canvas.sight.lowLightMultiplier().dim || 1);
-      bright = bright / (canvas.sight.lowLightMultiplier().bright || 1);
-      //-End change-
-      if (dim === 0 && bright === 0) dim = d.size * 0.6;
-      this.vision.initialize({
-        x: origin.x,
-        y: origin.y,
-        dim: dim,
-        bright: bright,
-        angle: this.data.sightAngle,
-        rotation: this.data.rotation,
-      });
-      canvas.sight.sources.set(sourceId, this.vision);
-      if (!defer) {
-        this.vision.drawLight();
-        canvas.sight.refresh({ noUpdateFog });
-      }
-    } else {
-      canvas.sight.sources.delete(sourceId);
-      if (isVisionSource && !defer) canvas.sight.refresh();
-    }
-  };
-
   Object.defineProperty(AmbientLight.prototype, "disableLowLight", {
     get: function () {
       return getProperty(this.data, "flags.pf1.disableLowLight") === true;
@@ -166,21 +80,6 @@ export function patchLowLightVision() {
       return result;
     },
   });
-
-  const Token__onUpdate = Token.prototype._onUpdate;
-  Token.prototype._onUpdate = async function (data, options, ...args) {
-    await Token__onUpdate.call(this, data, options, ...args);
-
-    if (
-      hasProperty(data, "flags.pf1.disableLowLight") ||
-      hasProperty(data, "flags.pf1.lowLightVision") ||
-      hasProperty(data, "flags.pf1.lowLightVisionMultiplier") ||
-      hasProperty(data, "flags.pf1.lowLightVisionMultiplierBright")
-    ) {
-      canvas.lighting.initializeSources();
-      canvas.perception.initialize();
-    }
-  };
 }
 
 /**

@@ -193,7 +193,6 @@ Hooks.once("init", function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
-  CONFIG.MeasuredTemplate.layerClass = TemplateLayerPF; // doesn't do anything?
   CONFIG.Canvas.layers.templates = TemplateLayerPF;
   CONFIG.Actor.documentClass = ActorPF;
   CONFIG.Token.documentClass = TokenDocumentPF;

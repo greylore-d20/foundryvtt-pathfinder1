@@ -472,11 +472,11 @@ export class ItemPF extends Item {
     const labels = {};
 
     // Physical items
-    if (hasProperty(itemData, "data.weight")) {
+    if (itemData.data.weight !== undefined) {
       // Sync name
-      if (!hasProperty(this.data, "data.identifiedName")) setProperty(this.data, "data.identifiedName", this.name);
+      if (this.data.data.identifiedName === undefined) this.data.data.identifiedName = this.name;
       // Prepare unidentified cost
-      if (!hasProperty(this.data, "data.unidentified.price")) setProperty(this.data, "data.unidentified.price", 0);
+      if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
 
       // Convert weight according metric system (lb vs kg)
       let usystem = game.settings.get("pf1", "weightUnits"); // override
@@ -510,9 +510,9 @@ export class ItemPF extends Item {
       // Slot label
       if (itemData.data.slot) {
         // Add equipment slot
-        const equipmentType = getProperty(this.data, "data.equipmentType") || null;
+        const equipmentType = this.data.data.equipmentType || null;
         if (equipmentType != null) {
-          const equipmentSlot = getProperty(this.data, "data.slot") || null;
+          const equipmentSlot = this.data.data.slot || null;
           labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
         } else labels.slot = null;
       }
@@ -558,11 +558,11 @@ export class ItemPF extends Item {
     // Weapon Items
     else if (itemData.type === "weapon") {
       // Type and subtype labels
-      let wType = getProperty(this.data, "data.weaponType");
+      let wType = this.data.data.weaponType;
       let typeKeys = Object.keys(C.weaponTypes);
       if (!typeKeys.includes(wType)) wType = typeKeys[0];
 
-      let wSubtype = getProperty(this.data, "data.weaponSubtype");
+      let wSubtype = this.data.data.weaponSubtype;
       let subtypeKeys = Object.keys(C.weaponTypes[wType]).filter((o) => !o.startsWith("_"));
       if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
 
@@ -573,11 +573,11 @@ export class ItemPF extends Item {
     // Equipment Items
     else if (itemData.type === "equipment") {
       // Type and subtype labels
-      let eType = getProperty(this.data, "data.equipmentType");
+      let eType = this.data.data.equipmentType;
       let typeKeys = Object.keys(C.equipmentTypes);
       if (!typeKeys.includes(eType)) eType = typeKeys[0];
 
-      let eSubtype = getProperty(this.data, "data.equipmentSubtype");
+      let eSubtype = this.data.data.equipmentSubtype;
       let subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
       if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
@@ -606,8 +606,8 @@ export class ItemPF extends Item {
 
       // Ability Activation Label
       let act = game.settings.get("pf1", "unchainedActionEconomy")
-        ? getProperty(data, "unchainedAction.activation") || {}
-        : getProperty(data, "activation") || {};
+        ? data.unchainedAction.activation || {}
+        : data.activation || {};
       if (act && act.cost > 1 && activationTypesPlural[act.type] != null) {
         labels.activation = [act.cost.toString(), activationTypesPlural[act.type]].filterJoin(" ");
       } else if (act) {
@@ -713,7 +713,7 @@ export class ItemPF extends Item {
     this._updateMaxUses();
 
     // Add saving throw DC label
-    if (hasProperty(this.data, "data.actionType") && this.hasSave) {
+    if (this.data.data.actionType !== undefined && this.hasSave) {
       // Save DC
       if (this.hasSave) {
         this.labels.save = `DC ${this.getDC()}`;

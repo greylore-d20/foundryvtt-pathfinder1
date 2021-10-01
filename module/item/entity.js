@@ -2741,6 +2741,10 @@ export class ItemPF extends Item {
         }
         break;
       }
+      case "damage": {
+        result = result.filter((c) => c.subTarget === "damage");
+        break;
+      }
     }
 
     return result;
@@ -2996,8 +3000,9 @@ export class ItemPF extends Item {
     }
 
     if (!this.isHealing) {
-      const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
-      const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
+      const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.data.actionType);
+      const isWeapon = ["mwak", "rwak"].includes(this.data.data.actionType);
+      const changes = this.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
       let changeBonus = [];
       {
         // Get damage bonus
@@ -4722,8 +4727,9 @@ export class ItemPF extends Item {
    * Generic damage source retrieval
    */
   get damageSources() {
-    const isSpell = ["msak", "rsak"].includes(this.data.data.actionType);
-    const changes = this.getContextChanges(isSpell ? "sdamage" : "wdamage");
+    const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.data.actionType);
+    const isWeapon = ["mwak", "rwak"].includes(this.data.data.actionType);
+    const changes = this.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
     const highest = getHighestChanges(changes, { ignoreTarget: true });
     return highest;
   }

@@ -64,12 +64,14 @@ export class ChatAttack {
   setItem(item) {
     if (item == null) {
       this.rollData = this._rollData;
+      this.attackType = "";
       this.item = null;
       return;
     }
 
     this.item = item;
     this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
+    this.attackType = getProperty(item.data, "data.attackType") ?? "";
 
     this.setRollData();
   }

@@ -1,4 +1,4 @@
-import { hasTokenVision } from "./misc/vision-permission.js";
+import { _rollInitiative, _getInitiativeFormula } from "./combat.js";
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { patchLowLightVision } from "./low-light-vision.js";
@@ -28,35 +28,6 @@ export async function PatchCore() {
     }
     return _templateCache[path];
   }
-
-  // Token patch for shared vision
-  const Token__isVisionSource = Token.prototype._isVisionSource;
-  Token.prototype._isVisionSource = function () {
-    if (!canvas.sight.tokenVision || !this.hasSight) return false;
-
-    // Only display hidden tokens for the GM
-    const isGM = game.user.isGM;
-    if (this.data.hidden && !isGM) return false;
-
-    // Always display controlled tokens which have vision
-    if (this._controlled) return true;
-
-    // Otherwise vision is ignored for GM users
-    if (isGM) return false;
-
-    // If a non-GM user controls no other tokens with sight, display sight anyways
-    const canObserve = this.actor && hasTokenVision(this);
-    if (!canObserve) return false;
-    const others = this.layer.controlled.filter((t) => !t.data.hidden && t.hasSight);
-    return !others.length || game.settings.get("pf1", "sharedVisionMode") === "1";
-  };
-
-  // Token#observer patch to make use of vision permission settings
-  Object.defineProperty(Token.prototype, "observer", {
-    get() {
-      return game.user.isGM || hasTokenVision(this);
-    },
-  });
 
   // Add Vision Permission sheet to ActorDirectory context options
   const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;

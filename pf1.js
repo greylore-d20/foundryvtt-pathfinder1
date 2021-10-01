@@ -21,6 +21,7 @@ import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
 import { CombatPF } from "./module/combat.js";
+import { TokenPF } from "./module/token/token.js";
 import { TokenDocumentPF } from "./module/token/document.js";
 import { EntrySelector } from "./module/apps/entry-selector.js";
 import { LevelUpForm } from "./module/apps/level-up.js";
@@ -195,6 +196,7 @@ Hooks.once("init", function () {
   CONFIG.PF1 = PF1;
   CONFIG.Actor.documentClass = ActorPF;
   CONFIG.Token.documentClass = TokenDocumentPF;
+  CONFIG.Token.objectClass = TokenPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
   CONFIG.Item.documentClass = ItemPF;
   CONFIG.Combat.documentClass = CombatPF;

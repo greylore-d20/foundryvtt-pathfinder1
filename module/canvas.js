@@ -128,22 +128,3 @@ TokenHUD.prototype._onToggleEffect = function (event, { overlay = false } = {}) 
       : img.getAttribute("src");
   return this.object.toggleEffect(effect, { overlay });
 };
-
-const Token_toggleEffect = Token.prototype.toggleEffect;
-Token.prototype.toggleEffect = async function (effect, { active, overlay = false, midUpdate } = {}) {
-  let call;
-  if (typeof effect == "string") {
-    let buffItem = this.actor.items.get(effect);
-    if (buffItem) {
-      call = await buffItem.update({ "data.active": !buffItem.data.data.active });
-    } else call = await Token_toggleEffect.call(this, effect, { active, overlay });
-  } else if (effect && !midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
-    const updates = {};
-    updates["data.attributes.conditions." + effect.id] = !this.actor.data.data.attributes.conditions[effect.id];
-    call = await this.actor.update(updates);
-  } else if (effect) {
-    call = await Token_toggleEffect.call(this, effect, { active, overlay });
-  }
-  if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();
-  return call;
-};

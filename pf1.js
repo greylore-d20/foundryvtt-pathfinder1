@@ -281,6 +281,9 @@ Hooks.once("init", function () {
 
   // Initialize module integrations
   initializeModules();
+
+  // Call post-init hook
+  Hooks.callAll("pf1.postInit");
 });
 
 /* -------------------------------------------- */
@@ -420,6 +423,8 @@ Hooks.once("setup", function () {
 
   // TinyMCE variables and commands
   tinyMCEInit();
+
+  Hooks.callAll("pf1.postSetup");
 });
 
 /* -------------------------------------------- */
@@ -504,6 +509,8 @@ Hooks.once("ready", async function () {
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
   }
+
+  Hooks.callAll("pf1.postReady");
 });
 
 /* -------------------------------------------- */

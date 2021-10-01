@@ -124,15 +124,22 @@ export class ItemChange {
         if (operator === "=") operator = "set";
 
         let value = 0;
-        if (operator === "script") {
-          const fn = this.createFunction(this.formula, ["d", "item"]);
-          const result = fn(rollData, this.parent);
-          value = result.value;
-          operator = result.operator;
-        } else {
-          value = RollPF.safeRoll(this.formula || "0", rollData, [t, this, rollData], {
-            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
-          }).total;
+        if (this.formula) {
+          if (operator === "script") {
+            const fn = this.createFunction(this.formula, ["d", "item"]);
+            const result = fn(rollData, this.parent);
+            value = result.value;
+            operator = result.operator;
+          } else if (operator === "function") {
+            value = this.formula(rollData, this.parent);
+            operator = "add";
+          } else if (!isNaN(this.formula)) {
+            value = parseFloat(this.formula);
+          } else {
+            value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
+              suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
+            }).total;
+          }
         }
 
         this.data.value = value;

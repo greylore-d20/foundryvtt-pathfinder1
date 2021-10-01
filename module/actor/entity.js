@@ -588,18 +588,21 @@ export class ActorPF extends Actor {
         if (this.data.type === "npc") {
           const value = spellbook.cl.base || 0;
           total += value;
+          clTotal += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
         }
         // Add HD
         if (spellbook.class === "_hd") {
           const value = this.data.data.attributes.hd.total;
           total += value;
+          clTotal += value;
           getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
         }
         // Add class levels
         else if (spellbook.class && rollData.classes[spellbook.class]) {
           const value = rollData.classes[spellbook.class].level;
           total += value;
+          clTotal += value;
 
           setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
         }
@@ -671,8 +674,7 @@ export class ActorPF extends Actor {
         let formulaRoll = 0;
         if (concFormula.length) formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
 
-        let ablMod = this.data.data.abilities?.[spellbookAbility]?.mod ?? 0;
-        const concentration = clTotal + ablMod + formulaRoll - rollData.attributes.energyDrain;
+        const concentration = clTotal + spellbookAbilityMod + formulaRoll - rollData.attributes.energyDrain;
         this.data.data.attributes.spells.spellbooks[spellbookKey].concentration = {
           total: concentration,
         };

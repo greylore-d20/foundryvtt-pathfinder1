@@ -1,0 +1,6 @@
+{{#if (hasContextNotes @root.actor target)}}
+<br>{{localize "PF1.ContextNotes"}}<br>
+{{#each (contextNotes @root.actor target)}}
+  {{{this}}}<br>
+{{/each}}
+{{/if}}

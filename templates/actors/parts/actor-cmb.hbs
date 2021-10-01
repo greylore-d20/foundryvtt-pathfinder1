@@ -17,6 +17,8 @@
   {{#if sourceDetails.data.attributes.cmb.bonus.length}}
   {{#each sourceDetails.data.attributes.cmb.bonus as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
   {{/if}}
+
+  {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.cmb"}}
 </span>
 
 {{numberFormat data.attributes.cmb.total decimals=0 sign=true}}

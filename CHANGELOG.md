@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.79.3 - 2021-10-3
+
+### Bug Fixes
+
+- Some actors were not initalized properly when using fractional BAB rules
+- Newly created actors had no valid setting to add STR to their CMD
+
 ## 0.79.2 - 2021-10-2
 
 ### Bug Fixes

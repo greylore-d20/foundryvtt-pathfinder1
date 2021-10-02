@@ -483,23 +483,19 @@ export class ActorPF extends Actor {
           });
         }
       } else {
-        setProperty(
-          this.data,
-          "data.attributes.bab.total",
-          classes.reduce((cur, obj) => {
-            const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.data.bab], { level: obj.data.data.level })
-              .total;
+        this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
+          const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.data.bab], { level: obj.data.data.level })
+            .total;
 
-            if (v !== 0) {
-              getSourceInfo(this.sourceInfo, k).positive.push({
-                name: getProperty(obj, "name"),
-                value: v,
-              });
-            }
+          if (v !== 0) {
+            getSourceInfo(this.sourceInfo, k).positive.push({
+              name: obj.name ?? "",
+              value: v,
+            });
+          }
 
-            return cur + v;
-          }, 0)
-        );
+          return cur + v;
+        }, 0);
       }
     }
 
@@ -912,7 +908,7 @@ export class ActorPF extends Actor {
    */
   refreshDerivedData() {
     // Reset maximum dexterity bonus
-    setProperty(this.data, "data.attributes.maxDexBonus", null);
+    this.data.data.attributes.maxDexBonus = null;
 
     {
       // Compute encumbrance
@@ -922,16 +918,15 @@ export class ActorPF extends Actor {
       const gearPen = this._applyArmorPenalties();
 
       // Set armor check penalty
-      setProperty(this.data, "data.attributes.acp.encumbrance", encPen.acp);
-      setProperty(this.data, "data.attributes.acp.gear", gearPen.acp);
-      setProperty(this.data, "data.attributes.acp.total", Math.max(encPen.acp, gearPen.acp));
+      this.data.data.attributes.acp.encumbrance = encPen.acp;
+      this.data.data.attributes.acp.gear = gearPen.acp;
+      this.data.data.attributes.acp.total = Math.max(encPen.acp, gearPen.acp);
 
       // Set maximum dexterity bonus
       if (encPen.maxDexBonus != null || gearPen.maxDexBonus != null) {
-        setProperty(
-          this.data,
-          "data.attributes.maxDexBonus",
-          Math.min(encPen.maxDexBonus ?? Number.POSITIVE_INFINITY, gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY)
+        this.data.data.attributes.maxDexBonus = Math.min(
+          encPen.maxDexBonus ?? Number.POSITIVE_INFINITY,
+          gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY
         );
       }
     }
@@ -968,7 +963,7 @@ export class ActorPF extends Actor {
         szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
         cmbBonus = getProperty(this.data, "data.attributes.cmb.bonus") ?? 0,
         cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
-      setProperty(this.data, "data.attributes.cmb.total", cmb);
+      this.data.data.attributes.cmb.total = cmb;
     }
 
     // Setup links
@@ -1009,8 +1004,8 @@ export class ActorPF extends Actor {
     // Round health
     const healthConfig = game.settings.get("pf1", "healthConfig");
     const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
-    for (const k of ["data.attributes.hp.max", "data.attributes.vigor.max"]) {
-      setProperty(this.data, `${k}`, round(getProperty(this.data, `${k}`)));
+    for (const k of ["hp", "vigor"]) {
+      this.data.data.attributes[k].max = round(this.data.data.attributes[k].max);
     }
 
     // Refresh HP
@@ -1045,10 +1040,10 @@ export class ActorPF extends Actor {
     {
       // Total
       const totalAtk =
-        (getProperty(this.data, "data.attributes.bab.total") ?? 0) -
-        (getProperty(this.data, "data.attributes.acp.attackPenalty") ?? 0) -
-        (getProperty(this.data, "data.attributes.energyDrain") ?? 0);
-      setProperty(this.data, "data.attributes.attack.shared", totalAtk);
+        this.data.data.attributes.bab.total -
+        this.data.data.attributes.acp.attackPenalty -
+        (this.data.data.attributes.energyDrain ?? 0);
+      this.data.data.attributes.attack.shared = totalAtk;
     }
 
     // Create arbitrary skill slots
@@ -1100,11 +1095,7 @@ export class ActorPF extends Actor {
       const v = getProperty(this.data, k);
       if (v) {
         for (const k2 of ["normal", "flatFooted"]) {
-          setProperty(
-            this.data,
-            `data.attributes.ac.${k2}.total`,
-            getProperty(this.data, `data.attributes.ac.${k2}.total`) + v
-          );
+          this.data.data.attributes.ac[k2].total += v;
         }
       }
     }
@@ -1138,18 +1129,14 @@ export class ActorPF extends Actor {
         flatFootedTotal: Math.min(0, cmdDexAblMod),
       };
       for (const [k, v] of Object.entries(ac)) {
-        setProperty(
-          this.data,
-          `data.attributes.ac.${k}.total`,
-          getProperty(this.data, `data.attributes.ac.${k}.total`) + v
-        );
+        this.data.data.attributes.ac[k].total += v;
         getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
           value: v,
           name: CONFIG.PF1.abilities[acAblKey[k]],
         });
       }
       for (const [k, v] of Object.entries(cmd)) {
-        setProperty(this.data, `data.attributes.cmd.${k}`, getProperty(this.data, `data.attributes.cmd.${k}`) + v);
+        this.data.data.attributes.cmd[k] += v;
         getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
           value: v,
           name: CONFIG.PF1.abilities[cmdDexAbl],
@@ -1343,12 +1330,12 @@ export class ActorPF extends Actor {
       maxDexBonus: null,
       acp: totalACP,
     };
-    setProperty(this.data, "data.attributes.acp.gear", totalACP);
+    this.data.data.attributes.acp.gear = totalACP;
     if (mdex.armor !== null || mdex.shield !== null)
       result.maxDexBonus = Math.min(mdex.armor ?? Number.POSITIVE_INFINITY, mdex.shield ?? Number.POSITIVE_INFINITY);
 
     // Set armor penalty to attack rolls
-    setProperty(this.data, "data.attributes.acp.attackPenalty", attackACPPenalty);
+    this.data.data.attributes.acp.attackPenalty = attackACPPenalty;
 
     return result;
   }
@@ -1464,10 +1451,16 @@ export class ActorPF extends Actor {
       "data.attributes.ac.normal.total": 10,
       "data.attributes.ac.touch.total": 10,
       "data.attributes.ac.flatFooted.total": 10,
+      "data.attributes.bab.total": 0,
+      "data.attributes.bab.value": 0,
       "data.attributes.cmd.total": 10,
       "data.attributes.cmd.flatFootedTotal": 10,
       "data.attributes.acp.armorBonus": 0,
       "data.attributes.acp.shieldBonus": 0,
+      "data.attributes.acp.gear": 0,
+      "data.attributes.acp.encumbrance": 0,
+      "data.attributes.acp.total": 0,
+      "data.attributes.acp.attackPenalty": 0,
       "data.attributes.maxDexBonus": null,
       "temp.ac.armor": 0,
       "temp.ac.shield": 0,
@@ -1477,6 +1470,7 @@ export class ActorPF extends Actor {
       "data.attributes.init.total": 0,
       "data.attributes.cmb.bonus": 0,
       "data.attributes.cmb.total": 0,
+      "data.attributes.cmb.value": 0,
       "data.attributes.hp.max": getProperty(this.data, "data.attributes.hp.base") ?? 0,
       "data.attributes.vigor.max": getProperty(this.data, "data.attributes.vigor.base") ?? 0,
       "data.attributes.wounds.max": getProperty(this.data, "data.attributes.wounds.base") ?? 0,
@@ -1490,6 +1484,8 @@ export class ActorPF extends Actor {
       "data.attributes.damage.spell": 0,
       "data.attributes.damage.shared": 0,
       "data.attributes.woundThresholds.level": 0,
+      "data.attributes.woundThresholds.mod": 0,
+      "data.attributes.woundThresholds.override": -1,
       "data.attributes.woundThresholds.penaltyBase": 0,
       "data.attributes.woundThresholds.penalty": 0,
       "data.abilities.str.checkMod": 0,

@@ -124,18 +124,22 @@ export class ExperienceDistributor extends FormApplication {
     const value = type === "split-evenly" ? this.getSplitExperience() : this.getTotalExperience();
 
     if (value > 0) {
-      for (let actor of this.getCharacters()) {
-        const actorActive = actor.toggled;
+      const characters = this.getCharacters()
+        .filter((o) => o.toggled)
+        .map((o) => {
+          return {
+            actor: o.actor,
+            value: value,
+          };
+        });
+      Hooks.callAll("pf1.gainXp", characters);
 
-        if (actorActive) {
-          const xpData = { value };
-          Hooks.callAll("pf1.gainXp", xpData, actor.actor);
-          if (xpData.value !== 0 && Number.isFinite(xpData.value)) {
-            await actor.actor.update({
-              "data.details.xp.value":
-                getProperty(actor.actor.data, "data.details.xp.value") + Math.floor(xpData.value),
-            });
-          }
+      for (let actorData of characters) {
+        if (actorData.value !== 0 && Number.isFinite(actorData.value)) {
+          await actorData.actor.update({
+            "data.details.xp.value":
+              getProperty(actorData.actor.data, "data.details.xp.value") + Math.floor(actorData.value),
+          });
         }
       }
     }

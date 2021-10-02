@@ -1,5 +1,56 @@
 # Changelog
 
+## 0.79.2 - 2021-10-2
+
+### Bug Fixes
+
+- Level up HD were rolled twice by Dice So Nice ([1065](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1065))
+- Attack maxIncrements was sometimes stored as a string. ([1028](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1028))
+- Buff level was sometimes stored as a string. ([1043](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1043))
+- At-will spells could count towards prepared total. ([1054](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1054))
+- Missing wand, scroll, and potion action usage with unchained revised action economy. ([1056](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1056))
+- Strength not added to CMD correctly. ([1062](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1062))
+- Display formulas instead of values for conditionals in damage hover infoboxes. ([1072](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1072))
+- Secondary attack modifier penalty could bleed into non-natural attacks. ([1074](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1074))
+- Attacks without images prevented the lite sheet from rendering
+- Quick actions could overflow outside of the character sheet.
+- Size bonus was applied twice for generic attacks (inverted for CMB, negating it).
+- Some spells were affected by weapon damage instead of spell damage changes.
+- Other action type benefited from weapon damage changes.
+- Fix DC labels on items showing data without bonuses from changes
+- Remove loop in favor of a formula for calculating carry capacity ([1061](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1061))
+- Fix deprecation warnings in the Vision Permission dialog ([1083](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1083))
+- Removed duplicate info in generic attacks.
+
+### Changelog
+
+- Added a setting for XP distributor opening to Experience Config ([1063](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1063))
+- Added human-readable names and translation support to actor and item types.
+- Improved ACP and Max Dex sources in hover infoboxes. ([518](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/518))
+- Allow dragging actors from the sidebar to add them to an ExperienceDistributor
+- Display context notes in hover infoboxes.
+- Display damage type if present for damage hover infoboxes instead of untyped.
+- Added CMD strength ability score substitution configuration.
+- Improve world load times and actor update performance
+- Rework spellbook CL and concentration display. ([773](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/773))
+
+### Compendium
+
+- Update the Award XP sample macro to use the ExperienceDistributor instead
+- Fix ammunition data
+
+### API
+
+- Round time set to 6 seconds to support Foundry's time tracking. ([1038](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1038))
+- Change ExperienceDistributor to use an array of actors instead of a combat object
+- Added the hook "pf1.gainXp" for adding experience through the ExperienceDistributor
+- Removed unused .concentration from spellbooks.
+- Add `pf1.postInit` hook ([1045](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1045))
+- Added Nat 20 and critical threat selectors. ([1053](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1053))
+- Revamped cmb.total to be fully derived value and introduced cmb.bonus for the old functionality. ([1064](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1064))
+- Added CombatPF to replace prototype overriding core Combat.
+- Added TokenPF to replace prototype overriding core Token.
+
 ## 0.79.1
 
 ### Bug Fixes

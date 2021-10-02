@@ -124,24 +124,24 @@ export class ExperienceDistributor extends FormApplication {
     const value = type === "split-evenly" ? this.getSplitExperience() : this.getTotalExperience();
 
     if (value > 0) {
-      const characters = this.getCharacters()
-        .filter((o) => o.toggled)
-        .map((o) => {
-          return {
-            actor: o.actor,
-            value: value,
-          };
-        });
-      Hooks.callAll("pf1.gainXp", characters);
+      const characters = this.getCharacters().filter((o) => o.toggled);
 
-      for (let actorData of characters) {
-        if (actorData.value !== 0 && Number.isFinite(actorData.value)) {
-          await actorData.actor.update({
-            "data.details.xp.value":
-              getProperty(actorData.actor.data, "data.details.xp.value") + Math.floor(actorData.value),
-          });
-        }
+      for (const actorData of characters) {
+        const result = { value: value };
+        Hooks.callAll("pf1.gainXp", actorData.actor, result);
+        actorData.value = result.value;
       }
+
+      const updates = characters
+        .map((o) => {
+          if (o.value === 0 || !Number.isFinite(o.value)) return null;
+          return {
+            _id: o.actor.id,
+            "data.details.xp.value": o.actor.data.data.details.xp.value + Math.floor(o.value),
+          };
+        })
+        .filter((o) => o != null);
+      Actor.implementation.updateDocuments(updates);
     }
 
     this.close();

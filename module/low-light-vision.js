@@ -1,8 +1,8 @@
 /**
  * Apply patches to Core Foundry to implement Pathfinder's Low-Light Vision rules
  */
-export function patchLowLightVision() {
-  SightLayer.prototype.hasLowLight = function () {
+export class SightLayerPF extends SightLayer {
+  hasLowLight() {
     console.warn("SightLayer#hasLowLight is deprecated in favor of SightLayer#lowLightMultiplier");
 
     const relevantTokens = canvas.tokens.placeables.filter((o) => {
@@ -20,9 +20,9 @@ export function patchLowLightVision() {
     const hasControlledLowLightTokens = lowLightTokens.filter((o) => o._controlled).length > 0;
     const hasLowLightTokens = lowLightTokens.length > 0;
     return (!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens;
-  };
+  }
 
-  SightLayer.prototype.lowLightMultiplier = function () {
+  lowLightMultiplier() {
     let result = {
       dim: 1,
       bright: 1,
@@ -55,31 +55,7 @@ export function patchLowLightVision() {
     }
 
     return result;
-  };
-
-  Object.defineProperty(AmbientLight.prototype, "disableLowLight", {
-    get: function () {
-      return getProperty(this.data, "flags.pf1.disableLowLight") === true;
-    },
-  });
-
-  const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
-  Object.defineProperty(AmbientLight.prototype, "dimRadius", {
-    get: function () {
-      let result = AmbientLight__get__dimRadius.call(this);
-      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().dim;
-      return result;
-    },
-  });
-
-  const AmbientLight__get__brightRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "brightRadius").get;
-  Object.defineProperty(AmbientLight.prototype, "brightRadius", {
-    get: function () {
-      let result = AmbientLight__get__brightRadius.call(this);
-      if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().bright;
-      return result;
-    },
-  });
+  }
 }
 
 /**
@@ -125,3 +101,19 @@ export const addLowLightVisionToTokenConfig = function (app, html) {
   // Insert new checkbox
   html.find('.tab[data-tab="vision"]').append(checkbox);
 };
+
+export class AmbientLightPF extends AmbientLight {
+  get disableLowLight() {
+    return getProperty(this.data, "flags.pf1.disableLowLight") === true;
+  }
+
+  get dimRadius() {
+    let result = super.dimRadius;
+    return this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().dim;
+  }
+
+  get brightRadius() {
+    let result = super.brightRadius;
+    return this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().bright;
+  }
+}

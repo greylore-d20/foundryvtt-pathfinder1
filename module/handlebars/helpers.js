@@ -185,19 +185,9 @@ export const registerHandlebarsHelpers = function () {
     return !!actor.getContextNotes(context).find((n) => n.notes.length);
   });
 
-  Handlebars.registerHelper("contextNotes", (actor, context) => {
-    const notes = [];
+  Handlebars.registerHelper("contextNotes", (actor, context, options) => {
+    const rollData = getProperty(options, "data.root.rollData");
     const noteObjs = actor.getContextNotes(context);
-
-    let rollData = {};
-    for (let noteObj of noteObjs) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
-
-    return notes;
+    return actor.formatContextNotes(noteObjs, rollData);
   });
 };

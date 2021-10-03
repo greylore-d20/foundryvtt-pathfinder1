@@ -1416,8 +1416,7 @@ export class ItemPF extends Item {
 
     // Toggle default roll mode
     let rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
-    if (["gmroll", "blindroll"].includes(rollMode)) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-    if (rollMode === "blindroll") chatData["blind"] = true;
+    ChatMessage.applyRollMode(chatData, rollMode);
 
     // Create the chat message
     return createCustomChatMessage(template, templateData, chatData);
@@ -2284,20 +2283,8 @@ export class ItemPF extends Item {
         // Use try to make sure a chat card is rendered even if DsN fails
         try {
           // Define common visibility options for whole attack
-          let whisper,
-            blind = false;
-          switch (rollMode) {
-            case "gmroll":
-              whisper = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-              break;
-            case "selfroll":
-              whisper = [game.user._id];
-              break;
-            case "blindroll":
-              whisper = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-              blind = true;
-              break;
-          }
+          const chatData = {};
+          ChatMessage.applyRollMode(chatData, rollMode);
 
           const mergeRolls = game.settings.get("dice-so-nice", "enabledSimultaneousRolls");
           const skipRolls = game.settings.get("dice-so-nice", "immediatelyDisplayChatMessages");
@@ -2311,10 +2298,12 @@ export class ItemPF extends Item {
            */
           const showRoll = async (pools) => {
             if (mergeRolls) {
-              return Promise.all(pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, whisper, blind)));
+              return Promise.all(
+                pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, chatData.whisper, chatData.blind))
+              );
             } else {
               for (const pool of pools) {
-                await game.dice3d.showForRoll(pool, game.user, true, whisper, blind);
+                await game.dice3d.showForRoll(pool, game.user, true, chatData.whisper, chatData.blind);
               }
             }
           };
@@ -3125,17 +3114,7 @@ export class ItemPF extends Item {
         content: await renderTemplate(chatTemplate, rollData),
       };
       // Handle different roll modes
-      switch (chatData.rollMode) {
-        case "gmroll":
-          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-          break;
-        case "selfroll":
-          chatData["whisper"] = [game.user._id];
-          break;
-        case "blindroll":
-          chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-          chatData["blind"] = true;
-      }
+      ChatMessage.applyRollMode(chatData, chatData.rollMode);
 
       // Send message
       if (options.chatMessage) ChatMessage.create(chatData);

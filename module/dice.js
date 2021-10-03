@@ -285,17 +285,7 @@ export class DicePF {
         setProperty(chatData, "flags.pf1.subject.core", "damage");
 
         // Handle different roll modes
-        switch (chatData.rollMode) {
-          case "gmroll":
-            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-            break;
-          case "selfroll":
-            chatData["whisper"] = [game.user._id];
-            break;
-          case "blindroll":
-            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u._id);
-            chatData["blind"] = true;
-        }
+        ChatMessage.applyRollMode(chatData, chatData.rollMode);
 
         // Send message
         rolled = true;

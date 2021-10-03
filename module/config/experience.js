@@ -76,7 +76,7 @@ export class ExperienceConfig extends FormApplication {
    * @override
    */
   async _updateObject(event, formData) {
-    const settings = expandObject(formData);
+    const settings = mergeObject(this._settings, expandObject(formData), { inplace: false });
     // Some mild sanitation for the numeric values.
     await game.settings.set("pf1", "experienceConfig", settings);
     ui.notifications.info("Updated Pathfinder experience configuration.");

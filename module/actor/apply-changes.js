@@ -444,7 +444,7 @@ const getBabTotal = function (d) {
   return d.attributes.bab.total;
 };
 
-const getNegativeEngergyDrain = function (d) {
+const getNegativeEnergyDrain = function (d) {
   return -d.attributes.energyDrain;
 };
 
@@ -707,7 +707,7 @@ export const addDefaultChanges = function (changes) {
     // Energy drain to attack
     changes.push(
       ItemChange.create({
-        formula: getNegativeEngergyDrain,
+        formula: getNegativeEnergyDrain,
         operator: "function",
         target: "attack",
         subTarget: "~attackCore",
@@ -773,7 +773,7 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain to CMD
     changes.push(
       ItemChange.create({
-        formula: getNegativeEngergyDrain,
+        formula: getNegativeEnergyDrain,
         operator: "function",
         target: "misc",
         subTarget: "cmd",
@@ -888,7 +888,7 @@ export const addDefaultChanges = function (changes) {
     // Energy Drain
     changes.push(
       ItemChange.create({
-        formula: getNegativeEngergyDrain,
+        formula: getNegativeEnergyDrain,
         operator: "function",
         target: "savingThrows",
         subTarget: "allSavingThrows",
@@ -1072,7 +1072,7 @@ export const addDefaultChanges = function (changes) {
   {
     changes.push(
       ItemChange.create({
-        formula: getNegativeEngergyDrain,
+        formula: getNegativeEnergyDrain,
         operator: "function",
         target: "skills",
         subTarget: "skills",

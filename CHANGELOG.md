@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.79.4 - 2021-10-3
+
+### Bug Fixes
+
+- Fix attack tooltip showing bonuses to all attacks twice.
+- Disabling experience tracking could lead to actors no longer getting initialised
+- Handle missing linked ammunition gracefully.
+- Prevent negative light sources from becoming larger with low-light vision
+
 ## 0.79.3 - 2021-10-3
 
 ### Bug Fixes

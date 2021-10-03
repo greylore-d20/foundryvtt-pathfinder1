@@ -18,7 +18,7 @@ export class TokenPF extends Token {
   async toggleEffect(effect, { active, overlay = false, midUpdate } = {}) {
     let call;
     if (typeof effect == "string") {
-      let buffItem = this.actor.items.get(effect);
+      const buffItem = this.actor.items.get(effect);
       if (buffItem) {
         call = await buffItem.update({ "data.active": !buffItem.data.data.active });
       } else call = await super.toggleEffect(effect, { active, overlay });

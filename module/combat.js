@@ -8,12 +8,11 @@ import { ActorPF } from "./actor/entity.js";
  *
  * @param {HTMLElement} html    The Chat Message being rendered
  * @param {Array} options       The Array of Context Menu options
- *
  * @returns {Array}              The extended options Array including new context choices
  */
 export const addChatMessageContextOptions = function (html, options) {
-  let canApply = (li) => canvas.tokens.controlled.length && li.find(".damage-roll .dice-total").length;
-  let canApplyCritical = (li) => canvas.tokens.controlled.length && li.find(".crit-damage-roll .dice-total").length;
+  const canApply = (li) => canvas.tokens.controlled.length && li.find(".damage-roll .dice-total").length;
+  const canApplyCritical = (li) => canvas.tokens.controlled.length && li.find(".crit-damage-roll .dice-total").length;
   options.push(
     {
       name: game.i18n.localize("PF1.ApplyDamage"),
@@ -109,8 +108,8 @@ export class CombatPF extends Combat {
    * @param {ActorPF} actor
    */
   _getInitiativeFormula(actor) {
-    if (CONFIG.Combat.initiative.formula) var parts = CONFIG.Combat.initiative.formula.split(/\s*\+\s*/);
-    else parts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
+    const defaultParts = ["1d20", "@attributes.init.total", "@attributes.init.total / 100"];
+    const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
     if (!actor) return parts[0] ?? "0";
     return parts.filter((p) => p !== null).join(" + ");
   }
@@ -137,7 +136,7 @@ export class CombatPF extends Combat {
     const [updates, messages] = await ids.reduce(
       async (results, id, i) => {
         const result = await results;
-        let [updates, messages] = result;
+        const [updates, messages] = result;
 
         // Get Combatant data
         const c = this.combatants.get(id);
@@ -162,7 +161,7 @@ export class CombatPF extends Combat {
         if (roll.err) ui.notifications.warn(roll.err.message);
         updates.push({ _id: id, initiative: roll.total });
 
-        let [notes, notesHTML] = c.actor.getInitiativeContextNotes();
+        const [notes, notesHTML] = c.actor.getInitiativeContextNotes();
 
         // Create roll template data
         const rollData = mergeObject(
@@ -176,7 +175,7 @@ export class CombatPF extends Combat {
         );
 
         // Create chat data
-        let chatData = mergeObject(
+        const chatData = mergeObject(
           {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.CHAT,
@@ -234,15 +233,15 @@ export class CombatPF extends Combat {
 
   static showInitiativeDialog = function (formula = null) {
     return new Promise((resolve) => {
-      let template = "systems/pf1/templates/chat/roll-dialog.hbs";
+      const template = "systems/pf1/templates/chat/roll-dialog.hbs";
       let rollMode = game.settings.get("core", "rollMode");
-      let dialogData = {
+      const dialogData = {
         formula: formula ? formula : "",
         rollMode: rollMode,
         rollModes: CONFIG.Dice.rollModes,
       };
       // Create buttons object
-      let buttons = {
+      const buttons = {
         normal: {
           label: "Roll",
           callback: (html) => {

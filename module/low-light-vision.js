@@ -23,7 +23,7 @@ export function patchLowLightVision() {
   };
 
   SightLayer.prototype.lowLightMultiplier = function () {
-    let result = {
+    const result = {
       dim: 1,
       bright: 1,
     };
@@ -34,7 +34,7 @@ export function patchLowLightVision() {
     const lowLightTokens = relevantTokens.filter((o) => getProperty(o, "actorVision.lowLight"));
 
     if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
-      for (let t of lowLightTokens.filter((o) => o._controlled)) {
+      for (const t of lowLightTokens.filter((o) => o._controlled)) {
         const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
         const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
         result.dim = Math.max(result.dim, multiplier);
@@ -45,7 +45,7 @@ export function patchLowLightVision() {
       const hasControlledLowLightTokens = lowLightTokens.filter((o) => o._controlled).length > 0;
       const hasLowLightTokens = lowLightTokens.length > 0;
       if ((!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens) {
-        for (let t of lowLightTokens) {
+        for (const t of lowLightTokens) {
           const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
           const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
           result.dim = Math.max(result.dim, multiplier);
@@ -66,7 +66,7 @@ export function patchLowLightVision() {
   const AmbientLight__get__dimRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "dimRadius").get;
   Object.defineProperty(AmbientLight.prototype, "dimRadius", {
     get: function () {
-      let result = AmbientLight__get__dimRadius.call(this);
+      const result = AmbientLight__get__dimRadius.call(this);
       if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().dim;
       return result;
     },
@@ -75,7 +75,7 @@ export function patchLowLightVision() {
   const AmbientLight__get__brightRadius = Object.getOwnPropertyDescriptor(AmbientLight.prototype, "brightRadius").get;
   Object.defineProperty(AmbientLight.prototype, "brightRadius", {
     get: function () {
-      let result = AmbientLight__get__brightRadius.call(this);
+      const result = AmbientLight__get__brightRadius.call(this);
       if (!this.disableLowLight) return result * canvas.sight.lowLightMultiplier().bright;
       return result;
     },

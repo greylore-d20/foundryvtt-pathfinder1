@@ -83,7 +83,7 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
  */
 export const createSaveMacro = async function (saveId, actorId, slot) {
   const actor = getActorFromId(actorId);
-  let saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
+  const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
   if (!actor) return;
 
   const command = `game.pf1.rollSaveMacro("${actorId}", "${saveId}");`;
@@ -193,7 +193,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
  * @returns {Promise|void} The item's roll or void if any requirements are not met
  */
 export const rollItemMacro = function (itemName, { itemId, itemType, actorId } = {}) {
-  let actor = getActorFromId(actorId);
+  const actor = getActorFromId(actorId);
   if (actor && !actor.testUserPermission(game.user, "OWNER")) {
     const msg = game.i18n.localize("PF1.ErrorNoActorPermission");
     console.warn(msg);

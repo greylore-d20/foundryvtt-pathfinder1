@@ -28,7 +28,7 @@ export const registerHandlebarsHelpers = function () {
     });
 
     // Construct the HTML
-    let editor = $(`<div class="editor"><div class="editor-content" data-edit="${target}">${content}</div></div>`);
+    const editor = $(`<div class="editor"><div class="editor-content" data-edit="${target}">${content}</div></div>`);
 
     // Append edit button
     const button = Boolean(options.hash["button"]);
@@ -43,7 +43,7 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("itemRange", (item, rollData) => {
     // ItemPF.range is not accessible here and is thus largely duplicated here
 
-    let range = getProperty(item, "data.range.value");
+    const range = getProperty(item, "data.range.value");
     const rangeType = getProperty(item, "data.range.units");
 
     if (rangeType == null) return null;
@@ -104,7 +104,7 @@ export const registerHandlebarsHelpers = function () {
     };
 
     const handleParts = (parts) => {
-      for (let [formula, _] of parts) {
+      for (const [formula, _] of parts) {
         const [roll, newformula] = reduceFormula(formula);
         if (roll.total == 0) continue;
         rv.push(newformula);
@@ -124,7 +124,7 @@ export const registerHandlebarsHelpers = function () {
 
     // Include general sources. Item enhancement bonus is among these.
     const sources = item.document.allDamageSources;
-    for (let s of sources) rv.push(s.formula);
+    for (const s of sources) rv.push(s.formula);
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 
@@ -190,10 +190,10 @@ export const registerHandlebarsHelpers = function () {
     const noteObjs = actor.getContextNotes(context);
 
     let rollData = {};
-    for (let noteObj of noteObjs) {
+    for (const noteObj of noteObjs) {
       rollData.item = {};
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
-      for (let note of noteObj.notes) {
+      for (const note of noteObj.notes) {
         notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
       }
     }

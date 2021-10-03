@@ -80,7 +80,7 @@ export class ChatAttack {
    * Applies changes to the roll data.
    */
   setRollData() {
-    let data = this.rollData;
+    const data = this.rollData;
     // Set critical hit multiplier
     data.critMult = 1;
     data.critCount = 0;
@@ -101,7 +101,7 @@ export class ChatAttack {
     }
 
     let result = "";
-    for (let n of this.attackNotes) {
+    for (const n of this.attackNotes) {
       if (n.length > 0) {
         result += `<span class="tag">${n}</span>`;
       }
@@ -119,7 +119,7 @@ export class ChatAttack {
     }
 
     let result = "";
-    for (let n of this.effectNotes) {
+    for (const n of this.effectNotes) {
       if (n.length > 0) {
         result += `<span class="tag">${n}</span>`;
       }
@@ -159,14 +159,14 @@ export class ChatAttack {
     }
 
     // Roll attack
-    let roll = this.item.rollAttack({
+    const roll = this.item.rollAttack({
       data: this.rollData,
       bonus: bonus,
       extraParts: extraParts,
       primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
     });
     data.roll = roll;
-    let d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
+    const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
     let critType = 0;
     const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
     if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
@@ -206,7 +206,7 @@ export class ChatAttack {
       mcman: ["melee"],
     };
 
-    let notes = [];
+    const notes = [];
     if (this.item != null && this.item.actor != null) {
       notes.push(...this.item.actor.getContextNotesParsed("attacks.attack"));
       if ((typeMap[type]?.length || 0) > 0)
@@ -233,7 +233,7 @@ export class ChatAttack {
     let data = this.damage;
     if (critical === true) data = this.critDamage;
 
-    let rollData = duplicate(this.rollData);
+    const rollData = duplicate(this.rollData);
     // Enforce critical multiplier
     rollData.critCount = 0;
 
@@ -250,7 +250,7 @@ export class ChatAttack {
       });
       data.rolls = rolls;
       // Add damage parts
-      for (let roll of rolls) {
+      for (const roll of rolls) {
         const dtype = roll.damageType;
         data.parts.push(new DamagePart(roll.roll.total, dtype, roll.roll, roll.type));
       }
@@ -260,7 +260,7 @@ export class ChatAttack {
     let tooltips = "";
 
     // Add tooltip
-    for (let p of Object.values(data.parts)) {
+    for (const p of Object.values(data.parts)) {
       tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.hbs", {
         part: p,
       });
@@ -372,7 +372,7 @@ export class ChatAttack {
     let notes = [];
     if (this.item != null && this.item.actor != null) {
       notes = this.item.actor.getContextNotes("attacks.effect").reduce((arr, o) => {
-        for (let n of o.notes) {
+        for (const n of o.notes) {
           arr.push(...n.split(/[\n\r]+/));
         }
         return arr;
@@ -381,7 +381,7 @@ export class ChatAttack {
       // Spell specific notes
       if (this.item.type === "spell") {
         this.item.actor.getContextNotes("spell.effect").forEach((o) => {
-          for (let n of o.notes) notes.push(...n.split(/[\n\r]+/));
+          for (const n of o.notes) notes.push(...n.split(/[\n\r]+/));
         });
       }
     }

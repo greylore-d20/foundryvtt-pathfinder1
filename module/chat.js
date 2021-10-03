@@ -10,7 +10,7 @@ export const createCustomChatMessage = async function (
   chatData = {},
   { rolls = [] } = {}
 ) {
-  let rollMode = game.settings.get("core", "rollMode");
+  const rollMode = game.settings.get("core", "rollMode");
   chatData = mergeObject(
     {
       rollMode: rollMode,
@@ -37,7 +37,7 @@ export const createCustomChatMessage = async function (
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
   if (game.dice3d != null && game.dice3d.isEnabled()) {
-    for (let roll of rolls) {
+    for (const roll of rolls) {
       await game.dice3d.showForRoll(roll, game.user, false, chatData.whisper, chatData.blind);
       chatData.sound = null;
     }
@@ -62,7 +62,7 @@ export const hideRollInfo = function (app, html, data) {
 export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.user.isGM) return;
 
-  let speaker = app.data.speaker;
+  const speaker = app.data.speaker;
   let actor = null;
   if (speaker != null) {
     if (speaker.token) {

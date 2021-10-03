@@ -42,7 +42,7 @@ export class SquareHighlight {
     this.clear();
 
     // Highlight squares
-    for (let s of this._squares) {
+    for (const s of this._squares) {
       const x = Math.floor(this.origin.x - s.x) * gridSize;
       const y = Math.floor(this.origin.y - s.y) * gridSize;
       grid.grid.highlightGridPosition(hl, { x: x, y: y, border: this.borderColor, color: this.fillColor });
@@ -84,7 +84,7 @@ export const showAttackReach = function (token, attack) {
     minRange = RollPF.safeRoll(getProperty(attack.data, "data.range.minValue") || "0", rollData).total;
   }
 
-  let squares = {
+  const squares = {
     normal: [],
     reach: [],
     extra: [],
@@ -130,11 +130,11 @@ export const showAttackReach = function (token, attack) {
     reach: new SquareHighlight(origin, colorToInt(reachColor.fill), colorToInt(reachColor.border)),
     extra: [],
   };
-  for (let s of squares.normal) {
+  for (const s of squares.normal) {
     result.normal.addSquare(s[0], s[1]);
   }
   if (isReach) {
-    for (let s of squares.reach) {
+    for (const s of squares.reach) {
       result.reach.addSquare(s[0], s[1]);
     }
   }
@@ -142,7 +142,7 @@ export const showAttackReach = function (token, attack) {
   // Add extra range squares
   {
     for (let a = 0; a < squares.extra.length; a++) {
-      let squaresExtra = squares.extra[a];
+      const squaresExtra = squares.extra[a];
 
       const color = {
         fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
@@ -150,7 +150,7 @@ export const showAttackReach = function (token, attack) {
       };
 
       const hl = new SquareHighlight(origin, colorToInt(color.fill), colorToInt(color.border));
-      for (let s of squaresExtra) {
+      for (const s of squaresExtra) {
         hl.addSquare(s[0], s[1]);
       }
       result.extra.push(hl);
@@ -161,7 +161,7 @@ export const showAttackReach = function (token, attack) {
 };
 
 export const addReachCallback = async function (data, html) {
-  let results = [];
+  const results = [];
 
   // Don't do anything under certain circumstances
   const itemId = getProperty(data, "flags.pf1.metadata.item");
@@ -246,7 +246,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   range = convertDistance(range)[0];
   if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
 
-  let result = [];
+  const result = [];
 
   if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
   if (!addSquareFunction) addSquareFunction = shouldAddReachSquare;
@@ -256,7 +256,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   const gridSize = canvas.grid.size;
 
   // Determine token squares
-  let tokenSquares = [];
+  const tokenSquares = [];
   for (let a = 0; a < Math.floor(token.w / gridSize); a++) {
     for (let b = 0; b < Math.floor(token.h / gridSize); b++) {
       const x = Math.floor((token.x + gridSize * 0.5) / gridSize + a);
@@ -266,7 +266,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   }
 
   // Determine token-based variables
-  let tokenRect = [
+  const tokenRect = [
     Math.floor((token.x + gridSize * 0.5) / gridSize),
     Math.floor((token.y + gridSize * 0.5) / gridSize),
     Math.floor(token.w / gridSize),
@@ -276,7 +276,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   // Create function to determine closest token square
   const getClosestTokenSquare = function (pos) {
     const lowest = { square: null, dist: null };
-    for (let s of tokenSquares) {
+    for (const s of tokenSquares) {
       const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
       if (lowest.dist == null || dist < lowest.dist) {
         lowest.square = s;
@@ -353,19 +353,19 @@ const shouldAddReachSquare = function (
 };
 
 export const measureReachDistance = function (p0, p1, alt = false) {
-  let gs = canvas.dimensions.size,
+  const gs = canvas.dimensions.size,
     ray = new Ray(p0, p1),
     nx = Math.abs(Math.ceil(ray.dx / gs)),
     ny = Math.abs(Math.ceil(ray.dy / gs));
 
   // Get the number of straight and diagonal moves
-  let nDiagonal = Math.min(nx, ny),
+  const nDiagonal = Math.min(nx, ny),
     nStraight = Math.abs(ny - nx);
 
   // Return distance
   if (!alt) {
-    let nd10 = Math.floor(nDiagonal / 2);
-    let spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
+    const nd10 = Math.floor(nDiagonal / 2);
+    const spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
     return spaces * canvas.dimensions.distance;
   }
 

@@ -56,13 +56,13 @@ export class Widget_CategorizedItemPicker extends Application {
     data.categories = [];
     data.items = [];
 
-    for (let cat of this.categories) {
+    for (const cat of this.categories) {
       data.categories.push({
         key: cat.key,
         label: cat.label,
       });
 
-      for (let item of cat.items) {
+      for (const item of cat.items) {
         data.items.push(
           mergeObject(
             {

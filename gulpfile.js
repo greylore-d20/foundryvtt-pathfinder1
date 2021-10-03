@@ -123,13 +123,13 @@ function rollup() {
  */
 function copyFiles() {
   if (IS_WIN) {
-    let promises = [],
+    const promises = [],
       args = "/R:5 /W:15 /MT:32 /NFL /NDL /NJH /NJS /nc /ns /np";
     SYSTEM_FILES.forEach((sf) => {
       promises.push(
         new Promise((resolve) => {
           if (sf.indexOf("**") > -1) {
-            let folder = sf.replace("/**/*", "");
+            const folder = sf.replace("/**/*", "");
             exec(`robocopy ${folder} ${DESTINATION}/${folder} /mir ${args}`, null, resolve);
           } else exec(`robocopy . ${DESTINATION} ${sf} ${args}`, null, resolve);
         })
@@ -319,7 +319,7 @@ function adhereTemplate(object, source, options = {}) {
   const sourceKeys = Object.keys(source);
   const path = options.path ?? [];
 
-  for (let k of Object.keys(object)) {
+  for (const k of Object.keys(object)) {
     if (
       !sourceKeys.includes(k) &&
       (!options.documentType || !TEMPLATE_EXCEPTION_PATHS[options.documentType].includes(path.join(".")))
@@ -364,15 +364,15 @@ function mergeObject(first, second) {
   }
   // Parse array
   if (second instanceof Array) {
-    let result = [];
+    const result = [];
     for (let a = 0; a < second.length; a++) {
       result.push(mergeObject({}, second[a]));
     }
     return result;
   }
   // Parse object
-  let result = typeof first === "object" ? first : {};
-  for (let [k, v] of Object.entries(second)) {
+  const result = typeof first === "object" ? first : {};
+  for (const [k, v] of Object.entries(second)) {
     result[k] = mergeObject(result[k], v);
   }
   return result;
@@ -404,7 +404,7 @@ function loadDocumentTemplates() {
       if (k === "templates") continue;
 
       if (v.templates instanceof Array) {
-        for (let templateKey of v.templates) {
+        for (const templateKey of v.templates) {
           doc[k] = mergeObject(v, doc.templates?.[templateKey] ?? {});
         }
         delete v.templates;
@@ -447,7 +447,7 @@ function sanitizePack(pack, templateData, documentType = "") {
     adhereTemplate(pack.data, templateData[documentType]?.[pack.type], { keepDefaults: false, documentType });
     // Adhere actor's items to template data
     if (documentType === "Actor" && pack.items?.length > 0) {
-      for (let i of pack.items) {
+      for (const i of pack.items) {
         adhereTemplate(i.data, templateData.Item[i.type], { keepDefaults: false, documentType: "Item" });
       }
     }
@@ -470,7 +470,7 @@ function extractPacks() {
     writableObjectMode: true,
     async transform(file, _, callback) {
       // Create directory.
-      let filename = path.parse(file.path).name;
+      const filename = path.parse(file.path).name;
       if (!fs.existsSync(`./${PACK_SRC}/${filename}`)) {
         fs.mkdirSync(`./${PACK_SRC}/${filename}`);
       }
@@ -496,10 +496,10 @@ function extractPacks() {
             // Remove permissions and _id, and adhere to template data
             pack = sanitizePack(pack, templateData, packData?.entity);
 
-            let output = JSON.stringify(pack, null, 2);
+            const output = JSON.stringify(pack, null, 2);
 
             // Sluggify the filename.
-            let packName = sluggify(pack.name);
+            const packName = sluggify(pack.name);
 
             // Write to the file system.
             fs.writeFileSync(path.resolve(__dirname, PACK_SRC, filename, `${packName}.json`), output);
@@ -544,7 +544,7 @@ function compilePacks() {
       readableObjectMode: true,
       writableObjectMode: true,
       transform(file, _, callback) {
-        let json = JSON.parse(file.contents.toString());
+        const json = JSON.parse(file.contents.toString());
         db.insert(json);
 
         // Complete the callback.

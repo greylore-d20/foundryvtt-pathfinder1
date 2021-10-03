@@ -46,7 +46,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
       },
     };
 
-    for (let a of attacks) {
+    for (const a of attacks) {
       attackSections.all.items.push(a);
     }
 

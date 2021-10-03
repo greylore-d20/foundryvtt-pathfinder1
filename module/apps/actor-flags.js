@@ -44,9 +44,9 @@ export class ActorSheetFlags extends BaseEntitySheet {
    */
   _getFlags() {
     const flags = {};
-    for (let [k, v] of Object.entries(CONFIG.PF1.characterFlags)) {
+    for (const [k, v] of Object.entries(CONFIG.PF1.characterFlags)) {
       if (!Object.prototype.hasOwnProperty.call(flags, v.section)) flags[v.section] = {};
-      let flag = duplicate(v);
+      const flag = duplicate(v);
       flag.type = v.type.name;
       flag.isCheckbox = v.type === Boolean;
       flag.isSelect = Object.prototype.hasOwnProperty.call(v, "choices");
@@ -70,7 +70,7 @@ export class ActorSheetFlags extends BaseEntitySheet {
 
     // Iterate over the flags which may be configured
     const updateData = {};
-    for (let [k, v] of Object.entries(CONFIG.pf1.characterFlags)) {
+    for (const [k, v] of Object.entries(CONFIG.pf1.characterFlags)) {
       if ([undefined, null, "", false].includes(formData[k])) updateData[`-=${k}`] = null;
       else if (v.type === Number && formData[k] === 0) updateData[`-=${k}`] = null;
       else updateData[k] = formData[k];

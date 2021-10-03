@@ -56,7 +56,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const iteratives = game.settings.get("pf1", "displayIteratives");
     const bab = data.data.attributes.bab.total;
     if (iteratives) {
-      let iters = [bab];
+      const iters = [bab];
       for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
       data["iteratives"] = `+${iters.join(" / +")}`;
     }
@@ -136,8 +136,8 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       sp: { into: "gp", each: 10 },
       gp: { into: "pp", each: 10 },
     };
-    for (let [c, t] of Object.entries(convert)) {
-      let change = Math.floor(curr[c] / t.each);
+    for (const [c, t] of Object.entries(convert)) {
+      const change = Math.floor(curr[c] / t.each);
       curr[c] -= change * t.each;
       curr[t.into] += change;
     }

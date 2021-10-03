@@ -91,7 +91,7 @@ export class RollPF extends Roll {
         const terms = [];
 
         if (fn in game.pf1.rollPreProcess) {
-          let fnParams = group.terms
+          const fnParams = group.terms
             // .slice(2, -1)
             .reduce((cur, s) => {
               cur.push(...s.split(/\s*,\s*/));

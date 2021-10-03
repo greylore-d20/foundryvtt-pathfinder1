@@ -277,7 +277,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     };
 
     // Partition items by category
-    let items = data.items.reduce((arr, item) => {
+    const items = data.items.reduce((arr, item) => {
       item.img = item.img || DEFAULT_TOKEN;
       item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
       item.hasUses = item.data.uses && item.data.uses.max > 0;
@@ -292,7 +292,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }, []);
 
     // Organize Inventory
-    for (let i of items) {
+    for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
@@ -486,7 +486,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropCurrency(event, data) {
-    let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+    const sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
     return new CurrencyTransfer(
       { actor: sourceActor, container: data.containerId, alt: data.alt },
       {
@@ -515,7 +515,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Create consumable from spell
     if (itemData.type === "spell") {
-      let resultData = await createConsumableSpellDialog(itemData, { allowSpell: false });
+      const resultData = await createConsumableSpellDialog(itemData, { allowSpell: false });
       if (resultData) return this.item.createContainerContent(resultData);
       else return false;
     }
@@ -585,17 +585,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    */
   _onItemSummary(event) {
     event.preventDefault();
-    let li = $(event.currentTarget).closest(".item"),
+    const li = $(event.currentTarget).closest(".item"),
       item = this.item.getContainerContent(li.attr("data-item-id")),
       chatData = item.getChatData({ secrets: this.actor ? this.actor.owner : this.owner });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
-      let summary = li.children(".item-summary");
+      const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      let div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      let props = $(`<div class="item-properties"></div>`);
+      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
+      const props = $(`<div class="item-properties"></div>`);
       chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());
@@ -638,7 +638,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _updateItems() {
-    let promises = [];
+    const promises = [];
 
     const updates = duplicate(this._itemUpdates);
     this._itemUpdates = [];

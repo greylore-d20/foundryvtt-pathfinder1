@@ -8,7 +8,7 @@ export const runUnitTests = async function () {
   }
 
   console.log("Running unit tests...");
-  let tests = [];
+  const tests = [];
 
   // tests.push(...(await runSkillTests(actor)));
   // tests.push(...(await runAttackTests(actor)));
@@ -46,7 +46,7 @@ class UnitTestResult {
 }
 
 const runSizeRollTests = async function () {
-  let result = [];
+  const result = [];
 
   await _addSizeRollTest("1d6", "1d6", result);
   await _addSizeRollTest("1d4", "1d6", result, { targetSize: 5 });
@@ -102,11 +102,11 @@ const _addSizeRollTest = async function (
 };
 
 const runSkillTests = async function (actor) {
-  let result = [];
+  const result = [];
 
   // Run base skill
   {
-    let test = new UnitTestResult("Normal skill check");
+    const test = new UnitTestResult("Normal skill check");
     try {
       await actor.rollSkill("acr", { skipDialog: true });
       test.succeed();
@@ -118,7 +118,7 @@ const runSkillTests = async function (actor) {
 
   // Run sub-skill
   {
-    let test = new UnitTestResult("Sub-skill check");
+    const test = new UnitTestResult("Sub-skill check");
     try {
       await actor.rollSkill("prf.subSkills.prf1", { skipDialog: true });
       test.succeed();
@@ -130,7 +130,7 @@ const runSkillTests = async function (actor) {
 
   // Run custom skill
   {
-    let test = new UnitTestResult("Custom skill check");
+    const test = new UnitTestResult("Custom skill check");
     try {
       await actor.rollSkill("test", { skipDialog: true });
       test.succeed();
@@ -144,11 +144,11 @@ const runSkillTests = async function (actor) {
 };
 
 const runAttackTests = async function (actor) {
-  let result = [];
+  const result = [];
 
   // Run Longsword attack
   {
-    let test = new UnitTestResult("Longsword attack");
+    const test = new UnitTestResult("Longsword attack");
     try {
       const item = actor.items.find((o) => o.name === "Longsword" && o.type === "attack");
       item.useAttack({ skipDialog: true });
@@ -161,7 +161,7 @@ const runAttackTests = async function (actor) {
 
   // Run Fireball attack
   {
-    let test = new UnitTestResult("Fireball spell");
+    const test = new UnitTestResult("Fireball spell");
     try {
       const item = actor.items.find((o) => o.name === "Fireball" && o.type === "spell");
       item.useAttack({ skipDialog: true });
@@ -176,11 +176,11 @@ const runAttackTests = async function (actor) {
 };
 
 const runMiscActorTests = async function (actor) {
-  let result = [];
+  const result = [];
 
   // Run BAB test
   {
-    let test = new UnitTestResult("BAB");
+    const test = new UnitTestResult("BAB");
     try {
       await actor.rollBAB();
       test.succeed();
@@ -192,7 +192,7 @@ const runMiscActorTests = async function (actor) {
 
   // Run CMB test
   {
-    let test = new UnitTestResult("CMB");
+    const test = new UnitTestResult("CMB");
     try {
       await actor.rollCMB();
       test.succeed();
@@ -204,7 +204,7 @@ const runMiscActorTests = async function (actor) {
 
   // Run Fortitude test
   {
-    let test = new UnitTestResult("Fortitude Saving Throw");
+    const test = new UnitTestResult("Fortitude Saving Throw");
     try {
       await actor.rollSavingThrow("fort", { skipPrompt: true });
       test.succeed();
@@ -216,7 +216,7 @@ const runMiscActorTests = async function (actor) {
 
   // Run Reflex test
   {
-    let test = new UnitTestResult("Reflex Saving Throw");
+    const test = new UnitTestResult("Reflex Saving Throw");
     try {
       await actor.rollSavingThrow("ref", { skipPrompt: true });
       test.succeed();
@@ -228,7 +228,7 @@ const runMiscActorTests = async function (actor) {
 
   // Run Will test
   {
-    let test = new UnitTestResult("Will Saving Throw");
+    const test = new UnitTestResult("Will Saving Throw");
     try {
       await actor.rollSavingThrow("will", { skipPrompt: true });
       test.succeed();
@@ -240,7 +240,7 @@ const runMiscActorTests = async function (actor) {
 
   // Run Initiative test
   {
-    let test = new UnitTestResult("Initiative");
+    const test = new UnitTestResult("Initiative");
     try {
       await actor.rollInitiative();
       test.succeed();

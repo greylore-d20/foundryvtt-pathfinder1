@@ -29,7 +29,7 @@ export class TokenQuickActions {
     };
 
     let quickActions = '<div class="col actions"><div class="below">';
-    let items = actor.getQuickActions();
+    const items = actor.getQuickActions();
     items.forEach(function (i) {
       const item = i.item;
       const icon = item.img ?? CONST.DEFAULT_TOKEN;

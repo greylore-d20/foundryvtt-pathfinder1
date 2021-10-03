@@ -15,21 +15,21 @@ export const measureDistances = function (segments, options = {}) {
 
   // Iterate over measured segments
   return segments.map((s) => {
-    let r = s.ray;
+    const r = s.ray;
 
     // Determine the total distance traveled
-    let nx = Math.abs(Math.ceil(r.dx / d.size));
-    let ny = Math.abs(Math.ceil(r.dy / d.size));
+    const nx = Math.abs(Math.ceil(r.dx / d.size));
+    const ny = Math.abs(Math.ceil(r.dy / d.size));
 
     // Determine the number of straight and diagonal moves
-    let nd = Math.min(nx, ny);
-    let ns = Math.abs(ny - nx);
+    const nd = Math.min(nx, ny);
+    const ns = Math.abs(ny - nx);
     nDiagonal += nd;
 
     // Alternative DMG Movement
     if (rule === "5105") {
-      let nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-      let spaces = nd10 * 2 + (nd - nd10) + ns;
+      const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
+      const spaces = nd10 * 2 + (nd - nd10) + ns;
       return spaces * canvas.dimensions.distance;
     }
 
@@ -40,19 +40,19 @@ export const measureDistances = function (segments, options = {}) {
 
 export const measureDistance = function (p0, p1, { gridSpaces = true } = {}) {
   if (!gridSpaces) return BaseGrid.prototype.measureDistance.bind(this)(p0, p1, { gridSpaces });
-  let gs = canvas.dimensions.size,
+  const gs = canvas.dimensions.size,
     ray = new Ray(p0, p1),
     nx = Math.abs(Math.ceil(ray.dx / gs)),
     ny = Math.abs(Math.ceil(ray.dy / gs));
 
   // Get the number of straight and diagonal moves
-  let nDiagonal = Math.min(nx, ny),
+  const nDiagonal = Math.min(nx, ny),
     nStraight = Math.abs(ny - nx);
 
   // Alternative DMG Movement
   if (this.parent.diagonalRule === "5105") {
-    let nd10 = Math.floor(nDiagonal / 2);
-    let spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
+    const nd10 = Math.floor(nDiagonal / 2);
+    const spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
     return spaces * canvas.dimensions.distance;
   }
 
@@ -88,10 +88,12 @@ TokenDocument.prototype.getBarAttribute = function (barName, { alternative = nul
  * Condition/ status effects section
  */
 export const getConditions = function () {
-  let core = CONFIG.statusEffects,
-    sys = Object.keys(CONFIG.PF1.conditions).map((c) => {
-      return { id: c, label: CONFIG.PF1.conditions[c], icon: CONFIG.PF1.conditionTextures[c] };
-    });
+  const core = CONFIG.statusEffects;
+  let sys = Object.keys(CONFIG.PF1.conditions).map((c) => ({
+    id: c,
+    label: CONFIG.PF1.conditions[c],
+    icon: CONFIG.PF1.conditionTextures[c],
+  }));
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else sys = [core[0]].concat(sys);
   return sys;
@@ -99,10 +101,10 @@ export const getConditions = function () {
 
 const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoices;
 TokenHUD.prototype._getStatusEffectChoices = function () {
-  let core = _TokenHUD_getStatusEffectChoices.call(this),
+  const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
   Object.entries(this.object.actor._calcBuffTextures()).forEach((obj, ind) => {
-    let [idx, buff] = obj;
+    const [idx, buff] = obj;
     if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;
     if (buff) {
       buffs[buff.icon] = {
@@ -121,7 +123,7 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
 //const TokenHUD__onToggleEffect = TokenHUD.prototype._onToggleEffect;
 TokenHUD.prototype._onToggleEffect = function (event, { overlay = false } = {}) {
   event.preventDefault();
-  let img = event.currentTarget;
+  const img = event.currentTarget;
   const effect =
     img.dataset.statusId && this.object.actor
       ? CONFIG.statusEffects.find((e) => e.id === img.dataset.statusId) ?? img.dataset.statusId

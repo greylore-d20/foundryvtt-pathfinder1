@@ -45,7 +45,7 @@ export class ListTabs {
     if (!valid) tabName = items[0].dataset.tab;
 
     // Change active tab
-    for (let a of items) {
+    for (const a of items) {
       if (a.dataset.tab === tabName) {
         this._list.value = a.value;
       }
@@ -54,7 +54,7 @@ export class ListTabs {
     // Change active content
     if (this._content) {
       const tabs = this._content.querySelectorAll(".tab");
-      for (let t of tabs) {
+      for (const t of tabs) {
         t.classList.toggle("active", t.dataset.tab === tabName);
       }
     }

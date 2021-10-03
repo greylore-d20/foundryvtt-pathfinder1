@@ -60,7 +60,7 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
     }
 
     // Recursively activate tabs
-    for (let subTab of rtabs.subTabs) {
+    for (const subTab of rtabs.subTabs) {
       _recursiveActivate.call(this, subTab, subTab.active);
     }
   };
@@ -72,7 +72,7 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
     if (html.find(`nav[data-group="${rtabs.group}"]`).length > 0) rtabs.__dormant = false;
     else rtabs.__dormant = true;
 
-    for (let subTab of rtabs.subTabs) {
+    for (const subTab of rtabs.subTabs) {
       _recursiveBind.call(this, subTab);
     }
   };
@@ -100,7 +100,7 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
     const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
     let cls = TabsV2;
     if (tabsElem) {
-      let type = tabsElem.dataset.tabsType;
+      const type = tabsElem.dataset.tabsType;
       if (type === "list") {
         cls = ListTabs;
       }
@@ -121,7 +121,7 @@ export const createTabs = function (html, tabGroups, existingTabs = null) {
       // Recursively create tabs
       tabs.group = group;
       tabs.subTabs = [];
-      for (let [childKey, subChildren] of Object.entries(children)) {
+      for (const [childKey, subChildren] of Object.entries(children)) {
         const childTabs = _func.call(this, childKey, subChildren);
         if (childTabs != null) {
           tabs.subTabs.push(childTabs);
@@ -227,7 +227,7 @@ export const sizeDieExt = function (origCount, origSides, targetSize = "M", init
       { orig: [6, 10], larger: [12, 8], smaller: [6, 8] },
       { orig: [8, 10], larger: [16, 8], smaller: [8, 8] },
     ];
-    for (let v of d10Arr) {
+    for (const v of d10Arr) {
       if (v.orig[0] === origCount && v.orig[1] === origSides) {
         if (targetSize < initialSize) {
           initialSize--;
@@ -243,8 +243,8 @@ export const sizeDieExt = function (origCount, origSides, targetSize = "M", init
   }
 
   // Get initial die type
-  let mediumDie = `${origCount}d${origSides}`;
-  let mediumDieMax = origCount * origSides;
+  const mediumDie = `${origCount}d${origSides}`;
+  const mediumDieMax = origCount * origSides;
   let c = duplicate(CONFIG.PF1.sizeDie);
   {
     if (c.indexOf(mediumDie) === -1) {
@@ -439,7 +439,7 @@ export const expandObjectExt = function (obj, options = { makeArrays: true }, _d
 
     // Convert the key to an object reference if it contains dot notation
     if (key.indexOf(".") !== -1) {
-      let parts = key.split(".");
+      const parts = key.split(".");
       key = parts.pop();
       target = parts.reduce((o, i, a) => {
         const nextKey = parts.length > a ? parts[a + 1] : null;
@@ -462,7 +462,7 @@ export const expandObjectExt = function (obj, options = { makeArrays: true }, _d
     return changed;
   };
 
-  let expanded = {};
+  const expanded = {};
   if (_d > 10) throw new Error("Maximum depth exceeded");
   for (let [k, v] of Object.entries(obj)) {
     if (v instanceof Object && !Array.isArray(v)) {
@@ -490,7 +490,7 @@ export const mergeObjectExt = function (
   if (!(original instanceof Object) || !(other instanceof Object)) {
     throw new Error("One of original or other are not Objects!");
   }
-  let depth = _d + 1;
+  const depth = _d + 1;
 
   // Maybe copy the original data at depth 0
   if (!inplace && _d === 0) original = duplicate(original);
@@ -502,7 +502,7 @@ export const mergeObjectExt = function (
 
   // Iterate over the other object
   for (let [k, v] of Object.entries(other)) {
-    let tv = getType(v);
+    const tv = getType(v);
 
     // Prepare to delete
     let toDelete = false;
@@ -563,7 +563,7 @@ export const mergeObjectExt = function (
 
     // Case 2 - Key does not exist
     else if (!toDelete) {
-      let canInsert = (depth === 1 && insertKeys) || (depth > 1 && insertValues);
+      const canInsert = (depth === 1 && insertKeys) || (depth > 1 && insertValues);
       if (canInsert) original[k] = v;
     }
   }
@@ -618,7 +618,7 @@ export const createConsumableSpellDialog = function (itemData, { allowSpell = tr
 };
 
 export const createConsumableSpell = async function (itemData, type) {
-  let data = await ItemPF.toConsumable(itemData, type);
+  const data = await ItemPF.toConsumable(itemData, type);
 
   if (data._id) delete data._id;
   return data;
@@ -650,7 +650,8 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
 
 export const colorToInt = function (color) {
   const rgb = color.rgb().color;
-  let integer = ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
+  const integer =
+    ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
 
   return integer;
 };
@@ -678,13 +679,13 @@ export const getBuffTargets = function (actor, type = "buffs") {
 
   // Append individual skills to buff targets
   if (actor) {
-    for (let s of actor._skillTargets) {
+    for (const s of actor._skillTargets) {
       const sId = s.split(".").slice(1).join(".");
       const skill = actor.getSkillInfo(sId);
       buffTargets[s] = { label: skill.name, category: "skill" };
     }
   } else {
-    for (let [k, v] of Object.entries(CONFIG.PF1.skills)) {
+    for (const [k, v] of Object.entries(CONFIG.PF1.skills)) {
       buffTargets[`skill.${k}`] = { label: v, category: "skill" };
     }
   }
@@ -751,15 +752,15 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
  * @returns {T[]} - New sorted Array
  */
 export const sortArrayByName = function (inputArr) {
-  let n = inputArr.length;
+  const n = inputArr.length;
   inputArr = duplicate(inputArr).map((o) => {
     o.name = o.name.toLocaleLowerCase();
     return o;
   });
   for (let i = 1; i < n; i++) {
-    let current = inputArr[i],
-      j = i - 1,
+    const current = inputArr[i],
       currentLower = current.name;
+    let j = i - 1;
     while (j > -1 && currentLower.localeCompare(inputArr[j].name, undefined, { ignorePunctuation: true }) < 0) {
       inputArr[j + 1] = inputArr[j];
       j--;
@@ -779,10 +780,10 @@ export const sortArrayByName = function (inputArr) {
  * @returns {number} Index where search is found or negative index indicating where it would be inserted
  */
 export const binarySearch = function (searchArr, el, compare_fn) {
-  var m = 0,
+  let m = 0,
     n = searchArr.length - 1;
   while (m <= n) {
-    var k = (n + m) >> 1,
+    const k = (n + m) >> 1,
       cmp = compare_fn(el, searchArr[k]);
     if (cmp > 0) {
       m = k + 1;
@@ -804,14 +805,14 @@ export const binarySearch = function (searchArr, el, compare_fn) {
  * @returns {Array.<T[]>|false} An Array containing all Array permutations or false if failed.
  */
 function uniquePermutations(perm) {
-  let total = new Set();
+  const total = new Set();
   if (perm.length > 7) {
     console.warn("Array too large. Not attempting.");
     return false;
   }
 
   for (let i = 0; i < perm.length; i = i + 1) {
-    let rest = uniquePermutations(perm.slice(0, i).concat(perm.slice(i + 1)));
+    const rest = uniquePermutations(perm.slice(0, i).concat(perm.slice(i + 1)));
 
     if (!rest.length) {
       total.add([perm[i]]);
@@ -841,7 +842,7 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
 
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;
-  for (let pack of packs) {
+  for (const pack of packs) {
     if (!pack.fuzzyIndex) pack.fuzzyIndex = sortArrayByName([...pack.index]);
     found = binarySearch(pack.fuzzyIndex, searchTerm, (sp, it) =>
       sp.localeCompare(it.name, undefined, { ignorePunctuation: true })
@@ -869,7 +870,7 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
     );
   }
 
-  for (let pack of packs) {
+  for (const pack of packs) {
     // Skip first mutation since it is already searched for manually before computing mutations
     for (let mut = 1; mut < searchMutations.length; mut++) {
       found = binarySearch(pack.fuzzyIndex, searchMutations[mut], (sp, it) =>

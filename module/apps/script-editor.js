@@ -58,7 +58,7 @@ export class ScriptEditor extends FormApplication {
   }
 
   resolvePromises(type, result) {
-    for (let p of this._promises[type]) {
+    for (const p of this._promises[type]) {
       if (!p.resolved) {
         p.callback(result);
         p.resolved = true;

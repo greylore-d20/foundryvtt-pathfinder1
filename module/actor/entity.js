@@ -2274,6 +2274,10 @@ export class ActorPF extends Actor {
     srcDetails(this.sourceDetails["data.attributes.cmb.bonus"]);
     srcDetails(this.sourceDetails["data.attributes.attack.shared"]);
 
+    const size = getProperty(this.data, "data.traits.size") ?? "med";
+    rollData.sizeBonus = CONFIG.PF1.sizeSpecialMods[size];
+    if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
+
     // Unreliable melee/ranged identification
     const isMelee =
       ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
@@ -2305,7 +2309,7 @@ export class ActorPF extends Actor {
       event: options.event,
       parts,
       dice: options.dice,
-      data: this.getRollData(),
+      data: rollData,
       subject: { core: "cmb" },
       title: game.i18n.localize("PF1.CMB"),
       speaker: ChatMessage.getSpeaker({ actor: this }),

@@ -197,17 +197,7 @@ export class CombatPF extends Combat {
         setProperty(chatData, "flags.pf1.subject.core", "init");
 
         // Handle different roll modes
-        switch (chatData.rollMode) {
-          case "gmroll":
-            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-            break;
-          case "selfroll":
-            chatData["whisper"] = [game.user._id];
-            break;
-          case "blindroll":
-            chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-            chatData["blind"] = true;
-        }
+        ChatMessage.applyRollMode(chatData, chatData.rollMode);
 
         if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
         messages.push(chatData);

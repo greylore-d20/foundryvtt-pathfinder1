@@ -21,18 +21,7 @@ export const createCustomChatMessage = async function (
   );
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
   // Handle different roll modes
-  switch (chatData.rollMode) {
-    case "gmroll":
-      chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-      break;
-    case "selfroll":
-      chatData["whisper"] = [game.user.id];
-      break;
-    case "blindroll":
-      chatData["whisper"] = game.users.contents.filter((u) => u.isGM).map((u) => u.id);
-      chatData["blind"] = true;
-      break;
-  }
+  ChatMessagePF.applyRollMode(chatData, chatData.rollMode);
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];

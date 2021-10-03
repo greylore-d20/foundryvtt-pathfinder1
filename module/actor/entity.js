@@ -2143,17 +2143,10 @@ export class ActorPF extends Actor {
     const skl = this.getSkillInfo(skillId);
 
     // Add contextual attack string
-    let notes = [];
     let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`skill.${skillId}`);
-    for (let noteObj of noteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
+    const notes = this.formatContextNotes(noteObjects, rollData);
 
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
     // Add untrained note
     if (skl.rt && !skl.rank) {
       notes.push(game.i18n.localize("PF1.Untrained"));
@@ -2270,17 +2263,9 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let notes = [];
     let rollData = this.getRollData();
     const noteObjects = this.getContextNotes("misc.cmb");
-    for (let noteObj of noteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const notes = this.formatContextNotes(noteObjects, rollData);
 
     const parts = [];
 
@@ -2346,17 +2331,9 @@ export class ActorPF extends Actor {
     ];
 
     // Add contextual notes
-    let notes = [];
     let rollData = this.getRollData();
     const noteObjects = [...this.getContextNotes("attacks.effect"), ...this.getContextNotes("attacks.attack")];
-    for (let noteObj of noteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const notes = this.formatContextNotes(noteObjects);
     rollData.item = {};
 
     let changes = sources
@@ -2609,17 +2586,9 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let notes = [];
     let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
-    for (let noteObj of noteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const notes = this.formatContextNotes(noteObjects, rollData);
 
     let parts = [];
 
@@ -2703,17 +2672,9 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let notes = [];
     let rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
-    for (let noteObj of noteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        notes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const notes = this.formatContextNotes(noteObjects, rollData);
 
     const label = CONFIG.PF1.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
@@ -2767,43 +2728,22 @@ export class ActorPF extends Actor {
     let rollData = this.getRollData();
 
     // Add contextual AC notes
-    let acNotes = [];
-    if (this.data.data.attributes.acNotes.length > 0) acNotes = this.data.data.attributes.acNotes.split(/[\n\r]+/);
     const acNoteObjects = this.getContextNotes("misc.ac");
-    for (let noteObj of acNoteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        acNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const acNotes = this.formatContextNotes(acNoteObjects, rollData);
+    if (this.data.data.attributes.acNotes.length > 0)
+      acNotes.push(...this.data.data.attributes.acNotes.split(/[\n\r]+/));
 
     // Add contextual CMD notes
-    let cmdNotes = [];
-    if (this.data.data.attributes.cmdNotes.length > 0) cmdNotes = this.data.data.attributes.cmdNotes.split(/[\n\r]+/);
     const cmdNoteObjects = this.getContextNotes("misc.cmd");
-    for (let noteObj of cmdNoteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        cmdNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const cmdNotes = this.formatContextNotes(cmdNoteObjects, rollData);
+    if (this.data.data.attributes.cmdNotes.length > 0)
+      cmdNotes.push(...this.data.data.attributes.cmdNotes.split(/[\n\r]+/));
 
     // Add contextual SR notes
-    let srNotes = [];
-    if (this.data.data.attributes.srNotes.length > 0) srNotes = this.data.data.attributes.srNotes.split(/[\n\r]+/);
     const srNoteObjects = this.getContextNotes("misc.sr");
-    for (let noteObj of srNoteObjects) {
-      rollData.item = {};
-      if (noteObj.item != null) rollData = noteObj.item.getRollData();
-
-      for (let note of noteObj.notes) {
-        srNotes.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData: rollData })));
-      }
-    }
+    const srNotes = this.formatContextNotes(srNoteObjects, rollData);
+    if (this.data.data.attributes.srNotes.length > 0)
+      srNotes.push(...this.data.data.attributes.srNotes.split(/[\n\r]+/));
 
     // Add misc data
     const reSplit = CONFIG.PF1.re.traitSeparator;
@@ -3344,6 +3284,19 @@ export class ActorPF extends Actor {
 
       return cur;
     }, []);
+  }
+
+  formatContextNotes(notes, rollData) {
+    const result = [];
+    for (let noteObj of notes) {
+      rollData.item = {};
+      if (noteObj.item != null) rollData = noteObj.item.getRollData();
+
+      for (let note of noteObj.notes) {
+        result.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData })));
+      }
+    }
+    return result;
   }
 
   async createEmbeddedDocuments(embeddedName, createData, options = {}) {

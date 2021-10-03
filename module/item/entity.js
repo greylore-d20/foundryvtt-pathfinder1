@@ -1668,14 +1668,18 @@ export class ItemPF extends Item {
 
     // Check ammunition links
     let ammoLinks = [],
-      ammoAvailable;
+      ammoAvailable = Number.POSITIVE_INFINITY;
     if (this.type === "attack") {
       ammoLinks = await this.getLinkedItems("ammunition", true);
       for (let l of ammoLinks) {
-        if (ammoAvailable == null) ammoAvailable = l.item.charges;
-        else ammoAvailable = Math.min(ammoAvailable, l.item.charges);
+        if (!l.item) {
+          const msg = game.i18n.localize("PF1.WarningMissingAmmunition");
+          console.warn(msg);
+          return ui.notifications.warn(msg);
+        }
+        ammoAvailable = Math.min(ammoAvailable, l.item?.charges ?? 0);
 
-        if (l.item.charges <= 0) {
+        if (ammoAvailable <= 0) {
           const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
           console.warn(msg);
           return ui.notifications.warn(msg);

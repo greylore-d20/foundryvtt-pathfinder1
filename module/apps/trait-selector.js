@@ -34,11 +34,11 @@ export class ActorTraitSelector extends BaseEntitySheet {
    */
   getData() {
     // Get current values
-    let attr = getProperty(this.object.data, this.attribute);
+    const attr = getProperty(this.object.data, this.attribute);
 
     // Populate choices
     const choices = duplicate(this.options.choices);
-    for (let [k, v] of Object.entries(choices)) {
+    for (const [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,
         chosen: attr.value.includes(k),
@@ -67,7 +67,7 @@ export class ActorTraitSelector extends BaseEntitySheet {
    */
   _updateObject(event, formData) {
     const choices = [];
-    for (let [k, v] of Object.entries(formData)) {
+    for (const [k, v] of Object.entries(formData)) {
       if (k !== "custom" && v) choices.push(k);
     }
     this.object.update({

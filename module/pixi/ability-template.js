@@ -13,8 +13,8 @@ export class AbilityTemplate extends MeasuredTemplate {
    * @returns {AbilityTemplate|null}     The template object, or null if the data does not produce a template
    */
   static fromData(options) {
-    let type = options.type;
-    let distance = options.distance;
+    const type = options.type;
+    const distance = options.distance;
     if (!type) return null;
     if (!distance) return null;
     if (!canvas.scene) return null;
@@ -91,10 +91,10 @@ export class AbilityTemplate extends MeasuredTemplate {
       // Update placement (mouse-move)
       handlers.mm = (event) => {
         event.stopPropagation();
-        let now = Date.now(); // Apply a 20ms throttle
+        const now = Date.now(); // Apply a 20ms throttle
         if (now - moveTime <= 20) return;
         const center = event.data.getLocalPosition(this.layer);
-        let pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
+        const pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
         this.data.x = pos.x;
         this.data.y = pos.y;
         this.refresh();

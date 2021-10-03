@@ -180,12 +180,12 @@ export class ItemSheetPF extends ItemSheet {
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
-      for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
+      for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
       const type = data.item.data.data.weaponType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
-        for (let [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
+        for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) data.weaponCategories.subTypes[k] = v;
         }
@@ -196,12 +196,12 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "equipment") {
       // Prepare categories for equipment
       data.equipmentCategories = { types: {}, subTypes: {} };
-      for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
+      for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
       const type = data.item.data.data.equipmentType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
-        for (let [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
+        for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) data.equipmentCategories.subTypes[k] = v;
         }
@@ -250,10 +250,10 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "class") {
       data.isMythicPath = data.data.classType === "mythic";
 
-      for (let [a, s] of Object.entries(data.data.savingThrows)) {
+      for (const [a, s] of Object.entries(data.data.savingThrows)) {
         s.label = CONFIG.PF1.savingThrows[a];
       }
-      for (let [a, s] of Object.entries(data.data.fc)) {
+      for (const [a, s] of Object.entries(data.data.fc)) {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
@@ -261,7 +261,7 @@ export class ItemSheetPF extends ItemSheet {
       data.isRacialHD = data.data.classType === "racial";
 
       if (this.actor != null) {
-        let healthConfig = game.settings.get("pf1", "healthConfig");
+        const healthConfig = game.settings.get("pf1", "healthConfig");
         data.healthConfig = data.isRacialHD
           ? healthConfig.hitdice.Racial
           : this.actor.data.type === "character"
@@ -292,7 +292,7 @@ export class ItemSheetPF extends ItemSheet {
       armorProf: CONFIG.PF1.armorProficiencies,
       weaponProf: CONFIG.PF1.weaponProficiencies,
     };
-    for (let [t, choices] of Object.entries(profs)) {
+    for (const [t, choices] of Object.entries(profs)) {
       if (hasProperty(data.item.data.data, t)) {
         const trait = data.data[t];
         if (!trait) continue;
@@ -321,7 +321,7 @@ export class ItemSheetPF extends ItemSheet {
         targets: {},
         modifiers: CONFIG.PF1.bonusModifiers,
       };
-      for (let [k, v] of Object.entries(CONFIG.PF1.buffTargets)) {
+      for (const [k, v] of Object.entries(CONFIG.PF1.buffTargets)) {
         if (typeof v === "object") data.changeGlobals.targets[k] = v._label;
       }
 
@@ -366,7 +366,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add distance units
     data.distanceUnits = duplicate(CONFIG.PF1.distanceUnits);
     if (this.item.type !== "spell") {
-      for (let d of ["close", "medium", "long"]) {
+      for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];
       }
     }
@@ -445,7 +445,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Post process data
-    for (let l of data.links.list) {
+    for (const l of data.links.list) {
       const items = getProperty(this.item.data, `data.links.${l.id}`) || [];
       for (let a = 0; a < items.length; a++) {
         const i = items[a];
@@ -476,8 +476,8 @@ export class ItemSheetPF extends ItemSheet {
     // Add dictionary flags
     {
       const flags = getProperty(data.item.data, "data.flags.dictionary") || [];
-      let result = [];
-      for (let [k, v] of flags) {
+      const result = [];
+      for (const [k, v] of flags) {
         result.push({ key: k, value: v });
       }
       setProperty(data, "flags.dictionary", result);
@@ -508,12 +508,12 @@ export class ItemSheetPF extends ItemSheet {
     const checkNo = '<i class="fas fa-times"></i>';
 
     // Iterate over all script calls, and adjust data
-    let scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
+    const scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
       ? duplicate(Array.from(this.document.scriptCalls).map((o) => o.data))
       : [];
     {
-      let promises = [];
-      for (let o of scriptCalls) {
+      const promises = [];
+      for (const o of scriptCalls) {
         promises.push(
           (async () => {
             // Obtain macro info
@@ -555,7 +555,7 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _getItemType(item) {
-    let typeKeys = Object.keys(CONFIG.PF1.itemTypes);
+    const typeKeys = Object.keys(CONFIG.PF1.itemTypes);
     let itemType = item.type;
     if (!typeKeys.includes(itemType)) itemType = typeKeys[0];
     return game.i18n.localize(CONFIG.PF1.itemTypes[itemType]);
@@ -661,9 +661,9 @@ export class ItemSheetPF extends ItemSheet {
    */
   async _updateObject(event, formData) {
     // Handle conditionals array
-    let conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
+    const conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
     formData["data.conditionals"] = conditionals.reduce((arr, entry) => {
-      let [i, j, k] = entry[0].split(".").slice(2);
+      const [i, j, k] = entry[0].split(".").slice(2);
       if (!arr[i]) arr[i] = ItemPF.defaultConditional;
       if (k) {
         const target = formData[`data.conditionals.${i}.${j}.target`];
@@ -697,8 +697,8 @@ export class ItemSheetPF extends ItemSheet {
     }, []);
 
     // Handle links arrays
-    let links = Object.entries(formData).filter((e) => e[0].startsWith("data.links"));
-    for (let e of links) {
+    const links = Object.entries(formData).filter((e) => e[0].startsWith("data.links"));
+    for (const e of links) {
       const path = e[0].split(".");
       const linkType = path[2];
       const index = path[3];
@@ -718,7 +718,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Change relative values
     const relativeKeys = ["data.currency.pp", "data.currency.gp", "data.currency.sp", "data.currency.cp"];
-    for (let [k, v] of Object.entries(formData)) {
+    for (const [k, v] of Object.entries(formData)) {
       if (typeof v !== "string") continue;
       // Add or subtract values
       if (relativeKeys.includes(k)) {
@@ -990,7 +990,7 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
 
     let browser = null;
-    for (let w of Object.values(ui.windows)) {
+    for (const w of Object.values(ui.windows)) {
       if (w instanceof PF1_HelpBrowser) {
         browser = w;
         browser.bringToTop();
@@ -1004,7 +1004,7 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onLinksDrop(event) {
     const elem = event.currentTarget;
-    var linkType = elem.dataset.tab;
+    let linkType = elem.dataset.tab;
 
     // Default selection for dropping on tab instead of body
     if (linkType === "links") linkType = "children";
@@ -1084,7 +1084,7 @@ export class ItemSheetPF extends ItemSheet {
 
     const item = this.object;
     // Check targets and other fields for valid values, reset if necessary
-    for (let modifier of data.modifiers) {
+    for (const modifier of data.modifiers) {
       if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
       let keys;
       for (let [k, v] of Object.entries(modifier)) {
@@ -1497,13 +1497,13 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      let notes = getProperty(this.document.data, key);
+      const notes = getProperty(this.document.data, key);
       const updateData = {};
       updateData[key] = notes.concat("");
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      let notes = duplicate(getProperty(this.document.data, key));
+      const notes = duplicate(getProperty(this.document.data, key));
       notes.splice(index, 1);
 
       const updateData = {};

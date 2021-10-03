@@ -35,7 +35,7 @@ export async function PatchCore() {
   {
     const origFunc = CombatTracker.prototype._getEntryContextOptions;
     CombatTracker.prototype._getEntryContextOptions = function () {
-      let result = origFunc.call(this);
+      const result = origFunc.call(this);
       addCombatTrackerContextOptions.call(this, result);
       return result;
     };
@@ -62,7 +62,7 @@ export async function PatchCore() {
       const chatMessage = `/${a.dataset.formula}`;
       const cMsg = CONFIG.ChatMessage.entityClass;
       const speaker = cMsg.getSpeaker();
-      let actor = cMsg.getSpeakerActor(speaker);
+      const actor = cMsg.getSpeakerActor(speaker);
       let rollData = actor ? actor.getRollData() : {};
 
       const sheet = a.closest(".sheet");
@@ -125,7 +125,7 @@ export async function PatchCore() {
   {
     const origFunc = CompendiumCollection.prototype.getIndex;
     CompendiumCollection.prototype.getIndex = async function ({ fields } = {}) {
-      let index = await origFunc.call(this, { fields });
+      const index = await origFunc.call(this, { fields });
       this.fuzzyIndex = sortArrayByName([...index]);
       return this.index;
     };
@@ -135,9 +135,9 @@ export async function PatchCore() {
   {
     const origFunc = TextEditor._createContentLink;
     TextEditor._createContentLink = function (match, type, target, name) {
-      let a = origFunc.call(this, match, type, target, name);
+      const a = origFunc.call(this, match, type, target, name);
       if (name?.indexOf("::") > -1) {
-        let args = name.split("::"),
+        const args = name.split("::"),
           label = args.pop();
         if (args.length) {
           args.forEach((o) => {
@@ -168,7 +168,7 @@ export async function PatchCore() {
   {
     const origFunc = TokenDocument.getTrackedAttributes;
     TokenDocument.getTrackedAttributes = function (data, _path = []) {
-      let attr = origFunc.call(this, data, _path);
+      const attr = origFunc.call(this, data, _path);
       if (_path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
       return attr;
     };

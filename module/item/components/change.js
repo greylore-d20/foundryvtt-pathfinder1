@@ -117,7 +117,7 @@ export class ItemChange {
     const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
 
     const overrides = actor.changeOverrides;
-    for (let t of targets) {
+    for (const t of targets) {
       if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
@@ -157,7 +157,7 @@ export class ItemChange {
                   overrides[t][operator][this.modifier] = (prior ?? 0) + value;
 
                   if (this.parent && !addedSourceInfo) {
-                    for (let si of sourceInfoTargets) {
+                    for (const si of sourceInfoTargets) {
                       getSourceInfo(actor.sourceInfo, si).positive.push({
                         value: value,
                         name: this.parent.name,
@@ -172,7 +172,7 @@ export class ItemChange {
                   overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
 
                   if (this.parent) {
-                    for (let si of sourceInfoTargets) {
+                    for (const si of sourceInfoTargets) {
                       const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
 
                       let doAdd = true;
@@ -206,7 +206,7 @@ export class ItemChange {
             overrides[t][operator][this.modifier] = value;
 
             if (this.parent && !addedSourceInfo) {
-              for (let si of sourceInfoTargets) {
+              for (const si of sourceInfoTargets) {
                 getSourceInfo(actor.sourceInfo, si).positive.push({
                   value: value,
                   operator: "set",

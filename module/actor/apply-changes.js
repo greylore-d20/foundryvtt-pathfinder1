@@ -25,7 +25,7 @@ export function applyChanges() {
   c.sort((a, b) => _sortChanges.call(this, a, b));
 
   // Parse change flags
-  for (let i of this.changeItems) {
+  for (const i of this.changeItems) {
     for (const [k, v] of Object.entries(getProperty(i.data, "data.changeFlags"))) {
       if (v === true) {
         this.flags[k] = true;
@@ -50,7 +50,7 @@ export function applyChanges() {
   this.refreshDerivedData();
 
   // Apply all changes
-  for (let change of c) {
+  for (const change of c) {
     let flats = getChangeFlat.call(this, change.subTarget, change.modifier);
     if (!(flats instanceof Array)) flats = [flats];
     for (const f of flats) {
@@ -73,7 +73,7 @@ const createOverride = function () {
     set: {},
   };
 
-  for (let k of Object.keys(CONFIG.PF1.bonusModifiers)) {
+  for (const k of Object.keys(CONFIG.PF1.bonusModifiers)) {
     result.add[k] = null;
     result.set[k] = null;
   }
@@ -180,7 +180,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
   if (changeTarget == null) return null;
 
   curData = curData ?? this.data.data;
-  let result = [];
+  const result = [];
 
   switch (changeTarget) {
     case "mhp":
@@ -279,84 +279,84 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "will":
       return "data.attributes.savingThrows.will.total";
     case "skills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let b of Object.keys(skl.subSkills)) {
+          for (const b of Object.keys(skl.subSkills)) {
             result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "strSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "str") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "str") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "dexSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "dex") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "dex") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "conSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "con") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "con") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "intSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "int") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "int") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "wisSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "wis") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "wis") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "chaSkills":
-      for (let [a, skl] of Object.entries(curData.skills)) {
+      for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
         if (skl.ability === "cha") result.push(`data.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
-          for (let [b, subSkl] of Object.entries(skl.subSkills)) {
+          for (const [b, subSkl] of Object.entries(skl.subSkills)) {
             if (subSkl != null && subSkl.ability === "cha") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
@@ -384,7 +384,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "chaChecks":
       return "data.abilities.cha.checkMod";
     case "allSpeeds":
-      for (let speedKey of Object.keys(curData.attributes.speed)) {
+      for (const speedKey of Object.keys(curData.attributes.speed)) {
         if (getProperty(curData, `attributes.speed.${speedKey}.base`))
           result.push(`data.attributes.speed.${speedKey}.total`);
       }
@@ -433,7 +433,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
 
   // Try to determine a change flat from hooks
   {
-    let result = { keys: [] };
+    const result = { keys: [] };
     Hooks.callAll("pf1.getChangeFlat", changeTarget, changeType, result);
     if (result.keys && result.keys.length) return result.keys;
   }
@@ -456,7 +456,7 @@ const getAbilityMod = function (ability) {
 
 export const addDefaultChanges = function (changes) {
   // Call hook
-  let tempChanges = [];
+  const tempChanges = [];
   Hooks.callAll("pf1.addDefaultChanges", this, tempChanges);
   changes.push(...tempChanges.filter((c) => c instanceof ItemChange));
 
@@ -533,7 +533,7 @@ export const addDefaultChanges = function (changes) {
     const maxed_health = Math.min(health_source.data.data.level, maximized) * health_source.data.data.hd;
     const level_health = Math.max(0, health_source.data.data.level - maximized) * die_health;
     const favor_health = (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
-    let health = maxed_health + level_health + favor_health;
+    const health = maxed_health + level_health + favor_health;
 
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
       value: maxed_health + level_health,
@@ -572,7 +572,7 @@ export const addDefaultChanges = function (changes) {
 
   // Add class data to saving throws
   const allClasses = [...classes, ...racialHD];
-  for (let a of Object.keys(this.data.data.attributes.savingThrows)) {
+  for (const a of Object.keys(this.data.data.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
     setProperty(this.data, k, getProperty(this.data, `data.attributes.savingThrows.${a}.base`) || 0);
     // Using Fractional Base Bonuses
@@ -606,7 +606,7 @@ export const addDefaultChanges = function (changes) {
         name: game.i18n.localize("PF1.Base"),
       });
     } else {
-      for (let c of allClasses) {
+      for (const c of allClasses) {
         const classType = getProperty(c.data.data, "classType") || "base";
         let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
         if (formula == null) formula = "0";
@@ -667,7 +667,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add movement speed(s)
-  for (let [k, s] of Object.entries(this.data.data.attributes.speed)) {
+  for (const [k, s] of Object.entries(this.data.data.attributes.speed)) {
     let base = s.base;
     if (!base) base = 0;
     changes.push(
@@ -896,7 +896,7 @@ export const addDefaultChanges = function (changes) {
         flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    for (let k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {
+    for (const k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {
       getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).positive.push({
         formula: "-@attributes.energyDrain",
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -1005,7 +1005,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "base",
           })
         );
-        for (let k of ["normal", "flatFooted"]) {
+        for (const k of ["normal", "flatFooted"]) {
           getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
             value: ac,
             name: item.name,
@@ -1081,7 +1081,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     const flats = getChangeFlat.call(this, "skills", "untyped");
-    for (let f of flats) {
+    for (const f of flats) {
       getSourceInfo(this.sourceInfo, f).positive.push({
         formula: "-@attributes.energyDrain",
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -1142,7 +1142,7 @@ export const addDefaultChanges = function (changes) {
         modifier: "size",
       })
     );
-    for (let k of ["total", "flatFootedTotal"]) {
+    for (const k of ["total", "flatFootedTotal"]) {
       getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
         value: CONFIG.PF1.sizeSpecialMods[sizeKey],
         type: "size",
@@ -1151,7 +1151,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add conditions
-  for (let [con, v] of Object.entries(this.data.data.attributes.conditions || {})) {
+  for (const [con, v] of Object.entries(this.data.data.attributes.conditions || {})) {
     if (!v) continue;
 
     switch (con) {
@@ -1166,7 +1166,7 @@ export const addDefaultChanges = function (changes) {
         );
         this.flags["loseDexToAC"] = true;
 
-        for (let k of [
+        for (const k of [
           "data.attributes.ac.normal.total",
           "data.attributes.ac.touch.total",
           "data.attributes.ac.flatFooted.total",
@@ -1178,7 +1178,7 @@ export const addDefaultChanges = function (changes) {
             name: game.i18n.localize("PF1.CondBlind"),
           });
         }
-        for (let k of [
+        for (const k of [
           "data.attributes.ac.normal.total",
           "data.attributes.ac.touch.total",
           "data.attributes.cmd.total",
@@ -1443,7 +1443,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        for (let k of Object.keys(this.data.data.attributes.savingThrows)) {
+        for (const k of Object.keys(this.data.data.attributes.savingThrows)) {
           getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).negative.push({
             value: -2,
             name: game.i18n.localize("PF1.CondFear"),
@@ -1460,7 +1460,7 @@ export const addDefaultChanges = function (changes) {
             })
           );
           const flats = getChangeFlat.call(this, "skills", "penalty");
-          for (let f of flats) {
+          for (const f of flats) {
             getSourceInfo(this.sourceInfo, f).negative.push({
               value: -2,
               name: game.i18n.localize("PF1.CondFear"),
@@ -1478,7 +1478,7 @@ export const addDefaultChanges = function (changes) {
             })
           );
           const flats = getChangeFlat.call(this, "allChecks", "penalty");
-          for (let f of flats) {
+          for (const f of flats) {
             getSourceInfo(this.sourceInfo, f).negative.push({
               value: -2,
               name: game.i18n.localize("PF1.CondFear"),
@@ -1522,7 +1522,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        for (let k of Object.keys(this.data.data.attributes.savingThrows)) {
+        for (const k of Object.keys(this.data.data.attributes.savingThrows)) {
           getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).negative.push({
             value: -2,
             name: game.i18n.localize("PF1.CondSickened"),
@@ -1539,7 +1539,7 @@ export const addDefaultChanges = function (changes) {
             })
           );
           const flats = getChangeFlat.call(this, "skills", "penalty");
-          for (let f of flats) {
+          for (const f of flats) {
             getSourceInfo(this.sourceInfo, f).negative.push({
               value: -2,
               name: game.i18n.localize("PF1.CondSickened"),
@@ -1557,7 +1557,7 @@ export const addDefaultChanges = function (changes) {
             })
           );
           const flats = getChangeFlat.call(this, "allChecks", "penalty");
-          for (let f of flats) {
+          for (const f of flats) {
             getSourceInfo(this.sourceInfo, f).negative.push({
               value: -2,
               name: game.i18n.localize("PF1.CondSickened"),
@@ -1751,7 +1751,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     return cur;
   }, {});
 
-  for (let c of changes) {
+  for (const c of changes) {
     let h;
     if (options.ignoreTarget) h = highest[c.modifier];
     else h = highest[c.modifier][c.subTarget];
@@ -1776,7 +1776,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
         h = highest[mod];
         changes = changes.filter(filterFunc);
       } else {
-        for (let subTarget of Object.keys(highest[mod])) {
+        for (const subTarget of Object.keys(highest[mod])) {
           h = highest[mod][subTarget];
           changes = changes.filter(filterFunc);
         }

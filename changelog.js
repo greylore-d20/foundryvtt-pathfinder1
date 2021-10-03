@@ -82,7 +82,7 @@ async function getChangelogData() {
   };
 
   const gitBranch = await git().silent(true).raw(["symbolic-ref", "--short", "HEAD"]);
-  let branchNumberRaw = gitBranch.match(/(\d)+/);
+  const branchNumberRaw = gitBranch.match(/(\d)+/);
   const branchNumber = branchNumberRaw && Number(branchNumberRaw[0]) ? branchNumberRaw[0] : undefined;
   const { version } = JSON.parse(fs.readFileSync("system.json", "utf-8"));
 

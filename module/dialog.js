@@ -47,7 +47,7 @@ export function dialogGetNumber({
 
 export const dialogGetActor = function (title = "", actors = []) {
   return new Promise((resolve) => {
-    let cancelled = true;
+    const cancelled = true;
 
     let content = "";
     actors.forEach((target) => {

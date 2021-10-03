@@ -102,7 +102,7 @@ export class ActorPF extends Actor {
       const actors = ActorPF.getSelectedActors();
       const saveId = button.dataset.type;
       let noSound = false;
-      for (let a of actors) {
+      for (const a of actors) {
         a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt() });
         noSound = true;
       }
@@ -142,8 +142,8 @@ export class ActorPF extends Actor {
    * @returns {Array.<ActorPF, Token>[]}
    */
   static getSelectedActors() {
-    let result = [];
-    for (let t of canvas.tokens.controlled) {
+    const result = [];
+    for (const t of canvas.tokens.controlled) {
       result.push([t.actor, t]);
     }
     return result;
@@ -207,12 +207,12 @@ export class ActorPF extends Actor {
   }
 
   get _skillTargets() {
-    let skills = [];
-    let subSkills = [];
-    for (let [sklKey, skl] of Object.entries(this.data.data.skills)) {
+    const skills = [];
+    const subSkills = [];
+    for (const [sklKey, skl] of Object.entries(this.data.data.skills)) {
       if (skl == null) continue;
       if (skl.subSkills != null) {
-        for (let subSklKey of Object.keys(skl.subSkills)) {
+        for (const subSklKey of Object.keys(skl.subSkills)) {
           subSkills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
         }
       } else skills.push(`skill.${sklKey}`);
@@ -243,7 +243,7 @@ export class ActorPF extends Actor {
   }
 
   _prepareContainerItems(items) {
-    let collection = [];
+    const collection = [];
 
     const getContainerContents = function (item) {
       if (item.type !== "container") return;
@@ -262,14 +262,14 @@ export class ActorPF extends Actor {
   }
 
   _prepareItemFlags(items) {
-    let bFlags = {};
-    let dFlags = {};
+    const bFlags = {};
+    const dFlags = {};
 
-    for (let i of items) {
+    for (const i of items) {
       // Process boolean flags
       if (i.isActive) {
         const flags = getProperty(i.data, "data.flags.boolean") || [];
-        for (let f of flags) {
+        for (const f of flags) {
           bFlags[f] = bFlags[f] || { sources: [] };
           bFlags[f].sources.push(i);
         }
@@ -278,7 +278,7 @@ export class ActorPF extends Actor {
       // Process dictionary flags
       if (i.data.data.tag) {
         const flags = getProperty(i.data, "data.flags.dictionary") || [];
-        for (let f of flags) {
+        for (const f of flags) {
           setProperty(dFlags, `${i.data.data.tag}.${f[0]}`, i.isActive ? f[1] : 0);
         }
       }
@@ -300,14 +300,14 @@ export class ActorPF extends Actor {
       })
       .filter((obj) => obj.isActive);
 
-    let changes = [];
-    for (let i of this.changeItems) {
+    const changes = [];
+    for (const i of this.changeItems) {
       changes.push(...i.changes);
     }
     addDefaultChanges.call(this, changes);
 
     const c = new Collection();
-    for (let e of changes) {
+    for (const e of changes) {
       c.set(e._id, e);
     }
     this.changes = c;
@@ -381,9 +381,9 @@ export class ActorPF extends Actor {
                 // Get existing sourceInfo for item with this name, create sourceInfo if none is found
                 // Remember whether sourceInfo can be modified or has to be pushed at the end
                 let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
-                    (o) => o.name === item.name
-                  ),
-                  hasInfo = !!sInfo;
+                  (o) => o.name === item.name
+                );
+                const hasInfo = !!sInfo;
                 if (!sInfo) sInfo = { name: item.name, value: [] };
                 else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
@@ -444,7 +444,7 @@ export class ActorPF extends Actor {
     // Refresh ability scores
     {
       const abs = Object.keys(this.data.data.abilities);
-      for (let ab of abs) {
+      for (const ab of abs) {
         const value = this.data.data.abilities[ab].value;
         if (value == null) {
           this.data.data.abilities[ab].total = null;
@@ -510,14 +510,14 @@ export class ActorPF extends Actor {
     this._applyArmorPenalties();
 
     // Reset class skills
-    for (let [k, s] of Object.entries(this.data.data.skills)) {
+    for (const [k, s] of Object.entries(this.data.data.skills)) {
       if (!s) continue;
       const isClassSkill = classes.reduce((cur, o) => {
         if ((o.data.data.classSkills || {})[k] === true) return true;
         return cur;
       }, false);
       this.data.data.skills[k].cs = isClassSkill;
-      for (let k2 of Object.keys(s.subSkills ?? {})) {
+      for (const k2 of Object.keys(s.subSkills ?? {})) {
         setProperty(s, `subSkills.${k2}.cs`, isClassSkill);
       }
     }
@@ -561,7 +561,7 @@ export class ActorPF extends Actor {
     const rollData = this.getRollData();
 
     // Set spellbook info
-    for (let [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
+    for (const [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
       const spellbookAbility = this.data.data.abilities[spellbook.ability];
       let spellbookAbilityScore = spellbookAbility?.total ?? 10;
 
@@ -731,7 +731,7 @@ export class ActorPF extends Actor {
             const offsetFormula =
               spellLevel[spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
 
-            let max =
+            const max =
               typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
                 ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
                 : null;
@@ -753,8 +753,8 @@ export class ActorPF extends Actor {
               spellLevel.max = base;
             }
 
-            let max = spellLevel.max;
-            let oldval = spellLevel.value;
+            const max = spellLevel.max;
+            const oldval = spellLevel.value;
             if (!Number.isFinite(oldval)) spellLevel.value = max;
           }
         }
@@ -774,7 +774,7 @@ export class ActorPF extends Actor {
         const slots = [];
         for (let a = 0; a < 10; a++) {
           const spellLevel = spellbook.spells[`spell${a}`];
-          let currentLevel = {};
+          const currentLevel = {};
           currentLevel.value = spellLevel.max;
           currentLevel.domainSlots = spellbook.domainSlotValue;
           slots.push(currentLevel);
@@ -782,14 +782,14 @@ export class ActorPF extends Actor {
 
         const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
         if (!spellbook.spontaneous) {
-          for (let i of spells) {
+          for (const i of spells) {
             const isDomain = i.data.data.domain === true;
             const a = i.data.data.level;
             const slotCost = i.data.data.slotCost ?? 1;
             let dSlots = slots[a].domainSlots;
             let uses = slots[a].value;
             if (Number.isFinite(i.maxCharges)) {
-              let subtract = { domain: 0, uses: 0 };
+              const subtract = { domain: 0, uses: 0 };
               if (isDomain) {
                 subtract.domain = Math.min(i.maxCharges, dSlots);
                 subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
@@ -810,10 +810,10 @@ export class ActorPF extends Actor {
           const useAuto = spellbook.autoSpellLevelCalculation;
           if (useAuto) {
             const spellPrepMode = spellbook.spellPreparationMode;
-            let casterType = spellbook.casterType || "high";
+            const casterType = spellbook.casterType || "high";
             const classLevel = Math.max(Math.min(spellbook.cl.autoSpellLevelTotal, 20), 1);
 
-            let spellbookAbilityScore = spellbookAbility?.total;
+            const spellbookAbilityScore = spellbookAbility?.total;
 
             const allLevelModFormula = spellbook.preparedAllOffsetFormula || "0";
             const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
@@ -1017,7 +1017,7 @@ export class ActorPF extends Actor {
     // Apply wound thresholds to skills
     const woundPenalty = this.data.data.attributes.woundThresholds?.penalty ?? 0;
     if (woundPenalty) {
-      for (let k of this.allSkills) {
+      for (const k of this.allSkills) {
         const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
         setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
       }
@@ -1047,29 +1047,29 @@ export class ActorPF extends Actor {
     }
 
     // Create arbitrary skill slots
-    for (let skillId of CONFIG.PF1.arbitrarySkills) {
+    for (const skillId of CONFIG.PF1.arbitrarySkills) {
       if (data.skills[skillId] == null) continue;
-      let skill = data.skills[skillId];
+      const skill = data.skills[skillId];
       skill.subSkills = skill.subSkills || {};
-      for (let subSkillId of Object.keys(skill.subSkills)) {
+      for (const subSkillId of Object.keys(skill.subSkills)) {
         if (skill.subSkills[subSkillId] == null) delete skill.subSkills[subSkillId];
       }
     }
 
     // Delete removed skills
-    for (let skillId of Object.keys(data.skills)) {
-      let skl = data.skills[skillId];
+    for (const skillId of Object.keys(data.skills)) {
+      const skl = data.skills[skillId];
       if (skl == null) {
         delete data.skills[skillId];
       }
     }
 
     // Mark background skills
-    for (let skillId of Object.keys(data.skills)) {
+    for (const skillId of Object.keys(data.skills)) {
       if (CONFIG.PF1.backgroundSkills.includes(skillId)) {
-        let skill = data.skills[skillId];
+        const skill = data.skills[skillId];
         skill.background = true;
-        for (let subSkillId of Object.keys(skill.subSkills ?? {})) skill.subSkills[subSkillId].background = true;
+        for (const subSkillId of Object.keys(skill.subSkills ?? {})) skill.subSkills[subSkillId].background = true;
       }
     }
 
@@ -1108,7 +1108,7 @@ export class ActorPF extends Actor {
       const cmdDexAbl = this.data.data.attributes.cmd.dexAbility ?? "dex";
       let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
       let acTouchAblMod = getProperty(this.data, `data.abilities.${acTouchAbl}.mod`);
-      let cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`) ?? 0;
+      const cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`) ?? 0;
       if (this.flags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAblMod, 0);
@@ -1148,7 +1148,7 @@ export class ActorPF extends Actor {
     {
       const armorItems = this.items.filter((o) => o.data.type === "equipment");
       let reducedSpeed = false;
-      let sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
+      const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
       if (this.data.data.attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Encumbrance");
@@ -1172,7 +1172,7 @@ export class ActorPF extends Actor {
       if (reducedSpeed) {
         for (const speedKey of Object.keys(this.data.data.attributes.speed)) {
           const key = `data.attributes.speed.${speedKey}.total`;
-          let value = getProperty(this.data, key);
+          const value = getProperty(this.data, key);
           setProperty(this.data, key, this.constructor.getReducedMovementSpeed(value));
           if (value > 0) {
             getSourceInfo(this.sourceInfo, key).negative.push(sInfo);
@@ -1307,7 +1307,7 @@ export class ActorPF extends Actor {
     // Add Broken to sources
     {
       const name = game.i18n.localize("PF1.Broken");
-      for (let eqType of Object.keys(broken)) {
+      for (const eqType of Object.keys(broken)) {
         const value = broken[eqType].value;
         if (value == 0) continue;
         const brokenId = broken[eqType].item.id;
@@ -1326,7 +1326,7 @@ export class ActorPF extends Actor {
 
     // Return result
     const totalACP = acp.armor + acp.shield;
-    let result = {
+    const result = {
       maxDexBonus: null,
       acp: totalACP,
     };
@@ -1343,10 +1343,10 @@ export class ActorPF extends Actor {
   prepareItemLinks() {
     if (!this.items) return;
 
-    for (let a of this.items) {
+    for (const a of this.items) {
       if (a.data.data.links == null) continue;
 
-      for (let l of Object.keys(a.data.data.links)) {
+      for (const l of Object.keys(a.data.data.links)) {
         if (LinkFunctions[l] != null) {
           LinkFunctions[l].call(this, a, a.data.data.links[l]);
         }
@@ -1356,12 +1356,12 @@ export class ActorPF extends Actor {
 
   _setSourceDetails(extraData) {
     const actorData = this.data;
-    let sourceDetails = {};
+    const sourceDetails = {};
     // Get empty source arrays
-    for (let b of Object.keys(CONFIG.PF1.buffTargets)) {
+    for (const b of Object.keys(CONFIG.PF1.buffTargets)) {
       let buffTargets = getChangeFlat.call(this, b, null);
       if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
-      for (let bt of buffTargets) {
+      for (const bt of buffTargets) {
         if (!sourceDetails[bt]) sourceDetails[bt] = [];
       }
     }
@@ -1374,7 +1374,7 @@ export class ActorPF extends Actor {
     sourceDetails["data.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["data.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["data.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
-    for (let [a, abl] of Object.entries(actorData.data.abilities)) {
+    for (const [a, abl] of Object.entries(actorData.data.abilities)) {
       sourceDetails[`data.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
       // Add ability penalty, damage and drain
       if (abl.damage != null && abl.damage !== 0) {
@@ -1400,10 +1400,10 @@ export class ActorPF extends Actor {
 
         if (wtData.level > 0) {
           const changeFlatKeys = ["~attackCore", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
-          for (let fk of changeFlatKeys) {
+          for (const fk of changeFlatKeys) {
             let flats = getChangeFlat.call(this, fk, "penalty", actorData.data);
             if (!(flats instanceof Array)) flats = [flats];
-            for (let k of flats) {
+            for (const k of flats) {
               if (!k) continue;
               sourceDetails[k].push({
                 name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtData.level]),
@@ -1417,13 +1417,13 @@ export class ActorPF extends Actor {
 
     // Add extra data
     const rollData = this.getRollData();
-    for (let [changeTarget, changeGrp] of Object.entries(extraData)) {
-      for (let grp of Object.values(changeGrp)) {
+    for (const [changeTarget, changeGrp] of Object.entries(extraData)) {
+      for (const grp of Object.values(changeGrp)) {
         if (grp.length > 0) {
           sourceDetails[changeTarget] = sourceDetails[changeTarget] || [];
-          for (let src of grp) {
+          for (const src of grp) {
             if (!src.operator) src.operator = "add";
-            let srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+            const srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
             let srcValue =
               src.value != null
                 ? src.value
@@ -1505,7 +1505,7 @@ export class ActorPF extends Actor {
     // Determine skill keys
     try {
       const skillKeys = getChangeFlat.call(this, "skills", "skills");
-      for (let k of skillKeys) {
+      for (const k of skillKeys) {
         keys[k] = 0;
       }
     } catch (err) {
@@ -1537,7 +1537,7 @@ export class ActorPF extends Actor {
     if (!hasProperty(this.data, "data.details.level.value")) return;
 
     // Experience bar
-    let prior = this.getLevelExp(this.data.data.details.level.value - 1 || 0),
+    const prior = this.getLevelExp(this.data.data.details.level.value - 1 || 0),
       max = this.getLevelExp(this.data.data.details.level.value || 1);
 
     this.data.data.details.xp.pct =
@@ -1655,7 +1655,7 @@ export class ActorPF extends Actor {
       else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks"))
         usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
 
-      for (let o of sbData) {
+      for (const o of sbData) {
         if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
         else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
           usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
@@ -1665,7 +1665,7 @@ export class ActorPF extends Actor {
 
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
-      let size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
+      const size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
       if (!this.isToken && !getProperty(this.data, "token.flags.pf1.staticSize")) {
         data["token.width"] = size.w;
         data["token.height"] = size.h;
@@ -1688,7 +1688,7 @@ export class ActorPF extends Actor {
     }
 
     // Apply changes in resources
-    for (let [k, v] of Object.entries(data)) {
+    for (const [k, v] of Object.entries(data)) {
       if (k.match(/^data\.resources\.([a-zA-Z0-9]+)\.value$/)) {
         const resKey = RegExp.$1;
         const itemId = getProperty(this.data, `data.resources.${resKey}._id`);
@@ -1742,14 +1742,14 @@ export class ActorPF extends Actor {
     data = await this.preUpdate(data);
 
     // Update changes
-    let diff = diffObject(flattenObject(this.data), data);
+    const diff = diffObject(flattenObject(this.data), data);
 
     // Diff token data
     if (data.token != null) {
       diff.token = diffObject(this.data.token, data.token);
     }
 
-    let result = diff;
+    const result = diff;
     if (!isObjectEmpty(diff) && options.skipUpdate !== true) {
       return super.update(diff, mergeObject(options, { recursive: true }));
     }
@@ -1767,8 +1767,8 @@ export class ActorPF extends Actor {
     {
       const sizeKey = getProperty(data, "data.traits.size");
       if (sizeKey) {
-        let size = CONFIG.PF1.tokenSizes[sizeKey];
-        let tokens = this.getActiveTokens(false, true).filter((o) => {
+        const size = CONFIG.PF1.tokenSizes[sizeKey];
+        const tokens = this.getActiveTokens(false, true).filter((o) => {
           if (getProperty(o.data, "flags.pf1.staticSize")) return false;
           if (!getProperty(o.data, "actorLink")) return false;
           return true;
@@ -1835,7 +1835,7 @@ export class ActorPF extends Actor {
 
     // Redraw token effects
     const tokens = this.getActiveTokens();
-    for (let t of tokens) {
+    for (const t of tokens) {
       t.drawEffects();
     }
   }
@@ -1904,7 +1904,7 @@ export class ActorPF extends Actor {
     if (itemData.data.uses?.per && activationType) {
       const itemTag = !itemData.data.useCustomTag ? createTag(itemData.name) : itemData.data.tag;
       const resKey = `data.resources.${itemTag}`;
-      let curUses = itemData.data.uses;
+      const curUses = itemData.data.uses;
 
       const res = { value: 0, max: 0, _id: null };
       setProperty(this.data, resKey, res);
@@ -1926,8 +1926,8 @@ export class ActorPF extends Actor {
    * @param options
    */
   async createOwnedItem(itemData, options) {
-    let t = itemData.type;
-    let initial = {};
+    const t = itemData.type;
+    const initial = {};
     // Assume NPCs are always proficient with weapons and always have spells prepared
     const hasPlayerOwner = this.hasPlayerOwner;
     if (!hasPlayerOwner) {
@@ -2143,7 +2143,7 @@ export class ActorPF extends Actor {
     const skl = this.getSkillInfo(skillId);
 
     // Add contextual attack string
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`skill.${skillId}`);
     const notes = this.formatContextNotes(noteObjects, rollData);
 
@@ -2153,7 +2153,7 @@ export class ActorPF extends Actor {
     }
 
     // Gather changes
-    let parts = [];
+    const parts = [];
     const changes = this.changes.filter((c) => {
       let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
       if (!(cf instanceof Array)) cf = [cf];
@@ -2189,12 +2189,12 @@ export class ActorPF extends Actor {
     }
 
     // Add changes
-    for (let c of changes) {
+    for (const c of changes) {
       if (!c.value) continue;
       parts.push(`${c.value}[${c.flavor}]`);
     }
 
-    let props = [];
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
@@ -2263,7 +2263,7 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
     const noteObjects = this.getContextNotes("misc.cmb");
     const notes = this.formatContextNotes(noteObjects, rollData);
 
@@ -2299,7 +2299,7 @@ export class ActorPF extends Actor {
       notes.push("+2 to Grapple");
     }
 
-    let props = [];
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
@@ -2331,12 +2331,12 @@ export class ActorPF extends Actor {
     ];
 
     // Add contextual notes
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
     const noteObjects = [...this.getContextNotes("attacks.effect"), ...this.getContextNotes("attacks.attack")];
     const notes = this.formatContextNotes(noteObjects);
     rollData.item = {};
 
-    let changes = sources
+    const changes = sources
       .filter((item) => Number.isInteger(item.value))
       .map((i) => {
         return `${i.value}[${i.name}]`;
@@ -2362,7 +2362,7 @@ export class ActorPF extends Actor {
     rollData.sizeBonus = CONFIG.PF1.sizeMods[getProperty(this.data, "data.traits.size") ?? "med"];
     if (rollData.sizeBonus != 0) changes.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
-    let props = [];
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: options.event,
@@ -2395,7 +2395,7 @@ export class ActorPF extends Actor {
     const wT = this.getWoundThresholdData();
     if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
 
-    let props = [];
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: event,
@@ -2429,7 +2429,7 @@ export class ActorPF extends Actor {
     if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
     // TODO: Make the penalty show separate of the CL.total.
 
-    let props = [];
+    const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     let formulaRoll = 0;
@@ -2462,7 +2462,7 @@ export class ActorPF extends Actor {
     const headers = [];
 
     const reSplit = CONFIG.PF1.re.traitSeparator;
-    let misc = [];
+    const misc = [];
 
     // Damage reduction
     if (data.traits.dr.length) {
@@ -2518,15 +2518,15 @@ export class ActorPF extends Actor {
   }
 
   getInitiativeContextNotes() {
-    let notes = this.getContextNotes("misc.init").reduce((arr, o) => {
-      for (let n of o.notes) arr.push(...n.split(/[\n\r]+/));
+    const notes = this.getContextNotes("misc.init").reduce((arr, o) => {
+      for (const n of o.notes) arr.push(...n.split(/[\n\r]+/));
       return arr;
     }, []);
 
     let notesHTML;
     if (notes.length > 0) {
       // Format notes if they're present
-      let notesHTMLParts = [];
+      const notesHTMLParts = [];
       notes.forEach((note) => notesHTMLParts.push(`<span class="tag">${note}</span>`));
       notesHTML =
         '<div class="flexcol property-group gm-sensitive"><label>' +
@@ -2586,11 +2586,11 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
     const notes = this.formatContextNotes(noteObjects, rollData);
 
-    let parts = [];
+    const parts = [];
 
     // Get base
     const base = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.base`);
@@ -2616,7 +2616,7 @@ export class ActorPF extends Actor {
         return cur;
       }, []);
     }
-    for (let c of changeBonus) {
+    for (const c of changeBonus) {
       parts.push(`${c.value}[${c.source}]`);
     }
 
@@ -2631,7 +2631,7 @@ export class ActorPF extends Actor {
     }
 
     // Roll saving throw
-    let props = this.getDefenseHeaders();
+    const props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
     return DicePF.d20Roll({
@@ -2672,7 +2672,7 @@ export class ActorPF extends Actor {
     if (allowed === false) return;
 
     // Add contextual notes
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
     const notes = this.formatContextNotes(noteObjects, rollData);
 
@@ -2682,7 +2682,7 @@ export class ActorPF extends Actor {
     const parts = [`@abilities.${abilityId}.mod[${label}]`];
     if (abl.checkMod != 0) {
       const changes = this.sourceDetails[`data.abilities.${abilityId}.checkMod`];
-      for (let c of changes) parts.push(`${c.value}[${c.name}]`);
+      for (const c of changes) parts.push(`${c.value}[${c.name}]`);
     }
     if (this.data.data.attributes.energyDrain) {
       parts.push("-@attributes.energyDrain");
@@ -2725,7 +2725,7 @@ export class ActorPF extends Actor {
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
-    let rollData = this.getRollData();
+    const rollData = this.getRollData();
 
     // Add contextual AC notes
     const acNoteObjects = this.getContextNotes("misc.ac");
@@ -2753,7 +2753,7 @@ export class ActorPF extends Actor {
       drNotes = this.data.data.traits.dr.split(reSplit);
     }
     // Energy Resistance
-    let energyResistance = [];
+    const energyResistance = [];
     if (this.data.data.traits.eres.length) {
       energyResistance.push(...this.data.data.traits.eres.split(reSplit));
     }
@@ -2848,9 +2848,9 @@ export class ActorPF extends Actor {
    */
   static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
     const promises = [];
-    var controlled = canvas.tokens.controlled,
-      healingInvert = 1,
-      numReg = /(\d+)/g,
+    let controlled = canvas.tokens.controlled,
+      healingInvert = 1;
+    const numReg = /(\d+)/g,
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
       sliceReg2 = /[^,;\n]+/g;
 
@@ -2869,11 +2869,11 @@ export class ActorPF extends Actor {
           value = Math.floor(value * (multiplier ?? 1));
           value = Math.max(value - dR, 0);
         }
-        let checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
+        const checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
         controlled = controlled.filter((con) => checked.includes(con.id));
       }
-      for (let t of controlled) {
-        let a = t.actor,
+      for (const t of controlled) {
+        const a = t.actor,
           hp = a.data.data.attributes.hp,
           tmp = parseInt(hp.temp) || 0;
 
@@ -2885,7 +2885,7 @@ export class ActorPF extends Actor {
         }
 
         // Temp HP adjustment
-        let dt = value > 0 ? Math.min(tmp, value) : 0;
+        const dt = value > 0 ? Math.min(tmp, value) : 0;
 
         if (!a.isOwner) {
           const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2909,7 +2909,7 @@ export class ActorPF extends Actor {
         healingInvert = -1;
         value = -1 * value;
       }
-      let tokens = controlled.map((tok) => {
+      const tokens = controlled.map((tok) => {
         return {
           _id: tok.id,
           name: tok.name,
@@ -2930,8 +2930,8 @@ export class ActorPF extends Actor {
       reductionDefault = reductionDefault ?? "";
 
       // Dialog configuration and callbacks
-      let template = "systems/pf1/templates/apps/damage-dialog.hbs";
-      let dialogData = {
+      const template = "systems/pf1/templates/apps/damage-dialog.hbs";
+      const dialogData = {
         damage: value,
         healing: healingInvert == -1 ? true : false,
         damageReduction: reductionDefault,
@@ -2951,7 +2951,7 @@ export class ActorPF extends Actor {
           callback: (html) => resolve(_submit.call(this, html, 0.5 * healingInvert)),
         };
 
-        var d = new Dialog(
+        const d = new Dialog(
           {
             title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
             content: html,
@@ -2965,7 +2965,7 @@ export class ActorPF extends Actor {
                *
                */
               function swapSelected() {
-                let checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
+                const checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
                 checked.forEach((chk) => (chk.checked = !chk.checked));
               }
               /**
@@ -3066,10 +3066,10 @@ export class ActorPF extends Actor {
 
     const penalty = getProperty(this.data, "data.attributes.woundThresholds.penalty");
     const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "allChecks"];
-    for (let fk of changeFlatKeys) {
+    for (const fk of changeFlatKeys) {
       let flats = getChangeFlat.call(this, fk, "penalty", this.data.data);
       if (!(flats instanceof Array)) flats = [flats];
-      for (let k of flats) {
+      for (const k of flats) {
         if (!k) continue;
         const curValue = getProperty(this.data, k);
         setProperty(this.data, k, curValue - penalty);
@@ -3078,12 +3078,12 @@ export class ActorPF extends Actor {
   }
 
   get allSkills() {
-    let result = [];
-    for (let [k, s] of Object.entries(this.data.data.skills)) {
+    const result = [];
+    for (const [k, s] of Object.entries(this.data.data.skills)) {
       if (!s) continue;
       result.push(k);
       if (s.subSkills) {
-        for (let k2 of Object.keys(s.subSkills)) {
+        for (const k2 of Object.keys(s.subSkills)) {
           result.push(`${k}.subSkills.${k2}`);
         }
       }
@@ -3092,13 +3092,13 @@ export class ActorPF extends Actor {
   }
 
   get allNotes() {
-    let result = [];
+    const result = [];
 
     const noteItems = this.items.filter((o) => {
       return o.data.data.contextNotes != null;
     });
 
-    for (let o of noteItems) {
+    for (const o of noteItems) {
       if (!o.isActive) continue;
       if (!o.data.data.contextNotes || o.data.data.contextNotes.length === 0) continue;
       result.push({ notes: o.data.data.contextNotes, item: o });
@@ -3120,12 +3120,12 @@ export class ActorPF extends Actor {
    * @param {string} context - The context to draw from.
    */
   getContextNotes(context) {
-    let result = this.allNotes;
+    const result = this.allNotes;
 
     // Attacks
     if (context.match(/^attacks\.(.+)/)) {
       const key = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === key;
@@ -3143,7 +3143,7 @@ export class ActorPF extends Actor {
       const skillKey = RegExp.$1;
       const skill = this.getSkillInfo(skillKey);
       const ability = skill.ability;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return (
@@ -3165,7 +3165,7 @@ export class ActorPF extends Actor {
     // Saving throws
     if (context.match(/^savingThrow\.(.+)/)) {
       const saveKey = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === saveKey || o.subTarget === "allSavingThrows";
@@ -3185,7 +3185,7 @@ export class ActorPF extends Actor {
     // Ability checks
     if (context.match(/^abilityChecks\.(.+)/)) {
       const ablKey = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === `${ablKey}Checks` || o.subTarget === "allChecks";
@@ -3201,7 +3201,7 @@ export class ActorPF extends Actor {
     // Misc
     if (context.match(/^misc\.(.+)/)) {
       const miscKey = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === miscKey;
@@ -3216,7 +3216,7 @@ export class ActorPF extends Actor {
 
     if (context.match(/^spell\.concentration\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === "concentration";
@@ -3239,7 +3239,7 @@ export class ActorPF extends Actor {
 
     if (context.match(/^spell\.cl\.([a-z]+)$/)) {
       const spellbookKey = RegExp.$1;
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes
           .filter((o) => {
             return o.subTarget === "cl";
@@ -3258,7 +3258,7 @@ export class ActorPF extends Actor {
     }
 
     if (context.match(/^spell\.effect$/)) {
-      for (let note of result) {
+      for (const note of result) {
         note.notes = note.notes.filter((o) => o.subTarget === "spellEffect").map((o) => o.text);
       }
 
@@ -3278,7 +3278,7 @@ export class ActorPF extends Actor {
     const noteObjects = this.getContextNotes(context);
 
     return noteObjects.reduce((cur, o) => {
-      for (let note of o.notes) {
+      for (const note of o.notes) {
         cur.push(TextEditor.enrichHTML(note, { rollData: o.item != null ? o.item.getRollData() : this.getRollData() }));
       }
 
@@ -3288,11 +3288,11 @@ export class ActorPF extends Actor {
 
   formatContextNotes(notes, rollData) {
     const result = [];
-    for (let noteObj of notes) {
+    for (const noteObj of notes) {
       rollData.item = {};
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
-      for (let note of noteObj.notes) {
+      for (const note of noteObj.notes) {
         result.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData })));
       }
     }
@@ -3339,7 +3339,7 @@ export class ActorPF extends Actor {
     }
     setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
 
-    let result = {
+    const result = {
       maxDexBonus: null,
       acp: 0,
     };
@@ -3427,7 +3427,7 @@ export class ActorPF extends Actor {
   convertCurrency(category = "currency", type = "pp") {
     const totalValue =
       category === "currency" ? this.getTotalCurrency("currency") : this.getTotalCurrency("altCurrency");
-    let values = [0, 0, 0, 0];
+    const values = [0, 0, 0, 0];
     switch (type) {
       case "pp":
         values[0] = Math.floor(totalValue / 10);
@@ -3484,13 +3484,13 @@ export class ActorPF extends Actor {
     let result = this.data.data;
 
     // Return cached data, if applicable
-    let skipRefresh = !options.refresh && this._rollData;
+    const skipRefresh = !options.refresh && this._rollData;
     if (skipRefresh) {
       result = this._rollData;
 
       // Clear certain fields
       const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
-      for (let k of clearFields) {
+      for (const k of clearFields) {
         const arr = k.split(".");
         const k2 = arr.slice(0, -1).join(".");
         const k3 = arr.slice(-1)[0];
@@ -3572,7 +3572,7 @@ export class ActorPF extends Actor {
           },
         };
 
-        for (let k of Object.keys(result.classes[tag].savingThrows)) {
+        for (const k of Object.keys(result.classes[tag].savingThrows)) {
           let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
@@ -3592,8 +3592,8 @@ export class ActorPF extends Actor {
       const armor = this.data.items.filter(
         (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
       );
-      let eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (let o of armor) {
+      const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+      for (const o of armor) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
         else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
@@ -3614,8 +3614,8 @@ export class ActorPF extends Actor {
       const shields = this.data.items.filter(
         (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
       );
-      let eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (let o of shields) {
+      const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+      for (const o of shields) {
         const subtype = o.data.data.equipmentSubtype;
         if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
         else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
@@ -3636,14 +3636,14 @@ export class ActorPF extends Actor {
 
     // Add spellbook info
     const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
-    let keyedBooks = [];
-    for (let [k, book] of spellbooks) {
+    const keyedBooks = [];
+    for (const [k, book] of spellbooks) {
       setProperty(result, `spells.${k}`, book);
       setProperty(result, `spells.${k}.abilityMod`, result.abilities[book.ability]?.mod ?? "");
       keyedBooks.push(k);
     }
     const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
-    for (let book of aliasBooks) {
+    for (const book of aliasBooks) {
       if (!keyedBooks.includes(book.class)) {
         setProperty(result, `spells.${book.class}`, book);
         keyedBooks.push(book.class);
@@ -3665,7 +3665,7 @@ export class ActorPF extends Actor {
   }
 
   static getReach(size = "med", stature = "tall") {
-    let result = {
+    const result = {
       melee: 5,
       reach: 10,
     };
@@ -3745,14 +3745,14 @@ export class ActorPF extends Actor {
       const _addChildren = async function (id) {
         const item = this.items.find((o) => o._id === id);
         const children = await item.getLinkedItems("children");
-        for (let child of children) {
+        for (const child of children) {
           if (!data.includes(child._id)) {
             data.push(child._id);
             await _addChildren.call(this, child._id);
           }
         }
       };
-      for (let id of data) {
+      for (const id of data) {
         await _addChildren.call(this, id);
       }
 
@@ -3814,10 +3814,10 @@ export class ActorPF extends Actor {
     const fx = [...this.effects];
 
     // Create and delete buff ActiveEffects
-    let toCreate = [];
-    let toDelete = [];
-    let toUpdate = [];
-    for (let [id, obj] of Object.entries(buffTextures)) {
+    const toCreate = [];
+    const toDelete = [];
+    const toUpdate = [];
+    for (const [id, obj] of Object.entries(buffTextures)) {
       const existing = fx.find((f) => f.data.origin === id);
       if (!existing) {
         if (obj.active) toCreate.push(obj.item.getRawEffectData());
@@ -3836,7 +3836,7 @@ export class ActorPF extends Actor {
     }
 
     // Create and delete condition ActiveEffects
-    for (let condKey of Object.keys(CONFIG.PF1.conditions)) {
+    for (const condKey of Object.keys(CONFIG.PF1.conditions)) {
       const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === condKey);
       const hasCondition = this.data.data.attributes.conditions[condKey] === true;
       const hasEffectIcon = idx >= 0;
@@ -3873,7 +3873,7 @@ export class ActorPF extends Actor {
   }
 
   refreshAbilityModifiers() {
-    for (let k of Object.keys(this.data.data.abilities)) {
+    for (const k of Object.keys(this.data.data.abilities)) {
       const total = this.data.data.abilities[k].total;
       if (total == null) {
         this.data.data.abilities[k].mod = 0;
@@ -3971,7 +3971,7 @@ export class ActorPF extends Actor {
     // Restore health and ability damage
     if (restoreHealth === true) {
       const hd = actorData.attributes.hd.total;
-      let heal = {
+      const heal = {
         hp: hd,
         abl: 1,
         nonlethal: hours * hd,
@@ -3989,18 +3989,18 @@ export class ActorPF extends Actor {
         0,
         (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal
       );
-      for (let [key, abl] of Object.entries(actorData.abilities)) {
-        let dmg = Math.abs(abl.damage);
+      for (const [key, abl] of Object.entries(actorData.abilities)) {
+        const dmg = Math.abs(abl.damage);
         updateData[`data.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
       }
     }
 
-    let itemUpdates = [];
-    let spellbookUses = {};
+    const itemUpdates = [];
+    const spellbookUses = {};
     // Restore daily uses of spells, feats, etc.
     if (restoreDailyUses === true) {
       // Update spellbooks
-      for (let [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
+      for (const [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
         for (let a = 0; a < 10; a++) {
           updateData[`data.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] =
             getProperty(sb, `spells.spell${a}.max`) || 0;
@@ -4008,8 +4008,8 @@ export class ActorPF extends Actor {
       }
 
       // Update charged items
-      for (let item of this.items) {
-        let itemUpdate = { _id: item.id };
+      for (const item of this.items) {
+        const itemUpdate = { _id: item.id };
         const itemData = item.data.data;
 
         if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
@@ -4037,7 +4037,7 @@ export class ActorPF extends Actor {
         }
       }
 
-      for (let [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+      for (const [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
         // Restore spellbooks using spell points
         if (spellbook.spellPoints.useSystem) {
           // Try to roll restoreFormula, fall back to restoring max spell points
@@ -4113,8 +4113,8 @@ export class ActorPF extends Actor {
    * @override
    */
   async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
-    let entity = this,
-      current = getProperty(this.data.data, attribute),
+    let entity = this;
+    const current = getProperty(this.data.data, attribute),
       updates = {};
     if (attribute.startsWith("resources.")) {
       const itemTag = attribute.split(".").slice(-1)[0];

@@ -5,7 +5,7 @@ export class PointBuyCalculator extends DocumentSheet {
     const actorAbl = this.actor.data.data.abilities;
 
     this.abilities = [];
-    for (let [k, name] of Object.entries(CONFIG.PF1.abilities)) {
+    for (const [k, name] of Object.entries(CONFIG.PF1.abilities)) {
       this.abilities.push({
         key: k,
         name: name,
@@ -46,7 +46,7 @@ export class PointBuyCalculator extends DocumentSheet {
   getSpentPoints() {
     let result = 0;
 
-    for (let a of this.abilities) {
+    for (const a of this.abilities) {
       result += CONFIG.PF1.abilityCost[a.value];
     }
     return result;
@@ -74,7 +74,7 @@ export class PointBuyCalculator extends DocumentSheet {
 
   _updateObject() {
     const updateData = {};
-    for (let a of this.abilities) {
+    for (const a of this.abilities) {
       updateData[`data.abilities.${a.key}.value`] = a.value;
     }
     this.actor.update(updateData);

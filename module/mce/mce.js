@@ -30,7 +30,7 @@ export const tinyMCEInit = function () {
  * @param editor
  */
 function registerContextMenu(editor) {
-  var isInfoElement = function (node) {
+  const isInfoElement = function (node) {
     if (node.nodeName.toLowerCase() !== "span") node = node.parentNode;
     return (
       node.nodeName.toLowerCase() === "span" &&
@@ -38,8 +38,8 @@ function registerContextMenu(editor) {
     );
   };
 
-  var getInfoElement = function () {
-    var node = editor.selection.getNode();
+  const getInfoElement = function () {
+    const node = editor.selection.getNode();
     return isInfoElement(node) ? node.closest("span.notImp,span.needSteps") : null;
   };
 
@@ -51,7 +51,7 @@ function registerContextMenu(editor) {
     label: "Info",
     predicate: isInfoElement,
     initValue: function () {
-      var elm = getInfoElement();
+      const elm = getInfoElement();
       return elm ? elm.title : "";
     },
     commands: [
@@ -61,7 +61,7 @@ function registerContextMenu(editor) {
         tooltip: game.i18n.localize("PF1.NotImplemented"),
         onSetup: function (buttonApi) {
           buttonApi.setActive(!!getInfoElement()?.classList.contains("notImp"));
-          var nodeChangeHandler = function () {
+          const nodeChangeHandler = function () {
             buttonApi.setActive(!editor.readonly && getInfoElement()?.classList.contains("notImp"));
           };
           editor.on("nodechange", nodeChangeHandler);
@@ -70,7 +70,7 @@ function registerContextMenu(editor) {
           };
         },
         onAction: function (formApi) {
-          var value = formApi.getValue(),
+          const value = formApi.getValue(),
             node = getInfoElement();
           editor.setDirty(true);
           editor.dom.setAttribs(node, { title: value, class: "notImp" });
@@ -83,7 +83,7 @@ function registerContextMenu(editor) {
         tooltip: game.i18n.localize("PF1.StepsRequired"),
         onSetup: function (buttonApi) {
           buttonApi.setActive(!!getInfoElement()?.classList.contains("needSteps"));
-          var nodeChangeHandler = function () {
+          const nodeChangeHandler = function () {
             buttonApi.setActive(!editor.readonly && getInfoElement()?.classList.contains("needSteps"));
           };
           editor.on("nodechange", nodeChangeHandler);
@@ -92,7 +92,7 @@ function registerContextMenu(editor) {
           };
         },
         onAction: function (formApi) {
-          var value = formApi.getValue(),
+          const value = formApi.getValue(),
             node = getInfoElement();
           editor.setDirty(true);
           editor.dom.setAttribs(node, { title: value, class: "needSteps" });
@@ -104,7 +104,7 @@ function registerContextMenu(editor) {
         icon: "close",
         tooltip: game.i18n.localize("PF1.RemoveInfo"),
         onAction: function (formApi) {
-          var node = getInfoElement();
+          const node = getInfoElement();
           editor.setDirty(true);
           editor.dom.remove(node, true);
           formApi.hide();

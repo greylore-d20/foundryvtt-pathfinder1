@@ -133,8 +133,8 @@ export class CompendiumBrowser extends Application {
     if (!diff) {
       result = true;
     } else {
-      let diffCompendiums = [];
-      for (let o of [...this._currentCompendiums, ...diff]) {
+      const diffCompendiums = [];
+      for (const o of [...this._currentCompendiums, ...diff]) {
         if (!diff.includes(o) || !this._currentCompendiums.includes(o)) diffCompendiums.push(o);
       }
       if (diffCompendiums.length > 0) result = true;
@@ -168,7 +168,7 @@ export class CompendiumBrowser extends Application {
   }
 
   async _createInitialElements() {
-    let items = [];
+    const items = [];
     for (let a = 0; items.length < this.lazyLoadTreshold && a < this.items.length; a++) {
       const item = this.items[a];
       if (this._passesFilters(item.item)) {
@@ -177,7 +177,7 @@ export class CompendiumBrowser extends Application {
       this.lazyIndex = a + 1;
     }
 
-    for (let item of items) {
+    for (const item of items) {
       await this._addEntryElement(item);
     }
   }
@@ -196,7 +196,7 @@ export class CompendiumBrowser extends Application {
   activateEntryListeners(elem) {
     // Open sheet
     elem.find(".entry-name").click((ev) => {
-      let li = ev.currentTarget.parentElement;
+      const li = ev.currentTarget.parentElement;
       this._onEntry(li.getAttribute("data-collection"), li.getAttribute("data-entry-id"));
     });
 
@@ -366,7 +366,7 @@ export class CompendiumBrowser extends Application {
 
     // Retrieve compendium contents
     let items = [];
-    for (let filter of filters) {
+    for (const filter of filters) {
       items.push(...(await p.getDocuments(filter)));
     }
 
@@ -377,7 +377,7 @@ export class CompendiumBrowser extends Application {
     // Flush full compendium contents from memory
     p.clear();
 
-    for (let i of items) {
+    for (const i of items) {
       if (!this._filterItems(i)) continue;
       this.packs[p.collection] = p;
       this.items.push(this._mapEntry(p, i.data));
@@ -390,9 +390,9 @@ export class CompendiumBrowser extends Application {
 
     if (this.shouldForceRefresh() || this._savedItems.length === 0) {
       // Initialize progress bar
-      let packs = [];
+      const packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
-      for (let p of game.packs.values()) {
+      for (const p of game.packs.values()) {
         if (p.documentClass.documentName === this.entityType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
@@ -413,7 +413,7 @@ export class CompendiumBrowser extends Application {
       this._onProgress(progress);
 
       // Load compendiums
-      for (let p of packs) {
+      for (const p of packs) {
         await this.loadCompendium(p, this.getBasicFilters());
       }
 
@@ -425,7 +425,7 @@ export class CompendiumBrowser extends Application {
         return;
       }
     } else {
-      for (let i of this._savedItems) {
+      for (const i of this._savedItems) {
         const p = game.packs.get(i.collection._id);
         if (p) {
           this.items.push(this._mapEntry(p, i.item));
@@ -470,16 +470,16 @@ export class CompendiumBrowser extends Application {
     // Merge active filters object with stored settings
     const filterSettings =
       getProperty(game.settings.get("pf1", "compendiumFilters") || {}, `${this.type}.activeFilters`) || {};
-    for (let [k, v] of Object.entries(filterSettings)) {
+    for (const [k, v] of Object.entries(filterSettings)) {
       if (!this.activeFilters[k]) continue;
       this.activeFilters[k] = v;
     }
 
     // Apply active filters to template
-    for (let k of Object.keys(this.activeFilters)) {
+    for (const k of Object.keys(this.activeFilters)) {
       const filter = this.filters.find((o) => o.path === k);
       if (!filter) continue;
-      for (let k2 of this.activeFilters[k]) {
+      for (const k2 of this.activeFilters[k]) {
         filter.active = filter.active || {};
         filter.active[k2] = true;
       }
@@ -644,7 +644,7 @@ export class CompendiumBrowser extends Application {
     {
       const spellTypes = item.data.types ? item.data.types.split(CONFIG.PF1.re.traitSeparator) : [];
       result.item.spellTypes = spellTypes;
-      for (let st of spellTypes) {
+      for (const st of spellTypes) {
         this.extraFilters["spellTypes"][st] = true;
       }
     }
@@ -1246,16 +1246,16 @@ export class CompendiumBrowser extends Application {
 
   _onFilterResults(event) {
     event.preventDefault();
-    let input = event.currentTarget;
+    const input = event.currentTarget;
 
     // Define filtering function
-    let filter = async (query) => {
+    const filter = async (query) => {
       this.filterQuery = query;
       await this._filterResults();
     };
 
     // Filter if we are done entering keys
-    let query = new RegExp(RegExp.escape(input.value), "i");
+    const query = new RegExp(RegExp.escape(input.value), "i");
     this.searchString = input.value;
     if (this._filterTimeout) {
       clearTimeout(this._filterTimeout);
@@ -1266,7 +1266,7 @@ export class CompendiumBrowser extends Application {
 
   _onActivateBooleanFilter(event) {
     event.preventDefault();
-    let input = event.currentTarget;
+    const input = event.currentTarget;
     const path = input.closest(".filter").dataset.path;
     const key = input.name;
     const value = input.checked;
@@ -1277,13 +1277,13 @@ export class CompendiumBrowser extends Application {
     }
 
     if (value) {
-      let index = this.activeFilters[path].indexOf(key);
+      const index = this.activeFilters[path].indexOf(key);
       if (index < 0) {
         this.activeFilters[path].push(key);
         filter.active[key] = true;
       }
     } else {
-      let index = this.activeFilters[path].indexOf(key);
+      const index = this.activeFilters[path].indexOf(key);
       if (index >= 0) {
         this.activeFilters[path].splice(index, 1);
         if (filter.active[key] != null) delete filter.active[key];
@@ -1318,7 +1318,7 @@ export class CompendiumBrowser extends Application {
 
   _determineFilteredItemCount() {
     let itemCount = 0;
-    for (let item of this.items) {
+    for (const item of this.items) {
       if (this._passesFilters(item.item)) {
         itemCount++;
       }
@@ -1349,19 +1349,19 @@ export class CompendiumBrowser extends Application {
             { path: "learnedAt.elementalSchool", type: "elementalSchool" },
             { path: "learnedAt.bloodline", type: "bloodline" },
           ];
-          for (let c of checks) {
+          for (const c of checks) {
             const f = this.activeFilters[c.path];
             if (!f || !f.length) continue;
             hasActiveFilter = true;
-            for (let fi of f) {
+            for (const fi of f) {
               const p = getProperty(item, `learnedAt.spellLevel.${c.type}`);
-              for (let sl of spellLevels) {
+              for (const sl of spellLevels) {
                 if (p[fi] === parseInt(sl)) result = true;
               }
             }
           }
           if (!hasActiveFilter) {
-            for (let sl of spellLevels) {
+            for (const sl of spellLevels) {
               if (item.allSpellLevels.includes(parseInt(sl))) result = true;
             }
           }
@@ -1387,9 +1387,9 @@ export class CompendiumBrowser extends Application {
   }
 
   getSaveEntries() {
-    let result = [];
+    const result = [];
 
-    let propKeys = ["_id", "name", "img"];
+    const propKeys = ["_id", "name", "img"];
 
     switch (this.type) {
       case "spells":
@@ -1439,21 +1439,21 @@ export class CompendiumBrowser extends Application {
         break;
     }
 
-    for (let i of this.items) {
-      let resultObj = {
+    for (const i of this.items) {
+      const resultObj = {
         collection: i.collection,
         item: {},
       };
 
       // Copy parsed properties
-      for (let k of Object.keys(i.item)) {
+      for (const k of Object.keys(i.item)) {
         if (k !== "data") {
           resultObj.item[k] = i.item[k];
         }
       }
 
       // Copy specific data properties
-      for (let k of propKeys) {
+      for (const k of propKeys) {
         if (hasProperty(i.item, k)) {
           setProperty(resultObj, `item.${k}`, getProperty(i.item, k));
         }

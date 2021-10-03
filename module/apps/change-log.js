@@ -25,14 +25,14 @@ export class ChangeLogWindow extends FormApplication {
   }
 
   async getData() {
-    let data = await super.getData();
+    const data = await super.getData();
 
     data.dontShowAgain = game.settings.get("pf1", "dontShowChangelog");
 
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("GET", "systems/pf1/CHANGELOG.md");
 
-    let promise = new Promise((resolve) => {
+    const promise = new Promise((resolve) => {
       xhr.onload = () => {
         if (xhr.status === 200) {
           data.changelog = this._processChangelog(xhr.response);
@@ -52,7 +52,7 @@ export class ChangeLogWindow extends FormApplication {
     let lines = md.split(/[\n\r]/);
     if (this.lastVersion) {
       for (let a = 0; a < lines.length; a++) {
-        let line = lines[a];
+        const line = lines[a];
         if (line.match(/##\s+([0-9]+\.[0-9]+\.[0-9]+)/)) {
           const version = SemanticVersion.fromString(RegExp.$1);
           if (!version.isHigherThan(this.lastVersion)) {

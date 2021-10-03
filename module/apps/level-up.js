@@ -94,7 +94,7 @@ export class LevelUpForm extends DocumentSheet {
 
     // Add health part
     if (formData["health.manual_value"]) {
-      let hp = parseInt(formData["health.manual_value"]);
+      const hp = parseInt(formData["health.manual_value"]);
       chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Manual",
         add: hp,
@@ -157,7 +157,7 @@ export class LevelUpForm extends DocumentSheet {
         return o[1] === chatData.level.new;
       });
       chatData.newFeatures = [];
-      for (let co of newAssociations) {
+      for (const co of newAssociations) {
         const item = this.actor.items.get(co[0]);
         if (item) chatData.newFeatures.push(item.toObject());
       }

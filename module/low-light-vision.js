@@ -23,7 +23,7 @@ export class SightLayerPF extends SightLayer {
   }
 
   lowLightMultiplier() {
-    let result = {
+    const result = {
       dim: 1,
       bright: 1,
     };
@@ -34,7 +34,7 @@ export class SightLayerPF extends SightLayer {
     const lowLightTokens = relevantTokens.filter((o) => getProperty(o, "actorVision.lowLight"));
 
     if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
-      for (let t of lowLightTokens.filter((o) => o._controlled)) {
+      for (const t of lowLightTokens.filter((o) => o._controlled)) {
         const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
         const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
         result.dim = Math.max(result.dim, multiplier);
@@ -45,7 +45,7 @@ export class SightLayerPF extends SightLayer {
       const hasControlledLowLightTokens = lowLightTokens.filter((o) => o._controlled).length > 0;
       const hasLowLightTokens = lowLightTokens.length > 0;
       if ((!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens) {
-        for (let t of lowLightTokens) {
+        for (const t of lowLightTokens) {
           const multiplier = getProperty(t, "actorVision.lowLightMultiplier") || 2;
           const multiplierBright = getProperty(t, "actorVision.lowLightMultiplierBright") || 2;
           result.dim = Math.max(result.dim, multiplier);
@@ -108,12 +108,12 @@ export class AmbientLightPF extends AmbientLight {
   }
 
   get dimRadius() {
-    let result = super.dimRadius;
+    const result = super.dimRadius;
     return this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().dim;
   }
 
   get brightRadius() {
-    let result = super.brightRadius;
+    const result = super.brightRadius;
     return this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().bright;
   }
 }

@@ -26,7 +26,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Actors
   console.log("Migrating Actor entities");
-  for (let a of game.actors.contents) {
+  for (const a of game.actors.contents) {
     try {
       const updateData = migrateActorData(a.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
@@ -40,7 +40,7 @@ export const migrateWorld = async function () {
 
   // Migrate World Items
   console.log("Migrating Item entities.");
-  for (let i of game.items.contents) {
+  for (const i of game.items.contents) {
     try {
       const updateData = migrateItemData(i.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
@@ -54,7 +54,7 @@ export const migrateWorld = async function () {
 
   // Migrate Actor Override Tokens
   console.log("Migrating Scene entities.");
-  for (let s of game.scenes.contents) {
+  for (const s of game.scenes.contents) {
     try {
       const updateData = migrateSceneData(s.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
@@ -79,7 +79,7 @@ export const migrateWorld = async function () {
       !p.locked
     );
   });
-  for (let p of packs) {
+  for (const p of packs) {
     await migrateCompendium(p);
   }
 
@@ -116,7 +116,7 @@ export const migrateCompendium = async function (pack) {
 
   // Iterate over compendium entries - applying fine-tuned migration functions
   console.log(`Migrating ${entity} entities in Compendium ${pack.collection}`);
-  for (let ent of content) {
+  for (const ent of content) {
     try {
       let updateData = null;
       if (entity === "Item") updateData = migrateItemData(ent.data);
@@ -196,7 +196,7 @@ export const migrateActorData = function (actor, token) {
   const items = actor.items.reduce((arr, i) => {
     // Migrate the Owned Item
     const itemData = i instanceof CONFIG.Item.documentClass ? i.toObject() : i;
-    let itemUpdate = migrateItemData(itemData);
+    const itemUpdate = migrateItemData(itemData);
 
     // Update the Owned Item
     if (!isObjectEmpty(itemUpdate)) {
@@ -294,7 +294,7 @@ export const migrateSceneData = function (scene) {
 const _migrateCharacterLevel = function (ent, updateData, linked) {
   const arr = ["details.level.value", "details.level.min", "details.level.max", "details.mythicTier"];
   if (!linked) return; // skip unlinked tokens
-  for (let k of arr) {
+  for (const k of arr) {
     const value = getProperty(ent.data, k);
     if (value == null) {
       updateData["data." + k] = 0;
@@ -312,7 +312,7 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
     "attributes.encumbrance.levels.drag",
     "attributes.encumbrance.carriedWeight",
   ];
-  for (let k of arr) {
+  for (const k of arr) {
     const value = getProperty(ent.data, k);
     if (value == null) {
       if (!linked) continue; // skip with unlinked tokens
@@ -323,7 +323,7 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
 
 const _migrateActorNoteArrays = function (ent, updateData) {
   const list = ["data.attributes.acNotes", "data.attributes.cmdNotes", "data.attributes.srNotes"];
-  for (let k of list) {
+  for (const k of list) {
     const value = getProperty(ent, k);
     const hasValue = hasProperty(ent, k);
     if (hasValue && value instanceof Array) {
@@ -340,7 +340,7 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
     "attributes.speed.fly",
     "attributes.speed.burrow",
   ];
-  for (let k of arr) {
+  for (const k of arr) {
     let value = getProperty(ent.data, k);
     if (!linked && value === undefined) continue; // skip with unlinked tokens
     if (typeof value === "string") value = parseInt(value);
@@ -360,7 +360,7 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
 };
 
 const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
-  for (let spellbookSlot of Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {})) {
+  for (const spellbookSlot of Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {})) {
     if (getProperty(ent, `data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
       updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
     }
@@ -391,11 +391,11 @@ const _migrateActorBaseStats = function (ent, updateData) {
     "data.attributes.savingThrows.ref.value",
     "data.attributes.savingThrows.will.value",
   ];
-  for (let k of keys) {
+  for (const k of keys) {
     if (k === "data.attributes.hp.base" && !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length)
       continue;
     if (getProperty(ent, k) != null) {
-      let kList = k.split(".");
+      const kList = k.split(".");
       kList[kList.length - 1] = `-=${kList[kList.length - 1]}`;
       updateData[kList.join(".")] = null;
     }
@@ -410,7 +410,7 @@ const _migrateUnusedActorCreatureType = function (ent, updateData) {
 const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
   const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
 
-  for (let k of spellbooks) {
+  for (const k of spellbooks) {
     const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = getProperty(ent, key);
     if (!linked && curFormula === undefined) continue; // skip with unlinked tokens
@@ -421,7 +421,7 @@ const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
 const _migrateActorSpellbookCL = function (ent, updateData) {
   const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
 
-  for (let k of spellbooks) {
+  for (const k of spellbooks) {
     const key = `data.attributes.spells.spellbooks.${k}.cl`;
     const curBase = parseInt(getProperty(ent, key + ".base"));
     const curFormula = getProperty(ent, key + ".formula");
@@ -435,7 +435,7 @@ const _migrateActorSpellbookCL = function (ent, updateData) {
 
 const _migrateActorConcentration = function (ent, updateData) {
   const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
-  for (let k of spellbooks) {
+  for (const k of spellbooks) {
     // Delete unused .concentration from old actors
     const key = `data.attributes.spells.spellbooks.${k}`;
     const oldValue = getProperty(ent, `${key}.concentration`);
@@ -542,8 +542,8 @@ const _migrateClassDynamics = function (ent, updateData) {
   if (typeof bab === "number") updateData["data.bab"] = "low";
 
   const stKeys = ["data.savingThrows.fort.value", "data.savingThrows.ref.value", "data.savingThrows.will.value"];
-  for (let key of stKeys) {
-    let value = getProperty(ent, key);
+  for (const key of stKeys) {
+    const value = getProperty(ent, key);
     if (typeof value === "number") updateData[key] = "low";
   }
 };
@@ -683,8 +683,8 @@ const _migrateItemChanges = function (ent, updateData) {
   // Migrate changes
   const changes = getProperty(ent, "data.changes");
   if (changes != null && changes instanceof Array) {
-    let newChanges = [];
-    for (let c of changes) {
+    const newChanges = [];
+    for (const c of changes) {
       if (c instanceof Array) {
         const nc = ItemChange.create(
           {
@@ -710,8 +710,8 @@ const _migrateItemChanges = function (ent, updateData) {
   // Migrate context notes
   const notes = getProperty(ent, "data.contextNotes");
   if (notes != null && notes instanceof Array) {
-    let newNotes = [];
-    for (let n of notes) {
+    const newNotes = [];
+    for (const n of notes) {
       if (n instanceof Array) {
         newNotes.push(mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false }));
       } else {
@@ -844,7 +844,7 @@ const _migrateProficiencies = function (ent, updateData) {
 
 const _migrateItemNotes = function (ent, updateData) {
   const list = ["data.attackNotes", "data.effectNotes"];
-  for (let k of list) {
+  for (const k of list) {
     const value = getProperty(ent, k);
     const hasValue = hasProperty(ent, k);
     if (hasValue && !(value instanceof Array)) {
@@ -894,10 +894,10 @@ const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
 
   if (!linked && spellbookUsage === undefined) return; // skip with unlinked tokens
   if (spellbookUsage == null) {
-    let usedSpellbooks = [];
+    const usedSpellbooks = [];
     if (!ent.items) return;
     const spells = ent.items.filter((o) => o.type === "spell");
-    for (let o of spells) {
+    for (const o of spells) {
       const sb = o.data.spellbook;
       if (sb && !usedSpellbooks.includes(sb)) {
         usedSpellbooks.push(sb);
@@ -910,14 +910,14 @@ const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
 const _migrateActorNullValues = function (ent, updateData) {
   // Prepare test data
   const entries = { "data.attributes.energyDrain": getProperty(ent, "data.attributes.energyDrain") };
-  for (let [k, a] of Object.entries(getProperty(ent.data, "data.abilities") || {})) {
+  for (const [k, a] of Object.entries(getProperty(ent.data, "data.abilities") || {})) {
     entries[`data.abilities.${k}.damage`] = a.damage;
     entries[`data.abilities.${k}.drain`] = a.drain;
     entries[`data.abilities.${k}.penalty`] = a.penalty;
   }
 
   // Set null values to 0
-  for (let [k, v] of Object.entries(entries)) {
+  for (const [k, v] of Object.entries(entries)) {
     if (v === null) {
       updateData[k] = 0;
     }
@@ -927,7 +927,7 @@ const _migrateActorNullValues = function (ent, updateData) {
 const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
   const spellbooks = getProperty(ent, "data.attributes.spells.spellbooks") || {};
 
-  for (let [k, b] of Object.entries(spellbooks)) {
+  for (const [k, b] of Object.entries(spellbooks)) {
     if (b.domainSlotValue !== undefined) continue;
     const key = `data.attributes.spells.spellbooks.${k}.domainSlotValue`;
     updateData[key] = 1;
@@ -990,7 +990,7 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
 
     return cur;
   }, []);
-  for (let k of skillKeys) {
+  for (const k of skillKeys) {
     keys[k] = 0;
   }
 
@@ -1021,10 +1021,10 @@ const _migrateActorConditions = function (ent, updateData) {
 const _migrateActorSkillRanks = function (ent, updateData, linked) {
   const skills = getProperty(ent, "data.skills");
   if (!skills) return; // Unlinked with no skill overrides of any kind
-  for (let [key, data] of Object.entries(skills)) {
+  for (const [key, data] of Object.entries(skills)) {
     if (!linked && data.rank === undefined) continue; // Unlinked with no override
     if (!Number.isFinite(data.rank)) updateData[`data.skills.${key}.rank`] = 0;
-    for (let [subKey, subData] of Object.entries(data.subSkills ?? {})) {
+    for (const [subKey, subData] of Object.entries(data.subSkills ?? {})) {
       if (!linked && subData.rank === undefined) continue; // Unlinked with no override
       if (!Number.isFinite(subData.rank)) updateData[`data.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }

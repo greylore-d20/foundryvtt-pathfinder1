@@ -198,7 +198,7 @@ export class CurrencyTransfer extends FormApplication {
     this.order.forEach((c) => (amount[c] = amount[c] ?? 0));
     if (!Object.values(amount).find((a) => a > 0)) return this._failed("PF1.CurrencyInsufficient"), false;
 
-    var sourceCurrency = duplicate(sourceAlt ? sourceDoc?.data.data.altCurrency : sourceDoc?.data.data.currency);
+    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.data.data.altCurrency : sourceDoc?.data.data.currency);
     const destCurrency = duplicate(destAlt ? destDoc.data.data.altCurrency : destDoc.data.data.currency);
     if ((!sourceCurrency && !game.user.isGM) || !destCurrency) return false;
     const originalSource = Object.assign(Object.fromEntries(this.order.map((o) => [o, Infinity])), sourceCurrency);
@@ -210,7 +210,7 @@ export class CurrencyTransfer extends FormApplication {
 
     if (sourceCurrency) {
       this.order.some((a) => {
-        let newSource = sourceCurrency[a] - amount[a];
+        const newSource = sourceCurrency[a] - amount[a];
 
         if (newSource < 0 && allowConversion) {
           amount = this.convert(originalSource, totalAmount, allowConversion);
@@ -265,10 +265,10 @@ export class CurrencyTransfer extends FormApplication {
     if (typeof totalAmount !== "number")
       totalAmount = this.order.reduce((acc, cur, idx) => acc + totalAmount?.[cur] * 10 ** (1 - idx));
     if (!totalAmount) return false;
-    var amount = {};
+    const amount = {};
     totalAmount =
       this.order.reduce((acc, cur, idx) => {
-        let minRequired = Math.min(limit[cur], Math.floor((acc % 10000) / 10 ** (3 - idx))), //Start from left to allow clumping
+        const minRequired = Math.min(limit[cur], Math.floor((acc % 10000) / 10 ** (3 - idx))), //Start from left to allow clumping
           inCopper = minRequired * 10 ** (3 - idx);
         amount[cur] = minRequired;
         limit[cur] -= minRequired;

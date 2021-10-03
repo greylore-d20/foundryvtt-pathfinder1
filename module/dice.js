@@ -61,19 +61,19 @@ export class DicePF {
     let rolled = false;
 
     // Inner roll function
-    let _roll = async (parts, setRoll, form) => {
+    const _roll = async (parts, setRoll, form) => {
       const originalFlavor = flavor;
       rollMode = form ? form.find('[name="rollMode"]').val() : rollMode;
       for (let a = 0; a < 1 + extraRolls.length; a++) {
         flavor = originalFlavor;
-        let curParts = duplicate(parts);
+        const curParts = duplicate(parts);
         // Don't include situational bonus unless it is defined
         data.bonus = form ? form.find('[name="bonus"]').val() : 0;
         if (!data.bonus && curParts.indexOf("@bonus") !== -1) curParts.pop();
 
         // Extra roll specifics
         if (a >= 1) {
-          let extraRoll = extraRolls[a - 1];
+          const extraRoll = extraRolls[a - 1];
           curParts.push(extraRoll.bonus);
           flavor += ` <div class="extra-roll-label">${extraRoll.label}</div>`;
         }
@@ -85,7 +85,7 @@ export class DicePF {
         }
 
         // Execute the roll
-        let roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
+        const roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
 
         // Convert the roll to a chat message
         if (chatTemplate) {
@@ -107,7 +107,7 @@ export class DicePF {
           );
 
           // Create chat data
-          let chatData = {
+          const chatData = {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: noSound ? null : a === 0 ? CONFIG.sounds.dice : null,
@@ -126,7 +126,7 @@ export class DicePF {
         } else {
           rolled = true;
           if (chatMessage) {
-            let msgData = {
+            const msgData = {
               speaker: speaker,
               flavor: flavor,
               rollMode: rollMode,
@@ -148,7 +148,7 @@ export class DicePF {
 
     // Render modal dialog
     template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
-    let dialogData = {
+    const dialogData = {
       formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
@@ -230,7 +230,7 @@ export class DicePF {
     noSound = false,
   }) {
     flavor = flavor || title;
-    let rollMode = game.settings.get("core", "rollMode");
+    const rollMode = game.settings.get("core", "rollMode");
     let rolled = false;
 
     // Inner roll function
@@ -246,9 +246,9 @@ export class DicePF {
         data["ablMult"] = data.item.ability.damageMult;
       }
 
-      let roll = Roll.create(parts.join("+"), data);
+      const roll = Roll.create(parts.join("+"), data);
       if (crit === true) {
-        let mult = data.item.ability.critMult || 2;
+        const mult = data.item.ability.critMult || 2;
 
         // Update first damage part
         roll.alter(0, mult);
@@ -271,7 +271,7 @@ export class DicePF {
         );
 
         // Create chat data
-        let chatData = {
+        const chatData = {
           user: game.user._id,
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           sound: noSound ? null : CONFIG.sounds.dice,
@@ -311,7 +311,7 @@ export class DicePF {
 
     // Construct dialog data
     template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
-    let dialogData = {
+    const dialogData = {
       formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
@@ -352,7 +352,7 @@ export class DicePF {
   }
 
   static messageRoll({ data, msgStr }) {
-    let re = /\[\[(.+)\]\]/g;
+    const re = /\[\[(.+)\]\]/g;
     return msgStr.replace(re, (_, p1) => {
       const roll = RollPF.safeRoll(p1, data);
       return roll.total.toString();

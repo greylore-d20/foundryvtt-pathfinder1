@@ -23,6 +23,8 @@ module.exports = {
     "no-param-reassign": "off",
     "no-continue": "off",
     "no-console": "off",
+    "prefer-const": ["error", { destructuring: "all" }],
+    "no-var": "error",
     "no-unused-vars": "off",
     "newline-per-chained-call": "off",
     "no-plusplus": "off",

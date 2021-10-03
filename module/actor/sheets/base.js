@@ -179,7 +179,7 @@ export class ActorSheetPF extends ActorSheet {
    * @param options
    */
   async getData(options) {
-    let isOwner = this.document.isOwner;
+    const isOwner = this.document.isOwner;
     const data = mergeObject(await super.getData(options), {
       owner: isOwner,
       limited: this.document.limited,
@@ -260,21 +260,21 @@ export class ActorSheetPF extends ActorSheet {
     else data.sourceDetails = null;
 
     // Ability Scores
-    for (let [a, abl] of Object.entries(data.data.abilities)) {
+    for (const [a, abl] of Object.entries(data.data.abilities)) {
       abl.label = CONFIG.PF1.abilities[a];
       abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.abilities[a].total : [];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
     }
 
     // Armor Class
-    for (let [a, ac] of Object.entries(data.data.attributes.ac)) {
+    for (const [a, ac] of Object.entries(data.data.attributes.ac)) {
       ac.label = CONFIG.PF1.ac[a];
       ac.valueLabel = CONFIG.PF1.acValueLabels[a];
       ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.attributes.ac[a].total : [];
     }
 
     // Saving Throws
-    for (let [a, savingThrow] of Object.entries(data.data.attributes.savingThrows)) {
+    for (const [a, savingThrow] of Object.entries(data.data.attributes.savingThrows)) {
       savingThrow.label = CONFIG.PF1.savingThrows[a];
       savingThrow.sourceDetails =
         data.sourceDetails != null ? data.sourceDetails.data.attributes.savingThrows[a].total : [];
@@ -282,7 +282,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update skill labels
     const acp = getProperty(this.document.data, "data.attributes.acp.total");
-    for (let [s, skl] of Object.entries(data.data.skills)) {
+    for (const [s, skl] of Object.entries(data.data.skills)) {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
@@ -327,7 +327,7 @@ export class ActorSheetPF extends ActorSheet {
 
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
-        for (let [s2, skl2] of Object.entries(skl.subSkills)) {
+        for (const [s2, skl2] of Object.entries(skl.subSkills)) {
           skl2.sourceDetails = [];
           if (skl2.rank > 0) {
             skl2.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skl2.rank });
@@ -353,7 +353,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update spellbook info
-    for (let [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
+    for (const [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
       setProperty(
         data.data,
         `attributes.spells.spellbooks.${k}.inUse`,
@@ -385,9 +385,9 @@ export class ActorSheetPF extends ActorSheet {
     // Skill rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
     // Count used skill ranks
-    for (let skl of Object.values(data.data.skills)) {
+    for (const skl of Object.values(data.data.skills)) {
       if (skl.subSkills != null) {
-        for (let subSkl of Object.values(skl.subSkills)) {
+        for (const subSkl of Object.values(skl.subSkills)) {
           if (data.useBGSkills && skl.background) {
             skillRanks.bgUsed += subSkl.rank;
           } else {
@@ -438,7 +438,7 @@ export class ActorSheetPF extends ActorSheet {
     }
     // Count from bonus skill rank formula
     if (this.actor.data.data.details.bonusSkillRankFormula !== "") {
-      let roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
+      const roll = RollPF.safeRoll(this.actor.data.data.details.bonusSkillRankFormula, rollData);
       if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
       skillRanks.allowed += roll.total;
       sourceData.push({
@@ -602,7 +602,7 @@ export class ActorSheetPF extends ActorSheet {
   _prepareHiddenElements() {
     // Hide spellbook info
     const spellbooks = getProperty(this.document.data, "data.attributes.spells.spellbooks");
-    for (let k of Object.keys(spellbooks)) {
+    for (const k of Object.keys(spellbooks)) {
       const key = `spellbook-info_${k}`;
       if (this._hiddenElems[key] == null) this._hiddenElems[key] = true;
     }
@@ -618,7 +618,7 @@ export class ActorSheetPF extends ActorSheet {
       armorProf: CONFIG.PF1.armorProficiencies,
       weaponProf: CONFIG.PF1.weaponProficiencies,
     };
-    for (let [t, choices] of Object.entries(map)) {
+    for (const [t, choices] of Object.entries(map)) {
       const trait = traits[t];
       if (!trait) continue;
       let values = [];
@@ -674,7 +674,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Reduce spells to the nested spellbook structure
-    let spellbook = {};
+    const spellbook = {};
     for (let a = 0; a < 10; a++) {
       if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
         spellbook[a] = {
@@ -710,21 +710,21 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _prepareSkillsets(skillset) {
-    let result = {
+    const result = {
       all: { skills: {} },
       adventure: { skills: {} },
       background: { skills: {} },
     };
 
     // sort skills by label
-    let keys = Object.keys(skillset).sort(function (a, b) {
+    const keys = Object.keys(skillset).sort(function (a, b) {
       if (skillset[a].custom && !skillset[b].custom) return 1;
       if (!skillset[a].custom && skillset[b].custom) return -1;
       return ("" + skillset[a].label).localeCompare(skillset[b].label);
     });
 
     keys.forEach((a) => {
-      let skl = skillset[a];
+      const skl = skillset[a];
       result.all.skills[a] = skl;
       if (skl.background) result.background.skills[a] = skl;
       else result.adventure.skills[a] = skl;
@@ -761,7 +761,7 @@ export class ActorSheetPF extends ActorSheet {
       const data = item.data;
 
       // Action usage
-      for (let f of ["action", "bonus", "reaction"]) {
+      for (const f of ["action", "bonus", "reaction"]) {
         if (filters.has(f)) {
           if (data.activation && data.activation.type !== f) return false;
         }
@@ -1213,7 +1213,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Toggle classes
     const forbiddenClasses = ["placeholder", "direct", "allow-relative"];
-    for (let cls of el.classList) {
+    for (const cls of el.classList) {
       if (!forbiddenClasses.includes(cls)) newEl.classList.add(cls);
     }
 
@@ -1225,7 +1225,7 @@ export class ActorSheetPF extends ActorSheet {
       newEl.addEventListener("change", (...args) => {
         changed = true;
         if (allowRelative) {
-          let number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
           newEl.value = number;
         }
 
@@ -1332,7 +1332,7 @@ export class ActorSheetPF extends ActorSheet {
   _initializeFilterItemList(i, ul) {
     const set = this._filters[ul.dataset.filter];
     const filters = ul.querySelectorAll(".filter-item");
-    for (let li of filters) {
+    for (const li of filters) {
       if (set.has(li.dataset.filter)) li.classList.add("active");
     }
   }
@@ -1609,17 +1609,17 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onItemSummary(event) {
     event.preventDefault();
-    let li = $(event.currentTarget).parents(".item"),
+    const li = $(event.currentTarget).parents(".item"),
       item = this.document.items.get(li.attr("data-item-id")),
       chatData = item.getChatData({ secrets: this.document.isOwner });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
-      let summary = li.children(".item-summary");
+      const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      let div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      let props = $(`<div class="item-properties"></div>`);
+      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
+      const props = $(`<div class="item-properties"></div>`);
       chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());
@@ -1648,7 +1648,7 @@ export class ActorSheetPF extends ActorSheet {
 
     elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
-    let value = getProperty(this.document.data, event.currentTarget.dataset.attrName);
+    const value = getProperty(this.document.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
 
     const wheelEvent = event && event instanceof WheelEvent;
@@ -2094,7 +2094,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onRollAbilityTest(event) {
     event.preventDefault();
-    let ability = event.currentTarget.closest(".ability").dataset.ability;
+    const ability = event.currentTarget.closest(".ability").dataset.ability;
     this.document.rollAbility(ability, { event: event });
   }
 
@@ -2125,7 +2125,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _onRollSavingThrow(event) {
     event.preventDefault();
-    let savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
+    const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
     this.document.rollSavingThrow(savingThrow, { event: event, skipPrompt: getSkipActionPrompt() });
   }
 
@@ -2139,7 +2139,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _prepareItems(data) {
     // Set item tags
-    for (let [key, res] of Object.entries(getProperty(data, "data.resources"))) {
+    for (const [key, res] of Object.entries(getProperty(data, "data.resources"))) {
       if (!res) continue;
       const id = res.id;
       if (!id) continue;
@@ -2247,9 +2247,9 @@ export class ActorSheetPF extends ActorSheet {
     feats = this._filterItems(feats, this._filters.features);
 
     // Organize Spellbook
-    let spellbookData = {};
+    const spellbookData = {};
     const spellbooks = data.data.attributes.spells.spellbooks;
-    for (let [a, spellbook] of Object.entries(spellbooks)) {
+    for (const [a, spellbook] of Object.entries(spellbooks)) {
       let spellbookSpells = spells.filter((obj) => {
         return obj.data.spellbook === a;
       });
@@ -2267,7 +2267,7 @@ export class ActorSheetPF extends ActorSheet {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
 
-    for (let i of items) {
+    for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
@@ -2296,8 +2296,8 @@ export class ActorSheetPF extends ActorSheet {
       );
     }
 
-    for (let f of feats) {
-      let k = f.data.featType;
+    for (const f of feats) {
+      const k = f.data.featType;
       if (f.data.abilityType && f.data.abilityType !== "none") {
         f.abilityType = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].long);
         f.abilityTypeShort = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].short);
@@ -2344,8 +2344,8 @@ export class ActorSheetPF extends ActorSheet {
       },
     };
 
-    for (let b of buffs) {
-      let s = b.data.buffType;
+    for (const b of buffs) {
+      const s = b.data.buffType;
       if (!buffSections[s]) continue;
       buffSections[s].items.push(b);
     }
@@ -2403,26 +2403,26 @@ export class ActorSheetPF extends ActorSheet {
       },
     };
 
-    for (let a of attacks) {
-      let s = a.data.attackType;
+    for (const a of attacks) {
+      const s = a.data.attackType;
       if (!attackSections[s]) continue;
       attackSections[s].items.push(a);
     }
 
     // Apply type filters
     {
-      let sections = [
+      const sections = [
         { key: "inventory", section: inventory },
         { key: "features", section: features },
         { key: "buffs", section: buffSections },
         { key: "attacks", section: attackSections },
       ];
-      for (let [k, sb] of Object.entries(spellbookData)) {
+      for (const [k, sb] of Object.entries(spellbookData)) {
         sections.push({ key: `spellbook-${k}`, section: sb.data });
       }
 
-      for (let section of sections) {
-        for (let [k, s] of Object.entries(section.section)) {
+      for (const section of sections) {
+        for (const [k, s] of Object.entries(section.section)) {
           const typeFilterCount = this._typeFilterCount(this._filters[section.key]);
           if (typeFilterCount > 0 && s.items.length === 0) {
             s._hidden = true;
@@ -2499,7 +2499,7 @@ export class ActorSheetPF extends ActorSheet {
       ? !event.shiftKey
       : event.shiftKey;
     if (tabLikeFilters) {
-      for (let f of Array.from(set)) {
+      for (const f of Array.from(set)) {
         if (f.startsWith("type-") && (f !== filter || typeFilterCount > 1)) {
           set.delete(f);
         }
@@ -2637,13 +2637,13 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _updateItems() {
-    let promises = [];
+    const promises = [];
 
     const updates = this._itemUpdates;
     this._itemUpdates = [];
 
     // Memorize variables in document
-    for (let d of updates) {
+    for (const d of updates) {
       const item = this.document.items.find((o) => o.id === d._id);
       item?.memorizeVariables();
       delete d._id;
@@ -2652,7 +2652,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _onDropCurrency(event, data) {
-    let sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId,
+    const sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId,
       dataType = "currency";
     return new CurrencyTransfer(
       { actor: sourceActor, container: data.containerId, alt: data.alt },
@@ -2670,7 +2670,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = item.toJSON();
 
     // Handle item sorting within the same actor
-    let sameActor =
+    const sameActor =
       (data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id)) &&
       !data.containerId;
     if (sameActor) {
@@ -2710,7 +2710,7 @@ export class ActorSheetPF extends ActorSheet {
   async _onDropItemCreate(itemData) {
     // Import spell as consumable
     if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
-      let resultData = await createConsumableSpellDialog(itemData);
+      const resultData = await createConsumableSpellDialog(itemData);
       if (resultData === "spell") {
         // No action here.
       } else if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
@@ -2722,7 +2722,7 @@ export class ActorSheetPF extends ActorSheet {
       getProperty(itemData, "data.classType") !== "mythic" &&
       !(event && event.shiftKey)
     ) {
-      let doReturn = await new Promise((resolve) => {
+      const doReturn = await new Promise((resolve) => {
         new Dialog(
           {
             title: game.i18n.localize("PF1.AddClass"),
@@ -2762,9 +2762,9 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (itemData.id) delete itemData.id;
-    let actorRef = this.document;
+    const actorRef = this.document;
     return this.document.createEmbeddedDocuments("Item", [itemData]).then((createdItem) => {
-      let fullItem = actorRef.items.get(createdItem.id);
+      const fullItem = actorRef.items.get(createdItem.id);
       return fullItem;
     });
   }
@@ -2835,7 +2835,7 @@ export class ActorSheetPF extends ActorSheet {
     // Update from elements with 'data-name'
     {
       const elems = this.element.find("*[data-name]");
-      let changedData = {};
+      const changedData = {};
       for (const el of elems) {
         const name = el.dataset.name;
         let value;
@@ -2850,13 +2850,13 @@ export class ActorSheetPF extends ActorSheet {
         }
       }
 
-      for (let [k, v] of Object.entries(changedData)) {
+      for (const [k, v] of Object.entries(changedData)) {
         formData[k] = v;
       }
     }
 
     // Add pending updates
-    for (let [k, v] of Object.entries(this._pendingUpdates)) {
+    for (const [k, v] of Object.entries(this._pendingUpdates)) {
       formData[k] = v;
     }
     this._pendingUpdates = {};
@@ -2883,7 +2883,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _createPlaceholders(html) {
     const elems = html.find("span[data-placeholder]");
-    for (let el of elems) {
+    for (const el of elems) {
       if (!el.innerText) {
         el.classList.add("placeholder");
         el.innerText = el.dataset.placeholder;

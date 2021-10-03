@@ -180,7 +180,7 @@ export class PF1_HelpBrowser extends Application {
     // Translate links
     {
       const links = html.find("a[href]");
-      for (let l of links) {
+      for (const l of links) {
         const href = l.href;
         l.removeAttribute("href");
         l.addEventListener("click", () => {

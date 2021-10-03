@@ -423,8 +423,8 @@ Hooks.once("setup", function () {
 
   // Localize buff targets
   const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
-  for (let l of localizeLabels) {
-    for (let [k, v] of Object.entries(CONFIG.PF1[l])) {
+  for (const l of localizeLabels) {
+    for (const [k, v] of Object.entries(CONFIG.PF1[l])) {
       CONFIG.PF1[l][k].label = game.i18n.localize(v.label);
     }
   }
@@ -484,7 +484,7 @@ Hooks.once("ready", async function () {
   ) {
     PREVIOUS_MIGRATION_VERSION = `${PREVIOUS_MIGRATION_VERSION}.0`;
   }
-  let needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(
+  const needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(
     SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
   );
   if (needMigration && game.user.isGM) {
@@ -532,11 +532,11 @@ Hooks.on("canvasInit", function () {
 });
 
 {
-  let callbacks = [];
+  const callbacks = [];
 
   Hooks.on("canvasReady", () => {
     // Remove old reach callbacks
-    for (let cb of callbacks) {
+    for (const cb of callbacks) {
       cb.elem.off(cb.event, cb.callback);
     }
 
@@ -635,7 +635,7 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   // Call hook for toggling conditions
   {
     const conditions = getProperty(data, "data.attributes.conditions") || {};
-    for (let [k, v] of Object.entries(conditions)) {
+    for (const [k, v] of Object.entries(conditions)) {
       Hooks.callAll("pf1.toggleActorCondition", actor, k, v);
     }
   }
@@ -655,7 +655,7 @@ Hooks.on("createToken", (scene, token, options, userId) => {
 Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   const actor = game.actors.get(token.actorId),
     buffTextures = Object.values(actor?._calcBuffTextures() ?? []).map((b) => b.icon);
-  for (let icon of buffTextures) await loadTexture(icon);
+  for (const icon of buffTextures) await loadTexture(icon);
 });
 
 Hooks.on("hoverToken", (token, hovering) => {
@@ -754,7 +754,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     // Remove token effects for deleted buff
     const isLinkedToken = getProperty(actor.data, "token.actorLink");
     if (isLinkedToken) {
-      let promises = [];
+      const promises = [];
       if (item.data.type === "buff" && item.data.data.active) {
         actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
         const tokens = actor.getActiveTokens();
@@ -768,10 +768,10 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     // Remove links
     const itemLinks = getProperty(item.data, "data.links");
     if (itemLinks) {
-      for (let [linkType, links] of Object.entries(itemLinks)) {
-        for (let link of links) {
+      for (const [linkType, links] of Object.entries(itemLinks)) {
+        for (const link of links) {
           const item = actor.items.find((o) => o.id === link.id);
-          let otherItemLinks = item?.links || {};
+          const otherItemLinks = item?.links || {};
           if (otherItemLinks[linkType]) {
             delete otherItemLinks[linkType];
           }

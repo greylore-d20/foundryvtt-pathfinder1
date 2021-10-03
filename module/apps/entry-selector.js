@@ -68,9 +68,9 @@ export class EntrySelector extends FormApplication {
     const a = event.currentTarget;
 
     if (a.classList.contains("add-entry")) {
-      let obj = [];
+      const obj = [];
       for (let a = 0; a < this.dataCount; a++) {
-        let dataType = this.dtypes[a];
+        const dataType = this.dtypes[a];
         if (dataType === "Number") obj.push(0);
         else obj.push("");
       }

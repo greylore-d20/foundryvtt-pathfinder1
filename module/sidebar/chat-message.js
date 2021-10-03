@@ -9,8 +9,8 @@ export class ChatMessagePF extends ChatMessage {
    * @type {ItemPF}
    */
   get itemSource() {
-    let itemId = this.data.flags?.pf1?.metadata?.item;
-    let actor = this.constructor.getSpeakerActor(this.data.speaker);
+    const itemId = this.data.flags?.pf1?.metadata?.item;
+    const actor = this.constructor.getSpeakerActor(this.data.speaker);
     if (!itemId || !actor) return false;
     return actor.items.get(itemId);
   }
@@ -34,10 +34,10 @@ export const customRolls = function (message, speaker, rollData) {
       case "D":
       case "DAMAGE":
       case "H":
-      case "HEAL":
+      case "HEAL": {
         rollData = rollData ?? actor?.getRollData() ?? {};
-        var roll = RollPF.safeRoll(value, rollData);
-        var total = roll.total;
+        const roll = RollPF.safeRoll(value, rollData);
+        const total = roll.total;
 
         return (async () => {
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
@@ -60,6 +60,7 @@ export const customRolls = function (message, speaker, rollData) {
           };
           cMsg.create(chatOptions);
         })();
+      }
     }
   }
   return false;

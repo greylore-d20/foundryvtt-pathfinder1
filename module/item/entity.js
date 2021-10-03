@@ -4662,7 +4662,7 @@ export class ItemPF extends Item {
     if (isManeuver) srcDetails(this.parentActor.sourceDetails["data.attributes.cmb.bonus"]);
     srcDetails(this.parentActor.sourceDetails["data.attributes.attack.general"]);
 
-    const changeSources = ["attack"];
+    const changeSources = [];
     if (isRanged) changeSources.push("rattack");
     if (isMelee) changeSources.push("mattack");
     const effectiveChanges = getHighestChanges(

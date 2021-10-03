@@ -1,6 +1,5 @@
 import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
-import { patchLowLightVision } from "./low-light-vision.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";
 
@@ -90,9 +89,6 @@ export async function PatchCore() {
       if (!up) game.pf1.tooltip.lock.new = false;
     };
   }
-
-  // Apply low light vision patches
-  patchLowLightVision();
 
   // Patch StringTerm
   StringTerm.prototype.evaluate = function (options = {}) {

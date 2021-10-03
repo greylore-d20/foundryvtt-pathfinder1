@@ -13,6 +13,7 @@ import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { TemplateLayerPF } from "./module/measure.js";
+import { SightLayerPF } from "./module/low-light-vision.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -21,6 +22,7 @@ import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { AmbientLightPF } from "./module/low-light-vision.js";
 import { CombatPF } from "./module/combat.js";
 import { TokenPF } from "./module/token/token.js";
 import { TokenDocumentPF } from "./module/token/document.js";
@@ -196,6 +198,8 @@ Hooks.once("init", function () {
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Canvas.layers.templates = TemplateLayerPF;
+  CONFIG.Canvas.layers.sight = SightLayerPF;
+  CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.Actor.documentClass = ActorPF;
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;

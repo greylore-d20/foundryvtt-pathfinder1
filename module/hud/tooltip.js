@@ -341,4 +341,33 @@ export class TooltipPF extends Application {
       this.clearBinds();
     });
   }
+
+  tokenHover(token, hovering) {
+    // Show token tooltip
+    if (hovering && !game.keyboard.isDown("Alt")) {
+      const p = game.pf1.tooltip.mousePos;
+      const el = document.elementFromPoint(p.x, p.y);
+      // This check is required to prevent hovering over tokens under application windows
+      if (el?.id === "board") {
+        game.pf1.tooltip.bind(token);
+      }
+    }
+    // Hide token tooltip
+    else game.pf1.tooltip.unbind(token);
+  }
+
+  static toggle(enable) {
+    if (enable) {
+      if (!game.pf1.tooltip) {
+        game.pf1.tooltip = new TooltipPF();
+        Hooks.on("hoverToken", game.pf1.tooltip.tokenHover);
+      }
+      game.pf1.tooltip?.setPosition();
+    } else {
+      if (game.pf1.tooltip) {
+        Hooks.off("hoverToken", game.pf1.tooltip.tokenHover);
+        game.pf1.tooltip = null;
+      }
+    }
+  }
 }

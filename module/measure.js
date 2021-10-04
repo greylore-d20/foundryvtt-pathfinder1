@@ -39,7 +39,9 @@ export class TemplateLayerPF extends TemplateLayer {
     event.data.preview = this.preview.addChild(template);
     template.draw();
   }
+}
 
+export class MeasuredTemplatePF extends MeasuredTemplate {
   _onDragLeftMove(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 

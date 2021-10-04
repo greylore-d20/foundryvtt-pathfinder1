@@ -896,7 +896,7 @@ const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
   if (spellbookUsage == null) {
     const usedSpellbooks = [];
     if (!ent.items) return;
-    const spells = ent.items.filter((o) => o.type === "spell");
+    const spells = ent.itemTypes.spell;
     for (const o of spells) {
       const sb = o.data.spellbook;
       if (sb && !usedSpellbooks.includes(sb)) {

@@ -164,7 +164,7 @@ export class ActorPF extends Actor {
 
   get race() {
     if (this.items == null) return null;
-    return this.items.filter((o) => o.type === "race")[0];
+    return this.itemTypes.race[0];
   }
 
   get typeColor() {
@@ -780,7 +780,7 @@ export class ActorPF extends Actor {
           slots.push(currentLevel);
         }
 
-        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
+        const spells = this.itemTypes.spell.filter((o) => o.data.data.spellbook === spellbookKey);
         if (!spellbook.spontaneous) {
           for (const i of spells) {
             const isDomain = i.data.data.domain === true;
@@ -1146,7 +1146,7 @@ export class ActorPF extends Actor {
 
     // Reduce final speed under certain circumstances
     {
-      const armorItems = this.items.filter((o) => o.data.type === "equipment");
+      const armorItems = this.itemTypes.equipment;
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
       if (this.data.data.attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
@@ -1848,7 +1848,7 @@ export class ActorPF extends Actor {
    */
   _updateExp(updateData) {
     // Get total level
-    const classes = this.items.filter((o) => o.type === "class");
+    const classes = this.itemTypes.class;
     const level = classes
       .filter((o) => o.data.data.classType !== "mythic")
       .reduce((cur, o) => cur + o.data.data.level, 0);
@@ -3726,9 +3726,7 @@ export class ActorPF extends Actor {
     if (this.items == null) return base;
 
     // Gather CR from templates
-    const templates = this.items.filter(
-      (o) => o.type === "feat" && o.data.data.featType === "template" && !o.data.data.disabled
-    );
+    const templates = this.itemTypes.feat.filter((o) => o.data.data.featType === "template" && !o.data.data.disabled);
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
@@ -3860,7 +3858,7 @@ export class ActorPF extends Actor {
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffTextures() {
-    const buffs = this.items.filter((o) => o.type === "buff");
+    const buffs = this.itemTypes.buff;
     return buffs.reduce((acc, cur) => {
       const id = cur.uuid;
       if (cur.data.data.hideFromToken) return acc;
@@ -3921,9 +3919,7 @@ export class ActorPF extends Actor {
    */
   getFeatCount() {
     const result = { max: 0, value: 0 };
-    result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled;
-    }).length;
+    result.value = this.itemTypes.feat.filter((o) => o.data.data.featType === "feat" && !o.data.data.disabled).length;
 
     // Add feat count by level
     const totalLevels = this.items

@@ -165,7 +165,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
     ) {
-      const buffs = actor.items.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
+      const buffs = actor.itemTypes.buff.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
       for (const b of buffs) {
         data.buffs = data.buffs || [];
         data.buffs.push({
@@ -206,8 +206,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
     ) {
-      const armor = actor.items.filter((i) => {
-        if (i.type !== "equipment") return false;
+      const armor = actor.itemTypes.equipment.filter((i) => {
         if (!i.data.data.equipped) return false;
         if (i.data.data.equipmentType !== "armor") return false;
         return true;
@@ -228,8 +227,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!getProperty(actor.data, "data.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
     ) {
-      const clothing = actor.items.filter((i) => {
-        if (i.type !== "equipment") return false;
+      const clothing = actor.itemTypes.equipment.filter((i) => {
         if (!i.data.data.equipped) return false;
         if (i.data.data.equipmentType !== "misc") return false;
         if (i.data.data.equipmentSubtype !== "clothing") return false;

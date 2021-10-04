@@ -476,8 +476,8 @@ export class ActorSheetPF extends ActorSheet {
       // Feat count
       // By level
       data.featCount = {};
-      data.featCount.value = this.actor.items.filter(
-        (o) => o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled
+      data.featCount.value = this.actor.itemTypes.feat.filter(
+        (o) => o.data.data.featType === "feat" && !o.data.data.disabled
       ).length;
       const totalLevels = this.document.items
         .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
@@ -2044,7 +2044,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.find((o) => o.id === itemId);
 
     const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
-    targets.push(...this.document.items.filter((o) => o.type === "container"));
+    targets.push(...this.document.itemTypes.container);
     targets.push(
       ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
     );

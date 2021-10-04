@@ -1,9 +1,11 @@
+import { MeasuredTemplatePF } from "../measure.js";
+
 /**
  * A helper class for building MeasuredTemplates for PF1 spells and abilities
  *
  * @augments {MeasuredTemplate}
  */
-export class AbilityTemplate extends MeasuredTemplate {
+export class AbilityTemplate extends MeasuredTemplatePF {
   /**
    * A factory method to create an AbilityTemplate instance using provided data
    *

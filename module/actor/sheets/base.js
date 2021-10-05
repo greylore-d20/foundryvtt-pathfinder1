@@ -2153,7 +2153,7 @@ export class ActorSheetPF extends ActorSheet {
       weapon: {
         label: game.i18n.localize("PF1.InventoryWeapons"),
         canCreate: true,
-        hasActions: false,
+        hasActions: true,
         items: [],
         canEquip: true,
         dataset: { type: "weapon" },

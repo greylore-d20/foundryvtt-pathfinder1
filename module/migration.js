@@ -223,7 +223,6 @@ export const migrateItemData = function (item) {
 
   _migrateItemArrayTypes(item, updateData);
   _migrateItemSpellUses(item, updateData);
-  _migrateWeaponDamage(item, updateData);
   _migrateWeaponImprovised(item, updateData);
   _migrateSpellDescription(item, updateData);
   _migrateClassDynamics(item, updateData);
@@ -243,6 +242,7 @@ export const migrateItemData = function (item) {
   _migrateLootEquip(item, updateData);
   _migrateUnchainedActionEconomy(item, updateData);
   _migrateItemRange(item, updateData);
+  _migrateWeaponData(item, updateData);
   _migrateItemLinks(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
@@ -493,17 +493,6 @@ const _migrateItemSpellUses = function (ent, updateData) {
   if (typeof value !== "number") updateData["data.preparation.maxAmount"] = 0;
 };
 
-const _migrateWeaponDamage = function (ent, updateData) {
-  if (ent.type !== "weapon") return;
-
-  const value = getProperty(ent.data, "weaponData");
-  if (typeof value !== "object") {
-    updateData["data.weaponData"] = {};
-    updateData["data.weaponData.critRange"] = 20;
-    updateData["data.weaponData.critMult"] = 2;
-  }
-};
-
 const _migrateWeaponImprovised = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
@@ -511,6 +500,88 @@ const _migrateWeaponImprovised = function (ent, updateData) {
   if (value === "improv") {
     updateData["data.weaponType"] = "misc";
     updateData["data.properties.imp"] = true;
+  }
+};
+
+const _migrateWeaponData = function (ent, updateData) {
+  if (ent.type !== "weapon") return;
+
+  if (getProperty(ent.data, "weaponData") !== undefined) {
+    const subtype = ent.data.weaponSubtype;
+    const isMelee = subtype !== "ranged";
+
+    // Generate missing data
+
+    // TODO: Respect character configuration if present
+    //getProperty(this.data, "data.attributes.attack.meleeAbility") || "str";
+    //getProperty(this.data, "data.attributes.attack.rangedAbility") || "dex";
+    const atkAbl = getProperty(ent.data, "ability.attack");
+    if (atkAbl == null || atkAbl === "") {
+      updateData["data.ability.attack"] = isMelee ? "str" : "dex";
+    }
+    const dmgAbl = getProperty(ent.data, "ability.damage");
+    if (dmgAbl == null || dmgAbl === "") {
+      updateData["data.ability.damage"] = "str";
+    }
+    if (getProperty(ent.data, "ability.damageMult") == null) {
+      updateData["data.ability.damageMult"] = subtype === "2h" ? 1.5 : 1;
+    }
+    if (getProperty(ent.data, "attackType") == null) {
+      updateData["data.attackType"] = "weapon";
+    }
+
+    // Activation
+    updateData["data.actionType"] = isMelee ? "mwak" : "rwak";
+    updateData["data.activation.type"] = "attack";
+    updateData["data.duration.units"] = "inst";
+
+    // BAB iteratives
+    updateData["data.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
+    updateData["data.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
+
+    // Preserve weapon data if present
+
+    // Criticals
+    updateData["data.ability.critRange"] = getProperty(ent.data, "weaponData.critRange") ?? 20;
+    updateData["data.ability.critMult"] = getProperty(ent.data, "weaponData.critMult") ?? 2;
+
+    // Range
+    if (isMelee) {
+      const isReach = getProperty(ent.data, "properties.rch") ?? false;
+      updateData["data.range.units"] = isReach ? "reach" : "melee";
+    } else {
+      updateData["data.range.units"] = "ft";
+    }
+    const range = getProperty(ent.data, "weaponData.range") ?? null;
+    if (range !== undefined) {
+      updateData["data.range.value"] = range;
+    }
+
+    const maxRange = getProperty(ent.data, "weaponData.maxRangeIncrements");
+    if (maxRange !== undefined) updateData["data.range.maxIncrements"] = maxRange;
+
+    // Damage
+    const damageRoll = getProperty(ent.data, "weaponData.damageRoll")?.trim();
+    const damageType = getProperty(ent.data, "weaponData.damageType")?.trim();
+    const damageBonusFormula = getProperty(ent.data, "weaponData.damageFormula")?.trim();
+
+    if (damageRoll !== undefined) {
+      let roll = damageRoll || "1d4";
+      let dieCount = 1,
+        dieSides = 4;
+      if (roll.match(/^([0-9]+)d([0-9]+)$/)) {
+        dieCount = parseInt(RegExp.$1);
+        dieSides = parseInt(RegExp.$2);
+        roll = `sizeRoll(${dieCount}, ${dieSides}, @size)`;
+      }
+      if (damageBonusFormula != null && damageBonusFormula.length) roll = `${roll} + ${damageBonusFormula}`;
+      updateData["data.damage.parts"] = [[roll, damageType || ""]];
+    }
+
+    // Attack bonus
+    updateData["data.attackBonus"] = getProperty(ent.data, "weaponData.attackFormula")?.trim() ?? "";
+
+    updateData["data.-=weaponData"] = null;
   }
 };
 
@@ -816,10 +887,6 @@ const _migrateItemRange = function (ent, updateData) {
   // Set max range increment
   if (getProperty(ent, "data.range.maxIncrements") === undefined) {
     setProperty(updateData, "data.range.maxIncrements", 1);
-  }
-
-  if (ent.type === "weapon" && getProperty(ent, "data.weaponData.maxRangeIncrements") === undefined) {
-    setProperty(updateData, "data.weaponData.maxRangeIncrements", 1);
   }
 };
 

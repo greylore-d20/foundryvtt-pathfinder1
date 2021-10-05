@@ -2001,74 +2001,41 @@ export class ActorPF extends Actor {
     attackData = flattenObject(attackData);
 
     // Add ability modifiers
-    const isMelee = getProperty(item.data, "data.weaponSubtype") !== "ranged";
-
-    if (isMelee)
-      attackData["data.ability.attack"] = getProperty(this.data, "data.attributes.attack.meleeAbility") || "str";
-    else attackData["data.ability.attack"] = getProperty(this.data, "data.attributes.attack.rangedAbility") || "dex";
-
-    if (isMelee) {
-      attackData["data.ability.damage"] = "str";
-      if (item.data.data.weaponSubtype === "2h" && isMelee) {
-        attackData["data.ability.damageMult"] = 1.5;
-        attackData["data.held"] = "2h";
-      }
-    }
+    attackData["data.ability.attack"] = item.data.data.ability.attack;
+    attackData["data.ability.damage"] = item.data.data.ability.damage;
+    attackData["data.ability.damageMult"] = item.data.data.ability.damageMult;
+    attackData["data.held"] = item.data.data.held;
 
     // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
     attackData["data.masterwork"] = item.data.data.masterwork;
     attackData["data.nonlethal"] = item.data.data.nonlethal;
-    attackData["data.attackType"] = "weapon";
+    attackData["data.attackType"] = item.data.data.attackType;
     attackData["data.enh"] = item.data.data.enh;
     attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
     attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
-    attackData["data.actionType"] = isMelee ? "mwak" : "rwak";
-    attackData["data.activation.type"] = "attack";
-    attackData["data.duration.units"] = "inst";
-    attackData["data.range.units"] = "melee";
+    attackData["data.actionType"] = item.data.data.actionType;
+    attackData["data.activation.type"] = item.data.data.activation.type;
+    attackData["data.duration.units"] = item.data.data.duration.units;
+    attackData["data.range.units"] = item.data.data.range.units;
     attackData["data.broken"] = item.data.data.broken;
     attackData["data.range.maxIncrements"] = item.data.data.weaponData.maxRangeIncrements;
     attackData["img"] = item.data.img;
 
     // Add additional attacks
-    attackData["data.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
-    attackData["data.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
+    attackData["data.attackParts"] = item.data.data.attackParts;
+    attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;
 
-    // Add damage formula
-    if (item.data.data.weaponData.damageRoll) {
-      const die = item.data.data.weaponData.damageRoll || "1d4";
-      let part = die;
-      let dieCount = 1,
-        dieSides = 4;
-      if (die.match(/^([0-9]+)d([0-9]+)$/)) {
-        dieCount = parseInt(RegExp.$1);
-        dieSides = parseInt(RegExp.$2);
-        // const weaponSize = Object.keys(CONFIG.PF1.sizeChart).indexOf(item.data.data.weaponData.size) - 4;
-        part = `sizeRoll(${dieCount}, ${dieSides}, @size)`;
-      }
-      const bonusFormula = getProperty(item.data, "data.weaponData.damageFormula");
-      if (bonusFormula != null && bonusFormula.length) part = `${part} + ${bonusFormula}`;
-      attackData["data.damage.parts"] = [[part, item.data.data.weaponData.damageType || ""]];
-    }
+    // Add damage
+    attackData["data.damage.parts"] = item.data.data.damage.parts;
 
     // Add attack bonus formula
-    {
-      const bonusFormula = getProperty(item.data, "data.weaponData.attackFormula");
-      if (bonusFormula != null && bonusFormula.length) attackData["data.attackBonus"] = bonusFormula;
-    }
-
-    // Set reach
-    if (isMelee && getProperty(item.data, "data.properties.rch") === true) {
-      attackData["data.range.units"] = "reach";
-    }
+    attackData["data.attackBonus"] = item.data.data.attackBonus;
 
     // Add range
-    if (!isMelee && getProperty(item.data, "data.weaponData.range") != null) {
-      attackData["data.range.units"] = "ft";
-      attackData["data.range.value"] = getProperty(item.data, "data.weaponData.range").toString();
-    }
+    attackData["data.range.units"] = item.data.data.range.units;
+    attackData["data.range.value"] = item.data.data.range.value;
 
     // Create attack
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];

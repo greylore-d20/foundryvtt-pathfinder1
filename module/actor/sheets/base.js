@@ -1619,6 +1619,9 @@ export class ActorSheetPF extends ActorSheet {
       summary.slideUp(200, () => summary.remove());
     } else {
       const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
+      if (chatData.shortDescription?.length) {
+        div.append(TextEditor.enrichHTML(chatData.shortDescription, item.getRollData()));
+      }
       const props = $(`<div class="item-properties"></div>`);
       chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);

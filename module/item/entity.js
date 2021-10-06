@@ -724,6 +724,8 @@ export class ItemPF extends Item {
     if (this.sheet?.rendered) {
       this.sheet?.render();
     }
+
+    if (this.type === "spell") this._updateSpellDescription();
   }
 
   prepareLinks() {
@@ -999,7 +1001,7 @@ export class ItemPF extends Item {
     else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
 
     // Update description
-    if (this.type === "spell") await this._updateSpellDescription(data, srcData);
+    if (this.type === "spell") await this._updateSpellDescription(srcData);
 
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"] != null) {
@@ -3318,12 +3320,11 @@ export class ItemPF extends Item {
     return game.actors.get(actorId) || null;
   }
 
-  /**
-   * Updates the spell's description.
-   */
+  get spellDescriptionData() {
+    if (this.type !== "spell") return {};
 
-  async _updateSpellDescription(updateData, srcData) {
     const reSplit = CONFIG.PF1.re.traitSeparator;
+    const srcData = this.data;
 
     const label = {
       school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
@@ -3461,12 +3462,16 @@ export class ItemPF extends Item {
 
       if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
     }
+    return data;
+  }
 
-    linkData(
-      srcData,
-      updateData,
-      "data.description.value",
-      await renderTemplate("systems/pf1/templates/internal/spell-description.hbs", data)
+  /**
+   * Updates the spell's description.
+   */
+  async _updateSpellDescription(data) {
+    this.data.data.description.value = await renderTemplate(
+      "systems/pf1/templates/internal/spell-description.hbs",
+      data ?? this.spellDescriptionData
     );
   }
 

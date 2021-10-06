@@ -238,11 +238,8 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Enrich description
-      data.description = TextEditor.enrichHTML(data.data.description.value, { rollData: this.item.getRollData() });
       if (data.data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
-          rollData: this.item.getRollData(),
-        });
+        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, { rollData });
       }
     }
 

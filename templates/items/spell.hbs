@@ -39,7 +39,13 @@
 
     {{!-- Description Tab --}}
     <div class="tab description" data-group="primary" data-tab="description">
-      {{{description}}}
+      {{> "systems/pf1/templates/internal/spell-description.hbs" @root.item.spellDescriptionData}}
+
+      {{!-- Spell Description --}}
+      {{#if data.shortDescription}}
+      <h2>{{localize "PF1.Description"}}</h2>
+      {{roll-editor content=shortDescription target="data.shortDescription" button=true owner=owner editable=editable}}
+      {{/if}}
     </div>
 
     {{!-- Details Tab --}}
@@ -285,12 +291,6 @@
 
       {{!-- Item Measure Template --}}
       {{> "systems/pf1/templates/items/parts/item-template.hbs"}}
-
-      {{!-- Spell Description --}}
-
-      <h3 class="form-header">{{localize "PF1.Description"}}</h3>
-
-      {{roll-editor content=shortDescription target="data.shortDescription" button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Conditionals Tab --}}

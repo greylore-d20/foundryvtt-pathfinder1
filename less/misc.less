@@ -17,6 +17,16 @@ form {
   }
 }
 
+/* Unrolled inline roll; copy normal inline roll format */
+.inline-preroll.inline-formula {
+  background: #ddd;
+  padding: 1px 4px;
+  border: 1px solid #4b4a44;
+  border-radius: 2px;
+  white-space: nowrap;
+  word-break: break-all;
+}
+
 /* Tooltip text */
 .tooltip .tooltipcontent {
   font-family: sans-serif;
@@ -44,7 +54,7 @@ form {
   opacity: 0;
   transition: opacity 0.3s;
 
-  .inline-roll {
+  .inline-preroll.inline-formula {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     i.fa-dice-d20 {

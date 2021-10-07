@@ -20,6 +20,8 @@
   "SETTINGS.pf1ExpRateL": "角色等级提升的速度。",
   "SETTINGS.pf1NoExpN": "关闭经验追踪",
   "SETTINGS.pf1NoExpL": "从人物卡中移除经验条。",
+  "SETTINGS.pf1OpenXPDistributorN": "打开经验分配器",
+  "SETTINGS.pf1OpenXPDistributorL": "在战斗结束时打开经验分配器，在确认删除战斗时按住Shift可跳过。",
   "SETTINGS.pf1BackgroundSkillsN": "使用背景技能",
   "SETTINGS.pf1BackgroundSkillsH": "使用背景技能可选规则集",
   "SETTINGS.pf1FractionalBaseBonusesN": "使用局部基础加值",
@@ -111,6 +113,19 @@
   "SETTINGS.pf1UnitsN": "单位制",
   "SETTINGS.pf1UnitsL": "游戏世界中使用的单位制",
 
+  "SETTINGS.pf1ImperialUnits": "英制 (尺, 磅)",
+  "SETTINGS.pf1ImperialDistanceUnits": "英制 (尺)",
+  "SETTINGS.pf1ImperialWeightUnits": "英制 (磅)",
+  "SETTINGS.pf1MetricUnits": "公制 (米, 千克)",
+  "SETTINGS.pf1MetricDistanceUnits": "公制 (米)",
+  "SETTINGS.pf1MetricWeightUnits": "公制 (千克)",
+
+  "SETTINGS.pf1DistanceUnitsN": "距离单位制",
+  "SETTINGS.pf1DistanceUnitsL": "覆盖所用的距离单位制。",
+
+  "SETTINGS.pf1WeightUnitsN": "重量单位制",
+  "SETTINGS.pf1WeightUnitsL": "覆盖所用的重量单位制。",
+
   "TOKEN.VisionLowLight": "昏暗视觉",
   "TOKEN.VisionLowLightMultiplier": "昏暗视觉乘数",
   "TOKEN.VisionDarkvision": "黑暗视觉",
@@ -143,6 +158,15 @@
   "PF1.TooltipConfigDisable": "禁用提示",
   "PF1.TooltipConfigHideWithoutKey": "按下{key}时显示",
   "PF1.OnMouse": "跟随鼠标",
+
+  "PF1.Sheet": {
+    "PC": "玩家角色 (PC)",
+    "NPC": "非玩家角色 (NPC)",
+    "NPCLite": "简洁NPC",
+    "NPCLoot": "战利品",
+    "Item": "泛用物品",
+    "Container": "容器"
+  },
 
   "PF1.TooltipWorldConfigName": "世界提示设置",
   "PF1.TooltipWorldConfigLabel": "提示(世界)",
@@ -531,8 +555,11 @@
 
   "PF1.TimeInst": "瞬间",
   "PF1.TimeTurn": "回合",
+  "PF1.TimeTurnShort": "回合",
   "PF1.TimeRound": "轮",
+  "PF1.TimeRoundShort": "轮",
   "PF1.TimeMinute": "分钟",
+  "PF1.TimeMinuteShort": "分钟",
   "PF1.TimeHour": "小时",
   "PF1.TimeDay": "天",
   "PF1.TimeMonth": "月",
@@ -669,7 +696,7 @@
 
   "PF1.FeatTypeFeat": "专长",
   "PF1.FeatTypeClassFeat": "职业特性",
-  "PF1.FeatTypeTraits": "特质",
+  "PF1.FeatTypeTraits": "背景",
   "PF1.FeatTypeRacial": "种族特质",
   "PF1.FeatTypeTemplate": "模板",
 
@@ -771,6 +798,8 @@
   "PF1.ChangeFlagDwarflikeEncumbrance": "矮人负载",
   "PF1.ChangeFlagMediumArmorFullSpeed": "中甲全速",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "重甲全速",
+
+  "PF1.Undefined": "未定义",
 
   "PF1.ErrorGenericPermission": "你没有权限进行任何动作",
   "PF1.ErrorNoActorPermission": "你没有控制该角色的权限",
@@ -1111,6 +1140,7 @@
   "PF1.Senses": "感官",
   "PF1.Save": "豁免",
   "PF1.Size": "体型",
+  "PF1.Resizing": "体型变化",
   "PF1.Special": "特殊",
   "PF1.Speed": "速度",
   "PF1.SpeedBurrow": "掘地速度",
@@ -1301,6 +1331,7 @@
   "PF1.Unlimited": "无限",
   "PF1.Requirements": "需求",
   "PF1.Formula": "公式",
+  "PF1.BonusFormula": "加值公式",
   "PF1.FormulaResult": "公式结果",
   "PF1.ActionType": "动作类型",
   "PF1.AttackRollBonus": "攻击加值",
@@ -1338,6 +1369,9 @@
   "PF1.UpdateActor": "更新角色",
   "PF1.UpdateItem": "更新物品",
   "PF1.BonusCarryStrength": "负重力量加值",
+  "PF1.BonusCarryMultiplier": "负重乘数加值",
+  "PF1.CarryStrength": "负重力量",
+  "PF1.CarryMultiplier": "负重乘数",
   "PF1.Multiplier": "乘数",
   "PF1.CarryLightLoad": "轻载",
   "PF1.CarryMediumLoad": "中载",
@@ -1348,6 +1382,7 @@
   "PF1.CarryLabel": "携带 {0} 磅",
   "PF1.CarryLabelKg": "携带 {0} 公斤",
   "PF1.SkillBonusRankFormula": "加值等级公式",
+  "PF1.ToggleSkillLock": "开关技能清单上几乎不需要部分的编辑锁。",
   "PF1.Rank": "等级",
   "PF1.SkillRankPlural": "技能等级",
   "PF1.Used": "已使用",
@@ -1530,6 +1565,10 @@
   "PF1.Hidden": "隐藏",
   "PF1.Bright": "光亮",
   "PF1.Dim": "昏暗",
+  "PF1.PCs": "PCs",
+  "PF1.NPCs": "NPCs",
+  "PF1.Options": "选项",
+  "PF1.Cancel": "取消",
 
   "PF1.Migration.Start": "为PF1系统版本：{version}执行迁移中。 请稍等。",
   "PF1.Migration.Ongoing": "迁移进行中，请等待其完成。",
@@ -1543,6 +1582,16 @@
     },
     "ContextNoteTargetSelector": {
       "Title": "选择备注目标"
+    },
+    "XPDistributor": {
+      "Title": "经验分配器",
+      "Options": {
+        "BonusExperience": "奖励经验"
+      },
+      "SplitEvenly": "平分",
+      "GiveToAll": "给予所有人",
+      "TotalExperience": "总经验",
+      "SplitExperience": "平分经验"
     }
   },
 
@@ -1955,5 +2004,22 @@
         }
       }
     }
+  },
+  "ACTOR": {
+    "TypeCharacter": "Player Character (PC)",
+    "TypeNpc": "Nonplayer Character (NPC)"
+  },
+  "ITEM": {
+    "TypeWeapon": "Weapon",
+    "TypeEquipment": "Equipment, Magic Item, etc.",
+    "TypeConsumable": "Consumable",
+    "TypeLoot": "Loot",
+    "TypeClass": "Class, Racial HD, Mythic Path, etc.",
+    "TypeSpell": "Spell",
+    "TypeFeat": "Feat, Class Feature, Talent, etc.",
+    "TypeBuff": "Buff",
+    "TypeAttack": "Attack",
+    "TypeRace": "Race",
+    "TypeContainer": "Container"
   }
 }

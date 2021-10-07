@@ -13,6 +13,7 @@ import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { TemplateLayerPF } from "./module/measure.js";
+import { MeasuredTemplatePF } from "./module/measure.js";
 import { SightLayerPF } from "./module/low-light-vision.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
@@ -200,6 +201,7 @@ Hooks.once("init", function () {
   CONFIG.Canvas.layers.templates = TemplateLayerPF;
   CONFIG.Canvas.layers.sight = SightLayerPF;
   CONFIG.AmbientLight.objectClass = AmbientLightPF;
+  CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
   CONFIG.Actor.documentClass = ActorPF;
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;

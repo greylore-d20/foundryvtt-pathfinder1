@@ -1697,7 +1697,7 @@ export class ItemPF extends Item {
     const _roll = async function (fullAttack, form) {
       const attackExtraParts = [],
         damageExtraParts = [];
-      let primaryAttack = true,
+      let primaryAttack = this.data.data.primaryAttack ?? true,
         hasteAttackRequired = false,
         manyshotDamageRequired = false,
         rapidShotAttackRequired = false,

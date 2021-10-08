@@ -156,9 +156,9 @@ const _migrateWorldSettings = async function () {
  * Migrate a single Actor entity to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
- * @param {Actor} actor   The actor data to derive an update from
- * @param token
- * @returns {object}       The updateData to apply
+ * @param {ActorData} actor   The actor data to derive an update from
+ * @param {Token} token
+ * @returns {object}          The updateData to apply
  */
 export const migrateActorData = function (actor, token) {
   const updateData = {};

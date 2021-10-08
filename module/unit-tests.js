@@ -150,7 +150,7 @@ const runAttackTests = async function (actor) {
   {
     const test = new UnitTestResult("Longsword attack");
     try {
-      const item = actor.items.find((o) => o.name === "Longsword" && o.type === "attack");
+      const item = actor.itemTypes.attack.find((o) => o.name === "Longsword");
       item.useAttack({ skipDialog: true });
       test.succeed();
     } catch (e) {
@@ -163,7 +163,7 @@ const runAttackTests = async function (actor) {
   {
     const test = new UnitTestResult("Fireball spell");
     try {
-      const item = actor.items.find((o) => o.name === "Fireball" && o.type === "spell");
+      const item = actor.itemTypes.spell.find((o) => o.name === "Fireball");
       item.useAttack({ skipDialog: true });
       test.succeed();
     } catch (e) {

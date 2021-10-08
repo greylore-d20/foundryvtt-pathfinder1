@@ -164,7 +164,7 @@ export class ActorPF extends Actor {
 
   get race() {
     if (this.items == null) return null;
-    return this.items.filter((o) => o.type === "race")[0];
+    return this.itemTypes.race[0];
   }
 
   get typeColor() {
@@ -780,7 +780,7 @@ export class ActorPF extends Actor {
           slots.push(currentLevel);
         }
 
-        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
+        const spells = this.itemTypes.spell.filter((o) => o.data.data.spellbook === spellbookKey);
         if (!spellbook.spontaneous) {
           for (const i of spells) {
             const isDomain = i.data.data.domain === true;
@@ -1146,7 +1146,7 @@ export class ActorPF extends Actor {
 
     // Reduce final speed under certain circumstances
     {
-      const armorItems = this.items.filter((o) => o.data.type === "equipment");
+      const armorItems = this.itemTypes.equipment;
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
       if (this.data.data.attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
@@ -1848,7 +1848,7 @@ export class ActorPF extends Actor {
    */
   _updateExp(updateData) {
     // Get total level
-    const classes = this.items.filter((o) => o.type === "class");
+    const classes = this.itemTypes.class;
     const level = classes
       .filter((o) => o.data.data.classType !== "mythic")
       .reduce((cur, o) => cur + o.data.data.level, 0);
@@ -3539,54 +3539,50 @@ export class ActorPF extends Actor {
     // Set class data
     const baseSavingThrows = {};
     result.classes = {};
-    this.data.items
-      .filter((obj) => {
-        return obj.type === "class";
-      })
-      .forEach((cls) => {
-        let tag = cls.data.data.tag;
-        if (!tag) {
-          if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
-          else return;
-        }
+    this.itemTypes.class.forEach((cls) => {
+      let tag = cls.data.data.tag;
+      if (!tag) {
+        if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
+        else return;
+      }
 
-        let healthConfig = game.settings.get("pf1", "healthConfig");
-        const hasPlayerOwner = this.hasPlayerOwner;
-        healthConfig =
-          cls.data.data.classType === "racial"
-            ? healthConfig.hitdice.Racial
-            : hasPlayerOwner
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-        const classType = cls.data.data.classType || "base";
-        result.classes[tag] = {
-          level: cls.data.data.level,
-          name: cls.name,
-          hd: cls.data.data.hd,
-          bab: cls.data.data.bab,
-          hp: healthConfig.auto,
-          savingThrows: {
-            fort: 0,
-            ref: 0,
-            will: 0,
-          },
-          fc: {
-            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
-          },
-        };
+      let healthConfig = game.settings.get("pf1", "healthConfig");
+      const hasPlayerOwner = this.hasPlayerOwner;
+      healthConfig =
+        cls.data.data.classType === "racial"
+          ? healthConfig.hitdice.Racial
+          : hasPlayerOwner
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
+      const classType = cls.data.data.classType || "base";
+      result.classes[tag] = {
+        level: cls.data.data.level,
+        name: cls.name,
+        hd: cls.data.data.hd,
+        bab: cls.data.data.bab,
+        hp: healthConfig.auto,
+        savingThrows: {
+          fort: 0,
+          ref: 0,
+          will: 0,
+        },
+        fc: {
+          hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
+          skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
+          alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
+        },
+      };
 
-        for (const k of Object.keys(result.classes[tag].savingThrows)) {
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
-          if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
+      for (const k of Object.keys(result.classes[tag].savingThrows)) {
+        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
+        if (formula == null) formula = "0";
+        result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
 
-          // Set base saving throws
-          baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
-          baseSavingThrows[k] += result.classes[tag].savingThrows[k];
-        }
-      });
+        // Set base saving throws
+        baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
+        baseSavingThrows[k] += result.classes[tag].savingThrows[k];
+      }
+    });
 
     // Add more info for formulas
     if (this.data.items) {
@@ -3594,8 +3590,8 @@ export class ActorPF extends Actor {
       result.shield = { type: 0 };
 
       // Determine equipped armor type
-      const armor = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
+      const armor = this.itemTypes.equipment.filter(
+        (o) => o.data.data.equipmentType === "armor" && o.data.data.equipped
       );
       const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       for (const o of armor) {
@@ -3616,8 +3612,8 @@ export class ActorPF extends Actor {
       mergeObject(result.armor, eqArmor);
 
       // Determine equipped shield type
-      const shields = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
+      const shields = this.itemTypes.equipment.filter(
+        (o) => o.data.data.equipmentType === "shield" && o.data.data.equipped
       );
       const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       for (const o of shields) {
@@ -3731,9 +3727,7 @@ export class ActorPF extends Actor {
     if (this.items == null) return base;
 
     // Gather CR from templates
-    const templates = this.items.filter(
-      (o) => o.type === "feat" && o.data.data.featType === "template" && !o.data.data.disabled
-    );
+    const templates = this.itemTypes.feat.filter((o) => o.data.data.featType === "template" && !o.data.data.disabled);
     return templates.reduce((cur, o) => {
       const crOffset = o.data.data.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
@@ -3865,7 +3859,7 @@ export class ActorPF extends Actor {
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffTextures() {
-    const buffs = this.items.filter((o) => o.type === "buff");
+    const buffs = this.itemTypes.buff;
     return buffs.reduce((acc, cur) => {
       const id = cur.uuid;
       if (cur.data.data.hideFromToken) return acc;
@@ -3940,9 +3934,7 @@ export class ActorPF extends Actor {
    */
   getFeatCount() {
     const result = { max: 0, value: 0 };
-    result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled;
-    }).length;
+    result.value = this.itemTypes.feat.filter((o) => o.data.data.featType === "feat" && !o.data.data.disabled).length;
 
     // Add feat count by level
     const totalLevels = this.items

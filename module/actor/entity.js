@@ -1,6 +1,6 @@
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, convertDistance, convertWeight } from "../lib.js";
+import { createTag, convertDistance, convertWeight, enrichHTMLUnrolled } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
@@ -3257,7 +3257,7 @@ export class ActorPF extends Actor {
     }, []);
   }
 
-  formatContextNotes(notes, rollData) {
+  formatContextNotes(notes, rollData, { roll = true } = {}) {
     const result = [];
     rollData = rollData ?? this.getRollData();
     for (const noteObj of notes) {
@@ -3265,7 +3265,7 @@ export class ActorPF extends Actor {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (const note of noteObj.notes) {
-        result.push(...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData })));
+        result.push(...note.split(/[\n\r]+/).map((o) => enrichHTMLUnrolled(o, { rollData, rolls: roll })));
       }
     }
     return result;

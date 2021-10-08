@@ -867,6 +867,42 @@
         "hardness": 5,
         "identifiedName": "Mwk Javelin",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 30,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -878,12 +914,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "weaponSubtype": "ranged",
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "P",
-          "range": 30
-        }
+        "weaponSubtype": "ranged"
       },
       "effects": [],
       "folder": null,
@@ -912,6 +943,42 @@
         "hardness": 10,
         "identifiedName": "Mwk Morningstar",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "B and P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -923,12 +990,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "weaponSubtype": "1h",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "B and P",
-          "range": 0
-        }
+        "weaponSubtype": "1h"
       },
       "effects": [],
       "folder": null,

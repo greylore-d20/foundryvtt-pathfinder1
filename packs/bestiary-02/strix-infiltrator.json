@@ -1358,6 +1358,43 @@
         "hardness": 10,
         "identifiedName": "Dagger",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "P or S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1367,13 +1404,7 @@
           "boolean": [],
           "dictionary": []
         },
-        "scriptCalls": [],
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "P or S",
-          "critRange": 19,
-          "range": 10
-        }
+        "scriptCalls": []
       },
       "effects": [],
       "folder": null,
@@ -1402,6 +1433,43 @@
         "hardness": 10,
         "identifiedName": "Short Sword",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1412,13 +1480,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "weaponType": "martial",
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "P",
-          "critRange": 19,
-          "range": 0
-        }
+        "weaponType": "martial"
       },
       "effects": [],
       "folder": null,
@@ -1439,6 +1501,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -2095,9 +2165,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, inquisitor 2, medium 2, mesmerist 2, psychic 1, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2, witch 2;\n    <strong>Domain</strong>&nbsp;Knowledge 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a copper piece)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject.</p><p><i>1st Round</i>: Presence or absence of thoughts (from conscious creatures with Intelligence scores of 1 or higher).</p><p><i>2nd Round</i>: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher (and at least 10 points higher than your own Intelligence score), you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting.</p><p><i>3rd Round</i>: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast <i>detect thoughts</i> again to have another chance. Creatures of animal intelligence (Int 1 or 2) have simple, instinctual thoughts.</p><p>Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2239,9 +2306,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;adept 2, alchemist 2, antipaladin 2, bard 2, inquisitor 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2;\n    <strong>Domain</strong>&nbsp;Trickery 2;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Arcane 2, Djinni 2, Oni 2, Rakshasa 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (an eyelash encased in gum arabic)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you or a creature or object weighing no more than 100 lbs./level<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>The creature or object touched becomes invisible. If the recipient is a creature carrying gear, that vanishes, too. If you cast the spell on someone else, neither you nor your allies can see the subject, unless you can normally see invisible things or you employ magic to do so.</p><p>Items dropped or put down by an invisible creature become visible; items picked up disappear if tucked into the clothing or pouches worn by the creature. Light, however, never becomes invisible, although a source of light can become so (thus, the effect is that of a light with no visible source). Any part of an item that the subject carries but that extends more than 10 feet from it becomes visible.</p><p>Of course, the subject is not magically silenced, and certain other conditions can render the recipient detectable (such as swimming in water or stepping in a puddle). If a check is required, a stationary invisible creature has a +40 bonus on its Stealth checks. This bonus is reduced to +20 if the creature is moving. The spell ends if the subject attacks any creature. For purposes of this spell, an attack includes any spell targeting a foe or whose area or effect includes a foe. Exactly who is a foe depends on the invisible character's perceptions. Actions directed at unattended objects do not break the spell. Causing harm indirectly is not an attack. Thus, an invisible being can open doors, talk, eat, climb stairs, summon monsters and have them attack, cut the ropes holding a rope bridge while enemies are on the bridge, remotely trigger traps, open a portcullis to release attack dogs, and so forth. If the subject attacks directly, however, it immediately becomes visible along with all its gear.</p><p>Spells such as <i>bless</i> that specifically affect allies but not foes are not attacks for this purpose, even when they include foes in their area.</p><p><i>Invisibility</i> can be made permanent (on objects only) with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2413,9 +2477,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;alchemist 1, antipaladin 1, bard 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1;\n    <strong>Domain</strong>&nbsp;Trickery 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Div 1, Nanite 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You make yourself--including clothing, armor, weapons, and equipmen--look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type (although you can appear as another subtype). Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender.</p><p>The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile (touch) or audible (sound) properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2552,9 +2613,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;alchemist 1, bard 1, bloodrager 1, inquisitor 1, magus 1, medium 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    \n    <strong>Subdomain</strong>&nbsp;Azata 1, Exploration 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell increases your base land speed by 30 feet. This adjustment is treated as an enhancement bonus. There is no effect on other modes of movement, such as burrow, climb, fly, or swim. As with any effect that increases your speed, this spell affects your jumping distance (see the Acrobatics skill).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2699,9 +2757,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;alchemist 1, druid 1, hunter 1, occultist 1, ranger 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M/DF (a hawk&#x27;s feather)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The subject gains a +2 competence bonus on Perception checks and gains low-light vision. Subjects that have low-light vision double the distance they can see under the effects of this spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2809,9 +2864,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration&nbsp;[force];\n    <strong>Level</strong>&nbsp;alchemist 1, bloodrager 1, magus 1, occultist 1, psychic 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    \n    <strong>Subdomain</strong>&nbsp;Defense 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p><i>Shield</i> creates an invisible <i>shield</i> of force that hovers in front of you. It negates <i>magic missile</i> attacks directed at you. The disk also provides a +4 <i>shield</i> bonus to AC. This bonus applies against incorporeal touch attacks, since it is a force effect. The <i>shield</i> has no armor check penalty or arcane spell failure chance.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

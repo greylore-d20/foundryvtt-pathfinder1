@@ -1661,6 +1661,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1694,6 +1702,43 @@
         "hardness": 10,
         "identifiedName": "Mwk Falchion",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(2, 4, @size)",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 18
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1706,13 +1751,7 @@
         "scriptCalls": [],
         "masterwork": true,
         "weaponType": "martial",
-        "weaponSubtype": "2h",
-        "weaponData": {
-          "damageRoll": "2d4",
-          "damageType": "S",
-          "critRange": 18,
-          "range": 0
-        }
+        "weaponSubtype": "2h"
       },
       "effects": [],
       "folder": null,
@@ -2299,9 +2338,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As summon nature’s ally V could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "uses": {
           "value": 1,

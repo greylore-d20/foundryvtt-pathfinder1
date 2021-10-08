@@ -1155,6 +1155,43 @@
         "hardness": 10,
         "identifiedName": "Light Steel Shield",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 3, @size)",
+              "B"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": "20",
+          "critMult": "2"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1165,13 +1202,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "weaponType": "martial",
-        "weaponData": {
-          "damageRoll": "1d3",
-          "damageType": "B",
-          "critRange": "20",
-          "critMult": "2"
-        }
+        "weaponType": "martial"
       },
       "effects": [],
       "folder": null,
@@ -1192,6 +1223,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1229,6 +1268,42 @@
         "hardness": 10,
         "identifiedName": "Mwk Light Mace",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "B"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1239,12 +1314,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "masterwork": true,
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "B",
-          "range": 0
-        }
+        "masterwork": true
       },
       "effects": [],
       "folder": null,
@@ -1756,9 +1826,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As resistant touch +2 could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "uses": {
           "value": 7,
@@ -1808,9 +1875,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As dimensional hop could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -1853,9 +1917,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(teleportation);\n    <strong>Level</strong>&nbsp;magus 5, medium 4, occultist 5, psychic 5, sorcerer/wizard 5, spiritualist 5, summoner 4, unchained Summoner 5, witch 5;\n    <strong>Domain</strong>&nbsp;Travel 5;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you and touched objects or other touched willing creatures<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell instantly transports you to a designated destination, which may be as distant as 100 miles per caster level. Interplanar travel is not possible. You can bring along objects as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature (carrying gear or objects up to its maximum load) or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as four Medium creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you. As with all spells where the range is personal and the target is you, you need not make a saving throw, nor is spell resistance applicable to you. Only objects held or in use (attended) by another person receive saving throws and spell resistance.</p><p>You must have some clear idea of the location and layout of the destination. The clearer your mental image, the more likely the teleportation works. Areas of strong physical or magical energy may make teleportation more hazardous or even impossible.</p><p>To see how well the teleportation works, roll d% and consult the table at the end of this spell. Refer to the following information for definitions of the terms on the table.</p><p><i>Familiarity:</i> \"Very familiar\" is a place where you have been very often and where you feel at home. \"Studied carefully\" is a place you know well, either because you can currently physically see it or you've been there often. \"Seen casually\" is a place that you have seen more than once but with which you are not very familiar. \"Viewed once\" is a place that you have seen once, possibly using magic such as <i>scrying.</i></p><p>\"False destination\" is a place that does not truly exist or if you are teleporting to an otherwise familiar location that no longer exists as such or has been so completely altered as to no longer be familiar to you. When traveling to a false destination, roll 1d20+80 to obtain results on the table, rather than rolling d%, since there is no real destination for you to hope to arrive at or even be off target from.</p><p><i>On Target</i>: You appear where you want to be.</p><p><i>Off Target</i>: You appear safely a random distance away from the destination in a random direction. Distance off target is d% of the distance that was to be traveled. The direction off target is determined randomly.</p><p><i>Similar Area</i>: You wind up in an area that's visually or thematically similar to the target area. Generally, you appear in the closest similar place within range. If no such area exists within the spell's range, the spell simply fails instead.</p><p><i>Mishap:</i> You and anyone else teleporting with you have gotten \"scrambled.\" You each take 1d10 points of damage, and you reroll on the chart to see where you wind up. For these rerolls, roll 1d20+80.</p><p>Each time \"Mishap\" comes up, the characters take more damage and must reroll.</p><p> <table><tr><th>Familiarity</th><th>On Target</th><th>Off Target</th><th>Similar Area</th><th>mishap</th></tr><tr><td>Very familiar</td><td>01-97</td><td>98-99</td><td>100</td><td>-</td></tr><tr><td>Studied carefully</td><td>01-94</td><td>95-97</td><td>98-99</td><td>100</td></tr><tr><td>Seen casually</td><td>01-88</td><td>89-94</td><td>95-98</td><td>99-100</td></tr><tr><td>Viewed once</td><td>01-76</td><td>77-88</td><td>89-96</td><td>97-100</td></tr><tr><td>False destination</td><td>-</td><td>-</td><td>81-92</td><td>93-100</td></tr></table> </p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1985,9 +2046,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[earth];\n    <strong>Level</strong>&nbsp;adept 5, cleric/oracle 5, druid 6, hunter 6, magus 5, occultist 5, shaman 6, sorcerer/wizard 5, summoner 4, unchained Summoner 5;\n    <strong>Domain</strong>&nbsp;Earth 5;\n    <strong>Subdomain</strong>&nbsp;Fortifications 5;\n    \n    <strong>Bloodline</strong>&nbsp;Shaitan 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a small block of granite)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;stone wall whose area is up to one 5-ft. square/level (S)<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a wall of rock that merges into adjoining rock surfaces. A <i>Wall of Stone</i> is 1 inch thick per four caster levels and composed of up to one 5-foot square per level. You can double the wall's area by halving its thickness. The wall cannot be conjured so that it occupies the same space as a creature or another object.</p><p>Unlike a <i>wall of iron</i>, you can create a <i>Wall of Stone</i> in almost any shape you desire. The wall created need not be vertical, nor rest upon any firm foundation; however, it must merge with and be solidly supported by existing stone. It can be used to bridge a chasm, for instance, or as a ramp. For this use, if the span is more than 20 feet, the wall must be arched and buttressed. This requirement reduces the spell's area by half. The wall can be crudely shaped to allow crenellations, battlements, and so forth by likewise reducing the area.</p><p>Like any other stone wall, this one can be destroyed by a <i>disintegrate</i> spell or by normal means such as breaking and chipping.</p><p>Each 5-foot square of the wall has hardness 8 and 15 hit points per inch of thickness. A section of wall whose hit points drop to 0 is breached. If a creature tries to break through the wall with a single attack, the DC for the Strength check is 20 + 2 per inch of thickness.</p><p>It is possible, but difficult, to trap mobile opponents within or under a <i>Wall of Stone</i>, provided the wall is shaped so it can hold the creatures. Creatures can avoid entrapment with successful Reflex saves.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2134,9 +2192,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(teleportation);\n    <strong>Level</strong>&nbsp;bard 4, magus 4, medium 3, mesmerist 4, occultist 4, psychic 4, sorcerer/wizard 4, spiritualist 4, summoner 3, unchained Summoner 4, witch 4;\n    <strong>Domain</strong>&nbsp;Travel 4;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Arcane 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;you and touched objects or other touched willing creatures<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none and Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desired--whether by simply visualizing the area or by stating direction. After using this spell, you can't take any other actions until your next turn. You can bring along objects as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature (carrying gear or objects up to its maximum load) or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you.</p><p>If you arrive in a place that is already occupied by a solid body, you and each creature traveling with you take 1d6 points of damage and are shunted to a random open space on a suitable surface within 100 feet of the intended location.</p><p>If there is no free space within 100 feet, you and each creature traveling with you take an additional 2d6 points of damage and are shunted to a free space within 1,000 feet. If there is no free space within 1,000 feet, you and each creature travelling with you take an additional 4d6 points of damage and the spell simply fails.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2279,9 +2334,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 4, inquisitor 4, medium 4, occultist 4, psychic 5, shaman 4, sorcerer/wizard 5, spiritualist 5, summoner 4, unchained Summoner 5;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Abyssal 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one extraplanar creature<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell forces an extraplanar creature back to its proper plane if it fails a Will save. If the spell is successful, the creature is instantly whisked away, but there is a 20% chance of actually sending the subject to a plane other than its own.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2413,9 +2465,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 4, bard 4, cleric/oracle 4, druid 4, hunter 4, inquisitor 4, medium 4, mesmerist 4, occultist 4, psychic 4, ranger 4, spiritualist 4;\n    <strong>Domain</strong>&nbsp;Liberation 4, Luck 4;\n    <strong>Subdomain</strong>&nbsp;Flowing 4;\n    \n    <strong>Bloodline</strong>&nbsp;Destined 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a leather strip bound to the target), DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you or creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell enables you or a creature you touch to move and attack normally for the duration of the spell, even under the influence of magic that usually impedes movement, such as paralysis, solid fog, slow, and <i>web.</i> All combat maneuver checks made to grapple the target automatically fail. The subject automatically succeeds on any combat maneuver checks and Escape Artist checks made to escape a grapple or a pin.</p><p>The spell also allows the subject to move and attack normally while underwater, even with slashing weapons such as axes and swords or with bludgeoning weapons such as flails, hammers, and maces, provided that the weapon is wielded in the hand rather than hurled. The <i>freedom of movement</i> spell does not, however, grant water breathing.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2574,9 +2623,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(summoning);\n    <strong>Level</strong>&nbsp;antipaladin 4, bard 4, cleric/oracle 4, medium 3, psychic 4, sorcerer/wizard 4, spiritualist 4, summoner 3, unchained Summoner 3, witch 4;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a tiny bag and a small candle)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one summoned creature<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>summon monster I,</i> except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -2704,9 +2750,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;antipaladin 3, bard 3, cleric/oracle 3, druid 4, hunter 4, inquisitor 3, magus 3, medium 3, mesmerist 3, occultist 3, paladin 3, psychic 3, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3, witch 3;\n    <strong>Domain</strong>&nbsp;Magic 3;\n    <strong>Subdomain</strong>&nbsp;Entropy 3;\n    \n    <strong>Bloodline</strong>&nbsp;Arcane 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;one spellcaster, creature, or object<br>\n    <strong>Targets</strong>&nbsp;one spellcaster, creature, or object<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can use <i>dispel magic</i> to end one ongoing spell that has been cast on a creature or object, to temporarily suppress the magical abilities of a magic item, or to counter another spellcaster's spell. A dispelled spell ends as if its duration had expired. Some spells, as detailed in their descriptions, can't be defeated by <i>dispel magic</i>. <i><i>Dispel</i> magic</i> can dispel (but not counter) spell-like effects just as it does spells. The of a spell with an instantaneous duration can't be dispelled, because the magical effect is already over before the <i>dispel magic</i> can take effect.</p><p>You choose to use <i>dispel magic</i> in one of two ways: a targeted dispel or a counterspell.</p><p><i>Targeted</i> <i>Dispel</i>: One object, creature, or spell is the target of the <i>dispel magic</i> spell. You make one dispel check (1d20 + your caster level) and compare that to the spell with highest caster level (DC = 11 + the spell's caster level). If successful, that spell ends.</p><p>If not, compare the same result to the spell with the next highest caster level. Repeat this process until you have dispelled one spell affecting the target, or you have failed to dispel every spell.</p><p>For example, a 7th-level caster casts <i>dispel magic</i>, targeting a creature affected by <i>stoneskin</i> (caster level 12th) and <i>fly</i> (caster level 6th). The caster level check results in a 19. This check is not high enough to end the <i>stoneskin</i> (which would have required a 23 or higher), but it is high enough to end the <i>fly</i> (which only required a 17). Had the dispel check resulted in a 23 or higher, the <i>stoneskin</i> would have been dispelled, leaving the <i>fly</i> intact. Had the dispel check been a 16 or less, no spells would have been affected.</p><p>You can also use a targeted dispel to specifically end one spell affecting the target or one spell affecting an area (such as a <i>wall of</i> fire). You must name the specific spell effect to be targeted in this way. If your caster level check is equal to or higher than the DC of that spell, it ends. No other spells or effects on the target are dispelled if your check is not high enough to end the targeted effect.</p><p>If you target an object or creature that is the effect of an ongoing spell (such as a monster <i>summon</i>ed by <i>summon</i> monster), you make a dispel check to end the spell that conjured the object or creature.</p><p>If the object that you target is a magic item, you make a dispel check against the item's caster level (DC = 11 + the item's caster level). If you succeed, all the item's magical properties are suppressed for 1d4 rounds, after which the item recovers its magical properties. A suppressed item becomes nonmagical for the duration of the effect. An interdimensional opening (such as a <i>bag of</i> holding) is temporarily closed. A magic item's physical properties are unchanged: A suppressed magic sword is still a sword (a masterwork sword, in fact). Artifacts and deities are unaffected by mortal magic such as this.</p><p>You automatically succeed on your dispel check against any spell that you cast yourself.</p><p><i>Counterspell</i>: When <i>dispel magic</i> is used in this way, the spell targets a spellcaster and is cast as a counterspell. Unlike a true counterspell, however, <i>dispel magic</i> may not work; you must make a dispel check to counter the other spellcaster's spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2880,9 +2923,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;cleric/oracle 3, inquisitor 3, occultist 3, shaman 3;\n    <strong>Domain</strong>&nbsp;Nobility 3, Strength 3, War 3;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;armor or shield touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless, object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels (maximum +5 at 20th level).</p><p>An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2997,9 +3037,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[earth];\n    <strong>Level</strong>&nbsp;cleric/oracle 3, druid 3, hunter 3, psychic 3;\n    <strong>Domain</strong>&nbsp;Ruins 3;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p><i>Meld into stone</i> enables you to meld your body and possessions into a single block of stone. The stone must be large enough to accommodate your body in all three dimensions. When the casting is complete, you and not more than 100 pounds of nonliving gear merge with the stone. If either condition is violated, the spell fails and is wasted.</p><p>While in the stone, you remain in contact, however tenuous, with the face of the stone through which you melded. You remain aware of the passage of time and can cast spells on yourself while hiding in the stone. Nothing that goes on outside the stone can be seen, but you can still hear what happens around you. Minor physical damage to the stone does not harm you, but its partial destruction (to the extent that you no longer fit within it) expels you and deals you 5d6 points of damage. The stone's complete destruction expels you and slays you instantly unless you make a DC 18 Fortitude save. Even if you make your save, you still take 5d6 points of damage.</p><p>Any time before the duration expires, you can step out of the stone through the surface that you entered. If the spell's duration expires or the effect is dispelled before you voluntarily exit the stone, you are violently expelled and take 5d6 points of damage.</p><p>The following spells harm you if cast upon the stone that you are occupying. <i>Stone to flesh</i> expels you and deals you 5d6 points of damage. Stone <i>shape</i> deals 3d6 points of damage but does not expel you. <i>Transmute rock to mud</i> expels you and then slays you instantly unless you make a DC 18 Fortitude save, in which case you are merely expelled. Finally, <i>passwall</i> expels you without damage.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3107,9 +3144,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 3, bloodrager 3, cleric/oracle 3, druid 3, hunter 2, inquisitor 3, occultist 3, psychic 3, ranger 2, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3;\n    <strong>Domain</strong>&nbsp;Luck 3, Protection 3;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Destined 3, Elemental 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Protection from energy</i> grants temporary immunity to the type of energy you specify when you cast it (acid, cold, electricity, fire, or sonic). When the spell absorbs 12 points per caster level of energy damage (to a maximum of 120 points at 10th level), it is discharged.</p><p><i>Protection from energy</i> overlaps (and does not stack with) <i><i>resist energy</i>.</i> If a character is warded by <i><i>protection</i> from energy</i> and <i>resist energy</i>, the <i>protection</i> spell absorbs damage until its power is exhausted.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3270,9 +3304,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[earth];\n    <strong>Level</strong>&nbsp;cleric/oracle 3, druid 3, hunter 3, occultist 3, shaman 3, sorcerer/wizard 4;\n    <strong>Domain</strong>&nbsp;Artifice 3, Earth 3;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (soft clay)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;stone or stone object touched, up to 10 cu. ft. + 1 cu. ft./level<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can form an existing piece of stone into any shape that suits your purpose. While it's possible to make crude coffers, doors, and so forth with <i>stone shape</i>, fine detail isn't possible. There is a 30% chance that any shape including moving parts simply doesn't work.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3397,9 +3428,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As bull’s strength could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -3445,9 +3473,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting, emotion];\n    <strong>Level</strong>&nbsp;bard 2, cleric/oracle 2, inquisitor 2, mesmerist 2, occultist 2, psychic 2, shaman 2;\n    <strong>Domain</strong>&nbsp;Charm 2;\n    <strong>Subdomain</strong>&nbsp;Family 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;creatures in a 20-ft.-radius spread<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell calms agitated creatures. You have no control over the affected creatures, but <i>calm emotions</i> can stop raging creatures from fighting or joyous ones from reveling. Creatures so affected cannot take violent actions (although they can defend themselves) or do anything destructive. Any aggressive action against or damage dealt to a calmed creature immediately breaks the spell on all calmed creatures.</p><p>This spell automatically suppresses (but does not dispel) any morale bonuses granted by spells such as <i>bless</i>, <i>good hope</i>, and <i>rage</i>, and also negates a bard's ability to inspire courage or a barbarian's rage ability. It also suppresses any fear effects and removes the confused condition from all targets. While the spell lasts, a suppressed spell, condition, or effect has no effect. When the <i>calm emotions spell</i> ends, the original spell or effect takes hold of the creature again, provided that its duration has not expired in the meantime.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3573,9 +3598,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[darkness];\n    <strong>Level</strong>&nbsp;adept 2, antipaladin 2, bard 2, cleric/oracle 2, inquisitor 2, magus 2, occultist 2, shaman 2, sorcerer/wizard 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M/DF (bat fur and a piece of coal)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;object touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell causes an object to radiate <i>darkness</i> out to a 20-foot radius. This <i>darkness</i> causes the illumination level in the area to drop one step, from bright light to normal light, from normal light to dim light, or from dim light to <i>darkness</i>. This spell has no effect in an area that is already dark. Creatures with light vulnerability or sensitivity take no penalties in normal light. All creatures gain concealment (20% miss chance) in dim light. All creatures gain total concealment (50% miss chance) in <i>darkness</i>.</p><p>Creatures with darkvision can see in an area of dim light or <i>darkness</i> without penalty. Nonmagical sources of light, such as torches and lanterns, do not increase the light level in an area of <i>darkness</i>. Magical light sources only increase the light level in an area if they are of a higher spell level than <i>darkness</i>.</p><p>If <i>darkness</i> is cast on a small object that is then placed inside or under a lightproof covering, the spell's effect is blocked until the covering is removed.</p><p>This spell does not stack with itself. <i>Darkness</i> can be used to counter or dispel any light spell of equal or lower spell level.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3703,9 +3725,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 2, inquisitor 2, paladin 2, psychic 2;\n    <strong>Domain</strong>&nbsp;Community 2, Protection 2;\n    <strong>Subdomain</strong>&nbsp;Friendship 2, Martyr 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a pair of platinum rings worth 50 gp worn by both you and the target)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell wards the subject and creates a mystic connection between you and the subject so that some of its wounds are transferred to you. The subject gains a +1 deflection bonus to AC and a +1 resistance bonus on saves. Additionally, the subject takes only half damage from all wounds and attacks (including those dealt by special abilities) that deal hit point damage. The amount of damage not taken by the warded creature is taken by you. Forms of harm that do not involve hit points, such as <i>charm</i> effects, temporary ability damage, level draining, and death effects, are not affected. If the subject suffers a reduction of hit points from a lowered Constitution score, the reduction is not split with you because it is not hit point damage. When the spell ends, subsequent damage is no longer divided between the subject and you, but damage already split is not reassigned to the subject.</p><p>If you and the subject of the spell move out of range of each other, the spell ends.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3829,9 +3848,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[sonic];\n    <strong>Level</strong>&nbsp;bard 2, cleric/oracle 2, occultist 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a musical instrument)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;10-ft.-radius spread<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You blast an area with a tremendous cacophony. Every creature in the area takes 1d8 points of sonic damage and must succeed on a Fortitude save to avoid being stunned for 1 round. Creatures that cannot hear are not stunned but are still damaged.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3934,9 +3950,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;cleric/oracle 2, inquisitor 2, medium 2, paladin 2, psychic 2, witch 2;\n    \n    <strong>Subdomain</strong>&nbsp;Honor 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;20-ft.-radius emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Creatures within the emanation area (or those who enter it) can't speak any deliberate and intentional lies. Each potentially affected creature is allowed a save to avoid the effects when the spell is cast or when the creature first enters the emanation area. Affected creatures are aware of this enchantment. Therefore, they may avoid answering questions to which they would normally respond with a lie, or they may be evasive as long as they remain within the boundaries of the truth. Creatures who leave the area are free to speak as they choose.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4053,9 +4066,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, cleric/oracle 1, inquisitor 1, paladin 1, shaman 1;\n    <strong>Domain</strong>&nbsp;Community 1;\n    <strong>Subdomain</strong>&nbsp;Leadership 1, Resolve 1;\n    \n    <strong>Bloodline</strong>&nbsp;Celestial 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;50 feet<br>\n    <strong>Area</strong>&nbsp;The caster and all allies within a 50-ft. burst, centered on the caster<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Bless</i> fills your allies with courage. Each ally gains a +1 morale bonus on attack rolls and on saving throws against fear effects.</p><p><i>Bless</i> counters and dispels <i>bane</i>.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4180,9 +4190,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, witch 1;\n    \n    <strong>Subdomain</strong>&nbsp;Devil 1, Toil 1, Tyranny 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options.</p><p><i>Approach</i>: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Drop</i>: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn.</p><p><i>Fall</i>: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties.</p><p><i>Flee</i>: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Halt</i>: The subject stands in place for 1 round. It may not take any actions but is not considered helpless.</p><p>If the subject can't carry out your command on its next turn, the spell automatically fails.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4318,9 +4325,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;adept 1, alchemist 1, bloodrager 1, cleric/oracle 1, druid 1, hunter 1, paladin 1, psychic 1, ranger 1, shaman 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    <strong>Domain</strong>&nbsp;Sun 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Martyred 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;24 hours<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A creature protected by <i>endure elements</i> suffers no harm from being in a hot or cold environment. It can exist comfortably in conditions between -50 and 140 degrees Fahrenheit without having to make Fortitude saves. The creature's equipment is likewise protected.</p><p><i>Endure elements</i> doesn't provide any protection from fire or cold damage, nor does it protect against other environmental hazards such as smoke, lack of air, and so forth.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4471,9 +4475,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 1, hunter 1, ranger 1;\n    <strong>Domain</strong>&nbsp;Travel 1;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of dirt)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell gives you a +10 foot enhancement bonus to your base speed. It has no effect on other modes of movement, such as burrow, climb, fly, or swim.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4579,9 +4580,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, inquisitor 1, spiritualist 1;\n    <strong>Domain</strong>&nbsp;Protection 1;\n    <strong>Subdomain</strong>&nbsp;Aeon 1, Freedom 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save. If the save succeeds, the opponent can attack normally and is unaffected by that casting of the spell. If the save fails, the opponent can't follow through with the attack, that part of its action is lost, and it can't directly attack the warded creature for the duration of the spell.</p><p>Those not attempting to attack the subject remain unaffected. This spell does not prevent the warded creature from being attacked or affected by area of effect spells. The subject cannot attack without breaking the spell but may use nonattack spells or otherwise act.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4694,9 +4692,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, inquisitor 1;\n    <strong>Domain</strong>&nbsp;Glory 1;\n    <strong>Subdomain</strong>&nbsp;Agathion 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (parchment with a holy text written on it)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a shimmering, magical field around the target that averts and deflects attacks. The spell grants the subject a +2 deflection bonus to AC, with an additional +1 to the bonus for every six levels you have (maximum +5 deflection bonus at 18th level).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4802,9 +4797,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[water];\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, occultist 0, paladin 1, shaman 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;up to 2 gallons of water/level<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell generates wholesome, drinkable water, just like clean rain water. Water can be created in an area as small as will actually contain the liquid, or in an area three times as large--possibly creating a downpour or filling many small receptacles. This water disappears after 1 day if not consumed.</p><p>Note: Conjuration spells can't create substances or objects within a creature. Water weighs about 8 pounds per gallon. One cubic foot of water contains roughly 8 gallons and weighs about 60 pounds.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4922,9 +4914,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;cleric/oracle 0, druid 0, hunter 0, inquisitor 0, mesmerist 0, occultist 0, paladin 1, psychic 0, ranger 1, shaman 0, sorcerer/wizard 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;one creature, one object, or a 5-ft. cube<br>\n    <strong>Targets</strong>&nbsp;one creature, one object, or a 5-ft. cube<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You determine whether a creature, object, or area has been poisoned or is poisonous. You can determine the exact type of poison with a DC 20 Wisdom check. A character with the Craft (alchemy) skill may try a DC 20 Craft (alchemy) check if the Wisdom check fails, or may try the Craft (alchemy) check prior to the Wisdom check. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5055,9 +5044,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, shaman 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5192,9 +5178,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;adept 0, bard 0, cleric/oracle 0, druid 0, hunter 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;10 feet<br>\n    \n    <strong>Targets</strong>&nbsp;one object of up to 1 lb./level<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless, object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell repairs damaged objects, restoring 1d4 hit points to the object. If the object has the broken condition, this condition is removed if the object is restored to at least half its original hit points. All of the pieces of an object must be present for this spell to function. Magic items can be repaired by this spell, but you must have a caster level equal to or higher than that of the object. Magic items that are destroyed (at 0 hit points or less) can be repaired with this spell, but this spell does not restore their magic abilities. This spell does not affect creatures (including constructs). This spell has no effect on objects that have been warped or otherwise transmuted, but it can still repair damage done to such items.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 10,

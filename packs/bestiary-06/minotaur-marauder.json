@@ -1219,6 +1219,43 @@
         "hardness": 10,
         "identifiedName": "+1 Greataxe",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 12, @size)",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1232,13 +1269,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "2h",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d12",
-          "damageType": "S",
-          "critMult": 3,
-          "range": 0
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -1267,6 +1298,44 @@
         "hardness": 5,
         "identifiedName": "Mwk Composite Longbow (+6 Str) With 40 Arrows",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 110,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "critRange": "20",
+          "critMult": "3"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1279,14 +1348,7 @@
         "scriptCalls": [],
         "masterwork": true,
         "weaponType": "martial",
-        "weaponSubtype": "ranged",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critRange": "20",
-          "critMult": "3",
-          "range": 110
-        }
+        "weaponSubtype": "ranged"
       },
       "effects": [],
       "folder": null,

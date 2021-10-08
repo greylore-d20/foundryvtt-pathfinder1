@@ -843,6 +843,43 @@
         "hardness": 10,
         "identifiedName": "Mwk Dagger",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "P or S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -853,13 +890,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "masterwork": true,
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "P or S",
-          "critRange": 19,
-          "range": 10
-        }
+        "masterwork": true
       },
       "effects": [],
       "folder": null,
@@ -888,6 +919,43 @@
         "hardness": 10,
         "identifiedName": "Mwk Rhoka Sword",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 18
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -900,13 +968,7 @@
         "scriptCalls": [],
         "masterwork": true,
         "weaponType": "exotic",
-        "weaponSubtype": "1h",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "S",
-          "critRange": 18,
-          "range": 0
-        }
+        "weaponSubtype": "1h"
       },
       "effects": [],
       "folder": null,
@@ -1277,9 +1339,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;bard 1, bloodrager 1, magus 1, occultist 1, psychic 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    <strong>Domain</strong>&nbsp;Void 1;\n    <strong>Subdomain</strong>&nbsp;Feather 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 immediate<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one Medium or smaller freefalling object or creature/level, no two of which may be more than 20 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;until landing or 1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless) or Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The affected creatures or objects fall slowly. <i>Feather fall</i> instantly changes the rate at which the targets fall to a mere 60 feet per round (equivalent to the end of a fall from a few feet), and the subjects take no damage upon landing while the spell is in effect. When the spell duration expires, a normal rate of falling resumes.</p><p>The spell affects one or more Medium or smaller creatures (including gear and carried objects up to each creature's maximum load) or objects, or the equivalent in larger creatures: a Large creature or object counts as two Medium creatures or objects, a Huge creature or object counts as four Medium creatures or objects, and so forth.</p><p>This spell has no special effect on ranged weapons unless they are falling quite a distance. If the spell is cast on a falling item, the object does half normal damage based on its weight, with no bonus for the height of the drop.</p><p><i>Feather fall</i> works only upon free-falling objects. It does not affect a sword blow or a charging or flying creature.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "immediate"
@@ -1410,9 +1469,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[see text];\n    <strong>Level</strong>&nbsp;cleric/oracle 2, inquisitor 2;\n    <strong>Domain</strong>&nbsp;Chaos 2, Evil 2, Good 2, Law 2;\n    <strong>Subdomain</strong>&nbsp;Demodand 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;weapon touched or 50 projectiles (all of which must be together at the time of casting)<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless, object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Align weapon</i> makes a weapon chaotic, evil, good, or lawful, as you choose. A weapon that is aligned can bypass the damage reduction of certain creatures. This spell has no effect on a weapon that already has an alignment.</p><p>You can't cast this spell on a natural weapon, such as an unarmed strike. When you make a weapon chaotic, evil, good, or lawful, <i>align weapon</i> is a chaotic, evil, good, or lawful spell, respectively.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1532,9 +1588,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[death, evil];\n    <strong>Level</strong>&nbsp;antipaladin 1, cleric/oracle 2, inquisitor 2, spiritualist 2, witch 2;\n    <strong>Domain</strong>&nbsp;Death 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;living creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous/10 minutes per HD of subject; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You draw forth the ebbing life force of a creature and use it to fuel your own power. Upon casting this spell, you touch a living creature that has -1 or fewer hit points. If the subject fails its saving throw, it dies, and you gain 1d8 temporary hit points and a +2 enhancement bonus to Strength. Additionally, your effective caster level goes up by +1, improving spell effects dependent on caster level. This increase in effective caster level does not grant you access to more spells. These effects last for 10 minutes per HD of the subject creature.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1648,9 +1701,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;bloodrager 1, magus 1, mesmerist 1, sorcerer/wizard 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Accursed 1, Daemon 1, Ghoul 1, Oni 1, Shadow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A coruscating ray springs from your hand. You must succeed on a ranged touch attack to strike a target. The subject takes a penalty to Strength equal to 1d6+1 per two caster levels (maximum 1d6+5).</p><p>The subject's Strength score cannot drop below 1. A successful Fortitude save reduces this penalty by half. This penalty does not stack with itself. Apply the highest penalty instead.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

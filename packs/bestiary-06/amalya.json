@@ -1382,6 +1382,42 @@
         "hardness": 10,
         "identifiedName": "Club",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "B"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1392,12 +1428,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "weaponSubtype": "1h",
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "B",
-          "range": 10
-        }
+        "weaponSubtype": "1h"
       },
       "effects": [],
       "folder": null,
@@ -1426,6 +1457,43 @@
         "hardness": 10,
         "identifiedName": "Dagger",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "P or S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1435,13 +1503,7 @@
           "boolean": [],
           "dictionary": []
         },
-        "scriptCalls": [],
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "P or S",
-          "critRange": 19,
-          "range": 10
-        }
+        "scriptCalls": []
       },
       "effects": [],
       "folder": null,
@@ -1462,6 +1524,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1836,9 +1906,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;bard 4, druid 3, hunter 2, ranger 2;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Verdant 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You can communicate with normal plants and plant creatures, and can ask questions of and receive answers from them. A normal plant's sense of its surroundings is limited, so it won't be able to give (or recognize) detailed descriptions of creatures or answer questions about events outside its immediate vicinity. The spell doesn't make plant creatures any more friendly or cooperative than normal. Furthermore, wary and cunning plant creatures are likely to be terse and evasive, while the more stupid ones may make inane comments. If a plant creature is friendly, it may do some favor or service for you.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1941,9 +2008,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 1, hunter 1, ranger 1, shaman 1;\n    <strong>Domain</strong>&nbsp;Plant 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Fey 1, Verdant 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    <strong>Area</strong>&nbsp;plants in a 40-ft.-radius spread<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n      <strong>Saving Throw</strong>&nbsp;Reflex partial; see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell causes tall grass, weeds, and other plants to wrap around creatures in the area of effect or those that enter the area. Creatures that fail their save gain the <i>entangle</i>d condition. Creatures that make their save can move as normal, but those that remain in the area must save again at the end of your turn. Creatures that move into the area must save immediately. Those that fail must end their movement and gain the <i>entangle</i>d condition. Entangled creatures can attempt to break free as a move action, making a Strength or Escape Artist check. The DC for this check is equal to the DC of the spell. The entire area of effect is considered difficult terrain while the effect lasts.</p><p>If the plants in the area are covered in thorns, those in the area take 1 point of damage each time they fail a save against the <i>entangle</i> or fail a check made to break free. Other effects, depending on the local plants, might be possible at GM discretion.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2058,9 +2122,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 2, hunter 2, ranger 3, shaman 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell allows you to assume the form of a Large living tree or shrub or a Large dead tree trunk with a small number of limbs. The exact type of tree, as well as its appearance, is completely under your control.</p><p>Even the closest inspection cannot reveal that the tree in question is actually a magically concealed creature. To all normal tests you are, in fact, a tree or shrub, although a <i>detect magic</i> spell reveals a faint transmutation on the tree. While in tree form, you can observe all that transpires around you just as if you were in your normal form, and your hit points and save bonuses remain unaffected. You gain a +10 natural armor bonus to AC but have an effective Dexterity score of 0 and a speed of 0 feet. You are immune to critical hits while in tree form. All clothing and gear carried or worn changes with you. You can dismiss <i>tree shape</i> as a free action (instead of as a standard action).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2159,9 +2220,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 2, hunter 2, occultist 2, shaman 2;\n    <strong>Domain</strong>&nbsp;Artifice 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;one touched piece of wood no larger than 10 cu. ft. + 1 cu. ft./level<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Wood <i>shape</i> enables you to form one existing piece of wood into any <i>shape</i> that suits your purpose. While it is possible to make crude coffers, doors, and so forth, fine detail isn't possible. There is a 30% chance that any <i>shape</i> that includes moving parts simply doesn't work.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2266,9 +2324,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(charm)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 1, mesmerist 1, occultist 1, psychic 1, shaman 1, sorcerer/wizard 1, witch 1;\n    <strong>Domain</strong>&nbsp;Charm 1;\n    <strong>Subdomain</strong>&nbsp;Slavery 1;\n    \n    <strong>Bloodline</strong>&nbsp;Rakshasa 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This charm makes a humanoid creature regard you as its trusted friend and ally (treat the target's attitude as friendly). If the creature is currently being threatened or attacked by you or your allies, however, it receives a +5 bonus on its saving throw.</p><p>The spell does not enable you to control the charmed person as if it were an automaton, but it perceives your words and actions in the most favorable way. You can try to give the subject orders, but you must win an opposed Charisma check to convince it to do anything it wouldn't ordinarily do. (Retries are not allowed.) An affected creature never obeys suicidal or obviously harmful orders, but it might be convinced that something very dangerous is worth doing. Any act by you or your apparent allies that threatens the charmed person breaks the spell. You must speak the person's language to communicate your commands, or else be good at pantomiming.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2399,9 +2454,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 3, mesmerist 3, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, witch 3;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Dreamspun 3, Fey 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, M (fine sand, rose petals, or a live cricket)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;one or more living creatures within a 10-ft.-radius burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>sleep</i>, except that it affects 10 HD of targets.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -2530,9 +2582,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(teleportation);\n    <strong>Level</strong>&nbsp;druid 5, hunter 4, ranger 4;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Fey 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level or until expended; see text<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>When you cast this spell, you gain the ability to step into a tree, magically infusing yourself with the plant. Once within a tree, you can teleport from that particular tree to another tree. The trees you enter must be of the same kind, must be living, and must have girth at least equal to yours. By moving into an oak tree (for example), you instantly know the location of all other oak trees within transport range (see below) and may choose whether you want to pass into one or simply step back out of the tree you moved into. You may choose to pass to any tree of the appropriate kind within the transport range as shown on the following table.</p><p> <table><tr><th>Type of Tree</th><th>Transport range</th></tr><tr><td>Oak, ash, yew</td><td>3,000 feet</td></tr><tr><td>Elm, linden</td><td>2,000 feet</td></tr><tr><td>Other deciduous</td><td>1,500 feet</td></tr><tr><td>Any coniferous</td><td>1,000 feet</td></tr></table>  You may move into a tree up to one time per caster level (passing from one tree to another counts only as moving into one tree). The spell lasts until the duration expires or you exit a tree. Each transport is a full-round action.</p><p>You can, at your option, remain within a tree without transporting yourself, but you are forced out when the spell ends. If the tree in which you are concealed is chopped down or burned, you are slain if you do not exit before the process is complete.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2637,9 +2686,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;bard 2, medium 2, mesmerist 2, occultist 3, psychic 2, sorcerer/wizard 3, witch 3;\n    <strong>Domain</strong>&nbsp;Charm 3;\n    <strong>Subdomain</strong>&nbsp;Corruption 2, Devil 3, Innuendo 3;\n    \n    <strong>Bloodline</strong>&nbsp;Infernal 3, Maestro 3, Rakshasa 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M (a snake&#x27;s tongue and a honeycomb)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level or until completed<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You influence the actions of the target creature by suggesting a course of activity (limited to a sentence or two). The <i>suggestion</i> must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell.</p><p>The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed.</p><p>A very reasonable <i>suggestion</i> causes the save to be made with a penalty (such as -1 or -2).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2791,9 +2837,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;alchemist 2, druid 2, hunter 2, ranger 2, shaman 2, summoner 2, unchained Summoner 2;\n    <strong>Domain</strong>&nbsp;Plant 2;\n    <strong>Subdomain</strong>&nbsp;Defense 2;\n    \n    <strong>Bloodline</strong>&nbsp;Verdant 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;living creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Barkskin</i> toughens a creature's skin. The effect grants a +2 enhancement bonus to the creature's existing natural armor bonus. This enhancement bonus increases by 1 for every three caster levels above 3rd, to a maximum of +5 at 12th level.</p><p>The enhancement bonus provided by <i>barkskin</i> stacks with the target's natural armor bonus, but not with other enhancement bonuses to natural armor. A creature without natural armor has an effective natural armor bonus of +0.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2921,9 +2964,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As lesser restoration could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -2969,9 +3009,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(summoning);\n    <strong>Level</strong>&nbsp;bard 2, druid 2, hunter 2, shaman 2, sorcerer/wizard 2, summoner 2, unchained Summoner 2, witch 2;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Pestilence 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a square of red cloth)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one swarm of bats, rats, or spiders<br>\n    <strong>Duration</strong>&nbsp;concentration + 2 rounds<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You summon a swarm of bats, rats, or spiders (your choice), which attacks all other creatures within its area. (You may summon the swarm so that it shares the area of other creatures.) If no living creatures are within its area, the swarm attacks or pursues the nearest creature as best it can. The caster has no control over its target or direction of travel.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -3097,9 +3134,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/spells/heal-sky-1.jpg",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;adept 1, alchemist 1, bard 1, cleric/oracle 1, druid 1, hunter 1, inquisitor 1, occultist 1, paladin 1, ranger 2, shaman 1, spiritualist 1, witch 1;\n    <strong>Domain</strong>&nbsp;Healing 1;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless); see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level (maximum +5). Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3247,9 +3281,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;alchemist 1, bloodrager 1, magus 1, medium 1, occultist 1, psychic 1, sorcerer/wizard 1, summoner 1, unchained Summoner 1, witch 1;\n    <strong>Domain</strong>&nbsp;Strength 1;\n    <strong>Subdomain</strong>&nbsp;Growth 1;\n    \n    <strong>Bloodline</strong>&nbsp;Boreal 1, Efreeti 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, M (powdered iron)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8. This increase changes the creature's size category to the next larger one. The target gains a +2 size bonus to Strength, a -2 size penalty to Dexterity (to a minimum of 1), and a -1 penalty on attack rolls and AC due to its increased size.</p><p>A humanoid creature whose size increases to Large has a space of 10 feet and a natural reach of 10 feet. This spell does not change the target's speed.</p><p>If insufficient room is available for the desired growth, the creature attains the maximum possible size and may make a Strength check (using its increased Strength) to burst any enclosures in the process. If it fails, it is constrained without harm by the materials enclosing it-the spell cannot be used to crush a creature by increasing its size.</p><p>All equipment worn or carried by a creature is similarly <i>enlarged</i> by the spell. Melee weapons affected by this spell deal more damage (see page 145). Other magical properties are not affected by this spell. Any <i>enlarged</i> item that leaves an <i>enlarged</i> creature's possession (including a projectile or thrown weapon) instantly returns to its normal size. This means that thrown and projectile weapons deal their normal damage. Magical properties of <i>enlarged</i> items are not increased by this spell.</p><p>Multiple magical effects that increase size do not stack.</p><p><i>Enlarge person</i> counters and dispels <i>reduce person</i>.</p><p><i>Enlarge person</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -3397,9 +3428,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation);\n    <strong>Level</strong>&nbsp;adept 1, cleric/oracle 1, druid 1, hunter 1, magus 1, mesmerist 1, shaman 1, sorcerer/wizard 1, spiritualist 1, unchained Summoner 1, witch 1;\n    <strong>Domain</strong>&nbsp;Air 1, Darkness 1, Water 1, Weather 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Ectoplasm 1, Marid 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;20 feet<br>\n    \n    \n    <strong>Effect</strong>&nbsp;cloud spreads in 20-ft. radius from you, 20 ft. high<br>\n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>A misty vapor arises around you. It is stationary. The vapor obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target).</p><p>A moderate wind (11+ mph), such as from a <i>gust of wind</i> spell, disperses the fog in 4 rounds. A strong wind (21+ mph) disperses the fog in 1 round. A <i>fireball, flame strike</i>, or similar spell burns away the fog in the explosive or fiery spell's area. A <i>Wall of Fire</i> burns away the fog in the area into which it deals damage.</p><p>This spell does not function underwater.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3553,9 +3581,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 1, hunter 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;one touched nonmagical oak club or quarterstaff<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Your own nonmagical club or quarterstaff becomes a weapon with a +1 enhancement bonus on attack and damage rolls. A quarterstaff gains this enhancement for both ends of the weapon. It deals damage as if it were two size categories larger (a Small club or quarterstaff so transmuted deals 1d8 points of damage, a Medium 2d6, and a Large 3d6), +1 for its enhancement bonus. These effects only occur when the weapon is wielded by you. If you do not wield it, the weapon behaves as if unaffected by this spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3648,9 +3673,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[water];\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, occultist 0, paladin 1, shaman 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;up to 2 gallons of water/level<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell generates wholesome, drinkable water, just like clean rain water. Water can be created in an area as small as will actually contain the liquid, or in an area three times as large--possibly creating a downpour or filling many small receptacles. This water disappears after 1 day if not consumed.</p><p>Note: Conjuration spells can't create substances or objects within a creature. Water weighs about 8 pounds per gallon. One cubic foot of water contains roughly 8 gallons and weighs about 60 pounds.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3766,9 +3788,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, shaman 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3903,9 +3922,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;adept 0, bard 0, cleric/oracle 0, druid 0, hunter 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;10 feet<br>\n    \n    <strong>Targets</strong>&nbsp;one object of up to 1 lb./level<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless, object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell repairs damaged objects, restoring 1d4 hit points to the object. If the object has the broken condition, this condition is removed if the object is restored to at least half its original hit points. All of the pieces of an object must be present for this spell to function. Magic items can be repaired by this spell, but you must have a caster level equal to or higher than that of the object. Magic items that are destroyed (at 0 hit points or less) can be repaired with this spell, but this spell does not restore their magic abilities. This spell does not affect creatures (including constructs). This spell has no effect on objects that have been warped or otherwise transmuted, but it can still repair damage done to such items.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 10,
@@ -4044,9 +4060,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, psychic 0, shaman 0, spiritualist 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Upon casting this spell, you target a living creature that has -1 or fewer hit points. That creature is automatically stabilized and does not lose any further hit points. If the creature later takes damage, it continues dying normally.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

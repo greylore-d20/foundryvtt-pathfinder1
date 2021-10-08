@@ -1056,6 +1056,43 @@
         "hardness": 5,
         "identifiedName": "+1 Longbow",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 100,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "critMult": 3
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1069,13 +1106,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "ranged",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critMult": 3,
-          "range": 100
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,

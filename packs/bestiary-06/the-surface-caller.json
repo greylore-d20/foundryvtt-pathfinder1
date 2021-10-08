@@ -1416,6 +1416,43 @@
         "hardness": 10,
         "identifiedName": "+1 Punching Dagger",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1427,13 +1464,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "P",
-          "critMult": 3,
-          "range": 0
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -1995,9 +2026,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[light];\n    <strong>Level</strong>&nbsp;bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;Up to four lights, all within a 10-ft.-radius area<br>\n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Depending on the version selected, you create up to four lights that resemble lanterns or torches (and cast that amount of light), or up to four glowing spheres of light (which look like will-o'-wisps), or one faintly glowing, vaguely humanoid shape. The <i>dancing lights</i> must stay within a 10-foot-radius area in relation to each other but otherwise move as you desire (no concentration required): forward or back, up or down, straight or turning corners, or the like. The lights can move up to 100 feet per round. A light winks out if the distance between you and it exceeds the spell's range.</p><p>You can only have one <i>dancing lights</i> spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent, it does not count against this limit.</p><p><i>Dancing lights</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2120,9 +2148,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[darkness];\n    <strong>Level</strong>&nbsp;adept 2, antipaladin 2, bard 2, cleric/oracle 2, inquisitor 2, magus 2, occultist 2, shaman 2, sorcerer/wizard 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M/DF (bat fur and a piece of coal)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;object touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell causes an object to radiate <i>darkness</i> out to a 20-foot radius. This <i>darkness</i> causes the illumination level in the area to drop one step, from bright light to normal light, from normal light to dim light, or from dim light to <i>darkness</i>. This spell has no effect in an area that is already dark. Creatures with light vulnerability or sensitivity take no penalties in normal light. All creatures gain concealment (20% miss chance) in dim light. All creatures gain total concealment (50% miss chance) in <i>darkness</i>.</p><p>Creatures with darkvision can see in an area of dim light or <i>darkness</i> without penalty. Nonmagical sources of light, such as torches and lanterns, do not increase the light level in an area of <i>darkness</i>. Magical light sources only increase the light level in an area if they are of a higher spell level than <i>darkness</i>.</p><p>If <i>darkness</i> is cast on a small object that is then placed inside or under a lightproof covering, the spell's effect is blocked until the covering is removed.</p><p>This spell does not stack with itself. <i>Darkness</i> can be used to counter or dispel any light spell of equal or lower spell level.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2251,9 +2276,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[light];\n    <strong>Level</strong>&nbsp;druid 1, hunter 1, mesmerist 1;\n    \n    <strong>Subdomain</strong>&nbsp;Light 1, Moon 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    <strong>Area</strong>&nbsp;creatures and objects within a 5-ft.-radius burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A pale glow surrounds and outlines the subjects. Outlined subjects shed light as candles. Creatures outlined by <i>faerie fire</i> take a -20 penalty on all Stealth checks. Outlined creatures do not benefit from the concealment normally provided by <i>darkness</i> (though a 2nd-level or higher magical <i>darkness</i> effect functions normally), <i>blur</i>, <i>displacement</i>, <i>invisibility</i>, or similar effects. The light is too dim to have any special effect on undead or dark-dwelling creatures vulnerable to light. The <i>faerie fire</i> can be blue, green, or violet, according to your choice at the time of casting. The <i>faerie fire</i> does not cause any harm to the objects or creatures thus outlined.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2358,9 +2380,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;(polymorph);\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, magus 2, medium 2, mesmerist 2, psychic 2, shaman 2, sorcerer/wizard 2, summoner 2, unchained Summoner 2, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a piece of the creature whose form you plan to assume)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>When you cast this spell, you can assume the form of any Small or Medium creature of the humanoid type. If the form you assume has any of the following abilities, you gain the listed ability: darkvision 60 feet, low-light vision, scent, and swim 30 feet.</p><p><i>Small creature</i>: If the form you take is that of a Small humanoid, you gain a +2 size bonus to your Dexterity.</p><p><i>Medium creature</i>: If the form you take is that of a Medium humanoid, you gain a +2 size bonus to your Strength.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2495,9 +2514,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation);\n    <strong>Level</strong>&nbsp;bard 1, magus 1, mesmerist 1, sorcerer/wizard 1, summoner 1, unchained Summoner 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (butter)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one object or 10-ft. square<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>A <i>grease</i> spell covers a solid surface with a layer of slippery <i>grease</i>. Any creature in the area when the spell is cast must make a successful Reflex save or fall. A creature can walk within or through the area of <i>grease</i> at half normal speed with a DC 10 Acrobatics check. Failure means it can't move that round (and must then make a Reflex save or fall), while failure by 5 or more means it falls (see the Acrobatics skill for details). Creatures that do not move on their turn do not need to make this check and are not considered flat-footed.</p><p>The spell can also be used to create a greasy coating on an item.</p><p>Material objects not in use are always affected by this spell, while an object wielded or employed by a creature requires its bearer to make a Reflex saving throw to avoid the effect. If the initial saving throw fails, the creature immediately drops the item. A saving throw must be made in each round that the creature attempts to pick up or use the <i>grease</i>d item. A creature wearing <i>grease</i>d armor or clothing gains a +10 circumstance bonus on Escape Artist checks and combat maneuver checks made to escape a grapple, and to their CMD to avoid being grappled.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2612,9 +2628,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;bloodrager 1, magus 1, mesmerist 1, sorcerer/wizard 1, witch 1;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Accursed 1, Daemon 1, Ghoul 1, Oni 1, Shadow 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;ray<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A coruscating ray springs from your hand. You must succeed on a ranged touch attack to strike a target. The subject takes a penalty to Strength equal to 1d6+1 per two caster levels (maximum 1d6+5).</p><p>The subject's Strength score cannot drop below 1. A successful Fortitude save reduces this penalty by half. This penalty does not stack with itself. Apply the highest penalty instead.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2741,9 +2754,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;alchemist 1, bloodrager 1, inquisitor 1, magus 1, medium 1, psychic 1, sorcerer/wizard 1;\n    <strong>Domain</strong>&nbsp;Destruction 1, Luck 1;\n    <strong>Subdomain</strong>&nbsp;Fist 1;\n    \n    <strong>Bloodline</strong>&nbsp;Shaitan 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, F (small wooden replica of an archery target)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;see text<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You gain temporary, intuitive insight into the immediate future during your next attack. Your next single attack roll (if it is made before the end of the next round) gains a +20 insight bonus.</p><p>Additionally, you are not affected by the miss chance that applies to attackers trying to strike a concealed target.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2878,9 +2888,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;bard 1, magus 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level (up to 5 rounds) (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>invisibility</i>, except the effect only lasts for 1 round per caster level (maximum of 5 rounds). Like <i>invisibility</i>, the spell immediately ends if the subject attacks any creature.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2990,9 +2997,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation)&nbsp;[acid];\n    <strong>Level</strong>&nbsp;inquisitor 0, magus 0, sorcerer/wizard 0, summoner 0, unchained Summoner 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one missile of acid<br>\n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You fire a small orb of acid at the target. You must succeed on a ranged touch attack to hit your target. The orb deals 1d3 points of acid damage. This acid disappears after 1 round.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3103,9 +3107,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As Arcana mark could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -3148,9 +3149,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of wool or similar substance)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature of 4 HD or less<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions. Humanoids of 5 or more HD are not affected. A dazed subject is not stunned, so attackers get no special advantage against it. After a creature has been dazed by this spell, it is immune to the effects of this spell for 1 minute.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3293,9 +3291,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation&nbsp;[language-dependent];\n    <strong>Level</strong>&nbsp;bard 0, medium 0, mesmerist 0, occultist 0, psychic 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a piece of copper wire)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature/level<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can whisper messages and receive whispered replies.</p><p>Those nearby can hear these messages with a DC 25 Perception check. You point your finger at each creature you want to receive the message. When you whisper, the whispered message is audible to all targeted creatures within range.</p><p>Magical <i>silence,</i> 1 foot of stone, 1 inch of common metal (or a thin sheet of lead), or 3 feet of wood or dirt blocks the spell.</p><p>The message does not have to travel in a straight line. It can circumvent a barrier if there is an open path between you and the subject, and the path's entire length lies within the spell's range. The creatures that receive the message can whisper a reply that you hear. The spell transmits sound, not meaning; it doesn't transcend language barriers. To speak a message, you must mouth the words and whisper.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3424,9 +3419,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a brass key)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;object weighing up to 30 lbs. or portal that can be opened or closed<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can open or close (your choice) a door, chest, box, window, bag, pouch, bottle, barrel, or other container. If anything resists this activity (such as a bar on a door or a lock on a chest), the spell fails. In addition, the spell can only open and close things weighing 30 pounds or less. Thus, doors, chests, and similar objects sized for enormous creatures may be beyond this spell's ability to affect.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3558,9 +3550,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, antipaladin 1, bard 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, paladin 1, psychic 0, ranger 1, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a clear crystal or mineral prism)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You can decipher magical inscriptions on objects-books, scrolls, weapons, and the like-that would otherwise be unintelligible. This deciphering does not normally invoke the magic contained in the writing, although it may do so in the case of a cursed or trapped scroll. Furthermore, once the spell is cast and you have read the magical inscription, you are thereafter able to read that particular writing without recourse to the use of <i>read magic.</i> You can read at the rate of one page (250 words) per minute. The spell allows you to identify a <i>Glyph of Warding</i> with a DC 13 Spellcraft check, a greater <i>Glyph of Warding</i> with a DC 16 Spellcraft check, or any <i>symbol</i> spell with a Spellcraft check (DC 10 + spell level).</p><p><i>Read magic</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

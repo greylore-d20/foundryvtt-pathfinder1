@@ -1065,6 +1065,43 @@
         "hardness": 10,
         "identifiedName": "+1 Scythe",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(2, 4, @size)",
+              "P or S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 4
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1078,13 +1115,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "2h",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "2d4",
-          "damageType": "P or S",
-          "critMult": 4,
-          "range": 0
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -1544,9 +1575,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 6, druid 6, hunter 6, psychic 6, shaman 6;\n    <strong>Domain</strong>&nbsp;Animal 6;\n    <strong>Subdomain</strong>&nbsp;Souls 6;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;10 feet<br>\n    <strong>Area</strong>&nbsp;10-ft.-radius emanation, centered on you<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You bring into being a mobile, hemispherical energy field that prevents the entrance of most types of living creatures.</p><p>The effect hedges out animals, aberrations, dragons, fey, giants, humanoids, magical beasts, monstrous humanoids, oozes, plants, and vermin, but not constructs, elementals, outsiders, or undead.</p><p>This spell may be used only defensively, not aggressively. Forcing an abjuration barrier against creatures that the spell keeps at bay collapses the barrier.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -1660,9 +1688,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[evil];\n    <strong>Level</strong>&nbsp;cleric/oracle 6, shaman 6, sorcerer/wizard 6, spiritualist 6;\n    <strong>Domain</strong>&nbsp;Death 6, Evil 6;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 hour<br>\n    <strong>Components</strong>&nbsp;V, S, M (a clay pot filled with grave dirt and an onyx gem worth at least 50 gp per HD of the undead to be created)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one corpse<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>A much more potent spell than  <i>animate dead </i>, this evil spell allows you to infuse a dead body with negative energy to create more powerful sorts of undead: ghouls, ghasts, mummies, and mohrgs. The type or types of undead you can create are based on your caster level, as shown on the table below.</p><p><table><thead><tr><th>Caster Level</th><th>Undead Created</th></tr> <tbody><tr><td>11th or lower</td><td>Ghoul</td></tr> <tr><td>12th-14th</td><td>Ghast</td></tr> <tr><td>15th-17th</td><td>Mummy</td></tr> <tr><td>18th or higher</td><td>Mohrg</td></tr></tbody></table>  You may create less powerful undead than your level would allow if you choose. Created undead are not automatically under the control of their animator. If you are capable of commanding undead, you may attempt to command the undead creature as it forms.</p><p>This spell must be cast at night.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "hour"
@@ -1777,9 +1802,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/spells/beam-red-2.jpg",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[fire];\n    <strong>Level</strong>&nbsp;cleric/oracle 5, druid 4, hunter 4, inquisitor 5, shaman 5;\n    <strong>Domain</strong>&nbsp;Sun 5, War 5;\n    <strong>Subdomain</strong>&nbsp;Arson 5;\n    \n    <strong>Bloodline</strong>&nbsp;Celestial 5;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;cylinder (10-ft. radius, 40-ft. high)<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A <i>flame strike</i> evokes a vertical column of divine fire. The spell deals 1d6 points of damage per caster level (maximum 15d6). Half the damage is fire damage, but the other half results directly from divine power and is therefore not subject to being reduced by resistance to fire-based attacks.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1910,9 +1932,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[death];\n    <strong>Level</strong>&nbsp;antipaladin 4, cleric/oracle 5, shaman 6, spiritualist 5, witch 6;\n    <strong>Domain</strong>&nbsp;Death 5, Repose 5;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;living creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can attempt to slay any one living creature. When you cast this spell, your hand seethes with eerie dark fire. You must succeed on a melee touch attack to touch the target. The target takes 12d6 points of damage + 1 point per caster level. If the target's Fortitude saving throw succeeds, it instead takes 3d6 points of damage + 1 point per caster level. The subject might die from damage even if it succeeds on its saving throw.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2030,9 +2049,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[evil, pain];\n    <strong>Level</strong>&nbsp;cleric/oracle 5, mesmerist 5, occultist 4, sorcerer/wizard 5, witch 5;\n    \n    <strong>Subdomain</strong>&nbsp;Kyton 5, Torture 5;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S, M (mercury and phosphorus, plus powdered diamond and opal worth a total of 1,000 gp)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;0 feet<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one symbol<br>\n    <strong>Duration</strong>&nbsp;see text<br>\n      <strong>Saving Throw</strong>&nbsp;Fortitude negates;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i><i>symbol of</i> death</i>, except that each creature within the radius of a <i><i>symbol of</i> <i>pain</i></i> instead suffers wracking <i>pain</i>s that impose a -4 penalty on attack rolls, skill checks, and ability checks. These effects last for 1 hour after the creature moves farther than 60 feet from the symbol.</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>pain</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>pain</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>pain</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>pain</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 30 for <i><i>symbol of</i> <i>pain</i></i>.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 10,
@@ -2158,9 +2174,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[evil];\n    <strong>Level</strong>&nbsp;cleric/oracle 5, druid 5, hunter 5, inquisitor 5;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;24 hours<br>\n    <strong>Components</strong>&nbsp;V, S, M (herbs, oils, and incense worth at least 1,000 gp, plus 1,000 gp per level of the spell to be tied to the unhallowed area)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    <strong>Area</strong>&nbsp;40-ft. radius emanating from the touched point<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Unhallow</i> makes a particular site, building, or structure an unholy site. This has three major effects.</p><p>First, the site or structure is guarded by a <i>magic circle against good</i> effect.</p><p>Second, the DC to resist negative channeled energy within the spell's area of effect gains a +4 sacred bonus and the DC to resist positive energy is reduced by 4. Spell resistance does not apply to this effect. This provision does not apply to the druid version of the spell.</p><p>Finally, you may choose to fix a single spell effect to the <i><i>unhallow</i>ed</i> site. The spell effect lasts for 1 year and functions throughout the entire site, regardless of its normal duration and area or effect. You may designate whether the effect applies to all creatures, creatures that share your faith or alignment, or creatures that adhere to another faith or alignment. At the end of the year, the chosen effect lapses, but it can be renewed or replaced simply by casting <i>unhallow</i> again.</p><p>Spell effects that may be tied to an <i><i>unhallow</i>ed</i> site include <i>aid, bane, bless, cause fear, darkness, daylight, death ward, deeper darkness, detect magic, detect good, dimensional anchor, discern lies, dispel magic, endure elements, freedom of movement, invisibility purge, protection from energy, remove fear, resist energy, silence, tongues,</i> and <i>zone of truth</i>.</p><p>Saving throws and spell resistance might apply to these spells' effects. (See the individual spell descriptions for details.) An area can receive only one <i>unhallow</i> spell (and its associated spell effect) at a time.</p><p><i>Unhallow</i> counters but does not dispel hallow.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 24,
@@ -2267,9 +2280,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation;\n    <strong>Level</strong>&nbsp;cleric/oracle 4, inquisitor 4, shaman 4;\n    <strong>Domain</strong>&nbsp;War 4;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>Calling upon the divine power of your patron, you imbue yourself with strength and skill in combat. You gain a +1 luck bonus on attack rolls, weapon damage rolls, Strength checks, and Strength-based skill checks for every three caster levels you have (maximum +6). You also gain 1 temporary hit point per caster level. Whenever you make a full-attack action, you can make an additional attack at your full base attack bonus, plus any appropriate modifiers. This additional attack is not cumulative with similar effects, such as <i>haste</i> or weapons with the speed special ability.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2372,9 +2382,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 4, bard 4, cleric/oracle 4, druid 4, hunter 4, inquisitor 4, medium 4, mesmerist 4, occultist 4, psychic 4, ranger 4, spiritualist 4;\n    <strong>Domain</strong>&nbsp;Liberation 4, Luck 4;\n    <strong>Subdomain</strong>&nbsp;Flowing 4;\n    \n    <strong>Bloodline</strong>&nbsp;Destined 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a leather strip bound to the target), DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you or creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell enables you or a creature you touch to move and attack normally for the duration of the spell, even under the influence of magic that usually impedes movement, such as paralysis, solid fog, slow, and <i>web.</i> All combat maneuver checks made to grapple the target automatically fail. The subject automatically succeeds on any combat maneuver checks and Escape Artist checks made to escape a grapple or a pin.</p><p>The spell also allows the subject to move and attack normally while underwater, even with slashing weapons such as axes and swords or with bludgeoning weapons such as flails, hammers, and maces, provided that the weapon is wielded in the hand rather than hurled. The <i>freedom of movement</i> spell does not, however, grant water breathing.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2533,9 +2540,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation;\n    <strong>Level</strong>&nbsp;cleric/oracle 4, shaman 4, spiritualist 4;\n    <strong>Domain</strong>&nbsp;Community 4, Magic 4;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched; see text<br>\n    \n    <strong>Duration</strong>&nbsp;permanent until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You transfer some of your currently prepared spells, and the ability to cast them, to another creature. Only a creature with an Intelligence score of at least 5 and a Wisdom score of at least 9 can receive this boon. Only cleric spells from the schools of abjuration, divination, and conjuration (healing) can be transferred. The number and level of spells that the subject can be granted depends on its Hit Dice; even multiple castings of <i>imbue with spell ability</i> can't exceed this limit.</p><p> <table><tr><th>HD of recipient</th><th>Spells imbued</th></tr><tr><td>2 or lower</td><td>One 1st-level spell</td></tr><tr><td>3-4</td><td>One or two 1st-level spells</td></tr><tr><td>5 or higher</td><td>One or two 1st-level spells and one 2nd-level spell</td></tr></table>  The transferred spell's variable characteristics (range, duration, area, and the like) function according to your level, not the level of the recipient.</p><p>Once you cast <i>imbue with spell ability</i>, you cannot prepare a new 4th-level spell to replace it until the recipient uses the imbued spells or is slain, or until you dismiss the <i>imbue with spell ability</i> spell. In the meantime, you remain responsible to your deity or your principles for the use to which the spell is put. If the number of 4th-level spells you can cast decreases, and that number drops below your current number of active <i>imbue with spell ability</i> spells, the more recently cast imbued spells are dispelled.</p><p>To cast a spell with a verbal component, the subject must be able to speak. To cast a spell with a somatic component, it must be able to move freely. To cast a spell with a material component or focus, it must have the materials or focus.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 10,
@@ -2644,9 +2648,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 4, cleric/oracle 4, inquisitor 4, occultist 4, psychic 4, spiritualist 4;\n    <strong>Domain</strong>&nbsp;Protection 4, Strength 4;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The warded creature is immune to the effects of one specified spell for every four levels you have. The spells must be of 4th level or lower. The warded creature effectively has unbeatable spell resistance regarding the specified spell or spells. Naturally, that immunity doesn't protect a creature from spells for which spell resistance doesn't apply. <i>Spell immunity</i> protects against spells, spell-like effects of magic items, and innate spell-like abilities of creatures. It does not protect against supernatural or extraordinary abilities, such as breath weapons or gaze attacks.</p><p>Only a particular spell can be protected against, not a certain domain or school of spells or a group of spells that are similar in effect. A creature can have only one <i>spell immunity</i> or greater <i>spell immunity</i> spell in effect on it at a time.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2765,9 +2766,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[evil];\n    <strong>Level</strong>&nbsp;cleric/oracle 4, inquisitor 4;\n    <strong>Domain</strong>&nbsp;Evil 4;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;20-ft.-radius spread<br>\n    \n    \n    <strong>Duration</strong>&nbsp;instantaneous (1d4 rounds); see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You call up unholy power to smite your enemies. The power takes the form of a cold, cloying miasma of greasy darkness. Only good and neutral (not evil) creatures are harmed by the spell.</p><p>The spell deals 1d8 points of damage per two caster levels (maximum 5d8) to a good creature (or 1d6 per caster level, maximum 10d6, to a good outsider) and causes it to be sickened for 1d4 rounds. A successful Will save reduces damage to half and negates the sickened effect. The effects cannot be negated by <i>remove disease</i> or <i>heal</i>, but <i>remove curse</i> is effective.</p><p>The spell deals only half damage to creatures who are neither evil nor good, and they are not sickened. Such a creature can reduce the damage by half again (down to one-quarter) with a successful Will save.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2867,9 +2865,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[evil];\n    <strong>Level</strong>&nbsp;adept 3, antipaladin 3, cleric/oracle 3, occultist 3, shaman 3, sorcerer/wizard 4, spiritualist 3;\n    <strong>Domain</strong>&nbsp;Death 3;\n    <strong>Subdomain</strong>&nbsp;Souls 3;\n    \n    <strong>Bloodline</strong>&nbsp;Undead 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (an onyx gem worth at least 25 gp per Hit Die of the undead)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;one or more corpses touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell turns corpses into undead skeletons or zombies (see the <i>Pathfinder RPG</i> Bestiary) that obey your spoken commands.</p><p>The undead can be made to follow you, or they can be made to remain in an area and attack any creature (or just a specific kind of creature) entering the place. They remain animated until they are destroyed. A destroyed skeleton or zombie can't be animated again.</p><p>Regardless of the type of undead you create with this spell, you can't create more HD of undead than twice your caster level with a single casting of <i>animate dead</i>. The <i>desecrate</i> spell doubles this limit.</p><p>The undead you create remain under your control indefinitely.</p><p>No matter how many times you use this spell, however, you can control only 4 HD worth of undead creatures per caster level. If you exceed this number, all the newly created creatures fall under your control, and any excess undead from previous castings become uncontrolled. You choose which creatures are released. Undead you control through the Command Undead feat do not count toward this limit.</p><p><i>Skeletons</i>: A skeleton can be created only from a mostly intact corpse or skeleton. The corpse must have bones. If a skeleton is made from a corpse, the flesh falls off the bones.</p><p><i>Zombies</i>: A zombie can be created only from a mostly intact corpse.</p><p>The corpse must be that of a creature with a physical anatomy.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3004,9 +2999,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[curse];\n    <strong>Level</strong>&nbsp;adept 3, antipaladin 3, bloodrager 4, cleric/oracle 3, medium 2, mesmerist 3, occultist 3, shaman 3, sorcerer/wizard 4, spiritualist 3, witch 3;\n    \n    <strong>Subdomain</strong>&nbsp;Curse 3, Tyranny 3;\n    \n    <strong>Bloodline</strong>&nbsp;Accursed 4, Div 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;permanent<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You place a curse on the subject. Choose one of the following.</p><p><ul><li>-6 decrease to an ability score (minimum 1).  <li>-4 penalty on attack rolls, saves, ability checks, and skill checks.  <li>Each turn, the target has a 50% chance to act normally; otherwise, it takes no action.</p><p></ul>You may also invent your own curse, but it should be no more powerful than those described above.</p><p>The curse bestowed by this spell cannot be dispelled, but it can be removed with a <i>break enchantment</i>, <i>limited wish</i>, <i>miracle</i>, <i>remove curse</i>, or <i>wish</i> spell.</p><p><i>Bestow curse</i> counters <i>remove curse</i>.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3156,9 +3148,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;antipaladin 3, bard 3, cleric/oracle 3, druid 4, hunter 4, inquisitor 3, magus 3, medium 3, mesmerist 3, occultist 3, paladin 3, psychic 3, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3, witch 3;\n    <strong>Domain</strong>&nbsp;Magic 3;\n    <strong>Subdomain</strong>&nbsp;Entropy 3;\n    \n    <strong>Bloodline</strong>&nbsp;Arcane 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;one spellcaster, creature, or object<br>\n    <strong>Targets</strong>&nbsp;one spellcaster, creature, or object<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You can use <i>dispel magic</i> to end one ongoing spell that has been cast on a creature or object, to temporarily suppress the magical abilities of a magic item, or to counter another spellcaster's spell. A dispelled spell ends as if its duration had expired. Some spells, as detailed in their descriptions, can't be defeated by <i>dispel magic</i>. <i><i>Dispel</i> magic</i> can dispel (but not counter) spell-like effects just as it does spells. The of a spell with an instantaneous duration can't be dispelled, because the magical effect is already over before the <i>dispel magic</i> can take effect.</p><p>You choose to use <i>dispel magic</i> in one of two ways: a targeted dispel or a counterspell.</p><p><i>Targeted</i> <i>Dispel</i>: One object, creature, or spell is the target of the <i>dispel magic</i> spell. You make one dispel check (1d20 + your caster level) and compare that to the spell with highest caster level (DC = 11 + the spell's caster level). If successful, that spell ends.</p><p>If not, compare the same result to the spell with the next highest caster level. Repeat this process until you have dispelled one spell affecting the target, or you have failed to dispel every spell.</p><p>For example, a 7th-level caster casts <i>dispel magic</i>, targeting a creature affected by <i>stoneskin</i> (caster level 12th) and <i>fly</i> (caster level 6th). The caster level check results in a 19. This check is not high enough to end the <i>stoneskin</i> (which would have required a 23 or higher), but it is high enough to end the <i>fly</i> (which only required a 17). Had the dispel check resulted in a 23 or higher, the <i>stoneskin</i> would have been dispelled, leaving the <i>fly</i> intact. Had the dispel check been a 16 or less, no spells would have been affected.</p><p>You can also use a targeted dispel to specifically end one spell affecting the target or one spell affecting an area (such as a <i>wall of</i> fire). You must name the specific spell effect to be targeted in this way. If your caster level check is equal to or higher than the DC of that spell, it ends. No other spells or effects on the target are dispelled if your check is not high enough to end the targeted effect.</p><p>If you target an object or creature that is the effect of an ongoing spell (such as a monster <i>summon</i>ed by <i>summon</i> monster), you make a dispel check to end the spell that conjured the object or creature.</p><p>If the object that you target is a magic item, you make a dispel check against the item's caster level (DC = 11 + the item's caster level). If you succeed, all the item's magical properties are suppressed for 1d4 rounds, after which the item recovers its magical properties. A suppressed item becomes nonmagical for the duration of the effect. An interdimensional opening (such as a <i>bag of</i> holding) is temporarily closed. A magic item's physical properties are unchanged: A suppressed magic sword is still a sword (a masterwork sword, in fact). Artifacts and deities are unaffected by mortal magic such as this.</p><p>You automatically succeed on your dispel check against any spell that you cast yourself.</p><p><i>Counterspell</i>: When <i>dispel magic</i> is used in this way, the spell targets a spellcaster and is cast as a counterspell. Unlike a true counterspell, however, <i>dispel magic</i> may not work; you must make a dispel check to counter the other spellcaster's spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3333,9 +3322,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 3;\n    <strong>Domain</strong>&nbsp;Rune 3;\n    <strong>Subdomain</strong>&nbsp;Home 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;10 minutes<br>\n    <strong>Components</strong>&nbsp;V, S, M (powdered diamond worth 200 gp)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    <strong>Area</strong>&nbsp;object touched or up to 5 sq. ft./level<br>\n    <strong>Targets</strong>&nbsp;object touched or up to 5 sq. ft./level<br>\n    \n    <strong>Duration</strong>&nbsp;permanent until discharged (D)<br>\n      <strong>Saving Throw</strong>&nbsp;see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This powerful inscription harms those who enter, pass, or open the warded area or object. A <i>Glyph of Warding</i> can guard a bridge or passage, ward a portal, trap a chest or box, and so on.</p><p>You set all of the conditions of the ward. Typically, any creature entering the warded area or opening the warded object without speaking a password (which you set when casting the spell) is subject to the magic it stores. Alternatively or in addition to a password trigger, glyphs can be set according to physical characteristics (such as height or weight) or creature type, subtype, or kind. Glyphs can also be set with respect to good, evil, law, or chaos, or to pass those of your religion. They cannot be set according to class, HD, or level.</p><p>Glyphs respond to invisible creatures normally but are not triggered by those who travel past them ethereally. Multiple glyphs cannot be cast on the same area. However, if a cabinet has three different drawers, each can be separately warded.</p><p>When casting the spell, you weave a tracery of faintly glowing lines around the warding sigil. A glyph can be placed to conform to any shape up to the limitations of your total square footage. When the spell is completed, the glyph and tracery become nearly invisible.</p><p>Glyphs cannot be affected or bypassed by such means as physical or magical probing, though they can be dispelled. <i>Mislead</i>, <i>polymorph</i>, and <i>nondetection</i> (and similar magical effects) can fool a glyph, though nonmagical disguises and the like can't. <i>Read magic</i> allows you to identify a <i>Glyph of Warding</i> with a DC 13 Knowledge (arcana) check. Identifying the glyph does not discharge it and allows you to know the basic nature of the glyph (version, type of damage caused, what spell is stored).</p><p><i>Note</i>: Magic traps such as <i>Glyph of Warding</i> are hard to detect and disable. While any character can use Perception to find a glyph, only a character with the trapfinding class feature can use Disable Device to disarm it. The DC in each case is 25 + spell level, or 28 for <i>Glyph of Warding</i>.</p><p>Depending on the version selected, a glyph either blasts the intruder or activates a spell.</p><p><i>Blast Glyph</i>: A <i>blast glyph</i> deals 1d8 points of damage per two caster levels (maximum 5d8) to the intruder and to all within 5 feet of him or her. This damage is acid, cold, fire, electricity, or sonic (caster's choice, made at time of casting). Each creature affected can attempt a Reflex save to take half damage. Spell resistance applies against this effect.</p><p><i>Spell Glyph</i>: You can store any harmful spell of 3rd level or lower that you know. All level-dependent features of the spell are based on your caster level at the time of casting the glyph. If the spell has a target, it targets the intruder. If the spell has an area or an amorphous effect, the area or effect is centered on the intruder. If the spell summons creatures, they appear as close as possible to the intruder and attack.Saving Throws and spell resistance operate as normal, except that the DC is based on the level of the spell stored in the glyph.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "cost": 10,
@@ -3446,9 +3432,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation;\n    <strong>Level</strong>&nbsp;cleric/oracle 3, inquisitor 3, occultist 3, spiritualist 3;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You surround yourself with a sphere of power with a radius of 5 feet per caster level that negates all forms of invisibility.</p><p>Anything invisible becomes visible while in the area.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3549,9 +3532,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 3, bloodrager 3, cleric/oracle 3, druid 3, hunter 2, inquisitor 3, occultist 3, psychic 3, ranger 2, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3;\n    <strong>Domain</strong>&nbsp;Luck 3, Protection 3;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Destined 3, Elemental 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Protection from energy</i> grants temporary immunity to the type of energy you specify when you cast it (acid, cold, electricity, fire, or sonic). When the spell absorbs 12 points per caster level of energy damage (to a maximum of 120 points at 10th level), it is discharged.</p><p><i>Protection from energy</i> overlaps (and does not stack with) <i><i>resist energy</i>.</i> If a character is warded by <i><i>protection</i> from energy</i> and <i>resist energy</i>, the <i>protection</i> spell absorbs damage until its power is exhausted.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3712,9 +3692,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[death, evil];\n    <strong>Level</strong>&nbsp;antipaladin 1, cleric/oracle 2, inquisitor 2, spiritualist 2, witch 2;\n    <strong>Domain</strong>&nbsp;Death 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;living creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous/10 minutes per HD of subject; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You draw forth the ebbing life force of a creature and use it to fuel your own power. Upon casting this spell, you touch a living creature that has -1 or fewer hit points. If the subject fails its saving throw, it dies, and you gain 1d8 temporary hit points and a +2 enhancement bonus to Strength. Additionally, your effective caster level goes up by +1, improving spell effects dependent on caster level. This increase in effective caster level does not grant you access to more spells. These effects last for 10 minutes per HD of the subject creature.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3828,9 +3805,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[evil];\n    <strong>Level</strong>&nbsp;antipaladin 2, cleric/oracle 2, inquisitor 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a vial of unholy water and 25 gp worth (5 pounds) of silver dust, all of which must be sprinkled around the area), DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;20-ft.-radius emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;2 hours/level<br>\n      <strong>Saving Throw</strong>&nbsp;none;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues an area with negative energy. The DC to resist negative channeled energy within this area gains a +3 profane bonus. Every undead creature entering a <i><i>desecrate</i>d</i> area gains a +1 profane bonus on all attack rolls, damage rolls, and saving throws.</p><p>An undead creature created within or summoned into such an area gains +1 hit points per HD. If the <i><i>desecrate</i>d</i> area contains an altar, shrine, or other permanent fixture dedicated to your deity or aligned higher power, the modifiers given above are doubled (+6 profane bonus to negative channeled energy DCs, +2 profane bonus and +2 hit points per HD for undead created in the area).</p><p>Furthermore, anyone who casts <i>animate dead</i> within this area may create as many as double the normal amount of undead (that is, 4 HD per caster level rather than 2 HD per caster level).</p><p>If the area contains an altar, shrine, or other permanent fixture of a deity, pantheon, or higher power other than your patron, the <i>desecrate</i> spell instead curses the area, cutting off its connection with the associated deity or power. This secondary function, if used, does not also grant the bonuses and penalties relating to undead, as given above.</p><p><i>Desecrate</i> counters and dispels <i>consecrate</i>.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3937,9 +3911,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 2, medium 2, occultist 3, shaman 2, sorcerer/wizard 3, spiritualist 2, witch 2;\n    <strong>Domain</strong>&nbsp;Repose 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (salt and a copper piece for each of the corpse&#x27;s eyes)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;corpse touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 day/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You preserve the remains of a dead creature so that they do not decay. Doing so effectively extends the time limit on raising that creature from the dead (see <i>raise dead</i>). Days spent under the influence of this spell don't count against the time limit.</p><p>Additionally, this spell makes transporting a slain (and thus decaying) comrade less unpleasant.</p><p>The spell also works on severed body parts and the like.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4063,9 +4034,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;antipaladin 2, bard 2, bloodrager 3, cleric/oracle 2, inquisitor 2, medium 2, mesmerist 2, occultist 3, psychic 2, shaman 2, sorcerer/wizard 3, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F/DF (a small, straight piece of iron)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one humanoid creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The subject becomes paralyzed and freezes in place. It is aware and breathes normally but cannot take any actions, even speech. Each round on its turn, the subject may attempt a new saving throw to end the effect. This is a full-round action that does not provoke attacks of opportunity. A winged creature who is paralyzed cannot flap its wings and falls. A swimmer can't swim and may drown.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4207,9 +4175,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;adept 2, alchemist 2, bloodrager 2, cleric/oracle 2, druid 2, hunter 1, inquisitor 2, occultist 2, paladin 2, psychic 2, ranger 1, shaman 2, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Celestial 2, Draconic 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This abjuration grants a creature limited <i>protection</i> from damage of whichever one of five energy types you select: acid, cold, electricity, fire, or sonic. The subject gains <i>resist energy</i> 10 against the energy type chosen, meaning that each time the creature is subjected to such damage (whether from a natural or magical source), that damage is reduced by 10 points before being applied to the creature's hit points. The value of the energy resistance granted increases to 20 points at 7th level and to a maximum of 30 points at 11th level. The spell protects the recipient's equipment as well.</p><p><i>Resist energy</i> absorbs only damage. The subject could still suffer unfortunate side effects.</p><p><i>Resist energy</i> overlaps (and does not stack with) <i><i>protection</i> from energy</i>. If a character is warded by <i><i>protection</i> from energy</i> and <i>resist energy</i>, the <i>protection</i> spell absorbs damage until its power is exhausted.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4370,9 +4335,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;antipaladin 2, bard 2, cleric/oracle 2, inquisitor 2, mesmerist 2, psychic 2;\n    \n    <strong>Subdomain</strong>&nbsp;Solitude 2;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    <strong>Area</strong>&nbsp;20-ft.-radius emanation centered on a creature, object, or point in space<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 round/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates; see text or none (object);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Upon the casting of this spell, complete <i>silence</i> prevails in the affected area. All sound is stopped: Conversation is impossible, spells with verbal components cannot be cast, and no noise whatsoever issues from, enters, or passes through the area. The spell can be cast on a point in space, but the effect is stationary unless cast on a mobile object. The spell can be centered on a creature, and the effect then radiates from the creature and moves as it moves. An unwilling creature can attempt a Will save to negate the spell and can use spell resistance, if any. Items in a creature's possession or magic items that emit sound receive the benefits of saves and spell resistance, but unattended objects and points in space do not. Creatures in an area of a <i>silence</i> spell are immune to sonic or language-based attacks, spells, and effects.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -4488,9 +4450,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[emotion, fear, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, bard 1, bloodrager 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, shaman 1, sorcerer/wizard 1, spiritualist 1, witch 1;\n    <strong>Domain</strong>&nbsp;Death 1;\n    <strong>Subdomain</strong>&nbsp;Daemon 1, Fear 1;\n    \n    <strong>Bloodline</strong>&nbsp;Abyssal 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature with 5 or fewer HD<br>\n    \n    <strong>Duration</strong>&nbsp;1d4 rounds or 1 round; see text<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. Creatures with 6 or more HD are immune to this effect. Cause fear counters and dispels remove fear.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4653,9 +4612,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, cleric/oracle 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, witch 1;\n    \n    <strong>Subdomain</strong>&nbsp;Devil 1, Toil 1, Tyranny 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 round<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options.</p><p><i>Approach</i>: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Drop</i>: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn.</p><p><i>Fall</i>: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties.</p><p><i>Flee</i>: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal.</p><p><i>Halt</i>: The subject stands in place for 1 round. It may not take any actions but is not considered helpless.</p><p>If the subject can't carry out your command on its next turn, the spell automatically fails.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4791,9 +4747,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, psychic 1;\n    \n    <strong>Subdomain</strong>&nbsp;Entropy 1;\n    \n    <strong>Bloodline</strong>&nbsp;Protean 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>A magical field appears around you, glowing with a chaotic blast of multicolored hues. This field deflects incoming arrows, rays, and other ranged attacks. Each ranged attack directed at you for which the attacker must make an attack roll has a 20% miss chance (similar to the effects of concealment). Other attacks that simply work at a distance are not affected.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4896,9 +4849,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, medium 1, spiritualist 1;\n    <strong>Domain</strong>&nbsp;Repose 1;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;30 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Using the powers of necromancy, you can determine the condition of creatures near death within the spell's range. You instantly know whether each creature within the area is dead, fragile (alive and wounded, with 3 or fewer hit points left), fighting off death (alive with 4 or more hit points), healthy, undead, or neither alive nor dead (such as a construct). <i>Deathwatch</i> sees through any spell or ability that allows creatures to feign death.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -4998,9 +4948,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[emotion, fear, mind-affecting];\n    <strong>Level</strong>&nbsp;antipaladin 1, cleric/oracle 1, inquisitor 1, mesmerist 1, shaman 1, spiritualist 1;\n    \n    <strong>Subdomain</strong>&nbsp;Demon 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell fills a single subject with a feeling of horrible dread that causes it to become shaken.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5116,9 +5063,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration&nbsp;[evil];\n    <strong>Level</strong>&nbsp;adept 1, antipaladin 1, bloodrager 1, cleric/oracle 1, inquisitor 1, medium 1, shaman 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    <strong>Domain</strong>&nbsp;Evil 1;\n    <strong>Subdomain</strong>&nbsp;Purity 1;\n    \n    <strong>Bloodline</strong>&nbsp;Infernal 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>Protection from Evil</i>, except that the deflection and resistance bonuses apply to attacks made by good creatures. The target receives a new saving throw against control by good creatures and good summoned creatures cannot touch the target.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5265,9 +5209,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;cleric/oracle 1, inquisitor 1;\n    <strong>Domain</strong>&nbsp;Glory 1;\n    <strong>Subdomain</strong>&nbsp;Agathion 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (parchment with a holy text written on it)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell creates a shimmering, magical field around the target that averts and deflects attacks. The spell grants the subject a +2 deflection bonus to AC, with an additional +1 to the bonus for every six levels you have (maximum +5 deflection bonus at 18th level).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5375,9 +5316,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy;\n    <strong>Level</strong>&nbsp;cleric/oracle 0, inquisitor 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You cause a living creature that is below 0 hit points but stabilized to resume dying. Upon casting this spell, you target a living creature that has -1 or fewer hit points. That creature begins dying, taking 1 point of damage per round. The creature can be stabilized later normally. This spell causes a creature that is dying to take 1 point of damage.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5504,9 +5442,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, bard 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>You detect magical auras. The amount of information revealed depends on how long you study a particular area or subject.</p><p><i>1st Round</i>: Presence or absence of magical auras.</p><p><i>2nd Round</i>: Number of different magical auras and the power of the most potent aura.</p><p><i>3rd Round</i>: The strength and location of each aura. If the items or creatures bearing the auras are in line of sight, you can make Knowledge (arcana) skill checks to determine the school of magic involved in each. (Make one check per aura: DC 15 + spell level, or 15 + 1/2 caster level for a nonspell effect.) If the aura emanates from a magic item, you can attempt to identify its properties (see Spellcraft).</p><p>Magical areas, multiple types of magic, or strong local magical emanations may distort or conceal weaker auras.</p><p><i>Aura Strength</i>: An aura's power depends on a spell's functioning spell level or an item's caster level; see the accompanying table. If an aura falls into more than one category, detect magic indicates the stronger of the two.</p><p><table><tr><th rowspan=\"2\">Spell or Object</th><th colspan=\"4\" style=\"text-align:center\">Aura Power</th></tr> <tr><th>Faint</th><th>Moderate</th><th>Strong</th><th>Overwhelming</th></tr> <tr><td>Functioning spell (spell level)</td><td>3rd or lower</td><td>4th-6th</td><td>7th-9th</td><td>10th+ (deity-level)</td></tr> <tr><td>Magic item (caster level)</td><td>5th or lower</td><td>6th-11th</td><td>12th-20th</td><td>21st+ (artifact)</td></tr></table>  <i>Lingering Aura</i>: A magical aura lingers after its original source dissipates (in the case of a spell) or is destroyed (in the case of a magic item). If <i>detect magic</i> is cast and directed at such a location, the spell indicates an aura strength of dim (even weaker than a faint aura). How long the aura lingers at this dim level depends on its original power: <table><tr><th>Original Strength</th><th>Duration of Lingering Aura</th></tr> <tr><td>Faint</td><td>1d6 rounds</td></tr> <tr><td>Moderate</td><td>1d6 minutes</td></tr> <tr><td>Strong</td><td>1d6x10 minutes</td></tr> <tr><td>Overwhelming</td><td>1d6 days</td></tr></table>  Outsiders and elementals are not magical in themselves, but if they are summoned, the conjuration spell registers. Each round, you can turn to detect magic in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p><p><i>Detect magic</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5660,9 +5595,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, medium 0, occultist 0, shaman 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute or until discharged<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell imbues the subject with a touch of divine guidance.</p><p>The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check. It must choose to use the bonus before making the roll to which it applies.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -5797,9 +5729,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 0, antipaladin 1, bard 0, cleric/oracle 0, druid 0, hunter 0, inquisitor 0, magus 0, medium 0, mesmerist 0, occultist 0, paladin 1, psychic 0, ranger 1, shaman 0, sorcerer/wizard 0, spiritualist 0, summoner 0, unchained Summoner 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a clear crystal or mineral prism)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You can decipher magical inscriptions on objects-books, scrolls, weapons, and the like-that would otherwise be unintelligible. This deciphering does not normally invoke the magic contained in the writing, although it may do so in the case of a cursed or trapped scroll. Furthermore, once the spell is cast and you have read the magical inscription, you are thereafter able to read that particular writing without recourse to the use of <i>read magic.</i> You can read at the rate of one page (250 words) per minute. The spell allows you to identify a <i>Glyph of Warding</i> with a DC 13 Spellcraft check, a greater <i>Glyph of Warding</i> with a DC 16 Spellcraft check, or any <i>symbol</i> spell with a Spellcraft check (DC 10 + spell level).</p><p><i>Read magic</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

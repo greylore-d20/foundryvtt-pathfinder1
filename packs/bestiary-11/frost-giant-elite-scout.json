@@ -1524,6 +1524,43 @@
         "hardness": 5,
         "identifiedName": "+1 Spear",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 20,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1536,13 +1573,7 @@
         "scriptCalls": [],
         "masterwork": true,
         "weaponSubtype": "2h",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critMult": 3,
-          "range": 20
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -2084,9 +2115,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;druid 1, hunter 1, ranger 1;\n    <strong>Domain</strong>&nbsp;Travel 1;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a pinch of dirt)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell gives you a +10 foot enhancement bonus to your base speed. It has no effect on other modes of movement, such as burrow, climb, fly, or swim.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

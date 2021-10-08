@@ -12,6 +12,44 @@
     "hardness": 10,
     "identifiedName": "Firewyrm",
     "changes": [],
+    "activation": {
+      "type": "attack"
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "range": {
+      "value": 0,
+      "units": "ft"
+    },
+    "actionType": "rwak",
+    "damage": {
+      "parts": [
+        [
+          "sizeRoll(6, 6, @size)",
+          "fire"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "ceil(@attributes.bab.total / 5) - 1"
+      },
+      "bonus": {
+        "formula": "@formulaicAttack * -5"
+      }
+    },
+    "ability": {
+      "attack": "dex",
+      "damage": "str",
+      "critRange": "",
+      "critMult": "2"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
@@ -23,14 +61,7 @@
     },
     "scriptCalls": [],
     "weaponType": "exotic",
-    "weaponSubtype": "ranged",
-    "weaponData": {
-      "damageRoll": "6d6",
-      "damageType": "fire",
-      "critRange": "",
-      "critMult": "2",
-      "range": 0
-    }
+    "weaponSubtype": "ranged"
   },
   "effects": [],
   "folder": null,

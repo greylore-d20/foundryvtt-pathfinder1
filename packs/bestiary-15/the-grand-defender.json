@@ -1077,6 +1077,43 @@
         "hardness": 10,
         "identifiedName": "+3 Heavy Steel Shield",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "B"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": "20",
+          "critMult": "2"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1090,13 +1127,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "1h",
-        "enh": 3,
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "B",
-          "critRange": "20",
-          "critMult": "2"
-        }
+        "enh": 3
       },
       "effects": [],
       "folder": null,

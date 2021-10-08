@@ -1587,6 +1587,43 @@
         "hardness": 10,
         "identifiedName": "+2 Falchion",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(2, 4, @size)",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 18
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1600,13 +1637,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "2h",
-        "enh": 2,
-        "weaponData": {
-          "damageRoll": "2d4",
-          "damageType": "S",
-          "critRange": 18,
-          "range": 0
-        }
+        "enh": 2
       },
       "effects": [],
       "folder": null,
@@ -2127,9 +2158,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 1, cleric/oracle 1, inquisitor 1, shaman 1, spiritualist 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;60 feet<br>\n    <strong>Area</strong>&nbsp;cone-shaped emanation<br>\n    \n    \n    <strong>Duration</strong>&nbsp;concentration, up to 10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>detect evil</i>, except that it detects the auras of good creatures, clerics or paladins of good deities, good spells, and good magic items, and you are vulnerable to an overwhelming good aura if you are evil.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2230,9 +2258,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;antipaladin 3, bard 3, inquisitor 3, mesmerist 3, psychic 3, sorcerer/wizard 3, witch 3;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You cause the target to become invisible and silent, but only to his allies. Any creature with an attitude of indifferent or worse toward the target, and any creature that wishes the target harm, can see the target normally. The target can see and hear himself, can cast spells with verbal components, and can use command words normally, but any effect that requires allies to see or hear the target does not function. An ally that can see invisible creatures can both see and hear the target of <i>isolate</i>.  If the target succeeds at its save, the duration of the spell is reduced to 1 round.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2346,9 +2371,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration&nbsp;[chaotic, evil, good, or lawful];\n    <strong>Level</strong>&nbsp;antipaladin 2, inquisitor 2, paladin 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 minutes/level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You grant the touched creature limited protection from magical effects that inflict damage based on the target creature's alignment, such as <i>holy smite</i>, order's wrath, a paladin's smite evil attack, or an <i>unholy</i> weapon. Choose one alignment type: chaos, evil, good, or law. The subject takes 5 less points of damage from effects that specifically harm creatures of that alignment. The value of the protection increases to 10 points at 7th level and 15 points at 11th level. The spell protects the recipient's equipment as well.</p><p><i>Corruption resistance</i> protects against spells, spell-like abilities, and special abilities, not physical attacks. <i>Corruption resistance</i> only protects against damage. The subject can still suffer side effects from such attacks. When you use this spell to protect an alignment, it gains the descriptor of that alignment.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2447,9 +2469,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As litany of wardingUC could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -2495,9 +2514,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;necromancy&nbsp;[fear, mind-affecting, emotion];\n    <strong>Level</strong>&nbsp;antipaladin 2, bard 2, medium 2, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, spiritualist 2, witch 2;\n    \n    <strong>Subdomain</strong>&nbsp;Fear 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a bone from an undead creature)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature per three levels, no two of which can be more than 30 ft. apart<br>\n    \n    <strong>Duration</strong>&nbsp;1 round/level or 1 round; see text for cause fear<br>\n    <strong>Saving Throw</strong>&nbsp;Will partial;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>cause fear</i>, except that it causes all targeted creatures of less than 6 HD to become frightened.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2632,9 +2648,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;alchemist 1, antipaladin 1, bard 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1;\n    <strong>Domain</strong>&nbsp;Trickery 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Div 1, Nanite 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You make yourself--including clothing, armor, weapons, and equipmen--look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type (although you can appear as another subtype). Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender.</p><p>The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile (touch) or audible (sound) properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2768,9 +2781,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As litany of slothUC could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -2815,9 +2825,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As litany of weaknessUC could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],

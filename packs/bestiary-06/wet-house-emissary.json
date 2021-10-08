@@ -1517,6 +1517,42 @@
         "hardness": 10,
         "identifiedName": "+1 Sword Cane",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1530,12 +1566,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "1h",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "P",
-          "range": 0
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -1564,6 +1595,43 @@
         "hardness": 5,
         "identifiedName": "Mwk Light Crossbow",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 80,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1575,13 +1643,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "weaponSubtype": "ranged",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critRange": 19,
-          "range": 80
-        }
+        "weaponSubtype": "ranged"
       },
       "effects": [],
       "folder": null,
@@ -2101,9 +2163,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;alchemist 3, antipaladin 3, hunter 4, inquisitor 3, medium 2, mesmerist 3, occultist 3, psychic 3, ranger 4, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3;\n    <strong>Domain</strong>&nbsp;Trickery 3;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (diamond dust worth 50 gp)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature or object touched<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level<br>\n      <strong>Saving Throw</strong>&nbsp;Will negates (harmless, object);&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>The warded creature or object becomes difficult to <i>detect</i> by divination spells such as <i>clairaudience/clairvoyance, locate object,</i> and <i>detect</i> spells. <i>Nondetection</i> also prevents location by such magic items as <i>crystal ball</i>s. If a divination is attempted against the warded creature or item, the caster of the divination must succeed on a caster level check (1d20 + caster level) against a DC of 11 + the caster level of the spellcaster who cast <i>nondetection</i>. If you cast <i>nondetection</i> on yourself or on an item currently in your possession, the DC is 15 + your caster level.</p><p>If cast on a creature, <i>nondetection</i> wards the creature's gear as well as the creature itself.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2257,9 +2316,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;adept 3, alchemist 3, bard 2, cleric/oracle 4, inquisitor 2, medium 2, mesmerist 2, psychic 3, shaman 4, sorcerer/wizard 3, spiritualist 3, summoner 3, unchained Summoner 3, witch 3;\n    \n    <strong>Subdomain</strong>&nbsp;Agathion 3, Language 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M/DF (a clay model of a ziggurat)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell grants the creature touched the ability to speak and understand the language of any intelligent creature, whether it is a racial tongue or a regional dialect. The subject can speak only one language at a time, although it may be able to understand several languages. <i>Tongues</i> does not enable the subject to speak with creatures who don't speak. The subject can make itself understood as far as its voice carries. This spell does not predispose any creature addressed toward the subject in any way.</p><p><i>Tongues</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2415,9 +2471,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;transmutation;\n    <strong>Level</strong>&nbsp;alchemist 2, druid 2, hunter 2, ranger 2, shaman 2, summoner 2, unchained Summoner 2;\n    <strong>Domain</strong>&nbsp;Plant 2;\n    <strong>Subdomain</strong>&nbsp;Defense 2;\n    \n    <strong>Bloodline</strong>&nbsp;Verdant 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;living creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Barkskin</i> toughens a creature's skin. The effect grants a +2 enhancement bonus to the creature's existing natural armor bonus. This enhancement bonus increases by 1 for every three caster levels above 3rd, to a maximum of +5 at 12th level.</p><p>The enhancement bonus provided by <i>barkskin</i> stacks with the target's natural armor bonus, but not with other enhancement bonuses to natural armor. A creature without natural armor has an effective natural armor bonus of +0.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2545,9 +2598,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As eagle’s splendor could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -2593,9 +2643,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, inquisitor 2, medium 2, mesmerist 2, psychic 2, shaman 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 minutes/level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You gain heightened sensitivity to the mannerisms, reactions, and body language of one creature you can perceive, allowing you to sense its state of mind and easily influence it. You gain a +10 bonus on Perception, Sense Motive, and Survival checks attempted against the target creature, as well as a +5 bonus on Diplomacy and Intimidate checks attempted against it.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2707,9 +2754,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;alchemist 2, bard 2, medium 2, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2, witch 2;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 minutes/level or until discharged<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>Your mind is able to correlate information effectively. When attempting an Appraise, Knowledge, Linguistics, or Spellcraft check, you can roll twice and take the higher result. If you have an ability that allows you to roll twice, you cannot use that ability and this benefit on the same roll.</p><p>The spell is discharged once you have used its benefit a number of times equal to your caster level.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2827,9 +2871,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;alchemist 1, bard 1, bloodrager 1, magus 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1, summoner 1, unchained Summoner 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 minute/level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>This spell functions as <i>blur</i>, except that the <i>blur</i>ring occurs only when you move at least 10 feet on your turn and ceases at the end of your movement. It is therefore mainly used to thwart attacks on your turn, such as attacks of opportunity. If you move at least twice your speed on your turn, the <i>blur</i>ring lasts until the start of your next turn.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2953,9 +2994,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/spells/heal-sky-1.jpg",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(healing);\n    <strong>Level</strong>&nbsp;adept 1, alchemist 1, bard 1, cleric/oracle 1, druid 1, hunter 1, inquisitor 1, occultist 1, paladin 1, ranger 2, shaman 1, spiritualist 1, witch 1;\n    <strong>Domain</strong>&nbsp;Healing 1;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;instantaneous<br>\n      <strong>Saving Throw</strong>&nbsp;Will half (harmless); see text;&nbsp;\n      <strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level (maximum +5). Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3104,9 +3142,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(glamer);\n    <strong>Level</strong>&nbsp;alchemist 1, antipaladin 1, bard 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1;\n    <strong>Domain</strong>&nbsp;Trickery 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Div 1, Nanite 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You make yourself--including clothing, armor, weapons, and equipmen--look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type (although you can appear as another subtype). Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender.</p><p>The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile (touch) or audible (sound) properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3243,9 +3278,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;divination;\n    <strong>Level</strong>&nbsp;alchemist 1, bard 1, druid 1, hunter 1, inquisitor 1, medium 1, mesmerist 1, occultist 1, psychic 1, ranger 1, shaman 1, sorcerer/wizard 1;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M/DF (a coffee bean)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;10 minutes/level (D)<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p>You enter a heightened state of awareness that allows you to notice more about your surroundings and recall information effortlessly. You gain a +2 competence bonus on Perception checks and on all Knowledge checks that you are trained in.</p><p>If this spell is active when you have to make an initiative check, you can instantly dismiss this spell and gain a +4 bonus on that check.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -3380,9 +3412,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration&nbsp;[force];\n    <strong>Level</strong>&nbsp;alchemist 1, bloodrager 1, magus 1, occultist 1, psychic 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    \n    <strong>Subdomain</strong>&nbsp;Defense 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p><i>Shield</i> creates an invisible <i>shield</i> of force that hovers in front of you. It negates <i>magic missile</i> attacks directed at you. The disk also provides a +4 <i>shield</i> bonus to AC. This bonus applies against incorporeal touch attacks, since it is a force effect. The <i>shield</i> has no armor check penalty or arcane spell failure chance.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

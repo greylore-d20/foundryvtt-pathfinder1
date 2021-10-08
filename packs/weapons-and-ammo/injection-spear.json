@@ -13,6 +13,43 @@
     "hardness": 10,
     "identifiedName": "Injection Spear",
     "changes": [],
+    "activation": {
+      "type": "attack"
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "range": {
+      "value": 0,
+      "units": "melee"
+    },
+    "actionType": "mwak",
+    "damage": {
+      "parts": [
+        [
+          "sizeRoll(1, 8, @size)",
+          "P"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "ceil(@attributes.bab.total / 5) - 1"
+      },
+      "bonus": {
+        "formula": "@formulaicAttack * -5"
+      }
+    },
+    "ability": {
+      "attack": "str",
+      "damage": "str",
+      "critMult": 3
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
@@ -24,13 +61,7 @@
     },
     "scriptCalls": [],
     "weaponType": "exotic",
-    "weaponSubtype": "2h",
-    "weaponData": {
-      "damageRoll": "1d8",
-      "damageType": "P",
-      "critMult": 3,
-      "range": 0
-    }
+    "weaponSubtype": "2h"
   },
   "effects": [],
   "folder": null,

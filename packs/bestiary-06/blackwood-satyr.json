@@ -1368,6 +1368,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1405,6 +1413,43 @@
         "hardness": 10,
         "identifiedName": "Dagger",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "P or S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 19
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1414,13 +1459,7 @@
           "boolean": [],
           "dictionary": []
         },
-        "scriptCalls": [],
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "P or S",
-          "critRange": 19,
-          "range": 10
-        }
+        "scriptCalls": []
       },
       "effects": [],
       "folder": null,
@@ -1704,9 +1743,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[light];\n    <strong>Level</strong>&nbsp;bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, shaman 0, sorcerer/wizard 0, witch 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;Up to four lights, all within a 10-ft.-radius area<br>\n    <strong>Duration</strong>&nbsp;1 minute<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>Depending on the version selected, you create up to four lights that resemble lanterns or torches (and cast that amount of light), or up to four glowing spheres of light (which look like will-o'-wisps), or one faintly glowing, vaguely humanoid shape. The <i>dancing lights</i> must stay within a 10-foot-radius area in relation to each other but otherwise move as you desire (no concentration required): forward or back, up or down, straight or turning corners, or the like. The lights can move up to 100 feet per round. A light winks out if the distance between you and it exceeds the spell's range.</p><p>You can only have one <i>dancing lights</i> spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent, it does not count against this limit.</p><p><i>Dancing lights</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1826,9 +1862,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 3, mesmerist 3, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, witch 3;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Dreamspun 3, Fey 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S, M (fine sand, rose petals, or a live cricket)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    <strong>Area</strong>&nbsp;one or more living creatures within a 10-ft.-radius burst<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>sleep</i>, except that it affects 10 HD of targets.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -1957,9 +1990,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(figment);\n    <strong>Level</strong>&nbsp;adept 0, bard 0, magus 0, medium 0, mesmerist 0, occultist 0, psychic 0, sorcerer/wizard 0;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a bit of wool or a small lump of wax)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;illusory sounds<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will disbelief;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Ghost sound</i> allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place. You choose what type of sound <i>ghost sound</i> creates when casting it and cannot thereafter change the sound's basic character.</p><p>The volume of sound created depends on your level. You can produce as much noise as four normal humans per caster level (maximum 40 humans). Thus, talking, singing, shouting, walking, marching, or running sounds can be created. The noise a <i>ghost sound</i> spell produces can be virtually any type of sound within the volume limit. A horde of rats running and squeaking is about the same volume as eight humans running and shouting. A roaring lion is equal to the noise from 16 humans, while a roaring dragon is equal to the noise from 32 humans. Anyone who hears a <i>ghost sound</i> receives a Will save to disbelieve.</p><p><i>Ghost sound</i> can enhance the effectiveness of a <i>silent image</i> spell.</p><p><i>Ghost sound</i> can be made permanent with a <i>permanency</i> spell.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2081,9 +2111,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[language-dependent, mind-affecting];\n    <strong>Level</strong>&nbsp;bard 2, medium 2, mesmerist 2, occultist 3, psychic 2, sorcerer/wizard 3, witch 3;\n    <strong>Domain</strong>&nbsp;Charm 3;\n    <strong>Subdomain</strong>&nbsp;Corruption 2, Devil 3, Innuendo 3;\n    \n    <strong>Bloodline</strong>&nbsp;Infernal 3, Maestro 3, Rakshasa 3;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, M (a snake&#x27;s tongue and a honeycomb)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 hour/level or until completed<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You influence the actions of the target creature by suggesting a course of activity (limited to a sentence or two). The <i>suggestion</i> must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell.</p><p>The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed.</p><p>A very reasonable <i>suggestion</i> causes the save to be made with a penalty (such as -1 or -2).</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2235,9 +2262,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;illusion&nbsp;(figment);\n    <strong>Level</strong>&nbsp;bard 3, magus 3, medium 3, mesmerist 3, occultist 3, psychic 3, sorcerer/wizard 3;\n    \n    <strong>Subdomain</strong>&nbsp;Imagination 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, F (a bit of fleece)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;long (400 ft. + 40 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;visual figment that cannot extend beyond four 10-ft. cubes + one 10-ft. cube/level (S)<br>\n    <strong>Duration</strong>&nbsp;concentration + 3 rounds<br>\n    <strong>Saving Throw</strong>&nbsp;Will disbelief (if interacted with);&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>silent image,</i> except that sound, smell, and thermal illusions are included in the spell effect. While concentrating, you can move the image within the range.</p><p>The image disappears when struck by an opponent unless you cause the illusion to react appropriately.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2362,9 +2386,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(compulsion)&nbsp;[emotion, mind-affecting];\n    <strong>Level</strong>&nbsp;bard 2, mesmerist 2, psychic 3, sorcerer/wizard 3, witch 3;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 day/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>You fill your target with feelings of intense infatuation for a specific individual known to the target. At the time of the casting, you designate a single creature as the focus of the target's desire.</p><p>Thereafter, the target does all it can to remain within 30 feet of the object of its desire. If the target moves outside this range, it gains the staggered condition until it is again near the focus of its desire. If remaining within 30 feet of the focus of its affection would place the target in obvious physical danger, the target can attempt a second save to break the spell's effect.</p><p><i>Reckless infatuation</i> counters <i>unadulterated loathing</i>.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2473,9 +2494,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;enchantment&nbsp;(charm)&nbsp;[mind-affecting];\n    <strong>Level</strong>&nbsp;bard 3, mesmerist 3, occultist 4, psychic 4, sorcerer/wizard 4, summoner 3, unchained Summoner 4, witch 4;\n    <strong>Domain</strong>&nbsp;Charm 5;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Infernal 4, Oni 4;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;close (25 ft. + 5 ft./2 levels)<br>\n    \n    <strong>Targets</strong>&nbsp;one living creature<br>\n    \n    <strong>Duration</strong>&nbsp;1 day/level<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell functions like <i>charm person</i>, except that the effect is not restricted by creature type or size.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2611,9 +2629,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As summon nature’s ally IV could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "uses": {
           "value": 1,

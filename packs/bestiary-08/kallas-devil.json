@@ -909,6 +909,42 @@
         "hardness": 10,
         "identifiedName": "Masterwork Trident",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 10,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -921,12 +957,7 @@
         "scriptCalls": [],
         "masterwork": true,
         "weaponType": "martial",
-        "weaponSubtype": "1h",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "range": 10
-        }
+        "weaponSubtype": "1h"
       },
       "effects": [],
       "folder": null,
@@ -1270,9 +1301,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation);\n    <strong>Level</strong>&nbsp;bloodrager 4, magus 4, psychic 4, sorcerer/wizard 4, spiritualist 4, summoner 3, unchained Summoner 4, witch 4;\n    \n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (octopus or squid tentacle)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    <strong>Area</strong>&nbsp;20-ft.-radius spread<br>\n    \n    \n    <strong>Duration</strong>&nbsp;1 round/level (D)<br>\n    <strong>Saving Throw</strong>&nbsp;none;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p>This spell causes a field of rubbery <i>black tentacles</i> to appear, burrowing up from the floor and reaching for any creature in the area.</p><p>Every creature within the area of the spell is the target of a combat maneuver check made to grapple each round at the beginning of your turn, including the round that <i>black tentacles</i> is cast. Creatures that enter the area of effect are also automatically attacked. The tentacles do not provoke attacks of opportunity. When determining the tentacles' CMB, the tentacles use your caster level as their base attack bonus and receive a +4 bonus due to their Strength and a +1 size bonus. Roll only once for the entire spell effect each round and apply the result to all creatures in the area of effect.</p><p>If the tentacles succeed in grappling a foe, that foe takes 1d6+4 points of damage and gains the grappled condition. Grappled opponents cannot move without first breaking the grapple. All other movement is prohibited unless the creature breaks the grapple first. The <i>black tentacles</i> spell receives a +5 bonus on grapple checks made against opponents it is already grappling, but cannot move foes or pin foes. Each round that <i>black tentacles</i> succeeds on a grapple check, it deals an additional 1d6+4 points of damage. The CMD of <i>black tentacles</i>, for the purposes of escaping the grapple, is equal to 10 + its CMB.</p><p>The tentacles created by this spell cannot be damaged, but they can be dispelled as normal. The entire area of effect is considered difficult terrain while the tentacles last.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1393,9 +1421,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[electricity];\n    <strong>Level</strong>&nbsp;druid 3, hunter 3, occultist 3, shaman 3;\n    <strong>Domain</strong>&nbsp;Weather 3;\n    <strong>Subdomain</strong>&nbsp;Catastrophe 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 round<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;one or more 30-ft.-long vertical lines of lightning<br>\n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Reflex half;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>Immediately upon completion of the spell, and once per round thereafter, you may call down a 5-foot-wide, 30-foot-long, vertical bolt of lightning that deals 3d6 points of electricity damage. The bolt of lightning flashes down in a vertical stroke at whatever target point you choose within the spell's range (measured from your position at the time). Any creature in the target square or in the path of the bolt is affected.</p><p>You need not call a bolt of lightning immediately; other actions, even spellcasting, can be performed first. Each round after the first you may use a standard action (concentrating on the spell) to call a bolt. You may call a total number of bolts equal to your caster level (maximum 10 bolts).</p><p>If you are outdoors and in a stormy area-a rain shower, clouds and wind, hot and cloudy conditions, or even a tornado (including a whirlwind formed by a djinni or an air elemental of at least Large size)-each bolt deals 3d10 points of electricity damage instead of 3d6.</p><p>This spell functions indoors or underground but not underwater.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "round"
@@ -1507,9 +1532,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;conjuration&nbsp;(creation);\n    <strong>Level</strong>&nbsp;bloodrager 3, magus 3, shaman 3, sorcerer/wizard 3, unchained Summoner 3, witch 3;\n    \n    <strong>Subdomain</strong>&nbsp;Smoke 3;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M (a rotten egg or cabbage leaves)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;cloud spreads in 20-ft. radius, 20 ft. high<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;no<br>\n  </p>\n  <h2>Description</h2>\n  <p><i>Stinking cloud</i> creates a bank of fog like that created by <i>fog cloud</i>, except that the vapors are nauseating. Living creatures in the cloud become nauseated. This condition lasts as long as the creature is in the cloud and for 1d4+1 rounds after it leaves.</p><p>(Roll separately for each nauseated character.) Any creature that succeeds on its save but remains in the cloud must continue to save each round on your turn. This is a poison effect.</p><p><i>Stinking cloud</i> can be made permanent with a <i>permanency</i> spell. A permanent <i>stinking cloud</i> dispersed by wind reforms in 10 minutes.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

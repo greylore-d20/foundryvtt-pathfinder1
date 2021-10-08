@@ -1092,6 +1092,43 @@
         "hardness": 5,
         "identifiedName": "Mwk Spear",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 20,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1103,13 +1140,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "weaponSubtype": "2h",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critMult": 3,
-          "range": 20
-        }
+        "weaponSubtype": "2h"
       },
       "effects": [],
       "folder": null,
@@ -1136,6 +1167,42 @@
         "hardness": 5,
         "identifiedName": "Sling",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 50,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 4, @size)",
+              "B"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1146,12 +1213,7 @@
           "dictionary": []
         },
         "scriptCalls": [],
-        "weaponSubtype": "ranged",
-        "weaponData": {
-          "damageRoll": "1d4",
-          "damageType": "B",
-          "range": 50
-        }
+        "weaponSubtype": "ranged"
       },
       "effects": [],
       "folder": null,
@@ -1405,9 +1467,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/skills/yellow_36.jpg",
       "data": {
-        "description": {
-          "value": "sbc | As adjuring stepUC could not be found in any compendium, a placeholder was generated."
-        },
         "tags": [],
         "damage": {
           "parts": [],
@@ -1452,9 +1511,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;adept 1, alchemist 1, bloodrager 1, cleric/oracle 1, druid 1, hunter 1, paladin 1, psychic 1, ranger 1, shaman 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    <strong>Domain</strong>&nbsp;Sun 1;\n    \n    \n    <strong>Bloodline</strong>&nbsp;Martyred 1;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;24 hours<br>\n    <strong>Saving Throw</strong>&nbsp;Will negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>A creature protected by <i>endure elements</i> suffers no harm from being in a hot or cold environment. It can exist comfortably in conditions between -50 and 140 degrees Fahrenheit without having to make Fortitude saves. The creature's equipment is likewise protected.</p><p><i>Endure elements</i> doesn't provide any protection from fire or cold damage, nor does it protect against other environmental hazards such as smoke, lack of air, and so forth.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -1605,9 +1661,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration&nbsp;[force];\n    <strong>Level</strong>&nbsp;alchemist 1, bloodrager 1, magus 1, occultist 1, psychic 1, sorcerer/wizard 1, spiritualist 1, summoner 1, unchained Summoner 1;\n    \n    <strong>Subdomain</strong>&nbsp;Defense 1;\n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;personal<br>\n    \n    <strong>Targets</strong>&nbsp;you<br>\n    \n    <strong>Duration</strong>&nbsp;1 min./level<br>\n    \n  </p>\n  <h2>Description</h2>\n  <p><i>Shield</i> creates an invisible <i>shield</i> of force that hovers in front of you. It negates <i>magic missile</i> attacks directed at you. The disk also provides a +4 <i>shield</i> bonus to AC. This bonus applies against incorporeal touch attacks, since it is a force effect. The <i>shield</i> has no armor check penalty or arcane spell failure chance.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

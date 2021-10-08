@@ -1571,6 +1571,44 @@
         "hardness": 5,
         "identifiedName": "+1 Composite Longbow (+4 Str) With 20 Arrows",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 110,
+          "units": "ft"
+        },
+        "actionType": "rwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "dex",
+          "damage": "str",
+          "critRange": "20",
+          "critMult": "3"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1584,14 +1622,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "ranged",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "P",
-          "critRange": "20",
-          "critMult": "3",
-          "range": 110
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,
@@ -1620,6 +1651,43 @@
         "hardness": 10,
         "identifiedName": "+1 Scimitar",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 6, @size)",
+              "S"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 18
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1633,13 +1701,7 @@
         "masterwork": true,
         "weaponType": "martial",
         "weaponSubtype": "1h",
-        "enh": 1,
-        "weaponData": {
-          "damageRoll": "1d6",
-          "damageType": "S",
-          "critRange": 18,
-          "range": 0
-        }
+        "enh": 1
       },
       "effects": [],
       "folder": null,

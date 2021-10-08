@@ -1500,6 +1500,14 @@
         },
         "tags": [],
         "changes": [],
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1537,6 +1545,42 @@
         "hardness": 10,
         "identifiedName": "Masterwork Morningstar",
         "changes": [],
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": 0,
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              "B and P"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "ceil(@attributes.bab.total / 5) - 1"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
         "contextNotes": [],
         "links": {
           "children": []
@@ -1548,12 +1592,7 @@
         },
         "scriptCalls": [],
         "masterwork": true,
-        "weaponSubtype": "1h",
-        "weaponData": {
-          "damageRoll": "1d8",
-          "damageType": "B and P",
-          "range": 0
-        }
+        "weaponSubtype": "1h"
       },
       "effects": [],
       "folder": null,
@@ -2030,9 +2069,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;evocation&nbsp;[air];\n    <strong>Level</strong>&nbsp;bloodrager 3, cleric/oracle 3, druid 3, hunter 2, magus 3, occultist 3, ranger 2, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner 2, unchained Summoner 3;\n    <strong>Domain</strong>&nbsp;Air 2;\n    \n    \n    \n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, M/DF (a tiny fan and an exotic feather)<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;medium (100 ft. + 10 ft./level)<br>\n    \n    \n    <strong>Effect</strong>&nbsp;wall up to 10 ft./level long and 5 ft./level high (S)<br>\n    <strong>Duration</strong>&nbsp;1 round/level<br>\n    <strong>Saving Throw</strong>&nbsp;none; see text;&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>An invisible vertical curtain of wind appears. It is 2 feet thick and of considerable strength. It is a roaring blast sufficient to blow away any bird smaller than an eagle, or tear papers and similar materials from unsuspecting hands. (A Reflex save allows a creature to maintain its grasp on an object.) Tiny and Small flying creatures cannot pass through the barrier. Loose materials and cloth garments fly upward when caught in a <i>wind wall.</i> Arrows and bolts are deflected upward and miss, while any other normal ranged weapon passing through the wall has a 30% miss chance. (A giant-thrown boulder, a siege engine projectile, and other massive ranged weapons are not affected.) Gases, most gaseous breath weapons, and creatures in gaseous form cannot pass through the wall (although it is no barrier to incorporeal creatures).</p><p>While the wall must be vertical, you can shape it in any continuous path along the ground that you like. It is possible to create cylindrical or square <i>wind walls</i> to enclose specific points.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"
@@ -2175,9 +2211,6 @@
       "type": "spell",
       "img": "systems/pf1/icons/misc/magic-swirl.png",
       "data": {
-        "description": {
-          "value": "<div class=\"spell-description\">\n  <p>\n    <strong>School</strong>&nbsp;abjuration;\n    <strong>Level</strong>&nbsp;adept 2, alchemist 2, bloodrager 2, cleric/oracle 2, druid 2, hunter 1, inquisitor 2, occultist 2, paladin 2, psychic 2, ranger 1, shaman 2, sorcerer/wizard 2, spiritualist 2, summoner 2, unchained Summoner 2;\n    \n    \n    \n    <strong>Bloodline</strong>&nbsp;Celestial 2, Draconic 2;\n  </p>\n  <p>\n    <strong>Casting Time</strong>&nbsp;1 standard action<br>\n    <strong>Components</strong>&nbsp;V, S, DF<br>\n  </p>\n  <p>\n    <strong>Range</strong>&nbsp;touch<br>\n    \n    <strong>Targets</strong>&nbsp;creature touched<br>\n    \n    <strong>Duration</strong>&nbsp;10 min./level<br>\n    <strong>Saving Throw</strong>&nbsp;Fortitude negates (harmless);&nbsp;<strong>Spell Resistance</strong>&nbsp;yes<br>\n  </p>\n  <h2>Description</h2>\n  <p>This abjuration grants a creature limited <i>protection</i> from damage of whichever one of five energy types you select: acid, cold, electricity, fire, or sonic. The subject gains <i>resist energy</i> 10 against the energy type chosen, meaning that each time the creature is subjected to such damage (whether from a natural or magical source), that damage is reduced by 10 points before being applied to the creature's hit points. The value of the energy resistance granted increases to 20 points at 7th level and to a maximum of 30 points at 11th level. The spell protects the recipient's equipment as well.</p><p><i>Resist energy</i> absorbs only damage. The subject could still suffer unfortunate side effects.</p><p><i>Resist energy</i> overlaps (and does not stack with) <i><i>protection</i> from energy</i>. If a character is warded by <i><i>protection</i> from energy</i> and <i>resist energy</i>, the <i>protection</i> spell absorbs damage until its power is exhausted.</p>\n</div>\n"
-        },
         "tags": [],
         "activation": {
           "type": "standard"

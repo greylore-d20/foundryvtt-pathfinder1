@@ -13,6 +13,44 @@
     "hardness": 10,
     "identifiedName": "Pepperbox Rifle",
     "changes": [],
+    "activation": {
+      "type": "attack"
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "range": {
+      "value": 80,
+      "units": "melee"
+    },
+    "actionType": "mwak",
+    "damage": {
+      "parts": [
+        [
+          "sizeRoll(1, 10, @size)",
+          "B and P"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "ceil(@attributes.bab.total / 5) - 1"
+      },
+      "bonus": {
+        "formula": "@formulaicAttack * -5"
+      }
+    },
+    "ability": {
+      "attack": "str",
+      "damage": "str",
+      "critRange": "",
+      "critMult": "4"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
@@ -24,14 +62,7 @@
     },
     "scriptCalls": [],
     "weaponType": "exotic",
-    "weaponSubtype": "2h",
-    "weaponData": {
-      "damageRoll": "1d10",
-      "damageType": "B and P",
-      "critRange": "",
-      "critMult": "4",
-      "range": 80
-    }
+    "weaponSubtype": "2h"
   },
   "effects": [],
   "folder": null,

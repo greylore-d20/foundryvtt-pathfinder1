@@ -17,6 +17,42 @@
     "hardness": 10,
     "identifiedName": "Sword Cane",
     "changes": [],
+    "activation": {
+      "type": "attack"
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "range": {
+      "value": 0,
+      "units": "melee"
+    },
+    "actionType": "mwak",
+    "damage": {
+      "parts": [
+        [
+          "sizeRoll(1, 6, @size)",
+          "P"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": "ceil(@attributes.bab.total / 5) - 1"
+      },
+      "bonus": {
+        "formula": "@formulaicAttack * -5"
+      }
+    },
+    "ability": {
+      "attack": "str",
+      "damage": "str"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
@@ -28,12 +64,7 @@
     },
     "scriptCalls": [],
     "weaponType": "martial",
-    "weaponSubtype": "1h",
-    "weaponData": {
-      "damageRoll": "1d6",
-      "damageType": "P",
-      "range": 0
-    }
+    "weaponSubtype": "1h"
   },
   "effects": [],
   "folder": null,

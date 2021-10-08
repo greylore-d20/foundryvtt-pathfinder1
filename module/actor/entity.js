@@ -2337,7 +2337,7 @@ export class ActorPF extends Actor {
     // Add contextual notes
     const rollData = this.getRollData();
     const noteObjects = [...this.getContextNotes("attacks.effect"), ...this.getContextNotes("attacks.attack")];
-    const notes = this.formatContextNotes(noteObjects);
+    const notes = this.formatContextNotes(noteObjects, rollData);
     rollData.item = {};
 
     const changes = sources
@@ -3292,6 +3292,7 @@ export class ActorPF extends Actor {
 
   formatContextNotes(notes, rollData) {
     const result = [];
+    rollData = rollData ?? this.getRollData();
     for (const noteObj of notes) {
       rollData.item = {};
       if (noteObj.item != null) rollData = noteObj.item.getRollData();

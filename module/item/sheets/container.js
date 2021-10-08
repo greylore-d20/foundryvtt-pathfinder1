@@ -209,7 +209,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       weapon: {
         label: game.i18n.localize("PF1.InventoryWeapons"),
         canCreate: true,
-        hasActions: false,
+        hasActions: true,
         items: [],
         canEquip: false,
         dataset: { type: "weapon" },

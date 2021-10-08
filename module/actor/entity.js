@@ -3153,7 +3153,7 @@ export class ActorPF extends Actor {
             return (
               // Check for skill.context or skill.xyz.subSkills.context
               o.subTarget === context ||
-              o.subTarget.split(".")?.[3] === context.split(".")?.[1] ||
+              o.subTarget?.split(".")?.[3] === context?.split(".")?.[1] ||
               o.subTarget === `${ability}Skills` ||
               o.subTarget === "skills"
             );

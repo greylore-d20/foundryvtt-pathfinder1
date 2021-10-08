@@ -1391,7 +1391,7 @@ export const addDefaultChanges = function (changes) {
 
         changes.push(
           ItemChange.create({
-            formula: 4,
+            formula: -4,
             target: "ac",
             subTarget: "ac",
             modifier: "penalty",

@@ -118,10 +118,16 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
+      if (!t) continue;
       if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";
+
+        const modifierChanger = t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/);
+        const isModifierChanger = modifierChanger != null;
+        const abilityTarget = modifierChanger?.[1];
+        const ability = isModifierChanger ? duplicate(rollData.abilities[abilityTarget]) : null;
 
         let value = 0;
         if (this.formula) {
@@ -219,9 +225,24 @@ export class ItemChange {
             break;
         }
 
-        // Reset ability modifiers
-        if (t.match(/^data\.abilities\.(?:[a-zA-Z0-9]+)\.(?:total|penalty|base)$/)) {
-          actor.refreshAbilityModifiers();
+        // Adjust ability modifier
+        if (isModifierChanger) {
+          const prevMod = CONFIG.Actor.documentClass.getAbilityModifier(ability.total, {
+            damage: ability.damage,
+            penalty: ability.penalty,
+          });
+          const newAbility = rollData.abilities[abilityTarget];
+          const mod = CONFIG.Actor.documentClass.getAbilityModifier(newAbility.total, {
+            damage: newAbility.damage,
+            penalty: newAbility.penalty,
+          });
+          setProperty(
+            actor.data,
+            `data.abilities.${abilityTarget}.mod`,
+            getProperty(actor.data, `data.abilities.${abilityTarget}.mod`) - (prevMod - mod)
+          );
+          // console.log(prevMod, mod);
+          // actor.refreshAbilityModifiers();
         }
       }
     }

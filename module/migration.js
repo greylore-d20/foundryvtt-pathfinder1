@@ -252,6 +252,10 @@ export const migrateItemData = function (item) {
   return updateData;
 };
 
+/**
+ * @param item
+ * @param updateData
+ */
 function _migrateSpellData(item, updateData) {
   if (item.type === "spell") {
     updateData["data.description.-=value"] = null;
@@ -588,6 +592,10 @@ const _migrateWeaponData = function (ent, updateData) {
     // Attack bonus
     updateData["data.attackBonus"] = getProperty(ent.data, "weaponData.attackFormula")?.trim() ?? "";
 
+    // Flag show in quickbar
+    updateData["data.showInQuickbar"] = false;
+
+    // Remove legacy data
     updateData["data.-=weaponData"] = null;
   }
 };

@@ -3749,7 +3749,10 @@ export class ActorPF extends Actor {
     return this.items
       .filter(
         (o) =>
-          (o.data.type === "attack" || o.data.type === "spell" || (o.data.type === "feat" && !o.data.data.disabled)) &&
+          (o.data.type === "weapon" ||
+            o.data.type === "attack" ||
+            o.data.type === "spell" ||
+            (o.data.type === "feat" && !o.data.data.disabled)) &&
           getProperty(o.data, "data.showInQuickbar") === true
       )
       .sort((a, b) => {

@@ -11,4 +11,24 @@ export class TokenDocumentPF extends TokenDocument {
 
     return super.update(data, options);
   }
+
+  /**
+   * Hijack Token health bar rendering to include temporary and temp-max health in the bar display
+   */
+  getBarAttribute(barName, { alternative = null } = {}) {
+    let data;
+    try {
+      data = super.getBarAttribute(barName, { alternative: alternative });
+    } catch (e) {
+      data = null;
+    }
+    if (data != null && data.attribute === "attributes.hp") {
+      data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
+    }
+
+    // Make resources editable
+    if (data?.attribute.startsWith("resources.")) data.editable = true;
+
+    return data;
+  }
 }

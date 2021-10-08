@@ -2013,29 +2013,39 @@ export class ActorPF extends Actor {
     attackData["data.nonlethal"] = item.data.data.nonlethal;
     attackData["data.attackType"] = item.data.data.attackType;
     attackData["data.enh"] = item.data.data.enh;
-    attackData["data.ability.critRange"] = item.data.data.weaponData.critRange || 20;
-    attackData["data.ability.critMult"] = item.data.data.weaponData.critMult || 2;
+    attackData["data.ability.critRange"] = item.data.data.ability.critRange || 20;
+    attackData["data.ability.critMult"] = item.data.data.ability.critMult || 2;
     attackData["data.actionType"] = item.data.data.actionType;
     attackData["data.activation.type"] = item.data.data.activation.type;
     attackData["data.duration.units"] = item.data.data.duration.units;
     attackData["data.range.units"] = item.data.data.range.units;
     attackData["data.broken"] = item.data.data.broken;
-    attackData["data.range.maxIncrements"] = item.data.data.weaponData.maxRangeIncrements;
     attackData["img"] = item.data.img;
+    attackData["data.soundEffect"] = item.data.data.soundEffect;
 
     // Add additional attacks
     attackData["data.attackParts"] = item.data.data.attackParts;
     attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;
+    attackData["data.critConfirmBonus"] = item.data.data.critConfirmBonus;
 
     // Add damage
-    attackData["data.damage.parts"] = item.data.data.damage.parts;
+    attackData["data.damage"] = item.data._source.data.damage;
 
     // Add attack bonus formula
     attackData["data.attackBonus"] = item.data.data.attackBonus;
 
     // Add range
-    attackData["data.range.units"] = item.data.data.range.units;
-    attackData["data.range.value"] = item.data.data.range.value;
+    attackData["data.range"] = item.data._source.data.range;
+
+    // Add measure template
+    attackData["data.measureTemplate"] = item.data._source.data.measureTemplate;
+
+    // Add notes
+    attackData["data.effectNotes"] = item.data._source.data.effectNotes;
+    attackData["data.attackNotes"] = item.data._source.data.attackNotes;
+
+    // Add saving throw
+    attackData["data.save"] = item.data._source.data.save;
 
     // Create attack
     if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];

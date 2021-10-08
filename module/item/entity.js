@@ -2577,7 +2577,7 @@ export class ItemPF extends Item {
         attacks,
         template,
         data,
-        conditionals: conditionals.map((c) => this.data.data.conditionals[c]),
+        conditionals: conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
       });
 
       return result;
@@ -3467,6 +3467,8 @@ export class ItemPF extends Item {
 
   /**
    * Updates the spell's description.
+   *
+   * @param data
    */
   async _updateSpellDescription(data) {
     this.data.data.description.value = await renderTemplate(

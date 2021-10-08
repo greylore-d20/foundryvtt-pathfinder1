@@ -254,7 +254,7 @@ Hooks.once("init", function () {
     "pf1",
     "use",
     "PF1.ScriptCalls.Use.Name",
-    ["attack", "feat", "equipment", "consumable", "spell"],
+    ["attack", "feat", "equipment", "consumable", "spell", "weapon"],
     "PF1.ScriptCalls.Use.Info"
   );
   game.pf1.registry.registerItemScriptCategory(

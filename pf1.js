@@ -444,11 +444,16 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Create tooltip
-  game.pf1.tooltip = new TooltipPF();
+  game.pf1.tooltip = null;
+  const ttconf = game.settings.get("pf1", "tooltipConfig");
+  const ttwconf = game.settings.get("pf1", "tooltipWorldConfig");
+  if (!ttconf.disable && !ttwconf.disable) TooltipPF.toggle(true);
+
   window.addEventListener("resize", () => {
-    game.pf1.tooltip.setPosition();
+    game.pf1.tooltip?.setPosition();
   });
   window.addEventListener("keydown", (event) => {
+    if (!game.pf1.tooltip) return;
     const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = true;
@@ -462,6 +467,7 @@ Hooks.once("ready", async function () {
     }
   });
   window.addEventListener("keyup", (event) => {
+    if (!game.pf1.tooltip) return;
     const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
     if (event.key === "Shift" && game.user.isGM) {
       game.pf1.tooltip.forceHideGMInfo = false;
@@ -658,20 +664,6 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   const actor = game.actors.get(token.actorId),
     buffTextures = Object.values(actor?._calcBuffTextures() ?? []).map((b) => b.icon);
   for (const icon of buffTextures) await loadTexture(icon);
-});
-
-Hooks.on("hoverToken", (token, hovering) => {
-  // Show token tooltip
-  if (hovering && !game.keyboard.isDown("Alt")) {
-    const p = game.pf1.tooltip.mousePos;
-    const el = document.elementFromPoint(p.x, p.y);
-    // This check is required to prevent hovering over tokens under application windows
-    if (el?.id === "board") {
-      game.pf1.tooltip.bind(token);
-    }
-  }
-  // Hide token tooltip
-  else game.pf1.tooltip.unbind(token);
 });
 
 Hooks.on("preDeleteToken", (token, options, userId) => {

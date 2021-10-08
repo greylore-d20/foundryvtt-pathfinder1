@@ -3,6 +3,7 @@ import { ExperienceConfig } from "./config/experience.js";
 import { AccessibilityConfig } from "./config/accessibility.js";
 import { TooltipConfig } from "./config/tooltip.js";
 import { TooltipWorldConfig } from "./config/tooltip_world.js";
+import { TooltipPF } from "./hud/tooltip.js";
 
 export const registerSystemSettings = function () {
   /**
@@ -122,8 +123,10 @@ export const registerSystemSettings = function () {
     default: TooltipConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      game.pf1.tooltip?.setPosition();
+    onChange: (settings) => {
+      const worldConf = game.settings.get("pf1", "tooltipWorldConfig");
+      const enable = !worldConf.disabled && !settings.disabled;
+      TooltipPF.toggle(enable);
     },
   });
 
@@ -142,7 +145,8 @@ export const registerSystemSettings = function () {
     default: TooltipWorldConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
+    onChange: (settings) => {
+      TooltipPF.toggle(!settings.disable);
       game.pf1.tooltip?.setPosition();
     },
   });

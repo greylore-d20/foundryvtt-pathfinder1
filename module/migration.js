@@ -156,9 +156,9 @@ const _migrateWorldSettings = async function () {
  * Migrate a single Actor entity to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
- * @param {Actor} actor   The actor data to derive an update from
- * @param token
- * @returns {object}       The updateData to apply
+ * @param {ActorData} actor   The actor data to derive an update from
+ * @param {Token} token
+ * @returns {object}          The updateData to apply
  */
 export const migrateActorData = function (actor, token) {
   const updateData = {};
@@ -896,7 +896,7 @@ const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
   if (spellbookUsage == null) {
     const usedSpellbooks = [];
     if (!ent.items) return;
-    const spells = ent.itemTypes.spell;
+    const spells = ent.items.filter((o) => o.type === "spell");
     for (const o of spells) {
       const sb = o.data.spellbook;
       if (sb && !usedSpellbooks.includes(sb)) {

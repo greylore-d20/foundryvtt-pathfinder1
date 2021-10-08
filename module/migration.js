@@ -246,10 +246,17 @@ export const migrateItemData = function (item) {
   _migrateItemLinks(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
+  _migrateSpellData(item, updateData);
 
   // Return the migrated update data
   return updateData;
 };
+
+function _migrateSpellData(item, updateData) {
+  if (item.type === "spell") {
+    updateData["data.description.-=value"] = null;
+  }
+}
 
 /* -------------------------------------------- */
 

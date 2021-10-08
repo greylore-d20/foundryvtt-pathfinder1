@@ -3286,7 +3286,7 @@ export class ActorPF extends Actor {
     const rv = await super.createEmbeddedDocuments(embeddedName, createData, options);
 
     // Create class
-    for (let item of rv) {
+    for (const item of rv) {
       if (item.type === "class") {
         await item._onLevelChange(0, item.data.data.level);
       }

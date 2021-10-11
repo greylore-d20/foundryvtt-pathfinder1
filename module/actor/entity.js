@@ -77,6 +77,12 @@ export class ActorPF extends Actor {
      * A list of attributes to remember between updates.
      */
     if (this._prevAttributes === undefined) this._prevAttributes = null;
+
+    /**
+     * @property {object} _states
+     * Tracks various states which need to be tracked.
+     */
+    if (this._states === undefined) this._states = {};
   }
 
   /* -------------------------------------------- */
@@ -1762,11 +1768,11 @@ export class ActorPF extends Actor {
   }
 
   _onUpdate(data, options, userId, context) {
+    super._onUpdate(data, options, userId, context);
+
     if (game.user.id === userId && hasProperty(data, "data.attributes.conditions")) {
       this.toggleConditionStatusIcons();
     }
-
-    super._onUpdate(data, options, userId, context);
 
     // Resize token(s)
     {
@@ -3796,8 +3802,10 @@ export class ActorPF extends Actor {
   }
 
   async toggleConditionStatusIcons() {
-    const buffTextures = this._calcBuffTextures();
+    if (this._states.togglingStatusIcons) return;
+    this._states.togglingStatusIcons = true;
 
+    const buffTextures = this._calcBuffTextures();
     if (!this.testUserPermission(game.user, "OWNER")) return;
     const fx = [...this.effects];
 
@@ -3844,6 +3852,7 @@ export class ActorPF extends Actor {
     if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete);
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate);
     if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate);
+    this._states.togglingStatusIcons = false;
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
@@ -4098,7 +4107,6 @@ export class ActorPF extends Actor {
           const newMax = getProperty(this.data, `${k}.max`) || 0;
           const prevValue = getProperty(this.data, `${k}.value`);
           const newValue = prevValue + (newMax - prevMax);
-          // if (k === "data.attributes.hp") console.log(prevMax, newMax, prevValue, newValue);
           if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
         }
       }

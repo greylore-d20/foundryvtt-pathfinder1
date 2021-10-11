@@ -1114,7 +1114,7 @@ const _migrateActorSkillRanks = function (ent, updateData, linked) {
 };
 
 const _migrateCarryBonus = function (ent, updateData, linked) {
-  if (getProperty("data.details.carryCapacity.bonus.user") === undefined) {
+  if (getProperty(ent, "data.details.carryCapacity.bonus.user") === undefined) {
     let bonus = getProperty(ent, "data.abilities.str.carryBonus");
     if (bonus !== undefined || linked) {
       bonus = bonus || 0;
@@ -1122,7 +1122,7 @@ const _migrateCarryBonus = function (ent, updateData, linked) {
     }
     updateData["data.abilities.str.-=carryBonus"] = null;
   }
-  if (getProperty("data.details.carryCapacity.multiplier.user") === undefined) {
+  if (getProperty(ent, "data.details.carryCapacity.multiplier.user") === undefined) {
     let mult = getProperty(ent, "data.abilities.str.carryMultiplier");
     if (mult !== undefined || linked) {
       mult = mult || 1;

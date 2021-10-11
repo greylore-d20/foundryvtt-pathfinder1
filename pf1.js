@@ -698,11 +698,6 @@ Hooks.on("createItem", (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
   if (userId !== game.user.id) return;
 
-  // Create class
-  if (item.type === "class" && actor) {
-    item._onLevelChange(0, item.data.data.level);
-  }
-
   // Show buff if active
   if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
     // Call hook
@@ -810,22 +805,6 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
     if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
       // Call hook
       Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
-    }
-
-    {
-      // Update level
-      await new Promise((resolve) => {
-        if (item.type === "class" && hasProperty(changedData, "data.level")) {
-          const newLevel = getProperty(changedData, "data.level");
-          const prevLevel = item._prevLevel ?? newLevel;
-          if (item._prevLevel !== undefined) delete item._prevLevel;
-          item._onLevelChange(prevLevel, newLevel).then(() => {
-            resolve();
-          });
-        } else {
-          resolve();
-        }
-      });
     }
   }
 });

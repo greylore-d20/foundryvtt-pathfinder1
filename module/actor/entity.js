@@ -592,7 +592,7 @@ export class ActorPF extends Actor {
           const value = this.data.data.attributes.hd.total;
           total += value;
           clTotal += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.HitDie"), value: value });
+          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.HitDie"), value);
         }
         // Add class levels
         else if (spellbook.class && rollData.classes[spellbook.class]) {

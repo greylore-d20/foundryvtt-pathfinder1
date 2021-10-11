@@ -671,10 +671,7 @@ Hooks.on("preDeleteToken", (token, options, userId) => {
   game.pf1.tooltip?.unbind(token.object);
 });
 
-Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
-  const token = canvas.tokens.placeables.find((t) => t.data.id === data.id);
-  if (!token) return;
-
+Hooks.on("updateToken", function (token, updateData, options, userId) {
   // Hide token tooltip on token update
   game.pf1.tooltip?.unbind(token);
 

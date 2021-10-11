@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.79.5 - 2021-10-11
+
+### Bug Fixes
+
+- Fix carry capacity migration resetting custom values.
+- Fix missing context note target making actor sheet inaccessible.
+- Does not exist in EmbeddedCollection with classes.
+- Fix missing roll data for formatContextNotes [cannot set property 'item' of undefined]. ([1089](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1089))
+- Fix missing size bonus with generic CMBs. ([1075](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1075))
+- Fix pinned condition changes ([1088](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1088))
+- Fix natural attacks always treated as primary if shift-clicked. ([1074](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1074))
+- Fix template grid highlights broken with 0.79.2 ([1087](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1087))
+- Hit Die was shown twice on HD based spellbook tooltips ([1094](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1094))
+- @details.cr.total wasn't usable in changes ([1100](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1100))
+- Mitigate errors with toggling buffs too fast ([1101](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1101))
+
+### Changelog
+
+- Weapons can now have attacks of their own. ([579](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/579))
+- Actor rest button moved to right of race to save vertical space.
+- Inline rolls in tooltip context notes are no longer rolled. ([1095](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1095))
+- Spells no longer permanently cache rendered description. ([1097](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1097))
+- Spell descriptions are now editable on description tab instead of bottom of details.
+
 ## 0.79.4 - 2021-10-3
 
 ### Bug Fixes

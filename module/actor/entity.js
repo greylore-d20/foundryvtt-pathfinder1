@@ -1757,10 +1757,6 @@ export class ActorPF extends Actor {
   }
 
   _onUpdate(data, options, userId, context) {
-    if (userId === game.user.id) {
-      this.toggleConditionStatusIcons();
-    }
-
     super._onUpdate(data, options, userId, context);
 
     // Resize token(s)

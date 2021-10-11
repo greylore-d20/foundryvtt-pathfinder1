@@ -3,7 +3,7 @@
  */
 export function initializeSocket() {
   game.socket.on("system.pf1", async (args) => {
-    const isFirstGM = game.user === game.users.find((u) => u.isGM && u.active);
+    const isFirstGM = game.user === game.users.find((u) => u.isGM).sort((a, b) => a.id - b.id)[0];
     try {
       switch (args.eventType) {
         case "cleanItemLink": {

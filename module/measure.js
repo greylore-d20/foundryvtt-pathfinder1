@@ -8,8 +8,6 @@ export class TemplateLayerPF extends TemplateLayer {
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
-    await super._onDragLeftStart(event);
-
     // Create the new preview template
     const tool = game.activeTool;
     const origin = event.data.origin;
@@ -34,10 +32,33 @@ export class TemplateLayerPF extends TemplateLayer {
     else if (tool === "ray") data["width"] = 5;
 
     // Assign the template
-    const doc = new MeasuredTemplateDocument(data, { parent: canvas.scene });
-    const template = new MeasuredTemplate(doc);
+    const doc = new CONFIG.MeasuredTemplate.documentClass(data, { parent: canvas.scene });
+    const template = new CONFIG.MeasuredTemplate.objectClass(doc);
     event.data.preview = this.preview.addChild(template);
-    template.draw();
+    return template.draw();
+  }
+
+  async _onDragLeftMove(event) {
+    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
+
+    const { destination, createState, preview, origin } = event.data;
+    if (createState === 0) return;
+
+    // Snap the destination to the grid
+    event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+
+    // Compute the ray
+    const ray = new Ray(origin, destination);
+    const ratio = canvas.dimensions.size / canvas.dimensions.distance;
+
+    // Update the preview object
+    preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
+    preview.data.distance = Math.floor(ray.distance / ratio / 5) * 5;
+    preview.refresh();
+    preview.highlightGrid();
+
+    // Confirm the creation state
+    event.data.createState = 2;
   }
 }
 

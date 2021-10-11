@@ -362,6 +362,11 @@ export class ActorPF extends Actor {
       this.data.data.details.xp.max = maxExp;
     }
 
+    // The following IS for NPCs
+    else if (this.data.type === "npc") {
+      this.data.data.details.cr.total = this.getCR(this.data.data);
+    }
+
     {
       // Handle armor and weapon proficiencies for PCs
       // NPCs are considered proficient with their armor

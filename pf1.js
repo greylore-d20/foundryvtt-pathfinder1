@@ -668,7 +668,7 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
 
 Hooks.on("preDeleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
-  game.pf1.tooltip.unbind(token.object);
+  game.pf1.tooltip?.unbind(token.object);
 });
 
 Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
@@ -676,7 +676,7 @@ Hooks.on("updateToken", (scene, data, updateData, options, userId) => {
   if (!token) return;
 
   // Hide token tooltip on token update
-  game.pf1.tooltip.unbind(token);
+  game.pf1.tooltip?.unbind(token);
 
   // Update token's actor sheet (if any)
   token.actor?.sheet?.render();

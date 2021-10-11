@@ -806,6 +806,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 });
 
 Hooks.on("updateItem", async (item, changedData, options, userId) => {
+  if (userId !== game.user.id) return;
   const actor = item.parent instanceof ActorPF ? item.parent : null;
 
   if (actor) {

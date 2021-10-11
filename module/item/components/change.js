@@ -118,13 +118,12 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
-      if (!t) continue;
       if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";
 
-        const modifierChanger = t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/);
+        const modifierChanger = t != null ? t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
         const isModifierChanger = modifierChanger != null;
         const abilityTarget = modifierChanger?.[1];
         const ability = isModifierChanger ? duplicate(rollData.abilities[abilityTarget]) : null;
@@ -241,8 +240,6 @@ export class ItemChange {
             `data.abilities.${abilityTarget}.mod`,
             getProperty(actor.data, `data.abilities.${abilityTarget}.mod`) - (prevMod - mod)
           );
-          // console.log(prevMod, mod);
-          // actor.refreshAbilityModifiers();
         }
       }
     }

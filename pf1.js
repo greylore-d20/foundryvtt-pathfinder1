@@ -737,11 +737,10 @@ Hooks.on("createItem", (item, options, userId) => {
       item.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
     }
   }
-
-  if (userId !== game.user.id) return;
 });
 
 Hooks.on("deleteItem", async (item, options, userId) => {
+  if (userId !== game.user.id) return;
   const actor = item.parent instanceof ActorPF ? item.parent : null;
 
   if (actor) {

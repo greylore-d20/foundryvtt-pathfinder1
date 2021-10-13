@@ -49,6 +49,9 @@ export function applyChanges() {
   }
   this.refreshDerivedData();
 
+  // Determine continuous changes
+  const continuousChanges = c.filter((o) => o.continuous === true);
+
   // Apply all changes
   for (const change of c) {
     let flats = getChangeFlat.call(this, change.subTarget, change.modifier);
@@ -58,6 +61,19 @@ export function applyChanges() {
     }
 
     change.applyChange(this, flats, this.flags);
+
+    // Apply continuous changes
+    for (const cc of continuousChanges) {
+      if (cc === change) continue;
+
+      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier);
+      if (!(flats instanceof Array)) flats = [flats];
+      for (const f of flats) {
+        if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
+      }
+
+      cc.applyChange(this, flats, this.flags);
+    }
 
     this.refreshDerivedData();
   }
@@ -677,7 +693,7 @@ export const addDefaultChanges = function (changes) {
         subTarget: `${k}Speed`,
         modifier: "base",
         operator: "set",
-        priority: 1000,
+        priority: 1001,
       })
     );
     if (base > 0) {
@@ -1293,7 +1309,8 @@ export const addDefaultChanges = function (changes) {
             subTarget: "dex",
             modifier: "untypedPerm",
             operator: "set",
-            priority: -1000,
+            priority: 1001,
+            continuous: true,
           })
         );
         getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
@@ -1309,7 +1326,8 @@ export const addDefaultChanges = function (changes) {
             subTarget: "dex",
             modifier: "untypedPerm",
             operator: "set",
-            priority: -1000,
+            priority: 1001,
+            continuous: true,
           })
         );
         getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
@@ -1325,7 +1343,8 @@ export const addDefaultChanges = function (changes) {
             subTarget: "dex",
             modifier: "untypedPerm",
             operator: "set",
-            priority: -1000,
+            priority: 1001,
+            continuous: true,
           })
         );
         changes.push(
@@ -1335,7 +1354,8 @@ export const addDefaultChanges = function (changes) {
             subTarget: "str",
             modifier: "untypedPerm",
             operator: "set",
-            priority: -1000,
+            priority: 1001,
+            continuous: true,
           })
         );
         getSourceInfo(this.sourceInfo, "data.abilities.dex.total").negative.push({
@@ -1371,6 +1391,7 @@ export const addDefaultChanges = function (changes) {
             operator: "set",
             flavor: game.i18n.localize("PF1.CondPinned"),
             priority: 1001,
+            continuous: true,
           })
         );
         this.flags["loseDexToAC"] = true;

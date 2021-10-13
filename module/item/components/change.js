@@ -52,6 +52,9 @@ export class ItemChange {
   get flavor() {
     return this.data.flavor ?? this.parent?.name.replace(/\[|\]/g, "") ?? this.modifier;
   }
+  get continuous() {
+    return this.data.continuous;
+  }
 
   get source() {
     return this.data.source;

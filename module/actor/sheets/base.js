@@ -199,6 +199,10 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = this.document.getRollData();
     data.rollData = rollData;
 
+    // Show whether the item has currency
+    data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);
+    data.hasAltCurrency = Object.values(this.object.data.data.altCurrency).some((o) => o > 0);
+
     // The Actor and its Items
     if (this.document.isToken) data.token = duplicate(this.document.token.data);
     else data.token = data.actor.token;
@@ -476,8 +480,8 @@ export class ActorSheetPF extends ActorSheet {
       // Feat count
       // By level
       data.featCount = {};
-      data.featCount.value = this.actor.itemTypes.feat.filter(
-        (o) => o.data.data.featType === "feat" && !o.data.data.disabled
+      data.featCount.value = this.actor.items.filter(
+        (o) => o.type === "feat" && o.data.data.featType === "feat" && !o.data.data.disabled
       ).length;
       const totalLevels = this.document.items
         .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
@@ -2047,7 +2051,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.find((o) => o.id === itemId);
 
     const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
-    targets.push(...this.document.itemTypes.container);
+    targets.push(...this.document.items.filter((o) => o.type === "container"));
     targets.push(
       ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
     );

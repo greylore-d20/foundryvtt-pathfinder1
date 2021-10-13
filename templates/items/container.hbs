@@ -43,13 +43,13 @@
       <div class="form-group">
         {{~> "systems/pf1/templates/internal/item-search.hbs" category="container"}}
 
-        <ol class="currency flexrow">
+        <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}}">
           <h3>
             {{localize "PF1.Currency"}}
           </h3>
           {{#each config.currencies as |l k|}}
           <label class="denomination {{k}}">{{l}}</label>
-          <input type="text" class="select-on-click" name="data.currency.{{k}}" value="{{lookup ../data.currency k}}" data-dtype="String"/>
+          <input type="text" class="select-on-click" name="data.currency.{{k}}" value="{{#if (lookup ../data.currency k)}}{{lookup ../data.currency k}}{{/if}}" data-dtype="String"/>
           <a class="convert-currency" data-type="{{k}}" data-category="currency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
           {{/each}}
         </ol>

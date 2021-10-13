@@ -65,6 +65,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
+    // Show whether the item has currency
+    data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);
+
     // Prepare inventory
     this._prepareContents(data);
 

@@ -3772,6 +3772,7 @@ export class ItemPF extends Item {
 
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parent) return;
+    const actor = this.parentActor;
 
     // Add items associated to this class
     if (newLevel > curLevel) {
@@ -3797,9 +3798,9 @@ export class ItemPF extends Item {
       }
 
       if (newItems.length) {
-        const items = await Item.implementation.createDocuments(
-          newItems.map((o) => o.data),
-          { parent: this.parentActor }
+        const items = await actor.createEmbeddedDocuments(
+          "Item",
+          newItems.map((o) => o.data)
         );
 
         const updateData = [];
@@ -3813,7 +3814,7 @@ export class ItemPF extends Item {
           updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
         }
         if (updateData.length) {
-          await Item.implementation.updateDocuments(updateData, { parent: this.parentActor });
+          await actor.updateEmbeddedDocuments("Item", updateData);
         }
       }
       // const newItemData = await ItemPF.create(itemData, { parent: this.parent });

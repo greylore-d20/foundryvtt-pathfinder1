@@ -24,7 +24,7 @@ export class TemplateLayerPF extends TemplateLayer {
       t: tool,
       x: pos.x,
       y: pos.y,
-      distance: 5,
+      distance: 0,
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
     };
@@ -49,11 +49,12 @@ export class TemplateLayerPF extends TemplateLayer {
 
     // Compute the ray
     const ray = new Ray(origin, destination);
-    const ratio = canvas.dimensions.size / canvas.dimensions.distance;
+    const dist = canvas.dimensions.distance;
+    const ratio = canvas.dimensions.size / dist;
 
     // Update the preview object
     preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
-    preview.data.distance = Math.floor(ray.distance / ratio / 5) * 5;
+    preview.data.distance = Math.floor(ray.distance / ratio / dist) * dist;
     preview.refresh();
     preview.highlightGrid();
 

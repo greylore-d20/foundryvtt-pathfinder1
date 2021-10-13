@@ -540,7 +540,7 @@ export class CompendiumBrowser extends Application {
     }
     // Get creature (sub)type
     if (item.items) {
-      const race = item.itemTypes.race[0];
+      const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
         result.item.creatureType = race.data.data.creatureType;
         result.item.subTypes = race.data.data.subTypes?.map((o) => {

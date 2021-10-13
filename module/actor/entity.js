@@ -573,6 +573,11 @@ export class ActorPF extends Actor {
 
     // Set spellbook info
     for (const [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
+      if (!spellbook) {
+        console.error(`Spellbook data not found for "${spellbookKey} on actor`, this);
+        continue;
+      }
+
       const spellbookAbility = this.data.data.abilities[spellbook.ability];
       let spellbookAbilityScore = spellbookAbility?.total ?? 10;
 
@@ -782,13 +787,12 @@ export class ActorPF extends Actor {
 
       // Update spellbook slots
       {
-        const slots = [];
+        const slots = {};
         for (let a = 0; a < 10; a++) {
-          const spellLevel = spellbook.spells[`spell${a}`];
-          const currentLevel = {};
-          currentLevel.value = spellLevel.max;
-          currentLevel.domainSlots = spellbook.domainSlotValue;
-          slots.push(currentLevel);
+          slots[a] = {
+            value: spellbook.spells[`spell${a}`].max,
+            domainSlots: spellbook.domainSlotValue,
+          };
         }
 
         const spells = this.itemTypes.spell.filter((o) => o.data.data.spellbook === spellbookKey);
@@ -796,10 +800,15 @@ export class ActorPF extends Actor {
           for (const i of spells) {
             const isDomain = i.data.data.domain === true;
             const a = i.data.data.level;
-            const slotCost = i.data.data.slotCost ?? 1;
-            let dSlots = slots[a].domainSlots;
+            // Basic sanity check
+            if (Math.clamped(a, 0, 9) !== a) {
+              console.error("Spell with impossible spell level:", i);
+              continue;
+            }
             let uses = slots[a].value;
             if (Number.isFinite(i.maxCharges)) {
+              const slotCost = i.data.data.slotCost ?? 1;
+              const dSlots = slots[a].domainSlots;
               const subtract = { domain: 0, uses: 0 };
               if (isDomain) {
                 subtract.domain = Math.min(i.maxCharges, dSlots);
@@ -807,11 +816,10 @@ export class ActorPF extends Actor {
               } else {
                 subtract.uses = i.maxCharges * slotCost;
               }
-              dSlots -= subtract.domain;
+              slots[a].domainSlots -= subtract.domain;
               uses -= subtract.uses;
             }
             slots[a].value = uses;
-            slots[a].domainSlots = dSlots;
             spellbook.spells[`spell${a}`].value = uses;
           }
         }

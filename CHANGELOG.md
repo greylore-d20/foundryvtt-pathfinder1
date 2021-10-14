@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.79.6 - 2021-10-14
+
+### Bug Fixes
+
+- Fix class item sheet displaying `@classes..level` instead of actual variable.
+- Fix seemingly random EmbeddedCollection errors with leveling. ([1103](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1103))
+- Changes with certain targets didn't work
+- Conditions that limited ability modifiers, such as pinned, still applied non-base ability bonuses ([1104](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1104))
+- Drawing measure templates was broken with scene distances different than 5 ([1108](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1108))
+
+### Changelog
+
+- Currencies on actor and container sheets are now less visible if there is nothing
+
 ## 0.79.5 - 2021-10-11
 
 ### Bug Fixes

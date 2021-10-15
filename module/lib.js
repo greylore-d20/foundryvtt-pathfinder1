@@ -627,24 +627,20 @@ export const createConsumableSpell = async function (itemData, type) {
 export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxValue = null) {
   let result = initialValue;
 
-  if (cmdStr.match(/(\+|[=-]?-)([0-9]+)/)) {
-    const operator = RegExp.$1;
-    let value = parseInt(RegExp.$2);
-    if (operator === "--" || operator === "=-") {
-      result = -value;
-    } else {
-      if (operator === "-") value = -value;
-      result = initialValue + value;
-      if (maxValue) result = Math.min(result, maxValue);
-    }
-  } else if (cmdStr.match(/^[0-9]+$/)) {
-    result = parseInt(cmdStr);
-    if (maxValue) result = Math.min(result, maxValue);
-  } else if (cmdStr === "") {
-    result = 0;
-  } else result = parseFloat(cmdStr);
+  if (cmdStr.match(/(=)?([+-]+)?(\d+)/)) {
+    const operator = RegExp.$2;
+    const isAbsolute = RegExp.$1 == "=" || ["--", "++"].includes(operator);
+    const isNegative = ["-", "--"].includes(operator);
+    const rawValue = parseInt(RegExp.$3, 10);
+    const value = isNegative ? -rawValue : rawValue;
+    result = isAbsolute ? value : initialValue + value;
+  } else {
+    result = parseFloat(cmdStr);
+  }
 
+  if (maxValue) result = Math.min(result, maxValue);
   if (Number.isNaN(result)) result = initialValue;
+
   return result;
 };
 

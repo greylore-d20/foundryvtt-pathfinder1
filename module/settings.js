@@ -450,7 +450,7 @@ export const registerSystemSettings = function () {
     hint: "SETTINGS.pf1AttackChatCardTemplateH",
     scope: "world",
     config: true,
-    default: "systems/pf1/templates/chat/attack-roll_compact.hbs",
+    default: "systems/pf1/templates/chat/attack-roll_abstract.hbs",
     type: String,
     choices: {
       "systems/pf1/templates/chat/attack-roll_abstract.hbs": "PF1.Abstract",

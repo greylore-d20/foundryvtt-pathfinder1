@@ -1,6 +1,6 @@
 <div class="dice-tooltip">
     {{#each parts}}
-    <section class="tooltip-part">
+    <section class="tooltip-part dice">
         <div class="dice">
             <header class="part-header flexrow">
                 <span class="part-formula">{{this.formula}}</span>
@@ -16,15 +16,18 @@
     </section>
     {{/each}}
 
-    {{#each numericParts}}
-    <section class="tooltip-part">
-        <div class="dice">
-            <header class="part-header flexrow">
-                <span class="part-formula"></span>
-                {{#if this.flavor}}<span class="part-flavor">{{this.flavor}}</span>{{/if}}
-                <span class="part-total">{{this.total}}</span>
-            </header>
-        </div>
-    </section>
-    {{/each}}
+    {{#if numericParts.length}}
+        <section class="tooltip-part numeric">
+            <div class="flexcol flavor">
+                {{#each numericParts}}
+                    {{#if this.flavor}}<span class="part-flavor">{{this.flavor}}</span>{{/if}}
+                {{/each}}
+            </div>
+            <div class="flexcol total">
+                {{#each numericParts}}
+                    <span class="part-total">{{this.total}}</span>
+                {{/each}}
+            </div>
+        </section>
+    {{/if}}
 </div>

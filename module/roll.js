@@ -134,7 +134,12 @@ export class RollPF extends Roll {
    */
   async getTooltip() {
     const parts = this.dice.map((d) => d.getTooltipData());
-    const numericParts = this.terms.reduce((cur, t, idx, arr) => {
+    const numericParts = this.getNumericParts();
+    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
+  }
+
+  getNumericParts() {
+    return this.terms.reduce((cur, t, idx, arr) => {
       const result = t instanceof NumericTerm ? t.getTooltipData() : undefined;
 
       const prior = arr[idx - 1];
@@ -148,7 +153,6 @@ export class RollPF extends Roll {
       }
       return cur;
     }, []);
-    return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
   }
 }
 

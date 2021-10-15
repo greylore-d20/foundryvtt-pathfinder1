@@ -2,6 +2,7 @@ export class ChatAttack {
   constructor(item, { label = "", primaryAttack = true, rollData = {} } = {}) {
     this.primaryAttack = primaryAttack;
     this._rollData = rollData;
+    this.isHealing = false;
     this.setItem(item);
     this.label = label;
 
@@ -72,6 +73,7 @@ export class ChatAttack {
     this.item = item;
     this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
     this.attackType = getProperty(item.data, "data.attackType") ?? "";
+    this.isHealing = this.item.isHealing;
 
     this.setRollData();
   }
@@ -180,6 +182,8 @@ export class ChatAttack {
     data.isNat20 = d20 === 20;
     data.rollJSON = escape(JSON.stringify(roll));
     data.formula = roll.formula;
+    data.parts = roll.dice.map((d) => d.getTooltipData());
+    data.numericParts = roll.getNumericParts();
 
     // Add crit confirm
     if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
@@ -268,11 +272,8 @@ export class ChatAttack {
 
     // Add normal data
     let flavor;
-    if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-    else
-      flavor = this.item.isHealing
-        ? game.i18n.localize("PF1.HealingCritical")
-        : game.i18n.localize("PF1.DamageCritical");
+    if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+    else flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
 
     // Determine total damage
     let totalDamage = data.parts.reduce((cur, p) => {
@@ -299,10 +300,10 @@ export class ChatAttack {
     if (critical) {
       if (!this.cards.critical)
         this.cards.critical = {
-          label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"),
+          label: game.i18n.localize(this.iisHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"),
           items: [],
         };
-      if (this.item.isHealing) {
+      if (this.isHealing) {
         this.cards.critical.items.push({
           label: game.i18n.localize("PF1.Apply"),
           value: -totalDamage,
@@ -330,10 +331,10 @@ export class ChatAttack {
     } else {
       if (!this.cards.damage)
         this.cards.damage = {
-          label: game.i18n.localize(this.item.isHealing ? "PF1.Healing" : "PF1.Damage"),
+          label: game.i18n.localize(this.isHealing ? "PF1.Healing" : "PF1.Damage"),
           items: [],
         };
-      if (this.item.isHealing) {
+      if (this.isHealing) {
         this.cards.damage.items.push({
           label: game.i18n.localize("PF1.Apply"),
           value: -totalDamage,

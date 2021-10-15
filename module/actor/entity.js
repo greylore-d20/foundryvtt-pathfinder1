@@ -3406,13 +3406,17 @@ export class ActorPF extends Actor {
   /**
    * @returns {number} The total amount of currency this actor has, in gold pieces
    */
-  mergeCurrency() {
-    return this.getTotalCurrency("currency") + this.getTotalCurrency("altCurrency");
+  mergeCurrency({ inLowestDenomination = false } = {}) {
+    const total =
+      this.getTotalCurrency("currency", { inLowestDenomination }) +
+      this.getTotalCurrency("altCurrency", { inLowestDenomination });
+    return inLowestDenomination ? total : total / 100;
   }
 
-  getTotalCurrency(category = "currency") {
+  getTotalCurrency(category = "currency", { inLowestDenomination = false } = {}) {
     const currencies = getProperty(this.data.data, category);
-    return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
+    const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
+    return inLowestDenomination ? total : total / 100;
   }
 
   /**

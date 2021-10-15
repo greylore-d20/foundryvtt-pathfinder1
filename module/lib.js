@@ -925,3 +925,17 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities
 
   return pcontent;
 }
+
+/**
+ * Split copper currency into gold, silver and copper.
+ */
+export const splitCurrency = (cp) => {
+  const gp = Math.floor(cp / 100);
+  const sp = Math.floor(cp / 10) - gp * 10;
+  cp = cp - gp * 100 - sp * 10;
+  return {
+    gp: Math.max(0, gp),
+    sp: Math.max(0, sp),
+    cp: Math.max(0, cp),
+  };
+};

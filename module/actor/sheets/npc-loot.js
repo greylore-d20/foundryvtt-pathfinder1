@@ -1,5 +1,5 @@
 import { ActorSheetPFNPC } from "./npc.js";
-import { createTabs } from "../../lib.js";
+import { createTabs, splitCurrency } from "../../lib.js";
 
 export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   /**
@@ -30,30 +30,15 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     data.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");
 
     // Get total value
-    const gpValue = this.calculateTotalItemValue() + this.actor.mergeCurrency();
-    const sellValue = this.calculateSellItemValue() + this.actor.mergeCurrency();
-    data.totalValue = {
-      gp: Math.max(0, Math.floor(gpValue)),
-      sp: Math.max(0, Math.floor(gpValue * 10 - Math.floor(gpValue) * 10)),
-      cp: Math.max(
-        0,
-        Math.floor(
-          Math.floor(gpValue * 100 - Math.floor(gpValue) * 100) -
-            Math.floor(gpValue * 10 - Math.floor(gpValue) * 10) * 10
-        )
-      ),
-    };
-    data.sellValue = {
-      gp: Math.max(0, Math.floor(sellValue)),
-      sp: Math.max(0, Math.floor(sellValue * 10 - Math.floor(sellValue) * 10)),
-      cp: Math.max(
-        0,
-        Math.floor(
-          Math.floor(sellValue * 100 - Math.floor(sellValue) * 100) -
-            Math.floor(sellValue * 10 - Math.floor(sellValue) * 10) * 10
-        )
-      ),
-    };
+    const cpValue =
+      this.calculateTotalItemValue({ inLowestDenomination: true }) +
+      this.actor.mergeCurrency({ inLowestDenomination: true });
+    const cpSellValue =
+      this.calculateSellItemValue({ inLowestDenomination: true }) +
+      this.actor.mergeCurrency({ inLowestDenomination: true });
+
+    data.totalValue = splitCurrency(cpValue);
+    data.sellValue = splitCurrency(cpSellValue);
 
     // Set labels
     if (!data.labels) data.labels = {};

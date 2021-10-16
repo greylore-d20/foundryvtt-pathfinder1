@@ -1,6 +1,6 @@
 import { ItemSheetPF } from "./base.js";
 import { ItemPF } from "../entity.js";
-import { convertWeight } from "../../lib.js";
+import { convertWeight, splitCurrency } from "../../lib.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { createConsumableSpellDialog } from "../../lib.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
@@ -169,30 +169,15 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
 
     // Get contents value
-    const gpValue = this.item.getValue({ sellValue: 1 }) - this.item.getValue({ recursive: false, sellValue: 1 });
-    const sellValue = this.item.getValue() - this.item.getValue({ recursive: false });
-    data.totalValue = {
-      gp: Math.max(0, Math.floor(gpValue)),
-      sp: Math.max(0, Math.floor(gpValue * 10 - Math.floor(gpValue) * 10)),
-      cp: Math.max(
-        0,
-        Math.floor(
-          Math.floor(gpValue * 100 - Math.floor(gpValue) * 100) -
-            Math.floor(gpValue * 10 - Math.floor(gpValue) * 10) * 10
-        )
-      ),
-    };
-    data.sellValue = {
-      gp: Math.max(0, Math.floor(sellValue)),
-      sp: Math.max(0, Math.floor(sellValue * 10 - Math.floor(sellValue) * 10)),
-      cp: Math.max(
-        0,
-        Math.floor(
-          Math.floor(sellValue * 100 - Math.floor(sellValue) * 100) -
-            Math.floor(sellValue * 10 - Math.floor(sellValue) * 10) * 10
-        )
-      ),
-    };
+    const cpValue =
+      this.item.getValue({ sellValue: 1, inLowestDenomination: true }) -
+      this.item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true });
+    const cpSellValue =
+      this.item.getValue({ inLowestDenomination: true }) -
+      this.item.getValue({ recursive: false, inLowestDenomination: true });
+
+    data.totalValue = splitCurrency(cpValue);
+    data.sellValue = splitCurrency(cpSellValue);
 
     // Set labels
     if (!data.labels) data.labels = {};

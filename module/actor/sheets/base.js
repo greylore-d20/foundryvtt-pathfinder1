@@ -9,6 +9,7 @@ import {
   convertWeight,
   createConsumableSpellDialog,
   adjustNumberByStringCommand,
+  splitCurrency,
 } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
@@ -242,18 +243,8 @@ export class ActorSheetPF extends ActorSheet {
 
     // Add inventory value
     {
-      const gpValue = this.calculateTotalItemValue();
-      const totalValue = {
-        gp: Math.max(0, Math.floor(gpValue)),
-        sp: Math.max(0, Math.floor(gpValue * 10 - Math.floor(gpValue) * 10)),
-        cp: Math.max(
-          0,
-          Math.floor(
-            Math.floor(gpValue * 100 - Math.floor(gpValue) * 100) -
-              Math.floor(gpValue * 10 - Math.floor(gpValue) * 10) * 10
-          )
-        ),
-      };
+      const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
+      const totalValue = splitCurrency(cpValue);
       data.labels.totalValue = game.i18n
         .localize("PF1.ItemContainerTotalItemValue")
         .format(totalValue.gp, totalValue.sp, totalValue.cp);
@@ -2873,19 +2864,21 @@ export class ActorSheetPF extends ActorSheet {
     return super._updateObject(event, formData);
   }
 
-  calculateTotalItemValue() {
+  calculateTotalItemValue({ inLowestDenomination = false } = {}) {
     const items = this.document.items.filter((o) => o.data.data.price != null);
-    return items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: 1 });
+    const total = items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: 1, inLowestDenomination: true });
     }, 0);
+    return inLowestDenomination ? total : total / 100;
   }
 
-  calculateSellItemValue() {
+  calculateSellItemValue({ inLowestDenomination = false } = {}) {
     const items = this.document.items.filter((o) => o.data.data.price != null);
     const sellMultiplier = this.document.getFlag("pf1", "sellMultiplier") || 0.5;
-    return items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: sellMultiplier });
+    const total = items.reduce((cur, i) => {
+      return cur + i.getValue({ sellValue: sellMultiplier, inLowestDenomination: true });
     }, 0);
+    return inLowestDenomination ? total : total / 100;
   }
 
   _createPlaceholders(html) {

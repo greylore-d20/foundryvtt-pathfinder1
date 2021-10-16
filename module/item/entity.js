@@ -4385,21 +4385,26 @@ export class ItemPF extends Item {
   /**
    * @returns {number} The total amount of currency this item contains, in gold pieces
    */
-  getTotalCurrency() {
+  getTotalCurrency({ inLowestDenomination = false } = {}) {
     const currencies = getProperty(this.data, "data.currency");
     if (!currencies) return 0;
-    return (currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp) / 100;
+    const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
+    return inLowestDenomination ? total : total / 100;
   }
 
-  getValue({ recursive = true, sellValue = 0.5 } = {}) {
+  getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false } = {}) {
     // Add item's contained currencies
-    let result = this.getTotalCurrency();
+    let result = this.getTotalCurrency({ inLowestDenomination });
+
+    const getActualValue = (identified = true) => {
+      const value = getProperty(this.data, identified ? "data.price" : "data.unidentified.price") || 0;
+      return inLowestDenomination ? value * 100 : value;
+    };
+
+    const quantity = getProperty(this.data, "data.quantity") || 0;
 
     // Add item's price
-    if (this.showUnidentifiedData)
-      result +=
-        (getProperty(this.data, "data.unidentified.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
-    else result += (getProperty(this.data, "data.price") || 0) * (getProperty(this.data, "data.quantity") || 0);
+    result += getActualValue(!this.showUnidentifiedData) * quantity;
 
     // Modify sell value
     if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;
@@ -4408,7 +4413,7 @@ export class ItemPF extends Item {
 
     // Add item's content items' values
     this.items.forEach((i) => {
-      result += i.getValue({ recursive: recursive, sellValue: sellValue });
+      result += i.getValue({ recursive: recursive, sellValue: sellValue, inLowestDenomination });
     });
 
     return result;

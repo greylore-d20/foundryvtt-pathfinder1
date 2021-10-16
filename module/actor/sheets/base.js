@@ -1226,7 +1226,8 @@ export class ActorSheetPF extends ActorSheet {
     parent.replaceChild(newEl, el);
     let changed = false;
     if (callback) {
-      newEl.addEventListener("change", (...args) => {
+      newEl.addEventListener("keypress", (event) => {
+        if (event.key !== "Enter") return;
         changed = true;
         if (allowRelative) {
           const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
@@ -1236,13 +1237,23 @@ export class ActorSheetPF extends ActorSheet {
         if (newEl.value === prevValue) {
           this._render();
         } else {
-          callback.call(this, ...args);
+          callback.call(this, event);
         }
       });
     }
     newEl.addEventListener("focusout", (event) => {
       if (!changed) {
-        this._render();
+        changed = true;
+        if (allowRelative && parseFloat(prevValue) !== parseFloat(newEl.value)) {
+          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+          newEl.value = number;
+        }
+
+        if (newEl.value === prevValue) {
+          this._render();
+        } else {
+          callback.call(this, event);
+        }
       }
     });
 

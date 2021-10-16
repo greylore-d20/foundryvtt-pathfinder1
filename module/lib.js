@@ -629,7 +629,7 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
 
   if (cmdStr.match(/(=)?([+-]+)?(\d+)/)) {
     const operator = RegExp.$2;
-    const isAbsolute = RegExp.$1 == "=" || ["--", "++"].includes(operator);
+    const isAbsolute = RegExp.$1 == "=" || ["--", "++"].includes(operator) || (!RegExp.$1 && !RegExp.$2);
     const isNegative = ["-", "--"].includes(operator);
     const rawValue = parseInt(RegExp.$3, 10);
     const value = isNegative ? -rawValue : rawValue;
@@ -887,6 +887,13 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
 
 /**
  * Variant of TextEditor._createInlineRoll for creating unrolled inline rolls.
+ *
+ * @param _match
+ * @param _command
+ * @param formula
+ * @param closing
+ * @param label
+ * @param {...any} args
  */
 export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
   const rollData = args.pop();
@@ -906,6 +913,13 @@ export function createInlineFormula(_match, _command, formula, closing, label, .
 
 /**
  * enrichHTML but with inline rolls not rolled
+ *
+ * @param content
+ * @param root0
+ * @param root0.rollData
+ * @param root0.secrets
+ * @param root0.rolls
+ * @param root0.entities
  */
 export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities } = {}) {
   let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, entities, rollData });

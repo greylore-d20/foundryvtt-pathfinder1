@@ -627,24 +627,20 @@ export const createConsumableSpell = async function (itemData, type) {
 export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxValue = null) {
   let result = initialValue;
 
-  if (cmdStr.match(/(\+|[=-]?-)([0-9]+)/)) {
-    const operator = RegExp.$1;
-    let value = parseInt(RegExp.$2);
-    if (operator === "--" || operator === "=-") {
-      result = -value;
-    } else {
-      if (operator === "-") value = -value;
-      result = initialValue + value;
-      if (maxValue) result = Math.min(result, maxValue);
-    }
-  } else if (cmdStr.match(/^[0-9]+$/)) {
-    result = parseInt(cmdStr);
-    if (maxValue) result = Math.min(result, maxValue);
-  } else if (cmdStr === "") {
-    result = 0;
-  } else result = parseFloat(cmdStr);
+  if (cmdStr.match(/(=)?([+-]+)?(\d+)/)) {
+    const operator = RegExp.$2;
+    const isAbsolute = RegExp.$1 == "=" || ["--", "++"].includes(operator) || (!RegExp.$1 && !RegExp.$2);
+    const isNegative = ["-", "--"].includes(operator);
+    const rawValue = parseInt(RegExp.$3, 10);
+    const value = isNegative ? -rawValue : rawValue;
+    result = isAbsolute ? value : initialValue + value;
+  } else {
+    result = parseFloat(cmdStr);
+  }
 
+  if (maxValue) result = Math.min(result, maxValue);
   if (Number.isNaN(result)) result = initialValue;
+
   return result;
 };
 
@@ -891,6 +887,13 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
 
 /**
  * Variant of TextEditor._createInlineRoll for creating unrolled inline rolls.
+ *
+ * @param _match
+ * @param _command
+ * @param formula
+ * @param closing
+ * @param label
+ * @param {...any} args
  */
 export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
   const rollData = args.pop();
@@ -910,6 +913,13 @@ export function createInlineFormula(_match, _command, formula, closing, label, .
 
 /**
  * enrichHTML but with inline rolls not rolled
+ *
+ * @param content
+ * @param root0
+ * @param root0.rollData
+ * @param root0.secrets
+ * @param root0.rolls
+ * @param root0.entities
  */
 export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities } = {}) {
   let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, entities, rollData });

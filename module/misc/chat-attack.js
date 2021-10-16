@@ -49,7 +49,9 @@ export class ChatAttack {
     this.attackNotes = [];
     this.effectNotes = [];
     this.attackNotesHTML = "";
+    this.attackNotesHTML_Inner = "";
     this.effectNotesHTML = "";
+    this.effectNotesHTML_Inner = "";
   }
 
   get critRange() {
@@ -112,6 +114,7 @@ export class ChatAttack {
     this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive attack-notes"><label>${game.i18n.localize(
       "PF1.AttackNotes"
     )}</label><div class="flexrow">${inner}</div></div>`;
+    this.attackNotesHTML_Inner = inner;
   }
 
   setEffectNotesHTML() {
@@ -130,6 +133,7 @@ export class ChatAttack {
     this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive effect-notes"><label>${game.i18n.localize(
       "PF1.EffectNotes"
     )}</label><div class="flexrow">${inner}</div></div>`;
+    this.effectNotesHTML_Inner = inner;
   }
 
   async addAttack({ bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {

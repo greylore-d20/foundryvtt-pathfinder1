@@ -42,9 +42,7 @@
           {{#if atk.attackNotes.length}}
             <div class="flexcol attack-notes property-group gm-sensitive">
               <div class="flexrow">
-                {{#each atk.attackNotes as |note|}}
-                  <span class="tag">{{{note}}}</span>
-                {{/each}}
+                {{{atk.attackNotesHTML_Inner}}}
               </div>
             </div>
           {{/if}}
@@ -132,9 +130,7 @@
           {{#if atk.effectNotes.length}}
             <div class="flexcol effect-notes property-group gm-sensitive">
               <div class="flexrow">
-                {{#each atk.effectNotes as |note|}}
-                  <span class="tag">{{{note}}}</span>
-                {{/each}}
+                {{{atk.effectNotesHTML_Inner}}}
               </div>
             </div>
           {{/if}}

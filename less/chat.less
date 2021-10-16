@@ -737,5 +737,26 @@
         text-align: center;
       }
     }
+
+    .spell-buttons {
+      justify-content: space-around;
+
+      > * {
+        flex: unset;
+      }
+
+      a:hover {
+        color: @colorRed;
+
+        .icon {
+          background-color: @colorRed;
+        }
+      }
+
+      .icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
   }
 }

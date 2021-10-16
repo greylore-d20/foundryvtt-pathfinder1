@@ -155,14 +155,14 @@
           {{!-- Concentration Check --}}
           {{#if concentrationCheck}}
             <div class="concentration">
-                <button data-action="concentration">{{localize "PF1.ConcentrationCheck"}}</button>
+              <a class="fake-card-button" data-action="concentration" title="{{localize "PF1.ConcentrationCheck"}}"><i class="icon icon-concentration-orb"></i></a>
             </div>
           {{/if}}
 
           {{!-- Caster Level Check--}}
           {{#if casterLevelCheck}}
             <div class="caster-level-check">
-                <button data-action="caster-level-check">{{localize "PF1.CasterLevelCheck"}}</button>
+              <a class="fake-card-button" data-action="caster-level-check" title="{{localize "PF1.CasterLevelCheck"}}"><i class="icon icon-fairy-wand"></i></a>
             </div>
           {{/if}}
         </div>

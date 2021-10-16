@@ -184,7 +184,7 @@ export class ChatAttack {
     // Add crit confirm
     if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
       this.hasCritConfirm = true;
-      this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult - 1);
+      this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult);
       if (this.item.data.data.broken) this.rollData.critMult = 1;
 
       await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });

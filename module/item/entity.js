@@ -255,6 +255,16 @@ export class ItemPF extends Item {
     return super.permission;
   }
 
+  get fullDescription() {
+    let result = this.data.data.description.value;
+
+    if (this.type === "spell") {
+      result += this.data.data.shortDescription;
+    }
+
+    return result;
+  }
+
   /**
    * @param {object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {number} The Difficulty Class for this item.
@@ -1366,6 +1376,7 @@ export class ItemPF extends Item {
       isVersatile: this.isVersatile,
       hasSave: this.hasSave && addDC,
       isSpell: this.data.type === "spell",
+      description: this.fullDescription,
       save: {
         dc: saveDC,
         type: saveType,
@@ -2466,6 +2477,7 @@ export class ItemPF extends Item {
             item: this.data,
             actor: this.parent.data,
             hasSave: this.hasSave,
+            description: this.fullDescription,
             save: {
               dc: saveDC,
               type: save,
@@ -3126,6 +3138,7 @@ export class ItemPF extends Item {
         sound: CONFIG.sounds.dice,
         speaker: ChatMessage.getSpeaker({ actor: this.parent }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
+        description: this.fullDescription,
         roll: roll,
         content: await renderTemplate(chatTemplate, rollData),
       };

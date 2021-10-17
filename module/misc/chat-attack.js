@@ -238,7 +238,7 @@ export class ChatAttack {
     rollData.critCount = 0;
 
     // Roll damage
-    const repeatCount = critical ? Math.max(1, rollData.critMult) : 1;
+    const repeatCount = critical ? Math.max(1, rollData.critMult - 1) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
       const rolls = this.item.rollDamage({

@@ -45,8 +45,9 @@ export function initializeModules() {
 
         getBaseSpeed(token) {
           const [y, x] = canvas.grid.grid.getGridPositionFromPixels(token.x, token.y);
+          const useElevation = this.getSetting("useElevation");
 
-          if (token.data.elevation > 0) {
+          if (useElevation && token.data.elevation > 0) {
             const flySpeed = token.actor.data.data.attributes.speed.fly.total;
             if (flySpeed > 0) {
               return flySpeed;
@@ -63,7 +64,7 @@ export function initializeModules() {
             }
           }
 
-          if (token.data.elevation < 0) {
+          if (useElevation && token.data.elevation < 0) {
             const burrowSpeed = token.actor.data.data.attributes.speed.burrow.total;
             if (burrowSpeed > 0) {
               return burrowSpeed;
@@ -71,6 +72,19 @@ export function initializeModules() {
           }
 
           return token.actor.data.data.attributes.speed.land.total;
+        }
+
+        get settings() {
+          return [
+            {
+              id: "useElevation",
+              name: "SETTINGS.pf1DragRulerUseElevationName",
+              hint: "SETTINGS.pf1DragRulerUseElevationHint",
+              scope: "world",
+              type: Boolean,
+              default: true,
+            },
+          ];
         }
       }
       dragRuler.registerSystem("pf1", Pf1SpeedProvider);

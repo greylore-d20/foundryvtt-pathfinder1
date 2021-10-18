@@ -1254,6 +1254,7 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondEntangled"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({

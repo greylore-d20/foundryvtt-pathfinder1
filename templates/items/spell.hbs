@@ -42,10 +42,8 @@
       {{> "systems/pf1/templates/internal/spell-description.hbs" @root.item.spellDescriptionData}}
 
       {{!-- Spell Description --}}
-      {{#if data.shortDescription}}
       <h2>{{localize "PF1.Description"}}</h2>
       {{roll-editor content=shortDescription target="data.shortDescription" button=true owner=owner editable=editable}}
-      {{/if}}
     </div>
 
     {{!-- Details Tab --}}

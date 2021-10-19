@@ -166,6 +166,15 @@ export class ItemPF extends Item {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
+  /**
+   * Returns total duration in seconds or null.
+   *
+   * @returns {number|null} Seconds or null.
+   */
+  get totalDurationSeconds() {
+    return this.data.data.duration?.totalSeconds ?? null;
+  }
+
   get auraStrength() {
     const cl = getProperty(this.data, "data.cl") || 0;
     if (cl < 1) {
@@ -736,6 +745,23 @@ export class ItemPF extends Item {
     }
 
     if (this.type === "spell") this._updateSpellDescription();
+
+    // Add total duration in seconds
+    if (this.type === "buff" && this.data.data.duration.value?.length) {
+      let seconds = 0;
+      const rollData = this.getRollData();
+      const duration = RollPF.safeRoll(this.data.data.duration.value || "0", rollData).total;
+      switch (this.data.data.duration.units) {
+        case "minute":
+          seconds = duration * 60;
+          break;
+        case "rounds":
+          seconds = duration * 6;
+          break;
+      }
+
+      this.data.data.duration.totalSeconds = seconds;
+    }
   }
 
   prepareLinks() {
@@ -1324,9 +1350,45 @@ export class ItemPF extends Item {
 
   // Determines the starting data for an ActiveEffect based off this item
   getRawEffectData() {
-    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.isActive };
-    if (this.type === "buff")
+    const createData = {
+      label: this.name,
+      icon: this.img,
+      origin: this.uuid,
+      disabled: !this.isActive,
+      duration: {},
+    };
+    if (this.type === "buff") {
       createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+
+      // Add buff durations
+      const durationValue = this.data.data.duration.value ?? null;
+      if (durationValue) {
+        let seconds = 0;
+        switch (this.data.data.duration.units) {
+          case "minute": {
+            seconds = this.totalDurationSeconds;
+            break;
+          }
+          case "turn": {
+            const turns = RollPF.safeRoll(durationValue, this.getRollData()).total;
+            if (turns > 0) {
+              createData.duration.turns = turns;
+              seconds = turns * 6;
+            }
+            break;
+          }
+          case "round": {
+            const rounds = RollPF.safeRoll(durationValue, this.getRollData()).total;
+            if (rounds > 0) {
+              createData.duration.rounds = rounds;
+              seconds = rounds * 6;
+            }
+            break;
+          }
+        }
+        if (seconds > 0) createData.duration.seconds = seconds;
+      }
+    }
     return createData;
   }
 

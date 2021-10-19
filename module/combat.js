@@ -260,4 +260,33 @@ export class CombatPF extends Combat {
       });
     });
   };
+
+  /**
+   * @override
+   * @returns {Promise<Combat>}
+   */
+  async nextRound() {
+    const combat = await super.nextRound();
+    // TODO: Process skipped turns.
+    try {
+      combat.combatant?.actor?.expireActiveEffects();
+    } catch (error) {
+      console.error(error);
+    }
+    return combat;
+  }
+
+  /**
+   * @override
+   * @returns {Promise<Combat>}
+   */
+  async nextTurn() {
+    const combat = await super.nextTurn();
+    try {
+      await combat.combatant?.actor?.expireActiveEffects();
+    } catch (error) {
+      console.error(error);
+    }
+    return combat;
+  }
 }

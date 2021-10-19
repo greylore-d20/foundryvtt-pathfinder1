@@ -262,17 +262,24 @@ export class CombatPF extends Combat {
   };
 
   /**
+   * Process current combatant: expire active effects & buffs.
+   */
+  async _processCurrentCombatant() {
+    try {
+      this.combatant?.actor?.expireActiveEffects();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
    * @override
    * @returns {Promise<Combat>}
    */
   async nextRound() {
     const combat = await super.nextRound();
     // TODO: Process skipped turns.
-    try {
-      combat.combatant?.actor?.expireActiveEffects();
-    } catch (error) {
-      console.error(error);
-    }
+    await this._processCurrentCombatant();
     return combat;
   }
 
@@ -282,11 +289,7 @@ export class CombatPF extends Combat {
    */
   async nextTurn() {
     const combat = await super.nextTurn();
-    try {
-      await combat.combatant?.actor?.expireActiveEffects();
-    } catch (error) {
-      console.error(error);
-    }
+    await this._processCurrentCombatant();
     return combat;
   }
 }

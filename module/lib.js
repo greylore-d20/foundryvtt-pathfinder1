@@ -635,7 +635,7 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
     const value = isNegative ? -rawValue : rawValue;
     result = isAbsolute ? value : initialValue + value;
   } else {
-    result = parseFloat(cmdStr);
+    result = parseFloat(cmdStr || "0");
   }
 
   if (maxValue) result = Math.min(result, maxValue);
@@ -938,6 +938,8 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities
 
 /**
  * Split copper currency into gold, silver and copper.
+ *
+ * @param cp
  */
 export const splitCurrency = (cp) => {
   const gp = Math.floor(cp / 100);

@@ -9,13 +9,15 @@ export class TemplateLayerPF extends TemplateLayer {
     await super._onDragLeftStart(event);
     if (!game.settings.get("pf1", "measureStyle")) return;
 
+    // Create temporary highlight layer
+    if (canvas.grid.getHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME) == null) {
+      canvas.grid.addHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME);
+    }
+
     // Create the new preview template
     const tool = game.activeTool;
     const origin = event.data.origin;
-    let pos;
-    if (["cone", "circle"].includes(tool)) {
-      pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
-    } else pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
+    const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
     origin.x = pos.x;
     origin.y = pos.y;
 
@@ -25,7 +27,7 @@ export class TemplateLayerPF extends TemplateLayer {
       t: tool,
       x: pos.x,
       y: pos.y,
-      distance: 0,
+      distance: 1,
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
     };
@@ -40,7 +42,8 @@ export class TemplateLayerPF extends TemplateLayer {
   }
 
   _onDragLeftMove(event) {
-    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
+    super._onDragLeftMove(event);
+    if (!game.settings.get("pf1", "measureStyle")) return;
 
     const { destination, createState, preview, origin } = event.data;
     if (createState === 0) return;
@@ -54,10 +57,22 @@ export class TemplateLayerPF extends TemplateLayer {
     const ratio = canvas.dimensions.size / dist;
 
     // Update the preview object
-    preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
-    preview.data.distance = Math.floor(ray.distance / ratio / dist) * dist;
+    const type = event.data.preview.data.t;
+    // Set direction
+    if (["cone", "circle"].includes(type)) {
+      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
+    } else if (type === "ray") {
+      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 5 / 2) / 5) * 5;
+    } else {
+      preview.data.direction = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+    }
+    // Set distance
+    if (["cone", "circle", "ray"].includes(type)) {
+      preview.data.distance = Math.floor(ray.distance / ratio / dist) * dist;
+    } else {
+      preview.data.distance = ray.distance / ratio;
+    }
     preview.refresh();
-    preview.highlightGrid();
 
     // Confirm the creation state
     event.data.createState = 2;
@@ -65,45 +80,6 @@ export class TemplateLayerPF extends TemplateLayer {
 }
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
-  _onDragLeftMove(event) {
-    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
-
-    super._onDragLeftMove(event);
-    if (event.data.createState >= 1) {
-      // Snap the destination to the grid
-      const dest = event.data.destination;
-      const { x, y } = canvas.grid.getSnappedPosition(dest.x, dest.y, 2);
-      dest.x = x;
-      dest.y = y;
-
-      // Compute the ray
-      const template = event.data.preview,
-        ray = new Ray(event.data.origin, event.data.destination),
-        ratio = canvas.dimensions.size / canvas.dimensions.distance;
-
-      // Update the shape data
-      if (["cone", "circle"].includes(template.data.t)) {
-        const direction = ray.angle;
-        template.data.direction = Math.toDegrees(
-          Math.floor((direction + Math.PI * 0.125) / (Math.PI * 0.25)) * (Math.PI * 0.25)
-        );
-        const distance = ray.distance / ratio;
-        template.data.distance = Math.floor(distance / canvas.dimensions.distance) * canvas.dimensions.distance;
-      } else {
-        template.data.direction = Math.toDegrees(ray.angle);
-        if (template.data.t === "ray") {
-          template.data.distance = Math.floor(ray.distance / ratio / 2.5) * 2.5;
-        } else {
-          template.data.distance = ray.distance / ratio;
-        }
-      }
-
-      // Draw the pending shape
-      template.refresh();
-      event.data.createState = 2;
-    }
-  }
-
   // Highlight grid in PF1 style
   highlightGrid() {
     if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone"].includes(this.data.t))

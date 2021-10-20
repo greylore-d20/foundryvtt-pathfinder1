@@ -3404,6 +3404,8 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * @param root0
+   * @param root0.inLowestDenomination
    * @returns {number} The total amount of currency this actor has, in gold pieces
    */
   mergeCurrency({ inLowestDenomination = false } = {}) {
@@ -3890,8 +3892,8 @@ export class ActorPF extends Actor {
    */
   static getAbilityModifier(score = null, options = {}) {
     if (score != null) {
-      const penalty = options.penalty ?? 0;
-      const damage = options.damage ?? 0;
+      const penalty = Math.abs(options.penalty ?? 0);
+      const damage = Math.abs(options.damage ?? 0);
       return Math.max(-5, Math.floor((score - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
     }
     return 0;

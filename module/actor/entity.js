@@ -344,7 +344,9 @@ export class ActorPF extends Actor {
    * Deletes expired temporary active effects and disables linked expired buffs.
    */
   async expireActiveEffects() {
-    const temporaryEffects = this.temporaryEffects.filter((ae) => ae.duration?.remaining <= 0);
+    const temporaryEffects = this.temporaryEffects.filter(
+      (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
+    );
     const toDelete = [],
       toDisable = [];
     for (const ae of temporaryEffects) {
@@ -3424,6 +3426,8 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * @param root0
+   * @param root0.inLowestDenomination
    * @returns {number} The total amount of currency this actor has, in gold pieces
    */
   mergeCurrency({ inLowestDenomination = false } = {}) {

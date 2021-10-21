@@ -275,6 +275,17 @@ export class ItemPF extends Item {
   }
 
   /**
+   * @returns {ActiveEffect} An active effect associated with this item.
+   */
+  get effect() {
+    return this.actor.effects.find((o) => {
+      const origin = o.data.origin.split(".");
+      if (origin[2] === "Item" && origin[3] === this.id) return true;
+      return false;
+    });
+  }
+
+  /**
    * @param {object} [rollData] - Data to pass to the roll. If none is given, get new roll data.
    * @returns {number} The Difficulty Class for this item.
    */
@@ -752,6 +763,9 @@ export class ItemPF extends Item {
       const rollData = this.getRollData();
       const duration = RollPF.safeRoll(this.data.data.duration.value || "0", rollData).total;
       switch (this.data.data.duration.units) {
+        case "hour":
+          seconds = duration * 60 * 60;
+          break;
         case "minute":
           seconds = duration * 60;
           break;
@@ -1365,7 +1379,8 @@ export class ItemPF extends Item {
       if (durationValue) {
         let seconds = 0;
         switch (this.data.data.duration.units) {
-          case "minute": {
+          case "minute":
+          case "hour": {
             seconds = this.totalDurationSeconds;
             break;
           }
@@ -4445,6 +4460,8 @@ export class ItemPF extends Item {
   }
 
   /**
+   * @param root0
+   * @param root0.inLowestDenomination
    * @returns {number} The total amount of currency this item contains, in gold pieces
    */
   getTotalCurrency({ inLowestDenomination = false } = {}) {

@@ -1,7 +1,5 @@
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
-import { ActorSheetFlags } from "../../apps/actor-flags.js";
-import { DicePF } from "../../dice.js";
 import {
   createTag,
   createTabs,

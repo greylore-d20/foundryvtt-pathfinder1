@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.79.7 - 2021-10-21
+
+### Bug Fixes
+
+- Fix incorrect bonus stacking for skill rolls. ([1120](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1120))
+- Fix inconsistent HP adjustment on actor sheet. ([1046](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1046))
+- Fix spell description was not editable if it was completely missing.
+- Fix rounding error in total value calculations. ([1030](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1030))
+- Entangled attack penalty was nondescript. ([1113](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1113))
+- Make full spell descriptions show up on chat cards again
+- @critMult is now valued at the actual critical multiplier if the attack is a critical threat, rather than at -1 value
+- Measure templates were unable to be created properly after having created something on the drawing layer ([1114](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1114))
+- Clearing some numeric input values on character sheets changed nothing ([1116](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1116))
+- Ability-targeting changes with a negative value and penalty as the modifier incorrectly applied positive values (This also fixes conditions such as Entanglement and Exhausted) ([1112](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1112))
+- Fix attacks/iteratives shown for damage-only attacks. ([1093](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1093))
+
+### Changelog
+
+- Delete expired active effects and disable linked buffs.
+- Drag Ruler can now be configured to not use token elevation to determine the token's movement type
+- Add information on the @critMult variable
+
+### API
+
+- Buff ActiveEffect duration is now initialized.
+
 ## 0.79.6 - 2021-10-14
 
 ### Bug Fixes

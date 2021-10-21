@@ -2164,12 +2164,15 @@ export class ActorPF extends Actor {
 
     // Gather changes
     const parts = [];
-    const changes = this.changes.filter((c) => {
-      let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
-      if (!(cf instanceof Array)) cf = [cf];
+    const changes = getHighestChanges(
+      this.changes.filter((c) => {
+        let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
+        if (!(cf instanceof Array)) cf = [cf];
 
-      return cf.includes(`data.skills.${skillId}.changeBonus`);
-    });
+        return cf.includes(`data.skills.${skillId}.changeBonus`);
+      }),
+      { ignoreTarget: true }
+    );
 
     // Add ability modifier
     if (skl.ability) {

@@ -864,6 +864,7 @@ export const PF1 = {
     turn: "PF1.TimeTurnShort",
     round: "PF1.TimeRoundShort",
     minute: "PF1.TimeMinuteShort",
+    hour: "PF1.TimeHourShort",
   },
 
   /* -------------------------------------------- */

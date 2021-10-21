@@ -260,4 +260,36 @@ export class CombatPF extends Combat {
       });
     });
   };
+
+  /**
+   * Process current combatant: expire active effects & buffs.
+   */
+  async _processCurrentCombatant() {
+    try {
+      this.combatant?.actor?.expireActiveEffects();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * @override
+   * @returns {Promise<Combat>}
+   */
+  async nextRound() {
+    const combat = await super.nextRound();
+    // TODO: Process skipped turns.
+    await this._processCurrentCombatant();
+    return combat;
+  }
+
+  /**
+   * @override
+   * @returns {Promise<Combat>}
+   */
+  async nextTurn() {
+    const combat = await super.nextTurn();
+    await this._processCurrentCombatant();
+    return combat;
+  }
 }

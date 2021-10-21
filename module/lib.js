@@ -951,3 +951,12 @@ export const splitCurrency = (cp) => {
     cp: Math.max(0, cp),
   };
 };
+
+/**
+ * Get first active GM user.
+ *
+ * @returns {User}
+ */
+export const getFirstActiveGM = function () {
+  return game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
+};

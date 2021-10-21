@@ -340,6 +340,28 @@ export class ActorPF extends Actor {
     this.doQueuedUpdates();
   }
 
+  /**
+   * Deletes expired temporary active effects and disables linked expired buffs.
+   */
+  async expireActiveEffects() {
+    const temporaryEffects = this.temporaryEffects.filter(
+      (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
+    );
+    const toDelete = [],
+      toDisable = [];
+    for (const ae of temporaryEffects) {
+      const re = ae.data.origin?.match(/Item\.(?<itemId>\w+)/);
+      const item = this.items.get(re?.groups.itemId);
+      if (!item || item.type !== "buff") {
+        toDelete.push(ae.id);
+      } else {
+        toDisable.push({ _id: item.id, "data.active": false });
+      }
+    }
+    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete);
+    if (toDisable.length) await this.updateEmbeddedDocuments("Item", toDisable);
+  }
+
   prepareBaseData() {
     super.prepareBaseData();
     this._resetInherentTotals();

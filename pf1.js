@@ -61,6 +61,7 @@ import {
   binarySearch,
   sortArrayByName,
   findInCompendia,
+  getFirstActiveGM,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
@@ -163,6 +164,7 @@ Hooks.once("init", function () {
       binarySearch,
       sortArrayByName,
       findInCompendia,
+      getFirstActiveGM,
     },
     // Components
     documentComponents: {
@@ -924,6 +926,29 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
     }
   }
 });
+
+/* ------------------------------- */
+/* Expire active effects
+/* ------------------------------- */
+{
+  const expireFromTokens = function () {
+    if (getFirstActiveGM() === game.user) {
+      for (const t of canvas.tokens.placeables) {
+        t.actor.expireActiveEffects();
+      }
+    }
+  };
+
+  // On game time change
+  Hooks.on("updateWorldTime", () => {
+    expireFromTokens();
+  });
+
+  // On canvas render
+  Hooks.on("canvasReady", () => {
+    expireFromTokens();
+  });
+}
 
 // Handle chat tooltips
 const handleChatTooltips = function (event) {

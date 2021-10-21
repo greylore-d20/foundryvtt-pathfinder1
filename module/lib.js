@@ -938,6 +938,8 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities
 
 /**
  * Split copper currency into gold, silver and copper.
+ *
+ * @param cp
  */
 export const splitCurrency = (cp) => {
   const gp = Math.floor(cp / 100);
@@ -948,4 +950,13 @@ export const splitCurrency = (cp) => {
     sp: Math.max(0, sp),
     cp: Math.max(0, cp),
   };
+};
+
+/**
+ * Get first active GM user.
+ *
+ * @returns {User}
+ */
+export const getFirstActiveGM = function () {
+  return game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
 };

@@ -664,8 +664,8 @@ Hooks.on("createToken", (scene, token, options, userId) => {
 
 Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   const actor = game.actors.get(token.actorId),
-    buffTextures = Object.values(actor?._calcBuffTextures() ?? []).map((b) => b.icon);
-  for (const icon of buffTextures) await loadTexture(icon);
+    buffTextures = Object.values(actor?._calcBuffActiveEffects() ?? []).map((b) => b.icon);
+  for (const icon of buffTextures) if (icon) await loadTexture(icon);
 });
 
 Hooks.on("preDeleteToken", (token, options, userId) => {

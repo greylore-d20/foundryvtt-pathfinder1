@@ -43,12 +43,7 @@ export const customRolls = function (message, speaker, rollData) {
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
             tokenId: tokenUuid,
             isHealing: type === "HEAL" || type === "H",
-            roll: {
-              value: total,
-              halfValue: Math.floor(total / 2),
-              formula: value,
-              json: escape(JSON.stringify(roll.toJSON())),
-            },
+            roll,
           });
           const chatOptions = {
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,

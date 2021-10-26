@@ -3842,7 +3842,7 @@ export class ActorPF extends Actor {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 
-    const buffTextures = this._calcBuffTextures();
+    const buffTextures = this._calcBuffActiveEffects();
     if (!this.testUserPermission(game.user, "OWNER")) return;
     const fx = [...this.effects];
 
@@ -3859,6 +3859,7 @@ export class ActorPF extends Actor {
         else {
           const existingData = existing.data.toObject();
           const mergedData = mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
+          if (obj.item.data.data.hideFromToken) mergedData.icon = null;
           const diffData = diffObject(existingData, mergedData);
           if (!isObjectEmpty(diffData)) {
             diffData._id = existing.id;
@@ -3893,13 +3894,12 @@ export class ActorPF extends Actor {
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
-  _calcBuffTextures() {
+  _calcBuffActiveEffects() {
     const buffs = this.items.filter((o) => o.type === "buff");
     return buffs.reduce((acc, cur) => {
       const id = cur.uuid;
-      if (cur.data.data.hideFromToken) return acc;
-
       if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur };
+      if (cur.data.data.hideFromToken) acc[id].icon = null;
       if (cur.data.data.active) acc[id].active = true;
       else acc[id].active = false;
       return acc;

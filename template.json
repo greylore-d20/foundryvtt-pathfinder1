@@ -793,12 +793,14 @@
         "weight": 0,
         "price": 0,
         "size": "med",
+        "equipped": true,
         "resizing": false,
         "identified": true,
         "hp": {
           "max": 10,
           "value": 10
         },
+        "broken": false,
         "hardness": 0,
         "carried": true,
         "unidentified": {
@@ -923,6 +925,17 @@
           "boolean": [],
           "dictionary": []
         }
+      },
+      "enhancable": {
+        "masterwork": false,
+        "enh": null
+      },
+      "hasAttack": {
+        "attackType": "weapon",
+        "nonlethal": false,
+        "proficient": true,
+        "primaryAttack": true,
+        "held": "normal"
       }
     },
     "class": {
@@ -991,7 +1004,9 @@
         "links",
         "tagged",
         "flags",
-        "scriptCalls"
+        "scriptCalls",
+        "enhancable",
+        "hasAttack"
       ],
       "equipped": true,
       "equipmentType": "armor",
@@ -1004,9 +1019,6 @@
       },
       "spellFailure": 0,
       "slot": "slotless",
-      "masterwork": false,
-      "broken": false,
-      "nonlethal": false,
       "links": {
         "charges": []
       }
@@ -1048,8 +1060,7 @@
         "flags",
         "scriptCalls"
       ],
-      "subType": "misc",
-      "equipped": true
+      "subType": "misc"
     },
     "spell": {
       "templates": ["itemDescription", "activatedEffect", "action", "links", "flags", "scriptCalls"],
@@ -1113,29 +1124,29 @@
         "links",
         "tagged",
         "flags",
-        "scriptCalls"
+        "scriptCalls",
+        "enhancable",
+        "hasAttack"
       ],
-      "equipped": true,
-      "masterwork": false,
-      "nonlethal": false,
       "weaponType": "simple",
       "weaponSubtype": "light",
       "properties": {},
-      "enh": null,
-      "broken": false,
       "showInQuickbar": true
     },
     "attack": {
-      "templates": ["itemDescription", "activatedEffect", "action", "links", "tagged", "flags", "scriptCalls"],
-      "attackType": "weapon",
-      "masterwork": false,
-      "nonlethal": false,
-      "enh": null,
-      "proficient": true,
-      "primaryAttack": true,
+      "templates": [
+        "itemDescription",
+        "activatedEffect",
+        "action",
+        "links",
+        "tagged",
+        "flags",
+        "scriptCalls",
+        "enhancable",
+        "hasAttack"
+      ],
       "showInQuickbar": true,
       "broken": false,
-      "held": "normal",
       "conditionals": [],
       "links": {
         "charges": [],

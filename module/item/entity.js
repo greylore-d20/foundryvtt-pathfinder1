@@ -3714,38 +3714,32 @@ export class ItemPF extends Item {
   }
 
   static async toConsumable(origData, type) {
-    let data = duplicate(game.system.template.Item.consumable);
-    for (const t of data.templates) {
-      mergeObject(data, duplicate(game.system.template.Item.templates[t]));
-    }
-    delete data.templates;
-    data = {
+    const data = {
       type: "consumable",
       name: origData.name,
-      data: data,
     };
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
-    const materialPrice = getProperty(origData, "data.materials.gpValue") || 0;
+    const materialPrice = origData.data.materials?.gpValue ?? 0;
 
     // Set consumable type
-    data.data.consumableType = type;
+    data["data.consumableType"] = type;
 
     // Set range
-    data.data.range.units = origData.data.range.units;
-    data.data.range.value = origData.data.range.value;
-    switch (data.data.range.units) {
+    data["data.range.units"] = origData.data.range.units;
+    data["data.range.value"] = origData.data.range.value;
+    switch (origData.data.range.units) {
       case "close":
-        data.data.range.value = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).total.toString();
-        data.data.range.units = "ft";
+        data["data.range.value"] = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).total.toString();
+        data["data.range.units"] = "ft";
         break;
       case "medium":
-        data.data.range.value = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }).total.toString();
-        data.data.range.units = "ft";
+        data["data.range.value"] = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }).total.toString();
+        data["data.range.units"] = "ft";
         break;
       case "long":
-        data.data.range.value = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }).total.toString();
-        data.data.range.units = "ft";
+        data["data.range.value"] = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }).total.toString();
+        data["data.range.units"] = "ft";
         break;
     }
 
@@ -3753,73 +3747,73 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice * 50;
-      data.data.hardness = 5;
-      data.data.hp.max = 5;
-      data.data.hp.value = 5;
+      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice * 50;
+      data["data.hardness"] = 5;
+      data["data.hp.max"] = 5;
+      data["data.hp.value"] = 5;
     } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
-      data.data.hardness = 1;
-      data.data.hp.max = 1;
-      data.data.hp.value = 1;
-      data.data.range.value = 0;
-      data.data.range.units = "personal";
+      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
+      data["data.hardness"] = 1;
+      data["data.hp.max"] = 1;
+      data["data.hp.value"] = 1;
+      data["data.range.value"] = 0;
+      data["data.range.units"] = "personal";
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data.data.price = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
-      data.data.hardness = 0;
-      data.data.hp.max = 1;
-      data.data.hp.value = 1;
+      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
+      data["data.hardness"] = 0;
+      data["data.hp.max"] = 1;
+      data["data.hp.value"] = 1;
     }
 
     // Set charges
     if (type === "wand") {
-      data.data.uses.maxFormula = "50";
-      data.data.uses.value = 50;
-      data.data.uses.max = 50;
-      data.data.uses.per = "charges";
+      data["data.uses.maxFormula"] = "50";
+      data["data.uses.value"] = 50;
+      data["data.uses.max"] = 50;
+      data["data.uses.per"] = "charges";
     } else {
-      data.data.uses.per = "single";
+      data["data.uses.per"] = "single";
     }
 
     // Set activation method
-    data.data.activation.type = "standard";
+    data["data.activation.type"] = "standard";
     // Set activation for unchained action economy
-    data.data.unchainedAction.activation.type = "action";
-    data.data.unchainedAction.activation.cost = 2;
+    data["data.unchainedAction.activation.type"] = "action";
+    data["data.unchainedAction.activation.cost"] = 2;
 
     // Set measure template
     if (type !== "potion") {
-      data.data.measureTemplate = getProperty(origData, "data.measureTemplate");
+      data["data.measureTemplate"] = getProperty(origData, "data.measureTemplate");
     }
 
     // Set damage formula
-    data.data.actionType = origData.data.actionType;
-    for (const d of getProperty(origData, "data.damage.parts")) {
+    data["data.actionType"] = origData.data.actionType;
+    for (const d of origData.data.damage.parts) {
       d[0] = d[0].replace(/@sl/g, slcl[0]);
       d[0] = d[0].replace(/@cl/g, "@item.cl");
       data.data.damage.parts.push(d);
     }
 
     // Set saves
-    data.data.save.description = origData.data.save.description;
-    data.data.save.dc = 10 + slcl[0] + Math.floor(slcl[0] / 2) + "";
+    data["data.save.description"] = origData.data.save.description;
+    data["data.save.dc"] = 10 + slcl[0] + Math.floor(slcl[0] / 2) + "";
 
     // Copy variables
-    data.data.attackNotes = origData.data.attackNotes;
-    data.data.effectNotes = origData.data.effectNotes;
-    data.data.attackBonus = origData.data.attackBonus;
-    data.data.critConfirmBonus = origData.data.critConfirmBonus;
-    data.data.aura.school = origData.data.school;
+    data["data.attackNotes"] = origData.data.attackNotes;
+    data["data.effectNotes"] = origData.data.effectNotes;
+    data["data.attackBonus"] = origData.data.attackBonus;
+    data["data.critConfirmBonus"] = origData.data.critConfirmBonus;
+    data["data.aura.school"] = origData.data.school;
 
     // Set Caster Level
-    data.data.cl = slcl[1];
+    data["data.cl"] = slcl[1];
 
     // Set description
-    data.data.description.value = await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
+    data["data.description.value"] = await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
       origData: origData,
       data: data,
       isWand: type === "wand",
@@ -3830,7 +3824,8 @@ export class ItemPF extends Item {
       config: CONFIG.PF1,
     });
 
-    return data;
+    // Create and return synthetic item data
+    return new ItemPF(expandObject(data)).data;
   }
 
   /**
@@ -4336,21 +4331,7 @@ export class ItemPF extends Item {
     }
 
     // Add to updates
-    const items = data.map((o) => {
-      if (!options.raw) {
-        let template = duplicate(game.system.template.Item[o.type]);
-        if (template.templates instanceof Array) {
-          template.templates.forEach((t) => {
-            template = mergeObject(template, game.system.template.Item.templates[t]);
-          });
-        }
-        delete template.templates;
-
-        o.data = mergeObject(template, o.data || {});
-      }
-
-      return o;
-    });
+    const items = data.map((o) => (options.raw ? o : new ItemPF(o).data));
     inventory.push(...items);
 
     // Filter items with duplicate _id

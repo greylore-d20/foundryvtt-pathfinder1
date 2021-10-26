@@ -11,8 +11,8 @@ export const registerHandlebarsHelpers = function () {
    * Render a MCE editor container with an optional toggle button
    */
   Handlebars.registerHelper("roll-editor", function (options) {
-    const item = getProperty(options, "data.root.item");
-    const actor = getProperty(options, "data.root.actor");
+    const item = options.data.root.item;
+    const actor = options.data.root.actor;
     const rollData = item != null ? item.getRollData() : actor != null ? actor.getRollData() : {};
 
     // Create editor
@@ -43,8 +43,8 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("itemRange", (item, rollData) => {
     // ItemPF.range is not accessible here and is thus largely duplicated here
 
-    const range = getProperty(item, "data.range.value");
-    const rangeType = getProperty(item, "data.range.units");
+    const range = item.data.range.value;
+    const rangeType = item.data.range.units;
 
     if (rangeType == null) return null;
 
@@ -53,9 +53,9 @@ export const registerHandlebarsHelpers = function () {
       switch (rangeType) {
         case "melee":
         case "touch":
-          return getProperty(rollData, "range.melee") || 0;
+          return rollData.range.melee || 0;
         case "reach":
-          return getProperty(rollData, "range.reach") || 0;
+          return rollData.range.reach || 0;
         case "close":
           feet = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData);
           break;
@@ -152,8 +152,7 @@ export const registerHandlebarsHelpers = function () {
   // Fetches ability mod value based on ability key.
   // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
-    if (multiplier == null) multiplier = 1;
-    return Math.floor(getProperty(rollData, `abilities.${abl}.mod`) * multiplier);
+    return Math.floor(rollData.abilities[abl].mod * multiplier ?? 1);
   });
 
   // Shorten string with ellipsis
@@ -186,7 +185,7 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("contextNotes", (actor, context, options) => {
-    const rollData = getProperty(options, "data.root.rollData");
+    const rollData = options.data.root.rollData;
     const noteObjs = actor.getContextNotes(context);
     return actor.formatContextNotes(noteObjs, rollData);
   });

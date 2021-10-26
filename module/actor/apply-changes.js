@@ -26,7 +26,7 @@ export function applyChanges() {
 
   // Parse change flags
   for (const i of this.changeItems) {
-    for (const [k, v] of Object.entries(getProperty(i.data, "data.changeFlags"))) {
+    for (const [k, v] of Object.entries(i.data.data.changeFlags)) {
       if (v === true) {
         this.flags[k] = true;
 
@@ -401,8 +401,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "data.abilities.cha.checkMod";
     case "allSpeeds":
       for (const speedKey of Object.keys(curData.attributes.speed)) {
-        if (getProperty(curData, `attributes.speed.${speedKey}.base`))
-          result.push(`data.attributes.speed.${speedKey}.total`);
+        const base = curData.attributes.speed[speedKey]?.base;
+        if (base !== undefined) result.push(`data.attributes.speed.${speedKey}.total`);
       }
       return result;
     case "landSpeed":
@@ -471,6 +471,7 @@ const getAbilityMod = function (ability) {
 };
 
 export const addDefaultChanges = function (changes) {
+  const actorData = this.data.data;
   // Call hook
   const tempChanges = [];
   Hooks.callAll("pf1.addDefaultChanges", this, tempChanges);
@@ -478,12 +479,12 @@ export const addDefaultChanges = function (changes) {
 
   // Class hit points
   const classes = this.data.items
-    .filter((o) => o.type === "class" && !["racial"].includes(getProperty(o.data, "data.classType")))
+    .filter((o) => o.type === "class" && !["racial"].includes(o.data.data.classType))
     .sort((a, b) => {
       return a.sort - b.sort;
     });
   const racialHD = this.data.items
-    .filter((o) => o.type === "class" && getProperty(o.data, "data.classType") === "racial")
+    .filter((o) => o.type === "class" && o.data.data.classType === "racial")
     .sort((a, b) => {
       return a.sort - b.sort;
     });
@@ -588,15 +589,15 @@ export const addDefaultChanges = function (changes) {
 
   // Add class data to saving throws
   const allClasses = [...classes, ...racialHD];
-  for (const a of Object.keys(this.data.data.attributes.savingThrows)) {
+  for (const a of Object.keys(actorData.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
-    setProperty(this.data, k, getProperty(this.data, `data.attributes.savingThrows.${a}.base`) || 0);
+    actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
     // Using Fractional Base Bonuses
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
       let highStart = false;
       const total = Math.floor(
         allClasses.reduce((cur, obj) => {
-          const saveScale = getProperty(obj.data, `data.savingThrows.${a}.value`) || "";
+          const saveScale = obj.data.data.savingThrows[a].value || "";
           if (saveScale === "high") {
             const acc = highStart ? 0 : 2;
             highStart = true;
@@ -623,7 +624,7 @@ export const addDefaultChanges = function (changes) {
       });
     } else {
       for (const c of allClasses) {
-        const classType = getProperty(c.data.data, "classType") || "base";
+        const classType = c.data.data.classType || "base";
         let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
         if (formula == null) formula = "0";
         const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);
@@ -635,20 +636,19 @@ export const addDefaultChanges = function (changes) {
             target: "savingThrows",
             subTarget: a,
             modifier: "untypedPerm",
-            flavor: getProperty(c, "name"),
+            flavor: c.name,
           })
         );
         getSourceInfo(this.sourceInfo, k).positive.push({
           value: total,
-          name: getProperty(c, "name"),
+          name: c.name,
         });
       }
     }
   }
 
   // Add Constitution to HP
-  let hpAbility = getProperty(this.data, "data.attributes.hpAbility");
-  if (hpAbility == null) hpAbility = "con";
+  const hpAbility = actorData.attributes.hpAbility ?? "con";
   if (hpAbility !== "") {
     changes.push(
       ItemChange.create({
@@ -683,7 +683,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add movement speed(s)
-  for (const [k, s] of Object.entries(this.data.data.attributes.speed)) {
+  for (const [k, s] of Object.entries(actorData.attributes.speed)) {
     let base = s.base;
     if (!base) base = 0;
     changes.push(
@@ -769,7 +769,7 @@ export const addDefaultChanges = function (changes) {
       });
     }
     // Strength or substitute to CMD
-    const strAbl = getProperty(this.data, "data.attributes.cmd.strAbility");
+    const strAbl = actorData.attributes.cmd.strAbility;
     if (strAbl in CONFIG.PF1.abilities) {
       changes.push(
         ItemChange.create({
@@ -807,7 +807,7 @@ export const addDefaultChanges = function (changes) {
 
   // Add Dexterity Modifier to Initiative
   {
-    const abl = getProperty(this.data, "data.attributes.init.ability");
+    const abl = actorData.attributes.init.ability;
     if (abl) {
       changes.push(
         ItemChange.create({
@@ -846,9 +846,8 @@ export const addDefaultChanges = function (changes) {
 
   // Add Ability modifiers and Energy Drain to saving throws
   {
-    let abl;
     // Ability Mod to Fortitude
-    abl = getProperty(this.data, "data.attributes.savingThrows.fort.ability");
+    let abl = actorData.attributes.savingThrows.fort.ability;
     if (abl) {
       changes.push(
         ItemChange.create({
@@ -866,7 +865,7 @@ export const addDefaultChanges = function (changes) {
       });
     }
     // Ability Mod to Reflex
-    abl = getProperty(this.data, "data.attributes.savingThrows.ref.ability");
+    abl = actorData.attributes.savingThrows.ref.ability;
     if (abl) {
       changes.push(
         ItemChange.create({
@@ -884,7 +883,7 @@ export const addDefaultChanges = function (changes) {
       });
     }
     // Ability Mod to Will
-    abl = getProperty(this.data, "data.attributes.savingThrows.will.ability");
+    abl = actorData.attributes.savingThrows.will.ability;
     if (abl) {
       changes.push(
         ItemChange.create({
@@ -912,7 +911,7 @@ export const addDefaultChanges = function (changes) {
         flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    for (const k of Object.keys(getProperty(this.data, "data.attributes.savingThrows"))) {
+    for (const k of Object.keys(actorData.attributes.savingThrows)) {
       getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).positive.push({
         formula: "-@attributes.energyDrain",
         name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -921,7 +920,7 @@ export const addDefaultChanges = function (changes) {
   }
   // Spell Resistance
   {
-    const sr = getProperty(this.data, "data.attributes.sr.formula") || 0;
+    const sr = actorData.attributes.sr.formula || 0;
     changes.push(
       ItemChange.create({
         formula: sr,
@@ -938,7 +937,7 @@ export const addDefaultChanges = function (changes) {
   }
   {
     // Carry capacity strength bonus
-    const cStr = getProperty(this.data, "data.details.carryCapacity.bonus.user") || 0;
+    const cStr = actorData.details.carryCapacity.bonus.user || 0;
     changes.push(
       ItemChange.create({
         formula: cStr,
@@ -953,7 +952,7 @@ export const addDefaultChanges = function (changes) {
       name: game.i18n.localize("PF1.Custom"),
     });
     // Carry capacity multiplier
-    const cMultBase = getProperty(this.data, "data.details.carryCapacity.multiplier.base") ?? 1;
+    const cMultBase = actorData.details.carryCapacity.multiplier.base ?? 1;
     changes.push(
       ItemChange.create({
         formula: cMultBase,
@@ -967,7 +966,7 @@ export const addDefaultChanges = function (changes) {
       formula: cMultBase.toString(),
       name: game.i18n.localize("PF1.Base"),
     });
-    const cMult = getProperty(this.data, "data.details.carryCapacity.multiplier.user") || 0;
+    const cMult = actorData.details.carryCapacity.multiplier.user || 0;
     changes.push(
       ItemChange.create({
         formula: cMult,
@@ -984,7 +983,7 @@ export const addDefaultChanges = function (changes) {
   }
   // Natural armor
   {
-    const ac = getProperty(this.data, "data.attributes.naturalAC") || 0;
+    const ac = actorData.attributes.naturalAC || 0;
     changes.push(
       ItemChange.create({
         formula: ac,
@@ -1033,7 +1032,7 @@ export const addDefaultChanges = function (changes) {
 
   // Add fly bonuses or penalties based on maneuverability
   {
-    const flyKey = getProperty(this.data, "data.attributes.speed.fly.maneuverability");
+    const flyKey = actorData.attributes.speed.fly.maneuverability;
     let flyValue = 0;
     if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
     if (flyValue !== 0) {
@@ -1106,7 +1105,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add size bonuses to various attributes
-  const sizeKey = this.data.data.traits.size;
+  const sizeKey = actorData.traits.size;
   if (sizeKey !== "med") {
     // AC
     changes.push(
@@ -1167,7 +1166,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add conditions
-  for (const [con, v] of Object.entries(this.data.data.attributes.conditions || {})) {
+  for (const [con, v] of Object.entries(actorData.attributes.conditions || {})) {
     if (!v) continue;
 
     switch (con) {
@@ -1465,7 +1464,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        for (const k of Object.keys(this.data.data.attributes.savingThrows)) {
+        for (const k of Object.keys(actorData.attributes.savingThrows)) {
           getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).negative.push({
             value: -2,
             name: game.i18n.localize("PF1.CondFear"),
@@ -1544,7 +1543,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        for (const k of Object.keys(this.data.data.attributes.savingThrows)) {
+        for (const k of Object.keys(actorData.attributes.savingThrows)) {
           getSourceInfo(this.sourceInfo, `data.attributes.savingThrows.${k}.total`).negative.push({
             value: -2,
             name: game.i18n.localize("PF1.CondSickened"),
@@ -1596,7 +1595,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        for (const k of Object.keys(this.data.data.attributes.ac)) {
+        for (const k of Object.keys(actorData.attributes.ac)) {
           getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).negative.push({
             value: -2,
             name: game.i18n.localize("PF1.CondStunned"),
@@ -1620,7 +1619,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Handle fatigue and exhaustion so that they don't stack
-  if (this.data.data.attributes.conditions.exhausted) {
+  if (actorData.attributes.conditions.exhausted) {
     changes.push(
       ItemChange.create({
         formula: -6,
@@ -1646,7 +1645,7 @@ export const addDefaultChanges = function (changes) {
       value: -6,
       name: game.i18n.localize("PF1.CondExhausted"),
     });
-  } else if (this.data.data.attributes.conditions.fatigued) {
+  } else if (actorData.attributes.conditions.fatigued) {
     changes.push(
       ItemChange.create({
         formula: -2,
@@ -1675,7 +1674,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Apply level drain to hit points
-  if (!Number.isNaN(this.data.data.attributes.energyDrain) && this.data.data.attributes.energyDrain > 0) {
+  if (!Number.isNaN(actorData.attributes.energyDrain) && actorData.attributes.energyDrain > 0) {
     changes.push(
       ItemChange.create({
         formula: (d) => -d.attributes.energyDrain * 5,
@@ -1709,29 +1708,31 @@ export const addDefaultChanges = function (changes) {
 };
 
 const resetSkills = function () {
-  const skills = this.data.data.skills;
+  const actorData = this.data.data;
+  const skills = actorData.skills;
 
   for (const [sklKey, skl] of Object.entries(skills)) {
     if (!skl) continue;
 
-    let acpPenalty = skl.acp ? this.data.data.attributes.acp.total : 0;
-    let ablMod = this.data.data.abilities[skl.ability].mod || 0;
+    let acpPenalty = skl.acp ? actorData.attributes.acp.total : 0;
+    let ablMod = actorData.abilities[skl.ability]?.mod || 0;
     let specificSkillBonus = skl.changeBonus || 0;
 
     // Parse main skills
     let sklValue = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
-    setProperty(this.data, `data.skills.${sklKey}.mod`, sklValue);
+    skl.mod = sklValue;
 
     // Parse sub-skills
     for (const [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
       if (!subSkl) continue;
-      if (!getProperty(this.data, `data.skills.${sklKey}.subSkills.${subSklKey}`)) continue;
+      const subSkill = skl.subSkills?.[subSklKey];
+      if (!subSkill) continue;
 
-      acpPenalty = subSkl.acp ? this.data.data.attributes.acp.total : 0;
-      ablMod = this.data.data.abilities[subSkl.ability].mod || 0;
+      acpPenalty = subSkl.acp ? actorData.attributes.acp.total : 0;
+      ablMod = actorData.abilities[subSkl.ability]?.mod || 0;
       specificSkillBonus = subSkl.changeBonus || 0;
       sklValue = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
-      setProperty(this.data, `data.skills.${sklKey}.subSkills.${subSklKey}.mod`, sklValue);
+      subSkill.mod = sklValue;
     }
   }
 };

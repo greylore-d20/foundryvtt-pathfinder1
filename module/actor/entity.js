@@ -2077,6 +2077,9 @@ export class ActorPF extends Actor {
     attackData["data.effectNotes"] = item.data._source.data.effectNotes;
     attackData["data.attackNotes"] = item.data._source.data.attackNotes;
 
+    // Add conditionals
+    attackData["data.conditionals"] = item.data._source.data.conditionals;
+
     // Add saving throw
     attackData["data.save"] = item.data._source.data.save;
 

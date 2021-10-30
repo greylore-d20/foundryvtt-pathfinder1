@@ -1399,6 +1399,8 @@ export class ItemPF extends ItemBasePF {
 
       // Add Difficulty Modifier (DC) label
       props.push(labels.save);
+      const saveDesc = this.data.data.save.description;
+      if (saveDesc.length > 0) props.push(saveDesc);
 
       // Duration
       if (data.duration != null) {

@@ -342,8 +342,10 @@ export class ActorPF extends Actor {
 
   /**
    * Deletes expired temporary active effects and disables linked expired buffs.
+   *
+   * @param {DocumentModificationContext} context
    */
-  async expireActiveEffects() {
+  async expireActiveEffects(context) {
     const temporaryEffects = this.temporaryEffects.filter(
       (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
     );
@@ -358,8 +360,10 @@ export class ActorPF extends Actor {
         disableBuffs.push({ _id: item.id, "data.active": false });
       }
     }
-    if (disableActiveEffects.length) await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects);
-    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs);
+    const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
+    if (disableActiveEffects.length)
+      await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);
+    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, context);
   }
 
   prepareBaseData() {
@@ -1793,7 +1797,7 @@ export class ActorPF extends Actor {
     super._onUpdate(data, options, userId, context);
 
     if (game.user.id === userId && hasProperty(data, "data.attributes.conditions")) {
-      this.toggleConditionStatusIcons();
+      this.toggleConditionStatusIcons({ render: false });
     }
 
     // Resize token(s)
@@ -1832,7 +1836,7 @@ export class ActorPF extends Actor {
 
   _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons();
+      this.toggleConditionStatusIcons({ render: false });
     }
     super._onCreateEmbeddedDocuments(...arguments);
   }
@@ -1859,7 +1863,7 @@ export class ActorPF extends Actor {
     }
 
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons();
+      this.toggleConditionStatusIcons({ render: false });
     }
 
     super._preUpdateEmbeddedDocuments(...arguments);
@@ -3853,7 +3857,10 @@ export class ActorPF extends Actor {
       });
   }
 
-  async toggleConditionStatusIcons() {
+  /**
+   * @param {DocumentModificationContext} context
+   */
+  async toggleConditionStatusIcons(context) {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 
@@ -3902,9 +3909,12 @@ export class ActorPF extends Actor {
       }
     }
 
-    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete);
-    if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate);
-    if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate);
+    const deleteContext = mergeObject({ render: !toCreate.length && !toUpdate.length }, context);
+    const createContext = mergeObject({ render: !toUpdate.length }, context);
+
+    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, deleteContext);
+    if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
+    if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
     this._states.togglingStatusIcons = false;
   }
 

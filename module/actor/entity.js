@@ -2026,12 +2026,7 @@ export class ActorPF extends Actor {
     if (item.data.type !== "weapon") throw new Error("Wrong Item type");
 
     // Get attack template
-    let attackData = { data: {} };
-    for (const template of game.data.system.template.Item.attack.templates) {
-      mergeObject(attackData.data, game.data.system.template.Item.templates[template]);
-    }
-    mergeObject(attackData.data, duplicate(game.data.system.template.Item.attack));
-    attackData = flattenObject(attackData);
+    const attackData = {};
 
     // Add ability modifiers
     attackData["data.ability.attack"] = item.data.data.ability.attack;
@@ -2080,9 +2075,10 @@ export class ActorPF extends Actor {
     // Add saving throw
     attackData["data.save"] = item.data._source.data.save;
 
+    // Synthetic intermediate item
+    const attackItem = new ItemPF(expandObject(attackData));
     // Create attack
-    if (hasProperty(attackData, "data.templates")) delete attackData["data.templates"];
-    const itemData = await this.createOwnedItem(expandObject(attackData));
+    const itemData = await this.createOwnedItem(attackItem.data);
 
     // Create link
     if (itemData.type === "attack") {

@@ -10,8 +10,6 @@
 
   .card-header {
     padding: 3px 0;
-    border-top: 2px groove #fff;
-    border-bottom: 2px groove #fff;
 
     img {
       flex: 0 0 36px;
@@ -148,20 +146,45 @@
 
     .dice-tooltip {
       z-index: 1;
-
-      .part-header {
-        .part-formula {
-          text-align: left;
-        }
-      }
     }
 
     &.success {
-      background-color: rgb(96, 192, 96);
+      background-color: @colorSuccess;
     }
 
     &.failure {
-      background-color: rgb(192, 96, 96);
+      background-color: @colorFailure;
+    }
+  }
+}
+
+.dice-tooltip {
+  .part-header {
+    width: 100%;
+
+    .part-formula {
+      text-align: left;
+      flex: 1;
+    }
+  }
+
+  .tooltip-part {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+
+    &.dice {
+      > .dice {
+        width: 100%;
+      }
+    }
+
+    > .flexcol.flavor {
+      align-items: flex-end;
+    }
+
+    > .flexcol.total {
+      align-items: flex-start;
     }
   }
 }
@@ -349,5 +372,391 @@
     padding: 2px;
     border: 1px solid @borderDark;
     border-radius: 4px;
+  }
+}
+
+/* ----------------------------------------- */
+/*  Compact Attack Card
+/* ----------------------------------------- */
+.chat-message.chat-card-abstract {
+  padding: 0;
+  padding-top: 5px;
+  border-width: 0;
+
+  .highlight {
+    color: @colorRed;
+  }
+
+  .icon {
+    background-color: @foregroundAbstractDark;
+    display: inline-block;
+    /* height: 100%; */
+    /* width: auto; */
+  }
+
+  &:not(.whisper) {
+    background-color: @backgroundAbstractLight;
+    background-image: unset;
+  }
+
+  .inline-roll,
+  .fake-inline-roll {
+    display: flex;
+    flex-flow: row nowrap;
+    border: none;
+    background: unset !important;
+    color: @foregroundAbstractDark;
+
+    .dice-tooltip {
+      color: @foregroundAbstractDark;
+      background-color: @backgroundAbstractDark;
+      background-image: unset;
+      border: none;
+
+      .part-flavor {
+        color: @foregroundAbstractDark;
+      }
+    }
+
+    &:hover {
+      color: @colorRed !important;
+      text-shadow: none;
+
+      .icon {
+        background-color: @colorRed !important;
+      }
+    }
+
+    &.success {
+      color: @colorSuccess_Abstract;
+
+      .icon {
+        background-color: @colorSuccess_Abstract;
+      }
+    }
+
+    &.failure {
+      color: @colorFailure_Abstract;
+
+      .icon {
+        background-color: @colorFailure_Abstract;
+      }
+    }
+
+    .icon {
+      margin-right: 2px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .line {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 16px;
+    vertical-align: middle;
+
+    .icon {
+      margin-right: 2px;
+      width: 16px;
+      height: 16px;
+    }
+
+    &.success {
+      color: @colorSuccess_Abstract;
+
+      .icon {
+        background-color: @colorSuccess_Abstract;
+      }
+    }
+
+    &.failure {
+      color: @colorFailure_Abstract;
+
+      .icon {
+        background-color: @colorFailure_Abstract;
+      }
+    }
+  }
+
+  // Properties, such as tags
+  .property-group {
+    label {
+      color: @foregroundAbstractDarkLabel;
+    }
+
+    .tag {
+      color: @foregroundAbstractDark;
+      background-color: @backgroundAbstractProperty;
+      border-width: 0;
+
+      &:hover {
+        background-color: @backgroundAbstractPropertyHighlight;
+      }
+    }
+  }
+
+  .chat-card {
+    // Card Header
+    header.card-header {
+      background-image: unset;
+      color: @foregroundAbstractLight;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0 2px 4px 2px;
+
+      h3 {
+        color: @foregroundAbstractLight;
+        font-family: "Signika", sans-serif;
+      }
+    }
+
+    .flavor {
+      color: @foregroundAbstractDarkLabel;
+      font-size: 14px;
+    }
+
+    // Card Content
+    .card-content {
+      padding: 0 2px;
+    }
+
+    // Card Body
+    .card-body {
+      color: @foregroundAbstractDark;
+      background-color: @backgroundAbstractDark;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      .label {
+        color: @foregroundAbstractDarkLabel;
+      }
+
+      // Primary properties
+      .properties-primary {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        > div {
+          border: unset;
+          margin: 0;
+          padding: 2px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          background-color: unset;
+          line-height: 20px;
+
+          span:not(.flavor) {
+            color: @foregroundAbstractDark;
+            font-size: 14px;
+          }
+        }
+
+        .card-range {
+          &:hover {
+            .range-value {
+              color: @colorRed;
+            }
+          }
+        }
+      }
+
+      .fake-card-button {
+        text-shadow: unset;
+        font-size: 16px;
+
+        &.square-16 {
+          width: 16px;
+          height: 16px;
+        }
+
+        &:hover {
+          color: @colorRed;
+        }
+      }
+
+      // Attacks
+      .attacks {
+        display: flex;
+        flex-direction: column;
+        padding: 0 2px;
+        margin-top: 8px;
+
+        .attack {
+          padding: 8px 0;
+          border-top: 1px solid @foregroundAbstractDark;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          > .flavor {
+            margin-bottom: 8px;
+          }
+
+          .attack-roll,
+          .critical-roll {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+
+            .damage-group {
+              display: flex;
+              flex-flow: row nowrap;
+              white-space: nowrap;
+
+              .fake-inline-roll {
+                margin-right: 8px;
+              }
+
+              &:hover {
+                a.fake-card-button {
+                  opacity: 1;
+                }
+              }
+
+              a {
+                margin: 0;
+                padding-right: 4px;
+
+                &.fake-card-button {
+                  opacity: 0;
+                }
+              }
+            }
+          }
+
+          .roll-breakdown {
+            display: none;
+            flex-flow: column nowrap;
+            width: 100%;
+            margin-top: 4px;
+            border-top: 1px solid @foregroundAbstractDarkFine;
+            &[data-type="damage"] {
+              border-bottom: 1px solid @foregroundAbstractDarkFine;
+            }
+            align-items: center;
+
+            .flavor {
+              text-align: center;
+            }
+
+            .inline-roll,
+            .fake-inline-roll {
+              display: flex;
+              width: 80%;
+              flex-direction: row;
+              justify-content: space-evenly;
+
+              > * {
+                flex: 0 0 33%;
+                text-align: center;
+              }
+            }
+          }
+
+          div.effect-notes,
+          div.attack-notes {
+            flex: 0 0 24px;
+            margin-top: 8px;
+            width: 100%;
+
+            > .flexrow {
+              align-items: flex-start;
+            }
+
+            .tag {
+              display: inline-block;
+              padding: 1px 3px;
+              border-color: @foregroundAbstractDarkFine;
+
+              a.inline-roll {
+                .fas {
+                  color: @foregroundAbstractDark;
+                }
+                &:hover {
+                  .fas {
+                    color: @colorRed;
+                  }
+                }
+
+                display: inline;
+              }
+
+              a.entity-link {
+                border: none;
+                background: unset;
+                color: @foregroundAbstractDark;
+
+                &:hover {
+                  color: @colorRed;
+                  text-shadow: unset;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .roll-info {
+      margin-top: 4px;
+    }
+
+    .spell-failure {
+      span.failure {
+        color: @colorFailure_Abstract !important;
+      }
+    }
+  }
+
+  // Message Header
+  .message-header {
+    color: @foregroundAbstractLight;
+    padding: 0 4px;
+  }
+
+  // Card Footer
+  .card-footer {
+    border-top: none;
+    padding: 0 2px;
+
+    .save {
+      display: flex;
+      flex-direction: column;
+      /* width: 100%; */
+      /* justify-content: center; */
+
+      a {
+        text-align: center;
+      }
+    }
+
+    .spell-buttons {
+      justify-content: space-around;
+
+      > * {
+        flex: unset;
+      }
+
+      a:hover {
+        color: @colorRed;
+
+        .icon {
+          background-color: @colorRed;
+        }
+      }
+
+      .icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
   }
 }

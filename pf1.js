@@ -596,11 +596,23 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Apply accessibility settings to chat message
   chat.applyAccessibilitySettings(app, html, data, game.settings.get("pf1", "accessibilityConfig"));
 
-  // Alter chat card title color
-  chat.addChatCardTitleGradient(app, html, data);
-
   // Handle chat tooltips
   html.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
+
+  // Handle abstract attack card
+  {
+    const elem = html.find(".chat-card-abstract");
+    if (elem.length) {
+      if (!html.hasClass("chat-card-abstract")) {
+        html.addClass("chat-card-abstract");
+        elem.removeClass("chat-card-abstract");
+      }
+      chat.handleAbstractChatCard(app, html, data);
+    } else {
+      // Alter chat card title color
+      chat.addChatCardTitleGradient(app, html, data);
+    }
+  }
 });
 
 Hooks.on("renderChatPopout", (app, html, data) => {

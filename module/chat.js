@@ -127,3 +127,25 @@ export const createInlineRollString = (roll, { hide3d = true } = {}) =>
   `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
   title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
+
+export const handleAbstractChatCard = function (app, html, data) {
+  // Hide breakdowns
+  html.find(".roll-breakdown").hide();
+
+  // Toggle breakdowns
+  html.find(`*[data-action="toggle-roll-breakdown"]`).on("click", _toggleRollBreakdown);
+};
+
+const _toggleRollBreakdown = function (event) {
+  event.preventDefault();
+  const target = event.currentTarget.dataset.actionTarget;
+  const baseElem = event.currentTarget.closest(".attack");
+  const breakdownElem = baseElem?.querySelector(`.roll-breakdown[data-type="${target}"]`);
+  if (!breakdownElem) return;
+
+  if (breakdownElem.offsetParent == null) {
+    $(breakdownElem).slideDown(150);
+  } else {
+    $(breakdownElem).slideUp(150);
+  }
+};

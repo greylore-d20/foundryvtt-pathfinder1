@@ -461,7 +461,7 @@ export class ItemPF extends Item {
    * @returns {boolean}
    */
   get isHealing() {
-    return this.data.data.actionType === "heal" && this.data.data.damage.parts.length;
+    return this.data.data.actionType === "heal" && this.data.data.damage.parts.length > 0;
   }
 
   get hasEffect() {
@@ -3277,7 +3277,7 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on("click", ".card-buttons button", this._onChatCardButton.bind(this));
+    html.on("click", ".card-buttons button, .fake-card-button", this._onChatCardButton.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
   }
 
@@ -3301,7 +3301,7 @@ export class ItemPF extends Item {
     // Get the Actor from a synthetic Token
     const actor = await this._getChatCardActor(card);
     if (!actor) {
-      if (action === "applyDamage") {
+      if (["applyDamage", "applyDamageHalf"].includes(action)) {
         await this._onChatCardAction(action, { button: button });
         button.disabled = false;
       }
@@ -3324,14 +3324,15 @@ export class ItemPF extends Item {
     // Consumable usage
     if (action === "consume") await item.useConsumable({ event });
     // Apply damage
-    else if (action === "applyDamage") {
+    else if (["applyDamage", "applyDamageHalf"].includes(action)) {
       let asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
         .map((o) => o.innerText)
         .includes(game.i18n.localize("PF1.Nonlethal"));
       if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
 
-      const value = button.dataset.value;
-      if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value), { asNonlethal });
+      let value = parseInt(button.dataset.value);
+      if (action === "applyDamageHalf") value = Math.floor(value / 2);
+      if (!isNaN(value)) ActorPF.applyDamage(parseInt(value), { asNonlethal });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {

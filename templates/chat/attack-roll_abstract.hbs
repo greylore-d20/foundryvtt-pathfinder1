@@ -1,0 +1,182 @@
+<div class="pf1 chat-card item-card chat-card-abstract" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
+  <header class="card-header flexrow">
+    <img src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+    {{#if name}}<h3 class="item-name">{{name}}</h3>{{/if}}
+  </header>
+
+  <div class="card-content">
+    {{{data.description.value}}}
+  </div>
+
+  <div class="card-body">
+    <div class="properties-primary">
+      {{!-- Spell Failure Chance --}}
+      {{#if spellFailure}}
+        <div class="spell-failure">
+          <span class="flavor">{{localize "PF1.ArcaneSpellFailure"}}</span>
+          <span class="dice-total spell-failure {{#unless spellFailureSuccess}}failure{{/unless}}">{{spellFailure}}</span>
+        </div>
+      {{/if}}
+
+      {{!-- Range --}}
+      {{#if range}}
+        <div class="card-range" data-range="{{range}}"{{#if rangeFormula}} title="{{rangeformula}}"{{/if}}>
+          <span class="range-header label flavor">{{localize "PF1.Range"}}</span>
+          <span class="range-value">{{rangeLabel}}</span>
+        </div>
+      {{/if}}
+    </div>
+
+    {{!-- Attacks --}}
+    <div class="attacks">
+      {{#each attacks as |atk|}}
+        <div class="attack">
+          <span class="flavor">
+            {{#if atk.rollData.d20}}
+              <i class="fas fa-dice-d20 highlight" title="{{localize "PF1.CustomRollDesc"}}"></i>
+            {{/if}}
+            {{atk.attack.flavor}}
+          </span>
+
+          {{!-- Attack Notes --}}
+          {{#if atk.attackNotes.length}}
+            <div class="flexcol attack-notes property-group gm-sensitive">
+              <div class="flexrow">
+                {{{atk.attackNotesHTML_Inner}}}
+              </div>
+            </div>
+          {{/if}}
+
+          {{!-- Normal attack --}}
+          {{#if (or atk.hasAttack atk.hasDamage)}}
+            <div class="attack-roll">
+              {{!-- Attack Roll --}}
+              {{#if atk.hasAttack}}
+                <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20{{/if}}{{#if atk.attack.isCrit}} critical-threat success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
+                title="{{atk.attack.formula}}" data-roll="{{atk.attack.rollJSON}}">
+                  <i class="icon icon-bullseye-arrow"></i> {{atk.attack.total}}
+                </a>
+              {{/if}}
+
+              {{!-- Damage Roll --}}
+              {{#if atk.hasDamage}}
+                <div class="damage-group">
+                  <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{#if isHealing}}{{localize "PF1.Healing"}}{{else}}{{localize "PF1.Damage"}}{{/if}}" data-action="toggle-roll-breakdown" data-action-target="damage">
+                    <i class="icon {{#if isHealing}}icon-health-normal{{else}}icon-sword-wound{{/if}}"></i> {{atk.damage.total}}
+                  </a>
+                  {{#if isHealing}}
+                    <a class="fake-card-button square-16" data-action="applyDamage" data-value="-{{atk.damage.total}}" title="{{localize "PF1.ApplyHealing"}}">1</a>
+                    <a class="fake-card-button square-16" data-action="applyDamageHalf" data-value="-{{atk.damage.total}}" title="{{localize "PF1.ApplyHalf"}}">½</a>
+                  {{else}}
+                    <a class="fake-card-button square-16" data-action="applyDamage" data-value="{{atk.damage.total}}" title="{{localize "PF1.ApplyDamage"}}">1</a>
+                    <a class="fake-card-button square-16" data-action="applyDamageHalf" data-value="{{atk.damage.total}}" title="{{localize "PF1.ApplyHalf"}}">½</a>
+                  {{/if}}
+                </div>
+              {{/if}}
+            </div>
+          {{/if}}
+
+          {{!-- Normal Damage Breakdown --}}
+          {{#if atk.hasDamage}}
+            <div class="roll-breakdown" data-type="damage">
+              <span class="flavor">{{atk.damage.flavor}}</span>
+              {{#each atk.damageRows as |row|}}
+                <a class="inline-roll inline-dsn-hidden inline-result" title="{{row.normal.roll.formula}}" data-roll="{{row.normal.roll.json}}">
+                  <span class="total">{{row.normal.roll.total}}</span>
+                  <span class="flavor">{{row.normal.damageType}}</span>
+                </a>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- Critical Attack --}}
+          {{#if atk.hasCritConfirm}}
+            <div class="critical-roll">
+              {{!-- Critical Attack Roll --}}
+              <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isNat20}} natural-20 success{{/if}}{{#if atk.critConfirm.isFumble}} failure{{/if}}"
+              title="{{atk.critConfirm.formula}}" data-roll="{{atk.critConfirm.rollJSON}}">
+                <i class="icon icon-impact-point"></i> {{atk.critConfirm.total}}
+              </a>
+
+              {{!-- Critical Damage Roll --}}
+              <div class="damage-group">
+                <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{#if isHealing}}{{localize "PF1.HealingCritical"}}{{else}}{{localize "PF1.DamageCritical"}}{{/if}}"
+                  data-action="toggle-roll-breakdown" data-action-target="crit">
+                  <i class="icon {{#if isHealing}}icon-healing{{else}}icon-scar-wound{{/if}}"></i> {{atk.critDamage.total}}
+                </a>
+                {{#if isHealing}}
+                  <a class="fake-card-button square-16" data-action="applyDamage" data-value="-{{atk.critDamage.total}}" title="{{localize "PF1.ApplyHealing"}}">1</a>
+                  <a class="fake-card-button square-16" data-action="applyDamageHalf" data-value="-{{atk.critDamage.total}}" title="{{localize "PF1.ApplyHalf"}}">½</a>
+                {{else}}
+                  <a class="fake-card-button square-16" data-action="applyDamage" data-value="{{atk.critDamage.total}}" title="{{localize "PF1.ApplyDamage"}}">1</a>
+                  <a class="fake-card-button square-16" data-action="applyDamageHalf" data-value="{{atk.critDamage.total}}" title="{{localize "PF1.ApplyHalf"}}">½</a>
+                {{/if}}
+              </div>
+            </div>
+
+          {{!-- Critical Damage Breakdown --}}
+            <div class="roll-breakdown" data-type="crit">
+              <span class="flavor">{{atk.critDamage.flavor}}</span>
+              {{#each atk.damageRows as |row|}}
+                <a class="inline-roll inline-dsn-hidden inline-result" title="{{row.crit.roll.formula}}" data-roll="{{row.crit.roll.json}}">
+                  <span class="total">{{row.crit.roll.total}}</span>
+                  <span class="flavor">{{row.crit.damageType}}</span>
+                </a>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- Effect Notes --}}
+          {{#if atk.effectNotes.length}}
+            <div class="flexcol effect-notes property-group gm-sensitive">
+              <div class="flexrow">
+                {{{atk.effectNotesHTML_Inner}}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{!-- Card Footer --}}
+    <footer class="card-footer">
+      {{#if hasSave}}
+        <div class="save">
+          <a class="fake-card-button" data-action="save" data-dc="{{save.dc}}" data-type="{{save.type}}">{{save.label}}</a>
+        </div>
+      {{/if}}
+
+      {{#if (or concentrationCheck casterLevelCheck)}}
+        <div class="card-buttons spell-buttons flexrow">
+          {{!-- Concentration Check --}}
+          {{#if concentrationCheck}}
+            <div class="concentration">
+              <a class="fake-card-button" data-action="concentration" title="{{localize "PF1.ConcentrationCheck"}}"><i class="icon icon-concentration-orb"></i></a>
+            </div>
+          {{/if}}
+
+          {{!-- Caster Level Check--}}
+          {{#if casterLevelCheck}}
+            <div class="caster-level-check">
+              <a class="fake-card-button" data-action="caster-level-check" title="{{localize "PF1.CasterLevelCheck"}}"><i class="icon icon-fairy-wand"></i></a>
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{!-- Properties --}}
+      {{#if hasProperties}}
+        {{#each properties as |prop|}}
+          <div class="flexcol property-group gm-sensitive general-notes">
+            <label>{{prop.header}}</label>
+            <div class="flexrow">
+              {{#each prop.value as |v|}}
+                <span class="tag">{{{v}}}</span>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+    </footer>
+  </div>
+</div>

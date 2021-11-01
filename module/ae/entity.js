@@ -18,14 +18,17 @@ export class ActiveEffectPF extends ActiveEffect {
 
   async delete(context) {
     const statusId = this.getFlag("core", "statusId"),
-      origin = this.data.origin?.split(".")?.[3] ?? null,
+      re = this.data.origin?.match(/Item\.(?<itemId>\w+)/),
+      origin = re?.groups.itemId,
       parentActor = this.parent,
-      returnVal = await super.delete(context),
-      updates = {};
+      secondaryContext = statusId || origin ? { render: false } : {},
+      returnVal = await super.delete(mergeObject(secondaryContext, context));
     if (statusId && parentActor.data.data.attributes.conditions[statusId]) {
-      updates[`data.attributes.conditions.${statusId}`] = false;
-      parentActor.update(updates);
-    } else if (origin && parentActor.items.get(origin)) parentActor.items.get(origin).update({ "data.active": false });
+      const updates = { [`data.attributes.conditions.${statusId}`]: false };
+      await parentActor.update(updates, context);
+    } else if (origin) {
+      parentActor.items.get(origin)?.update({ "data.active": false }, context);
+    }
     return returnVal;
   }
 

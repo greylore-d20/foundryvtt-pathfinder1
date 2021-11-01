@@ -4182,15 +4182,15 @@ export class ActorPF extends Actor {
       // Absolute
     } else if (!isDelta) {
       if (entity instanceof Actor) {
-        if (typeof entity[`data.${attribute}.value`] === "undefined") updates[`data.${attribute}`] = value;
-        else updates[`data.${attribute}.value`] = value;
+        if (isBar) updates[`data.${attribute}.value`] = value;
+        else updates[`data.${attribute}`] = value;
       } else {
         updates["data.uses.value"] = value;
       }
       // Relative
     } else {
       if (entity instanceof Actor) {
-        if (current.value !== undefined)
+        if (isBar)
           updates[`data.${attribute}.value`] = Math.clamped(current.min || 0, current.value + value, current.max);
         else updates[`data.${attribute}`] = current + value;
       } else {

@@ -960,3 +960,13 @@ export const splitCurrency = (cp) => {
 export const getFirstActiveGM = function () {
   return game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
 };
+
+/**
+ * @returns {boolean} Whether all users have script macro permission.
+ */
+export const hasScriptPermissionForAll = function () {
+  for (const u of game.users) {
+    if (!u.can("MACRO_SCRIPT")) return false;
+  }
+  return true;
+};

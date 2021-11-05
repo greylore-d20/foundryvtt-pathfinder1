@@ -97,6 +97,8 @@ export class ItemScriptCall {
    * @param {object.<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
    */
   async execute(shared, extraParams = {}) {
+    if (!game.user.can("CONST.USER_PERMISSIONS.MACRO_SCRIPT")) return;
+
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.parentActor;

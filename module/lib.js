@@ -803,7 +803,7 @@ export const binarySearch = function (searchArr, el, compare_fn) {
 function uniquePermutations(perm) {
   const total = new Set();
   if (perm.length > 7) {
-    console.warn("Array too large. Not attempting.");
+    console.warn("Array too large. Not attempting.", perm);
     return false;
   }
 

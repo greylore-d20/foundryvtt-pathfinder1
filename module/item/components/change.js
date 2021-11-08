@@ -1,5 +1,6 @@
 import { getChangeFlat, getSourceInfo } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
+import { hasScriptPermissionForAll } from "../../lib.js";
 
 export class ItemChange {
   static create(data, parent) {
@@ -134,10 +135,15 @@ export class ItemChange {
         let value = 0;
         if (this.formula) {
           if (operator === "script") {
-            const fn = this.createFunction(this.formula, ["d", "item"]);
-            const result = fn(rollData, this.parent);
-            value = result.value;
-            operator = result.operator;
+            if (hasScriptPermissionForAll()) {
+              const fn = this.createFunction(this.formula, ["d", "item"]);
+              const result = fn(rollData, this.parent);
+              value = result.value;
+              operator = result.operator;
+            } else {
+              value = 0;
+              operator = "add";
+            }
           } else if (operator === "function") {
             value = this.formula(rollData, this.parent);
             operator = "add";

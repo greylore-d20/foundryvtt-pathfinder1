@@ -1,4 +1,4 @@
-import { createTabs, getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
+import { createTabs, getBuffTargetDictionary, getBuffTargets, hasScriptPermissionForAll } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
@@ -117,6 +117,7 @@ export class ItemSheetPF extends ItemSheet {
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
+    data.allowScriptsForAll = hasScriptPermissionForAll();
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");

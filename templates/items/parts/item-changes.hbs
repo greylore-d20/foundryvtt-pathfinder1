@@ -57,7 +57,7 @@
           {{#select (lookup this.data "operator") }}
           <option value="add">+</option>
           <option value="set">=</option>
-          <option value="script">S</option>
+          {{#if ../allowScriptsForAll}}<option value="script">S</option>{{/if}}
           {{/select}}
         </select>
       </div>

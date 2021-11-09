@@ -381,6 +381,30 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Low-light Vision Mode
+   */
+  game.settings.register("pf1", "allowScriptChanges", {
+    name: "SETTINGS.pf1AllowScriptChangesN",
+    hint: "SETTINGS.pf1AllowScriptChangesH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: (value) => {
+      if (!value || !game.user.isGM) return;
+      // Flash scare message and confirmation
+      const d = Dialog.confirm({
+        title: game.i18n.localize("SETTINGS.pf1AllowScriptChangesN"),
+        content: game.i18n.localize("SETTINGS.pf1AllowScriptChangesW"),
+        defaultYes: false,
+      });
+      d.then((result) => {
+        if (!result) game.settings.set("pf1", "allowScriptChanges", false);
+      });
+    },
+  });
+
+  /**
    * Hide token conditions
    */
   game.settings.register("pf1", "hideTokenConditions", {

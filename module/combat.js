@@ -114,7 +114,10 @@ export class CombatPF extends Combat {
     return parts.filter((p) => p !== null).join(" + ");
   }
 
-  async _rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
+  /**
+   * @override
+   */
+  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant.id;

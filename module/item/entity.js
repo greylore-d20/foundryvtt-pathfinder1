@@ -3793,10 +3793,11 @@ export class ItemPF extends Item {
 
     // Set damage formula
     data["data.actionType"] = origData.data.actionType;
+    data["data.damage.parts"] = [];
     for (const d of origData.data.damage.parts) {
       d[0] = d[0].replace(/@sl/g, slcl[0]);
       d[0] = d[0].replace(/@cl/g, "@item.cl");
-      data.data.damage.parts.push(d);
+      data["data.damage.parts"].push(d);
     }
 
     // Set saves

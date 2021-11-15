@@ -347,19 +347,19 @@ export class ActorPF extends Actor {
     const temporaryEffects = this.temporaryEffects.filter(
       (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
     );
-    const toDelete = [],
-      toDisable = [];
+    const disableActiveEffects = [],
+      disableBuffs = [];
     for (const ae of temporaryEffects) {
       const re = ae.data.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);
       if (!item || item.type !== "buff") {
-        toDelete.push(ae.id);
+        disableActiveEffects.push({ _id: ae.id, active: false });
       } else {
-        toDisable.push({ _id: item.id, "data.active": false });
+        disableBuffs.push({ _id: item.id, "data.active": false });
       }
     }
-    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete);
-    if (toDisable.length) await this.updateEmbeddedDocuments("Item", toDisable);
+    if (disableActiveEffects.length) await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects);
+    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs);
   }
 
   prepareBaseData() {

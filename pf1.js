@@ -934,6 +934,8 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
   const expireFromTokens = function () {
     if (getFirstActiveGM() === game.user) {
       for (const t of canvas.tokens.placeables) {
+        // Skip tokens in combat to avoid too early expiration
+        if (t.combatant?.combat?.started) continue;
         t.actor.expireActiveEffects();
       }
     }

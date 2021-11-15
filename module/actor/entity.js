@@ -2135,7 +2135,15 @@ export class ActorPF extends Actor {
    */
   rollSkill(
     skillId,
-    options = { event: null, skipDialog: false, staticRoll: null, chatMessage: true, noSound: false, dice: "1d20" }
+    options = {
+      event: null,
+      skipDialog: false,
+      staticRoll: null,
+      chatMessage: true,
+      noSound: false,
+      dice: "1d20",
+      bonus: null,
+    }
   ) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2201,6 +2209,10 @@ export class ActorPF extends Actor {
     for (const c of changes) {
       if (!c.value) continue;
       parts.push(`${c.value}[${c.flavor}]`);
+    }
+
+    if (options.bonus?.length) {
+      parts.push(`+ ${options.bonus}`);
     }
 
     const props = [];
@@ -2587,7 +2599,7 @@ export class ActorPF extends Actor {
 
   rollSavingThrow(
     savingThrowId,
-    options = { event: null, chatMessage: true, noSound: false, skipPrompt: true, dice: "1d20" }
+    options = { event: null, chatMessage: true, noSound: false, skipPrompt: true, dice: "1d20", bonus: null }
   ) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2641,6 +2653,10 @@ export class ActorPF extends Actor {
           CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
         )}]`
       );
+    }
+
+    if (options.bonus?.length) {
+      parts.push(`+ ${options.bonus}`);
     }
 
     // Roll saving throw

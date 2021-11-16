@@ -1662,7 +1662,9 @@ export class ItemPF extends Item {
     if (useScriptCalls.length > 0) {
       const data = { chatMessage };
 
-      return this.executeScriptCalls("use", { attacks: [], template: undefined, data });
+      const shared = await this.executeScriptCalls("use", { attacks: [], template: undefined, data });
+      if (shared.hideChat !== true) await this.roll();
+      return shared;
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
@@ -2447,7 +2449,9 @@ export class ItemPF extends Item {
       await this.addCharges(-cost);
 
       // Post message
-      if (attacks.length) {
+      let t, templateData;
+      const isAttack = attacks.length > 0;
+      if (isAttack) {
         // Get extra text and properties
         const props = [];
         let extraText = "";
@@ -2543,7 +2547,7 @@ export class ItemPF extends Item {
           this.parentActor?.token ??
           canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
 
-        const templateData = mergeObject(
+        templateData = mergeObject(
           chatTemplateData,
           {
             tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
@@ -2656,14 +2660,7 @@ export class ItemPF extends Item {
         Hooks.call("itemUse", this, "postAttack", { ev, skipDialog, chatData, templateData });
 
         // Create message
-        const t = game.settings.get("pf1", "attackChatCardTemplate");
-        if (chatMessage) result = await createCustomChatMessage(t, templateData, chatData);
-        else result = { template: t, data: templateData, chatData };
-      }
-      // Post chat card even without action
-      else {
-        if (chatMessage) result = this.roll();
-        else result = { descriptionOnly: true };
+        t = game.settings.get("pf1", "attackChatCardTemplate");
       }
 
       // Subtract ammunition
@@ -2673,12 +2670,21 @@ export class ItemPF extends Item {
       const data = { chatMessage, fullAttack };
 
       // Execute script call
-      await this.executeScriptCalls("use", {
+      const shared = await this.executeScriptCalls("use", {
         attacks,
         template,
         data,
         conditionals: conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
       });
+
+      // Show chat message
+      if (isAttack) {
+        if (chatMessage && shared.hideChat !== true) result = await createCustomChatMessage(t, templateData, chatData);
+        else result = { template: t, data: templateData, chatData };
+      } else {
+        if (chatMessage && shared.hideChat !== true) result = this.roll();
+        else result = { descriptionOnly: true };
+      }
 
       return result;
     };

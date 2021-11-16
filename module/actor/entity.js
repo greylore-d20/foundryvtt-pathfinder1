@@ -591,7 +591,7 @@ export class ActorPF extends Actor {
   }
 
   updateSpellbookInfo() {
-    const rollData = this.getRollData();
+    const rollData = this.getRollData({ refresh: true });
 
     // Set spellbook info
     for (const [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
@@ -3682,7 +3682,7 @@ export class ActorPF extends Actor {
     const keyedBooks = [];
     for (const [k, book] of spellbooks) {
       setProperty(result, `spells.${k}`, book);
-      setProperty(result, `spells.${k}.abilityMod`, result.abilities[book.ability]?.mod ?? "");
+      result.spells[k].abilityMod = result.abilities[book.ability]?.mod ?? "";
       keyedBooks.push(k);
     }
     const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");

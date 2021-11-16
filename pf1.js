@@ -641,6 +641,12 @@ Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
   }
 });
 
+Hooks.on("preCreateActor", (actor, data, options, userId) => {
+  if (data.type === "character") {
+    actor.data._source.token.actorLink = true;
+  }
+});
+
 Hooks.on("updateActor", (actor, data, options, userId) => {
   // Call hook for toggling conditions
   {

@@ -1926,14 +1926,6 @@ export class ActorPF extends Actor {
     }
   }
 
-  async _onCreate(data, options, userId, context) {
-    if (game.userId === userId) {
-      if (data.type === "character") this.update({ "token.actorLink": true }, { updateChanges: false });
-    }
-
-    super._onCreate(data, options, userId, context);
-  }
-
   updateItemResources(itemData) {
     const activationType = game.settings.get("pf1", "unchainedActionEconomy")
       ? itemData.data.unchainedAction?.activation?.type

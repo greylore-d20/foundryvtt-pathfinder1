@@ -3559,11 +3559,7 @@ export class ActorPF extends Actor {
     setProperty(result, "conditions.loseDexToAC", this.flags.loseDexToAC);
 
     // Return cached data, if applicable
-    if (skipRefresh) {
-      Hooks.callAll("pf1.getRollData", this, result, false);
-
-      return result;
-    }
+    if (skipRefresh) return result;
 
     /* ----------------------------- */
     /* Set the following data on a refresh

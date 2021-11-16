@@ -658,7 +658,7 @@ Hooks.on("createToken", (scene, token, options, userId) => {
 
   // Update changes and generate sourceDetails to ensure valid actor data
   if (actor != null) {
-    actor.toggleConditionStatusIcons();
+    actor.toggleConditionStatusIcons({ render: false });
   }
 });
 

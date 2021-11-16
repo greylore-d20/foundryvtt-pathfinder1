@@ -861,10 +861,10 @@ export class ItemPF extends Item {
     return shared;
   }
 
-  async update(data, options = {}) {
+  async update(data, context = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
-    if (options.recursive === false) {
-      return super.update(data, options);
+    if (context.recursive === false) {
+      return super.update(data, context);
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
@@ -1168,9 +1168,9 @@ export class ItemPF extends Item {
       if (!anyDiff && !(diff[d] instanceof Array)) delete diff[d];
     }
 
-    if (Object.keys(diff).length && !options.skipUpdate) {
+    if (Object.keys(diff).length && !context.skipUpdate) {
       if (this.parentItem == null) {
-        await super.update(diff, options);
+        await super.update(diff, context);
       } else {
         // Determine item index to update in parent
         const parentInventory = this.parentItem.data.data.inventoryItems || [];
@@ -1194,10 +1194,10 @@ export class ItemPF extends Item {
 
           // Update parent item
           await this.parentItem.update(diff);
-          await this.render();
+          if (context.render !== false) await this.render();
         }
       }
-    } else if (options.skipUpdate) {
+    } else if (context.skipUpdate) {
       diff["_id"] = this.id;
     }
 

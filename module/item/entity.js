@@ -1455,6 +1455,7 @@ export class ItemPF extends Item {
       hasSave: this.hasSave && addDC,
       isSpell: this.data.type === "spell",
       description: this.fullDescription,
+      rollData: this.getRollData(),
       save: {
         dc: saveDC,
         type: saveType,
@@ -2560,6 +2561,7 @@ export class ItemPF extends Item {
             actor: this.parent.data,
             hasSave: this.hasSave,
             description: this.fullDescription,
+            rollData,
             save: {
               dc: saveDC,
               type: save,

@@ -134,10 +134,16 @@ export class ItemChange {
         let value = 0;
         if (this.formula) {
           if (operator === "script") {
-            const fn = this.createFunction(this.formula, ["d", "item"]);
-            const result = fn(rollData, this.parent);
-            value = result.value;
-            operator = result.operator;
+            if (!game.settings.get("pf1", "allowScriptChanges")) {
+              ui.notifications.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"));
+              value = 0;
+              operator = "add";
+            } else {
+              const fn = this.createFunction(this.formula, ["d", "item"]);
+              const result = fn(rollData, this.parent);
+              value = result.value;
+              operator = result.operator;
+            }
           } else if (operator === "function") {
             value = this.formula(rollData, this.parent);
             operator = "add";

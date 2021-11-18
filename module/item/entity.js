@@ -4825,7 +4825,7 @@ export class ItemPF extends Item {
   }
 
   /**
-   * Generic damage source retrieval, includes default conditionals
+   * Generic damage source retrieval, includes default conditionals and other item specific modifiers.
    */
   get allDamageSources() {
     const conds = this.data.data.conditionals
@@ -4852,6 +4852,20 @@ export class ItemPF extends Item {
         });
       }
     }
-    return getHighestChanges([...this.damageSources, ...fakeCondChanges], { ignoreTarget: true });
+
+    const allChanges = [...this.damageSources, ...fakeCondChanges];
+
+    // Add special cases specific to the item
+    // Broken
+    if (this.data.data.broken) {
+      allChanges.push({
+        flavor: game.i18n.localize("PF1.Broken"),
+        value: -2,
+        modifier: "untyped",
+        formula: "-2",
+      });
+    }
+
+    return getHighestChanges(allChanges, { ignoreTarget: true });
   }
 }

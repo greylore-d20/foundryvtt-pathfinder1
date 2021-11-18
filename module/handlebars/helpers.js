@@ -189,4 +189,10 @@ export const registerHandlebarsHelpers = function () {
     const noteObjs = actor.getContextNotes(context);
     return actor.formatContextNotes(noteObjs, rollData);
   });
+
+  Handlebars.registerHelper("enrich", (content, options) => {
+    const owner = Boolean(options.hash["owner"]);
+    const rollData = options.hash["rollData"];
+    return new Handlebars.SafeString(TextEditor.enrichHTML(content, { secrets: owner, rollData }));
+  });
 };

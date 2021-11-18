@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.79.8 - 2021-11-18
+
+### Bug Fixes
+
+- Broken condition was missing from combat tab damage display.
+- Fix hidden buffs did not automatically expire. ([1124](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1124))
+- CL and Concentration buttons were missing with attack chat card style.
+- Fixed deletion of active effects failing to disable associated buffs in some instances.
+- Fix missing initiative dialog.
+- Fix multiplied scrollbars.
+- Spell chat cards were missing roll data. ([1153](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1153))
+- Fix attributes modified via token HUD trashing certain actor data. ([1067](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1067))
+- Fix Maker's Call per day
+- Creating consumables from spells with damage or healing caused an error
+- Spellbook roll data was using an incorrect value for its ability modifier
+- Item Script Calls were executed on every client when activated ([1141](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1141))
+- Spell description in actor sheet was missing roll data. ([1153](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1153))
+- Buffs could expire too soon on round start or refresh. ([1121](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1121))
+
+### Changelog
+
+- Weapons can now have conditional modifiers.
+- Add option to hide chat cards with script calls, rather than hide them regardless ([1132](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1132))
+- BREAKING: Script type changes are now locked behind a world setting
+
+### API
+
+- Prevent unnecessary `pf1.getRollData` hook calls ([1134](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1134))
+- Add bonus formula option to actor.rollSavingThrow and actor.rollSkill
+
 ## 0.79.7 - 2021-10-21
 
 ### Bug Fixes

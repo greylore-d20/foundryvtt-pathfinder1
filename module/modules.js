@@ -56,7 +56,7 @@ export function initializeModules() {
 
           if (
             enhancedTerrain &&
-            canvas.terrain.terrainAt(x, y).some((terrain) => terrain.data.environment === "water")
+            canvas.terrain.terrainFromGrid(x, y).some((terrain) => terrain.data.environment === "water")
           ) {
             const swimSpeed = token.actor.data.data.attributes.speed.swim.total;
             if (swimSpeed > 0) {

@@ -34,8 +34,8 @@
     "changes": [
       {
         "_id": "icda5p5f",
-        "formula": "if (d.shield.type < 1 && d.armor.type < 1 && d.attributes.encumbrance.level < 1) {\n    result.value = d.abilities.wis.mod;\n    result.value += Math.floor((d.classes?.monkUnchained?.level ?? 0) / 4);\n}",
-        "operator": "script",
+        "formula": "(@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level < 1 ? 1 : 0) * (@abilities.wis.mod + floor(@classes.monkUnchained.level / 4))",
+        "operator": "add",
         "subTarget": "ac",
         "modifier": "untyped",
         "priority": 0,
@@ -44,8 +44,8 @@
       },
       {
         "_id": "rsxq5qsu",
-        "formula": "if (d.shield.type < 1 && d.armor.type < 1 && d.attributes.encumbrance.level < 1) {\n    result.value = d.abilities.wis.mod;\n    result.value += Math.floor((d.classes?.monkUnchained?.level ?? 0) / 4);\n}",
-        "operator": "script",
+        "formula": "(@shield.type < 1 && @armor.type < 1 && @attributes.encumbrance.level < 1 ? 1 : 0) * (@abilities.wis.mod + floor(@classes.monkUnchained.level / 4))",
+        "operator": "add",
         "subTarget": "cmd",
         "modifier": "untyped",
         "priority": 0,

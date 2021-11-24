@@ -152,7 +152,7 @@ export const registerHandlebarsHelpers = function () {
   // Fetches ability mod value based on ability key.
   // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
-    return Math.floor(rollData.abilities[abl].mod * multiplier ?? 1);
+    return Math.floor(rollData.abilities[abl]?.mod * multiplier ?? 1);
   });
 
   // Shorten string with ellipsis

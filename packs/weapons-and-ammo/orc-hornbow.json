@@ -11,8 +11,8 @@
     "weight": 7,
     "price": 130,
     "hp": {
-      "max": 5,
-      "value": 5
+      "max": "5",
+      "value": "5"
     },
     "hardness": 5,
     "identifiedName": "Orc Hornbow",
@@ -24,14 +24,17 @@
       "units": "inst"
     },
     "range": {
-      "value": 80,
+      "value": "80",
       "units": "ft"
+    },
+    "uses": {
+      "per": ""
     },
     "actionType": "rwak",
     "damage": {
       "parts": [
         [
-          "sizeRoll(2, 6, @size)",
+          "sizeRoll(2, 6, @size) + min(@abilities.str.mod, 0)",
           "P"
         ]
       ],
@@ -45,12 +48,16 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
     "ability": {
       "attack": "dex",
-      "damage": "str",
+      "damage": "",
       "critMult": 3
+    },
+    "save": {
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
@@ -65,7 +72,8 @@
     },
     "scriptCalls": [],
     "weaponType": "exotic",
-    "weaponSubtype": "ranged"
+    "weaponSubtype": "ranged",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

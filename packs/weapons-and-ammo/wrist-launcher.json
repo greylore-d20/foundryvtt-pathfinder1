@@ -11,8 +11,8 @@
     "weight": 1,
     "price": 200,
     "hp": {
-      "max": 5,
-      "value": 5
+      "max": "5",
+      "value": "5"
     },
     "hardness": 5,
     "identifiedName": "Wrist Launcher",
@@ -24,8 +24,11 @@
       "units": "inst"
     },
     "range": {
-      "value": 20,
+      "value": "20",
       "units": "ft"
+    },
+    "uses": {
+      "per": ""
     },
     "actionType": "rwak",
     "damage": {
@@ -40,13 +43,16 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
     "ability": {
       "attack": "dex",
-      "damage": "str",
-      "critRange": "20",
-      "critMult": "0"
+      "damage": "",
+      "critMult": 0
+    },
+    "save": {
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
@@ -61,7 +67,8 @@
     },
     "scriptCalls": [],
     "weaponType": "exotic",
-    "weaponSubtype": "ranged"
+    "weaponSubtype": "ranged",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

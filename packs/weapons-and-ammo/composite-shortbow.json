@@ -11,8 +11,8 @@
     "weight": 2,
     "price": 75,
     "hp": {
-      "max": 5,
-      "value": 5
+      "max": "5",
+      "value": "5"
     },
     "hardness": 5,
     "identifiedName": "Composite Shortbow",
@@ -24,14 +24,17 @@
       "units": "inst"
     },
     "range": {
-      "value": 70,
+      "value": "70",
       "units": "ft"
+    },
+    "uses": {
+      "per": ""
     },
     "actionType": "rwak",
     "damage": {
       "parts": [
         [
-          "sizeRoll(1, 6, @size)",
+          "sizeRoll(1, 6, @size) + min(@abilities.str.mod, 0)",
           "P"
         ]
       ],
@@ -45,12 +48,16 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
     "ability": {
       "attack": "dex",
-      "damage": "str",
+      "damage": "",
       "critMult": 3
+    },
+    "save": {
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
@@ -65,7 +72,8 @@
     },
     "scriptCalls": [],
     "weaponType": "martial",
-    "weaponSubtype": "ranged"
+    "weaponSubtype": "ranged",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

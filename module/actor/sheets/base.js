@@ -394,7 +394,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     // Count allowed skill ranks
-    const sourceData = getSourceInfo(this.document.sourceInfo, "data.skillRanks").positive;
+    const sourceData = [];
     setProperty(data.sourceData, "skillRanks", sourceData);
     this.document.data.items
       .filter((obj) => {

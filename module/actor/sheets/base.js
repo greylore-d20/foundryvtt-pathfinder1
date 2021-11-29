@@ -1214,22 +1214,20 @@ export class ActorSheetPF extends ActorSheet {
     const allowRelative = el.classList.contains("allow-relative");
     parent.replaceChild(newEl, el);
     let changed = false;
-    if (callback) {
-      newEl.addEventListener("keypress", (event) => {
-        if (event.key !== "Enter") return;
-        changed = true;
-        if (allowRelative) {
-          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
-          newEl.value = number;
-        }
+    newEl.addEventListener("keypress", (event) => {
+      if (event.key !== "Enter") return;
+      changed = true;
+      if (allowRelative) {
+        const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+        newEl.value = number;
+      }
 
-        if (newEl.value === prevValue) {
-          this._render();
-        } else {
-          callback.call(this, event);
-        }
-      });
-    }
+      if (newEl.value.toString() === prevValue.toString()) {
+        this._render();
+      } else if (typeof callback === "function") {
+        callback.call(this, event);
+      }
+    });
     newEl.addEventListener("focusout", (event) => {
       if (!changed) {
         changed = true;
@@ -1238,9 +1236,9 @@ export class ActorSheetPF extends ActorSheet {
           newEl.value = number;
         }
 
-        if (newEl.value === prevValue) {
+        if (newEl.value.toString() === prevValue.toString()) {
           this._render();
-        } else {
+        } else if (typeof callback === "function") {
           callback.call(this, event);
         }
       }

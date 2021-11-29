@@ -89,9 +89,7 @@ export class TokenPF extends Token {
     if (isVisionSource && !deleted) {
       //-Override token vision sources to not receive low-light bonus-
       let dim = maxR ?? this.getLightRadius(this.data.dimSight);
-      let bright = this.getLightRadius(this.data.brightSight);
-      dim = dim / (canvas.sight.lowLightMultiplier().dim || 1);
-      bright = bright / (canvas.sight.lowLightMultiplier().bright || 1);
+      const bright = this.getLightRadius(this.data.brightSight);
       //-End change-
       if (dim === 0 && bright === 0) dim = d.size * 0.6;
       this.vision.initialize({

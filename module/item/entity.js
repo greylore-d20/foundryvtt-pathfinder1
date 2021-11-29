@@ -3587,7 +3587,7 @@ export class ItemPF extends Item {
   async _updateSpellDescription(data) {
     this.data.data.description.value = await renderTemplate(
       "systems/pf1/templates/internal/spell-description.hbs",
-      data ?? this.spellDescriptionData
+      mergeObject(data ?? {}, this.spellDescriptionData)
     );
   }
 

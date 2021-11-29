@@ -91,7 +91,7 @@ export class ItemSheetPF extends ItemSheet {
   async getData() {
     const data = await super.getData();
     data.data = data.data.data;
-    const rollData = this.item.getRollData();
+    const rollData = duplicate(this.item.getRollData());
     data.labels = this.item.labels;
 
     // Include sub-items
@@ -318,6 +318,12 @@ export class ItemSheetPF extends ItemSheet {
       if (this.actor) {
         data.spellbooks = duplicate(this.actor.data.data.attributes.spells.spellbooks);
       }
+
+      const desc = await renderTemplate(
+        "systems/pf1/templates/internal/spell-description.hbs",
+        this.document.spellDescriptionData
+      );
+      data.topDescription = TextEditor.enrichHTML(desc, { rollData });
 
       // Enrich description
       if (data.data.shortDescription != null) {

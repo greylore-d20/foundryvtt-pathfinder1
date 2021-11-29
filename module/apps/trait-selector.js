@@ -1,9 +1,9 @@
 /**
  * A specialized form used to select damage or condition types which apply to an Actor
  *
- * @type {BaseEntitySheet}
+ * @type {DocumentSheet}
  */
-export class ActorTraitSelector extends BaseEntitySheet {
+export class ActorTraitSelector extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
     options.classes = ["pf1", "trait-selector"];

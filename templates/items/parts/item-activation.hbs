@@ -132,6 +132,12 @@
 <div class="form-group uses-per">
   <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
 </div>
+{{#if isPhysical}}
+  <div class="form-group">
+    <label>{{localize "PF1.PricePerCharge"}}</label>
+    <input type="text" name="data.uses.pricePerUse" value="{{data.uses.pricePerUse}}" placeholder="0" type="Number"/>
+  </div>
+{{/if}}
 {{/if}}
 
 <div class="form-group stacked">

@@ -133,19 +133,101 @@ export class ItemSheetPF extends ItemSheet {
         data.auraStrength_name = auraStrength_name;
 
         data.labels.identify = game.i18n.localize("PF1.IdentifyDCNumber").format(15 + rollData.item.cl);
-        // const auraSchool = CONFIG.PF1.spellSchools[rollData.item.aura.school];
-        // data.labels.aura = `${auraStrength_name} ${auraSchool}`;
       }
     }
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {
-      data.itemName =
-        getProperty(this.item.data, "data.unidentified.name") ||
-        getProperty(this.item.data, "data.identifiedName") ||
-        this.item.name;
+      data.itemName = this.item.data.data.unidentified.name || this.item.data.data.identifiedName || this.item.name;
     } else {
-      data.itemName = getProperty(this.item.data, "data.identifiedName") || this.item.name;
+      data.itemName = this.item.data.data.identifiedName || this.item.name;
+    }
+
+    // Override description attributes
+    if (data.isPhysical) {
+      data.descriptionAttributes = [];
+
+      // Add weight
+      data.descriptionAttributes.push({
+        isNumber: true,
+        name: "data.baseWeight",
+        fakeName: true,
+        label: game.i18n.localize("PF1.Weight"),
+        value: data.item.data.data.weightConverted,
+        id: "data-baseWeight",
+      });
+
+      // Add price
+      if (data.showIdentifyDescription) {
+        data.descriptionAttributes.push(
+          {
+            isNumber: true,
+            name: "data.price",
+            fakeName: true,
+            label: game.i18n.localize("PF1.Price"),
+            value: this.item.getValue({ sellValue: 1 }),
+            id: "data-price",
+          },
+          {
+            isNumber: true,
+            name: "data.unidentified.price",
+            fakeName: true,
+            label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
+            value: data.item.data.data.unidentified.price,
+            id: "data-unidentifiedBasePrice",
+          }
+        );
+      } else {
+        if (data.showUnidentifiedData) {
+          data.descriptionAttributes.push({
+            isNumber: true,
+            name: "data.unidentified.price",
+            fakeName: true,
+            label: game.i18n.localize("PF1.Price"),
+            value: data.item.data.data.unidentified.price,
+            id: "data-price",
+          });
+        } else {
+          data.descriptionAttributes.push({
+            isNumber: true,
+            name: "data.price",
+            fakeName: true,
+            label: game.i18n.localize("PF1.Price"),
+            value: this.item.getValue({ sellValue: 1 }),
+            id: "data-price",
+          });
+        }
+      }
+
+      // Add hit points
+      data.descriptionAttributes.push({
+        isRange: true,
+        label: game.i18n.localize("PF1.HPShort"),
+        value: {
+          name: "data.hp.value",
+          value: data.item.data.data.hp.value,
+        },
+        max: {
+          name: "data.hp.max",
+          value: data.item.data.data.hp.max,
+        },
+      });
+
+      // Add hardness
+      data.descriptionAttributes.push({
+        isNumber: true,
+        label: game.i18n.localize("PF1.Hardness"),
+        name: "data.hardness",
+        value: data.item.data.data.hardness,
+      });
+
+      // Add carried flag
+      data.descriptionAttributes.push({
+        isBoolean: true,
+        name: "data.carried",
+        label: game.i18n.localize("PF1.Carried"),
+        value: data.item.data.data.carried,
+      });
     }
 
     // Action Details

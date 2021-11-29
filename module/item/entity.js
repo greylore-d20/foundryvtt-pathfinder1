@@ -3758,7 +3758,9 @@ export class ItemPF extends Item {
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice * 50;
+      data["data.price"] = 0;
+      data["data.uses.pricePerUse"] =
+        Math.floor(((Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice) / 50) * 100) / 100;
       data["data.hardness"] = 5;
       data["data.hp.max"] = 5;
       data["data.hp.value"] = 5;
@@ -3860,7 +3862,7 @@ export class ItemPF extends Item {
       } else if (tc === "med") {
         result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
       } else if (tc === "low") {
-        result[1] = Math.min(result[1], 4 + Math.max(0, o[1] - 1) * 3);
+        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
       }
     }
 
@@ -4469,7 +4471,13 @@ export class ItemPF extends Item {
     let result = this.getTotalCurrency({ inLowestDenomination });
 
     const getActualValue = (identified = true) => {
-      const value = getProperty(this.data, identified ? "data.price" : "data.unidentified.price") || 0;
+      let value = 0;
+      if (identified) value = this.data.data.price;
+      else value = this.data.data.unidentified.price;
+
+      // Add charge price
+      if (identified) value += (this.data.data.uses?.pricePerUse ?? 0) * (this.data.data.uses?.value ?? 0);
+
       return inLowestDenomination ? value * 100 : value;
     };
 

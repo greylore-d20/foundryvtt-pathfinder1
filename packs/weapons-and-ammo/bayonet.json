@@ -10,6 +10,10 @@
     "tags": [],
     "weight": 1,
     "price": 5,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
     "hardness": 10,
     "identifiedName": "Bayonet",
     "changes": [],
@@ -22,6 +26,9 @@
     "range": {
       "value": 0,
       "units": "melee"
+    },
+    "uses": {
+      "per": ""
     },
     "actionType": "mwak",
     "damage": {
@@ -41,11 +48,16 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
     "ability": {
       "attack": "str",
-      "damage": "str"
+      "damage": "str",
+      "damageMult": 1.5
+    },
+    "save": {
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
@@ -59,7 +71,9 @@
       "dictionary": []
     },
     "scriptCalls": [],
-    "weaponSubtype": "2h"
+    "held": "2h",
+    "weaponSubtype": "2h",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

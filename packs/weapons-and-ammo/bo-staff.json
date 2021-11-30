@@ -10,6 +10,10 @@
     "tags": [],
     "weight": 3,
     "price": 1,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
     "hardness": 10,
     "identifiedName": "Bo Staff",
     "changes": [],
@@ -22,6 +26,9 @@
     "range": {
       "value": 0,
       "units": "melee"
+    },
+    "uses": {
+      "per": ""
     },
     "actionType": "mwak",
     "damage": {
@@ -41,13 +48,17 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
     "ability": {
       "attack": "str",
       "damage": "str",
-      "critRange": "",
-      "critMult": "2"
+      "damageMult": 1.5,
+      "critRange": null
+    },
+    "save": {
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
@@ -61,8 +72,10 @@
       "dictionary": []
     },
     "scriptCalls": [],
+    "held": "2h",
     "weaponType": "exotic",
-    "weaponSubtype": "2h"
+    "weaponSubtype": "2h",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

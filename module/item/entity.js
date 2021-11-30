@@ -3734,6 +3734,8 @@ export class ItemPF extends Item {
     };
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
+    origData.sl = slcl[0];
+    origData.cl = slcl[1];
     const materialPrice = origData.data.materials?.gpValue ?? 0;
 
     // Set consumable type
@@ -3744,15 +3746,15 @@ export class ItemPF extends Item {
     data["data.range.value"] = origData.data.range.value;
     switch (origData.data.range.units) {
       case "close":
-        data["data.range.value"] = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: slcl[1] }).total.toString();
+        data["data.range.value"] = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: origData.cl }).total.toString();
         data["data.range.units"] = "ft";
         break;
       case "medium":
-        data["data.range.value"] = RollPF.safeRoll("100 + @cl * 10", { cl: slcl[1] }).total.toString();
+        data["data.range.value"] = RollPF.safeRoll("100 + @cl * 10", { cl: origData.cl }).total.toString();
         data["data.range.units"] = "ft";
         break;
       case "long":
-        data["data.range.value"] = RollPF.safeRoll("400 + @cl * 40", { cl: slcl[1] }).total.toString();
+        data["data.range.value"] = RollPF.safeRoll("400 + @cl * 40", { cl: origData.cl }).total.toString();
         data["data.range.units"] = "ft";
         break;
     }
@@ -3763,14 +3765,14 @@ export class ItemPF extends Item {
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
       data["data.price"] = 0;
       data["data.uses.pricePerUse"] =
-        Math.floor(((Math.max(0.5, slcl[0]) * slcl[1] * 750 + materialPrice) / 50) * 100) / 100;
+        Math.floor(((Math.max(0.5, origData.sl) * origData.cl * 750 + materialPrice) / 50) * 100) / 100;
       data["data.hardness"] = 5;
       data["data.hp.max"] = 5;
       data["data.hp.value"] = 5;
     } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 50 + materialPrice;
+      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 50 + materialPrice;
       data["data.hardness"] = 1;
       data["data.hp.max"] = 1;
       data["data.hp.value"] = 1;
@@ -3779,7 +3781,7 @@ export class ItemPF extends Item {
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data["data.price"] = Math.max(0.5, slcl[0]) * slcl[1] * 25 + materialPrice;
+      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 25 + materialPrice;
       data["data.hardness"] = 0;
       data["data.hp.max"] = 1;
       data["data.hp.value"] = 1;
@@ -3810,14 +3812,12 @@ export class ItemPF extends Item {
     data["data.actionType"] = origData.data.actionType;
     data["data.damage.parts"] = [];
     for (const d of origData.data.damage.parts) {
-      d[0] = d[0].replace(/@sl/g, slcl[0]);
-      d[0] = d[0].replace(/@cl/g, "@item.cl");
-      data["data.damage.parts"].push(d);
+      data["data.damage.parts"].push(this._replaceConsumableConversionString(d, origData));
     }
 
     // Set saves
     data["data.save.description"] = origData.data.save.description;
-    data["data.save.dc"] = 10 + slcl[0] + Math.floor(slcl[0] / 2) + "";
+    data["data.save.dc"] = 10 + origData.sl + Math.floor(origData.sl / 2) + "";
 
     // Copy variables
     data["data.attackNotes"] = origData.data.attackNotes;
@@ -3826,23 +3826,41 @@ export class ItemPF extends Item {
     data["data.critConfirmBonus"] = origData.data.critConfirmBonus;
     data["data.aura.school"] = origData.data.school;
 
+    // Replace attack and effect formula data
+    for (const arrKey of ["data.attackNotes", "data.effectNotes"]) {
+      const arr = data[arrKey];
+      for (let a = 0; a < arr.length; a++) {
+        const note = arr[a];
+        arr[a] = this._replaceConsumableConversionString(note, origData);
+      }
+    }
+
     // Set Caster Level
-    data["data.cl"] = slcl[1];
+    data["data.cl"] = origData.cl;
 
     // Set description
-    data["data.description.value"] = await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
-      origData: origData,
-      data: data,
-      isWand: type === "wand",
-      isPotion: type === "potion",
-      isScroll: type === "scroll",
-      sl: slcl[0],
-      cl: slcl[1],
-      config: CONFIG.PF1,
-    });
+    data["data.description.value"] = this._replaceConsumableConversionString(
+      await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
+        origData: origData,
+        data: data,
+        isWand: type === "wand",
+        isPotion: type === "potion",
+        isScroll: type === "scroll",
+        sl: origData.sl,
+        cl: origData.cl,
+        config: CONFIG.PF1,
+      }),
+      origData
+    );
 
     // Create and return synthetic item data
     return new ItemPF(expandObject(data)).data;
+  }
+
+  static _replaceConsumableConversionString(string, rollData) {
+    string = string.replace(/@sl/, rollData.sl);
+    string = string.replace(/@cl/, "@item.cl");
+    return string;
   }
 
   /**

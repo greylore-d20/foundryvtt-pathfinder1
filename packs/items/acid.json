@@ -11,9 +11,50 @@
     "quantity": 3,
     "weight": 1,
     "price": 10,
-    "carried": false,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
     "identifiedName": "Acid",
     "changes": [],
+    "activation": {
+      "type": "attack"
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "range": {
+      "value": "10",
+      "units": "ft",
+      "maxIncrements": 5
+    },
+    "uses": {
+      "per": "single"
+    },
+    "actionType": "rwak",
+    "damage": {
+      "parts": [
+        [
+          "1d6",
+          "Acid"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "label": ""
+    },
+    "ability": {
+      "attack": "dex",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "contextNotes": [],
     "links": {
       "children": [
@@ -42,7 +83,8 @@
     },
     "scriptCalls": [],
     "weaponType": "misc",
-    "weaponSubtype": "other"
+    "weaponSubtype": "splash",
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

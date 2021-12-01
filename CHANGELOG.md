@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.79.9 - 2021-12-1
+
+### Bug Fixes
+
+- Item sheets were not being brought to the foreground when editing an already open one ([1170](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1170))
+- Fix sheets not rendering if CMB Ability is blank
+- Fix low-light vision affecting token sight radius ([1151](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1151))
+- Prevent actor skill rank source duplication
+- Spontaneous spells were unusable in certain situations
+- Currency values became strings in certain situations, causing problems ([1152](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1152))
+- Many projectile weapons were erroniously adding Strength to damage ([1146](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1146))
+- Inline top level spell description data wasn't getting enriched ([1143](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1143))
+
+### Changelog
+
+- Add price per charge to consumable items
+- Apply @sl and @cl in more fields in spell to consumable conversion
+
+### Compendium
+
+- Change monk AC bonus to "add" instead of "script" type ([1](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1))
+- Change Strix' incorrect Shapechanger subtype to Strix subtype ([1167](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1167))
+- Changed two-handed weapons to have a 1.5x Strength damage modifier by default ([1169](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1169))
+- Improve default data for tanglefoot bags, alchemist fire, acid and thunderstones
+- Bonus from rangers' Track feature had a wrong formula ([1168](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1168))
+
 ## 0.79.8 - 2021-11-18
 
 ### Bug Fixes

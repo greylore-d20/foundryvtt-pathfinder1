@@ -3734,8 +3734,8 @@ export class ItemPF extends Item {
     };
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
-    origData.sl = slcl[0];
-    origData.cl = slcl[1];
+    if (origData.sl == null) origData.sl = slcl[0];
+    if (origData.cl == null) origData.cl = slcl[1];
     const materialPrice = origData.data.materials?.gpValue ?? 0;
 
     // Set consumable type
@@ -3812,12 +3812,15 @@ export class ItemPF extends Item {
     data["data.actionType"] = origData.data.actionType;
     data["data.damage.parts"] = [];
     for (const d of origData.data.damage.parts) {
-      data["data.damage.parts"].push(this._replaceConsumableConversionString(d[0], origData));
+      data["data.damage.parts"].push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
     }
 
     // Set saves
     data["data.save.description"] = origData.data.save.description;
-    data["data.save.dc"] = 10 + origData.sl + Math.floor(origData.sl / 2) + "";
+    data["data.save.type"] = origData.data.save.type;
+    data["data.save.dc"] = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
+      origData.sl / 2
+    )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
 
     // Copy variables
     data["data.attackNotes"] = origData.data.attackNotes;
@@ -3858,8 +3861,8 @@ export class ItemPF extends Item {
   }
 
   static _replaceConsumableConversionString(string, rollData) {
-    string = string.replace(/@sl/, rollData.sl);
-    string = string.replace(/@cl/, "@item.cl");
+    string = string.replace(/@sl/g, rollData.sl);
+    string = string.replace(/@cl/g, "@item.cl");
     return string;
   }
 

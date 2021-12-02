@@ -98,7 +98,7 @@ export class ItemPF extends Item {
       if (this.spellbook?.spellPreparationMode === "spontaneous") return false;
       if (this.maxCharges > 0 && this.chargeCost > 0) return true;
     }
-    if (this.type === "consumable" && getProperty(this.data, "data.uses.per") === "single") return true;
+    if (getProperty(this.data, "data.uses.per") === "single") return true;
     return ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
   }
 

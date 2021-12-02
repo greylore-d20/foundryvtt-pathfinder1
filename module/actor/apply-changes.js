@@ -386,19 +386,38 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         "data.abilities.int.checkMod",
         "data.abilities.wis.checkMod",
         "data.abilities.cha.checkMod",
+        ...(this.data.data.attributes.init.ability ? ["data.attributes.init.total"] : []),
       ];
     case "strChecks":
-      return "data.abilities.str.checkMod";
+      return [
+        "data.abilities.str.checkMod",
+        ...(this.data.data.attributes.init.ability === "str" ? ["data.attributes.init.total"] : []),
+      ];
     case "dexChecks":
-      return "data.abilities.dex.checkMod";
+      return [
+        "data.abilities.dex.checkMod",
+        ...(this.data.data.attributes.init.ability === "dex" ? ["data.attributes.init.total"] : []),
+      ];
     case "conChecks":
-      return "data.abilities.con.checkMod";
+      return [
+        "data.abilities.con.checkMod",
+        ...(this.data.data.attributes.init.ability === "con" ? ["data.attributes.init.total"] : []),
+      ];
     case "intChecks":
-      return "data.abilities.int.checkMod";
+      return [
+        "data.abilities.int.checkMod",
+        ...(this.data.data.attributes.init.ability === "int" ? ["data.attributes.init.total"] : []),
+      ];
     case "wisChecks":
-      return "data.abilities.wis.checkMod";
+      return [
+        "data.abilities.wis.checkMod",
+        ...(this.data.data.attributes.init.ability === "wis" ? ["data.attributes.init.total"] : []),
+      ];
     case "chaChecks":
-      return "data.abilities.cha.checkMod";
+      return [
+        "data.abilities.cha.checkMod",
+        ...(this.data.data.attributes.init.ability === "cha" ? ["data.attributes.init.total"] : []),
+      ];
     case "allSpeeds":
       for (const speedKey of Object.keys(curData.attributes.speed)) {
         const base = curData.attributes.speed[speedKey]?.base;

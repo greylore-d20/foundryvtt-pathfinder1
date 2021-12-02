@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.79.10 - 2021-12-2
+
+### Bug Fixes
+
+- Creating consumables from spells with damage components didn't work
+- Initiative wasn't benefitting from dexterity check changes ([1147](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1147))
+- Non-consumables with single charges now subtract quantity on use
+
+### Changelog
+
+- Add ability to select CL and SL when creating consumables from spells ([1131](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1131))
+
+### Compendium
+
+- Change initial quantity of Acid to 1
+
 ## 0.79.9 - 2021-12-1
 
 ### Bug Fixes

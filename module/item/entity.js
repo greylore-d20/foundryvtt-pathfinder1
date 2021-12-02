@@ -3812,7 +3812,7 @@ export class ItemPF extends Item {
     data["data.actionType"] = origData.data.actionType;
     data["data.damage.parts"] = [];
     for (const d of origData.data.damage.parts) {
-      data["data.damage.parts"].push(this._replaceConsumableConversionString(d, origData));
+      data["data.damage.parts"].push(this._replaceConsumableConversionString(d[0], origData));
     }
 
     // Set saves

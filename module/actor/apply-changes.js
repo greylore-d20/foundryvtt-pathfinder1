@@ -623,6 +623,11 @@ export const addDefaultChanges = function (changes) {
             return cur + obj.data.data.level / 2 + acc;
           }
           if (saveScale === "low") return cur + obj.data.data.level / 3;
+          if (saveScale === "custom") {
+            return (
+              cur + RollPF.safeRoll(obj.data.data.savingThrows[a].custom || "0", { level: obj.data.data.level }).total
+            );
+          }
           return cur;
         }, 0)
       );
@@ -644,7 +649,14 @@ export const addDefaultChanges = function (changes) {
     } else {
       for (const c of allClasses) {
         const classType = c.data.data.classType || "base";
-        let formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
+        let formula;
+        console.log(classType);
+        if (classType === "custom") {
+          formula = c.data.data.savingThrows[a].custom || "0";
+          console.log("SAVING:", formula);
+        } else {
+          formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
+        }
         if (formula == null) formula = "0";
         const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);
 

@@ -1,10 +1,8 @@
 import { convertDistance } from "../lib.js";
 
 export const registerHandlebarsHelpers = function () {
-  Handlebars.registerHelper("concat", (a, b) => {
-    if (typeof a === "number") a = a.toString();
-    if (typeof b === "number") b = b.toString();
-    return a + b;
+  Handlebars.registerHelper("concat", (...args) => {
+    return args.slice(0, args.length - 1).join("");
   });
 
   /**

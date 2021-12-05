@@ -1603,21 +1603,7 @@ export class ActorPF extends Actor {
    * @returns {number} The reduced movement speed.
    */
   static getReducedMovementSpeed(value) {
-    const incr = 5;
-
-    if (value <= 0) return value;
-    if (value < 2 * incr) return incr;
-    value = Math.floor(value / incr) * incr;
-
-    let result = 0,
-      counter = 2;
-    for (let a = incr; a <= value; a += counter * incr) {
-      result += incr;
-      if (counter === 1) counter = 2;
-      else counter = 1;
-    }
-
-    return result;
+    return value - Math.floor(value / 5 / 3) * 5;
   }
 
   /**

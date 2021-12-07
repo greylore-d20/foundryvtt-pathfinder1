@@ -50,7 +50,7 @@ export class ActorSheetFlags extends DocumentSheet {
       flag.type = v.type.name;
       flag.isCheckbox = v.type === Boolean;
       flag.isSelect = Object.prototype.hasOwnProperty.call(v, "choices");
-      flag.value = this.entity.getFlag("PF1", k);
+      flag.value = this.document.getFlag("PF1", k);
       flags[v.section][k] = flag;
     }
     return flags;

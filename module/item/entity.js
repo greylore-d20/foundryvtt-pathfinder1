@@ -2406,7 +2406,7 @@ export class ItemPF extends Item {
            * Visually roll dice
            *
            * @async
-           * @param {DicePool[]} pools - An array of DicePools to be rolled together
+           * @param {PoolTerm[]} pools - An array of PoolTerms to be rolled together
            * @returns {Promise} A Promise that is resolved when all rolls have been displayed
            */
           const showRoll = async (pools) => {
@@ -2421,17 +2421,17 @@ export class ItemPF extends Item {
             }
           };
 
-          /** @type {DicePool[]} */
+          /** @type {PoolTerm[]} */
           const pools = [];
 
           for (const atk of attacks) {
-            // Create DicePool for attack and damage rolls
-            const attackPool = new DicePool();
+            // Create PoolTerm for attack and damage rolls
+            const attackPool = new PoolTerm();
             if (atk.attack.roll) attackPool.rolls.push(atk.attack.roll);
             attackPool.rolls.push(...(atk.damage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
 
-            // Create DicePool for crit confirmation and crit damage rolls
-            const critPool = new DicePool();
+            // Create PoolTerm for crit confirmation and crit damage rolls
+            const critPool = new PoolTerm();
             if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm.roll);
             critPool.rolls.push(...(atk.critDamage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
 
@@ -3419,7 +3419,7 @@ export class ItemPF extends Item {
    * Get the Actor which is the author of a chat card
    *
    * @param {HTMLElement} card    The chat card being used
-   * @returns {Actor|null}         The Actor entity or null
+   * @returns {Actor|null}         The Actor Document or null
    * @private
    */
   static async _getChatCardActor(card) {
@@ -3634,7 +3634,7 @@ export class ItemPF extends Item {
    * Get the Actor which is the author of a chat card
    *
    * @param {HTMLElement} card    The chat card being used
-   * @returns {Array.<Actor>}      The Actor entity or null
+   * @returns {Array.<Actor>}      The Actor Document or null
    * @private
    */
   static _getChatCardTargets(card) {
@@ -4086,7 +4086,7 @@ export class ItemPF extends Item {
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
       if (getProperty(itemData, "type") === "spell") setProperty(itemData, "data.spellbook", "spelllike");
 
-      const newItemData = await this.parent.createOwnedItem(itemData);
+      const newItemData = await this.parent.createEmbeddedDocuments("Item", [itemData]);
       const newItem = this.parent.items.get(newItemData._id);
 
       await this.createItemLink("children", "data", newItem, newItem._id);
@@ -4411,7 +4411,7 @@ export class ItemPF extends Item {
         }
       }
 
-      // Remove entity from collection
+      // Remove document from collection
       return false;
     }, []);
 
@@ -4428,7 +4428,7 @@ export class ItemPF extends Item {
     const pending = new Map();
     data = data instanceof Array ? data : [data];
     for (const d of data) {
-      if (!d._id) throw new Error("You must provide an id for every Embedded Entity in an update operation");
+      if (!d._id) throw new Error("You must provide an id for every Embedded Document in an update operation");
       pending.set(d._id, d);
     }
 

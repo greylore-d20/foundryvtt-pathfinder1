@@ -5,9 +5,9 @@ export class SidebarPF extends Sidebar {
     super(...args);
 
     this.compendiums = {
-      spells: new CompendiumBrowser({ type: "spells", entityType: "Item" }),
-      items: new CompendiumBrowser({ type: "items", entityType: "Item" }),
-      bestiary: new CompendiumBrowser({ type: "bestiary", entityType: "Actor" }),
+      spells: new CompendiumBrowser({ type: "spells", documentType: "Item" }),
+      items: new CompendiumBrowser({ type: "items", documentType: "Item" }),
+      bestiary: new CompendiumBrowser({ type: "bestiary", documentType: "Actor" }),
     };
   }
 

@@ -45,7 +45,7 @@ export class ExperienceConfig extends FormApplication {
   }
 
   /**
-   * Activate the default set of listeners for the Entity sheet These listeners handle basic stuff like form submission or updating images.
+   * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
    *
    * @override
    */

@@ -404,13 +404,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(li.dataset.itemId);
 
     if (this.actor) {
-      await this.actor.createOwnedItem(item.data);
+      await this.actor.createEmbeddedDocuments("Item", [item.data]);
       await this.item.deleteContainerContent(item._id);
     }
   }
 
   _onDragStart(event) {
-    // Skip entity links, since they should be handled differently
+    // Skip document links, since they should be handled differently
     if (event.target.classList.contains("entity-link")) return;
 
     // Create drag data for an owned item

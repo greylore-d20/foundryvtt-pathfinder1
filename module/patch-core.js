@@ -18,9 +18,9 @@ export async function PatchCore() {
           return game.user.isGM;
         },
         callback: (li) => {
-          const entity = this.constructor.collection.get(li.data("entityId"));
-          if (entity) {
-            const sheet = entity.visionPermissionSheet;
+          const doc = this.constructor.collection.get(li.data("entityId"));
+          if (doc) {
+            const sheet = doc.visionPermissionSheet;
             if (sheet.rendered) {
               if (sheet._minimized) sheet.maximize();
               else sheet.close();
@@ -60,7 +60,7 @@ export async function PatchCore() {
       if (!a.classList.contains("custom")) return origClick.call(this, event);
 
       const chatMessage = `/${a.dataset.formula}`;
-      const cMsg = CONFIG.ChatMessage.entityClass;
+      const cMsg = CONFIG.ChatMessage.documentClass;
       const speaker = cMsg.getSpeaker();
       const actor = cMsg.getSpeakerActor(speaker);
       let rollData = actor ? actor.getRollData() : {};
@@ -68,7 +68,7 @@ export async function PatchCore() {
       const sheet = a.closest(".sheet");
       if (sheet) {
         const app = ui.windows[sheet.dataset.appid];
-        if (["Actor", "Item"].includes(app?.object?.entity)) rollData = app.object.getRollData();
+        if (["Actor", "Item"].includes(app?.document.documentName)) rollData = app.object.getRollData();
       }
       return customRolls(chatMessage, speaker, rollData);
     };
@@ -132,7 +132,7 @@ export async function PatchCore() {
     };
   }
 
-  // Entity link attribute stuffing
+  // Document link attribute stuffing
   {
     const origFunc = TextEditor._createContentLink;
     TextEditor._createContentLink = function (match, type, target, name) {

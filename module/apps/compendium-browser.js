@@ -148,7 +148,8 @@ export class CompendiumBrowser extends Application {
     if (options.refresh) {
       this._currentCompendiums = game.packs
         .filter((o) => {
-          if (o.metadata.entity !== this.entityType) return false;
+          // TODO: Remove entity after 0.8.X
+          if ((o.metadata.type ?? o.metadata.entity) !== this.documentType) return false;
 
           if (this.shouldSkip(o)) return false;
 
@@ -304,7 +305,7 @@ export class CompendiumBrowser extends Application {
     return [this.typeName, "Browser"].join(" ");
   }
 
-  get entityType() {
+  get documentType() {
     return COMPENDIUM_TYPES[this.type];
   }
 
@@ -393,7 +394,7 @@ export class CompendiumBrowser extends Application {
       const packs = [];
       const progress = { pct: 0, message: game.i18n.localize("PF1.LoadingCompendiumBrowser"), loaded: -1, total: 0 };
       for (const p of game.packs.values()) {
-        if (p.documentClass.documentName === this.entityType && !this.shouldSkip(p)) {
+        if (p.documentClass.documentName === this.documentType && !this.shouldSkip(p)) {
           progress.total++;
           packs.push(p);
         } else {
@@ -1195,7 +1196,7 @@ export class CompendiumBrowser extends Application {
   }
 
   /**
-   * Handle opening a single compendium entry by invoking the configured entity class and its sheet
+   * Handle opening a single compendium entry by invoking the configured document class and its sheet
    *
    * @param collectionKey
    * @param entryId
@@ -1203,8 +1204,8 @@ export class CompendiumBrowser extends Application {
    */
   async _onEntry(collectionKey, entryId) {
     const pack = game.packs.find((o) => o.collection === collectionKey);
-    const entity = await pack.getDocument(entryId);
-    entity.sheet.render(true);
+    const doc = await pack.getDocument(entryId);
+    doc.sheet.render(true);
   }
 
   /**

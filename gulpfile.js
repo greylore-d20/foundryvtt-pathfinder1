@@ -494,7 +494,7 @@ function extractPacks() {
           // Iterate through each compendium entry.
           packs.forEach((pack) => {
             // Remove permissions and _id, and adhere to template data
-            pack = sanitizePack(pack, templateData, packData?.entity);
+            pack = sanitizePack(pack, templateData, packData?.documentName);
 
             const output = JSON.stringify(pack, null, 2);
 

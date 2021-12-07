@@ -23,7 +23,7 @@ export const registerHandlebarsHelpers = function () {
     const owner = Boolean(options.hash["owner"]);
     const content = TextEditor.enrichHTML(options.hash["content"] || "", {
       secrets: owner,
-      entities: true,
+      documents: true,
       rollData: rollData,
     });
 

@@ -2,7 +2,7 @@ export class VisionPermissionSheet extends FormApplication {
   constructor(object, options) {
     super(object, options);
 
-    // Register the sheet as an active Application for the Entity
+    // Register the sheet as an active Application for the Document
     this.object.apps[this.appId] = this;
   }
 

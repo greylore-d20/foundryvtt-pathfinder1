@@ -1787,7 +1787,7 @@ export class ActorSheetPF extends ActorSheet {
         name: "New Race",
         type: "race",
       };
-      this.document.createOwnedItem(itemData);
+      this.document.createEmbeddedDocuments("Item", [itemData]);
     }
     // Edit race
     else if (a.classList.contains("edit")) {
@@ -1915,7 +1915,7 @@ export class ActorSheetPF extends ActorSheet {
     data.data.identifiedName = data.name;
     if (data.data.links) data.data.links = {};
 
-    this.document.createOwnedItem(data);
+    this.document.createEmbeddedDocuments("Item", [data]);
   }
 
   _quickAction(event) {
@@ -1985,7 +1985,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
 
-    return this.document.createOwnedItem(itemData);
+    return this.document.createEmbeddedDocuments("Item", [itemData]);
   }
 
   /* -------------------------------------------- */
@@ -2069,11 +2069,11 @@ export class ActorSheetPF extends ActorSheet {
     if (target && target !== item) {
       const itemData = item.data;
       if (target instanceof Actor) {
-        await target.createOwnedItem(itemData);
+        await target.createEmbeddedDocuments("Item", [itemData]);
       } else if (target instanceof Item) {
         await target.createContainerContent(itemData);
       }
-      await this.document.deleteOwnedItem(item.id);
+      await this.document.deleteEmbeddeddocuments("Item", [item.id]);
     }
   }
 

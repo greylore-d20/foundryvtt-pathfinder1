@@ -339,7 +339,6 @@ export const registerSystemSettings = function () {
     type: Boolean,
     onChange: () => {
       // Refresh canvas sight
-      canvas.lighting.initializeSources();
       canvas.perception.initialize();
     },
   });

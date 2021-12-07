@@ -240,8 +240,8 @@ export class ActorPF extends Actor {
     if (data.permission != null) {
       const nonGM = game.users.contents.filter((u) => !u.isGM);
       return nonGM.some((u) => {
-        if (data.permission["default"] >= CONST.ENTITY_PERMISSIONS["OWNER"]) return true;
-        return data.permission[u._id] >= CONST.ENTITY_PERMISSIONS["OWNER"];
+        if (data.permission["default"] >= CONST.DOCUMENT_PERMISSION_LEVELS["OWNER"]) return true;
+        return data.permission[u._id] >= CONST.DOCUMENT_PERMISSION_LEVELS["OWNER"];
       });
     }
     const hasPlayerOwner = this.hasPlayerOwner;
@@ -1770,11 +1770,11 @@ export class ActorPF extends Actor {
 
   /**
    * Extend the default update method to enhance data before submission.
-   * See the parent Entity.update method for full details.
+   * See the parent Document.update method for full details.
    *
    * @param {object} data     The data with which to update the Actor
    * @param {object} options  Additional options which customize the update workflow
-   * @returns {Promise}        A Promise which resolves to the updated Entity
+   * @returns {Promise}        A Promise which resolves to the updated Document
    */
   async update(data, options = {}) {
     this._trackPreviousAttributes();
@@ -1862,7 +1862,7 @@ export class ActorPF extends Actor {
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
-    // Work around the issue where updating embedded entities on Tokens used a parameter less
+    // Work around the issue where updating embedded documents on Tokens used a parameter less
     // NOTE: This is a dirty workaround which is a bug in core Foundry. Once this is fixed in Foundry, this should be undone.
     if (!(documents instanceof Array && result instanceof Array)) {
       userId = options;
@@ -1952,38 +1952,6 @@ export class ActorPF extends Actor {
     }
 
     return false;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * See the base Actor class for API documentation of this method
-   *
-   * @param itemData
-   * @param options
-   */
-  async createOwnedItem(itemData, options) {
-    const t = itemData.type;
-    const initial = {};
-    // Assume NPCs are always proficient with weapons and always have spells prepared
-    const hasPlayerOwner = this.hasPlayerOwner;
-    if (!hasPlayerOwner) {
-      if (t === "weapon") initial["data.proficient"] = true;
-      if (["weapon", "equipment"].includes(t)) initial["data.equipped"] = true;
-    }
-    if (t === "spell") {
-      if (this.sheet != null && this.sheet._spellbookTab != null) {
-        initial["data.spellbook"] = this.sheet._spellbookTab;
-      }
-    }
-
-    // Alter change ids
-    for (const c of getProperty(itemData, "data.changes") || []) {
-      c._id = randomID(8);
-    }
-
-    mergeObject(itemData, initial);
-    return ItemPF.create(itemData, { parent: this });
   }
 
   /* -------------------------------------------- */
@@ -2085,7 +2053,7 @@ export class ActorPF extends Actor {
     // Synthetic intermediate item
     const attackItem = new ItemPF(expandObject(attackData));
     // Create attack
-    const itemData = await this.createOwnedItem(attackItem.data);
+    const itemData = await this.createEmbeddedDocuments("Item", [attackItem.data]);
 
     // Create link
     if (itemData.type === "attack") {
@@ -3513,7 +3481,8 @@ export class ActorPF extends Actor {
    */
   importItemFromCollection(collection, entryId) {
     const pack = game.packs.find((p) => p.collection === collection);
-    if (pack.metadata.entity !== "Item") return;
+    // TODO: Remove entity after 0.8.X
+    if ((pack.metadata.type ?? pack.metadata.entity) !== "Item") return;
 
     return pack.getDocument(entryId).then((ent) => {
       console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
@@ -3523,7 +3492,7 @@ export class ActorPF extends Actor {
         data = mergeObject(data, this.sheet.getDropData(data));
       }
       delete data._id;
-      return this.createOwnedItem(data);
+      return this.createEmbeddedDocuments("Item", [data]);
     });
   }
 
@@ -4181,14 +4150,14 @@ export class ActorPF extends Actor {
    * @override
    */
   async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
-    let entity = this;
+    let doc = this;
     const current = getProperty(this.data.data, attribute),
       updates = {};
     if (attribute.startsWith("resources.")) {
       const itemTag = attribute.split(".").slice(-1)[0];
-      entity = this.items.find((item) => item.data.data.tag === itemTag);
+      doc = this.items.find((item) => item.data.data.tag === itemTag);
     }
-    if (!entity) return;
+    if (!doc) return;
     const updateData = {};
 
     // Special key
@@ -4202,7 +4171,7 @@ export class ActorPF extends Actor {
       updates["data.attributes.hp.value"] = Math.min(current.value + dt, current.max);
       // Absolute
     } else if (!isDelta) {
-      if (entity instanceof Actor) {
+      if (doc instanceof Actor) {
         if (isBar) updates[`data.${attribute}.value`] = value;
         else updates[`data.${attribute}`] = value;
       } else {
@@ -4210,7 +4179,7 @@ export class ActorPF extends Actor {
       }
       // Relative
     } else {
-      if (entity instanceof Actor) {
+      if (doc instanceof Actor) {
         if (isBar)
           updates[`data.${attribute}.value`] = Math.clamped(current.min || 0, current.value + value, current.max);
         else updates[`data.${attribute}`] = current + value;
@@ -4220,6 +4189,6 @@ export class ActorPF extends Actor {
     }
 
     const allowed = Hooks.call("modifyTokenAttribute", { attribute, value, isDelta, isBar }, updates);
-    return allowed !== false ? entity.update(updates) : this;
+    return allowed !== false ? doc.update(updates) : this;
   }
 }

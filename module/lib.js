@@ -158,7 +158,8 @@ export const unpackVersion = function (version) {
  * @returns {boolean} Whether the current core version is at least the given version.
  */
 export const isMinimumCoreVersion = function (version) {
-  const coreVersion = SemanticVersion.fromString(game.data.version);
+  // TODO: Remove after 0.8.X
+  const coreVersion = SemanticVersion.fromString(game.version ?? game.data.version);
   const compareVersion = SemanticVersion.fromString(version);
 
   return !coreVersion.isLowerThan(compareVersion);
@@ -847,7 +848,8 @@ function uniquePermutations(perm) {
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
   let packs;
   if (options?.packs && options.packs.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
-  else packs = game.packs.filter((o) => !options?.type || o.metadata.entity == options.type);
+  else packs = game.packs.filter((o) => !options?.type || (o.metadata.type ?? o.metadata.entity) == options.type);
+  // TODO: Remove entity after 0.8.X
 
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;
@@ -932,10 +934,10 @@ export function createInlineFormula(_match, _command, formula, closing, label, .
  * @param root0.rollData
  * @param root0.secrets
  * @param root0.rolls
- * @param root0.entities
+ * @param root0.documents
  */
-export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, entities } = {}) {
-  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, entities, rollData });
+export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, documents } = {}) {
+  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData });
 
   if (!rolls) {
     const html = document.createElement("div");

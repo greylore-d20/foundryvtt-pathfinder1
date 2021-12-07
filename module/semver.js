@@ -1,5 +1,5 @@
 export class SemanticVersion {
-  static re = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+  static re = /^(0|[1-9]\d*)\.(0|[1-9]\d*)(?:\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)?$/
 
   constructor() {
     this.major = 0;
@@ -14,7 +14,7 @@ export class SemanticVersion {
       let result = new this();
       result.major = parseInt(RegExp.$1);
       result.minor = parseInt(RegExp.$2);
-      result.patch = parseInt(RegExp.$3);
+      result.patch = parseInt(RegExp.$3 || 0);
       result.preRelease = RegExp.$4 || "";
       result.buildMetaData = RegExp.$5 || "";
       return result;

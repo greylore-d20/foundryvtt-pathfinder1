@@ -1015,21 +1015,21 @@ export class ItemSheetPF extends ItemSheet {
     const elem = event.currentTarget;
     let link;
 
-    // Case 1 - Entity from Compendium Pack
+    // Case 1 - Document from Compendium Pack
     if (data.pack) {
       const pack = game.packs.get(data.pack);
       if (!pack) return;
-      const entity = await pack.getDocument(data.id);
-      link = `@Compendium[${data.pack}.${data.id}]{${entity.name}}`;
+      const doc = await pack.getDocument(data.id);
+      link = `@Compendium[${data.pack}.${data.id}]{${doc.name}}`;
     }
 
-    // Case 2 - Entity from World
+    // Case 2 - Document from World
     else {
       const config = CONFIG[data.type];
       if (!config) return false;
-      const entity = config.collection.instance.get(data.id);
-      if (!entity) return false;
-      link = `@${data.type}[${entity._id}]{${entity.name}}`;
+      const doc = config.collection.instance.get(data.id);
+      if (!doc) return false;
+      link = `@${data.type}[${doc._id}]{${doc.name}}`;
     }
 
     // Insert link
@@ -1127,7 +1127,7 @@ export class ItemSheetPF extends ItemSheet {
       itemLink = data.data._id;
     }
 
-    // Case 3 - Import from World entity
+    // Case 3 - Import from World Document
     else {
       dataType = "world";
       targetItem = game.items.get(data.id);

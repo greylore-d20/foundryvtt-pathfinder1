@@ -10,7 +10,6 @@ export class TokenPF extends Token {
       hasProperty(data, "flags.pf1.lowLightVisionMultiplier") ||
       hasProperty(data, "flags.pf1.lowLightVisionMultiplierBright")
     ) {
-      canvas.lighting.initializeSources();
       canvas.perception.initialize();
     }
   }

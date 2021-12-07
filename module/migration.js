@@ -25,40 +25,40 @@ export const migrateWorld = async function () {
   await _migrateWorldSettings();
 
   // Migrate World Actors
-  console.log("Migrating Actor entities");
+  console.log("Migrating Actor documents");
   for (const a of game.actors.contents) {
     try {
       const updateData = migrateActorData(a.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
-        console.log(`Migrating Actor entity ${a.name}`);
+        console.log(`Migrating Actor document ${a.name}`);
         await a.update(updateData, { enforceTypes: false });
       }
     } catch (err) {
-      console.error(`Error migrating actor entity ${a.name}`, err);
+      console.error(`Error migrating actor document ${a.name}`, err);
     }
   }
 
   // Migrate World Items
-  console.log("Migrating Item entities.");
+  console.log("Migrating Item documents.");
   for (const i of game.items.contents) {
     try {
       const updateData = migrateItemData(i.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
-        console.log(`Migrating Item entity ${i.name}`);
+        console.log(`Migrating Item document ${i.name}`);
         await i.update(updateData, { enforceTypes: false });
       }
     } catch (err) {
-      console.error(`Error migrating item entity ${i.name}`, err);
+      console.error(`Error migrating item document ${i.name}`, err);
     }
   }
 
   // Migrate Actor Override Tokens
-  console.log("Migrating Scene entities.");
+  console.log("Migrating Scene documents.");
   for (const s of game.scenes.contents) {
     try {
       const updateData = migrateSceneData(s.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
-        console.log(`Migrating Scene entity ${s.name}`);
+        console.log(`Migrating Scene document ${s.name}`);
         await s.update(updateData, { enforceTypes: false });
         // If we do not do this, then synthetic token actors remain in cache
         // with the un-updated actorData.
@@ -67,7 +67,7 @@ export const migrateWorld = async function () {
         });
       }
     } catch (err) {
-      console.error(`Error migrating scene entity ${s.name}`, err);
+      console.error(`Error migrating scene document ${s.name}`, err);
     }
   }
 
@@ -75,9 +75,10 @@ export const migrateWorld = async function () {
   const packs = game.packs.filter((p) => {
     return (
       (["world", "pf1"].includes(p.metadata.package) || p.metadata.system === "pf1") &&
-      ["Actor", "Item", "Scene"].includes(p.metadata.entity) &&
+      ["Actor", "Item", "Scene"].includes(p.metadata.type ?? p.metadata.entity) &&
       !p.locked
     );
+    // TODO: Remove entity after 0.8.X
   });
   for (const p of packs) {
     await migrateCompendium(p);
@@ -101,36 +102,37 @@ export const migrateWorld = async function () {
 /* -------------------------------------------- */
 
 /**
- * Apply migration rules to all Entities within a single Compendium pack
+ * Apply migration rules to all Documents within a single Compendium pack
  *
  * @param pack
  * @returns {Promise}
  */
 export const migrateCompendium = async function (pack) {
-  const entity = pack.metadata.entity;
-  if (!["Actor", "Item", "Scene"].includes(entity)) return;
+  // TODO: Remove entity after 0.8.X
+  const doc = pack.metadata.type ?? pack.metadata.entity;
+  if (!["Actor", "Item", "Scene"].includes(doc)) return;
 
   // Begin by requesting server-side data model migration and get the migrated content
   await pack.migrate();
   const content = await pack.getDocuments();
 
   // Iterate over compendium entries - applying fine-tuned migration functions
-  console.log(`Migrating ${entity} entities in Compendium ${pack.collection}`);
+  console.log(`Migrating ${doc} documents in Compendium ${pack.collection}`);
   for (const ent of content) {
     try {
       let updateData = null;
-      if (entity === "Item") updateData = migrateItemData(ent.data);
-      else if (entity === "Actor") updateData = migrateActorData(ent.data);
-      else if (entity === "Scene") updateData = migrateSceneData(ent.data);
+      if (doc === "Item") updateData = migrateItemData(ent.data);
+      else if (doc === "Actor") updateData = migrateActorData(ent.data);
+      else if (doc === "Scene") updateData = migrateSceneData(ent.data);
       expandObject(updateData);
       updateData["_id"] = ent.id;
       await ent.update(updateData);
-      console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
+      console.log(`Migrated ${doc} document ${ent.name} in Compendium ${pack.collection}`);
     } catch (err) {
-      console.error(`Error migrating ${entity} entity ${ent.name} in Compendium ${pack.collection}`, err);
+      console.error(`Error migrating ${doc} document ${ent.name} in Compendium ${pack.collection}`, err);
     }
   }
-  console.log(`Migrated all ${entity} entities from Compendium ${pack.collection}`);
+  console.log(`Migrated all ${doc} documents from Compendium ${pack.collection}`);
 };
 
 /**
@@ -149,11 +151,11 @@ const _migrateWorldSettings = async function () {
 };
 
 /* -------------------------------------------- */
-/*  Entity Type Migration Helpers               */
+/*  Document Type Migration Helpers               */
 /* -------------------------------------------- */
 
 /**
- * Migrate a single Actor entity to incorporate latest data model changes
+ * Migrate a single Actor document to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
  * @param {ActorData} actor   The actor data to derive an update from
@@ -213,7 +215,7 @@ export const migrateActorData = function (actor, token) {
 /* -------------------------------------------- */
 
 /**
- * Migrate a single Item entity to incorporate latest data model changes
+ * Migrate a single Item document to incorporate latest data model changes
  *
  * @param {Actor} item   The item data to derive an update from
  * @returns {object}       The updateData to apply
@@ -265,7 +267,7 @@ function _migrateSpellData(item, updateData) {
 /* -------------------------------------------- */
 
 /**
- * Migrate a single Scene entity to incorporate changes to the data model of it's actor data overrides
+ * Migrate a single Scene document to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
  *
  * @param {object} scene - The Scene to Update

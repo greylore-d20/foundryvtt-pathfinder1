@@ -62,6 +62,7 @@ import {
   sortArrayByName,
   findInCompendia,
   getFirstActiveGM,
+  isMinimumCoreVersion,
 } from "./module/lib.js";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
@@ -161,6 +162,7 @@ Hooks.once("init", function () {
       dialogGetActor,
       dialogGetNumber,
       SemanticVersion,
+      isMinimumCoreVersion,
       binarySearch,
       sortArrayByName,
       findInCompendia,
@@ -200,8 +202,13 @@ Hooks.once("init", function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
-  CONFIG.Canvas.layers.templates = TemplateLayerPF;
-  CONFIG.Canvas.layers.sight = SightLayerPF;
+  if (isMinimumCoreVersion("9.0")) {
+    CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
+    CONFIG.Canvas.layers.sight.layerClass = SightLayerPF;
+  } else {
+    CONFIG.Canvas.layers.templates = TemplateLayerPF;
+    CONFIG.Canvas.layers.sight = SightLayerPF;
+  }
   CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
   CONFIG.Actor.documentClass = ActorPF;
@@ -303,7 +310,7 @@ Hooks.once("init", function () {
 /* -------------------------------------------- */
 
 /**
- * This function runs after game data has been requested and loaded from the servers, so entities exist
+ * This function runs after game data has been requested and loaded from the servers, so documents exist
  */
 Hooks.once("setup", function () {
   // Localize CONFIG objects once up-front
@@ -689,7 +696,7 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
 
 Hooks.on("controlToken", (token, selected) => {
   // Refresh canvas sight
-  canvas.lighting.initializeSources();
+  canvas.perception.initialize();
 });
 
 // Create race on actor

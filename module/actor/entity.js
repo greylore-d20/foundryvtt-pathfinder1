@@ -2053,7 +2053,7 @@ export class ActorPF extends Actor {
     // Synthetic intermediate item
     const attackItem = new ItemPF(expandObject(attackData));
     // Create attack
-    const itemData = await this.createEmbeddedDocuments("Item", [attackItem.data]);
+    const itemData = await this.createEmbeddedDocuments("Item", [attackItem.toObject()]);
 
     // Create link
     if (itemData.type === "attack") {
@@ -3487,7 +3487,7 @@ export class ActorPF extends Actor {
     return pack.getDocument(entryId).then((ent) => {
       console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
 
-      let data = duplicate(ent.data);
+      let data = ent.toObject();
       if (this.sheet != null && this.sheet.rendered) {
         data = mergeObject(data, this.sheet.getDropData(data));
       }

@@ -1908,7 +1908,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const itemId = $(a).parents(".item").attr("data-item-id");
     const item = this.document.items.get(itemId);
-    const data = duplicate(item.data);
+    const data = item.toObject();
 
     delete data.id;
     data.name = `${data.name} (Copy)`;
@@ -2067,7 +2067,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (target && target !== item) {
-      const itemData = item.data;
+      const itemData = item.toObject();
       if (target instanceof Actor) {
         await target.createEmbeddedDocuments("Item", [itemData]);
       } else if (target instanceof Item) {

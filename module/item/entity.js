@@ -3923,7 +3923,7 @@ export class ItemPF extends Item {
       if (newItems.length) {
         const items = await actor.createEmbeddedDocuments(
           "Item",
-          newItems.map((o) => o.data)
+          newItems.map((o) => o.toObject())
         );
 
         const updateData = [];
@@ -4080,7 +4080,7 @@ export class ItemPF extends Item {
 
       return true;
     } else if (linkType === "children" && dataType !== "data") {
-      const itemData = duplicate(targetItem.data);
+      const itemData = targetItem.toObject();
       delete itemData._id;
 
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere

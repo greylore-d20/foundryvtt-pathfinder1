@@ -86,7 +86,7 @@ const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
 export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
   console.debug("Duplicating combatant:", combatant);
   combat.createEmbeddedDocuments("Combatant", [
-    mergeObject(duplicate(combatant.data), { initiative: initiative }, { inplace: false }),
+    mergeObject(duplicate(combatant.toObject()), { initiative: initiative }, { inplace: false }),
   ]);
 };
 

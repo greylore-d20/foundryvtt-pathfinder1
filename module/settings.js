@@ -5,6 +5,10 @@ import { TooltipConfig } from "./config/tooltip.js";
 import { TooltipWorldConfig } from "./config/tooltip_world.js";
 import { TooltipPF } from "./hud/tooltip.js";
 
+const debouncedReload = foundry.utils.debounce(() => {
+  window.location.reload();
+}, 100);
+
 export const registerSystemSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
@@ -103,9 +107,7 @@ export const registerSystemSettings = function () {
     default: AccessibilityConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      window.location.reload();
-    },
+    onChange: debouncedReload,
   });
 
   // Tooltip configuration
@@ -280,9 +282,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      window.location.reload();
-    },
+    onChange: debouncedReload,
   });
 
   /**
@@ -436,9 +436,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      window.location.reload();
-    },
+    onChange: debouncedReload,
   });
 
   /**

@@ -102,11 +102,11 @@ export class TokenPF extends Token {
       canvas.sight.sources.set(sourceId, this.vision);
       if (!defer) {
         this.vision.drawLight();
-        canvas.sight.refresh({ noUpdateFog });
+        canvas.perception.refresh();
       }
     } else {
       canvas.sight.sources.delete(sourceId);
-      if (isVisionSource && !defer) canvas.sight.refresh();
+      if (isVisionSource && !defer) canvas.perception.refresh();
     }
   }
 

@@ -404,7 +404,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(li.dataset.itemId);
 
     if (this.actor) {
-      await this.actor.createEmbeddedDocuments("Item", [item.data]);
+      await this.actor.createEmbeddedDocuments("Item", [item.toObject()]);
       await this.item.deleteContainerContent(item._id);
     }
   }

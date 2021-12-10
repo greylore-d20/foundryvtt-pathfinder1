@@ -921,7 +921,7 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
 // Show experience distributor after combat
 Hooks.on("deleteCombat", (combat, options, userId) => {
   const isGM = game.user.isGM;
-  const shiftPressed = game.keyboard.isDown("Shift");
+  const shiftPressed = game.keyboard.downKeys.has("SHIFT");
   const { disableExperienceTracking, openXpDistributor } = game.settings.get("pf1", "experienceConfig");
   if (
     isGM &&

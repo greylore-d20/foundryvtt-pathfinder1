@@ -103,7 +103,7 @@ module.exports = {
     PlayerList: "readonly",
     DrawingConfig: "readonly",
     DrawingHUD: "readonly",
-    LightConfig: "readonly",
+    AmbientLightConfig: "readonly",
     NoteConfig: "readonly",
     AmbientSoundConfig: "readonly",
     TileConfig: "readonly",

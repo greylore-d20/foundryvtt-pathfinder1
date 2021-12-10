@@ -2,6 +2,7 @@ import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";
+import { isMinimumCoreVersion } from "./lib.js";
 
 /**
  *
@@ -173,5 +174,24 @@ export async function PatchCore() {
       if (_path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
       return attr;
     };
+  }
+
+  // Todo: Remove after 0.8.x
+  {
+    if (!isMinimumCoreVersion("9.0")) {
+      const origFunc = game.initializeKeyboard;
+      game.initializeKeyboard = function () {
+        origFunc.call(this);
+        Object.defineProperty(game.keyboard, "downKeys", {
+          get: function () {
+            const keys = new Set([...game.keyboard._downKeys]);
+            [...game.keyboard._downKeys].forEach((k) => {
+              keys.add(k.toUpperCase());
+            });
+            return keys;
+          },
+        });
+      };
+    }
   }
 }

@@ -632,7 +632,7 @@ export const migrateSystemSettings = async function () {
 
 export const getSkipActionPrompt = function () {
   return (
-    (game.settings.get("pf1", "skipActionDialogs") && !game.keyboard.isDown("Shift")) ||
-    (!game.settings.get("pf1", "skipActionDialogs") && game.keyboard.isDown("Shift"))
+    (game.settings.get("pf1", "skipActionDialogs") && !game.keyboard.downKeys.has("SHIFT")) ||
+    (!game.settings.get("pf1", "skipActionDialogs") && game.keyboard.downKeys.has("SHIFT"))
   );
 };

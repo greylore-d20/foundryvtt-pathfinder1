@@ -2908,7 +2908,7 @@ export class ActorPF extends Actor {
       return Promise.all(promises);
     };
 
-    if (game.keyboard.isDown("Shift") ? !forceDialog : forceDialog) {
+    if (game.keyboard.downKeys.has("SHIFT") ? !forceDialog : forceDialog) {
       if (value < 0) {
         healingInvert = -1;
         value = -1 * value;

@@ -213,7 +213,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
   }
 
   // Trigger the item roll
-  if (!game.keyboard.isDown("Control")) {
+  if (!game.keyboard.downKeys.has("CONTROL")) {
     return item.use({ skipDialog: getSkipActionPrompt() });
   }
   return item.roll();

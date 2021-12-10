@@ -301,8 +301,8 @@ export class TooltipPF extends Application {
 
   show() {
     if (this.objects.length === 0) return;
-    if (this.config.hideWithoutKey && !game.keyboard.isDown("Control")) return;
-    if (!this.config.hideWithoutKey && game.keyboard.isDown("Control")) return;
+    if (this.config.hideWithoutKey && !game.keyboard.downKeys.has("CONTROL")) return;
+    if (!this.config.hideWithoutKey && game.keyboard.downKeys.has("CONTROL")) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
     this.element.css("visibility", "visible");
@@ -344,7 +344,7 @@ export class TooltipPF extends Application {
 
   tokenHover(token, hovering) {
     // Show token tooltip
-    if (hovering && !game.keyboard.isDown("Alt")) {
+    if (hovering && !game.keyboard.downKeys.has("ALT")) {
       const p = game.pf1.tooltip.mousePos;
       const el = document.elementFromPoint(p.x, p.y);
       // This check is required to prevent hovering over tokens under application windows

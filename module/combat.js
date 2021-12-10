@@ -126,7 +126,7 @@ export class CombatPF extends Combat {
     let overrideRollMode = null,
       bonus = "",
       stop = false;
-    if (keyboard.isDown("Shift")) {
+    if (keyboard.downKeys.has("SHIFT")) {
       const dialogData = await Combat.implementation.showInitiativeDialog(formula);
       overrideRollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";

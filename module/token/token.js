@@ -44,7 +44,8 @@ export class TokenPF extends Token {
     return getProperty(this.data, "flags.pf1.disableLowLight") === true;
   }
 
-  updateSource({ defer = false, deleted = false, noUpdateFog = false } = {}) {
+  // TODO: Remove noUpdateFog after 0.8.X
+  updateSource({ defer = false, deleted = false, noUpdateFog = false, skipUpdateFog = false } = {}) {
     if (CONFIG.debug.sight) {
       SightLayer._performance = { start: performance.now(), tests: 0, rays: 0 };
     }
@@ -102,7 +103,7 @@ export class TokenPF extends Token {
       canvas.sight.sources.set(sourceId, this.vision);
       if (!defer) {
         this.vision.drawLight();
-        canvas.perception.refresh();
+        canvas.perception.schedule({ sight: { refresh: true, skipUpdateFog, noUpdateFog } });
       }
     } else {
       canvas.sight.sources.delete(sourceId);

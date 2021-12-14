@@ -376,7 +376,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (button.disabled) return;
 
     const li = event.currentTarget.closest(".item");
-    if (keyboard.downKeys.has("SHIFT")) {
+    if (getSkipActionPrompt()) {
       this.item.deleteContainerContent(li.dataset.itemId);
     } else {
       button.disabled = true;

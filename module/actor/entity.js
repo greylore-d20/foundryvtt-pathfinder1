@@ -2908,7 +2908,7 @@ export class ActorPF extends Actor {
       return Promise.all(promises);
     };
 
-    if (game.keyboard.downKeys.has("SHIFT") ? !forceDialog : forceDialog) {
+    if (game.pf1.skipConfirmPrompt ? !forceDialog : forceDialog) {
       if (value < 0) {
         healingInvert = -1;
         value = -1 * value;

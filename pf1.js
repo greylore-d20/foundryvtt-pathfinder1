@@ -7,7 +7,12 @@
 
 // Import Modules
 import { PF1, CONFIG_OVERRIDES } from "./module/config.js";
-import { registerSystemSettings, registerClientSettings, migrateSystemSettings } from "./module/settings.js";
+import {
+  registerSystemSettings,
+  registerClientSettings,
+  migrateSystemSettings,
+  getSkipActionPrompt,
+} from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
@@ -79,6 +84,7 @@ import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
 import { Registry } from "./module/registry.js";
+import { PF1Controls } from "./module/controls.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -190,6 +196,14 @@ Hooks.once("init", function () {
     tooltip: null,
     runUnitTests,
     AbilityTemplate,
+    controls: PF1Controls,
+    // Variables controlled by control configuration
+    skipConfirmPrompt: false,
+    tokenTooltip: {
+      hide: false,
+      hideGMInfo: false,
+    },
+    forceShowItem: false,
     // Function library
     functions: {
       getBuffTargets,
@@ -300,6 +314,9 @@ Hooks.once("init", function () {
 
   // Initialize module integrations
   initializeModules();
+
+  // Token tooltip status
+  game.pf1.tokenTooltip.hide = game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey ?? false;
 
   // Call post-init hook
   Hooks.callAll("pf1.postInit");
@@ -443,6 +460,9 @@ Hooks.once("setup", function () {
   // TinyMCE variables and commands
   tinyMCEInit();
 
+  // Register controls
+  game.pf1.controls.registerSystemControls();
+
   Hooks.callAll("pf1.postSetup");
 });
 
@@ -460,34 +480,6 @@ Hooks.once("ready", async function () {
 
   window.addEventListener("resize", () => {
     game.pf1.tooltip?.setPosition();
-  });
-  window.addEventListener("keydown", (event) => {
-    if (!game.pf1.tooltip) return;
-    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
-    if (event.key === "Shift" && game.user.isGM) {
-      game.pf1.tooltip.forceHideGMInfo = true;
-      game.pf1.tooltip.render();
-    } else if (event.key === "Control") {
-      if (tooltipConfig.hideWithoutKey) {
-        game.pf1.tooltip.show();
-      } else {
-        game.pf1.tooltip.hide();
-      }
-    }
-  });
-  window.addEventListener("keyup", (event) => {
-    if (!game.pf1.tooltip) return;
-    const tooltipConfig = game.settings.get("pf1", "tooltipConfig");
-    if (event.key === "Shift" && game.user.isGM) {
-      game.pf1.tooltip.forceHideGMInfo = false;
-      game.pf1.tooltip.render();
-    } else if (event.key === "Control") {
-      if (tooltipConfig.hideWithoutKey) {
-        game.pf1.tooltip.hide();
-      } else {
-        game.pf1.tooltip.show();
-      }
-    }
   });
 
   // Migrate data
@@ -921,13 +913,13 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
 // Show experience distributor after combat
 Hooks.on("deleteCombat", (combat, options, userId) => {
   const isGM = game.user.isGM;
-  const shiftPressed = game.keyboard.downKeys.has("SHIFT");
+  const skipPrompt = getSkipActionPrompt();
   const { disableExperienceTracking, openXpDistributor } = game.settings.get("pf1", "experienceConfig");
   if (
     isGM &&
     !disableExperienceTracking &&
     combat.started &&
-    ((openXpDistributor && !shiftPressed) || (!openXpDistributor && shiftPressed))
+    ((openXpDistributor && !skipPrompt) || (!openXpDistributor && skipPrompt))
   ) {
     const combatants = combat.combatants.map((o) => o.actor);
     const app = new ExperienceDistributor(combatants);

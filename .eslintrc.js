@@ -480,5 +480,6 @@ module.exports = {
     NumericTerm: "readonly",
     RollTerm: "readonly",
     getDocumentClass: "readonly",
+    KeybindingsConfig: "readonly",
   },
 };

@@ -301,8 +301,7 @@ export class TooltipPF extends Application {
 
   show() {
     if (this.objects.length === 0) return;
-    if (this.config.hideWithoutKey && !game.keyboard.downKeys.has("CONTROL")) return;
-    if (!this.config.hideWithoutKey && game.keyboard.downKeys.has("CONTROL")) return;
+    if (game.pf1.tokenTooltip.hide) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
     this.element.css("visibility", "visible");
@@ -313,9 +312,8 @@ export class TooltipPF extends Application {
   }
 
   async _render(force = false, options = {}) {
-    const p = super._render(force, options);
+    await super._render(force, options);
 
-    await p;
     this.hide();
 
     // Required to re-align portraits
@@ -325,12 +323,12 @@ export class TooltipPF extends Application {
       let loadedContentCount = 0;
       loadableContent.one("load", () => {
         loadedContentCount++;
-        if (loadedContentCount === loadableContentCount && this.objects.length) {
+        if (loadedContentCount === loadableContentCount && this.objects.length === 1) {
           this._setPosition();
           this.show();
         }
       });
-    } else if (this.objects.length) {
+    } else if (this.objects.length === 1) {
       this._setPosition();
       this.show();
     }
@@ -344,7 +342,7 @@ export class TooltipPF extends Application {
 
   tokenHover(token, hovering) {
     // Show token tooltip
-    if (hovering && !game.keyboard.downKeys.has("ALT")) {
+    if (hovering) {
       const p = game.pf1.tooltip.mousePos;
       const el = document.elementFromPoint(p.x, p.y);
       // This check is required to prevent hovering over tokens under application windows
@@ -369,5 +367,14 @@ export class TooltipPF extends Application {
         game.pf1.tooltip = null;
       }
     }
+  }
+
+  async refresh() {
+    this.forceHideGMInfo = game.pf1.tokenTooltip.hideGMInfo;
+    await this.render();
+
+    const hide = game.pf1.tokenTooltip.hide;
+    if (hide) this.hide();
+    else this.show();
   }
 }

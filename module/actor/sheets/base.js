@@ -2023,7 +2023,7 @@ export class ActorSheetPF extends ActorSheet {
     const li = event.currentTarget.closest(".item");
     const item = this.document.items.find((o) => o.id === li.dataset.itemId);
 
-    if (keyboard.downKeys.has("SHIFT")) {
+    if (getSkipActionPrompt()) {
       item.delete();
     } else {
       button.disabled = true;

@@ -176,22 +176,14 @@ export async function PatchCore() {
     };
   }
 
-  // Todo: Remove after 0.8.x
+  // Remove warnings for conflicting uneditable system bindings
   {
-    if (!isMinimumCoreVersion("9.0")) {
-      const origFunc = game.initializeKeyboard;
-      game.initializeKeyboard = function () {
-        origFunc.call(this);
-        Object.defineProperty(game.keyboard, "downKeys", {
-          get: function () {
-            const keys = new Set([...game.keyboard._downKeys]);
-            [...game.keyboard._downKeys].forEach((k) => {
-              keys.add(k.toUpperCase());
-            });
-            return keys;
-          },
-        });
-      };
-    }
+    const origFunc = KeybindingsConfig.prototype._detectConflictingActions;
+    KeybindingsConfig.prototype._detectConflictingActions = function (actionId, action, binding) {
+      // Uneditable System bindings are never wrong, they can never conflict with something
+      if (actionId.startsWith("pf1.") && action.uneditable.includes(binding)) return [];
+
+      return origFunc.call(this, actionId, action, binding);
+    };
   }
 }

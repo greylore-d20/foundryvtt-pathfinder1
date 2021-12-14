@@ -213,7 +213,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
   }
 
   // Trigger the item roll
-  if (!game.keyboard.downKeys.has("CONTROL")) {
+  if (!game.pf1.forceShowItem) {
     return item.use({ skipDialog: getSkipActionPrompt() });
   }
   return item.roll();

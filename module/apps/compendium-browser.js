@@ -353,7 +353,7 @@ export class CompendiumBrowser extends Application {
   _onProgress(progress) {
     progress.loaded++;
     progress.pct = Math.round((progress.loaded * 10) / progress.total) * 10;
-    SceneNavigation._onLoadProgress(progress.message, progress.pct);
+    SceneNavigation.displayProgressBar({ label: progress.message, pct: progress.pct });
   }
 
   async loadCompendium(p, filters = [null]) {

@@ -3867,6 +3867,7 @@ export class ActorPF extends Actor {
           "flags.core.statusId": condKey,
           name: CONFIG.PF1.conditions[condKey],
           icon: CONFIG.PF1.conditionTextures[condKey],
+          label: CONFIG.PF1.conditions[condKey],
         });
       } else if (!hasCondition && hasEffectIcon) {
         const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === condKey);

@@ -6,8 +6,7 @@ import { degtorad } from "./lib.js";
 export class TemplateLayerPF extends TemplateLayer {
   // Use 90 degrees cone in PF1 style
   async _onDragLeftStart(event) {
-    await super._onDragLeftStart(event);
-    if (!game.settings.get("pf1", "measureStyle")) return;
+    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
     // Create temporary highlight layer
     if (canvas.grid.getHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME) == null) {
@@ -42,8 +41,7 @@ export class TemplateLayerPF extends TemplateLayer {
   }
 
   _onDragLeftMove(event) {
-    super._onDragLeftMove(event);
-    if (!game.settings.get("pf1", "measureStyle")) return;
+    if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
     const { destination, createState, preview, origin } = event.data;
     if (createState === 0) return;

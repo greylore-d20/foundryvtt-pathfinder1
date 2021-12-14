@@ -90,6 +90,11 @@ export class AbilityTemplate extends MeasuredTemplatePF {
 
       const pfStyle = game.settings.get("pf1", "measureStyle") === true;
 
+      const _clear = () => {
+        if (this.destroyed) return;
+        this.destroy();
+      };
+
       // Update placement (mouse-move)
       handlers.mm = (event) => {
         event.stopPropagation();
@@ -115,6 +120,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         this.active = false;
         const hl = canvas.grid.getHighlightLayer(`Template.${this.id}`);
         hl.clear();
+        _clear();
 
         initialLayer.activate();
         if (canResolve) resolve(false);
@@ -128,7 +134,8 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         this.data.update(this.data);
 
         // Create the template
-        const result = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.toObject()]);
+        const result = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]);
+        _clear();
         resolve(result);
       };
 

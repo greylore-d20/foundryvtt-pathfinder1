@@ -3755,12 +3755,12 @@ export class ActorPF extends Actor {
 
       // Add children to list of items to be deleted
       const _addChildren = async function (id) {
-        const item = this.items.find((o) => o._id === id);
+        const item = this.items.find((o) => o.id === id);
         const children = await item.getLinkedItems("children");
         for (const child of children) {
-          if (!data.includes(child._id)) {
-            data.push(child._id);
-            await _addChildren.call(this, child._id);
+          if (!data.includes(child.id)) {
+            data.push(child.id);
+            await _addChildren.call(this, child.id);
           }
         }
       };

@@ -68,16 +68,14 @@ export const addLowLightVisionToLightConfig = function (app, html) {
   const obj = app.object;
 
   // Create checkbox HTML element
-  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize(
-    "PF1.DisableLightLowLightVision"
-  )}</label><div class="form-group">`;
+  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
   if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
-  checkboxStr += "/></div></div>";
+  checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 
   // Insert new checkbox
-  checkbox.insertBefore(html.find('button[type="submit"]'));
+  html.find('div.tab[data-tab="basic"]').append(checkbox);
 };
 
 /**
@@ -90,16 +88,14 @@ export const addLowLightVisionToTokenConfig = function (app, html) {
   const obj = app.object;
 
   // Create checkbox HTML element
-  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize(
-    "PF1.DisableLightLowLightVision"
-  )}</label><div class="form-group">`;
+  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
   if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
-  checkboxStr += "/></div></div>";
+  checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 
   // Insert new checkbox
-  html.find('.tab[data-tab="vision"]').append(checkbox);
+  html.find('.tab[data-group="light"][data-tab="basic"]').append(checkbox);
 };
 
 export class AmbientLightPF extends AmbientLight {

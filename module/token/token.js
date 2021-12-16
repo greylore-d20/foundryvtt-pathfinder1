@@ -4,13 +4,25 @@ export class TokenPF extends Token {
   async _onUpdate(data, options, ...args) {
     await super._onUpdate(data, options, ...args);
 
-    if (
-      hasProperty(data, "flags.pf1.disableLowLight") ||
-      hasProperty(data, "flags.pf1.lowLightVision") ||
-      hasProperty(data, "flags.pf1.lowLightVisionMultiplier") ||
-      hasProperty(data, "flags.pf1.lowLightVisionMultiplierBright")
-    ) {
-      canvas.perception.initialize();
+    // Get the changed attributes
+    const keys = Object.keys(data).filter((k) => k !== "_id");
+    const changed = new Set(keys);
+    const changedFlags = new Set(Object.keys(data.flags?.pf1 ?? {}));
+
+    const testFlags =
+      new Set(
+        [
+          "disableLowLight",
+          "lowLightVision",
+          "lowLightVisionMultiplier",
+          "lowLightVisionMultiplierBright",
+        ].filter((s) => changedFlags.has(s))
+      ).size > 0;
+    if (testFlags || changed.has("light")) {
+      canvas.perception.schedule({
+        lighting: { initialize: true, refresh: true },
+        sight: { refresh: true },
+      });
     }
   }
 
@@ -135,5 +147,60 @@ export class TokenPF extends Token {
   // Token#observer patch to make use of vision permission settings
   get observer() {
     return game.user.isGM || hasTokenVision(this);
+  }
+
+  /**
+   * @override
+   * Update an emitted light source associated with this Token.
+   * @param {boolean} [defer]           Defer refreshing the LightingLayer to manually call that refresh later.
+   * @param {boolean} [deleted]         Indicate that this light source has been deleted.
+   */
+  updateLightSource({ defer = false, deleted = false } = {}) {
+    // Prepare data
+    const origin = this.getSightOrigin();
+    const sourceId = this.sourceId;
+    const d = canvas.dimensions;
+    const isLightSource = this.emitsLight && !this.data.hidden;
+
+    // Initialize a light source
+    if (isLightSource && !deleted) {
+      const dim = this.getLightRadius(
+        Math.max(
+          this.data.light.dim,
+          this.disableLowLight ? this.data.light.dim : this.data.light.dim * canvas.sight.lowLightMultiplier().dim
+        )
+      );
+      const bright = this.getLightRadius(
+        Math.max(
+          this.data.light.bright,
+          this.disableLowLight
+            ? this.data.light.bright
+            : this.data.light.bright * canvas.sight.lowLightMultiplier().bright
+        )
+      );
+
+      const lightConfig = foundry.utils.mergeObject(this.data.light.toObject(false), {
+        x: origin.x,
+        y: origin.y,
+        dim: Math.clamped(dim, 0, d.maxR),
+        bright: Math.clamped(bright, 0, d.maxR),
+        z: this.document.getFlag("core", "priority"),
+        seed: this.document.getFlag("core", "animationSeed"),
+        rotation: this.data.rotation,
+      });
+      this.light.initialize(lightConfig);
+      canvas.lighting.sources.set(sourceId, this.light);
+    }
+
+    // Remove a light source
+    else canvas.lighting.sources.delete(sourceId);
+
+    // Schedule a perception update
+    if (!defer && (isLightSource || deleted)) {
+      canvas.perception.schedule({
+        lighting: { refresh: true },
+        sight: { refresh: true },
+      });
+    }
   }
 }

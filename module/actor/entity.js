@@ -2858,8 +2858,6 @@ export class ActorPF extends Actor {
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
       sliceReg2 = /[^,;\n]+/g;
 
-    //if (!controlled) return;
-
     const _submit = async function (form, multiplier) {
       if (form) {
         value = form.find('[name="damage"]').val();

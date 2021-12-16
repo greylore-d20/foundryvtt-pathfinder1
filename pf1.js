@@ -527,6 +527,10 @@ Hooks.once("ready", async function () {
     }
   }
 
+  // Initialize perception, because the game doesn't render lights for GMs at first load
+  // Not sure why this is necessary atm
+  canvas.perception.initialize();
+
   Hooks.callAll("pf1.postReady");
 });
 
@@ -616,7 +620,7 @@ Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
 
-Hooks.on("renderLightConfig", (app, html) => {
+Hooks.on("renderAmbientLightConfig", (app, html) => {
   addLowLightVisionToLightConfig(app, html);
 });
 
@@ -632,8 +636,6 @@ Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
     {
       if (item.type === "class" && hasProperty(changedData, "data.level")) {
         const prevLevel = getProperty(item.data, "data.level");
-        // const newLevel = getProperty(changedData, "data.level");
-        // item._onLevelChange(prevLevel, newLevel);
         item._prevLevel = prevLevel;
       }
     }
@@ -688,7 +690,12 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
 
 Hooks.on("controlToken", (token, selected) => {
   // Refresh canvas sight
-  canvas.perception.initialize();
+  canvas.perception.schedule({
+    lighting: { initialize: true, refresh: true },
+    sight: { refresh: true },
+    sounds: { refresh: true },
+    foreground: { refresh: true },
+  });
 });
 
 // Create race on actor

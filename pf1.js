@@ -878,7 +878,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   )
     newHTML += " checked";
   newHTML += "/></div>";
-  html.find('.tab[data-tab="image"] > *:nth-child(3)').after(newHTML);
+  html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
 
   // Add disable low-light vision checkbox
   addLowLightVisionToTokenConfig(app, html);

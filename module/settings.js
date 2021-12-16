@@ -341,7 +341,7 @@ export const registerSystemSettings = function () {
       // Refresh canvas sight
       canvas.perception.schedule({
         lighting: { initialize: true, refresh: true },
-        sight: { refresh: true },
+        sight: { initialize: true, refresh: true },
       });
     },
   });

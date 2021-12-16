@@ -20,7 +20,12 @@ export function initializeSocket() {
           break;
         }
         case "redrawCanvas":
-          canvas.draw();
+          canvas.perception.schedule({
+            lighting: { initialize: true, refresh: true },
+            sight: { refresh: true },
+            sounds: { refresh: true },
+            foreground: { refresh: true },
+          });
           break;
         case "currencyTransfer": {
           if (!isFirstGM) return;

@@ -2,7 +2,6 @@ import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";
-import { isMinimumCoreVersion } from "./lib.js";
 
 /**
  *
@@ -19,7 +18,7 @@ export async function PatchCore() {
           return game.user.isGM;
         },
         callback: (li) => {
-          const doc = this.constructor.collection.get(li.data("entityId"));
+          const doc = this.constructor.collection.get(li.data("documentId"));
           if (doc) {
             const sheet = doc.visionPermissionSheet;
             if (sheet.rendered) {

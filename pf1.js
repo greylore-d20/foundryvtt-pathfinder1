@@ -83,8 +83,8 @@ import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
+import * as controls from "./module/controls.js";
 import { Registry } from "./module/registry.js";
-import { PF1Controls } from "./module/controls.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -196,7 +196,7 @@ Hooks.once("init", function () {
     tooltip: null,
     runUnitTests,
     AbilityTemplate,
-    controls: PF1Controls,
+    controls,
     // Variables controlled by control configuration
     skipConfirmPrompt: false,
     tokenTooltip: {

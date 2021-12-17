@@ -236,18 +236,6 @@ export class ActorPF extends Actor {
     return this._visionPermissionSheet;
   }
 
-  _dataIsPC(data) {
-    if (data.permission != null) {
-      const nonGM = game.users.contents.filter((u) => !u.isGM);
-      return nonGM.some((u) => {
-        if (data.permission["default"] >= CONST.DOCUMENT_PERMISSION_LEVELS["OWNER"]) return true;
-        return data.permission[u._id] >= CONST.DOCUMENT_PERMISSION_LEVELS["OWNER"];
-      });
-    }
-    const hasPlayerOwner = this.hasPlayerOwner;
-    return hasPlayerOwner;
-  }
-
   _prepareContainerItems(items) {
     const collection = [];
 
@@ -3489,7 +3477,6 @@ export class ActorPF extends Actor {
       if (this.sheet != null && this.sheet.rendered) {
         data = mergeObject(data, this.sheet.getDropData(data));
       }
-      delete data._id;
       return this.createEmbeddedDocuments("Item", [data]);
     });
   }
@@ -3753,7 +3740,7 @@ export class ActorPF extends Actor {
 
       // Add children to list of items to be deleted
       const _addChildren = async function (id) {
-        const item = this.items.find((o) => o.id === id);
+        const item = this.items.get(id);
         const children = await item.getLinkedItems("children");
         for (const child of children) {
           if (!data.includes(child.id)) {

@@ -7,17 +7,15 @@ export class TokenPF extends Token {
     // Get the changed attributes
     const keys = Object.keys(data).filter((k) => k !== "_id");
     const changed = new Set(keys);
-    const changedFlags = new Set(Object.keys(data.flags?.pf1 ?? {}));
+    const changedFlags = Object.keys(data.flags?.pf1 ?? {});
 
-    const testFlags =
-      new Set(
-        [
-          "disableLowLight",
-          "lowLightVision",
-          "lowLightVisionMultiplier",
-          "lowLightVisionMultiplierBright",
-        ].filter((s) => changedFlags.has(s))
-      ).size > 0;
+    const testFlags = [
+      "disableLowLight",
+      "lowLightVision",
+      "lowLightVisionMultiplier",
+      "lowLightVisionMultiplierBright",
+    ].some((s) => changedFlags.includes(s));
+
     if (testFlags || changed.has("light")) {
       canvas.perception.schedule({
         lighting: { initialize: true, refresh: true },

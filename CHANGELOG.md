@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.80.0 - 2021-12-17
+
+### Changelog
+
+- Update compatibility to FVTT V9
+
 ## 0.79.10 - 2021-12-2
 
 ### Bug Fixes

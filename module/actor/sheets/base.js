@@ -1194,7 +1194,7 @@ export class ActorSheetPF extends ActorSheet {
     let maxValue;
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = getProperty(this.document.data, name);
+      prevValue = getProperty(this.document.data, name) ?? "";
       if (prevValue && typeof prevValue !== "string") prevValue = prevValue.toString();
 
       if (name.endsWith(".value")) {

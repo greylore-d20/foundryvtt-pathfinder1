@@ -207,7 +207,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
       })
     : null;
   if (!item) {
-    const msg = game.i18n.format("PF1.WarningNoItemOnActor", { 0: actor.name, 1: itemName });
+    const msg = game.i18n.format("PF1.WarningNoItemOnActor", { 0: actor?.name, 1: itemName });
     console.warn(msg);
     return ui.notifications.warn(msg);
   }

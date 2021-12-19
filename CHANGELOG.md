@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.80.1 - 2021-12-19
+
+### Bug Fixes
+
+- Keybindings were broken after Foundry API changes
+- Fix an issue with changing available spell slots manually
+
 ## 0.80.0 - 2021-12-17
 
 ### Changelog

@@ -24,6 +24,18 @@ export const registerSystemControls = () => {
     },
   });
 
+  game.keybindings.register("pf1", "forceShowItem", {
+    name: "PF1.KEYBINDINGS.ForceShowItem.Name",
+    hint: game.i18n.localize("PF1.KEYBINDINGS.ForceShowItem.Hint"),
+    uneditable: CTRL_KEYS,
+    onDown: () => {
+      game.pf1.forceShowItem = true;
+    },
+    onUp: () => {
+      game.pf1.forceShowItem = false;
+    },
+  });
+
   game.keybindings.register("pf1", "hideTokenTooltip", {
     name: "PF1.KEYBINDINGS.HideTokenTooltip.Name",
     hint: game.i18n.localize("PF1.KEYBINDINGS.HideTokenTooltip.Hint"),
@@ -38,18 +50,6 @@ export const registerSystemControls = () => {
     restricted: true,
     onDown: () => game.pf1.controls._hideTokenTooltipGMInfo(true),
     onUp: () => game.pf1.controls._hideTokenTooltipGMInfo(false),
-  });
-
-  game.keybindings.register("pf1", "forceShowItem", {
-    name: "PF1.KEYBINDINGS.ForceShowItem.Name",
-    hint: game.i18n.localize("PF1.KEYBINDINGS.ForceShowItem.Hint"),
-    uneditable: CTRL_KEYS,
-    onDown: () => {
-      game.pf1.forceShowItem = true;
-    },
-    onUp: () => {
-      game.pf1.forceShowItem = false;
-    },
   });
 };
 

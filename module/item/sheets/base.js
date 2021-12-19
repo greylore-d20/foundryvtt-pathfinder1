@@ -182,7 +182,7 @@ export class ItemSheetPF extends ItemSheet {
             name: "data.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: data.item.data.data.unidentified.price,
+            value: this.item.getValue({ sellValue: 1, forceUnidentified: true }),
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -193,7 +193,7 @@ export class ItemSheetPF extends ItemSheet {
             name: "data.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.data.unidentified.price,
+            value: this.item.getValue({ sellValue: 1 }),
             id: "data-price",
           });
         } else {

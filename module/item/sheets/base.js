@@ -147,6 +147,15 @@ export class ItemSheetPF extends ItemSheet {
     if (data.isPhysical) {
       data.descriptionAttributes = [];
 
+      // Add quantity
+      data.descriptionAttributes.push({
+        isNumber: true,
+        name: "data.quantity",
+        label: game.i18n.localize("PF1.Quantity"),
+        value: data.item.data.data.quantity,
+        id: "data-quantity",
+      });
+
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
@@ -173,7 +182,7 @@ export class ItemSheetPF extends ItemSheet {
             name: "data.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: data.item.data.data.unidentified.price,
+            value: this.item.getValue({ sellValue: 1, forceUnidentified: true }),
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -184,7 +193,7 @@ export class ItemSheetPF extends ItemSheet {
             name: "data.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.data.unidentified.price,
+            value: this.item.getValue({ sellValue: 1 }),
             id: "data-price",
           });
         } else {

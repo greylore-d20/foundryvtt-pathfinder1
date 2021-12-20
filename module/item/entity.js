@@ -4490,7 +4490,17 @@ export class ItemPF extends Item {
     return inLowestDenomination ? total : total / 100;
   }
 
-  getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false } = {}) {
+  /**
+   * Returns the displayed value of an item according to multiple options
+   *
+   * @param {object} [options] - Various optional parameters affecting value calculations
+   * @param {boolean} [options.recursive] - Whether the value of contained items should be included
+   * @param {number} [options.sellValue] - The sell value multiplier
+   * @param {boolean} [options.inLowestDenomination] - Whether the value should be returned in the lowest denomination
+   * @param {boolean} [options.forceUnidentified] - Override whether the value should use the unidentified price
+   * @returns {number} The item's value
+   */
+  getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
     // Add item's contained currencies
     let result = this.getTotalCurrency({ inLowestDenomination });
 
@@ -4508,7 +4518,7 @@ export class ItemPF extends Item {
     const quantity = getProperty(this.data, "data.quantity") || 0;
 
     // Add item's price
-    result += getActualValue(!this.showUnidentifiedData) * quantity;
+    result += getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
 
     // Modify sell value
     if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;

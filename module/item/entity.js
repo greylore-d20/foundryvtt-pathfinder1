@@ -875,7 +875,7 @@ export class ItemPF extends Item {
     {
       const newLevel = data["data.level"];
       if (this.type === "class" && newLevel !== undefined) {
-        const prevLevel = this._prevLevel ?? newLevel;
+        const prevLevel = this.data.data.level ?? newLevel;
         if (this._prevLevel !== undefined) delete this._prevLevel;
         await this._onLevelChange(prevLevel, newLevel);
       }
@@ -2988,7 +2988,7 @@ export class ItemPF extends Item {
       if (newItems.length) {
         const items = await actor.createEmbeddedDocuments(
           "Item",
-          newItems.map((o) => o.toObject())
+          newItems.map((o) => o.data)
         );
 
         const updateData = [];
@@ -3005,13 +3005,6 @@ export class ItemPF extends Item {
           await actor.updateEmbeddedDocuments("Item", updateData);
         }
       }
-      // const newItemData = await ItemPF.create(itemData, { parent: this.parent });
-      // const newItem = this.parent.items.find((o) => o.id === newItemData.id);
-
-      // // await this.setFlag("pf1", `links.classAssociations.${newItemData._id}`, co.level);
-      // selfUpdateData[`flags.pf1.links.classAssociations.${newItemData.id}`] = co.level;
-      // await this.createItemLink("children", "data", newItem, newItem.id);
-      // }
     }
 
     // Remove items associated to this class

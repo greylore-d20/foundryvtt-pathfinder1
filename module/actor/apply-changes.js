@@ -650,10 +650,8 @@ export const addDefaultChanges = function (changes) {
       for (const c of allClasses) {
         const classType = c.data.data.classType || "base";
         let formula;
-        console.log(classType);
         if (classType === "custom") {
           formula = c.data.data.savingThrows[a].custom || "0";
-          console.log("SAVING:", formula);
         } else {
           formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
         }

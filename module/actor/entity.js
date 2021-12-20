@@ -513,10 +513,8 @@ export class ActorPF extends Actor {
         this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
           const babType = obj.data.data.bab;
           let formula;
-          console.log(babType);
           if (babType === "custom") {
             formula = obj.data.data.babFormula || "0";
-            console.log("BABFORMULA", formula);
           } else {
             formula = CONFIG.PF1.classBABFormulas[babType] || "0";
           }

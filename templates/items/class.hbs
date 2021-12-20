@@ -83,6 +83,10 @@
           {{/each}}
           {{/select}}
         </select>
+        {{#if (eq data.bab "custom")}}
+        <label>{{localize "PF1.Formula"}}</label>
+        <input type='text' name='data.babFormula' value='{{data.babFormula}}'>
+        {{/if}}
       </div>
 
       {{!-- Skills/Level --}}
@@ -126,6 +130,10 @@
           {{/each}}
           {{/select}}
         </select>
+        {{#if (eq savingThrow.value "custom")}}
+        <label>{{localize "PF1.Formula"}}</label>
+        <input name="data.savingThrows.{{id}}.custom" type="text" value="{{savingThrow.custom}}" />
+        {{/if}}
       </div>
       {{/each}}
 

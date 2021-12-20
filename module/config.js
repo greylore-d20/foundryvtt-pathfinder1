@@ -85,6 +85,7 @@ export const PF1 = {
     low: "PF1.Low",
     med: "PF1.Medium",
     high: "PF1.High",
+    custom: "PF1.Custom",
   },
 
   /**
@@ -93,6 +94,7 @@ export const PF1 = {
   classSavingThrows: {
     low: "PF1.Poor",
     high: "PF1.Good",
+    custom: "PF1.Custom",
   },
 
   /**
@@ -102,6 +104,7 @@ export const PF1 = {
     low: "floor(@level * 0.5)",
     med: "floor(@level * 0.75)",
     high: "@level",
+    custom: "0",
   },
 
   /**
@@ -125,6 +128,10 @@ export const PF1 = {
       high: "2 + floor(@level / 2)",
     },
     mythic: {
+      low: "0",
+      high: "0",
+    },
+    custom: {
       low: "0",
       high: "0",
     },

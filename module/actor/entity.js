@@ -496,6 +496,8 @@ export class ActorPF extends Actor {
             if (babScale === "high") return cur + obj.data.data.level;
             if (babScale === "med") return cur + obj.data.data.level * 0.75;
             if (babScale === "low") return cur + obj.data.data.level * 0.5;
+            if (babScale === "custom")
+              return cur + RollPF.safeRoll(obj.data.data.babFormula || "0", { level: obj.data.data.level }).total;
             return cur;
           }, 0)
         );
@@ -509,8 +511,16 @@ export class ActorPF extends Actor {
         }
       } else {
         this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
-          const v = RollPF.safeRoll(CONFIG.PF1.classBABFormulas[obj.data.data.bab], { level: obj.data.data.level })
-            .total;
+          const babType = obj.data.data.bab;
+          let formula;
+          console.log(babType);
+          if (babType === "custom") {
+            formula = obj.data.data.babFormula || "0";
+            console.log("BABFORMULA", formula);
+          } else {
+            formula = CONFIG.PF1.classBABFormulas[babType] || "0";
+          }
+          const v = RollPF.safeRoll(formula, { level: obj.data.data.level }).total;
 
           if (v !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({
@@ -3562,7 +3572,12 @@ export class ActorPF extends Actor {
         };
 
         for (const k of Object.keys(result.classes[tag].savingThrows)) {
-          let formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
+          let formula;
+          if (classType === "custom") {
+            formula = cls.data.data.savingThrows[k].custom || "0";
+          } else {
+            formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
+          }
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
 

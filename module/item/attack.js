@@ -589,7 +589,7 @@ export const addDamage = async function (shared) {
   shared.ammoUsed = 1;
 
   // Set conditional modifiers
-  const conditionalParts = {
+  shared.conditionalParts = {
     "damage.normal": shared.conditionalPartsCommon["damage.allDamage.normal"] ?? [],
   };
 
@@ -1068,4 +1068,6 @@ export const postMessage = async function (shared) {
     if (shared.chatMessage && shared.scriptData.hideChat !== true) result = this.roll();
     else result = { descriptionOnly: true };
   }
+
+  return result;
 };

@@ -1787,7 +1787,7 @@ export class ItemPF extends Item {
     if (allowed === false) return;
 
     // Get new roll data
-    shared.rollData = _callFn("getRollData");
+    shared.rollData = await _callFn("getRollData");
 
     // Show attack dialog, if appropriate
     if (!skipDialog) {
@@ -1798,17 +1798,17 @@ export class ItemPF extends Item {
 
       // Alter roll data
       shared.fullAttack = result.fullAttack;
-      _callFn("alterRollData", result.html);
+      await _callFn("alterRollData", result.html);
     }
 
     // Generate attacks
-    const baseAttacks = _callFn("generateAttacks");
+    const baseAttacks = await _callFn("generateAttacks");
     shared.attacks = shared.fullAttack ? [...baseAttacks, ...shared.attacks] : baseAttacks;
     // Handle conditionals
-    _callFn("handleConditionals");
+    await _callFn("handleConditionals");
 
     // Check attack requirements, post dialog
-    reqErr = _callFn("checkAttackRequirements");
+    reqErr = await _callFn("checkAttackRequirements");
     if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
     // Generate chat attacks
@@ -1828,16 +1828,18 @@ export class ItemPF extends Item {
     if (shared.rollData.chargeCost > 0) await this.addCharges(-shared.rollData.chargeCost);
 
     // Retrieve message data
-    _callFn("getMessageData");
+    await _callFn("getMessageData");
     // Call script calls
     await _callFn("executeScriptCalls");
     // Post message
-    await _callFn("postMessage");
+    const result = await _callFn("postMessage");
 
     // Deselect targets
     for (const t of game.user.targets) {
       t.setTarget(false);
     }
+
+    return result;
   }
 
   /**

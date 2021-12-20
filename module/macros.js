@@ -261,9 +261,10 @@ export const rollSaveMacro = function (actorId, saveId) {
  * @param {object} [options] - Additional parameters
  * @param {string} [options.actorName] - The actor's name
  * @param {string} [options.actorId] - The actor's identifier
+ * @param options.rollMode
  * @returns {Promise|void} The defense roll, or void if no actor is found
  */
-export const rollDefenses = function ({ actorName = null, actorId = null } = {}) {
+export const rollDefenses = function ({ actorName = null, actorId = null, rollMode = null } = {}) {
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
     const msg = game.i18n.format("PF1.ErrorNoApplicableActorFoundForAction", {
@@ -273,7 +274,7 @@ export const rollDefenses = function ({ actorName = null, actorId = null } = {})
     return ui.notifications.warn(msg);
   }
 
-  return actor.rollDefenses();
+  return actor.rollDefenses({ rollMode });
 };
 
 /**

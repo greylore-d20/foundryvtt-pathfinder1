@@ -1,0 +1,25 @@
+<h2>{{localize "PF1.Targets"}}</h2>
+
+<div class="attack-targets">
+  {{#each targets as |t|}}
+    <div class="target" data-uuid="{{t.uuid}}">
+      <img class="target-image" src="{{t.actorData.img}}"/>
+
+      {{!-- AC --}}
+      <div class="ac" data-gm-sensitive-uuid="{{t.uuid}}">
+        <div class="normal" title="{{localize "PF1.ACNormal"}}">
+          <i class="fas fa-shield-alt"></i>
+          <span class="value">{{t.actorData.data.attributes.ac.normal.total}}</span>
+        </div>
+        <div class="touch" title="{{localize "PF1.ACTouch"}}">
+          <i class="fas fa-hand-point-up"></i>
+          <span class="value">{{t.actorData.data.attributes.ac.touch.total}}</span>
+        </div>
+        <div class="flatFooted" title="{{localize "PF1.ACFlatFooted"}}">
+          <i class="fas fa-shoe-prints"></i>
+          <span class="value">{{t.actorData.data.attributes.ac.flatFooted.total}}</span>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>

@@ -14,6 +14,14 @@ export class ChatMessagePF extends ChatMessage {
     if (!itemId || !actor) return false;
     return actor.items.get(itemId);
   }
+
+  /**
+   * @returns {TokenPF[]} The tokens which were targeted with this chat card.
+   */
+  get targets() {
+    const targetIds = this.data.flags?.pf1?.metadata?.targets ?? [];
+    return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+  }
 }
 
 // Returns a promise to the created chatMessage or false if no command was executed

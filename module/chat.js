@@ -51,6 +51,30 @@ export const hideRollInfo = function (app, html, data) {
 export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.user.isGM) return;
 
+  // Hide info that's always sensitive, no matter the card's owner
+  html.find(".gm-sensitive-always").remove();
+
+  // Hide info about unowned tokens
+  html.find("[data-gm-sensitive-uuid]").each((a, elem) => {
+    // Quickly hide element
+    elem = $(elem);
+    elem.hide();
+
+    // Then check for stuff
+    const uuid = elem.data("gm-sensitive-uuid");
+    if (!uuid) return;
+    fromUuid(uuid).then((obj) => {
+      //  Show element again, since we have permission
+      if (obj?.testUserPermission && obj.testUserPermission(game.user, "OBSERVER")) {
+        elem.show();
+      }
+      // Remove element completely, since we don't have permission
+      else {
+        elem.remove();
+      }
+    });
+  });
+
   const speaker = app.data.speaker;
   let actor = null;
   if (speaker != null) {
@@ -62,10 +86,36 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     }
   }
 
-  if (!actor || (actor && actor.testUserPermission(game.user, "LIMITED"))) return;
+  if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
 
   // Hide info
   html.find(".gm-sensitive").remove();
+
+  // Hide identified and description
+  const item = app.itemSource;
+  if (item != null && item.data?.data?.identified === false) {
+    const unidentifiedName = item.data.data.unidentified?.name;
+    if (unidentifiedName) {
+      html.find("header .item-name").text(unidentifiedName);
+    }
+    const unidentifiedDescription = item.data.data.description?.unidentified;
+    html.find(".card-content").html(TextEditor.enrichHTML(unidentifiedDescription, item.getRollData()));
+  }
+
+  // Alter GM inner texts
+  html.find("[data-gm-sensitive-inner]").each((a, elem) => {
+    elem = $(elem);
+    elem.text(elem.data("gm-sensitive-inner"));
+    elem.removeData("gm-sensitive-inner");
+  });
+
+  // Turn rolls into raw strings
+  html.find(".inline-roll").each((a, elem) => {
+    const roll = Roll.fromJSON(unescape(elem.dataset.roll));
+    const parent = elem.parentNode;
+    parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);
+    parent.removeChild(elem);
+  });
 };
 
 export const addChatCardTitleGradient = async function (app, html, data) {
@@ -127,3 +177,57 @@ export const createInlineRollString = (roll, { hide3d = true } = {}) =>
   `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
   title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
+
+export const addTargetCallbacks = function (app, html) {
+  const targetElems = html.find(".attack-targets .target[data-uuid]");
+
+  // Define getter functions
+  const _getTokenByElem = async function (elem) {
+    const actor = await fromUuid(elem?.dataset.uuid ?? "");
+    return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
+  };
+  const _getRootTargetElement = function (elem) {
+    if (elem.dataset.uuid != null) return elem;
+    return elem.closest("[data-uuid]");
+  };
+
+  // Create image callback functions
+  const _mouseEnterCallback = function (event) {
+    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+      t?._onHoverIn(event, { hoverOutOthers: false });
+    });
+  };
+  const _mouseLeaveCallback = function (event) {
+    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+      t?._onHoverOut(event);
+    });
+  };
+  const _imageClickCallback = function (event) {
+    event.preventDefault();
+    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+      if (t?.actor.testUserPermission(game.user, "OWNER")) {
+        t.control();
+      }
+    });
+  };
+  const _ACClickCallback = function (event) {
+    event.preventDefault();
+    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+      t?.actor.rollDefenses({ rollMode: "selfroll" });
+    });
+  };
+
+  // Add callbacks
+  for (let elem of targetElems) {
+    elem = $(elem);
+
+    // Image element events
+    const imgElem = elem.find(".target-image");
+    imgElem.on("mouseenter", _mouseEnterCallback);
+    imgElem.on("mouseleave", _mouseLeaveCallback);
+    imgElem.on("click", _imageClickCallback);
+
+    // Misc element events
+    elem.find(".ac").on("click", _ACClickCallback);
+  }
+};

@@ -2710,8 +2710,11 @@ export class ActorPF extends Actor {
 
   /**
    * Show defenses in chat
+   *
+   * @param root0
+   * @param root0.rollMode
    */
-  async rollDefenses() {
+  async rollDefenses({ rollMode = null } = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2819,9 +2822,12 @@ export class ActorPF extends Actor {
 
     setProperty(data, "flags.pf1.subject", "defenses");
 
-    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, {
+    const chatData = {
       speaker: ChatMessage.getSpeaker({ actor: this }),
-    });
+      rollMode,
+    };
+
+    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);
   }
 
   /* -------------------------------------------- */

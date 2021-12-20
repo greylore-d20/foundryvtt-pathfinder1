@@ -1,5 +1,5 @@
 export class ChatAttack {
-  constructor(item, { label = "", primaryAttack = true, rollData = {} } = {}) {
+  constructor(item, { label = "", primaryAttack = true, rollData = {}, targets = null } = {}) {
     this.primaryAttack = primaryAttack;
     this._rollData = rollData;
     this.setItem(item);
@@ -49,6 +49,7 @@ export class ChatAttack {
     this.effectNotes = [];
     this.attackNotesHTML = "";
     this.effectNotesHTML = "";
+    this.targets = targets;
   }
 
   get critRange() {

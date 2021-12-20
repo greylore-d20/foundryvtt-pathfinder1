@@ -749,8 +749,12 @@ export const getMessageData = async function (shared) {
   shared.chatData = {
     speaker: ChatMessage.getSpeaker({ actor: this.parent }),
     rollMode: shared.rollMode,
-    // "flags.pf1.noRollRender": true,
   };
+
+  // Set attack sound
+  if (this.data.data.soundEffect) shared.chatData.sound = this.data.data.soundEffect;
+  // Set dice sound if neither attack sound nor Dice so Nice are available
+  else if (game.dice3d == null || !game.dice3d.isEnabled()) shared.chatData.sound = CONFIG.sounds.dice;
 
   // Get extra text
   const props = [];

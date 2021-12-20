@@ -84,6 +84,7 @@ import * as chat from "./module/chat.js";
 import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
 import * as controls from "./module/controls.js";
+import * as ItemAttack from "./module/item/attack.js";
 import { Registry } from "./module/registry.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
@@ -196,6 +197,7 @@ Hooks.once("init", function () {
     tooltip: null,
     runUnitTests,
     AbilityTemplate,
+    ItemAttack,
     controls,
     // Variables controlled by control configuration
     skipConfirmPrompt: false,

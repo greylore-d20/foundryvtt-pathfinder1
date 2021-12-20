@@ -184,6 +184,7 @@ export const addTargetCallbacks = function (app, html) {
   // Define getter functions
   const _getTokenByElem = async function (elem) {
     const actor = await fromUuid(elem?.dataset.uuid ?? "");
+    if (actor instanceof TokenDocument) return actor.object;
     return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
   };
   const _getRootTargetElement = function (elem) {

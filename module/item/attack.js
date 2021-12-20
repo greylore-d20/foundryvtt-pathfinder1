@@ -864,17 +864,19 @@ export const getMessageData = async function (shared) {
   const metadata = game.pf1.ItemAttack.generateChatMetadata.call(this, shared);
 
   // Get target info
-  const targets = metadata.targets?.length
-    ? metadata.targets.map((o) => canvas.tokens.get(o)).filter((o) => o != null)
-    : [];
-  if (targets.length) {
-    shared.templateData.targets = targets.map((o) => {
-      return {
-        actorData: o.actor.data,
-        tokenData: o.data,
-        uuid: o.actor.uuid,
-      };
-    });
+  if (!game.settings.get("pf1", "disableAttackCardTargets")) {
+    const targets = metadata.targets?.length
+      ? metadata.targets.map((o) => canvas.tokens.get(o)).filter((o) => o != null)
+      : [];
+    if (targets.length) {
+      shared.templateData.targets = targets.map((o) => {
+        return {
+          actorData: o.actor.data,
+          tokenData: o.data,
+          uuid: o.actor.uuid,
+        };
+      });
+    }
   }
 
   shared.chatData["flags.pf1.metadata"] = metadata;

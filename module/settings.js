@@ -552,6 +552,18 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Disable targets for attack cards
+   */
+  game.settings.register("pf1", "disableAttackCardTargets", {
+    name: "SETTINGS.pf1DisableAttackCardTargetsN",
+    hint: "SETTINGS.pf1DisableAttackCardTargetsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };
 
 export const registerClientSettings = function () {

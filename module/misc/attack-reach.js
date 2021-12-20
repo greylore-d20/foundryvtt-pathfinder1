@@ -161,42 +161,38 @@ export const showAttackReach = function (token, attack) {
 };
 
 export const addReachCallback = async function (data, html) {
-  const results = [];
-
   // Don't do anything under certain circumstances
   const itemId = getProperty(data, "flags.pf1.metadata.item");
-  if (!itemId) return results;
+  if (!itemId) return;
 
-  const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
-  let token;
-  if (tokenUuid) {
-    token = (await fromUuid(tokenUuid))?.object;
-  }
-  if (!token || !token.actor) return results;
+  // Define getter functions
+  const _getTokenByUuid = async function (uuid) {
+    const actor = await fromUuid(uuid);
+    if (actor instanceof TokenDocument) return actor.object;
+    return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
+  };
 
-  const item = token.actor.items.find((o) => o.id === itemId);
-  if (!item) return results;
-
+  // Define functions
   let highlight;
-  // Add mouse enter callback
   const mouseEnterCallback = function () {
-    if (token._destroyed) return;
-    if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item);
+    const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
+    _getTokenByUuid(tokenUuid).then((t) => {
+      if (!t) return;
+      const item = t.actor.items.get(itemId);
+      if (!item) return;
+      if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(t, item);
 
-    if (!highlight) return;
+      if (!highlight) return;
 
-    highlight.normal.render();
-    highlight.reach.render();
-    highlight.extra.forEach((hl) => {
-      hl.render();
+      highlight.normal.render();
+      highlight.reach.render();
+      highlight.extra.forEach((hl) => {
+        hl.render();
+      });
     });
   };
-  const rangeElems = html.find(".card-range");
-  rangeElems.on("mouseenter", mouseEnterCallback);
 
-  // Add mouse leave callback
   const mouseLeaveCallback = function () {
-    if (token._destroyed) return;
     if (!highlight) return;
 
     highlight.normal.clear(true);
@@ -205,9 +201,10 @@ export const addReachCallback = async function (data, html) {
       hl.clear(true);
     });
   };
+
+  const rangeElems = html.find(".card-range");
+  rangeElems.on("mouseenter", mouseEnterCallback);
   rangeElems.on("mouseleave", mouseLeaveCallback);
-  // Add 'click' event as a safeguard to remove highlights
-  // html.on("click", mouseLeaveCallback);
 
   // Clear highlights when chat messages are rendered
   Hooks.on("renderChatMessage", () => {
@@ -219,27 +216,6 @@ export const addReachCallback = async function (data, html) {
       hl.clear(true);
     });
   });
-
-  // Add results
-  results.push(
-    {
-      event: "mouseenter",
-      callback: mouseEnterCallback,
-      elem: html,
-    },
-    {
-      event: "mouseleave",
-      callback: mouseLeaveCallback,
-      elem: html,
-    },
-    {
-      event: "click",
-      callback: mouseLeaveCallback,
-      elem: html,
-    }
-  );
-
-  return results;
 };
 
 const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {

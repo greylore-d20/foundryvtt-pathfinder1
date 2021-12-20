@@ -549,20 +549,14 @@ Hooks.on("canvasInit", function () {
 {
   const callbacks = [];
 
-  Hooks.on("canvasReady", () => {
-    // Remove old reach callbacks
-    for (const cb of callbacks) {
-      cb.elem.off(cb.event, cb.callback);
-    }
-
+  Hooks.on("ready", () => {
     // Add reach measurements
     game.messages.forEach(async (m) => {
       const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
       if (!elem || (elem && !elem.length)) return;
 
       // Add reach callback
-      const results = await addReachCallback(m.data, elem);
-      callbacks.push(...results);
+      addReachCallback(m.data, elem);
 
       // Create target callbacks
       chat.addTargetCallbacks(m, elem);

@@ -198,25 +198,38 @@
       flex: 0 0 104px;
       margin-right: 2px;
       margin-bottom: 2px;
+      border: 1px solid black;
+      padding: 0;
+
+      &.expanded {
+        flex: 0 0 100%;
+      }
 
       img.target-image {
         width: 64px;
         height: 64px;
         min-width: 64px;
         min-height: 64px;
+        max-width: 64px;
+        max-height: 64px;
         object-fit: cover;
         object-position: 50% 0;
+        margin: 0;
+        border: unset;
+        border-radius: 0;
       }
 
       .ac {
-        border-top: 1px solid black;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
         display: flex;
         flex-flow: column nowrap;
         flex: 0 0 40px;
         padding: 4px;
         justify-content: space-evenly;
+
+        &:hover {
+          text-shadow: 0 0 10px red;
+          cursor: pointer;
+        }
 
         > div {
           display: flex;

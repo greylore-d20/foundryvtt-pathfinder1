@@ -3652,6 +3652,7 @@ export class ItemPF extends Item {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async addItemBooleanFlag(flagName) {
+    flagName = String(flagName);
     const flags = getProperty(this.data, "data.flags.boolean") || [];
 
     if (flags.filter((f) => f[0] === flagName).length === 0) {
@@ -3698,6 +3699,7 @@ export class ItemPF extends Item {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async setItemDictionaryFlag(flagName, value) {
+    flagName = String(flagName);
     const flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
 
     let doUpdate = false;

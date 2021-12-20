@@ -584,6 +584,7 @@ export const naturalSort = function (arr, propertyKey = "") {
 export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
   const slcl = ItemPF.getMinimumCasterLevelBySpellData(itemData.data);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
+    name: itemData.name,
     sl: slcl[0],
     cl: slcl[1],
   });

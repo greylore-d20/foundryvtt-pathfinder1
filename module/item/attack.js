@@ -812,6 +812,9 @@ export const getMessageData = async function (shared) {
           0: CONFIG.PF1.savingThrows[shared.save],
           1: shared.saveDC.toString(),
         }),
+        gmSensitiveLabel: game.i18n.format("PF1.SavingThrowButtonLabelGMSensitive", {
+          save: CONFIG.PF1.savingThrows[shared.save],
+        }),
       },
     },
     { inplace: false }

@@ -62,10 +62,36 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     }
   }
 
-  if (!actor || (actor && actor.testUserPermission(game.user, "LIMITED"))) return;
+  if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
 
   // Hide info
   html.find(".gm-sensitive").remove();
+
+  // Hide identified and description
+  const item = app.itemSource;
+  if (item != null && item.data.data.identified === false) {
+    const unidentifiedName = item.data.data.unidentified?.name;
+    if (unidentifiedName) {
+      html.find("header .item-name").text(unidentifiedName);
+    }
+    const unidentifiedDescription = item.data.data.description?.unidentified;
+    html.find(".card-content").html(TextEditor.enrichHTML(unidentifiedDescription, item.getRollData()));
+  }
+
+  // Alter GM inner texts
+  html.find("[data-gm-sensitive-inner]").each((a, elem) => {
+    elem = $(elem);
+    elem.text(elem.data("gm-sensitive-inner"));
+    elem.removeData("gm-sensitive-inner");
+  });
+
+  // Turn rolls into raw strings
+  html.find(".inline-roll").each((a, elem) => {
+    const roll = Roll.fromJSON(unescape(elem.dataset.roll));
+    const parent = elem.parentNode;
+    parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);
+    parent.removeChild(elem);
+  });
 };
 
 export const addChatCardTitleGradient = async function (app, html, data) {

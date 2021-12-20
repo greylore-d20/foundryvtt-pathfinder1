@@ -53,6 +53,7 @@ export const preloadHandlebarsTemplates = async function () {
     // Chat card partials
     "systems/pf1/templates/chat/parts/attack-roll-header.hbs",
     "systems/pf1/templates/chat/parts/attack-roll-footer.hbs",
+    "systems/pf1/templates/chat/parts/attack-roll-targets.hbs",
 
     // Internal Rendering Partials
     "systems/pf1/templates/internal/spell-description.hbs",

@@ -559,8 +559,13 @@ Hooks.on("canvasInit", function () {
     game.messages.forEach(async (m) => {
       const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
       if (!elem || (elem && !elem.length)) return;
+
+      // Add reach callback
       const results = await addReachCallback(m.data, elem);
       callbacks.push(...results);
+
+      // Create target callbacks
+      chat.addTargetCallbacks(m, elem);
     });
 
     // Toggle token condition icons
@@ -578,6 +583,9 @@ Hooks.on("canvasInit", function () {
     // Add reach measurements on hover
     const results = await addReachCallback(data.message, html);
     callbacks.push(...results);
+
+    // Create target callbacks
+    chat.addTargetCallbacks(app, html);
   });
 }
 

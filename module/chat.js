@@ -51,6 +51,9 @@ export const hideRollInfo = function (app, html, data) {
 export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.user.isGM) return;
 
+  // Hide info that's always sensitive, no matter the card's owner
+  html.find(".gm-sensitive-always").remove();
+
   const speaker = app.data.speaker;
   let actor = null;
   if (speaker != null) {
@@ -153,3 +156,42 @@ export const createInlineRollString = (roll, { hide3d = true } = {}) =>
   `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
   title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
+
+export const addTargetCallbacks = function (app, html) {
+  const targetElems = html.find(".attack-targets .target[data-id]");
+
+  const _getTokenByElem = function (elem) {
+    return canvas.tokens.get(elem?.dataset.id ?? "");
+  };
+
+  // Create callback functions
+  const _mouseEnterCallback = function (event) {
+    const token = _getTokenByElem(event.currentTarget);
+    if (!token) return;
+
+    token._onHoverIn(event, { hoverOutOthers: false });
+  };
+  const _mouseLeaveCallback = function (event) {
+    const token = _getTokenByElem(event.currentTarget);
+    if (!token) return;
+
+    token._onHoverOut(event);
+  };
+  const _clickCallback = function (event) {
+    event.preventDefault();
+    const token = _getTokenByElem(event.currentTarget);
+    if (!token) return;
+
+    if (token.actor.testUserPermission(game.user, "OWNER")) {
+      token.control();
+    }
+  };
+
+  // Add callbacks
+  for (let elem of targetElems) {
+    elem = $(elem);
+    elem.on("mouseenter", _mouseEnterCallback);
+    elem.on("mouseleave", _mouseLeaveCallback);
+    elem.on("click", _clickCallback);
+  }
+};

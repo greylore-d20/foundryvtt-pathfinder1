@@ -1833,6 +1833,11 @@ export class ItemPF extends Item {
     await _callFn("executeScriptCalls");
     // Post message
     await _callFn("postMessage");
+
+    // Deselect targets
+    for (const t of game.user.targets) {
+      t.setTarget(false);
+    }
   }
 
   /**

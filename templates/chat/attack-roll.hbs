@@ -1,6 +1,10 @@
 <div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
   {{~> "systems/pf1/templates/chat/parts/attack-roll-header.hbs"}}
 
+  {{#if targets}}
+  {{> "systems/pf1/templates/chat/parts/attack-roll-targets.hbs"}}
+  {{/if}}
+
   {{#each attacks as |atk|}}
   <div class="chat-attack">
     {{#unless atk.notesOnly}}

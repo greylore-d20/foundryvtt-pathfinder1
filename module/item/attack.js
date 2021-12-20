@@ -549,6 +549,7 @@ export const addAttacks = async function (shared) {
       label: atk.label,
       primaryAttack: shared.primaryAttack,
       rollData: shared.rollData,
+      targets: game.user.targets,
     });
 
     // Add attack roll
@@ -862,6 +863,19 @@ export const getMessageData = async function (shared) {
   // Generate metadata
   const metadata = game.pf1.ItemAttack.generateChatMetadata.call(this, shared);
 
+  // Get target info
+  const targets = metadata.targets?.length
+    ? metadata.targets.map((o) => canvas.tokens.get(o)).filter((o) => o != null)
+    : [];
+  if (targets.length) {
+    shared.templateData.targets = targets.map((o) => {
+      return {
+        actorData: o.actor.data,
+        tokenData: o.data,
+      };
+    });
+  }
+
   shared.chatData["flags.pf1.metadata"] = metadata;
   shared.chatData["flags.core.canPopout"] = true;
 };
@@ -963,6 +977,9 @@ export const generateChatMetadata = function (shared) {
   metadata.rolls = {
     attacks: {},
   };
+
+  // Add targets
+  metadata.targets = Array.from(game.user.targets).map((o) => o.id);
 
   // Add attack rolls
   for (let a = 0; a < shared.chatAttacks.length; a++) {

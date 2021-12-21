@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.80.2 - 2021-12-21
+
+### Bug Fixes
+
+- Fix item quantity input field missing from item sheets ([1179](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1179))
+- Fix error on passing time for tokens with origin actors deleted ([1184](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1184))
+
+### Changelog
+
+- Hide more GM sensitive info from players
+- Added custom BAB and saing throw formula options for classes. ([234](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/234))
+- Add target info to chat attack cards
+
+### Localization
+
+- Fix consumable creation dialog's spell name ([1178](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1178))
+
+### API
+
+- Untangled items' useAttack and put the individual functions in game.pf1.ItemAttack
+
 ## 0.80.1 - 2021-12-19
 
 ### Bug Fixes

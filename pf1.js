@@ -952,7 +952,7 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
       for (const t of canvas.tokens.placeables) {
         // Skip tokens in combat to avoid too early expiration
         if (t.combatant?.combat?.started) continue;
-        t.actor.expireActiveEffects();
+        t.actor?.expireActiveEffects();
       }
     }
   };

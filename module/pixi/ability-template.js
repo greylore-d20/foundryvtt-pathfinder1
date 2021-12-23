@@ -123,7 +123,10 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         _clear();
 
         initialLayer.activate();
-        if (canResolve) resolve(false);
+        if (canResolve)
+          resolve({
+            result: false,
+          });
       };
 
       // Confirm the workflow (left-click)
@@ -134,7 +137,15 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         this.data.update(this.data);
 
         // Create the template
-        const result = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]);
+        const result = {
+          result: true,
+          place: async () => {
+            this.template = (await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]))[0];
+          },
+          delete: () => {
+            return this.template?.delete();
+          },
+        };
         _clear();
         resolve(result);
       };

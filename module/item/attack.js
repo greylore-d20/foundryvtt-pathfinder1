@@ -624,10 +624,16 @@ export const addEffectNotes = async function (shared) {
 };
 
 /**
+ * @typedef {Object} Attack_MeasureTemplateResult
+ * @property {boolean} result - Whether an area was selected.
+ * @property {Function} [place] - Function to place the template, if an area was selected.
+ * @property {Function} [delete] - Function to delete the template, if it has been placed.
+ */
+/**
  * Prompts the user for an area, based on the attack's measure template.
  *
  * @param {Object} shared - Shared data between attack functions.
- * @returns {Promise.<boolean>} Whether an area was selected.
+ * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
  */
 export const promptMeasureTemplate = async function (shared) {
   // Determine size
@@ -651,17 +657,19 @@ export const promptMeasureTemplate = async function (shared) {
 
   // Create template
   shared.template = game.pf1.AbilityTemplate.fromData(templateOptions);
+  let result;
   if (shared.template) {
     const sheetRendered = this.parent?.sheet?._element != null;
     if (sheetRendered) this.parent.sheet.minimize();
-    shared.template = await shared.template.drawPreview(shared.event);
-    if (!shared.template) {
+    result = await shared.template.drawPreview(shared.event);
+    if (!result.result) {
       if (sheetRendered) this.parent.sheet.maximize();
-      return false;
+      return result;
     }
   }
 
-  return true;
+  await result.place();
+  return result;
 };
 
 /**

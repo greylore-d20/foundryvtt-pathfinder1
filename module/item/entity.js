@@ -1646,6 +1646,23 @@ export class ItemPF extends Item {
       return this.useAttack({ ev, skipDialog, chatMessage });
     }
 
+    // Use
+    const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
+    let shared;
+    if (useScriptCalls.length > 0) {
+      const data = { chatMessage };
+
+      shared = await this.executeScriptCalls("use", { attacks: [], template: undefined, data });
+      if (shared.reject) return shared;
+      if (shared.hideChat !== true) await this.roll();
+    }
+    // Show a chat card if this item doesn't have 'use' type script call(s)
+    else {
+      if (chatMessage) return this.roll();
+      else return { descriptionOnly: true }; // nothing to show for printing description
+    }
+
+    // Deduct charges
     if (this.isCharged) {
       if (this.charges < this.chargeCost) {
         if (this.isSingleUse) {
@@ -1661,22 +1678,8 @@ export class ItemPF extends Item {
         await this.addCharges(-this.chargeCost);
       }
     }
-    const chatData = {};
-    if (this.data.data.soundEffect) chatData.sound = this.data.data.soundEffect;
 
-    const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
-    if (useScriptCalls.length > 0) {
-      const data = { chatMessage };
-
-      const shared = await this.executeScriptCalls("use", { attacks: [], template: undefined, data });
-      if (shared.hideChat !== true) await this.roll();
-      return shared;
-    }
-    // Show a chat card if this item doesn't have 'use' type script call(s)
-    else {
-      if (chatMessage) return this.roll();
-      else return { descriptionOnly: true }; // nothing to show for printing description
-    }
+    return shared;
   }
 
   parseFormulaicAttacks({ formula = null } = {}) {
@@ -1807,7 +1810,7 @@ export class ItemPF extends Item {
     // Handle conditionals
     await _callFn("handleConditionals");
 
-    // Check attack requirements, post dialog
+    // Check attack requirements, post-dialog
     reqErr = await _callFn("checkAttackRequirements");
     if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
@@ -1815,9 +1818,17 @@ export class ItemPF extends Item {
     await _callFn("generateChatAttacks");
 
     // Prompt measure template
+    let measureResult;
     if (shared.useMeasureTemplate) {
-      const measureResult = await _callFn("promptMeasureTemplate");
-      if (!measureResult) return;
+      measureResult = await _callFn("promptMeasureTemplate");
+      if (!measureResult.result) return;
+    }
+
+    // Call script calls
+    await _callFn("executeScriptCalls");
+    if (shared.scriptData?.reject) {
+      await measureResult.delete();
+      return;
     }
 
     // Handle Dice So Nice
@@ -1829,10 +1840,11 @@ export class ItemPF extends Item {
 
     // Retrieve message data
     await _callFn("getMessageData");
-    // Call script calls
-    await _callFn("executeScriptCalls");
     // Post message
-    const result = await _callFn("postMessage");
+    let result;
+    if (shared.scriptData?.hideChat !== true) {
+      result = await _callFn("postMessage");
+    } else return;
 
     // Deselect targets
     for (const t of game.user.targets) {

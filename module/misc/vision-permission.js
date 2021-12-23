@@ -71,9 +71,9 @@ export const hasTokenVision = function (token) {
   if (token.actor.testUserPermission(game.user, "OWNER")) return true;
 
   const visionFlag = token.actor.getFlag("pf1", "visionPermission");
-  if (!visionFlag || !visionFlag.users[game.user._id]) return false;
-  if (visionFlag.users[game.user._id].level === "yes") return true;
-  if (visionFlag.users[game.user._id].level === "default" && visionFlag.default === "yes") return true;
+  if (!visionFlag || !visionFlag.users[game.user.id]) return false;
+  if (visionFlag.users[game.user.id].level === "yes") return true;
+  if (visionFlag.users[game.user.id].level === "default" && visionFlag.default === "yes") return true;
 
   return false;
 };

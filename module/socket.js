@@ -3,7 +3,7 @@
  */
 export function initializeSocket() {
   game.socket.on("system.pf1", async (args) => {
-    const isFirstGM = game.user === game.users.find((u) => u.isGM).sort((a, b) => a.id - b.id)[0];
+    const isFirstGM = game.user === game.users.filter((u) => u.isGM).sort((a, b) => a.id - b.id)[0];
     try {
       switch (args.eventType) {
         case "cleanItemLink": {
@@ -11,7 +11,7 @@ export function initializeSocket() {
           const actor = await fromUuid(args.actorUUID);
           // Get item
           const parentItemData = await fromUuid(args.itemUUID);
-          const parentItem = actor.items.find((o) => o._id === parentItemData._id);
+          const parentItem = actor.items.get(parentItemData._id);
           // Get link data
           const link = args.link;
           const linkType = args.linkType;
@@ -20,9 +20,9 @@ export function initializeSocket() {
           break;
         }
         case "redrawCanvas":
-          canvas.perception.schedule({
+          canvas.perception.update({
             lighting: { initialize: true, refresh: true },
-            sight: { refresh: true },
+            sight: { initialize: true, refresh: true },
             sounds: { refresh: true },
             foreground: { refresh: true },
           });

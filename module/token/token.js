@@ -1,4 +1,4 @@
-import { hasTokenVision } from "../misc/vision-permission";
+import { hasTokenVision } from "../misc/vision-permission.js";
 
 export class TokenPF extends Token {
   async _onUpdate(data, options, ...args) {

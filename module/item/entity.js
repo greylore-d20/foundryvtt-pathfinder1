@@ -2345,7 +2345,7 @@ export class ItemPF extends Item {
     // Set aura strength
     setProperty(result, "item.auraStrength", this.auraStrength);
 
-    result.item.dc = this.hasSave ? this.getDC(result) : 0;
+    result.dc = this.hasSave ? this.getDC(result) : 0;
 
     this._rollData = result.item;
 

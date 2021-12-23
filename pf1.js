@@ -20,6 +20,7 @@ import { measureDistances, getConditions } from "./module/canvas.js";
 import { TemplateLayerPF } from "./module/measure.js";
 import { MeasuredTemplatePF } from "./module/measure.js";
 import { SightLayerPF } from "./module/low-light-vision.js";
+import { ActorBasePF } from "./module/actor/base.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
@@ -41,6 +42,7 @@ import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
+import { ItemBasePF } from "./module/item/base.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
 import { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
@@ -69,6 +71,7 @@ import {
   getFirstActiveGM,
   isMinimumCoreVersion,
 } from "./module/lib.js";
+import { getAbilityModifier } from "./module/actor/lib.mjs";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
 import { ChatAttack } from "./module/misc/chat-attack.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
@@ -113,8 +116,9 @@ Hooks.once("init", function () {
 
   // Create a PF1 namespace within the game global
   game.pf1 = {
+    polymorphism: { ActorBasePF, ItemBasePF },
     documents: { ActorPF, ItemPF, TokenDocumentPF },
-    entities: { ActorPF, ItemPF, TokenDocumentPF },
+    entities: { ActorPF, ItemPF, TokenDocumentPF }, // Deprecated
     applications: {
       // Actors
       ActorSheetPF,
@@ -163,6 +167,7 @@ Hooks.once("init", function () {
       createTabs,
       getItemOwner,
       getActorFromId,
+      getAbilityModifier,
       getChangeFlat,
       getSourceInfo,
       convertDistance,
@@ -231,11 +236,26 @@ Hooks.once("init", function () {
   }
   CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
-  CONFIG.Actor.documentClass = ActorPF;
+  CONFIG.Actor.documentClass = ActorBasePF;
+  CONFIG.Actor.documentClasses = {
+    default: ActorPF, // fallback
+    // Specific types
+    // character: ActorPF,
+    // npc: ActorPF,
+  };
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
-  CONFIG.Item.documentClass = ItemPF;
+  CONFIG.Item.documentClass = ItemBasePF;
+  CONFIG.Item.documentClasses = {
+    default: ItemPF, // Fallback
+    // Specific types
+    // equipment: ItemPF,
+    // loot: ItemPF,
+    // attack: ItemPF,
+    // spell: ItemPF,
+    // etc.
+  };
   CONFIG.Combat.documentClass = CombatPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;

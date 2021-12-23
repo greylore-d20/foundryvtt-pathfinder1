@@ -1,3 +1,5 @@
+import { ActorBasePF } from "./base.js";
+import { getAbilityModifier } from "./lib.mjs";
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
 import { createTag, convertDistance, convertWeight, enrichHTMLUnrolled } from "../lib.js";
@@ -18,7 +20,7 @@ import { VisionPermissionSheet } from "../misc/vision-permission.js";
 /**
  * Extend the base Actor class to implement additional game system logic.
  */
-export class ActorPF extends Actor {
+export class ActorPF extends ActorBasePF {
   // TODO: Remove once all broken _id references are fixed.
   get _id() {
     console.error("ActorPF._id is obsolete; use ActorPF.id instead.");
@@ -3893,30 +3895,12 @@ export class ActorPF extends Actor {
     }, {});
   }
 
-  /**
-   * Determines what ability modifier is appropriate for a given score.
-   *
-   * @param {number} [score] - The score to find the modifier for.
-   * @param {object} [options={}] - Options for this function.
-   * @param {number} [options.penalty=0] - A penalty value to take into account.
-   * @param {number} [options.damage=0] - Ability score damage to take into account.
-   * @returns {number} The modifier for the given score.
-   */
-  static getAbilityModifier(score = null, options = {}) {
-    if (score != null) {
-      const penalty = Math.abs(options.penalty ?? 0);
-      const damage = Math.abs(options.damage ?? 0);
-      return Math.max(-5, Math.floor((score - 10) / 2) - Math.floor(penalty / 2) - Math.floor(damage / 2));
-    }
-    return 0;
-  }
-
   refreshAbilityModifiers() {
     for (const k of Object.keys(this.data.data.abilities)) {
       const total = this.data.data.abilities[k].total;
       const penalty = Math.abs(this.data.data.abilities[k].penalty || 0);
       const damage = this.data.data.abilities[k].damage;
-      const newMod = this.constructor.getAbilityModifier(total, { penalty, damage });
+      const newMod = getAbilityModifier(total, { penalty, damage });
       this.data.data.abilities[k].mod = newMod;
 
       // Store previous ability score

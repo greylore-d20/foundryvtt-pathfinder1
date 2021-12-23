@@ -1,3 +1,4 @@
+import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
@@ -12,7 +13,7 @@ import { RollPF } from "../roll.js";
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-export class ItemPF extends Item {
+export class ItemPF extends ItemBasePF {
   // TODO: Remove once all broken _id references are fixed.
   get _id() {
     console.error("ItemPF._id is obsolete; use ItemPF.id instead.");

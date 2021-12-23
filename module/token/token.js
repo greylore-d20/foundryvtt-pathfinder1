@@ -95,20 +95,12 @@ export class TokenPF extends Token {
 
     // Initialize a light source
     if (isLightSource && !deleted) {
-      const dim = this.getLightRadius(
-        Math.max(
-          this.data.light.dim,
-          this.disableLowLight ? this.data.light.dim : this.data.light.dim * canvas.sight.lowLightMultiplier().dim
-        )
-      );
-      const bright = this.getLightRadius(
-        Math.max(
-          this.data.light.bright,
-          this.disableLowLight
-            ? this.data.light.bright
-            : this.data.light.bright * canvas.sight.lowLightMultiplier().bright
-        )
-      );
+      let dim = this.getLightRadius(this.data.light.dim);
+      let bright = this.getLightRadius(this.data.light.bright);
+      if (this.data.light.luminosity >= 0 && !this.disableLowLight) {
+        dim *= canvas.sight.lowLightMultiplier().dim;
+        bright *= canvas.sight.lowLightMultiplier().bright;
+      }
 
       const lightConfig = foundry.utils.mergeObject(this.data.light.toObject(false), {
         x: origin.x,

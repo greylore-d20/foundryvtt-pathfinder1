@@ -105,11 +105,13 @@ export class AmbientLightPF extends AmbientLight {
 
   get dimRadius() {
     const result = super.dimRadius;
+    if (this.data.config.luminosity < 0) return result;
     return Math.max(result, this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().dim);
   }
 
   get brightRadius() {
     const result = super.brightRadius;
+    if (this.data.config.luminosity < 0) return result;
     return Math.max(result, this.disableLowLight ? result : result * canvas.sight.lowLightMultiplier().bright);
   }
 }

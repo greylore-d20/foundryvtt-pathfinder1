@@ -1167,7 +1167,6 @@ export class ActorSheetPF extends ActorSheet {
   createTabs(html) {
     const tabGroups = {
       primary: {
-        subdetails: {},
         skillset: {},
         spellbooks: {},
       },

@@ -1310,22 +1310,10 @@ export const addDefaultChanges = function (changes) {
             target: "attack",
             subTarget: "attack",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondGrappled"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.attack.general").negative.push({
-          value: -2,
-          name: game.i18n.localize("PF1.CondGrappled"),
-        });
-
-        changes.push(
-          ItemChange.create({
-            formula: -2,
-            target: "misc",
-            subTarget: "cmb",
-            modifier: "penalty",
-          })
-        );
-        getSourceInfo(this.sourceInfo, "data.attributes.cmb.bonus").negative.push({
           value: -2,
           name: game.i18n.localize("PF1.CondGrappled"),
         });

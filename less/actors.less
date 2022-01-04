@@ -63,6 +63,8 @@
       .race-container {
         flex: 1;
         margin: 3px 0;
+        display: flex;
+        gap: 4px;
 
         .item-controls {
           flex: 0;
@@ -76,7 +78,7 @@
           }
         }
 
-        .race {
+        .race.item-image {
           flex: 0 0 32px;
           background-size: contain;
           line-height: 32px;
@@ -89,10 +91,6 @@
           &.rollable:hover {
             background-image: url("../../icons/svg/d20-black.svg") !important;
           }
-        }
-
-        .race-info {
-          margin-left: 8px;
         }
       }
     }
@@ -724,6 +722,8 @@
       margin: 0;
       padding: 0;
       text-align: right;
+      justify-content: end;
+      align-items: center;
     }
 
     select {

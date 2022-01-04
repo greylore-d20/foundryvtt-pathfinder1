@@ -53,7 +53,7 @@
 
   <div class="form-group {{data.traits.di.cssClass}}">
     <label for="data.traits.di">{{localize "PF1.DamImm"}}</label>
-    <ul class="traits-list">
+    <ul class="traits-list tag-list">
       {{#each data.traits.di.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
@@ -63,7 +63,7 @@
 
   <div class="form-group {{data.traits.dv.cssClass}}">
     <label for="data.traits.dv">{{localize "PF1.DamVuln"}}</label>
-    <ul class="traits-list">
+    <ul class="traits-list tag-list">
       {{#each data.traits.dv.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
@@ -73,7 +73,7 @@
 
   <div class="form-group {{data.traits.ci.cssClass}}">
     <label for="data.traits.ci">{{localize "PF1.ConImm"}}</label>
-    <ul class="traits-list">
+    <ul class="traits-list tag-list">
       {{#each data.traits.ci.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
@@ -83,7 +83,7 @@
 
   <div class="form-group {{data.traits.languages.cssClass}}">
     <label for="data.traits.languages">{{localize "PF1.Languages"}}</label>
-    <ul class="traits-list">
+    <ul class="traits-list tag-list">
       {{#each data.traits.languages.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
@@ -96,7 +96,7 @@
       <label for="data.traits.weaponProf">
         {{localize "PF1.TraitWeaponProf"}}
       </label>
-      <ul class="traits-list tooltip">
+      <ul class="traits-list tooltip tag-list">
         {{#each data.traits.weaponProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>
         {{/each}}
@@ -114,7 +114,7 @@
       <label for="data.traits.armorProf">
         {{localize "PF1.TraitArmorProf"}}
       </label>
-      <ul class="traits-list tooltip">
+      <ul class="traits-list tooltip tag-list">
         {{#each data.traits.armorProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>
         {{/each}}

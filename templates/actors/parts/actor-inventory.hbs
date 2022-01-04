@@ -192,7 +192,7 @@
     <span class="text-box direct" name="data.details.carryCapacity.multiplier.user" data-dtype="Number" data-placeholder="0">{{data.details.carryCapacity.multiplier.user}}</span>
   </div>
   {{#with encumbrance}}
-  <div class="flexrow inventory-tags">
+  <div class="flexrow inventory-tags tag-list">
     <span class="tag">{{carryLabel}}</span>
     <span class="tag">{{../labels.totalValue}}</span>
   </div>
@@ -232,7 +232,7 @@
 {{else}}
 {{#with encumbrance}}
 <div class="flexcol tab-footer">
-  <div class="flexrow">
+  <div class="flexrow tag-list">
     <span class="tag carry-load">{{carryLabel}}</span>
     <span class="tag gear-value">{{../labels.totalValue}}</span>
     <span class="tag gear-value-sale">{{../labels.sellValue}}</span>

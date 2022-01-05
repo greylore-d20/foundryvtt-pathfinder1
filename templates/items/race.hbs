@@ -56,7 +56,7 @@
       {{!-- Proficiencies --}}
       <div class="form-group {{data.armorProf.cssClass}}">
         <label for="data.weaponProf">{{localize "PF1.TraitWeaponProf"}}</label>
-        <ul class="traits-list">
+        <ul class="traits-list tag-list">
           {{#each data.weaponProf.selected as |v k|}}
             <li class="tag {{k}}">{{v}}</li>
           {{/each}}
@@ -66,7 +66,7 @@
 
       <div class="form-group {{data.armorProf.cssClass}}">
         <label for="data.armorProf">{{localize "PF1.TraitArmorProf"}}</label>
-        <ul class="traits-list">
+        <ul class="traits-list tag-list">
           {{#each data.armorProf.selected as |v k|}}
             <li class="tag {{k}}">{{v}}</li>
           {{/each}}

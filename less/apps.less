@@ -239,13 +239,26 @@
     border-bottom: @borderGroove;
   }
 
+  .tag-list {
+    display: flex;
+    row-gap: 1px;
+    column-gap: 2px;
+    flex-wrap: wrap;
+    
+
+    .tag {
+      height: min-content;
+      white-space: nowrap;
+    }
+  }
+
   /* Tags */
   .tag {
     display: inline-block;
-    margin: 0 2px 1px 0;
+    flex: 0;
     padding: 0 3px;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: var(--font-size-11, 8pt);
+    line-height: 1.2;
     border: 1px solid #999;
     border-radius: 3px;
     background: rgba(0, 0, 0, 0.05);

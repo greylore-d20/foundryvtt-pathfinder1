@@ -972,8 +972,8 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-actions a").mouseup((ev) => this._quickItemActionControl(ev));
 
     // Roll Skill Checks
-    html.find(".skill > .skill-name > .rollable").click(this._onRollSkillCheck.bind(this));
-    html.find(".sub-skill > .skill-name > .rollable").click(this._onRollSubSkillCheck.bind(this));
+    html.find(".skill > .rollable").click(this._onRollSkillCheck.bind(this));
+    html.find(".sub-skill > .rollable").click(this._onRollSubSkillCheck.bind(this));
 
     // Open skill compendium entry
     html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
@@ -2456,14 +2456,14 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onRollSkillCheck(event) {
     event.preventDefault();
-    const skill = event.currentTarget.parentElement.parentElement.dataset.skill;
+    const skill = event.currentTarget.parentElement.dataset.skill;
     this.document.rollSkill(skill, { event: event, skipDialog: getSkipActionPrompt() });
   }
 
   _onRollSubSkillCheck(event) {
     event.preventDefault();
-    const mainSkill = event.currentTarget.parentElement.parentElement.dataset.mainSkill;
-    const skill = event.currentTarget.parentElement.parentElement.dataset.skill;
+    const mainSkill = event.currentTarget.parentElement.dataset.mainSkill;
+    const skill = event.currentTarget.parentElement.dataset.skill;
     this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { event: event, skipDialog: getSkipActionPrompt() });
   }
 

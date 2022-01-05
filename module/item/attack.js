@@ -56,7 +56,7 @@ export const checkRequirements = async function (shared) {
         ui.notifications.warn(msg);
         return ERR_REQUIREMENT.MISSING_AMMO;
       }
-      shared.ammoAvailable = shared.Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
+      shared.ammoAvailable = Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
 
       if (shared.ammoAvailable <= 0) {
         const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);

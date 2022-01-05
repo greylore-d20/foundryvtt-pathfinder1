@@ -1,4 +1,8 @@
 export class RollPF extends Roll {
+  get totalHalved() {
+    return Math.floor(this.total / 2);
+  }
+
   static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {

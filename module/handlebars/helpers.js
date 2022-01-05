@@ -193,4 +193,8 @@ export const registerHandlebarsHelpers = function () {
     const rollData = options.hash["rollData"];
     return new Handlebars.SafeString(TextEditor.enrichHTML(content, { secrets: owner, rollData }));
   });
+
+  Handlebars.registerHelper("json-string", (obj) => {
+    return new Handlebars.SafeString(escape(JSON.stringify(obj)));
+  });
 };

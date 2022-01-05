@@ -179,7 +179,6 @@ export class ChatAttack {
     data.isCrit = critType === 1;
     data.isFumble = critType === 2;
     data.isNat20 = d20 === 20;
-    data.rollJSON = escape(JSON.stringify(roll));
     data.formula = roll.formula;
 
     // Add crit confirm
@@ -423,13 +422,8 @@ export class ChatAttack {
 export class DamagePart {
   constructor(amount, damageType, roll, type = "normal") {
     this.amount = amount;
-    this.damageType = damageType;
-    if (!this.damageType) this.damageType = "Untyped";
+    this.damageType = damageType ?? "Untyped";
     this.type = type;
-    this.roll = {
-      json: escape(JSON.stringify(roll)),
-      formula: roll.formula,
-      total: roll.total,
-    };
+    this.roll = roll;
   }
 }

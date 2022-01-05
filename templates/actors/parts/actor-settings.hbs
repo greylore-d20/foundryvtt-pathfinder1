@@ -51,7 +51,7 @@
         {{!-- Initiative --}}
         <div class="flexrow">
             <label class="cell left-label">{{localize "PF1.Initiative"}}</label>
-            <select data-name="data.attributes.init.ability" class="cell midsize">
+            <select name="data.attributes.init.ability" class="cell midsize">
                 {{#select data.attributes.init.ability}}
                     <option value=""></option>
                     {{selectOptions config.abilities}}
@@ -157,7 +157,7 @@
         {{#each data.attributes.savingThrows as |savingThrow id|}}
             <div class="flexrow">
                 <label class="cell left-label">{{savingThrow.label}}</label>
-                <select data-name="data.attributes.savingThrows.{{id}}.ability" class="cell midsize">
+                <select name="data.attributes.savingThrows.{{id}}.ability" class="cell midsize">
                     {{#select savingThrow.ability}}
                         <option value=""></option>
                         {{#each ../config.abilities as |label value|}}

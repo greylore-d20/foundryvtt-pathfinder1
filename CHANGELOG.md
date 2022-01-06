@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.80.3 - 2022-1-6
+
+### Bug Fixes
+
+- Attacks with ammo links couldn't be used. ([1187](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1187))
+- Fix item images not rendering in actor sheet with some special characters in the file name. ([1197](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1197))
+- Actor-specific tooltip settings didn't load correctly ([1189](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1189))
+- Unidentified items used from an owned actor showed their identified name and description in the chat card ([1175](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1175))
+- Fix light with negative luminosity being affected by low-light vision
+- Fix vision permission not working ([1186](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1186))
+- Grappled condition was adding penalties to CMB twice ([1191](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1191))
+
+### Changelog
+
+- Added @dc to item roll data. ([1183](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1183))
+- Add `shared.reject` to item use script calls ([1182](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1182))
+
+### API
+
+- Add MeasureTemplatePF.getTokensWithin and MeasureTemplatePF.getHighlightedSquares functions
+- Roll JSON is no longer created pre-emptively for useAttack (including associated useItem hooks).
+
 ## 0.80.2 - 2021-12-21
 
 ### Bug Fixes

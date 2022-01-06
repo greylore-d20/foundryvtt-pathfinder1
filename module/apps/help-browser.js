@@ -166,14 +166,12 @@ export class PF1_HelpBrowser extends Application {
   }
 
   fixURL(url) {
-    let result = url;
-
-    if (url.match(/^.+?:\/\/.+\//)) {
-      const arr = url.split("/");
-      result = arr.slice(3).join("/");
+    if (/https?:\/\//.test(url)) {
+      const base = window.location.href.replace(/[^/]*$/, "");
+      return url.slice(base.length);
     }
 
-    return result;
+    return url.replace(/^.+?:\/\/[^/]+\//, "");
   }
 
   activateListeners(html) {

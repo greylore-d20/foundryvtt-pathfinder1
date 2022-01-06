@@ -1,6 +1,5 @@
 import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
-import { fromUuidSync } from "./lib.js";
 import Color from "color";
 
 /* -------------------------------------------- */

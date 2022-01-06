@@ -1329,10 +1329,6 @@ export class ItemPF extends ItemBasePF {
       )
     );
 
-    // Toggle default roll mode
-    const rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
-    ChatMessage.applyRollMode(chatData, rollMode);
-
     // Create the chat message
     return createCustomChatMessage(template, templateData, chatData);
   }

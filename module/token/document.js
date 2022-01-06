@@ -12,6 +12,13 @@ export class TokenDocumentPF extends TokenDocument {
     return super.update(data, options);
   }
 
+  // Todo: Declare this in TokenDocumentPF when/ if TokenDocument.getData calls the constructor's method
+  getTrackedAttributes(data, path = []) {
+    const attr = super.getTrackedAttributes(data, path);
+    if (path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
+    return attr;
+  }
+
   /**
    * Hijack Token health bar rendering to include temporary and temp-max health in the bar display
    */

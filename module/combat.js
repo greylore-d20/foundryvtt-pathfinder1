@@ -90,13 +90,13 @@ export const duplicateCombatantInitiative = function (combat, combatant, initiat
   ]);
 };
 
-export const addCombatTrackerContextOptions = function (result) {
-  result.push({
+Hooks.on("getCombatTrackerEntryContext", function addCombatTrackerContextOptions(html, menuItems) {
+  menuItems.push({
     name: "PF1.DuplicateInitiative",
     icon: '<i class="fas fa-dice-d20"></i>',
-    callback: (li) => duplicateCombatantInitiativeDialog.call(this, this.combats, li.data("combatant-id")),
+    callback: (li) => duplicateCombatantInitiativeDialog.call(game.combat, game.combats, li.data("combatant-id")),
   });
-};
+});
 
 export class CombatPF extends Combat {
   /**

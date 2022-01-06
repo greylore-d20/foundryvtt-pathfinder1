@@ -19,6 +19,12 @@ import { VisionPermissionSheet } from "../misc/vision-permission.js";
  * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends Actor {
+  // TODO: Remove once all broken _id references are fixed.
+  get _id() {
+    console.error("ActorPF._id is obsolete; use ActorPF.id instead.");
+    return this.id;
+  }
+
   constructor(...args) {
     super(...args);
 

@@ -213,6 +213,7 @@
       {{/if}}
 
       {{!-- Prepared Spells --}}
+      {{#unless usesSpellpoints}}
       {{#if isPreparedSpell}}
       <div class="form-group">
         <div class="form-fields">
@@ -235,6 +236,7 @@
         </label>
       </div>
       {{/if}}
+      {{/unless}}
 
       {{#unless isAtWill}}
       <div class="spell-misc form-group stacked">
@@ -269,12 +271,14 @@
       </div>
 
       {{!-- Spell Slot Cost --}}
+      {{#unless usesSpellpoints}}
       <div class="form-group">
         <div class="form-fields">
           <label>{{localize "PF1.SpellSlotCost"}}</label>
           <input type="text" name="data.slotCost" value="{{data.slotCost}}" data-dtype="Number"/>
         </div>
       </div>
+      {{/unless}}
 
       <h3 class="form-header">{{localize "PF1.SpellCasting"}}</h3>
 

@@ -89,7 +89,6 @@ export const hideGMSensitiveInfo = function (app, html, data) {
   // Hide identified and description
   const item = app.itemSource;
   if (item != null && item.data?.data?.identified === false) {
-    console.log(item.data);
     const unidentifiedName = item.data.data.unidentified?.name;
     if (unidentifiedName) {
       html.find("header .item-name").text(unidentifiedName);

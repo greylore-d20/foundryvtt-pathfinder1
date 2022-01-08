@@ -321,7 +321,8 @@ export class ItemSheetPF extends ItemSheet {
         spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.item.data.data.spellbook}`);
       }
 
-      data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous : false;
+      data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
+      data.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       data.isAtWill = data.item.data.atWill;
       data.spellbooks = {};
       if (this.actor) {

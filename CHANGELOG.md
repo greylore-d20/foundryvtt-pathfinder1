@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.80.4 - 2022-1-8
+
+### Bug Fixes
+
+- Fix chat cards getting an incorrect ID for its measure template
+- Help browser was nonfunctional with routePrefix. ([1144](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1144))
+- Item gifting was silently failing. ([1190](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1190))
+- Buff icons broken with hide from token in token HUD condition menu.
+- Non-formulaic extra attacks did not apply their modifiers to attacks. ([1200](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1200))
+
+### Changelog
+
+- Chat cards with measure templates now have all tokens within as targets
+- Add saving throws to chat card targets
+
 ## 0.80.3 - 2022-1-6
 
 ### Bug Fixes

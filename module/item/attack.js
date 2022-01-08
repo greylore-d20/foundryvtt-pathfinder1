@@ -319,7 +319,7 @@ export const generateAttacks = function (shared) {
   const allAttacks = shared.fullAttack
     ? this.data.data.attackParts.reduce(
         (cur, r) => {
-          cur.push({ bonus: r[0], label: r[1] });
+          cur.push({ attackBonus: r[0], label: r[1] });
           return cur;
         },
         [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]

@@ -13,6 +13,12 @@ import { RollPF } from "../roll.js";
  * Override and extend the basic :class:`Item` implementation
  */
 export class ItemPF extends Item {
+  // TODO: Remove once all broken _id references are fixed.
+  get _id() {
+    console.error("ItemPF._id is obsolete; use ItemPF.id instead.");
+    return this.id;
+  }
+
   constructor(...args) {
     super(...args);
 

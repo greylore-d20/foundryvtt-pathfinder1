@@ -152,7 +152,11 @@ Hooks.once("init", function () {
       roll: normalDie,
     },
     //Chat
-    chat: { ChatAttack, ChatMessagePF },
+    chat: {
+      ChatAttack,
+      ChatMessagePF,
+      events: { targetACClick: chat.targetACClick, targetSavingThrowClick: chat.targetSavingThrowClick },
+    },
     // Utility
     utils: {
       createTag,
@@ -593,6 +597,8 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 
   // Hide GM sensitive info
   chat.hideGMSensitiveInfo(app, html, data);
+
+  // Hide targets, if there's more than 1
 
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();

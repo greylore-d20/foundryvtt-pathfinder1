@@ -172,13 +172,13 @@
       &.die.success,
       &.fatedie.success,
       &.coin.heads {
-        color: #18520b;
+        color: @colorSuccess;
         filter: sepia(0.5) hue-rotate(60deg);
       }
       &.die.failure,
       &.fatedie.failure,
       &.coin.tails {
-        color: #aa0200;
+        color: @colorFailure;
         filter: sepia(0.5) hue-rotate(-60deg);
       }
     }
@@ -186,7 +186,14 @@
 }
 
 .message {
-  .attack-targets {
+  h2.attack-targets {
+    &:hover {
+      text-shadow: 0 0 10px red;
+      cursor: pointer;
+    }
+  }
+
+  div.attack-targets {
     margin-bottom: 4px;
     display: flex;
     flex-flow: row wrap;
@@ -195,39 +202,73 @@
     .target {
       display: flex;
       flex-flow: row nowrap;
-      flex: 0 0 104px;
+      flex: 0 0 content;
       margin-right: 2px;
       margin-bottom: 2px;
       border: 1px solid black;
-      padding: 0;
+      padding: 2px;
+      align-items: center;
 
-      &.expanded {
-        flex: 0 0 100%;
+      .icon {
+        height: 16px;
+      }
+
+      .saving-throws {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-evenly;
+        min-width: 40px;
+
+        > div {
+          display: flex;
+          justify-content: space-evenly;
+
+          &.click {
+            &:hover {
+              box-shadow: 0 0 10px red;
+              cursor: pointer;
+            }
+          }
+
+          > * {
+            flex: 0 0 16px;
+          }
+
+          .value {
+            &.success {
+              color: @colorSuccess;
+              font-weight: bold;
+            }
+            &.failure {
+              color: @colorFailure;
+              font-weight: bold;
+            }
+          }
+        }
       }
 
       img.target-image {
-        width: 64px;
-        height: 64px;
-        min-width: 64px;
-        min-height: 64px;
-        max-width: 64px;
-        max-height: 64px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        max-width: 48px;
+        max-height: 48px;
+        border: 1px solid black;
         object-fit: cover;
         object-position: 50% 0;
         margin: 0;
-        border: unset;
         border-radius: 0;
       }
 
       .ac {
         display: flex;
         flex-flow: column nowrap;
-        flex: 0 0 40px;
-        padding: 4px;
         justify-content: space-evenly;
+        min-width: 40px;
 
         &:hover {
-          text-shadow: 0 0 10px red;
+          box-shadow: 0 0 10px red;
           cursor: pointer;
         }
 

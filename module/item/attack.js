@@ -990,8 +990,15 @@ export const generateChatMetadata = function (shared) {
     attacks: {},
   };
 
+  // Get template for later variables
+  const template = canvas.templates.get(metadata.template);
+
   // Add targets
-  metadata.targets = Array.from(game.user.targets).map((o) => o.id);
+  if (template != null) {
+    metadata.targets = template.getTokensWithin().map((o) => o.id);
+  } else {
+    metadata.targets = Array.from(game.user.targets).map((o) => o.id);
+  }
 
   // Add attack rolls
   for (let a = 0; a < shared.chatAttacks.length; a++) {

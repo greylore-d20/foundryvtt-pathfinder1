@@ -254,6 +254,7 @@ export const alterRollData = function (shared, form) {
       : game.i18n.localize("PF1.PowerAttack");
     shared.damageBonus.push(`${powerAttackBonus}[${label}]`);
     const powerAttackPenalty = -(1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4));
+    shared.rollData.powerAttackPenalty = powerAttackPenalty;
     shared.attackBonus.push(`${powerAttackPenalty}[${label}]`);
     shared.powerAttack = true;
   }

@@ -656,19 +656,20 @@ export const promptMeasureTemplate = async function (shared) {
   }
 
   // Create template
-  shared.template = game.pf1.AbilityTemplate.fromData(templateOptions);
+  shared.template = null;
+  const template = game.pf1.AbilityTemplate.fromData(templateOptions);
   let result;
-  if (shared.template) {
+  if (template) {
     const sheetRendered = this.parent?.sheet?._element != null;
     if (sheetRendered) this.parent.sheet.minimize();
-    result = await shared.template.drawPreview(shared.event);
+    result = await template.drawPreview(shared.event);
     if (!result.result) {
       if (sheetRendered) this.parent.sheet.maximize();
       return result;
     }
   }
 
-  await result.place();
+  shared.template = await result.place();
   return result;
 };
 

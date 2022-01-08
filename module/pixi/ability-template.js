@@ -140,7 +140,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         const result = {
           result: true,
           place: async () => {
-            this.template = (await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]))[0];
+            return (await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]))[0];
           },
           delete: () => {
             return this.template?.delete();

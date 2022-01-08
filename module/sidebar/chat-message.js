@@ -16,6 +16,18 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
+   * Return associated template or null.
+   *
+   * @type {MeasuredTemplatePF}
+   */
+  get measureTemplate() {
+    const templateId = this.data.flags?.pf1?.metadata?.template;
+    if (!templateId) return null;
+    const template = canvas.templates.get(templateId);
+    return template || null;
+  }
+
+  /**
    * @returns {TokenPF[]} The tokens which were targeted with this chat card.
    */
   get targets() {

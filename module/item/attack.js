@@ -248,11 +248,12 @@ export const alterRollData = function (shared, form) {
   // Power Attack
   if (form.find('[name="power-attack"]').prop("checked")) {
     let powerAttackBonus = (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * 2;
-    if (getProperty(this.data, "data.attackType") === "natural") {
-      if (shared.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5) powerAttackBonus *= 1.5;
-      else if (!shared.primaryAttack) powerAttackBonus *= 0.5;
+    if (this.data.data.attackType === "natural") {
+      if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
+        powerAttackBonus *= 1.5;
+      else if (!shared.rollData.item?.primaryAttack) powerAttackBonus *= 0.5;
     } else {
-      if (getProperty(shared.rollData, "item.held") === "2h") powerAttackBonus *= 1.5;
+      if (shared.rollData?.item?.held === "2h") powerAttackBonus *= 1.5;
       else if (getProperty(shared.rollData, "item.held") === "oh") powerAttackBonus *= 0.5;
     }
     const label = ["rwak", "rsak"].includes(this.data.data.actionType)

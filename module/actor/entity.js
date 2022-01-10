@@ -529,10 +529,6 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Prepare Character data
-    if (this.data.type === "character") this._prepareCharacterData(this.data.data);
-    else if (this.data.type === "npc") this._prepareNPCData(this.data.data);
-
     // Reset HD
     setProperty(this.data, "data.attributes.hd.total", this.data.data.details.level.value);
 
@@ -553,9 +549,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     this.updateSpellbookInfo();
-
-    // Add base initiative (for NPC Lite sheets)
-    this.data.data.attributes.init.total = this.data.data.attributes.init.value;
   }
 
   /**
@@ -566,9 +559,6 @@ export class ActorPF extends ActorBasePF {
    * @returns {boolean} Whether the actor is proficient with that item.
    */
   hasArmorProficiency(item, proficiencyName) {
-    // Assume NPCs to be proficient with their armor
-    if (this.data.type === "npc") return true;
-
     // Check for item type
     if (item.type !== "equipment" || !["armor", "shield"].includes(item.data.data.equipmentType)) return true;
 
@@ -1556,27 +1546,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Prepare Character type specific data
-   */
-  _prepareCharacterData() {
-    if (!hasProperty(this.data, "data.details.level.value")) return;
-
-    // Experience bar
-    const prior = this.getLevelExp(this.data.data.details.level.value - 1 || 0),
-      max = this.getLevelExp(this.data.data.details.level.value || 1);
-
-    this.data.data.details.xp.pct =
-      ((Math.max(prior, Math.min(max, this.data.data.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare NPC type specific data
-   */
-  _prepareNPCData() {}
-
-  /**
    * Return reduced movement speed.
    *
    * @param {number} value - The non-reduced movement speed.
@@ -1606,38 +1575,10 @@ export class ActorPF extends ActorBasePF {
    * @returns {number}       The XP required
    */
   getLevelExp(level) {
-    const expConfig = game.settings.get("pf1", "experienceConfig");
-    const expTrack = expConfig.track;
-    // Preset experience tracks
-    if (["fast", "medium", "slow"].includes(expTrack)) {
-      const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS[expTrack];
-      return levels[Math.min(level, levels.length - 1)];
-    }
-    // Custom formula experience track
-    let totalXP = 0;
-    if (expConfig.custom.formula.length > 0) {
-      for (let a = 0; a < level; a++) {
-        const rollData = this.getRollData();
-        rollData.level = a + 1;
-        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData);
-        totalXP += roll.total;
-      }
-    }
-    return Math.max(1, totalXP);
+    return 0; // Only used by PCs
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Return the amount of experience granted by killing a creature of a certain CR.
-   *
-   * @param cr {null | number}     The creature's challenge rating
-   * @returns {number}       The amount of experience granted per kill
-   */
-  getCRExp(cr) {
-    if (cr < 1.0) return Math.max(400 * cr, 0);
-    return CONFIG.PF1.CR_EXP_LEVELS[cr];
-  }
 
   /* -------------------------------------------- */
   /*  Socket Listeners and Handlers
@@ -1848,55 +1789,6 @@ export class ActorPF extends ActorBasePF {
     const tokens = this.getActiveTokens();
     for (const t of tokens) {
       t.drawEffects();
-    }
-  }
-
-  /**
-   * Makes sure experience values are correct in update data.
-   *
-   * @param {object} data - The update data, as per ActorPF.update()
-   * @param updateData
-   */
-  _updateExp(updateData) {
-    // Get total level
-    const classes = this.items.filter((o) => o.type === "class");
-    const level = classes
-      .filter((o) => o.data.data.classType !== "mythic")
-      .reduce((cur, o) => cur + o.data.data.level, 0);
-
-    // The following is not for NPCs
-    if (this.data.type !== "character") return;
-
-    if (updateData["data.details.xp.value"] == null) return;
-
-    // Translate update exp value to number
-    let newExp = updateData["data.details.xp.value"],
-      resetExp = false;
-    if (typeof newExp === "string") {
-      const curExp =
-        typeof this.data.data.details.xp.value === "number"
-          ? this.data.data.details.xp.value
-          : parseInt(this.data.data.details.xp.value);
-      if (newExp.match(/^\+([0-9]+)$/)) {
-        newExp = curExp + parseInt(RegExp.$1);
-      } else if (newExp.match(/^-([0-9]+)$/)) {
-        newExp = curExp - parseInt(RegExp.$1);
-      } else if (newExp === "") {
-        resetExp = true;
-      } else if (newExp.match(/^([0-9]+)$/)) {
-        newExp = parseInt(newExp);
-      } else {
-        newExp = curExp;
-      }
-
-      updateData["data.details.xp.value"] = newExp;
-    }
-    const maxExp = this.getLevelExp(level);
-    updateData["data.details.xp.max"] = maxExp;
-
-    if (resetExp) {
-      const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
-      updateData["data.details.xp.value"] = minExp;
     }
   }
 

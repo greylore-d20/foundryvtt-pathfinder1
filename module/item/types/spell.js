@@ -2,9 +2,10 @@ import { ItemPF } from "../entity.js";
 
 export class ItemSpellPF extends ItemPF {
   prepareData() {
-    super.prepareData();
-    const itemData = this.data.data;
+    const itemData = super.prepareData();
+    const data = itemData.data;
     const labels = this.labels;
+    const C = CONFIG.PF1;
 
     // Spell Level,  School, and Components
     if (itemData.type === "spell") {

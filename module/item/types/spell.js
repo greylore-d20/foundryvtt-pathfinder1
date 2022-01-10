@@ -65,6 +65,21 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
+  getTypeChatData(data, labels, props) {
+    if (data.sr) {
+      props.push(game.i18n.localize("PF1.SpellResistance"));
+    }
+
+    // Add charges
+    if (this.isCharged && !this.data.data.atWill) {
+      if (this.useSpellPoints()) {
+        props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
+      } else {
+        props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+      }
+    }
+  }
+
   async use({ ev = null, skipDialog = false, chatMessage = true } = {}) {
     return this.useSpell(ev, { skipDialog, chatMessage });
   }

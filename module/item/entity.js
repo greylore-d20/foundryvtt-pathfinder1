@@ -1534,6 +1534,20 @@ export class ItemPF extends ItemBasePF {
     return data;
   }
 
+  /**
+   * Per item type chat data.
+   *
+   * @param data
+   * @param labels
+   * @param props
+   */
+  getTypeChatData(data, labels, props) {
+    // Charges as used by most item types, except spells
+    if (this.isCharged && !this.data.data.atWill) {
+      props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+    }
+  }
+
   /* -------------------------------------------- */
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */

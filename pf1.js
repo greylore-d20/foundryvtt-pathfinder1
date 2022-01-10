@@ -44,6 +44,17 @@ import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
+import { ItemAttackPF } from "./module/item/types/attack.js";
+import { ItemBuffPF } from "./module/item/types/buff.js";
+import { ItemClassPF } from "./module/item/types/class.js";
+import { ItemConsumablePF } from "./module/item/types/consumable.js";
+import { ItemContainerPF } from "./module/item/types/container.js";
+import { ItemEquipmentPF } from "./module/item/types/equipment.js";
+import { ItemFeatPF } from "./module/item/types/feat.js";
+import { ItemLootPF } from "./module/item/types/loot.js";
+import { ItemRacePF } from "./module/item/types/race.js";
+import { ItemSpellPF } from "./module/item/types/spell.js";
+import { ItemWeaponPF } from "./module/item/types/weapon.js";
 import { ItemBasePF } from "./module/item/base.js";
 import { ItemSheetPF } from "./module/item/sheets/base.js";
 import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
@@ -252,10 +263,17 @@ Hooks.once("init", function () {
   CONFIG.Item.documentClasses = {
     default: ItemPF, // Fallback
     // Specific types
-    // equipment: ItemPF,
-    // loot: ItemPF,
-    // attack: ItemPF,
-    // spell: ItemPF,
+    attack: ItemAttackPF,
+    buff: ItemBuffPF,
+    class: ItemClassPF,
+    consumable: ItemConsumablePF,
+    container: ItemContainerPF,
+    equipment: ItemEquipmentPF,
+    feat: ItemFeatPF,
+    loot: ItemLootPF,
+    race: ItemRacePF,
+    spell: ItemSpellPF,
+    weapon: ItemWeaponPF,
     // etc.
   };
   CONFIG.Combat.documentClass = CombatPF;

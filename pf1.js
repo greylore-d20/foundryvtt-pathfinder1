@@ -22,6 +22,8 @@ import { MeasuredTemplatePF } from "./module/measure.js";
 import { SightLayerPF } from "./module/low-light-vision.js";
 import { ActorBasePF } from "./module/actor/base.js";
 import { ActorPF } from "./module/actor/entity.js";
+import { ActorCharacterPF } from "./module/actor/types/character.js";
+import { ActorNPCPF } from "./module/actor/types/npc.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
@@ -240,8 +242,8 @@ Hooks.once("init", function () {
   CONFIG.Actor.documentClasses = {
     default: ActorPF, // fallback
     // Specific types
-    // character: ActorPF,
-    // npc: ActorPF,
+    character: ActorCharacterPF,
+    npc: ActorNPCPF,
   };
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;

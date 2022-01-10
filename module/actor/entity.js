@@ -384,17 +384,6 @@ export class ActorPF extends ActorBasePF {
       this.data.data.attributes.conditions[condition] ??= false;
     }
 
-    // The following is not for NPCs
-    if (this.data.type === "character") {
-      const maxExp = this.getLevelExp(level);
-      this.data.data.details.xp.max = maxExp;
-    }
-
-    // The following IS for NPCs
-    else if (this.data.type === "npc") {
-      this.data.data.details.cr.total = this.getCR(this.data.data);
-    }
-
     {
       // Handle armor and weapon proficiencies for PCs
       // NPCs are considered proficient with their armor
@@ -1069,19 +1058,6 @@ export class ActorPF extends ActorBasePF {
       for (const k of this.allSkills) {
         const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
         setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
-      }
-    }
-
-    // Reset CR
-    if (this.data.type === "npc") {
-      setProperty(this.data, "data.details.cr.total", this.getCR(this.data.data));
-
-      // Reset experience value
-      try {
-        const crTotal = getProperty(this.data, "data.details.cr.total") || 0;
-        setProperty(this.data, "data.details.xp.value", this.getCRExp(crTotal));
-      } catch (e) {
-        setProperty(this.data, "data.details.xp.value", this.getCRExp(1));
       }
     }
 
@@ -3726,25 +3702,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     return result;
-  }
-
-  getCR() {
-    if (this.data.type !== "npc") return 0;
-    const data = this.data.data;
-
-    const base = data.details.cr.base;
-    if (this.items == null) return base;
-
-    // Gather CR from templates
-    const templates = this.items.filter(
-      (o) => o.type === "feat" && o.data.data.featType === "template" && !o.data.data.disabled
-    );
-    return templates.reduce((cur, o) => {
-      const crOffset = o.data.data.crOffset;
-      if (typeof crOffset === "string" && crOffset.length)
-        cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
-      return cur;
-    }, base);
   }
 
   async deleteEmbeddedDocuments(embeddedName, data, options = {}) {

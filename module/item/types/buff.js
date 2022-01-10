@@ -1,6 +1,26 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemBuffPF extends ItemPF {
+  prepareData() {
+    const itemData = super.prepareData();
+    const data = itemData.data;
+    const labels = this.labels;
+    const C = CONFIG.PF1;
+
+    labels.buffType = C.buffTypes[data.buffType];
+
+    if (this.data.data.duration) {
+      const dur = this.data.data.duration;
+      const unit = C.timePeriodsShort[dur.units];
+      if (unit && dur.value) {
+        const val = RollPF.safeTotal(dur.value, this.getRollData());
+        labels.duration = [val, unit].filterJoin(" ");
+      } else {
+        labels.duration = null;
+      }
+    }
+  }
+
   prepareDerivedItemData() {
     super.prepareDerivedItemData();
     const itemData = this.data.data;

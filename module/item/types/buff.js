@@ -61,6 +61,46 @@ export class ItemBuffPF extends ItemPF {
     return effect;
   }
 
+  // Determines the starting data for an ActiveEffect based off this item
+  getRawEffectData() {
+    const createData = super.getRawEffectData();
+
+    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    if (this.data.data.hideFromToken) createData.icon = null;
+
+    // Add buff durations
+    const durationValue = this.data.data.duration.value ?? null;
+    if (durationValue) {
+      let seconds = 0;
+      switch (this.data.data.duration.units) {
+        case "minute":
+        case "hour": {
+          seconds = this.totalDurationSeconds;
+          break;
+        }
+        case "turn": {
+          const turns = RollPF.safeRoll(durationValue, this.getRollData()).total;
+          if (turns > 0) {
+            createData.duration.turns = turns;
+            seconds = turns * 6;
+          }
+          break;
+        }
+        case "round": {
+          const rounds = RollPF.safeRoll(durationValue, this.getRollData()).total;
+          if (rounds > 0) {
+            createData.duration.rounds = rounds;
+            seconds = rounds * 6;
+          }
+          break;
+        }
+      }
+      if (seconds > 0) createData.duration.seconds = seconds;
+    }
+
+    return createData;
+  }
+
   getRollData() {
     const result = super.getRollData();
 

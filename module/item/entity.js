@@ -3061,4 +3061,13 @@ export class ItemPF extends ItemBasePF {
 
     return getHighestChanges(allChanges, { ignoreTarget: true });
   }
+
+  /**
+   * @param {...any} args
+   * @deprecated
+   */
+  static toConsumable(...args) {
+    console.warn("ItemPF.toConsumable() is deprecated in favor of ItemSpellPF.toConsumable()");
+    return CONFIG.Item.documentClasses.spell.toConsumable(...args);
+  }
 }

@@ -3599,13 +3599,6 @@ export class ItemPF extends ItemBasePF {
     // Modify sell value
     if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;
 
-    if (!this.items || !recursive) return result;
-
-    // Add item's content items' values
-    this.items.forEach((i) => {
-      result += i.getValue({ recursive: recursive, sellValue: sellValue, inLowestDenomination });
-    });
-
     return result;
   }
 

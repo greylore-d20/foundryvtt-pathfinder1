@@ -330,6 +330,12 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
+  static _replaceConsumableConversionString(string, rollData) {
+    string = string.replace(/@sl/g, rollData.sl);
+    string = string.replace(/@cl/g, "@item.cl");
+    return string;
+  }
+
   static async toConsumable(origData, type) {
     const data = {
       type: "consumable",

@@ -2274,12 +2274,6 @@ export class ItemPF extends ItemBasePF {
     return targets;
   }
 
-  static _replaceConsumableConversionString(string, rollData) {
-    string = string.replace(/@sl/g, rollData.sl);
-    string = string.replace(/@cl/g, "@item.cl");
-    return string;
-  }
-
   /**
    * @param {string} linkType - The type of link.
    * @param {string} dataType - Either "compendium", "data" or "world".

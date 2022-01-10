@@ -55,11 +55,8 @@ export class ItemPF extends ItemBasePF {
     return super.isOwned || this.parentItem != null;
   }
 
+  // Overriden by more specific implementations where necessary
   get isActive() {
-    if (this.type === "buff") return this.data.data.active;
-    if (this.type === "equipment" || this.type === "weapon") return this.data.data.equipped;
-    if (this.type === "loot" && this.data.data.subType === "gear") return this.data.data.equipped;
-    if (this.type === "feat") return !this.data.data.disabled;
     return true;
   }
 

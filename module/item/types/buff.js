@@ -46,6 +46,21 @@ export class ItemBuffPF extends ItemPF {
     }
   }
 
+  //Creates a simple ActiveEffect from a buff item. Returns the effect
+  async toEffect({ noCreate = false } = {}) {
+    if (!this.parent) return;
+
+    const existing = this.parent.effects.find((e) => e.data.origin == this.uuid);
+    if (existing || noCreate) return existing;
+
+    // Add a new effect
+    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
+    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    const effect = ActiveEffect.create(createData, { parent: this.parent });
+
+    return effect;
+  }
+
   getRollData() {
     const result = super.getRollData();
 

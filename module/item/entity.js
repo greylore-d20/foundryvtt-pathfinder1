@@ -2591,9 +2591,6 @@ export class ItemPF extends ItemBasePF {
     const result = {};
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
-    if (this.type === "attack") {
-      result["size"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.size._label);
-    }
     if (this.type === "spell" || this.hasSave)
       result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available

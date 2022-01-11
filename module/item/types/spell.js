@@ -482,7 +482,7 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get fullDescription() {
-    return super.fullDescription() + this.data.data.shortDescription;
+    return super.fullDescription + this.data.data.shortDescription;
   }
 
   get spellDescriptionData() {

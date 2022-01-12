@@ -583,7 +583,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       summary.slideUp(200, () => summary.remove());
     } else {
       const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      const props = $(`<div class="item-properties"></div>`);
+      const props = $(`<div class="item-properties tag-list"></div>`);
       chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());

@@ -2519,7 +2519,7 @@ export class ActorPF extends Actor {
       notesHTML =
         '<div class="flexcol property-group gm-sensitive"><label>' +
         game.i18n.localize("PF1.Notes") +
-        '</label> <div class="flexrow">' +
+        '</label> <div class="flexrow tag-list">' +
         notesHTMLParts.join("") +
         "</div></div>";
     }

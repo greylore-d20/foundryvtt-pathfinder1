@@ -110,7 +110,7 @@ export class ChatAttack {
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
     this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive attack-notes"><label>${game.i18n.localize(
       "PF1.AttackNotes"
-    )}</label><div class="flexrow">${inner}</div></div>`;
+    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
   setEffectNotesHTML() {
@@ -128,7 +128,7 @@ export class ChatAttack {
     const inner = TextEditor.enrichHTML(result, { rollData: this.rollData });
     this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive effect-notes"><label>${game.i18n.localize(
       "PF1.EffectNotes"
-    )}</label><div class="flexrow">${inner}</div></div>`;
+    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
   async addAttack({ bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {

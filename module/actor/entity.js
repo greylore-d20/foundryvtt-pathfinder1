@@ -1665,8 +1665,9 @@ export class ActorPF extends Actor {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
-  async preUpdate(data) {
-    data = flattenObject(data);
+  async _preUpdate(data, options, userId) {
+    this._trackPreviousAttributes();
+    await super._preUpdate(data, options, userId);
 
     // Apply settings
     // Set used spellbook flags
@@ -1756,39 +1757,6 @@ export class ActorPF extends Actor {
     return data;
   }
 
-  /**
-   * Extend the default update method to enhance data before submission.
-   * See the parent Document.update method for full details.
-   *
-   * @param {object} data     The data with which to update the Actor
-   * @param {object} options  Additional options which customize the update workflow
-   * @returns {Promise}        A Promise which resolves to the updated Document
-   */
-  async update(data, options = {}) {
-    this._trackPreviousAttributes();
-
-    // Avoid regular update flow for explicitly non-recursive update calls
-    if (options.recursive === false) {
-      return super.update(data, options);
-    }
-
-    data = await this.preUpdate(data);
-
-    // Update changes
-    const diff = diffObject(flattenObject(this.data), data);
-
-    // Diff token data
-    if (data.token != null) {
-      diff.token = diffObject(this.data.token, data.token);
-    }
-
-    const result = diff;
-    if (!isObjectEmpty(diff) && options.skipUpdate !== true) {
-      return super.update(diff, mergeObject(options, { recursive: true }));
-    }
-    return result;
-  }
-
   _onUpdate(data, options, userId, context) {
     super._onUpdate(data, options, userId, context);
 
@@ -1825,7 +1793,9 @@ export class ActorPF extends Actor {
   }
 
   _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
-    this._trackPreviousAttributes();
+    if (game.user.id == userId) {
+      this._trackPreviousAttributes();
+    }
 
     super._preCreateEmbeddedDocuments(...arguments);
   }
@@ -1838,13 +1808,17 @@ export class ActorPF extends Actor {
   }
 
   _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
-    this._trackPreviousAttributes();
+    if (game.user.id == userId) {
+      this._trackPreviousAttributes();
+    }
 
     super._preDeleteEmbeddedDocuments(...arguments);
   }
 
   _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
-    this._trackPreviousAttributes();
+    if (game.user.id == userId) {
+      this._trackPreviousAttributes();
+    }
 
     super._preUpdateEmbeddedDocuments(...arguments);
   }

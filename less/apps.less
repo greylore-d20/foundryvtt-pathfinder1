@@ -1309,6 +1309,18 @@
   &:hover {
     border-color: #3030ff;
   }
+
+  &.disabled {
+    color: gray;
+
+    img {
+      filter: grayscale(100%);
+    }
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0);
+    }
+  }
 }
 
 /* ----------------------------------------- */

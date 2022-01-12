@@ -1,3 +1,4 @@
+import { isString } from "markdown-it/lib/common/utils";
 import { getFirstActiveGM } from "./lib.js";
 
 /**
@@ -7,8 +8,9 @@ export function initializeSocket() {
   game.socket.on("system.pf1", runSocketFunction);
 }
 
-const runSocketFunction = async function (args) {
+const runSocketFunction = async function (args, senderId) {
   const isFirstGM = game.user === getFirstActiveGM();
+  const sender = game.users.get(senderId);
   try {
     switch (args.eventType) {
       case "cleanItemLink": {
@@ -54,6 +56,17 @@ const runSocketFunction = async function (args) {
       case "alterChatTargetAttribute":
         if (isFirstGM) alterChatTargetAttribute(args);
         break;
+      case "giveItem": {
+        if (!isFirstGM) return;
+        const item = await fromUuid(args.item);
+        const sourceActor = item.parent;
+        if (!sourceActor.testUserPermission(sender, "OWNER")) return;
+        const targetActor = await fromUuid(args.targetActor);
+        const itemData = item.toObject();
+        await targetActor.createEmbeddedDocuments("Item", [itemData]);
+        await sourceActor.deleteEmbeddedDocuments("Item", [item.id]);
+        break;
+      }
     }
   } catch (err) {
     console.log("PF1 | Socket Error: ", err);

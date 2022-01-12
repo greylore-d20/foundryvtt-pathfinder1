@@ -2052,6 +2052,11 @@ export class ActorSheetPF extends ActorSheet {
     targets.push(
       ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
     );
+    targets.push(
+      ...game.actors.contents.filter(
+        (o) => o.hasPlayerOwner && o !== this.document && !o.testUserPermission(game.user, "OWNER")
+      )
+    );
     const targetData = await dialogGetActor(`Give item to actor`, targets);
 
     if (!targetData) return;
@@ -2068,7 +2073,17 @@ export class ActorSheetPF extends ActorSheet {
     if (target && target !== item) {
       const itemData = item.toObject();
       if (target instanceof Actor) {
-        await target.createEmbeddedDocuments("Item", [itemData]);
+        if (target.testUserPermission(game.user, "OWNER")) {
+          await target.createEmbeddedDocuments("Item", [itemData]);
+        } else {
+          game.socket.emit("system.pf1", {
+            eventType: "giveItem",
+            targetActor: target.uuid,
+            item: item.uuid,
+          });
+          // Deleting will be performed on the gm side as well to prevent race conditions
+          return;
+        }
       } else if (target instanceof Item) {
         await target.createContainerContent(itemData);
       }

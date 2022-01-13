@@ -1106,7 +1106,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Combine AC types
-    for (const k of ["temp.ac.armor", "temp.ac.shield", "temp.ac.natural"]) {
+    for (const k of ["data.ac.normal.total", "data.ac.shield.total", "data.ac.natural.total"]) {
       const v = getProperty(this.data, k);
       if (v) {
         for (const k2 of ["normal", "flatFooted"]) {
@@ -1477,9 +1477,18 @@ export class ActorPF extends ActorBasePF {
       "data.attributes.acp.total": 0,
       "data.attributes.acp.attackPenalty": 0,
       "data.attributes.maxDexBonus": null,
-      "temp.ac.armor": 0,
-      "temp.ac.shield": 0,
-      "temp.ac.natural": 0,
+      "data.ac.normal.total": 0,
+      "data.ac.normal.base": 0,
+      "data.ac.normal.enh": 0,
+      "data.ac.normal.misc": 0,
+      "data.ac.natural.total": 0,
+      "data.ac.natural.base": 0,
+      "data.ac.natural.misc": 0,
+      "data.ac.natural.enh": 0,
+      "data.ac.shield.total": 0,
+      "data.ac.shield.base": 0,
+      "data.ac.shield.enh": 0,
+      "data.ac.shield.misc": 0,
       "data.attributes.sr.total": 0,
       "data.attributes.init.bonus": 0,
       "data.attributes.init.total": 0,

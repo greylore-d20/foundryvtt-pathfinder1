@@ -12,11 +12,12 @@ import { getSkipActionPrompt } from "./settings.js";
  * Create a Macro from an Item drop, or get an existing one.
  *
  * @param {object} item     The item data
+ * @param {string} actor    The actor ID
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createItemMacro = async function (item, slot) {
-  const actor = getItemOwner(item);
+export const createItemMacro = async function (item, actor, slot) {
+  actor = actor ? game.actors.get(actor) : getItemOwner(item);
   const command =
     `game.pf1.rollItemMacro("${item.name}", {\n` +
     `  itemId: "${item._id}",\n` +

@@ -178,13 +178,13 @@ export const linkData = function (expanded, flattened, key, value) {
   flattened[key] = value;
 };
 
+/**
+ * @param {Object} item Item data
+ * @returns {User|null}
+ */
 export const getItemOwner = function (item) {
   if (item.actor) return item.actor;
-  if (item._id) {
-    return game.actors.contents.filter((o) => {
-      return o.items.filter((i) => i._id === item._id).length > 0;
-    })[0];
-  }
+  if (item._id) return game.actors.find((o) => o.items.get(item._id));
   return null;
 };
 

@@ -508,6 +508,13 @@ export class ItemPF extends Item {
     if (itemData.data.weight !== undefined) {
       // Sync name
       if (this.data.data.identifiedName === undefined) this.data.data.identifiedName = this.name;
+      if (this.showUnidentifiedData) {
+        // Set unidentified name for players
+        const unidentifiedName = this.data.data.unidentified.name;
+        if (unidentifiedName) this.data.name = unidentifiedName;
+        // Set unidentified description for players
+        this.data.data.description.value = this.data.data.description.unidentified;
+      }
       // Prepare unidentified cost
       if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
 

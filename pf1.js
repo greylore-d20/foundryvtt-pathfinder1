@@ -109,7 +109,7 @@ import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 
-// Add String.format
+// OBSOLETE: Add String.format
 if (!String.prototype.format) {
   String.prototype.format = function (...args) {
     return this.replace(/{(\d+)}/g, function (match, number) {
@@ -117,6 +117,14 @@ if (!String.prototype.format) {
     });
   };
 }
+
+// Objectify modules
+const objectifyModule = function (module) {
+  return Object.entries(module).reduce((cur, obj) => {
+    cur[obj[0]] = obj[1];
+    return cur;
+  }, {});
+};
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -221,7 +229,7 @@ Hooks.once("init", function () {
     tooltip: null,
     runUnitTests,
     AbilityTemplate,
-    ItemAttack,
+    ItemAttack: objectifyModule(ItemAttack),
     controls,
     // Variables controlled by control configuration
     skipConfirmPrompt: false,

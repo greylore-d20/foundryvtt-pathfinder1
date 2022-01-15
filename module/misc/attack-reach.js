@@ -167,6 +167,7 @@ export const addReachCallback = async function (data, html) {
 
   // Define getter functions
   const _getTokenByUuid = async function (uuid) {
+    if (!uuid) return;
     const actor = await fromUuid(uuid);
     if (actor instanceof TokenDocument) return actor.object;
     return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);

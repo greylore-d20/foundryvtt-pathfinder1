@@ -111,13 +111,15 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     elem.removeData("gm-sensitive-inner");
   });
 
-  // Turn rolls into raw strings
-  html.find(".inline-roll").each((a, elem) => {
-    const roll = Roll.fromJSON(unescape(elem.dataset.roll));
-    const parent = elem.parentNode;
-    parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);
-    parent.removeChild(elem);
-  });
+  if (game.settings.get("pf1", "obscureInlineRolls")) {
+    // Turn rolls into raw strings
+    html.find(".inline-roll").each((a, elem) => {
+      const roll = Roll.fromJSON(unescape(elem.dataset.roll));
+      const parent = elem.parentNode;
+      parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);
+      parent.removeChild(elem);
+    });
+  }
 };
 
 export const addChatCardTitleGradient = async function (app, html, data) {

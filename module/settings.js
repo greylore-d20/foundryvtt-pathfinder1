@@ -430,6 +430,19 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Hide inline rolls from non-observers.
+   */
+  game.settings.register("pf1", "obscureInlineRolls", {
+    name: "SETTINGS.pf1obscureInlineRollsN",
+    hint: "SETTINGS.pf1obscureInlineRollsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: debouncedReload,
+  });
+
+  /**
    * Display default token conditions alongside system ones
    */
   game.settings.register("pf1", "coreEffects", {

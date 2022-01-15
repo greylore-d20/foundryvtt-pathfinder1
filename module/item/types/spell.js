@@ -81,8 +81,15 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
-  async use({ ev = null, skipDialog = false, chatMessage = true } = {}) {
-    return this.useSpell(ev, { skipDialog, chatMessage });
+  /**
+   * @param {object} options
+   * @param {Event} options.ev
+   * @param {boolean} options.skipDialog
+   * @param {boolean} options.chatMessage
+   * @param {string|undefined} options.rollMode
+   */
+  async use({ ev = null, skipDialog = false, chatMessage = true, rollMode } = {}) {
+    return this.useSpell(ev, { skipDialog, chatMessage, rollMode });
   }
 
   /**
@@ -91,10 +98,11 @@ export class ItemSpellPF extends ItemPF {
    * @param {MouseEvent} ev - The click event
    * @param {object} options - Additional options
    * @param {boolean} options.skipDialog - Whether to skip the roll dialog
-   * @param options.chatMessage
+   * @param {boolean} options.chatMessage
+   * @param {string|undefined} options.rollMode Roll mode override
    * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
-  async useSpell(ev, { skipDialog = false, chatMessage = true } = {}) {
+  async useSpell(ev, { skipDialog = false, chatMessage = true, rollMode } = {}) {
     if (!this.testUserPermission(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -112,7 +120,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Invoke the Item roll
-    return this.useAttack({ ev: ev, skipDialog: skipDialog, chatMessage });
+    return this.useAttack({ ev, skipDialog, chatMessage, rollMode });
   }
 
   async addSpellUses(value, data = null) {

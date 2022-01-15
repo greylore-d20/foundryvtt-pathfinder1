@@ -1238,11 +1238,12 @@ export class ItemPF extends ItemBasePF {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    *
    * @param altChatData
-   * @param root0
-   * @param root0.addDC
-   * @returns {Promise}
+   * @param {Object} options
+   * @param {boolean} options.addDC
+   * @param {string|undefined} options.rollMode Roll mode override.
+   * @returns {Promise|undefined}
    */
-  async roll(altChatData = {}, { addDC = true } = {}) {
+  async roll(altChatData = {}, { addDC = true, rollMode } = {}) {
     const actor = this.parent;
     if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
@@ -1336,7 +1337,7 @@ export class ItemPF extends ItemBasePF {
     );
 
     // Toggle default roll mode
-    const rollMode = chatData.rollMode || game.settings.get("core", "rollMode");
+    rollMode = rollMode ?? chatData.rollMode ?? game.settings.get("core", "rollMode");
     ChatMessage.applyRollMode(chatData, rollMode);
 
     // Create the chat message
@@ -1447,9 +1448,16 @@ export class ItemPF extends ItemBasePF {
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
 
-  async use({ ev = null, skipDialog = false, chatMessage = true } = {}) {
+  /**
+   * @param {Object} options
+   * @param {Event} options.ev
+   * @param {boolean} options.skipDialog
+   * @param {boolean} options.chatMessage
+   * @param {string|undefined} options.rollMode Roll mode override
+   */
+  async use({ ev = null, skipDialog = false, chatMessage = true, rollMode } = {}) {
     if (this.hasAction) {
-      return this.useAttack({ ev, skipDialog, chatMessage });
+      return this.useAttack({ ev, skipDialog, chatMessage, rollMode });
     }
 
     // Use
@@ -1464,7 +1472,7 @@ export class ItemPF extends ItemBasePF {
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
-      if (chatMessage) return this.roll();
+      if (chatMessage) return this.roll(undefined, undefined, { rollMode });
       else return { descriptionOnly: true }; // nothing to show for printing description
     }
 
@@ -1524,7 +1532,16 @@ export class ItemPF extends ItemBasePF {
     return extraAttacks;
   }
 
-  async useAttack({ ev = null, skipDialog = false, chatMessage = true, dice = "1d20" } = {}) {
+  /**
+   *
+   * @param {Object} options
+   * @param {Event} options.ev
+   * @param {boolean} options.skipDialog
+   * @param {boolean} options.chatMessage
+   * @param {string} options.dice Die roll override.
+   * @param {string|undefined} options.rollMode Roll mode override.
+   */
+  async useAttack({ ev = null, skipDialog = false, chatMessage = true, dice = "1d20", rollMode } = {}) {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
 
     // Prepare variables
@@ -1599,6 +1616,9 @@ export class ItemPF extends ItemBasePF {
       if (!measureResult.result) return;
     }
 
+    // Override roll mode if present.
+    if (rollMode) shared.rollMode = rollMode;
+
     // Call script calls
     await _callFn("executeScriptCalls");
     if (shared.scriptData?.reject) {
@@ -1616,6 +1636,7 @@ export class ItemPF extends ItemBasePF {
 
     // Retrieve message data
     await _callFn("getMessageData");
+
     // Post message
     let result;
     if (shared.scriptData?.hideChat !== true) {

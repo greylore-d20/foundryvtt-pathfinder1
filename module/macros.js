@@ -21,7 +21,7 @@ export const createItemMacro = async function (item, slot) {
     `game.pf1.rollItemMacro("${item.name}", {\n` +
     `  itemId: "${item._id}",\n` +
     `  itemType: "${item.type}",\n` +
-    (actor != null ? `  actorId: "${actor._id}",\n` : "") +
+    (actor != null ? `  actorId: "${actor.id}",\n` : "") +
     `});`;
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {

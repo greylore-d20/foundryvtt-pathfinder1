@@ -1790,36 +1790,6 @@ export class ActorPF extends ActorBasePF {
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
-  /**
-   * Cast a Spell, consuming a spell slot of a certain level
-   *
-   * @param {ItemPF} item   The spell being cast by the actor
-   * @param {MouseEvent} ev The click event
-   * @param root0
-   * @param root0.skipDialog
-   */
-  async useSpell(item, ev, { skipDialog = false } = {}) {
-    if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-    if (item.data.type !== "spell") throw new Error("Wrong Item type");
-
-    if (
-      getProperty(item.data, "data.preparation.mode") !== "atwill" &&
-      item.getSpellUses() < item.chargeCost &&
-      item.autoDeductCharges
-    ) {
-      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-
-    // Invoke the Item roll
-    return item.useAttack({ ev: ev, skipDialog: skipDialog });
-  }
-
   async createAttackFromWeapon(item) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);

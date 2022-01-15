@@ -88,7 +88,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   get hasAction() {
-    return this.hasAttack || this.hasDamage || this.hasEffect || this.hasSave || this.hasTemplate || this.hasSound;
+    return (
+      this.hasAttack ||
+      this.hasDamage ||
+      this.hasEffect ||
+      this.hasSave ||
+      this.hasTemplate ||
+      this.hasSound ||
+      this.isCharged
+    );
   }
 
   get isSingleUse() {

@@ -25,7 +25,7 @@ export class AttackDialog extends Application {
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};
-    for (const [idx, cData] of Object.entries(this.object.data.data.conditionals)) {
+    for (const [idx, cData] of Object.entries(this.object.data.data.conditionals ?? {})) {
       this.conditionals[`conditional.${idx}`] = cData.default === true;
     }
 
@@ -34,6 +34,10 @@ export class AttackDialog extends Application {
       resolve: null,
       reject: null,
     };
+  }
+
+  get title() {
+    return `Use: ${this.object.name}`;
   }
 
   static get defaultOptions() {

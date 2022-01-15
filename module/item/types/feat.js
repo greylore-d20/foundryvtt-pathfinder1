@@ -22,7 +22,7 @@ export class ItemFeatPF extends ItemPF {
   }
 
   getTypeChatData(data, labels, props) {
-    super.getTypeChatData(data, props);
+    super.getTypeChatData(data, labels, props);
     // Add ability type label
     if (this.type === "feat") {
       if (labels.abilityType) {

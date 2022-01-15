@@ -12,7 +12,7 @@
   {{#if hasDamage}}
   <div class="form-group">
     <label>{{localize "PF1.DamageBonus"}}</label>
-    <input class="attribute" type="text" name="damage-bonus" value="{{attributes.dmaage-bonus}}" placeholder="e.g. +1d4"/>
+    <input class="attribute" type="text" name="damage-bonus" value="{{attributes.damage-bonus}}" placeholder="e.g. +1d4"/>
   </div>
   {{/if}}
 
@@ -147,7 +147,7 @@
   </div>
 
   <div class="form-group">
-    {{#unless isSpell}}
+    {{#if isAttack}}
     <button type="button" name="attack_single">
       {{localize "PF1.SingleAttack"}}
     </button>
@@ -159,6 +159,6 @@
     <button type="submit" name="attack_full">
       {{localize "PF1.Use"}}
     </button>
-    {{/unless}}
+    {{/if}}
   </div>
 </form>

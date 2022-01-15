@@ -3,8 +3,6 @@ import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
-import { AbilityTemplate } from "../pixi/ability-template.js";
-import { ChatAttack } from "../misc/chat-attack.js";
 import { ItemChange } from "./components/change.js";
 import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";

@@ -2,49 +2,49 @@
   {{#if hasAttack}}
   <div class="form-group">
       <label>{{localize "PF1.AttackRollDice"}}</label>
-      <input type="text" name="d20" value="{{data.d20}}" placeholder="e.g. 2d20kl"/>
+      <input class="attribute" type="text" name="d20" value="{{attributes.d20}}" placeholder="e.g. 2d20kl"/>
   </div>
   <div class="form-group">
     <label>{{localize "PF1.AttackRollBonus"}}</label>
-    <input type="text" name="attack-bonus" value="" placeholder="e.g. +1d4"/>
+    <input class="attribute" type="text" name="attack-bonus" value="{{attributes.attack-bonus}}" placeholder="e.g. +1d4"/>
   </div>
   {{/if}}
   {{#if hasDamage}}
   <div class="form-group">
     <label>{{localize "PF1.DamageBonus"}}</label>
-    <input type="text" name="damage-bonus" value="" placeholder="e.g. +1d4"/>
+    <input class="attribute" type="text" name="damage-bonus" value="{{attributes.dmaage-bonus}}" placeholder="e.g. +1d4"/>
   </div>
   {{/if}}
 
   {{!-- Flags --}}
   {{#if (or hasAttack hasDamage)}}
-  <div class="form-group stacked">
+  <div class="form-group stacked flags">
     <label>{{localize "PF1.Misc"}}</label>
     <label class="checkbox">
-      <input type="checkbox" name="haste-attack"/> {{localize "PF1.Haste"}}
+      <input type="checkbox" name="haste-attack" {{checked flags.haste-attack}}/> {{localize "PF1.Haste"}}
     </label>
     {{#if isMeleeWeaponAttackAction}}
     <label class="checkbox">
-      <input type="checkbox" name="power-attack"/> {{localize "PF1.PowerAttack"}}
+      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}/> {{localize "PF1.PowerAttack"}}
     </label>
     {{/if}}
     {{#if isRangedWeaponAttackAction}}
     <label class="checkbox">
-      <input type="checkbox" name="power-attack"/> {{localize "PF1.DeadlyAim"}}
+      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}/> {{localize "PF1.DeadlyAim"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="manyshot"/> {{localize "PF1.Manyshot"}}
+      <input type="checkbox" name="manyshot" {{checked flags.manyshot}}/> {{localize "PF1.Manyshot"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="rapid-shot"/> {{localize "PF1.RapidShot"}}
+      <input type="checkbox" name="rapid-shot" {{checked flags.rapid-shot}}/> {{localize "PF1.RapidShot"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="point-blank-shot"/> {{localize "PF1.PointBlankShot"}}
+      <input type="checkbox" name="point-blank-shot" {{checked flags.point-blank-shot}}/> {{localize "PF1.PointBlankShot"}}
     </label>
     {{/if}}
     {{#if isNaturalAttack}}
     <label class="checkbox">
-      <input type="checkbox" {{checked item.primaryAttack}} name="primary-attack"/> {{localize "PF1.PrimaryAttack"}}
+      <input type="checkbox" {{checked flags.primary-attack}} name="primary-attack"/> {{localize "PF1.PrimaryAttack"}}
     </label>
     {{/if}}
   </div>
@@ -52,11 +52,11 @@
 
   {{!-- Conditionals --}}
   {{#if item.conditionals}}
-  <div class="form-group stacked">
+  <div class="form-group stacked conditionals">
     <label>{{localize "PF1.Conditionals"}}</label>
     {{#each item.conditionals as |conditional a|}}
     <label class="checkbox">
-      <input type="checkbox" name="conditional.{{a}}" class="conditional" {{checked this.default}}> {{lookup this "name"}}
+      <input type="checkbox" name="conditional.{{a}}" class="conditional" {{checked (lookup ../conditionals (concat "conditional." a))}}> {{lookup this "name"}}
     </label>
     {{/each}}
   </div>
@@ -66,7 +66,7 @@
   <div class="form-group select">
     <label>{{localize "PF1.DamageAbility"}}</label>
     <select name="damage-ability-multiplier">
-      {{#select data.item.ability.damageMult}}
+      {{#select attributes.damage-ability-multiplier}}
       <option value="0.5">x0.5</option>
       <option value="1">x1</option>
       <option value="1.5">x1.5</option>
@@ -82,7 +82,7 @@
   <div class="form-group select">
     <label>{{localize "PF1.Held"}}</label>
     <select name="held">
-      {{#select data.item.held}}
+      {{#select attributes.held}}
       {{#each config.weaponHoldTypes as |name type|}}
       <option value="{{type}}">{{name}}</option>
       {{/each}}
@@ -95,29 +95,42 @@
   {{#if isSpell}}
   <div class="form-group">
     <label>{{localize "PF1.CasterLevelOffset"}}</label>
-    <input type="number" data-dtype="Number" value="0" name="cl-offset" />
+    <input class="attribute" type="number" data-dtype="Number" value="{{attributes.cl-offset}}" name="cl-offset" />
   </div>
 
   <div class="form-group">
     <label>{{localize "PF1.SpellLevelOffset"}}</label>
-    <input type="number" data-dtype="Number" value="0" name="sl-offset" />
+    <input class="attribute" type="number" data-dtype="Number" value="{{attributes.sl-offset}}" name="sl-offset" />
   </div>
 
   <div class="form-group">
     <label>{{localize "PF1.ConcentrationCheck"}}</label>
-    <input type="checkbox" data-dtype="Boolean" name="concentration">
+    <input type="checkbox" data-dtype="Boolean" name="concentration" {{checked flags.concentration}} />
   </div>
 
   <div class="form-group">
     <label>{{localize "PF1.CasterLevelCheck"}}</label>
-    <input type="checkbox" data-dtype="Boolean" name="cl-check" {{checked item.clCheck}}>
+    <input type="checkbox" data-dtype="Boolean" name="cl-check" {{checked flags.cl-check}} />
+  </div>
+  {{/if}}
+
+  {{!-- Attacks (preview only, for now) --}}
+  {{#if hasAttack}}
+  <div class="attacks">
+    <h2>{{localize "PF1.Attacks"}}</h2>
+    {{#each attacks as |atk idx|}}
+    <div class="attack" data-index="{{idx}}">
+      <input class="name" disabled type="text" name="attack.{{idx}}.name" value="{{atk.name}}" title="{{localize "PF1.Name"}}" />
+      <input class="bonus" disabled type="text" name="attack.{{idx}}.bonus" value="{{atk.bonus}}" title="{{localize "PF1.AttackRollBonus"}}" />
+    </div>
+    {{/each}}
   </div>
   {{/if}}
 
   <div class="form-group stacked">
     {{#if hasTemplate}}
     <label class="checkbox">
-      <input type="checkbox" name="measure-template" checked/> {{localize "PF1.MeasureTemplate"}}
+      <input type="checkbox" name="measure-template" {{checked flags.measure-template}} /> {{localize "PF1.MeasureTemplate"}}
     </label>
     {{/if}}
   </div>
@@ -125,11 +138,27 @@
   <div class="form-group">
     <label>{{localize "PF1.RollMode"}}</label>
     <select name="rollMode">
-      {{#select rollMode}}
+      {{#select attributes.rollMode}}
       {{#each rollModes as |label mode|}}
       <option value="{{mode}}">{{localize label}}</option>
       {{/each}}
       {{/select}}
     </select>
+  </div>
+
+  <div class="form-group">
+    {{#unless isSpell}}
+    <button type="button" name="attack_single">
+      {{localize "PF1.SingleAttack"}}
+    </button>
+
+    <button type="submit" name="attack_full">
+      {{localize "PF1.FullAttack"}}
+    </button>
+    {{else}}
+    <button type="submit" name="attack_full">
+      {{localize "PF1.Use"}}
+    </button>
+    {{/unless}}
   </div>
 </form>

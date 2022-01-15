@@ -393,7 +393,6 @@
 
       .item-name {
         align-items: baseline;
-        white-space: break-spaces;
 
         .change-formula {
           margin: 0 2px;
@@ -1555,6 +1554,32 @@
         input {
           flex: 0.8;
         }
+      }
+    }
+  }
+}
+
+// Attack Roll Dialog
+.pf1.attack-dialog {
+  .attacks {
+    padding: 2px;
+    border: 1px solid @colorOlive;
+    border-radius: 4px;
+
+    .attack {
+      margin-bottom: 2px;
+      display: flex;
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      .name {
+        flex: 1;
+        margin-right: 2px;
+      }
+      .bonus {
+        flex: 0 0 64px;
       }
     }
   }

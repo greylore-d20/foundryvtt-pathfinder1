@@ -93,6 +93,11 @@ export const getRollData = function (shared) {
  * @returns {ItemAttack_Dialog_Result|boolean}
  */
 export const createAttackDialog = async function (shared) {
+  const dialog = new game.pf1.applications.AttackDialog(this, shared.rollData);
+  return dialog.show();
+};
+
+export const createAttackDialogBak = async function (shared) {
   // Render modal dialog
   const htmlTemplate = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
   const dialogData = {
@@ -233,18 +238,6 @@ export const alterRollData = function (shared, form) {
     shared.useMeasureTemplate = elem.prop("checked");
   }
 
-  // Damage ability multiplier
-  elem = form.find('[name="damage-ability-multiplier"]');
-  if (elem.length > 0) {
-    shared.rollData.item.ability.damageMult = parseFloat(elem.val());
-  }
-
-  // Held type
-  elem = form.find('[name="held"]');
-  if (elem.length > 0) {
-    shared.rollData.item.held = elem.val();
-  }
-
   // Power Attack
   if (form.find('[name="power-attack"]').prop("checked")) {
     let powerAttackBonus = (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * 2;
@@ -273,17 +266,6 @@ export const alterRollData = function (shared, form) {
         if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
       })
       .get();
-  }
-
-  // Caster level offset
-  elem = form.find('[name="cl-offset"]');
-  if (elem.length > 0) {
-    shared.rollData.cl += parseInt(elem.val());
-  }
-  // Spell level offset
-  elem = form.find('[name="sl-offset"]');
-  if (elem.length > 0) {
-    shared.rollData.sl += parseInt(elem.val());
   }
 
   // CL check enabled

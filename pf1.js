@@ -65,6 +65,7 @@ import { PatchCore } from "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { RollPF } from "./module/roll.js";
 import { AbilityTemplate } from "./module/pixi/ability-template.js";
+import { AttackDialog } from "./module/item/attack-dialog.js";
 import {
   getItemOwner,
   sizeDieExt,
@@ -143,6 +144,7 @@ Hooks.once("init", function () {
       ItemSheetPF,
       ItemSheetPF_Container,
       // Misc
+      AttackDialog,
       ActorSheetFlags,
       ActorRestDialog,
       ActorTraitSelector,

@@ -209,7 +209,11 @@ export const addTargetCallbacks = function (app, html) {
     event.preventDefault();
     _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
       if (t?.actor.testUserPermission(game.user, "OWNER")) {
-        t.control();
+        if (t._controlled) {
+          if (event.shiftKey) t.release();
+        } else {
+          t.control({ releaseOthers: !event.shiftKey });
+        }
       }
     });
   };

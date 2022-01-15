@@ -976,3 +976,10 @@ export const splitCurrency = (cp) => {
 export const getFirstActiveGM = function () {
   return game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
 };
+
+/**
+ * Check whether at least one GM is active.
+ */
+export const isGMActive = function () {
+  return game.users.some((u) => u.active && u.isGM);
+};

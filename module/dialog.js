@@ -1,3 +1,5 @@
+import { isGMActive } from "./lib";
+
 /**
  * @param root0
  * @param root0.title
@@ -52,7 +54,10 @@ export const dialogGetActor = function (title = "", actors = []) {
     let content = "";
     actors.forEach((target) => {
       if (target instanceof Actor) {
-        content += `<div class="dialog-get-actor flexrow" data-actor-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+        const gmActive = isGMActive();
+        const enabled = gmActive || target.testUserPermission(game.user, "OWNER");
+        const disabledClass = enabled ? "" : "disabled";
+        content += `<div class="dialog-get-actor flexrow ${disabledClass}" data-actor-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
       } else if (target instanceof Item) {
         content += `<div class="dialog-get-actor flexrow" data-item-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
       }
@@ -77,7 +82,7 @@ export const dialogGetActor = function (title = "", actors = []) {
     dialog.activateListeners = function (html) {
       Dialog.prototype.activateListeners.call(this, html);
 
-      html.find(".dialog-get-actor").click((event) => {
+      html.find(".dialog-get-actor:not(.disabled)").click((event) => {
         const elem = event.currentTarget;
         const actorId = elem.dataset.actorId;
         if (actorId) {

@@ -1,6 +1,6 @@
 import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
-import { ItemPF } from "./item/entity.js";
+import { ItemSpellPF } from "./item/types/spell.js";
 import { ActorPF } from "./actor/entity.js";
 
 /**
@@ -582,7 +582,7 @@ export const naturalSort = function (arr, propertyKey = "") {
 };
 
 export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
-  const slcl = ItemPF.getMinimumCasterLevelBySpellData(itemData.data);
+  const slcl = ItemSpellPF.getMinimumCasterLevelBySpellData(itemData.data);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
     name: itemData.name,
     sl: slcl[0],
@@ -633,7 +633,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
 };
 
 export const createConsumableSpell = async function (itemData, type) {
-  const data = await ItemPF.toConsumable(itemData, type);
+  const data = await ItemSpellPF.toConsumable(itemData, type);
 
   if (data._id) delete data._id;
   return data;

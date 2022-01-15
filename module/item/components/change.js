@@ -1,5 +1,6 @@
 import { getChangeFlat, getSourceInfo } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
+import { getAbilityModifier } from "../../actor/lib.mjs";
 
 export class ItemChange {
   static create(data, parent) {
@@ -235,12 +236,12 @@ export class ItemChange {
 
         // Adjust ability modifier
         if (isModifierChanger) {
-          const prevMod = CONFIG.Actor.documentClass.getAbilityModifier(ability.total, {
+          const prevMod = getAbilityModifier(ability.total, {
             damage: ability.damage,
             penalty: ability.penalty,
           });
           const newAbility = rollData.abilities[abilityTarget];
-          const mod = CONFIG.Actor.documentClass.getAbilityModifier(newAbility.total, {
+          const mod = getAbilityModifier(newAbility.total, {
             damage: newAbility.damage,
             penalty: newAbility.penalty,
           });

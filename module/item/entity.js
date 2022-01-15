@@ -1,3 +1,4 @@
+import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
@@ -12,7 +13,7 @@ import { RollPF } from "../roll.js";
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-export class ItemPF extends Item {
+export class ItemPF extends ItemBasePF {
   // TODO: Remove once all broken _id references are fixed.
   get _id() {
     console.error("ItemPF._id is obsolete; use ItemPF.id instead.");
@@ -54,11 +55,8 @@ export class ItemPF extends Item {
     return super.isOwned || this.parentItem != null;
   }
 
+  // Overriden by more specific implementations where necessary
   get isActive() {
-    if (this.type === "buff") return this.data.data.active;
-    if (this.type === "equipment" || this.type === "weapon") return this.data.data.equipped;
-    if (this.type === "loot" && this.data.data.subType === "gear") return this.data.data.equipped;
-    if (this.type === "feat") return !this.data.data.disabled;
     return true;
   }
 
@@ -100,18 +98,12 @@ export class ItemPF extends Item {
   }
 
   get isCharged() {
-    if (this.type === "spell") {
-      if (this.spellbook?.spellPreparationMode === "spontaneous") return false;
-      if (this.maxCharges > 0 && this.chargeCost > 0) return true;
-    }
     if (getProperty(this.data, "data.uses.per") === "single") return true;
     return ["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"));
   }
 
   get autoDeductCharges() {
-    return this.type === "spell"
-      ? getProperty(this.data, "data.preparation.autoDeductCharges") === true
-      : this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true;
+    return this.isCharged && getProperty(this.data, "data.uses.autoDeductCharges") === true;
   }
 
   get charges() {
@@ -123,7 +115,6 @@ export class ItemPF extends Item {
     if (link) return link.charges;
 
     // Get own charges
-    if (this.type === "spell") return this.getSpellUses();
     if (this.isSingleUse) return getProperty(this.data, "data.quantity");
     return getProperty(this.data, "data.uses.value") || 0;
   }
@@ -137,42 +128,15 @@ export class ItemPF extends Item {
     if (link) return link.maxCharges;
 
     // Get own charges
-    if (this.type === "spell") return this.getSpellUses(true);
     if (this.isSingleUse) return getProperty(this.data, "data.quantity");
     return getProperty(this.data, "data.uses.max") || 0;
   }
 
   get chargeCost() {
-    if (this.type === "spell") {
-      if (this.useSpellPoints()) return this.getSpellPointCost();
-      return 1;
-    }
-
     const formula = getProperty(this.data, "data.uses.autoDeductChargesCost");
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
     const cost = RollPF.safeRoll(formula, this.getRollData()).total;
     return cost;
-  }
-
-  get spellbook() {
-    if (this.type !== "spell") return null;
-    if (this.parent == null) return null;
-
-    const spellbookIndex = this.data.data.spellbook;
-    return this.parent?.data?.data.attributes.spells.spellbooks[spellbookIndex];
-  }
-
-  get casterLevel() {
-    const spellbook = this.spellbook;
-    if (!spellbook) return null;
-
-    return spellbook.cl.total + (this.data.data.clOffset || 0);
-  }
-
-  get spellLevel() {
-    if (this.type !== "spell") return null;
-
-    return this.data.data.level + (this.data.data.slOffset || 0);
   }
 
   /**
@@ -274,13 +238,7 @@ export class ItemPF extends Item {
   }
 
   get fullDescription() {
-    let result = this.data.data.description.value;
-
-    if (this.type === "spell") {
-      result += this.data.data.shortDescription;
-    }
-
-    return result;
+    return this.data.data.description.value;
   }
 
   /**
@@ -310,15 +268,6 @@ export class ItemPF extends Item {
     // Get conditional save DC bonus
     const dcBonus = rollData["dcBonus"] ?? 0;
 
-    if (this.type === "spell") {
-      const spellbook = this.spellbook;
-      if (spellbook != null) {
-        let formula = spellbook.baseDCFormula;
-        if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
-        result = RollPF.safeRoll(formula, rollData).total + dcBonus;
-      }
-      return result;
-    }
     const dcFormula = getProperty(data, "save.dc")?.toString() || "0";
     try {
       result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
@@ -431,8 +380,6 @@ export class ItemPF extends Item {
 
     // Add own charges
     if (getProperty(this.data, "data.uses.per") === "single" && getProperty(this.data, "data.quantity") == null) return;
-
-    if (this.type === "spell") return this.addSpellUses(value);
 
     const prevValue = this.isSingleUse
       ? getProperty(this.data, "data.quantity")
@@ -564,83 +511,6 @@ export class ItemPF extends Item {
       }
     }
 
-    // Spell Level,  School, and Components
-    if (itemData.type === "spell") {
-      labels.level = C.spellLevels[data.level];
-      labels.school = C.spellSchools[data.school];
-      labels.components = this.getSpellComponents()
-        .map((o) => o[0])
-        .join(" ");
-    }
-
-    // Feat Items
-    else if (itemData.type === "feat") {
-      labels.featType = C.featTypes[data.featType];
-
-      // Ability type
-      if (data.abilityType && data.abilityType !== "none") {
-        labels.abilityType = C.abilityTypes[data.abilityType].short;
-      } else if (labels.abilityType) {
-        delete labels.abilityType;
-      }
-    }
-
-    // Buff Items
-    else if (itemData.type === "buff") {
-      labels.buffType = C.buffTypes[data.buffType];
-
-      if (this.data.data.duration) {
-        const dur = this.data.data.duration;
-        const unit = C.timePeriodsShort[dur.units];
-        if (unit && dur.value) {
-          const val = RollPF.safeTotal(dur.value, this.getRollData());
-          labels.duration = [val, unit].filterJoin(" ");
-        } else {
-          labels.duration = null;
-        }
-      }
-    }
-
-    // Weapon Items
-    else if (itemData.type === "weapon") {
-      // Type and subtype labels
-      let wType = this.data.data.weaponType;
-      const typeKeys = Object.keys(C.weaponTypes);
-      if (!typeKeys.includes(wType)) wType = typeKeys[0];
-
-      let wSubtype = this.data.data.weaponSubtype;
-      const subtypeKeys = Object.keys(C.weaponTypes[wType]).filter((o) => !o.startsWith("_"));
-      if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
-
-      labels.weaponType = C.weaponTypes[wType]._label;
-      labels.weaponSubtype = C.weaponTypes[wType][wSubtype];
-    }
-
-    // Equipment Items
-    else if (itemData.type === "equipment") {
-      // Type and subtype labels
-      let eType = this.data.data.equipmentType;
-      const typeKeys = Object.keys(C.equipmentTypes);
-      if (!typeKeys.includes(eType)) eType = typeKeys[0];
-
-      let eSubtype = this.data.data.equipmentSubtype;
-      const subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
-      if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
-
-      labels.equipmentType = C.equipmentTypes[eType]._label;
-      labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
-
-      // AC labels
-      const ac = (data.armor.value || 0) + (data.armor.enh || 0);
-      labels.armor = ac > 0 ? `${ac} AC` : "";
-      if (data.armor.dex === "") data.armor.dex = null;
-      else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {
-        data.armor.dex = parseInt(data.armor.dex);
-      }
-      // Add enhancement bonus
-      if (data.armor.enh == null) data.armor.enh = 0;
-    }
-
     // Activated Items
     if (Object.prototype.hasOwnProperty.call(data, "activation")) {
       const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
@@ -769,28 +639,6 @@ export class ItemPF extends Item {
     // Re-render sheet, if open
     if (this.sheet?.rendered) {
       this.sheet?.render();
-    }
-
-    if (this.type === "spell") this._updateSpellDescription();
-
-    // Add total duration in seconds
-    if (this.type === "buff" && this.data.data.duration.value?.length) {
-      let seconds = 0;
-      const rollData = this.getRollData();
-      const duration = RollPF.safeRoll(this.data.data.duration.value || "0", rollData).total;
-      switch (this.data.data.duration.units) {
-        case "hour":
-          seconds = duration * 60 * 60;
-          break;
-        case "minute":
-          seconds = duration * 60;
-          break;
-        case "rounds":
-          seconds = duration * 6;
-          break;
-      }
-
-      this.data.data.duration.totalSeconds = seconds;
     }
   }
 
@@ -1075,9 +923,6 @@ export class ItemPF extends Item {
     // Update name
     if (data["data.identifiedName"]) linkData(srcData, data, "name", data["data.identifiedName"]);
     else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
-
-    // Update description
-    if (this.type === "spell") await this._updateSpellDescription(srcData);
 
     // Update weight according metric system (lb vs kg)
     if (data["data.weightConverted"] != null) {
@@ -1365,65 +1210,15 @@ export class ItemPF extends Item {
     }
   }
 
-  //Creates a simple ActiveEffect from a buff item. Returns the effect
-  async toEffect({ noCreate = false } = {}) {
-    if (!this.parent || this.type !== "buff") return;
-
-    const existing = this.parent.effects.find((e) => e.data.origin == this.uuid);
-    if (existing || noCreate) return existing;
-
-    // Add a new effect
-    const createData = { label: this.name, icon: this.img, origin: this.uuid, disabled: !this.data.data.active };
-    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    const effect = ActiveEffect.create(createData, { parent: this.parent });
-
-    return effect;
-  }
-
   // Determines the starting data for an ActiveEffect based off this item
   getRawEffectData() {
-    const createData = {
+    return {
       label: this.name,
       icon: this.img,
       origin: this.uuid,
       disabled: !this.isActive,
       duration: {},
     };
-    if (this.type === "buff") {
-      createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-      if (this.data.data.hideFromToken) createData.icon = null;
-
-      // Add buff durations
-      const durationValue = this.data.data.duration.value ?? null;
-      if (durationValue) {
-        let seconds = 0;
-        switch (this.data.data.duration.units) {
-          case "minute":
-          case "hour": {
-            seconds = this.totalDurationSeconds;
-            break;
-          }
-          case "turn": {
-            const turns = RollPF.safeRoll(durationValue, this.getRollData()).total;
-            if (turns > 0) {
-              createData.duration.turns = turns;
-              seconds = turns * 6;
-            }
-            break;
-          }
-          case "round": {
-            const rounds = RollPF.safeRoll(durationValue, this.getRollData()).total;
-            if (rounds > 0) {
-              createData.duration.rounds = rounds;
-              seconds = rounds * 6;
-            }
-            break;
-          }
-        }
-        if (seconds > 0) createData.duration.seconds = seconds;
-      }
-    }
-    return createData;
   }
 
   // Fetches all this item's script calls of a specified category
@@ -1620,32 +1415,26 @@ export class ItemPF extends Item {
       }
     }
 
-    // Add SR reminder
-    if (this.type === "spell") {
-      if (data.sr) {
-        props.push(game.i18n.localize("PF1.SpellResistance"));
-      }
-    }
-
-    // Add ability type label
-    if (this.type === "feat") {
-      if (labels.abilityType) {
-        props.push(labels.abilityType);
-      }
-    }
-
-    // Add charges
-    if (this.isCharged && !this.data.data.atWill) {
-      if (this.type === "spell" && this.useSpellPoints()) {
-        props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
-      } else {
-        props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
-      }
-    }
+    // Get per item type chat data
+    this.getTypeChatData(data, labels, props);
 
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
     return data;
+  }
+
+  /**
+   * Per item type chat data.
+   *
+   * @param data
+   * @param labels
+   * @param props
+   */
+  getTypeChatData(data, labels, props) {
+    // Charges as used by most item types, except spells
+    if (this.isCharged && !this.data.data.atWill) {
+      props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
+    }
   }
 
   /* -------------------------------------------- */
@@ -1653,9 +1442,7 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   async use({ ev = null, skipDialog = false, chatMessage = true } = {}) {
-    if (this.type === "spell") {
-      return this.useSpell(ev, { skipDialog, chatMessage });
-    } else if (this.hasAction) {
+    if (this.hasAction) {
       return this.useAttack({ ev, skipDialog, chatMessage });
     }
 
@@ -1729,37 +1516,6 @@ export class ItemPF extends Item {
     setProperty(this.data, "data.formulaicAttacks.count.value", extraAttacks);
 
     return extraAttacks;
-  }
-
-  /**
-   * Cast a Spell, consuming a spell slot of a certain level
-   *
-   * @param {MouseEvent} ev - The click event
-   * @param {object} options - Additional options
-   * @param {boolean} options.skipDialog - Whether to skip the roll dialog
-   * @param options.chatMessage
-   * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
-   */
-  async useSpell(ev, { skipDialog = false, chatMessage = true } = {}) {
-    if (!this.testUserPermission(game.user, "OWNER")) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-    if (this.data.type !== "spell") throw new Error("Wrong Item type");
-
-    if (
-      getProperty(this.data, "data.preparation.mode") !== "atwill" &&
-      this.getSpellUses() < this.chargeCost &&
-      this.autoDeductCharges
-    ) {
-      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-
-    // Invoke the Item roll
-    return this.useAttack({ ev: ev, skipDialog: skipDialog, chatMessage });
   }
 
   async useAttack({ ev = null, skipDialog = false, chatMessage = true, dice = "1d20" } = {}) {
@@ -2342,25 +2098,6 @@ export class ItemPF extends Item {
     const result = this.parent != null && this.parent.data ? this.parent.getRollData() : {};
 
     result.item = this.data.data;
-    if (this.type === "spell" && this.parent != null) {
-      const spellbook = this.spellbook;
-      if (spellbook != null) {
-        const spellAbility = spellbook.ability;
-        let ablMod = "";
-        if (spellAbility !== "") ablMod = getProperty(this.parent.data, `data.abilities.${spellAbility}.mod`);
-
-        result.cl = this.casterLevel || 0;
-        result.sl = this.spellLevel || 0;
-        result.classLevel =
-          spellbook.class === "_hd"
-            ? result.attributes.hd.total
-            : spellbook.class?.length > 0
-            ? getProperty(result, `classes.${spellbook.class}.level`) || 0 // `
-            : 0;
-        result.ablMod = ablMod;
-      }
-    }
-    if (this.type === "buff") result.item.level = this.data.data.level;
 
     // Add dictionary flag
     if (this.data.data.tag) {
@@ -2526,200 +2263,6 @@ export class ItemPF extends Item {
     return game.actors.get(actorId) || null;
   }
 
-  get spellDescriptionData() {
-    if (this.type !== "spell") return {};
-
-    const reSplit = CONFIG.PF1.re.traitSeparator;
-    const srcData = this.data;
-
-    const label = {
-      school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
-      subschool: getProperty(srcData, "data.subschool") || "",
-      types: "",
-    };
-    const data = {
-      data: mergeObject(this.data.data, srcData.data, { inplace: false }),
-      label: label,
-    };
-
-    // Set subschool and types label
-    const types = getProperty(srcData, "data.types");
-    if (typeof types === "string" && types.length > 0) {
-      label.types = types.split(reSplit).join(", ");
-    }
-    // Set information about when the spell is learned
-    data.learnedAt = {};
-    data.learnedAt.class = (getProperty(srcData, "data.learnedAt.class") || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.domain = (getProperty(srcData, "data.learnedAt.domain") || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.subDomain = (getProperty(srcData, "data.learnedAt.subDomain") || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.elementalSchool = (getProperty(srcData, "data.learnedAt.elementalSchool") || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.bloodline = (getProperty(srcData, "data.learnedAt.bloodline") || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-
-    // Set casting time label
-    const act = game.settings.get("pf1", "unchainedActionEconomy")
-      ? getProperty(srcData, "data.unchainedAction.activation")
-      : getProperty(srcData, "data.activation");
-    if (act != null) {
-      const activationCost = act.cost;
-      const activationType = act.type;
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypes_unchained
-        : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
-        : CONFIG.PF1.abilityActivationTypesPlurals;
-
-      if (activationType) {
-        if (activationTypesPlurals[activationType] != null) {
-          if (activationCost === 1) label.castingTime = `${activationTypes[activationType]}`;
-          else label.castingTime = `${activationTypesPlurals[activationType]}`;
-        } else label.castingTime = `${activationTypes[activationType]}`;
-      }
-      if (!Number.isNaN(activationCost) && label.castingTime != null)
-        label.castingTime = `${activationCost} ${label.castingTime}`;
-      if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();
-    }
-
-    // Set components label
-    label.components = this.getSpellComponents(srcData).join(", ");
-
-    // Set duration label
-    {
-      const duration = getProperty(srcData, "data.spellDuration");
-      if (duration) label.duration = duration;
-    }
-    // Set effect label
-    {
-      const effect = getProperty(srcData, "data.spellEffect");
-      if (effect) label.effect = effect;
-    }
-    // Set targets label
-    {
-      const targets = getProperty(srcData, "data.target.value");
-      if (targets) label.targets = targets;
-    }
-    // Set range label
-    {
-      const rangeUnit = getProperty(srcData, "data.range.units");
-      const rangeValue = getProperty(srcData, "data.range.value");
-
-      if (rangeUnit != null && rangeUnit !== "none") {
-        label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
-        let units = game.settings.get("pf1", "distanceUnits"); // override
-        if (units === "default") units = game.settings.get("pf1", "units");
-        if (rangeUnit === "close")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
-          )}`;
-        else if (rangeUnit === "medium")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
-          )}`;
-        else if (rangeUnit === "long")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
-          )}`;
-        else if (["ft", "mi"].includes(rangeUnit)) {
-          if (!rangeValue) label.range = "";
-          else label.range = `${rangeValue} ${label.range}`;
-        }
-      }
-    }
-    // Set area label
-    {
-      const area = getProperty(srcData, "data.spellArea");
-
-      if (area) label.area = area;
-    }
-
-    // Set DC and SR
-    {
-      const savingThrowDescription = getProperty(srcData, "data.save.description");
-      if (savingThrowDescription) label.savingThrow = savingThrowDescription;
-      else label.savingThrow = "none";
-
-      const sr = getProperty(srcData, "data.sr");
-      label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
-
-      if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
-    }
-    return data;
-  }
-
-  /**
-   * Updates the spell's description.
-   *
-   * @param data
-   */
-  async _updateSpellDescription(data) {
-    this.data.data.description.value = await renderTemplate(
-      "systems/pf1/templates/internal/spell-description.hbs",
-      mergeObject(data ?? {}, this.spellDescriptionData)
-    );
-  }
-
-  getSpellComponents(srcData) {
-    if (!srcData) srcData = duplicate(this.data);
-    const reSplit = CONFIG.PF1.re.traitSeparator;
-
-    let components = [];
-    for (const [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
-      if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
-      else if (key === "verbal" && value) components.push("V");
-      else if (key === "somatic" && value) components.push("S");
-      else if (key === "material" && value) components.push("M");
-      else if (key === "focus" && value) components.push("F");
-    }
-    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
-    const df = getProperty(srcData, "data.components.divineFocus");
-    // Sort components
-    const componentsOrder = ["V", "S", "M", "F", "DF"];
-    components.sort((a, b) => {
-      const index = [componentsOrder.indexOf(a), components.indexOf(b)];
-      if (index[0] === -1 && index[1] === -1) return 0;
-      if (index[0] === -1 && index[1] >= 0) return 1;
-      if (index[0] >= 0 && index[1] === -1) return -1;
-      return index[0] - index[1];
-    });
-    components = components.map((o) => {
-      if (o === "M") {
-        if (df === 2) o = "M/DF";
-        if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
-      }
-      if (o === "F") {
-        if (df === 3) o = "F/DF";
-        if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
-      }
-      return o;
-    });
-    return components;
-  }
-
   /* -------------------------------------------- */
 
   /**
@@ -2736,326 +2279,6 @@ export class ItemPF extends Item {
     if (character && controlled.length === 0) targets.push(character);
     if (!targets.length) throw new Error(`You must designate a specific Token as the roll target`);
     return targets;
-  }
-
-  useSpellPoints() {
-    if (!this.parent) return false;
-    if (this.data.type !== "spell") return false;
-
-    const spellbookKey = this.data.data.spellbook;
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
-    return getProperty(spellbook, "spellPoints.useSystem") || false;
-  }
-
-  getSpellPointCost(rollData = null) {
-    if (!rollData) rollData = this.getRollData();
-
-    const roll = RollPF.safeRoll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData);
-    return roll.total;
-  }
-
-  async addSpellUses(value, data = null) {
-    if (!this.parent) return;
-    if (this.data.data.atWill) return;
-
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
-      isSpontaneous = spellbook.spontaneous,
-      spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
-      spellLevel = getProperty(this.data, "data.level");
-
-    if (this.useSpellPoints()) {
-      const curUses = this.getSpellUses();
-      const updateData = {};
-      updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
-      return this.parent.update(updateData);
-    } else {
-      const newCharges = isSpontaneous
-        ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
-        : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);
-
-      if (!isSpontaneous) {
-        const key = "data.preparation.preparedAmount";
-        if (data == null) {
-          data = {};
-          data[key] = newCharges;
-          return this.update(data);
-        } else {
-          data[key] = newCharges;
-        }
-      } else {
-        const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
-        const actorUpdateData = {};
-        actorUpdateData[key] = newCharges;
-        return this.parent.update(actorUpdateData);
-      }
-    }
-
-    return null;
-  }
-
-  getSpellUses(max = false) {
-    if (!this.parent) return 0;
-    if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
-
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
-      isSpontaneous = spellbook.spontaneous,
-      spellLevel = getProperty(this.data, "data.level");
-
-    if (this.useSpellPoints()) {
-      if (max) return getProperty(spellbook, "spellPoints.max");
-      return getProperty(spellbook, "spellPoints.value");
-    } else {
-      if (isSpontaneous) {
-        if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
-          if (max) return getProperty(spellbook, `spells.spell${spellLevel}.max`) || 0;
-          return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
-        }
-      } else {
-        if (max) return getProperty(this.data, "data.preparation.maxAmount") || 0;
-        return getProperty(this.data, "data.preparation.preparedAmount") || 0;
-      }
-    }
-
-    return 0;
-  }
-
-  static async toConsumable(origData, type) {
-    const data = {
-      type: "consumable",
-      name: origData.name,
-    };
-
-    const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
-    if (origData.sl == null) origData.sl = slcl[0];
-    if (origData.cl == null) origData.cl = slcl[1];
-    const materialPrice = origData.data.materials?.gpValue ?? 0;
-
-    // Set consumable type
-    data["data.consumableType"] = type;
-
-    // Set range
-    data["data.range.units"] = origData.data.range.units;
-    data["data.range.value"] = origData.data.range.value;
-    switch (origData.data.range.units) {
-      case "close":
-        data["data.range.value"] = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-      case "medium":
-        data["data.range.value"] = RollPF.safeRoll("100 + @cl * 10", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-      case "long":
-        data["data.range.value"] = RollPF.safeRoll("400 + @cl * 40", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-    }
-
-    // Set name
-    if (type === "wand") {
-      data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
-      data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data["data.price"] = 0;
-      data["data.uses.pricePerUse"] =
-        Math.floor(((Math.max(0.5, origData.sl) * origData.cl * 750 + materialPrice) / 50) * 100) / 100;
-      data["data.hardness"] = 5;
-      data["data.hp.max"] = 5;
-      data["data.hp.value"] = 5;
-    } else if (type === "potion") {
-      data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
-      data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 50 + materialPrice;
-      data["data.hardness"] = 1;
-      data["data.hp.max"] = 1;
-      data["data.hp.value"] = 1;
-      data["data.range.value"] = 0;
-      data["data.range.units"] = "personal";
-    } else if (type === "scroll") {
-      data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
-      data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 25 + materialPrice;
-      data["data.hardness"] = 0;
-      data["data.hp.max"] = 1;
-      data["data.hp.value"] = 1;
-    }
-
-    // Set charges
-    if (type === "wand") {
-      data["data.uses.maxFormula"] = "50";
-      data["data.uses.value"] = 50;
-      data["data.uses.max"] = 50;
-      data["data.uses.per"] = "charges";
-    } else {
-      data["data.uses.per"] = "single";
-    }
-
-    // Set activation method
-    data["data.activation.type"] = "standard";
-    // Set activation for unchained action economy
-    data["data.unchainedAction.activation.type"] = "action";
-    data["data.unchainedAction.activation.cost"] = 2;
-
-    // Set measure template
-    if (type !== "potion") {
-      data["data.measureTemplate"] = getProperty(origData, "data.measureTemplate");
-    }
-
-    // Set damage formula
-    data["data.actionType"] = origData.data.actionType;
-    data["data.damage.parts"] = [];
-    for (const d of origData.data.damage.parts) {
-      data["data.damage.parts"].push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
-    }
-
-    // Set saves
-    data["data.save.description"] = origData.data.save.description;
-    data["data.save.type"] = origData.data.save.type;
-    data["data.save.dc"] = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
-      origData.sl / 2
-    )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
-
-    // Copy variables
-    data["data.attackNotes"] = origData.data.attackNotes;
-    data["data.effectNotes"] = origData.data.effectNotes;
-    data["data.attackBonus"] = origData.data.attackBonus;
-    data["data.critConfirmBonus"] = origData.data.critConfirmBonus;
-    data["data.aura.school"] = origData.data.school;
-
-    // Replace attack and effect formula data
-    for (const arrKey of ["data.attackNotes", "data.effectNotes"]) {
-      const arr = data[arrKey];
-      for (let a = 0; a < arr.length; a++) {
-        const note = arr[a];
-        arr[a] = this._replaceConsumableConversionString(note, origData);
-      }
-    }
-
-    // Set Caster Level
-    data["data.cl"] = origData.cl;
-
-    // Set description
-    data["data.description.value"] = this._replaceConsumableConversionString(
-      await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
-        origData: origData,
-        data: data,
-        isWand: type === "wand",
-        isPotion: type === "potion",
-        isScroll: type === "scroll",
-        sl: origData.sl,
-        cl: origData.cl,
-        config: CONFIG.PF1,
-      }),
-      origData
-    );
-
-    // Create and return synthetic item data
-    return new ItemPF(expandObject(data)).data;
-  }
-
-  static _replaceConsumableConversionString(string, rollData) {
-    string = string.replace(/@sl/g, rollData.sl);
-    string = string.replace(/@cl/g, "@item.cl");
-    return string;
-  }
-
-  /**
-   * @param {object} itemData - A spell item's data.
-   * @returns {number[]} An array containing the spell level and caster level.
-   */
-  static getMinimumCasterLevelBySpellData(itemData) {
-    const learnedAt = getProperty(itemData, "learnedAt.class").reduce((cur, o) => {
-      const classes = o[0].split("/");
-      for (const cls of classes) cur.push([cls, o[1]]);
-      return cur;
-    }, []);
-    const result = [9, 20];
-    for (const o of learnedAt) {
-      result[0] = Math.min(result[0], o[1]);
-
-      const tc = CONFIG.PF1.classCasterType[o[0]] || "high";
-      if (tc === "high") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 2);
-      } else if (tc === "med") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
-      } else if (tc === "low") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
-      }
-    }
-
-    return result;
-  }
-
-  async _onLevelChange(curLevel, newLevel) {
-    if (!this.parent) return;
-    const actor = this.parentActor;
-
-    // Add items associated to this class
-    if (newLevel > curLevel) {
-      const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
-        o.__index = index;
-        return o.level > curLevel && o.level <= newLevel;
-      });
-
-      const newItems = [];
-      for (const co of classAssociations) {
-        const collection = co.id.split(".").slice(0, 2).join(".");
-        const itemId = co.id.split(".")[2];
-        const pack = game.packs.get(collection);
-        const item = await pack.getDocument(itemId);
-
-        const itemData = duplicate(item.data);
-
-        // Set temporary flag
-        setProperty(itemData, "flags.pf1.__co.level", duplicate(co.level));
-
-        delete itemData._id;
-        newItems.push({ data: itemData, co: co });
-      }
-
-      if (newItems.length) {
-        const items = await actor.createEmbeddedDocuments(
-          "Item",
-          newItems.map((o) => o.data)
-        );
-
-        const updateData = [];
-        const classUpdateData = { _id: this.data._id };
-        updateData.push(classUpdateData);
-        for (const i of items) {
-          const co = i.getFlag("pf1", "__co");
-          // Set class association flags
-          classUpdateData[`flags.pf1.links.classAssociations.${i.id}`] = co.level;
-          // Remove temporary flag
-          updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
-        }
-        if (updateData.length) {
-          await actor.updateEmbeddedDocuments("Item", updateData);
-        }
-      }
-    }
-
-    // Remove items associated to this class
-    if (newLevel < curLevel) {
-      const associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
-      const itemIds = [];
-      for (const [id, level] of Object.entries(associations)) {
-        const item = this.parent.items.find((o) => o.id === id);
-        if (!item) {
-          delete associations[id];
-          continue;
-        }
-
-        if (level > newLevel) {
-          itemIds.push(item.id);
-          delete associations[id];
-        }
-      }
-      await this.setFlag("pf1", "links.classAssociations", associations);
-      await Item.implementation.deleteDocuments(itemIds, { parent: this.parent });
-    }
-
-    // Call level change hook
-    Hooks.call("pf1.classLevelChange", this.actor, this, curLevel, newLevel);
   }
 
   /**
@@ -3334,9 +2557,6 @@ export class ItemPF extends Item {
     const result = {};
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
-    if (this.type === "attack") {
-      result["size"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.size._label);
-    }
     if (this.type === "spell" || this.hasSave)
       result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
@@ -3376,14 +2596,12 @@ export class ItemPF extends Item {
     }
     // Add subtargets affecting effects
     if (target === "effect") {
-      if (this.data.type === "spell") result["cl"] = game.i18n.localize("PF1.CasterLevel");
       if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
     }
     // Add misc subtargets
     if (target === "misc") {
       // Add charges subTarget with specific label
-      if (this.type === "spell" && this.useSpellPoints()) result["charges"] = game.i18n.localize("PF1.SpellPointsCost");
-      else if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
+      if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
     }
     return result;
   }
@@ -3433,146 +2651,13 @@ export class ItemPF extends Item {
     return change;
   }
 
-  async createContainerContent(data, options = { raw: false }) {
-    const embeddedName = "Item";
-    const user = game.user;
-    const itemOptions = { temporary: false, renderSheet: false };
-
-    let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
-    // Iterate over data to create
-    data = data instanceof Array ? data : [data];
-    if (!(itemOptions.temporary || itemOptions.noHook)) {
-      for (const d of data) {
-        const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} creation prevented by preCreate hook`);
-          return null;
-        }
-
-        d._id = randomID(16);
-      }
-    }
-
-    // Add to updates
-    const items = data.map((o) => (options.raw ? o : new ItemPF(o).data));
-    inventory.push(...items);
-
-    // Filter items with duplicate _id
-    {
-      const ids = [];
-      inventory = inventory.filter((i) => {
-        if (ids.includes(i._id)) return false;
-        ids.push(i._id);
-        return true;
-      });
-    }
-
-    await this.update({ "data.inventoryItems": inventory });
-  }
-
-  getContainerContent(itemId) {
-    return this.items.get(itemId);
-  }
-
-  async deleteContainerContent(data) {
-    const embeddedName = "ContainerContent";
-    const user = game.user;
-    const options = { noHook: false };
-
-    // Iterate over data to create
-    data = data instanceof Array ? data : [data];
-    const ids = new Set(data);
-
-    // Iterate over elements of the collection
-    const inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []).filter((d) => {
-      if (!ids.has(d._id)) return true;
-
-      // Call pre-update hooks to ensure the update is allowed to proceed
-      if (!options.noHook) {
-        const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
-          return true;
-        }
-      }
-
-      // Remove document from collection
-      return false;
-    }, []);
-
-    // Trigger the Socket workflow
-    await this.update({ "data.inventoryItems": inventory });
-  }
-
-  async updateContainerContents(data) {
-    const embeddedName = "ContainerContent";
-    const user = game.user;
-    const options = { diff: true };
-
-    // Structure the update data
-    const pending = new Map();
-    data = data instanceof Array ? data : [data];
-    for (const d of data) {
-      if (!d._id) throw new Error("You must provide an id for every Embedded Document in an update operation");
-      pending.set(d._id, d);
-    }
-
-    // Difference each update against existing data
-    const updates = this.items.reduce((arr, d) => {
-      if (!pending.has(d.id)) return arr;
-      let update = pending.get(d.id);
-
-      // Diff the update against current data
-      if (options.diff) {
-        update = diffObject(d.data, expandObject(update));
-        if (isObjectEmpty(update)) return arr;
-        update["_id"] = d.id;
-      }
-
-      // Call pre-update hooks to ensure the update is allowed to proceed
-      if (!options.noHook) {
-        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
-          return arr;
-        }
-      }
-
-      // Stage the update
-      arr.push(update);
-      return arr;
-    }, []);
-    if (!updates.length) return [];
-    let inventory = duplicate(this.data.data.inventoryItems).map((o) => {
-      for (const u of updates) {
-        if (u._id === o._id) return mergeObject(o, u);
-      }
-      return o;
-    });
-
-    // Filter items with duplicate _id
-    {
-      const ids = [];
-      inventory = inventory.filter((i) => {
-        if (ids.includes(i._id)) return false;
-        ids.push(i._id);
-        return true;
-      });
-    }
-
-    await this.update({ "data.inventoryItems": inventory });
-  }
-
   /**
-   * @param root0
-   * @param root0.inLowestDenomination
+   * @param options
+   * @param options.inLowestDenomination
    * @returns {number} The total amount of currency this item contains, in gold pieces
    */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
-    const currencies = getProperty(this.data, "data.currency");
-    if (!currencies) return 0;
-    const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
-    return inLowestDenomination ? total : total / 100;
+    return 0;
   }
 
   /**
@@ -3607,13 +2692,6 @@ export class ItemPF extends Item {
 
     // Modify sell value
     if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;
-
-    if (!this.items || !recursive) return result;
-
-    // Add item's content items' values
-    this.items.forEach((i) => {
-      result += i.getValue({ recursive: recursive, sellValue: sellValue, inLowestDenomination });
-    });
 
     return result;
   }
@@ -3665,13 +2743,6 @@ export class ItemPF extends Item {
     );
   }
 
-  async delete(context = {}) {
-    if (this.data.type === "class") {
-      await this._onLevelChange(this.data.data.level, 0);
-    }
-
-    return super.delete(context);
-  }
   /**
    * Sets a boolean flag on this item.
    *
@@ -3996,5 +3067,14 @@ export class ItemPF extends Item {
     }
 
     return getHighestChanges(allChanges, { ignoreTarget: true });
+  }
+
+  /**
+   * @param {...any} args
+   * @deprecated
+   */
+  static toConsumable(...args) {
+    console.warn("ItemPF.toConsumable() is deprecated in favor of ItemSpellPF.toConsumable()");
+    return CONFIG.Item.documentClasses.spell.toConsumable(...args);
   }
 }

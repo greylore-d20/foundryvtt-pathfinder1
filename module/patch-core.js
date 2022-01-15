@@ -165,16 +165,6 @@ export async function PatchCore() {
     };
   }
 
-  // Todo: Declare this in TokenDocumentPF when/ if TokenDocument.getData calls the constructor's method
-  {
-    const origFunc = TokenDocument.getTrackedAttributes;
-    TokenDocument.getTrackedAttributes = function (data, _path = []) {
-      const attr = origFunc.call(this, data, _path);
-      if (_path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
-      return attr;
-    };
-  }
-
   // Remove warnings for conflicting uneditable system bindings
   {
     const origFunc = KeybindingsConfig.prototype._detectConflictingActions;

@@ -874,8 +874,12 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 Hooks.on("renderTokenConfig", async (app, html) => {
   const TokenData = foundry.data.TokenData;
   // Add vision inputs
+  let object = app.object;
+  if (object instanceof Actor) object = object.token.data;
+  else if (object instanceof TokenDocument) object = object.data;
+  // else: pure data for default token settings in core settings
   let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {
-    object: duplicate(app.object.data instanceof TokenData ? app.object.data : app.object.data.token),
+    object: foundry.utils.deepClone(object),
   });
   html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
 
@@ -883,10 +887,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   newHTML = `<div class="form-group"><label>${game.i18n.localize(
     "PF1.StaticSize"
   )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
-  if (
-    getProperty(app.object instanceof TokenDocument ? app.object.data : app.object.data.token, "flags.pf1.staticSize")
-  )
-    newHTML += " checked";
+  if (getProperty(object, "flags.pf1.staticSize")) newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
 

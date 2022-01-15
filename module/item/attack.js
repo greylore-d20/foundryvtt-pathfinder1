@@ -530,7 +530,7 @@ export const addAttacks = async function (shared) {
     // Create attack object
     const attack = new ChatAttack(this, {
       label: atk.label,
-      primaryAttack: shared.primaryAttack,
+      primaryAttack: shared.rollData.item?.primaryAttack !== false,
       rollData: shared.rollData,
       targets: game.user.targets,
     });

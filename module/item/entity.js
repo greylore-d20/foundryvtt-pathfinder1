@@ -1803,7 +1803,8 @@ export class ItemPF extends ItemBasePF {
     }
     // Add secondary natural attack penalty
     if (this.data.data.attackType === "natural" && primaryAttack === false) {
-      parts.push(`-5[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+      const penalty = -5;
+      parts.push(`${penalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
     }
     // Add bonus
     if (bonus) {

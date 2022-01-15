@@ -900,7 +900,7 @@ Hooks.on("dropActorSheetData", (act, sheet, data) => {
 
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   let macro;
-  if (data.type === "Item") macro = macros.createItemMacro(data.data, slot);
+  if (data.type === "Item") macro = macros.createItemMacro(data.data, data.actor, slot);
   else if (data.type === "skill") macro = macros.createSkillMacro(data.skill, data.actor, slot);
   else if (data.type === "save") macro = macros.createSaveMacro(data.altType, data.actor, slot);
   else if (["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type))

@@ -1611,7 +1611,8 @@ export class ItemPF extends ItemBasePF {
 
     // Subtract uses
     if (shared.ammoUsed > 0) await _callFn("subtractAmmo", shared.ammoUsed);
-    if (shared.rollData.chargeCost > 0) await this.addCharges(-shared.rollData.chargeCost);
+    if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
+      await this.addCharges(-shared.rollData.chargeCost);
 
     // Retrieve message data
     await _callFn("getMessageData");

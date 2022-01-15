@@ -52,9 +52,9 @@ export const dialogGetActor = function (title = "", actors = []) {
     let content = "";
     actors.forEach((target) => {
       if (target instanceof Actor) {
-        content += `<div class="dialog-get-actor flexrow" data-actor-id="${target._id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+        content += `<div class="dialog-get-actor flexrow" data-actor-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
       } else if (target instanceof Item) {
-        content += `<div class="dialog-get-actor flexrow" data-item-id="${target._id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+        content += `<div class="dialog-get-actor flexrow" data-item-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
       }
     });
 

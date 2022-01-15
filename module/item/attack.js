@@ -56,7 +56,7 @@ export const checkRequirements = async function (shared) {
         ui.notifications.warn(msg);
         return ERR_REQUIREMENT.MISSING_AMMO;
       }
-      shared.ammoAvailable = shared.Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
+      shared.ammoAvailable = Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
 
       if (shared.ammoAvailable <= 0) {
         const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
@@ -248,11 +248,12 @@ export const alterRollData = function (shared, form) {
   // Power Attack
   if (form.find('[name="power-attack"]').prop("checked")) {
     let powerAttackBonus = (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * 2;
-    if (getProperty(this.data, "data.attackType") === "natural") {
-      if (shared.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5) powerAttackBonus *= 1.5;
-      else if (!shared.primaryAttack) powerAttackBonus *= 0.5;
+    if (this.data.data.attackType === "natural") {
+      if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
+        powerAttackBonus *= 1.5;
+      else if (!shared.rollData.item?.primaryAttack) powerAttackBonus *= 0.5;
     } else {
-      if (getProperty(shared.rollData, "item.held") === "2h") powerAttackBonus *= 1.5;
+      if (shared.rollData?.item?.held === "2h") powerAttackBonus *= 1.5;
       else if (getProperty(shared.rollData, "item.held") === "oh") powerAttackBonus *= 0.5;
     }
     const label = ["rwak", "rsak"].includes(this.data.data.actionType)
@@ -319,7 +320,7 @@ export const generateAttacks = function (shared) {
   const allAttacks = shared.fullAttack
     ? this.data.data.attackParts.reduce(
         (cur, r) => {
-          cur.push({ bonus: r[0], label: r[1] });
+          cur.push({ attackBonus: r[0], label: r[1] });
           return cur;
         },
         [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]
@@ -624,10 +625,16 @@ export const addEffectNotes = async function (shared) {
 };
 
 /**
+ * @typedef {Object} Attack_MeasureTemplateResult
+ * @property {boolean} result - Whether an area was selected.
+ * @property {Function} [place] - Function to place the template, if an area was selected.
+ * @property {Function} [delete] - Function to delete the template, if it has been placed.
+ */
+/**
  * Prompts the user for an area, based on the attack's measure template.
  *
  * @param {Object} shared - Shared data between attack functions.
- * @returns {Promise.<boolean>} Whether an area was selected.
+ * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
  */
 export const promptMeasureTemplate = async function (shared) {
   // Determine size
@@ -650,18 +657,21 @@ export const promptMeasureTemplate = async function (shared) {
   }
 
   // Create template
-  shared.template = game.pf1.AbilityTemplate.fromData(templateOptions);
-  if (shared.template) {
+  shared.template = null;
+  const template = game.pf1.AbilityTemplate.fromData(templateOptions);
+  let result;
+  if (template) {
     const sheetRendered = this.parent?.sheet?._element != null;
     if (sheetRendered) this.parent.sheet.minimize();
-    shared.template = await shared.template.drawPreview(shared.event);
-    if (!shared.template) {
+    result = await template.drawPreview(shared.event);
+    if (!result.result) {
       if (sheetRendered) this.parent.sheet.maximize();
-      return false;
+      return result;
     }
   }
 
-  return true;
+  shared.template = await result.place();
+  return result;
 };
 
 /**
@@ -981,8 +991,15 @@ export const generateChatMetadata = function (shared) {
     attacks: {},
   };
 
+  // Get template for later variables
+  const template = canvas.templates.get(metadata.template);
+
   // Add targets
-  metadata.targets = Array.from(game.user.targets).map((o) => o.id);
+  if (template != null) {
+    metadata.targets = template.getTokensWithin().map((o) => o.id);
+  } else {
+    metadata.targets = Array.from(game.user.targets).map((o) => o.id);
+  }
 
   // Add attack rolls
   for (let a = 0; a < shared.chatAttacks.length; a++) {

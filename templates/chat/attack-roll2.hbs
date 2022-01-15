@@ -12,7 +12,7 @@
         {{/if}}
       </h1>
       <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20{{/if}}{{#if atk.attack.isCrit}} critical-threat success{{/if}}{{#if atk.attack.isFumble}} failure{{/if}}"
-         title="{{atk.attack.formula}}" data-roll="{{atk.attack.rollJSON}}">
+         title="{{atk.attack.formula}}" data-roll="{{json-string atk.attack.roll}}">
         <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
       </a>
     </div>
@@ -21,7 +21,7 @@
     <div class="flexrow">
       <h3>{{atk.critConfirm.flavor}}</h3>
       <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.critConfirm.isFumble}} failure{{/if}}"
-         title="{{atk.critConfirm.formula}}" data-roll="{{atk.critConfirm.rollJSON}}"}}>
+         title="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm.roll}}">
         <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
       </a>
     </div>
@@ -39,7 +39,7 @@
     {{#each atk.damage.parts as |part|}}
     <div class="flexrow">
       <span>{{part.damageType}}</span>
-      <a class="inline-roll inline-dsn-hidden inline-result" title="{{part.roll.formula}}" data-roll="{{part.roll.json}}">
+      <a class="inline-roll inline-dsn-hidden inline-result" title="{{part.roll.formula}}" data-roll="{{json-string part.roll}}">
         <i class="fas fa-dice-d20"></i> {{part.roll.total}}
       </a>
     </div>
@@ -57,7 +57,7 @@
     {{#each atk.critDamage.parts as |part|}}
     <div class="flexrow">
       <span>{{part.damageType}}</span>
-      <a class="inline-roll inline-dsn-hidden inline-result" title="{{part.roll.formula}}" data-roll="{{part.roll.json}}">
+      <a class="inline-roll inline-dsn-hidden inline-result" title="{{part.roll.formula}}" data-roll="{{json-string part.roll}}">
         <i class="fas fa-dice-d20"></i> {{part.roll.total}}
       </a>
     </div>

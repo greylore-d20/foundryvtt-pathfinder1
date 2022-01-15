@@ -51,7 +51,7 @@
         {{!-- Initiative --}}
         <div class="flexrow">
             <label class="cell left-label">{{localize "PF1.Initiative"}}</label>
-            <select data-name="data.attributes.init.ability" class="cell midsize">
+            <select name="data.attributes.init.ability" class="cell midsize">
                 {{#select data.attributes.init.ability}}
                     <option value=""></option>
                     {{selectOptions config.abilities}}
@@ -157,7 +157,7 @@
         {{#each data.attributes.savingThrows as |savingThrow id|}}
             <div class="flexrow">
                 <label class="cell left-label">{{savingThrow.label}}</label>
-                <select data-name="data.attributes.savingThrows.{{id}}.ability" class="cell midsize">
+                <select name="data.attributes.savingThrows.{{id}}.ability" class="cell midsize">
                     {{#select savingThrow.ability}}
                         <option value=""></option>
                         {{#each ../config.abilities as |label value|}}
@@ -201,27 +201,27 @@
 
     <div class="form-group stacked">
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideHeld" {{checked actor.data.details.tooltip.hideHeld}}/> {{localize "PF1.HideHeld"}}
+            <input type="checkbox" name="data.details.tooltip.hideHeld" {{checked actor.data.data.details.tooltip.hideHeld}}/> {{localize "PF1.HideHeld"}}
         </label>
 
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideArmor" {{checked actor.data.details.tooltip.hideArmor}}/> {{localize "PF1.HideArmor"}}
+            <input type="checkbox" name="data.details.tooltip.hideArmor" {{checked actor.data.data.details.tooltip.hideArmor}}/> {{localize "PF1.HideArmor"}}
         </label>
 
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideBuffs" {{checked actor.data.details.tooltip.hideBuffs}}/> {{localize "PF1.HideBuffs"}}
+            <input type="checkbox" name="data.details.tooltip.hideBuffs" {{checked actor.data.data.details.tooltip.hideBuffs}}/> {{localize "PF1.HideBuffs"}}
         </label>
 
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideConditions" {{checked actor.data.details.tooltip.hideConditions}}/> {{localize "PF1.HideConditions"}}
+            <input type="checkbox" name="data.details.tooltip.hideConditions" {{checked actor.data.data.details.tooltip.hideConditions}}/> {{localize "PF1.HideConditions"}}
         </label>
 
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideClothing" {{checked actor.data.details.tooltip.hideClothing}}/> {{localize "PF1.HideClothing"}}
+            <input type="checkbox" name="data.details.tooltip.hideClothing" {{checked actor.data.data.details.tooltip.hideClothing}}/> {{localize "PF1.HideClothing"}}
         </label>
 
         <label class="checkbox">
-            <input type="checkbox" name="data.details.tooltip.hideName" {{checked actor.data.details.tooltip.hideName}}/> {{localize "PF1.HideName"}}
+            <input type="checkbox" name="data.details.tooltip.hideName" {{checked actor.data.data.details.tooltip.hideName}}/> {{localize "PF1.HideName"}}
         </label>
     </div>
 {{/if}}

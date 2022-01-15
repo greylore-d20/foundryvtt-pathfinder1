@@ -1,5 +1,7 @@
 import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
+import { getSkipActionPrompt } from "./settings.js";
+import { alterChatTargetAttribute } from "./socket.js";
 import Color from "color";
 
 /* -------------------------------------------- */
@@ -86,11 +88,6 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     }
   }
 
-  if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
-
-  // Hide info
-  html.find(".gm-sensitive").remove();
-
   // Hide identified and description
   const item = app.itemSource;
   if (item != null && item.data?.data?.identified === false) {
@@ -101,6 +98,11 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     const unidentifiedDescription = item.data.data.description?.unidentified;
     html.find(".card-content").html(TextEditor.enrichHTML(unidentifiedDescription, item.getRollData()));
   }
+
+  if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
+
+  // Hide info
+  html.find(".gm-sensitive").remove();
 
   // Alter GM inner texts
   html.find("[data-gm-sensitive-inner]").each((a, elem) => {
@@ -211,12 +213,6 @@ export const addTargetCallbacks = function (app, html) {
       }
     });
   };
-  const _ACClickCallback = function (event) {
-    event.preventDefault();
-    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-      t?.actor.rollDefenses({ rollMode: "selfroll" });
-    });
-  };
 
   // Add callbacks
   for (let elem of targetElems) {
@@ -229,6 +225,56 @@ export const addTargetCallbacks = function (app, html) {
     imgElem.on("click", _imageClickCallback);
 
     // Misc element events
-    elem.find(".ac").on("click", _ACClickCallback);
+    elem.find(".ac").on("click", (event) => {
+      event.preventDefault();
+
+      _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+        if (!t?.actor) return;
+        game.pf1.chat.events.targetACClick(app, html, t.actor, event);
+      });
+    });
+    elem.find(".saving-throws .click").on("click", (event) => {
+      event.preventDefault();
+
+      _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
+        if (!t?.actor) return;
+        game.pf1.chat.events.targetSavingThrowClick(app, html, t.actor, event);
+      });
+    });
+  }
+};
+
+export const targetACClick = async function (app, html, actor, event) {
+  actor.rollDefenses({ rollMode: "selfroll" });
+};
+
+export const targetSavingThrowClick = async function (app, html, actor, event) {
+  const elem = event.currentTarget;
+  const save = elem.dataset.savingThrow;
+
+  const message = await actor.rollSavingThrow(save, { event, skipPrompt: getSkipActionPrompt() });
+  const total = message?.roll?.total;
+
+  // Replace saving throw value on original chat card's target
+  if (total != null) {
+    // Prepare parameters
+    const args = {
+      eventType: "alterChatTargetAttribute",
+      message: app.id,
+      targetUuid: actor.uuid,
+      save,
+      value: total,
+    };
+
+    // Add parameters based on d20 result
+    const d20 = message.roll.terms[0];
+    if (d20.faces === 20) {
+      if (d20.total === 1) args.isFailure = true;
+      else if (d20.total === 20) args.isSuccess = true;
+    }
+
+    // Do action
+    if (game.user.isGM) return alterChatTargetAttribute(args);
+    else game.socket.emit("system.pf1", args);
   }
 };

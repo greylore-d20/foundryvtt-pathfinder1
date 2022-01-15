@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.80.4 - 2022-1-8
+
+### Bug Fixes
+
+- Fix chat cards getting an incorrect ID for its measure template
+- Help browser was nonfunctional with routePrefix. ([1144](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1144))
+- Item gifting was silently failing. ([1190](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1190))
+- Buff icons broken with hide from token in token HUD condition menu.
+- Non-formulaic extra attacks did not apply their modifiers to attacks. ([1200](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1200))
+
+### Changelog
+
+- Chat cards with measure templates now have all tokens within as targets
+- Add saving throws to chat card targets
+
+## 0.80.3 - 2022-1-6
+
+### Bug Fixes
+
+- Attacks with ammo links couldn't be used. ([1187](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1187))
+- Fix item images not rendering in actor sheet with some special characters in the file name. ([1197](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1197))
+- Actor-specific tooltip settings didn't load correctly ([1189](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1189))
+- Unidentified items used from an owned actor showed their identified name and description in the chat card ([1175](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1175))
+- Fix light with negative luminosity being affected by low-light vision
+- Fix vision permission not working ([1186](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1186))
+- Grappled condition was adding penalties to CMB twice ([1191](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1191))
+
+### Changelog
+
+- Added @dc to item roll data. ([1183](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1183))
+- Add `shared.reject` to item use script calls ([1182](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1182))
+
+### API
+
+- Add MeasureTemplatePF.getTokensWithin and MeasureTemplatePF.getHighlightedSquares functions
+- Roll JSON is no longer created pre-emptively for useAttack (including associated useItem hooks).
+
 ## 0.80.2 - 2021-12-21
 
 ### Bug Fixes

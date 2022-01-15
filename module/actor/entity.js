@@ -19,6 +19,12 @@ import { VisionPermissionSheet } from "../misc/vision-permission.js";
  * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends Actor {
+  // TODO: Remove once all broken _id references are fixed.
+  get _id() {
+    console.error("ActorPF._id is obsolete; use ActorPF.id instead.");
+    return this.id;
+  }
+
   constructor(...args) {
     super(...args);
 
@@ -3819,8 +3825,9 @@ export class ActorPF extends Actor {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 
-    const buffTextures = this._calcBuffActiveEffects();
     if (!this.testUserPermission(game.user, "OWNER")) return;
+
+    const buffTextures = this._calcBuffActiveEffects();
     const fx = [...this.effects];
 
     // Create and delete buff ActiveEffects
@@ -3880,7 +3887,6 @@ export class ActorPF extends Actor {
     return buffs.reduce((acc, cur) => {
       const id = cur.uuid;
       if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur };
-      if (cur.data.data.hideFromToken) acc[id].icon = null;
       if (cur.data.data.active) acc[id].active = true;
       else acc[id].active = false;
       return acc;

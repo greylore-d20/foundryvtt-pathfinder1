@@ -5,51 +5,126 @@
   "img": "systems/pf1/icons/feats/dodge.jpg",
   "data": {
     "description": {
-      "value": "<p>At 4th level, when a brawler wears light or no armor, she gains a +1 dodge bonus to AC and CMD. This bonus increases by 1 at 9th, 13th, and 18th levels.<br><br>These bonuses to AC apply against touch attacks. She loses these bonuses while immobilized or helpless, wearing medium or heavy armor, or carrying a medium or heavy load.</p>"
+      "value": "<p>At 4th level, when a brawler wears light or no armor, she gains a +1 dodge bonus to AC and CMD. This bonus increases by 1 at 9th, 13th, and 18th levels.<br><br>These bonuses to AC apply against touch attacks. She loses these bonuses while immobilized or helpless, wearing medium or heavy armor, or carrying a medium or heavy load.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "passive"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "passive"
       }
     },
-    "uses": {
-      "per": ""
+    "duration": {
+      "value": null,
+      "units": ""
     },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [
       {
         "_id": "ipjt76kz",
-        "formula": "if (d.armor.type < 2 && d.attributes.encumbrance.level < 1) {\n    result.value = 1;\n    const lvl = d.classes?.brawler?.level ?? 0;\n    if (lvl >= 9) result.value++;\n    if (lvl >= 13) result.value++;\n    if (lvl >= 18) result.value++;\n}",
-        "operator": "script",
+        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * min(4, max(0, floor((@classes.brawler.level - 1) / 4)))",
+        "operator": "add",
         "subTarget": "ac",
         "modifier": "dodge",
         "priority": 0,
         "value": 0,
         "target": "ac"
+      },
+      {
+        "_id": "tvl84rm2",
+        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * min(4, max(0, floor((@classes.brawler.level - 1) / 4)))",
+        "operator": "add",
+        "subTarget": "cmd",
+        "modifier": "dodge",
+        "priority": 0,
+        "value": 0
       }
     ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "",
+    "useCustomTag": false,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -64,7 +139,14 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false,
+    "spellArea": "",
+    "conditionals": [],
+    "identifiedName": "AC Bonus (BRA)"
   },
   "effects": [],
   "folder": null,

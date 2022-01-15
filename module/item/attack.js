@@ -680,13 +680,14 @@ export const handleDiceSoNice = async function (shared) {
        * @returns {Promise} A Promise that is resolved when all rolls have been displayed
        */
       const showRoll = async (pools) => {
+        const whisper = chatData.whisper?.length ? chatData.whisper : undefined; // DSN does not like empty array for whisper
         if (mergeRolls) {
           return Promise.all(
-            pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, chatData.whisper, chatData.blind))
+            pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind))
           );
         } else {
           for (const pool of pools) {
-            await game.dice3d.showForRoll(pool, game.user, true, chatData.whisper, chatData.blind);
+            await game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind);
           }
         }
       };

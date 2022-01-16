@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.80.6 - 2022-1-16
+
+### Bug Fixes
+
+- Updating unlinked tokens caused errors ([1223](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1223))
+
 ## 0.80.5 - 2022-1-16
 
 ### Bug Fixes

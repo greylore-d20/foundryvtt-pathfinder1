@@ -1468,7 +1468,7 @@ export class ItemPF extends ItemBasePF {
     }
     // Show a chat card if this item doesn't have 'use' type script call(s)
     else {
-      if (chatMessage) return this.roll(undefined, undefined, { rollMode });
+      if (chatMessage) return this.roll(undefined, { rollMode });
       else return { descriptionOnly: true }; // nothing to show for printing description
     }
 

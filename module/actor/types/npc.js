@@ -29,7 +29,7 @@ export class ActorNPCPF extends ActorPF {
   }
 
   /* Not used by NPCs */
-  _updateExp(updateData) {}
+  _updateExp() {}
 
   getCR() {
     if (this.data.type !== "npc") return 0;

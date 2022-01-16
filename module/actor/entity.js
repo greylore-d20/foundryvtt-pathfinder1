@@ -1593,97 +1593,74 @@ export class ActorPF extends ActorBasePF {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
-  async _preUpdate(data, options, userId) {
-    data = flattenObject(data);
+  async _preUpdate(update, options, userId) {
     this._trackPreviousAttributes();
-    await super._preUpdate(data, options, userId);
+    await super._preUpdate(update, options, userId);
+
+    if (!update.data) return; // No system updates.
+
+    const oldData = this.data.data;
 
     // Apply settings
-    // Set used spellbook flags
-    {
-      const re = new RegExp(/^spellbook-([a-zA-Z]+)-inuse$/);
-      const sbData = Object.entries(data)
-        .filter((o) => {
-          const result = o[0].match(re);
-          if (result) delete data[o[0]];
-          return result;
-        })
-        .map((o) => {
-          return { spellbook: o[0].replace(re, "$1"), inUse: o[1] };
-        });
-
-      let usedSpellbooks = [];
-      if (data["data.attributes.spells.usedSpellbooks"])
-        usedSpellbooks = duplicate(data["data.attributes.spells.usedSpellbooks"]);
-      else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks"))
-        usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
-
-      for (const o of sbData) {
-        if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
-        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
-          usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
-      }
-      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
-    }
-
     // Apply changes in Actor size to Token width/height
-    if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {
-      const size = CONFIG.PF1.tokenSizes[data["data.traits.size"]];
-      if (!this.isToken && !getProperty(this.data, "token.flags.pf1.staticSize")) {
-        data["token.width"] = size.w;
-        data["token.height"] = size.h;
-        data["token.scale"] = size.scale;
+    const newSize = update.data.traits?.size;
+    if (newSize !== undefined && oldData.traits.size !== undefined) {
+      const size = CONFIG.PF1.tokenSizes[newSize];
+      if (!this.isToken && !getProperty(this.data, "token.flags.pf1.statiSize")) {
+        if (!update.token) update.token = {};
+        update.token.width = size.w;
+        update.token.height = size.h;
+        update.token.scale = size.scale;
       }
     }
 
     // Make certain variables absolute
-    const _absoluteKeys = Object.keys(this.data.data.abilities)
-      .reduce((arr, abl) => {
-        arr.push(`data.abilities.${abl}.userPenalty`, `data.abilities.${abl}.damage`, `data.abilities.${abl}.drain`);
-        return arr;
-      }, [])
-      .concat("data.attributes.energyDrain")
-      .filter((k) => {
-        return data[k] != null;
-      });
-    for (const k of _absoluteKeys) {
-      data[k] = Math.abs(data[k]);
+    const abilities = update.data.abilities;
+    if (abilities) {
+      const absoluteKeys = ["userPenalty", "damage", "drain"];
+      const keys = Object.keys(abilities);
+      for (const abl of keys) {
+        for (const absKey of absoluteKeys) {
+          if (abilities[abl][absKey] !== undefined) {
+            abilities[abl][absKey] = Math.abs(abilities[abl][absKey]);
+          }
+        }
+      }
+    }
+
+    const energyDrain = update.data.attributes?.energyDrain;
+    if (energyDrain !== undefined) {
+      update.data.attributes.energyDrain = Math.abs(energyDrain);
     }
 
     // Apply changes in resources
-    for (const [k, v] of Object.entries(data)) {
-      if (k.match(/^data\.resources\.([a-zA-Z0-9]+)\.value$/)) {
-        const resKey = RegExp.$1;
-        const itemId = getProperty(this.data, `data.resources.${resKey}._id`);
-        if (itemId && itemId.length) {
-          const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, {
-            "data.uses.value": v,
-          });
-          if (!isObjectEmpty(updateData)) {
-            this._queuedItemUpdates[itemId] = updateData;
-          }
+    const resources = update.data.resources;
+    if (resources) {
+      for (const [key, value] of Object.entries(resources)) {
+        const itemId = resources[key]._id ?? oldData.resources[key]._id;
+        if (itemId?.length) {
+          const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, { "data.uses.value": value });
+          this._queuedItemUpdates[itemId] = updateData;
         }
       }
     }
 
     // Make only 1 fear condition active at most
-    {
-      const keys = ["shaken", "frightened", "panicked"];
-      for (let k of keys) {
-        k = `data.attributes.conditions.${k}`;
-        if (data[k] === true) {
-          for (let k2 of keys) {
-            k2 = `data.attributes.conditions.${k2}`;
-            if (k2 !== k) data[k2] = false;
+    const conditions = update.data.attributes?.conditions;
+    if (conditions) {
+      const fearStages = ["shaken", "frightened", "panicked"];
+      for (const key of fearStages) {
+        if (conditions[key] === true) {
+          for (const key2 of fearStages) {
+            if (key !== key2) conditions[key] = false;
           }
+          break;
         }
       }
     }
 
     // Update experience
-    this._updateExp(data);
-
-    return data;
+    this._updateExp(update);
   }
 
   _onUpdate(data, options, userId, context) {

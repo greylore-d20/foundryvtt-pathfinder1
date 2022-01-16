@@ -1594,6 +1594,7 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async _preUpdate(data, options, userId) {
+    data = flattenObject(data);
     this._trackPreviousAttributes();
     await super._preUpdate(data, options, userId);
 

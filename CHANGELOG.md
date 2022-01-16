@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.80.5 - 2022-1-16
+
+### Bug Fixes
+
+- Queued updates would run on all users who own the actor. ([1109](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1109))
+- Default token settings caused an error and failed to provide system specific settings. ([1209](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1209))
+- DSN was not shown for other users with attacks. ([1206](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1206))
+- @powerAttackPenalty was no longer in attack roll data.
+- Some chat messages did not respect current roll mode if no forcing was used.
+- Power Attack for natural attacks was only adding 1 damage per step
+- Negative charge costs work again ([1218](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1218))
+- Secondary natural attacks weren't applying an attack penalty ([1207](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1207))
+- Fix bar attributes not showing up in token configurations ([1](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1))
+
+### Changelog
+
+- Inline roll turning into raw strings is now optional.
+- Allow giving items to all other players while a GM is connected
+- Change name property on player clients for unidentified items, allowing for better operability with modules
+- Charged actions are now proper actions ([810](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/810))
+- Allow multiselect with shift on chat card targets ([1212](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1212))
+
+### Compendium
+
+- Changed Brawler's AC bonus to use a formula instead of a script
+
+### API
+
+- Remove unused ActorPF.useSpell ([1221](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1221))
+- Created a class for attack dialogs
+- Make game.pf1.ItemAttack actually moddable ([1220](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1220))
+
 ## 0.80.4 - 2022-1-8
 
 ### Bug Fixes

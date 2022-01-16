@@ -2455,6 +2455,7 @@ export class ActorPF extends ActorBasePF {
       parts,
       dice: options.dice,
       situational: true,
+      actor: this,
       data: rollData,
       subject: { save: savingThrowId },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),

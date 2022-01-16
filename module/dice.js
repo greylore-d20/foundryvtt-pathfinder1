@@ -34,6 +34,7 @@ export class DicePF {
     event,
     parts,
     dice = "1d20",
+    actor,
     data,
     subject,
     template,
@@ -163,7 +164,7 @@ export class DicePF {
 
       new Dialog(
         {
-          title: title,
+          title: actor ? `${title}: ${actor.name}` : title,
           content: html,
           buttons: {
             normal: {

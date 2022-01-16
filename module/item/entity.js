@@ -1888,7 +1888,7 @@ export class ItemPF extends ItemBasePF {
     const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData });
     return `<div class="flexcol property-group"><label>${game.i18n.localize(
       "PF1.EffectNotes"
-    )}</label><div class="flexrow">${inner}</div></div>`;
+    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
   /**

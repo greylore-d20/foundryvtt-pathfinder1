@@ -2210,6 +2210,7 @@ export class ActorPF extends ActorBasePF {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       event: event,
+      dice: options.dice,
       parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
       data: rollData,
       subject: { core: "cl" },

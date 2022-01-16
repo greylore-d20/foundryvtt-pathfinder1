@@ -12,18 +12,18 @@ export const createCustomChatMessage = async function (
   chatData = {},
   { rolls = [] } = {}
 ) {
-  const rollMode = game.settings.get("core", "rollMode");
   chatData = mergeObject(
     {
-      rollMode: rollMode,
       user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.CHAT,
     },
     chatData
   );
+
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
+
   // Handle different roll modes
-  ChatMessagePF.applyRollMode(chatData, chatData.rollMode);
+  ChatMessage.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];

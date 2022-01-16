@@ -258,12 +258,51 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
             "data.attributes.ac.flatFooted.total",
           ];
       }
-    case "aac":
-      return "temp.ac.armor";
-    case "sac":
-      return "temp.ac.shield";
-    case "nac":
-      return "temp.ac.natural";
+    case "aac": {
+      const targets = ["data.ac.normal.total"];
+      switch (changeType) {
+        case "base":
+          targets.push("data.ac.normal.base");
+          break;
+        case "enh":
+          targets.push("data.ac.normal.enh");
+          break;
+        default:
+          targets.push("data.ac.normal.misc");
+          break;
+      }
+      return targets;
+    }
+    case "sac": {
+      const targets = ["data.ac.shield.total"];
+      switch (changeType) {
+        case "base":
+          targets.push("data.ac.shield.base");
+          break;
+        case "enh":
+          targets.push("data.ac.shield.enh");
+          break;
+        default:
+          targets.push("data.ac.shield.misc");
+          break;
+      }
+      return targets;
+    }
+    case "nac": {
+      const targets = ["data.ac.natural.total"];
+      switch (changeType) {
+        case "base":
+          targets.push("data.ac.natural.base");
+          break;
+        case "enh":
+          targets.push("data.ac.natural.enh");
+          break;
+        default:
+          targets.push("data.ac.natural.misc");
+          break;
+      }
+      return targets;
+    }
     case "tac":
       return "data.attributes.ac.touch.total";
     case "ffac":

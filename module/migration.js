@@ -975,19 +975,8 @@ const _migrateActorTokenVision = function (ent, updateData) {
 
 const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
   const spellbookUsage = getProperty(ent, "data.attributes.spells.usedSpellbooks");
-
-  if (!linked && spellbookUsage === undefined) return; // skip with unlinked tokens
-  if (spellbookUsage == null) {
-    const usedSpellbooks = [];
-    if (!ent.items) return;
-    const spells = ent.items.filter((o) => o.type === "spell");
-    for (const o of spells) {
-      const sb = o.data.spellbook;
-      if (sb && !usedSpellbooks.includes(sb)) {
-        usedSpellbooks.push(sb);
-      }
-    }
-    updateData["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
+  if (spellbookUsage !== undefined) {
+    updateData["data.attributes.spells.-=usedSpellbooks"] = null;
   }
 };
 

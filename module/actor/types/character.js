@@ -24,22 +24,22 @@ export class ActorCharacterPF extends ActorPF {
   }
 
   _updateExp(updateData) {
+    const xpData = updateData.data.details?.xp;
+    if (xpData?.value == undefined) return;
+
     // Get total level
     const classes = this.items.filter((o) => o.type === "class");
     const level = classes
       .filter((o) => o.data.data.classType !== "mythic")
       .reduce((cur, o) => cur + o.data.data.level, 0);
 
-    if (updateData["data.details.xp.value"] == null) return;
+    const oldData = this.data.data;
 
     // Translate update exp value to number
-    let newExp = updateData["data.details.xp.value"],
+    let newExp = xpData.value,
       resetExp = false;
     if (typeof newExp === "string") {
-      const curExp =
-        typeof this.data.data.details.xp.value === "number"
-          ? this.data.data.details.xp.value
-          : parseInt(this.data.data.details.xp.value);
+      const curExp = Number(oldData.details.xp.value);
       if (newExp.match(/^\+([0-9]+)$/)) {
         newExp = curExp + parseInt(RegExp.$1);
       } else if (newExp.match(/^-([0-9]+)$/)) {
@@ -52,14 +52,14 @@ export class ActorCharacterPF extends ActorPF {
         newExp = curExp;
       }
 
-      updateData["data.details.xp.value"] = newExp;
+      xpData.value = newExp;
     }
     const maxExp = this.getLevelExp(level);
-    updateData["data.details.xp.max"] = maxExp;
+    xpData.max = maxExp;
 
     if (resetExp) {
       const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
-      updateData["data.details.xp.value"] = minExp;
+      xpData.value = minExp;
     }
   }
 

@@ -5,25 +5,85 @@
   "img": "icons/weapons/guns/gun-wood.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 57</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 2,000 gp <strong>Weight</strong> 12 lbs.</p><p><strong>Damage</strong> 1d10 (small), 1d12 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 60 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p><p><strong>Misfire</strong> 1-2 (5 ft.); <strong>Capacity</strong> 3</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This long-barreled musket shoots more precisely than other muskets but is slightly less damaging on a critical hit. It can fire only dragoon cartridges or specially modified <em>mage shot</em>.</p>"
+      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 57</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 2,000 gp <strong>Weight</strong> 12 lbs.</p><p><strong>Damage</strong> 1d10 (small), 1d12 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 60 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p><p><strong>Misfire</strong> 1-2 (5 ft.); <strong>Capacity</strong> 3</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This long-barreled musket shoots more precisely than other muskets but is slightly less damaging on a critical hit. It can fire only dragoon cartridges or specially modified <em>mage shot</em>.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 12,
     "price": 2000,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Dragoon Musket",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
     },
-    "range": {
-      "value": 60,
-      "units": "melee"
+    "target": {
+      "value": ""
     },
-    "actionType": "mwak",
+    "range": {
+      "value": "60",
+      "units": "ft",
+      "maxIncrements": 10,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -41,31 +101,67 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
-      "attack": "str",
-      "damage": "str",
+      "attack": "dex",
+      "damage": "",
       "damageMult": 1.5,
-      "critRange": "",
-      "critMult": "3"
+      "critRange": 20,
+      "critMult": 3
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "dragoonMusket",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
     "weaponSubtype": "2h",
-    "conditionals": []
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

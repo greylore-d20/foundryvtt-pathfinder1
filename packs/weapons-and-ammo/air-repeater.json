@@ -5,25 +5,85 @@
   "img": "icons/weapons/guns/gun-wood.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Heroes of Golarion pg. 18</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 600 gp <strong>Weight</strong> 6 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 50 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1 (see text); <strong>Capacity</strong> 6</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This long-barreled firearm is powered by a removable compressed air reservoir. A misfire while an air repeater has the broken condition does not cause the firearm to explode, but it does destroy the air reservoir. An air repeater can fire 6 shots before the air reservoir is depleted. An air repeater comes with three air reservoirs. Replacing the air reservoir requires 1 minute. The @Compendium[pf-content.pf-feats.5MEcO5qLxNgAM7zs]{Rapid Reload} feat reduces this to a full-round action.</p>"
+      "value": "<p><strong>Source</strong> <em>Heroes of Golarion pg. 18</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 600 gp <strong>Weight</strong> 6 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 50 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1 (see text); <strong>Capacity</strong> 6</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This long-barreled firearm is powered by a removable compressed air reservoir. A misfire while an air repeater has the broken condition does not cause the firearm to explode, but it does destroy the air reservoir. An air repeater can fire 6 shots before the air reservoir is depleted. An air repeater comes with three air reservoirs. Replacing the air reservoir requires 1 minute. The @Compendium[pf-content.pf-feats.5MEcO5qLxNgAM7zs]{Rapid Reload} feat reduces this to a full-round action.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 6,
     "price": 600,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Air Repeater",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
     },
-    "range": {
-      "value": 50,
-      "units": "melee"
+    "target": {
+      "value": ""
     },
-    "actionType": "mwak",
+    "range": {
+      "value": "50",
+      "units": "ft",
+      "maxIncrements": 10,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -41,31 +101,67 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
-      "attack": "str",
-      "damage": "str",
+      "attack": "dex",
+      "damage": "",
       "damageMult": 1.5,
-      "critRange": "",
-      "critMult": "4"
+      "critRange": 20,
+      "critMult": 4
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "airRepeater",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
     "weaponSubtype": "2h",
-    "conditionals": []
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

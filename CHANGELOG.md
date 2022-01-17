@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.80.7 - 2022-1-17
+
+### Bug Fixes
+
+- Prototype token was missing system specific vision settings. ([1224](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1224))
+- Give item dialog could not be scrolled. ([1195](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1195))
+- Experience points were incorrectly tracked as a string, causing issues
+- Wound penalties were applying twice to initiative ([1231](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1231))
+- Melee/ranged attacks on combat tab ignored wound threshold for display ([1230](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1230))
+- Weapon attacks only had a full attack option on their use dialogs ([1228](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1228))
+- Fix attack bonus display on attack roll dialogs for formulaic attacks ([1229](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1229))
+- Fix error when setting shared.reject in item script with measure template ([1227](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1227))
+- Spontaneous spellbooks didn't make use of domain spells ([1193](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1193))
+
+### Compendium
+
+- Fix firearm weapon data ([1203](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1203))
+
 ## 0.80.6 - 2022-1-16
 
 ### Bug Fixes

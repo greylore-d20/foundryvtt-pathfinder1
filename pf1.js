@@ -925,7 +925,9 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   const TokenData = foundry.data.TokenData;
   // Add vision inputs
   let object = app.object;
-  if (object instanceof Actor) object = object.token.data;
+  // Prototype token
+  if (object instanceof Actor) object = object.data.token;
+  // Regular token
   else if (object instanceof TokenDocument) object = object.data;
   // else: pure data for default token settings in core settings
   let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {

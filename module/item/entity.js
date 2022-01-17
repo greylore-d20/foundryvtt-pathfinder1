@@ -1618,7 +1618,7 @@ export class ItemPF extends ItemBasePF {
     // Call script calls
     await _callFn("executeScriptCalls");
     if (shared.scriptData?.reject) {
-      await measureResult.delete();
+      await measureResult?.delete();
       return;
     }
 

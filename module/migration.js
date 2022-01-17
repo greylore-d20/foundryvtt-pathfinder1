@@ -192,6 +192,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorConditions(actor, updateData, linked);
   _migrateActorSkillRanks(actor, updateData, linked);
   _migrateCarryBonus(actor, updateData, linked);
+  _migrateBuggedValues(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1131,5 +1132,13 @@ const _migrateCarryBonus = function (ent, updateData, linked) {
       updateData["data.details.carryCapacity.multiplier.user"] = mult - 1;
     }
     updateData["data.abilities.str.-=carryMultiplier"] = null;
+  }
+};
+
+const _migrateBuggedValues = function (ent, updateData, linked) {
+  // Convert to integers
+  const convertToInt = ["data.details.xp.value"];
+  for (const key of convertToInt) {
+    updateData[key] = parseInt(getProperty(ent, key));
   }
 };

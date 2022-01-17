@@ -76,6 +76,7 @@ export class AttackDialog extends Application {
       isMeleeWeaponAttackAction: this.object.data.data.actionType === "mwak",
       isRangedWeaponAttackAction: this.object.data.data.actionType === "rwak",
       isAttack: this.object.type === "attack",
+      isWeapon: this.object.type === "weapon",
       isSpell: this.object.type === "spell",
       hasTemplate: this.object.hasTemplate,
       attacks: this.getAttacks(),

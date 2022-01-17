@@ -147,7 +147,7 @@
   </div>
 
   <div class="form-group">
-    {{#if isAttack}}
+    {{#if (or isAttack isWeapon)}}
     <button type="button" name="attack_single">
       {{localize "PF1.SingleAttack"}}
     </button>

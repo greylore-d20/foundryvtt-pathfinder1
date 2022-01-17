@@ -178,7 +178,7 @@ export class AttackDialog extends Application {
       result.push(
         mergeObject(this.constructor.defaultAttack, {
           name: atk[1],
-          bonus: atk[0],
+          bonus: RollPF.safeTotal(atk[0], this.rollData),
         })
       );
     }
@@ -190,6 +190,7 @@ export class AttackDialog extends Application {
     };
     const atkCount = RollPF.safeTotal(attackFormulae.count, this.rollData) || 0;
     for (let a = 0; a < atkCount; a++) {
+      this.rollData.formulaicAttack = a + 1;
       const bonus = RollPF.safeTotal(attackFormulae.bonus, this.rollData);
       const name = game.i18n.format(this.object.data.data.formulaicAttacks?.label || "PF1.FormulaAttack", { 0: a + 2 });
       result.push(
@@ -199,6 +200,7 @@ export class AttackDialog extends Application {
         })
       );
     }
+    if (this.rollData.formulaicAttack !== undefined) delete this.rollData.formulaicAttack;
 
     // Add haste attack
     if (this.flags["haste-attack"] === true) {

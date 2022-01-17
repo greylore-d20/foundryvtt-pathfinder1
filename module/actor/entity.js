@@ -868,11 +868,14 @@ export class ActorPF extends ActorBasePF {
                 const formula = spellLevel.preparedOffsetFormula || "0";
                 available += RollPF.safeTotal(formula, rollData);
 
+                let dSlots = slots[a].domainSlots;
                 const used = spells.reduce((acc, i) => {
-                  const { level, spellbook, preparation, atWill } = i.data.data;
-                  return level === a && spellbook === spellbookKey && !atWill && preparation.spontaneousPrepared
-                    ? ++acc
-                    : acc;
+                  const { level, spellbook, preparation, atWill, domain } = i.data.data;
+                  if (level === a && spellbook === spellbookKey && !atWill && preparation.spontaneousPrepared) {
+                    if (domain && dSlots > 0) --dSlots;
+                    else ++acc;
+                  }
+                  return acc;
                 }, 0);
 
                 remaining = available - used;

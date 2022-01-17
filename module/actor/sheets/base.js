@@ -191,7 +191,7 @@ export class ActorSheetPF extends ActorSheet {
       spellFailure: this.document.spellFailure,
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.data : null,
-      usesAnySpellbook: (getProperty(this.document.data, "data.attributes.spells.usedSpellbooks") || []).length > 0,
+      usesAnySpellbook: this.document.data.data.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
     });
     data.data = data.data.data;
@@ -343,15 +343,6 @@ export class ActorSheetPF extends ActorSheet {
           skl2.untrained = skl2.rt === true && skl2.rank <= 0;
         }
       }
-    }
-
-    // Update spellbook info
-    for (const [k, spellbook] of Object.entries(getProperty(data.data, "attributes.spells.spellbooks"))) {
-      setProperty(
-        data.data,
-        `attributes.spells.spellbooks.${k}.inUse`,
-        (getProperty(data.data, "attributes.spells.usedSpellbooks") || []).includes(k)
-      );
     }
 
     // Control items

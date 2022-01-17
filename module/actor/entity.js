@@ -1012,6 +1012,12 @@ export class ActorPF extends ActorBasePF {
         }
       });
     });
+
+    // Prepare auxillary data
+    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
+    const spellbooks = this.data.data.attributes?.spells?.spellbooks;
+    const usedBooks = spellbooks ? Object.keys(spellbooks ?? {}).filter((book) => spellbooks[book]?.inUse) : [];
+    setProperty(this.data, "data.attributes.spells.usedSpellbooks", usedBooks);
   }
 
   prepareSpecificDerivedData() {
@@ -1597,34 +1603,6 @@ export class ActorPF extends ActorBasePF {
     data = flattenObject(data);
     this._trackPreviousAttributes();
     await super._preUpdate(data, options, userId);
-
-    // Apply settings
-    // Set used spellbook flags
-    {
-      const re = new RegExp(/^spellbook-([a-zA-Z]+)-inuse$/);
-      const sbData = Object.entries(data)
-        .filter((o) => {
-          const result = o[0].match(re);
-          if (result) delete data[o[0]];
-          return result;
-        })
-        .map((o) => {
-          return { spellbook: o[0].replace(re, "$1"), inUse: o[1] };
-        });
-
-      let usedSpellbooks = [];
-      if (data["data.attributes.spells.usedSpellbooks"])
-        usedSpellbooks = duplicate(data["data.attributes.spells.usedSpellbooks"]);
-      else if (hasProperty(this.data, "data.attributes.spells.usedSpellbooks"))
-        usedSpellbooks = duplicate(getProperty(this.data, "data.attributes.spells.usedSpellbooks"));
-
-      for (const o of sbData) {
-        if (o.inUse === true && !usedSpellbooks.includes(o.spellbook)) usedSpellbooks.push(o.spellbook);
-        else if (o.inUse === false && usedSpellbooks.includes(o.spellbook))
-          usedSpellbooks.splice(usedSpellbooks.indexOf(o.spellbook), 1);
-      }
-      data["data.attributes.spells.usedSpellbooks"] = usedSpellbooks;
-    }
 
     // Apply changes in Actor size to Token width/height
     if (data["data.traits.size"] && this.data.data.traits.size !== data["data.traits.size"]) {

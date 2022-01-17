@@ -13,6 +13,7 @@ export class AttackDialog extends Application {
     this.flags = {
       "primary-attack": this.object.data.data.primaryAttack === true,
       "cl-check": this.object.data.data.clCheck === true,
+      "measure-template": true,
     };
     this.attributes = {
       d20: this.rollData.d20 ?? "",

@@ -1654,12 +1654,10 @@ export class ActorPF extends ActorBasePF {
     const conditions = update.data.attributes?.conditions;
     if (conditions) {
       const fearStages = ["shaken", "frightened", "panicked"];
-      for (const key of fearStages) {
-        if (conditions[key] === true) {
-          for (const key2 of fearStages) {
-            if (key !== key2) conditions[key] = false;
-          }
-          break;
+      const updateFearKey = Object.keys(conditions).find((o) => fearStages.includes(o));
+      if (updateFearKey != null) {
+        for (const key of fearStages) {
+          if (key !== updateFearKey) conditions[key] = false;
         }
       }
     }

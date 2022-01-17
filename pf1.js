@@ -926,7 +926,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
   let object = app.object;
   // Prototype token
-  if (object instanceof Actor) object = object.data.token.data;
+  if (object instanceof Actor) object = object.data.token;
   // Regular token
   else if (object instanceof TokenDocument) object = object.data;
   // else: pure data for default token settings in core settings

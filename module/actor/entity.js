@@ -1042,21 +1042,6 @@ export class ActorPF extends ActorBasePF {
       this.data.data.attributes[k].max = round(this.data.data.attributes[k].max);
     }
 
-    // Refresh HP
-    this._applyPreviousAttributes();
-
-    // Update wound threshold
-    this.updateWoundThreshold();
-
-    // Apply wound thresholds to skills
-    const woundPenalty = this.data.data.attributes.woundThresholds?.penalty ?? 0;
-    if (woundPenalty) {
-      for (const k of this.allSkills) {
-        const prevValue = getProperty(this.data, `data.skills.${k}.mod`);
-        setProperty(this.data, `data.skills.${k}.mod`, prevValue - woundPenalty);
-      }
-    }
-
     // Shared attack bonuses
     {
       // Total
@@ -1066,6 +1051,12 @@ export class ActorPF extends ActorBasePF {
         (this.data.data.attributes.energyDrain ?? 0);
       this.data.data.attributes.attack.shared = totalAtk;
     }
+
+    // Refresh HP
+    this._applyPreviousAttributes();
+
+    // Update wound threshold
+    this.updateWoundThreshold();
 
     // Create arbitrary skill slots
     for (const skillId of CONFIG.PF1.arbitrarySkills) {
@@ -2867,13 +2858,13 @@ export class ActorPF extends ActorBasePF {
     setProperty(this.data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
 
     const penalty = getProperty(this.data, "data.attributes.woundThresholds.penalty");
-    const changeFlatKeys = ["cmb", "cmd", "allSavingThrows", "ac", "skills", "allChecks"];
+    const changeFlatKeys = CONFIG.PF1.woundThresholdChangeTargets;
     for (const fk of changeFlatKeys) {
       let flats = getChangeFlat.call(this, fk, "penalty", this.data.data);
       if (!(flats instanceof Array)) flats = [flats];
       for (const k of flats) {
         if (!k) continue;
-        const curValue = getProperty(this.data, k);
+        const curValue = getProperty(this.data, k) ?? 0;
         setProperty(this.data, k, curValue - penalty);
       }
     }

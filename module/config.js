@@ -305,6 +305,11 @@ export const PF1 = {
     3: "PF1.WoundLevelCritical",
   },
 
+  /**
+   * Change targets affected by Wound Thresholds.
+   */
+  woundThresholdChangeTargets: ["~attackCore", "cmb", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"],
+
   divineFocus: {
     0: "",
     1: "PF1.SpellComponentDivineFocusAlone",

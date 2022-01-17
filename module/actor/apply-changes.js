@@ -345,6 +345,18 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         }
       }
       return result;
+    case "~skillMods":
+      for (const [a, skl] of Object.entries(curData.skills)) {
+        if (skl == null) continue;
+        result.push(`data.skills.${a}.mod`);
+
+        if (skl.subSkills != null) {
+          for (const b of Object.keys(skl.subSkills)) {
+            result.push(`data.skills.${a}.subSkills.${b}.mod`);
+          }
+        }
+      }
+      return result;
     case "strSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;

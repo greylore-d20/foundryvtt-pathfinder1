@@ -16,7 +16,6 @@ import { ItemPF } from "../../item/entity.js";
 import { dialogGetActor } from "../../dialog.js";
 import { applyAccessibilitySettings } from "../../chat.js";
 import { LevelUpForm } from "../../apps/level-up.js";
-import { getSourceInfo } from "../apply-changes.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 import { getHighestChanges } from "../apply-changes.js";
 import { PF1 } from "../../config.js";

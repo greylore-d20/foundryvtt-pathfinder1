@@ -23,6 +23,7 @@ export class ActorNPCPF extends ActorPF {
       setProperty(this.data, "data.details.xp.value", this.getCRExp(1));
     }
   }
+
   hasArmorProficiency(item, proficiencyName) {
     // Assume NPCs to be proficient with their armor
     return true;

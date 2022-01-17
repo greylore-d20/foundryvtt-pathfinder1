@@ -19,10 +19,6 @@ export class ActorCharacterPF extends ActorPF {
       ((Math.max(prior, Math.min(max, actorData.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
   }
 
-  prepareSpecificDerivedData() {
-    super.prepareSpecificDerivedData();
-  }
-
   _updateExp(updateData) {
     const xpData = updateData.data.details?.xp;
     if (xpData?.value == undefined) return;

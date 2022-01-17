@@ -2867,7 +2867,7 @@ export class ActorPF extends ActorBasePF {
     setProperty(this.data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
 
     const penalty = getProperty(this.data, "data.attributes.woundThresholds.penalty");
-    const changeFlatKeys = ["cmb", "cmd", "init", "allSavingThrows", "ac", "skills", "allChecks"];
+    const changeFlatKeys = ["cmb", "cmd", "allSavingThrows", "ac", "skills", "allChecks"];
     for (const fk of changeFlatKeys) {
       let flats = getChangeFlat.call(this, fk, "penalty", this.data.data);
       if (!(flats instanceof Array)) flats = [flats];

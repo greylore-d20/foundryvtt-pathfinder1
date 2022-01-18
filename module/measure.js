@@ -58,18 +58,21 @@ export class TemplateLayerPF extends TemplateLayer {
     // Update the preview object
     const type = event.data.preview.data.t;
     // Set direction
-    if (["cone", "circle"].includes(type)) {
-      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
+    const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+    if (snapToGrid && ["cone", "circle"].includes(type)) {
+      const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
+      preview.data.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
     } else if (type === "ray") {
-      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 5 / 2) / 5) * 5;
+      preview.data.direction = Math.floor((baseDirection + 5 / 2) / 5) * 5;
     } else {
-      preview.data.direction = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+      preview.data.direction = baseDirection;
     }
     // Set distance
-    if (["cone", "circle", "ray"].includes(type)) {
-      preview.data.distance = Math.floor(ray.distance / ratio / dist) * dist;
+    const baseDistance = ray.distance / ratio;
+    if (snapToGrid && ["cone", "circle", "ray"].includes(type)) {
+      preview.data.distance = Math.floor(baseDistance / dist) * dist;
     } else {
-      preview.data.distance = ray.distance / ratio;
+      preview.data.distance = baseDistance;
     }
     preview.refresh();
 

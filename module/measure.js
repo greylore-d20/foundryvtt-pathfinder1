@@ -57,13 +57,14 @@ export class TemplateLayerPF extends TemplateLayer {
 
     // Update the preview object
     const type = event.data.preview.data.t;
+    const cellSize = canvas.dimensions.distance;
     // Set direction
     const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
     if (snapToGrid && ["cone", "circle"].includes(type)) {
       const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
       preview.data.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
     } else if (type === "ray") {
-      preview.data.direction = Math.floor((baseDirection + 5 / 2) / 5) * 5;
+      preview.data.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
     } else {
       preview.data.direction = baseDirection;
     }

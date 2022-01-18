@@ -8,10 +8,8 @@ export class TemplateLayerPF extends TemplateLayer {
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
-    // Create temporary highlight layer
-    if (canvas.grid.getHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME) == null) {
-      canvas.grid.addHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME);
-    }
+    // Call placeables layer super instead of templatelayer
+    await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
 
     // Create the new preview template
     const tool = game.activeTool;

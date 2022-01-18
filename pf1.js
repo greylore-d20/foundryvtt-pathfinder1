@@ -259,6 +259,7 @@ Hooks.once("init", function () {
   }
   CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
+  CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
   CONFIG.Actor.documentClass = ActorBasePF;
   CONFIG.Actor.documentClasses = {
     default: ActorPF, // fallback

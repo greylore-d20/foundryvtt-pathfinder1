@@ -30,10 +30,13 @@ export class TemplateLayerPF extends TemplateLayer {
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
     };
-    if (tool === "cone") data["angle"] = 90;
-    else if (tool === "ray") data["width"] = 5;
 
-    // Assign the template
+    // Apply some type-specific defaults
+    const defaults = CONFIG.MeasuredTemplate.defaults;
+    if (tool === "cone") data["angle"] = defaults.angle;
+    else if (tool === "ray") data["width"] = defaults.width * canvas.dimensions.distance;
+
+    // Create a preview template
     const doc = new CONFIG.MeasuredTemplate.documentClass(data, { parent: canvas.scene });
     const template = new CONFIG.MeasuredTemplate.objectClass(doc);
     event.data.preview = this.preview.addChild(template);

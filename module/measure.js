@@ -4,7 +4,7 @@ import { degtorad } from "./lib.js";
  * Applies patches to core functions to integrate Pathfinder specific measurements.
  */
 export class TemplateLayerPF extends TemplateLayer {
-  // Use 90 degrees cone in PF1 style
+  // Foundry does not respect CONFIG.MeasuredTemplate.documentClass and CONFIG.MeasuredTemplate.objectClass
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
@@ -13,17 +13,21 @@ export class TemplateLayerPF extends TemplateLayer {
 
     // Create the new preview template
     const tool = game.activeTool;
-    const origin = event.data.origin;
-    const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
-    origin.x = pos.x;
-    origin.y = pos.y;
+    const { origin, originalEvent } = event.data;
+
+    // Snap to grid
+    if (!originalEvent.shiftKey) {
+      const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, this.gridPrecision);
+      origin.x = pos.x;
+      origin.y = pos.y;
+    }
 
     // Create the template
     const data = {
       user: game.user.id,
       t: tool,
-      x: pos.x,
-      y: pos.y,
+      x: origin.x,
+      y: origin.y,
       distance: 1,
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
@@ -47,8 +51,13 @@ export class TemplateLayerPF extends TemplateLayer {
     const { destination, createState, preview, origin } = event.data;
     if (createState === 0) return;
 
+    const { originalEvent } = event.data;
+
     // Snap the destination to the grid
-    event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+    const snapToGrid = !originalEvent.shiftKey;
+    if (snapToGrid) {
+      event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+    }
 
     // Compute the ray
     const ray = new Ray(origin, destination);

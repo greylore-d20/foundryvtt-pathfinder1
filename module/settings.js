@@ -577,6 +577,18 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
   });
+
+  /**
+   * Clear targets after attack
+   */
+  game.settings.register("pf1", "clearTargetsAfterAttack", {
+    name: "SETTINGS.pf1ClearTargetsAfterAttackN",
+    hint: "SETTINGS.pf1ClearTargetsAfterAttackH",
+    scope: "client",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 };
 
 export const registerClientSettings = function () {

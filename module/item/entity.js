@@ -1640,8 +1640,10 @@ export class ItemPF extends ItemBasePF {
     } else return;
 
     // Deselect targets
-    for (const t of game.user.targets) {
-      t.setTarget(false);
+    if (game.settings.get("pf1", "clearTargetsAfterAttack")) {
+      for (const t of game.user.targets) {
+        t.setTarget(false);
+      }
     }
 
     return result;

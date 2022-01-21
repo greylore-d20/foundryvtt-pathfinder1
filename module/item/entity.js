@@ -1557,7 +1557,7 @@ export class ItemPF extends ItemBasePF {
       attacks: [],
       chatAttacks: [],
       rollMode: game.settings.get("core", "rollMode"),
-      useMeasureTemplate: false,
+      useMeasureTemplate: this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
       conditionals: null,
       conditionalPartsCommon: {},
       casterLevelCheck: false,

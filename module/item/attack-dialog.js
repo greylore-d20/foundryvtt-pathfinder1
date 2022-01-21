@@ -93,7 +93,7 @@ export class AttackDialog extends Application {
     html.find(`input[type="checkbox"][name="concentration"]`).on("change", this._onToggleFlag.bind(this));
     html.find(`input[type="checkbox"][name="cl-check"]`).on("change", this._onToggleFlag.bind(this));
     html.find(`input[type="checkbox"][name="measure-template"]`).on("change", this._onToggleFlag.bind(this));
-    html.find(`select[name="rollMode"]`).on("change", this._onSelectChange.bind(this));
+    html.find(`select`).on("change", this._onSelectChange.bind(this));
     html.find(`.conditionals input[type="checkbox"]`).on("change", this._onToggleConditional.bind(this));
 
     // Button hover

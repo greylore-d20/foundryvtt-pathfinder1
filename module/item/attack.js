@@ -97,84 +97,6 @@ export const createAttackDialog = async function (shared) {
   return dialog.show();
 };
 
-export const createAttackDialogBak = async function (shared) {
-  // Render modal dialog
-  const htmlTemplate = "systems/pf1/templates/apps/attack-roll-dialog.hbs";
-  const dialogData = {
-    data: shared.rollData,
-    item: this.data.data,
-    config: CONFIG.PF1,
-    rollMode: shared.rollMode,
-    rollModes: CONFIG.Dice.rollModes,
-    hasAttack: this.hasAttack,
-    hasDamage: this.hasDamage,
-    hasDamageAbility: getProperty(this.data, "data.ability.damage") !== "",
-    isNaturalAttack: getProperty(this.data, "data.attackType") === "natural",
-    isWeaponAttack: getProperty(this.data, "data.attackType") === "weapon",
-    isMeleeWeaponAttackAction: getProperty(this.data, "data.actionType") === "mwak",
-    isRangedWeaponAttackAction: getProperty(this.data, "data.actionType") === "rwak",
-    isAttack: this.type === "attack",
-    isSpell: this.type === "spell",
-    hasTemplate: this.hasTemplate,
-  };
-  const html = await renderTemplate(htmlTemplate, dialogData);
-
-  const result = await new Promise((resolve) => {
-    const buttons = {};
-    if (this.hasAttack) {
-      if (this.type !== "spell") {
-        buttons.normal = {
-          label: game.i18n.localize("PF1.SingleAttack"),
-          callback: (html) => resolve({ fullAttack: false, html }),
-        };
-      }
-
-      let showFullAttack = false;
-
-      if (["mwak", "rwak"].includes(getProperty(this.data, "data.actionType"))) {
-        showFullAttack = true;
-      } else if ((getProperty(this.data, "data.AttackParts") || []).length) {
-        showFullAttack = true;
-      } else {
-        // Fetch formulaic attacks and ensure .value is set
-        let fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
-        if (fmAtks == null && getProperty(this.data, "data.formulaicAttacks.count.formula")?.length > 0) {
-          fmAtks = getProperty(this.data, "data.formulaicAttacks.count.value");
-          if (fmAtks > 0) showFullAttack = true;
-        }
-      }
-
-      if (showFullAttack || this.type === "spell") {
-        buttons.multi = {
-          label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.FullAttack"),
-          callback: (html) => resolve({ fullAttack: true, html }),
-        };
-      }
-    } else {
-      buttons.normal = {
-        label: this.type === "spell" ? game.i18n.localize("PF1.Cast") : game.i18n.localize("PF1.Use"),
-        callback: (html) => resolve({ fullAttack: false, html }),
-      };
-    }
-    new Dialog(
-      {
-        title: `${game.i18n.localize("PF1.Use")}: ${this.name}`,
-        content: html,
-        buttons: buttons,
-        default: buttons.multi != null ? "multi" : "normal",
-        close: (html) => {
-          resolve(false);
-        },
-      },
-      {
-        classes: ["dialog", "pf1", "use-attack"],
-      }
-    ).render(true);
-  });
-
-  return result;
-};
-
 /**
  * Alters roll (and shared) data based on user input during the attack's dialog.
  *
@@ -268,6 +190,9 @@ export const alterRollData = function (shared, form) {
       })
       .get();
   }
+
+  // Damage multiplier
+  shared.rollData.item.ability.damageMult = form.find(`[name="damage-ability-multiplier"]`).val() ?? 1;
 
   // CL check enabled
   elem = form.find('[name="cl-check"]:checked');

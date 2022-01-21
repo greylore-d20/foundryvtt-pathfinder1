@@ -68,7 +68,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
    */
   async drawPreview(event) {
     const initialLayer = canvas.activeLayer;
-    this.draw();
+    await this.draw();
     this.active = true;
     this.layer.activate();
     this.layer.preview.addChild(this);

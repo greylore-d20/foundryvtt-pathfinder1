@@ -220,7 +220,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     if (!this.id || !this.shape) return;
 
     // Clear existing highlight
-    const hl = grid.getHighlightLayer(`Template.${this.id}`);
+    const hl = this.getHighlightLayer();
     hl.clear();
 
     // Get grid squares to highlight
@@ -228,5 +228,9 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     for (const s of highlightSquares) {
       grid.grid.highlightGridPosition(hl, { x: s.x, y: s.y, color: fc, border: bc });
     }
+  }
+
+  getHighlightLayer() {
+    return canvas.grid.getHighlightLayer(`Template.${this.id}`) ?? canvas.grid.addHighlightLayer(`Template.${this.id}`);
   }
 }

@@ -296,7 +296,6 @@ export const migrateSceneData = async function (scene) {
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;
         const updates = new Map(update[embeddedName].map((u) => [u._id, u]));
-        console.log(updates, update, embeddedName, mergedData);
         mergedData[embeddedName].forEach((original) => {
           const update = updates.get(original._id);
           if (update) mergeObject(original, update);

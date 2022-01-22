@@ -2,7 +2,6 @@ import { ItemPF } from "./item/entity.js";
 import { ExperienceConfig } from "./config/experience.js";
 import { createTag } from "./lib.js";
 import { ItemChange } from "./item/components/change.js";
-import { getChangeFlat } from "./actor/apply-changes.js";
 import { SemanticVersion } from "./semver.js";
 
 /**
@@ -21,6 +20,11 @@ export const migrateWorld = async function () {
     permanent: true,
   });
   console.log("System Migration starting.");
+  const removeNotification = function (li) {
+    li.fadeOut(66, () => li.remove());
+    ui.notifications.active.pop();
+    ui.notifications.fetch();
+  };
 
   await _migrateWorldSettings();
 
@@ -56,7 +60,7 @@ export const migrateWorld = async function () {
   console.log("Migrating Scene documents.");
   for (const s of game.scenes.contents) {
     try {
-      const updateData = migrateSceneData(s.data);
+      const updateData = await migrateSceneData(s.data);
       if (!foundry.utils.isObjectEmpty(updateData)) {
         console.log(`Migrating Scene document ${s.name}`);
         await s.update(updateData, { enforceTypes: false });
@@ -85,14 +89,14 @@ export const migrateWorld = async function () {
   }
 
   // Set the migration as complete
-  game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
-  ui.notifications.active
-    .find(
-      (o) =>
-        o.hasClass("permanent") &&
-        o[0].innerText === game.i18n.format("PF1.Migration.Start", { version: game.system.data.version })
-    )
-    ?.click();
+  await game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
+  const infoElem = ui.notifications.active.find(
+    (o) =>
+      o.hasClass("permanent") &&
+      o[0].innerText === game.i18n.format("PF1.Migration.Start", { version: game.system.data.version })
+  );
+  if (infoElem) removeNotification(infoElem);
+  // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.data.version }));
   console.log("System Migration completed.");
   game.pf1.isMigrating = false;
@@ -123,7 +127,7 @@ export const migrateCompendium = async function (pack) {
       let updateData = null;
       if (doc === "Item") updateData = migrateItemData(ent.data);
       else if (doc === "Actor") updateData = migrateActorData(ent.data);
-      else if (doc === "Scene") updateData = migrateSceneData(ent.data);
+      else if (doc === "Scene") updateData = await migrateSceneData(ent.data);
       expandObject(updateData);
       updateData["_id"] = ent.id;
       await ent.update(updateData);
@@ -193,6 +197,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorSkillRanks(actor, updateData, linked);
   _migrateCarryBonus(actor, updateData, linked);
   _migrateBuggedValues(actor, updateData, linked);
+  _migrateSpellbookUsage(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -274,8 +279,9 @@ function _migrateSpellData(item, updateData) {
  * @param {object} scene - The Scene to Update
  * @returns {object} The updateData to apply
  */
-export const migrateSceneData = function (scene) {
-  const tokens = scene.tokens.map((token) => {
+export const migrateSceneData = async function (scene) {
+  const tokens = [];
+  for (const token of scene.tokens) {
     const t = token.toJSON();
     if (!t.actorId || t.actorLink) {
       t.actorData = {};
@@ -283,8 +289,11 @@ export const migrateSceneData = function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else if (!t.actorLink) {
-      const actorData = duplicate(t.actorData);
-      actorData.type = token.actor?.type;
+      const actor = await game.actors.documentClass.create(
+        mergeObject(game.actors.get(t.actorId).data._source, t.actorData, { inplace: false }),
+        { temporary: true }
+      );
+      const actorData = actor.data;
       const update = migrateActorData(actorData, token);
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;
@@ -298,8 +307,8 @@ export const migrateSceneData = function (scene) {
 
       mergeObject(t.actorData, update);
     }
-    return t;
-  });
+    tokens.push(t);
+  }
   return { tokens };
 };
 
@@ -1129,5 +1138,20 @@ const _migrateBuggedValues = function (ent, updateData, linked) {
   const convertToInt = ["data.details.xp.value"];
   for (const key of convertToInt) {
     updateData[key] = parseInt(getProperty(ent, key));
+  }
+};
+
+const _migrateSpellbookUsage = function (ent, updateData, linked) {
+  const usedSpellbooks = ent.items
+    .filter((i) => i.type === "spell")
+    .reduce((cur, i) => {
+      if (!i.data.data.spellbook) return cur;
+      if (cur.includes(i.data.data.spellbook)) return cur;
+      cur.push(i.data.data.spellbook);
+      return cur;
+    }, []);
+
+  for (const bookKey of usedSpellbooks) {
+    updateData[`data.attributes.spells.spellbooks.${bookKey}.inUse`] = true;
   }
 };

@@ -79,12 +79,52 @@ export class TemplateLayerPF extends TemplateLayer {
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
   getHighlightedSquares() {
-    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone"].includes(this.data.t)) return [];
+    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.data.t)) return [];
 
     const grid = canvas.grid,
       d = canvas.dimensions;
 
     if (!this.id || !this.shape) return [];
+
+    // Parse rays as per Bresenham's algorithm
+    if (this.data.t === "ray") {
+      const result = [];
+
+      const s = d.size;
+      const line = function (x0, y0, x1, y1) {
+        x0 = Math.floor(Math.floor(x0) / s);
+        x1 = Math.floor(Math.floor(x1) / s);
+        y0 = Math.floor(Math.floor(y0) / s);
+        y1 = Math.floor(Math.floor(y1) / s);
+
+        const dx = Math.abs(x1 - x0);
+        const dy = Math.abs(y1 - y0);
+        const sx = x0 < x1 ? 1 : -1;
+        const sy = y0 < y1 ? 1 : -1;
+        let err = dx - dy;
+
+        while (!(x0 === x1 && y0 === y1)) {
+          result.push({ x: x0 * s, y: y0 * s });
+          const e2 = err << 1;
+          if (e2 > -dy) {
+            err -= dy;
+            x0 += sx;
+          }
+          if (e2 < dx) {
+            err += dx;
+            y0 += sy;
+          }
+        }
+      };
+
+      // Extend ray by half a square for better highlight calculation
+      const ray = Ray.fromAngle(this.ray.A.x, this.ray.A.y, this.ray.angle, this.ray.distance + s / 2);
+
+      // Get resulting squares
+      line(ray.A.x, ray.A.y, ray.B.x, ray.B.y);
+
+      return result;
+    }
 
     // Get number of rows and columns
     const nr = Math.ceil((this.data.distance * 1.5) / d.distance / (d.size / grid.h)),
@@ -209,7 +249,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
   // Highlight grid in PF1 style
   highlightGrid() {
-    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone"].includes(this.data.t))
+    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.data.t))
       return super.highlightGrid();
 
     const grid = canvas.grid,

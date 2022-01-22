@@ -2326,7 +2326,12 @@ export class ActorPF extends ActorBasePF {
     return [notes, notesHTML];
   }
 
-  async rollInitiative({ createCombatants = false, rerollInitiative = false, initiativeOptions = {} } = {}) {
+  async rollInitiative({
+    createCombatants = false,
+    rerollInitiative = false,
+    initiativeOptions = {},
+    skipDialog = false,
+  } = {}) {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
@@ -2356,13 +2361,33 @@ export class ActorPF extends ActorBasePF {
       arr.push(c.id);
       return arr;
     }, []);
-    return combatantIds.length ? combat.rollInitiative(combatantIds, initiativeOptions) : combat;
+    return combatantIds.length
+      ? combat.rollInitiative(
+          combatantIds,
+          mergeObject(initiativeOptions, {
+            skipDialog,
+          })
+        )
+      : combat;
   }
 
   rollSavingThrow(
     savingThrowId,
-    options = { event: null, chatMessage: true, noSound: false, skipPrompt: true, dice: "1d20", bonus: null }
+    options = {
+      event: null,
+      chatMessage: true,
+      noSound: false,
+      skipDialog: false,
+      skipPrompt: null,
+      dice: "1d20",
+      bonus: null,
+    }
   ) {
+    if (typeof options.skipPrompt === "boolean") {
+      console.warn(`The 'skipPrompt' option in ActorPF.rollSavingThrow is deprecated in favor of 'skipDialog'`);
+      options.skipDialog = options.skipPrompt;
+    }
+
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2436,7 +2461,7 @@ export class ActorPF extends ActorBasePF {
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
-      fastForward: options.skipPrompt !== false ? true : false,
+      fastForward: options.skipDialog,
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,

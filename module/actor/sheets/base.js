@@ -2130,13 +2130,17 @@ export class ActorSheetPF extends ActorSheet {
 
   _onRollInitiative(event) {
     event.preventDefault();
-    this.document.rollInitiative({ createCombatants: true, rerollInitiative: game.user.isGM });
+    this.document.rollInitiative({
+      createCombatants: true,
+      rerollInitiative: game.user.isGM,
+      skipDialog: getSkipActionPrompt(),
+    });
   }
 
   _onRollSavingThrow(event) {
     event.preventDefault();
     const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
-    this.document.rollSavingThrow(savingThrow, { event: event, skipPrompt: getSkipActionPrompt() });
+    this.document.rollSavingThrow(savingThrow, { event: event, skipDialog: getSkipActionPrompt() });
   }
 
   /* -------------------------------------------- */

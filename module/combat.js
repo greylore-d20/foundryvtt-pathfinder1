@@ -1,4 +1,5 @@
 import { ActorPF } from "./actor/entity.js";
+import { getSkipActionPrompt } from "./settings.js";
 
 /* -------------------------------------------- */
 
@@ -117,7 +118,8 @@ export class CombatPF extends Combat {
   /**
    * @override
    */
-  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
+  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null } = {}) {
+    if (skipDialog == null) skipDialog = getSkipActionPrompt();
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant.id;
@@ -126,7 +128,7 @@ export class CombatPF extends Combat {
     let overrideRollMode = null,
       bonus = "",
       stop = false;
-    if (!game.pf1.skipConfirmPrompt) {
+    if (!skipDialog) {
       const dialogData = await Combat.implementation.showInitiativeDialog(formula);
       overrideRollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";

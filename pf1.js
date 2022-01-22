@@ -762,6 +762,7 @@ Hooks.on("controlToken", (token, selected) => {
 Hooks.on("preCreateItem", (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
 
+  // Overwrite race
   if (actor && actor.race && item.type === "race") {
     actor.race.update(item.data._source);
     return false;

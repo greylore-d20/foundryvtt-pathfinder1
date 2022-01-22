@@ -1512,6 +1512,8 @@ export const PF1 = {
   spellComponents: {
     V: "PF1.SpellComponentVerbal",
     S: "PF1.SpellComponentSomatic",
+    T: "PF1.SpellComponentThought",
+    E: "PF1.SpellComponentEmotion",
     M: "PF1.SpellComponentMaterial",
     F: "PF1.SpellComponentFocus",
     DF: "PF1.SpellComponentDivineFocus",

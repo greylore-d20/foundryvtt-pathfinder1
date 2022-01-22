@@ -38,6 +38,29 @@ export class ItemPF extends ItemBasePF {
     return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
   }
 
+  _preCreate(data, options, user) {
+    super._preCreate(data, options, user);
+
+    let updates = {};
+    if (typeof this.preCreateData === "function") {
+      updates = this.preCreateData(data, options, user);
+    }
+
+    if (Object.keys(updates).length) return this.data.update(updates);
+  }
+
+  /**
+   * Meant to be overridden.
+   *
+   * @param data
+   * @param options
+   * @param user
+   * @returns {Object} Update data to replace with.
+   */
+  preCreateData(data, options, user) {
+    return {};
+  }
+
   /**
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */

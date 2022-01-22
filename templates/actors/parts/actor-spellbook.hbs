@@ -175,6 +175,10 @@
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.autoSpellLevelCalculation"
           {{checked spellbook.orig.autoSpellLevelCalculation}}/> {{localize "PF1.AutoCalculateSpellSlots"}}
         </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.psychic"
+          {{checked spellbook.orig.psychic}}/> {{localize "PF1.Psychic"}}
+        </label>
         {{#unless spellbook.orig.autoSpellLevelCalculation}}
         <label class="checkbox">
           <input type="checkbox" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.spontaneous"

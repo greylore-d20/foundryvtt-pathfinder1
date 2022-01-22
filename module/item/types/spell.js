@@ -24,6 +24,27 @@ export class ItemSpellPF extends ItemPF {
     this._updateSpellDescription();
   }
 
+  preCreateData(data, options, user) {
+    const updates = super.preCreateData(data, options, user);
+
+    const actor = this.parentActor;
+    if (actor) {
+      // Swap non-psychic components for psychic ones
+      if (this.spellbook?.psychic === true) {
+        if (this.data.data.components?.verbal === true) {
+          updates["data.components.verbal"] = false;
+          updates["data.components.thought"] = true;
+        }
+        if (this.data.data.components?.somatic === true) {
+          updates["data.components.somatic"] = false;
+          updates["data.components.emotion"] = true;
+        }
+      }
+    }
+
+    return updates;
+  }
+
   getRollData() {
     const result = super.getRollData();
 
@@ -283,13 +304,15 @@ export class ItemSpellPF extends ItemPF {
       if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
       else if (key === "verbal" && value) components.push("V");
       else if (key === "somatic" && value) components.push("S");
+      else if (key === "thought" && value) components.push("T");
+      else if (key === "emotion" && value) components.push("E");
       else if (key === "material" && value) components.push("M");
       else if (key === "focus" && value) components.push("F");
     }
     if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
     const df = getProperty(srcData, "data.components.divineFocus");
     // Sort components
-    const componentsOrder = ["V", "S", "M", "F", "DF"];
+    const componentsOrder = ["V", "S", "T", "E", "M", "F", "DF"];
     components.sort((a, b) => {
       const index = [componentsOrder.indexOf(a), components.indexOf(b)];
       if (index[0] === -1 && index[1] === -1) return 0;

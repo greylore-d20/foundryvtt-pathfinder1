@@ -93,6 +93,29 @@ export class ActorPF extends ActorBasePF {
     if (this._states === undefined) this._states = {};
   }
 
+  _preCreate(data, options, user) {
+    super._preCreate(data, options, user);
+
+    let updates = {};
+    if (typeof this.preCreateData === "function") {
+      updates = this.preCreateData(data, options, user);
+    }
+
+    if (Object.keys(updates).length) return this.data.update(updates);
+  }
+
+  /**
+   * Meant to be overridden.
+   *
+   * @param data
+   * @param options
+   * @param user
+   * @returns {Object} Update data to replace with.
+   */
+  preCreateData(data, options, user) {
+    return {};
+  }
+
   /* -------------------------------------------- */
 
   static chatListeners(html) {

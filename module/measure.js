@@ -9,11 +9,12 @@ export class TemplateLayerPF extends TemplateLayer {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
     // Call placeables layer super instead of templatelayer
+    const origin = duplicate(event.data.origin);
     await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
 
     // Create the new preview template
     const tool = game.activeTool;
-    const { origin, originalEvent } = event.data;
+    const { originalEvent } = event.data;
 
     // Snap to grid
     if (!originalEvent.shiftKey) {
@@ -72,7 +73,7 @@ export class TemplateLayerPF extends TemplateLayer {
     if (snapToGrid && ["cone", "circle"].includes(type)) {
       const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
       preview.data.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
-    } else if (type === "ray") {
+    } else if (snapToGrid && type === "ray") {
       preview.data.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
     } else {
       preview.data.direction = baseDirection;

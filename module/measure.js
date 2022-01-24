@@ -4,36 +4,42 @@ import { degtorad } from "./lib.js";
  * Applies patches to core functions to integrate Pathfinder specific measurements.
  */
 export class TemplateLayerPF extends TemplateLayer {
-  // Use 90 degrees cone in PF1 style
+  // Foundry does not respect CONFIG.MeasuredTemplate.documentClass and CONFIG.MeasuredTemplate.objectClass
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
-    // Create temporary highlight layer
-    if (canvas.grid.getHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME) == null) {
-      canvas.grid.addHighlightLayer(this.constructor.HIGHLIGHT_TEMP_LAYERNAME);
-    }
+    // Call placeables layer super instead of templatelayer
+    const origin = duplicate(event.data.origin);
+    await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
 
     // Create the new preview template
     const tool = game.activeTool;
-    const origin = event.data.origin;
-    const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, 2);
-    origin.x = pos.x;
-    origin.y = pos.y;
+    const { originalEvent } = event.data;
+
+    // Snap to grid
+    if (!originalEvent.shiftKey) {
+      const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, this.gridPrecision);
+      origin.x = pos.x;
+      origin.y = pos.y;
+    }
 
     // Create the template
     const data = {
       user: game.user.id,
       t: tool,
-      x: pos.x,
-      y: pos.y,
+      x: origin.x,
+      y: origin.y,
       distance: 1,
       direction: 0,
       fillColor: game.user.data.color || "#FF0000",
     };
-    if (tool === "cone") data["angle"] = 90;
-    else if (tool === "ray") data["width"] = 5;
 
-    // Assign the template
+    // Apply some type-specific defaults
+    const defaults = CONFIG.MeasuredTemplate.defaults;
+    if (tool === "cone") data["angle"] = defaults.angle;
+    else if (tool === "ray") data["width"] = defaults.width * canvas.dimensions.distance;
+
+    // Create a preview template
     const doc = new CONFIG.MeasuredTemplate.documentClass(data, { parent: canvas.scene });
     const template = new CONFIG.MeasuredTemplate.objectClass(doc);
     event.data.preview = this.preview.addChild(template);
@@ -46,8 +52,13 @@ export class TemplateLayerPF extends TemplateLayer {
     const { destination, createState, preview, origin } = event.data;
     if (createState === 0) return;
 
+    const { originalEvent } = event.data;
+
     // Snap the destination to the grid
-    event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+    const snapToGrid = !originalEvent.shiftKey;
+    if (snapToGrid) {
+      event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+    }
 
     // Compute the ray
     const ray = new Ray(origin, destination);
@@ -56,19 +67,23 @@ export class TemplateLayerPF extends TemplateLayer {
 
     // Update the preview object
     const type = event.data.preview.data.t;
+    const cellSize = canvas.dimensions.distance;
     // Set direction
-    if (["cone", "circle"].includes(type)) {
-      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 45 / 2) / 45) * 45;
-    } else if (type === "ray") {
-      preview.data.direction = Math.floor((Math.normalizeDegrees(Math.toDegrees(ray.angle)) + 5 / 2) / 5) * 5;
+    const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+    if (snapToGrid && ["cone", "circle"].includes(type)) {
+      const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
+      preview.data.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
+    } else if (snapToGrid && type === "ray") {
+      preview.data.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
     } else {
-      preview.data.direction = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+      preview.data.direction = baseDirection;
     }
     // Set distance
-    if (["cone", "circle", "ray"].includes(type)) {
-      preview.data.distance = Math.floor(ray.distance / ratio / dist) * dist;
+    const baseDistance = ray.distance / ratio;
+    if (snapToGrid && ["cone", "circle", "ray"].includes(type)) {
+      preview.data.distance = Math.floor(baseDistance / dist) * dist;
     } else {
-      preview.data.distance = ray.distance / ratio;
+      preview.data.distance = baseDistance;
     }
     preview.refresh();
 

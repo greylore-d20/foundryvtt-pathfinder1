@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.80.8 - 2022-1-24
+
+### Bug Fixes
+
+- Measured templates forced grid snapping for angles and distances with shift held.
+- Measured templates did not respect scene configuration (such as line templates being 5m wide).
+- Fix tag wrapping
+- Measure templates weren't shown on quick rolls ([1232](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1232))
+- Fix measure templates with textures throwing errors ([1234](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1234))
+- Fix damage multipliers and non-primary attack damage ([1233](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1233))
+
+### Changelog
+
+- Make target clearing optional ([1236](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1236))
+- Add psychic spellbooks ([1202](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1202))
+- Implemented Bresenham lines for ray measure templates
+
+### API
+
+- Use skipDialog instead of skipPrompt in ActorPF.rollSavingThrow ([1238](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1238))
+- Add skipDialog option to ActorPF.rollInitiative ([1239](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1239))
+
 ## 0.80.7 - 2022-1-17
 
 ### Bug Fixes

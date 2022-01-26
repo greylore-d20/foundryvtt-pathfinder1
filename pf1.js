@@ -892,13 +892,13 @@ Hooks.on("chatMessage", (log, message, chatData) => {
 
 Hooks.on("renderActorDirectory", (app, html, data) => {
   html.find("li.actor").each((i, li) => {
-    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id")));
   });
 });
 
 Hooks.on("renderItemDirectory", (app, html, data) => {
   html.find("li.item").each((i, li) => {
-    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-entity-id")));
+    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id")));
   });
 });
 

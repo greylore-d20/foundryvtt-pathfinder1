@@ -5,18 +5,23 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>As a swift action, you can cause waves of heat to radiate from your body. This heat deals 1d4 points of fire damage per two oracle levels (minimum 1d4) to all creatures within 10 feet. A Reflex save halves the damage. In addition, your form wavers and blurs, granting you 20% concealment until your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.</p>"
+      "value": "<p>As a swift action, you can cause waves of heat to radiate from your body. This heat deals 1d4 points of fire damage per two oracle levels (minimum 1d4) to all creatures within 10 feet. A Reflex save halves the damage. In addition, your form wavers and blurs, granting you 20% concealment until your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "swift"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "action"
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
@@ -24,13 +29,30 @@
     },
     "range": {
       "value": "10",
-      "units": "ft"
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "1 + floor(@classes.oracle.level / 5)"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "save",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -42,8 +64,22 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
-      "damage": ""
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -52,17 +88,28 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_heatAura",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -77,7 +124,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

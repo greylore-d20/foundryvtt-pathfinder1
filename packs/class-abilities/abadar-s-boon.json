@@ -5,14 +5,18 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You can spend 1 minute meditating on and communing with a masterwork object of any type. At the end of this time, you can speak with that item. This functions as per @Compendium[pf1.spells.wgm8mm1za909pwch]{Stone Tell}, except that it works with masterwork goods, and the item cannot tell you what it covers or conceals if that question is not applicable to it.</p>\n<p>You can speak with items in this way for a number of minutes equal to your oracle level. This duration does not need to be consecutive, but it must be used in 1-minute increments.</p>"
+      "value": "<p>You can spend 1 minute meditating on and communing with a masterwork object of any type. At the end of this time, you can speak with that item. This functions as per @Compendium[pf1.spells.wgm8mm1za909pwch]{Stone Tell}, except that it works with masterwork goods, and the item cannot tell you what it covers or conceals if that question is not applicable to it.</p>\n<p>You can speak with items in this way for a number of minutes equal to your oracle level. This duration does not need to be consecutive, but it must be used in 1-minute increments.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "minute"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "minute"
       }
     },
@@ -24,32 +28,83 @@
       "value": "masterwork weapon held"
     },
     "range": {
-      "units": "seeText"
+      "value": null,
+      "units": "seeText",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.oracle.level"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_abadarsBoon",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -64,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

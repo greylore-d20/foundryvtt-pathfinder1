@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
   "data": {
     "description": {
-      "value": "<p>When the arcanist is under the effect of a spell of the polymorph subschool that she cast, she can expend 1 point from her arcane reservoir to change to another valid form allowed by the spell. This reduces the spell’s caster level by 1, which can take the spell’s caster level below the minimum caster level necessary to cast the spell, and reduces the spell’s duration if applicable.</p>\n<p>The arcanist must have the Lepidstadt Shifter exploit to select this exploit.</p>"
+      "value": "<p>When the arcanist is under the effect of a spell of the polymorph subschool that she cast, she can expend 1 point from her arcane reservoir to change to another valid form allowed by the spell. This reduces the spell’s caster level by 1, which can take the spell’s caster level below the minimum caster level necessary to cast the spell, and reduces the spell’s duration if applicable.</p>\n<p>The arcanist must have the Lepidstadt Shifter exploit to select this exploit.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,37 +21,90 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "self"
     },
     "range": {
-      "units": "personal"
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_alteredShifting",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -63,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

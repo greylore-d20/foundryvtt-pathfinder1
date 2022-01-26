@@ -5,14 +5,18 @@
   "img": "systems/pf1/icons/skills/affliction_03.jpg",
   "data": {
     "description": {
-      "value": "<p>At 9th level, you gain the benefits of @Compendium[pf1.spells.s9amdo5398alb5p0]{Haste}&nbsp;for a number of rounds per day equal to your&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;level. These rounds don’t need to be consecutive. Each time you hit a creature with two or more claw attacks during a full attack while affected by this ability, that creature takes 1d4 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Bleed\">bleed</a>&nbsp;damage.</p>"
+      "value": "<p>At 9th level, you gain the benefits of @Compendium[pf1.spells.s9amdo5398alb5p0]{Haste}&nbsp;for a number of rounds per day equal to your&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;level. These rounds don’t need to be consecutive. Each time you hit a creature with two or more claw attacks during a full attack while affected by this ability, that creature takes 1d4 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Bleed\">bleed</a>&nbsp;damage.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "free"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "free"
       }
     },
@@ -24,35 +28,83 @@
       "value": "self"
     },
     "range": {
-      "units": "personal"
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.sorcerer.level"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_ravenousFury",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -67,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

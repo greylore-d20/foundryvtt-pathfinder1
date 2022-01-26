@@ -5,32 +5,106 @@
   "img": "systems/pf1/icons/items/weapons/dagger.PNG",
   "data": {
     "description": {
-      "value": "<p>A rogue with this talent can, as an immediate action, attempt an Escape Artist check in place of a Reflex saving throw against any effect that would impose the entangled condition on her. Additionally, once per day when she is the target of a grapple combat maneuver, a rogue with this talent can attempt an Escape Artist check as an immediate action, using the result of the skill check in place of her CMD against that combat maneuver attempt. A rogue can use this second ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Escape Artist to select this talent.</p>"
+      "value": "<p>A rogue with this talent can, as an immediate action, attempt an Escape Artist check in place of a Reflex saving throw against any effect that would impose the entangled condition on her. Additionally, once per day when she is the target of a grapple combat maneuver, a rogue with this talent can attempt an Escape Artist check as an immediate action, using the result of the skill check in place of her CMD against that combat maneuver attempt. A rogue can use this second ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Escape Artist to select this talent.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
-    "measureTemplate": {
-      "size": "0"
+    "activation": {
+      "cost": 1,
+      "type": ""
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_escapingStunt",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -45,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

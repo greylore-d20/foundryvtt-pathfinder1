@@ -59,6 +59,17 @@ export const PF1 = {
   },
 
   /**
+   * At which levels you receive how many new ability points.
+   */
+  levelAbilityScores: {
+    4: 1,
+    8: 1,
+    12: 1,
+    16: 1,
+    20: 1,
+  },
+
+  /**
    * The set of Saving Throws
    */
   savingThrows: {

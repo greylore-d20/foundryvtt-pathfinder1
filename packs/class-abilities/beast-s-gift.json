@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The witch can use her magic to grant her allies ferocious animal abilities. The witch can partially transform a willing ally, granting him natural attacks for a number of minutes equal to the witch’s level. Choose one: the creature gains one bite attack that deals 1d8 points of damage and one secondary attack of the witch’s choice that deals 1d6 points of damage, or the creature gains two claw attacks that deal 1d4 points of damage each. These attacks follow the standard rules for natural attacks.</p>"
+      "value": "<p>The witch can use her magic to grant her allies ferocious animal abilities. The witch can partially transform a willing ally, granting him natural attacks for a number of minutes equal to the witch’s level. Choose one: the creature gains one bite attack that deals 1d8 points of damage and one secondary attack of the witch’s choice that deals 1d6 points of damage, or the creature gains two claw attacks that deal 1d4 points of damage each. These attacks follow the standard rules for natural attacks.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -24,29 +27,84 @@
     "target": {
       "value": "willing ally"
     },
-    "uses": {
-      "per": ""
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_beastsGift",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -61,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You call upon the inexorable ravages of time and entropy to damage an object or undead creature within 30 feet, dealing 1d6 points of damage per 2 oracle levels you have, ignoring hardness and damage reduction. If used against an undead creature or an object in another creature's possession, the undead creature or the creature possessing the object can attempt a Reflex saving throw to halve the damage.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>"
+      "value": "<p>You call upon the inexorable ravages of time and entropy to damage an object or undead creature within 30 feet, dealing 1d6 points of damage per 2 oracle levels you have, ignoring hardness and damage reduction. If used against an undead creature or an object in another creature's possession, the undead creature or the creature possessing the object can attempt a Reflex saving throw to halve the damage.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,6 +21,7 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
@@ -25,13 +29,30 @@
     },
     "range": {
       "value": "30",
-      "units": "ft"
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "3 + @abilities.cha.mod"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "rsak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -43,9 +64,22 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": ""
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -54,17 +88,28 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_returnToDust",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -79,7 +124,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

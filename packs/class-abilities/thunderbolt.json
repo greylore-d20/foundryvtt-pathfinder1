@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/lighting-eerie-1.jpg",
   "data": {
     "description": {
-      "value": "<p>At 9th level, you can command a stroke of lightning to strike from above in a 5-foot-radius cylinder 60 feet high. The thunderbolt inflicts 1d6 points of damage per sorcerer level; half of this damage is electricity and half is sonic. A&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\">Reflex</a>&nbsp;save (DC 10 + 1/2 your sorcerer level + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier) halves this damage. Creatures failing their saves are&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Deafened\">deafened</a>&nbsp;for 1 round. At 9th level, you can use this ability once per day, at 17th twice per day, and at 20th three times per day. This power has a range of 120 feet.</p>"
+      "value": "<p>At 9th level, you can command a stroke of lightning to strike from above in a 5-foot-radius cylinder 60 feet high. The thunderbolt inflicts 1d6 points of damage per sorcerer level; half of this damage is electricity and half is sonic. A&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\">Reflex</a>&nbsp;save (DC 10 + 1/2 your sorcerer level + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier) halves this damage. Creatures failing their saves are&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Deafened\">deafened</a>&nbsp;for 1 round. At 9th level, you can use this ability once per day, at 17th twice per day, and at 20th three times per day. This power has a range of 120 feet.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,19 +21,38 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "5-ft. radius cylinder"
     },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level < 20 && @classes.sorcerer.level > 16) ? 2 : 1)"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "spellsave",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -42,8 +64,22 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
-      "damage": ""
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -52,17 +88,28 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_thunderbolt",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -77,7 +124,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

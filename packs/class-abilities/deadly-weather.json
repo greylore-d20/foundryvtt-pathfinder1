@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/blue_25.jpg",
   "data": {
     "description": {
-      "value": "<p>At 8th level, you can unleash a furious call to the heavens, summoning forth an ever-changing storm of destruction for a number of rounds per day equal to your cleric level. This storm has a radius of 5 feet per cleric level. Each round, the storm has one of the following effects: driving rain (–4 on all Perception checks and ranged attack rolls), howling winds (–8 on Fly skill checks and ranged attack rolls), heavy snow (all terrain is considered difficult), or lightning bolt (as&nbsp;call lightning). Other effects depending on the weather might also apply (at the GM’s discretion). You choose which effect takes place each round, but no effect may be repeated on the following round. These rounds do not need to be consecutive.</p>\n<p>This power replaces the Destructive Aura power of the Destruction Domain.</p>"
+      "value": "<p>At 8th level, you can unleash a furious call to the heavens, summoning forth an ever-changing storm of destruction for a number of rounds per day equal to your cleric level. This storm has a radius of 5 feet per cleric level. Each round, the storm has one of the following effects: driving rain (–4 on all Perception checks and ranged attack rolls), howling winds (–8 on Fly skill checks and ranged attack rolls), heavy snow (all terrain is considered difficult), or lightning bolt (as&nbsp;call lightning). Other effects depending on the weather might also apply (at the GM’s discretion). You choose which effect takes place each round, but no effect may be repeated on the following round. These rounds do not need to be consecutive.</p>\n<p>This power replaces the Destructive Aura power of the Destruction Domain.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -21,36 +24,87 @@
       "value": "1",
       "units": "round"
     },
+    "target": {
+      "value": ""
+    },
     "range": {
-      "units": "seeText"
+      "value": null,
+      "units": "seeText",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.cleric.level"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_deadlyWeather",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -65,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

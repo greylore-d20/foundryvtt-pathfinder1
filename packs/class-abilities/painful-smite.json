@@ -5,53 +5,106 @@
   "img": "systems/pf1/icons/skills/arrow_11.jpg",
   "data": {
     "description": {
-      "value": "<p>Prior to making a melee attack roll, you can choose to convert all damage from that strike into nonlethal damage, adding your Wisdom modifier to the damage. If your attack hits, as a free action you can attempt an Intimidate check to demoralize the target. You gain a bonus on this Intimidate check equal to the amount of nonlethal damage dealt by the painful smite. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Destructive Smite power of the Destruction Domain.</p>"
+      "value": "<p>Prior to making a melee attack roll, you can choose to convert all damage from that strike into nonlethal damage, adding your Wisdom modifier to the damage. If your attack hits, as a free action you can attempt an Intimidate check to demoralize the target. You gain a bonus on this Intimidate check equal to the amount of nonlethal damage dealt by the painful smite. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Destructive Smite power of the Destruction Domain.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "free"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "free"
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "self"
     },
     "range": {
-      "units": "personal"
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "3 + @abilities.wis.mod"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_painfulSmite",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -66,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

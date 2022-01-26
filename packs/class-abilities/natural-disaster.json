@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>A witch using this hex calls down the forces of nature to wreak havoc on an area. This functions as a @Compendium[pf1.spells.n4e35m6qu9nmkhgm]{Storm Of Vengeance} combined with an @Compendium[pf1.spells.a5gcbpwfhu4hh5ic]{Earthquake} that occurs on the second round of the effect (while acid is raining from the sky). A witch must concentrate for the duration of this effect. If disrupted, the effect immediately ends.</p>\n<p>A witch can only use this ability once per day.</p>"
+      "value": "<p>A witch using this hex calls down the forces of nature to wreak havoc on an area. This functions as a @Compendium[pf1.spells.n4e35m6qu9nmkhgm]{Storm Of Vengeance} combined with an @Compendium[pf1.spells.a5gcbpwfhu4hh5ic]{Earthquake} that occurs on the second round of the effect (while acid is raining from the sky). A witch must concentrate for the duration of this effect. If disrupted, the effect immediately ends.</p>\n<p>A witch can only use this ability once per day.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "round"
     },
     "unchainedAction": {
@@ -18,38 +21,90 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "seeText"
     },
     "target": {
       "value": "360-ft. radius area"
     },
     "range": {
-      "units": "long"
+      "value": null,
+      "units": "long",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "1"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_naturalDisaster",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -64,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

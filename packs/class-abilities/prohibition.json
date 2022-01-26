@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/items/inventory/note-scroll.jpg",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can command a creature within 30 feet to refrain from committing a particular action (including any referenced in the spell @Compendium[pf1.spells.mmdypasgl5us00wb]{Forbid Action}). If the creature performs the named action before the beginning of your next turn, it takes 1d6 points of damage + 1 point for every 2 cleric levels you possess and the effect ends. This is a language-dependent effect. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.<br><br>If you have the spell rune domain power, you can attach a spell effect to the prohibition as if it were the spell rune domain ability; the spell takes effect if the creature performs the named action. This spell must be of at least 1 level lower than the highest-level cleric spell you can cast, and it must target one or more creatures. Regardless of the number of targets the spell can normally affect, it affects only the creature that triggers the rune. Attaching a spell in this way extends the duration of the prohibition by a number of rounds equal to the spell’s level, or until it is discharged.</p>\n<p>This power replaces the Touch of Law power of the Law Domain or the Blast Rune power of the Rune Domain.</p>"
+      "value": "<p>As a standard action, you can command a creature within 30 feet to refrain from committing a particular action (including any referenced in the spell @Compendium[pf1.spells.mmdypasgl5us00wb]{Forbid Action}). If the creature performs the named action before the beginning of your next turn, it takes 1d6 points of damage + 1 point for every 2 cleric levels you possess and the effect ends. This is a language-dependent effect. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.<br><br>If you have the spell rune domain power, you can attach a spell effect to the prohibition as if it were the spell rune domain ability; the spell takes effect if the creature performs the named action. This spell must be of at least 1 level lower than the highest-level cleric spell you can cast, and it must target one or more creatures. Regardless of the number of targets the spell can normally affect, it affects only the creature that triggers the rune. Attaching a spell in this way extends the duration of the prohibition by a number of rounds equal to the spell’s level, or until it is discharged.</p>\n<p>This power replaces the Touch of Law power of the Law Domain or the Blast Rune power of the Rune Domain.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,6 +21,7 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
@@ -25,35 +29,82 @@
     },
     "range": {
       "value": "30",
-      "units": "ft"
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "3 + @abilities.wis.mod"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_prohibition",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -68,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

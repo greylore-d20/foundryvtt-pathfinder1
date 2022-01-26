@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/blood_04.jpg",
   "data": {
     "description": {
-      "value": "<p>At 9th level, as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>, you can choose to sacrifice some of your&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;to grant an ally double that number in&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>. You can sacrifice up to your character level in&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;when using this ability. These&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>&nbsp;last up to 1 minute per&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;level. You cannot heal your sacrificed&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;until your target has lost its&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>.</p>\n<ul>\n<li>At 9th level, you can use this ability once per day.</li>\n<li>At 17th level, you can use this ability twice per day.</li>\n</ul>"
+      "value": "<p>At 9th level, as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>, you can choose to sacrifice some of your&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;to grant an ally double that number in&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>. You can sacrifice up to your character level in&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;when using this ability. These&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>&nbsp;last up to 1 minute per&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;level. You cannot heal your sacrificed&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Hit-Points\">hit points</a>&nbsp;until your target has lost its&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Temporary-Hit-Points\">temporary hit points</a>.</p>\n<ul>\n<li>At 9th level, you can use this ability once per day.</li>\n<li>At 17th level, you can use this ability twice per day.</li>\n</ul>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -17,33 +20,91 @@
         "type": "action"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.sorcerer.level >= 17 ? 2 : 1"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_giftOfBlood",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -58,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

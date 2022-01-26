@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/link-blue-2.jpg",
   "data": {
     "description": {
-      "value": "<p><strong>Element&nbsp;</strong>aether;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>8;&nbsp;<strong>Burn&nbsp;</strong>0<br><strong>Prerequisite&nbsp;</strong>force barrier, force ward</p>\n<p>You can create a globe of force, as the @Compendium[pf1.spells.v8s6gfrhzzzhru7k]{Telekinetic Sphere} spell, that lasts as long as you concentrate as a standard action, and you can move the globe as a move action.</p>\n<p>You can accept 1 point of burn to increase the duration to 1 minute per level and eliminate the need to concentrate to maintain the globe.</p>"
+      "value": "<p><strong>Element&nbsp;</strong>aether;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>8;&nbsp;<strong>Burn&nbsp;</strong>0<br><strong>Prerequisite&nbsp;</strong>force barrier, force ward</p>\n<p>You can create a globe of force, as the @Compendium[pf1.spells.v8s6gfrhzzzhru7k]{Telekinetic Sphere} spell, that lasts as long as you concentrate as a standard action, and you can move the globe as a move action.</p>\n<p>You can accept 1 point of burn to increase the duration to 1 minute per level and eliminate the need to concentrate to maintain the globe.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -21,29 +24,87 @@
       "value": "@classes.kineticist.level",
       "units": "minute"
     },
-    "uses": {
-      "per": ""
+    "target": {
+      "value": ""
     },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_telekineticGlobe",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -58,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

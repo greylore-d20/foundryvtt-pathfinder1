@@ -1,7 +1,7 @@
 import { createInlineRollString } from "../chat.js";
 import { RollPF } from "../roll.js";
 
-export class LevelUpForm extends DocumentSheet {
+export class LevelUpForm extends FormApplication {
   constructor(...args) {
     super(...args);
 
@@ -9,15 +9,45 @@ export class LevelUpForm extends DocumentSheet {
      * Tracks whether this form has already been submitted.
      */
     this._submitted = false;
+
+    /**
+     * Tracks the currently viewed section.
+     */
+    this._section = 0;
+
+    /**
+     * Tracks section data.
+     */
+    this._sections = this._addSections();
   }
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
       template: "systems/pf1/templates/apps/level-up.hbs",
-      width: 500,
+      width: 720,
+      height: 480,
       closeOnSubmit: true,
     });
+  }
+
+  get section() {
+    return this._section;
+  }
+  get currentSection() {
+    return this._sections[this.section];
+  }
+
+  setSection(idx) {
+    this._section = idx;
+
+    // Disable all sections
+    this.element.find(".section[data-section]").removeClass("active");
+
+    // Enable the new section
+    this.element.find(`.section[data-section-index="${idx}"]`).addClass("active");
+
+    this._updateNavButtons();
   }
 
   get title() {
@@ -63,13 +93,8 @@ export class LevelUpForm extends DocumentSheet {
     result.data = this.object.data.toObject();
     result.actor = this.actor.data.toObject();
 
-    // Add health data
-    const hpSettings = game.settings.get("pf1", "healthConfig");
-    const hpOptions = this.actor.data.type === "character" ? hpSettings.hitdice.PC : hpSettings.hitdice.NPC;
-    result.health = {
-      autoHP: hpOptions.auto === true,
-      manualValue: Math.ceil(1 + (result.data.data.hd - 1) / 2),
-    };
+    // Add sections
+    result.sections = this._sections;
 
     // Add favored class data
     result.fc = {
@@ -87,56 +112,114 @@ export class LevelUpForm extends DocumentSheet {
     return result;
   }
 
-  async _updateObject(event, formData) {
-    const item = this.object;
-    const updateData = {};
-    const chatData = {};
+  _addSections() {
+    const result = [];
 
-    // Add health part
-    if (formData["health.manual_value"]) {
-      const hp = parseInt(formData["health.manual_value"]);
-      chatData.hp = {
-        label: "PF1.LevelUp.Chat.Health.Manual",
-        add: hp,
-        roll: RollPF.safeRoll(`${hp}`),
-      };
-      if (!Number.isNaN(hp)) {
-        updateData["data.hp"] = item.data.data.hp + hp;
-      }
-    } else if (formData["health.roll"]) {
-      // Roll for health
-      const formula = `1d${item.data.data.hd}`;
-      const roll = RollPF.safeRoll(formula);
-      chatData.hp = {
-        label: "PF1.LevelUp.Chat.Health.Roll",
-        add: createInlineRollString(roll),
-        roll: roll,
-      };
-      if (!Number.isNaN(roll.total)) {
-        updateData["data.hp"] = item.data.data.hp + roll.total;
-      }
+    // Add health section
+    const hpSettings = game.settings.get("pf1", "healthConfig");
+    const hpOptions = this.actor.data.type === "character" ? hpSettings.hitdice.PC : hpSettings.hitdice.NPC;
+    if (hpOptions.auto !== true) {
+      result.push({
+        name: "health",
+        label: "PF1.LevelUpForm_Health",
+        choice: {
+          id: null,
+          manualValue: Math.ceil(1 + (this.object.data.data.hd - 1) / 2),
+        },
+        items: [
+          {
+            img: "systems/pf1/icons/items/inventory/dice.jpg",
+            name: game.i18n.localize("PF1.LevelUpForm_Health_Roll"),
+            id: "roll",
+            type: "html",
+            target: "systems/pf1/templates/apps/level-up/health_roll.hbs",
+          },
+          {
+            img: "systems/pf1/icons/skills/green_19.jpg",
+            name: game.i18n.localize("PF1.LevelUpForm_Health_Manual"),
+            id: "manual",
+            type: "html",
+            target: "systems/pf1/templates/apps/level-up/health_manual.hbs",
+          },
+        ],
+      });
     }
 
-    // Add favored class part
-    if (formData["fc.type"] && formData["fc.type"] !== "none") {
-      const key = `data.fc.${formData["fc.type"]}.value`;
-      updateData[key] = getProperty(item.data, key) + 1;
+    // Add favoured class bonus
+    if (this.isFavouredClass()) {
+      result.push({
+        name: "fc",
+        label: "PF1.LevelUp.FC.Label",
+        choice: {
+          id: null,
+        },
+        items: [
+          {
+            name: game.i18n.localize("PF1.None"),
+            id: "none",
+          },
+          {
+            img: "systems/pf1/icons/skills/green_19.jpg",
+            name: game.i18n.localize("PF1.FavouredClassBonus.HP"),
+            id: "hp",
+            type: "html",
+            target: "systems/pf1/templates/apps/level-up/fc_hp.hbs",
+          },
+          {
+            img: "systems/pf1/icons/items/inventory/dice.jpg",
+            name: game.i18n.localize("PF1.FavouredClassBonus.Skill"),
+            id: "skill",
+            type: "html",
+            target: "systems/pf1/templates/apps/level-up/fc_skill.hbs",
+          },
+          {
+            img: "systems/pf1/icons/skills/affliction_22.jpg",
+            name: game.i18n.localize("PF1.FavouredClassBonus.Alt"),
+            id: "alt",
+            type: "html",
+            target: "systems/pf1/templates/apps/level-up/fc_alt.hbs",
+          },
+        ],
+      });
+    }
 
-      const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[formData["fc.type"]];
-      chatData.fc = {
-        type: formData["fc.type"],
-        label: `PF1.FavouredClassBonus.${fcKey}`,
-      };
+    return result;
+  }
+
+  /**
+   * @returns {boolean} Whether this form's associated class is a favoured class.
+   * @// TODO: Add better logic for determining this <26-01-22, Furyspark> //
+   */
+  isFavouredClass() {
+    return this.object.data.data.classType === "base";
+  }
+
+  async _updateObject(event, formData) {
+    const itemData = {};
+    const actorData = {};
+    const chatData = {};
+    const newItems = [];
+
+    for (const section of this._sections) {
+      const data = this._parseSection(section);
+      mergeObject(itemData, data.item);
+      mergeObject(actorData, data.actor);
+      mergeObject(chatData, data.chatData);
+      for (const item of data.newItems) {
+        const prevItem = newItems.find((o) => o._id === item._id);
+        if (prevItem != null) mergeObject(prevItem, item);
+        else newItems.push(item);
+      }
     }
 
     // Add level
     chatData.level = {
-      previous: item.data.data.level,
-      new: item.data.data.level + 1,
+      previous: this.object.data.data.level,
+      new: this.object.data.data.level + 1,
     };
 
     // Update class
-    updateData["data.level"] = chatData.level.new;
+    itemData["data.level"] = chatData.level.new;
     const lup = new Promise((resolve) => {
       Hooks.on(
         "pf1.classLevelChange",
@@ -148,8 +231,17 @@ export class LevelUpForm extends DocumentSheet {
         }.bind(this)
       );
     });
-    const up = this.object.update(updateData);
+    const up = this.object.update(itemData);
     await Promise.allSettled([up, lup]);
+
+    // Update actor
+    if (Object.keys(actorData).length) {
+      await this.actor.update(actorData);
+    }
+    // Add items
+    if (newItems.length > 0) {
+      await this.actor.createEmbeddedDocuments("Item", newItems);
+    }
 
     // Add new class features to chat data
     {
@@ -193,6 +285,77 @@ export class LevelUpForm extends DocumentSheet {
     return this.createChatMessage(chatData);
   }
 
+  /**
+   * @typedef {object} LevelUp_UpdateData
+   * @property {object} item - The update data for the leveling class item.
+   * @property {object} actor - The update data for the associated actor.
+   * @property {object} chatData - Data to add for the level up's chat card.
+   * @property {object[]} newItems - Items to add due to this update.
+   */
+  /**
+   * Parses a section, and sets updateData as appropriate for a submit.
+   *
+   * @param {object} section - The given section.
+   * @returns {LevelUp_UpdateData}
+   */
+  _parseSection(section) {
+    const result = {
+      item: {},
+      actor: {},
+      chatData: {},
+      newItems: [],
+    };
+
+    const fn = this[`_parseSection_${section.name}`];
+    if (fn instanceof Function) return fn.call(this, section, result);
+
+    return result;
+  }
+
+  _parseSection_health(section, result) {
+    // Manual health
+    if (section.choice.id === "manual") {
+      const hpValue = section.choice.manualValue;
+      result.item["data.hp"] = this.object.data.data.hp + hpValue;
+      result.chatData.hp = {
+        label: "PF1.LevelUp.Chat.Health.Manual",
+        add: hpValue,
+        roll: RollPF.safeRoll(`${hpValue}`),
+      };
+    }
+    // Roll health
+    else if (section.choice.id === "roll") {
+      const formula = `1d${this.object.data.data.hd}`;
+      const roll = RollPF.safeRoll(formula);
+      result.chatData.hp = {
+        label: "PF1.LevelUp.Chat.Health.Roll",
+        add: createInlineRollString(roll),
+        roll: roll,
+      };
+      if (!Number.isNaN(roll.total)) {
+        result.item["data.hp"] = this.object.data.data.hp + roll.total;
+      }
+    }
+
+    return result;
+  }
+
+  _parseSection_fc(section, result) {
+    const id = section.choice.id;
+    if (["hp", "skill", "alt"].includes(id)) {
+      const key = `data.fc.${section.choice.id}.value`;
+      result.item[key] = getProperty(this.object.data, key) + 1;
+
+      const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[id];
+      result.chatData.fc = {
+        type: id,
+        label: `PF1.FavouredClassBonus.${fcKey}`,
+      };
+    }
+
+    return result;
+  }
+
   async createChatMessage(formData) {
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
@@ -213,9 +376,128 @@ export class LevelUpForm extends DocumentSheet {
   }
 
   activateListeners(html) {
-    html.find(`.switch-check[name="health.roll"]`).change(this._switchHealthRoll.bind(this));
+    html.find(".list-selector .item").on("click", this._onClickListItem.bind(this));
 
-    html.find('button[name="submit"]').click(this._onSubmit.bind(this));
+    html.find(`button[data-type="previous"]`).on("click", this._onPreviousSection.bind(this));
+    html.find(`button[data-type="next"]`).on("click", this._onNextSection.bind(this));
+    html.find('button[name="submit"]').on("click", this._onSubmit.bind(this));
+  }
+
+  activateContentListeners(html) {
+    html.find("input.section-choice").on("change", this._onChangeSectionChoice.bind(this));
+  }
+
+  _onPreviousSection(event) {
+    event.preventDefault();
+
+    this.setSection(this.section - 1);
+  }
+
+  _onNextSection(event) {
+    event.preventDefault();
+
+    this.setSection(this.section + 1);
+  }
+
+  _onClickListItem(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const list = a.closest(".list-selector");
+
+    // Return if item already selected
+    if (a.classList.contains("active")) return;
+
+    // Make item visibly active
+    list.querySelectorAll(".item").forEach((elem) => {
+      elem.classList.remove("active");
+    });
+    a.classList.add("active");
+
+    // Remove previous content
+    const contentId = list.dataset.content;
+    const contentElem = this.element.find(`.${contentId}-body`);
+    contentElem.empty();
+
+    // Replace content
+    const section = this._sections[list.closest(".section").dataset.sectionIndex];
+    const sectionItem = section.items.find((o) => o.id === a.dataset.id);
+    this._renderContent(sectionItem).then((html) => {
+      contentElem.append(html);
+      this.activateContentListeners(contentElem);
+    });
+
+    // Update form buttons
+    this.currentSection.choice.id = a.dataset.id;
+    this._updateNavButtons();
+  }
+
+  async _renderContent(item) {
+    switch (item.type) {
+      case "html":
+        return renderTemplate(item.target, this.getHTMLData());
+    }
+
+    return "";
+  }
+
+  _onChangeSectionChoice(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const [sectionName, key] = a.name.split(":");
+    const section = this._sections.find((o) => o.name === sectionName);
+
+    if (!section) return;
+
+    // Get value
+    let value = a.value;
+    switch (a.dataset.dtype.toLowerCase()) {
+      case "number":
+        value = parseFloat(value);
+        break;
+      case "boolean":
+        value = ["true", "1"].includes(value);
+        break;
+    }
+
+    // Change section choice
+    setProperty(section.choice, key, value);
+  }
+
+  _updateNavButtons() {
+    const formDiv = this.element.find(".nav-buttons");
+
+    const buttons = {
+      previous: formDiv.find(`button[data-type="previous"]`),
+      next: formDiv.find(`button[data-type="next"]`),
+      submit: formDiv.find(`button[type="submit"]`),
+    };
+    if (this._section > 0) {
+      buttons.previous.prop("disabled", false);
+    } else {
+      buttons.previous.prop("disabled", true);
+    }
+
+    if (this.section < this._sections.length - 1 && this.currentSection.choice?.id != null) {
+      buttons.next.prop("disabled", false);
+    } else {
+      buttons.next.prop("disabled", true);
+    }
+
+    if (this.section === this._sections.length - 1 && this.currentSection.choice?.id != null) {
+      buttons.submit.prop("disabled", false);
+    } else {
+      buttons.submit.prop("disabled", true);
+    }
+  }
+
+  getHTMLData() {
+    return {
+      actor: this.actor.data.toObject(),
+      item: this.object.data.toObject(),
+      rollData: this.object.getRollData(),
+      appData: this.getData(),
+      section: this.currentSection,
+    };
   }
 
   _onSubmit(event, ...args) {
@@ -224,12 +506,5 @@ export class LevelUpForm extends DocumentSheet {
 
     this._submitted = true;
     super._onSubmit(event, ...args);
-  }
-
-  _switchHealthRoll(event) {
-    const checked = $(event.currentTarget).prop("checked");
-    const targetElem = this.element.find(`input[type="text"][name="health.manual_value"]`);
-
-    targetElem.attr("disabled", checked);
   }
 }

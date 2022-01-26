@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>Your body dissolves, and you become a living shadow. This ability functions as @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form}.</p>\n<p>At 14th level, this ability functions as @Compendium[pf1.spells.6p5j2x5gjjsntyd6]{Shadow Body} instead, except you also gain DR 10/magic and become immune to poison, sneak attacks, and critical hits as if also using @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form}.</p>\n<p>You can use this ability a number of minutes per day equal to your oracle level. This duration does not need to be consecutive, but it must be spent in 1-minute increments.</p>\n<p>You must be at least 7th level to choose this revelation.</p>"
+      "value": "<p>Your body dissolves, and you become a living shadow. This ability functions as @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form}.</p>\n<p>At 14th level, this ability functions as @Compendium[pf1.spells.6p5j2x5gjjsntyd6]{Shadow Body} instead, except you also gain DR 10/magic and become immune to poison, sneak attacks, and critical hits as if also using @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form}.</p>\n<p>You can use this ability a number of minutes per day equal to your oracle level. This duration does not need to be consecutive, but it must be spent in 1-minute increments.</p>\n<p>You must be at least 7th level to choose this revelation.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -25,32 +28,83 @@
       "value": "self"
     },
     "range": {
-      "units": "personal"
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.oracle.level"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_livingShadow",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -65,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

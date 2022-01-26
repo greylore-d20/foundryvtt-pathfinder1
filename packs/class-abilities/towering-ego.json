@@ -5,29 +5,85 @@
   "img": "systems/pf1/icons/skills/yellow_14.jpg",
   "data": {
     "description": {
-      "value": "<p>At 2nd level, a mesmerist gains a bonus equal to his Charisma bonus (minimum 0) on Will saving throws. If the mesmerist is under any effect that would prevent him from providing the emotional component of psychic spells, he loses this bonus on saving throws.</p>"
+      "value": "<p>At 2nd level, a mesmerist gains a bonus equal to his Charisma bonus (minimum 0) on Will saving throws. If the mesmerist is under any effect that would prevent him from providing the emotional component of psychic spells, he loses this bonus on saving throws.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "passive"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "passive"
       }
     },
-    "uses": {
-      "per": ""
+    "duration": {
+      "value": null,
+      "units": ""
     },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [
       {
         "_id": "hu6at6e7",
@@ -40,16 +96,26 @@
         "target": "savingThrows"
       }
     ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_toweringEgo",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -64,7 +130,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

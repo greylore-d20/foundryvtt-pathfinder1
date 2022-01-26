@@ -1,43 +1,35 @@
 <form class="{{cssClass}}" autocomplete="off">
-    {{#unless health.autoHP}}
-    <div class="part">
-        <h4 class="form-header">{{localize "PF1.LevelUpForm_Health"}}</h4>
+  {{#each sections as |section sectionIdx|}}
+    {{!-- Health --}}
+    <div class="tab section{{#if (eq sectionIdx 0)}} active{{/if}} flexcol" data-section="{{section.name}}" data-section-index="{{sectionIdx}}">
+      <h2 class="form-header">{{localize section.label}}</h2>
 
-        <div class="health">
-            <div class="switch roll-health">
-                <input class="switch-check" type="checkbox" checked name="health.roll" id="{{uuid}}.health.roll">
-                <label class="switch-label" for="{{uuid}}.health.roll">
-                    <span class="switch-primary">{{localize "PF1.LevelUpForm_Health_Roll"}}</span>
-                    <span class="switch-secondary">{{localize "PF1.LevelUpForm_Health_Manual"}}</span>
-                </label>
-            </div>
-
-            <input type="text" disabled name="health.manual_value" value="{{health.manualValue}}" />
-        </div>
-    </div>
-    {{/unless}}
-
-    {{#if fc.allowed}}
-    <div class="part">
-        <h4 class="form-header">{{localize "PF1.FavouredClassBonus.Label"}}</h4>
-
-        <div class="fc">
-            {{#each fc.types as |fc|}}
-                <div class="switch fc-type">
-                    <input class="switch-check" type="radio" {{checked fc.checked}} name="fc.type" value="{{fc.key}}" id="{{uuid}}.fc.type.{{fc.key}}">
-                    <label class="switch-label" for="{{uuid}}.fc.type.{{fc.key}}">
-                        <span class="switch-primary">{{fc.label}}</span>
-                        <span class="switch-secondary">{{fc.label}}</span>
-                    </label>
-                </div>
+      {{#if section.items}}
+        <div class="flexrow">
+          <nav class="list-selector" data-content="{{section.name}}">
+            {{#each section.items as |item a|}}
+              <a class="item" data-id="{{item.id}}" data-target="{{item.target}}" data-type="{{item.type}}">
+                {{#if item.img}}
+                  <img src="{{item.img}}"></img>
+                {{else}}
+                  <span class="fake-img"></span>
+                {{/if}}
+                <span class="name">{{item.name}}</span>
+              </a>
             {{/each}}
-        </div>
-    </div>
-    {{/if}}
+          </nav>
 
-    <div class="form-group">
-        <button type="submit" name="submit" >
-            <i class="far fa-save"></i> {{localize "PF1.Submit"}}
-        </button>
+          <div class="content {{section.name}}-body"></div>
+        </div>
+      {{/if}}
     </div>
+  {{/each}}
+
+  <hr>
+
+  <div class="nav-buttons">
+    <button type="button" disabled data-type="previous">{{localize "PF1.Previous"}}</button>
+    <button type="button" disabled data-type="next">{{localize "PF1.Next"}}</button>
+    <button type="submit" disabled data-type="submit">{{localize "PF1.Submit"}}</button>
+  </div>
 </form>

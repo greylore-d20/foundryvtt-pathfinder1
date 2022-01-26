@@ -1442,26 +1442,62 @@
 /* ----------------------------------------- */
 
 .pf1.level-up {
-  div.part {
-    margin-bottom: 4px;
-  }
+  .tab {
+    height: calc(100% - 6em);
 
-  div.health {
-    display: flex;
-    flex-flow: row nowrap;
+    &:not(.active) {
+      display: none;
+    }
 
-    .switch.roll-health {
-      flex: 0 0 96px;
+    h2 {
+      flex: 0;
+    }
 
-      .switch-label span {
-        height: 26px;
-        line-height: 26px;
-        padding: 0;
+    .list-selector {
+      display: flex;
+      flex: 2;
+      flex-direction: column;
+      height: 100%;
+
+      a.item {
+        display: flex;
+        align-items: center;
+
+        .itemBackground();
+
+        .img {
+          flex: 0;
+        }
+        .fake-img {
+          flex: 0 0 3.6em;
+        }
+        img,
+        .fake-img {
+          margin-right: 0.4em;
+          width: 3.6em;
+          height: 3.6em;
+        }
+
+        span.name {
+          font-size: 1.4em;
+        }
       }
     }
 
-    input[type="text"] {
-      flex: 0 0 64px;
+    .content {
+      flex: 3;
+      border: 1px solid @colorOlive;
+      border-radius: 0.4em;
+      padding: 0.2em;
+      height: 100%;
+    }
+  }
+
+  .nav-buttons {
+    height: 6em;
+
+    button {
+      width: 16em;
     }
   }
 }

@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/affliction_08.jpg",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can make a melee touch attack and expend 1 point of mental focus to cause the flesh of a living creature to rot and wither. If the attack hits, the target takes 1d8 points of damage + 1 point per occultist level you possess.</p>\n<p>For every 4 occultist levels you possess beyond 3rd, the target takes an additional 1d8 points of damage (to a maximum of 5d8 at 19th level). If you miss with the melee touch attack, this power is wasted with no effect.</p>\n<p>You must be at least 3rd level to select this focus power.</p>"
+      "value": "<p>As a standard action, you can make a melee touch attack and expend 1 point of mental focus to cause the flesh of a living creature to rot and wither. If the attack hits, the target takes 1d8 points of damage + 1 point per occultist level you possess.</p>\n<p>For every 4 occultist levels you possess beyond 3rd, the target takes an additional 1d8 points of damage (to a maximum of 5d8 at 19th level). If you miss with the melee touch attack, this power is wasted with no effect.</p>\n<p>You must be at least 3rd level to select this focus power.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,18 +21,38 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "creature touched"
     },
     "range": {
-      "units": "touch"
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "msak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -41,26 +64,52 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": ""
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
-      "dc": "0"
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_fleshRot",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -75,7 +124,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

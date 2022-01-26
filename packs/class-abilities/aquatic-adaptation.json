@@ -5,32 +5,85 @@
   "img": "systems/pf1/icons/skills/emerald_05.jpg",
   "data": {
     "description": {
-      "value": "<p>At 3rd level, you gain a swim&nbsp;<a href=\"https://www.d20pfsrd.com/magic-items/magic-weapons#TOC-Speed\">speed</a>&nbsp;of 30 feet. At 9th level, you gain the&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Amphibious-Ex-\">amphibious</a>&nbsp;special quality and develop a fat layer that grants a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Natural-armor-Bonus\">natural armor bonus</a>&nbsp;and resist cold 5. When immersed in water, you gain&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Blindsight-and-Blindsense\">blindsense</a>&nbsp;30 feet. At 15th level, you gain a swim&nbsp;<a href=\"https://www.d20pfsrd.com/magic-items/magic-weapons#TOC-Speed\">speed</a>&nbsp;of 60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Blindsight-and-Blindsense\">blindsense</a>&nbsp;of 60 feet in water.</p>"
+      "value": "<p>At 3rd level, you gain a swim&nbsp;<a href=\"https://www.d20pfsrd.com/magic-items/magic-weapons#TOC-Speed\">speed</a>&nbsp;of 30 feet. At 9th level, you gain the&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules#TOC-Amphibious-Ex-\">amphibious</a>&nbsp;special quality and develop a fat layer that grants a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Natural-armor-Bonus\">natural armor bonus</a>&nbsp;and resist cold 5. When immersed in water, you gain&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Blindsight-and-Blindsense\">blindsense</a>&nbsp;30 feet. At 15th level, you gain a swim&nbsp;<a href=\"https://www.d20pfsrd.com/magic-items/magic-weapons#TOC-Speed\">speed</a>&nbsp;of 60 feet and&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Blindsight-and-Blindsense\">blindsense</a>&nbsp;of 60 feet in water.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "passive"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "passive"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [
       {
         "_id": "vk3jemkk",
@@ -53,16 +106,26 @@
         "target": "ac"
       }
     ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_aquaticAdaptation",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -77,7 +140,11 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

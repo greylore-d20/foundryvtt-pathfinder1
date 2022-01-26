@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/vines-jade-3.jpg",
   "data": {
     "description": {
-      "value": "<p>At 10th level, you can summon a battle companion. This ability functions as @Compendium[pf1.spells.choriern682hgptb]{Summon Nature's Ally IV}, with a duration of 1 minute. This ability can summon only one animal, regardless of the list used, and the creature’s type changes to plant instead of animal.</p>\n<p>For every 2 levels beyond 10th, the level of the summon nature’s ally spell increases by 1, to a maximum of @Compendium[pf1.spells.x6y3kyvxf8s31jhy]{Summon Nature's Ally IX} at 20th level.</p>"
+      "value": "<p>At 10th level, you can summon a battle companion. This ability functions as @Compendium[pf1.spells.choriern682hgptb]{Summon Nature's Ally IV}, with a duration of 1 minute. This ability can summon only one animal, regardless of the list used, and the creature’s type changes to plant instead of animal.</p>\n<p>For every 2 levels beyond 10th, the level of the summon nature’s ally spell increases by 1, to a maximum of @Compendium[pf1.spells.x6y3kyvxf8s31jhy]{Summon Nature's Ally IX} at 20th level.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "round"
     },
     "unchainedAction": {
@@ -21,29 +24,87 @@
       "value": "1",
       "units": "minute"
     },
-    "uses": {
-      "per": ""
+    "target": {
+      "value": ""
     },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_plantBlessingBattleCompanion",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -57,7 +118,12 @@
           "Warpriest"
         ]
       ]
-    }
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

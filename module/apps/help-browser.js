@@ -82,9 +82,6 @@ export class PF1_HelpBrowser extends Application {
   }
 
   async openURL(url, { addToHistory = true, header = "" } = {}) {
-    // Alter URL
-    url = this.fixURL(url);
-
     if (url !== this._currentURL) {
       // Add new page to history
       if (addToHistory) {
@@ -165,21 +162,12 @@ export class PF1_HelpBrowser extends Application {
     }
   }
 
-  fixURL(url) {
-    if (/https?:\/\//.test(url)) {
-      const base = window.location.href.replace(/[^/]*$/, "");
-      return url.slice(base.length);
-    }
-
-    return url.replace(/^.+?:\/\/[^/]+\//, "");
-  }
-
   activateListeners(html) {
     // Translate links
     {
       const links = html.find("a[href]");
       for (const l of links) {
-        const href = l.href;
+        const href = l.getAttribute("href");
         l.removeAttribute("href");
         l.addEventListener("click", () => {
           const header = l.dataset?.header || "";

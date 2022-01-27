@@ -21,6 +21,10 @@ export class ItemFeatPF extends ItemPF {
     return !this.data.data.disabled;
   }
 
+  get subType() {
+    return this.data.data.featType;
+  }
+
   getTypeChatData(data, labels, props) {
     super.getTypeChatData(data, labels, props);
     // Add ability type label

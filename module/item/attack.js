@@ -47,23 +47,21 @@ export const checkRequirements = async function (shared) {
   }
 
   // Check ammunition links
-  if (this.type === "attack") {
-    shared.ammoLinks = await this.getLinkedItems("ammunition", true);
-    for (const l of shared.ammoLinks) {
-      if (!l.item) {
-        const msg = game.i18n.localize("PF1.WarningMissingAmmunition");
-        console.warn(msg);
-        ui.notifications.warn(msg);
-        return ERR_REQUIREMENT.MISSING_AMMO;
-      }
-      shared.ammoAvailable = Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
+  shared.ammoLinks = await this.getLinkedItems("ammunition", true);
+  for (const l of shared.ammoLinks) {
+    if (!l.item) {
+      const msg = game.i18n.localize("PF1.WarningMissingAmmunition");
+      console.warn(msg);
+      ui.notifications.warn(msg);
+      return ERR_REQUIREMENT.MISSING_AMMO;
+    }
+    shared.ammoAvailable = Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
 
-      if (shared.ammoAvailable <= 0) {
-        const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
-        console.warn(msg);
-        ui.notifications.warn(msg);
-        return ERR_REQUIREMENT.INSUFFICIENT_AMMO;
-      }
+    if (shared.ammoAvailable <= 0) {
+      const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
+      console.warn(msg);
+      ui.notifications.warn(msg);
+      return ERR_REQUIREMENT.INSUFFICIENT_AMMO;
     }
   }
 

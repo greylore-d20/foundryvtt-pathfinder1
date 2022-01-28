@@ -24,11 +24,13 @@ import { ActorBasePF } from "./module/actor/base.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorCharacterPF } from "./module/actor/types/character.js";
 import { ActorNPCPF } from "./module/actor/types/npc.js";
+import { BasicActorPF } from "./module/actor/types/basic.js";
 import { ActorSheetPF } from "./module/actor/sheets/base.js";
 import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
 import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
 import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
 import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
+import { ActorSheetPFBasic } from "./module/actor/sheets/basic.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
 import { AmbientLightPF } from "./module/low-light-vision.js";
@@ -266,6 +268,7 @@ Hooks.once("init", function () {
     // Specific types
     character: ActorCharacterPF,
     npc: ActorNPCPF,
+    basic: BasicActorPF,
   };
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;
@@ -317,6 +320,7 @@ Hooks.once("init", function () {
   Actors.registerSheet("PF1", ActorSheetPFNPC, { label: "PF1.Sheet.NPC", types: ["npc"], makeDefault: true });
   Actors.registerSheet("PF1", ActorSheetPFNPCLite, { label: "PF1.Sheet.NPCLite", types: ["npc"], makeDefault: false });
   Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { label: "PF1.Sheet.NPCLoot", types: ["npc"], makeDefault: false });
+  Actors.registerSheet("PF1", ActorSheetPFBasic, { label: "PF1.Sheet.Basic", types: ["basic"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("PF1", ItemSheetPF, {
     label: "PF1.Sheet.Item",

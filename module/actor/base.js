@@ -15,7 +15,7 @@ export class ActorBasePF extends Actor {
       super(data, context);
     } else if (data.type) {
       const subtyped = { pf1: { subtyped: true } };
-      const cls = CONFIG.Actor.documentClasses[data.data?.type ?? data.type] ?? CONFIG.Actor.documentClasses.default;
+      const cls = CONFIG.Actor.documentClasses[data.type] ?? CONFIG.Actor.documentClasses.default;
       if (!cls) console.warn(data.data?.type, data.type);
       return new cls(data, { ...subtyped, ...context });
     }

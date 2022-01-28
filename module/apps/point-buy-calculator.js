@@ -18,7 +18,7 @@ export class PointBuyCalculator extends DocumentSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "pointbuy-calculator"],
       title: "Point Buy Calculator",
-      template: "systems/pf1/templates/apps/pointbuy-calculator.hbs",
+      template: "systems/pf1/templates/apps/point-buy-calculator.hbs",
       width: 320,
       height: "auto",
       closeOnSubmit: false,

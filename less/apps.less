@@ -352,8 +352,11 @@
 .pf1.trait-selector {
   max-height: 720px;
 
-  .window-content {
-    overflow: auto;
+  form {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: fit-content 2em 2em;
   }
 }
 
@@ -1058,6 +1061,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    overflow: auto;
   }
 
   input[type="text"] {

@@ -78,4 +78,8 @@ export class ItemClassPF extends ItemPF {
     // Call level change hook
     Hooks.call("pf1.classLevelChange", this.actor, this, curLevel, newLevel);
   }
+
+  get subType() {
+    return this.data.data.classType;
+  }
 }

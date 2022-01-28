@@ -20,4 +20,11 @@ export class ItemBasePF extends Item {
       return new cls(data, { ...subtyped, ...context });
     }
   }
+
+  /**
+   * @returns {string} Item subtype.
+   */
+  get subType() {
+    return null;
+  }
 }

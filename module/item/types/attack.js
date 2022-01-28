@@ -8,4 +8,8 @@ export class ItemAttackPF extends ItemPF {
 
     return result;
   }
+
+  get subType() {
+    return this.data.data.attackType;
+  }
 }

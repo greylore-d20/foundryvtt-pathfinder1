@@ -112,4 +112,8 @@ export class ItemBuffPF extends ItemPF {
   get isActive() {
     return this.data.data.active;
   }
+
+  get subType() {
+    return this.data.data.buffType;
+  }
 }

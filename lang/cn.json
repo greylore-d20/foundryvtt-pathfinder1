@@ -42,8 +42,14 @@
   "SETTINGS.pf1SharedVisionModeH": "如何处理玩家间的共享视野",
   "SETTINGS.pf1SharedVisionWithoutSelection": "不包含选中的token",
   "SETTINGS.pf1SharedVisionWithSelection": "总是",
+  "SETTINGS.pf1AllowScriptChangesN": "启用脚本改变",
+  "SETTINGS.pf1AllowScriptChangesH": "允许在世界中使用 \"脚本\"-类型的改变",
+  "SETTINGS.pf1AllowScriptChangesW": "<b>该设定项会允许玩家们如GM般执行任意代码。</b><br><br>你完全确定你想要启用这个吗？",
+  "SETTINGS.pf1AllowScriptChangesE": "该世界中已禁用脚本改变。",
   "SETTINGS.pf1HideTokenConditionsN": "隐藏状态图标",
   "SETTINGS.pf1HideTokenConditionsH": "从token上隐藏增益和状态图标",
+  "SETTINGS.pf1obscureInlineRollsN": "隐藏内联投骰",
+  "SETTINGS.pf1obscureInlineRollsH": "将内联投骰对拥有查看以下权限的玩家隐藏。",
   "SETTINGS.pf1CoreEffectsN": "默认token状态",
   "SETTINGS.pf1CoreEffectsH": "取消勾选便仅在token上显示pf1状态图标，勾选则连核心图标一并显示",
   "SETTINGS.pf1HideChatButtonsN": "隐藏聊天卡片按钮",
@@ -64,6 +70,10 @@
   "SETTINGS.pf1DisplayIterativesH": "将BAB拆分成迭代显示，而不是显示总值",
   "SETTINGS.pf1AlternativeReachCornerRuleN": "替换触及规则",
   "SETTINGS.pf1AlternativeReachCornerRuleH": "10尺触及范围不包括外围角落",
+  "SETTINGS.pf1DisableAttackCardTargetsN": "禁用攻击目标",
+  "SETTINGS.pf1DisableAttackCardTargetsH": "禁用攻击卡片上的目标角色显示",
+  "SETTINGS.pf1ClearTargetsAfterAttackN": "攻击后清除目标",
+  "SETTINGS.pf1ClearTargetsAfterAttackH": "是否在攻击投骰之后取消所有目标。",
 
   "SETTINGS.pf1HealthConfigName": "设置生命值",
   "SETTINGS.pf1HealthConfigLabel": "设置生命值",
@@ -100,8 +110,28 @@
   "SETTINGS.pf1DragRulerWalk": "行走",
   "SETTINGS.pf1DragRulerDash": "疾走",
   "SETTINGS.pf1DragRulerRun": "奔跑",
-  "SETTINGS.pf1DragRulerUseElevationName": "Use elevation to determine movement type",
-  "SETTINGS.pf1DragRulerUseElevationHint": "Use a tokens elevation to determine wether a token is flying or burrowing",
+  "SETTINGS.pf1DragRulerUseElevationName": "使用高度来决定移动类型",
+  "SETTINGS.pf1DragRulerUseElevationHint": "使用指示物的高度来决定其是正在飞行还是掘地",
+
+  "PF1.KEYBINDINGS": {
+    "SkipConfirmPrompt": {
+      "Name": "跳过确认对话"
+    },
+
+    "HideTokenTooltip": {
+      "Name": "隐藏指示物提示",
+      "Hint": "按下此键时隐藏指示物提示"
+    },
+
+    "HideTokenTooltipGMInfo": {
+      "Name": "显示玩家视角的指示物提示"
+    },
+
+    "ForceShowItem": {
+      "Name": "强制显示物品",
+      "Hint": "是否在使用物品宏时在聊天中显示该物品"
+    }
+  },
 
   "PF1.OptionalAndVariantRules": "选项及变体规则",
 
@@ -540,6 +570,8 @@
   "PF1.SkillSwm": "游泳",
   "PF1.SkillUMD": "使用魔法装置",
 
+  "PF1.AddSkill": "添加技能",
+
   "PF1.TargetAlly": "盟友",
   "PF1.TargetCreature": "生物",
   "PF1.TargetCylinder": "圆柱形",
@@ -563,6 +595,7 @@
   "PF1.TimeMinute": "分钟",
   "PF1.TimeMinuteShort": "分钟",
   "PF1.TimeHour": "小时",
+  "PF1.TimeHourShort": "小时",
   "PF1.TimeDay": "天",
   "PF1.TimeMonth": "月",
   "PF1.TimeYear": "年",
@@ -579,9 +612,12 @@
 
   "PF1.Arcanist": "奥能师",
   "PF1.RedMantisAssassin": "红螳螂杀手",
+  "PF1.Psychic": "异能者",
 
   "PF1.SpellComponentVerbal": "言语",
   "PF1.SpellComponentSomatic": "姿势",
+  "PF1.SpellComponentThought": "思想",
+  "PF1.SpellComponentEmotion": "情绪",
   "PF1.SpellComponentMaterial": "材料",
   "PF1.SpellComponentFocus": "器材",
   "PF1.SpellComponentDivineFocus": "法器",
@@ -800,6 +836,8 @@
   "PF1.ChangeFlagDwarflikeEncumbrance": "矮人负载",
   "PF1.ChangeFlagMediumArmorFullSpeed": "中甲全速",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "重甲全速",
+  "PF1.ChangeFlagNoDex": "无敏捷加值",
+  "PF1.ChangeFlagNoStr": "无力量加值",
 
   "PF1.Undefined": "未定义",
 
@@ -824,6 +862,7 @@
   "PF1.WarningNoSizeDie": "无法确定适合 {0} 的骰子大小，默认投掷 {1}",
   "PF1.WarningNoDiceAllowedInFormula": "{1}的公式'{0}'中不允许投骰",
   "PF1.WarningInsufficientAmmunition": "{0}类弹药不足",
+  "PF1.WarningMissingAmmunition": "没有与该攻击关联的弹药",
   "PF1.WarningConditionalRoll": "投特定调整值{name}的{number}号公式时发生了错误",
   "PF1.WarningNoItemOnActor": "角色{0}未持有物品{1}",
   "PF1.WarningCannotCreateChargeLink": "无法在{0}和{1}之间创建充能型关联，因为{1}已经有自己的充能型关联了",
@@ -1071,6 +1110,7 @@
   "PF1.AddConditional": "添加情况",
   "PF1.AddChange": "添加改变",
   "PF1.AddNote": "添加备注",
+  "PF1.AddEntry": "添加条目",
   "PF1.Confirmation": "确认",
   "PF1.Attributes": "属性",
   "PF1.ArmorClass": "AC",
@@ -1237,6 +1277,7 @@
   "PF1.SkillCheck": "{0} 技能检定",
   "PF1.SavingThrowRoll": "{0} 豁免",
   "PF1.SavingThrowButtonLabel": "{0}DC{1}",
+  "PF1.SavingThrowButtonLabelGMSensitive": "{save} 豁免",
   "PF1.SpellResistanceNote": "法术抗力 {0}",
   "PF1.ImmunityPlural": "免疫",
   "PF1.BABAbbr": "BAB",
@@ -1364,6 +1405,7 @@
   "PF1.CheckFlags": "标志",
   "PF1.Quantity": "数量",
   "PF1.Price": "价格",
+  "PF1.PricePerCharge": "每发充能价格",
   "PF1.HPShort": "HP",
   "PF1.Hardness": "硬度",
   "PF1.SituationalBonus": "环境加值",
@@ -1576,7 +1618,7 @@
   "PF1.Migration.Ongoing": "迁移进行中，请等待其完成。",
   "PF1.Migration.End": "PF1升级至版本：{version}成功!",
 
-  "PF1.DenyDexBonus": "拒绝敏捷加值",
+  "PF1.DenyDexBonus": "失去敏捷加值",
 
   "PF1.Application": {
     "ChangeTargetSelector": {
@@ -1672,6 +1714,9 @@
             },
             "CombatRound": {
               "Desc": "The current round of combat, or <code>0</code> if not in combat."
+            },
+            "CritMult": {
+              "Desc": "The critical multiplier of the attack, or 1 if the attack is not a critical threat. Only appropriate for use in damage rolls and attack and effect notes."
             }
           },
           "Functions": {
@@ -1971,7 +2016,9 @@
             "Use": {
               "Name": "Use",
               "Desc": {
-                "Basic": "Called when an item has been used. If an item has at least one script call under this category, it's usable no matter what. This call will have two additional variables: <code>{var1}</code> which is an array of attack data, and <code>{var2}</code>, which containts the attack's measure template (if any)."
+                "Basic": "Called when an item has been used. If an item has at least one script call under this category, it's usable no matter what. This call will have two additional variables: <code>{var1}</code> which is an array of attack data, and <code>{var2}</code>, which containts the attack's measure template (if any).",
+                "Extra1": "Setting <code>shared.hideChat</code> to <code>true</code> prevents a chat card from being shown.",
+                "Extra2": "Setting <code>shared.reject</code> to <code>true</code> prevents the item from being used, take away charges and showing a chat card."
               }
             },
 

@@ -4,6 +4,12 @@
  * @type {DocumentSheet}
  */
 export class ActorTraitSelector extends DocumentSheet {
+  constructor(doc, options) {
+    super(doc, options);
+    // Enrich dialog identity
+    this.options.classes.push(options.subject);
+  }
+
   static get defaultOptions() {
     const options = super.defaultOptions;
     options.classes = ["pf1", "trait-selector"];

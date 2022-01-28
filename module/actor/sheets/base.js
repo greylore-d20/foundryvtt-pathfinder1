@@ -2600,6 +2600,7 @@ export class ActorSheetPF extends ActorSheet {
     const options = {
       name: label.getAttribute("for"),
       title: label.innerText,
+      subject: a.dataset.options,
       choices: CONFIG.PF1[a.dataset.options],
     };
 

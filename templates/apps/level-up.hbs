@@ -1,31 +1,36 @@
 <form class="{{cssClass}}" autocomplete="off">
-  {{#each sections as |section sectionIdx|}}
-    {{!-- Health --}}
-    <div class="tab section{{#if (eq sectionIdx 0)}} active{{/if}} flexcol" data-section="{{section.name}}" data-section-index="{{sectionIdx}}">
-      <h2 class="form-header">{{localize section.label}}</h2>
+  <div class="tab section flexcol" data-section="{{section.name}}" data-section-index="{{sectionIdx}}">
+    <h2 class="form-header">{{localize section.label}}</h2>
 
-      {{#if section.items}}
-        <div class="flexrow">
-          <nav class="list-selector" data-content="{{section.name}}">
-            {{#each section.items as |item a|}}
-              <a class="item" data-id="{{item.id}}" data-target="{{item.target}}" data-type="{{item.type}}">
-                {{#if item.img}}
-                  <img src="{{item.img}}"></img>
-                {{else}}
-                  <span class="fake-img"></span>
-                {{/if}}
-                <span class="name">{{item.name}}</span>
-              </a>
-            {{/each}}
-          </nav>
+    {{#if section.items}}
+      <div class="flexrow">
+        <nav class="list-selector" data-content="{{section.name}}">
+          {{#each section.items as |item a|}}
+            <a class="item{{#if (eq item.id ../section.currentItem.id)}} active{{/if}}" data-id="{{item.id}}" data-target="{{item.target}}" data-type="{{item.type}}">
+              {{#if item.img}}
+                <img src="{{item.img}}"></img>
+              {{else}}
+                <span class="fake-img"></span>
+              {{/if}}
+              <span class="name">{{item.name}}</span>
+            </a>
+          {{/each}}
+        </nav>
 
-          <div class="content {{section.name}}-body"></div>
+        <div class="content {{section.name}}-body">
+          {{#with section.currentItem}}
+            {{#if (eq type "html")}}
+              {{> (lookup . "target") ..}}
+            {{/if}}
+          {{/with}}
         </div>
-      {{/if}}
-    </div>
-  {{/each}}
+      </div>
+    {{/if}}
 
-  <hr>
+    {{#if section.template}}
+      {{> (lookup section "template") .}}
+    {{/if}}
+  </div>
 
   <div class="nav-buttons">
     <button type="button" disabled data-type="previous">{{localize "PF1.Previous"}}</button>

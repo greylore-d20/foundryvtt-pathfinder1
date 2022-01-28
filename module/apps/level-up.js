@@ -19,6 +19,9 @@ export class LevelUpForm extends FormApplication {
      * Tracks section data.
      */
     this._sections = this._addSections();
+
+    // Add summary section at the end
+    this._sections.push(this._addSummarySection());
   }
 
   static get defaultOptions() {
@@ -41,13 +44,7 @@ export class LevelUpForm extends FormApplication {
   setSection(idx) {
     this._section = idx;
 
-    // Disable all sections
-    this.element.find(".section[data-section]").removeClass("active");
-
-    // Enable the new section
-    this.element.find(`.section[data-section-index="${idx}"]`).addClass("active");
-
-    this._updateNavButtons();
+    return this._render();
   }
 
   get title() {
@@ -92,22 +89,28 @@ export class LevelUpForm extends FormApplication {
 
     result.data = this.object.data.toObject();
     result.actor = this.actor.data.toObject();
+    result.config = CONFIG.PF1;
 
     // Add sections
+    result.section = this.currentSection;
     result.sections = this._sections;
 
-    // Add favored class data
-    result.fc = {
-      allowed: result.data.data.classType === "base",
-      types: [
-        { key: "none", label: game.i18n.localize("PF1.None"), checked: true },
-        { key: "hp", label: game.i18n.localize("PF1.FavouredClassBonus.HP") },
-        { key: "skill", label: game.i18n.localize("PF1.FavouredClassBonus.Skill") },
-        { key: "alt", label: game.i18n.localize("PF1.FavouredClassBonus.Alt") },
-      ],
-    };
+    // Add summary data
+    result.summary = this.getSummaryData();
 
     result.uuid = `${result.actor._id}.${result.data._id}`;
+
+    return result;
+  }
+
+  getSummaryData() {
+    const result = {};
+
+    for (const section of this._sections) {
+      if (section.name === "summary") continue;
+      const { summary } = this._parseSection(section);
+      result[section.name] = summary;
+    }
 
     return result;
   }
@@ -122,10 +125,8 @@ export class LevelUpForm extends FormApplication {
       result.push({
         name: "health",
         label: "PF1.LevelUpForm_Health",
-        choice: {
-          id: null,
-          manualValue: Math.ceil(1 + (this.object.data.data.hd - 1) / 2),
-        },
+        choice: null,
+        manualValue: Math.ceil(1 + (this.object.data.data.hd - 1) / 2),
         items: [
           {
             img: "systems/pf1/icons/items/inventory/dice.jpg",
@@ -150,9 +151,7 @@ export class LevelUpForm extends FormApplication {
       result.push({
         name: "fc",
         label: "PF1.LevelUp.FC.Label",
-        choice: {
-          id: null,
-        },
+        choice: null,
         items: [
           {
             name: game.i18n.localize("PF1.None"),
@@ -183,7 +182,37 @@ export class LevelUpForm extends FormApplication {
       });
     }
 
+    // Add ability score
+    const newHD = this.actor.getRollData().attributes.hd.total + 1;
+    const newAbilityScores = CONFIG.PF1.levelAbilityScores[newHD];
+    if (typeof newAbilityScores === "number" && newAbilityScores > 0) {
+      result.push({
+        name: "ability",
+        label: "PF1.LevelUp.AbilityScore.Label",
+        template: "systems/pf1/templates/apps/level-up/ability-score.hbs",
+        choice: null,
+        abilities: Object.keys(CONFIG.PF1.abilities).reduce((cur, o) => {
+          cur[o] = {
+            value: this.actor.data.data.abilities[o].total,
+            name: CONFIG.PF1.abilities[o],
+            added: 0,
+            isEnhanced: this.actor.data.data.abilities[o].total !== this.actor.data.data.abilities[o].base,
+          };
+          return cur;
+        }, {}),
+        value: newAbilityScores,
+      });
+    }
+
     return result;
+  }
+
+  _addSummarySection() {
+    return {
+      name: "summary",
+      label: "PF1.LevelUp.Summary.Label",
+      template: "systems/pf1/templates/apps/level-up/summary.hbs",
+    };
   }
 
   /**
@@ -197,14 +226,18 @@ export class LevelUpForm extends FormApplication {
   async _updateObject(event, formData) {
     const itemData = {};
     const actorData = {};
-    const chatData = {};
+    const chatData = {
+      config: CONFIG.PF1,
+    };
     const newItems = [];
+    const callbacks = [];
 
     for (const section of this._sections) {
       const data = this._parseSection(section);
       mergeObject(itemData, data.item);
       mergeObject(actorData, data.actor);
       mergeObject(chatData, data.chatData);
+      callbacks.push(...data.callbacks);
       for (const item of data.newItems) {
         const prevItem = newItems.find((o) => o._id === item._id);
         if (prevItem != null) mergeObject(prevItem, item);
@@ -241,6 +274,10 @@ export class LevelUpForm extends FormApplication {
     // Add items
     if (newItems.length > 0) {
       await this.actor.createEmbeddedDocuments("Item", newItems);
+    }
+    // Run callbacks
+    for (const cb of callbacks) {
+      await cb.call(this);
     }
 
     // Add new class features to chat data
@@ -291,6 +328,8 @@ export class LevelUpForm extends FormApplication {
    * @property {object} actor - The update data for the associated actor.
    * @property {object} chatData - Data to add for the level up's chat card.
    * @property {object[]} newItems - Items to add due to this update.
+   * @property {object[]} summary - Data for the summary to show.
+   * @property {Function[]} callbacks - Asynchronous callbacks to call upon submit.
    */
   /**
    * Parses a section, and sets updateData as appropriate for a submit.
@@ -304,6 +343,8 @@ export class LevelUpForm extends FormApplication {
       actor: {},
       chatData: {},
       newItems: [],
+      summary: {},
+      callbacks: [],
     };
 
     const fn = this[`_parseSection_${section.name}`];
@@ -313,18 +354,25 @@ export class LevelUpForm extends FormApplication {
   }
 
   _parseSection_health(section, result) {
+    result.summary = {
+      label: "PF1.LevelUp.Chat.Health.Header",
+      template: "systems/pf1/templates/apps/level-up/summary/health.hbs",
+      type: section.choice,
+    };
+
     // Manual health
-    if (section.choice.id === "manual") {
-      const hpValue = section.choice.manualValue;
+    if (section.choice === "manual") {
+      const hpValue = section.manualValue;
       result.item["data.hp"] = this.object.data.data.hp + hpValue;
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Manual",
         add: hpValue,
         roll: RollPF.safeRoll(`${hpValue}`),
       };
+      result.summary.hp = hpValue;
     }
     // Roll health
-    else if (section.choice.id === "roll") {
+    else if (section.choice === "roll") {
       const formula = `1d${this.object.data.data.hd}`;
       const roll = RollPF.safeRoll(formula);
       result.chatData.hp = {
@@ -341,9 +389,15 @@ export class LevelUpForm extends FormApplication {
   }
 
   _parseSection_fc(section, result) {
-    const id = section.choice.id;
+    result.summary = {
+      label: "PF1.LevelUp.Chat.FC.Header",
+      template: "systems/pf1/templates/apps/level-up/summary/fc.hbs",
+      id: section.choice,
+    };
+
+    const id = section.choice;
     if (["hp", "skill", "alt"].includes(id)) {
-      const key = `data.fc.${section.choice.id}.value`;
+      const key = `data.fc.${section.choice}.value`;
       result.item[key] = getProperty(this.object.data, key) + 1;
 
       const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[id];
@@ -351,6 +405,108 @@ export class LevelUpForm extends FormApplication {
         type: id,
         label: `PF1.FavouredClassBonus.${fcKey}`,
       };
+
+      result.summary.desc = `PF1.LevelUp.FC.${fcKey}.Desc`;
+    }
+
+    return result;
+  }
+
+  _parseSection_ability(section, result) {
+    const added = Object.entries(section.abilities).reduce((cur, o) => {
+      if (!(o[1].added > 0)) return cur;
+      cur[o[0]] = o[1].added;
+      return cur;
+    }, {});
+
+    // Add summary data
+    result.summary = {
+      label: "PF1.LevelUp.AbilityScore.Label",
+      template: "systems/pf1/templates/apps/level-up/summary/ability-score.hbs",
+      choices: added,
+    };
+
+    // Add chat data
+    if (Object.keys(added).length) {
+      result.chatData.ability = {
+        choices: added,
+      };
+    }
+
+    const item = this.actor.items.find((o) => o.getFlag("pf1", "levelUp") === true);
+    // Add level up ability score feature if it doesn't exist yet
+    if (!item) {
+      const newItem = mergeObject(
+        CONFIG.PF1.levelAbilityScoreFeature,
+        {
+          flags: {
+            pf1: {
+              levelUp: true,
+            },
+          },
+        },
+        { inplace: false }
+      );
+
+      // Translate name and description
+      newItem.name = game.i18n.localize(newItem.name);
+      setProperty(
+        newItem,
+        "data.description.value",
+        game.i18n.localize(getProperty(newItem, "data.description.value") ?? "")
+      );
+
+      // Add changes
+      setProperty(
+        newItem,
+        "data.changes",
+        Object.entries(added).reduce((cur, o) => {
+          const change = mergeObject(game.pf1.documentComponents.ItemChange.defaultData, {
+            formula: `${o[1]}`,
+            subTarget: o[0],
+            modifier: "untypedPerm",
+          });
+
+          cur.push(change);
+          return cur;
+        }, [])
+      );
+
+      result.newItems.push(newItem);
+    }
+    // If a level up ability score feature already exists, update it
+    else {
+      const cb = async function () {
+        const changes = duplicate(item.data.data.changes ?? []);
+        for (const [key, value] of Object.entries(added)) {
+          const change = changes.find((o) => o.subTarget === key);
+
+          // Update previous change
+          if (change != null) {
+            const prevValue = parseInt(change.formula);
+            if (!Number.isNaN(prevValue)) {
+              const newValue = prevValue + value;
+              change.formula = `${newValue}`;
+              continue;
+            }
+          }
+
+          // Add new change
+          changes.push(
+            mergeObject(game.pf1.documentComponents.ItemChange.defaultData, {
+              subTarget: key,
+              formula: `${value}`,
+              modifier: "untypedPerm",
+            })
+          );
+        }
+
+        await item.update({
+          "data.changes": changes,
+        });
+      };
+
+      result.callbacks.push(cb);
     }
 
     return result;
@@ -377,14 +533,13 @@ export class LevelUpForm extends FormApplication {
 
   activateListeners(html) {
     html.find(".list-selector .item").on("click", this._onClickListItem.bind(this));
+    html.find("input.section-choice").on("change", this._onChangeSectionChoice.bind(this));
+
+    html.find(".ability-scores .ability-score .operator").on("click", this._onClickAbilityScoreOperator.bind(this));
 
     html.find(`button[data-type="previous"]`).on("click", this._onPreviousSection.bind(this));
     html.find(`button[data-type="next"]`).on("click", this._onNextSection.bind(this));
     html.find('button[name="submit"]').on("click", this._onSubmit.bind(this));
-  }
-
-  activateContentListeners(html) {
-    html.find("input.section-choice").on("change", this._onChangeSectionChoice.bind(this));
   }
 
   _onPreviousSection(event) {
@@ -402,42 +557,18 @@ export class LevelUpForm extends FormApplication {
   _onClickListItem(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const list = a.closest(".list-selector");
 
     // Return if item already selected
     if (a.classList.contains("active")) return;
 
-    // Make item visibly active
-    list.querySelectorAll(".item").forEach((elem) => {
-      elem.classList.remove("active");
-    });
-    a.classList.add("active");
-
-    // Remove previous content
-    const contentId = list.dataset.content;
-    const contentElem = this.element.find(`.${contentId}-body`);
-    contentElem.empty();
-
-    // Replace content
-    const section = this._sections[list.closest(".section").dataset.sectionIndex];
-    const sectionItem = section.items.find((o) => o.id === a.dataset.id);
-    this._renderContent(sectionItem).then((html) => {
-      contentElem.append(html);
-      this.activateContentListeners(contentElem);
-    });
-
-    // Update form buttons
-    this.currentSection.choice.id = a.dataset.id;
-    this._updateNavButtons();
+    this.currentSection.currentItem = this.currentSection.items.find((o) => o.id === a.dataset.id);
+    setProperty(this.currentSection, "choice", a.dataset.id);
+    return this._render();
   }
 
-  async _renderContent(item) {
-    switch (item.type) {
-      case "html":
-        return renderTemplate(item.target, this.getHTMLData());
-    }
-
-    return "";
+  async _render(...args) {
+    await super._render(...args);
+    this._updateNavButtons();
   }
 
   _onChangeSectionChoice(event) {
@@ -460,7 +591,25 @@ export class LevelUpForm extends FormApplication {
     }
 
     // Change section choice
-    setProperty(section.choice, key, value);
+    setProperty(section, key, value);
+  }
+
+  _onClickAbilityScoreOperator(event) {
+    event.preventDefault();
+
+    const a = event.currentTarget;
+    const operator = a.dataset.operator;
+    const ablKey = a.closest(".ability-score").dataset.key;
+    const section = this.currentSection;
+    const add = operator === "add" ? 1 : operator === "subtract" ? -1 : 0;
+
+    section.abilities[ablKey].value += add;
+    section.abilities[ablKey].added += add;
+    section.value -= add;
+
+    section.choice = section.value === 0 ? true : null;
+
+    this._render();
   }
 
   _updateNavButtons() {
@@ -477,27 +626,18 @@ export class LevelUpForm extends FormApplication {
       buttons.previous.prop("disabled", true);
     }
 
-    if (this.section < this._sections.length - 1 && this.currentSection.choice?.id != null) {
+    const hasMadeChoice = !!this.currentSection.choice;
+    if (this.section < this._sections.length - 1 && hasMadeChoice) {
       buttons.next.prop("disabled", false);
     } else {
       buttons.next.prop("disabled", true);
     }
 
-    if (this.section === this._sections.length - 1 && this.currentSection.choice?.id != null) {
+    if (this.section === this._sections.length - 1) {
       buttons.submit.prop("disabled", false);
     } else {
       buttons.submit.prop("disabled", true);
     }
-  }
-
-  getHTMLData() {
-    return {
-      actor: this.actor.data.toObject(),
-      item: this.object.data.toObject(),
-      rollData: this.object.getRollData(),
-      appData: this.getData(),
-      section: this.currentSection,
-    };
   }
 
   _onSubmit(event, ...args) {

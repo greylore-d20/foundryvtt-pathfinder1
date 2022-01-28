@@ -1,0 +1,9 @@
+<p>
+  {{localize summary.desc}}
+</p>
+
+{{#if (eq summary.id "alt")}}
+{{#if data.data.fc.alt.notes}}
+<b>{{ data.data.fc.alt.notes }}</b>
+{{/if}}
+{{/if}}

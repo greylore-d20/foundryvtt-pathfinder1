@@ -70,6 +70,21 @@ export const PF1 = {
   },
 
   /**
+   * Data for the feature associated with ability scores gained from leveling.
+   */
+  levelAbilityScoreFeature: {
+    img: "systems/pf1/icons/skills/affliction_10.jpg",
+    name: "PF1.LevelUp.AbilityScore.Item.Name",
+    data: {
+      description: {
+        value: "PF1.LevelUp.AbilityScore.Item.Desc",
+      },
+      featType: "misc",
+    },
+    type: "feat",
+  },
+
+  /**
    * The set of Saving Throws
    */
   savingThrows: {

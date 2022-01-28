@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/ice_06.jpg",
   "data": {
     "description": {
-      "value": "<p>At 15th level, you can create a savage winter storm centered on you. This power acts as @Compendium[pf1.spells.g9koefk7x9szoheo]{Control Winds}, but in addition the entire area (not including the “eye” at the center of the storm) is affected as a @Compendium[pf1.spells.qnp4eosajai8s3sf]{Sleet Storm}&nbsp;and all in the area are exposed to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/environment/environmental-rules#TOC-Cold-Dangers\">extreme cold</a>. You may use this ability once per day.</p>"
+      "value": "<p>At 15th level, you can create a savage winter storm centered on you. This power acts as @Compendium[pf1.spells.g9koefk7x9szoheo]{Control Winds}, but in addition the entire area (not including the “eye” at the center of the storm) is affected as a @Compendium[pf1.spells.qnp4eosajai8s3sf]{Sleet Storm}&nbsp;and all in the area are exposed to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/environment/environmental-rules#TOC-Cold-Dangers\">extreme cold</a>. You may use this ability once per day.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -17,33 +20,91 @@
         "type": "action"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "1"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_blizzard",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -58,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

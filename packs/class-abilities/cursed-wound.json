@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The witch can curse a living creature, preventing it from healing completely. For a number of days equal to 3 + the witch’s Intelligence modifier (minimum 1), whenever the victim is the target of a conjuration (healing) spell or magical healing effect, the caster of the healing effect must succeed at a caster level check (DC = 11 + the witch’s level) to end the hex. If the check fails, the healing effect functions as normal, except it cannot remove the last 10 points of damage the victim suffered. Similarly, natural healing, fast healing, and regeneration fail to cure the victim’s last 10 points of damage. Thus, the victim’s effective maximum number of hit points is 10 fewer than normal. A successful Will save reduces the duration of this hex to 1 round.</p>\n<p>At 5th level, the victim of this hex also takes a –2 penalty on Fortitude saving throws to avoid contracting a disease or poison from an injury. This is a curse effect and can be removed by @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}.</p>"
+      "value": "<p>The witch can curse a living creature, preventing it from healing completely. For a number of days equal to 3 + the witch’s Intelligence modifier (minimum 1), whenever the victim is the target of a conjuration (healing) spell or magical healing effect, the caster of the healing effect must succeed at a caster level check (DC = 11 + the witch’s level) to end the hex. If the check fails, the healing effect functions as normal, except it cannot remove the last 10 points of damage the victim suffered. Similarly, natural healing, fast healing, and regeneration fail to cure the victim’s last 10 points of damage. Thus, the victim’s effective maximum number of hit points is 10 fewer than normal. A successful Will save reduces the duration of this hex to 1 round.</p>\n<p>At 5th level, the victim of this hex also takes a –2 penalty on Fortitude saving throws to avoid contracting a disease or poison from an injury. This is a curse effect and can be removed by @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -24,29 +27,84 @@
     "target": {
       "value": "one creature"
     },
-    "uses": {
-      "per": ""
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_cursedWound",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -60,7 +118,12 @@
           "Witch"
         ]
       ]
-    }
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

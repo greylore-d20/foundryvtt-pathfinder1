@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/affliction_07.jpg",
   "data": {
     "description": {
-      "value": "<p>Starting at 1st level, you can make a melee touch attack as a standard action that causes a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;for a number of rounds equal to 1/2 your sorcerer level (minimum 1). If you touch a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;creature with this ability, it becomes&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#frightened\" rel=\"nofollow\">frightened</a>&nbsp;for 1 round if it has fewer Hit Dice than your sorcerer level. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\" rel=\"nofollow\">Charisma</a>&nbsp;modifier.</p>"
+      "value": "<p>Starting at 1st level, you can make a melee touch attack as a standard action that causes a living creature to become&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;for a number of rounds equal to 1/2 your sorcerer level (minimum 1). If you touch a&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#shaken\" rel=\"nofollow\">shaken</a>&nbsp;creature with this ability, it becomes&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#frightened\" rel=\"nofollow\">frightened</a>&nbsp;for 1 round if it has fewer Hit Dice than your sorcerer level. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\" rel=\"nofollow\">Charisma</a>&nbsp;modifier.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -25,35 +28,83 @@
       "value": "creature touched"
     },
     "range": {
-      "units": "touch"
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "3 + @abilities.cha.mod"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_graveTouchSor",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -68,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

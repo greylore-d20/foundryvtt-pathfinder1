@@ -5,32 +5,106 @@
   "img": "systems/pf1/icons/items/potions/unique-3.jpg",
   "data": {
     "description": {
-      "value": "<p>As a full-round action, the alchemist can increase the save DC of any poison by 4 and increase its duration by 2 frequency increments (for example,&nbsp;<a href=\"https://aonprd.com/PoisonDisplay.aspx?ItemName=Large%20scorpion%20venom\">large scorpion venom</a>&nbsp;lasts 8 rounds instead of 6 and&nbsp;<a href=\"https://aonprd.com/PoisonDisplay.aspx?ItemName=Drow%20poison\">drow poison</a>&nbsp;lasts 4 minutes instead of 2). Additionally, malignant poisons take effect immediately and do not have an onset time. This alchemical change lasts until the poison’s extended duration ends or for a number of minutes equal to the alchemist’s level, whichever comes first. After that, the poison reverts back to its original state. An alchemist must be at least 10th level before selecting this discovery.</p>"
+      "value": "<p>As a full-round action, the alchemist can increase the save DC of any poison by 4 and increase its duration by 2 frequency increments (for example,&nbsp;<a href=\"https://aonprd.com/PoisonDisplay.aspx?ItemName=Large%20scorpion%20venom\">large scorpion venom</a>&nbsp;lasts 8 rounds instead of 6 and&nbsp;<a href=\"https://aonprd.com/PoisonDisplay.aspx?ItemName=Drow%20poison\">drow poison</a>&nbsp;lasts 4 minutes instead of 2). Additionally, malignant poisons take effect immediately and do not have an onset time. This alchemical change lasts until the poison’s extended duration ends or for a number of minutes equal to the alchemist’s level, whichever comes first. After that, the poison reverts back to its original state. An alchemist must be at least 10th level before selecting this discovery.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
-    "measureTemplate": {
-      "size": "0"
+    "activation": {
+      "cost": 1,
+      "type": ""
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_malignantPoison",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -44,7 +118,12 @@
           "Alchemist"
         ]
       ]
-    }
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

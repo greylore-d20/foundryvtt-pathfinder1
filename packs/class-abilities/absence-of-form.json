@@ -5,14 +5,18 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You gain @Compendium[pf1.spells.68m9du7zw2di7ew6]{Feather Fall} as a spell-like ability, which you can use a number of rounds per day equal to your oracle level. The rounds do not need to be used consecutively. If you are in mid fall when this ability’s duration expires, you take falling damage as if you fell from the altitude you were at when the spell ended.</p>\n<p>At 10th level, you can also apply your daily rounds of this ability to use @Compendium[pf1.spells.e4v1uv8hexeu9sxj]{Air Walk}.</p>"
+      "value": "<p>You gain @Compendium[pf1.spells.68m9du7zw2di7ew6]{Feather Fall} as a spell-like ability, which you can use a number of rounds per day equal to your oracle level. The rounds do not need to be used consecutively. If you are in mid fall when this ability’s duration expires, you take falling damage as if you fell from the altitude you were at when the spell ended.</p>\n<p>At 10th level, you can also apply your daily rounds of this ability to use @Compendium[pf1.spells.e4v1uv8hexeu9sxj]{Air Walk}.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "immediate"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "reaction"
       }
     },
@@ -24,32 +28,83 @@
       "value": "one medium or smaller freefalling object or creature/level"
     },
     "range": {
-      "units": "close"
+      "value": null,
+      "units": "close",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.oracle.level"
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_absenceOfForm",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -64,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "sp"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "sp",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

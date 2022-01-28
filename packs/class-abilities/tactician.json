@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/feats/strike-back.jpg",
   "data": {
     "description": {
-      "value": "<p>At 1st level, a cavalier receives a&nbsp;<a href=\"https://aonprd.com/Feats.aspx?Category=Teamwork\">teamwork feat</a>&nbsp;as a bonus feat. He must meet the prerequisites for this feat. As a standard action, the cavalier can grant this feat to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for 3 rounds plus 1 round for every two levels the cavalier possesses. Allies do not need to meet the prerequisites of these bonus feats. The cavalier can use this ability once per day at 1st level, plus one additional time per day at 5th level and for every 5 levels thereafter.</p>"
+      "value": "<p>At 1st level, a cavalier receives a&nbsp;<a href=\"https://aonprd.com/Feats.aspx?Category=Teamwork\">teamwork feat</a>&nbsp;as a bonus feat. He must meet the prerequisites for this feat. As a standard action, the cavalier can grant this feat to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for 3 rounds plus 1 round for every two levels the cavalier possesses. Allies do not need to meet the prerequisites of these bonus feats. The cavalier can use this ability once per day at 1st level, plus one additional time per day at 5th level and for every 5 levels thereafter.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -27,24 +30,60 @@
     "range": {
       "value": "30",
       "units": "ft",
-      "maxIncrements": "1"
+      "maxIncrements": "1",
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "1 + floor(@classes.cavalier.level / 5)"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [
       {
         "_id": "9v2eqx97",
@@ -57,6 +96,12 @@
         "target": "misc"
       }
     ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [
       {
         "subTarget": "attack",
@@ -68,12 +113,15 @@
       "children": [],
       "charges": []
     },
-    "tag": "tactician",
+    "tag": "classFeat_tactician",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -88,7 +136,11 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

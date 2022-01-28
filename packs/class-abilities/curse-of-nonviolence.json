@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The witch can curse a creature to prevent it from attacking innocents. If the target fails its Will save, it cannot take violent actions or do anything destructive against any creature with fewer Hit Dice than itself. If another creature takes hostile action against the cursed creature, the cursed creature can act normally in regard to that creature only.</p>\n<p>This is an abjuration effect.</p>\n<p>The curse is permanent but can be removed with a @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment}, @Compendium[pf1.spells.suel7sgnztenv551]{Miracle}, or @Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell. Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
+      "value": "<p>The witch can curse a creature to prevent it from attacking innocents. If the target fails its Will save, it cannot take violent actions or do anything destructive against any creature with fewer Hit Dice than itself. If another creature takes hostile action against the cursed creature, the cursed creature can act normally in regard to that creature only.</p>\n<p>This is an abjuration effect.</p>\n<p>The curse is permanent but can be removed with a @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment}, @Compendium[pf1.spells.suel7sgnztenv551]{Miracle}, or @Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell. Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,23 +21,60 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "perm"
     },
     "target": {
       "value": "one creature"
     },
-    "uses": {
-      "per": ""
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "save",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
-      "damage": ""
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -43,17 +83,28 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_curseOfNonviolence",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -68,7 +119,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

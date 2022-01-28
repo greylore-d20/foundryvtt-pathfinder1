@@ -5,7 +5,9 @@
   "img": "systems/pf1/icons/feats/greater-shield-focus.jpg",
   "data": {
     "description": {
-      "value": "<p><em>You are skilled at deflecting blows with your shield.</em><br /><br /><strong>Prerequisites</strong><br />Shield Focus, Shield Proficiency, base attack bonus +1, 8th-level fighter.<br /><br /><strong>Benefits</strong><br />Increase the AC bonus granted by any shield you are using by 1. This bonus stacks with the bonus granted by Shield Focus.<br /><br /><strong>Combat Trick</strong><br />When an attack is made against you while you are using a shield, you can spend up to 4 stamina points. For that attack, your shield bonus increases by an amount equal to the number of stamina points you spent. This increase does not stack with any gained from the Shield Focus combat trick.</p>\n<p>&nbsp;</p>\n<p><strong>Usage</strong>: add 1 to Armor Class to any shield in your inventory.</p>"
+      "value": "<p><em>You are skilled at deflecting blows with your shield.</em><br /><br /><strong>Prerequisites</strong><br />Shield Focus, Shield Proficiency, base attack bonus +1, 8th-level fighter.<br /><br /><strong>Benefits</strong><br />Increase the AC bonus granted by any shield you are using by 1. This bonus stacks with the bonus granted by Shield Focus.<br /><br /><strong>Combat Trick</strong><br />When an attack is made against you while you are using a shield, you can spend up to 4 stamina points. For that attack, your shield bonus increases by an amount equal to the number of stamina points you spent. This increase does not stack with any gained from the Shield Focus combat trick.</p>\n<p>&nbsp;</p>\n<p><strong>Usage</strong>: add 1 to Armor Class to any shield in your inventory.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [
       [
@@ -15,15 +17,80 @@
         "Combat"
       ]
     ],
+    "activation": {
+      "cost": 1,
+      "type": ""
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [
       {
         "_id": "qexjy8jn",
@@ -35,26 +102,41 @@
         "value": 1
       }
     ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "greaterShieldFocus",
+    "tag": "feat_greaterShieldFocus",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "featType": "feat",
     "associations": {
       "classes": []
-    }
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

@@ -5,33 +5,92 @@
   "img": "systems/pf1/icons/feats/wind-stance.jpg",
   "data": {
     "description": {
-      "value": "<p>This character can no longer be flanked. This defense denies a rogue the ability to sneak attack the character by flanking her, unless the attacker has at least four more rogue levels than the target has class levels.</p>\n<p>If a character already has&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Uncanny-Dodge-Ex-\">uncanny dodge</a>&nbsp;(see above) from another class, the levels from the classes that grant&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Uncanny-Dodge-Ex-\">uncanny dodge</a>&nbsp;stack to determine the minimum rogue level required to flank the character.</p>"
+      "value": "<p>This character can no longer be flanked. This defense denies a rogue the ability to sneak attack the character by flanking her, unless the attacker has at least four more rogue levels than the target has class levels.</p>\n<p>If a character already has&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Uncanny-Dodge-Ex-\">uncanny dodge</a>&nbsp;(see above) from another class, the levels from the classes that grant&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Uncanny-Dodge-Ex-\">uncanny dodge</a>&nbsp;stack to determine the minimum rogue level required to flank the character.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "passive"
     },
     "unchainedAction": {
       "activation": {
+        "cost": 1,
         "type": "passive"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": null,
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": 0,
+      "type": "",
+      "description": ""
+    },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [
       {
         "subTarget": "ac",
@@ -43,12 +102,15 @@
       "children": [],
       "charges": []
     },
-    "tag": "improvedUncannyDodge",
+    "tag": "classFeat_improvedUncannyDodge",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -63,7 +125,11 @@
         ]
       ]
     },
-    "abilityType": "ex"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

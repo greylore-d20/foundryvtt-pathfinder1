@@ -39,6 +39,7 @@
 @colorFailure: #aa0200;
 
 @itemHoverBackgroundTint: rgba(64, 64, 192, 0.2);
+@itemActiveBackgroundTint: rgba(32, 32, 96, 0.2);
 @itemDarkBackgroundTint: rgba(155, 155, 155, 0.2);
 @itemBrightBackgroundTint: rgba(210, 210, 210, 0.3);
 
@@ -49,6 +50,9 @@
   }
   &:hover {
     background-color: @hover;
+  }
+  &.active {
+    background-color: @itemActiveBackgroundTint;
   }
 }
 

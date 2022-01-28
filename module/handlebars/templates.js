@@ -65,6 +65,20 @@ export const preloadHandlebarsTemplates = async function () {
     // Tooltip
     "systems/pf1/templates/hud/tooltip.hbs",
     "systems/pf1/templates/hud/tooltip_actor.hbs",
+
+    // Level Up sections
+    "systems/pf1/templates/apps/level-up/fc_alt.hbs",
+    "systems/pf1/templates/apps/level-up/fc_hp.hbs",
+    "systems/pf1/templates/apps/level-up/fc_skill.hbs",
+    "systems/pf1/templates/apps/level-up/health_roll.hbs",
+    "systems/pf1/templates/apps/level-up/health_manual.hbs",
+    "systems/pf1/templates/apps/level-up/ability-score.hbs",
+    "systems/pf1/templates/apps/level-up/summary.hbs",
+
+    // Level Up summary
+    "systems/pf1/templates/apps/level-up/summary/health.hbs",
+    "systems/pf1/templates/apps/level-up/summary/fc.hbs",
+    "systems/pf1/templates/apps/level-up/summary/ability-score.hbs",
   ];
 
   // Load the template parts

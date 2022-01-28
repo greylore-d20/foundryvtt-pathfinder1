@@ -5,10 +5,13 @@
   "img": "systems/pf1/icons/spells/explosion-orange-2.jpg",
   "data": {
     "description": {
-      "value": "<p>At 9th level, twice per day, you can use fire to restore the health of yourself or your allies. As a standard action, you can wreathe your hand in a halo of flame and touch yourself or another creature. The touch heals 2d8 + your character level points of damage. You can also remove one of the following conditions affecting the target: 1d6 points of&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Ability_Score_Damage\">ability damage</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Blinded\">blinded</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Confused\">confused</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Dazzled\">dazzled</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Deafened\">deafened</a>, diseased,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Exhausted\">exhausted</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Fatigued\">fatigued</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Nauseated\">nauseated</a>, poisoned, or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Sickened\">sickened</a>. At 20th level, you can use this ability three times per day.</p>"
+      "value": "<p>At 9th level, twice per day, you can use fire to restore the health of yourself or your allies. As a standard action, you can wreathe your hand in a halo of flame and touch yourself or another creature. The touch heals 2d8 + your character level points of damage. You can also remove one of the following conditions affecting the target: 1d6 points of&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores/#Ability_Score_Damage\">ability damage</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Blinded\">blinded</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Confused\">confused</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Dazzled\">dazzled</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Deafened\">deafened</a>, diseased,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Exhausted\">exhausted</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Fatigued\">fatigued</a>,&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Nauseated\">nauseated</a>, poisoned, or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions/#TOC-Sickened\">sickened</a>. At 20th level, you can use this ability three times per day.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -18,22 +21,38 @@
       }
     },
     "duration": {
+      "value": null,
       "units": "inst"
     },
     "target": {
       "value": "creature touched"
     },
     "range": {
-      "units": "touch"
+      "value": null,
+      "units": "touch",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
+      "value": 0,
       "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": "@classes.sorcerer.level >= 20 ? 3 : 2"
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "heal",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -45,25 +64,52 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
-      "damage": ""
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
-      "dc": "0"
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
+    "tag": "classFeat_cleansingFlame",
+    "useCustomTag": true,
     "armorProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "weaponProf": {
-      "value": []
+      "value": [],
+      "custom": ""
     },
     "flags": {
       "boolean": [],
@@ -78,7 +124,11 @@
         ]
       ]
     },
-    "abilityType": "su"
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

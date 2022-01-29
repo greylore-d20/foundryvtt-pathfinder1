@@ -49,7 +49,7 @@ export class ItemSheetPF extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       width: 580,
       classes: ["pf1", "sheet", "item"],
-      scrollY: [".tab", ".buff-flags", ".editor-content", '.tab[data-tab="changes"]'],
+      scrollY: [".tab", ".buff-flags", ".editor-content"],
       dragDrop: [
         {
           dragSelector: "li.conditional",

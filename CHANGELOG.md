@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.80.9 - 2022-1-29
+
+### Bug Fixes
+
+- Skill list, item description, and item advanced tab reset scroll positions.
+- Fix missing save description tag.
+
+### Changelog
+
+- Weapons can have ammunition linked.
+- Revamped the dialog for leveling up an actor
+- The construct racial HD now provides automatic bonus hit points based on size
+- Add the cowering condition
+
 ## 0.80.8 - 2022-1-24
 
 ### Bug Fixes

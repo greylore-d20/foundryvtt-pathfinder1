@@ -7,40 +7,6 @@ import { parseRollStringVariable } from "./roll.js";
  *
  */
 export async function PatchCore() {
-  // Add Vision Permission sheet to ActorDirectory context options
-  const ActorDirectory__getEntryContextOptions = ActorDirectory.prototype._getEntryContextOptions;
-  ActorDirectory.prototype._getEntryContextOptions = function () {
-    return ActorDirectory__getEntryContextOptions.call(this).concat([
-      {
-        name: "PF1.Vision",
-        icon: '<i class="fas fa-eye"></i>',
-        condition: (li) => {
-          return game.user.isGM;
-        },
-        callback: (li) => {
-          const doc = this.constructor.collection.get(li.data("documentId"));
-          if (doc) {
-            const sheet = doc.visionPermissionSheet;
-            if (sheet.rendered) {
-              if (sheet._minimized) sheet.maximize();
-              else sheet.close();
-            } else sheet.render(true);
-          }
-        },
-      },
-    ]);
-  };
-
-  // Add combat tracker context menu options
-  {
-    const origFunc = CombatTracker.prototype._getEntryContextOptions;
-    CombatTracker.prototype._getEntryContextOptions = function () {
-      const result = origFunc.call(this);
-      addCombatTrackerContextOptions.call(this, result);
-      return result;
-    };
-  }
-
   // Add inline support for extra /commands
   {
     const origParse = ChatLog.parse;

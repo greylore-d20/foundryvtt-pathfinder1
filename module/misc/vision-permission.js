@@ -1,3 +1,24 @@
+// Add Vision Permission sheet to ActorDirectory context options
+Hooks.on("getActorDirectoryEntryContext", function sharedVision(html, menuItems) {
+  menuItems.push({
+    name: "PF1.Vision",
+    icon: '<i class="fas fa-eye"></i>',
+    condition: (li) => {
+      return game.user.isGM;
+    },
+    callback: (li) => {
+      const doc = game.actors.get(li.data("documentId"));
+      if (doc) {
+        const sheet = doc.visionPermissionSheet;
+        if (sheet.rendered) {
+          if (sheet._minimized) sheet.maximize();
+          else sheet.close();
+        } else sheet.render(true);
+      }
+    },
+  });
+});
+
 export class VisionPermissionSheet extends FormApplication {
   constructor(object, options) {
     super(object, options);

@@ -102,26 +102,27 @@ export const createAttackDialog = async function (shared) {
  * @param {JQuery} form - The attack dialog's form data.
  */
 export const alterRollData = function (shared, form) {
-  shared.rollData.d20 = form.find(`[name="d20"]`).val();
-  const atkBonus = form.find(`[name="attack-bonus"]`).val();
+  const formData = new FormDataExtended(form[0].querySelector("form")).toObject();
+  shared.rollData.d20 = formData["d20"];
+  const atkBonus = formData["attack-bonus"];
   if (atkBonus) {
     shared.attackBonus.push(atkBonus);
   }
-  const dmgBonus = form.find(`[name="damage-bonus"]`).val();
+  const dmgBonus = formData["damage-bonus"];
   if (dmgBonus) {
     shared.damageBonus.push(dmgBonus);
   }
-  shared.rollMode = form.find(`[name="rollMode"]`).val();
+  shared.rollMode = formData["rollMode"];
 
   // Point-Blank Shot
-  if (form.find('[name="point-blank-shot"]').prop("checked")) {
+  if (formData["point-blank-shot"]) {
     shared.attackBonus.push(`1[${game.i18n.localize("PF1.PointBlankShot")}]`);
     shared.damageBonus.push(`1[${game.i18n.localize("PF1.PointBlankShot")}]`);
     shared.pointBlankShot = true;
   }
 
   // Haste
-  if (shared.fullAttack && form.find('[name="haste-attack"]').prop("checked")) {
+  if (shared.fullAttack && formData["haste-attack"]) {
     shared.attacks.push({
       id: "haste",
       label: game.i18n.localize("PF1.Haste"),
@@ -129,7 +130,7 @@ export const alterRollData = function (shared, form) {
   }
 
   // Many-shot
-  if (shared.fullAttack && form.find('[name="manyshot"]').prop("checked")) {
+  if (shared.fullAttack && formData["manyshot"]) {
     shared.attacks.push({
       id: "manyshot",
       label: game.i18n.localize("PF1.ManyShot"),
@@ -137,7 +138,7 @@ export const alterRollData = function (shared, form) {
   }
 
   // Rapid Shot
-  if (shared.fullAttack && form.find('[name="rapid-shot"]').prop("checked")) {
+  if (shared.fullAttack && form["rapid-shot"]) {
     shared.attacks.push({
       id: "rapidshot",
       label: game.i18n.localize("PF1.RapidShot"),
@@ -145,21 +146,14 @@ export const alterRollData = function (shared, form) {
     shared.attackBonus.push(`-2[${game.i18n.localize("PF1.RapidShot")}]`);
   }
 
-  let elem;
   // Primary attack
-  elem = form.find(`[name="primary-attack"]`);
-  if (typeof elem.prop("checked") === "boolean") {
-    shared.rollData.item.primaryAttack = elem.prop("checked");
-  }
+  shared.rollData.item.primaryAttack = formData["primary-attack"];
 
   // Use measure template
-  elem = form.find('[name="measure-template"]');
-  if (typeof elem.prop("checked") === "boolean") {
-    shared.useMeasureTemplate = elem.prop("checked");
-  }
+  shared.useMeasureTemplate = formData["measure-template"];
 
   // Power Attack
-  if (form.find('[name="power-attack"]').prop("checked")) {
+  if (formData["power-attack"]) {
     let powerAttackBonus = (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * 2;
     if (this.data.data.attackType === "natural") {
       if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
@@ -180,7 +174,7 @@ export const alterRollData = function (shared, form) {
   }
 
   // Conditionals
-  elem = form.find(".conditional");
+  const elem = form.find(".conditional");
   if (elem.length > 0) {
     shared.conditionals = elem
       .map(function () {
@@ -193,12 +187,10 @@ export const alterRollData = function (shared, form) {
   shared.rollData.item.ability.damageMult = form.find(`[name="damage-ability-multiplier"]`).val() ?? 1;
 
   // CL check enabled
-  elem = form.find('[name="cl-check"]:checked');
-  if (elem.length > 0) shared.casterLevelCheck = true;
+  shared.casterLevelCheck = formData["cl-check"];
 
   // Concentration enabled
-  elem = form.find('[name="concentration"]:checked');
-  if (elem.length > 0) shared.concentrationCheck = true;
+  shared.concentrationCheck = formData["concentration"];
 
   // Conditional defaults for fast-forwarding
   if (shared.conditionals === undefined) {

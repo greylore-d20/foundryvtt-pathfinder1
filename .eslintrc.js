@@ -455,6 +455,7 @@ module.exports = {
     toRadians: "readonly",
     normalizeRadians: "readonly",
     validateForm: "readonly",
+    FormDataExtended: "readonly",
     timeSince: "readonly",
     _templateCache: "readonly",
     CONFIG: "readonly",

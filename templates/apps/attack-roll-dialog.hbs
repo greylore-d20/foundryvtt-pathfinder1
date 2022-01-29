@@ -56,7 +56,7 @@
     <label>{{localize "PF1.Conditionals"}}</label>
     {{#each item.conditionals as |conditional a|}}
     <label class="checkbox">
-      <input type="checkbox" name="conditional.{{a}}" class="conditional" {{checked (lookup ../conditionals (concat "conditional." a))}}> {{lookup this "name"}}
+      <input type="checkbox" data-dtype="Boolean" name="conditional.{{a}}" class="conditional" {{checked (lookup ../conditionals (concat "conditional." a))}}> {{lookup this "name"}}
     </label>
     {{/each}}
   </div>

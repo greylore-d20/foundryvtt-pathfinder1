@@ -1597,6 +1597,7 @@ export const PF1 = {
     daze: "PF1.CondTypeDaze",
     dazzle: "PF1.CondTypeDazzle",
     deaf: "PF1.CondTypeDeaf",
+    deathEffects: "PF1.CondTypeDeathEffects",
     disease: "PF1.CondTypeDisease",
     energyDrain: "PF1.CondTypeEnergyDrain",
     fatigue: "PF1.CondTypeFatigue",
@@ -1635,6 +1636,7 @@ export const PF1 = {
     nauseated: "PF1.CondNauseated",
     dazed: "PF1.CondDazed",
     pf1_sleep: "PF1.CondSleep",
+    cowering: "PF1.CondCowering",
   },
 
   conditionTextures: {
@@ -1662,6 +1664,7 @@ export const PF1 = {
     nauseated: "systems/pf1/icons/conditions/nauseated.png",
     dazed: "systems/pf1/icons/conditions/dazed.png",
     pf1_sleep: "systems/pf1/icons/conditions/sleep.png",
+    cowering: "systems/pf1/icons/conditions/screaming.png",
   },
 
   buffTypes: {

@@ -1507,6 +1507,33 @@ export const addDefaultChanges = function (changes) {
           });
         }
         break;
+      case "cowering":
+        changes.push(
+          ItemChange.create({
+            formula: -2,
+            target: "defense",
+            subTarget: "ac",
+            modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondCowering"),
+          })
+        );
+        this.flags["loseDexToAC"] = true;
+
+        for (const k of [
+          "data.attributes.ac.normal.total",
+          "data.attributes.ac.touch.total",
+          "data.attributes.ac.flatFooted.total",
+        ]) {
+          getSourceInfo(this.sourceInfo, k).negative.push({
+            name: game.i18n.localize("PF1.CondCowering"),
+            value: -2,
+          });
+          getSourceInfo(this.sourceInfo, k).negative.push({
+            name: game.i18n.localize("PF1.CondCowering"),
+            value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
+          });
+        }
+        break;
       case "shaken":
       case "frightened":
       case "panicked":

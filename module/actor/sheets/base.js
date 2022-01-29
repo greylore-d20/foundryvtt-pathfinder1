@@ -113,15 +113,9 @@ export class ActorSheetPF extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       scrollY: [
-        ".inventory-body .inventory-list",
         ".combat-attacks",
-        ".spells_primary-body .inventory-list",
-        ".spells_secondary-body .inventory-list",
-        ".spells_tertiary-body .inventory-list",
-        ".spells_spelllike-body .inventory-list",
-        ".buffs-body .inventory-list",
-        ".skillset-body .skills-list.adventure",
-        ".skillset-body .skills-list.background",
+        ".inventory-list",
+        ".skills-list",
         ".feats-body",
         ".traits",
         ".actor-notes",

@@ -1,6 +1,15 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemBuffPF extends ItemPF {
+  async _preUpdate(changed, options, userId) {
+    // Add activation time when not present
+    if (changed.data?.active && changed.data?.duration?.start === undefined) {
+      setProperty(changed, "data.duration.start", game.time.worldTime);
+    }
+
+    return super._preUpdate(changed, options, userId);
+  }
+
   prepareData() {
     const itemData = super.prepareData();
     const data = itemData.data;

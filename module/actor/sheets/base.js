@@ -860,16 +860,6 @@ export class ActorSheetPF extends ActorSheet {
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));
 
-    // Remove default change handler
-    html.off("change");
-    // Add alternative change handler
-    html.find("input,select,textarea").on("change", this._onChangeInput.bind(this));
-
-    // Add general text box (span) handler
-    html.find("span.text-box.direct").on("click", (event) => {
-      this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this));
-    });
-
     // Activate Item Filters
     const filterLists = html.find(".filter-list");
     filterLists.each(this._initializeFilterItemList.bind(this));
@@ -891,14 +881,27 @@ export class ActorSheetPF extends ActorSheet {
     // Item summaries
     html.find(".item .item-name h4").click((event) => this._onItemSummary(event));
 
+    // Everything below here is only needed if the sheet is editable
+    if (!this.options.editable) {
+      html.find("span.text-box").addClass("readonly");
+      return;
+    }
+
+    // Remove default change handler
+    html.off("change");
+    // Add alternative change handler
+    html.find("input,select,textarea").on("change", this._onChangeInput.bind(this));
+
+    // Add general text box (span) handler
+    html.find("span.text-box.direct").on("click", (event) => {
+      this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this));
+    });
+
     // Click to change text input
     html.find('*[data-action="input-text"]').click((event) => this._onInputText(event));
     html
       .find('*[data-action="input-text"].wheel-change')
       .on("wheel", (event) => this._onInputText(event.originalEvent));
-
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));

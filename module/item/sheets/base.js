@@ -524,7 +524,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add ammunition links
-    if (this.item.type === "attack") {
+    if (["attack", "weapon"].includes(this.item.type)) {
       data.links.list.push({
         id: "ammunition",
         label: game.i18n.localize("PF1.LinkTypeAmmunition"),

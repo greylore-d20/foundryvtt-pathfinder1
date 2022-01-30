@@ -1765,7 +1765,7 @@ export class ItemPF extends ItemBasePF {
    * @param root0.bonus
    * @param root0.primaryAttack
    */
-  rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
+  async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
     const rollData = duplicate(data ?? this.getRollData());
     const itemData = rollData.item;
 
@@ -1858,7 +1858,7 @@ export class ItemPF extends ItemBasePF {
 
     if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
 
-    const roll = RollPF.safeRoll([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData);
+    const roll = await RollPF.create([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData).evaluate();
     return roll;
   }
 
@@ -1931,7 +1931,7 @@ export class ItemPF extends ItemBasePF {
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
-    const roll = RollPF.safeRoll(itemData.formula, rollData);
+    const roll = await RollPF.create(itemData.formula, rollData).evaluate();
     return roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.parent }),
       flavor: itemData.chatFlavor || title,
@@ -1950,7 +1950,13 @@ export class ItemPF extends ItemBasePF {
    * @param root0.conditionalParts
    * @param root0.primaryAttack
    */
-  rollDamage({ data = null, critical = false, extraParts = [], conditionalParts = {}, primaryAttack = true } = {}) {
+  async rollDamage({
+    data = null,
+    critical = false,
+    extraParts = [],
+    conditionalParts = {},
+    primaryAttack = true,
+  } = {}) {
     const rollData = duplicate(data ?? this.getRollData());
 
     if (!this.hasDamage) {
@@ -2059,7 +2065,7 @@ export class ItemPF extends ItemBasePF {
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
       const roll = {
-        roll: RollPF.safeRoll([part.base, ...rollParts].join(" + "), rollData),
+        roll: await RollPF.create([part.base, ...rollParts].join(" + "), rollData).evaluate(),
         damageType: part.damageType,
         type: part.type,
       };
@@ -2098,7 +2104,7 @@ export class ItemPF extends ItemBasePF {
     });
     // Submit the roll to chat
     if (effectStr === "") {
-      RollPF.safeRoll(parts.join(" + ")).toMessage({
+      await RollPF.create(parts.join(" + ")).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
         flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
       });
@@ -2106,7 +2112,7 @@ export class ItemPF extends ItemBasePF {
       const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
       const chatTemplateData = { hasExtraText: true, extraText: effectStr };
       // Execute the roll
-      const roll = RollPF.safeRoll(parts.join("+"), data);
+      const roll = await RollPF.create(parts.join("+"), data).evaluate();
 
       // Create roll template data
       const rollData = mergeObject(

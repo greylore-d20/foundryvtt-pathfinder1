@@ -64,7 +64,7 @@ export class RollPF extends Roll {
     simplified = simplified.map((term) => {
       if (!(term instanceof StringTerm)) return term;
       const t = this._classifyStringTerm(term.formula, { intermediate: false });
-      t.options = term.options;
+      t.options = foundry.utils.mergeObject(term.options, t.options, { inplace: false });
       return t;
     });
 
@@ -89,11 +89,12 @@ export class RollPF extends Roll {
       openSymbol: "(",
       closeSymbol: ")",
       onClose: (group) => {
+        // Extract group arguments
         const fn = group.open.slice(0, -1);
+        const expression = group.terms.join("");
         const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
-        const term = group.terms.join("");
-        const terms = [];
 
+        const terms = [];
         if (fn in game.pf1.rollPreProcess) {
           const fnParams = group.terms
             // .slice(2, -1)
@@ -116,11 +117,11 @@ export class RollPF extends Roll {
 
           return game.pf1.rollPreProcess[fn](...fnParams);
         } else if (fn in Math) {
-          const args = this._splitMathArgs(term);
+          const args = this._splitMathArgs(expression);
           terms.push(new MathTerm({ fn, terms: args, options }));
         } else {
           if (fn) terms.push(new StringTerm({ term: fn }));
-          terms.push(new ParentheticalTerm({ term, options }));
+          terms.push(new ParentheticalTerm({ term: expression, options }));
         }
         return terms;
       },

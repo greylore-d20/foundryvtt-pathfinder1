@@ -160,7 +160,7 @@ export class ChatAttack {
     }
 
     // Roll attack
-    const roll = this.item.rollAttack({
+    const roll = await this.item.rollAttack({
       data: this.rollData,
       bonus: bonus,
       extraParts: extraParts,
@@ -241,7 +241,7 @@ export class ChatAttack {
     const repeatCount = critical ? Math.max(1, rollData.critMult - 1) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      const rolls = this.item.rollDamage({
+      const rolls = await this.item.rollDamage({
         data: rollData,
         extraParts: extraParts,
         primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,

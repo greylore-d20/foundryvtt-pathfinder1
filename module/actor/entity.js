@@ -1012,7 +1012,7 @@ export class ActorPF extends ActorBasePF {
       const shrAtk = getProperty(this.data, "data.attributes.attack.shared") ?? 0,
         genAtk = getProperty(this.data, "data.attributes.attack.general") ?? 0,
         cmbAbl = getProperty(this.data, "data.attributes.cmbAbility"),
-        cmbAblMod = getProperty(this.data, `data.abilities.${cmbAbl}.mod`) ?? 0,
+        cmbAblMod = this.data.data.abilities[cmbAbl]?.mod ?? 0,
         size = getProperty(this.data, "data.traits.size"),
         szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
         cmbBonus = getProperty(this.data, "data.attributes.cmb.bonus") ?? 0,
@@ -1141,12 +1141,12 @@ export class ActorPF extends ActorBasePF {
     // Add Dexterity to AC
     {
       // get configured ability scores
-      const acAbl = this.data.data.attributes.ac.normal.ability ?? "dex";
-      const acTouchAbl = this.data.data.attributes.ac.touch.ability ?? "dex";
-      const cmdDexAbl = this.data.data.attributes.cmd.dexAbility ?? "dex";
-      let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
-      let acTouchAblMod = getProperty(this.data, `data.abilities.${acTouchAbl}.mod`);
-      const cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`) ?? 0;
+      const acAbl = this.data.data.attributes.ac.normal.ability;
+      const acTouchAbl = this.data.data.attributes.ac.touch.ability;
+      const cmdDexAbl = this.data.data.attributes.cmd.dexAbility;
+      let acAblMod = this.data.data.abilities[acAbl]?.mod ?? 0;
+      let acTouchAblMod = this.data.data.abilities[acTouchAbl]?.mod ?? 0;
+      const cmdDexAblMod = this.data.data.abilities[cmdDexAbl]?.mod ?? 0;
       if (this.flags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAblMod, 0);
@@ -1166,19 +1166,17 @@ export class ActorPF extends ActorBasePF {
         total: cmdDexAblMod,
         flatFootedTotal: Math.min(0, cmdDexAblMod),
       };
-      for (const [k, v] of Object.entries(ac)) {
-        this.data.data.attributes.ac[k].total += v;
-        getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
-          value: v,
-          name: CONFIG.PF1.abilities[acAblKey[k]],
-        });
+      for (const [k, value] of Object.entries(ac)) {
+        if (!Number.isFinite(value)) continue;
+        const name = CONFIG.PF1.abilities[acAblKey[k]];
+        this.data.data.attributes.ac[k].total += value ?? 0;
+        getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({ value, name });
       }
-      for (const [k, v] of Object.entries(cmd)) {
-        this.data.data.attributes.cmd[k] += v;
-        getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
-          value: v,
-          name: CONFIG.PF1.abilities[cmdDexAbl],
-        });
+      for (const [k, value] of Object.entries(cmd)) {
+        if (!Number.isFinite(value)) continue;
+        const name = CONFIG.PF1.abilities[cmdDexAbl];
+        this.data.data.attributes.cmd[k] += value;
+        getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({ value, name });
       }
     }
 
@@ -2100,7 +2098,7 @@ export class ActorPF extends ActorBasePF {
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor));
 
     const abl = options.ability ?? this.data.data.attributes.cmbAbility;
-    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`) ?? 0;
+    const ablMod = this.data.data.abilities[abl]?.mod ?? 0;
     if (ablMod != 0) describePart(ablMod, CONFIG.PF1.abilities[abl]);
 
     // Add grapple note

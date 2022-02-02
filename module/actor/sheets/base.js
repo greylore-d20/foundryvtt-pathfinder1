@@ -219,9 +219,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Generic melee and ranged attack bonuses, only present for sheet.
     const coreAttack = data.data.attributes.attack.shared + data.data.attributes.attack.general,
-      meleeAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.meleeAbility}.mod`),
-      rangedAtkAbl = getProperty(data, `data.abilities.${data.data.attributes.attack.rangedAbility}.mod`),
-      cmbAbl = getProperty(data, `data.abilities.${data.data.attributes.cmbAbility}.mod`);
+      meleeAtkAbl = data.data.abilities[data.data.attributes.attack.meleeAbility]?.mod ?? 0,
+      rangedAtkAbl = data.data.abilities[data.data.attributes.attack.rangedAbility]?.mod ?? 0,
+      cmbAbl = data.data.abilities[data.data.attributes.cmbAbility]?.mod ?? 0;
 
     const szMod = CONFIG.PF1.sizeMods[data.data.traits.size],
       szCMBMod = CONFIG.PF1.sizeSpecialMods[data.data.traits.size];
@@ -290,10 +290,12 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       // Add ability modifier source
-      skl.sourceDetails.push({
-        name: CONFIG.PF1.abilities[skl.ability],
-        value: data.data.abilities[skl.ability].mod,
-      });
+      if (skl.ability) {
+        skl.sourceDetails.push({
+          name: CONFIG.PF1.abilities[skl.ability],
+          value: data.data.abilities[skl.ability]?.mod ?? 0,
+        });
+      }
 
       // Add misc skill bonus source
       if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) {

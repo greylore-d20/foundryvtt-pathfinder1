@@ -2948,6 +2948,7 @@ export class ItemPF extends ItemBasePF {
         rollData.formulaicAttack = i + 1;
         appendAttack(fmAtkBonus);
       }
+      delete rollData.formulaicAttack;
     }
 
     // Conditional modifiers

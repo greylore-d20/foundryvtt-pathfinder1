@@ -1658,13 +1658,16 @@ export class ActorPF extends ActorBasePF {
     // Apply changes in resources
     const resources = update.data.resources;
     if (resources) {
-      for (const [key, value] of Object.entries(resources)) {
+      for (const key of Object.keys(resources)) {
         const itemId = resources[key]._id ?? oldData.resources[key]._id;
-        if (itemId?.length) {
+        const value = resources[key]?.value;
+        if (itemId?.length && Number.isFinite(value)) {
           const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, { "data.uses.value": value });
           this._queuedItemUpdates[itemId] = updateData;
         }
       }
+      // Avoid contaminating actor data
+      delete update.data.resources;
     }
 
     // Make only 1 fear condition active at most

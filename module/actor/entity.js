@@ -1691,13 +1691,13 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Resize token(s)
-    {
+    if (game.user.id === userId) {
       const sizeKey = getProperty(data, "data.traits.size");
       if (sizeKey) {
         const size = CONFIG.PF1.tokenSizes[sizeKey];
         const tokens = this.getActiveTokens(false, true).filter((o) => {
-          if (getProperty(o.data, "flags.pf1.staticSize")) return false;
-          if (!getProperty(o.data, "actorLink")) return false;
+          if (o.getFlag("pf1", "staticSize")) return false;
+          if (!o.data.actorLink) return false;
           return true;
         });
         tokens.forEach((o) => {

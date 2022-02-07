@@ -1008,17 +1008,7 @@ export class ActorPF extends ActorBasePF {
     this.prepareSpecificDerivedData();
 
     // Prepare CMB total
-    {
-      const shrAtk = getProperty(this.data, "data.attributes.attack.shared") ?? 0,
-        genAtk = getProperty(this.data, "data.attributes.attack.general") ?? 0,
-        cmbAbl = getProperty(this.data, "data.attributes.cmbAbility"),
-        cmbAblMod = getProperty(this.data, `data.abilities.${cmbAbl}.mod`) ?? 0,
-        size = getProperty(this.data, "data.traits.size"),
-        szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
-        cmbBonus = getProperty(this.data, "data.attributes.cmb.bonus") ?? 0,
-        cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
-      this.data.data.attributes.cmb.total = cmb;
-    }
+    this.prepareCMB();
 
     // Setup links
     this.prepareItemLinks();
@@ -1040,6 +1030,22 @@ export class ActorPF extends ActorBasePF {
     });
 
     // Prepare auxillary data
+    this.prepareSpellbooks();
+  }
+
+  prepareCMB() {
+    const shrAtk = this.data.data.attributes.attack.shared ?? 0,
+      genAtk = this.data.data.attributes.attack.general ?? 0,
+      cmbAbl = this.data.data.attributes.cmbAbility,
+      cmbAblMod = this.data.data.abilities[cmbAbl]?.mod ?? 0,
+      size = this.data.data.traits.size,
+      szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
+      cmbBonus = this.data.data.attributes.cmb.bonus ?? 0,
+      cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
+    this.data.data.attributes.cmb.total = cmb;
+  }
+
+  prepareSpellbooks() {
     // usedSpellbooks backwards compatibility. Mostly unused by the system itself
     const spellbooks = this.data.data.attributes?.spells?.spellbooks;
     const usedBooks = spellbooks ? Object.keys(spellbooks ?? {}).filter((book) => spellbooks[book]?.inUse) : [];
@@ -1049,13 +1055,12 @@ export class ActorPF extends ActorBasePF {
   prepareSpecificDerivedData() {
     Hooks.callAll("pf1.prepareDerivedActorData", this);
 
+    const attributes = this.data.data.attributes,
+      abilities = this.data.data.abilities;
+
     // Set base ability modifier
-    for (const ab of Object.keys(this.data.data.abilities)) {
-      setProperty(
-        this.data,
-        `data.abilities.${ab}.baseMod`,
-        Math.floor((getProperty(this.data, `data.abilities.${ab}.base`) - 10) / 2)
-      );
+    for (const ab of Object.keys(abilities)) {
+      abilities[ab].baseMod = Math.floor((abilities[ab].base ?? 0) - 10) / 2;
     }
 
     const actorData = this.data;
@@ -1065,17 +1070,14 @@ export class ActorPF extends ActorBasePF {
     const healthConfig = game.settings.get("pf1", "healthConfig");
     const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
     for (const k of ["hp", "vigor"]) {
-      this.data.data.attributes[k].max = round(this.data.data.attributes[k].max);
+      attributes[k].max = round(attributes[k].max);
     }
 
     // Shared attack bonuses
     {
       // Total
-      const totalAtk =
-        this.data.data.attributes.bab.total -
-        this.data.data.attributes.acp.attackPenalty -
-        (this.data.data.attributes.energyDrain ?? 0);
-      this.data.data.attributes.attack.shared = totalAtk;
+      const totalAtk = attributes.bab.total - attributes.acp.attackPenalty - (attributes.energyDrain ?? 0);
+      attributes.attack.shared = totalAtk;
     }
 
     // Refresh HP
@@ -1111,29 +1113,25 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Prepare modifier containers
-    data.attributes.mods = data.attributes.mods || {};
-    data.attributes.mods.skills = data.attributes.mods.skills || {};
-
     // Set labels
     this.labels = {};
     this.labels.race =
       this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
-    this.labels.alignment = CONFIG.PF1.alignments[this.data.data.details.alignment];
+    this.labels.alignment = CONFIG.PF1.alignments[data.details.alignment];
 
     // Set speed labels
     this.labels.speed = {};
-    for (const [key, obj] of Object.entries(getProperty(this.data, "data.attributes.speed") || {})) {
+    for (const [key, obj] of Object.entries(attributes.speed ?? {})) {
       const dist = convertDistance(obj.total);
       this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
     }
 
     // Combine AC types
     for (const k of ["data.ac.normal.total", "data.ac.shield.total", "data.ac.natural.total"]) {
-      const v = getProperty(this.data, k);
+      const v = getProperty(actorData, k);
       if (v) {
         for (const k2 of ["normal", "flatFooted"]) {
-          this.data.data.attributes.ac[k2].total += v;
+          attributes.ac[k2].total += v;
         }
       }
     }
@@ -1141,17 +1139,17 @@ export class ActorPF extends ActorBasePF {
     // Add Dexterity to AC
     {
       // get configured ability scores
-      const acAbl = this.data.data.attributes.ac.normal.ability ?? "dex";
-      const acTouchAbl = this.data.data.attributes.ac.touch.ability ?? "dex";
-      const cmdDexAbl = this.data.data.attributes.cmd.dexAbility ?? "dex";
-      let acAblMod = getProperty(this.data, `data.abilities.${acAbl}.mod`);
-      let acTouchAblMod = getProperty(this.data, `data.abilities.${acTouchAbl}.mod`);
-      const cmdDexAblMod = getProperty(this.data, `data.abilities.${cmdDexAbl}.mod`) ?? 0;
+      const acAbl = attributes.ac.normal.ability ?? "dex";
+      const acTouchAbl = attributes.ac.touch.ability ?? "dex";
+      const cmdDexAbl = attributes.cmd.dexAbility ?? "dex";
+      let acAblMod = abilities[acAbl]?.mod ?? 0;
+      let acTouchAblMod = abilities[acTouchAbl]?.mod ?? 0;
+      const cmdDexAblMod = abilities[cmdDexAbl]?.mod ?? 0;
       if (this.flags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAblMod, 0);
       }
-      const maxDex = getProperty(this.data, "data.attributes.maxDexBonus") ?? null;
+      const maxDex = attributes.maxDexBonus ?? null;
       const ac = {
         normal: maxDex !== null ? Math.min(maxDex, acAblMod) : acAblMod,
         touch: maxDex !== null ? Math.min(maxDex, acTouchAblMod) : acTouchAblMod,
@@ -1167,14 +1165,14 @@ export class ActorPF extends ActorBasePF {
         flatFootedTotal: Math.min(0, cmdDexAblMod),
       };
       for (const [k, v] of Object.entries(ac)) {
-        this.data.data.attributes.ac[k].total += v;
+        attributes.ac[k].total += v;
         getSourceInfo(this.sourceInfo, `data.attributes.ac.${k}.total`).positive.push({
           value: v,
           name: CONFIG.PF1.abilities[acAblKey[k]],
         });
       }
       for (const [k, v] of Object.entries(cmd)) {
-        this.data.data.attributes.cmd[k] += v;
+        attributes.cmd[k] += v;
         getSourceInfo(this.sourceInfo, `data.attributes.cmd.${k}`).positive.push({
           value: v,
           name: CONFIG.PF1.abilities[cmdDexAbl],
@@ -1187,21 +1185,19 @@ export class ActorPF extends ActorBasePF {
       const armorItems = this.items.filter((o) => o.data.type === "equipment");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
-      if (this.data.data.attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
+      if (attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Encumbrance");
       }
       if (
-        armorItems.filter((o) => getProperty(o.data.data, "equipmentSubtype") === "mediumArmor" && o.data.data.equipped)
-          .length &&
+        armorItems.filter((o) => o.data.data.equipmentSubtype === "mediumArmor" && o.data.data.equipped).length &&
         !this.flags["mediumArmorFullSpeed"]
       ) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
       }
       if (
-        armorItems.filter((o) => getProperty(o.data.data, "equipmentSubtype") === "heavyArmor" && o.data.data.equipped)
-          .length &&
+        armorItems.filter((o) => o.data.data.equipmentSubtype === "heavyArmor" && o.data.data.equipped).length &&
         !this.flags["heavyArmorFullSpeed"]
       ) {
         reducedSpeed = true;
@@ -1220,7 +1216,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add encumbrance source details
-    switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
+    switch (attributes.encumbrance.level) {
       case 1:
         getSourceInfo(this.sourceInfo, "data.attributes.acp.total").negative.push({
           name: game.i18n.localize("PF1.Encumbrance"),
@@ -1518,9 +1514,9 @@ export class ActorPF extends ActorBasePF {
       "data.attributes.cmb.bonus": 0,
       "data.attributes.cmb.total": 0,
       "data.attributes.cmb.value": 0,
-      "data.attributes.hp.max": getProperty(this.data, "data.attributes.hp.base") ?? 0,
-      "data.attributes.vigor.max": getProperty(this.data, "data.attributes.vigor.base") ?? 0,
-      "data.attributes.wounds.max": getProperty(this.data, "data.attributes.wounds.base") ?? 0,
+      "data.attributes.hp.max": this.data.data.attributes.hp.base ?? 0,
+      "data.attributes.vigor.max": this.data.data.attributes.vigor.base ?? 0,
+      "data.attributes.wounds.max": this.data.data.attributes.wounds.base ?? 0,
       "data.attributes.attack.general": 0,
       "data.attributes.attack.melee": 0,
       "data.attributes.attack.ranged": 0,
@@ -1779,14 +1775,14 @@ export class ActorPF extends ActorBasePF {
       : itemData.data.activation?.type;
     if (itemData.data.uses?.per && activationType) {
       const itemTag = !itemData.data.useCustomTag ? createTag(itemData.name) : itemData.data.tag;
-      const resKey = `data.resources.${itemTag}`;
       const curUses = itemData.data.uses;
 
-      const res = { value: 0, max: 0, _id: null };
-      setProperty(this.data, resKey, res);
-      res.value = curUses.value;
-      res.max = curUses.max;
-      res._id = itemData._id;
+      const res = {
+        value: curUses.value,
+        max: curUses.max,
+        _id: itemData._id,
+      };
+      this.data.data.resources[itemTag] = res;
       return true;
     }
 
@@ -2079,7 +2075,7 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails["data.attributes.cmb.bonus"]);
     srcDetails(this.sourceDetails["data.attributes.attack.shared"]);
 
-    const size = getProperty(this.data, "data.traits.size") ?? "med";
+    const size = this.data.data.traits.size ?? "med";
     rollData.sizeBonus = CONFIG.PF1.sizeSpecialMods[size];
     if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
@@ -2100,7 +2096,7 @@ export class ActorPF extends ActorBasePF {
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor));
 
     const abl = options.ability ?? this.data.data.attributes.cmbAbility;
-    const ablMod = getProperty(this.data, `data.abilities.${abl}.mod`) ?? 0;
+    const ablMod = this.data.data.abilities[abl]?.mod ?? 0;
     if (ablMod != 0) describePart(ablMod, CONFIG.PF1.abilities[abl]);
 
     // Add grapple note
@@ -2167,8 +2163,8 @@ export class ActorPF extends ActorBasePF {
     const atkAbl = getProperty(this.data, `data.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
     changes.push(`${getProperty(this.data, `data.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
 
-    const size = getProperty(this.data, "data.traits.size");
-    rollData.sizeBonus = CONFIG.PF1.sizeMods[getProperty(this.data, "data.traits.size") ?? "med"];
+    const size = this.data.data.traits.size ?? "med";
+    rollData.sizeBonus = CONFIG.PF1.sizeMods[size];
     if (rollData.sizeBonus != 0) changes.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
     const props = [];
@@ -2428,7 +2424,7 @@ export class ActorPF extends ActorBasePF {
     const parts = [];
 
     // Get base
-    const base = getProperty(this.data, `data.attributes.savingThrows.${savingThrowId}.base`);
+    const base = this.data.data.attributes.savingThrows[savingThrowId]?.base;
     if (base) parts.push(`${base}[${game.i18n.localize("PF1.Base")}]`);
 
     // Add changes
@@ -2858,7 +2854,7 @@ export class ActorPF extends ActorBasePF {
 
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
     const conf = this.data.type === "npc" ? hpconf.npc : hpconf.pc;
-    const override = getProperty(data, "data.attributes.woundThresholds.override") ?? -1;
+    const override = data.data.attributes.woundThresholds.override ?? -1;
     return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
   }
 
@@ -2872,8 +2868,8 @@ export class ActorPF extends ActorBasePF {
     data = data ?? this.data;
 
     const woundMult = this.getWoundThresholdMultiplier(data),
-      woundLevel = getProperty(data, "data.attributes.woundThresholds.level") ?? 0,
-      woundPenalty = woundLevel * woundMult + (getProperty(data, "data.attributes.woundThresholds.mod") ?? 0);
+      woundLevel = data.data.attributes.woundThresholds.level ?? 0,
+      woundPenalty = woundLevel * woundMult + (data.data.attributes.woundThresholds.mod ?? 0);
     return {
       level: woundLevel,
       penalty: woundPenalty,
@@ -2888,27 +2884,30 @@ export class ActorPF extends ActorBasePF {
   updateWoundThreshold() {
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
     const usage = this.data.type === "npc" ? hpconf.npc.useWoundThresholds : hpconf.pc.useWoundThresholds;
+    const wt = this.data.data.attributes.woundThresholds;
     if (!usage) {
-      setProperty(this.data, "data.attributes.woundThresholds.level", 0);
-      setProperty(this.data, "data.attributes.woundThresholds.penaltyBase", 0);
-      setProperty(this.data, "data.attributes.woundThresholds.penalty", 0);
+      wt.level = 0;
+      wt.penaltyBase = 0;
+      wt.penalty = 0;
+      wt.mod = 0;
       return;
     }
-    const curHP = getProperty(this.data, "data.attributes.hp.value"),
-      tempHP = getProperty(this.data, "data.attributes.hp.temp") || 0,
-      maxHP = getProperty(this.data, "data.attributes.hp.max");
+    const hp = this.data.data.attributes.hp,
+      curHP = hp.value,
+      tempHP = hp.temp ?? 0,
+      maxHP = hp.max;
 
     let level = usage > 0 ? Math.clamped(4 - Math.ceil(((curHP + tempHP) / maxHP) * 4), 0, 3) : 0;
     if (Number.isNaN(level)) level = 0; // Division by 0 due to max HP on new actors.
 
     const wtMult = this.getWoundThresholdMultiplier();
-    const wtMod = getProperty(this.data, "data.attributes.woundThresholds.mod") ?? 0;
+    const wtMod = wt.mod ?? 0;
 
-    setProperty(this.data, "data.attributes.woundThresholds.level", level);
-    setProperty(this.data, "data.attributes.woundThresholds.penaltyBase", level * wtMult); // To aid relevant formulas
-    setProperty(this.data, "data.attributes.woundThresholds.penalty", level * wtMult + wtMod);
+    wt.level = level;
+    wt.penaltyBase = level * wtMult; // To aid relevant formulas
+    wt.penalty = level * wtMult + wtMod;
 
-    const penalty = getProperty(this.data, "data.attributes.woundThresholds.penalty");
+    const penalty = wt.penalty;
     const changeFlatKeys = CONFIG.PF1.woundThresholdChangeTargets;
     for (const fk of changeFlatKeys) {
       let flats = getChangeFlat.call(this, fk, "penalty", this.data.data);
@@ -3170,30 +3169,34 @@ export class ActorPF extends ActorBasePF {
    * @returns {MobilityPenaltyResult} The resulting penalties from encumbrance.
    */
   _computeEncumbrance() {
+    // Init base data
+    const attributes = this.data.data.attributes;
+    if (attributes.encumbrance === undefined) attributes.encumbrance = {};
+    const encumbrance = attributes.encumbrance;
+
     const carry = this.getCarryCapacity();
-    setProperty(this.data, "data.attributes.encumbrance.levels.light", carry.light);
-    setProperty(this.data, "data.attributes.encumbrance.levels.medium", carry.medium);
-    setProperty(this.data, "data.attributes.encumbrance.levels.heavy", carry.heavy);
-    setProperty(this.data, "data.attributes.encumbrance.levels.carry", carry.heavy * 2);
-    setProperty(this.data, "data.attributes.encumbrance.levels.drag", carry.heavy * 5);
+    // Set levels
+    encumbrance.levels = carry;
+    encumbrance.levels.carry = carry.heavy * 2;
+    encumbrance.levels.drag = carry.heavy * 5;
 
     const carriedWeight = Math.max(0, this.getCarriedWeight());
-    setProperty(this.data, "data.attributes.encumbrance.carriedWeight", Math.round(carriedWeight * 10) / 10);
+    encumbrance.carriedWeight = Math.round(carriedWeight * 10) / 10;
 
     // Determine load level
     let encLevel = 0;
     if (carriedWeight > 0) {
-      if (carriedWeight > this.data.data.attributes.encumbrance.levels.light) encLevel++;
-      if (carriedWeight > this.data.data.attributes.encumbrance.levels.medium) encLevel++;
+      if (carriedWeight > encumbrance.levels.light) encLevel++;
+      if (carriedWeight > encumbrance.levels.medium) encLevel++;
     }
-    setProperty(this.data, "data.attributes.encumbrance.level", encLevel);
+    encumbrance.level = encLevel;
 
     const result = {
       maxDexBonus: null,
       acp: 0,
     };
 
-    switch (getProperty(this.data, "data.attributes.encumbrance.level")) {
+    switch (encumbrance.level) {
       case 1:
         result.acp = 3;
         result.maxDexBonus = 3;
@@ -3268,7 +3271,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   getTotalCurrency(category = "currency", { inLowestDenomination = false } = {}) {
-    const currencies = getProperty(this.data.data, category);
+    const currencies = this.data.data[category];
     const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
     return inLowestDenomination ? total : total / 100;
   }
@@ -3379,7 +3382,7 @@ export class ActorPF extends ActorBasePF {
     // Set size index
     {
       const sizeChart = Object.keys(CONFIG.PF1.sizeChart);
-      result.size = sizeChart.indexOf(getProperty(result, "traits.size"));
+      result.size = sizeChart.indexOf(result.traits.size);
     }
 
     // Set class data
@@ -3610,15 +3613,9 @@ export class ActorPF extends ActorBasePF {
     return this.items
       .filter(
         (o) =>
-          (o.data.type === "weapon" ||
-            o.data.type === "attack" ||
-            o.data.type === "spell" ||
-            (o.data.type === "feat" && !o.data.data.disabled)) &&
-          getProperty(o.data, "data.showInQuickbar") === true
+          o.isActive && o.data.data.showInQuickbar === true && ["weapon", "attack", "spell", "feat"].includes(o.type)
       )
-      .sort((a, b) => {
-        return a.data.data.sort - b.data.data.sort;
-      })
+      .sort((a, b) => a.data.data.sort - b.data.data.sort)
       .map((o) => {
         return {
           item: o,
@@ -3869,7 +3866,7 @@ export class ActorPF extends ActorBasePF {
               itemUpdate["data.preparation.preparedAmount"] = itemData.preparation.maxAmount;
               itemUpdates.push(itemUpdate);
             }
-            if (!getProperty(item.data, "data.domain")) {
+            if (!item.data.data.domain) {
               let sbUses =
                 updateData[
                   `data.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`

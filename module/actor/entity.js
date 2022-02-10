@@ -570,8 +570,6 @@ export class ActorPF extends ActorBasePF {
         setProperty(s, `subSkills.${k2}.cs`, isClassSkill);
       }
     }
-
-    this.updateSpellbookInfo();
   }
 
   /**

@@ -653,7 +653,8 @@ export class ActorSheetPF extends ActorSheet {
     // Reduce spells to the nested spellbook structure
     const spellbook = {};
     for (let level = 0; level < 10; level++) {
-      if (!isNaN(getProperty(book, `spells.spell${level}.max`))) {
+      const spellLevel = getProperty(book, `spells.spell${level}`);
+      if (!isNaN(spellLevel.max)) {
         spellbook[level] = {
           level: level,
           usesSlots: true,
@@ -662,12 +663,12 @@ export class ActorSheetPF extends ActorSheet {
           canPrepare: data.actor.type === "character",
           label: CONFIG.PF1.spellLevels[level],
           items: [],
-          uses: getProperty(book, `spells.spell${level}.value`) || 0,
-          baseSlots: getProperty(book, `spells.spell${level}.base`) || 0,
-          slots: getProperty(book, `spells.spell${level}.max`) || 0,
+          uses: spellLevel.value || 0,
+          baseSlots: spellLevel.base || 0,
+          slots: spellLevel.max || 0,
           dataset: { type: "spell", level: level, spellbook: bookKey },
           name: game.i18n.localize(`PF1.SpellLevel${level}`),
-          spellMessage: getProperty(book, `spells.spell${level}.spellMessage`),
+          spellMessage: spellLevel.spellMessage,
         };
       }
     }

@@ -647,7 +647,8 @@ export class ActorSheetPF extends ActorSheet {
       const cl = book.cl.autoSpellLevelTotal;
 
       const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
-      max = castsPerDay.length - 1;
+      // Check against undefined protects against bad CL modifications.
+      max = castsPerDay !== undefined ? castsPerDay.length - 1 : 0;
     }
 
     // Reduce spells to the nested spellbook structure

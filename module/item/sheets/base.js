@@ -420,16 +420,24 @@ export class ItemSheetPF extends ItemSheet {
         if (typeof v === "object") data.changeGlobals.targets[k] = v._label;
       }
 
+      // Prepare individual changes
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.data.changes.reduce((cur, o) => {
-        const obj = { data: o };
+      data.changes = [];
+      for (const change of this.item.changes) {
+        const obj = {
+          data: change.data,
+          subTargetLabel: buffTargets[change.subTarget]?.label,
+          isScript: change.data.operator === "script",
+          canUseScript: game.settings.get("pf1", "allowScriptChanges"),
+        };
 
-        obj.subTargetLabel = buffTargets[o.subTarget]?.label;
-        obj.isScript = obj.data.operator === "script";
+        // Widget-type
+        const widget = CONFIG.PF1.buffTargets[change.subTarget]?.widget;
+        obj.banner = widget ? await widget.getBanner(change) : null;
+        if (widget != null) obj.canUseScript = false;
 
-        cur.push(obj);
-        return cur;
-      }, []);
+        data.changes.push(obj);
+      }
     }
 
     // Prepare stuff for attacks with conditionals
@@ -890,6 +898,9 @@ export class ItemSheetPF extends ItemSheet {
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
     html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
+
+    // Click change widget
+    html.find(".change-banner").on("click", this._onClickChangeBanner.bind(this));
 
     // Modify note changes
     html.find(".context-note-control").click(this._onNoteControl.bind(this));
@@ -1388,6 +1399,19 @@ export class ItemSheetPF extends ItemSheet {
       },
       { category, item: change?.subTarget }
     );
+    this._openApplications.push(w.appId);
+    w.render(true);
+  }
+
+  _onClickChangeBanner(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    const change = this.item.changes.get(a.closest(".change").dataset.change);
+    const widget = CONFIG.PF1.buffTargets[change.subTarget].widget;
+
+    // Show widget
+    const w = new widget(change);
     this._openApplications.push(w.appId);
     w.render(true);
   }

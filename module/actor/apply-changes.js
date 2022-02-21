@@ -54,7 +54,15 @@ export function applyChanges() {
 
   // Apply all changes
   for (const change of c) {
-    let flats = getChangeFlat.call(this, change.subTarget, change.modifier);
+    let flats = getChangeFlat.call(
+      this,
+      change.subTarget,
+      change.modifier,
+      null,
+      change,
+      change.parsedData,
+      change.widget
+    );
     if (!(flats instanceof Array)) flats = [flats];
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
@@ -66,7 +74,7 @@ export function applyChanges() {
     for (const cc of continuousChanges) {
       if (cc === change) continue;
 
-      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier);
+      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier, null, change, change.parsedData, change.widget);
       if (!(flats instanceof Array)) flats = [flats];
       for (const f of flats) {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
@@ -192,7 +200,14 @@ const getSortChangePriority = function () {
   };
 };
 
-export const getChangeFlat = function (changeTarget, changeType, curData = null) {
+export const getChangeFlat = function (
+  changeTarget,
+  changeType,
+  curData = null,
+  change = null,
+  data = {},
+  widget = null
+) {
   if (changeTarget == null) return null;
 
   curData = curData ?? this.data.data;
@@ -517,10 +532,13 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     }
   }
 
+  // Get change targets by widget
+  if (widget != null) return widget.getChangeTargets(change, data);
+
   // Try to determine a change flat from hooks
   {
     const result = { keys: [] };
-    Hooks.callAll("pf1.getChangeFlat", changeTarget, changeType, result);
+    Hooks.callAll("pf1.getChangeFlat", changeTarget, changeType, result, { change, data, widget });
     if (result.keys && result.keys.length) return result.keys;
   }
   return null;

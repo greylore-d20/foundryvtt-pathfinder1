@@ -1714,3 +1714,25 @@
     }
   }
 }
+
+/* ----------------------------------------- */
+/*  Change Widgets                           */
+/* ----------------------------------------- */
+
+.pf1.change-widget {
+  &.spellbook-selector {
+    .spellbooks {
+      display: flex;
+      flex-direction: row;
+
+      a.spellbook {
+        text-align: center;
+        .itemBackground();
+
+        &.active {
+          text-shadow: 0 0 10px red;
+        }
+      }
+    }
+  }
+}

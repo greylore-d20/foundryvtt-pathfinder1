@@ -1,0 +1,13 @@
+<form class="flexcol">
+  <div class="flexrow spellbooks">
+    <a class="spellbook{{#if (eq "_all" data.spellbook)}} active{{/if}}" data-value="_all">{{localize "PF1.All"}}</a>
+    {{#each spellbooks as |name sb|}}
+      <a class="spellbook{{#if (eq sb ../data.spellbook)}} active{{/if}}" data-value="{{sb}}">{{name}}</a>
+    {{/each}}
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "PF1.Formula"}}</label>
+    <input type="text" class="formula" name="formula" value="{{data.formula}}" />
+  </div>
+</form>

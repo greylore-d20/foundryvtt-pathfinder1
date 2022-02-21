@@ -1610,6 +1610,22 @@ export class ActorPF extends ActorBasePF {
     return 0; // Only used by PCs
   }
 
+  getSpellbookInfo() {
+    const result = {};
+
+    for (const [k, sb] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
+      result[k] = {
+        name:
+          sb.altName ||
+          (sb.class && sb.class !== "_hd"
+            ? this.items.find((o) => o.type === "class" && o.data.data.tag === sb.class)?.name
+            : sb.name),
+      };
+    }
+
+    return result;
+  }
+
   /* -------------------------------------------- */
 
   /* -------------------------------------------- */
@@ -2227,6 +2243,19 @@ export class ActorPF extends ActorBasePF {
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.data.data.abilities[spellbook.ability]?.mod ?? 0;
+    const parts = [
+      `@cl[${game.i18n.localize("PF1.CasterLevel")}]`,
+      `@mod[${CONFIG.PF1.abilities[spellbook.ability]}]`,
+      `@formulaBonus[${game.i18n.localize("PF1.ByBonus")}]`,
+    ];
+
+    // Get change bonuses
+    const sourceInfo = this.sourceInfo[`data.attributes.spells.${spellbookKey}.concentration.changeBonus`];
+    if (sourceInfo) {
+      [...sourceInfo.positive, ...sourceInfo.negative].forEach((o) => {
+        parts.push(`${o.value}[${o.name}]`);
+      });
+    }
 
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
     if (allowed === false) return;
@@ -2248,12 +2277,8 @@ export class ActorPF extends ActorBasePF {
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
-      event: event,
-      parts: [
-        `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
-          CONFIG.PF1.abilities[spellbook.ability]
-        }] + @formulaBonus[${game.i18n.localize("PF1.ByBonus")}]`,
-      ],
+      event,
+      parts,
       dice: options.dice,
       data: rollData,
       subject: { core: "concentration" },

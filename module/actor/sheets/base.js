@@ -190,6 +190,7 @@ export class ActorSheetPF extends ActorSheet {
     data.data = data.data.data;
     const rollData = this.document.getRollData();
     data.rollData = rollData;
+    data.spellbookInfo = this.document.getSpellbookInfo();
 
     // Show whether the item has currency
     data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);

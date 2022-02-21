@@ -1772,6 +1772,11 @@ export const PF1 = {
     bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc" },
     carryStr: { label: "PF1.CarryStrength", category: "misc" },
     carryMult: { label: "PF1.CarryMultiplier", category: "misc" },
+    concentration: {
+      label: "PF1.Concentration",
+      category: "spell",
+      widget: "ChangeWidget_SpellbookSelector",
+    },
   },
 
   buffTargetCategories: {
@@ -1786,6 +1791,7 @@ export const PF1 = {
     speed: { label: "PF1.Speed" },
     health: { label: "PF1.Health" },
     misc: { label: "PF1.Misc" },
+    spell: { label: "PF1.BuffTarSpells" },
   },
 
   contextNoteTargets: {

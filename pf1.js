@@ -110,6 +110,8 @@ import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
+import { ChangeWidget_Base } from "./module/item/components/change-widgets/base.js";
+import { ChangeWidget_SpellbookSelector } from "./module/item/components/change-widgets/spellbook-selector.js";
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
@@ -212,6 +214,11 @@ Hooks.once("init", function () {
     // Components
     documentComponents: {
       ItemChange,
+    },
+    // Item Change Widgets
+    itemChangeWidgets: {
+      ChangeWidget_Base,
+      ChangeWidget_SpellbookSelector,
     },
     // API
     registry: Registry,
@@ -515,6 +522,17 @@ Hooks.once("setup", function () {
   for (const l of localizeLabels) {
     for (const [k, v] of Object.entries(CONFIG.PF1[l])) {
       CONFIG.PF1[l][k].label = game.i18n.localize(v.label);
+    }
+  }
+
+  // Set up widgets for CONFIG.PF1.buffTargets and CONFIG.PF1.contextNoteTargets
+  const widgetTargets = ["buffTargets", "contextNoteTargets"];
+  for (const key of widgetTargets) {
+    const wt = CONFIG.PF1[key];
+    for (const tar of Object.values(wt)) {
+      if (typeof tar.widget === "string") {
+        tar.widget = game.pf1.itemChangeWidgets[tar.widget];
+      }
     }
   }
 

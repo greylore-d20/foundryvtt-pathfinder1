@@ -69,22 +69,30 @@ export class ItemChange {
     }
 
     // Return default targets
-    let flats = getChangeFlat.call(actor, this.subTarget, this.modifier);
+    let flats = getChangeFlat.call(actor, this.subTarget, this.modifier, null, this, this.parsedData, this.widget);
     if (!(flats instanceof Array)) flats = [flats];
     return flats;
+  }
+
+  get widget() {
+    return CONFIG.PF1.buffTargets[this.subTarget]?.widget;
+  }
+  get parsedData() {
+    return this.widget != null ? JSON.parse(this.formula) : this.formula;
   }
 
   prepareData() {}
 
   preUpdate(data) {
-    // Make sure sub-target is valid
-    {
-      if (data["target"]) {
-        const subTarget = data["subTarget"] || this.subTarget;
-        const changeSubTargets = this.parent.getChangeSubTargets(data["target"]);
-        if (changeSubTargets[subTarget] == null) {
-          data["subTarget"] = Object.keys(changeSubTargets)[0];
-        }
+    // Set default value when changing subtarget to something with a widget
+    if (data["subTarget"] && data["subTarget"] != this.subTarget) {
+      const prevTarget = this.subTarget;
+      const newTarget = data["subTarget"];
+      const prevWidget = CONFIG.PF1.buffTargets[prevTarget]?.widget;
+      const newWidget = CONFIG.PF1.buffTargets[newTarget].widget;
+      if (prevWidget !== newWidget) {
+        data["formula"] = "0";
+        if (newWidget) data["formula"] = JSON.stringify(newWidget.defaultValue);
       }
     }
 
@@ -110,10 +118,17 @@ export class ItemChange {
   }
 
   applyChange(actor, targets = null, flags = {}) {
+    const widget = CONFIG.PF1.buffTargets[this.subTarget]?.widget;
+    let data = {};
+    if (widget != null) {
+      data = JSON.parse(this.formula);
+    }
+
     // Prepare change targets
-    if (!targets) {
-      targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
-      if (!(targets instanceof Array)) targets = [targets];
+    if (!(targets instanceof Array) || targets.filter((o) => o != null).length === 0) {
+      targets = getChangeFlat.call(actor, this.subTarget, this.modifier, null, this, data, widget);
+      if (!(targets instanceof Array) && targets != null) targets = [targets];
+      else if (targets == null) targets = [];
     }
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
     let addedSourceInfo = false;
@@ -122,6 +137,11 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
+      // Create target variable, if it doesn't exist yet AND if this is a widget change
+      if (widget != null && !hasProperty(this.parent.actor?.data ?? {}, t)) {
+        setProperty(this.parent.actor?.data ?? {}, t, 0);
+      }
+
       if (!overrides || overrides[t]) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
@@ -134,7 +154,12 @@ export class ItemChange {
 
         let value = 0;
         if (this.formula) {
-          if (operator === "script") {
+          if (widget != null) {
+            // Get this change's value
+            value = widget.getValue(this, data);
+            // Do customizable stuff with this change
+            widget.applyChange(this, data);
+          } else if (operator === "script") {
             if (!game.settings.get("pf1", "allowScriptChanges")) {
               ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"));
               value = 0;

@@ -902,6 +902,69 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
 };
 
 /**
+ * Removes flairs from a formula.
+ *
+ * @param {string} formula
+ */
+export function stripRollFlairs(formula) {
+  return formula.replace(/\[[^\]]*]/g, "");
+}
+
+/**
+ * Simplifies formula to very basic level.
+ *
+ * @param {string} formula Roll formula
+ * @param {object} rollData Roll data
+ * @param {object} safeEvalOpts Options to Roll.safeEval
+ */
+export function simplifyFormula(formula, rollData = {}, safeEvalOpts) {
+  const temp = [];
+  const terms = RollPF.parse(stripRollFlairs(formula), rollData);
+  for (const term of terms) {
+    if (term instanceof DiceTerm || term instanceof OperatorTerm) {
+      temp.push(term);
+    } else if (term.isDeterministic) {
+      const evl = RollPF.safeEval(term.formula, {}, safeEvalOpts);
+      temp.push(...RollPF.parse(`${evl}`));
+    } else {
+      temp.push(term);
+    }
+  }
+
+  // Combine simple terms (e.g. 5+3)
+  const temp2 = [];
+  let prev, term;
+  while (temp.length) {
+    prev = term;
+    term = temp.shift();
+    const next = temp[0];
+    if (term instanceof OperatorTerm) {
+      // Ternary handling
+      if (term.operator === "?") {
+        temp.shift(); // remove if-true val
+        const elseOp = temp.shift();
+        const falseVal = temp.shift();
+        const simpler = RollPF.safeEval(
+          [prev.formula, term.formula, next.formula, elseOp?.formula ?? "", falseVal?.formula ?? ""].join("")
+        );
+        term = RollPF.parse(`${simpler}`)[0];
+        temp2.pop(); // Remove last term
+      } else if (prev instanceof NumericTerm && next instanceof NumericTerm) {
+        const simpler = RollPF.safeEval([prev.formula, term.formula, next.formula].join(""));
+        term = RollPF.parse(`${simpler}`)[0];
+        temp2.pop(); // Remove the last numeric term
+        temp.shift(); // Remove the next term
+      }
+    }
+    temp2.push(term);
+  }
+
+  return RollPF.simplifyTerms(temp2)
+    .map((tt) => tt.formula)
+    .join("");
+}
+
+/**
  * Variant of TextEditor._createInlineRoll for creating unrolled inline rolls.
  *
  * @param _match
@@ -915,8 +978,14 @@ export function createInlineFormula(_match, _command, formula, closing, label, .
   const rollData = args.pop();
   if (closing.length === 3) formula += "]"; // What does this even do?
 
-  const e_formula = Roll.replaceFormulaData(formula, rollData, { missing: 0, warn: true });
   const cls = ["inline-preroll", "inline-formula"];
+  let e_formula;
+  try {
+    e_formula = simplifyFormula(formula, rollData, { missing: 0, warn: true });
+  } catch (err) {
+    console.error(err);
+    e_formula = "0";
+  }
   label = label ? `${label}: ${e_formula}` : e_formula;
 
   // Format return value

@@ -138,7 +138,7 @@ export const alterRollData = function (shared, form) {
   }
 
   // Rapid Shot
-  if (shared.fullAttack && form["rapid-shot"]) {
+  if (shared.fullAttack && formData["rapid-shot"]) {
     shared.attacks.push({
       id: "rapidshot",
       label: game.i18n.localize("PF1.RapidShot"),

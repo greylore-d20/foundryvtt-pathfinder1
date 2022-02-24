@@ -2560,7 +2560,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _searchFilterChange(event) {
     event.preventDefault();
-    this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
+    event.stopPropagation();
 
     // Accept input only while not compositioning
 

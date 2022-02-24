@@ -167,7 +167,7 @@ export class ActorPF extends ActorBasePF {
         return true;
       });
     }
-    if (speaker.token && !actor) actor = canvas.tokens.placeables.find((o) => o.id === speaker.token)?.actor;
+    if (speaker.token && !actor) actor = canvas.tokens.get(speaker.token)?.actor;
     if (!actor) actor = game.actors.get(speaker.actor);
 
     return actor;
@@ -1867,7 +1867,7 @@ export class ActorPF extends ActorBasePF {
     // Create link
     if (itemData.type === "attack") {
       // check for correct itemData, Foundry #3419
-      const newItem = this.items.find((o) => o.id === itemData.id);
+      const newItem = this.items.get(itemData.id);
       if (newItem) {
         await item.createItemLink("children", "data", newItem, itemData.id);
       }

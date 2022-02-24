@@ -44,7 +44,7 @@ export const addChatMessageContextOptions = function (html, options) {
 };
 
 const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
-  const combat = combats.find((c) => c.combatants.filter((o) => o.id === combatantId).length > 0);
+  const combat = combats.find((c) => c.combatants.get(combatantId) !== undefined);
   if (!combat) {
     ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
     return;

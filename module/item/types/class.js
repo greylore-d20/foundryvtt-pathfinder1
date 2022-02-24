@@ -60,7 +60,7 @@ export class ItemClassPF extends ItemPF {
       const associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
       const itemIds = [];
       for (const [id, level] of Object.entries(associations)) {
-        const item = this.parent.items.find((o) => o.id === id);
+        const item = this.parent.items.get(id);
         if (!item) {
           delete associations[id];
           continue;

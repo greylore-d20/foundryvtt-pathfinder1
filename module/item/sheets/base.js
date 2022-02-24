@@ -1132,7 +1132,7 @@ export class ItemSheetPF extends ItemSheet {
     else if (data.data) {
       dataType = "data";
       if (this.item && this.item.actor) {
-        targetItem = this.item.actor.items.find((o) => o.id === data.data._id);
+        targetItem = this.item.actor.items.get(data.data._id);
       }
       itemLink = data.data._id;
     }

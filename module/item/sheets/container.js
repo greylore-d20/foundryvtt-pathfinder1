@@ -15,7 +15,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
      * @type {Set}
      */
     this._filters = {
-      search: "",
+      search: { container: "" },
     };
 
     /** Item search */
@@ -62,6 +62,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    */
   async getData() {
     const data = await super.getData();
+
+    // Add filters
+    data.filters = this._filters;
 
     // The item's items
     data.items = this.item.items.map((i) => {
@@ -756,7 +759,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
   _searchFilterCommit(event) {
     const container = this.item;
-    const search = this._filters.search.toLowerCase();
+    const search = this._filters.search.container.toLowerCase();
 
     // TODO: Do not refresh if same search term, unless the sheet has updated.
     if (this.effectiveSearch === search && !this.searchRefresh) return;
@@ -780,7 +783,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   _clearSearch(event) {
-    this._filters.search = "";
+    this._filters.search.container = "";
     $(event.target).prev(".search-input").val("").change();
   }
 
@@ -797,12 +800,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     // Accept input only while not compositioning
 
     const search = event.target.value;
-    const changed = this._filters.search !== search;
+    const changed = this._filters.search.container !== search;
 
     if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset
     if (this.searchCompositioning) return;
 
-    this._filters.search = search;
+    this._filters.search.container = search;
 
     if (event.type === "keyup") {
       // Delay search

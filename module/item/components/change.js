@@ -259,7 +259,7 @@ export class ItemChange {
     try {
       const preDef = `const actor = item.actor; const result = { operator: "add", value: 0, };`;
       const postDef = `return result;`;
-      const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}${postDef}};`;
+      const fullDef = `return function(${funcArgs.join(",")}) {${preDef}${funcDef}\n${postDef}};`;
       return new Function(fullDef)();
     } catch (e) {
       console.warn("Could not create change function with definition ", funcDef);

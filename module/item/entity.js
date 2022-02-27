@@ -1050,12 +1050,12 @@ export class ItemPF extends ItemBasePF {
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (const d in diff) {
       if (!(diff[d] instanceof Array)) continue;
-      const origData = getProperty(this.data, d) || [];
+      const origData = getProperty(this.data._source, d) || [];
       if (diff[d].length !== origData.length) continue;
       const anyDiff = diff[d].some((obj, idx) => {
         if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
       });
-      if (!anyDiff && !(diff[d] instanceof Array)) delete diff[d];
+      if (!anyDiff) delete diff[d];
     }
 
     if (Object.keys(diff).length && !context.skipUpdate) {

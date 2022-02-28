@@ -1,12 +1,10 @@
 <nav class="sheet-navigation tabs" data-group="links" data-tabs-type="list">
-  <select class="tabs">
-    {{#each links.list as |link|}}
-    <option value="{{link.id}}" data-tab="{{link.id}}">{{link.label}}</option>
-    {{/each}}
-  </select>
+  {{#each links.list as |link|}}
+  <a class="item" data-tab="{{link.id}}" data-group="links">{{link.label}}</a>
+  {{/each}}
 </nav>
 
-<div class="links-body">
+<section class="links-body">
 
   {{#each links.list as |link|}}
   {{!-- Children Tab --}}
@@ -56,4 +54,4 @@
     </table>
   </div>
   {{/each}}
-</div>
+</section>

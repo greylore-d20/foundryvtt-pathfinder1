@@ -2,7 +2,6 @@ import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
 import {
   createTag,
-  createTabs,
   CR,
   convertWeight,
   createConsumableSpellDialog,
@@ -36,7 +35,6 @@ export class ActorSheetPF extends ActorSheet {
      * @type {number}
      */
     this._scrollTab = {};
-    this._initialTab = {};
 
     /**
      * Track the set of item filters which are applied
@@ -133,6 +131,23 @@ export class ActorSheetPF extends ActorSheet {
         { dragSelector: "li.generic-defenses[data-drag]" },
         { dragSelector: ".spellcasting-concentration[data-drag]" },
         { dragSelector: ".spellcasting-cl" },
+      ],
+      tabs: [
+        {
+          navSelector: "nav.tabs[data-group='primary']",
+          contentSelector: "section.primary-body",
+          initial: "summary",
+        },
+        {
+          navSelector: "nav.tabs[data-group='skillset']",
+          contentSelector: "section.skillset-body",
+          initial: "adventure",
+        },
+        {
+          navSelector: "nav.tabs[data-group='spellbooks']",
+          contentSelector: "section.spellbooks-body",
+          initial: "primary",
+        },
       ],
     });
   }
@@ -849,8 +864,6 @@ export class ActorSheetPF extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    this.createTabs(html);
-
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));
 
@@ -1149,16 +1162,6 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
-  }
-
-  createTabs(html) {
-    const tabGroups = {
-      primary: {
-        skillset: {},
-        spellbooks: {},
-      },
-    };
-    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
   }
 
   /* -------------------------------------------- */

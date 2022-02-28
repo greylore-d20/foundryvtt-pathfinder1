@@ -1,5 +1,5 @@
 import { ActorSheetPFNPC } from "./npc.js";
-import { createTabs, splitCurrency } from "../../lib.js";
+import { splitCurrency } from "../../lib.js";
 
 export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   /**
@@ -10,6 +10,7 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc", "loot"],
+      tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "inventory" }],
       width: 620,
       height: 420,
     });
@@ -57,14 +58,5 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     }
 
     return data;
-  }
-
-  createTabs(html) {
-    const tabGroups = {
-      primary: {
-        inventory: {},
-      },
-    };
-    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
   }
 }

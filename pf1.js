@@ -75,7 +75,6 @@ import {
   normalDie,
   getActorFromId,
   createTag,
-  createTabs,
   convertWeight,
   convertWeightBack,
   convertDistance,
@@ -189,7 +188,6 @@ Hooks.once("init", function () {
     // Utility
     utils: {
       createTag,
-      createTabs,
       getItemOwner,
       getActorFromId,
       getAbilityModifier,

@@ -120,19 +120,21 @@ export class CombatPF extends Combat {
   /**
    * @override
    */
-  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null } = {}) {
+  async rollInitiative(
+    ids,
+    { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null, rollMode } = {}
+  ) {
     if (skipDialog == null) skipDialog = getSkipActionPrompt();
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant.id;
     if (!formula) formula = this._getInitiativeFormula(this.combatant.actor);
 
-    let overrideRollMode = null,
-      bonus = "",
+    let bonus = "",
       stop = false;
     if (!skipDialog) {
-      const dialogData = await Combat.implementation.showInitiativeDialog(formula);
-      overrideRollMode = dialogData.rollMode;
+      const dialogData = await Combat.implementation.showInitiativeDialog(formula, rollMode);
+      rollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
       stop = dialogData.stop || false;
     }
@@ -158,12 +160,8 @@ export class CombatPF extends Combat {
         }
 
         // Roll initiative
-        const rollMode =
-          overrideRollMode != null
-            ? overrideRollMode
-            : messageOptions.rollMode || c.token.hidden || c.hidden
-            ? "gmroll"
-            : "roll";
+        const isHidden = c.token.hidden || c.hidden;
+        rollMode ??= messageOptions.rollMode ?? (isHidden ? "gmroll" : game.settings.get("core", "rollMode"));
         const roll = RollPF.safeRoll(formula, rollData, "initiative");
         delete rollData.bonus; // Cleanup
         if (roll.err) ui.notifications.warn(roll.err.message);
@@ -229,10 +227,10 @@ export class CombatPF extends Combat {
     return this;
   }
 
-  static showInitiativeDialog = function (formula = null) {
+  static showInitiativeDialog = function (formula = null, rollMode) {
+    rollMode ??= game.settings.get("core", "rollMode");
     return new Promise((resolve) => {
       const template = "systems/pf1/templates/chat/roll-dialog.hbs";
-      let rollMode = game.settings.get("core", "rollMode");
       const dialogData = {
         formula: formula ? formula : "",
         rollMode: rollMode,

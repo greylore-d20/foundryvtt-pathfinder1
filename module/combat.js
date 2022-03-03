@@ -146,10 +146,10 @@ export class CombatPF extends Combat {
         // Get Combatant data
         const c = this.combatants.get(id);
         if (!c) return results;
-        const actorData = c.actor ? c.actor.data.data : {};
+        const rollData = c.actor?.getRollData() ?? {};
         formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
 
-        actorData.bonus = bonus;
+        rollData.bonus = bonus;
         // Add bonus
         if (bonus.length > 0 && i === 0) {
           formula += " + @bonus";
@@ -162,14 +162,15 @@ export class CombatPF extends Combat {
             : messageOptions.rollMode || c.token.hidden || c.hidden
             ? "gmroll"
             : "roll";
-        const roll = RollPF.safeRoll(formula, actorData);
+        const roll = RollPF.safeRoll(formula, rollData, "initiative");
+        delete rollData.bonus; // Cleanup
         if (roll.err) ui.notifications.warn(roll.err.message);
         updates.push({ _id: id, initiative: roll.total });
 
         const [notes, notesHTML] = c.actor.getInitiativeContextNotes();
 
-        // Create roll template data
-        const rollData = mergeObject(
+        // Create card template data
+        const templateData = mergeObject(
           {
             user: game.user.id,
             formula: roll.formula,
@@ -179,7 +180,7 @@ export class CombatPF extends Combat {
           notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
         );
 
-        // Create chat data
+        // Create chat card data
         const chatData = mergeObject(
           {
             user: game.user.id,
@@ -192,13 +193,13 @@ export class CombatPF extends Combat {
               token: c.token.id,
               alias: c.token.name,
             },
+            flags: { pf1: { subject: { core: "init" } } },
             flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
             roll: roll,
-            content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", rollData),
+            content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },
           messageOptions
         );
-        setProperty(chatData, "flags.pf1.subject.core", "init");
 
         // Handle different roll modes
         ChatMessage.applyRollMode(chatData, chatData.rollMode);

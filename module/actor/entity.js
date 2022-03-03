@@ -2380,7 +2380,7 @@ export class ActorPF extends ActorBasePF {
     // Iterate over combatants to roll for
     const combatantIds = combat.combatants.reduce((arr, c) => {
       if (c.actor.id !== this.id || (this.isToken && c.data.tokenId !== this.token.id)) return arr;
-      if (c.initiative && !rerollInitiative) return arr;
+      if (c.initiative !== null && !rerollInitiative) return arr;
       arr.push(c.id);
       return arr;
     }, []);

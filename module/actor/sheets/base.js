@@ -654,31 +654,29 @@ export class ActorSheetPF extends ActorSheet {
 
     // Reduce spells to the nested spellbook structure
     const spellbook = {};
-    for (let a = 0; a < 10; a++) {
-      if (!isNaN(getProperty(book, `spells.spell${a}.max`))) {
-        spellbook[a] = {
-          level: a,
+    for (let level = 0; level < 10; level++) {
+      const spellLevel = getProperty(book, `spells.spell${level}`);
+      if (!isNaN(spellLevel.max)) {
+        spellbook[level] = {
+          level: level,
           usesSlots: true,
           spontaneous: book.spontaneous,
           canCreate: owner === true,
           canPrepare: data.actor.type === "character",
-          label: CONFIG.PF1.spellLevels[a],
+          label: CONFIG.PF1.spellLevels[level],
           items: [],
-          uses: getProperty(book, `spells.spell${a}.value`) || 0,
-          baseSlots: getProperty(book, `spells.spell${a}.base`) || 0,
-          slots: getProperty(book, `spells.spell${a}.max`) || 0,
-          dataset: { type: "spell", level: a, spellbook: bookKey },
-          name: game.i18n.localize(`PF1.SpellLevel${a}`),
-          spellMessage: getProperty(book, `spells.spell${a}.spellMessage`),
+          uses: spellLevel.value || 0,
+          baseSlots: spellLevel.base || 0,
+          slots: spellLevel.max || 0,
+          dataset: { type: "spell", level: level, spellbook: bookKey },
+          name: game.i18n.localize(`PF1.SpellLevel${level}`),
+          spellMessage: spellLevel.spellMessage,
         };
       }
     }
     spells.forEach((spell) => {
-      const spellBookKey = getProperty(spell, "data.spellbook");
-      if (spellBookKey === bookKey) {
-        const lvl = spell.data.level ?? min;
-        spellbook[lvl]?.items.push(spell);
-      }
+      const lvl = spell.data.level ?? min;
+      spellbook[lvl]?.items.push(spell);
     });
 
     for (let a = 0; a < 10; a++) {
@@ -2262,13 +2260,11 @@ export class ActorSheetPF extends ActorSheet {
     // Organize Spellbook
     const spellbookData = {};
     const spellbooks = data.data.attributes.spells.spellbooks;
-    for (const [a, spellbook] of Object.entries(spellbooks)) {
-      let spellbookSpells = spells.filter((obj) => {
-        return obj.data.spellbook === a;
-      });
-      spellbookSpells = this._filterItems(spells, getProperty(this._filters, `spellbook-${a}`));
-      spellbookData[a] = {
-        data: this._prepareSpellbook(data, spellbookSpells, a),
+    for (const [key, spellbook] of Object.entries(spellbooks)) {
+      let spellbookSpells = spells.filter((obj) => obj.data.spellbook === key);
+      spellbookSpells = this._filterItems(spellbookSpells, getProperty(this._filters, `spellbook-${key}`));
+      spellbookData[key] = {
+        data: this._prepareSpellbook(data, spellbookSpells, key),
         prepared: spellbookSpells.filter((obj) => {
           return obj.data.preparation.mode === "prepared" && obj.data.preparation.prepared;
         }).length,

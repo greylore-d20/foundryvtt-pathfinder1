@@ -916,6 +916,24 @@ export class ItemSheetPF extends ItemSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
+    // Linked item clicks
+    html
+      .find(".tab[data-tab='links'] .links-item[data-link] .links-item-name")
+      .on("click", this._openLinkedItem.bind(this));
+
+    // Search box
+    if (["container"].includes(this.item.data.type)) {
+      const sb = html.find(".search-input");
+      sb.on("keyup change", this._searchFilterChange.bind(this));
+      sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
+      this.searchRefresh = true;
+      // Filter tabs on followup refreshes
+      sb.each(function () {
+        if (this.value.length > 0) $(this).change();
+      });
+      html.find(".clear-search").on("click", this._clearSearch.bind(this));
+    }
+
     /* -------------------------------------------- */
     /*  Links
     /* -------------------------------------------- */
@@ -1207,6 +1225,29 @@ export class ItemSheetPF extends ItemSheet {
       choices: CONFIG.PF1[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
+  }
+
+  /**
+   * Open linked item sheet.
+   *
+   * @param {Event} event
+   */
+  _openLinkedItem(event) {
+    event.preventDefault();
+    const el = event.target.closest("[data-link]"),
+      link = el.dataset.link,
+      parts = link.split("."),
+      packId = parts.length === 3 ? parts.slice(0, 2).join(".") : null,
+      itemId = parts.pop();
+
+    if (packId) {
+      game.packs
+        .get(packId)
+        .getDocument(itemId)
+        .then((d) => d.sheet.render(true));
+    } else {
+      this.actor.items.get(itemId).sheet.render(true);
+    }
   }
 
   /**

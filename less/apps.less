@@ -277,7 +277,7 @@
     }
   }
 
-  div.links-body {
+  .links-body {
     table {
       .links-item-extra-field {
         width: 128px;
@@ -293,13 +293,14 @@
       }
 
       .links-item {
-        .links-item-name {
-          img {
-            vertical-align: middle;
-          }
+        .links-item-name > div {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
 
-          span {
-            vertical-align: middle;
+          img {
+            flex: 0 0 24px;
+            margin-right: 4px;
           }
         }
       }

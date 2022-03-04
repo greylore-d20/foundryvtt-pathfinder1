@@ -1007,7 +1007,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Make sure charges doesn't exceed max charges, and vice versa
-    {
+    if (this.isCharged) {
       let charges = 0;
       let maxCharges = 0;
       let target = "value";
@@ -1028,11 +1028,11 @@ export class ItemPF extends ItemBasePF {
       const link = getProperty(this, "links.charges");
       if (!link) {
         if (this.type === "spell") {
-          linkData(srcData, data, "data.preparation.preparedAmount", charges);
-          linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
+          if (charges !== undefined) linkData(srcData, data, "data.preparation.preparedAmount", charges);
+          if (maxCharges !== undefined) linkData(srcData, data, "data.preparation.maxAmount", maxCharges);
         } else {
-          linkData(srcData, data, "data.uses.value", charges);
-          linkData(srcData, data, "data.uses.max", maxCharges);
+          if (charges !== undefined) linkData(srcData, data, "data.uses.value", charges);
+          if (maxCharges !== undefined) linkData(srcData, data, "data.uses.max", maxCharges);
         }
       } else {
         // Update charges for linked items
@@ -1050,12 +1050,12 @@ export class ItemPF extends ItemBasePF {
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (const d in diff) {
       if (!(diff[d] instanceof Array)) continue;
-      const origData = getProperty(this.data, d) || [];
+      const origData = getProperty(this.data._source, d) || [];
       if (diff[d].length !== origData.length) continue;
       const anyDiff = diff[d].some((obj, idx) => {
         if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
       });
-      if (!anyDiff && !(diff[d] instanceof Array)) delete diff[d];
+      if (!anyDiff) delete diff[d];
     }
 
     if (Object.keys(diff).length && !context.skipUpdate) {

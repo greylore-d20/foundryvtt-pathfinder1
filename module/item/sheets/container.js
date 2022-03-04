@@ -10,6 +10,22 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     super(...args);
 
     /**
+     * Track the set of item filters which are applied
+     *
+     * @type {Set}
+     */
+    this._filters = {
+      search: { container: "" },
+    };
+
+    /** Item search */
+    this.searchCompositioning = false; // for IME
+    this.searchRefresh = true; // Lock out same term search unless sheet also refreshes
+    this.searchDelay = 250; // arbitrary ?ms for arbitrarily decent reactivity; MMke this configurable?
+    this.searchDelayEvent = null; // setTimeout id
+    this.effectiveSearch = ""; // prevent searching the same thing
+
+    /**
      * Track item updates from the actor sheet.
      *
      * @type {object[]}
@@ -46,6 +62,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    */
   async getData() {
     const data = await super.getData();
+
+    // Add filters
+    data.filters = this._filters;
 
     // The item's items
     data.items = this.item.items.map((i) => {
@@ -346,6 +365,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Item Rolling
     html.find(".item .item-image").click((event) => this._onItemRoll(event));
+
+    // Search box
+    const sb = html.find(".search-input");
+    sb.on("keyup change", this._searchFilterChange.bind(this));
+    sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
+    this.searchRefresh = true;
+    // Filter following refresh
+    sb.each(function () {
+      if (this.value.length > 0) $(this).change();
+    });
+    html.find(".clear-search").on("click", this._clearSearch.bind(this));
   }
 
   _onItemCreate(event) {
@@ -723,5 +753,63 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     if (item == null) return;
     return item.roll();
+  }
+
+  /** Item Search */
+
+  _searchFilterCommit(event) {
+    const container = this.item;
+    const search = this._filters.search.container.toLowerCase();
+
+    // TODO: Do not refresh if same search term, unless the sheet has updated.
+    if (this.effectiveSearch === search && !this.searchRefresh) return;
+
+    this.effectiveSearch = search;
+    this.searchRefresh = false;
+
+    const matchSearch = (name) => name.toLowerCase().includes(search); // MKAhvi: Bad method for i18n support.
+
+    $(event.target)
+      .closest(".tab")
+      .find(".item-list .item")
+      .each(function () {
+        const jq = $(this);
+        if (search?.length > 0) {
+          const item = container.items.get(this.dataset.itemId);
+          if (matchSearch(item.name)) jq.show();
+          else jq.hide();
+        } else jq.show();
+      });
+  }
+
+  _clearSearch(event) {
+    this._filters.search.container = "";
+    $(event.target).prev(".search-input").val("").change();
+  }
+
+  // IME related
+  _searchFilterCompositioning(event) {
+    this.searchCompositioning = event.type === "compositionstart";
+  }
+
+  _searchFilterChange(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    //this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
+
+    // Accept input only while not compositioning
+
+    const search = event.target.value;
+    const changed = this._filters.search.container !== search;
+
+    if (this.searchCompositioning || changed) clearTimeout(this.searchDelayEvent); // reset
+    if (this.searchCompositioning) return;
+
+    this._filters.search.container = search;
+
+    if (event.type === "keyup") {
+      // Delay search
+      if (changed) this.searchDelayEvent = setTimeout(() => this._searchFilterCommit(event), this.searchDelay);
+    } else this._searchFilterCommit(event);
   }
 }

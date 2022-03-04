@@ -1,4 +1,4 @@
-import { createTabs, getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
+import { getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
 import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
 import { ItemChange } from "../components/change.js";
@@ -38,6 +38,19 @@ export class ItemSheetPF extends ItemSheet {
         {
           dragSelector: "li.conditional",
           dropSelector: 'div[data-tab="conditionals"]',
+        },
+      ],
+      tabs: [
+        {
+          navSelector: "nav.tabs[data-group='primary']",
+          contentSelector: "section.primary-body",
+          initial: "description",
+        },
+        { navSelector: "nav.tabs[data-group='links']", contentSelector: "section.links-body", initial: "children" },
+        {
+          navSelector: "nav.tabs[data-group='description']",
+          contentSelector: "section.description-body",
+          initial: "identified",
         },
       ],
     });
@@ -840,15 +853,6 @@ export class ItemSheetPF extends ItemSheet {
    */
   activateListeners(html) {
     super.activateListeners(html);
-
-    // Activate tabs
-    const tabGroups = {
-      primary: {
-        description: {},
-        links: {},
-      },
-    };
-    this._tabsAlt = createTabs.call(this, html, tabGroups, this._tabsAlt);
 
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));

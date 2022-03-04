@@ -1,4 +1,3 @@
-import { ListTabs } from "./misc/list-tabs.js";
 import { SemanticVersion } from "./semver.js";
 import { ItemSpellPF } from "./item/types/spell.js";
 import { ActorPF } from "./actor/entity.js";
@@ -39,104 +38,6 @@ export const alterRoll = function (str, add, multiply) {
     return (nd == null || Number.isNaN(nd) ? "" : nd) + "d" + d + mods;
   });
   // }
-};
-
-/**
- * Creates tabs for a sheet object
- *
- * @param html
- * @param tabGroups
- * @param existingTabs
- */
-export const createTabs = function (html, tabGroups, existingTabs = null) {
-  // Create recursive activation/callback function
-  const _recursiveActivate = function (rtabs, tabName = null) {
-    if (rtabs.__dormant) return;
-
-    if (tabName == null) this._initialTab[rtabs.group] = rtabs.active;
-    else {
-      rtabs.activate(tabName);
-      this._initialTab[rtabs.group] = tabName;
-    }
-
-    // Recursively activate tabs
-    for (const subTab of rtabs.subTabs) {
-      _recursiveActivate.call(this, subTab, subTab.active);
-    }
-  };
-
-  // Recursively bind tabs
-  const _recursiveBind = function (rtabs) {
-    rtabs.bind(html[0]);
-
-    if (html.find(`nav[data-group="${rtabs.group}"]`).length > 0) rtabs.__dormant = false;
-    else rtabs.__dormant = true;
-
-    for (const subTab of rtabs.subTabs) {
-      _recursiveBind.call(this, subTab);
-    }
-  };
-
-  // Create all tabs
-  const _func = function (group, children, tabs = null) {
-    let dormant = false;
-    if (html.find(`nav[data-group="${group}"]`).length === 0) dormant = true;
-
-    if (this._initialTab == null) this._initialTab = {};
-
-    const subHtml = html.find(`.${group}-body > div[data-group="${group}"]`);
-    const activeSubHtml = subHtml.filter(".active");
-    const initial =
-      this._initialTab[group] !== undefined
-        ? this._initialTab[group]
-        : activeSubHtml.length > 0
-        ? activeSubHtml[0].dataset.tab
-        : "";
-
-    // Set up data for scroll position and active tab
-    if (this._initialTab[group] === undefined) this._initialTab[group] = initial;
-
-    // Determine tab type
-    const tabsElem = html.find(`.tabs[data-group="${group}"]`)[0];
-    let cls = TabsV2;
-    if (tabsElem) {
-      const type = tabsElem.dataset.tabsType;
-      if (type === "list") {
-        cls = ListTabs;
-      }
-    }
-
-    // Create tabs object
-    if (!tabs) {
-      tabs = new cls({
-        navSelector: `.tabs[data-group="${group}"]`,
-        contentSelector: `.${group}-body`,
-        initial,
-        callback: (_, tabs) => {
-          _recursiveActivate.call(this, tabs);
-        },
-      });
-      tabs.__dormant = dormant;
-
-      // Recursively create tabs
-      tabs.group = group;
-      tabs.subTabs = [];
-      for (const [childKey, subChildren] of Object.entries(children)) {
-        const childTabs = _func.call(this, childKey, subChildren);
-        if (childTabs != null) {
-          tabs.subTabs.push(childTabs);
-          childTabs.parent = tabs;
-        }
-      }
-    }
-
-    _recursiveBind.call(this, tabs);
-    return tabs;
-  };
-
-  for (const groupKey of Object.keys(tabGroups)) {
-    return _func.call(this, groupKey, tabGroups[groupKey], existingTabs);
-  }
 };
 
 /**

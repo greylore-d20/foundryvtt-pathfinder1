@@ -41,6 +41,25 @@ export class ItemPF extends ItemBasePF {
   _preCreate(data, options, user) {
     super._preCreate(data, options, user);
 
+    // Ensure unique Change IDs
+    const actor = this.parentActor;
+    if (actor && data.data?.changes?.length > 0) {
+      const changes = data.data.changes;
+      let updated = false;
+      for (const c of changes) {
+        let i = 0;
+        // Forcibly seek unused ID.
+        while (actor.changes.get(c._id) !== undefined) {
+          updated = true;
+          // Revert to default ID generation if too many iterations have passed. Just let it break if even more has passed.
+          if (i > 10_000) break;
+          else if (i++ > 1_000) c._id = foundry.utils.randomID();
+          else c._id = ItemChange.defaultData._id;
+        }
+      }
+      if (updated) this.data.update({ "data.changes": changes });
+    }
+
     let updates = {};
     if (typeof this.preCreateData === "function") {
       updates = this.preCreateData(data, options, user);

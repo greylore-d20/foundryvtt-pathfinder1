@@ -2064,12 +2064,20 @@ export class ItemPF extends ItemBasePF {
       const part = parts[a];
       let rollParts = [];
       if (a === 0) rollParts = [...part.extra, ...extraParts];
-      const roll = {
-        roll: await RollPF.create([part.base, ...rollParts].join(" + "), rollData).evaluate(),
-        damageType: part.damageType,
-        type: part.type,
-      };
-      rolls.push(roll);
+      const formula = [part.base, ...rollParts].join(" + ");
+      // Skip empty formulas instead of erroring on them
+      if (formula.length == 0) continue;
+      try {
+        const roll = {
+          roll: await RollPF.create(formula, rollData).evaluate(),
+          damageType: part.damageType,
+          type: part.type,
+        };
+        rolls.push(roll);
+      } catch (err) {
+        console.error("Error with damage formula:", formula, this);
+        throw err;
+      }
     }
 
     return rolls;

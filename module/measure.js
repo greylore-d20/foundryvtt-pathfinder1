@@ -264,7 +264,11 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
   // Highlight grid in PF1 style
   highlightGrid() {
-    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.data.t))
+    if (
+      !game.settings.get("pf1", "measureStyle") ||
+      !["circle", "cone", "ray"].includes(this.data.t) ||
+      canvas.grid.type !== CONST.GRID_TYPES.SQUARE
+    )
       return super.highlightGrid();
 
     const grid = canvas.grid,

@@ -171,6 +171,11 @@ export const alterRollData = function (shared, form) {
     shared.rollData.powerAttackPenalty = powerAttackPenalty;
     shared.attackBonus.push(`${powerAttackPenalty}[${label}]`);
     shared.powerAttack = true;
+    shared.rollData.powerAttackBonus = powerAttackBonus;
+    shared.rollData.powerAttackPenalty = powerAttackPenalty;
+  } else {
+    shared.rollData.powerAttackBonus = 0;
+    shared.rollData.powerAttackPenalty = 0;
   }
 
   // Conditionals

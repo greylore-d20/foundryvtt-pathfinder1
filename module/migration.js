@@ -966,13 +966,13 @@ const _migrateActorCR = function (ent, updateData, linked) {
 
 const _migrateAttackAbility = function (ent, updateData, linked) {
   const cmbAbl = getProperty(ent, "data.attributes.cmbAbility");
-  if (cmbAbl == null && linked) updateData["data.attributes.cmbAbility"] = "str";
+  if (cmbAbl === undefined && linked) updateData["data.attributes.cmbAbility"] = "str";
 
   const meleeAbl = getProperty(ent, "data.attributes.attack.meleeAbility");
-  if (meleeAbl == null && linked) updateData["data.attributes.attack.meleeAbility"] = "str";
+  if (meleeAbl === undefined && linked) updateData["data.attributes.attack.meleeAbility"] = "str";
 
   const rangedAbl = getProperty(ent, "data.attributes.attack.rangedAbility");
-  if (rangedAbl == null && linked) updateData["data.attributes.attack.rangedAbility"] = "dex";
+  if (rangedAbl === undefined && linked) updateData["data.attributes.attack.rangedAbility"] = "dex";
 };
 
 const _migrateActorTokenVision = function (ent, updateData) {

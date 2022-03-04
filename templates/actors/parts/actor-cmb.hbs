@@ -9,7 +9,7 @@
   {{#if sourceDetails.data.attributes.attack.shared.length}}
   {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
   {{/if}}
-  {{lookup @root.config.abilities data.attributes.cmbAbility}} : {{abilityMod data.attributes.cmbAbility @root.rollData 1}}<br/>
+  {{#if data.attributes.cmbAbility}}{{lookup @root.config.abilities data.attributes.cmbAbility}} : {{abilityMod data.attributes.cmbAbility @root.rollData 1}}<br/>{{/if}}
   {{#if sourceDetails.data.attributes.attack.general.length}}
   {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}} : {{src.value}}<br/>{{/each}}
   {{/if}}

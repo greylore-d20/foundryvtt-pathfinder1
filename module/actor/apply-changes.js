@@ -729,8 +729,8 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add Constitution to HP
-  const hpAbility = actorData.attributes.hpAbility ?? "con";
-  if (hpAbility !== "") {
+  const hpAbility = actorData.attributes.hpAbility;
+  if (hpAbility) {
     changes.push(
       ItemChange.create({
         formula: (d) => d.abilities[hpAbility].mod * d.attributes.hd.total,

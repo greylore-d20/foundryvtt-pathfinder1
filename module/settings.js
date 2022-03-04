@@ -578,6 +578,15 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register("pf1", "initiativeTiebreaker", {
+    name: "SETTINGS.pf1InitTiebreakerN",
+    hint: "SETTINGS.pf1InitTiebreakerH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Clear targets after attack
    */

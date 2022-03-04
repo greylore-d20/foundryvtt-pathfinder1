@@ -760,7 +760,16 @@ export class ActorPF extends ActorBasePF {
             CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
               casterType
             ];
-          const classLevel = Math.max(Math.min(spellbook.cl.autoSpellLevelTotal, 20), 1);
+          let classLevel = Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20);
+
+          // Protect against invalid class level bricking actors
+          if (!Number.isSafeInteger(classLevel)) {
+            const msg = `Actor ${this.id} has invalid caster class level.`;
+            console.error(msg, classLevel);
+            ui.notifications?.error(msg);
+            classLevel = Math.floor(classLevel);
+          }
+
           rollData.ablMod = spellbookAbilityMod;
 
           const allLevelModFormula =
@@ -862,7 +871,7 @@ export class ActorPF extends ActorBasePF {
           if (useAuto) {
             const spellPrepMode = spellbook.spellPreparationMode;
             const casterType = spellbook.casterType || "high";
-            const classLevel = Math.max(Math.min(spellbook.cl.autoSpellLevelTotal, 20), 1);
+            const classLevel = Math.floor(Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20));
 
             const spellbookAbilityScore = spellbookAbility?.total;
 

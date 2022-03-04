@@ -835,7 +835,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     if (itemLinks) {
       for (const [linkType, links] of Object.entries(itemLinks)) {
         for (const link of links) {
-          const item = actor.items.find((o) => o.id === link.id);
+          const item = actor.items.get(link.id);
           const otherItemLinks = item?.links || {};
           if (otherItemLinks[linkType]) {
             delete otherItemLinks[linkType];

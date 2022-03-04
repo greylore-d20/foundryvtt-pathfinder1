@@ -2538,7 +2538,7 @@ export class ItemPF extends ItemBasePF {
     }
     // Same actor's item
     else if (this.parent != null && this.parent.items != null) {
-      item = this.parent.items.find((o) => o.id === id[0]);
+      item = this.parent.items.get(id[0]);
     }
 
     // Package extra data
@@ -2569,7 +2569,7 @@ export class ItemPF extends ItemBasePF {
   _cleanLink(oldLink, linkType) {
     if (!this.parent) return;
 
-    const otherItem = this.parent.items.find((o) => o.id === oldLink.id);
+    const otherItem = this.parent.items.get(oldLink.id);
     if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
       delete otherItem.links.charges;
     }

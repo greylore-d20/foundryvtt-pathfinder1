@@ -522,7 +522,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (data.tokenId) {
       actor = game.actors.tokens[data.tokenId];
     } else if (data.actorId) {
-      actor = game.actors.contents.find((o) => o.id === data.actorId);
+      actor = game.actors.get(data.actorId);
     }
 
     const item = await ItemPF.fromDropData(data);

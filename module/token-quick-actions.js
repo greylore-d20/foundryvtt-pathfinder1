@@ -3,7 +3,7 @@ import { getSkipActionPrompt } from "./settings.js";
 
 export class TokenQuickActions {
   static async addTop3Attacks(app, html, data) {
-    const token = canvas.tokens.placeables.find((o) => o.id === data._id);
+    const token = canvas.tokens.get(data._id);
     const actor = token.actor;
 
     if (actor == null) return;
@@ -48,7 +48,7 @@ export class TokenQuickActions {
     html.find(".col.middle").after(quickActions + "</div></div>");
 
     items.forEach(function (i) {
-      const item = actor.items.find((o) => o.id === i.item.id);
+      const item = actor.items.get(i.item.id);
       const type = item.type;
       const elem = html.find(`#${type}-${item.id}`);
 

@@ -1909,7 +1909,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const itemId = a.dataset.itemId;
-    const item = this.document.items.find((o) => o.id === itemId);
+    const item = this.document.items.get(itemId);
     if (!item) return;
 
     game.pf1.rollItemMacro(item.name, { itemId: item.id, itemType: item.type, actorId: this.document.id });
@@ -2008,7 +2008,7 @@ export class ActorSheetPF extends ActorSheet {
     if (button.disabled) return;
 
     const li = event.currentTarget.closest(".item");
-    const item = this.document.items.find((o) => o.id === li.dataset.itemId);
+    const item = this.document.items.get(li.dataset.itemId);
 
     if (getSkipActionPrompt()) {
       item.delete();
@@ -2033,7 +2033,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.find((o) => o.id === itemId);
+    const item = this.document.items.get(itemId);
 
     const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
     targets.push(...this.document.items.filter((o) => o.type === "container"));
@@ -2050,11 +2050,11 @@ export class ActorSheetPF extends ActorSheet {
     if (!targetData) return;
     let target;
     if (targetData.type === "actor") {
-      target = game.actors.contents.find((o) => o.id === targetData.id);
+      target = game.actors.get(targetData.id);
     } else if (targetData.type === "item") {
-      target = this.document.items.find((o) => o.id === targetData.id);
+      target = this.document.items.get(targetData.id);
       if (!target) {
-        target = game.items.contents.find((o) => o.id === targetData.id);
+        target = game.items.get(targetData.id);
       }
     }
 
@@ -2155,7 +2155,7 @@ export class ActorSheetPF extends ActorSheet {
       if (!res) continue;
       const id = res.id;
       if (!id) continue;
-      const item = this.document.items.find((o) => o.id === id);
+      const item = this.document.items.get(id);
       if (!item) continue;
       item.data.tag = !item.data.data.useCustomTag ? key : item.data.data.tag;
     }
@@ -2655,8 +2655,12 @@ export class ActorSheetPF extends ActorSheet {
 
     // Memorize variables in document
     for (const d of updates) {
-      const item = this.document.items.find((o) => o.id === d._id);
-      item?.memorizeVariables();
+      const item = this.document.items.get(d._id);
+      if (!item) {
+        console.error("Item update for non-existing item:", d._id, d);
+        continue;
+      }
+      item.memorizeVariables();
       delete d._id;
       await item.update(d);
     }

@@ -701,10 +701,11 @@ export const addDefaultChanges = function (changes) {
       for (const c of allClasses) {
         const classType = c.data.data.classType || "base";
         let formula;
-        if (classType === "custom") {
+        const saveType = c.data.data.savingThrows[a].value;
+        if (saveType === "custom") {
           formula = c.data.data.savingThrows[a].custom || "0";
         } else {
-          formula = CONFIG.PF1.classSavingThrowFormulas[classType][c.data.data.savingThrows[a].value];
+          formula = CONFIG.PF1.classSavingThrowFormulas[classType][saveType];
         }
         if (formula == null) formula = "0";
         const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);

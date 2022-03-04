@@ -185,7 +185,7 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("contextNotes", (actor, context, options) => {
     const rollData = options.data.root.rollData;
     const noteObjs = actor.getContextNotes(context);
-    return actor.formatContextNotes(noteObjs, rollData);
+    return actor.formatContextNotes(noteObjs, rollData, { roll: false });
   });
 
   Handlebars.registerHelper("enrich", (content, options) => {

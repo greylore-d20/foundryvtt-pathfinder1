@@ -3425,10 +3425,11 @@ export class ActorPF extends ActorBasePF {
 
         for (const k of Object.keys(result.classes[tag].savingThrows)) {
           let formula;
-          if (classType === "custom") {
+          const saveType = cls.data.data.savingThrows[k].value;
+          if (saveType === "custom") {
             formula = cls.data.data.savingThrows[k].custom || "0";
           } else {
-            formula = CONFIG.PF1.classSavingThrowFormulas[classType][cls.data.data.savingThrows[k].value];
+            formula = CONFIG.PF1.classSavingThrowFormulas[saveType];
           }
           if (formula == null) formula = "0";
           result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;

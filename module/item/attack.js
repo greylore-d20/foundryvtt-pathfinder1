@@ -896,7 +896,7 @@ export const generateChatMetadata = function (shared) {
   };
 
   // Get template for later variables
-  const template = canvas.templates.get(metadata.template);
+  const template = canvas.scene ? canvas.templates.get(metadata.template) : null;
 
   // Add targets
   if (template != null) {

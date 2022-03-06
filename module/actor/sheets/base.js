@@ -402,7 +402,7 @@ export class ActorSheetPF extends ActorSheet {
         return obj.type === "class" && obj.data.data.classType !== "mythic";
       })
       .forEach((cls) => {
-        const clsLevel = cls.data.data.level;
+        const clsLevel = cls.hitDice;
         const clsSkillsPerLevel = cls.data.data.skillsPerLevel;
         const fcSkills = cls.data.data.fc.skill.value;
         skillRanks.allowed +=

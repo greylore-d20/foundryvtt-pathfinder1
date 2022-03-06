@@ -96,7 +96,8 @@ export class ItemClassPF extends ItemPF {
     const itemData = this.data.data;
     if (itemData.hitDice === undefined) {
       if (itemData.customHD?.length > 0) {
-        itemData.hitDice = RollPF.safeRoll(itemData.customHD, this.getRollData()).total;
+        const rollData = { item: { level: this.data.data.level } };
+        itemData.hitDice = RollPF.safeRoll(itemData.customHD, rollData).total;
       } else {
         itemData.hitDice = this.subType === "mythic" ? 0 : itemData.level;
       }

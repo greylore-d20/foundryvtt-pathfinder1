@@ -392,14 +392,16 @@ export class ActorPF extends ActorBasePF {
 
     // Update total level and mythic tier
     const classes = this.data.items.filter((o) => o.type === "class");
-    const level = classes
-      .filter((o) => o.data.data.classType !== "mythic")
-      .reduce((cur, o) => cur + o.data.data.level, 0);
-    this.data.data.details.level.value = level;
+    const { level, mythicTier } = classes.reduce(
+      (cur, o) => {
+        cur.level += o.hitDice;
+        cur.mythicTier += o.mythicTier;
+        return cur;
+      },
+      { level: 0, mythicTier: 0 }
+    );
 
-    const mythicTier = classes
-      .filter((o) => o.data.data.classType === "mythic")
-      .reduce((cur, o) => cur + o.data.data.level, 0);
+    this.data.data.details.level.value = level;
     this.data.data.details.mythicTier = mythicTier;
 
     // Populate conditions

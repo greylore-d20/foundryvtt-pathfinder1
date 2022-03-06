@@ -79,7 +79,37 @@ export class ItemClassPF extends ItemPF {
     Hooks.call("pf1.classLevelChange", this.actor, this, curLevel, newLevel);
   }
 
+  prepareBaseData() {
+    super.prepareBaseData();
+    const itemData = this.data.data;
+    // Reset cached HD/MT
+    // Can't prepare here as the actor uses this info before item preparation is done.
+    itemData._hitDice = undefined;
+    itemData._mythicTier = undefined;
+  }
+
   get subType() {
     return this.data.data.classType;
+  }
+
+  get hitDice() {
+    const itemData = this.data.data;
+    if (itemData.hitDice === undefined) {
+      if (itemData.customHD?.length > 0) {
+        itemData.hitDice = RollPF.safeRoll(itemData.customHD, this.getRollData()).total;
+      } else {
+        itemData.hitDice = this.subType === "mythic" ? 0 : itemData.level;
+      }
+    }
+
+    return itemData.hitDice;
+  }
+
+  get mythicTier() {
+    const itemData = this.data.data;
+    if (itemData.mythicTier === undefined) {
+      itemData.mythicTier = this.subType === "mythic" ? itemData.level : 0;
+    }
+    return itemData.mythicTier;
   }
 }

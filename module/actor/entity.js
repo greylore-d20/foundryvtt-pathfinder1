@@ -3424,6 +3424,8 @@ export class ActorPF extends ActorBasePF {
           level: cls.data.data.level,
           name: cls.name,
           hd: cls.data.data.hd,
+          hitDice: cls.hitDice,
+          mythicTier: cls.mythicTier,
           bab: cls.data.data.bab,
           hp: healthConfig.auto,
           savingThrows: {

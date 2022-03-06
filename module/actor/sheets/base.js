@@ -476,7 +476,7 @@ export class ActorSheetPF extends ActorSheet {
       const totalLevels = this.document.items
         .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
         .reduce((cur, o) => {
-          return cur + o.data.data.level;
+          return cur + o.hitDice;
         }, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
       sourceData.push({

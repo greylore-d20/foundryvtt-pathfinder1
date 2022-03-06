@@ -127,9 +127,9 @@ export const PF1 = {
    * The formulae for BAB progressions
    */
   classBABFormulas: {
-    low: "floor(@level * 0.5)",
-    med: "floor(@level * 0.75)",
-    high: "@level",
+    low: "floor(@hitDice * 0.5)",
+    med: "floor(@hitDice * 0.75)",
+    high: "@hitDice",
     custom: "0",
   },
 
@@ -138,20 +138,20 @@ export const PF1 = {
    */
   classSavingThrowFormulas: {
     base: {
-      low: "floor(@level / 3)",
-      high: "2 + floor(@level / 2)",
+      low: "floor(@hitDice / 3)",
+      high: "2 + floor(@hitDice / 2)",
     },
     prestige: {
-      low: "floor((1 + @level) / 3)",
-      high: "floor((1 + @level) / 2)",
+      low: "floor((1 + @hitDice) / 3)",
+      high: "floor((1 + @hitDice) / 2)",
     },
     npc: {
-      low: "floor(@level / 3)",
-      high: "2 + floor(@level / 2)",
+      low: "floor(@hitDice / 3)",
+      high: "2 + floor(@hitDice / 2)",
     },
     racial: {
-      low: "floor(@level / 3)",
-      high: "2 + floor(@level / 2)",
+      low: "floor(@hitDice / 3)",
+      high: "2 + floor(@hitDice / 2)",
     },
     mythic: {
       low: "0",

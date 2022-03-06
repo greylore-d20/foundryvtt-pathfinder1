@@ -515,11 +515,13 @@ export class ActorPF extends ActorBasePF {
         const v = Math.floor(
           classes.reduce((cur, obj) => {
             const babScale = getProperty(obj, "data.data.bab") || "";
-            if (babScale === "high") return cur + obj.data.data.level;
-            if (babScale === "med") return cur + obj.data.data.level * 0.75;
-            if (babScale === "low") return cur + obj.data.data.level * 0.5;
-            if (babScale === "custom")
-              return cur + RollPF.safeRoll(obj.data.data.babFormula || "0", { level: obj.data.data.level }).total;
+            if (babScale === "high") return cur + obj.hitDice;
+            if (babScale === "med") return cur + obj.hitDice * 0.75;
+            if (babScale === "low") return cur + obj.hitDice * 0.5;
+            if (babScale === "custom") {
+              const clsRollData = { level: obj.data.data.level, hitDice: obj.hitDice };
+              return cur + RollPF.safeRoll(obj.data.data.babFormula || "0", clsRollData).total;
+            }
             return cur;
           }, 0)
         );
@@ -540,7 +542,7 @@ export class ActorPF extends ActorBasePF {
           } else {
             formula = CONFIG.PF1.classBABFormulas[babType] || "0";
           }
-          const v = RollPF.safeRoll(formula, { level: obj.data.data.level }).total;
+          const v = RollPF.safeRoll(formula, { level: obj.data.data.level, hitDice: obj.hitDice }).total;
 
           if (v !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({
@@ -3440,6 +3442,10 @@ export class ActorPF extends ActorBasePF {
           },
         };
 
+        const clsRollData = {
+          level: cls.data.data.level,
+          hitDice: cls.hitDice,
+        };
         for (const k of Object.keys(result.classes[tag].savingThrows)) {
           let formula;
           const saveType = cls.data.data.savingThrows[k].value;
@@ -3449,7 +3455,7 @@ export class ActorPF extends ActorBasePF {
             formula = CONFIG.PF1.classSavingThrowFormulas[saveType];
           }
           if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, { level: cls.data.data.level }).total;
+          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, clsRollData).total;
 
           // Set base saving throws
           baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
@@ -3787,7 +3793,7 @@ export class ActorPF extends ActorBasePF {
     const totalLevels = this.items
       .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.data.classType))
       .reduce((cur, o) => {
-        return cur + o.data.data.level;
+        return cur + o.hitDice;
       }, 0);
     result.max += Math.ceil(totalLevels / 2);
 

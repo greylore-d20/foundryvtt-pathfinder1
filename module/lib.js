@@ -953,3 +953,41 @@ export const getFirstActiveGM = function () {
 export const isGMActive = function () {
   return game.users.some((u) => u.active && u.isGM);
 };
+
+/**
+ * @param formula
+ * @param type
+ * @param rollData
+ */
+export function calculateRangeFormula(formula, type = "ft", rollData = {}) {
+  switch (type) {
+    case "melee":
+    case "touch":
+      return getProperty(rollData, "range.melee") ?? 0;
+    case "reach":
+      return getProperty(rollData, "range.reach") ?? 0;
+    case "close":
+      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.close, rollData).total;
+    case "medium":
+      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.medium, rollData).total;
+    case "long":
+      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.long, rollData).total;
+    case "mi":
+      return RollPF.safeRoll(formula, rollData).total * 5_280;
+    default:
+      return RollPF.safeRoll(formula, rollData).total;
+  }
+}
+
+/**
+ * Calculates range formula and converts it.
+ *
+ * @param formula
+ * @param type
+ * @param rollData
+ */
+export function calculateRange(formula, type = "ft", rollData = {}) {
+  if (type == null) return null;
+  const value = calculateRangeFormula(formula, type, rollData);
+  return convertDistance(value)[0];
+}

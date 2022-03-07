@@ -1,4 +1,3 @@
-import { ItemPF } from "./item/entity.js";
 import { ChatMessagePF } from "./sidebar/chat-message.js";
 import { getSkipActionPrompt } from "./settings.js";
 import { alterChatTargetAttribute } from "./socket.js";
@@ -125,7 +124,7 @@ export const hideGMSensitiveInfo = function (app, html, data) {
 export const addChatCardTitleGradient = async function (app, html, data) {
   const card = html.find(".chat-card")[0];
   if (!card) return;
-  const actor = await ItemPF._getChatCardActor(card);
+  const actor = await CONFIG.Item.documentClasses.default._getChatCardActor(card);
   if (!actor) return;
   const item = actor.items.get(card.dataset.itemId);
   if (!item) return;

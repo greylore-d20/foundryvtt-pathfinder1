@@ -2,7 +2,6 @@ import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
 import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, calculateRange } from "../lib.js";
-import { ActorPF } from "../actor/entity.js";
 import { ItemChange } from "./components/change.js";
 import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
@@ -2238,7 +2237,7 @@ export class ItemPF extends ItemBasePF {
       if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
 
       const value = button.dataset.value;
-      if (!isNaN(parseInt(value))) ActorPF.applyDamage(parseInt(value), { asNonlethal });
+      if (!isNaN(parseInt(value))) CONFIG.Actor.documentClasses.default.applyDamage(parseInt(value), { asNonlethal });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {

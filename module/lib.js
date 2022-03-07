@@ -1,6 +1,4 @@
 import { SemanticVersion } from "./semver.js";
-import { ItemSpellPF } from "./item/types/spell.js";
-import { ActorPF } from "./actor/entity.js";
 
 /**
  * Creates a tag from a string.
@@ -228,7 +226,11 @@ export const sizeReach = function (size = "M", reach = false, stature = "tall") 
   if (typeof size === "number") size = Object.values(CONFIG.PF1.sizeChart)[size];
   size = Object.entries(CONFIG.PF1.sizeChart).find((o) => o[1] === size)[0];
 
-  return [new NumericTerm({ number: ActorPF.getReach(size, stature)[reach ? "reach" : "melee"] })];
+  return [
+    new NumericTerm({
+      number: CONFIG.Actor.documentClasses.default.getReach(size, stature)[reach ? "reach" : "melee"],
+    }),
+  ];
 };
 
 /**
@@ -483,7 +485,7 @@ export const naturalSort = function (arr, propertyKey = "") {
 };
 
 export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
-  const slcl = ItemSpellPF.getMinimumCasterLevelBySpellData(itemData.data);
+  const slcl = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData.data);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
     name: itemData.name,
     sl: slcl[0],
@@ -534,7 +536,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
 };
 
 export const createConsumableSpell = async function (itemData, type) {
-  const data = await ItemSpellPF.toConsumable(itemData, type);
+  const data = await CONFIG.Item.documentClasses.spell.toConsumable(itemData, type);
 
   if (data._id) delete data._id;
   return data;

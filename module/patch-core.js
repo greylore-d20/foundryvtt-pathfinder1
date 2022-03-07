@@ -1,4 +1,3 @@
-import { addCombatTrackerContextOptions } from "./combat.js";
 import { customRolls } from "./sidebar/chat-message.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";

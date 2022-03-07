@@ -1651,7 +1651,7 @@ export class ItemPF extends ItemBasePF {
 
     // Prompt measure template
     let measureResult;
-    if (shared.useMeasureTemplate) {
+    if (shared.useMeasureTemplate && canvas.scene) {
       measureResult = await _callFn("promptMeasureTemplate");
       if (!measureResult.result) return;
     }

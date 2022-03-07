@@ -120,21 +120,19 @@ export class CombatPF extends Combat {
   /**
    * @override
    */
-  async rollInitiative(
-    ids,
-    { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null, rollMode } = {}
-  ) {
+  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null } = {}) {
     if (skipDialog == null) skipDialog = getSkipActionPrompt();
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
-    const currentId = this.combatant.id;
+    const currentId = this.combatant?.id;
+    let chatRollMode = game.settings.get("core", "rollMode");
     if (!formula) formula = this._getInitiativeFormula(this.combatant.actor);
 
     let bonus = "",
       stop = false;
     if (!skipDialog) {
-      const dialogData = await Combat.implementation.showInitiativeDialog(formula, rollMode);
-      rollMode = dialogData.rollMode;
+      const dialogData = await Combat.implementation.showInitiativeDialog(formula);
+      chatRollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
       stop = dialogData.stop || false;
     }
@@ -147,23 +145,23 @@ export class CombatPF extends Combat {
         const result = await results;
         const [updates, messages] = result;
 
-        // Get Combatant data
+        // Get Combatant data (non-strictly)
         const c = this.combatants.get(id);
-        if (!c) return results;
+        if (!c || !c.isOwner) return results;
+
+        // Produce an initiative roll for the Combatant
         const rollData = c.actor?.getRollData() ?? {};
         formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
-
         rollData.bonus = bonus;
-        // Add bonus
         if (bonus.length > 0 && i === 0) {
           formula += " + @bonus";
         }
 
-        // Roll initiative
+        // Produce an initiative roll for the Combatant
         const isHidden = c.token.hidden || c.hidden;
-        rollMode ??= messageOptions.rollMode ?? (isHidden ? "gmroll" : game.settings.get("core", "rollMode"));
-        const roll = RollPF.safeRoll(formula, rollData, "initiative");
-        delete rollData.bonus; // Cleanup
+        chatRollMode ??= messageOptions.rollMode ?? (isHidden ? "gmroll" : game.settings.get("core", "rollMode"));
+        const roll = await RollPF.create(formula, rollData).evaluate();
+        delete rollData.bonus;
         if (roll.err) ui.notifications.warn(roll.err.message);
         updates.push({ _id: id, initiative: roll.total });
 
@@ -185,7 +183,7 @@ export class CombatPF extends Combat {
           {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-            rollMode: rollMode,
+            rollMode: chatRollMode,
             sound: CONFIG.sounds.dice,
             speaker: {
               scene: canvas.scene.id,
@@ -218,17 +216,15 @@ export class CombatPF extends Combat {
     await this.updateEmbeddedDocuments("Combatant", updates);
 
     // Ensure the turn order remains with the same combatant
-    if (updateTurn) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
+    if (updateTurn && currentId) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
 
     // Create multiple chat messages
-    await ChatMessage.create(messages);
-
-    // Return the updated Combat
+    await ChatMessage.implementation.create(messages);
     return this;
   }
 
-  static showInitiativeDialog = function (formula = null, rollMode) {
-    rollMode ??= game.settings.get("core", "rollMode");
+  static showInitiativeDialog = function (formula = null) {
+    let rollMode = game.settings.get("core", "rollMode");
     return new Promise((resolve) => {
       const template = "systems/pf1/templates/chat/roll-dialog.hbs";
       const dialogData = {

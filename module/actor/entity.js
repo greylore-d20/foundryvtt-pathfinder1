@@ -974,6 +974,7 @@ export class ActorPF extends ActorBasePF {
   refreshDerivedData() {
     // Reset maximum dexterity bonus
     this.data.data.attributes.maxDexBonus = null;
+    this.data.data.abilities.dex.maxBonus = this.data.data.abilities.dex.mod;
 
     {
       // Compute encumbrance
@@ -992,6 +993,10 @@ export class ActorPF extends ActorBasePF {
         this.data.data.attributes.maxDexBonus = Math.min(
           encPen.maxDexBonus ?? Number.POSITIVE_INFINITY,
           gearPen.maxDexBonus ?? Number.POSITIVE_INFINITY
+        );
+        this.data.data.abilities.dex.maxBonus = Math.min(
+          this.data.data.abilities.dex.maxBonus,
+          this.data.data.attributes.maxDexBonus
         );
       }
     }

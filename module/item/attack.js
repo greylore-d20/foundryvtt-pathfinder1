@@ -448,6 +448,7 @@ export const addAttacks = async function (shared) {
       ], //`
     };
 
+    shared.rollData.attackCount = a;
     // Create attack object
     const attack = new ChatAttack(this, {
       label: atk.label,
@@ -482,6 +483,9 @@ export const addAttacks = async function (shared) {
     shared.chatAttacks.push(attack);
     shared.ammoUsed++;
   }
+
+  // Cleanup rollData
+  delete shared.rollData.attackCount;
 };
 
 /**

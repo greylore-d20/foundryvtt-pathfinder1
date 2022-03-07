@@ -294,8 +294,14 @@ export class ItemPF extends ItemBasePF {
    */
   get effect() {
     return this.actor.effects.find((o) => {
-      const origin = o.data.origin.split(".");
-      if (origin[2] === "Item" && origin[3] === this.id) return true;
+      const originItem = o.getFlag("pf1", "origin")?.item;
+      if (originItem === this.id) return true;
+
+      // DEPRECATED: Use origin flag instead.
+      const re = o.data.origin.match(/Item\.(?<itemId>\w+)/),
+        origin = re?.groups.itemId;
+
+      if (origin === this.id) return true;
       return false;
     });
   }
@@ -1118,7 +1124,12 @@ export class ItemPF extends ItemBasePF {
         let effectUpdates = {};
         // Update token effects
         if (diff["data.hideFromToken"] != null) {
-          const fx = actor.effects.find((fx) => fx.data.origin === this.uuid);
+          const fx = actor.effects.find((fx) => {
+            const originId = fx.getFlag("pf1", "origin")?.item;
+            console.log("AE:", originId, this.id);
+            if (originId === this.id) return true;
+            else return fx.data.origin === this.uuid; // DEPRECATED: Use origin flag only.
+          });
           if (fx) {
             effectUpdates[fx.id] = effectUpdates[fx.id] || {
               "flags.pf1.show": !diff["data.hideFromToken"],
@@ -1264,6 +1275,7 @@ export class ItemPF extends ItemBasePF {
       label: this.name,
       icon: this.img,
       origin: this.uuid,
+      flags: { pf1: { origin: { item: this.id } } },
       disabled: !this.isActive,
       duration: {},
     };

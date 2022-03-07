@@ -819,7 +819,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     if (isLinkedToken) {
       const promises = [];
       if (item.data.type === "buff" && item.data.data.active) {
-        actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
+        actor.effects.find((e) => e.getFlag("pf1", "origin")?.item === item.id)?.delete();
         const tokens = actor.getActiveTokens();
         for (const token of tokens) {
           promises.push(token.toggleEffect(item.data.img, { active: false }));

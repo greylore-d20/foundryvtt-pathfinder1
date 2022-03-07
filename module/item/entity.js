@@ -1102,34 +1102,6 @@ export class ItemPF extends ItemBasePF {
     // Update tokens and the actor using this item
     const actor = this.parent;
     if (actor) {
-      // Update actor
-      {
-        let effectUpdates = {};
-        // Update token effects
-        if (diff["data.hideFromToken"] != null) {
-          const fx = actor.effects.find((fx) => {
-            const originId = fx.getFlag("pf1", "origin")?.item;
-            console.log("AE:", originId, this.id);
-            if (originId === this.id) return true;
-            else return fx.data.origin === this.uuid; // DEPRECATED: Use origin flag only.
-          });
-          if (fx) {
-            effectUpdates[fx.id] = effectUpdates[fx.id] || {
-              "flags.pf1.show": !diff["data.hideFromToken"],
-            };
-          }
-        }
-
-        // Update effects
-        effectUpdates = Object.entries(effectUpdates).reduce((cur, o) => {
-          const obj = o[1];
-          obj._id = o[0];
-          cur.push(obj);
-          return cur;
-        }, []);
-        if (effectUpdates.length) await actor.updateEmbeddedDocuments("ActiveEffect", effectUpdates);
-      }
-
       // Update tokens
       const promises = [];
       const tokens = canvas.tokens.placeables.filter((token) => token.actor?.id === actor.id);

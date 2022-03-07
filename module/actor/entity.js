@@ -1749,10 +1749,11 @@ export class ActorPF extends ActorBasePF {
   }
 
   _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+    super._onCreateEmbeddedDocuments(...arguments);
+
     if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons({ render: false });
     }
-    super._onCreateEmbeddedDocuments(...arguments);
   }
 
   _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
@@ -1780,18 +1781,16 @@ export class ActorPF extends ActorBasePF {
       result = documents;
     }
 
-    if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons({ render: false });
-    }
-
     super._preUpdateEmbeddedDocuments(...arguments);
 
-    if (this.sheet) this.sheet.render();
-
-    // Redraw token effects
-    const tokens = this.getActiveTokens();
-    for (const t of tokens) {
-      t.drawEffects();
+    if (userId === game.user.id && embeddedName === "Item") {
+      this.toggleConditionStatusIcons({ render: false }).then(() => {
+        // Redraw token effects
+        const tokens = this.getActiveTokens();
+        for (const t of tokens) {
+          t.drawEffects();
+        }
+      });
     }
   }
 

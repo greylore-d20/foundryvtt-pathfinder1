@@ -1912,6 +1912,12 @@ export const PF1 = {
     vermin: "PF1.CreatureTypeVermin",
   },
 
+  spellRangeFormulas: {
+    close: "25 + floor(@cl / 2) * 5",
+    medium: "100 + @cl * 10",
+    long: "400 + @cl * 40",
+  },
+
   /**
    * An array containing the damage dice progression for size adjustments
    */

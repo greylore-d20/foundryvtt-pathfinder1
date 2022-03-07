@@ -1,4 +1,5 @@
 import { ItemPF } from "../entity.js";
+import { calculateRange } from "../../lib";
 
 export class ItemSpellPF extends ItemPF {
   prepareData() {
@@ -382,22 +383,10 @@ export class ItemSpellPF extends ItemPF {
     data["data.consumableType"] = type;
 
     // Set range
-    data["data.range.units"] = origData.data.range.units;
-    data["data.range.value"] = origData.data.range.value;
-    switch (origData.data.range.units) {
-      case "close":
-        data["data.range.value"] = RollPF.safeRoll("25 + floor(@cl / 2) * 5", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-      case "medium":
-        data["data.range.value"] = RollPF.safeRoll("100 + @cl * 10", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-      case "long":
-        data["data.range.value"] = RollPF.safeRoll("400 + @cl * 40", { cl: origData.cl }).total.toString();
-        data["data.range.units"] = "ft";
-        break;
-    }
+    data["data.range.units"] = calculateRange(origData.data.range.value, origData.data.range.units, {
+      cl: origData.cl,
+    });
+    data["data.range.value"] = "ft";
 
     // Set name
     if (type === "wand") {

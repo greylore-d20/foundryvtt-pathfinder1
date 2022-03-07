@@ -1,7 +1,7 @@
 import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, linkData, convertDistance, convertWeight, convertWeightBack } from "../lib.js";
+import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, calculateRange } from "../lib.js";
 import { ActorPF } from "../actor/entity.js";
 import { ItemChange } from "./components/change.js";
 import { ItemScriptCall } from "./components/script-call.js";
@@ -217,23 +217,7 @@ export class ItemPF extends ItemBasePF {
 
     if (rangeType == null) return null;
 
-    switch (rangeType) {
-      case "melee":
-      case "touch":
-        return convertDistance(getProperty(this.getRollData(), "range.melee") || 0)[0];
-      case "reach":
-        return convertDistance(getProperty(this.getRollData(), "range.reach") || 0)[0];
-      case "close":
-        return convertDistance(RollPF.safeRoll("25 + floor(@cl / 2) * 5", this.getRollData()).total)[0];
-      case "medium":
-        return convertDistance(RollPF.safeRoll("100 + @cl * 10", this.getRollData()).total)[0];
-      case "long":
-        return convertDistance(RollPF.safeRoll("400 + @cl * 40", this.getRollData()).total)[0];
-      case "mi":
-        return convertDistance(range * 5280)[0];
-      default:
-        return convertDistance(range)[0];
-    }
+    return calculateRange(range, rangeType, this.getRollData());
   }
 
   get minRange() {
@@ -1414,28 +1398,12 @@ export class ItemPF extends ItemBasePF {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (data.range != null) {
-        let rangeValue = [0, "ft"];
-        switch (data.range.units) {
-          case "close":
-            rangeValue = convertDistance(25 + Math.floor(rollData.cl / 2) * 5);
-            break;
-          case "medium":
-            rangeValue = convertDistance(100 + rollData.cl * 10);
-            break;
-          case "long":
-            rangeValue = convertDistance(400 + rollData.cl * 40);
-            break;
-          case "ft":
-          case "mi":
-            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total, data.range.units);
-            break;
-          case "spec":
-            rangeValue = convertDistance(RollPF.safeRoll(data.range.value || "0", rollData).total);
-            break;
-        }
+        const range = data.range.value,
+          units = data.range.units,
+          rangeValue = calculateRange(range, units, rollData);
         dynamicLabels.range =
           rangeValue[0] > 0
-            ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue[0]} ${CONFIG.PF1.measureUnits[rangeValue[1]]}`)
+            ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue} ${CONFIG.PF1.measureUnits[units]}`)
             : null;
       }
 

@@ -2,7 +2,7 @@ import { ActorBasePF } from "./base.js";
 import { getAbilityModifier } from "./lib.mjs";
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, convertDistance, convertWeight, enrichHTMLUnrolled } from "../lib.js";
+import { createTag, convertDistance, convertWeight, enrichHTMLUnrolled, calculateRange } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
@@ -956,9 +956,9 @@ export class ActorPF extends ActorBasePF {
       // Set spellbook range
       const cl = spellbook.cl.total;
       spellbook.range = {
-        close: convertDistance(25 + 5 * Math.floor(cl / 2))[0],
-        medium: convertDistance(100 + 10 * cl)[0],
-        long: convertDistance(400 + 40 * cl)[0],
+        close: calculateRange(null, "close", { cl }),
+        medium: calculateRange(null, "medium", { cl }),
+        long: convertDistance(null, "long", { cl }),
       };
     }
   }

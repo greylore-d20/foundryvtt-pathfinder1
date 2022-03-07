@@ -1,4 +1,4 @@
-import { convertDistance } from "../lib.js";
+import { convertDistance, calculateRange } from "../lib.js";
 
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("concat", (...args) => {
@@ -46,39 +46,7 @@ export const registerHandlebarsHelpers = function () {
 
     if (rangeType == null) return null;
 
-    const toFeet = () => {
-      let feet;
-      switch (rangeType) {
-        case "melee":
-        case "touch":
-          return rollData.range.melee || 0;
-        case "reach":
-          return rollData.range.reach || 0;
-        case "close":
-          feet = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData);
-          break;
-        case "medium":
-          feet = RollPF.safeRoll("100 + @cl * 10", rollData);
-          break;
-        case "long":
-          feet = RollPF.safeRoll("400 + @cl * 40", rollData);
-          break;
-        case "mi":
-          return range * 5280; // TODO: Should remain as miles for shortness
-        case "ft":
-          feet = RollPF.safeRoll(range, rollData);
-          break;
-        default:
-          return range;
-      }
-      if (feet.err) {
-        console.log(feet.err, item);
-        return "[x]";
-      }
-      return feet.total;
-    };
-
-    const ft = toFeet();
+    const ft = calculateRange(range, rangeType, rollData);
     if (ft && typeof ft !== "string") {
       const rv = convertDistance(ft);
       return `${rv[0]} ${rv[1]}`;

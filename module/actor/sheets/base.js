@@ -1180,6 +1180,8 @@ export class ActorSheetPF extends ActorSheet {
     let prevValue = el.innerText;
     if (el.classList.contains("placeholder")) prevValue = "";
 
+    const noCap = el.classList.contains("no-value-cap");
+
     const name = el.getAttribute("name");
     let maxValue;
     if (name) {
@@ -1187,7 +1189,7 @@ export class ActorSheetPF extends ActorSheet {
       prevValue = getProperty(this.document.data, name) ?? "";
       if (prevValue && typeof prevValue !== "string") prevValue = prevValue.toString();
 
-      if (name.endsWith(".value")) {
+      if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
         maxValue = getProperty(this.document.data, maxName);
       }

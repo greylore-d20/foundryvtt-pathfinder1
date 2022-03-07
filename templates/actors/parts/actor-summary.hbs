@@ -278,9 +278,10 @@
         <li class='flexcol land tooltip'>
           <div class="tooltipcontent">
             @attributes.speed.land.total : {{convertDistance data.attributes.speed.land.total}}
-            {{#if sourceDetails.data.attributes.speed.land.total.length}}
+            {{#if (or sourceDetails.data.attributes.speed.land.base.length sourceDetails.data.attributes.speed.land.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.land.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.land.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.land.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedLand_Short"}}</h4>
@@ -291,9 +292,10 @@
         <li class='flexcol climb tooltip'>
           <div class="tooltipcontent">
             @attributes.speed.climb.total : {{convertDistance data.attributes.speed.climb.total}}
-            {{#if sourceDetails.data.attributes.speed.climb.total.length}}
+            {{#if (or sourceDetails.data.attributes.speed.climb.base.length sourceDetails.data.attributes.speed.climb.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.climb.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.climb.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.climb.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedClimb_Short"}}</h4>
@@ -304,9 +306,10 @@
         <li class='flexcol swim tooltip'>
           <div class="tooltipcontent">
             @attributes.speed.swim.total : {{convertDistance data.attributes.speed.swim.total}}
-            {{#if sourceDetails.data.attributes.speed.swim.total.length}}
+            {{#if (or sourceDetails.data.attributes.swim.land.base.length sourceDetails.data.attributes.swim.land.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.swim.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.swim.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.swim.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
 
@@ -318,9 +321,10 @@
         <li class='flexcol burrow tooltip'>
           <div class="tooltipcontent">
             @attributes.speed.burrow.total : {{convertDistance data.attributes.speed.burrow.total}}
-            {{#if sourceDetails.data.attributes.speed.burrow.total.length}}
+            {{#if (or sourceDetails.data.attributes.speed.burrow.base.length sourceDetails.data.attributes.speed.burrow.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.burrow.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.burrow.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.burrow.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedBurrow_Short"}}</h4>
@@ -332,9 +336,10 @@
           <div class="tooltipcontent">
             @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
             @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
-            {{#if sourceDetails.data.attributes.speed.fly.total.length}}
+            {{#if (or sourceDetails.data.attributes.speed.fly.base.length sourceDetails.data.attributes.speed.fly.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.fly.total as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.fly.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.data.attributes.speed.fly.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedFly_Short"}}</h4>

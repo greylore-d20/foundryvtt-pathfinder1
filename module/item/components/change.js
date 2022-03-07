@@ -165,7 +165,7 @@ export class ItemChange {
         switch (operator) {
           case "add":
             {
-              const base = getProperty(actor.data, t);
+              const base = getProperty(actor.data, t) ?? 0;
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
                   setProperty(actor.data, t, base + value);

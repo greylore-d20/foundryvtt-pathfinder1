@@ -474,15 +474,20 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       }
       return result;
     case "landSpeed":
-      return "data.attributes.speed.land.total";
+      if (changeType === "base") return "data.attributes.speed.land.base";
+      return "data.attributes.speed.land.add";
     case "climbSpeed":
-      return "data.attributes.speed.climb.total";
+      if (changeType === "base") return "data.attributes.speed.climb.base";
+      return "data.attributes.speed.climb.add";
     case "swimSpeed":
-      return "data.attributes.speed.swim.total";
+      if (changeType === "base") return "data.attributes.speed.swim.base";
+      return "data.attributes.speed.swim.add";
     case "burrowSpeed":
-      return "data.attributes.speed.burrow.total";
+      if (changeType === "base") return "data.attributes.speed.burrow.base";
+      return "data.attributes.speed.burrow.add";
     case "flySpeed":
-      return "data.attributes.speed.fly.total";
+      if (changeType === "base") return "data.attributes.speed.fly.base";
+      return "data.attributes.speed.fly.add";
     case "cmb":
       return "data.attributes.cmb.bonus";
     case "cmd":
@@ -776,7 +781,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     if (base > 0) {
-      getSourceInfo(this.sourceInfo, `data.attributes.speed.${k}.total`).positive.push({
+      getSourceInfo(this.sourceInfo, `data.attributes.speed.${k}.base`).positive.push({
         value: base,
         name: game.i18n.localize("PF1.Base"),
       });

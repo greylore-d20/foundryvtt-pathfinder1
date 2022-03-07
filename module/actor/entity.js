@@ -1000,6 +1000,13 @@ export class ActorPF extends ActorBasePF {
         );
       }
     }
+
+    // Add speed parts together
+    {
+      for (const [k, v] of Object.entries(this.data.data.attributes.speed)) {
+        v.total = (v.base ?? 0) + (v.add ?? 0);
+      }
+    }
   }
 
   /**

@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.80.10 - 2022-3-7
+
+### Bug Fixes
+
+- Script changes could not end in comment or few other forms of valid code.
+- Spellbook preparation was done twice.
+- Bad class level modification formula could brick actors. ([1272](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1272))
+- Change IDs were retained, causing conflicts and nonfunctional Changes, especially when duplicating items. ([1290](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1290))
+- Attacks & spells would fail with no scene viewed. ([1301](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1301))
+- Experience past what was needed to level was lost. ([1256](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1256))
+- Custom saving throws in class were nonfunctional. ([1255](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1255))
+- Players could reroll initiative if their initiative was exactly 0.
+- Initiative rolls ignored current roll mode ([1044](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1044))
+- Context notes rolled dice on actor sheet. ([1261](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1261))
+- @attackCount was undefined in attack roll data. ([1283](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1283))
+- @powerAttackBonus and @powerAttackPenalty were missing. ([1273](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1273))
+- Rapid Shot Conditional checkbox did nothing ([1254](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1254))
+- Sheet lockup with search in combination of some other actions. ([1265](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1265))
+- Template highlight was in use in unsupported grid types. ([1276](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1276))
+- Macro script calls referencing no longer existing macros caused the item to break ([1298](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1298))
+- Base modifier changes to speed didn't apply to the actual base speed ([1278](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1278))
+- Toggling hide from token on buffs caused errors. ([1306](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1306))
+- Permission error to update a token was shown to players when unowned linked actor changed size.
+
+### Changelog
+
+- Custom HD formula support.
+- Initiative tiebreaker is now labeled and optional.
+- Clicking on linked item in item sheet links tab opens its sheet. ([1286](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1286))
+
+### Compendium
+
+- Remove bestiaries
+- Uncanny Dodge incorrectly gave additional flat-footed AC unhindered by max dex bonus ([1293](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1293))
+
+### Localization
+
+- Update the German translation
+
+### API
+
+- Make attack rolls asynchronous for custom roll parsers
+
 ## 0.80.9 - 2022-1-29
 
 ### Bug Fixes

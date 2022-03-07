@@ -708,7 +708,7 @@ export const addDefaultChanges = function (changes) {
           formula = CONFIG.PF1.classSavingThrowFormulas[classType][saveType];
         }
         if (formula == null) formula = "0";
-        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level }).total);
+        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level, hitDice: c.hitDice }).total);
 
         // Add change
         changes.push(

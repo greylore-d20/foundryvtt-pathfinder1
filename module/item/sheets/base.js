@@ -611,8 +611,13 @@ export class ItemSheetPF extends ItemSheet {
             // Obtain macro info
             if (o.type === "macro") {
               const m = await fromUuid(o.value);
-              o.name = m.data.name;
-              o.img = m.data.img;
+              if (m == null) {
+                o.name = `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
+                o.img = "icons/svg/hazard.svg";
+              } else {
+                o.name = m.data.name;
+                o.img = m.data.img;
+              }
             }
 
             // Add data

@@ -81,20 +81,23 @@ const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoi
 TokenHUD.prototype._getStatusEffectChoices = function () {
   const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
-  Object.entries(this.object.actor._calcBuffActiveEffects()).forEach((obj, ind) => {
-    const [idx, buff] = obj;
-    if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;
-    if (buff) {
-      buffs[buff.icon] = {
-        id: buff.id,
-        title: buff.label,
-        src: buff.icon,
-        isActive: buff.active,
-        isOverlay: false,
-        cssClass: buff.active ? "active" : "",
-      };
-    }
-  });
+  // Only add buff textures for actors with that function (so not e.g. basic actors)
+  if (this.object.actor._calcBuffActiveEffects) {
+    Object.values(this.object.actor._calcBuffActiveEffects()).forEach((obj, ind) => {
+      const buff = obj;
+      if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;
+      if (buff) {
+        buffs[buff.icon] = {
+          id: buff.id,
+          title: buff.label,
+          src: buff.icon,
+          isActive: buff.active,
+          isOverlay: false,
+          cssClass: buff.active ? "active" : "",
+        };
+      }
+    });
+  }
   return Object.assign({}, core, buffs);
 };
 

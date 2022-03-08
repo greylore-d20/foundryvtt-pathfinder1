@@ -622,7 +622,9 @@ Hooks.on("canvasInit", function () {
     // Toggle token condition icons
     if (game.user.isGM) {
       canvas.tokens.placeables.forEach((t) => {
-        if (t.actor) t.actor.toggleConditionStatusIcons();
+        if (!t.actor) return;
+        if (!t.actor.toggleConditionStatusIcons) return; // Don't do anything for actors without this function (e.g. basic actors)
+        t.actor.toggleConditionStatusIcons();
       });
     }
   });
@@ -733,8 +735,9 @@ Hooks.on("createToken", (scene, token, options, userId) => {
 });
 
 Hooks.on("preCreateToken", async (scene, token, options, userId) => {
-  const actor = game.actors.get(token.actorId),
-    buffTextures = Object.values(actor?._calcBuffActiveEffects() ?? []).map((b) => b.icon);
+  const actor = game.actors.get(token.actorId);
+  if (!actor?._calcBuffActiveEffects) return; // Don't do anything for actors without this function (e.g. basic actors)
+  const buffTextures = Object.values(actor?._calcBuffActiveEffects() ?? []).map((b) => b.icon);
   for (const icon of buffTextures) if (icon) await loadTexture(icon);
 });
 
@@ -1015,7 +1018,9 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
       for (const t of canvas.tokens.placeables) {
         // Skip tokens in combat to avoid too early expiration
         if (t.combatant?.combat?.started) continue;
-        t.actor?.expireActiveEffects();
+        // Don't do anything for actors without this function (e.g. basic actors)
+        if (!t.actor?.expireActiveEffects) continue;
+        t.actor.expireActiveEffects();
       }
     }
   };

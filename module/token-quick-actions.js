@@ -7,6 +7,7 @@ export class TokenQuickActions {
     const actor = token.actor;
 
     if (actor == null) return;
+    if (!actor.getQuickActions) return;
 
     const actualChargeCost = (i) => Math.floor(i.charges / i.chargeCost),
       actualMaxCharge = (i) => Math.floor(i.maxCharges / i.chargeCost);

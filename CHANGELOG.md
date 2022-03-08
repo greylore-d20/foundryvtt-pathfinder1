@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.80.11 - 2022-3-8
+
+### Bug Fixes
+
+- Sheet failed to render under certain circumstances. ([1308](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1308))
+- Long spell range was broken.
+- Hidden tokens initiative roll weren't being hidden correctly
+- Implement property checking to prevent errors with basic actors ([1307](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1307))
+- Hide tokens from chat card targets for players that can't see them currently ([1294](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1294))
+
 ## 0.80.10 - 2022-3-7
 
 ### Bug Fixes

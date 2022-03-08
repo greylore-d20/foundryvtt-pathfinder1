@@ -79,10 +79,9 @@ export const migrateWorld = async function () {
   const packs = game.packs.filter((p) => {
     return (
       (["world", "pf1"].includes(p.metadata.package) || p.metadata.system === "pf1") &&
-      ["Actor", "Item", "Scene"].includes(p.metadata.type ?? p.metadata.entity) &&
+      ["Actor", "Item", "Scene"].includes(p.metadata.type) &&
       !p.locked
     );
-    // TODO: Remove entity after 0.8.X
   });
   for (const p of packs) {
     await migrateCompendium(p);
@@ -112,8 +111,7 @@ export const migrateWorld = async function () {
  * @returns {Promise}
  */
 export const migrateCompendium = async function (pack) {
-  // TODO: Remove entity after 0.8.X
-  const doc = pack.metadata.type ?? pack.metadata.entity;
+  const doc = pack.metadata.type;
   if (!["Actor", "Item", "Scene"].includes(doc)) return;
 
   // Begin by requesting server-side data model migration and get the migrated content
@@ -149,8 +147,9 @@ const _migrateWorldSettings = async function () {
     const config = game.settings.get("pf1", "experienceConfig") || ExperienceConfig.defaultSettings;
     config.track = oldXPTrack;
     await game.settings.set("pf1", "experienceConfig", config);
-    // Remove old config style
-    await game.settings.set("pf1", "experienceRate", "");
+    // HACK: Remove old config style for real
+    if (game.settings.settings.get("pf1", "experienceRate") !== undefined)
+      game.settings.settings.delete("pf1.experienceRate");
   }
 };
 

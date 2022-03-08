@@ -148,8 +148,7 @@ export class CompendiumBrowser extends Application {
     if (options.refresh) {
       this._currentCompendiums = game.packs
         .filter((o) => {
-          // TODO: Remove entity after 0.8.X
-          if ((o.metadata.type ?? o.metadata.entity) !== this.documentType) return false;
+          if (o.metadata.type !== this.documentType) return false;
 
           if (this.shouldSkip(o)) return false;
 

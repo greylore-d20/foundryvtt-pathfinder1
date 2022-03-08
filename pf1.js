@@ -141,7 +141,11 @@ Hooks.once("init", function () {
   game.pf1 = {
     polymorphism: { ActorBasePF, ItemBasePF },
     documents: { ActorPF, ItemPF, TokenDocumentPF },
-    entities: { ActorPF, ItemPF, TokenDocumentPF }, // Deprecated
+    get entities() {
+      // OBSOLETION WARNING
+      console.error("game.pf1.entities is obsolete; please use game.pf1.documents instead.");
+      return this.documents;
+    },
     applications: {
       // Actors
       ActorSheetPF,
@@ -250,13 +254,8 @@ Hooks.once("init", function () {
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;
-  if (isMinimumCoreVersion("9.0")) {
-    CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
-    CONFIG.Canvas.layers.sight.layerClass = SightLayerPF;
-  } else {
-    CONFIG.Canvas.layers.templates = TemplateLayerPF;
-    CONFIG.Canvas.layers.sight = SightLayerPF;
-  }
+  CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
+  CONFIG.Canvas.layers.sight.layerClass = SightLayerPF;
   CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles

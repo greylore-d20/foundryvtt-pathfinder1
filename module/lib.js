@@ -58,7 +58,7 @@ export const unpackVersion = function (version) {
  */
 export const isMinimumCoreVersion = function (version) {
   // TODO: Remove after 0.8.X
-  const coreVersion = SemanticVersion.fromString(game.version ?? game.data.version);
+  const coreVersion = SemanticVersion.fromString(game.version);
   const compareVersion = SemanticVersion.fromString(version);
 
   return !coreVersion.isLowerThan(compareVersion);
@@ -752,8 +752,7 @@ function uniquePermutations(perm) {
 export const findInCompendia = function (searchTerm, options = { packs: [], type: undefined }) {
   let packs;
   if (options?.packs && options.packs.length) packs = options.packs.flatMap((o) => game.packs.get(o) ?? []);
-  else packs = game.packs.filter((o) => !options?.type || (o.metadata.type ?? o.metadata.entity) == options.type);
-  // TODO: Remove entity after 0.8.X
+  else packs = game.packs.filter((o) => !options?.type || o.metadata.type == options.type);
 
   searchTerm = searchTerm.toLocaleLowerCase();
   let found, foundDoc, foundPack;

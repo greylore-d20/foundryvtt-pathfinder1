@@ -3335,8 +3335,7 @@ export class ActorPF extends ActorBasePF {
    */
   importItemFromCollection(collection, entryId) {
     const pack = game.packs.find((p) => p.collection === collection);
-    // TODO: Remove entity after 0.8.X
-    if ((pack.metadata.type ?? pack.metadata.entity) !== "Item") return;
+    if (pack.metadata.type !== "Item") return;
 
     return pack.getDocument(entryId).then((ent) => {
       console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);

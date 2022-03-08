@@ -1,5 +1,5 @@
 export class ActiveEffectPF extends ActiveEffect {
-  async create(data, context) {
+  async create(data, context = {}) {
     const statusId = this.data["flags.core.statusId"],
       origin = this.data.origin, // DEPRECATED: Use origin flag instead.
       originItem = this.getFlag("pf1", "origin")?.item,
@@ -26,7 +26,7 @@ export class ActiveEffectPF extends ActiveEffect {
     return super.create(data, context);
   }
 
-  async delete(context) {
+  async delete(context = {}) {
     const statusId = this.getFlag("core", "statusId"),
       originItem = this.getFlag("pf1", "origin")?.item,
       re = this.data.origin?.match(/Item\.(?<itemId>\w+)/), // DEPRECATED: Use origin flag instead.

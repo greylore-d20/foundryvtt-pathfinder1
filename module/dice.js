@@ -55,7 +55,11 @@ export class DicePF {
     chatMessage = true,
     noSound = false,
     compendiumEntry = null,
+    originalOptions = {},
   }) {
+    // Call pre-roll handlers
+    Hooks.call("pf1.preRoll", ...arguments);
+
     // Handle input arguments
     flavor = flavor || title;
     let rollMode = game.settings.get("core", "rollMode");

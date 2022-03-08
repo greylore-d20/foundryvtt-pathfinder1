@@ -2009,6 +2009,7 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       fastForward: options.skipDialog === true,
       staticRoll: options.staticRoll,
@@ -2023,6 +2024,7 @@ export class ActorPF extends ActorBasePF {
       chatMessage: options.chatMessage,
       noSound: options.noSound,
       compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
+      originalOptions: options,
     });
   }
 
@@ -2050,6 +2052,7 @@ export class ActorPF extends ActorBasePF {
     if (allowed === false) return;
 
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
       dice: options.dice,
@@ -2061,6 +2064,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2118,6 +2122,7 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       parts,
       dice: options.dice,
@@ -2130,6 +2135,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2181,6 +2187,7 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       parts: changes,
       dice: options.dice,
@@ -2193,6 +2200,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2214,11 +2222,12 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
+      actor: this,
       event: event,
       dice: options.dice,
       parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
       data: rollData,
-      subject: { core: "cl" },
+      subject: { core: "cl", spellbook: spellbookKey },
       title: game.i18n.localize("PF1.CasterLevelCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2226,6 +2235,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2263,7 +2273,7 @@ export class ActorPF extends ActorBasePF {
       ],
       dice: options.dice,
       data: rollData,
-      subject: { core: "concentration" },
+      subject: { core: "concentration", spellbook: spellbookKey },
       title: game.i18n.localize("PF1.ConcentrationCheck"),
       speaker: ChatMessage.getSpeaker({ actor: this }),
       takeTwenty: false,
@@ -2271,6 +2281,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2481,11 +2492,11 @@ export class ActorPF extends ActorBasePF {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       parts,
       dice: options.dice,
       situational: true,
-      actor: this,
       data: rollData,
       subject: { save: savingThrowId },
       title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
@@ -2496,6 +2507,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 
@@ -2549,6 +2561,7 @@ export class ActorPF extends ActorBasePF {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
     return DicePF.d20Roll({
+      actor: this,
       event: options.event,
       parts,
       dice: options.dice,
@@ -2560,6 +2573,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
+      originalOptions: options,
     });
   }
 

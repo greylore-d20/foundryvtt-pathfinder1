@@ -1776,13 +1776,7 @@ export class ActorPF extends ActorBasePF {
     super._onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId);
 
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons({ render: false }).then(() => {
-        // Redraw token effects
-        const tokens = this.getActiveTokens();
-        for (const t of tokens) {
-          t.drawEffects();
-        }
-      });
+      this.toggleConditionStatusIcons({ render: false });
     }
   }
 

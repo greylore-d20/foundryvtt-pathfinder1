@@ -962,7 +962,7 @@ export class ActorPF extends ActorBasePF {
       spellbook.range = {
         close: calculateRange(null, "close", { cl }),
         medium: calculateRange(null, "medium", { cl }),
-        long: convertDistance(null, "long", { cl }),
+        long: calculateRange(null, "long", { cl }),
       };
     }
   }

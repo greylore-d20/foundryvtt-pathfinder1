@@ -791,7 +791,7 @@ export const getMessageData = async function (shared) {
         return {
           actorData: o.actor.data,
           tokenData: o.data,
-          uuid: o.actor.uuid,
+          uuid: o.document.uuid,
         };
       });
     }

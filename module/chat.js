@@ -1,4 +1,3 @@
-import { ChatMessagePF } from "./sidebar/chat-message.js";
 import { getSkipActionPrompt } from "./settings.js";
 import { alterChatTargetAttribute } from "./socket.js";
 import Color from "color";
@@ -22,7 +21,7 @@ export const createCustomChatMessage = async function (
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
 
   // Handle different roll modes
-  ChatMessage.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
+  game.pf1.chat.ChatMessagePF.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
@@ -33,7 +32,7 @@ export const createCustomChatMessage = async function (
     }
   }
 
-  return ChatMessagePF.create(chatData);
+  return game.pf1.chat.ChatMessagePF.create(chatData);
 };
 
 export const hideRollInfo = function (app, html, data) {
@@ -65,6 +64,8 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     const uuid = elem.data("gm-sensitive-uuid");
     if (!uuid) return;
     fromUuid(uuid).then((obj) => {
+      // If token or token document, get actor for testing user permissions
+      if (obj instanceof Token || obj instanceof TokenDocument) obj = obj.actor;
       //  Show element again, since we have permission
       if (obj?.testUserPermission && obj.testUserPermission(game.user, "OBSERVER")) {
         elem.show();
@@ -181,14 +182,31 @@ export const createInlineRollString = (roll, { hide3d = true } = {}) =>
   title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
 
+export const hideInvisibleTargets = async function (app, html) {
+  const targetElems = html.find(".attack-targets .target");
+  const targets = targetElems.toArray().reduce((cur, o) => {
+    cur.push({ uuid: o.dataset.uuid, elem: o });
+    return cur;
+  }, []);
+
+  for (const t of targets) {
+    const elem = $(t.elem);
+
+    // Gather token
+    t.token = (await fromUuid(t.uuid)).object;
+
+    // Hide if token invisible
+    if (!t.token?.visible) elem.hide();
+    else elem.show();
+  }
+};
+
 export const addTargetCallbacks = function (app, html) {
   const targetElems = html.find(".attack-targets .target[data-uuid]");
 
   // Define getter functions
   const _getTokenByElem = async function (elem) {
-    const actor = await fromUuid(elem?.dataset.uuid ?? "");
-    if (actor instanceof TokenDocument) return actor.object;
-    return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
+    return (await fromUuid(elem?.dataset.uuid ?? ""))?.object;
   };
   const _getRootTargetElement = function (elem) {
     if (elem.dataset.uuid != null) return elem;
@@ -257,7 +275,7 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
   const elem = event.currentTarget;
   const save = elem.dataset.savingThrow;
 
-  const message = await actor.rollSavingThrow(save, { event, skipPrompt: getSkipActionPrompt() });
+  const message = await actor.rollSavingThrow(save, { event, skipDialog: getSkipActionPrompt() });
   const total = message?.roll?.total;
 
   // Replace saving throw value on original chat card's target

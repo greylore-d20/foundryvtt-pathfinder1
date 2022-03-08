@@ -617,6 +617,9 @@ Hooks.on("canvasInit", function () {
 
       // Create target callbacks
       chat.addTargetCallbacks(m, elem);
+
+      // Hide non-visible targets for players
+      if (!game.user.isGM) chat.hideInvisibleTargets(m, elem);
     });
 
     // Toggle token condition icons
@@ -636,9 +639,6 @@ Hooks.on("canvasInit", function () {
     // Add reach measurements on hover
     const results = await addReachCallback(data.message, html);
     callbacks.push(...results);
-
-    // Create target callbacks
-    chat.addTargetCallbacks(app, html);
   });
 }
 
@@ -653,7 +653,11 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Hide GM sensitive info
   chat.hideGMSensitiveInfo(app, html, data);
 
-  // Hide targets, if there's more than 1
+  // Hide non-visible targets for players
+  if (!game.user.isGM) chat.hideInvisibleTargets(app, html);
+
+  // Create target callbacks
+  chat.addTargetCallbacks(app, html);
 
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();

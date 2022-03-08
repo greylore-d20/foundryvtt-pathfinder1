@@ -364,7 +364,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @param {DocumentModificationContext} context
    */
-  async expireActiveEffects(context) {
+  async expireActiveEffects(context = {}) {
     const temporaryEffects = this.temporaryEffects.filter(
       (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
     );
@@ -1705,7 +1705,7 @@ export class ActorPF extends ActorBasePF {
     this._updateExp(update);
   }
 
-  _onUpdate(data, options, userId, context) {
+  _onUpdate(data, options, userId, context = {}) {
     super._onUpdate(data, options, userId, context);
 
     if (game.user.id === userId && hasProperty(data, "data.attributes.conditions")) {
@@ -1773,24 +1773,10 @@ export class ActorPF extends ActorBasePF {
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
-    // Work around the issue where updating embedded documents on Tokens used a parameter less
-    // NOTE: This is a dirty workaround which is a bug in core Foundry. Once this is fixed in Foundry, this should be undone.
-    if (!(documents instanceof Array && result instanceof Array)) {
-      userId = options;
-      options = result;
-      result = documents;
-    }
-
-    super._preUpdateEmbeddedDocuments(...arguments);
+    super._onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId);
 
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons({ render: false }).then(() => {
-        // Redraw token effects
-        const tokens = this.getActiveTokens();
-        for (const t of tokens) {
-          t.drawEffects();
-        }
-      });
+      this.toggleConditionStatusIcons({ render: false });
     }
   }
 
@@ -3679,7 +3665,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * @param {DocumentModificationContext} context
    */
-  async toggleConditionStatusIcons(context) {
+  async toggleConditionStatusIcons(context = {}) {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 

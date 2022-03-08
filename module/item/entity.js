@@ -1092,7 +1092,6 @@ export class ItemPF extends ItemBasePF {
 
           // Update parent item
           await this.parentItem.update(diff);
-          if (context.render !== false) await this.render();
         }
       }
     } else if (context.skipUpdate) {

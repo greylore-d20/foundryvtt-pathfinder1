@@ -1,3 +1,5 @@
+import { fractionalToString } from "../lib";
+
 /**
  *
  */
@@ -669,7 +671,13 @@ export const addDefaultChanges = function (changes) {
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
       const total = Math.floor(
         allClasses.reduce((cur, cls) => {
-          return cur + cls.data.data.savingThrows[a].base;
+          const base = cls.data.data.savingThrows[a].base;
+
+          getSourceInfo(this.sourceInfo, k).positive.push({
+            value: fractionalToString(base),
+            name: cls.name,
+          });
+          return cur + base;
         }, 0)
       );
 
@@ -683,10 +691,6 @@ export const addDefaultChanges = function (changes) {
           flavor: game.i18n.localize("PF1.Base"),
         })
       );
-      getSourceInfo(this.sourceInfo, k).positive.push({
-        value: total,
-        name: game.i18n.localize("PF1.Base"),
-      });
     } else {
       for (const c of allClasses) {
         const baseSave = c.data.data.savingThrows[a].base;

@@ -2,7 +2,14 @@ import { ActorBasePF } from "./base.js";
 import { getAbilityModifier } from "./lib.mjs";
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import { createTag, convertDistance, convertWeight, enrichHTMLUnrolled, calculateRange } from "../lib.js";
+import {
+  createTag,
+  convertDistance,
+  convertWeight,
+  enrichHTMLUnrolled,
+  calculateRange,
+  fractionalToString,
+} from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
@@ -514,17 +521,17 @@ export class ActorPF extends ActorBasePF {
       if (useFractionalBaseBonuses) {
         const v = Math.floor(
           classes.reduce((cur, cls) => {
-            return cur + cls.data.data.babValue;
+            const bab = cls.data.data.babBase;
+            if (bab !== 0) {
+              getSourceInfo(this.sourceInfo, k).positive.push({
+                name: cls.name,
+                value: fractionalToString(bab),
+              });
+            }
+            return cur + bab;
           }, 0)
         );
         this.data.data.attributes.bab.total = Math.floor(v);
-
-        if (v !== 0) {
-          getSourceInfo(this.sourceInfo, k).positive.push({
-            name: game.i18n.localize("PF1.Base"),
-            value: v,
-          });
-        }
       } else {
         this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
           const bab = obj.data.data.babValue;

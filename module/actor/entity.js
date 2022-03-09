@@ -422,6 +422,21 @@ export class ActorPF extends ActorBasePF {
       actorData.attributes.conditions[condition] ??= false;
     }
 
+    // Add .total getter for languages
+    if (actorData.traits.languages.total === undefined) {
+      Object.defineProperty(actorData.traits.languages, "total", {
+        get: function () {
+          return [
+            ...this.value,
+            ...this.custom
+              .split(";")
+              .map((l) => l?.trim())
+              .filter((l) => !!l),
+          ];
+        },
+      });
+    }
+
     // Refresh ability scores
     {
       const abs = Object.keys(actorData.abilities);
@@ -1022,21 +1037,6 @@ export class ActorPF extends ActorBasePF {
         // Save collected proficiencies in actor's data
         actorData.traits[prof].total = [...proficiencies];
         actorData.traits[prof].customTotal = customProficiencies.join(";");
-      }
-
-      // Add .total getter for languages
-      if (actorData.traits.languages.total === undefined) {
-        Object.defineProperty(actorData.traits.languages, "total", {
-          get: function () {
-            return [
-              ...this.value,
-              ...this.custom
-                .split(";")
-                .map((l) => l?.trim())
-                .filter((l) => !!l),
-            ];
-          },
-        });
       }
     }
   }

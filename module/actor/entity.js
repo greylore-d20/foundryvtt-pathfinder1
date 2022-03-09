@@ -403,6 +403,7 @@ export class ActorPF extends ActorBasePF {
     const classes = this.items.filter((o) => o.type === "class");
     const { level, mythicTier } = classes.reduce(
       (cur, o) => {
+        o.prepareDerivedData(); // HACK: Out of order preparation for later.
         cur.level += o.hitDice;
         cur.mythicTier += o.mythicTier;
         return cur;
@@ -522,7 +523,7 @@ export class ActorPF extends ActorBasePF {
       if (useFractionalBaseBonuses) {
         const v = Math.floor(
           classes.reduce((cur, cls) => {
-            if (cls.data.data.babBase === undefined) cls.prepareDerivedData(); // HACK: Out of order preparation
+            // HACK: Depends on earlier out of order preparation
             const bab = cls.data.data.babBase;
             if (bab !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -536,7 +537,7 @@ export class ActorPF extends ActorBasePF {
         actorData.attributes.bab.total = Math.floor(v);
       } else {
         actorData.attributes.bab.total = classes.reduce((cur, cls) => {
-          if (cls.data.data.babBase === undefined) cls.prepareDerivedData(); // HACK: Out of order preparation
+          // HACK: Depends on earlier out of order preparation
           const bab = cls.data.data.babBase;
           if (bab !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({

@@ -489,7 +489,8 @@ export class ItemPF extends ItemBasePF {
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
-    const itemData = super.prepareData() || this.data;
+    super.prepareData();
+    const itemData = this.data;
     const data = itemData.data;
     const C = CONFIG.PF1;
     const labels = {};

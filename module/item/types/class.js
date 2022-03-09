@@ -84,8 +84,8 @@ export class ItemClassPF extends ItemPF {
     const itemData = this.data.data;
     // Reset cached HD/MT
     // Can't prepare here as the actor uses this info before item preparation is done.
-    itemData._hitDice = undefined;
-    itemData._mythicTier = undefined;
+    itemData.hitDice = undefined;
+    itemData.mythicTier = undefined;
   }
 
   get subType() {

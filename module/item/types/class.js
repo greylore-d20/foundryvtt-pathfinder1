@@ -95,23 +95,25 @@ export class ItemClassPF extends ItemPF {
 
     const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses");
 
-    const saveFormulas = useFractional
-      ? CONFIG.PF1.classFractionalSavingThrowFormulas
-      : CONFIG.PF1.classSavingThrowFormulas;
-
     // Prepare class base save
-    for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
-      const classType = itemData.classType || "base";
-      let formula;
-      const saveType = itemData.savingThrows[save].value;
-      if (saveType === "custom") {
-        formula = itemData.savingThrows[save].custom || "0";
-      } else {
-        formula = saveFormulas[classType][saveType];
+    {
+      const saveFormulas = useFractional
+        ? CONFIG.PF1.classFractionalSavingThrowFormulas
+        : CONFIG.PF1.classSavingThrowFormulas;
+
+      for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
+        const classType = itemData.classType || "base";
+        let formula;
+        const saveType = itemData.savingThrows[save].value;
+        if (saveType === "custom") {
+          formula = itemData.savingThrows[save].custom || "0";
+        } else {
+          formula = saveFormulas[classType][saveType];
+        }
+        if (formula == null) formula = "0";
+        const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+        itemData.savingThrows[save].base = total;
       }
-      if (formula == null) formula = "0";
-      const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
-      itemData.savingThrows[save].base = total;
     }
   }
 

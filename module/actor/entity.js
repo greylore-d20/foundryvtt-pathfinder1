@@ -392,6 +392,9 @@ export class ActorPF extends ActorBasePF {
     if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, context);
   }
 
+  /**
+   * Prepare actor data before items are prepared.
+   */
   prepareBaseData() {
     super.prepareBaseData();
     this._resetInherentTotals();

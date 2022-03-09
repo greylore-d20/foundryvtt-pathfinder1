@@ -3427,9 +3427,9 @@ export class ActorPF extends ActorBasePF {
           bab: cls.data.data.bab,
           hp: healthConfig.auto,
           savingThrows: {
-            fort: 0,
-            ref: 0,
-            will: 0,
+            fort: cls.data.data.savingThrows.fort.base,
+            ref: cls.data.data.savingThrows.ref.base,
+            will: cls.data.data.savingThrows.will.base,
           },
           fc: {
             hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
@@ -3437,26 +3437,6 @@ export class ActorPF extends ActorBasePF {
             alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
           },
         };
-
-        const clsRollData = {
-          level: cls.data.data.level,
-          hitDice: cls.hitDice,
-        };
-        for (const k of Object.keys(result.classes[tag].savingThrows)) {
-          let formula;
-          const saveType = cls.data.data.savingThrows[k].value;
-          if (saveType === "custom") {
-            formula = cls.data.data.savingThrows[k].custom || "0";
-          } else {
-            formula = CONFIG.PF1.classSavingThrowFormulas[saveType];
-          }
-          if (formula == null) formula = "0";
-          result.classes[tag].savingThrows[k] = RollPF.safeRoll(formula, clsRollData).total;
-
-          // Set base saving throws
-          baseSavingThrows[k] = baseSavingThrows[k] ?? 0;
-          baseSavingThrows[k] += result.classes[tag].savingThrows[k];
-        }
       });
 
     // Add more info for formulas

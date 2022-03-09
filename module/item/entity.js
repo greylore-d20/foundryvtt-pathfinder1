@@ -641,20 +641,22 @@ export class ItemPF extends ItemBasePF {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
 
-    // Initialize tag for items that have tagged template
-    const taggedTypes = game.system.template.Item.types.filter((t) =>
-      game.system.template.Item[t].templates?.includes("tagged")
-    );
-    if (this.data.data["useCustomTag"] !== true && taggedTypes.includes(this.data.type)) {
-      const name = this.name;
-      this.data.data.tag = createTag(name);
-    }
-
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
 
     return itemData;
+  }
+
+  prepareBaseData() {
+    const itemData = this.data.data;
+
+    // Initialize tag for items that have tagged template
+    const itemTemplate = game.system.template.Item;
+    const taggedTypes = itemTemplate.types.filter((t) => itemTemplate[t].templates?.includes("tagged"));
+    if (itemData.useCustomTag !== true && taggedTypes.includes(this.type)) {
+      itemData.tag = createTag(this.name);
+    }
   }
 
   prepareDerivedItemData() {

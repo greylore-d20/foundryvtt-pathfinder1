@@ -702,21 +702,12 @@ export const addDefaultChanges = function (changes) {
       });
     } else {
       for (const c of allClasses) {
-        const classType = c.data.data.classType || "base";
-        let formula;
-        const saveType = c.data.data.savingThrows[a].value;
-        if (saveType === "custom") {
-          formula = c.data.data.savingThrows[a].custom || "0";
-        } else {
-          formula = CONFIG.PF1.classSavingThrowFormulas[classType][saveType];
-        }
-        if (formula == null) formula = "0";
-        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level, hitDice: c.hitDice }).total);
+        const baseSave = c.data.data.savingThrows[a].base;
 
         // Add change
         changes.push(
           game.pf1.documentComponents.ItemChange.create({
-            formula: total,
+            formula: baseSave,
             target: "savingThrows",
             subTarget: a,
             modifier: "untypedPerm",
@@ -724,7 +715,7 @@ export const addDefaultChanges = function (changes) {
           })
         );
         getSourceInfo(this.sourceInfo, k).positive.push({
-          value: total,
+          value: baseSave,
           name: c.name,
         });
       }

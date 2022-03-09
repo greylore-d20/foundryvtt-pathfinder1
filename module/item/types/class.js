@@ -88,6 +88,30 @@ export class ItemClassPF extends ItemPF {
     itemData.mythicTier = undefined;
   }
 
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    const itemData = this.data.data;
+
+    const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses");
+
+
+    // Prepare class base save
+    for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
+      const classType = itemData.classType || "base";
+      let formula;
+      const saveType = itemData.savingThrows[save].value;
+      if (saveType === "custom") {
+        formula = itemData.savingThrows[save].custom || "0";
+      } else {
+        formula = CONFIG.PF1.classSavingThrowFormulas[classType][saveType];
+      }
+      if (formula == null) formula = "0";
+      const total = Math.floor(RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total);
+      itemData.savingThrows[save].base = total;
+    }
+  }
+
   get subType() {
     return this.data.data.classType;
   }

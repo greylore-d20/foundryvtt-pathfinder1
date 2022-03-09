@@ -677,9 +677,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Re-render sheet, if open
-    if (this.sheet?.rendered) {
-      this.sheet?.render();
-    }
+    this.sheet?.render(false);
   }
 
   prepareLinks() {

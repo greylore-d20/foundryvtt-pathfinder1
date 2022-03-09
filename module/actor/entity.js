@@ -397,8 +397,10 @@ export class ActorPF extends ActorBasePF {
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
 
+    const actorData = this.data.data;
+
     // Update total level and mythic tier
-    const classes = this.data.items.filter((o) => o.type === "class");
+    const classes = this.items.filter((o) => o.type === "class");
     const { level, mythicTier } = classes.reduce(
       (cur, o) => {
         cur.level += o.hitDice;
@@ -408,27 +410,26 @@ export class ActorPF extends ActorBasePF {
       { level: 0, mythicTier: 0 }
     );
 
-    this.data.data.details.level.value = level;
-    this.data.data.details.mythicTier = mythicTier;
+    actorData.details.level.value = level;
+    actorData.details.mythicTier = mythicTier;
 
     // Populate conditions
     for (const condition of Object.keys(CONFIG.PF1.conditions)) {
-      this.data.data.attributes.conditions[condition] ??= false;
+      actorData.attributes.conditions[condition] ??= false;
     }
 
     {
       // Handle armor and weapon proficiencies for PCs
       // NPCs are considered proficient with their armor
-      if (this.data.type === "character") {
+      if (this.type === "character") {
         // Collect proficiencies from items, add them to actor's proficiency totals
         for (const prof of ["armorProf", "weaponProf"]) {
           // Custom proficiency baseline from actor
           const customProficiencies =
-            this.data.data.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) ||
-            [];
+            actorData.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
 
           // Iterate over all items to create one array of non-custom proficiencies
-          const proficiencies = this.data.items.reduce(
+          const proficiencies = this.items.reduce(
             (profs, item) => {
               // Check only items able to grant proficiencies
               if (hasProperty(item.data, `data.${prof}`)) {
@@ -470,17 +471,17 @@ export class ActorPF extends ActorBasePF {
               }
               return profs;
             },
-            [...this.data.data.traits[prof].value] // Default proficiency baseline from actor
+            [...actorData.traits[prof].value] // Default proficiency baseline from actor
           );
 
           // Save collected proficiencies in actor's data
-          this.data.data.traits[prof].total = [...proficiencies];
-          this.data.data.traits[prof].customTotal = customProficiencies.join(";");
+          actorData.traits[prof].total = [...proficiencies];
+          actorData.traits[prof].customTotal = customProficiencies.join(";");
         }
 
         // Add .total getter for languages
-        if (this.data.data.traits.languages.total === undefined) {
-          Object.defineProperty(this.data.data.traits.languages, "total", {
+        if (actorData.traits.languages.total === undefined) {
+          Object.defineProperty(actorData.traits.languages, "total", {
             get: function () {
               return [
                 ...this.value,
@@ -497,18 +498,18 @@ export class ActorPF extends ActorBasePF {
 
     // Refresh ability scores
     {
-      const abs = Object.keys(this.data.data.abilities);
+      const abs = Object.keys(actorData.abilities);
       for (const ab of abs) {
-        const value = this.data.data.abilities[ab].value;
+        const value = actorData.abilities[ab].value;
         if (value == null) {
-          this.data.data.abilities[ab].total = null;
-          this.data.data.abilities[ab].base = null;
-          this.data.data.abilities[ab].baseMod = 0;
+          actorData.abilities[ab].total = null;
+          actorData.abilities[ab].base = null;
+          actorData.abilities[ab].baseMod = 0;
         } else {
-          this.data.data.abilities[ab].total = value - this.data.data.abilities[ab].drain;
-          this.data.data.abilities[ab].penalty =
-            (this.data.data.abilities[ab].penalty || 0) + (this.data.data.abilities[ab].userPenalty || 0);
-          this.data.data.abilities[ab].base = this.data.data.abilities[ab].total;
+          actorData.abilities[ab].total = value - actorData.abilities[ab].drain;
+          actorData.abilities[ab].penalty =
+            (actorData.abilities[ab].penalty || 0) + (actorData.abilities[ab].userPenalty || 0);
+          actorData.abilities[ab].base = actorData.abilities[ab].total;
         }
       }
       this.refreshAbilityModifiers();
@@ -521,6 +522,7 @@ export class ActorPF extends ActorBasePF {
       if (useFractionalBaseBonuses) {
         const v = Math.floor(
           classes.reduce((cur, cls) => {
+            if (cls.data.data.babBase === undefined) cls.prepareDerivedData(); // HACK: Out of order preparation
             const bab = cls.data.data.babBase;
             if (bab !== 0) {
               getSourceInfo(this.sourceInfo, k).positive.push({
@@ -531,13 +533,14 @@ export class ActorPF extends ActorBasePF {
             return cur + bab;
           }, 0)
         );
-        this.data.data.attributes.bab.total = Math.floor(v);
+        actorData.attributes.bab.total = Math.floor(v);
       } else {
-        this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
-          const bab = obj.data.data.babValue;
+        actorData.attributes.bab.total = classes.reduce((cur, cls) => {
+          if (cls.data.data.babBase === undefined) cls.prepareDerivedData(); // HACK: Out of order preparation
+          const bab = cls.data.data.babBase;
           if (bab !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({
-              name: obj.name ?? "",
+              name: cls.name ?? "",
               value: bab,
             });
           }
@@ -547,19 +550,19 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Reset HD
-    setProperty(this.data, "data.attributes.hd.total", this.data.data.details.level.value);
+    setProperty(actorData, "attributes.hd.total", actorData.details.level.value);
 
     // Apply ACP and Max Dexterity Bonus
     this._applyArmorPenalties();
 
     // Reset class skills
-    for (const [k, s] of Object.entries(this.data.data.skills)) {
+    for (const [k, s] of Object.entries(actorData.skills)) {
       if (!s) continue;
       const isClassSkill = classes.reduce((cur, o) => {
         if ((o.data.data.classSkills || {})[k] === true) return true;
         return cur;
       }, false);
-      this.data.data.skills[k].cs = isClassSkill;
+      actorData.skills[k].cs = isClassSkill;
       for (const k2 of Object.keys(s.subSkills ?? {})) {
         setProperty(s, `subSkills.${k2}.cs`, isClassSkill);
       }

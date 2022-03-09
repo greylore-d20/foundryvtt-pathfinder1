@@ -443,6 +443,19 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Hide save DCs.
+   */
+  game.settings.register("pf1", "obscureSaveDCs", {
+    name: "SETTINGS.pf1obscureSaveDCsN",
+    hint: "SETTINGS.pf1obscureSaveDCsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: debouncedReload,
+  });
+
+  /**
    * Display default token conditions alongside system ones
    */
   game.settings.register("pf1", "coreEffects", {

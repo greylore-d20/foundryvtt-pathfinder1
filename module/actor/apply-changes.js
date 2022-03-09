@@ -667,22 +667,9 @@ export const addDefaultChanges = function (changes) {
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
     // Using Fractional Base Bonuses
     if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
-      let highStart = false;
       const total = Math.floor(
-        allClasses.reduce((cur, obj) => {
-          const saveScale = obj.data.data.savingThrows[a].value || "";
-          if (saveScale === "high") {
-            const acc = highStart ? 0 : 2;
-            highStart = true;
-            return cur + obj.data.data.level / 2 + acc;
-          }
-          if (saveScale === "low") return cur + obj.data.data.level / 3;
-          if (saveScale === "custom") {
-            return (
-              cur + RollPF.safeRoll(obj.data.data.savingThrows[a].custom || "0", { level: obj.data.data.level }).total
-            );
-          }
-          return cur;
+        allClasses.reduce((cur, cls) => {
+          return cur + cls.data.data.savingThrows[a].base;
         }, 0)
       );
 

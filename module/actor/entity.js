@@ -513,19 +513,11 @@ export class ActorPF extends ActorBasePF {
       const k = "data.attributes.bab.total";
       if (useFractionalBaseBonuses) {
         const v = Math.floor(
-          classes.reduce((cur, obj) => {
-            const babScale = getProperty(obj, "data.data.bab") || "";
-            if (babScale === "high") return cur + obj.hitDice;
-            if (babScale === "med") return cur + obj.hitDice * 0.75;
-            if (babScale === "low") return cur + obj.hitDice * 0.5;
-            if (babScale === "custom") {
-              const clsRollData = { level: obj.data.data.level, hitDice: obj.hitDice };
-              return cur + RollPF.safeRoll(obj.data.data.babFormula || "0", clsRollData).total;
-            }
-            return cur;
+          classes.reduce((cur, cls) => {
+            return cur + cls.data.data.babValue;
           }, 0)
         );
-        this.data.data.attributes.bab.total = v;
+        this.data.data.attributes.bab.total = Math.floor(v);
 
         if (v !== 0) {
           getSourceInfo(this.sourceInfo, k).positive.push({
@@ -535,23 +527,14 @@ export class ActorPF extends ActorBasePF {
         }
       } else {
         this.data.data.attributes.bab.total = classes.reduce((cur, obj) => {
-          const babType = obj.data.data.bab;
-          let formula;
-          if (babType === "custom") {
-            formula = obj.data.data.babFormula || "0";
-          } else {
-            formula = CONFIG.PF1.classBABFormulas[babType] || "0";
-          }
-          const v = RollPF.safeRoll(formula, { level: obj.data.data.level, hitDice: obj.hitDice }).total;
-
-          if (v !== 0) {
+          const bab = obj.data.data.babValue;
+          if (bab !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({
               name: obj.name ?? "",
-              value: v,
+              value: bab,
             });
           }
-
-          return cur + v;
+          return cur + bab;
         }, 0);
       }
     }

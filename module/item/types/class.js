@@ -115,6 +115,20 @@ export class ItemClassPF extends ItemPF {
         itemData.savingThrows[save].base = total;
       }
     }
+
+    // Prepare BAB
+    {
+      const babFormulas = useFractional ? CONFIG.PF1.classFractionalBABFormulas : CONFIG.PF1.classBABFormulas;
+
+      const babType = itemData.bab;
+      let formula;
+      if (babType === "custom") {
+        formula = itemData.babFormula || "0";
+      } else {
+        formula = babFormulas[babType] || "0";
+      }
+      itemData.babBase = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+    }
   }
 
   get subType() {

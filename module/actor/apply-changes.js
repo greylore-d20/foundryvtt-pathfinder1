@@ -667,49 +667,42 @@ export const addDefaultChanges = function (changes) {
   for (const a of Object.keys(actorData.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
-    // Using Fractional Base Bonuses
-    if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
-      const total = Math.floor(
-        allClasses.reduce((cur, cls) => {
-          const base = cls.data.data.savingThrows[a].base;
+    const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
 
-          getSourceInfo(this.sourceInfo, k).positive.push({
-            value: fractionalToString(base),
-            name: cls.name,
-          });
-          return cur + base;
-        }, 0)
-      );
+    const total = allClasses.reduce((cur, cls) => {
+      const base = cls.data.data.savingThrows[a].base;
 
-      // Add change
+      if (!useFractional) {
+        // Add per class change
+        changes.push(
+          game.pf1.documentComponents.ItemChange.create({
+            formula: base,
+            target: "savingThrows",
+            subTarget: a,
+            modifier: "untypedPerm",
+            flavor: cls.name,
+          })
+        );
+      }
+
+      getSourceInfo(this.sourceInfo, k).positive.push({
+        value: useFractional ? fractionalToString(base) : base,
+        name: cls.name,
+      });
+      return cur + base;
+    }, 0);
+
+    if (useFractional) {
+      // Add shared change with fractional
       changes.push(
         game.pf1.documentComponents.ItemChange.create({
-          formula: total,
+          formula: Math.floor(total),
           target: "savingThrows",
           subTarget: a,
           modifier: "untypedPerm",
           flavor: game.i18n.localize("PF1.Base"),
         })
       );
-    } else {
-      for (const c of allClasses) {
-        const baseSave = c.data.data.savingThrows[a].base;
-
-        // Add change
-        changes.push(
-          game.pf1.documentComponents.ItemChange.create({
-            formula: baseSave,
-            target: "savingThrows",
-            subTarget: a,
-            modifier: "untypedPerm",
-            flavor: c.name,
-          })
-        );
-        getSourceInfo(this.sourceInfo, k).positive.push({
-          value: baseSave,
-          name: c.name,
-        });
-      }
     }
   }
 

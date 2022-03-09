@@ -518,36 +518,21 @@ export class ActorPF extends ActorBasePF {
 
     // Reset BAB
     {
-      const useFractionalBaseBonuses = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
       const k = "data.attributes.bab.total";
-      if (useFractionalBaseBonuses) {
-        const v = Math.floor(
-          classes.reduce((cur, cls) => {
-            // HACK: Depends on earlier out of order preparation
-            const bab = cls.data.data.babBase;
-            if (bab !== 0) {
-              getSourceInfo(this.sourceInfo, k).positive.push({
-                name: cls.name,
-                value: fractionalToString(bab),
-              });
-            }
-            return cur + bab;
-          }, 0)
-        );
-        actorData.attributes.bab.total = Math.floor(v);
-      } else {
-        actorData.attributes.bab.total = classes.reduce((cur, cls) => {
+      const v = Math.floor(
+        classes.reduce((cur, cls) => {
           // HACK: Depends on earlier out of order preparation
           const bab = cls.data.data.babBase;
           if (bab !== 0) {
             getSourceInfo(this.sourceInfo, k).positive.push({
-              name: cls.name ?? "",
-              value: bab,
+              name: cls.name,
+              value: fractionalToString(bab),
             });
           }
           return cur + bab;
-        }, 0);
-      }
+        }, 0)
+      );
+      actorData.attributes.bab.total = Math.floor(v);
     }
 
     // Reset HD

@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            {{#if flags.dictionary.length}}
+            {{#if flags.dictionary}}
             <table>
                 <thead>
                     <tr>
@@ -40,10 +40,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each flags.dictionary as |d|}}
+                    {{#each flags.dictionary as |value key|}}
                     <tr>
-                        <td>{{d.key}}</td>
-                        <td>{{d.value}}</td>
+                        <td>{{key}}</td>
+                        <td>{{./value}}</td>
                     </tr>
                     {{/each}}
                 </tbody>

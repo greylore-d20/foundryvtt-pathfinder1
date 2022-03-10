@@ -1009,23 +1009,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Try to convert dictionary flags to numbers
-    if (data["data.flags.dictionary"] !== undefined) {
-      const flags = data["data.flags.dictionary"];
-
-      for (const f of flags) {
-        let value = f[1];
-        // Try to convert value to a number
-        if (typeof value === "string" && value.match(/^[0-9]+(?:\.[0-9]+)?$/)) {
-          const newValue = parseFloat(value);
-          if (!Number.isNaN(newValue)) {
-            value = newValue;
-          }
-          f[1] = value;
-        }
-      }
-    }
-
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {
       let charges = 0;
@@ -2810,14 +2793,17 @@ export class ItemPF extends ItemBasePF {
    * Sets a boolean flag on this item.
    *
    * @param {string} flagName - The name/key of the flag to set.
+   * @param {Object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
-  async addItemBooleanFlag(flagName) {
+  async addItemBooleanFlag(flagName, context = {}) {
     flagName = String(flagName);
-    const flags = getProperty(this.data, "data.flags.boolean") || [];
+    const flags = getProperty(this.data, "data.flags.boolean") ?? {};
 
-    if (flags.filter((f) => f[0] === flagName).length === 0) {
-      await this.update({ "data.flags.boolean": flags.concat([[flagName]]) });
+    if (Array.isArray(flags)) throw new Error(`${this.name} [${this.id}] requires migration.`);
+
+    if (flags[flagName] === undefined) {
+      await this.update({ [`data.flags.boolean.${flagName}`]: true }, context);
       return true;
     }
 
@@ -2828,14 +2814,14 @@ export class ItemPF extends ItemBasePF {
    * Removes a boolean flag from this item.
    *
    * @param {string} flagName - The name/key of the flag to remove.
+   * @param {Object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
-  async removeItemBooleanFlag(flagName) {
-    let flags = getProperty(this.data, "data.flags.boolean") || [];
+  async removeItemBooleanFlag(flagName, context = {}) {
+    const flags = getProperty(this.data, "data.flags.boolean") ?? {};
 
-    if (flags.filter((f) => f[0] === flagName).length > 0) {
-      flags = flags.filter((f) => f[0] !== flagName);
-      await this.update({ "data.flags.boolean": flags });
+    if (flags[flagName] !== undefined) {
+      await this.update({ [`data.flags.boolean.-=${flagName}`]: null }, context);
       return true;
     }
 
@@ -2847,9 +2833,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {boolean} Whether the flag was found on this item.
    */
   hasItemBooleanFlag(flagName) {
-    const flags = getProperty(this.data, "data.flags.boolean") || [];
-
-    return flags.map((f) => f[0]).includes(flagName);
+    const flags = getProperty(this.data, "data.flags.boolean") ?? {};
+    return flags[flagName] === true;
   }
 
   /**
@@ -2857,30 +2842,15 @@ export class ItemPF extends ItemBasePF {
    *
    * @param {string} flagName - The name/key of the flag to set.
    * @param {number|string} value - The flag's new value.
+   * @param {Object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
-  async setItemDictionaryFlag(flagName, value) {
+  async setItemDictionaryFlag(flagName, value, context = {}) {
     flagName = String(flagName);
-    const flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
+    const flags = duplicate(getProperty(this.data, "data.flags.dictionary") ?? {});
 
-    let doUpdate = false;
-    let foundFlag = false;
-    for (const f of flags) {
-      if (f[0] === flagName) {
-        foundFlag = true;
-        if (f[1] !== value) {
-          f[1] = value;
-          doUpdate = true;
-        }
-      }
-    }
-    if (!foundFlag) {
-      flags.push([flagName, value]);
-      doUpdate = true;
-    }
-
-    if (doUpdate) {
-      await this.update({ "data.flags.dictionary": flags });
+    if (flags[flagName] !== value) {
+      await this.update({ [`data.flags.dictionary.${flagName}`]: value }, context);
       return true;
     }
 
@@ -2891,23 +2861,14 @@ export class ItemPF extends ItemBasePF {
    * Removes a dictionary flag from this item.
    *
    * @param {string} flagName - The name/key of the flag to remove.
+   * @param {Object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
-  async removeItemDictionaryFlag(flagName) {
-    const flags = duplicate(getProperty(this.data, "data.flags.dictionary") || []);
+  async removeItemDictionaryFlag(flagName, context = {}) {
+    const flags = getProperty(this.data, "data.flags.dictionary") ?? {};
 
-    let doUpdate = false;
-    for (let a = 0; a < flags.length; a++) {
-      const f = flags[a];
-      if (f[0] === flagName) {
-        flags.splice(a, 1);
-        a--;
-        doUpdate = true;
-      }
-    }
-
-    if (doUpdate) {
-      await this.update({ "data.flags.dictionary": flags });
+    if (flags[flagName] !== undefined) {
+      await this.update({ [`data.flags.dictionary.-=${flagName}`]: null }, context);
       return true;
     }
 
@@ -2919,12 +2880,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this.data, "data.flags.dictionary") || [];
-
-    const flag = flags.find((f) => {
-      return f[0] === flagName;
-    });
-    return flag ? flag[1] : undefined;
+    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+    return flags[flagName];
   }
 
   /**

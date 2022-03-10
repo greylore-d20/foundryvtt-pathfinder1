@@ -233,6 +233,7 @@ export const migrateItemData = function (item) {
 
   _migrateItemArrayTypes(item, updateData);
   _migrateItemSpellUses(item, updateData);
+  _migrateFlagsArrayToObject(item, updateData);
   _migrateWeaponImprovised(item, updateData);
   _migrateSpellDescription(item, updateData);
   _migrateClassDynamics(item, updateData);
@@ -341,6 +342,35 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
       if (!linked) continue; // skip with unlinked tokens
       updateData["data." + k] = 0;
     }
+  }
+};
+
+/**
+ * Convert array based flags into object.
+ *
+ * @param ent
+ * @param updateData
+ * @param linked
+ */
+const _migrateFlagsArrayToObject = function (ent, updateData) {
+  const flags = ent.data.flags;
+  if (!flags) return;
+  const bflags = flags.boolean,
+    dflags = flags.dictionary;
+
+  if (Array.isArray(bflags)) {
+    // Compatibility with old data: Convert old array into actual dictionary.
+    updateData["data.flags.boolean"] = bflags.reduce((flags, flag) => {
+      flags[flag] = true;
+      return flags;
+    }, {});
+  }
+
+  if (Array.isArray(dflags)) {
+    updateData["data.flags.dictionary"] = dflags.reduce((flags, [key, value]) => {
+      flags[key] = value;
+      return flags;
+    }, {});
   }
 };
 

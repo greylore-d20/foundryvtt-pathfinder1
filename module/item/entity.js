@@ -1058,11 +1058,14 @@ export class ItemPF extends ItemBasePF {
     const diff = diffObject(flattenObject(this.data), data);
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
     for (const d in diff) {
-      if (!(diff[d] instanceof Array)) continue;
+      if (!Array.isArray(diff[d])) continue;
       const origData = getProperty(this.data._source, d) || [];
-      if (diff[d].length !== origData.length) continue;
+      if (diff[d].length !== origData?.length) continue;
       const anyDiff = diff[d].some((obj, idx) => {
-        if (!isObjectEmpty(diffObject(obj, origData[idx]))) return true;
+        // Bidirectional diff is required or else it will not detect some changes (e.g. empty attack note being filled).
+        // First is additions, second is deletions.
+        if (!isObjectEmpty(diffObject(origData[idx], obj)) || !isObjectEmpty(diffObject(obj, origData[idx])))
+          return true;
       });
       if (!anyDiff) delete diff[d];
     }

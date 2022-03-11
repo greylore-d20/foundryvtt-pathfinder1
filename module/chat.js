@@ -106,6 +106,8 @@ export const hideGMSensitiveInfo = function (app, html, data) {
 
   // Alter GM inner texts
   html.find("[data-gm-sensitive-inner]").each((a, elem) => {
+    if (!game.settings.get("pf1", "obscureSaveDCs") && elem.dataset.action === "save") return;
+
     elem = $(elem);
     elem.text(elem.data("gm-sensitive-inner"));
     elem.removeData("gm-sensitive-inner");

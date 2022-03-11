@@ -387,6 +387,10 @@ export class ActorPF extends ActorBasePF {
 
   prepareBaseData() {
     super.prepareBaseData();
+
+    // HACK: Init missing resources structure. Needed mostly for JSON imports.
+    this.data.data.resources ??= {};
+
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
 

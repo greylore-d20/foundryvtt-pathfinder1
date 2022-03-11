@@ -450,7 +450,7 @@ export const registerSystemSettings = function () {
     hint: "SETTINGS.pf1obscureSaveDCsH",
     scope: "world",
     config: true,
-    default: false,
+    default: true,
     type: Boolean,
     onChange: debouncedReload,
   });

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.80.12 - 2022-3-11
+
+### Bug Fixes
+
+- Some changes were not saved correctly (e.g. attack & effect notes).
+
+### Changelog
+
+- Save DC hiding in chat cards is now optional. ([1262](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1262))
+
 ## 0.80.11 - 2022-3-8
 
 ### Bug Fixes

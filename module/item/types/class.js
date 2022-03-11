@@ -84,8 +84,51 @@ export class ItemClassPF extends ItemPF {
     const itemData = this.data.data;
     // Reset cached HD/MT
     // Can't prepare here as the actor uses this info before item preparation is done.
-    itemData._hitDice = undefined;
-    itemData._mythicTier = undefined;
+    itemData.hitDice = undefined;
+    itemData.mythicTier = undefined;
+  }
+
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    const itemData = this.data.data;
+
+    const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses");
+
+    // Prepare class base save
+    {
+      const saveFormulas = useFractional
+        ? CONFIG.PF1.classFractionalSavingThrowFormulas
+        : CONFIG.PF1.classSavingThrowFormulas;
+
+      for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
+        const classType = itemData.classType || "base";
+        let formula;
+        const saveType = itemData.savingThrows[save].value;
+        if (saveType === "custom") {
+          formula = itemData.savingThrows[save].custom || "0";
+        } else {
+          formula = saveFormulas[classType][saveType];
+        }
+        if (formula == null) formula = "0";
+        const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+        itemData.savingThrows[save].base = total;
+      }
+    }
+
+    // Prepare BAB
+    {
+      const babFormulas = useFractional ? CONFIG.PF1.classFractionalBABFormulas : CONFIG.PF1.classBABFormulas;
+
+      const babType = itemData.bab;
+      let formula;
+      if (babType === "custom") {
+        formula = itemData.babFormula || "0";
+      } else {
+        formula = babFormulas[babType] || "0";
+      }
+      itemData.babBase = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+    }
   }
 
   get subType() {

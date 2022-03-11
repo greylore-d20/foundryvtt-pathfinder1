@@ -1,3 +1,5 @@
+import { fractionalToString } from "../lib";
+
 /**
  *
  */
@@ -665,69 +667,42 @@ export const addDefaultChanges = function (changes) {
   for (const a of Object.keys(actorData.attributes.savingThrows)) {
     const k = `data.attributes.savingThrows.${a}.total`;
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
-    // Using Fractional Base Bonuses
-    if (game.settings.get("pf1", "useFractionalBaseBonuses")) {
-      let highStart = false;
-      const total = Math.floor(
-        allClasses.reduce((cur, obj) => {
-          const saveScale = obj.data.data.savingThrows[a].value || "";
-          if (saveScale === "high") {
-            const acc = highStart ? 0 : 2;
-            highStart = true;
-            return cur + obj.data.data.level / 2 + acc;
-          }
-          if (saveScale === "low") return cur + obj.data.data.level / 3;
-          if (saveScale === "custom") {
-            return (
-              cur + RollPF.safeRoll(obj.data.data.savingThrows[a].custom || "0", { level: obj.data.data.level }).total
-            );
-          }
-          return cur;
-        }, 0)
-      );
+    const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
 
-      // Add change
+    const total = allClasses.reduce((cur, cls) => {
+      const base = cls.data.data.savingThrows[a].base;
+
+      if (!useFractional) {
+        // Add per class change
+        changes.push(
+          game.pf1.documentComponents.ItemChange.create({
+            formula: base,
+            target: "savingThrows",
+            subTarget: a,
+            modifier: "untypedPerm",
+            flavor: cls.name,
+          })
+        );
+      }
+
+      getSourceInfo(this.sourceInfo, k).positive.push({
+        value: useFractional ? fractionalToString(base) : base,
+        name: cls.name,
+      });
+      return cur + base;
+    }, 0);
+
+    if (useFractional) {
+      // Add shared change with fractional
       changes.push(
         game.pf1.documentComponents.ItemChange.create({
-          formula: total,
+          formula: Math.floor(total),
           target: "savingThrows",
           subTarget: a,
           modifier: "untypedPerm",
           flavor: game.i18n.localize("PF1.Base"),
         })
       );
-      getSourceInfo(this.sourceInfo, k).positive.push({
-        value: total,
-        name: game.i18n.localize("PF1.Base"),
-      });
-    } else {
-      for (const c of allClasses) {
-        const classType = c.data.data.classType || "base";
-        let formula;
-        const saveType = c.data.data.savingThrows[a].value;
-        if (saveType === "custom") {
-          formula = c.data.data.savingThrows[a].custom || "0";
-        } else {
-          formula = CONFIG.PF1.classSavingThrowFormulas[classType][saveType];
-        }
-        if (formula == null) formula = "0";
-        const total = Math.floor(RollPF.safeRoll(formula, { level: c.data.data.level, hitDice: c.hitDice }).total);
-
-        // Add change
-        changes.push(
-          game.pf1.documentComponents.ItemChange.create({
-            formula: total,
-            target: "savingThrows",
-            subTarget: a,
-            modifier: "untypedPerm",
-            flavor: c.name,
-          })
-        );
-        getSourceInfo(this.sourceInfo, k).positive.push({
-          value: total,
-          name: c.name,
-        });
-      }
     }
   }
 

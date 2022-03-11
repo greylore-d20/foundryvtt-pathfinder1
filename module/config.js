@@ -133,6 +133,13 @@ export const PF1 = {
     custom: "0",
   },
 
+  classFractionalBABFormulas: {
+    low: "@hitDice * 0.5", // 1/2
+    med: "@hitDice * 0.75", // 3/4
+    high: "@hitDice", // 1/1
+    custom: "0",
+  },
+
   /**
    * The formulae for saving throw progressions by class type
    */
@@ -152,6 +159,32 @@ export const PF1 = {
     racial: {
       low: "floor(@hitDice / 3)",
       high: "2 + floor(@hitDice / 2)",
+    },
+    mythic: {
+      low: "0",
+      high: "0",
+    },
+    custom: {
+      low: "0",
+      high: "0",
+    },
+  },
+  classFractionalSavingThrowFormulas: {
+    base: {
+      low: "@hitDice / 3",
+      high: "2 + @hitDice / 2",
+    },
+    prestige: {
+      low: "(1 + @hitDice) / 3",
+      high: "(1 + @hitDice) / 2",
+    },
+    npc: {
+      low: "@hitDice / 3",
+      high: "2 + @hitDice / 2",
+    },
+    racial: {
+      low: "@hitDice / 3",
+      high: "2 + @hitDice / 2",
     },
     mythic: {
       low: "0",

@@ -87,6 +87,26 @@ export const getItemOwner = function (item) {
   return null;
 };
 
+/**
+ * Turn some fractional numbers into pretty strings.
+ *
+ * @param {number} v
+ * @returns {string|undefined}
+ */
+export const fractionalToString = (v) => {
+  const base = Math.floor(v);
+  const f = Math.roundDecimals(v - Math.floor(v), 3);
+  if (f === 0) return `${base}`;
+  const rv = [];
+  if (base !== 0) rv.push(base);
+  else if (f === 0.25) rv.push("1/4");
+  else if (f === 0.336) rv.push("1/3");
+  else if (f === 0.5) rv.push("1/2");
+  else if (f === 0.667) rv.push("2/3");
+  else if (f === 0.75) rv.push("3/4");
+  return rv.join(" ");
+};
+
 export const CR = {
   fromString(value) {
     if (value === "1/8") return 0.125;

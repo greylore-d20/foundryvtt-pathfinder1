@@ -1568,10 +1568,6 @@ export class ItemPF extends ItemBasePF {
     let reqErr = await _callFn("checkRequirements");
     if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
-    // Call itemUse hook and determine whether the item can be used based off that
-    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
-    if (allowed === false) return;
-
     // Get new roll data
     shared.rollData = await _callFn("getRollData");
 
@@ -1609,6 +1605,13 @@ export class ItemPF extends ItemBasePF {
 
     // Override roll mode if present.
     if (rollMode) shared.rollMode = rollMode;
+
+    // Call itemUse hook and determine whether the item can be used based off that
+    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
+    if (allowed === false) {
+      await measureResult?.delete();
+      return;
+    }
 
     // Call script calls
     await _callFn("executeScriptCalls");
@@ -2061,6 +2064,7 @@ export class ItemPF extends ItemBasePF {
    * @param options
    */
   async useConsumable(options = { chatMessage: true }) {
+    console.warn("ItemPF.useConsumable is obsolete; use ItemPF.useAttack instead.");
     const itemData = this.data.data;
     let parts = itemData.damage.parts;
     const data = this.getRollData();
@@ -2199,10 +2203,8 @@ export class ItemPF extends ItemBasePF {
     // Get card targets
     // const targets = isTargetted ? this._getChatCardTargets(card) : [];
 
-    // Consumable usage
-    if (action === "consume") await item.useConsumable({ event });
     // Apply damage
-    else if (action === "applyDamage") {
+    if (action === "applyDamage") {
       let asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
         .map((o) => o.innerText)
         .includes(game.i18n.localize("PF1.Nonlethal"));

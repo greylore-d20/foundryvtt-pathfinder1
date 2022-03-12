@@ -1064,6 +1064,8 @@ export class ActorPF extends ActorBasePF {
   prepareSpecificDerivedData() {
     Hooks.callAll("pf1.prepareDerivedActorData", this);
 
+    this.refreshDerivedData();
+
     const attributes = this.data.data.attributes,
       abilities = this.data.data.abilities;
 
@@ -1221,7 +1223,7 @@ export class ActorPF extends ActorBasePF {
           const value = getProperty(this.data, key);
           setProperty(this.data, key, this.constructor.getReducedMovementSpeed(value));
           if (value > 0) {
-            getSourceInfo(this.sourceInfo, key).negative.push(sInfo);
+            getSourceInfo(this.sourceInfo, `data.attributes.speed.${speedKey}.add`).negative.push(sInfo);
           }
         }
       }
@@ -1252,8 +1254,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     this.updateSpellbookInfo();
-
-    this.refreshDerivedData();
   }
 
   /**

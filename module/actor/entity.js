@@ -482,9 +482,6 @@ export class ActorPF extends ActorBasePF {
     // Reset HD
     setProperty(actorData, "attributes.hd.total", actorData.details.level.value);
 
-    // Apply ACP and Max Dexterity Bonus
-    this._applyArmorPenalties();
-
     // Reset class skills
     for (const [k, s] of Object.entries(actorData.skills)) {
       if (!s) continue;

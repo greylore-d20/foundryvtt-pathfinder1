@@ -2108,7 +2108,7 @@ export class ActorSheetPF extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     const ability = event.currentTarget.closest(".ability").dataset.ability;
-    this.document.rollAbility(ability, { event: event });
+    this.document.rollAbilityTest(ability, { event: event });
   }
 
   _onRollBAB(event) {

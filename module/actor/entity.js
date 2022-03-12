@@ -2024,6 +2024,7 @@ export class ActorPF extends ActorBasePF {
    * @param {object} options      Options which configure how ability tests or saving throws are rolled
    */
   rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
+    console.warn("ActorPF.rollAbility is obsolete; use ActorPF.rollAbilityTest instead.");
     this.rollAbilityTest(abilityId, options);
   }
 

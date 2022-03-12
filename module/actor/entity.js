@@ -1069,7 +1069,10 @@ export class ActorPF extends ActorBasePF {
 
     // Set base ability modifier
     for (const ab of Object.keys(abilities)) {
-      abilities[ab].baseMod = Math.floor((abilities[ab].base ?? 0) - 10) / 2;
+      const total = abilities[ab].base;
+      const penalty = abilities[ab].penalty || 0;
+      const damage = abilities[ab].damage;
+      abilities[ab].baseMod = getAbilityModifier(total, { penalty, damage });
     }
 
     const actorData = this.data;

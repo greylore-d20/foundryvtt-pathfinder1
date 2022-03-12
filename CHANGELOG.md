@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.80.13 - 2022-3-12
+
+### Bug Fixes
+
+- Fix certain sheets not opening ([1319](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1319))
+- Fix incorrect metric calculation on actor combat tabs ([1321](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1321))
+- Fix baseMod of abilities allowing decimals ([1312](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1312))
+
+### API
+
+- Deprecate ActorPF.rollAbility ([1313](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1313))
+- Make the itemUse hook call after the attack dialog ([1316](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1316))
+
 ## 0.80.12 - 2022-3-11
 
 ### Bug Fixes

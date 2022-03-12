@@ -1209,7 +1209,7 @@ export class ItemSheetPF extends ItemSheet {
 
     const scriptEditor = new ScriptEditor({ command: change.formula }).render(true);
     const result = await scriptEditor.awaitResult();
-    if (typeof result.command === "string") {
+    if (typeof result?.command === "string") {
       return change.update({ formula: result.command });
     }
   }

@@ -675,9 +675,6 @@ export class ItemPF extends ItemBasePF {
         this.labels.save = `DC ${this.getDC()}`;
       }
     }
-
-    // Re-render sheet, if open
-    this.sheet?.render(false);
   }
 
   prepareLinks() {

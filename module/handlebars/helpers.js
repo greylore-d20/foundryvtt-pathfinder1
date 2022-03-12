@@ -48,8 +48,8 @@ export const registerHandlebarsHelpers = function () {
 
     const ft = calculateRange(range, rangeType, rollData);
     if (ft && typeof ft !== "string") {
-      const rv = convertDistance(ft);
-      return `${rv[0]} ${rv[1]}`;
+      const rv = convertDistance(range);
+      return `${ft} ${rv[1]}`;
     } else {
       return "" + (ft ?? "");
     }

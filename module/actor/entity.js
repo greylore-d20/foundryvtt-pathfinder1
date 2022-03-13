@@ -1827,6 +1827,7 @@ export class ActorPF extends ActorBasePF {
     attackData["data.broken"] = item.data.data.broken;
     attackData["img"] = item.data.img;
     attackData["data.soundEffect"] = item.data.data.soundEffect;
+    attackData["data.usesAmmo"] = item.data.data.usesAmmo;
 
     // Add additional attacks
     attackData["data.attackParts"] = item.data.data.attackParts;

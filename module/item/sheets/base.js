@@ -110,6 +110,7 @@ export class ItemSheetPF extends ItemSheet {
     data.itemName = data.item.name;
     data.isPhysical = hasProperty(data.item.data, "data.quantity");
     data.isSpell = this.item.type === "spell";
+    data.usesAmmo = this.item.data.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;
@@ -514,22 +515,6 @@ export class ItemSheetPF extends ItemSheet {
           level: {
             type: "Number",
             label: game.i18n.localize("PF1.Level"),
-          },
-        },
-        items: [],
-      });
-    }
-
-    // Add ammunition links
-    if (["attack", "weapon"].includes(this.item.type)) {
-      data.links.list.push({
-        id: "ammunition",
-        label: game.i18n.localize("PF1.LinkTypeAmmunition"),
-        help: game.i18n.localize("PF1.LinkHelpAmmunition"),
-        fields: {
-          recoverChance: {
-            type: "Number",
-            label: game.i18n.localize("PF1.RecoverChancePercentage"),
           },
         },
         items: [],

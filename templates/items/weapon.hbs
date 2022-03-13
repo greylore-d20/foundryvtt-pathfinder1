@@ -1,21 +1,20 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-
+<form class="{{ cssClass }} flexcol" autocomplete="off">
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{ item.img }}" title="{{ item.name }}" data-edit="img" />
 
     <div class="header-details flexrow">
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
 
       <ul class="summary">
         <li>
-          {{itemType}}
+          {{ itemType }}
         </li>
         <li>
-          {{labels.weaponType}}
+          {{ labels.weaponType }}
         </li>
         <li>
-          {{labels.weaponSubtype}}
+          {{ labels.weaponSubtype }}
         </li>
       </ul>
     </div>
@@ -37,7 +36,6 @@
 
   {{!-- Item Sheet Body --}}
   <section class="primary-body">
-
     {{!-- Description Tab --}}
     {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
 
@@ -45,9 +43,14 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{#if owner}}
       <label class="checkbox">
-        <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+        <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}} />
+        {{localize "PF1.ShowInQuickbar"}}
       </label>
       {{/if}}
+
+      <label class="checkbox">
+        <input type="checkbox" name="data.usesAmmo" {{checked data.usesAmmo}} /> {{localize "PF1.UsesAmmo"}}
+      </label>
 
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
@@ -64,7 +67,7 @@
         <select name="data.weaponType">
           {{#select data.weaponType}}
           {{#each weaponCategories.types as |name type|}}
-          <option value="{{type}}">{{name}}</option>
+          <option value="{{ type }}">{{ name }}</option>
           {{/each}}
           {{/select}}
         </select>
@@ -76,7 +79,7 @@
         <select name="data.weaponSubtype">
           {{#select data.weaponSubtype}}
           {{#each weaponCategories.subTypes as |name type|}}
-          <option value="{{type}}">{{name}}</option>
+          <option value="{{ type }}">{{ name }}</option>
           {{/each}}
           {{/select}}
         </select>
@@ -91,7 +94,7 @@
         <select name="data.held">
           {{#select data.held}}
           {{#each config.weaponHoldTypes as |name type|}}
-          <option value="{{type}}">{{name}}</option>
+          <option value="{{ type }}">{{ name }}</option>
           {{/each}}
           {{/select}}
         </select>
@@ -101,18 +104,18 @@
       <div class="form-group stacked">
         <label>{{localize "PF1.EquipmentStatus"}}</label>
         <label class="checkbox">
-          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{localize "PF1.Equipped"}}
+          <input type="checkbox" name="data.equipped" {{checked data.equipped}} /> {{localize "PF1.Equipped"}}
         </label>
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="data.identified" {{checked data.identified}} /> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}} /> {{localize "PF1.Masterwork"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="data.broken" {{checked data.broken}} /> {{localize "PF1.Broken"}}
         </label>
       </div>
 
@@ -122,7 +125,8 @@
         <label>{{localize "PF1.WeaponProperties"}}</label>
         {{#each config.weaponProperties as |name prop|}}
         <label class="checkbox">
-          <input type="checkbox" name="data.properties.{{prop}}" {{checked (lookup ../data.properties prop)}}/> {{ name }}
+          <input type="checkbox" name="data.properties.{{ prop }}" {{checked (lookup ../data.properties prop)}}/>
+          {{ name }}
         </label>
         {{/each}}
       </div>
@@ -130,7 +134,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="data.enh" value="{{ data.enh }}" data-dtype="Number" placeholder="0" />
         </div>
       </div>
 

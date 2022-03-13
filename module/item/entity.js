@@ -1538,10 +1538,6 @@ export class ItemPF extends ItemBasePF {
     // Prepare variables
     const shared = {
       event: ev,
-      ammoLinks: [],
-      ammoAvailable: Number.POSITIVE_INFINITY,
-      ammoRequired: 0,
-      ammoUsed: 0,
       rollData: {},
       skipDialog,
       chatMessage,
@@ -1580,12 +1576,23 @@ export class ItemPF extends ItemBasePF {
 
       // Alter roll data
       shared.fullAttack = result.fullAttack;
+      shared.attacks = result.attacks;
       await _callFn("alterRollData", result.html);
+    } else {
+      shared.attacks = await _callFn("generateAttacks");
+    }
+
+    // Filter out attacks without ammo usage
+    if (this.data.data.usesAmmo) {
+      shared.attacks = shared.attacks.filter((o) => o.ammo != null);
+      if (shared.attacks.length === 0) {
+        ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));
+        return;
+      }
     }
 
     // Generate attacks
-    const baseAttacks = await _callFn("generateAttacks");
-    shared.attacks = shared.fullAttack ? [...baseAttacks, ...shared.attacks] : baseAttacks;
+    if (!shared.fullAttack) shared.attacks = shared.attacks.slice(0, 1);
     // Handle conditionals
     await _callFn("handleConditionals");
 
@@ -1624,7 +1631,7 @@ export class ItemPF extends ItemBasePF {
     await _callFn("handleDiceSoNice");
 
     // Subtract uses
-    if (shared.ammoUsed > 0) await _callFn("subtractAmmo", shared.ammoUsed);
+    await _callFn("subtractAmmo");
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       await this.addCharges(-shared.rollData.chargeCost);
 

@@ -122,6 +122,42 @@
     <div class="attack" data-index="{{idx}}">
       <input class="name" disabled type="text" name="attack.{{idx}}.name" value="{{atk.name}}" title="{{localize "PF1.Name"}}" />
       <input class="bonus" disabled type="text" name="attack.{{idx}}.bonus" value="{{atk.bonus}}" title="{{localize "PF1.AttackRollBonus"}}" />
+      {{#if @root.usesAmmo}}
+        <div class="ammo-select">
+          <div class="flexrow">
+            {{#if atk.ammo}}
+              <img src="{{atk.ammo.data.img}}"></img>
+              <span>{{atk.ammo.data.name}}</span>
+            {{else}}
+              <span></span>
+            {{/if}}
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <ul class="ammo-list">
+            {{!-- No ammo --}}
+            <li class="ammo-item" data-id="null">
+              <span>{{localize "PF1.None"}}</span>
+
+              <div class="controls">
+                <a data-type="set-default" title="{{localize "PF1.Default"}}"><i class="fas fa-cog"></i></a>
+                <a data-type="set-all" title="{{localize "PF1.ApplyToAll"}}"><i class="fas fa-plus"></i></a>
+              </div>
+            </li>
+            {{!-- Ammo items --}}
+            {{#each @root.ammo as |ammo|}}
+              <li class="ammo-item{{#if ammo.isDefault}} default{{/if}}" data-id="{{ammo.data._id}}">
+                <img src="{{ammo.data.img}}"></img>
+                <span>{{ammo.data.name}} ({{ammo.data.data.quantity}})</span>
+
+                <div class="controls">
+                  <a data-type="set-default" title="{{localize "PF1.Default"}}"><i class="fas fa-cog"></i></a>
+                  <a data-type="set-all" title="{{localize "PF1.ApplyToAll"}}"><i class="fas fa-plus"></i></a>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
     </div>
     {{/each}}
   </div>

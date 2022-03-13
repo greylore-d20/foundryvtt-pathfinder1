@@ -390,7 +390,7 @@ export class ChatAttack {
       notes.push(...this.item.data.data.effectNotes);
     }
 
-    this.effectNotes = notes;
+    this.effectNotes = this.effectNotes.concat(notes);
     this.setEffectNotesHTML();
   }
 

@@ -46,25 +46,6 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
   }
 
-  // Check ammunition links
-  shared.ammoLinks = await this.getLinkedItems("ammunition", true);
-  for (const l of shared.ammoLinks) {
-    if (!l.item) {
-      const msg = game.i18n.localize("PF1.WarningMissingAmmunition");
-      console.warn(msg);
-      ui.notifications.warn(msg);
-      return ERR_REQUIREMENT.MISSING_AMMO;
-    }
-    shared.ammoAvailable = Math.min(shared.ammoAvailable, l.item?.charges ?? 0);
-
-    if (shared.ammoAvailable <= 0) {
-      const msg = game.i18n.localize("PF1.WarningInsufficientAmmunition").format(l.item.name);
-      console.warn(msg);
-      ui.notifications.warn(msg);
-      return ERR_REQUIREMENT.INSUFFICIENT_AMMO;
-    }
-  }
-
   return 0;
 };
 
@@ -253,6 +234,17 @@ export const generateAttacks = function (shared) {
     }
   }
 
+  // Set ammo usage
+  if (this.data.data.usesAmmo) {
+    const ammoId = this.getFlag("pf1", "defaultAmmo");
+    const quantity = this.actor.items.get(ammoId)?.data.data.quantity ?? 0;
+    for (let a = 0; a < allAttacks.length; a++) {
+      const atk = allAttacks[a];
+      if (quantity >= a + 1) atk.ammo = ammoId;
+      else atk.ammo = null;
+    }
+  }
+
   return allAttacks;
 };
 
@@ -264,12 +256,30 @@ export const generateAttacks = function (shared) {
  * @returns {Promise}
  */
 export const subtractAmmo = function (shared, value = 1) {
-  if (!shared.ammoLinks.length) return;
-  const promises = [];
-  for (const l of shared.ammoLinks) {
-    promises.push(l.item.addCharges(-value));
+  if (!this.data.data.usesAmmo) return;
+
+  const ammoUsage = {};
+  for (const atk of shared.attacks) {
+    if (atk.ammo) {
+      if (!ammoUsage[atk.ammo]) ammoUsage[atk.ammo] = 1;
+      else ammoUsage[atk.ammo]++;
+    }
   }
-  return Promise.all(promises);
+
+  if (!isObjectEmpty(ammoUsage)) {
+    const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
+      const currentValue = this.actor.items.get(o[0]).data.data.quantity;
+      const obj = {
+        _id: o[0],
+        "data.quantity": currentValue - o[1],
+      };
+
+      cur.push(obj);
+      return cur;
+    }, []);
+
+    return this.actor.updateEmbeddedDocuments("Item", updateData);
+  }
 };
 
 /**
@@ -399,9 +409,9 @@ export const generateChatAttacks = async function (shared) {
   else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
 
   // Add attack cards
-  if (shared.ammoLinks.length) {
-    shared.chatAttacks.forEach((atk) => atk.addAmmunitionCards());
-  }
+  // if (shared.ammoLinks.length) {
+  // shared.chatAttacks.forEach((atk) => atk.addAmmunitionCards());
+  // }
 
   // Add save info
   shared.save = getProperty(this.data, "data.save.type");
@@ -414,14 +424,7 @@ export const generateChatAttacks = async function (shared) {
  * @param {Object} shared - Shared data between attack functions.
  */
 export const addAttacks = async function (shared) {
-  shared.ammoRequired = Math.min(shared.attacks.length, shared.ammoAvailable);
-
-  for (
-    let a = 0;
-    (shared.ammoLinks.length && shared.ammoUsed < shared.ammoRequired) ||
-    (!shared.ammoLinks.length && a < shared.attacks.length);
-    a++
-  ) {
+  for (let a = 0; a < shared.attacks.length; a++) {
     const atk = shared.attacks[a];
 
     // Combine conditional modifiers for attack and damage
@@ -477,11 +480,14 @@ export const addAttacks = async function (shared) {
     if (a === 0) attack.addAttackNotes();
 
     // Add effect notes
+    if (atk.ammo != null) {
+      const ammoItem = this.actor.items.get(atk.ammo);
+      attack.effectNotes.push(`${game.i18n.localize("PF1.LootTypeAmmoSingle")}: ${ammoItem.name}`);
+    }
     attack.addEffectNotes();
 
     // Add to list
     shared.chatAttacks.push(attack);
-    shared.ammoUsed++;
   }
 
   // Cleanup rollData
@@ -494,8 +500,6 @@ export const addAttacks = async function (shared) {
  * @param {Object} shared - Shared data between attack functions.
  */
 export const addDamage = async function (shared) {
-  shared.ammoUsed = 1;
-
   // Set conditional modifiers
   shared.conditionalParts = {
     "damage.normal": shared.conditionalPartsCommon["damage.allDamage.normal"] ?? [],
@@ -841,13 +845,13 @@ export const addGenericPropertyLabels = function (shared) {
   if (shared.attacks.find((o) => o.id === "rapidshot")) properties.push(game.i18n.localize("PF1.RapidShot"));
 
   // Add ammo-remaining counter or out-of-ammunition warning
-  if (shared.ammoLinks.length) {
-    if (shared.ammoUsed === shared.ammoAvailable) {
-      properties.push(game.i18n.localize("PF1.AmmoDepleted"));
-    } else {
-      properties.push(game.i18n.localize("PF1.AmmoRemaining").format(shared.ammoAvailable - shared.ammoUsed));
-    }
-  }
+  // if (shared.ammoLinks.length) {
+  // if (shared.ammoUsed === shared.ammoAvailable) {
+  // properties.push(game.i18n.localize("PF1.AmmoDepleted"));
+  // } else {
+  // properties.push(game.i18n.localize("PF1.AmmoRemaining").format(shared.ammoAvailable - shared.ammoUsed));
+  // }
+  // }
 
   // Add Armor Check Penalty's application to attack rolls info
   if (this.hasAttack && shared.rollData.attributes.acp.attackPenalty > 0)
@@ -943,7 +947,7 @@ export const generateChatMetadata = function (shared) {
 
   // Add miscellaneous metadata
   const ammoId = shared.ammoLinks?.filter((l) => l.item.charges > 0).map((l) => l.item.id);
-  if (ammoId.length > 0) metadata.ammo = { id: ammoId, quantity: shared.ammoUsed };
+  // if (ammoId.length > 0) metadata.ammo = { id: ammoId, quantity: shared.ammoUsed };
   if (shared.saveDC) metadata.save = { dc: shared.saveDC, type: shared.save };
   if (this.type === "spell") metadata.spell = { cl: shared.rollData.cl, sl: shared.rollData.sl };
 

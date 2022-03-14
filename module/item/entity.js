@@ -764,7 +764,12 @@ export class ItemPF extends ItemBasePF {
     await super._preUpdate(update, options, userId);
 
     // Reset loot extra type when loot subtype is changed
-    if (this.type === "loot" && update.data?.subType !== undefined && update.data?.extraType === undefined) {
+    if (
+      this.type === "loot" &&
+      update.data?.subType !== undefined &&
+      update.data?.subType !== this.data.data.subType &&
+      update.data?.extraType === undefined
+    ) {
       setProperty(update, "data.extraType", "");
     }
   }

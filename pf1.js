@@ -449,6 +449,7 @@ Hooks.once("setup", function () {
     "abilityActivationTypes_unchained",
     "abilityActivationTypesPlurals_unchained",
     "actorStatures",
+    "ammoTypes",
   ];
 
   // Config (sub-)objects to be sorted

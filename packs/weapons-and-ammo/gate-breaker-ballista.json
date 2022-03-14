@@ -5,24 +5,85 @@
   "img": "icons/weapons/artillery/ballista-wood-green.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Ultimate Combat pg. 160</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 1,200 gp <strong>Weight</strong> -</p>\n<p><strong>Damage</strong> 6d8; <strong>Critical</strong> 19-20/x2; <strong>Range</strong> 100 ft.; <strong>Type</strong> B</p>\n<p><strong>Crew</strong> 5; <strong>Aim</strong> 3; <strong>Load</strong> 5; <strong>Speed</strong> 0 ft.</p>\n<p><strong>Category</strong> Direct-Fire (Gargantuan); <strong>Proficiency</strong> Siege Engine</p>\n<h3 class=\"framing\">Description</h3>\n<p>Resembling a massive crossbow, a ballista's power is provided by twisted skeins of animal sinew used as torsion springs driving a pair of adjustable arms. A cord attached to both arms is winched back and a projectile is loaded into a grooved slider for release. Ballistae are direct-fire weapons.</p>\n<p>&nbsp;</p>\n<p><em>Light</em>: This common type of ballista, also called an arbalest or scorpion, is size Large, maneuverable, and often mounted atop towers or even vehicles. Light ballistae have a hardness of 5 and 50 hit points. Light ballista bolts cost 10 gp each and weigh 10 pounds.</p>\n<p>&nbsp;</p>\n<p><em>Heavy</em>: These Huge-sized siege engines are commonly used as castle defenses, as well as on large warships. Heavy ballistae have a hardness of 5 and 100 hit points. Heavy ballista bolts cost 30 gp and weigh 20 pounds each.</p>\n<p>&nbsp;</p>\n<p><em>Gate Breaker</em>: This massive ballista fires specially weighted quarrels with blunt metal tips. These are used as long-range battering rams, shot at walls or the gates of castles. When they hit a wooden structure, they have a critical range of 19-20/x3. Gate breaker ballistae have a hardness of 5 and 200 hit points. Gate breaker ballista bolts cost 50 gp and weigh 30 pounds each.</p>"
+      "value": "<p><strong>Source</strong> <em>Ultimate Combat pg. 160</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 1,200 gp <strong>Weight</strong> -</p>\n<p><strong>Damage</strong> 6d8; <strong>Critical</strong> 19-20/x2; <strong>Range</strong> 100 ft.; <strong>Type</strong> B</p>\n<p><strong>Crew</strong> 5; <strong>Aim</strong> 3; <strong>Load</strong> 5; <strong>Speed</strong> 0 ft.</p>\n<p><strong>Category</strong> Direct-Fire (Gargantuan); <strong>Proficiency</strong> Siege Engine</p>\n<h3 class=\"framing\">Description</h3>\n<p>Resembling a massive crossbow, a ballista's power is provided by twisted skeins of animal sinew used as torsion springs driving a pair of adjustable arms. A cord attached to both arms is winched back and a projectile is loaded into a grooved slider for release. Ballistae are direct-fire weapons.</p>\n<p>&nbsp;</p>\n<p><em>Light</em>: This common type of ballista, also called an arbalest or scorpion, is size Large, maneuverable, and often mounted atop towers or even vehicles. Light ballistae have a hardness of 5 and 50 hit points. Light ballista bolts cost 10 gp each and weigh 10 pounds.</p>\n<p>&nbsp;</p>\n<p><em>Heavy</em>: These Huge-sized siege engines are commonly used as castle defenses, as well as on large warships. Heavy ballistae have a hardness of 5 and 100 hit points. Heavy ballista bolts cost 30 gp and weigh 20 pounds each.</p>\n<p>&nbsp;</p>\n<p><em>Gate Breaker</em>: This massive ballista fires specially weighted quarrels with blunt metal tips. These are used as long-range battering rams, shot at walls or the gates of castles. When they hit a wooden structure, they have a critical range of 19-20/x3. Gate breaker ballistae have a hardness of 5 and 200 hit points. Gate breaker ballista bolts cost 50 gp and weigh 30 pounds each.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
+    "weight": 0,
     "price": 1200,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Gate Breaker Ballista",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
     },
-    "range": {
-      "value": 100,
-      "units": "ft"
+    "target": {
+      "value": ""
     },
+    "range": {
+      "value": "100",
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -40,28 +101,69 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "dex",
       "damage": "str",
-      "critRange": "19",
-      "critMult": "2"
+      "damageMult": 1,
+      "critRange": 19,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "gateBreakerBallista",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
     "weaponType": "exotic",
-    "weaponSubtype": "ranged"
+    "weaponSubtype": "ranged",
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": false,
+    "ammoType": "",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

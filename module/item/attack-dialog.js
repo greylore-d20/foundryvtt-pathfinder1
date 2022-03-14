@@ -94,9 +94,7 @@ export class AttackDialog extends Application {
 
   getAmmo() {
     const actor = this.object.actor;
-    const ammo = actor.items.filter(
-      (o) => o.type === "loot" && o.data.data.subType === "ammo" && o.data.data.quantity > 0
-    );
+    const ammo = actor.items.filter(this._filterAmmo.bind(this));
 
     return ammo.map((o) => {
       return {
@@ -104,6 +102,16 @@ export class AttackDialog extends Application {
         isDefault: this.object.getFlag("pf1", "defaultAmmo") === o.id,
       };
     });
+  }
+
+  _filterAmmo(item) {
+    if (!(item.type === "loot" && item.data.data.subType === "ammo")) return false;
+    if (item.data.data.quantity <= 0) return false;
+
+    const weaponAmmoType = this.object.data.data.ammoType;
+    const ammoType = item.extraType;
+    if (!ammoType) return true;
+    if (weaponAmmoType === ammoType) return true;
   }
 
   activateListeners(html) {

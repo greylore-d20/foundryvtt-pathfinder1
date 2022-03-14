@@ -5,29 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/halfling-hope-shot.PNG",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Melee Tactics Toolbox pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 1 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> disarm</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Flails</p><h3 class=\"framing\">Description</h3><p>One end of this short rope has a sling bullet wrapped in a monkey's fist knot, and the other end is tied in a small loop. You wrap the loop around your wrist as a full-round action and swing the weighted end like a flail. If the loop is properly attached to your wrist and you drop the rope-shot or are disarmed, you can recover it as a swift action. Removing the weapon's loop is a full-round action. You get a +2 bonus on Sleight of Hand checks made to conceal a rope-shot on your body. Halflings treat rope-shots as martial weapons.</p>"
+      "value": "<p><strong>Source</strong> <em>Melee Tactics Toolbox pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 1 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> disarm</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Flails</p><h3 class=\"framing\">Description</h3><p>One end of this short rope has a sling bullet wrapped in a monkey's fist knot, and the other end is tied in a small loop. You wrap the loop around your wrist as a full-round action and swing the weighted end like a flail. If the loop is properly attached to your wrist and you drop the rope-shot or are disarmed, you can recover it as a swift action. Removing the weapon's loop is a full-round action. You get a +2 bonus on Sleight of Hand checks made to conceal a rope-shot on your body. Halflings treat rope-shots as martial weapons.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 1,
     "price": 1,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
     "hp": {
-      "max": 2,
-      "value": 2
+      "max": "2",
+      "value": "2"
     },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Halfling Rope-Shot",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
+    },
+    "target": {
+      "value": ""
     },
     "range": {
       "value": 0,
-      "units": "melee"
+      "units": "melee",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "mwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -45,25 +101,69 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "str",
-      "damage": "str"
+      "damage": "str",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "halflingRopeshot",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
-    "weaponType": "exotic"
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
+    "weaponType": "exotic",
+    "weaponSubtype": "light",
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": true,
+    "ammoType": "slingBullet",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

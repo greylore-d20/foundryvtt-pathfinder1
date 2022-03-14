@@ -760,6 +760,15 @@ export class ItemPF extends ItemBasePF {
     return shared;
   }
 
+  async _preUpdate(update, options, userId) {
+    await super._preUpdate(update, options, userId);
+
+    // Reset loot extra type when loot subtype is changed
+    if (this.type === "loot" && update.data?.subType !== undefined && update.data?.extraType === undefined) {
+      setProperty(update, "data.extraType", "");
+    }
+  }
+
   async update(data, context = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
     if (context.recursive === false) {

@@ -110,7 +110,7 @@ export class ItemSheetPF extends ItemSheet {
     data.itemName = data.item.name;
     data.isPhysical = hasProperty(data.item.data, "data.quantity");
     data.isSpell = this.item.type === "spell";
-    data.usesAmmo = this.item.data.data.usesAmmo !== undefined;
+    data.canUseAmmo = this.item.data.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;

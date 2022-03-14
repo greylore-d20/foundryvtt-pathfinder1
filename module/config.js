@@ -722,6 +722,19 @@ export const PF1 = {
     misc: "PF1.Misc",
   },
 
+  /**
+   * The subtypes for ammo type loot items
+   */
+  ammoTypes: {
+    arrow: "PF1.AmmoTypeArrow",
+    bolt: "PF1.AmmoTypeBolt",
+    repeatingBolt: "PF1.AmmoTypeRepeatingBolt",
+    slingBullet: "PF1.AmmoTypeBulletSling",
+    gunBullet: "PF1.AmmoTypeBulletGun",
+    dragoonBullet: "PF1.AmmoTypeBulletDragoon",
+    dart: "PF1.AmmoTypeDart",
+  },
+
   /* -------------------------------------------- */
 
   /**

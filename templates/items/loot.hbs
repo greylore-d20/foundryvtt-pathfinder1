@@ -42,7 +42,7 @@
 
       {{!-- Loot Type --}}
       <div class="form-group">
-        <label>Item Type</label>
+        <label>{{localize "PF1.Type"}}</label>
         <select name="data.subType">
           {{#select data.subType}}
           {{#each config.lootTypes as |name type|}}
@@ -51,6 +51,20 @@
           {{/select}}
         </select>
       </div>
+
+      {{#if (eq data.subType "ammo")}}
+        <div class="form-group">
+          <label>{{localize "PF1.Subtype"}}</label>
+          <select name="data.extraType">
+            {{#select data.extraType}}
+            <option value=""></option>
+            {{#each config.ammoTypes as |name type|}}
+              <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+      {{/if}}
 
       {{!-- Item Size --}}
       {{> "systems/pf1/templates/items/parts/item-size.hbs"}}

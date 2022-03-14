@@ -5,25 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/switchscythe.PNG",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Adventurer's Armory 2 pg. 9</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 18 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> 1d6 (small), 2d4 (medium); <strong>Critical</strong> x4; <strong>Range</strong> -; <strong>Type</strong> P or S; <strong>Special</strong> trip</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Blades, Heavy</p><h3 class=\"framing\">Description</h3><p>This scythe has a spring-loaded blade that folds down into the weapon's handle. Opening the scythe blade is a swift action, and closing it again is a standard action. You can use Bluff or Sleight of Hand to treat a closed switchscythe as a hidden weapon; the apparatus can be disguised with 1 minute of work, which grants a +5 bonus on such checks. This disguise is ruined when the weapon is opened and must be reapplied to hide the weapon again. Any effects that apply to a scythe also apply to a switchscythe.</p>"
+      "value": "<p><strong>Source</strong> <em>Adventurer's Armory 2 pg. 9</em></p>\n<h3 class=\"framing\"><img style=\"margin: 3px 3px 0px 3px;\" title=\"PFS Legal\" src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" />Statistics</h3>\n<p><strong>Cost</strong> 18 gp <strong>Weight</strong> 10 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 2d4 (medium); <strong>Critical</strong> x4; <strong>Range</strong> -; <strong>Type</strong> P or S; <strong>Special</strong> trip</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<p><strong>Weapon Groups</strong> Blades, Heavy</p>\n<h3 class=\"framing\">Description</h3>\n<p>This scythe has a spring-loaded blade that folds down into the weapon's handle. Opening the scythe blade is a swift action, and closing it again is a standard action. You can use Bluff or Sleight of Hand to treat a closed switchscythe as a hidden weapon; the apparatus can be disguised with 1 minute of work, which grants a +5 bonus on such checks. This disguise is ruined when the weapon is opened and must be reapplied to hide the weapon again. Any effects that apply to a scythe also apply to a switchscythe.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 10,
     "price": 18,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
+    "hp": {
+      "max": "10",
+      "value": "10"
+    },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Switchscythe",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
+    },
+    "target": {
+      "value": ""
     },
     "range": {
       "value": 0,
-      "units": "melee"
+      "units": "melee",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "mwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -41,31 +101,69 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "str",
       "damage": "str",
       "damageMult": 1.5,
-      "critRange": "",
-      "critMult": "4"
+      "critRange": null,
+      "critMult": 4
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "switchscythe",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
     "weaponSubtype": "2h",
-    "conditionals": []
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": false,
+    "ammoType": "",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

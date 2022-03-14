@@ -238,21 +238,20 @@ export class ItemSpellPF extends ItemPF {
     // No actor? No DC!
     if (!this.parent) return 0;
 
-    rollData = rollData ?? this.getRollData();
-    const data = rollData.item;
-
-    let result = 10;
-
-    // Get conditional save DC bonus
-    const dcBonus = rollData["dcBonus"] ?? 0;
-
     const spellbook = this.spellbook;
-    if (spellbook != null) {
+    if (spellbook) {
       let formula = spellbook.baseDCFormula;
+
+      rollData = rollData ?? this.getRollData();
+      const data = rollData.item;
       if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
-      result = RollPF.safeRoll(formula, rollData).total + dcBonus;
+
+      // Get conditional save DC bonus
+      const dcBonus = rollData["dcBonus"] ?? 0;
+
+      return RollPF.safeRoll(formula, rollData).total + dcBonus;
     }
-    return result;
+    return 10;
   }
 
   getSpellUses(max = false) {

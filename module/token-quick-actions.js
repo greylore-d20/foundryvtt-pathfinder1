@@ -15,13 +15,7 @@ export class TokenQuickActions {
       let r = "<charges>";
       const max = item.isCharged ? actualMaxCharge(item) : 0;
       const recharging = item.isCharged && item.chargeCost < 0;
-      const uses = item.isCharged
-        ? !recharging
-          ? actualChargeCost(item)
-          : -item.chargeCost
-        : item.data.data.links?.ammunition
-            ?.flatMap((l) => actor.items.get(l.id) ?? [])
-            .reduce((a, b) => a + actualChargeCost(b), 0) ?? 0;
+      const uses = item.isCharged ? (!recharging ? actualChargeCost(item) : -item.chargeCost) : 0;
       if (!recharging) r += `<span class='remaining'>${uses}</span >`;
       else r += `<span class='recharge'>+${uses}</span>`;
       if (!recharging && max !== 0) r += `<span class='delimiter' >/</span ><span class='max'>${max}</span>`;
@@ -42,7 +36,6 @@ export class TokenQuickActions {
       quickActions +=
         `<div id="${type}-${item.id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
         `<img src="${icon}" width="36" height="36" title="${title}">`;
-      if (item.isCharged || item.data.data.links?.ammunition?.length > 0) quickActions += chargeDisplay(item);
       quickActions += "</div >";
     });
 

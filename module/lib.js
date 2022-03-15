@@ -347,8 +347,8 @@ export const measureDistance = function (
   // TODO: Optionally adjust start and end point to closest grid
   ray ??= new Ray(p0, p1);
   const gs = canvas.dimensions.size,
-    nx = Math.abs(Math.ceil(ray.dx / gs)),
-    ny = Math.abs(Math.ceil(ray.dy / gs));
+    nx = Math.ceil(Math.abs(ray.dx / gs)),
+    ny = Math.ceil(Math.abs(ray.dy / gs));
 
   // Get the number of straight and diagonal moves
   const nDiagonal = Math.min(nx, ny),

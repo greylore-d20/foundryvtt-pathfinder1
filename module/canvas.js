@@ -1,3 +1,5 @@
+import { measureDistance as unifiedMeasureDistance } from "./lib.js";
+
 /**
  * Measure the distance between two pixel coordinates
  * See BaseGrid.measureDistance for more details
@@ -9,55 +11,11 @@ export const measureDistances = function (segments, options = {}) {
   if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
   // Track the total number of diagonals
-  let nDiagonal = 0;
   const rule = this.parent.diagonalRule;
-  const d = canvas.dimensions;
+  const state = { diagonals: 0 };
 
   // Iterate over measured segments
-  return segments.map((s) => {
-    const r = s.ray;
-
-    // Determine the total distance traveled
-    const nx = Math.abs(Math.ceil(r.dx / d.size));
-    const ny = Math.abs(Math.ceil(r.dy / d.size));
-
-    // Determine the number of straight and diagonal moves
-    const nd = Math.min(nx, ny);
-    const ns = Math.abs(ny - nx);
-    nDiagonal += nd;
-
-    // Alternative DMG Movement
-    if (rule === "5105") {
-      const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-      const spaces = nd10 * 2 + (nd - nd10) + ns;
-      return spaces * canvas.dimensions.distance;
-    }
-
-    // Standard PHB Movement
-    else return (ns + nd) * canvas.scene.data.gridDistance;
-  });
-};
-
-export const measureDistance = function (p0, p1, { gridSpaces = true } = {}) {
-  if (!gridSpaces) return BaseGrid.prototype.measureDistance.bind(this)(p0, p1, { gridSpaces });
-  const gs = canvas.dimensions.size,
-    ray = new Ray(p0, p1),
-    nx = Math.abs(Math.ceil(ray.dx / gs)),
-    ny = Math.abs(Math.ceil(ray.dy / gs));
-
-  // Get the number of straight and diagonal moves
-  const nDiagonal = Math.min(nx, ny),
-    nStraight = Math.abs(ny - nx);
-
-  // Alternative DMG Movement
-  if (this.parent.diagonalRule === "5105") {
-    const nd10 = Math.floor(nDiagonal / 2);
-    const spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
-    return spaces * canvas.dimensions.distance;
-  }
-
-  // Standard PHB Movement
-  else return (nStraight + nDiagonal) * canvas.scene.data.gridDistance;
+  return segments.map((s) => unifiedMeasureDistance(null, null, { ray: s.ray, diagonalRule: rule, state }));
 };
 
 /* -------------------------------------------- */

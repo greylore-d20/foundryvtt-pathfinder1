@@ -316,6 +316,60 @@ export const convertDistance = function (value, type = "ft") {
 };
 
 /**
+ * @typedef Point
+ * @property {number} x X coordinate
+ * @param {number} y Y coordinate
+ */
+
+/**
+ * @typedef MeasureState
+ * @param {number} diagonals Number of diagonals passed so far.
+ * @param {number} cells Total cells in distance
+ */
+
+/**
+ * Measure distance between two points.
+ *
+ * @param {Point} p0 Start point on canvas
+ * @param {Point} p1 End point on canvas
+ * @param {Object} options Measuring options.
+ * @param {boolean} options.altReach Use alternate reach weapon diagonal rule at 10 ft range.
+ * @param {"5105"|"555"} options.diagonalRule Used diagonal rule. Defaults to 5/10/5 PF measuring.
+ * @param {Ray} options.ray Pre-generated ray to use instead of the points.
+ * @param {MeasureState} options.state Optional state tracking across multiple measures.
+ * @returns {number} Grid distance between the two points.
+ */
+export const measureDistance = function (
+  p0,
+  p1,
+  { ray = null, diagonalRule = "5105", state = { diagonals: 0, spaces: 0 } } = {}
+) {
+  // TODO: Optionally adjust start and end point to closest grid
+  ray ??= new Ray(p0, p1);
+  const gs = canvas.dimensions.size,
+    nx = Math.abs(Math.ceil(ray.dx / gs)),
+    ny = Math.abs(Math.ceil(ray.dy / gs));
+
+  // Get the number of straight and diagonal moves
+  const nDiagonal = Math.min(nx, ny),
+    nStraight = Math.abs(ny - nx);
+
+  state.diagonals += nDiagonal;
+
+  let cells = 0;
+  // Standard Pathfinder diagonals: double distance for every odd.
+  if (this.parent.diagonalRule === "5105") {
+    const nd10 = Math.floor(state.diagonals / 2) - Math.floor((state.diagonals - nDiagonal) / 2);
+    cells = nd10 * 2 + (nDiagonal - nd10) + nStraight;
+  }
+  // Equal distance diagonals
+  else cells = nStraight + nDiagonal;
+
+  state.cells += cells;
+  return cells * canvas.dimensions.distance;
+};
+
+/**
  * Converts lbs to what the world is using as a measurement unit.
  *
  * @param {number} value - The value (in lbs) to convert.

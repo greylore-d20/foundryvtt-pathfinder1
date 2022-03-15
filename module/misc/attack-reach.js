@@ -1,5 +1,5 @@
 import Color from "color";
-import { colorToInt, convertDistance } from "../lib.js";
+import { colorToInt, convertDistance, measureDistance } from "../lib.js";
 
 const rangeColor = {
   fill: Color("#ff0000"),
@@ -307,8 +307,8 @@ const shouldAddReachSquare = function (
   const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
   const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
 
-  const dist = measureReachDistance(p0, p1);
-  const dist2 = measureReachDistance(p0, p1, true);
+  const dist = measureDistance(p0, p1);
+  const dist2 = options.useReachRule ? measureDistance(p0, p1, { diagonalRule: "555" }) : null;
   const reachRuleRange = convertDistance(10)[0];
   if (dist > range) {
     // Special rule for 10-ft. reach
@@ -327,24 +327,4 @@ const shouldAddReachSquare = function (
   }
 
   return true;
-};
-
-export const measureReachDistance = function (p0, p1, alt = false) {
-  const gs = canvas.dimensions.size,
-    ray = new Ray(p0, p1),
-    nx = Math.abs(Math.ceil(ray.dx / gs)),
-    ny = Math.abs(Math.ceil(ray.dy / gs));
-
-  // Get the number of straight and diagonal moves
-  const nDiagonal = Math.min(nx, ny),
-    nStraight = Math.abs(ny - nx);
-
-  // Return distance
-  if (!alt) {
-    const nd10 = Math.floor(nDiagonal / 2);
-    const spaces = nd10 * 2 + (nDiagonal - nd10) + nStraight;
-    return spaces * canvas.dimensions.distance;
-  }
-
-  return (nStraight + nDiagonal) * canvas.scene.data.gridDistance;
 };

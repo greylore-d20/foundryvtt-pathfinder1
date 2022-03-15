@@ -11,11 +11,11 @@ export const measureDistances = function (segments, options = {}) {
   if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
   // Track the total number of diagonals
-  const rule = this.parent.diagonalRule;
+  const diagonalRule = this.parent.diagonalRule;
   const state = { diagonals: 0 };
 
   // Iterate over measured segments
-  return segments.map((s) => unifiedMeasureDistance(null, null, { ray: s.ray, diagonalRule: rule, state }));
+  return segments.map((s) => unifiedMeasureDistance(null, null, { ray: s.ray, diagonalRule, state }));
 };
 
 /* -------------------------------------------- */

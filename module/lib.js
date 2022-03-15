@@ -342,7 +342,7 @@ export const convertDistance = function (value, type = "ft") {
 export const measureDistance = function (
   p0,
   p1,
-  { ray = null, diagonalRule = "5105", state = { diagonals: 0, spaces: 0 } } = {}
+  { ray = null, diagonalRule = "5105", state = { diagonals: 0, cells: 0 } } = {}
 ) {
   // TODO: Optionally adjust start and end point to closest grid
   ray ??= new Ray(p0, p1);

@@ -358,7 +358,7 @@ export const measureDistance = function (
 
   let cells = 0;
   // Standard Pathfinder diagonals: double distance for every odd.
-  if (this.parent.diagonalRule === "5105") {
+  if (diagonalRule === "5105") {
     const nd10 = Math.floor(state.diagonals / 2) - Math.floor((state.diagonals - nDiagonal) / 2);
     cells = nd10 * 2 + (nDiagonal - nd10) + nStraight;
   }

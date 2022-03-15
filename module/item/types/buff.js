@@ -69,7 +69,7 @@ export class ItemBuffPF extends ItemPF {
     const createData = {
       label: this.name,
       icon: this.img,
-      origin: this.uuid,
+      //origin: this.uuid,
       disabled: !this.data.data.active,
       flags: {
         pf1: {

@@ -1,4 +1,4 @@
-import { degtorad } from "./lib.js";
+import { degtorad, measureDistance } from "./lib.js";
 
 /**
  * Applies patches to core functions to integrate Pathfinder specific measurements.
@@ -161,23 +161,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
       if (min < max) return value >= min && value <= max;
       return value >= min || value <= max;
-    };
-
-    const measureDistance = function (p0, p1) {
-      const gs = canvas.dimensions.size,
-        ray = new Ray(p0, p1),
-        // How many squares do we travel across to get there? If 2.3, we should count that as 3 instead of 2; hence, Math.ceil
-        nx = Math.ceil(Math.abs(ray.dx / gs)),
-        ny = Math.ceil(Math.abs(ray.dy / gs));
-
-      // Get the number of straight and diagonal moves
-      const nDiagonal = Math.min(nx, ny),
-        nStraight = Math.abs(ny - nx);
-
-      // Diagonals in PF pretty much count as 1.5 times a straight
-      const distance = Math.floor(nDiagonal * 1.5 + nStraight);
-      const distanceOnGrid = distance * canvas.dimensions.distance;
-      return distanceOnGrid;
     };
 
     const originOffset = { x: 0, y: 0 };

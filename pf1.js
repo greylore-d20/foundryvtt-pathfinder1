@@ -17,6 +17,7 @@ import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
+import { measureDistance } from "./module/lib.js";
 import { TemplateLayerPF } from "./module/measure.js";
 import { MeasuredTemplatePF } from "./module/measure.js";
 import { SightLayerPF } from "./module/low-light-vision.js";
@@ -95,7 +96,7 @@ import { SemanticVersion } from "./module/semver.js";
 import { runUnitTests } from "./module/unit-tests.js";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
-import { addReachCallback, measureReachDistance } from "./module/misc/attack-reach.js";
+import { addReachCallback } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
 import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
@@ -200,8 +201,15 @@ Hooks.once("init", function () {
       convertDistance,
       convertWeight,
       convertWeightBack,
+      measureDistance,
       measureDistances,
-      measureReachDistance,
+      measureReachDistance(p0, p1, alt = false) {
+        // OBSOLETE: Wrapper for compatibility with old. Remove later.
+        console.warn(
+          'measureReachDistance is obsolete, please use measureDistance with diagonalRule set to "555" instead'
+        );
+        return measureDistance(p0, p1, { diagonalRule: alt ? "555" : "5105" });
+      },
       dialogGetActor,
       dialogGetNumber,
       SemanticVersion,

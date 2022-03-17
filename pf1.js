@@ -727,17 +727,6 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   }
 });
 
-Hooks.on("createToken", (scene, token, options, userId) => {
-  if (userId !== game.user.id) return;
-
-  const actor = game.actors.tokens[token.data._id] ?? game.actors.get(token.actorId);
-
-  // Update changes and generate sourceDetails to ensure valid actor data
-  if (actor != null) {
-    actor.toggleConditionStatusIcons({ render: false });
-  }
-});
-
 Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   const actor = game.actors.get(token.actorId);
   if (!actor?._calcBuffActiveEffects) return; // Don't do anything for actors without this function (e.g. basic actors)

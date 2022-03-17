@@ -2,7 +2,13 @@ export class EntrySelector extends FormApplication {
   constructor(...args) {
     super(...args);
 
-    this.entries = duplicate(getProperty(this.object.data, this.attribute) || []);
+    // Prepare data and convert it into format compatible with the editor
+    this.isFlag = this.options.flag === true;
+    this.isFlat = this.options.flat === true;
+    const data = deepClone(getProperty(this.object.data, this.attribute) ?? (this.isFlag ? {} : []));
+
+    this.originalEntries = data;
+    this.entries = this.isFlag ? (this.isFlat ? Object.keys(data).map((d) => [d]) : Object.entries(data)) : data;
   }
 
   static get defaultOptions() {
@@ -58,7 +64,21 @@ export class EntrySelector extends FormApplication {
   async _updateObject(event, formData) {
     const updateData = {};
 
-    updateData[this.attribute] = this.entries;
+    if (this.isFlag) {
+      // Convert editor data for flags
+      const newKeys = new Set(); // Needed for deletion detection
+      const entries = this.entries.forEach(([key, value]) => {
+        newKeys.add(key);
+        updateData[`${this.attribute}.${key}`] = this.isFlat ? true : value;
+      });
+      // Handle deletions
+      const oldKeys = Object.keys(this.originalEntries);
+      oldKeys.forEach((key) => {
+        if (!newKeys.has(key)) updateData[`${this.attribute}.-=${key}`] = null;
+      });
+    } else {
+      updateData[this.attribute] = this.entries;
+    }
 
     return this.object.update(updateData);
   }

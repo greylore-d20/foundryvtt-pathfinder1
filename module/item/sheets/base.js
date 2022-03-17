@@ -1569,6 +1569,8 @@ export class ItemSheetPF extends ItemSheet {
     const options = {
       name: a.getAttribute("for"),
       title: a.innerText,
+      flag: a.dataset.flag === "true",
+      flat: a.dataset.flat === "true",
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };

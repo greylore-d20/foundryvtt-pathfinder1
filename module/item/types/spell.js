@@ -154,7 +154,7 @@ export class ItemSpellPF extends ItemPF {
     if (!this.parent) return;
     if (this.data.data.atWill) return;
 
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = this.spellbook,
       isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
@@ -228,53 +228,51 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get spellbook() {
-    if (this.parent == null) return null;
-
-    const spellbookIndex = this.data.data.spellbook;
-    return this.parent?.data?.data.attributes.spells.spellbooks[spellbookIndex];
+    const bookId = this.data.data.spellbook;
+    return this.parent?.data?.data.attributes.spells.spellbooks[bookId];
   }
 
   getDC(rollData = null) {
     // No actor? No DC!
     if (!this.parent) return 0;
 
-    rollData = rollData ?? this.getRollData();
-    const data = rollData.item;
-
-    let result = 10;
-
-    // Get conditional save DC bonus
-    const dcBonus = rollData["dcBonus"] ?? 0;
-
     const spellbook = this.spellbook;
-    if (spellbook != null) {
+    if (spellbook) {
       let formula = spellbook.baseDCFormula;
+
+      rollData = rollData ?? this.getRollData();
+      const data = rollData.item;
       if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
-      result = RollPF.safeRoll(formula, rollData).total + dcBonus;
+
+      // Get conditional save DC bonus
+      const dcBonus = rollData["dcBonus"] ?? 0;
+
+      return RollPF.safeRoll(formula, rollData).total + dcBonus;
     }
-    return result;
+    return 10;
   }
 
   getSpellUses(max = false) {
     if (!this.parent) return 0;
-    if (this.data.data.atWill) return Number.POSITIVE_INFINITY;
+    const itemData = this.data.data;
+    if (itemData.atWill) return Number.POSITIVE_INFINITY;
 
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`),
+    const spellbook = this.spellbook,
       isSpontaneous = spellbook.spontaneous,
-      spellLevel = getProperty(this.data, "data.level");
+      spellLevel = itemData.level;
 
     if (this.useSpellPoints()) {
-      if (max) return getProperty(spellbook, "spellPoints.max");
-      return getProperty(spellbook, "spellPoints.value");
+      if (max) return spellbook.spellPoints?.max;
+      return spellbook.spellPoints?.value;
     } else {
       if (isSpontaneous) {
-        if (getProperty(this.data, "data.preparation.spontaneousPrepared") === true) {
+        if (itemData.preparation.spontaneousPrepared === true) {
           if (max) return getProperty(spellbook, `spells.spell${spellLevel}.max`) || 0;
           return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
         }
       } else {
-        if (max) return getProperty(this.data, "data.preparation.maxAmount") || 0;
-        return getProperty(this.data, "data.preparation.preparedAmount") || 0;
+        if (max) return itemData.preparation?.maxAmount ?? 0;
+        return itemData.preparation?.preparedAmount ?? 0;
       }
     }
 
@@ -284,16 +282,13 @@ export class ItemSpellPF extends ItemPF {
   useSpellPoints() {
     if (!this.parent) return false;
 
-    const spellbookKey = this.data.data.spellbook;
-    const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${spellbookKey}`);
-    return getProperty(spellbook, "spellPoints.useSystem") || false;
+    return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 
   getSpellPointCost(rollData = null) {
     if (!rollData) rollData = this.getRollData();
 
-    const roll = RollPF.safeRoll(getProperty(this.data, "data.spellPoints.cost") || "0", rollData);
-    return roll.total;
+    return RollPF.safeRoll(this.data.data.spellPoints?.cost ?? "0", rollData).total;
   }
 
   getSpellComponents(srcData) {

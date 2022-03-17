@@ -651,25 +651,21 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _getItemStatus(item) {
+    const itemData = item.data.data;
     if (item.type === "spell") {
       const spellbook = this.item.spellbook;
-      if (item.data.data.preparation.mode === "prepared") {
-        if (item.data.data.preparation.preparedAmount > 0) {
-          if (spellbook != null && spellbook.spontaneous) {
-            return game.i18n.localize("PF1.SpellPrepPrepared");
-          } else {
-            return game.i18n.localize("PF1.AmountPrepared").format(item.data.data.preparation.preparedAmount);
-          }
-        }
-        return game.i18n.localize("PF1.Unprepared");
-      } else if (item.data.data.preparation.mode) {
-        return item.data.data.preparation.mode.titleCase();
-      } else return "";
-    } else if (
-      ["weapon", "equipment"].includes(item.type) ||
-      (item.type === "loot" && item.data.data.subType === "gear")
-    ) {
-      return item.data.data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+      if (itemData.preparation.mode === "prepared") {
+        if (spellbook?.spellPreparationMode === "spontaneous") {
+          if (itemData.preparation.spontaneousPrepared) return game.i18n.localize("PF1.SpellPrepPrepared");
+          else return game.i18n.localize("PF1.Unprepared");
+        } else if (itemData.preparation.preparedAmount > 0)
+          return game.i18n.localize("PF1.AmountPrepared").format(itemData.preparation.preparedAmount);
+        else return game.i18n.localize("PF1.Unprepared");
+      } else if (itemData.preparation.mode) {
+        return itemData.preparation.mode.titleCase();
+      }
+    } else if (itemData.equipped !== undefined) {
+      return itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
     }
   }
 

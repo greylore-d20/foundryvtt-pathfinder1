@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.80.14 - 2022-3-17
+
+### Bug Fixes
+
+- Buff duration.totalSeconds was wrong for round durations.
+- Speed wasn't being affected by encumbrance or armor ([1322](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1322))
+
+### Changelog
+
+- Revamped ammunition system
+
+### Compendium
+
+- Added weapon properties to compendium weapons
+
+### API
+
+- game.pf1.utils.measureReachDistance obsoleted.
+- game.pf1.utils.measureDistance introduced.
+
 ## 0.80.13 - 2022-3-12
 
 ### Bug Fixes

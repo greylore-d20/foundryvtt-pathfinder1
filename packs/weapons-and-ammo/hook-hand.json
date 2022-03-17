@@ -5,29 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/hook-hand.PNG",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 188</em>, <em>Pirates of the Inner Sea pg. 19</em>, <em>Skull and Shackles Player's Guide pg. 6</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 10 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> disarm</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><h3 class=\"framing\">Description</h3><p>Pirates who lose a hand in the course of their adventures sometimes attach hooks to their wrists. Hook hands can't be disarmed. They generally don't interfere with day-to-day activities, but can't be used for tasks that would require an actual hand (such as completing somatic components, drawing arrows, or holding a weapon with both hands).</p>"
+      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 188</em>, <em>Pirates of the Inner Sea pg. 19</em>, <em>Skull and Shackles Player's Guide pg. 6</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 10 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> disarm</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><h3 class=\"framing\">Description</h3><p>Pirates who lose a hand in the course of their adventures sometimes attach hooks to their wrists. Hook hands can't be disarmed. They generally don't interfere with day-to-day activities, but can't be used for tasks that would require an actual hand (such as completing somatic components, drawing arrows, or holding a weapon with both hands).</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 1,
     "price": 10,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
     "hp": {
-      "max": 2,
-      "value": 2
+      "max": "2",
+      "value": "2"
     },
+    "broken": false,
     "hardness": 10,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Hook Hand",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
+    },
+    "target": {
+      "value": ""
     },
     "range": {
       "value": 0,
-      "units": "melee"
+      "units": "melee",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "mwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -45,24 +101,67 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "str",
-      "damage": "str"
+      "damage": "str",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "hookHand",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
-    "scriptCalls": []
+    "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
+    "weaponType": "simple",
+    "weaponSubtype": "light",
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": true,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

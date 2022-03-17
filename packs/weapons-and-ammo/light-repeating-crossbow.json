@@ -5,33 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/crossbow-repeating.PNG",
   "data": {
     "description": {
-      "value": "<p>This weapon functions identically to a&nbsp;<a href=\"https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/crossbow-repeating-heavy/\">repeating heavy crossbow</a>, except that its damage, critical, and range values are equivalent to those of a light crossbow instead of a heavy crossbow. Its significantly lighter construction and pull make it both more portable and more useful to those who rely on stealth or speed.</p>"
+      "value": "<p>This weapon functions identically to a&nbsp;<a href=\"https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/crossbow-repeating-heavy/\">repeating heavy crossbow</a>, except that its damage, critical, and range values are equivalent to those of a light crossbow instead of a heavy crossbow. Its significantly lighter construction and pull make it both more portable and more useful to those who rely on stealth or speed.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 6,
     "price": 250,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
     "hp": {
       "max": "5",
       "value": "5"
     },
+    "broken": false,
     "hardness": 5,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Light Repeating Crossbow",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
+    },
+    "target": {
+      "value": ""
     },
     "range": {
       "value": "80",
       "units": "ft",
-      "maxIncrements": 10
+      "maxIncrements": 10,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -52,28 +104,66 @@
       },
       "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "dex",
       "damage": "",
-      "critRange": 19
+      "damageMult": 1,
+      "critRange": 19,
+      "critMult": 2
     },
     "save": {
-      "dc": "0"
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
+    "tag": "",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
     "weaponType": "exotic",
     "weaponSubtype": "ranged",
-    "conditionals": []
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": true,
+    "ammoType": "repeatingBolt",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

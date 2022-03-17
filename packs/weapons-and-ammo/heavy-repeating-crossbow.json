@@ -5,33 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/crossbow-repeating.PNG",
   "data": {
     "description": {
-      "value": "<p>The repeating heavy crossbow holds 5 repeating crossbow bolts.</p>\n<p>As long as it holds bolts, you can reload it by pulling the reloading lever (a&nbsp;free action). Loading a new case of 5 bolts is a&nbsp;full-round action&nbsp;that provokes attacks of opportunity.</p>\n<p>You can fire a repeating crossbow with one hand or fire a repeating crossbow in each hand in the same manner as you would a normal crossbow of the same size. However, you must fire the weapon with two hands in order to use the reloading lever, and you must use two hands to load a new case of bolts.</p>"
+      "value": "<p>The repeating heavy crossbow holds 5 repeating crossbow bolts.</p>\n<p>As long as it holds bolts, you can reload it by pulling the reloading lever (a&nbsp;free action). Loading a new case of 5 bolts is a&nbsp;full-round action&nbsp;that provokes attacks of opportunity.</p>\n<p>You can fire a repeating crossbow with one hand or fire a repeating crossbow in each hand in the same manner as you would a normal crossbow of the same size. However, you must fire the weapon with two hands in order to use the reloading lever, and you must use two hands to load a new case of bolts.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 12,
     "price": 400,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
     "hp": {
       "max": "5",
       "value": "5"
     },
+    "broken": false,
     "hardness": 5,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Heavy Repeating Crossbow",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
+    },
+    "target": {
+      "value": ""
     },
     "range": {
       "value": "120",
       "units": "ft",
-      "maxIncrements": 10
+      "maxIncrements": 10,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -52,28 +104,66 @@
       },
       "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "dex",
       "damage": "",
-      "critRange": 19
+      "damageMult": 1,
+      "critRange": 19,
+      "critMult": 2
     },
     "save": {
-      "dc": "0"
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
+    "tag": "",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
     "weaponType": "exotic",
     "weaponSubtype": "ranged",
-    "conditionals": []
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": true,
+    "ammoType": "repeatingBolt",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

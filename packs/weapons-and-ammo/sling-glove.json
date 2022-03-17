@@ -5,29 +5,85 @@
   "img": "systems/pf1/icons/items/weapons/sling-glove.png",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 5</em>, <em>Legacy of Fire Player's Guide pg. 23</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 50 ft.; <strong>Type</strong> B; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This curved, scooped-shaped, 2-foot-long wicker basket attaches to your wrist, allowing you to throw fist-sized stones at great speed merely by whipping your arm forward. Loading a sling glove is a free action that does not provoke an attack of opportunity so long as you have a free hand. You take -4 penalty when throwing a stone at an adjacent target and cannot use the weapon to attack creatures in your space.</p>"
+      "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 5</em>, <em>Legacy of Fire Player's Guide pg. 23</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 50 ft.; <strong>Type</strong> B; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This curved, scooped-shaped, 2-foot-long wicker basket attaches to your wrist, allowing you to throw fist-sized stones at great speed merely by whipping your arm forward. Loading a sling glove is a free action that does not provoke an attack of opportunity so long as you have a free hand. You take -4 penalty when throwing a stone at an adjacent target and cannot use the weapon to attack creatures in your space.</p>",
+      "chat": "",
+      "unidentified": ""
     },
     "tags": [],
+    "quantity": 1,
     "weight": 2,
     "price": 5,
+    "size": "med",
+    "equipped": true,
+    "resizing": false,
+    "identified": true,
     "hp": {
-      "max": 5,
-      "value": 5
+      "max": "5",
+      "value": "5"
     },
+    "broken": false,
     "hardness": 5,
+    "carried": true,
+    "unidentified": {
+      "price": 0,
+      "name": ""
+    },
     "identifiedName": "Sling Glove",
+    "cl": 0,
+    "aura": {
+      "custom": false,
+      "school": ""
+    },
     "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
     "activation": {
+      "cost": 1,
       "type": "attack"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
     "duration": {
+      "value": null,
       "units": "inst"
     },
-    "range": {
-      "value": 50,
-      "units": "ft"
+    "target": {
+      "value": ""
     },
+    "range": {
+      "value": "50",
+      "units": "ft",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
     "actionType": "rwak",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -45,28 +101,69 @@
       },
       "bonus": {
         "formula": "@formulaicAttack * -5"
-      }
+      },
+      "label": ""
     },
+    "formula": "",
     "ability": {
       "attack": "dex",
       "damage": "str",
-      "critRange": "",
-      "critMult": "2"
+      "damageMult": 1,
+      "critRange": null,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "slingGlove",
+    "useCustomTag": false,
     "flags": {
       "boolean": [],
       "dictionary": []
     },
     "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "attackType": "weapon",
+    "nonlethal": false,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
     "weaponType": "exotic",
-    "weaponSubtype": "ranged"
+    "weaponSubtype": "ranged",
+    "properties": {
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
+    "showInQuickbar": true,
+    "conditionals": [],
+    "usesAmmo": true,
+    "ammoType": "slingBullet",
+    "spellArea": ""
   },
   "effects": [],
   "folder": null,

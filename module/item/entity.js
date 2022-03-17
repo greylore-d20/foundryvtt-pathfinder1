@@ -1243,7 +1243,7 @@ export class ItemPF extends ItemBasePF {
     return {
       label: this.name,
       icon: this.img,
-      origin: this.uuid,
+      //origin: this.uuid,
       flags: { pf1: { origin: { item: this.id } } },
       disabled: !this.isActive,
       duration: {},

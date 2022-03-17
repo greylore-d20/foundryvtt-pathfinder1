@@ -46,7 +46,7 @@ export class ItemBuffPF extends ItemPF {
         case "minute":
           seconds = duration * 60;
           break;
-        case "rounds":
+        case "round":
           seconds = duration * 6;
           break;
       }

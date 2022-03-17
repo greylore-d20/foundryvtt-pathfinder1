@@ -2238,36 +2238,40 @@ export class ItemPF extends ItemBasePF {
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {
       if (!item) return;
 
-      const ammoLinks = await item.getLinkedItems("ammunition", true);
       let recovered = false;
       let failed = false;
       const promises = [];
 
-      for (const l of ammoLinks) {
-        let chance = 100;
-        if (action === "recoverAmmo") {
-          chance = l.linkData.recoverChance;
-        }
+      // Find ammo item
+      const ammoItem = item.actor.items.get(button.dataset.ammoId);
+      if (!ammoItem) return;
+      let chance = 100;
+      if (action === "recoverAmmo") {
+        chance = 50; // @TODO: Allow user to set chance to something else, somehow
+      }
 
-        if (chance >= Math.random() * 100) {
-          recovered = true;
-          promises.push(l.item.addCharges(1));
-        } else {
-          failed = true;
-        }
+      // (Try to) recover ammo
+      if (chance >= Math.random() * 100) {
+        recovered = true;
+        promises.push(ammoItem.addCharges(1));
+      } else {
+        failed = true;
       }
 
       // Disable button
-      if (button) {
-        button.disabled = true;
-        if (recovered && !failed) {
-          button.style.backgroundColor = "#00AA00";
-        } else if (!recovered && failed) {
-          button.style.backgroundColor = "#AA0000";
-        } else if (recovered && failed) {
-          button.style.backgroundColor = "#0000AA";
-        }
+      button.disabled = true;
+      if (recovered && !failed) {
+        button.style.backgroundColor = "#00AA00";
+      } else if (!recovered && failed) {
+        button.style.backgroundColor = "#AA0000";
+      } else if (recovered && failed) {
+        button.style.backgroundColor = "#0000AA";
       }
+
+      // Update chat card
+      const content = button.closest(".chat-card").outerHTML;
+      const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
+      promises.push(card.update({ content: content }));
 
       await Promise.all(promises);
 

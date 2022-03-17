@@ -409,9 +409,11 @@ export const generateChatAttacks = async function (shared) {
   else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
 
   // Add attack cards
-  // if (shared.ammoLinks.length) {
-  // shared.chatAttacks.forEach((atk) => atk.addAmmunitionCards());
-  // }
+  shared.attacks.forEach((attack, idx) => {
+    if (!attack.ammo) return;
+    const atk = shared.chatAttacks[idx];
+    atk.addAmmunitionCards(attack.ammo);
+  });
 
   // Add save info
   shared.save = getProperty(this.data, "data.save.type");

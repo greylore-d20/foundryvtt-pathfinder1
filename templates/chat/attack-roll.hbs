@@ -150,7 +150,7 @@
         <label>{{cardGroup.label}}</label>
         <div class="flexrow">
         {{#each cardGroup.items as |item|}}
-          <button data-action="{{item.action}}" data-value="{{item.value}}" data-tags="{{item.tags}}">{{item.label}}</button>
+          <button data-action="{{item.action}}" data-value="{{item.value}}" data-tags="{{item.tags}}"{{#if item.data}}{{#each item.data as |dValue dKey|}} data-{{dKey}}="{{dValue}}"{{/each}}{{/if}}>{{item.label}}</button>
         {{/each}}
         </div>
       </div>

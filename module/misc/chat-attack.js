@@ -394,10 +394,18 @@ export class ChatAttack {
     this.setEffectNotesHTML();
   }
 
-  addAmmunitionCards() {
+  addAmmunitionCards(ammoId) {
     this.cards.recoverAmmo = { label: game.i18n.localize("PF1.RecoverAmmunition"), items: [] };
-    this.cards.recoverAmmo.items.push({ label: game.i18n.localize("PF1.Recover"), action: "recoverAmmo" });
-    this.cards.recoverAmmo.items.push({ label: game.i18n.localize("PF1.ForceRecover"), action: "forceRecoverAmmo" });
+    this.cards.recoverAmmo.items.push({
+      label: game.i18n.localize("PF1.Recover"),
+      action: "recoverAmmo",
+      data: { "ammo-id": ammoId },
+    });
+    this.cards.recoverAmmo.items.push({
+      label: game.i18n.localize("PF1.ForceRecover"),
+      action: "forceRecoverAmmo",
+      data: { "ammo-id": ammoId },
+    });
   }
 
   finalize() {

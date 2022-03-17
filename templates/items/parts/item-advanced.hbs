@@ -15,8 +15,8 @@
                 </div>
 
                 <div class="tag-list flexrow">
-                    {{#each flags.boolean as |f|}}
-                    <span class="tag">{{f}}</span>
+                    {{#each flags.boolean as |value key|}}
+                    <span class="tag">{{key}}</span>
                     {{/each}}
                 </div>
             </div>

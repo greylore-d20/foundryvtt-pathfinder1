@@ -24,7 +24,9 @@ export class ItemClassPF extends ItemPF {
         const pack = game.packs.get(collection);
         const item = await pack.getDocument(itemId);
 
-        const itemData = duplicate(item.data);
+        // Apply Foundry's transformations for importing
+        // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
+        const itemData = game.items.fromCompendium(item);
 
         // Set temporary flag
         setProperty(itemData, "flags.pf1.__co.level", duplicate(co.level));

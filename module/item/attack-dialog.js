@@ -163,11 +163,12 @@ export class AttackDialog extends Application {
     this.flags[elem.name] = elem.checked === true;
 
     // Add or remove haste attack
-    if (["haste-attack", "rapid-shot"].includes(elem.name)) {
+    if (["haste-attack", "rapid-shot", "manyshot"].includes(elem.name)) {
       if (elem.checked) {
         const translationString = {
           "haste-attack": "PF1.Haste",
           "rapid-shot": "PF1.RapidShot",
+          manyshot: "PF1.Manyshot",
         };
 
         this.attacks.push(
@@ -347,6 +348,7 @@ export class AttackDialog extends Application {
   getFormAttacks() {
     return this.attacks.map((o) => {
       return {
+        id: o.id,
         label: o.name,
         attackBonus: o.bonus,
         ammo: o.ammo?.data._id,

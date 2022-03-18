@@ -2163,7 +2163,7 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on("click", ".card-buttons button", this._onChatCardButton.bind(this));
+    html.on("click", ".card-buttons button, .inline-action", this._onChatCardButton.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
   }
 

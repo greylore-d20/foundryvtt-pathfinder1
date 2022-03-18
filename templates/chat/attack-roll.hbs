@@ -1,13 +1,50 @@
-<div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
-  {{~> "systems/pf1/templates/chat/parts/attack-roll-header.hbs"}}
+{{!-- Apply Damage button/widget --}}
+{{#*inline "applyDamageButton"}}
+  {{!-- Apply full damage --}}
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" title="{{#if isHealing}}{{localize "PF1.ApplyHealing"}}{{else}}{{localize "PF1.ApplyDamage"}}{{/if}}">
+    <i class="fas fa-hammer"></i>
+    <i class="absolute fas fa-plus"></i>
+  </a>
+  {{!-- Apply half damage --}}
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" title="{{localize "PF1.ApplyHalf"}}">
+    <i class="fas fa-hammer"></i>
+    <i class="absolute">½</i>
+  </a>
+{{/inline}}
 
-  {{#if targets}}
-  {{> "systems/pf1/templates/chat/parts/attack-roll-targets.hbs"}}
-  {{/if}}
+{{!-- Damage row partial --}}
+{{#*inline "damageRow"}}
+  <tr>
+    {{#if dr.normal}}
+      <td>
+        <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.normal.roll.formula}}" data-roll="{{json-string dr.normal.roll}}">
+          <i class="fas fa-dice-d20"></i> {{dr.normal.roll.total}}
+        </a>
+      </td>
+      <td>{{dr.normal.damageType}}</td>
+    {{else}}
+      <td></td>
+      <td></td>
+    {{/if}}
+    {{#if atk.hasCritConfirm}}
+    {{#if dr.crit}}
+      <td>
+        <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.crit.roll.formula}}" data-roll="{{json-string dr.crit.roll}}">
+          <i class="fas fa-dice-d20"></i> {{dr.crit.roll.total}}
+        </a>
+      </td>
+      <td>{{dr.crit.damageType}}</td>
+    {{else}}
+      <td></td>
+      <td></td>
+    {{/if}}
+    {{/if}}
+  </tr>
+{{/inline}}
 
-  {{#each attacks as |atk|}}
-  <div class="chat-attack">
-    {{#unless atk.notesOnly}}
+{{!-- Attack table partial --}}
+{{#*inline "attackTable"}}
+  {{#unless atk.notesOnly}}
     <table>
       <thead>
         {{#if atk.hasAttack}}
@@ -32,6 +69,7 @@
             <a class="attack-damage total fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
+            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing}}
           </th>
         </tr>
         {{/if}}
@@ -63,6 +101,7 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
+            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing}}
           </th>
           {{#if atk.hasCritConfirm}}
           <th colspan="2">
@@ -70,38 +109,14 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
               {{atk.critDamage.total}}
             </a>
+            {{> applyDamageButton damage=atk.critDamage.total isHealing=atk.isHealing}}
           </th>
           {{/if}}
         </tr>
 
         {{!-- Damage parts in an attack --}}
         {{#each atk.damageRows as |dr|}}
-        <tr>
-          {{#if dr.normal}}
-          <td>
-            <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.normal.roll.formula}}" data-roll="{{json-string dr.normal.roll}}">
-              <i class="fas fa-dice-d20"></i> {{dr.normal.roll.total}}
-            </a>
-          </td>
-          <td>{{dr.normal.damageType}}</td>
-          {{else}}
-          <td></td>
-          <td></td>
-          {{/if}}
-          {{#if atk.hasCritConfirm}}
-          {{#if dr.crit}}
-          <td>
-            <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.crit.roll.formula}}" data-roll="{{json-string dr.crit.roll}}">
-              <i class="fas fa-dice-d20"></i> {{dr.crit.roll.total}}
-            </a>
-          </td>
-          <td>{{dr.crit.damageType}}</td>
-          {{else}}
-          <td></td>
-          <td></td>
-          {{/if}}
-          {{/if}}
-        </tr>
+          {{> damageRow atk=../atk dr=dr}}
         {{/each}}
         {{/if}}
 
@@ -109,37 +124,34 @@
 
         {{!-- Damage parts without an attack roll --}}
         {{#each atk.damageRows as |dr|}}
-        <tr>
-          {{#if dr.normal}}
-          <td>
-            <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.normal.roll.formula}}" data-roll="{{json-string dr.normal.roll}}">
-              <i class="fas fa-dice-d20"></i> {{dr.normal.roll.total}}
-            </a>
-          </td>
-          <td>{{dr.normal.damageType}}</td>
-          {{else}}
-          <td></td>
-          <td></td>
-          {{/if}}
-          {{#if atk.hasCritConfirm}}
-          {{#if dr.crit}}
-          <td>
-            <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.crit.roll.formula}}" data-roll="{{json-string dr.crit.roll}}">
-              <i class="fas fa-dice-d20"></i> {{dr.crit.roll.total}}
-            </a>
-          </td>
-          <td>{{dr.crit.damageType}}</td>
-          {{else}}
-          <td></td>
-          <td></td>
-          {{/if}}
-          {{/if}}
-        </tr>
+          {{> damageRow atk=../atk dr=dr}}
         {{/each}}
         {{/if}}
       </tbody>
     </table>
-    {{/unless}}
+  {{else}}
+    <table>
+      <thead>
+        <tr>
+          <th>
+            {{atk.label}}
+          </th>
+        </tr>
+      </thead>
+    </table>
+  {{/unless}}
+{{/inline}}
+
+<div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
+  {{~> "systems/pf1/templates/chat/parts/attack-roll-header.hbs"}}
+
+  {{#if targets}}
+  {{> "systems/pf1/templates/chat/parts/attack-roll-targets.hbs"}}
+  {{/if}}
+
+  {{#each attacks as |atk|}}
+  <div class="chat-attack">
+    {{> attackTable atk=atk}}
 
     {{#if atk.hasCards}}
     <hr>

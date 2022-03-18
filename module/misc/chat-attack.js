@@ -73,6 +73,7 @@ export class ChatAttack {
     this.item = item;
     this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
     this.attackType = getProperty(item.data, "data.attackType") ?? "";
+    this.isHealing = item.isHealing;
 
     this.setRollData();
   }
@@ -268,11 +269,8 @@ export class ChatAttack {
 
     // Add normal data
     let flavor;
-    if (!critical) flavor = this.item.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-    else
-      flavor = this.item.isHealing
-        ? game.i18n.localize("PF1.HealingCritical")
-        : game.i18n.localize("PF1.DamageCritical");
+    if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+    else flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
 
     // Determine total damage
     let totalDamage = data.parts.reduce((cur, p) => {
@@ -294,71 +292,6 @@ export class ChatAttack {
 
     // Handle nonlethal attacks
     if (this.item.data.data.nonlethal) flavor = game.i18n.localize("PF1.Nonlethal");
-
-    // Add card
-    if (critical) {
-      if (!this.cards.critical)
-        this.cards.critical = {
-          label: game.i18n.localize(this.item.isHealing ? "PF1.HealingCritical" : "PF1.DamageCritical"),
-          items: [],
-        };
-      if (this.item.isHealing) {
-        this.cards.critical.items.push({
-          label: game.i18n.localize("PF1.Apply"),
-          value: -totalDamage,
-          action: "applyDamage",
-        });
-        this.cards.critical.items.push({
-          label: game.i18n.localize("PF1.ApplyHalf"),
-          value: -Math.floor(totalDamage / 2),
-          action: "applyDamage",
-        });
-      } else {
-        this.cards.critical.items.push({
-          label: game.i18n.localize("PF1.Apply"),
-          value: totalDamage,
-          action: "applyDamage",
-          tags: minimumDamage ? "nonlethal" : "",
-        });
-        this.cards.critical.items.push({
-          label: game.i18n.localize("PF1.ApplyHalf"),
-          value: Math.floor(totalDamage / 2),
-          action: "applyDamage",
-          tags: minimumDamage ? "nonlethal" : "",
-        });
-      }
-    } else {
-      if (!this.cards.damage)
-        this.cards.damage = {
-          label: game.i18n.localize(this.item.isHealing ? "PF1.Healing" : "PF1.Damage"),
-          items: [],
-        };
-      if (this.item.isHealing) {
-        this.cards.damage.items.push({
-          label: game.i18n.localize("PF1.Apply"),
-          value: -totalDamage,
-          action: "applyDamage",
-        });
-        this.cards.damage.items.push({
-          label: game.i18n.localize("PF1.ApplyHalf"),
-          value: -Math.floor(totalDamage / 2),
-          action: "applyDamage",
-        });
-      } else {
-        this.cards.damage.items.push({
-          label: game.i18n.localize("PF1.Apply"),
-          value: totalDamage,
-          action: "applyDamage",
-          tags: minimumDamage ? "nonlethal" : "",
-        });
-        this.cards.damage.items.push({
-          label: game.i18n.localize("PF1.ApplyHalf"),
-          value: Math.floor(totalDamage / 2),
-          action: "applyDamage",
-          tags: minimumDamage ? "nonlethal" : "",
-        });
-      }
-    }
 
     // Finalize data
     data.flavor = flavor;

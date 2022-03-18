@@ -165,4 +165,9 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("json-string", (obj) => {
     return new Handlebars.SafeString(escape(JSON.stringify(obj)));
   });
+
+  Handlebars.registerHelper("halfNumber", (value) => {
+    value = typeof value === "number" ? value : parseFloat(value);
+    return new Handlebars.SafeString(Math.floor(value / 2).toString());
+  });
 };

@@ -104,10 +104,7 @@ export const alterRollData = function (shared, form) {
 
   // Many-shot
   if (shared.fullAttack && formData["manyshot"]) {
-    shared.attacks.push({
-      id: "manyshot",
-      label: game.i18n.localize("PF1.ManyShot"),
-    });
+    shared.manyShot = true;
   }
 
   // Rapid Shot
@@ -397,10 +394,10 @@ export const generateChatAttacks = async function (shared) {
   else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
 
   // Add attack cards
-  shared.attacks.forEach((attack, idx) => {
+  shared.attacks.forEach((attack) => {
     if (!attack.ammo) return;
-    const atk = shared.chatAttacks[idx];
-    atk.addAmmunitionCards(attack.ammo);
+    const atk = attack.chatAttack;
+    atk?.addAmmunitionCards(attack.ammo);
   });
 
   // Add save info
@@ -442,6 +439,10 @@ export const addAttacks = async function (shared) {
     };
 
     shared.rollData.attackCount = a;
+
+    // Don't create a chat attack for manyshot (manyshot attack is only added for ammo usage)
+    // if (atk.id === "manyshot") continue;
+
     // Create attack object
     const attack = new ChatAttack(this, {
       label: atk.label,
@@ -450,24 +451,26 @@ export const addAttacks = async function (shared) {
       targets: game.user.targets,
     });
 
-    // Add attack roll
-    await attack.addAttack({
-      extraParts: duplicate(shared.attackBonus).concat([atk.attackBonus]),
-      conditionalParts,
-    });
+    if (atk.id !== "manyshot") {
+      // Add attack roll
+      await attack.addAttack({
+        extraParts: duplicate(shared.attackBonus).concat([atk.attackBonus]),
+        conditionalParts,
+      });
 
-    // Add damage
-    if (this.hasDamage) {
-      await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: false, conditionalParts });
+      // Add damage
+      if (this.hasDamage) {
+        await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: false, conditionalParts });
 
-      // Add critical hit damage
-      if (attack.hasCritConfirm) {
-        await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: true, conditionalParts });
+        // Add critical hit damage
+        if (attack.hasCritConfirm) {
+          await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: true, conditionalParts });
+        }
       }
-    }
 
-    // Add attack notes
-    if (a === 0) attack.addAttackNotes();
+      // Add attack notes
+      if (a === 0) attack.addAttackNotes();
+    }
 
     // Add effect notes
     if (atk.ammo != null) {
@@ -478,6 +481,9 @@ export const addAttacks = async function (shared) {
 
     // Add to list
     shared.chatAttacks.push(attack);
+
+    // Add a reference to the attack that created this chat attack
+    atk.chatAttack = attack;
   }
 
   // Cleanup rollData
@@ -832,16 +838,9 @@ export const addGenericPropertyLabels = function (shared) {
   if (shared.pointBlankShot) properties.push(game.i18n.localize("PF1.PointBlankShot"));
 
   // Add info for Rapid Shot
-  if (shared.attacks.find((o) => o.id === "rapidshot")) properties.push(game.i18n.localize("PF1.RapidShot"));
+  if (shared.attacks.find((o) => o.id === "rapid-shot")) properties.push(game.i18n.localize("PF1.RapidShot"));
 
-  // Add ammo-remaining counter or out-of-ammunition warning
-  // if (shared.ammoLinks.length) {
-  // if (shared.ammoUsed === shared.ammoAvailable) {
-  // properties.push(game.i18n.localize("PF1.AmmoDepleted"));
-  // } else {
-  // properties.push(game.i18n.localize("PF1.AmmoRemaining").format(shared.ammoAvailable - shared.ammoUsed));
-  // }
-  // }
+  if (shared.manyShot) properties.push(game.i18n.localize("PF1.Manyshot"));
 
   // Add Armor Check Penalty's application to attack rolls info
   if (this.hasAttack && shared.rollData.attributes.acp.attackPenalty > 0)

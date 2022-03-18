@@ -163,18 +163,23 @@ export class AttackDialog extends Application {
     this.flags[elem.name] = elem.checked === true;
 
     // Add or remove haste attack
-    if (elem.name === "haste-attack") {
+    if (["haste-attack", "rapid-shot"].includes(elem.name)) {
       if (elem.checked) {
+        const translationString = {
+          "haste-attack": "PF1.Haste",
+          "rapid-shot": "PF1.RapidShot",
+        };
+
         this.attacks.push(
           mergeObject(this.constructor.defaultAttack, {
-            id: "haste",
-            name: game.i18n.localize("PF1.Haste"),
+            id: elem.name,
+            name: game.i18n.localize(translationString[elem.name]),
             bonus: 0,
           })
         );
         this.setAttackAmmo(this.attacks.length - 1, this.object.getFlag("pf1", "defaultAmmo"));
       } else {
-        this.attacks = this.attacks.filter((o) => o.id !== "haste");
+        this.attacks = this.attacks.filter((o) => o.id !== elem.name);
       }
     }
 

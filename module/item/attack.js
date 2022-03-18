@@ -102,14 +102,6 @@ export const alterRollData = function (shared, form) {
     shared.pointBlankShot = true;
   }
 
-  // Haste
-  if (shared.fullAttack && formData["haste-attack"]) {
-    shared.attacks.push({
-      id: "haste",
-      label: game.i18n.localize("PF1.Haste"),
-    });
-  }
-
   // Many-shot
   if (shared.fullAttack && formData["manyshot"]) {
     shared.attacks.push({

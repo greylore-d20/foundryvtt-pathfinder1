@@ -440,9 +440,6 @@ export const addAttacks = async function (shared) {
 
     shared.rollData.attackCount = a;
 
-    // Don't create a chat attack for manyshot (manyshot attack is only added for ammo usage)
-    // if (atk.id === "manyshot") continue;
-
     // Create attack object
     const attack = new ChatAttack(this, {
       label: atk.label,
@@ -460,11 +457,20 @@ export const addAttacks = async function (shared) {
 
       // Add damage
       if (this.hasDamage) {
-        await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: false, conditionalParts });
+        const extraParts = duplicate(shared.damageBonus);
+
+        // Add manyshot damage
+        // @TODO: could be cleaner in regards to chat output
+        if (shared.manyShot && a === 0) {
+          await attack.addDamage({ extraParts: [], critical: false, conditionalParts });
+        }
+
+        // Add damage
+        await attack.addDamage({ extraParts, critical: false, conditionalParts });
 
         // Add critical hit damage
         if (attack.hasCritConfirm) {
-          await attack.addDamage({ extraParts: duplicate(shared.damageBonus), critical: true, conditionalParts });
+          await attack.addDamage({ extraParts, critical: true, conditionalParts });
         }
       }
 

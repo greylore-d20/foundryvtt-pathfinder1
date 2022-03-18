@@ -142,6 +142,26 @@
       </thead>
     </table>
   {{/unless}}
+
+  {{!-- Ammo --}}
+  {{#if atk.ammo}}
+    <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}">
+      <label class="group-title">{{localize "PF1.LootTypeAmmoSingle"}}</label>
+      <img src="{{atk.ammo.img}}" />
+      <span class="name">{{atk.ammo.name}}</span>
+
+      {{!-- Recover --}}
+      <a class="inline-action" data-action="recoverAmmo" title="{{localize "PF1.RecoverAmmunition"}}">
+        <i class="fas fa-rocket"></i>
+      </a>
+
+      {{!-- Force Recover --}}
+      <a class="inline-action" data-action="forceRecoverAmmo" title="{{localize "PF1.ForceRecover"}}">
+        <i class="fas fa-rocket"></i>
+        <i class="absolute fas fa-plus"></i>
+      </a>
+    </div>
+  {{/if}}
 {{/inline}}
 
 <div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>

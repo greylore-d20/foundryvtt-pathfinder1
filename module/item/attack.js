@@ -418,7 +418,7 @@ export const generateChatAttacks = async function (shared) {
   shared.attacks.forEach((attack) => {
     if (!attack.ammo) return;
     const atk = attack.chatAttack;
-    atk?.addAmmunitionCards(attack.ammo);
+    if (atk) atk.setAmmo(attack.ammo);
   });
 
   // Add save info
@@ -512,11 +512,9 @@ export const addAttacks = async function (shared) {
     }
 
     // Add effect notes
-    if (atk.ammo != null) {
-      const ammoItem = this.actor.items.get(atk.ammo);
-      attack.effectNotes.push(`${game.i18n.localize("PF1.LootTypeAmmoSingle")}: ${ammoItem.name}`);
+    if (atk.id !== "manyshot") {
+      attack.addEffectNotes();
     }
-    attack.addEffectNotes();
 
     // Add to list
     shared.chatAttacks.push(attack);
@@ -974,8 +972,6 @@ export const generateChatMetadata = function (shared) {
   }
 
   // Add miscellaneous metadata
-  const ammoId = shared.ammoLinks?.filter((l) => l.item.charges > 0).map((l) => l.item.id);
-  // if (ammoId.length > 0) metadata.ammo = { id: ammoId, quantity: shared.ammoUsed };
   if (shared.saveDC) metadata.save = { dc: shared.saveDC, type: shared.save };
   if (this.type === "spell") metadata.spell = { cl: shared.rollData.cl, sl: shared.rollData.sl };
 

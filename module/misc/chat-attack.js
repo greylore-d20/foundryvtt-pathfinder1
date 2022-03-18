@@ -51,6 +51,25 @@ export class ChatAttack {
     this.attackNotesHTML = "";
     this.effectNotesHTML = "";
     this.targets = targets;
+    this.ammo = null;
+  }
+
+  setAmmo(ammoId) {
+    if (ammoId == null) {
+      this.ammo = null;
+    } else {
+      const ammoItem = this.item.actor?.items.get(ammoId);
+      if (ammoItem == null) {
+        this.ammo = null;
+        return;
+      }
+
+      this.ammo = {
+        id: ammoId,
+        img: ammoItem.img,
+        name: ammoItem.name,
+      };
+    }
   }
 
   get critRange() {
@@ -330,20 +349,6 @@ export class ChatAttack {
 
     this.effectNotes = this.effectNotes.concat(notes);
     this.setEffectNotesHTML();
-  }
-
-  addAmmunitionCards(ammoId) {
-    this.cards.recoverAmmo = { label: game.i18n.localize("PF1.RecoverAmmunition"), items: [] };
-    this.cards.recoverAmmo.items.push({
-      label: game.i18n.localize("PF1.Recover"),
-      action: "recoverAmmo",
-      data: { "ammo-id": ammoId },
-    });
-    this.cards.recoverAmmo.items.push({
-      label: game.i18n.localize("PF1.ForceRecover"),
-      action: "forceRecoverAmmo",
-      data: { "ammo-id": ammoId },
-    });
   }
 
   finalize() {

@@ -2226,7 +2226,8 @@ export class ItemPF extends ItemBasePF {
       const promises = [];
 
       // Find ammo item
-      const ammoItem = item.actor.items.get(button.dataset.ammoId);
+      const ammoId = button.closest(".ammo")?.dataset.ammoId || button.dataset.ammoId;
+      const ammoItem = item.actor.items.get(ammoId);
       if (!ammoItem) return;
       let chance = 100;
       if (action === "recoverAmmo") {
@@ -2243,18 +2244,26 @@ export class ItemPF extends ItemBasePF {
 
       // Disable button
       button.disabled = true;
+      let elemColor = "";
       if (recovered && !failed) {
-        button.style.backgroundColor = "#00AA00";
+        elemColor = "#00AA00";
       } else if (!recovered && failed) {
-        button.style.backgroundColor = "#AA0000";
+        elemColor = "#AA0000";
       } else if (recovered && failed) {
-        button.style.backgroundColor = "#0000AA";
+        elemColor = "#0000AA";
       }
 
       // Update chat card
-      const content = button.closest(".chat-card").outerHTML;
-      const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
-      promises.push(card.update({ content: content }));
+      if (elemColor) {
+        if (button.tagName.toLowerCase() === "BUTTON") {
+          button.style.backgroundColor = elemColor;
+        } else {
+          button.style.color = elemColor;
+        }
+        const content = button.closest(".chat-card").outerHTML;
+        const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
+        promises.push(card.update({ content: content }));
+      }
 
       await Promise.all(promises);
 

@@ -194,6 +194,26 @@
   </ol>
 </div>
 
+{{!-- Power Attack/Deadly Aim properties --}}
+{{#if hasAttackRoll}}
+  <h4 class="attack-header">{{localize "PF1.PowerAttack"}}/{{localize "PF1.DeadlyAim"}}</h4>
+
+  <div class="form-group">
+    <label>{{localize "PF1.Multiplier"}}</label>
+    <input type="text" name="data.powerAttack.multiplier" value="{{data.powerAttack.multiplier}}" data-dtype="String" placeholder="{{localize "PF1.Held"}}" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "PF1.DamageBonus"}}</label>
+    <input type="text" name="data.powerAttack.damageBonus" value="{{data.powerAttack.damageBonus}}" data-dtype="Number" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "PF1.CriticalMultiplier"}}</label>
+    <input type="text" name="data.powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number" />
+  </div>
+{{/if}}
+
 <hr>
 {{/unless}}
 

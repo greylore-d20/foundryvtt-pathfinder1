@@ -118,22 +118,43 @@ export const alterRollData = function (shared, form) {
   // Use measure template
   shared.useMeasureTemplate = formData["measure-template"];
 
+  // Set held type
+  setProperty(shared.rollData, "item.held", formData["held"]);
+
   // Power Attack
   if (formData["power-attack"]) {
-    let powerAttackBonus = (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * 2;
-    if (this.data.data.attackType === "natural") {
-      if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
-        powerAttackBonus *= 1.5;
-      else if (!shared.rollData.item?.primaryAttack) powerAttackBonus *= 0.5;
+    const basePowerAttackBonus = shared.rollData.item?.powerAttack?.damageBonus ?? 2;
+    let powerAttackBonus =
+      (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * basePowerAttackBonus;
+
+    // Get multiplier
+    let powerAttackMultiplier = shared.rollData.item?.powerAttack?.multiplier;
+    if (!powerAttackMultiplier) {
+      powerAttackMultiplier = 1;
+      if (this.data.data.attackType === "natural") {
+        if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
+          powerAttackMultiplier = 1.5;
+        else if (!shared.rollData.item?.primaryAttack) powerAttackMultiplier = 0.5;
+      } else {
+        if (shared.rollData?.item?.held === "2h") powerAttackMultiplier = 1.5;
+        else if (shared.rollData?.item?.held === "oh") powerAttackMultiplier = 0.5;
+      }
     } else {
-      if (shared.rollData?.item?.held === "2h") powerAttackBonus *= 1.5;
-      else if (getProperty(shared.rollData, "item.held") === "oh") powerAttackBonus *= 0.5;
+      powerAttackMultiplier = parseFloat(powerAttackMultiplier);
     }
+
+    // Apply multiplier
+    powerAttackBonus = Math.floor(powerAttackBonus * powerAttackMultiplier);
+
+    // Get label
     const label = ["rwak", "rsak"].includes(this.data.data.actionType)
       ? game.i18n.localize("PF1.DeadlyAim")
       : game.i18n.localize("PF1.PowerAttack");
-    shared.damageBonus.push(`${powerAttackBonus}[${label}]`);
+
+    // Get penalty
     const powerAttackPenalty = -(1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4));
+
+    // Add bonuses
     shared.rollData.powerAttackPenalty = powerAttackPenalty;
     shared.attackBonus.push(`${powerAttackPenalty}[${label}]`);
     shared.powerAttack = true;
@@ -459,10 +480,22 @@ export const addAttacks = async function (shared) {
       if (this.hasDamage) {
         const extraParts = duplicate(shared.damageBonus);
 
+        // Add power attack bonus
+        if (shared.rollData.powerAttackBonus !== 0) {
+          // Get label
+          const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+            ? game.i18n.localize("PF1.DeadlyAim")
+            : game.i18n.localize("PF1.PowerAttack");
+
+          const powerAttackBonus =
+            shared.rollData.powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
+          extraParts.push(`${powerAttackBonus}[${label}]`);
+        }
+
         // Add manyshot damage
         // @TODO: could be cleaner in regards to chat output
         if (shared.manyShot && a === 0) {
-          await attack.addDamage({ extraParts: [], critical: false, conditionalParts });
+          await attack.addDamage({ extraParts, critical: false, conditionalParts });
         }
 
         // Add damage

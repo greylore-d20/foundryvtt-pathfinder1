@@ -10,13 +10,13 @@
         <div class="form-group">
             <div class="form-fields boolean-flags">
                 <div class="data-selector">
-                    <a class="entry-selector" for="data.flags.boolean" data-fields="{{localize "PF1.FlagsBoolean"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
+                    <a class="entry-selector" for="data.flags.boolean" data-flag="true" data-flat="true" data-fields="{{localize "PF1.FlagsBoolean"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
                     <label for="data.flags.boolean">{{localize "PF1.FlagsBoolean"}}</label>
                 </div>
 
                 <div class="tag-list flexrow">
-                    {{#each flags.boolean as |f|}}
-                    <span class="tag">{{f}}</span>
+                    {{#each flags.boolean as |value key|}}
+                    <span class="tag">{{key}}</span>
                     {{/each}}
                 </div>
             </div>
@@ -26,12 +26,12 @@
         <div class="form-group">
             <div class="form-fields dictionary-flags">
                 <div class="data-selector">
-                    <a class="entry-selector" for="data.flags.dictionary" data-fields="{{localize "PF1.Name"}};{{localize "PF1.Value"}}" data-dtypes="String;String"><i class="fas fa-edit"></i></a>
+                    <a class="entry-selector" for="data.flags.dictionary" data-flag="true" data-fields="{{localize "PF1.Name"}};{{localize "PF1.Value"}}" data-dtypes="String;String"><i class="fas fa-edit"></i></a>
                     <label for="data.flags.dictionary">{{localize "PF1.FlagsDictionary"}}</label>
                 </div>
             </div>
 
-            {{#if flags.dictionary.length}}
+            {{#if flags.dictionary}}
             <table>
                 <thead>
                     <tr>
@@ -40,10 +40,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each flags.dictionary as |d|}}
+                    {{#each flags.dictionary as |value key|}}
                     <tr>
-                        <td>{{d.key}}</td>
-                        <td>{{d.value}}</td>
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
                     </tr>
                     {{/each}}
                 </tbody>

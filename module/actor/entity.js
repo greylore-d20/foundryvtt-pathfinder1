@@ -34,6 +34,11 @@ export class ActorPF extends ActorBasePF {
     return this.id;
   }
 
+  /**
+   * Init item flags.
+   */
+  itemFlags = { boolean: {}, dictionary: {} };
+
   constructor(...args) {
     super(...args);
 
@@ -300,23 +305,24 @@ export class ActorPF extends ActorBasePF {
     for (const i of items) {
       // Process boolean flags
       if (i.isActive) {
-        const flags = getProperty(i.data, "data.flags.boolean") || [];
-        for (const f of flags) {
-          bFlags[f] = bFlags[f] || { sources: [] };
+        const flags = getProperty(i.data, "data.flags.boolean") || {};
+        for (const f of Object.keys(flags)) {
+          bFlags[f] ??= { sources: [] };
           bFlags[f].sources.push(i);
         }
       }
 
       // Process dictionary flags
-      if (i.data.data.tag) {
-        const flags = getProperty(i.data, "data.flags.dictionary") || [];
-        for (const f of flags) {
-          setProperty(dFlags, `${i.data.data.tag}.${f[0]}`, i.isActive ? f[1] : 0);
+      const tag = i.data.data.tag;
+      if (tag) {
+        const flags = getProperty(i.data, "data.flags.dictionary") || {};
+        for (const [key, value] of Object.entries(flags)) {
+          setProperty(dFlags, `${tag}.${key}`, i.isActive ? value : 0);
         }
       }
     }
 
-    return {
+    this.itemFlags = {
       boolean: bFlags,
       dictionary: dFlags,
     };
@@ -349,7 +355,7 @@ export class ActorPF extends ActorBasePF {
     super.applyActiveEffects();
 
     this.containerItems = this._prepareContainerItems(this.items);
-    this.itemFlags = this._prepareItemFlags(this.allItems);
+    this._prepareItemFlags(this.allItems);
     this._prepareChanges();
   }
 
@@ -3811,7 +3817,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {boolean} Whether this actor has any owned item with the given flag.
    */
   hasItemBooleanFlag(flagName) {
-    return getProperty(this, `itemFlags.boolean.${flagName}`) != null;
+    return this.itemFlags.boolean[flagName] != null;
   }
 
   async performRest({ restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = {}) {

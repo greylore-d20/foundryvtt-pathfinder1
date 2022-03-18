@@ -544,21 +544,8 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareItemFlags(data) {
-    // Add boolean flags
-    {
-      const flags = getProperty(data.item.data, "data.flags.boolean") || [];
-      setProperty(data, "flags.boolean", flags);
-    }
-
-    // Add dictionary flags
-    {
-      const flags = getProperty(data.item.data, "data.flags.dictionary") || [];
-      const result = [];
-      for (const [k, v] of flags) {
-        result.push({ key: k, value: v });
-      }
-      setProperty(data, "flags.dictionary", result);
-    }
+    setProperty(data, "flags.boolean", getProperty(data.item.data, "data.flags.boolean") ?? {});
+    setProperty(data, "flags.dictionary", getProperty(data.item.data, "data.flags.dictionary") ?? {});
   }
 
   async _prepareScriptCalls(data) {
@@ -1582,6 +1569,8 @@ export class ItemSheetPF extends ItemSheet {
     const options = {
       name: a.getAttribute("for"),
       title: a.innerText,
+      flag: a.dataset.flag === "true",
+      flat: a.dataset.flat === "true",
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };

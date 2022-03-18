@@ -420,6 +420,7 @@ module.exports = {
     adapter: "readonly",
     easyrtc: "readonly",
     duplicate: "readonly",
+    deepClone: "readonly",
     getType: "readonly",
     invertObject: "readonly",
     filterObject: "readonly",

@@ -1,12 +1,14 @@
 {{!-- Apply Damage button/widget --}}
 {{#*inline "applyDamageButton"}}
   {{!-- Apply full damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" title="{{#if isHealing}}{{localize "PF1.ApplyHealing"}}{{else}}{{localize "PF1.ApplyDamage"}}{{/if}}">
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" title="{{#if isHealing}}{{localize "PF1.ApplyHealing"}}{{else}}{{localize "PF1.ApplyDamage"}}{{/if}}"
+                                                                                                      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute fas fa-plus"></i>
   </a>
   {{!-- Apply half damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" title="{{localize "PF1.ApplyHalf"}}">
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" title="{{localize "PF1.ApplyHalf"}}"
+                                                                                                      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute">½</i>
   </a>
@@ -69,7 +71,7 @@
             <a class="attack-damage total fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
-            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing}}
+            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
         </tr>
         {{/if}}
@@ -101,7 +103,7 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
               {{atk.damage.total}}
             </a>
-            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing}}
+            {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
           {{#if atk.hasCritConfirm}}
           <th colspan="2">
@@ -109,7 +111,7 @@
             <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
               {{atk.critDamage.total}}
             </a>
-            {{> applyDamageButton damage=atk.critDamage.total isHealing=atk.isHealing}}
+            {{> applyDamageButton damage=atk.critDamage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
           </th>
           {{/if}}
         </tr>

@@ -39,6 +39,7 @@ export class ChatAttack {
     this.hasDamage = false;
     this.hasRange = item.hasRange;
     this.minimumDamage = false;
+    this.nonlethal = false;
     this.damageRows = [];
 
     this.notesOnly = true;
@@ -288,10 +289,14 @@ export class ChatAttack {
       totalDamage = 1;
       minimumDamage = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
+      this.nonlethal = true;
     }
 
     // Handle nonlethal attacks
-    if (this.item.data.data.nonlethal) flavor = game.i18n.localize("PF1.Nonlethal");
+    if (this.item.data.data.nonlethal) {
+      this.nonlethal = true;
+      flavor = game.i18n.localize("PF1.Nonlethal");
+    }
 
     // Finalize data
     data.flavor = flavor;

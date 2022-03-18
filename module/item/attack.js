@@ -1019,7 +1019,6 @@ export const postMessage = async function (shared) {
 
   // Show chat message
   let result;
-  console.log(shared);
   if (shared.chatAttacks.length > 0) {
     if (shared.chatMessage && shared.scriptData.hideChat !== true)
       result = await createCustomChatMessage(t, shared.templateData, shared.chatData);

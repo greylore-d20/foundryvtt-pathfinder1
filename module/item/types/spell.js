@@ -296,19 +296,28 @@ export class ItemSpellPF extends ItemPF {
     const reSplit = CONFIG.PF1.re.traitSeparator;
 
     let components = [];
+    const compKeys = {
+      V: game.i18n.localize("PF1.SpellComponentKeys.Verbal"),
+      S: game.i18n.localize("PF1.SpellComponentKeys.Somatic"),
+      T: game.i18n.localize("PF1.SpellComponentKeys.Thought"),
+      E: game.i18n.localize("PF1.SpellComponentKeys.Emotion"),
+      M: game.i18n.localize("PF1.SpellComponentKeys.Material"),
+      F: game.i18n.localize("PF1.SpellComponentKeys.Focus"),
+      DF: game.i18n.localize("PF1.SpellComponentKeys.DivineFocus"),
+    };
     for (const [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
       if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
-      else if (key === "verbal" && value) components.push("V");
-      else if (key === "somatic" && value) components.push("S");
-      else if (key === "thought" && value) components.push("T");
-      else if (key === "emotion" && value) components.push("E");
-      else if (key === "material" && value) components.push("M");
-      else if (key === "focus" && value) components.push("F");
+      else if (key === "verbal" && value) components.push(compKeys.V);
+      else if (key === "somatic" && value) components.push(compKeys.S);
+      else if (key === "thought" && value) components.push(compKeys.T);
+      else if (key === "emotion" && value) components.push(compKeys.E);
+      else if (key === "material" && value) components.push(compKeys.M);
+      else if (key === "focus" && value) components.push(compKeys.F);
     }
-    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push("DF");
+    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push(compKeys.DF);
     const df = getProperty(srcData, "data.components.divineFocus");
     // Sort components
-    const componentsOrder = ["V", "S", "T", "E", "M", "F", "DF"];
+    const componentsOrder = [compKeys.V, compKeys.S, compKeys.T, compKeys.E, compKeys.M, compKeys.F, compKeys.DF];
     components.sort((a, b) => {
       const index = [componentsOrder.indexOf(a), components.indexOf(b)];
       if (index[0] === -1 && index[1] === -1) return 0;
@@ -317,12 +326,12 @@ export class ItemSpellPF extends ItemPF {
       return index[0] - index[1];
     });
     components = components.map((o) => {
-      if (o === "M") {
-        if (df === 2) o = "M/DF";
+      if (o === compKeys.M) {
+        if (df === 2) o = `${compKeys.M}/${compKeys.DF}`;
         if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
       }
-      if (o === "F") {
-        if (df === 3) o = "F/DF";
+      if (o === compKeys.F) {
+        if (df === 3) o = `${compKeys.F}/${compKeys.DF}`;
         if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
       }
       return o;

@@ -3338,28 +3338,6 @@ export class ActorPF extends ActorBasePF {
     return this.update(updateData);
   }
 
-  /**
-   * Import a new owned Item from a compendium collection
-   * The imported Item is then added to the Actor as an owned item.
-   *
-   * @param collection {String}     The name of the pack from which to import
-   * @param entryId {String}        The ID of the compendium entry to import
-   */
-  importItemFromCollection(collection, entryId) {
-    const pack = game.packs.find((p) => p.collection === collection);
-    if (pack.metadata.type !== "Item") return;
-
-    return pack.getDocument(entryId).then((ent) => {
-      console.log(`${vtt} | Importing Item ${ent.name} from ${collection}`);
-
-      let data = ent.toObject();
-      if (this.sheet != null && this.sheet.rendered) {
-        data = mergeObject(data, this.sheet.getDropData(data));
-      }
-      return this.createEmbeddedDocuments("Item", [data]);
-    });
-  }
-
   getRollData(options = { refresh: false }) {
     let result = this.data.data;
 

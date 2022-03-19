@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.80.15 - 2022-3-19
+
+### Bug Fixes
+
+- Haste was incorrectly adding two attacks
+- Manyshot wasn't working correctly
+- Applying nonlethal damage from a chat card incorrectly applied lethal damage if it was due to low damage
+
+### Changelog
+
+- Improve rapid shot handling
+- Remove apply damage chat cards in favor of inline buttons
+- Add more control over power attack damage ([1330](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1330))
+- Altered ammunition recovery chat buttons to be more visually pleasing
+
 ## 0.80.14 - 2022-3-17
 
 ### Bug Fixes

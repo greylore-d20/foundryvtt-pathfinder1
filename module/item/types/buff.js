@@ -91,7 +91,8 @@ export class ItemBuffPF extends ItemPF {
     if (this.data.data.hideFromToken) createData.icon = null;
 
     // Add buff durations
-    const durationValue = this.data.data.duration.value ?? null;
+    let durationValue = this.data.data.duration.value ?? null;
+    if (typeof durationValue == "number") durationValue += "";
     if (durationValue) {
       let seconds = 0;
       switch (this.data.data.duration.units) {

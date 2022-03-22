@@ -152,6 +152,7 @@ export const alterAmmoRecovery = function (app, html) {
     $(el)
       .find(".inline-action")
       .each((i, ia) => {
+        // TODO: Disable button & track proper quantities
         if (data.recovered) ia.classList.add("recovered");
         if (data.failed) ia.classList.add("recovery-failed");
       });

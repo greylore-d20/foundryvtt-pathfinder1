@@ -2244,25 +2244,13 @@ export class ItemPF extends ItemBasePF {
 
       // Disable button
       button.disabled = true;
-      let elemColor = "";
-      if (recovered && !failed) {
-        elemColor = "#00AA00";
-      } else if (!recovered && failed) {
-        elemColor = "#AA0000";
-      } else if (recovered && failed) {
-        elemColor = "#0000AA";
-      }
 
       // Update chat card
-      if (elemColor) {
-        if (button.tagName.toLowerCase() === "BUTTON") {
-          button.style.backgroundColor = elemColor;
-        } else {
-          button.style.color = elemColor;
-        }
-        const content = button.closest(".chat-card").outerHTML;
+      if (recovered || failed) {
+        if (recovered) button.classList.add("recovered");
+        if (failed) button.classList.add("recovery-failed");
         const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
-        promises.push(card.update({ content: content }));
+        promises.push(card.setFlag("pf1", "ammoRecovery", { [ammoId]: { failed, recovered } }));
       }
 
       await Promise.all(promises);

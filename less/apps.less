@@ -43,6 +43,16 @@
       height: 10px;
       line-height: 8px;
     }
+
+    &[data-action="recoverAmmo"],
+    &[data-action="forceRecoverAmmo"] {
+      &.recovered {
+        color: #00AA00;
+      }
+      &.recovery-failed {
+        color: #AA0000;
+      }
+    }
   }
 
   .switch-check {

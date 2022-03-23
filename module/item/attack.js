@@ -481,7 +481,7 @@ export const addAttacks = async function (shared) {
         const extraParts = duplicate(shared.damageBonus);
 
         // Add power attack bonus
-        if (shared.rollData.powerAttackBonus !== 0) {
+        if (shared.rollData.powerAttackBonus >= 0) {
           // Get label
           const label = ["rwak", "rsak"].includes(this.data.data.actionType)
             ? game.i18n.localize("PF1.DeadlyAim")

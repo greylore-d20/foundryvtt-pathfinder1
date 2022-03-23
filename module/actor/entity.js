@@ -3648,7 +3648,9 @@ export class ActorPF extends ActorBasePF {
     const toDelete = [];
     const toUpdate = [];
     for (const [id, obj] of Object.entries(buffTextures)) {
-      const existing = fx.find((f) => f.data.origin === id);
+      const existing = fx.find((f) => {
+        return f.data.origin === id || f.data.flags.pf1?.origin?.item === obj.id;
+      });
       if (!existing) {
         if (obj.active) toCreate.push(obj.item.getRawEffectData());
       } else {

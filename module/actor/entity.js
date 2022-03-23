@@ -1485,7 +1485,7 @@ export class ActorPF extends ActorBasePF {
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
               sourceDetails[changeTarget].push({
-                name: srcInfo,
+                name: srcInfo.replace(/[[\]]/g, ""),
                 value: srcValue,
               });
             }

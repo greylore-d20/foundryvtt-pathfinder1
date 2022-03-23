@@ -277,14 +277,8 @@ export class ItemPF extends ItemBasePF {
    */
   get effect() {
     return this.actor.effects.find((o) => {
-      const originItem = o.getFlag("pf1", "origin")?.item;
-      if (originItem === this.id) return true;
-
-      // DEPRECATED: Use origin flag instead.
-      const re = o.data.origin.match(/Item\.(?<itemId>\w+)/),
-        origin = re?.groups.itemId;
-
-      if (origin === this.id) return true;
+      const origin = o.data.origin.split(".");
+      if (origin[2] === "Item" && origin[3] === this.id) return true;
       return false;
     });
   }
@@ -1226,7 +1220,7 @@ export class ItemPF extends ItemBasePF {
     return {
       label: this.name,
       icon: this.img,
-      //origin: this.uuid,
+      origin: this.uuid,
       flags: { pf1: { origin: { item: this.id } } },
       disabled: !this.isActive,
       duration: {},

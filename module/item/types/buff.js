@@ -59,17 +59,14 @@ export class ItemBuffPF extends ItemPF {
   async toEffect({ noCreate = false } = {}) {
     if (!this.parent) return;
 
-    const existing = this.parent.effects.find((e) => {
-      if (e.getFlag("pf1", "origin")?.item === this.id) return true;
-      else return e.data.origin == this.uuid; // DEPRECATED: Use origin flag only
-    });
+    const existing = this.parent.effects.find((e) => e.data.origin == this.uuid);
     if (existing || noCreate) return existing;
 
     // Add a new effect
     const createData = {
       label: this.name,
       icon: this.img,
-      //origin: this.uuid,
+      origin: this.uuid,
       disabled: !this.data.data.active,
       flags: {
         pf1: {

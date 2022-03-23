@@ -384,8 +384,8 @@ export class ActorPF extends ActorBasePF {
     const disableActiveEffects = [],
       disableBuffs = [];
     for (const ae of temporaryEffects) {
-      const itemId = ae.getFlag("pf1", "origin")?.item;
-      const item = this.items.get(itemId);
+      const re = ae.data.origin?.match(/Item\.(?<itemId>\w+)/);
+      const item = this.items.get(re?.groups.itemId);
       if (!item || item.type !== "buff") {
         disableActiveEffects.push({ _id: ae.id, active: false });
       } else {
@@ -3648,11 +3648,7 @@ export class ActorPF extends ActorBasePF {
     const toDelete = [];
     const toUpdate = [];
     for (const [id, obj] of Object.entries(buffTextures)) {
-      const existing = fx.find((f) => {
-        const originItem = f.getFlag("pf1", "origin")?.item;
-        if (originItem === obj.id) return true;
-        else return f.data.origin === id; // DEPRECATED
-      });
+      const existing = fx.find((f) => f.data.origin === id);
       if (!existing) {
         if (obj.active) toCreate.push(obj.item.getRawEffectData());
       } else {
@@ -3703,7 +3699,7 @@ export class ActorPF extends ActorBasePF {
     const buffs = this.items.filter((o) => o.type === "buff");
     return buffs.reduce((acc, cur) => {
       const id = cur.uuid;
-      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur, origin: cur.id };
+      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur };
       if (cur.data.data.active) acc[id].active = true;
       else acc[id].active = false;
       return acc;

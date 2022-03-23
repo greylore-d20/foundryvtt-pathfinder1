@@ -2,6 +2,8 @@ import { hasTokenVision } from "../misc/vision-permission.js";
 
 export class TokenPF extends Token {
   async _onUpdate(data, options, ...args) {
+    if (!this.hud.effects) return;
+
     await super._onUpdate(data, options, ...args);
 
     // Get the changed attributes

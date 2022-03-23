@@ -40,7 +40,7 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
   const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
   // Only add buff textures for actors with that function (so not e.g. basic actors)
-  if (this.object.actor._calcBuffActiveEffects) {
+  if (this.object.actor?._calcBuffActiveEffects) {
     Object.values(this.object.actor._calcBuffActiveEffects()).forEach((obj, ind) => {
       const buff = obj;
       if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;

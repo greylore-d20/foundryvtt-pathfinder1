@@ -1,6 +1,8 @@
 import { ScriptEditor } from "../../apps/script-editor.js";
 
 export class ItemScriptCall {
+  static AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+
   static create(data, parent) {
     const result = new this();
 
@@ -104,12 +106,12 @@ export class ItemScriptCall {
       actor?.token?.object ?? (actor ? canvas.tokens.placeables.find((t) => t.actor?.id === actor.id) : null);
 
     // Attempt script execution
-    const body = `(async () => {
+    const body = `await (async () => {
       ${await this.getScriptBody()}
     })()`;
-    const fn = Function("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
+    const fn = ItemScriptCall.AsyncFunction("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
     try {
-      return fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
+      return await fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
     } catch (err) {
       ui.notifications.error(`There was an error in your script/macro syntax. See the console (F12) for details`);
       console.error(err);

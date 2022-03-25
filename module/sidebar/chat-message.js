@@ -56,10 +56,10 @@ export const customRolls = function (message, speaker, rollData) {
       case "H":
       case "HEAL": {
         rollData = rollData ?? actor?.getRollData() ?? {};
-        const roll = RollPF.safeRoll(value, rollData);
-        const total = roll.total;
+        const roll = Roll.create(value, rollData).roll();
 
-        return (async () => {
+        return roll.then(async (roll) => {
+          const total = roll.total;
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
             tokenId: tokenUuid,
             isHealing: type === "HEAL" || type === "H",
@@ -74,7 +74,7 @@ export const customRolls = function (message, speaker, rollData) {
             content: content,
           };
           cMsg.create(chatOptions);
-        })();
+        });
       }
     }
   }

@@ -340,7 +340,7 @@ export class ActorSheetPF extends ActorSheet {
           }
           skl2.sourceDetails.push({
             name: CONFIG.PF1.abilities[skl2.ability],
-            value: data.data.abilities[skl2.ability].mod,
+            value: data.data.abilities[skl2.ability]?.mod ?? 0,
           });
           if (
             data.sourceDetails != null &&

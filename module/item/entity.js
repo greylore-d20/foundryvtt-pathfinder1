@@ -3094,6 +3094,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * @param {boolean} active
+   * @param {Object} context Optional update context
+   * @returns Update promise if item type supports the operation.
+   */
+  setActive(active, context) {
+    throw new Error(`Item type ${this.type} does not support ItemPF#setActive`);
+  }
+
+  /**
    * @param {...any} args
    * @deprecated
    */

@@ -679,6 +679,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Alter chat card title color
   chat.addChatCardTitleGradient(app, html, data);
 
+  // Alter ammo recovery options
+  chat.alterAmmoRecovery(app, html);
+
   // Handle chat tooltips
   html.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
 });

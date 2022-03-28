@@ -141,6 +141,25 @@ export const addChatCardTitleGradient = async function (app, html, data) {
   else titleText.css("color", "white");
 };
 
+export const alterAmmoRecovery = function (app, html) {
+  const recoveryData = app.getFlag("pf1", "ammoRecovery");
+  if (!recoveryData) return;
+
+  html.find(".chat-attack .ammo[data-ammo-id]").each((i, el) => {
+    const attackIndex = el.closest(".chat-attack").dataset.index;
+    const ammoId = el.dataset.ammoId;
+    const data = recoveryData[attackIndex]?.[ammoId];
+    if (!data) return;
+    $(el)
+      .find(".inline-action")
+      .each((i, ia) => {
+        // TODO: Disable button & track proper quantities
+        if (data.recovered) ia.classList.add("recovered");
+        if (data.failed) ia.classList.add("recovery-failed");
+      });
+  });
+};
+
 export const applyAccessibilitySettings = function (app, html, data, conf) {
   const fontSize = conf.fontSize || 0;
 

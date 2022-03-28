@@ -21,7 +21,7 @@
       }
     },
     "duration": {
-      "value": "3 + @abilities.witch.level",
+      "value": "3 + @classes.witch.level",
       "units": "round"
     },
     "target": {
@@ -77,7 +77,7 @@
       "critMult": 2
     },
     "save": {
-      "dc": "0",
+      "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
       "type": "will",
       "description": "Will reduces duration to 1 round"
     },

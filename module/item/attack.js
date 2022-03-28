@@ -826,7 +826,7 @@ export const getMessageData = async function (shared) {
     if (targets.length) {
       shared.templateData.targets = targets.map((o) => {
         return {
-          actorData: o.actor.data,
+          actorData: o.actor?.data,
           tokenData: o.data,
           uuid: o.document.uuid,
         };

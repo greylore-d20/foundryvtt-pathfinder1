@@ -171,8 +171,8 @@
   {{> "systems/pf1/templates/chat/parts/attack-roll-targets.hbs"}}
   {{/if}}
 
-  {{#each attacks as |atk|}}
-  <div class="chat-attack">
+  {{#each attacks as |atk idx|}}
+  <div class="chat-attack" data-index="{{idx}}">
     {{> attackTable atk=atk}}
 
     {{#if atk.hasCards}}

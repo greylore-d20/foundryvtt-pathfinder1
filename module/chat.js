@@ -146,8 +146,9 @@ export const alterAmmoRecovery = function (app, html) {
   if (!recoveryData) return;
 
   html.find(".chat-attack .ammo[data-ammo-id]").each((i, el) => {
+    const attackIndex = el.closest(".chat-attack").dataset.index;
     const ammoId = el.dataset.ammoId;
-    const data = recoveryData[ammoId];
+    const data = recoveryData[attackIndex]?.[ammoId];
     if (!data) return;
     $(el)
       .find(".inline-action")

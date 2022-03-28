@@ -2220,13 +2220,21 @@ export class ItemPF extends ItemBasePF {
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {
       if (!item) return;
+      if (!item.isOwner) return;
+
+      // Check for recovery state
+      const attackIndex = button.closest(".chat-attack").dataset.index;
+      const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
+      const ammoId = button.closest(".ammo")?.dataset.ammoId || button.dataset.ammoId;
+      const recoveryData = card.getFlag("pf1", "ammoRecovery");
+      const ammoRecovery = recoveryData?.[attackIndex]?.[ammoId];
+      if (ammoRecovery?.failed || ammoRecovery?.recovered) return;
 
       let recovered = false;
       let failed = false;
       const promises = [];
 
       // Find ammo item
-      const ammoId = button.closest(".ammo")?.dataset.ammoId || button.dataset.ammoId;
       const ammoItem = item.actor.items.get(ammoId);
       if (!ammoItem) return;
       let chance = 100;
@@ -2242,15 +2250,11 @@ export class ItemPF extends ItemBasePF {
         failed = true;
       }
 
-      // Disable button
-      button.disabled = true;
-
       // Update chat card
       if (recovered || failed) {
-        if (recovered) button.classList.add("recovered");
-        if (failed) button.classList.add("recovery-failed");
-        const card = game.messages.get(button.closest(".chat-message").dataset.messageId);
-        promises.push(card.setFlag("pf1", "ammoRecovery", { [ammoId]: { failed, recovered } }));
+        if (attackIndex) {
+          promises.push(card.setFlag("pf1", "ammoRecovery", { [attackIndex]: { [ammoId]: { failed, recovered } } }));
+        }
       }
 
       await Promise.all(promises);

@@ -34,6 +34,16 @@ export class ItemEquipmentPF extends ItemPF {
     if (data.armor.enh == null) data.armor.enh = 0;
   }
 
+  /**
+   * @param {boolean} active
+   * @param {Object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "data.equipped": active }, context);
+  }
+
   get isActive() {
     return this.data.data.equipped;
   }

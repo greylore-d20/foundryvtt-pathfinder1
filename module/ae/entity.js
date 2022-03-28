@@ -11,7 +11,7 @@ export class ActiveEffectPF extends ActiveEffect {
     }
     if (origin) {
       const buffItem = this.parent.items.get(origin.split(".")[3]);
-      if (buffItem && !buffItem.data.data.active) await buffItem.update({ "data.active": true });
+      if (buffItem && !buffItem.data.data.active) await buffItem.setActive(true);
     }
     return super.create(data, context);
   }
@@ -27,7 +27,7 @@ export class ActiveEffectPF extends ActiveEffect {
       const updates = { [`data.attributes.conditions.${statusId}`]: false };
       await parentActor.update(updates, context);
     } else if (origin) {
-      parentActor.items.get(origin)?.update({ "data.active": false }, context);
+      parentActor.items.get(origin)?.setActive(false, context);
     }
     return returnVal;
   }

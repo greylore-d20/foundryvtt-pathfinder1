@@ -9,6 +9,16 @@ export class ItemLootPF extends ItemPF {
     return this.data.data.extraType;
   }
 
+  /**
+   * @param {boolean} active
+   * @param {Object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "data.equipped": active }, context);
+  }
+
   get isActive() {
     if (this.subType === "gear") return this.data.data.equipped;
     return true;

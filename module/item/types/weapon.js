@@ -19,6 +19,17 @@ export class ItemWeaponPF extends ItemPF {
     labels.weaponType = C.weaponTypes[wType]._label;
     labels.weaponSubtype = C.weaponTypes[wType][wSubtype];
   }
+
+  /**
+   * @param {boolean} active
+   * @param {Object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "data.equipped": active }, context);
+  }
+
   get isActive() {
     return this.data.data.equipped;
   }

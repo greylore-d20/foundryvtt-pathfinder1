@@ -136,4 +136,14 @@ export class ItemBuffPF extends ItemPF {
   get subType() {
     return this.data.data.buffType;
   }
+
+  /**
+   * @param {boolean} active
+   * @param {Object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "data.active": active }, context);
+  }
 }

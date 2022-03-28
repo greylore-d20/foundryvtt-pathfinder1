@@ -479,6 +479,8 @@ export const addAttacks = async function (shared) {
       // Add damage
       if (this.hasDamage) {
         const extraParts = duplicate(shared.damageBonus);
+        const nonCritParts = [];
+        const critParts = [];
 
         // Add power attack bonus
         if (shared.rollData.powerAttackBonus >= 0) {
@@ -487,23 +489,24 @@ export const addAttacks = async function (shared) {
             ? game.i18n.localize("PF1.DeadlyAim")
             : game.i18n.localize("PF1.PowerAttack");
 
-          const powerAttackBonus =
-            shared.rollData.powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
-          extraParts.push(`${powerAttackBonus}[${label}]`);
+          const powerAttackBonus = shared.rollData.powerAttackBonus;
+          const powerAttackCritBonus = powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
+          nonCritParts.push(`${powerAttackBonus}[${label}]`);
+          critParts.push(`${powerAttackCritBonus}[${label}]`);
         }
 
         // Add manyshot damage
         // @TODO: could be cleaner in regards to chat output
         if (shared.manyShot && a === 0) {
-          await attack.addDamage({ extraParts, critical: false, conditionalParts });
+          await attack.addDamage({ extraParts: [...extraParts, ...nonCritParts], critical: false, conditionalParts });
         }
 
         // Add damage
-        await attack.addDamage({ extraParts, critical: false, conditionalParts });
+        await attack.addDamage({ extraParts: [...extraParts, ...nonCritParts], critical: false, conditionalParts });
 
         // Add critical hit damage
         if (attack.hasCritConfirm) {
-          await attack.addDamage({ extraParts, critical: true, conditionalParts });
+          await attack.addDamage({ extraParts: [...extraParts, ...critParts], critical: true, conditionalParts });
         }
       }
 

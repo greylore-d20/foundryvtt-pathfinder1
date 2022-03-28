@@ -623,9 +623,6 @@ Hooks.on("canvasInit", function () {
       // Add reach callback
       addReachCallback(m.data, elem);
 
-      // Create target callbacks
-      chat.addTargetCallbacks(m, elem);
-
       // Hide non-visible targets for players
       if (!game.user.isGM) chat.hideInvisibleTargets(m, elem);
     });
@@ -666,6 +663,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 
   // Create target callbacks
   chat.addTargetCallbacks(app, html);
+
+  // Alter target defense options
+  chat.alterTargetDefense(app, html);
 
   // Optionally collapse the content
   if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();

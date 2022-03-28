@@ -145,7 +145,7 @@ export const alterAmmoRecovery = function (app, html) {
   const recoveryData = app.getFlag("pf1", "ammoRecovery");
   if (!recoveryData) return;
 
-  html.find(".chat-attack .ammo[data-ammo-id]").each((i, el) => {
+  html.find(".chat-attack .ammo[data-ammo-id]").each((a, el) => {
     const attackIndex = el.closest(".chat-attack").dataset.index;
     const ammoId = el.dataset.ammoId;
     const data = recoveryData[attackIndex]?.[ammoId];
@@ -157,6 +157,19 @@ export const alterAmmoRecovery = function (app, html) {
         if (data.recovered) ia.classList.add("recovered");
         if (data.failed) ia.classList.add("recovery-failed");
       });
+  });
+};
+
+export const alterTargetDefense = function (app, html) {
+  const defenseData = app.getFlag("pf1", "targetDefense");
+  if (!defenseData) return;
+
+  html.find(".attack-targets .saving-throws div[data-saving-throw]").each((a, el) => {
+    const actorUUID = el.closest(".target").dataset.uuid;
+    const save = el.dataset.savingThrow;
+    const value = getProperty(defenseData, `${actorUUID}.save.${save}`);
+    if (value == null) return;
+    $(el).find(".value").text(value.toString());
   });
 };
 
@@ -301,24 +314,7 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
 
   // Replace saving throw value on original chat card's target
   if (total != null) {
-    // Prepare parameters
-    const args = {
-      eventType: "alterChatTargetAttribute",
-      message: app.id,
-      targetUuid: actor.uuid,
-      save,
-      value: total,
-    };
-
-    // Add parameters based on d20 result
-    const d20 = message.roll.terms[0];
-    if (d20.faces === 20) {
-      if (d20.total === 1) args.isFailure = true;
-      else if (d20.total === 20) args.isSuccess = true;
-    }
-
-    // Do action
-    if (game.user.isGM) return alterChatTargetAttribute(args);
-    else game.socket.emit("system.pf1", args);
+    const actorUUID = elem.closest(".target").dataset.uuid;
+    await app.setFlag("pf1", "targetDefense", { [actorUUID]: { save: { [save]: total } } });
   }
 };

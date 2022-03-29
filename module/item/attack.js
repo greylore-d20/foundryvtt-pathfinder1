@@ -80,10 +80,12 @@ export const createAttackDialog = async function (shared) {
  * Alters roll (and shared) data based on user input during the attack's dialog.
  *
  * @param {Object} shared - Shared data between attack functions.
- * @param {JQuery} form - The attack dialog's form data.
+ * @param {JQuery|Object} form - The attack dialog's jQuery form data or FormData object
  */
-export const alterRollData = function (shared, form) {
-  const formData = new FormDataExtended(form[0].querySelector("form")).toObject();
+export const alterRollData = function (shared, form = {}) {
+  let formData;
+  if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).toObject();
+  else formData = form;
   shared.rollData.d20 = formData["d20"];
   const atkBonus = formData["attack-bonus"];
   if (atkBonus) {
@@ -93,7 +95,7 @@ export const alterRollData = function (shared, form) {
   if (dmgBonus) {
     shared.damageBonus.push(dmgBonus);
   }
-  shared.rollMode = formData["rollMode"];
+  shared.rollMode = formData["rollMode"] ?? game.settings.get("core", "rollMode");
 
   // Point-Blank Shot
   if (formData["point-blank-shot"]) {
@@ -119,7 +121,7 @@ export const alterRollData = function (shared, form) {
   shared.useMeasureTemplate = formData["measure-template"];
 
   // Set held type
-  setProperty(shared.rollData, "item.held", formData["held"]);
+  setProperty(shared.rollData, "item.held", formData["held"] ?? "normal");
 
   // Power Attack
   if (formData["power-attack"]) {
@@ -166,17 +168,16 @@ export const alterRollData = function (shared, form) {
   }
 
   // Conditionals
-  const elem = form.find(".conditional");
-  if (elem.length > 0) {
-    shared.conditionals = elem
-      .map(function () {
-        if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
-      })
-      .get();
-  }
+  Object.keys(formData).forEach((f) => {
+    const idx = f.match(/conditional\.(\d+)/)?.[1];
+    if (idx && formData[f]) {
+      if (!shared.conditionals) shared.conditionals = [parseInt(idx)];
+      else shared.conditionals.push(parseInt(idx));
+    }
+  });
 
   // Damage multiplier
-  shared.rollData.item.ability.damageMult = form.find(`[name="damage-ability-multiplier"]`).val() ?? 1;
+  shared.rollData.item.ability.damageMult = formData["damage-ability-multiplier"] ?? "1";
 
   // CL check enabled
   shared.casterLevelCheck = formData["cl-check"];
@@ -185,7 +186,7 @@ export const alterRollData = function (shared, form) {
   shared.concentrationCheck = formData["concentration"];
 
   // Conditional defaults for fast-forwarding
-  if (shared.conditionals === undefined) {
+  if (!shared.conditionals) {
     shared.conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
       if (con.default) arr.push(i);
       return arr;

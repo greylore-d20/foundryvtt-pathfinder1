@@ -1571,6 +1571,7 @@ export class ItemPF extends ItemBasePF {
       await _callFn("alterRollData", result.html);
     } else {
       shared.attacks = await _callFn("generateAttacks");
+      await _callFn("alterRollData");
     }
 
     // Filter out attacks without ammo usage

@@ -100,7 +100,7 @@ export const fractionalToString = (v) => {
   const rv = [];
   if (base !== 0) rv.push(base);
   else if (f === 0.25) rv.push("1/4");
-  else if (f === 0.336) rv.push("1/3");
+  else if (f === 0.333) rv.push("1/3");
   else if (f === 0.5) rv.push("1/2");
   else if (f === 0.667) rv.push("2/3");
   else if (f === 0.75) rv.push("3/4");

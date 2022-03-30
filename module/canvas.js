@@ -32,7 +32,7 @@ export const getConditions = function () {
   }));
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else sys = [core[0]].concat(sys);
-  return sys;
+  return sys.sort((a, b) => a.label.localeCompare(b.label));
 };
 
 const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoices;

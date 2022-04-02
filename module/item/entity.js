@@ -972,16 +972,6 @@ export class ItemPF extends ItemBasePF {
       linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
     }
 
-    // Set weapon subtype
-    if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
-      const type = data["data.weaponType"];
-      const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
-      const keys = Object.keys(CONFIG.PF1.weaponTypes[type]).filter((o) => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        linkData(srcData, data, "data.weaponSubtype", keys[0]);
-      }
-    }
-
     // Set equipment subtype and slot
     if (
       data["data.equipmentType"] != null &&

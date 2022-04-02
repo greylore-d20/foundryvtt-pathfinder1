@@ -1,6 +1,18 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemWeaponPF extends ItemPF {
+  async _preUpdate(update, context) {
+    // Set weapon subtype if not present
+    const newWeaponType = getProperty(update, "data.weaponType");
+    if (newWeaponType != null && newWeaponType !== this.data.data.weaponType) {
+      const subtype = getProperty(update, "data.weaponSubtype") ?? this.data.data.weaponSubtype ?? "";
+      const keys = Object.keys(CONFIG.PF1.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        setProperty(update, "data.weaponSubtype", keys[0]);
+      }
+    }
+  }
+
   prepareData() {
     const itemData = super.prepareData();
     const data = itemData.data;

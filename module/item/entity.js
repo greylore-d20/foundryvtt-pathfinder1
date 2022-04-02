@@ -972,27 +972,6 @@ export class ItemPF extends ItemBasePF {
       linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
     }
 
-    // Set equipment subtype and slot
-    if (
-      data["data.equipmentType"] != null &&
-      data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")
-    ) {
-      // Set subtype
-      const type = data["data.equipmentType"];
-      const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
-      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        linkData(srcData, data, "data.equipmentSubtype", keys[0]);
-      }
-
-      // Set slot
-      const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
-      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
-      if (!slot || !keys.includes(slot)) {
-        linkData(srcData, data, "data.slot", keys[0]);
-      }
-    }
-
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {
       let charges = 0;

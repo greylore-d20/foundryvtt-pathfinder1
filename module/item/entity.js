@@ -955,6 +955,12 @@ export class ItemPF extends ItemBasePF {
 
       linkData(srcData, data, "data.weight", baseWeight + contentsWeight);
     }
+
+    // Update weight according metric system (lb vs kg)
+    if (data["data.weightConverted"] != null) {
+      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
+    }
+
     // Update price from base price
     if (data["data.basePrice"] != null) {
       linkData(srcData, data, "data.price", getProperty(srcData, "data.basePrice") || 0);
@@ -966,11 +972,6 @@ export class ItemPF extends ItemBasePF {
     // Update name
     if (data["data.identifiedName"]) linkData(srcData, data, "name", data["data.identifiedName"]);
     else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
-
-    // Update weight according metric system (lb vs kg)
-    if (data["data.weightConverted"] != null) {
-      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
-    }
 
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {

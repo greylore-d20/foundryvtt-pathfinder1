@@ -775,16 +775,6 @@ export class ItemPF extends ItemBasePF {
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
-    // Update class
-    {
-      const newLevel = data["data.level"];
-      if (this.type === "class" && newLevel !== undefined) {
-        const prevLevel = this.data.data.level ?? newLevel;
-        if (this._prevLevel !== undefined) delete this._prevLevel;
-        await this._onLevelChange(prevLevel, newLevel);
-      }
-    }
-
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
       const changeIndexes = [];

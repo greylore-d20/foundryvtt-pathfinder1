@@ -708,20 +708,6 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
   TokenQuickActions.addTop3Attacks(app, html, data);
 });
 
-Hooks.on("preUpdateItem", (item, changedData, options, userId) => {
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
-
-  if (actor) {
-    // Update level
-    {
-      if (item.type === "class" && hasProperty(changedData, "data.level")) {
-        const prevLevel = getProperty(item.data, "data.level");
-        item._prevLevel = prevLevel;
-      }
-    }
-  }
-});
-
 Hooks.on("preCreateActor", (actor, data, options, userId) => {
   if (data.type === "character") {
     actor.data._source.token.actorLink = true;

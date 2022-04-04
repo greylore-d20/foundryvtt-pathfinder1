@@ -35,7 +35,7 @@
       position: absolute;
       left: -2px;
       top: -2px;
-      font-size: 0.5rem;
+      font-size: @fontSizeNormal;
       background: black;
       color: var(--color-text-light-highlight);
       padding: 1px;
@@ -112,7 +112,7 @@
 
   .window-content {
     background: @sheetBackground;
-    font-size: 13px;
+    font-size: @fontSizeEnlarged;
     color: @colorDark;
     overflow: hidden;
   }
@@ -165,8 +165,8 @@
   label.checkbox {
     flex: auto;
     margin: 0;
-    line-height: 20px;
-    font-size: 11px;
+    line-height: 2;
+    font-size: @fontSizeNormal;
 
     input[type="checkbox"] {
       height: auto;
@@ -276,7 +276,7 @@
     margin: 0 0 0.25em 0;
     padding: 0 2px;
     .nodesto();
-    font-size: 26px;
+    font-size: @fontSizeHeader;
     border-top: @borderGroove;
     border-bottom: @borderGroove;
   }
@@ -291,10 +291,6 @@
       height: min-content;
       white-space: nowrap;
     }
-
-    &.race-info {
-      display: block;
-    }
   }
 
   /* Tags */
@@ -302,7 +298,7 @@
     display: inline-block;
     flex: 0;
     padding: 0 3px;
-    font-size: var(--font-size-11, 8pt);
+    font-size: @fontSizeSmall;
     line-height: 1.2;
     border: 1px solid #999;
     border-radius: 3px;
@@ -412,7 +408,7 @@
     overflow-y: hidden;
     padding: 5px;
     background: @sheetBackground;
-    font-size: 13px;
+    font-size: @fontSizeEnlarged;
     color: @colorDark;
 
     form {
@@ -556,7 +552,7 @@
       .item-recharge {
         flex: 0 0 80px;
         text-align: right;
-        font-size: 14px;
+        font-size: @fontSizeNormal;
         color: @colorTan;
       }
 
@@ -589,7 +585,7 @@
       h3 {
         margin: 0;
         padding-left: 5px;
-        font-size: 14px;
+        font-size: @fontSizeNormal;
         font-weight: bold;
       }
 
@@ -614,7 +610,7 @@
     .item-detail {
       height: 24px;
       flex: 0 0 80px;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
       color: @colorTan;
       text-align: center;
       overflow: hidden;
@@ -708,9 +704,9 @@
 
         button {
           height: 24px;
-          font-size: 11px;
+          font-size: @fontSizeNormal;
           padding: 0;
-          line-height: 24px;
+          line-height: 2;
         }
       }
     }
@@ -755,7 +751,7 @@
 
       a {
         flex: 0 0 16px;
-        font-size: 14px;
+        font-size: @fontSizeNormal;
         text-align: center;
         color: #666;
       }
@@ -768,8 +764,8 @@
     // Item Dropdown Summary
     .item-summary {
       flex: 0 0 100%;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: @fontSizeNormal;
+      line-height: 1.5;
       padding: 0.25em 0.5em;
       border-top: 1px solid @colorFaint;
     }
@@ -805,8 +801,8 @@
   // Select Fields
   select {
     flex: 1;
-    font-size: 12px;
-    height: 24px;
+    font-size: @fontSizeNormal;
+    line-height: 1;
     background: transparent;
   }
 
@@ -877,8 +873,7 @@
       padding: 5px;
 
       input {
-        height: 50px;
-        font-size: 36px;
+        font-size: @fontSizeHeader;
         font-variant-caps: small-caps;
         margin: 0;
       }
@@ -967,7 +962,7 @@
     }
 
     &.subtabs {
-      font-size: 18px;
+      font-size: @fontSizeSubHeader;
     }
   }
 
@@ -996,7 +991,7 @@
 
     .filter-item {
       text-align: center;
-      font-size: 12px;
+      font-size: @fontSizeNormal;
       margin: 0 6px;
       border-bottom: 3px solid @colorBeige;
       white-space: nowrap;
@@ -1050,7 +1045,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 14px;
+    font-size: @fontSizeLarge;
     justify-content: center;
     align-items: center;
 
@@ -1412,7 +1407,7 @@
       }
 
       i {
-        font-size: 24px;
+        font-size: @fontSizeHeader;
       }
       i.gray {
         color: gray;
@@ -1529,7 +1524,7 @@
           }
 
           span.name {
-            font-size: 1.4em;
+            font-size: @fontSizeLarge;
           }
         }
       }
@@ -1546,7 +1541,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        font-size: 1.4em;
+        font-size: @fontSizeLarge;
 
         ul {
           margin: 0;
@@ -1795,8 +1790,8 @@
           i {
             flex: 0 0 12px;
             text-align: center;
-            line-height: 24px;
-            font-size: 11px;
+            line-height: 2;
+            font-size: @fontSizeNormal;
           }
         }
 

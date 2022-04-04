@@ -173,35 +173,7 @@ export const alterTargetDefense = function (app, html) {
   });
 };
 
-export const applyAccessibilitySettings = function (app, html, data, conf) {
-  const fontSize = conf.fontSize || 0;
-
-  // Enlarge font sizes
-  if (fontSize > 0) {
-    // Enlarge table font sizes
-    {
-      const size = 10 + fontSize * 4;
-      html.find("table").css("font-size", `${size}px`);
-    }
-
-    // Enlarge attack roll numbers
-    {
-      const size = 12 + fontSize * 4;
-      html.find(".inline-roll, .fake-inline-roll").css("font-size", `${size}px`);
-    }
-
-    // Enlarge attack headers
-    {
-      const size = 1 + fontSize * 0.3;
-      html.find(".chat-attack th").css("font-size", `${size}em`);
-    }
-    // Enlarge attack labels
-    {
-      const size = 0.7 + fontSize * 0.3;
-      html.find(".chat-attack td").css("font-size", `${size}em`);
-    }
-  }
-};
+export const applyAccessibilitySettings = function (app, html, data, conf) {};
 
 /**
  * Returns an inline roll string suitable for chat messages.

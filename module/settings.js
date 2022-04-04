@@ -93,6 +93,7 @@ export const registerSystemSettings = function () {
   });
 
   // Accessibility configuration
+  /*
   game.settings.registerMenu("pf1", "accessibilityConfig", {
     name: "PF1.AccessibilityConfigName",
     label: "PF1.AccessibilityConfigLabel",
@@ -101,6 +102,7 @@ export const registerSystemSettings = function () {
     icon: "fas fa-wheelchair",
     type: AccessibilityConfig,
   });
+  */
   game.settings.register("pf1", "accessibilityConfig", {
     name: "PF1.AccessibilityConfigName",
     scope: "client",

@@ -2733,7 +2733,9 @@ export class ItemPF extends ItemBasePF {
       // Add charge price
       if (identified) value += (this.data.data.uses?.pricePerUse ?? 0) * (this.data.data.uses?.value ?? 0);
 
-      return inLowestDenomination ? value * 100 : value;
+      if (inLowestDenomination) value *= 100;
+      if (this.data.data.broken) value *= 0.75; // TODO: Make broken value configurable
+      return value;
     };
 
     const quantity = getProperty(this.data, "data.quantity") || 0;

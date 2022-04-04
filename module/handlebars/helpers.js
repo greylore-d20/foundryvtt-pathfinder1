@@ -1,4 +1,4 @@
-import { convertDistance, calculateRange } from "../lib.js";
+import { convertDistance, calculateRange, simplifyFormula } from "../lib.js";
 
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("concat", (...args) => {
@@ -63,19 +63,17 @@ export const registerHandlebarsHelpers = function () {
 
     const rv = [];
 
-    const reduceFormula = (formula) => {
-      const roll = RollPF.safeRoll(formula, rollData);
-      formula = roll.formula.replace(/\[[^\]]+\]/g, ""); // remove flairs
-      return [roll, formula];
-    };
-
-    const handleParts = (parts) => {
-      for (const [formula, _] of parts) {
-        const [roll, newformula] = reduceFormula(formula);
-        if (roll.total == 0) continue;
+    const handleFormula = (formula, change) => {
+      // Ensure @item.level and similar gets parsed correctly
+      const rd = change?.parent?.getRollData() ?? rollData;
+      const roll = RollPF.safeRoll(formula, rd);
+      if (roll.total !== 0) {
+        const newformula = simplifyFormula(roll.formula);
         rv.push(newformula);
       }
     };
+
+    const handleParts = (parts) => parts.forEach(([formula, _]) => handleFormula(formula));
 
     // Normal damage parts
     handleParts(itemData.damage.parts);
@@ -89,8 +87,7 @@ export const registerHandlebarsHelpers = function () {
     handleParts(itemData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    const sources = item.document.allDamageSources;
-    for (const s of sources) rv.push(s.formula);
+    item.document.allDamageSources?.forEach((s) => handleFormula(s.formula, s));
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 

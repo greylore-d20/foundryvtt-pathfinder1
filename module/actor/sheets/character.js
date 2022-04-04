@@ -122,7 +122,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof LevelUpForm && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new LevelUpForm(item).render(true);
   }
 

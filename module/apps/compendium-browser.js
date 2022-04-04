@@ -1204,7 +1204,7 @@ export class CompendiumBrowser extends Application {
   async _onEntry(collectionKey, entryId) {
     const pack = game.packs.find((o) => o.collection === collectionKey);
     const doc = await pack.getDocument(entryId);
-    doc.sheet.render(true);
+    doc.sheet.render(true, { focus: true });
   }
 
   /**

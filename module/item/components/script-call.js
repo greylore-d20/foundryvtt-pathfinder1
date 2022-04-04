@@ -69,7 +69,7 @@ export class ItemScriptCall {
       let err;
       if (macro) {
         if (macro.testUserPermission(game.user, "OBSERVER")) {
-          macro.sheet.render(true);
+          macro.sheet.render(true, { focus: true });
         } else {
           err = game.i18n.format("DOCUMENT.SheetPermissionWarn", { document: macro.documentName });
         }

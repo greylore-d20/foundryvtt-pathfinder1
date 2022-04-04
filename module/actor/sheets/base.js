@@ -1340,7 +1340,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof ActorRestDialog && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new ActorRestDialog(this.document).render(true);
   }
 
@@ -1554,7 +1554,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    game.pf1.compendiums[target].render(true);
+    game.pf1.compendiums[target].render(true, { focus: true });
   }
 
   _onRollConcentration(event) {
@@ -1589,7 +1589,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof LevelUpForm && o._element && o.object === item;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new LevelUpForm(item).render(true);
   }
 
@@ -1797,7 +1797,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof PointBuyCalculator && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new PointBuyCalculator(this.document).render(true);
   }
 
@@ -1996,8 +1996,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(item.apps).find((o) => {
       return o instanceof ItemSheet && o.document === item && o._element != null;
     });
-    if (app) app.bringToTop();
-    else item.sheet.render(true);
+    item.sheet.render(true, { focus: true });
   }
 
   /**
@@ -2491,7 +2490,7 @@ export class ActorSheetPF extends ActorSheet {
     const entryId = parts.slice(-1)[0];
     const pack = game.packs.get(packKey);
     const entry = await pack.getDocument(entryId);
-    entry.sheet.render(true);
+    entry.sheet.render(true, { focus: true });
   }
 
   /* -------------------------------------------- */
@@ -2608,7 +2607,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof ActorTraitSelector && o.options.name === options.name && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new ActorTraitSelector(this.document, options).render(true);
   }
 

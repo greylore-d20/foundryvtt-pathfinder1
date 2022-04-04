@@ -589,7 +589,7 @@ Hooks.once("ready", async function () {
 
     if (curVersion.isHigherThan(changelogVersion)) {
       const app = new ChangeLogWindow(changelogVersion);
-      app.render(true);
+      app.render(true, { focus: true });
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
   }
@@ -987,7 +987,10 @@ Hooks.on("renderSidebarTab", (app, html) => {
         $("<div id='pf1-details'>").append(chlogButton, helpButton)
       );
 
-    chlogButton.click(() => new ChangeLogWindow().render(true));
+    chlogButton.click(() => {
+      const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new ChangeLogWindow();
+      chlog.render(true, { focus: true });
+    });
     helpButton.click(() => new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs"));
   }
 });

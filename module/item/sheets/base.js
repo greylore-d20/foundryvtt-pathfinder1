@@ -931,7 +931,7 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    game.pf1.compendiums[target].render(true);
+    game.pf1.compendiums[target].render(true, { focus: true });
   }
 
   _onScriptCallControl(event) {
@@ -1055,6 +1055,7 @@ export class ItemSheetPF extends ItemSheet {
       if (w instanceof PF1_HelpBrowser) {
         browser = w;
         browser.bringToTop();
+        browser.maximize();
         break;
       }
     }
@@ -1217,9 +1218,9 @@ export class ItemSheetPF extends ItemSheet {
       game.packs
         .get(packId)
         .getDocument(itemId)
-        .then((d) => d.sheet.render(true));
+        .then((d) => d.sheet.render(true, { focus: true }));
     } else {
-      this.actor.items.get(itemId).sheet.render(true);
+      this.actor.items.get(itemId).sheet.render(true, { focus: true });
     }
   }
 

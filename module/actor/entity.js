@@ -164,7 +164,7 @@ export class ActorPF extends ActorBasePF {
       const entryId = parts.slice(-1)[0];
       const pack = game.packs.get(packKey);
       const entry = await pack.getDocument(entryId);
-      entry.sheet.render(true);
+      entry.sheet.render(true, { focus: true });
     }
   }
 

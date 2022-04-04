@@ -1051,6 +1051,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Action
     html.find(".quick-actions li").click(this._quickAction.bind(this));
+    html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
 
     // Convert currency
     html.find("a.convert-currency").click(this._convertCurrency.bind(this));

@@ -49,9 +49,13 @@ export class TokenQuickActions {
       // Add click handler
       elem.on("click", (event) => {
         if (!event.ctrlKey) {
-          return item.use({ skipDialog: getSkipActionPrompt() });
+          return item.use({ ev: event, skipDialog: getSkipActionPrompt() });
         }
         return item.roll();
+      });
+
+      elem.on("contextmenu", () => {
+        item.sheet.render(true, { focus: true });
       });
 
       // Add mouse enter handler

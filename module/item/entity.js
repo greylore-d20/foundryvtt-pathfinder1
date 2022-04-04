@@ -746,6 +746,10 @@ export class ItemPF extends ItemBasePF {
   async executeScriptCalls(category, extraParams = {}) {
     const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
     const shared = {};
+    if (extraParams.attackData) {
+      shared.attackData = extraParams.attackData;
+      delete extraParams.attackData;
+    }
 
     for (const s of scripts) {
       await s.execute(shared, extraParams);
@@ -1446,9 +1450,14 @@ export class ItemPF extends ItemBasePF {
     const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
     let shared;
     if (useScriptCalls.length > 0) {
-      const data = { chatMessage };
-
-      shared = await this.executeScriptCalls("use", { attacks: [], template: undefined, data });
+      shared = await this.executeScriptCalls("use", {
+        attackData: { event: ev, skipDialog, chatMessage, rollMode },
+        // Deprecated for V10
+        attacks: [],
+        template: undefined,
+        data: { chatMessage },
+        // End Deprecated
+      });
       if (shared.reject) return shared;
       if (shared.hideChat !== true) await this.roll();
     }

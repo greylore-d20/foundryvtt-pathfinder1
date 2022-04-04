@@ -990,14 +990,48 @@ export const generateChatMetadata = function (shared) {
  */
 export const executeScriptCalls = async function (shared) {
   // Extra options for script call
-  const data = { chatMessage: shared.chatMessage, fullAttack: shared.fullAttack };
+  const attackData = shared;
+
+  // Deprecated for V10
+  const actorName = this.actor.name;
+  const itemName = this.name;
+  const deprecationWarning = function (propName, newName) {
+    console.warn(
+      `${actorName}'s ${itemName} is using the deprecated "${propName}". Use "${
+        newName ? newName : "shared.attackData." + propName
+      }" instead.`
+    );
+  };
+  const handlerMaker = function (propName, redirect) {
+    return {
+      get(obj, prop) {
+        if (prop == "chatMessage" || prop == "fullAttack")
+          deprecationWarning("data." + prop, "shared.attackData." + prop);
+        else deprecationWarning(propName, redirect);
+        return Reflect.get(...arguments);
+      },
+      set(obj, prop, value) {
+        if (prop == "chatMessage" || prop == "fullAttack")
+          deprecationWarning("data." + prop, "shared.attackData." + prop);
+        else deprecationWarning(propName, redirect);
+        return Reflect.set(...arguments);
+      },
+    };
+  };
+  // End deprecated
 
   // Execute script call
   shared.scriptData = await this.executeScriptCalls("use", {
-    attacks: shared.chatAttacks,
-    template: shared.template,
-    data,
-    conditionals: shared.conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
+    attackData,
+    // Deprecated for V10
+    data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("data")),
+    attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
+    template: new Proxy(shared.template ?? {}, handlerMaker("template")),
+    conditionals: new Proxy(
+      shared.conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
+      handlerMaker("conditionals")
+    ),
+    // End deprecated
   });
 };
 

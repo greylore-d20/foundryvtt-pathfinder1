@@ -1165,9 +1165,19 @@ const _migrateCarryBonus = function (ent, updateData, linked) {
 
 const _migrateBuggedValues = function (ent, updateData, linked) {
   // Convert to integers
-  const convertToInt = ["data.details.xp.value"];
+  const convertToInt = [
+    "data.details.xp.value",
+    "data.currency.pp",
+    "data.currency.gp",
+    "data.currency.sp",
+    "data.currency.cp",
+    "data.altCurrency.pp",
+    "data.altCurrency.gp",
+    "data.altCurrency.sp",
+    "data.altCurrency.cp",
+  ];
   for (const key of convertToInt) {
-    updateData[key] = parseInt(getProperty(ent, key));
+    updateData[key] = parseInt(getProperty(ent, key)) || 0;
   }
 };
 

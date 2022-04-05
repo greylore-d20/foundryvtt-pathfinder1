@@ -3238,7 +3238,7 @@ export class ActorPF extends ActorBasePF {
     if (!coinWeightDivisor) return 0;
     return (
       Object.values(this.data.data.currency).reduce((cur, amount) => {
-        return cur + amount;
+        return (parseInt(cur) || 0) + amount;
       }, 0) / coinWeightDivisor
     );
   }

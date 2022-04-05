@@ -135,6 +135,9 @@ const objectifyModule = function (module) {
 Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
+  // Redirect notifications to console before Notifications is ready
+  ui.notifications = { info: console.log, warn: console.warn, error: console.error };
+
   // Register client settings
   registerClientSettings();
 

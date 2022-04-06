@@ -59,8 +59,10 @@ export const registerSystemSettings = function () {
         if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        if (o) {
+          o.prepareData();
+          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        }
       });
     },
   });
@@ -86,8 +88,10 @@ export const registerSystemSettings = function () {
         if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        if (o) {
+          o.prepareData();
+          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+        }
       });
     },
   });
@@ -187,7 +191,7 @@ export const registerSystemSettings = function () {
     onChange: () => {
       [...game.actors.contents, ...Object.values(game.actors.tokens)]
         .filter((o) => {
-          return o.data.type === "character";
+          return o?.data.type === "character";
         })
         .forEach((o) => {
           o.prepareData();
@@ -199,7 +203,7 @@ export const registerSystemSettings = function () {
   const reRenderSheets = () => {
     [...game.actors.contents, ...Object.values(game.actors.tokens)]
       .filter((o) => {
-        return o.data.type === "character";
+        return o?.data.type === "character";
       })
       .forEach((o) => {
         o.prepareData();
@@ -269,7 +273,7 @@ export const registerSystemSettings = function () {
         if (o.sheet && o.sheet.rendered) o.sheet.render(true);
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
+        if (o?.sheet && o.sheet.rendered) o.sheet.render(true);
       });
     },
   });
@@ -379,7 +383,7 @@ export const registerSystemSettings = function () {
         o.prepareData();
       });
       Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
+        o?.prepareData();
       });
     },
   });
@@ -422,7 +426,7 @@ export const registerSystemSettings = function () {
       const promises = [];
       const actors = [
         ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
-        ...Object.values(game.actors.tokens),
+        ...Object.values(game.actors.tokens).filter((a) => a != null),
       ];
       for (const actor of actors) {
         promises.push(actor.toggleConditionStatusIcons({ render: false }));
@@ -524,7 +528,7 @@ export const registerSystemSettings = function () {
       const promises = [];
       const actors = [
         ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
-        ...Object.values(game.actors.tokens),
+        ...Object.values(game.actors.tokens).filter((a) => a != null),
       ];
       for (const actor of actors) {
         promises.push(actor.toggleConditionStatusIcons());

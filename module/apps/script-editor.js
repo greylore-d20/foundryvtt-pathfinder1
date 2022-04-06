@@ -5,6 +5,12 @@ export class ScriptEditor extends FormApplication {
     this.command = options.command || "";
     this.name = options.name || null;
 
+    this.parent = options.parent;
+
+    // Add editor title
+    if (this.name) this.options.title = this.parent ? `${this.parent.name}: ${this.name}` : this.name;
+    else this.options.title = this.parent?.name ?? game.i18n.localize("PF1.Unknown");
+
     this._promises = {
       submit: [],
     };

@@ -1104,7 +1104,7 @@ export class ItemSheetPF extends ItemSheet {
 
     if (!change) return;
 
-    const scriptEditor = new ScriptEditor({ command: change.formula }).render(true);
+    const scriptEditor = new ScriptEditor({ command: change.formula, parent: this.object }).render(true);
     const result = await scriptEditor.awaitResult();
     if (typeof result?.command === "string") {
       return change.update({ formula: result.command });

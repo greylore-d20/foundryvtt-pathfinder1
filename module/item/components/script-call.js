@@ -107,7 +107,7 @@ export class ItemScriptCall {
     }
     // For regular script calls
     else {
-      const scriptEditor = new ScriptEditor({ command: this.value, name: this.name }).render(true);
+      const scriptEditor = new ScriptEditor({ command: this.value, name: this.name, parent: this.parent }).render(true);
       const result = await scriptEditor.awaitResult();
       if (result) {
         return this.update({ value: result.command, name: result.name });

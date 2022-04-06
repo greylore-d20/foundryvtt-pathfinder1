@@ -2845,6 +2845,16 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Get all item boolean flags as array.
+   *
+   * @returns {string[]}
+   */
+  getItemBooleanFlags() {
+    const flags = getProperty(this.data, "data.flags.boolean") ?? {};
+    return Object.keys(flags);
+  }
+
+  /**
    * Sets a dictionary flag value on this item.
    *
    * @param {string} flagName - The name/key of the flag to set.
@@ -2889,6 +2899,16 @@ export class ItemPF extends ItemBasePF {
   getItemDictionaryFlag(flagName) {
     const flags = getProperty(this.data, "data.flags.dictionary") || {};
     return flags[flagName];
+  }
+
+  /**
+   * Get all item dictionary flags as array of objects.
+   *
+   * @returns {object[]}
+   */
+  getItemDictionaryFlags() {
+    const flags = getProperty(this.data, "data.flags.dictionary") || {};
+    return flags;
   }
 
   /**

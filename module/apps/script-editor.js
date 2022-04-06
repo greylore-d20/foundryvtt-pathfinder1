@@ -1,3 +1,5 @@
+import { PF1_HelpBrowser } from "./help-browser.js";
+
 export class ScriptEditor extends FormApplication {
   constructor(options = {}) {
     super(options);
@@ -49,6 +51,15 @@ export class ScriptEditor extends FormApplication {
 
   activateListeners(html) {
     html.find('button[type="submit"]').click(this._onSubmit.bind(this));
+
+    // Open help browser
+    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+  }
+
+  _openHelpBrowser(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    PF1_HelpBrowser.open(a.dataset.url);
   }
 
   _updateObject(event, formData) {

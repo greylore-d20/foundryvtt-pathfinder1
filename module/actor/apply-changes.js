@@ -1,3 +1,4 @@
+import { PF1 } from "../config";
 import { fractionalToString } from "../lib";
 
 /**
@@ -98,75 +99,15 @@ const createOverride = function () {
 };
 
 const getSortChangePriority = function () {
-  const skillTargets = this._skillTargets;
+  /** @type {[string, {sort: number}][]}*/
+  const skillTargets = this._skillTargets.map((target, index) => [target, { sort: 76000 + index * 10 }]);
+  const buffTargets = Object.entries(PF1.buffTargets);
+  const types = [...skillTargets, ...buffTargets]
+    .sort(([, { sort: aSort }], [, { sort: bSort }]) => aSort - bSort)
+    .map(([target]) => target);
+
   return {
-    types: [
-      "acpA",
-      "acpS",
-      "mDexA",
-      "mDexS",
-      "str",
-      "dex",
-      "con",
-      "int",
-      "wis",
-      "cha",
-      "strMod",
-      "dexMod",
-      "conMod",
-      "intMod",
-      "wisMod",
-      "chaMod",
-      "skills",
-      "carryStr",
-      "carryMult",
-      "strSkills",
-      "dexSkills",
-      "conSkills",
-      "intSkills",
-      "wisSkills",
-      "chaSkills",
-      ...skillTargets,
-      "allChecks",
-      "strChecks",
-      "dexChecks",
-      "conChecks",
-      "intChecks",
-      "wisChecks",
-      "chaChecks",
-      "landSpeed",
-      "climbSpeed",
-      "swimSpeed",
-      "burrowSpeed",
-      "flySpeed",
-      "allSpeeds",
-      "ac",
-      "aac",
-      "sac",
-      "nac",
-      "tac",
-      "ffac",
-      "attack",
-      "bab",
-      "~attackCore",
-      "mattack",
-      "rattack",
-      "damage",
-      "wdamage",
-      "sdamage",
-      "critConfirm",
-      "allSavingThrows",
-      "fort",
-      "ref",
-      "will",
-      "cmb",
-      "cmd",
-      "ffcmd",
-      "init",
-      "mhp",
-      "wounds",
-      "vigor",
-    ],
+    types: types,
     modifiers: [
       "untyped",
       "untypedPerm",

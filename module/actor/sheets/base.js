@@ -687,6 +687,9 @@ export class ActorSheetPF extends ActorSheet {
           dataset: { type: "spell", level: level, spellbook: bookKey },
           name: game.i18n.localize(`PF1.SpellLevel${level}`),
           spellMessage: spellLevel.spellMessage,
+          lowAbilityScore: spellLevel.lowAbilityScore,
+          known: spellLevel.known,
+          preparation: spellLevel.preparation,
         };
       }
     }

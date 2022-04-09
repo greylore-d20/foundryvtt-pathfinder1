@@ -364,7 +364,8 @@
     <ol class="inventory-list">
       {{#each spellbook.data as |section sid|}}
       {{#unless section._hidden}}
-      <li class="flexrow inventory-header spellbook-header" data-level="{{section.level}}">
+      <li class="flexrow inventory-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}"
+        data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.orig.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
         <div class="item-name flexrow">
           <h3>{{section.name}}</h3>
         </div>
@@ -508,6 +509,9 @@
         </li>
         {{/each}}
 
+        {{#if section.lowAbilityScore}}
+          <h4 class="spell-level-message">{{localize "PF1.SpellScoreTooLow"}}</h4>
+        {{/if}}
         {{#if section.spellMessage}}
           <h4 class="spell-level-message">{{section.spellMessage}}</h4>
         {{/if}}

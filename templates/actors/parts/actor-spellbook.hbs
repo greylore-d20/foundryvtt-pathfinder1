@@ -422,7 +422,7 @@
       <ol class="item-list">
 
         {{#each section.items as |item i|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow {{#if item.document.isPrepared}}prepared{{else}}unprepared{{/if}} {{#if item.data.domain}}domain{{/if}}" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")'></div>
             <h4>{{item.name}}</h4>
@@ -434,7 +434,7 @@
             {{!-- Domain Marker --}}
             <div>
               {{#if item.data.domain}}
-              <i class="fas fa-hand-sparkles" title="{{localize "PF1.Domain"}}/{{localize "PF1.School"}}"></i>
+              <i class="fas fa-hand-sparkles spell-icon domain" title="{{localize "PF1.Domain"}}/{{localize "PF1.School"}}"></i>
               {{/if}}
             </div>
 
@@ -455,7 +455,7 @@
             {{else}}
             <a class="item-control item-toggle-data {{#if data.preparation.spontaneousPrepared}}enabled{{/if}}" data-name="data.preparation.spontaneousPrepared"
               title="{{#if data.preparation.spontaneousPrepared}}{{localize "PF1.Prepared"}}{{else}}{{localize "PF1.Unprepared"}}{{/if}}">
-              <i class="fas fa-cog"></i>
+              <i class="fas fa-cog spell-icon prepared"></i>
             </a>
             {{/unless}}
             {{else}}

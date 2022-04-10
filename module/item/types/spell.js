@@ -505,6 +505,17 @@ export class ItemSpellPF extends ItemPF {
     );
   }
 
+  /**
+   * @returns true if the spell is prepared in any manner.
+   */
+  get isPrepared() {
+    return (
+      this.data.data.atWill ||
+      (this.isCharged && this.charges > 0) ||
+      (this.spellbook?.spontaneous && this.data.data.preparation.spontaneousPrepared)
+    );
+  }
+
   get fullDescription() {
     return super.fullDescription + this.data.data.shortDescription;
   }

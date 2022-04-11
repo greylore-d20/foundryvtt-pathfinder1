@@ -2155,16 +2155,6 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _prepareItems(data) {
-    // Set item tags
-    for (const [key, res] of Object.entries(getProperty(data, "data.resources"))) {
-      if (!res) continue;
-      const id = res.id;
-      if (!id) continue;
-      const item = this.document.items.get(id);
-      if (!item) continue;
-      item.data.tag = !item.data.data.useCustomTag ? key : item.data.data.tag;
-    }
-
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
       weapon: {

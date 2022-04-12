@@ -506,13 +506,14 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @returns true if the spell is prepared in any manner.
+   * @returns true if the spell is prepared to cast in any manner.
    */
-  get isPrepared() {
+  get canCast() {
+    if (this.data.data.atWill) return true;
+    const charges = this.charges; // Cache
     return (
-      this.data.data.atWill ||
-      (this.isCharged && this.charges > 0) ||
-      (this.spellbook?.spontaneous && this.data.data.preparation.spontaneousPrepared)
+      (this.isCharged && charges > 0) ||
+      (this.spellbook?.spontaneous && this.data.data.preparation.spontaneousPrepared && charges > 0)
     );
   }
 

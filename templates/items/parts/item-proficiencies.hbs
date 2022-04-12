@@ -1,0 +1,29 @@
+<div class="form-group {{data.armorProf.cssClass}}">
+  <label for="data.weaponProf">{{localize "PF1.TraitWeaponProf"}}</label>
+  <ul class="traits-list tag-list">
+    {{#each data.weaponProf.selected as |v k|}}
+      <li class="tag {{k}}">{{v}}</li>
+    {{/each}}
+  </ul>
+  <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
+</div>
+
+<div class="form-group {{data.armorProf.cssClass}}">
+  <label for="data.armorProf">{{localize "PF1.TraitArmorProf"}}</label>
+  <ul class="traits-list tag-list">
+    {{#each data.armorProf.selected as |v k|}}
+      <li class="tag {{k}}">{{v}}</li>
+    {{/each}}
+  </ul>
+  <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
+</div>
+
+<div class="form-group {{data.languages.cssClass}}">
+  <label for="data.languages">{{localize "PF1.Languages"}}</label>
+  <ul class="traits-list tag-list">
+    {{#each data.languages.selected as |v k|}}
+      <li class="tag {{k}}">{{v}}</li>
+    {{/each}}
+  </ul>
+  <a class="trait-selector" data-options="languages"><i class="fas fa-edit"></i></a>
+</div>

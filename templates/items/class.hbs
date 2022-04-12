@@ -102,25 +102,7 @@
       </div>
 
       {{!-- Proficiencies --}}
-      <div class="form-group {{data.armorProf.cssClass}}">
-        <label for="data.weaponProf">{{localize "PF1.TraitWeaponProf"}}</label>
-        <ul class="traits-list tag-list">
-          {{#each data.weaponProf.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-          {{/each}}
-        </ul>
-        <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
-      </div>
-
-      <div class="form-group {{data.armorProf.cssClass}}">
-        <label for="data.armorProf">{{localize "PF1.TraitArmorProf"}}</label>
-        <ul class="traits-list tag-list">
-          {{#each data.armorProf.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-          {{/each}}
-        </ul>
-        <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
-      </div>
+      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       <h4 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h4>
 

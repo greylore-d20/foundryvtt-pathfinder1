@@ -40,7 +40,7 @@ export class ActorTraitSelector extends DocumentSheet {
    */
   getData() {
     // Get current values
-    const attr = getProperty(this.object.data, this.attribute);
+    const attr = getProperty(this.object.data, this.attribute) ?? { value: [], custom: "" };
 
     // Populate choices
     const choices = duplicate(this.options.choices);

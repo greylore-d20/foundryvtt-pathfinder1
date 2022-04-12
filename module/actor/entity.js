@@ -969,67 +969,72 @@ export class ActorPF extends ActorBasePF {
     });
   }
 
+  /**
+   * Prepare armor, weapon, and language proficiencies.
+   */
   prepareProficiencies() {
     const actorData = this.data.data;
-    // Handle armor and weapon proficiencies for PCs
-    // NPCs are considered proficient with their armor
-    if (this.type === "character") {
-      // Collect proficiencies from items, add them to actor's proficiency totals
-      for (const prof of ["armorProf", "weaponProf"]) {
-        // Custom proficiency baseline from actor
-        const customProficiencies =
-          actorData.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
+    // Collect proficiencies from items, add them to actor's proficiency totals
+    const proficiencies = {
+      armorProf: CONFIG.PF1.armorProficiencies,
+      weaponProf: CONFIG.PF1.weaponProficiencies,
+      languages: CONFIG.PF1.languages,
+    };
+    for (const [prof, translations] of Object.entries(proficiencies)) {
+      // Custom proficiency baseline from actor
+      const customProficiencies =
+        actorData.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
 
-        // Iterate over all items to create one array of non-custom proficiencies
-        const proficiencies = this.items.reduce(
-          (profs, item) => {
-            // Check only items able to grant proficiencies
-            if (hasProperty(item.data, `data.${prof}`)) {
-              // Get existing sourceInfo for item with this name, create sourceInfo if none is found
-              // Remember whether sourceInfo can be modified or has to be pushed at the end
-              let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
-                (o) => o.name === item.name
-              );
-              const hasInfo = !!sInfo;
-              if (!sInfo) sInfo = { name: item.name, value: [] };
-              else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
+      // Iterate over all items to create one array of non-custom proficiencies
+      const proficiencies = this.items.reduce(
+        (profs, item) => {
+          // Check only items able to grant proficiencies
+          if (hasProperty(item.data, `data.${prof}`)) {
+            // Get existing sourceInfo for item with this name, create sourceInfo if none is found
+            // Remember whether sourceInfo can be modified or has to be pushed at the end
+            let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
+              (o) => o.name === item.name
+            );
+            const hasInfo = !!sInfo;
+            if (!sInfo) sInfo = { name: item.name, value: [] };
+            else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
-              // Regular proficiencies
-              for (const proficiency of item.data.data[prof].value) {
-                // Add localized source info if item's info does not have this proficiency already
-                if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
-                // Add raw proficiency key
-                if (!profs.includes(proficiency)) profs.push(proficiency);
-              }
-
-              // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
-              const customProfs =
-                item.data.data[prof].custom
-                  ?.split(CONFIG.PF1.re.traitSeparator)
-                  .map((i) => i.trim())
-                  .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
-              // Add readable custom profs to sources and overall collection
-              sInfo.value.push(...customProfs);
-              customProficiencies.push(...customProfs);
-
-              if (sInfo.value.length > 0) {
-                // Dedupe if adding to existing sourceInfo
-                if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
-                // Transform arrays into presentable strings
-                sInfo.value = sInfo.value.join(", ");
-                // If sourceInfo was not a reference to existing info, push it now
-                if (!hasInfo) getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
-              }
+            // Regular proficiencies
+            for (const proficiency of item.data.data[prof].value) {
+              // Add localized source info if item's info does not have this proficiency already
+              if (!sInfo.value.includes(proficiency)) sInfo.value.push(translations[proficiency]);
+              // Add raw proficiency key
+              if (!profs.includes(proficiency)) profs.push(proficiency);
             }
-            return profs;
-          },
-          [...actorData.traits[prof].value] // Default proficiency baseline from actor
-        );
 
-        // Save collected proficiencies in actor's data
-        actorData.traits[prof].total = [...proficiencies];
-        actorData.traits[prof].customTotal = customProficiencies.join(";");
-      }
+            // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
+            const customProfs =
+              item.data.data[prof].custom
+                ?.split(CONFIG.PF1.re.traitSeparator)
+                .map((i) => i.trim())
+                .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+            // Add readable custom profs to sources and overall collection
+            sInfo.value.push(...customProfs);
+            customProficiencies.push(...customProfs);
+
+            if (sInfo.value.length > 0) {
+              // Dedupe if adding to existing sourceInfo
+              if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
+              // Transform arrays into presentable strings
+              sInfo.value = sInfo.value.join(", ");
+              // If sourceInfo was not a reference to existing info, push it now
+              if (!hasInfo) getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
+            }
+          }
+          return profs;
+        },
+        [...(actorData.traits[prof]?.value ?? [])] // Default proficiency baseline from actor
+      );
+
+      // Save collected proficiencies in actor's data
+      actorData.traits[prof] ??= {}; // In case the data structure is missing
+      actorData.traits[prof].total = [...proficiencies];
+      actorData.traits[prof].customTotal = customProficiencies.join(";");
     }
   }
 

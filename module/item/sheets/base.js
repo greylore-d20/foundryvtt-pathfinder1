@@ -380,10 +380,11 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Prepare proficiencies
+    // Prepare proficiencies & languages
     const profs = {
       armorProf: CONFIG.PF1.armorProficiencies,
       weaponProf: CONFIG.PF1.weaponProficiencies,
+      languages: CONFIG.PF1.languages,
     };
     for (const [t, choices] of Object.entries(profs)) {
       if (hasProperty(data.item.data.data, t)) {

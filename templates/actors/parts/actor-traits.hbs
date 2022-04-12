@@ -83,10 +83,16 @@
 
   <div class="form-group {{data.traits.languages.cssClass}}">
     <label for="data.traits.languages">{{localize "PF1.Languages"}}</label>
-    <ul class="traits-list tag-list">
+    <ul class="traits-list tooltip tag-list">
       {{#each data.traits.languages.selected as |v k|}}
-      <li class="tag {{k}}">{{v}}</li>
+        <li class="tag {{k}}">{{v}}</li>
       {{/each}}
+      {{#if sourceDetails.data.traits.languages.length}}
+        <div class="tooltipcontent">
+          {{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.data.traits.languages as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        </div>
+      {{/if}}
     </ul>
     <a class="trait-selector" data-options="languages"><i class="fas fa-edit"></i></a>
   </div>

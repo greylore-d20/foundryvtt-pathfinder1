@@ -1733,33 +1733,47 @@
     padding: 2px;
     border: 1px solid @colorTan;
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .attack,
+    .attack-header {
+      display: flex;
+      gap: 2px;
+
+      h3 {
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+      }
+
+      .name {
+        flex: 1;
+      }
+      .bonus {
+        flex: 0 0 64px;
+      }
+      .ammo {
+        flex: 0 0 120px;
+      }
+    }
 
     .attack {
-      margin-bottom: 2px;
       display: flex;
 
       &.disabled {
         opacity: 0.5;
       }
 
-      .name {
-        flex: 1;
-        margin-right: 2px;
-      }
-      .bonus {
-        flex: 0 0 64px;
-        margin-right: 2px;
-      }
-
       // Ammo select
       .ammo-select {
-        flex: 0 0 120px;
-        height: 26px;
         background: rgba(0, 0, 0, 0.05);
         border: 1px solid @colorTan;
         border-radius: 3px;
         text-overflow: ellipsis;
         width: 120px;
+        height: 26px;
 
         &.focus {
           box-shadow: 0 0 5px red;

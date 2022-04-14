@@ -3339,7 +3339,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   getRollData(options = { refresh: false }) {
-    let result = this.data.data;
+    let result;
 
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
@@ -3358,6 +3358,8 @@ export class ActorPF extends ActorBasePF {
           if (typeof obj === "object") delete obj[k3];
         }
       }
+    } else {
+      result = deepClone(this.data.data);
     }
 
     /* ----------------------------- */

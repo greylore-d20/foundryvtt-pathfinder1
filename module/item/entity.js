@@ -2145,7 +2145,7 @@ export class ItemPF extends ItemBasePF {
   getRollData() {
     const result = this.parent != null && this.parent.data ? this.parent.getRollData() : {};
 
-    result.item = this.data.data;
+    result.item = deepClone(this.data.data);
 
     // Add dictionary flag
     if (this.data.data.tag) {

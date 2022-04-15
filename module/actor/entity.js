@@ -2374,8 +2374,10 @@ export class ActorPF extends ActorBasePF {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
-      if (game.user.isGM && canvas.scene) {
-        combat = await game.combats.documentClass.create({ scene: canvas.scene.id, active: true });
+      if (game.user.isGM) {
+        const combatData = { active: true };
+        if (canvas?.scene?.id) combatData.scene = canvas.scene.id;
+        combat = await game.combats.documentClass.create(combatData);
       } else {
         ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
         return null;
@@ -2387,9 +2389,13 @@ export class ActorPF extends ActorBasePF {
       const tokens = this.isToken ? [this.token] : this.getActiveTokens();
       const createData = tokens.reduce((arr, t) => {
         if (t.inCombat) return arr;
-        arr.push({ tokenId: t.id, hidden: t.data.hidden });
+        arr.push({ tokenId: t.id, actorId: this.id, hidden: t.data.hidden });
         return arr;
       }, []);
+      // Add special combatant if there are no tokens
+      if (tokens.length == 0) {
+        createData.push({ actorId: this.id });
+      }
       await combat.createEmbeddedDocuments("Combatant", createData);
     }
 

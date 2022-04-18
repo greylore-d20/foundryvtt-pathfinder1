@@ -576,7 +576,8 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
   return new Promise((resolve) => {
     const dialogData = {
       title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
-      content: content,
+      content,
+      itemData,
       buttons: {
         potion: {
           icon: '<i class="fas fa-prescription-bottle"></i>',

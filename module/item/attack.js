@@ -804,7 +804,7 @@ export const getMessageData = async function (shared) {
   // Add spell info
   if (this.type === "spell" && this.parent != null) {
     // Spell failure
-    if (this.parent.spellFailure > 0) {
+    if (this.parent.spellFailure > 0 && this.data.data.components.somatic) {
       const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
         const roll = RollPF.safeRoll("1d100");

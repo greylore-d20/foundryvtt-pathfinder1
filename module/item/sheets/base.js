@@ -151,6 +151,7 @@ export class ItemSheetPF extends ItemSheet {
         name: "data.quantity",
         label: game.i18n.localize("PF1.Quantity"),
         value: data.item.data.data.quantity,
+        decimals: 0,
         id: "data-quantity",
       });
 
@@ -161,6 +162,7 @@ export class ItemSheetPF extends ItemSheet {
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
         value: data.item.data.data.weightConverted,
+        decimals: 2,
         id: "data-baseWeight",
       });
 
@@ -173,6 +175,7 @@ export class ItemSheetPF extends ItemSheet {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: this.item.getValue({ sellValue: 1 }),
+            decimals: 2,
             id: "data-price",
           },
           {
@@ -181,6 +184,7 @@ export class ItemSheetPF extends ItemSheet {
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: this.item.getValue({ sellValue: 1, forceUnidentified: true }),
+            decimals: 2,
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -192,6 +196,7 @@ export class ItemSheetPF extends ItemSheet {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: this.item.getValue({ sellValue: 1 }),
+            decimals: 2,
             id: "data-price",
           });
         } else {
@@ -201,6 +206,7 @@ export class ItemSheetPF extends ItemSheet {
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: this.item.getValue({ sellValue: 1 }),
+            decimals: 2,
             id: "data-price",
           });
         }
@@ -225,6 +231,7 @@ export class ItemSheetPF extends ItemSheet {
         isNumber: true,
         label: game.i18n.localize("PF1.Hardness"),
         name: "data.hardness",
+        decimals: 0,
         value: data.item.data.data.hardness,
       });
 

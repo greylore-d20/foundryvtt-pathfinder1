@@ -1,6 +1,26 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemEquipmentPF extends ItemPF {
+  async _preUpdate(update, context) {
+    // Set equipment subtype and slot
+    const type = getProperty(update, "data.equipmentType");
+    if (type !== undefined && type !== this.data.data.equipmentType) {
+      // Set subtype
+      const subtype = getProperty(update, "data.equipmentSubtype") ?? this.data.data.equipmentSubtype ?? "";
+      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
+      if (!subtype || !keys.includes(subtype)) {
+        setProperty(update, "data.equipmentSubtype", keys[0]);
+      }
+
+      // Set slot
+      const slot = getProperty(update, "data.slot") ?? this.data.data.slot ?? "";
+      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
+      if (!slot || !keys.includes(slot)) {
+        setProperty(update, "data.slot", keys[0]);
+      }
+    }
+  }
+
   get subType() {
     return this.data.data.equipmentType;
   }

@@ -761,15 +761,7 @@ export class ItemPF extends ItemBasePF {
   async _preUpdate(update, options, userId) {
     await super._preUpdate(update, options, userId);
 
-    // Reset loot extra type when loot subtype is changed
-    if (
-      this.type === "loot" &&
-      update.data?.subType !== undefined &&
-      update.data?.subType !== this.data.data.subType &&
-      update.data?.extraType === undefined
-    ) {
-      setProperty(update, "data.extraType", "");
-    }
+    // Nothing here
   }
 
   async update(data, context = {}) {
@@ -778,16 +770,6 @@ export class ItemPF extends ItemBasePF {
       return super.update(data, context);
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
-
-    // Update class
-    {
-      const newLevel = data["data.level"];
-      if (this.type === "class" && newLevel !== undefined) {
-        const prevLevel = this.data.data.level ?? newLevel;
-        if (this._prevLevel !== undefined) delete this._prevLevel;
-        await this._onLevelChange(prevLevel, newLevel);
-      }
-    }
 
     // Make sure changes remains an array
     if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
@@ -959,6 +941,12 @@ export class ItemPF extends ItemBasePF {
 
       linkData(srcData, data, "data.weight", baseWeight + contentsWeight);
     }
+
+    // Update weight according metric system (lb vs kg)
+    if (data["data.weightConverted"] != null) {
+      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
+    }
+
     // Update price from base price
     if (data["data.basePrice"] != null) {
       linkData(srcData, data, "data.price", getProperty(srcData, "data.basePrice") || 0);
@@ -970,42 +958,6 @@ export class ItemPF extends ItemBasePF {
     // Update name
     if (data["data.identifiedName"]) linkData(srcData, data, "name", data["data.identifiedName"]);
     else if (data["name"]) linkData(srcData, data, "data.identifiedName", data["name"]);
-
-    // Update weight according metric system (lb vs kg)
-    if (data["data.weightConverted"] != null) {
-      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
-    }
-
-    // Set weapon subtype
-    if (data["data.weaponType"] != null && data["data.weaponType"] !== getProperty(this.data, "data.weaponType")) {
-      const type = data["data.weaponType"];
-      const subtype = data["data.weaponSubtype"] || getProperty(this.data, "data.weaponSubtype") || "";
-      const keys = Object.keys(CONFIG.PF1.weaponTypes[type]).filter((o) => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        linkData(srcData, data, "data.weaponSubtype", keys[0]);
-      }
-    }
-
-    // Set equipment subtype and slot
-    if (
-      data["data.equipmentType"] != null &&
-      data["data.equipmentType"] !== getProperty(this.data, "data.equipmentType")
-    ) {
-      // Set subtype
-      const type = data["data.equipmentType"];
-      const subtype = data["data.equipmentSubtype"] || getProperty(this.data, "data.equipmentSubtype") || "";
-      let keys = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
-      if (!subtype || !keys.includes(subtype)) {
-        linkData(srcData, data, "data.equipmentSubtype", keys[0]);
-      }
-
-      // Set slot
-      const slot = data["data.slot"] || getProperty(this.data, "data.slot") || "";
-      keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
-      if (!slot || !keys.includes(slot)) {
-        linkData(srcData, data, "data.slot", keys[0]);
-      }
-    }
 
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {

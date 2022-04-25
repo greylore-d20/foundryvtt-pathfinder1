@@ -1,6 +1,29 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemClassPF extends ItemPF {
+  async _preUpdate(update, context, userId) {
+    await super._preUpdate(update, context, userId);
+
+    // Set level marker
+    if (hasProperty(update, "data.level")) {
+      this._prevLevel = this.data.data.level;
+    }
+  }
+
+  async update(data, context = {}) {
+    await super.update(data, context);
+
+    // Update class
+    const newLevel = getProperty(data, "data.level");
+    if (newLevel !== undefined && this.parent) {
+      const prevLevel = this._prevLevel;
+      if (prevLevel !== undefined) {
+        delete this._prevLevel;
+        await this._onLevelChange(prevLevel, newLevel);
+      }
+    }
+  }
+
   async delete(context = {}) {
     await this._onLevelChange(this.data.data.level, 0);
     return super.delete(context);

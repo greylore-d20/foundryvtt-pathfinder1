@@ -158,7 +158,7 @@ export class CombatPF extends Combat {
         }
 
         // Produce an initiative roll for the Combatant
-        const isHidden = c.token.hidden || c.hidden;
+        const isHidden = c.token?.hidden || c.hidden;
         if (isHidden) chatRollMode = messageOptions.rollMode ?? "gmroll";
         const roll = await RollPF.create(formula, rollData).evaluate();
         delete rollData.bonus;
@@ -186,13 +186,13 @@ export class CombatPF extends Combat {
             rollMode: chatRollMode,
             sound: CONFIG.sounds.dice,
             speaker: {
-              scene: canvas.scene.id,
+              scene: canvas.scene?.id,
               actor: c.actor ? c.actor.id : null,
-              token: c.token.id,
-              alias: c.token.name,
+              token: c.token?.id,
+              alias: c.token?.name,
             },
             flags: { pf1: { subject: { core: "init" } } },
-            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
+            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token?.name ?? c.actor.name),
             roll: roll,
             content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },

@@ -23,6 +23,7 @@ import {
 } from "./apply-changes.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
+import { Spellbook, SpellbookLevel, SpellRanges, SpellbookMode, SpellbookSlots } from "./components/spellbook.js";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -513,368 +514,395 @@ export class ActorPF extends ActorBasePF {
     );
   }
 
-  updateSpellbookInfo() {
-    const rollData = this.getRollData({ refresh: true });
+  /**
+   * Update specific spellbook.
+   *
+   * @param {string} bookKey
+   * @param {Object} rollData
+   * @param {Object} cache Pre-calculated data for re-use from _generateSpellbookCache
+   */
+  _updateSpellBook(bookKey, rollData, cache) {
+    const actorData = this.data.data;
+    const book = actorData.attributes.spells.spellbooks[bookKey];
+    if (!book) {
+      console.error(`Spellbook data not found for "${bookKey} on actor`, this);
+      return;
+    }
 
-    // Set spellbook info
-    for (const [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
-      if (!spellbook) {
-        console.error(`Spellbook data not found for "${spellbookKey} on actor`, this);
-        continue;
+    rollData ??= this.getRollData({ refresh: true });
+    cache ??= this._generateSpellbookCache();
+
+    const bookInfo = cache.books[bookKey];
+
+    const spellbookAbility = actorData.abilities[book.ability];
+
+    // Add spell slots based on ability bonus slot formula
+    const spellSlotAbilityScoreBonus = RollPF.safeRoll(book.spellSlotAbilityBonusFormula || "0", rollData).total,
+      spellSlotAbilityScore = (spellbookAbility?.total ?? 10) + spellSlotAbilityScoreBonus,
+      spellSlotAbilityMod = getAbilityModifier(spellSlotAbilityScore);
+
+    // Set CL
+    let clTotal = 0;
+    {
+      const key = `data.attributes.spells.spellbooks.${bookKey}.cl.total`;
+      const formula = book.cl.formula || "0";
+      let total = 0;
+
+      // Add NPC base
+      if (this.data.type === "npc") {
+        const value = book.cl.base || 0;
+        total += value;
+        clTotal += value;
+        getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
+      }
+      // Add HD
+      if (book.class === "_hd") {
+        const value = actorData.attributes.hd.total;
+        total += value;
+        clTotal += value;
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.HitDie"), value);
+      }
+      // Add class levels
+      else if (book.class && rollData.classes[book.class]) {
+        const value = rollData.classes[book.class].level;
+        total += value;
+        clTotal += value;
+
+        setSourceInfoByName(this.sourceInfo, key, rollData.classes[book.class].name, value);
       }
 
-      const spellbookAbility = this.data.data.abilities[spellbook.ability];
-      let spellbookAbilityScore = spellbookAbility?.total ?? 10;
+      // set auto spell level calculation offset
+      if (book.autoSpellLevelCalculation) {
+        const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
+        const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+        const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+        book.cl.autoSpellLevelTotal = autoTotal;
 
-      // Add spell slots based on ability bonus slot formula
-      {
-        const formula = spellbook.spellSlotAbilityBonusFormula || "0";
-        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
-      }
-
-      const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
-
-      // Set CL
-      let clTotal = 0;
-      {
-        const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
-        const formula = spellbook.cl.formula || "0";
-        let total = 0;
-
-        // Add NPC base
-        if (this.data.type === "npc") {
-          const value = spellbook.cl.base || 0;
-          total += value;
-          clTotal += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
-        }
-        // Add HD
-        if (spellbook.class === "_hd") {
-          const value = this.data.data.attributes.hd.total;
-          total += value;
-          clTotal += value;
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.HitDie"), value);
-        }
-        // Add class levels
-        else if (spellbook.class && rollData.classes[spellbook.class]) {
-          const value = rollData.classes[spellbook.class].level;
-          total += value;
-          clTotal += value;
-
-          setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
-        }
-
-        // set auto spell level calculation offset
-        if (spellbook.autoSpellLevelCalculation) {
-          const autoFormula = spellbook.cl.autoSpellLevelCalculationFormula || "0";
-          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
-          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
-          spellbook.cl.autoSpellLevelTotal = autoTotal;
-
-          clTotal += autoBonus;
-          if (autoBonus !== 0) {
-            setSourceInfoByName(
-              this.sourceInfo,
-              key,
-              game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
-              autoBonus
-            );
-          }
-        }
-
-        // Add from bonus formula
-        const clBonus = RollPF.safeRoll(formula, rollData).total;
-        clTotal += clBonus;
-        if (clBonus > 0) {
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
-        } else if (clBonus < 0) {
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
-        }
-
-        if (rollData.attributes.woundThresholds.penalty != null) {
-          // Subtract Wound Thresholds penalty. Can't reduce below 1.
-          if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
-            clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
-            setSourceInfoByName(
-              this.sourceInfo,
-              key,
-              game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
-              -rollData.attributes.woundThresholds.penalty
-            );
-          }
-        }
-
-        // Subtract energy drain
-        if (rollData.attributes.energyDrain) {
-          clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
+        clTotal += autoBonus;
+        if (autoBonus !== 0) {
           setSourceInfoByName(
             this.sourceInfo,
             key,
-            game.i18n.localize("PF1.CondTypeEnergyDrain"),
-            -Math.abs(rollData.attributes.energyDrain),
-            false
+            game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
+            autoBonus
           );
         }
-
-        setProperty(this.data, key, clTotal);
       }
 
-      // Set concentration bonus
-      {
-        // Temp fix for old actors that fail migration
-        {
-          const v = this.data.data.attributes.spells.spellbooks[spellbookKey].concentration;
-          if (Number.isFinite(v)) this.data.data.attributes.spells.spellbooks[spellbookKey].concentration = {};
+      // Add from bonus formula
+      const clBonus = RollPF.safeRoll(formula, rollData).total;
+      clTotal += clBonus;
+      if (clBonus > 0) {
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
+      } else if (clBonus < 0) {
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
+      }
+
+      if (rollData.attributes.woundThresholds.penalty != null) {
+        // Subtract Wound Thresholds penalty. Can't reduce below 1.
+        if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
+          clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
+          setSourceInfoByName(
+            this.sourceInfo,
+            key,
+            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+            -rollData.attributes.woundThresholds.penalty
+          );
         }
-
-        const concFormula = this.data.data.attributes.spells.spellbooks[spellbookKey].concentrationFormula;
-        let formulaRoll = 0;
-        if (concFormula.length) formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
-
-        const concentration = clTotal + spellbookAbilityMod + formulaRoll - rollData.attributes.energyDrain;
-        this.data.data.attributes.spells.spellbooks[spellbookKey].concentration = {
-          total: concentration,
-        };
       }
 
-      const getAbilityBonus = (a) =>
-        a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
-      // Spell slots
-      {
-        const useAuto = spellbook.autoSpellLevelCalculation;
-        if (useAuto) {
-          let spellPrepMode = spellbook.spellPreparationMode;
-          if (!spellPrepMode) {
-            spellPrepMode = "spontaneous";
-            spellbook.spellPreparationMode = spellPrepMode;
-          }
+      // Subtract energy drain
+      if (rollData.attributes.energyDrain) {
+        clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
+        setSourceInfoByName(
+          this.sourceInfo,
+          key,
+          game.i18n.localize("PF1.CondTypeEnergyDrain"),
+          -Math.abs(rollData.attributes.energyDrain),
+          false
+        );
+      }
 
-          // turn off spell points
-          spellbook.spellPoints.useSystem = false;
+      setProperty(this.data, key, clTotal);
+    }
 
-          // set base "spontaneous" based on spell prep mode
-          if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
-            spellbook.spontaneous = true;
-          } else {
-            spellbook.spontaneous = false;
-          }
+    // Set concentration bonus
+    {
+      // Temp fix for old actors that fail migration
+      if (Number.isFinite(book.concentration)) book.concentration = {};
+      const concFormula = book.concentrationFormula;
+      const formulaRoll = concFormula.length ? RollPF.safeRoll(concFormula, rollData).total : 0;
+      const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;
+      const concentration = clTotal + classAbilityMod + formulaRoll - rollData.attributes.energyDrain;
+      book.concentration = { total: concentration };
+    }
 
-          let casterType = spellbook.casterType;
-          if (!casterType || (spellPrepMode === "hybrid" && casterType !== "high")) {
-            casterType = "high";
-            spellbook.casterType = casterType;
-          }
-          if (spellPrepMode === "prestige" && casterType !== "low") {
-            casterType = "low";
-            spellbook.casterType = casterType;
-          }
+    const getAbilityBonus = (a) => (a !== 0 ? ActorPF.getSpellSlotIncrease(spellSlotAbilityMod, a) : 0);
 
-          const castsForLevels =
-            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
-              casterType
-            ];
-          let classLevel = Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20);
+    const mode = new SpellbookMode(book);
+    const useSpellPoints = book.spellPoints.useSystem === true;
 
-          // Protect against invalid class level bricking actors
-          if (!Number.isSafeInteger(classLevel)) {
-            const msg = `Actor ${this.id} has invalid caster class level.`;
-            console.error(msg, classLevel);
-            ui.notifications?.error(msg);
-            classLevel = Math.floor(classLevel);
-          }
+    // Spell slots
+    const useAuto = book.autoSpellLevelCalculation;
+    if (useAuto) {
+      // turn off spell points
+      book.spellPoints.useSystem = false;
 
-          rollData.ablMod = spellbookAbilityMod;
+      // set base "spontaneous" based on spell prep mode
+      book.spontaneous = mode.isSemiSpontaneous;
 
-          const allLevelModFormula =
-            spellbook[spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
-          const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+      let casterType = book.casterType;
+      if (!casterType || (mode.isHybrid && casterType !== "high")) {
+        book.casterType = casterType = "high";
+      }
+      if (mode.isPrestige && casterType !== "low") {
+        book.casterType = casterType = "low";
+      }
 
-          for (let a = 0; a < 10; a++) {
-            const spellLevel = spellbook.spells[`spell${a}`];
-            // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
-            const spellsForLevel =
-              a === 0 && spellbook.spontaneous
-                ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
-                : castsForLevels[classLevel - 1][a];
-            spellLevel.base = spellsForLevel;
+      const castsForLevels =
+        CONFIG.PF1.casterProgression[book.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
+      let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
 
-            const offsetFormula =
-              spellLevel[spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
+      // Protect against invalid class level bricking actors
+      if (!Number.isSafeInteger(classLevel)) {
+        const msg = `Actor ${this.id} has invalid caster class level.`;
+        console.error(msg, classLevel);
+        ui.notifications?.error(msg);
+        classLevel = Math.floor(classLevel);
+      }
 
-            const max =
-              typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
-                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
-                : null;
+      rollData.ablMod = spellSlotAbilityMod;
 
-            spellLevel.max = max;
-            if (!Number.isFinite(spellLevel.value)) spellLevel.value = max;
-          }
+      const allLevelModFormula =
+        book[book.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
+      const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+
+      for (let level = 0; level < 10; level++) {
+        const levelData = book.spells[`spell${level}`];
+        // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
+        const spellsForLevel =
+          level === 0 && book.spontaneous
+            ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
+            : castsForLevels[classLevel - 1][level];
+        levelData.base = spellsForLevel;
+
+        const offsetFormula = levelData[book.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
+
+        const max =
+          typeof spellsForLevel === "number" || (level === 0 && book.hasCantrips)
+            ? spellsForLevel + getAbilityBonus(level) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
+            : null;
+
+        levelData.max = max;
+        if (!Number.isFinite(levelData.value)) levelData.value = max;
+      }
+    } else {
+      for (let level = 0; level < 10; level++) {
+        const spellLevel = book.spells[`spell${level}`];
+        let base = parseInt(spellLevel.base);
+        if (Number.isNaN(base)) {
+          spellLevel.base = null;
+          spellLevel.max = 0;
+        } else if (book.autoSpellLevels) {
+          base += getAbilityBonus(level);
+          spellLevel.max = base;
         } else {
-          for (let a = 0; a < 10; a++) {
-            const spellLevel = spellbook.spells[`spell${a}`];
-            let base = parseInt(spellLevel.base);
-            if (Number.isNaN(base)) {
-              spellLevel.base = null;
-              spellLevel.max = 0;
-            } else if (spellbook.autoSpellLevels) {
-              base += getAbilityBonus(a);
-              spellLevel.max = base;
-            } else {
-              spellLevel.max = base;
-            }
-
-            const max = spellLevel.max;
-            const oldval = spellLevel.value;
-            if (!Number.isFinite(oldval)) spellLevel.value = max;
-          }
+          spellLevel.max = base;
         }
+
+        const max = spellLevel.max;
+        const oldval = spellLevel.value;
+        if (!Number.isFinite(oldval)) spellLevel.value = max;
+      }
+    }
+
+    // Set spontaneous spell slots to something sane
+    for (let a = 0; a < 10; a++) {
+      const spellLevel = book.spells[`spell${a}`];
+      const current = spellLevel.value;
+      spellLevel.value = current || 0;
+    }
+
+    // Update spellbook slots
+    {
+      const slots = {};
+      for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
+        slots[spellLevel] = new SpellbookSlots({
+          value: book.spells[`spell${spellLevel}`].max,
+          domain: book.domainSlotValue,
+        });
       }
 
-      // Set spontaneous spell slots to something sane
-      {
-        for (let a = 0; a < 10; a++) {
-          const spellLevel = spellbook.spells[`spell${a}`];
-          const current = spellLevel.value;
-          spellLevel.value = current || 0;
-        }
-      }
-
-      // Update spellbook slots
-      {
-        const slots = {};
-        for (let a = 0; a < 10; a++) {
-          slots[a] = {
-            value: spellbook.spells[`spell${a}`].max,
-            domainSlots: spellbook.domainSlotValue,
-          };
-        }
-
-        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
-        if (!spellbook.spontaneous) {
-          for (const i of spells) {
-            const isDomain = i.data.data.domain === true;
-            const a = i.data.data.level;
-            // Basic sanity check
-            if (Math.clamped(a, 0, 9) !== a) {
-              console.error("Spell with impossible spell level:", i);
-              continue;
-            }
-            let uses = slots[a].value;
-            if (Number.isFinite(i.maxCharges)) {
-              const slotCost = i.data.data.slotCost ?? 1;
-              const dSlots = slots[a].domainSlots;
+      // Slot usage
+      if (!book.spontaneous) {
+        for (let level = 0; level < 10; level++) {
+          const levelSpells = bookInfo.level[level]?.spells ?? [];
+          const lvlSlots = slots[level];
+          for (const spell of levelSpells) {
+            if (Number.isFinite(spell.maxCharges)) {
+              const slotCost = spell.data.data.slotCost ?? 1;
               const subtract = { domain: 0, uses: 0 };
-              if (isDomain) {
-                subtract.domain = Math.min(i.maxCharges, dSlots);
-                subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
+              if (spell.data.data.domain === true) {
+                subtract.domain = Math.min(spell.maxCharges, lvlSlots.domain);
+                subtract.uses = (spell.maxCharges - subtract.domain) * slotCost;
               } else {
-                subtract.uses = i.maxCharges * slotCost;
+                subtract.uses = spell.maxCharges * slotCost;
               }
-              slots[a].domainSlots -= subtract.domain;
-              uses -= subtract.uses;
+              lvlSlots.domain -= subtract.domain;
+              lvlSlots.value -= subtract.uses;
             }
-            slots[a].value = uses;
-            spellbook.spells[`spell${a}`].value = uses;
           }
+          book.spells[`spell${level}`].value = lvlSlots.value;
         }
+      }
 
-        // Spells available hint text if auto spell levels is enabled
-        {
-          const useAuto = spellbook.autoSpellLevelCalculation;
-          if (useAuto) {
-            const spellPrepMode = spellbook.spellPreparationMode;
-            const casterType = spellbook.casterType || "high";
-            const classLevel = Math.floor(Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20));
+      // Spells available hint text if auto spell levels is enabled
+      const useAuto = book.autoSpellLevelCalculation;
+      if (useAuto) {
+        const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
 
-            const spellbookAbilityScore = spellbookAbility?.total;
+        const allLevelModFormula = book.preparedAllOffsetFormula || "0";
+        const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
-            const allLevelModFormula = spellbook.preparedAllOffsetFormula || "0";
-            const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+        const casterType = book.casterType || "high";
+        const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
 
-            for (let a = 0; a < 10; a++) {
-              const spellLevel = spellbook.spells[`spell${a}`];
-              if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
-                const message = game.i18n.localize("PF1.SpellScoreTooLow");
-                spellLevel.spellMessage = message;
-                continue;
-              }
+        for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
+          const spellLevelData = book.spells[`spell${spellLevel}`];
+          if (maxLevelByAblScore < spellLevel) {
+            spellLevelData.lowAbilityScore = true;
+            continue;
+          }
 
-              let remaining;
-              if (spellPrepMode === "prepared") {
-                // for prepared casters, just use the 'value' calculated above
-                remaining = spellLevel.value;
-              } else {
-                // spontaneous or hybrid
-                // if not prepared then base off of casts per day
-                let available =
-                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
-                available += allLevelMod;
+          spellLevelData.known = { unused: 0, max: 0 };
+          spellLevelData.preparation = { unused: 0, max: 0 };
 
-                const formula = spellLevel.preparedOffsetFormula || "0";
-                available += RollPF.safeTotal(formula, rollData);
+          let remaining;
+          if (mode.isPrepared) {
+            // for prepared casters, just use the 'value' calculated above
+            remaining = spellLevelData.value;
+            spellLevelData.preparation.max = spellLevelData.max;
+          } else {
+            // spontaneous or hybrid
+            // if not prepared then base off of casts per day
+            let available =
+              CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel];
+            available += allLevelMod;
 
-                let dSlots = slots[a].domainSlots;
-                const used = spells.reduce((acc, i) => {
-                  const { level, spellbook, preparation, atWill, domain } = i.data.data;
-                  if (level === a && spellbook === spellbookKey && !atWill && preparation.spontaneousPrepared) {
-                    if (domain && dSlots > 0) --dSlots;
-                    else ++acc;
-                  }
-                  return acc;
-                }, 0);
+            const formula = spellLevelData.preparedOffsetFormula || "0";
+            available += RollPF.safeTotal(formula, rollData);
 
-                remaining = available - used;
-              }
+            // Leave record of max known
+            spellLevelData.known.max = available;
 
-              if (!remaining) {
-                spellLevel.spellMessage = "";
-                continue;
-              }
-
-              let remainingMessage = "";
-              if (remaining < 0) {
-                remainingMessage = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
-              } else if (remaining > 0) {
-                if (spellPrepMode === "spontaneous") {
-                  remainingMessage =
-                    remaining === 1
-                      ? game.i18n.localize("PF1.LearnMoreSpell")
-                      : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
-                } else {
-                  // hybrid or prepared
-                  remainingMessage =
-                    remaining === 1
-                      ? game.i18n.localize("PF1.PrepareMoreSpell")
-                      : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
+            // Count spell slots used
+            let dSlots = slots[spellLevel].domain;
+            const used =
+              bookInfo.level[spellLevel]?.spells.reduce((acc, i) => {
+                const { preparation, atWill, domain } = i.data.data;
+                if (!atWill && preparation.spontaneousPrepared) {
+                  if (domain && dSlots > 0) --dSlots;
+                  else ++acc;
                 }
-              }
+                return acc;
+              }, 0) ?? 0;
+            slots[spellLevel].domainUnused = dSlots;
+            slots[spellLevel].used = used;
 
-              if (remainingMessage) {
-                spellLevel.spellMessage = remainingMessage;
-              }
+            remaining = available - used;
+          }
+
+          if (!remaining) {
+            spellLevelData.spellMessage = "";
+            continue;
+          }
+
+          let spellRemainingMsg = "";
+
+          if (remaining < 0) {
+            spellRemainingMsg = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
+            if (mode.isSpontaneous) spellLevelData.unusedKnown = remaining;
+            else spellLevelData.preparation.unused = remaining;
+          } else if (remaining > 0) {
+            if (mode.isSpontaneous) {
+              spellRemainingMsg =
+                remaining === 1
+                  ? game.i18n.localize("PF1.LearnMoreSpell")
+                  : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
+              spellLevelData.known.unused = remaining;
+            } else {
+              // hybrid or prepared
+              spellRemainingMsg =
+                remaining === 1
+                  ? game.i18n.localize("PF1.PrepareMoreSpell")
+                  : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
+              spellLevelData.preparation.unused = remaining;
             }
           }
+
+          spellLevelData.spellMessage = spellRemainingMsg;
         }
       }
+    }
 
-      // Spell points
-      {
-        const formula = spellbook.spellPoints.maxFormula || "0";
-        rollData.cl = spellbook.cl.total;
-        rollData.ablMod = spellbookAbilityMod;
-        const spellClass = spellbook.class ?? "";
-        rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
-        const roll = RollPF.safeRoll(formula, rollData);
-        spellbook.spellPoints.max = roll.total;
-      }
+    // Spell points
+    if (useSpellPoints) {
+      const formula = book.spellPoints.maxFormula || "0";
+      rollData.cl = book.cl.total;
+      rollData.ablMod = spellSlotAbilityMod;
+      const spellClass = book.class ?? "";
+      rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
+      const roll = RollPF.safeRoll(formula, rollData);
+      book.spellPoints.max = roll.total;
+    } else {
+      book.spellPoints.max = 0;
+    }
 
-      // Set spellbook range
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: calculateRange(null, "close", { cl }),
-        medium: calculateRange(null, "medium", { cl }),
-        long: calculateRange(null, "long", { cl }),
-      };
+    // Set spellbook ranges
+    book.range = new SpellRanges(book.cl.total);
+  }
+
+  /**
+   * Collect some basic spellbook info so it doesn't need to be gathered again for each spellbook.
+   */
+  _generateSpellbookCache() {
+    const bookKeys = Object.keys(this.data.data.attributes.spells.spellbooks);
+
+    const allSpells = this.items.filter((i) => i.type === "spell");
+
+    const cache = {
+      spells: allSpells,
+      books: {},
+    };
+
+    // Prepare spellbooks
+    bookKeys.forEach((bookKey) => {
+      cache.books[bookKey] ??= new Spellbook(bookKey, this);
+    });
+
+    // Spread out spells to books
+    allSpells.forEach((spell) => {
+      const bookKey = spell.data.data.spellbook;
+      if (!bookKeys.includes(bookKey)) return console.error("Spell has invalid book", spell);
+      cache.books[bookKey].addSpell(spell);
+    });
+
+    // Include the data in output as is
+    this._spellbookCache = cache;
+
+    return cache;
+  }
+
+  /**
+   * Update all spellbooks
+   */
+  updateSpellbookInfo() {
+    const rollData = this.getRollData({ refresh: true });
+    const cache = this._generateSpellbookCache();
+
+    // Set spellbook info
+    for (const bookKey of Object.keys(this.data.data.attributes.spells.spellbooks)) {
+      this._updateSpellBook(bookKey, rollData, cache);
     }
   }
 

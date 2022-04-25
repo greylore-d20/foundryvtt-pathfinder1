@@ -568,8 +568,10 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
 
   const getData = function (html) {
     const data = itemData;
-    data.sl = parseInt(html.find(`[name="sl"]`).val()) || 1;
+    data.sl = parseInt(html.find(`[name="sl"]`).val());
     data.cl = parseInt(html.find(`[name="cl"]`).val()) || 1;
+    // NaN check here to allow SL 0
+    if (Number.isNaN(data.sl)) data.sl = 1;
     return data;
   };
 

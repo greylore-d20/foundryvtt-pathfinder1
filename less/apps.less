@@ -92,6 +92,7 @@
     color: @colorTan;
   }
 
+  input[type="text"]:disabled,
   input[type="text"][disabled] {
     color: @colorTan;
   }
@@ -135,20 +136,27 @@
   input[type="number"] {
     &:hover,
     &:focus {
-      border: 1px solid #111;
-      box-shadow: 0 0 8px red;
+      &:not(:disabled),
+      &:not([disabled]) {
+        border: 1px solid #111;
+        box-shadow: 0 0 8px red;
+      }
     }
   }
 
   // Disabled Fields
-  input:disabled,
-  select:disabled,
-  textarea:disabled,
-  input:readonly {
-    color: @colorOlive;
-    &:hover,
-    &:focus {
-      box-shadow: none !important;
+  input,
+  select,
+  textarea,
+  input {
+    &:disabled,
+    &[disabled],
+    &:readonly {
+      color: @colorOlive;
+      &:hover,
+      &:focus {
+        box-shadow: none !important;
+      }
     }
   }
 

@@ -4,15 +4,24 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
-   * Return linked item or falsey
+   * Linked item.
    *
-   * @type {ItemPF}
+   * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.
    */
   get itemSource() {
     const itemId = this.data.flags?.pf1?.metadata?.item;
-    const actor = this.constructor.getSpeakerActor(this.data.speaker);
-    if (!itemId || !actor) return false;
-    return actor.items.get(itemId);
+    if (itemId) {
+      const actor = this.constructor.getSpeakerActor(this.data.speaker);
+      return actor?.items.get(itemId);
+    }
+    return null;
+  }
+
+  /**
+   * @type {boolean} True if item source is defined, regardless if that item source still exists.
+   */
+  get hasItemSource() {
+    return this.data.flags?.pf1?.metadata?.item !== undefined;
   }
 
   /**

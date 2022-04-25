@@ -47,7 +47,7 @@ export class ActorTraitSelector extends DocumentSheet {
     for (const [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,
-        chosen: attr.value.includes(k),
+        chosen: attr.value?.includes(k),
       };
     }
 

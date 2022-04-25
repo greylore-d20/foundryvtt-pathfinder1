@@ -206,6 +206,8 @@ export class ActorSheetPF extends ActorSheet {
     const rollData = this.document.getRollData();
     data.rollData = rollData;
 
+    data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
+
     // Show whether the item has currency
     data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);
     data.hasAltCurrency = Object.values(this.object.data.data.altCurrency).some((o) => o > 0);

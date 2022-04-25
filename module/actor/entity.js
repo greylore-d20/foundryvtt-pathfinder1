@@ -988,7 +988,7 @@ export class ActorPF extends ActorBasePF {
     const actorData = this.data.data;
     // Handle armor and weapon proficiencies for PCs
     // NPCs are considered proficient with their armor
-    if (this.type === "character") {
+    if (this.type === "character" || game.settings.get("pf1", "npcProficiencies")) {
       // Collect proficiencies from items, add them to actor's proficiency totals
       for (const prof of ["armorProf", "weaponProf"]) {
         // Custom proficiency baseline from actor
@@ -1038,10 +1038,11 @@ export class ActorPF extends ActorBasePF {
             }
             return profs;
           },
-          [...actorData.traits[prof].value] // Default proficiency baseline from actor
+          [...(actorData.traits[prof]?.value ?? [])] // Default proficiency baseline from actor
         );
 
         // Save collected proficiencies in actor's data
+        actorData.traits[prof] ??= {};
         actorData.traits[prof].total = [...proficiencies];
         actorData.traits[prof].customTotal = customProficiencies.join(";");
       }

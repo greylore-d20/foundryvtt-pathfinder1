@@ -586,6 +586,18 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Allow proficiencies on NPCs.
+   */
+  game.settings.register("pf1", "npcProficiencies", {
+    name: "SETTINGS.pf1NPCProficienciesN",
+    hint: "SETTINGS.pf1NPCProficienciesH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  /**
    * Disable targets for attack cards
    */
   game.settings.register("pf1", "disableAttackCardTargets", {

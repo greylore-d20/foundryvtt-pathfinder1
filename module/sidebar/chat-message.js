@@ -56,7 +56,7 @@ export const customRolls = function (message, speaker, rollData) {
     speaker = speaker ?? cMsg.getSpeaker();
     const actor = cMsg.getSpeakerActor(speaker);
     const scene = speaker.scene ? game.scenes.get(speaker.scene) : canvas.scene;
-    const tokenDocument = scene.tokens.get(speaker.token);
+    const tokenDocument = scene?.tokens.get(speaker.token);
     const tokenUuid = tokenDocument?.uuid;
 
     switch (type) {

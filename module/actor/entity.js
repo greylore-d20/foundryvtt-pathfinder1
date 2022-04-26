@@ -982,6 +982,13 @@ export class ActorPF extends ActorBasePF {
     // Prepare auxillary data
     this.prepareSpellbooks();
 
+    // Offset relative attributes
+    for (const k of this.constructor.relativeAttributes) {
+      const value = getProperty(this.data, `${k}.value`);
+      const max = getProperty(this.data, `${k}.max`);
+      setProperty(this.data, `${k}.value`, value + max);
+    }
+
     // Update tokens for resources
     const tokens = this.isToken ? [this.token] : this.getActiveTokens();
     tokens.forEach((t) => {

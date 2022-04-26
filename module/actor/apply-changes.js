@@ -141,7 +141,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
 
   switch (changeTarget) {
     case "mhp":
-      return ["data.attributes.hp.max", "data.attributes.hp.value"];
+      return "data.attributes.hp.max";
     case "wounds":
       return "data.attributes.wounds.max";
     case "vigor":

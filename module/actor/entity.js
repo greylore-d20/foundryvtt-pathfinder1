@@ -94,12 +94,6 @@ export class ActorPF extends ActorBasePF {
     if (this.containerItems === undefined) this.containerItems = [];
 
     /**
-     * @property {object} _prevAttributes
-     * A list of attributes to remember between updates.
-     */
-    if (this._prevAttributes === undefined) this._prevAttributes = null;
-
-    /**
      * @property {object} _states
      * Tracks various states which need to be tracked.
      */
@@ -369,8 +363,6 @@ export class ActorPF extends ActorBasePF {
 
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
-
-    this.doQueuedUpdates();
   }
 
   /**
@@ -995,6 +987,11 @@ export class ActorPF extends ActorBasePF {
         // Drop the harmless error
       }
     });
+
+    // Alter source HP, Wounds and Vigor to allow updates
+    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+      setProperty(this.data._source, `${k}.value`, getProperty(this.data, `${k}.value`));
+    }
   }
 
   /**
@@ -1119,9 +1116,6 @@ export class ActorPF extends ActorBasePF {
       const totalAtk = attributes.bab.total - attributes.acp.attackPenalty - (attributes.energyDrain ?? 0);
       attributes.attack.shared = totalAtk;
     }
-
-    // Refresh HP
-    this._applyPreviousAttributes();
 
     // Update wound threshold
     this.updateWoundThreshold();
@@ -1651,7 +1645,6 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async _preUpdate(update, options, userId) {
-    this._trackPreviousAttributes();
     await super._preUpdate(update, options, userId);
 
     if (!update.data) return; // No system updates.
@@ -1716,6 +1709,14 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    // Offset HP value
+    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+      const value = getProperty(update, `${k}.value`);
+      if (value == null) continue;
+      const max = getProperty(this.data, `${k}.max`);
+      setProperty(update, `${k}.value`, value - max);
+    }
+
     // Update experience
     this._updateExp(update);
   }
@@ -1744,47 +1745,12 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  async doQueuedUpdates() {
-    if (!this.testUserPermission(game.user, "OWNER")) return;
-    if (this._queuedUpdates == null) return;
-
-    const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
-    this._queuedUpdates = {};
-    if (!isObjectEmpty(diff)) {
-      await this.update(diff);
-    }
-  }
-
-  _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preCreateEmbeddedDocuments(...arguments);
-  }
-
   _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons({ render: false });
     }
-  }
-
-  _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preDeleteEmbeddedDocuments(...arguments);
-  }
-
-  _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preUpdateEmbeddedDocuments(...arguments);
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
@@ -3928,44 +3894,6 @@ export class ActorPF extends ActorBasePF {
 
     await this.updateEmbeddedDocuments("Item", itemUpdates);
     return this.update(updateData);
-  }
-
-  _trackPreviousAttributes() {
-    // Track HP, Wounds and Vigor
-    this._prevAttributes = this._prevAttributes || {};
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      const max = getProperty(this.data, `${k}.max`);
-      if (this._prevAttributes[k] != null) continue;
-      this._prevAttributes[k] = max;
-    }
-
-    // Track ability scores
-    this._prevAbilityScores = this._prevAbilityScores || {};
-    for (const k of Object.keys(this.data.data.abilities)) {
-      this._prevAbilityScores[k] = {
-        total: this.data.data.abilities[k].total,
-        mod: this.data.data.abilities[k].mod,
-      };
-    }
-  }
-
-  _applyPreviousAttributes() {
-    if (!game.pf1.isMigrating && this._initialized) {
-      // Apply HP, Wounds and Vigor
-      if (this._prevAttributes) {
-        for (const [k, prevMax] of Object.entries(this._prevAttributes)) {
-          if (prevMax == null) continue;
-          const newMax = getProperty(this.data, `${k}.max`) || 0;
-          const prevValue = getProperty(this.data, `${k}.value`);
-          const newValue = prevValue + (newMax - prevMax);
-          if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
-        }
-      }
-      this._prevAttributes = null;
-
-      // Clear previous ability score tracking
-      this._prevAbilityScores = null;
-    }
   }
 
   /**

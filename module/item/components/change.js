@@ -130,7 +130,7 @@ export class ItemChange {
         const modifierChanger = t != null ? t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
         const isModifierChanger = modifierChanger != null;
         const abilityTarget = modifierChanger?.[1];
-        const ability = isModifierChanger ? duplicate(rollData.abilities[abilityTarget]) : null;
+        const ability = isModifierChanger ? duplicate(actor.data.data.abilities[abilityTarget]) : null;
 
         let value = 0;
         if (this.formula) {
@@ -240,8 +240,7 @@ export class ItemChange {
             damage: ability.damage,
             penalty: ability.penalty,
           });
-          const newAbility = rollData.abilities[abilityTarget];
-          newAbility.total += this.data.value;
+          const newAbility = actor.data.data.abilities[abilityTarget];
           const mod = getAbilityModifier(newAbility.total, {
             damage: newAbility.damage,
             penalty: newAbility.penalty,

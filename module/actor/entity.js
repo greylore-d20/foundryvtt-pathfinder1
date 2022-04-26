@@ -35,6 +35,10 @@ export class ActorPF extends ActorBasePF {
     return this.id;
   }
 
+  static get relativeAttributes() {
+    return ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"];
+  }
+
   /**
    * Init item flags.
    */
@@ -989,8 +993,9 @@ export class ActorPF extends ActorBasePF {
     });
 
     // Alter source HP, Wounds and Vigor to allow updates
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      setProperty(this.data._source, `${k}.value`, getProperty(this.data, `${k}.value`));
+    for (const k of this.constructor.relativeAttributes) {
+      // console.log(getProperty(this.data, `${k}.value`));
+      // setProperty(this.data._source, `${k}.value`, getProperty(this.data, `${k}.value`));
     }
   }
 
@@ -1647,6 +1652,16 @@ export class ActorPF extends ActorBasePF {
   async _preUpdate(update, options, userId) {
     await super._preUpdate(update, options, userId);
 
+    // Offset HP value
+    for (const k of this.constructor.relativeAttributes) {
+      const isPathKey = update[`${k}.value`] !== undefined;
+      const value = isPathKey ? update[`${k}.value`] : getProperty(update, `${k}.value`);
+      if (value == null) continue;
+      const max = getProperty(this.data, `${k}.max`);
+      if (isPathKey) update[`${k}.value`] = value - max;
+      else setProperty(update, `${k}.value`, value - max);
+    }
+
     if (!update.data) return; // No system updates.
 
     const oldData = this.data.data;
@@ -1709,16 +1724,32 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Offset HP value
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      const value = getProperty(update, `${k}.value`);
-      if (value == null) continue;
-      const max = getProperty(this.data, `${k}.max`);
-      setProperty(update, `${k}.value`, value - max);
-    }
-
     // Update experience
     this._updateExp(update);
+  }
+
+  /**
+   * @override
+   */
+  static async updateDocuments(updates = [], context = {}) {
+    if (context.parent?.pack) context.pack = context.parent.pack;
+    const { parent, pack, ...options } = context;
+
+    /**
+     * Dirtiliy change options.diff to false if values of hp, wounds or vigor is involved.
+     * This is necessary to allow e.g. subtracting max hp from current hp (or setting hp to 0 from max).
+     * I currently don't know of a better way around this.
+     * -Furyspark (2022-04-26)
+     */
+    for (const data of updates) {
+      for (const k of this.relativeAttributes) {
+        if (data[`${k}.value`] != null) options.diff = false;
+      }
+    }
+
+    const updated = await this.database.update(this.implementation, { updates, options, parent, pack });
+    await this._onUpdateDocuments(updated, context);
+    return updated;
   }
 
   _onUpdate(data, options, userId, context = {}) {
@@ -2752,7 +2783,7 @@ export class ActorPF extends ActorBasePF {
           t.actor.update({
             "data.attributes.hp.nonlethal": hp.nonlethal + nld,
             "data.attributes.hp.temp": tmp - dt,
-            "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
+            "data.attributes.hp.value": Math.min(hp.value - (value - dt), hp.max),
           })
         );
       }

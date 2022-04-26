@@ -118,7 +118,7 @@ export class ItemChange {
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
     let addedSourceInfo = false;
 
-    const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
+    const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
@@ -241,6 +241,7 @@ export class ItemChange {
             penalty: ability.penalty,
           });
           const newAbility = rollData.abilities[abilityTarget];
+          newAbility.total += this.data.value;
           const mod = getAbilityModifier(newAbility.total, {
             damage: newAbility.damage,
             penalty: newAbility.penalty,

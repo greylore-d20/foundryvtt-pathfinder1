@@ -991,12 +991,6 @@ export class ActorPF extends ActorBasePF {
         // Drop the harmless error
       }
     });
-
-    // Alter source HP, Wounds and Vigor to allow updates
-    for (const k of this.constructor.relativeAttributes) {
-      // console.log(getProperty(this.data, `${k}.value`));
-      // setProperty(this.data._source, `${k}.value`, getProperty(this.data, `${k}.value`));
-    }
   }
 
   /**

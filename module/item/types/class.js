@@ -46,6 +46,12 @@ export class ItemClassPF extends ItemPF {
         const itemId = co.id.split(".")[2];
         const pack = game.packs.get(collection);
         const item = await pack.getDocument(itemId);
+        if (!item) {
+          const msg = `Could not find class association: ${co.id}`;
+          console.warn(co.id, msg, this);
+          ui.notifications?.warn(msg);
+          continue;
+        }
 
         // Apply Foundry's transformations for importing
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.

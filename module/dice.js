@@ -83,14 +83,17 @@ export class DicePF {
           flavor += ` <div class="extra-roll-label">${extraRoll.label}</div>`;
         }
 
-        // Do set roll
-        if (setRoll != null && setRoll >= 0) {
-          curParts[0] = `${setRoll}`;
-          flavor += ` (Take ${setRoll})`;
-        }
-
         // Execute the roll
         const roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
+
+        // Spoof a roll (e.g. Take 10/20)
+        if (setRoll != null && setRoll >= 0) {
+          const diff = setRoll - roll.dice[0].total,
+            newTotal = roll._total + diff;
+          roll.terms[0].results[0].result = setRoll;
+          roll._total = newTotal;
+          flavor += ` (Take ${setRoll})`;
+        }
 
         // Convert the roll to a chat message
         if (chatTemplate) {

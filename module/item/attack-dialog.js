@@ -294,13 +294,15 @@ export class AttackDialog extends Application {
     );
 
     // Get static extra attacks
+    let curAttackNumber = 1;
     for (const atk of this.object.data.data.attackParts ?? []) {
       result.push(
         mergeObject(this.constructor.defaultAttack, {
-          name: atk[1],
+          name: atk[1] || game.i18n.format("PF1.FormulaAttack", { 0: curAttackNumber + 1 }),
           bonus: RollPF.safeTotal(atk[0], this.rollData),
         })
       );
+      curAttackNumber++;
     }
 
     // Get formulaic extra attacks
@@ -312,13 +314,16 @@ export class AttackDialog extends Application {
     for (let a = 0; a < atkCount; a++) {
       this.rollData.formulaicAttack = a + 1;
       const bonus = RollPF.safeTotal(attackFormulae.bonus, this.rollData);
-      const name = game.i18n.format(this.object.data.data.formulaicAttacks?.label || "PF1.FormulaAttack", { 0: a + 2 });
+      const name = game.i18n.format(this.object.data.data.formulaicAttacks?.label || "PF1.FormulaAttack", {
+        0: curAttackNumber + 1,
+      });
       result.push(
         mergeObject(this.constructor.defaultAttack, {
           name,
           bonus,
         })
       );
+      curAttackNumber++;
     }
     if (this.rollData.formulaicAttack !== undefined) delete this.rollData.formulaicAttack;
 

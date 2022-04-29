@@ -482,44 +482,45 @@ export const addAttacks = async function (shared) {
         extraParts: duplicate(shared.attackBonus).concat([atk.attackBonus]),
         conditionalParts,
       });
+    }
 
-      // Add damage
-      if (this.hasDamage) {
-        const extraParts = duplicate(shared.damageBonus);
-        const nonCritParts = [];
-        const critParts = [];
+    // Add damage
+    if (this.hasDamage) {
+      const extraParts = duplicate(shared.damageBonus);
+      const nonCritParts = [];
+      const critParts = [];
 
-        // Add power attack bonus
-        if (shared.rollData.powerAttackBonus >= 0) {
-          // Get label
-          const label = ["rwak", "rsak"].includes(this.data.data.actionType)
-            ? game.i18n.localize("PF1.DeadlyAim")
-            : game.i18n.localize("PF1.PowerAttack");
+      // Add power attack bonus
+      if (shared.rollData.powerAttackBonus >= 0) {
+        // Get label
+        const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+          ? game.i18n.localize("PF1.DeadlyAim")
+          : game.i18n.localize("PF1.PowerAttack");
 
-          const powerAttackBonus = shared.rollData.powerAttackBonus;
-          const powerAttackCritBonus = powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
-          nonCritParts.push(`${powerAttackBonus}[${label}]`);
-          critParts.push(`${powerAttackCritBonus}[${label}]`);
-        }
-
-        // Add manyshot damage
-        // @TODO: could be cleaner in regards to chat output
-        if (shared.manyShot && a === 0) {
-          await attack.addDamage({ extraParts: [...extraParts, ...nonCritParts], critical: false, conditionalParts });
-        }
-
-        // Add damage
-        await attack.addDamage({ extraParts: [...extraParts, ...nonCritParts], critical: false, conditionalParts });
-
-        // Add critical hit damage
-        if (attack.hasCritConfirm) {
-          await attack.addDamage({ extraParts: [...extraParts, ...critParts], critical: true, conditionalParts });
-        }
+        const powerAttackBonus = shared.rollData.powerAttackBonus;
+        const powerAttackCritBonus = powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
+        nonCritParts.push(`${powerAttackBonus}[${label}]`);
+        critParts.push(`${powerAttackCritBonus}[${label}]`);
       }
 
-      // Add attack notes
-      if (a === 0) attack.addAttackNotes();
+      // Add damage
+      let flavor = null;
+      if (atk.id === "manyshot") flavor = game.i18n.localize("PF1.Manyshot");
+      await attack.addDamage({
+        flavor,
+        extraParts: [...extraParts, ...nonCritParts],
+        critical: false,
+        conditionalParts,
+      });
+
+      // Add critical hit damage
+      if (attack.hasCritConfirm) {
+        await attack.addDamage({ extraParts: [...extraParts, ...critParts], critical: true, conditionalParts });
+      }
     }
+
+    // Add attack notes
+    if (a === 0) attack.addAttackNotes();
 
     // Add effect notes
     if (atk.id !== "manyshot") {

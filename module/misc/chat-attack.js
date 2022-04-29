@@ -152,7 +152,7 @@ export class ChatAttack {
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
-  async addAttack({ bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
+  async addAttack({ noAttack = false, bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
     if (!this.item) return;
 
     this.hasAttack = true;
@@ -181,35 +181,38 @@ export class ChatAttack {
     }
 
     // Roll attack
-    const roll = await this.item.rollAttack({
-      data: this.rollData,
-      bonus: bonus,
-      extraParts: extraParts,
-      primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
-    });
-    data.roll = roll;
-    const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
-    let critType = 0;
-    const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
-    if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
-    else if (d20 === 1) critType = 2;
+    if (!noAttack) {
+      const roll = await this.item.rollAttack({
+        data: this.rollData,
+        bonus: bonus,
+        extraParts: extraParts,
+        primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
+      });
+      data.roll = roll;
+      const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
+      let critType = 0;
+      const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
+      if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
+      else if (d20 === 1) critType = 2;
+
+      data.total = roll.total;
+      data.isCrit = critType === 1;
+      data.isFumble = critType === 2;
+      data.isNat20 = d20 === 20;
+      data.formula = roll.formula;
+
+      // Add crit confirm
+      if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
+        this.hasCritConfirm = true;
+        this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult);
+        if (this.item.data.data.broken) this.rollData.critMult = 1;
+
+        await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
+      }
+    }
 
     // Add tooltip
     data.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
-    data.total = roll.total;
-    data.isCrit = critType === 1;
-    data.isFumble = critType === 2;
-    data.isNat20 = d20 === 20;
-    data.formula = roll.formula;
-
-    // Add crit confirm
-    if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
-      this.hasCritConfirm = true;
-      this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult);
-      if (this.item.data.data.broken) this.rollData.critMult = 1;
-
-      await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
-    }
 
     if (this.attackNotes === "") this.addAttackNotes();
   }
@@ -246,7 +249,7 @@ export class ChatAttack {
     this.setAttackNotesHTML();
   }
 
-  async addDamage({ extraParts = [], critical = false, conditionalParts = {} } = {}) {
+  async addDamage({ flavor = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
     if (!this.item) return;
 
     this.hasDamage = true;
@@ -288,9 +291,11 @@ export class ChatAttack {
     }
 
     // Add normal data
-    let flavor;
-    if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-    else flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+    if (!flavor) {
+      if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+      else
+        flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+    }
 
     // Determine total damage
     let totalDamage = data.parts.reduce((cur, p) => {

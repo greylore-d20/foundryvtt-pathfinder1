@@ -10,8 +10,8 @@
 
   "SETTINGS.pf1DiagN": "Diagonale Bewegungsregel",
   "SETTINGS.pf1DiagL": "Konfiguration, welche Diagonalbewegungsregel für Spiele innerhalb dieses Systems verwendet werden soll.",
-  "SETTINGS.pf1InitTBN": "Initiative Geschicklichkeit",
-  "SETTINGS.pf1InitTBL": "Anfügen der Geschicklichkeit, um in der Initiative ein Unentschieden besser zu erkennen.",
+  "SETTINGS.pf1InitTiebreakerN": "Initiative Geschicklichkeit",
+  "SETTINGS.pf1InitTiebreakerH": "Anfügen der Geschicklichkeit, um in der Initiative ein Unentschieden besser zu erkennen.",
   "SETTINGS.pf1CurWtN": "Währungsgewicht anwenden",
   "SETTINGS.pf1CurWtL": "Mitgeführtes Geld beeinflusst die Tragelast",
   "SETTINGS.pf1DiagPHB": "5/5/5",
@@ -20,11 +20,13 @@
   "SETTINGS.pf1ExpRateL": "Aufstiegsgeschwindigkeit",
   "SETTINGS.pf1NoExpN": "Deaktiviere Erfahrungspunkte-Tracking",
   "SETTINGS.pf1NoExpL": "Entfernen der Erfahrungsbalken aus Charakterbögen.",
+  "SETTINGS.pf1OpenXPDistributorN": "Öffne XP-Verteiler",
+  "SETTINGS.pf1OpenXPDistributorL": "Öffnet den XP-Verteiler bei Kampfende, wenn Shift beim Löschen des Kampfes nicht gedrückt wird",
   "SETTINGS.pf1BackgroundSkillsN": "Benutze Hintergrundfertigkeiten",
   "SETTINGS.pf1BackgroundSkillsH": "Benutze die alternativen Regeln für Hintergrundfertigkeiten",
   "SETTINGS.pf1FractionalBaseBonusesN": "Benutze Anteilige Grundboni",
   "SETTINGS.pf1FractionalBaseBonusesH": "Benutze die optionalen Anteilige Grundboni Regeln",
-  "SETTINGS.pf1PCWoundsAndVigorN": "Wunden und Vitalität für PCs",
+  "SETTINGS.pf1PCWoundsAndVigorN": "Wunden und Vitalität für SCs",
   "SETTINGS.pf1PCWoundsAndVigorH": "Benutze die optionalen Wunden und Vitalität Regeln für Spielercharaktere.",
   "SETTINGS.pf1NPCWoundsAndVigorN": "Wunden und Vitalität für NSCs",
   "SETTINGS.pf1NPCWoundsAndVigorH": "Benutze die optionalen Wunden und Vitalität Regeln für Nicht-Spielercharaktere.",
@@ -40,8 +42,16 @@
   "SETTINGS.pf1SharedVisionModeH": "Wie soll Sicht teilen zwischen Spielern gehandhabt werden?",
   "SETTINGS.pf1SharedVisionWithoutSelection": "Ohne ausgewähltes Token",
   "SETTINGS.pf1SharedVisionWithSelection": "Immer",
+  "SETTINGS.pf1AllowScriptChangesN": "Script-Änderungen zulassen",
+  "SETTINGS.pf1AllowScriptChangesH": "Lässt die Benutzung von Änderungen des Types \"Script\" in der Welt zu",
+  "SETTINGS.pf1AllowScriptChangesW": "<b>Diese Einstellung erlaubt es Spielern, beliebigen Code als GM auszuführen.</b><br><br>Bist du dir wirklich sicher, dass du dies erlauben möchtest?",
+  "SETTINGS.pf1AllowScriptChangesE": "Script-Änderungen sind in dieser Welt gesperrt.",
   "SETTINGS.pf1HideTokenConditionsN": "Verstecke Token Zustände",
   "SETTINGS.pf1HideTokenConditionsH": "Ob die Icons von Zuständen und Buffs auf dem Token versteckt werden sollen",
+  "SETTINGS.pf1obscureInlineRollsN": "Inline-Würfe verstecken",
+  "SETTINGS.pf1obscureInlineRollsH": "Verstecke Inline-Würfe vor Spielern ohne mindestens Beobachter-Rechte.",
+  "SETTINGS.pf1obscureSaveDCsN": "Obscure save DCs",
+  "SETTINGS.pf1obscureSaveDCsH": "Hide DC values from chat cards from players.",
   "SETTINGS.pf1CoreEffectsN": "Default Token Conditions",
   "SETTINGS.pf1CoreEffectsH": "Displays only PF1 conditions on tokens (unchecked) or core icons as well (checked)",
   "SETTINGS.pf1HideChatButtonsN": "Verstecke Chat-Karten Schaltflächen",
@@ -62,6 +72,12 @@
   "SETTINGS.pf1DisplayIterativesH": "Breaks down BAB display to iteratives instead of only the total bonus",
   "SETTINGS.pf1AlternativeReachCornerRuleN": "Alternative Reichweitenregeln",
   "SETTINGS.pf1AlternativeReachCornerRuleH": "Verbiete die äußeren Ecken bei 3m Rechweitenmessungen",
+  "SETTINGS.pf1NPCProficienciesN": "NSC-Geübtheiten",
+  "SETTINGS.pf1NPCProficienciesH": "NSC-Akteure benutzen auch Geübheiten. Wenn dies deaktiviert ist (standard), dann sind sie geübt in allen, wie sie nach RAW haben.",
+  "SETTINGS.pf1DisableAttackCardTargetsN": "Disable Attack Targets",
+  "SETTINGS.pf1DisableAttackCardTargetsH": "Disables targeted actors from showing up on attack cards",
+  "SETTINGS.pf1ClearTargetsAfterAttackN": "Clear targets after attack",
+  "SETTINGS.pf1ClearTargetsAfterAttackH": "Whether to untarget everything after an attack roll.",
 
   "SETTINGS.pf1HealthConfigName": "TP Konfiguration",
   "SETTINGS.pf1HealthConfigLabel": "TP Konfiguration",
@@ -100,6 +116,36 @@
   "SETTINGS.pf1DragRulerRun": "Rennen",
   "SETTINGS.pf1DragRulerUseElevationName": "Use elevation to determine movement type",
   "SETTINGS.pf1DragRulerUseElevationHint": "Use a tokens elevation to determine wether a token is flying or burrowing",
+
+  "PF1.KEYBINDINGS": {
+    "SkipConfirmPrompt": {
+      "Name": "Bestätigungsdialog überspringen"
+    },
+
+    "HideTokenTooltip": {
+      "Name": "Token-Tooltip verstecken",
+      "Hint": "Versteckt den Token-Tooltip, während dieser Knopf gedrückt gehalten wird"
+    },
+
+    "HideTokenTooltipGMInfo": {
+      "Name": "Zeige Token-Tooltip als Spieler"
+    },
+
+    "ForceShowItem": {
+      "Name": "Erzwinge Gegenstand zeigen",
+      "Hint": "Soll der Gegenstand im Chat gezeigt werden, wenn ein Macro benutzt wird?"
+    }
+  },
+
+  "PF1.SpellComponentKeys": {
+    "Verbal": "V",
+    "Somatic": "G",
+    "Thought": "D",
+    "Emotion": "E",
+    "Material": "M",
+    "Focus": "F",
+    "DivineFocus": "GF"
+  },
 
   "PF1.OptionalAndVariantRules": "Optionale & Varianten Regeln",
 
@@ -159,6 +205,14 @@
   "PF1.TooltipConfigHideWithoutKey": "Hide unless {key} is held",
   "PF1.OnMouse": "On Mouse",
 
+  "PF1.Sheet": {
+    "PC": "Spielercharakter (SC)",
+    "NPC": "Nichtspielercharakter (NSC)",
+    "NPCLite": "NSC-Lite",
+    "NPCLoot": "Beute",
+    "Item": "Generischer Gegenstand",
+    "Container": "Behälter"
+  },
   "PF1.TooltipWorldConfigName": "Tooltip World Configuration",
   "PF1.TooltipWorldConfigLabel": "Tooltip (World)",
   "PF1.TooltipWorldConfigHint": "Change world-wide tooltip settings",
@@ -214,6 +268,7 @@
   "PF1.ApplyCriticalDamage": "Kritischen Schaden anwenden",
   "PF1.ApplyHealing": "Heilung anwenden",
   "PF1.ApplyCriticalHealing": "Kritische Heilung anwenden",
+  "PF1.ApplyToAll": "Auf alle anwenden",
   "PF1.ReduceBy": "Verringere um",
   "PF1.SwapSelected": "Swap Selected",
   "PF1.ClearReduction": "Clear Reduction",
@@ -444,6 +499,14 @@
   "PF1.LootTypeGearSingle": "Ausrüstung",
   "PF1.LootTypeAmmoSingle": "Munition",
   "PF1.LootTypeTradeGoodsSingle": "Handelsware",
+
+  "PF1.AmmoTypeArrow": "Pfeil",
+  "PF1.AmmoTypeBolt": "Bolzen",
+  "PF1.AmmoTypeRepeatingBolt": "Bolzen (repetierend)",
+  "PF1.AmmoTypeBulletSling": "Kugel (Schleuder)",
+  "PF1.AmmoTypeBulletGun": "Kugel (Feuerwaffe)",
+  "PF1.AmmoTypeBulletDragoon": "Kugel (Dragoner)",
+  "PF1.AmmoTypeDart": "Wurfpfeil",
 
   "PF1.SenseBS": "Blindsicht",
   "PF1.SenseDV": "Dunkelsicht",
@@ -790,6 +853,8 @@
   "PF1.ChangeFlagDwarflikeEncumbrance": "Zwergenähnliche Traglast",
   "PF1.ChangeFlagMediumArmorFullSpeed": "Bewegungsrate in Mittlerer Rüstung",
   "PF1.ChangeFlagHeavyArmorFullSpeed": "Bewegungsrate in Schwerer Rüstung",
+  "PF1.ChangeFlagNoDex": "Keine Geschicklichkeit",
+  "PF1.ChangeFlagNoStr": "Keine Stärke",
 
   "PF1.Undefined": "Undefiniert",
 
@@ -1036,6 +1101,8 @@
     }
   },
 
+  "PF1.Abundant": "Reichlich",
+  "PF1.AbundantDesc": "Entferne nie diese Munition nach Benutzung.",
   "PF1.AddClass": "Klasse hinzufügen",
   "PF1.Horizontal": "Horizontal",
   "PF1.Vertical": "Vertikal",
@@ -1061,6 +1128,7 @@
   "PF1.AddConditional": "Bedingten Modifikator hinzufügen",
   "PF1.AddChange": "Änderung hinzufügen",
   "PF1.AddNote": "Notiz hinzufügen",
+  "PF1.AddEntry": "Eintrag hinzufügen",
   "PF1.Confirmation": "Bestätigung",
   "PF1.Attributes": "Attribute",
   "PF1.ArmorClass": "Rüstungsklasse",
@@ -1112,6 +1180,8 @@
   "PF1.Vigor": "Vitalität",
   "PF1.HitDice": "Trefferwürfel",
   "PF1.HitDie": "Trefferwürfel",
+  "PF1.CustomHitDice": "Eigene Trefferwürfel-Formel",
+  "PF1.CustomHitDiceHint": "Gib Formel ein, z.B. floor(@item.level / 2)",
   "PF1.InfoShort": "Info",
   "PF1.Inventory": "Inventar",
   "PF1.Inspiration": "Inspiration",
@@ -1173,8 +1243,10 @@
   "PF1.TempHP": "Temperäre Trefferpunkte",
   "PF1.Nonlethal": "Nichttödlich",
   "PF1.Initiative": "Initiative",
+  "PF1.Tiebreaker": "Kollisionsauflöser",
   "PF1.MaxDexShort": "Max GE",
   "PF1.Type": "Typ",
+  "PF1.Subtype": "Subtyp",
   "PF1.ActionPlural": "Aktionen",
   "PF1.ChargePlural": "Ladungen",
   "PF1.ConditionPlural": "Zustände",
@@ -1227,6 +1299,7 @@
   "PF1.SkillCheck": "{0} Fertigkeitswurf",
   "PF1.SavingThrowRoll": "{0} Rettungswurf",
   "PF1.SavingThrowButtonLabel": "{0} SG {1}",
+  "PF1.SavingThrowButtonLabelGMSensitive": "{save}-Rettungswurf",
   "PF1.SpellResistanceNote": "Zauberresistenz {0}",
   "PF1.ImmunityPlural": "Immunitäten",
   "PF1.BABAbbr": "GAB",
@@ -1293,6 +1366,7 @@
   "PF1.AuraStrength_Strong": "Stark",
   "PF1.AuraStrength_Overwhelming": "Übermächtig",
 
+  "PF1.Unknown": "Unbekannt",
   "PF1.ElementalSchool": "Elemental School",
   "PF1.Bloodline": "Blutlinie",
   "PF1.ConcentrationCheck": "Konzentrationswurf",
@@ -1323,6 +1397,7 @@
   "PF1.Unlimited": "Unlimitiert",
   "PF1.Requirements": "Anforderungen",
   "PF1.Formula": "Formel",
+  "PF1.BonusFormula": "Bonusformel",
   "PF1.FormulaResult": "Formelergebnis",
   "PF1.ActionType": "Aktionstyp",
   "PF1.AttackRollBonus": "Angriffsbonus",
@@ -1353,6 +1428,7 @@
   "PF1.CheckFlags": "Flags",
   "PF1.Quantity": "Menge",
   "PF1.Price": "Preis",
+  "PF1.PricePerCharge": "Preis pro Ladung",
   "PF1.HPShort": "TP",
   "PF1.Hardness": "Härte",
   "PF1.SituationalBonus": "Situationsbonus",
@@ -1458,8 +1534,11 @@
   "PF1.Manyshot": "Mehrfachschuss",
   "PF1.RapidShot": "Schnelles Schießen",
   "PF1.PointBlankShot": "Kernschuss",
-  "PF1.AmmoRemaining": "Ammunition Remaining: {0}",
-  "PF1.AmmoDepleted": "Out of Ammunition!",
+  "PF1.UsesAmmo": "Benutzt Munition",
+  "PF1.Ammunition": "Munition",
+  "PF1.AmmunitionAbbr": "Mun.",
+  "PF1.AmmoRemaining": "Verbleibende Munition: {0}",
+  "PF1.AmmoDepleted": "Keine Munition mehr!",
   "PF1.Priority": "Priorität",
   "PF1.Creatures": "Kreaturen",
   "PF1.ChargeCost": "Verbrauchte Ladungen",
@@ -1531,6 +1610,8 @@
   "PF1.Maximum": "Maximum",
   "PF1.Ability": "Attribut",
   "PF1.Modifier": "Modifikator",
+  "PF1.ModifierAbbr": "Mod.",
+  "PF1.Bonus": "Bonus",
   "PF1.OpenAssociatedCompendiumEntry": "Öffne den dazugehörigen Komendiumseintrag",
   "PF1.OpenCompendium": "Kompendium öffnen",
   "PF1.Primary": "Primär",
@@ -1556,6 +1637,10 @@
   "PF1.Hidden": "Versteckt",
   "PF1.Bright": "Hell",
   "PF1.Dim": "Dunkel",
+  "PF1.PCs": "SCs",
+  "PF1.NPCs": "NSCs",
+  "PF1.Options": "Optionen",
+  "PF1.Cancel": "Abbrechen",
 
   "PF1.Migration.Start": "Starte PF1 System-Migration für Version {version}. Bitte warten.",
   "PF1.Migration.Ongoing": "Migration läuft noch. Bitte warten bis diese abgeschlossen ist.",
@@ -1569,6 +1654,16 @@
     },
     "ContextNoteTargetSelector": {
       "Title": "Wähle Kontextnotizenziel"
+    },
+    "XPDistributor": {
+      "Title": "Erfahrungsverteiler",
+      "Options": {
+        "BonusExperience": "Bonus-Erfahrung"
+      },
+      "SplitEvenly": "Gleich verteilen",
+      "GiveToAll": "Allen geben",
+      "TotalExperience": "Gesamte Erfahrung",
+      "SplitExperience": "Erfahrung aufteilen"
     }
   },
 
@@ -1576,6 +1671,7 @@
     "AddClassDialog": "Du kannst Shift gedrückt halten um diesen Dialog zu unterdrücken.",
     "AddClassDialog_Desc": "Normal öffnen einen kurzen Anpassungsassistenten, während Roh die Klasse ohne Anpassungen hinzufügt."
   },
+
   "PF1.Help": {
     "Label": "Hilfe",
     "WIP": "Diese Sektion ist derzeit in Bearbeitung.",

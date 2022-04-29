@@ -244,10 +244,12 @@ export const generateAttacks = function (shared) {
   // Set ammo usage
   if (this.data.data.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
-    const quantity = this.actor.items.get(ammoId)?.data.data.quantity ?? 0;
+    const item = this.actor.items.get(ammoId);
+    const quantity = item?.data.data.quantity ?? 0;
+    const abundant = item?.data.flags.pf1.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
-      if (quantity >= a + 1) atk.ammo = ammoId;
+      if (abundant || quantity >= a + 1) atk.ammo = ammoId;
       else atk.ammo = null;
     }
   }
@@ -268,6 +270,10 @@ export const subtractAmmo = function (shared, value = 1) {
   const ammoUsage = {};
   for (const atk of shared.attacks) {
     if (atk.ammo) {
+      const item = this.actor.items.get(atk.ammo);
+      // Don't remove abundant ammunition
+      if (item.data.flags.pf1.abundant) continue;
+
       if (!ammoUsage[atk.ammo]) ammoUsage[atk.ammo] = 1;
       else ammoUsage[atk.ammo]++;
     }

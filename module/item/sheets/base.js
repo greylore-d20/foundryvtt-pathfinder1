@@ -88,6 +88,7 @@ export class ItemSheetPF extends ItemSheet {
   async getData() {
     const data = await super.getData();
     data.data = data.data.data;
+    data.flags = { flags: data.data.flags };
     const rollData = duplicate(this.item.getRollData());
     data.labels = this.item.labels;
 

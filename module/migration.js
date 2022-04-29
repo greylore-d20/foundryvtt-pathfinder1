@@ -1198,16 +1198,12 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
 };
 
 const _migrateActorHP = function (ent, updateData, linked) {
-  const lastMigrationVersion = game.pf1.utils.SemanticVersion.fromString(
-    game.settings.get("pf1", "systemMigrationVersion")
-  );
-
   // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
-  if (lastMigrationVersion.isLowerThan(game.pf1.utils.SemanticVersion.fromString("0.80.16"))) {
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+  for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+    if (getProperty(ent, `${k}.offset`) == null) {
       const max = getProperty(ent, `${k}.max`);
       const value = getProperty(ent, `${k}.value`);
-      updateData[`${k}.value`] = value - max;
+      updateData[`${k}.offset`] = value - max;
     }
   }
 };

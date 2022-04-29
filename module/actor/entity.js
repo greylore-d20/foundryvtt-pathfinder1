@@ -984,9 +984,9 @@ export class ActorPF extends ActorBasePF {
 
     // Offset relative attributes
     for (const k of this.constructor.relativeAttributes) {
-      const value = getProperty(this.data, `${k}.value`);
+      const offset = getProperty(this.data, `${k}.offset`);
       const max = getProperty(this.data, `${k}.max`);
-      setProperty(this.data, `${k}.value`, value + max);
+      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
     }
 
     // Update tokens for resources
@@ -1654,13 +1654,21 @@ export class ActorPF extends ActorBasePF {
     await super._preUpdate(update, options, userId);
 
     // Offset HP value
-    for (const k of this.constructor.relativeAttributes) {
-      const isPathKey = update[`${k}.value`] !== undefined;
-      const value = isPathKey ? update[`${k}.value`] : getProperty(update, `${k}.value`);
-      if (value == null) continue;
-      const max = getProperty(this.data, `${k}.max`);
-      if (isPathKey) update[`${k}.value`] = value - max;
-      else setProperty(update, `${k}.value`, value - max);
+    if (this._initialized) {
+      for (const k of this.constructor.relativeAttributes) {
+        const isPathKey = {
+          value: Object.hasOwnProperty.call(update, `${k}.value`),
+          offset: Object.hasOwnProperty.call(update, `${k}.offset`),
+          max: Object.hasOwnProperty.call(update, `${k}.max`),
+        };
+        const value = Object.entries(isPathKey).reduce((cur, o) => {
+          cur[o[0]] = o[1] ? update[`${k}.${o[0]}`] : getProperty(update, `${k}.${o[0]}`);
+          if (o[0] === "max" && cur[o[0]] === undefined) cur[o[0]] = getProperty(this.data, `${k}.max`);
+          return cur;
+        }, {});
+        if (value.value !== undefined && value.offset === undefined)
+          setProperty(update, `${k}.offset`, value.value - value.max);
+      }
     }
 
     if (!update.data) return; // No system updates.
@@ -1727,30 +1735,6 @@ export class ActorPF extends ActorBasePF {
 
     // Update experience
     this._updateExp(update);
-  }
-
-  /**
-   * @override
-   */
-  static async updateDocuments(updates = [], context = {}) {
-    if (context.parent?.pack) context.pack = context.parent.pack;
-    const { parent, pack, ...options } = context;
-
-    /**
-     * Dirtiliy change options.diff to false if values of hp, wounds or vigor is involved.
-     * This is necessary to allow e.g. subtracting max hp from current hp (or setting hp to 0 from max).
-     * I currently don't know of a better way around this.
-     * -Furyspark (2022-04-26)
-     */
-    for (const data of updates) {
-      for (const k of this.relativeAttributes) {
-        if (data[`${k}.value`] != null) options.diff = false;
-      }
-    }
-
-    const updated = await this.database.update(this.implementation, { updates, options, parent, pack });
-    await this._onUpdateDocuments(updated, context);
-    return updated;
   }
 
   _onUpdate(data, options, userId, context = {}) {
@@ -3756,7 +3740,7 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  importFromJSON(json) {
+  async importFromJSON(json) {
     // Set _initialized flag to prevent faults (such as HP changing incorrectly)
     this._initialized = false;
 

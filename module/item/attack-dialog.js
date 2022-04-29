@@ -366,6 +366,8 @@ export class AttackDialog extends Application {
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;
+    const ammoItem = ammoId ? this.object.actor.items.get(ammoId) : null;
+    const abundant = ammoItem?.data.flags.pf1.abundant;
 
     // Check if ammo exists
     if (ammoId && this.ammoUsage[ammoId] == null) ammoId = null;
@@ -380,7 +382,7 @@ export class AttackDialog extends Application {
     }
 
     // Don't allow overusage
-    if (this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
+    if (!abundant && this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
 
     atk.ammo = this.getAmmo().find((o) => o.data._id === ammoId);
     // Add to ammo usage tracker

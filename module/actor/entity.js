@@ -35,13 +35,13 @@ export class ActorPF extends ActorBasePF {
     return this.id;
   }
 
-  /**
-   * Init item flags.
-   */
-  itemFlags = { boolean: {}, dictionary: {} };
-
   constructor(...args) {
     super(...args);
+
+    /**
+     * Init item flags.
+     */
+    if (this.itemFlags === undefined) this.itemFlags = { boolean: {}, dictionary: {} };
 
     /**
      * A list of all the active items with changes.

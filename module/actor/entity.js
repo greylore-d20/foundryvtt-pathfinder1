@@ -82,12 +82,6 @@ export class ActorPF extends ActorBasePF {
     if (this._runningFunctions === undefined) this._runningFunctions = {};
 
     /**
-     * @property {object} _queuedItemUpdates
-     * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
-     */
-    if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
-
-    /**
      * @property {ItemPF[]} containerItems
      * All items this actor is holding in containers.
      */
@@ -1687,21 +1681,6 @@ export class ActorPF extends ActorBasePF {
     const energyDrain = update.data.attributes?.energyDrain;
     if (energyDrain !== undefined) {
       update.data.attributes.energyDrain = Math.abs(energyDrain);
-    }
-
-    // Apply changes in resources
-    const resources = update.data.resources;
-    if (resources) {
-      for (const key of Object.keys(resources)) {
-        const itemId = resources[key]._id ?? oldData.resources[key]._id;
-        const value = resources[key]?.value;
-        if (itemId?.length && Number.isFinite(value)) {
-          const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, { "data.uses.value": value });
-          this._queuedItemUpdates[itemId] = updateData;
-        }
-      }
-      // Avoid contaminating actor data
-      delete update.data.resources;
     }
 
     // Make only 1 fear condition active at most

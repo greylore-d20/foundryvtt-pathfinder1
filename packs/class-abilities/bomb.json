@@ -56,12 +56,17 @@
     "damage": {
       "parts": [
         [
-          "(ceil(@classes.alchemist.level / 2))d6 + @abilities.int.mod",
+          "1d6",
           "Fire"
         ]
       ],
       "critParts": [],
-      "nonCritParts": []
+      "nonCritParts": [
+        [
+          "(ceil(@classes.alchemist.level / 2) - 1)d6",
+          "Fire"
+        ]
+      ]
     },
     "attackParts": [],
     "formulaicAttacks": {
@@ -76,7 +81,7 @@
     "formula": "",
     "ability": {
       "attack": "dex",
-      "damage": "",
+      "damage": "int",
       "damageMult": 1,
       "critRange": 20,
       "critMult": 2

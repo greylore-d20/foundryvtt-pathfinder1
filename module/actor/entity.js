@@ -35,6 +35,10 @@ export class ActorPF extends ActorBasePF {
     return this.id;
   }
 
+  static get relativeAttributes() {
+    return ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"];
+  }
+
   constructor(...args) {
     super(...args);
 
@@ -86,12 +90,6 @@ export class ActorPF extends ActorBasePF {
      * All items this actor is holding in containers.
      */
     if (this.containerItems === undefined) this.containerItems = [];
-
-    /**
-     * @property {object} _prevAttributes
-     * A list of attributes to remember between updates.
-     */
-    if (this._prevAttributes === undefined) this._prevAttributes = null;
 
     /**
      * @property {object} _states
@@ -363,8 +361,6 @@ export class ActorPF extends ActorBasePF {
 
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
-
-    this.doQueuedUpdates();
   }
 
   /**
@@ -980,6 +976,13 @@ export class ActorPF extends ActorBasePF {
     // Prepare auxillary data
     this.prepareSpellbooks();
 
+    // Offset relative attributes
+    for (const k of this.constructor.relativeAttributes) {
+      const offset = getProperty(this.data, `${k}.offset`);
+      const max = getProperty(this.data, `${k}.max`);
+      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
+    }
+
     // Update tokens for resources
     const tokens = this.isToken ? [this.token] : this.getActiveTokens();
     tokens.forEach((t) => {
@@ -1113,9 +1116,6 @@ export class ActorPF extends ActorBasePF {
       const totalAtk = attributes.bab.total - attributes.acp.attackPenalty - (attributes.energyDrain ?? 0);
       attributes.attack.shared = totalAtk;
     }
-
-    // Refresh HP
-    this._applyPreviousAttributes();
 
     // Update wound threshold
     this.updateWoundThreshold();
@@ -1645,8 +1645,25 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async _preUpdate(update, options, userId) {
-    this._trackPreviousAttributes();
     await super._preUpdate(update, options, userId);
+
+    // Offset HP value
+    if (this._initialized) {
+      for (const k of this.constructor.relativeAttributes) {
+        const isPathKey = {
+          value: Object.hasOwnProperty.call(update, `${k}.value`),
+          offset: Object.hasOwnProperty.call(update, `${k}.offset`),
+          max: Object.hasOwnProperty.call(update, `${k}.max`),
+        };
+        const value = Object.entries(isPathKey).reduce((cur, o) => {
+          cur[o[0]] = o[1] ? update[`${k}.${o[0]}`] : getProperty(update, `${k}.${o[0]}`);
+          if (o[0] === "max" && cur[o[0]] === undefined) cur[o[0]] = getProperty(this.data, `${k}.max`);
+          return cur;
+        }, {});
+        if (value.value !== undefined && value.offset === undefined)
+          setProperty(update, `${k}.offset`, value.value - value.max);
+      }
+    }
 
     if (!update.data) return; // No system updates.
 
@@ -1699,6 +1716,30 @@ export class ActorPF extends ActorBasePF {
     this._updateExp(update);
   }
 
+  /**
+   * @override
+   */
+  static async updateDocuments(updates = [], context = {}) {
+    if (context.parent?.pack) context.pack = context.parent.pack;
+    const { parent, pack, ...options } = context;
+
+    /**
+     * Dirtiliy change options.diff to false if values of hp, wounds or vigor is involved.
+     * This is necessary to allow e.g. subtracting max hp from current hp (or setting hp to 0 from max).
+     * I currently don't know of a better way around this.
+     * -Furyspark (2022-04-26)
+     */
+    for (const data of updates) {
+      for (const k of this.relativeAttributes) {
+        if (data[`${k}.value`] != null) options.diff = false;
+      }
+    }
+
+    const updated = await this.database.update(this.implementation, { updates, options, parent, pack });
+    await this._onUpdateDocuments(updated, context);
+    return updated;
+  }
+
   _onUpdate(data, options, userId, context = {}) {
     super._onUpdate(data, options, userId, context);
 
@@ -1723,47 +1764,12 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  async doQueuedUpdates() {
-    if (!this.testUserPermission(game.user, "OWNER")) return;
-    if (this._queuedUpdates == null) return;
-
-    const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
-    this._queuedUpdates = {};
-    if (!isObjectEmpty(diff)) {
-      await this.update(diff);
-    }
-  }
-
-  _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preCreateEmbeddedDocuments(...arguments);
-  }
-
   _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons({ render: false });
     }
-  }
-
-  _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preDeleteEmbeddedDocuments(...arguments);
-  }
-
-  _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preUpdateEmbeddedDocuments(...arguments);
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
@@ -2765,7 +2771,7 @@ export class ActorPF extends ActorBasePF {
           t.actor.update({
             "data.attributes.hp.nonlethal": hp.nonlethal + nld,
             "data.attributes.hp.temp": tmp - dt,
-            "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
+            "data.attributes.hp.value": Math.min(hp.value - (value - dt), hp.max),
           })
         );
       }
@@ -3737,7 +3743,7 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  importFromJSON(json) {
+  async importFromJSON(json) {
     // Set _initialized flag to prevent faults (such as HP changing incorrectly)
     this._initialized = false;
 
@@ -3907,44 +3913,6 @@ export class ActorPF extends ActorBasePF {
 
     await this.updateEmbeddedDocuments("Item", itemUpdates);
     return this.update(updateData);
-  }
-
-  _trackPreviousAttributes() {
-    // Track HP, Wounds and Vigor
-    this._prevAttributes = this._prevAttributes || {};
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      const max = getProperty(this.data, `${k}.max`);
-      if (this._prevAttributes[k] != null) continue;
-      this._prevAttributes[k] = max;
-    }
-
-    // Track ability scores
-    this._prevAbilityScores = this._prevAbilityScores || {};
-    for (const k of Object.keys(this.data.data.abilities)) {
-      this._prevAbilityScores[k] = {
-        total: this.data.data.abilities[k].total,
-        mod: this.data.data.abilities[k].mod,
-      };
-    }
-  }
-
-  _applyPreviousAttributes() {
-    if (!game.pf1.isMigrating && this._initialized) {
-      // Apply HP, Wounds and Vigor
-      if (this._prevAttributes) {
-        for (const [k, prevMax] of Object.entries(this._prevAttributes)) {
-          if (prevMax == null) continue;
-          const newMax = getProperty(this.data, `${k}.max`) || 0;
-          const prevValue = getProperty(this.data, `${k}.value`);
-          const newValue = prevValue + (newMax - prevMax);
-          if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
-        }
-      }
-      this._prevAttributes = null;
-
-      // Clear previous ability score tracking
-      this._prevAbilityScores = null;
-    }
   }
 
   /**

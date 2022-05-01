@@ -200,6 +200,7 @@ export const migrateActorData = function (actor, token) {
   _migrateCarryBonus(actor, updateData, linked);
   _migrateBuggedValues(actor, updateData, linked);
   _migrateSpellbookUsage(actor, updateData, linked);
+  _migrateActorHP(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1193,5 +1194,16 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
 
   for (const bookKey of usedSpellbooks) {
     updateData[`data.attributes.spells.spellbooks.${bookKey}.inUse`] = true;
+  }
+};
+
+const _migrateActorHP = function (ent, updateData, linked) {
+  // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
+  for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+    if (getProperty(ent, `${k}.offset`) == null) {
+      const max = getProperty(ent, `${k}.max`);
+      const value = getProperty(ent, `${k}.value`);
+      updateData[`${k}.offset`] = value - max;
+    }
   }
 };

@@ -490,7 +490,7 @@ export class ItemSpellPF extends ItemPF {
     );
 
     // Create and return synthetic item data
-    return new ItemPF(expandObject(data)).data;
+    return new ItemPF(expandObject(data)).toObject();
   }
 
   /**

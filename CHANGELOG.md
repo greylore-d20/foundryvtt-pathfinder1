@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.80.16 - 2022-5-1
+
+### Bug Fixes
+
+- Broken condition is now considered in an item's value ([635](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/635))
+- Clicking on sheets to open didn't always focus them
+- Orphaned tokens would cause errors with Health Configuration menu ([1292](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1292))
+- Ammo recovery buttons could permanently garble chat messages. ([1348](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1348))
+- Arcane Spell Failure was rolled even with no somatic component involved. ([1372](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1372))
+- Item sheet numbers sometimes had excessive accuracy. ([1373](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1373))
+- Consumables created from cantrips cost as if made from level 1 spells. ([1389](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1389))
+- Prevent early error notifications from causing more errors ([874](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/874))
+- Initiative could not be rolled with no token on scene. ([1291](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1291))
+- Initiative could not be rolled with no scene.
+- Unlinking ability score from subskill broke sheets.
+- Token HUD was nonfunctional for tokens with no actor.
+- Buffs weren't being simplified into combat tab damage display ([1366](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1366))
+- Fix error when skipping dialog on attacks ([1350](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1350))
+- actor.hasItemBooleanFlag() returned false for buffs on world launch ([1384](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1384))
+- Fix changes from items with brackets in their name breaking some rolls ([1352](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1352))
+- Power attack critical bonuses were being applied to normal damage as well ([1355](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1355))
+- Rolling saving throws on attack card targets wasn't being tracked
+- Skipping attack dialogs prevented default conditional modifiers from applying
+- Fix rolls not working with no active scene
+- Give default names to nameless extra attacks ([1394](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1394))
+- Currency could get stuck as a non-number ([939](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/939))
+
+### Changelog
+
+- Allow abundant ammunition
+- Manyshot damage is defined more clearly in chat cards ([1374](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1374))
+- Right-clicking quick actions now opens its item sheet
+- Token HUD conditions are now sorted alphabetically. ([1356](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1356))
+- Font Size is now controlled by Foundry setting
+
+### API
+
+- ItemAttack's shared object is now exposed to Use Script Calls through `shared.attackData`
+- BREAKING: "Use" Script Call's `attacks`, `template`, `conditionals`, `data.fullAttack`, and `data.chatMessage` are deprecated now. Use above object to access them. They will be removed in V10.
+- Add a `sort` property to `CONFIG.PF1.buffTargets`, determining Change application order
+- Added `offset` variables to hp, vigor and wounds
+- Added `getItemBooleanFlags` and `getItemDictionaryFlags` as Item methods
+- New ItemPF#setActive(bool) function to allow simple activation to all item types that support it.
+- Script Calls are awaited and called in order now
+- `/damage` and `/heal` now roll asynchronously
+
 ## 0.80.15 - 2022-3-19
 
 ### Bug Fixes

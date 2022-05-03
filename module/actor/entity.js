@@ -958,6 +958,13 @@ export class ActorPF extends ActorBasePF {
 
     applyChanges.call(this);
 
+    // Offset relative attributes
+    for (const k of this.constructor.relativeAttributes) {
+      const offset = getProperty(this.data, `${k}.offset`);
+      const max = getProperty(this.data, `${k}.max`);
+      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
+    }
+
     // Prepare specific derived data
     this.prepareSpecificDerivedData();
 
@@ -975,13 +982,6 @@ export class ActorPF extends ActorBasePF {
 
     // Prepare auxillary data
     this.prepareSpellbooks();
-
-    // Offset relative attributes
-    for (const k of this.constructor.relativeAttributes) {
-      const offset = getProperty(this.data, `${k}.offset`);
-      const max = getProperty(this.data, `${k}.max`);
-      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
-    }
 
     // Update tokens for resources
     const tokens = this.isToken ? [this.token] : this.getActiveTokens();

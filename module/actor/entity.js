@@ -1010,7 +1010,7 @@ export class ActorPF extends ActorBasePF {
     for (const [prof, translations] of Object.entries(proficiencies)) {
       // Custom proficiency baseline from actor
       const customProficiencies =
-        actorData.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
+        actorData.traits[prof]?.custom?.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
 
       // Iterate over all items to create one array of non-custom proficiencies
       const proficiencies = this.items.reduce(
@@ -1569,10 +1569,10 @@ export class ActorPF extends ActorBasePF {
       "data.abilities.int.checkMod": 0,
       "data.abilities.wis.checkMod": 0,
       "data.abilities.cha.checkMod": 0,
-      "data.attributes.spells.spellbooks.primary.concentration.total": 0,
-      "data.attributes.spells.spellbooks.secondary.concentration.total": 0,
-      "data.attributes.spells.spellbooks.tertiary.concentration.total": 0,
-      "data.attributes.spells.spellbooks.spelllike.concentration.total": 0,
+      "data.attributes.spells.spellbooks.primary.concentration": 0,
+      "data.attributes.spells.spellbooks.secondary.concentration": 0,
+      "data.attributes.spells.spellbooks.tertiary.concentration": 0,
+      "data.attributes.spells.spellbooks.spelllike.concentration": 0,
       "data.details.carryCapacity.bonus.total": 0,
       "data.details.carryCapacity.multiplier.total": 0,
     };
@@ -1595,7 +1595,11 @@ export class ActorPF extends ActorBasePF {
 
     // Reset totals
     for (const [k, v] of Object.entries(keys)) {
-      setProperty(this.data, k, v);
+      try {
+        setProperty(this.data, k, v);
+      } catch (err) {
+        console.log(err, k);
+      }
     }
   }
 

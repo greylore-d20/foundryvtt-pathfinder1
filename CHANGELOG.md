@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.80.18 - 2022-5-3
+
+### Bug Fixes
+
+- Fix critical error in initializing actors
+- Fix wound thresholds with new HP handling ([1402](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1402))
+- Fix class associations not working ([1401](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1401))
+- Ranged weapons became unusable with most ammo ([1400](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1400))
+
 ## 0.80.17 - 2022-5-3
 
 ### Bug Fixes

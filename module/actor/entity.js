@@ -2071,7 +2071,7 @@ export class ActorPF extends ActorBasePF {
     });
   }
 
-  rollCMB(options = { ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
+  rollCMB(options = { ranged: false, ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2097,16 +2097,9 @@ export class ActorPF extends ActorBasePF {
     rollData.sizeBonus = CONFIG.PF1.sizeSpecialMods[size];
     if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
-    // Unreliable melee/ranged identification
-    const isMelee =
-      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
-      ["melee", "reach"].includes(this.data.data.range.units);
-    const isRanged =
-      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
-
     const changeSources = ["attack"];
-    if (isRanged) changeSources.push("rattack");
-    if (isMelee) changeSources.push("mattack");
+    if (options.ranged === true) changeSources.push("rattack");
+    else changeSources.push("mattack");
     const effectiveChanges = getHighestChanges(
       this.changes.filter((c) => changeSources.includes(c.subTarget)),
       { ignoreTarget: true }

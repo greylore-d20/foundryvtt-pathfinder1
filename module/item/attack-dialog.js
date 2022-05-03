@@ -162,7 +162,7 @@ export class AttackDialog extends Application {
     const elem = event.currentTarget;
     this.flags[elem.name] = elem.checked === true;
 
-    // Add or remove haste attack
+    // Add or remove haste, rapid-shot or manyshot attack
     if (["haste-attack", "rapid-shot", "manyshot"].includes(elem.name)) {
       if (elem.checked) {
         const translationString = {
@@ -171,7 +171,12 @@ export class AttackDialog extends Application {
           manyshot: "PF1.Manyshot",
         };
 
-        this.attacks.push(
+        // Correlate manyshot with the first attack, add the others at the end
+        const place = elem.name === "manyshot" ? 1 : this.attacks.length;
+
+        this.attacks.splice(
+          place,
+          0,
           mergeObject(this.constructor.defaultAttack, {
             id: elem.name,
             name: game.i18n.localize(translationString[elem.name]),

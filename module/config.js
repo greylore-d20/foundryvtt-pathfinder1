@@ -367,7 +367,7 @@ export const PF1 = {
   /**
    * Change targets affected by Wound Thresholds.
    */
-  woundThresholdChangeTargets: ["~attackCore", "cmb", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"],
+  woundThresholdChangeTargets: ["~attackCore", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"],
 
   divineFocus: {
     0: "",

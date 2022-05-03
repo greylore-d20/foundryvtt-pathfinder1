@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.80.17 - 2022-5-3
+
+### Bug Fixes
+
+- CMB wasn't working ([1398](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1398))
+
+### Localization
+
+- Updated German translation
+
 ## 0.80.16 - 2022-5-1
 
 ### Bug Fixes

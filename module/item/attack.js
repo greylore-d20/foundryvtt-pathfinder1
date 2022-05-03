@@ -272,7 +272,7 @@ export const subtractAmmo = function (shared, value = 1) {
     if (atk.ammo) {
       const item = this.actor.items.get(atk.ammo);
       // Don't remove abundant ammunition
-      if (item.data.flags.pf1.abundant) continue;
+      if (item.data.flags?.pf1?.abundant) continue;
 
       if (!ammoUsage[atk.ammo]) ammoUsage[atk.ammo] = 1;
       else ammoUsage[atk.ammo]++;

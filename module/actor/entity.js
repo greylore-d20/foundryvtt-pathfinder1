@@ -3447,19 +3447,11 @@ export class ActorPF extends ActorBasePF {
     mergeObject(result.shield, eqShield);
 
     // Add spellbook info
-    const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
-    const keyedBooks = [];
-    for (const [k, book] of spellbooks) {
-      setProperty(result, `spells.${k}`, book);
-      result.spells[k].abilityMod = result.abilities[book.ability]?.mod ?? "";
-      keyedBooks.push(k);
-    }
-    const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
-    for (const book of aliasBooks) {
-      if (!keyedBooks.includes(book.class)) {
-        setProperty(result, `spells.${book.class}`, book);
-        keyedBooks.push(book.class);
-      }
+    result.spells = result.attributes.spells.spellbooks;
+    for (const [k, book] of Object.entries(result.spells)) {
+      book.abilityMod = result.abilities[book.ability]?.mod ?? 0;
+      // Add alias
+      if (book.class && book.class !== "_hd") result.spells[book.class] ??= book;
     }
 
     // Add item dictionary flags

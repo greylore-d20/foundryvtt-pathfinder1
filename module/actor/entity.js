@@ -391,17 +391,27 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Prepare actor data before items are prepared.
+   *
+   * @override
    */
   prepareBaseData() {
     super.prepareBaseData();
+
+    const actorData = this.data.data;
+
+    // Reset equipment info
+    actorData.equipment = {
+      shield: { type: 0, id: undefined },
+      armor: { type: 0, id: undefined },
+    };
+    // Reset class info
+    actorData.classes = {};
 
     // HACK: Init missing resources structure. Needed mostly for JSON imports.
     this.data.data.resources ??= {};
 
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
-
-    const actorData = this.data.data;
 
     // Update total level and mythic tier
     const classes = this.items.filter((o) => o.type === "class");

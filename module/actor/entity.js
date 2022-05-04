@@ -3406,55 +3406,45 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add more info for formulas
-    if (this.data.items) {
-      result.armor = { type: 0 };
-      result.shield = { type: 0 };
+    result.armor = { type: 0 };
+    result.shield = { type: 0 };
 
-      // Determine equipped armor type
-      const armor = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
-      );
-      const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of armor) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
-        else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
-        else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqArmor.total < fullAC) {
-          eqArmor.ac = baseAC;
-          eqArmor.total = fullAC;
-          eqArmor.enh = enhAC;
-        }
+    // Determine equipped armor type
+    const armorId = result.equipment.armor.id,
+      shieldId = result.equipment.shield.id;
+    const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+    const armor = armorId ? this.items.get(armorId) : null;
+    if (armor) {
+      result.armor.type = result.equipment.armor.type;
+      const armorData = armor.data.data;
+      const enhAC = armorData.armor.enh ?? 0,
+        baseAC = armorData.armor.value ?? 0,
+        fullAC = baseAC + enhAC;
+      if (eqArmor.total < fullAC) {
+        eqArmor.ac = baseAC;
+        eqArmor.total = fullAC;
+        eqArmor.enh = enhAC;
       }
-      if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
-      mergeObject(result.armor, eqArmor);
-
-      // Determine equipped shield type
-      const shields = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
-      );
-      const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of shields) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
-        else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
-        else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;
-        else if (subtype === "towerShield" && result.shield.type < 4) result.shield.type = 4;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqShield.total < fullAC) {
-          eqShield.ac = baseAC;
-          eqShield.total = fullAC;
-          eqShield.enh = enhAC;
-        }
-      }
-      if (!Number.isFinite(eqShield.total)) eqShield.total = 0;
-      mergeObject(result.shield, eqShield);
     }
+    if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
+    mergeObject(result.armor, eqArmor);
+
+    // Determine equipped shield type
+    const shield = shieldId ? this.items.get(shieldId) : null;
+    const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+    if (shield) {
+      result.shield.type = result.equipment.shield.type;
+      const shieldData = armor.data.data;
+      const enhAC = shieldData.armor.enh ?? 0,
+        baseAC = shieldData.armor.value ?? 0,
+        fullAC = baseAC + enhAC;
+      if (eqShield.total < fullAC) {
+        eqShield.ac = baseAC;
+        eqShield.total = fullAC;
+        eqShield.enh = enhAC;
+      }
+    }
+    mergeObject(result.shield, eqShield);
 
     // Add spellbook info
     const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));

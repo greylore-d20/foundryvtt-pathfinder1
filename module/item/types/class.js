@@ -1,4 +1,5 @@
 import { ItemPF } from "../entity.js";
+import { createTag } from "../../lib";
 
 export class ItemClassPF extends ItemPF {
   async _preUpdate(update, context, userId) {
@@ -159,6 +160,48 @@ export class ItemClassPF extends ItemPF {
         formula = babFormulas[babType] || "0";
       }
       itemData.babBase = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+    }
+
+    // Feed info back to actor
+    const actor = this.actor;
+    // Test against actor.data to avoid unlinked token weirdness
+    if (actor?.data) {
+      const actorData = actor.data.data,
+        classData = this.data.data;
+
+      let tag = classData.tag;
+      if (!tag) tag = createTag(this.name);
+
+      let healthConfig = game.settings.get("pf1", "healthConfig");
+      const hasPlayerOwner = this.hasPlayerOwner;
+      healthConfig =
+        classData.classType === "racial"
+          ? healthConfig.hitdice.Racial
+          : hasPlayerOwner
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
+
+      if (!classData.classType) console.warn(`${this.name} lacks class type`, this);
+      const isBaseClass = (classData.classType || "base") === "base";
+      actorData.classes[tag] = {
+        level: classData.level,
+        name: this.name,
+        hd: classData.hd,
+        hitDice: this.hitDice,
+        mythicTier: this.mythicTier,
+        bab: classData.bab,
+        hp: healthConfig.auto,
+        savingThrows: {
+          fort: classData.savingThrows.fort.base,
+          ref: classData.savingThrows.ref.base,
+          will: classData.savingThrows.will.base,
+        },
+        fc: {
+          hp: isBaseClass ? classData.fc.hp.value : 0,
+          skill: isBaseClass ? classData.fc.skill.value : 0,
+          alt: isBaseClass ? classData.fc.alt.value : 0,
+        },
+      };
     }
   }
 

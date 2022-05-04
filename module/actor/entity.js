@@ -3405,50 +3405,6 @@ export class ActorPF extends ActorBasePF {
       result.size = sizeChart.indexOf(result.traits.size);
     }
 
-    // Set class data
-    const baseSavingThrows = {};
-    result.classes = {};
-    this.data.items
-      .filter((obj) => {
-        return obj.type === "class";
-      })
-      .forEach((cls) => {
-        let tag = cls.data.data.tag;
-        if (!tag) {
-          if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
-          else return;
-        }
-
-        let healthConfig = game.settings.get("pf1", "healthConfig");
-        const hasPlayerOwner = this.hasPlayerOwner;
-        healthConfig =
-          cls.data.data.classType === "racial"
-            ? healthConfig.hitdice.Racial
-            : hasPlayerOwner
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-        const classType = cls.data.data.classType || "base";
-        result.classes[tag] = {
-          level: cls.data.data.level,
-          name: cls.name,
-          hd: cls.data.data.hd,
-          hitDice: cls.hitDice,
-          mythicTier: cls.mythicTier,
-          bab: cls.data.data.bab,
-          hp: healthConfig.auto,
-          savingThrows: {
-            fort: cls.data.data.savingThrows.fort.base,
-            ref: cls.data.data.savingThrows.ref.base,
-            will: cls.data.data.savingThrows.will.base,
-          },
-          fc: {
-            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
-          },
-        };
-      });
-
     // Add more info for formulas
     if (this.data.items) {
       result.armor = { type: 0 };

@@ -1720,30 +1720,6 @@ export class ActorPF extends ActorBasePF {
     this._updateExp(update);
   }
 
-  /**
-   * @override
-   */
-  static async updateDocuments(updates = [], context = {}) {
-    if (context.parent?.pack) context.pack = context.parent.pack;
-    const { parent, pack, ...options } = context;
-
-    /**
-     * Dirtiliy change options.diff to false if values of hp, wounds or vigor is involved.
-     * This is necessary to allow e.g. subtracting max hp from current hp (or setting hp to 0 from max).
-     * I currently don't know of a better way around this.
-     * -Furyspark (2022-04-26)
-     */
-    for (const data of updates) {
-      for (const k of this.relativeAttributes) {
-        if (data[`${k}.value`] != null) options.diff = false;
-      }
-    }
-
-    const updated = await this.database.update(this.implementation, { updates, options, parent, pack });
-    await this._onUpdateDocuments(updated, context);
-    return updated;
-  }
-
   _onUpdate(data, options, userId, context = {}) {
     super._onUpdate(data, options, userId, context);
 

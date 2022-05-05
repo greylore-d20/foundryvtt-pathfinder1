@@ -1,12 +1,14 @@
 export class TokenDocumentPF extends TokenDocument {
   async update(data, options) {
+    data = expandObject(data);
+
     // Resize token with actor size change
-    const sizeKey = getProperty(data, "actorData.data.traits.size");
+    const sizeKey = data.actorData?.data?.traits?.size;
     if (sizeKey) {
       const size = CONFIG.PF1.tokenSizes[sizeKey];
-      setProperty(data, "width", size.w);
-      setProperty(data, "height", size.h);
-      setProperty(data, "scale", size.scale);
+      data.width = size.w;
+      data.height = size.h;
+      data.scale = size.scale;
     }
 
     return super.update(data, options);

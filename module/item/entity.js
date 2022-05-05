@@ -765,6 +765,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   async update(data, context = {}) {
+    data = expandObject(data);
     // Avoid regular update flow for explicitly non-recursive update calls
     if (context.recursive === false) {
       return super.update(data, context);

@@ -135,15 +135,17 @@ export class ItemClassPF extends ItemPF {
       for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
         const classType = itemData.classType || "base";
         let formula;
-        const saveType = itemData.savingThrows[save].value;
+        const saveData = itemData.savingThrows[save];
+        const saveType = saveData.value;
         if (saveType === "custom") {
-          formula = itemData.savingThrows[save].custom || "0";
+          formula = saveData.custom || "0";
         } else {
           formula = saveFormulas[classType][saveType];
         }
         if (formula == null) formula = "0";
         const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
-        itemData.savingThrows[save].base = total;
+        saveData.base = total;
+        if (useFractional) saveData.good = saveFormulas[classType].goodSave === true && saveType === "high";
       }
     }
 

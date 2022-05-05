@@ -95,11 +95,11 @@ export const getItemOwner = function (item) {
  */
 export const fractionalToString = (v) => {
   const base = Math.floor(v);
-  const f = Math.roundDecimals(v - Math.floor(v), 3);
+  const f = Math.roundDecimals(v - base, 3);
   if (f === 0) return `${base}`;
   const rv = [];
   if (base !== 0) rv.push(base);
-  else if (f === 0.25) rv.push("1/4");
+  if (f === 0.25) rv.push("1/4");
   else if (f === 0.333) rv.push("1/3");
   else if (f === 0.5) rv.push("1/2");
   else if (f === 0.667) rv.push("2/3");

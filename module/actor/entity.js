@@ -519,6 +519,8 @@ export class ActorPF extends ActorBasePF {
       return;
     }
 
+    book.label = `PF1.SpellBook${bookKey.capitalize()}`;
+
     rollData ??= this.getRollData({ refresh: true });
     cache ??= this._generateSpellbookCache();
 

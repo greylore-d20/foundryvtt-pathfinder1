@@ -6,7 +6,7 @@
     {{#if spellbook.name}}{{spellbook.name}}{{else}}
     {{~#if (and spellbook.class (ne spellbook.class "_hd"))}}
     {{~#with (lookup @root.data.classes spellbook.class)}}{{name}}{{/with}}
-    {{~else}}{{a}}{{/if}}{{/if}}</a>
+    {{~else}}{{spellbook.label}}{{/if}}{{/if}}</a>
   {{/if}}
   {{/each}}
 </nav>

@@ -132,7 +132,7 @@
           <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.name"
             value="{{spellbook.orig.name}}" placeholder="{{#if (and spellbook.orig.class (ne spellbook.orig.class "_hd"))}}
             {{~#with (lookup @root.data.classes spellbook.orig.class)}}{{name}}{{/with}}
-            {{~else}}{{spellbookIndex}}{{/if}}" />
+            {{~else}}{{spellbook.orig.label}}{{/if}}" />
         </div>
 
         <div class="flexrow domain-slot-value">

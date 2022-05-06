@@ -613,7 +613,7 @@ export class ActorPF extends ActorBasePF {
         );
       }
 
-      setProperty(this.data, key, clTotal);
+      book.cl.total = clTotal;
     }
 
     // Set concentration bonus
@@ -886,14 +886,19 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update all spellbooks
    */
-  updateSpellbookInfo() {
-    const rollData = this.getRollData({ refresh: true });
-    const cache = this._generateSpellbookCache();
+  updateSpellbookInfo(rollData, cache) {
+    rollData ??= this.getRollData({ refresh: true });
+    cache ??= this._generateSpellbookCache();
+
+    const spellbooks = this.data.data.attributes.spells.spellbooks;
 
     // Set spellbook info
-    for (const bookKey of Object.keys(this.data.data.attributes.spells.spellbooks)) {
+    for (const bookKey of Object.keys(spellbooks)) {
       this._updateSpellBook(bookKey, rollData, cache);
     }
+
+    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
+    this.data.data.attributes.spells.usedSpellbooks = Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
   }
 
   /**
@@ -979,9 +984,6 @@ export class ActorPF extends ActorBasePF {
       item.prepareDerivedItemData();
       this.updateItemResources(item.data);
     });
-
-    // Prepare auxillary data
-    this.prepareSpellbooks();
 
     // Update tokens for resources
     const tokens = this.isToken ? [this.token] : this.getActiveTokens();
@@ -1075,13 +1077,6 @@ export class ActorPF extends ActorBasePF {
       cmbBonus = this.data.data.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
     this.data.data.attributes.cmb.total = cmb;
-  }
-
-  prepareSpellbooks() {
-    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
-    const spellbooks = this.data.data.attributes?.spells?.spellbooks;
-    const usedBooks = spellbooks ? Object.keys(spellbooks ?? {}).filter((book) => spellbooks[book]?.inUse) : [];
-    setProperty(this.data, "data.attributes.spells.usedSpellbooks", usedBooks);
   }
 
   prepareSpecificDerivedData() {

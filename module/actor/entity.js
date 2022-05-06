@@ -974,6 +974,9 @@ export class ActorPF extends ActorBasePF {
     // Setup links
     this.prepareItemLinks();
 
+    // Refresh roll data again to include processed  info
+    this.getRollData({ refresh: true });
+
     // Update item resources
     this.items.forEach((item) => {
       item.prepareDerivedItemData();

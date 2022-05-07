@@ -157,9 +157,8 @@
         {{#each skills as |skill key|}}
         <li class="item flexrow" data-skill="{{key}}">
           <label class="checkbox skill-cs">
-            <input type="checkbox" name="data.classSkills.{{key}}" {{checked skill.classSkill}} />
+            <input type="checkbox" name="data.classSkills.{{key}}" {{checked skill.classSkill}} /> {{skill.name}}
           </label>
-          <h4>{{skill.name}}</h4>
         </li>
         {{/each}}
         </ol>

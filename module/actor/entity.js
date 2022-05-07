@@ -1658,6 +1658,11 @@ export class ActorPF extends ActorBasePF {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
+  async update(data, context = {}) {
+    data = expandObject(data);
+    return super.update(data, context);
+  }
+
   async _preUpdate(update, options, userId) {
     await super._preUpdate(update, options, userId);
 

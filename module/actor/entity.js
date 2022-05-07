@@ -897,6 +897,9 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Update all spellbooks
+   *
+   * @param rollData
+   * @param cache
    */
   updateSpellbookInfo(rollData, cache) {
     rollData ??= this.getRollData({ refresh: true });
@@ -974,13 +977,6 @@ export class ActorPF extends ActorBasePF {
     });
 
     applyChanges.call(this);
-
-    // Offset relative attributes
-    for (const k of this.constructor.relativeAttributes) {
-      const offset = getProperty(this.data, `${k}.offset`);
-      const max = getProperty(this.data, `${k}.max`);
-      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
-    }
 
     // Prepare specific derived data
     this.prepareSpecificDerivedData();
@@ -1118,6 +1114,13 @@ export class ActorPF extends ActorBasePF {
     const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
     for (const k of ["hp", "vigor"]) {
       attributes[k].max = round(attributes[k].max);
+    }
+
+    // Offset relative attributes
+    for (const k of this.constructor.relativeAttributes) {
+      const offset = getProperty(this.data, `${k}.offset`);
+      const max = getProperty(this.data, `${k}.max`);
+      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
     }
 
     // Shared attack bonuses

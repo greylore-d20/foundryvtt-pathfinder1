@@ -391,17 +391,27 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Prepare actor data before items are prepared.
+   *
+   * @override
    */
   prepareBaseData() {
     super.prepareBaseData();
+
+    const actorData = this.data.data;
+
+    // Reset equipment info
+    actorData.equipment = {
+      shield: { type: 0, id: undefined },
+      armor: { type: 0, id: undefined },
+    };
+    // Reset class info
+    actorData.classes = {};
 
     // HACK: Init missing resources structure. Needed mostly for JSON imports.
     this.data.data.resources ??= {};
 
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
-
-    const actorData = this.data.data;
 
     // Update total level and mythic tier
     const classes = this.items.filter((o) => o.type === "class");
@@ -3371,115 +3381,53 @@ export class ActorPF extends ActorBasePF {
       result.size = sizeChart.indexOf(result.traits.size);
     }
 
-    // Set class data
-    const baseSavingThrows = {};
-    result.classes = {};
-    this.data.items
-      .filter((obj) => {
-        return obj.type === "class";
-      })
-      .forEach((cls) => {
-        let tag = cls.data.data.tag;
-        if (!tag) {
-          if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
-          else return;
-        }
-
-        let healthConfig = game.settings.get("pf1", "healthConfig");
-        const hasPlayerOwner = this.hasPlayerOwner;
-        healthConfig =
-          cls.data.data.classType === "racial"
-            ? healthConfig.hitdice.Racial
-            : hasPlayerOwner
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-        const classType = cls.data.data.classType || "base";
-        result.classes[tag] = {
-          level: cls.data.data.level,
-          name: cls.name,
-          hd: cls.data.data.hd,
-          hitDice: cls.hitDice,
-          mythicTier: cls.mythicTier,
-          bab: cls.data.data.bab,
-          hp: healthConfig.auto,
-          savingThrows: {
-            fort: cls.data.data.savingThrows.fort.base,
-            ref: cls.data.data.savingThrows.ref.base,
-            will: cls.data.data.savingThrows.will.base,
-          },
-          fc: {
-            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
-          },
-        };
-      });
-
     // Add more info for formulas
-    if (this.data.items) {
-      result.armor = { type: 0 };
-      result.shield = { type: 0 };
+    result.armor = { type: 0 };
+    result.shield = { type: 0 };
 
-      // Determine equipped armor type
-      const armor = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
-      );
-      const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of armor) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
-        else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
-        else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqArmor.total < fullAC) {
-          eqArmor.ac = baseAC;
-          eqArmor.total = fullAC;
-          eqArmor.enh = enhAC;
-        }
+    // Determine equipped armor type
+    const armorId = result.equipment.armor.id,
+      shieldId = result.equipment.shield.id;
+    const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+    const armor = armorId ? this.items.get(armorId) : null;
+    if (armor) {
+      result.armor.type = result.equipment.armor.type;
+      const armorData = armor.data.data;
+      const enhAC = armorData.armor.enh ?? 0,
+        baseAC = armorData.armor.value ?? 0,
+        fullAC = baseAC + enhAC;
+      if (eqArmor.total < fullAC) {
+        eqArmor.ac = baseAC;
+        eqArmor.total = fullAC;
+        eqArmor.enh = enhAC;
       }
-      if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
-      mergeObject(result.armor, eqArmor);
-
-      // Determine equipped shield type
-      const shields = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
-      );
-      const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of shields) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
-        else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
-        else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;
-        else if (subtype === "towerShield" && result.shield.type < 4) result.shield.type = 4;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqShield.total < fullAC) {
-          eqShield.ac = baseAC;
-          eqShield.total = fullAC;
-          eqShield.enh = enhAC;
-        }
-      }
-      if (!Number.isFinite(eqShield.total)) eqShield.total = 0;
-      mergeObject(result.shield, eqShield);
     }
+    if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
+    mergeObject(result.armor, eqArmor);
+
+    // Determine equipped shield type
+    const shield = shieldId ? this.items.get(shieldId) : null;
+    const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+    if (shield) {
+      result.shield.type = result.equipment.shield.type;
+      const shieldData = armor.data.data;
+      const enhAC = shieldData.armor.enh ?? 0,
+        baseAC = shieldData.armor.value ?? 0,
+        fullAC = baseAC + enhAC;
+      if (eqShield.total < fullAC) {
+        eqShield.ac = baseAC;
+        eqShield.total = fullAC;
+        eqShield.enh = enhAC;
+      }
+    }
+    mergeObject(result.shield, eqShield);
 
     // Add spellbook info
-    const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
-    const keyedBooks = [];
-    for (const [k, book] of spellbooks) {
-      setProperty(result, `spells.${k}`, book);
-      result.spells[k].abilityMod = result.abilities[book.ability]?.mod ?? "";
-      keyedBooks.push(k);
-    }
-    const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
-    for (const book of aliasBooks) {
-      if (!keyedBooks.includes(book.class)) {
-        setProperty(result, `spells.${book.class}`, book);
-        keyedBooks.push(book.class);
-      }
+    result.spells = result.attributes.spells.spellbooks;
+    for (const [k, book] of Object.entries(result.spells)) {
+      book.abilityMod = result.abilities[book.ability]?.mod ?? 0;
+      // Add alias
+      if (book.class && book.class !== "_hd") result.spells[book.class] ??= book;
     }
 
     // Add item dictionary flags

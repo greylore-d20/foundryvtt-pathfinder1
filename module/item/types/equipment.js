@@ -52,6 +52,42 @@ export class ItemEquipmentPF extends ItemPF {
     }
     // Add enhancement bonus
     if (data.armor.enh == null) data.armor.enh = 0;
+
+    // Feed info back to actor
+    if (data.equipped === true) {
+      const actor = this.actor;
+      // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
+      if (!actor?.data) return;
+
+      const actorData = actor.data.data;
+      switch (data.equipmentType) {
+        case "shield": {
+          const subtype = data.equipmentSubtype;
+          let shieldType = actorData.equipment.shield.type;
+          if (subtype === "other" && shieldType < 1) shieldType = 1;
+          else if (subtype === "lightShield" && shieldType < 2) shieldType = 2;
+          else if (subtype === "heavyShield" && shieldType < 3) shieldType = 3;
+          else if (subtype === "towerShield" && shieldType < 4) shieldType = 4;
+          if (actorData.equipment.shield.type !== shieldType) {
+            actorData.equipment.shield.type = shieldType;
+            actorData.equipment.shield.id = this.id;
+          }
+          break;
+        }
+        case "armor": {
+          const subtype = data.equipmentSubtype;
+          let armorType = actorData.equipment.armor.type;
+          if (subtype === "lightArmor" && armorType < 1) armorType = 1;
+          else if (subtype === "mediumArmor" && armorType < 2) armorType = 2;
+          else if (subtype === "heavyArmor" && armorType < 3) armorType = 3;
+          if (armorType !== actorData.equipment.armor.type) {
+            actorData.equipment.armor.type = armorType;
+            actorData.equipment.armor.id = this.id;
+          }
+          break;
+        }
+      }
+    }
   }
 
   /**

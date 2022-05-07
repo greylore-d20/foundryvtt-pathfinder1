@@ -2,20 +2,27 @@ import { ItemPF } from "../entity.js";
 import { createTag } from "../../lib";
 
 export class ItemClassPF extends ItemPF {
-  async update(data, context = {}) {
-    data = expandObject(data);
-    const prevLevel = this.data.data.level;
-    const rv = await super.update(data, context);
+  async _preUpdate(update, context, userId) {
+    await super._preUpdate(update, context, userId);
 
-    // Handle class level update
-    const newLevel = data.data?.level;
+    // Set level marker
+    if (hasProperty(update, "data.level")) {
+      this._prevLevel = this.data.data.level;
+    }
+  }
+
+  async update(data, context = {}) {
+    await super.update(data, context);
+
+    // Update class
+    const newLevel = data["data.level"] || getProperty(data, "data.level");
     if (newLevel !== undefined && this.parent) {
-      if (prevLevel !== newLevel) {
+      const prevLevel = this._prevLevel;
+      if (prevLevel !== undefined) {
+        delete this._prevLevel;
         await this._onLevelChange(prevLevel, newLevel);
       }
     }
-
-    return rv;
   }
 
   async delete(context = {}) {

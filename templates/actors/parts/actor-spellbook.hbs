@@ -128,10 +128,11 @@
         </div>
 
         <div class="flexrow alt-name">
-          <label><h3>{{localize "PF1.AlternativeSpellbookName"}}</h3></label>
-          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.altName"
-            value="{{spellbook.orig.altName}}" placeholder="{{#if (and spellbook.orig.class (ne spellbook.orig.class "_hd"))}}{{spellbook.orig.class}}
-              {{else}}{{~spellbook.orig.name}}{{/if}}" />
+          <label><h3>{{localize "PF1.SpellbookName"}}</h3></label>
+          <input type="text" name="data.attributes.spells.spellbooks.{{spellbookIndex}}.name"
+            value="{{spellbook.orig.name}}" placeholder="{{#if (and spellbook.orig.class (ne spellbook.orig.class "_hd"))}}
+            {{~#with (lookup @root.data.classes spellbook.orig.class)}}{{name}}{{/with}}
+            {{~else}}{{spellbook.orig.label}}{{/if}}" />
         </div>
 
         <div class="flexrow domain-slot-value">

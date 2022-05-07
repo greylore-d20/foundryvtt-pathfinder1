@@ -472,6 +472,17 @@ const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
   }
 };
 
+const _migrateActorSpellbookName = function (ent, updateData) {
+  const spellbooks = Object.entries(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  for (const [bookId, book] of spellbooks) {
+    if (book.altName !== undefined) {
+      const key = `data.attributes.spells.spellbooks.${bookId}`;
+      updateData[`${key}.-=altName`] = null;
+      if (book.altName.length) updateData[`${key}.name`] = book.altName;
+    }
+  }
+};
+
 const _migrateActorSpellbookCL = function (ent, updateData) {
   const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
 

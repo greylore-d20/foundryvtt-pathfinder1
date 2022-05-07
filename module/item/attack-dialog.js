@@ -183,7 +183,7 @@ export class AttackDialog extends Application {
             bonus: 0,
           })
         );
-        this.setAttackAmmo(this.attacks.length - 1, this.object.getFlag("pf1", "defaultAmmo"));
+        this.setAttackAmmo(place, this.object.getFlag("pf1", "defaultAmmo"));
       } else {
         this.attacks = this.attacks.filter((o) => o.id !== elem.name);
       }

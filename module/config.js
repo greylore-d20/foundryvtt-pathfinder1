@@ -170,9 +170,11 @@ export const PF1 = {
     },
   },
   classFractionalSavingThrowFormulas: {
+    goodSaveBonus: "2",
     base: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     prestige: {
       low: "(1 + @hitDice) / 3",
@@ -180,11 +182,13 @@ export const PF1 = {
     },
     npc: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     racial: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     mythic: {
       low: "0",

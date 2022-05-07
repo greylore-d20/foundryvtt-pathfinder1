@@ -605,10 +605,11 @@ export const addDefaultChanges = function (changes) {
 
   // Add class data to saving throws
   const allClasses = [...classes, ...racialHD];
+  const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
   for (const a of Object.keys(actorData.attributes.savingThrows)) {
+    let hasGoodSave = false;
     const k = `data.attributes.savingThrows.${a}.total`;
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
-    const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
 
     const total = allClasses.reduce((cur, cls) => {
       const base = cls.data.data.savingThrows[a].base;
@@ -624,6 +625,8 @@ export const addDefaultChanges = function (changes) {
             flavor: cls.name,
           })
         );
+      } else {
+        if (cls.data.data.savingThrows[a].good === true) hasGoodSave = true;
       }
 
       getSourceInfo(this.sourceInfo, k).positive.push({
@@ -644,6 +647,25 @@ export const addDefaultChanges = function (changes) {
           flavor: game.i18n.localize("PF1.Base"),
         })
       );
+    }
+
+    // Fractional bonus +2 when one class has good save
+    if (useFractional && hasGoodSave) {
+      const goodSaveFormula = CONFIG.PF1.classFractionalSavingThrowFormulas.goodSaveBonus;
+      const total = RollPF.safeRoll(goodSaveFormula).total;
+      changes.push(
+        game.pf1.documentComponents.ItemChange.create({
+          formula: total,
+          target: "savingThrows",
+          subTarget: a,
+          modifier: "untypedPerm",
+          flavor: game.i18n.localize("PF1.SavingThrowGoodFractionalBonus"),
+        })
+      );
+      getSourceInfo(this.sourceInfo, k).positive.push({
+        value: fractionalToString(total),
+        name: game.i18n.localize("PF1.SavingThrowGoodFractionalBonus"),
+      });
     }
   }
 

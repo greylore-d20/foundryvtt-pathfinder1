@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.80.19 - 2022-5-7
+
+### Bug Fixes
+
+- Roll data was missing information. ([1413](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1413))
+- Fractional Base Bonuses did not display fractions in all circumstances. ([1409](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1409))
+- Fractional Base Bonuses gave +2 for every class with good saves instead of only one. ([1409](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1409))
+- Fix inconsistent update handling.
+- Modules relying on health tracking were broken ([1406](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1406))
+- Temp HP couldn't be removed sometimes ([1407](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1407))
+- Current hp didn't round when using continuous health ([1405](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1405))
+- Linked children were no longer being removed with parent item ([1381](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1381))
+
 ## 0.80.18 - 2022-5-3
 
 ### Bug Fixes

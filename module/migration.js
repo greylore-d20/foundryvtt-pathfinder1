@@ -1117,9 +1117,14 @@ const _migrateActorConditions = function (ent, updateData) {
   // Migrate fear to shaken
   {
     const cond = getProperty(ent, "data.conditions.fear");
-    if (cond === true) {
-      updateData["data.conditions.shaken"] = true;
+    if (cond !== undefined) {
+      if (cond === true) updateData["data.attributes.conditions.shaken"] = true;
       updateData["data.conditions.-=fear"] = null;
+    }
+    const condAlt = getProperty(ent, "data.attributes.conditions.fear");
+    if (condAlt !== undefined) {
+      if (condAlt === true) updateData["data.attributes.conditions.shaken"] = true;
+      updateData["data.attributes.conditions.-=fear"] = null;
     }
   }
 };

@@ -1953,27 +1953,19 @@ export class ItemPF extends ItemBasePF {
       const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.data.actionType);
       const isWeapon = ["mwak", "rwak"].includes(this.data.data.actionType);
       const changes = this.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
-      let changeBonus = [];
-      {
-        // Get damage bonus
-        changeBonus = getHighestChanges(
-          changes.filter((c) => {
-            c.applyChange(this.actor);
-            return !["set", "="].includes(c.operator);
-          }),
-          { ignoreTarget: true }
-        ).reduce((cur, c) => {
-          if (c.value)
-            cur.push({
-              value: c.value,
-              source: c.flavor,
-            });
-          return cur;
-        }, []);
-      }
-      for (const c of changeBonus) {
-        parts[0].extra.push(`${c.value}[${c.source}]`);
-      }
+      // Get damage bonus
+      getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.actor);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).forEach((c) => {
+        let value = c.isDeferred ? c.formula : c.value;
+        // Put in parenthesis if there's chance it is more complex
+        if (/[\s+-?:]/.test(value)) value = `(${value})`;
+        parts[0].extra.push(`${value}[${c.flavor}]`);
+      });
 
       // Add broken penalty
       if (this.data.data.broken) {

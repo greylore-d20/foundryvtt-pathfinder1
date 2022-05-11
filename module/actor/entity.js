@@ -3389,41 +3389,45 @@ export class ActorPF extends ActorBasePF {
     result.shield = { type: 0 };
 
     // Determine equipped armor type
-    const armorId = result.equipment.armor.id,
-      shieldId = result.equipment.shield.id;
-    const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-    const armor = armorId ? this.items.get(armorId) : null;
-    if (armor) {
-      result.armor.type = result.equipment.armor.type;
-      const armorData = armor.data.data;
-      const enhAC = armorData.armor.enh ?? 0,
-        baseAC = armorData.armor.value ?? 0,
-        fullAC = baseAC + enhAC;
-      if (eqArmor.total < fullAC) {
-        eqArmor.ac = baseAC;
-        eqArmor.total = fullAC;
-        eqArmor.enh = enhAC;
+    {
+      const armorId = result.equipment.armor.id;
+      const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+      const armor = armorId ? this.items.get(armorId) : null;
+      if (armor) {
+        result.armor.type = result.equipment.armor.type;
+        const armorData = armor.data.data;
+        const enhAC = armorData.armor.enh ?? 0,
+          baseAC = armorData.armor.value ?? 0,
+          fullAC = baseAC + enhAC;
+        if (eqArmor.total < fullAC) {
+          eqArmor.ac = baseAC;
+          eqArmor.total = fullAC;
+          eqArmor.enh = enhAC;
+        }
       }
+      if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
+      mergeObject(result.armor, eqArmor);
     }
-    if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
-    mergeObject(result.armor, eqArmor);
 
     // Determine equipped shield type
-    const shield = shieldId ? this.items.get(shieldId) : null;
-    const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-    if (shield) {
-      result.shield.type = result.equipment.shield.type;
-      const shieldData = armor.data.data;
-      const enhAC = shieldData.armor.enh ?? 0,
-        baseAC = shieldData.armor.value ?? 0,
-        fullAC = baseAC + enhAC;
-      if (eqShield.total < fullAC) {
-        eqShield.ac = baseAC;
-        eqShield.total = fullAC;
-        eqShield.enh = enhAC;
+    {
+      const shieldId = result.equipment.shield.id;
+      const shield = shieldId ? this.items.get(shieldId) : null;
+      const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
+      if (shield) {
+        result.shield.type = result.equipment.shield.type;
+        const shieldData = shield.data.data;
+        const enhAC = shieldData.armor.enh ?? 0,
+          baseAC = shieldData.armor.value ?? 0,
+          fullAC = baseAC + enhAC;
+        if (eqShield.total < fullAC) {
+          eqShield.ac = baseAC;
+          eqShield.total = fullAC;
+          eqShield.enh = enhAC;
+        }
       }
+      mergeObject(result.shield, eqShield);
     }
-    mergeObject(result.shield, eqShield);
 
     // Add spellbook info
     result.spells = result.attributes.spells.spellbooks;

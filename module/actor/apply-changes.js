@@ -1499,6 +1499,7 @@ export const addDefaultChanges = function (changes) {
             target: "savingThrows",
             subTarget: "allSavingThrows",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondFear"),
           })
         );
         for (const k of Object.keys(actorData.attributes.savingThrows)) {
@@ -1515,6 +1516,7 @@ export const addDefaultChanges = function (changes) {
               target: "skills",
               subTarget: "skills",
               modifier: "penalty",
+              flavor: game.i18n.localize("PF1.CondFear"),
             })
           );
           const flats = getChangeFlat.call(this, "skills", "penalty");
@@ -1533,6 +1535,7 @@ export const addDefaultChanges = function (changes) {
               target: "abilityChecks",
               subTarget: "allChecks",
               modifier: "penalty",
+              flavor: game.i18n.localize("PF1.CondFear"),
             })
           );
           const flats = getChangeFlat.call(this, "allChecks", "penalty");

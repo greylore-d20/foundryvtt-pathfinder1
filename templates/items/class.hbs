@@ -67,7 +67,7 @@
       {{!-- HD count --}}
       <div class="form-group">
         <label>{{localize "PF1.CustomHitDice"}}</label>
-        <input type="text" name="data.customHD" value="{{data.customHD}}" data-dtype="String" placeholder="{{localize "PF1.CustomHitDiceHint"}}"/>
+        <input type="text" class="formula" name="data.customHD" value="{{data.customHD}}" data-dtype="String" placeholder="{{localize "PF1.CustomHitDiceHint"}}"/>
       </div>
 
       {{!-- Hit Points --}}
@@ -91,7 +91,7 @@
         </select>
         {{#if (eq data.bab "custom")}}
         <label>{{localize "PF1.Formula"}}</label>
-        <input type='text' name='data.babFormula' value='{{data.babFormula}}'>
+        <input type="text" class="formula" name='data.babFormula' value='{{data.babFormula}}'>
         {{/if}}
       </div>
 
@@ -120,7 +120,7 @@
         </select>
         {{#if (eq savingThrow.value "custom")}}
         <label>{{localize "PF1.Formula"}}</label>
-        <input name="data.savingThrows.{{id}}.custom" type="text" value="{{savingThrow.custom}}" />
+        <input name="data.savingThrows.{{id}}.custom" class="formula" type="text" value="{{savingThrow.custom}}" />
         {{/if}}
       </div>
       {{/each}}

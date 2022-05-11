@@ -801,10 +801,10 @@ export class ActorPF extends ActorBasePF {
             let dSlots = slots[spellLevel].domain;
             const used =
               bookInfo.level[spellLevel]?.spells.reduce((acc, i) => {
-                const { preparation, atWill, domain } = i.data.data;
+                const { preparation, atWill, domain, slotCost } = i.data.data;
                 if (!atWill && preparation.spontaneousPrepared) {
-                  if (domain && dSlots > 0) --dSlots;
-                  else ++acc;
+                  if (domain && dSlots > 0) dSlots -= slotCost;
+                  else acc += slotCost;
                 }
                 return acc;
               }, 0) ?? 0;

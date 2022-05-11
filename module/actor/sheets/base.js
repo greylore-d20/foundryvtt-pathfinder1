@@ -1954,6 +1954,11 @@ export class ActorSheetPF extends ActorSheet {
     };
     delete itemData.data["type"];
 
+    // Convert some data to numbers
+    for (const [k, v] of Object.entries(itemData.data)) {
+      if (!Number.isNaN(parseFloat(v))) itemData.data[k] = parseFloat(v);
+    }
+
     const getSubtype = (d) => getProperty(d, `data.${d.type}Type`);
     const subtype = getSubtype(itemData);
     const sameSubgroup = (oldItem) => {

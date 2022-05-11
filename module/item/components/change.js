@@ -56,6 +56,9 @@ export class ItemChange {
   get continuous() {
     return this.data.continuous;
   }
+  get isDeferred() {
+    return ["damage", "wdamage", "sdamage"].includes(this.subTarget);
+  }
 
   get source() {
     return this.data.source;
@@ -150,6 +153,8 @@ export class ItemChange {
             operator = "add";
           } else if (!isNaN(this.formula)) {
             value = parseFloat(this.formula);
+          } else if (this.isDeferred) {
+            value = this.formula;
           } else {
             value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
               suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),

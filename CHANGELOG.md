@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.80.21 - 2022-5-11
+
+### Bug Fixes
+
+- Shield info was parsed incorrectly in roll data. ([1420](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1420))
+
+### Changelog
+
+- Changes to damage are no longer pre-rolled, allowing dice to be used
+- Spontaneous casters now take spell slot cost into account ([1412](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1412))
+
 ## 0.80.20 - 2022-5-7
 
 ## 0.80.19 - 2022-5-7

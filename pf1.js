@@ -34,6 +34,7 @@ import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
 import { ActorSheetPFBasic } from "./module/actor/sheets/basic.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
+import { SensesSelector } from "./module/apps/senses-selector.js";
 import { AmbientLightPF } from "./module/low-light-vision.js";
 import { CombatPF } from "./module/combat.js";
 import { TokenPF } from "./module/token/token.js";
@@ -79,6 +80,7 @@ import {
   convertWeight,
   convertWeightBack,
   convertDistance,
+  convertDistanceBack,
   getBuffTargets,
   getBuffTargetDictionary,
   binarySearch,
@@ -165,6 +167,7 @@ Hooks.once("init", function () {
       ActorSheetFlags,
       ActorRestDialog,
       ActorTraitSelector,
+      SensesSelector,
       CompendiumDirectoryPF,
       CompendiumBrowser,
       EntrySelector,
@@ -202,6 +205,7 @@ Hooks.once("init", function () {
       getChangeFlat,
       getSourceInfo,
       convertDistance,
+      convertDistanceBack,
       convertWeight,
       convertWeightBack,
       measureDistance,
@@ -984,14 +988,9 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   if (object instanceof Actor) object = object.data.token;
   // Regular token
   else if (object instanceof TokenDocument) object = object.data;
-  // else: pure data for default token settings in core settings
-  let newHTML = await renderTemplate("systems/pf1/templates/internal/token-config_vision.hbs", {
-    object: foundry.utils.deepClone(object),
-  });
-  html.find('.tab[data-tab="vision"] > *:nth-child(2)').after(newHTML);
 
   // Add static size checkbox
-  newHTML = `<div class="form-group"><label>${game.i18n.localize(
+  let newHTML = `<div class="form-group"><label>${game.i18n.localize(
     "PF1.StaticSize"
   )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
   if (getProperty(object, "flags.pf1.staticSize")) newHTML += " checked";

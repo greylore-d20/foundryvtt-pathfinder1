@@ -1353,10 +1353,14 @@ export const PF1 = {
    */
   senses: {
     bs: "PF1.SenseBS",
+    bse: "PF1.SenseBSense",
     dv: "PF1.SenseDV",
     ts: "PF1.SenseTS",
     tr: "PF1.SenseTR",
     ll: "PF1.SenseLL",
+    si: "PF1.SenseSI",
+    sid: "PF1.SenseSID",
+    sc: "PF1.SenseSC",
   },
 
   /* -------------------------------------------- */

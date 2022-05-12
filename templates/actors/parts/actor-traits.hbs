@@ -21,9 +21,14 @@
     </select>
   </div>
 
-  <div class="form-group {{#unless data.traits.senses}}inactive{{/unless}}">
+  <div class="form-group">
     <label>{{localize "PF1.Senses"}}</label>
-    <input type="text" name="data.traits.senses" value="{{data.traits.senses}}" placeholder="{{localize "PF1.None"}}"/>
+    <ul class="traits-list tag-list">
+      {{#each senses as |v k|}}
+      <li class="tag {{k}}">{{v}}</li>
+      {{/each}}
+    </ul>
+    <a class="senses-selector"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group {{#unless data.traits.dr}}inactive{{/unless}}">

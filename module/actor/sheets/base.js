@@ -368,6 +368,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update traits
     this._prepareTraits(data.data.traits);
+    data.senses = this._prepareSenses(data.data.traits.senses);
 
     // Prepare owned items
     this._prepareItems(data);
@@ -642,6 +643,37 @@ export class ActorSheetPF extends ActorSheet {
       }
       trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
     }
+  }
+
+  _prepareSenses(senses) {
+    const result = {};
+
+    for (const [k, v] of Object.entries(senses)) {
+      if (k === "ll" && senses[k].enabled) {
+        result[k] = CONFIG.PF1.senses[k];
+        continue;
+      }
+
+      if (k === "custom" && v.length) {
+        v.split(CONFIG.PF1.re.traitSeparator).forEach((c, i) => {
+          result[`custom${i + 1}`] = c.trim();
+        });
+        continue;
+      }
+
+      if (typeof v === "number" && v > 0) {
+        const converted = game.pf1.utils.convertDistance(v);
+        result[k] = `${CONFIG.PF1.senses[k]} ${converted[0]} ${converted[1]}`;
+        continue;
+      }
+
+      if (v === true) {
+        result[k] = CONFIG.PF1.senses[k];
+        continue;
+      }
+    }
+
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -1008,6 +1040,10 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".race").each((i, el) => {
       if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
     });
+
+    // Edit senses
+    html.find(".senses-selector").on("click", this._onSensesSelector.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
@@ -1805,6 +1841,16 @@ export class ActorSheetPF extends ActorSheet {
     });
     if (app) app.render(true, { focus: true });
     else new PointBuyCalculator(this.document).render(true);
+  }
+
+  async _onSensesSelector(event) {
+    event.preventDefault();
+
+    const app = Object.values(this.document.apps).find((o) => {
+      return o instanceof game.pf1.applications.SensesSelector && o._element;
+    });
+    if (app) app.render(true, { focus: true });
+    else new game.pf1.applications.SensesSelector(this.document).render(true);
   }
 
   async _onControlAlignment(event) {

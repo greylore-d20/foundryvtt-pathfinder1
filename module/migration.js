@@ -201,6 +201,7 @@ export const migrateActorData = function (actor, token) {
   _migrateBuggedValues(actor, updateData, linked);
   _migrateSpellbookUsage(actor, updateData, linked);
   _migrateActorHP(actor, updateData, linked);
+  _migrateActorSenses(actor, updateData, linked, token);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1221,5 +1222,31 @@ const _migrateActorHP = function (ent, updateData, linked) {
       const value = getProperty(ent, `${k}.value`);
       updateData[`${k}.offset`] = value - max;
     }
+  }
+};
+
+const _migrateActorSenses = function (ent, updateData, linked, token) {
+  const oldSenses = getProperty(ent, "data.traits.senses");
+  if (typeof oldSenses === "string") {
+    const tokenData = token != null ? token.data : ent.token;
+
+    updateData["data.traits.senses"] = {
+      dv: tokenData.brightSight,
+      ts: 0,
+      bs: 0,
+      bse: 0,
+      ll: {
+        enabled: tokenData.flags?.pf1?.lowLightVision,
+        multiplier: {
+          dim: tokenData.flags?.pf1?.lowLightVisionMultiplier ?? 2,
+          bright: tokenData.flags?.pf1?.lowLightVisionMultiplierBright ?? 2,
+        },
+      },
+      sid: false,
+      tr: false,
+      si: false,
+      sc: false,
+      custom: oldSenses,
+    };
   }
 };

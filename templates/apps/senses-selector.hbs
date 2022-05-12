@@ -1,0 +1,82 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+  {{!-- Low Light vision --}}
+  <div class="form-group">
+    <label>{{localize "TOKEN.VisionLowLight"}}</label>
+    <input
+      type="checkbox"
+      name="data.traits.senses.ll.enabled"
+      {{checked
+      data.data.traits.senses.ll.enabled}}
+      data-dtype="Boolean"
+    />
+  </div>
+
+  {{!-- Low Light vision multiplier --}}
+  <div class="form-group slim">
+    <label>{{localize "TOKEN.VisionLowLightMultiplier"}}</label>
+    <div class="form-fields">
+      <label>{{localize "LIGHT.Dim"}}</label>
+      <input type="text" data-dtype="Number" name="data.traits.senses.ll.multiplier.dim" value="{{data.data.traits.senses.ll.multiplier.dim}}" />
+      <label>{{localize "LIGHT.Bright"}}</label>
+      <input type="text" data-dtype="Number" name="data.traits.senses.ll.multiplier.bright" value="{{data.data.traits.senses.ll.multiplier.bright}}" />
+    </div>
+  </div>
+
+  {{!-- Darkvision --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseDV"}} <span class="units">({{gridUnits}})</span></label>
+    <input type="text" data-dtype="Number" name="data.traits.senses.dv" value="{{converted.data.traits.senses.dv}}" />
+  </div>
+
+  {{!-- Tremorsense --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseTS"}} <span class="units">({{gridUnits}})</span></label>
+    <input type="text" data-dtype="Number" name="data.traits.senses.ts" value="{{converted.data.traits.senses.ts}}" />
+  </div>
+
+  {{!-- Blindsense --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseBSense"}} <span class="units">({{gridUnits}})</span></label>
+    <input type="text" data-dtype="Number" name="data.traits.senses.bse" value="{{converted.data.traits.senses.bse}}" />
+  </div>
+
+  {{!-- Blindsight --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseBS"}} <span class="units">({{gridUnits}})</span></label>
+    <input type="text" data-dtype="Number" name="data.traits.senses.bs" value="{{converted.data.traits.senses.bs}}" />
+  </div>
+
+  {{!-- Scent --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseSC"}}*</label>
+    <input type="checkbox" data-dtype="Boolean" name="data.traits.senses.sc" {{checked data.data.traits.senses.sc}} />
+  </div>
+
+  {{!-- See invisibility --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseSI"}}*</label>
+    <input type="checkbox" data-dtype="Boolean" name="data.traits.senses.si" {{checked data.data.traits.senses.si}} />
+  </div>
+
+  {{!-- Truesight --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseTR"}}*</label>
+    <input type="checkbox" data-dtype="Boolean" name="data.traits.senses.tr" {{checked data.data.traits.senses.tr}} />
+  </div>
+
+  {{!-- See in darkness --}}
+  <div class="form-group">
+    <label>{{localize "PF1.SenseSID"}}*</label>
+    <input type="checkbox" data-dtype="Boolean" name="data.traits.senses.sid" {{checked data.data.traits.senses.sid}} />
+  </div>
+
+  {{!-- Custom --}}
+  <div class="form-group">
+    <label>{{localize "PF1.Custom"}}</label>
+    <input type="text" data-dtype="String" name="data.traits.senses.custom" value="{{data.data.traits.senses.custom}}" />
+  </div>
+
+  <p class="footnote">* {{localize "PF1.Info.NotFunctioning"}}</p>
+
+  <button type="submit" name="submit"><i class="far fa-save"></i> {{ localize "Save Changes" }}</button>
+</form>

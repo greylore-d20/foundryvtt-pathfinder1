@@ -316,6 +316,29 @@ export const convertDistance = function (value, type = "ft") {
 };
 
 /**
+ * Converts what the world is using as a measurement unit to feet.
+ *
+ * @param {number} value - The value (in the world's measurement unit) to convert back.
+ * @param {string} type - The target type to convert back to. Either 'ft' (feet, default) or 'mi' (miles, in which case the expected given value should be in km (metric))
+ * @returns {number} The resulting value.
+ */
+export const convertDistanceBack = function (value, type = "ft") {
+  let system = game.settings.get("pf1", "distanceUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  switch (system) {
+    case "metric":
+      switch (type) {
+        case "mi":
+          return [Math.round((value / 1.6) * 100) / 100, "mi"];
+        default:
+          return [Math.round(((value * 5) / 1.5) * 100) / 100, "ft"];
+      }
+    default:
+      return [value, type];
+  }
+};
+
+/**
  * @typedef Point
  * @property {number} x X coordinate
  * @param {number} y Y coordinate

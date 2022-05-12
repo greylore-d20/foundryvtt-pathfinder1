@@ -2,14 +2,7 @@ import { ActorBasePF } from "./base.js";
 import { getAbilityModifier } from "./lib.mjs";
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import {
-  createTag,
-  convertDistance,
-  convertWeight,
-  enrichHTMLUnrolled,
-  calculateRange,
-  fractionalToString,
-} from "../lib.js";
+import { createTag, enrichHTMLUnrolled, fractionalToString } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
@@ -23,7 +16,7 @@ import {
 } from "./apply-changes.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
-import { Spellbook, SpellbookLevel, SpellRanges, SpellbookMode, SpellbookSlots } from "./components/spellbook.js";
+import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./components/spellbook.js";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -1169,7 +1162,7 @@ export class ActorPF extends ActorBasePF {
     // Set speed labels
     this.labels.speed = {};
     for (const [key, obj] of Object.entries(attributes.speed ?? {})) {
-      const dist = convertDistance(obj.total);
+      const dist = game.pf1.utils.convertDistance(obj.total);
       this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
     }
 
@@ -3256,7 +3249,7 @@ export class ActorPF extends ActorBasePF {
       heavy = Math.floor(table[table.length - 1] * Math.pow(4, multiplierCount) * carryMultiplier);
     }
     // Convert to world unit system
-    heavy = convertWeight(heavy);
+    heavy = game.pf1.utils.convertWeight(heavy);
 
     return {
       light: Math.floor(heavy / 3),
@@ -3275,7 +3268,7 @@ export class ActorPF extends ActorBasePF {
       return cur + o.data.data.weight * o.data.data.quantity;
     }, this._calculateCoinWeight());
 
-    return convertWeight(weight);
+    return game.pf1.utils.convertWeight(weight);
   }
 
   /**

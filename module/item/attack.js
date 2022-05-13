@@ -186,7 +186,7 @@ export const alterRollData = function (shared, form = {}) {
   shared.concentrationCheck = formData["concentration"];
 
   // Conditional defaults for fast-forwarding
-  if (!shared.conditionals) {
+  if (!shared.conditionals && isObjectEmpty(formData)) {
     shared.conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
       if (con.default) arr.push(i);
       return arr;

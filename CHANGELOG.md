@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.80.22 - 2022-5-13
+
+### Bug Fixes
+
+- Conditional modifiers that were on by default always applied ([1425](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1425))
+- Critical damage rolls no longer suffer from negative modifiers
+- The sickened condition was showing as 'penalty' in damage rolls
+
+### Changelog
+
+- Add better senses support for actors
+- Add option to split an item stack ([1142](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1142))
+- Add base dice overrides for skill and save roll dialogs ([1354](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1354))
+
+### API
+
+- Add options.targets to ActorPF.applyDamage to override targets ([1424](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1424))
+
 ## 0.80.21 - 2022-5-11
 
 ### Bug Fixes

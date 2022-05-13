@@ -1568,6 +1568,7 @@ export const addDefaultChanges = function (changes) {
             target: "damage",
             subTarget: "wdamage",
             modifier: "penalty",
+            flavor: game.i18n.localize("PF1.CondSickened"),
           })
         );
         getSourceInfo(this.sourceInfo, "data.attributes.damage.weapon").negative.push({

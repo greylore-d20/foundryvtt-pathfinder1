@@ -1049,10 +1049,11 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     // Owned Item management
-    html.find(".item-create").click((ev) => this._onItemCreate(ev));
-    html.find(".item-edit").click(this._onItemEdit.bind(this));
-    html.find(".item-delete").click(this._onItemDelete.bind(this));
-    html.find(".item-give").click(this._onItemGive.bind(this));
+    html.find(".item-create").on("click", (ev) => this._onItemCreate(ev));
+    html.find(".item-edit").on("click", this._onItemEdit.bind(this));
+    html.find(".item-delete").on("click", this._onItemDelete.bind(this));
+    html.find(".item-give").on("click", this._onItemGive.bind(this));
+    html.find(".item-split").on("click", this._onItemSplit.bind(this));
 
     // Quick edit item
     html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
@@ -2139,6 +2140,35 @@ export class ActorSheetPF extends ActorSheet {
       console.log({ sheet: this, document: this.document });
       await this.document.deleteEmbeddedDocuments("Item", [item.id]);
     }
+  }
+
+  async _onItemSplit(event) {
+    event.preventDefault();
+
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.document.items.get(itemId);
+
+    new Dialog({
+      title: game.i18n.format("PF1.Dialog.SplitItem.Title", { 0: item.name }),
+      content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
+      buttons: {
+        split: {
+          // icon: `<i class="fas fa-people-arrows></i>`,
+          label: game.i18n.localize("PF1.Split"),
+          callback: async (html) => {
+            let splitValue = parseInt(html.find(`[name="value"]`).val());
+            splitValue = Math.min(item.data.data.quantity - 1, Math.max(0, splitValue));
+            if (splitValue > 0) {
+              await item.update({ "data.quantity": Math.max(0, item.data.data.quantity - splitValue) });
+              const data = item.data.toObject();
+              data.data.quantity = splitValue;
+              await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
+            }
+          },
+        },
+      },
+      default: "split",
+    }).render(true);
   }
 
   _onSubmitElement(event) {

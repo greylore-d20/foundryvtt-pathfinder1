@@ -67,6 +67,10 @@ export class DicePF {
 
     // Inner roll function
     const _roll = async (parts, setRoll, form) => {
+      let baseDice = form ? form.find(`[name="d20"]`).val() : dice;
+      if (!baseDice) baseDice = dice;
+      parts = [baseDice].concat(parts);
+
       const originalFlavor = flavor;
       rollMode = form ? form.find('[name="rollMode"]').val() : rollMode;
       for (let a = 0; a < 1 + extraRolls.length; a++) {
@@ -150,17 +154,18 @@ export class DicePF {
     };
 
     // Modify the roll and handle fast-forwarding
-    parts = [dice].concat(parts);
-    if (fastForward === true) return _roll(parts, staticRoll);
-    else parts = parts.concat(["@bonus"]);
+    if (fastForward === true) {
+      parts = [dice].concat(parts);
+      return _roll(parts, staticRoll);
+    } else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog
     template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
     const dialogData = {
-      formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
       rollModes: CONFIG.Dice.rollModes,
+      d20: dice === "1d20" ? "" : dice,
     };
     const html = await renderTemplate(template, dialogData);
 

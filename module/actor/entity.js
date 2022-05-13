@@ -2687,6 +2687,21 @@ export class ActorPF extends ActorBasePF {
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);
   }
 
+  /**
+   * Wrapper for the static function, taking this actor as the only target.
+   *
+   * @param value
+   * @param options
+   */
+  async applyDamage(value, options = {}) {
+    return this.constructor.applyDamage(
+      value,
+      mergeObject(options, {
+        targets: [this],
+      })
+    );
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -2699,12 +2714,22 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.forceDialog=true] - Forces the opening of a Dialog as if Shift was pressed
    * @param {string} [options.reductionDefault] - Default value for Damage Reduction
    * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
+   * @param {Array.<Token|Actor>} [options.targets] - Override the targets to apply damage to
    * @returns {Promise}
    */
-  static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
+  static async applyDamage(
+    value,
+    { forceDialog = false, reductionDefault = "", asNonlethal = false, targets = null } = {}
+  ) {
     const promises = [];
     let controlled = canvas.tokens.controlled,
       healingInvert = 1;
+
+    // Override targets, if supplied
+    if (targets instanceof Array) {
+      controlled = targets.filter((o) => o instanceof Token || o instanceof Actor);
+    }
+
     const numReg = /(\d+)/g,
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
       sliceReg2 = /[^,;\n]+/g;
@@ -2726,7 +2751,7 @@ export class ActorPF extends ActorBasePF {
         controlled = controlled.filter((con) => checked.includes(con.id));
       }
       for (const t of controlled) {
-        const a = t.actor,
+        const a = t instanceof Token ? t.actor : t,
           hp = a.data.data.attributes.hp,
           tmp = parseInt(hp.temp) || 0;
 
@@ -2747,7 +2772,7 @@ export class ActorPF extends ActorBasePF {
           continue;
         }
         promises.push(
-          t.actor.update({
+          a.update({
             "data.attributes.hp.nonlethal": hp.nonlethal + nld,
             "data.attributes.hp.temp": tmp - dt,
             "data.attributes.hp.value": Math.min(hp.value - (value - dt), hp.max),
@@ -2763,19 +2788,16 @@ export class ActorPF extends ActorBasePF {
         value = -1 * value;
       }
       const tokens = controlled.map((tok) => {
+        const isToken = tok instanceof Token;
+        const actor = isToken ? tok.actor : tok;
         return {
-          _id: tok.id,
-          name: tok.name,
-          dr: tok.actor.data.data.traits.dr.match(sliceReg),
-          eres: tok.actor.data.data.traits.eres.match(sliceReg),
-          di: [
-            ...tok.actor.data.data.traits.di.value,
-            ...(tok.actor.data.data.traits.di.custom.match(sliceReg2) ?? []),
-          ],
-          dv: [
-            ...tok.actor.data.data.traits.dv.value,
-            ...(tok.actor.data.data.traits.dv.custom.match(sliceReg2) ?? []),
-          ],
+          _id: isToken ? tok.id : actor.id,
+          name: isToken ? tok.name : actor.name,
+          isToken,
+          dr: actor.data.data.traits.dr.match(sliceReg),
+          eres: actor.data.data.traits.eres.match(sliceReg),
+          di: [...actor.data.data.traits.di.value, ...(actor.data.data.traits.di.custom.match(sliceReg2) ?? [])],
+          dv: [...actor.data.data.traits.dv.value, ...(actor.data.data.traits.dv.custom.match(sliceReg2) ?? [])],
           checked: true,
         };
       });

@@ -1999,10 +1999,30 @@ export class ItemPF extends ItemBasePF {
       if (formula.length == 0) continue;
       try {
         const roll = {
-          roll: await RollPF.create(formula, rollData).evaluate(),
+          roll: await RollPF.create(formula, rollData).evaluate({ async: true }),
           damageType: part.damageType,
           type: part.type,
         };
+        // Remove all negative damage results on critical damage
+        if (critical) {
+          const parts = [];
+          roll.roll.terms.forEach((t, i, arr) => {
+            const prior = arr[i - 1];
+            const isPriorNegativeOperator = prior instanceof OperatorTerm && prior.operator === "-";
+
+            if (t instanceof NumericTerm) {
+              const isNegative =
+                (t.number <= 0 && !isPriorNegativeOperator) || (t.number >= 0 && isPriorNegativeOperator);
+              if (isNegative) {
+                if (prior instanceof OperatorTerm) parts.pop();
+              } else {
+                if (t.flavor) parts.push(`${t.number}[${t.flavor}]`);
+                else parts.push(`${t.number}`);
+              }
+            } else parts.push(t.formula);
+          });
+          roll.roll = await RollPF.create(parts.join(" "), rollData).evaluate({ async: true });
+        }
         rolls.push(roll);
       } catch (err) {
         console.error("Error with damage formula:", formula, this);

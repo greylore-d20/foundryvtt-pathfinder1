@@ -840,7 +840,7 @@ export class ItemSheetPF extends ItemSheet {
     html.mousemove((ev) => this._moveTooltips(ev));
 
     // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
+    if (!this.isEditable) return;
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));

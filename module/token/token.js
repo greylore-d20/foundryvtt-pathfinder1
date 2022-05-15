@@ -106,7 +106,7 @@ export class TokenPF extends Token {
 
   updateVisionSource(...args) {
     // Set bright vision from actor senses
-    if (["character", "npc"].includes(this.actor.type)) {
+    if (["character", "npc"].includes(this.actor?.type)) {
       const { dv, bs, bse, ts } = this.actor.data.data.traits.senses;
       const highestVision = Math.max(dv, Math.max(bs, Math.max(bse, ts)));
       this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0];

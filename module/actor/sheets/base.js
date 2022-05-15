@@ -926,6 +926,21 @@ export class ActorSheetPF extends ActorSheet {
     // Item summaries
     html.find(".item .item-name h4").click((event) => this._onItemSummary(event));
 
+    // Allow opening items even if the sheet isn't editable.
+
+    // Race item
+    html.find(".race").each((i, el) => {
+      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
+    });
+    // General items
+    html.find(".item-edit").on("click", this._onItemEdit.bind(this));
+    // General items (right click)
+    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
+    // Quick items (right click)
+    html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
+    // Race controls (editable limitations done internally)
+    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) {
       html.find("span.text-box").addClass("readonly");
@@ -1027,19 +1042,11 @@ export class ActorSheetPF extends ActorSheet {
     // Rest
     html.find(".rest").click(this._onRest.bind(this));
 
-    // Race controls
-    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
-
     // Point Buy Calculator
     html.find("button.pointbuy-calculator").click(this._onPointBuyCalculator.bind(this));
 
     // Alignment
     html.find(".control.alignment").click(this._onControlAlignment.bind(this));
-
-    // Quick edit race item
-    html.find(".race").each((i, el) => {
-      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
-    });
 
     // Edit senses
     html.find(".senses-selector").on("click", this._onSensesSelector.bind(this));
@@ -1050,13 +1057,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Owned Item management
     html.find(".item-create").on("click", (ev) => this._onItemCreate(ev));
-    html.find(".item-edit").on("click", this._onItemEdit.bind(this));
     html.find(".item-delete").on("click", this._onItemDelete.bind(this));
     html.find(".item-give").on("click", this._onItemGive.bind(this));
     html.find(".item-split").on("click", this._onItemSplit.bind(this));
-
-    // Quick edit item
-    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
 
     // Item Rolling
     html.find(".item .item-image").click((event) => this._onItemRoll(event));
@@ -1093,7 +1096,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Action
     html.find(".quick-actions li").click(this._quickAction.bind(this));
-    html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
 
     // Convert currency
     html.find("a.convert-currency").click(this._convertCurrency.bind(this));
@@ -1816,21 +1818,23 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    // Add race
-    if (a.classList.contains("add")) {
-      const itemData = {
-        name: "New Race",
-        type: "race",
-      };
-      this.document.createEmbeddedDocuments("Item", [itemData]);
-    }
-    // Edit race
-    else if (a.classList.contains("edit")) {
+    // Edit race (allow opening without edit rights)
+    if (a.classList.contains("edit")) {
       this._onItemEdit(event);
     }
-    // Delete race
-    else if (a.classList.contains("delete")) {
-      this._onItemDelete(event);
+    // Add race
+    else if (this.isEditable) {
+      if (a.classList.contains("add")) {
+        const itemData = {
+          name: "New Race",
+          type: "race",
+        };
+        this.document.createEmbeddedDocuments("Item", [itemData]);
+      }
+      // Delete race
+      else if (a.classList.contains("delete")) {
+        this._onItemDelete(event);
+      }
     }
   }
 

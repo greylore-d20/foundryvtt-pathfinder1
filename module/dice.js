@@ -154,10 +154,8 @@ export class DicePF {
     };
 
     // Modify the roll and handle fast-forwarding
-    if (fastForward === true) {
-      parts = [dice].concat(parts);
-      return _roll(parts, staticRoll);
-    } else parts = parts.concat(["@bonus"]);
+    if (fastForward === true) return _roll(parts, staticRoll);
+    else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog
     template = template || "systems/pf1/templates/chat/roll-dialog.hbs";

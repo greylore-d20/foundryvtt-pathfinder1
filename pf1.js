@@ -849,10 +849,12 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
     };
 
     const children = _getChildren(item);
-    const toRemove = [item.id, ...children].reduce((cur, o) => {
-      if (!cur.includes(o)) cur.push(o);
-      return cur;
-    }, []);
+    const toRemove = [item.id, ...children]
+      .reduce((cur, o) => {
+        if (!cur.includes(o)) cur.push(o);
+        return cur;
+      }, [])
+      .filter((o) => item.actor.items.has(o));
 
     if (children.length > 0 && !options.handledChildren) {
       CONFIG.Item.documentClass.deleteDocuments(toRemove, {

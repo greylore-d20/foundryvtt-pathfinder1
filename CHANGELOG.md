@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.80.23 - 2022-5-15
+
+### Bug Fixes
+
+- d20 was rolled multiple times when roll dialog was not used. ([1434](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1434))
+- Uneditable item sheets allowed editing some elements.
+- Tokens without actor broke scenes ([1429](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1429))
+- Items with severed children could not be deleted ([1427](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1427))
+
+### Changelog
+
+- Item sheets can be viewed on actors that are not editable.
+
 ## 0.80.22 - 2022-5-13
 
 ### Bug Fixes

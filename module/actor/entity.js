@@ -1758,7 +1758,7 @@ export class ActorPF extends ActorBasePF {
 
       // Apply race size to actor
       const race = documents.find((d) => d.type === "race");
-      if (race) {
+      if (race?.data.data.size) {
         if (this.data.data.traits.size !== race.data.data.size)
           this.update({ "data.traits.size": race.data.data.size });
       }

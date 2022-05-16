@@ -288,7 +288,7 @@ export class ItemSpellPF extends ItemPF {
   getSpellPointCost(rollData = null) {
     if (!rollData) rollData = this.getRollData();
 
-    return RollPF.safeRoll(this.data.data.spellPoints?.cost ?? "0", rollData).total;
+    return RollPF.safeRoll(this.data.data.spellPoints?.cost || "0", rollData).total;
   }
 
   getSpellComponents(srcData) {

@@ -113,7 +113,7 @@ export class CombatPF extends Combat {
     if (actor && game.settings.get("pf1", "initiativeTiebreaker"))
       defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
     const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
-    if (!actor) return parts[0] ?? "0";
+    if (!actor) return parts[0] || "0";
     return parts.filter((p) => p !== null).join(" + ");
   }
 

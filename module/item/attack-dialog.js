@@ -313,7 +313,7 @@ export class AttackDialog extends Application {
     // Get formulaic extra attacks
     const attackFormulae = {
       count: this.object.data.data.formulaicAttacks?.count?.formula ?? null,
-      bonus: this.object.data.data.formulaicAttacks?.bonus?.formula ?? "0",
+      bonus: this.object.data.data.formulaicAttacks?.bonus?.formula || "0",
     };
     const atkCount = RollPF.safeTotal(attackFormulae.count, this.rollData) || 0;
     for (let a = 0; a < atkCount; a++) {

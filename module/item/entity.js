@@ -2900,7 +2900,7 @@ export class ItemPF extends ItemBasePF {
     // Formula-based extra attacks
     const fmAtk = itemData.formulaicAttacks?.count?.formula?.trim();
     if (fmAtk?.length > 0) {
-      const fmAtkBonus = itemData.formulaicAttacks?.bonus?.formula?.trim() ?? "0";
+      const fmAtkBonus = itemData.formulaicAttacks?.bonus?.formula?.trim() || "0";
       const count = RollPF.safeRoll(fmAtk, rollData);
       for (let i = 0; i < count.total; i++) {
         rollData.formulaicAttack = i + 1;
@@ -2984,7 +2984,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRoll(itemData.attackBonus ?? "0", rollData);
+    const bonusRoll = RollPF.safeRoll(itemData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), -100);
 

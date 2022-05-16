@@ -31,8 +31,7 @@ export class SightLayerPF extends SightLayer {
     const relevantTokens = canvas.tokens.placeables.filter((o) => {
       return o.actor && o.actor.testUserPermission(game.user, "OBSERVER");
     });
-    // const lowLightTokens = relevantTokens.filter((o) => o.actorVision?.lowLight);
-    const lowLightTokens = relevantTokens.filter((o) => o.actor?.data.data.traits.senses.ll.enabled);
+    const lowLightTokens = relevantTokens.filter((o) => o.actor?.data.data.traits?.senses?.ll?.enabled);
 
     if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
       for (const t of lowLightTokens.filter((o) => o._controlled)) {

@@ -16,14 +16,18 @@ export const migrateWorld = async function () {
     return ui.notifications.error(msg);
   }
   game.pf1.isMigrating = true;
-  ui.notifications.info(game.i18n.format("PF1.Migration.Start", { version: game.system.data.version }), {
+  const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.data.version });
+  ui.notifications.info(startMessage, {
     permanent: true,
   });
   console.log("System Migration starting.");
+  // Overloaded. Can be jQuery notification or queue object
   const removeNotification = function (li) {
-    li.fadeOut(66, () => li.remove());
-    ui.notifications.active.pop();
-    ui.notifications.fetch();
+    if (li.fadeOut) {
+      li.fadeOut(66, () => li.remove());
+      ui.notifications.active = ui.notifications.active.filter((o) => o != li);
+      ui.notifications.fetch();
+    } else ui.notifications.queue = ui.notifications.queue.filter((o) => o != li);
   };
 
   await _migrateWorldSettings();
@@ -89,11 +93,9 @@ export const migrateWorld = async function () {
 
   // Set the migration as complete
   await game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
-  const infoElem = ui.notifications.active.find(
-    (o) =>
-      o.hasClass("permanent") &&
-      o[0].innerText === game.i18n.format("PF1.Migration.Start", { version: game.system.data.version })
-  );
+  const infoElem =
+    ui.notifications.queue.find((o) => o.permanent && o.message == startMessage) ||
+    ui.notifications.active.find((o) => o.hasClass("permanent") && o[0].innerText === startMessage);
   if (infoElem) removeNotification(infoElem);
   // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.data.version }));

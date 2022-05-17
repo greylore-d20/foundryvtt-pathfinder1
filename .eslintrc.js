@@ -125,6 +125,7 @@ module.exports = {
     ActorTokenHelpers: "readonly",
     CombatEncounters: "readonly",
     Combat: "readonly",
+    Combatant: "readonly",
     Folders: "readonly",
     Folder: "readonly",
     Items: "readonly",

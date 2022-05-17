@@ -1860,12 +1860,9 @@ export class ActorPF extends ActorBasePF {
     const itemData = await this.createEmbeddedDocuments("Item", [attackItem.toObject()]);
 
     // Create link
-    if (itemData.type === "attack") {
-      // check for correct itemData, Foundry #3419
-      const newItem = this.items.get(itemData.id);
-      if (newItem) {
-        await item.createItemLink("children", "data", newItem, itemData.id);
-      }
+    const newItem = this.items.get(itemData[0].id);
+    if (newItem) {
+      await item.createItemLink("children", "data", newItem, itemData[0].id);
     }
 
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));

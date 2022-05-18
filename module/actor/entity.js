@@ -1710,14 +1710,19 @@ export class ActorPF extends ActorBasePF {
       update.data.attributes.energyDrain = Math.abs(energyDrain);
     }
 
-    // Make only 1 fear condition active at most
+    // Make only 1 fear or fatigue condition active at most
     const conditions = update.data.attributes?.conditions;
     if (conditions) {
-      const fearStages = ["shaken", "frightened", "panicked"];
-      const updateFearKey = Object.keys(conditions).find((o) => fearStages.includes(o));
-      if (updateFearKey != null) {
-        for (const key of fearStages) {
-          if (key !== updateFearKey) conditions[key] = false;
+      const conditionStages = [
+        ["shaken", "frightened", "panicked"],
+        ["fatigued", "exhausted"],
+      ];
+      for (const conditionGroup of conditionStages) {
+        const conditionKey = Object.keys(conditions).find((o) => conditionGroup.includes(o));
+        if (conditionKey != null) {
+          for (const key of conditionGroup) {
+            if (key !== conditionKey) conditions[key] = false;
+          }
         }
       }
     }

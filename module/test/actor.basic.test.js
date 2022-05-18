@@ -1,6 +1,6 @@
 import { createTestActor } from "./test.lib.js";
 
-export const registerActorBaseTests = (quench) => {
+export const registerActorBasicTests = (quench) => {
   // ---------------------------------- //
   // Actor basics                       //
   // ---------------------------------- //
@@ -182,114 +182,5 @@ export const registerActorBaseTests = (quench) => {
       });
     },
     { displayName: "PF1: Basic Actor Tests" }
-  );
-
-  // ---------------------------------- //
-  // Actor stats                        //
-  // ---------------------------------- //
-  quench.registerBatch(
-    "pf1.actor.conditions",
-    async (context) => {
-      const { describe, it, expect, before, after } = context;
-
-      /** @type {ActorPF} */
-      let actor;
-      before(async () => {
-        actor = await createTestActor();
-      });
-
-      // ---------------------------------- //
-      // Shaken                             //
-      // ---------------------------------- //
-      describe("shaken", function () {
-        after(async () => {
-          await actor.setCondition("shaken", false);
-        });
-        it("can enable", async function () {
-          await actor.setCondition("shaken", true);
-          expect(actor.hasCondition("shaken")).to.be.true;
-        });
-
-        describe("lowered saving throws", function () {
-          it("lowered Fortitude", function () {
-            expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(-2);
-          });
-          it("lowered Reflex", function () {
-            expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(-2);
-          });
-          it("lowered Will", function () {
-            expect(actor.data.data.attributes.savingThrows.will.total).to.equal(-2);
-          });
-        });
-
-        it("lowered attack", function () {
-          expect(actor.data.data.attributes.attack.general).to.equal(-2);
-        });
-
-        it("lowered skill checks", function () {
-          expect(actor.data.data.skills.acr.mod).to.equal(-2);
-          expect(actor.data.data.skills.clm.mod).to.equal(-2);
-          expect(actor.data.data.skills.umd.mod).to.equal(-2);
-        });
-
-        it("lowered ability checks", function () {
-          expect(actor.data.data.abilities.str.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.dex.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.con.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.int.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.wis.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.cha.checkMod).to.equal(-2);
-        });
-      });
-
-      // ---------------------------------- //
-      // Sickened                           //
-      // ---------------------------------- //
-      describe("sickened", function () {
-        after(async () => {
-          await actor.setCondition("sickened", false);
-        });
-        it("can enable", async function () {
-          await actor.setCondition("sickened", true);
-          expect(actor.hasCondition("sickened")).to.be.true;
-        });
-
-        describe("lowered saving throws", function () {
-          it("lowered Fortitude", function () {
-            expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(-2);
-          });
-          it("lowered Reflex", function () {
-            expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(-2);
-          });
-          it("lowered Will", function () {
-            expect(actor.data.data.attributes.savingThrows.will.total).to.equal(-2);
-          });
-        });
-
-        it("lowered attack", function () {
-          expect(actor.data.data.attributes.attack.general).to.equal(-2);
-        });
-
-        it("lowered weapon damage", function () {
-          expect(actor.data.data.attributes.damage.weapon).to.equal(-2);
-        });
-
-        it("lowered skill checks", function () {
-          expect(actor.data.data.skills.acr.mod).to.equal(-2);
-          expect(actor.data.data.skills.clm.mod).to.equal(-2);
-          expect(actor.data.data.skills.umd.mod).to.equal(-2);
-        });
-
-        it("lowered ability checks", function () {
-          expect(actor.data.data.abilities.str.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.dex.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.con.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.int.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.wis.checkMod).to.equal(-2);
-          expect(actor.data.data.abilities.cha.checkMod).to.equal(-2);
-        });
-      });
-    },
-    { displayName: "PF1: Actor Conditions Tests" }
   );
 };

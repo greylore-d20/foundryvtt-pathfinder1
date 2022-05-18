@@ -2702,6 +2702,46 @@ export class ActorPF extends ActorBasePF {
     );
   }
 
+  /**
+   * Easy way to toggle a condition.
+   *
+   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   */
+  async toggleCondition(key) {
+    key = `data.attributes.conditions.${key}`;
+
+    const newStatus = !getProperty(this.data, key);
+    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
+    await this.update(updateData);
+  }
+
+  /**
+   * Easy way to set a condition.
+   *
+   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
+   */
+  async setCondition(key, enabled) {
+    key = `data.attributes.conditions.${key}`;
+
+    const newStatus = !getProperty(this.data, key);
+    if (newStatus !== enabled) return;
+    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
+    await this.update(updateData);
+  }
+
+  /**
+   * Easy way to determine whether this actor has a condition.
+   *
+   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   */
+  hasCondition(key) {
+    key = `data.attributes.conditions.${key}`;
+    return getProperty(this.data, key) === true;
+  }
+
   /* -------------------------------------------- */
 
   /**

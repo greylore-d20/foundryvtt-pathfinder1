@@ -448,6 +448,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "data.attributes.mDex.shieldBonus";
     case "spellResist":
       return "data.attributes.sr.total";
+    case "damage":
+      return "data.attributes.damage.general";
+    case "wdamage":
+      return "data.attributes.damage.weapon";
+    case "sdamage":
+      return "data.attributes.damage.spell";
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {

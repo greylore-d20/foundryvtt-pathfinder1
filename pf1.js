@@ -95,7 +95,7 @@ import { ChatAttack } from "./module/misc/chat-attack.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
-import { registerTests } from "./module/test/index.js";
+import { registerTests } from "./module/test";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
 import { addReachCallback } from "./module/misc/attack-reach.js";

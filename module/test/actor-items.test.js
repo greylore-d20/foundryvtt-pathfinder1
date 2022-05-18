@@ -1,5 +1,9 @@
-import { createTestActor, addCompendiumItemToActor } from "./test.lib.js";
+import { ActorPF } from "../actor/entity.js";
+import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
 
+/**
+ * @param {import("@ethaks/fvtt-quench").Quench} quench - The singleton Quench instance
+ */
 export const registerActorItemTests = (quench) => {
   // ---------------------------------- //
   // Actor stats                        //
@@ -12,27 +16,36 @@ export const registerActorItemTests = (quench) => {
       /** @type {ActorPF} */
       let actor;
       before(async () => {
-        actor = await createTestActor();
+        actor = await createTestActor({}, { temporary: false });
+      });
+      after(async () => {
+        await actor.delete();
       });
 
       // ---------------------------------- //
       // Race                               //
       // ---------------------------------- //
       describe("add race", function () {
-        it("add Human", async function () {
+        before(async () => {
           await addCompendiumItemToActor(actor, "pf1.races", "Human");
         });
+        after(async () => {
+          await actor.race.delete();
+        });
+
+        it("add Human", async function () {
+          const race = actor.itemTypes.race[0];
+          expect(race.name).to.equal("Human");
+        });
+
         it("replace with Elf", async function () {
           await addCompendiumItemToActor(actor, "pf1.races", "Elf");
-        });
-        it("has only 1 race", function () {
-          const races = actor.items.filter((o) => o.type === "race");
-          expect(races.length).to.equal(1);
+          expect(actor.itemTypes.race).to.be.an("array").with.lengthOf(1);
+          expect(actor.itemTypes.race[0].name).to.equal("Elf");
         });
 
         describe("has Elf stats", function () {
           it("has 12 Dex", function () {
-            console.log(actor.data.data.abilities.dex.total);
             expect(actor.data.data.abilities.dex.total).to.equal(12);
           });
           it("has 12 Int", function () {

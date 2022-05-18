@@ -2,10 +2,13 @@
 // Quench Unit Testing              //
 // -------------------------------- //
 
-import { registerActorBasicTests } from "./actor.basic.test.js";
-import { registerActorConditionsTests } from "./actor.conditions.test.js";
-import { registerActorItemTests } from "./actor.items.test.js";
+import { registerActorBasicTests } from "./actor-basics.test.js";
+import { registerActorConditionsTests } from "./actor-conditions.test.js";
+import { registerActorItemTests } from "./actor-items.test.js";
 
+/**
+ * Registers all `Quench` tests
+ */
 export const registerTests = async () => {
   Hooks.on("quenchReady", async (quench) => {
     registerActorBasicTests(quench);

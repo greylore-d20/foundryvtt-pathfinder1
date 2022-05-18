@@ -1,4 +1,6 @@
-import { createTestActor } from "./test.lib.js";
+import { ActorPF } from "../actor/entity";
+import { ChatMessagePF } from "../sidebar/chat-message";
+import { createTestActor } from "./actor-utils";
 
 export const registerActorBasicTests = (quench) => {
   // ---------------------------------- //
@@ -11,45 +13,49 @@ export const registerActorBasicTests = (quench) => {
       /** @type {ActorPF} */
       let actor;
       before(async () => {
-        actor = await createTestActor();
+        actor = await createTestActor({}, { temporary: true });
       });
 
       describe("ActorPF basic rolls", function () {
         // ---------------------------------- //
         // BAB                                //
         // ---------------------------------- //
-        describe("#rollBAB", function () {
-          /** @type {ChatMessage} */
+        describe("#rollBAB with defaults", function () {
+          /** @type {ChatMessagePF} */
           let roll;
           before(async () => {
             roll = await actor.rollBAB();
           });
 
-          it("between 1 and 20", function () {
-            expect(roll?.roll?.total).to.be.within(1, 20);
+          it("should have the correct formula", function () {
+            expect(roll?.roll?.formula).to.equal("1d20 + 0[BAB]");
           });
 
-          it("should be a ChatMessage", function () {
-            expect(roll instanceof ChatMessage).to.be.true;
+          it("should produce a ChatMessage", function () {
+            expect(roll instanceof ChatMessagePF).to.be.true;
+          });
+
+          it("should have the correct subject", function () {
+            expect(roll?.data.flags.pf1?.subject?.core === "bab");
           });
         });
 
         // ---------------------------------- //
         // CMB                                //
         // ---------------------------------- //
-        describe("#rollCMB", function () {
+        describe("#rollCMB with defaults", function () {
           /** @type {ChatMessage} */
           let roll;
           before(async () => {
             roll = await actor.rollCMB();
           });
 
-          it("between 1 and 20", function () {
-            expect(roll?.roll?.total).to.be.within(1, 20);
+          it("should have the correct formula", function () {
+            expect(roll?.roll?.formula).to.equal("1d20 + 1[Strength]");
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof ChatMessage).to.be.true;
+            expect(roll instanceof ChatMessagePF).to.be.true;
           });
         });
 
@@ -64,11 +70,11 @@ export const registerActorBasicTests = (quench) => {
           });
 
           it("between 1 and 20", function () {
-            expect(roll?.roll?.total).to.be.within(1, 20);
+            expect(roll?.roll?.formula).to.equal("1d20 + 1[Strength]");
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof ChatMessage).to.be.true;
+            expect(roll instanceof ChatMessagePF).to.be.true;
           });
         });
 
@@ -83,12 +89,12 @@ export const registerActorBasicTests = (quench) => {
               roll = await actor.rollSavingThrow("fort", { skipDialog: true });
             });
 
-            it("between 1 and 20", function () {
-              expect(roll?.roll?.total).to.be.within(1, 20);
+            it("should have the correct formula", function () {
+              expect(roll?.roll?.formula).to.equal("1d20 + 3[Constitution]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessage).to.be.true;
+              expect(roll instanceof ChatMessagePF).to.be.true;
             });
           });
 
@@ -99,12 +105,12 @@ export const registerActorBasicTests = (quench) => {
               roll = await actor.rollSavingThrow("ref", { skipDialog: true });
             });
 
-            it("between 1 and 20", function () {
-              expect(roll?.roll?.total).to.be.within(1, 20);
+            it("should have the correct formula", function () {
+              expect(roll?.roll?.formula).to.equal("1d20 + 2[Dexterity]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessage).to.be.true;
+              expect(roll instanceof ChatMessagePF).to.be.true;
             });
           });
 
@@ -115,12 +121,12 @@ export const registerActorBasicTests = (quench) => {
               roll = await actor.rollSavingThrow("will", { skipDialog: true });
             });
 
-            it("between 1 and 20", function () {
-              expect(roll?.roll?.total).to.be.within(1, 20);
+            it("should have the correct formula", function () {
+              expect(roll?.roll?.formula).to.equal("1d20 + 2[Wisdom]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessage).to.be.true;
+              expect(roll instanceof ChatMessagePF).to.be.true;
             });
           });
         });

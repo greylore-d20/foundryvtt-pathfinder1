@@ -7,6 +7,8 @@
     {{/each}}
     {{/select}}
   </select>
+  {{#if allowAutoResizing}}
   <label for="data.resizing">{{localize "PF1.Resizing"}}</label>
   <input type="checkbox" name="data.resizing" data-dtype="Boolean" {{checked data.resizing}}>
+  {{/if}}
 </div>

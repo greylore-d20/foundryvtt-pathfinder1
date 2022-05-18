@@ -1755,6 +1755,13 @@ export class ActorPF extends ActorBasePF {
 
     if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons({ render: false });
+
+      // Apply race size to actor
+      const race = documents.find((d) => d.type === "race");
+      if (race?.data.data.size) {
+        if (this.data.data.traits.size !== race.data.data.size)
+          this.update({ "data.traits.size": race.data.data.size });
+      }
     }
   }
 
@@ -1860,12 +1867,9 @@ export class ActorPF extends ActorBasePF {
     const itemData = await this.createEmbeddedDocuments("Item", [attackItem.toObject()]);
 
     // Create link
-    if (itemData.type === "attack") {
-      // check for correct itemData, Foundry #3419
-      const newItem = this.items.get(itemData.id);
-      if (newItem) {
-        await item.createItemLink("children", "data", newItem, itemData.id);
-      }
+    const newItem = this.items.get(itemData[0].id);
+    if (newItem) {
+      await item.createItemLink("children", "data", newItem, itemData[0].id);
     }
 
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));

@@ -919,14 +919,14 @@ export function stripRollFlairs(formula) {
  * @param {object} rollData Roll data
  * @param {object} safeEvalOpts Options to Roll.safeEval
  */
-export function simplifyFormula(formula, rollData = {}, safeEvalOpts) {
+export function simplifyFormula(formula, rollData = {}) {
   const temp = [];
   const terms = RollPF.parse(stripRollFlairs(formula), rollData);
   for (const term of terms) {
     if (term instanceof DiceTerm || term instanceof OperatorTerm) {
       temp.push(term);
     } else if (term.isDeterministic) {
-      const evl = RollPF.safeEval(term.formula, {}, safeEvalOpts);
+      const evl = RollPF.safeTotal(term.formula);
       temp.push(...RollPF.parse(`${evl}`));
     } else {
       temp.push(term);
@@ -978,12 +978,12 @@ export function simplifyFormula(formula, rollData = {}, safeEvalOpts) {
  */
 export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
   const rollData = args.pop();
-  if (closing.length === 3) formula += "]"; // What does this even do?
+  if (closing.length === 3) formula += "]";
 
   const cls = ["inline-preroll", "inline-formula"];
   let e_formula;
   try {
-    e_formula = simplifyFormula(formula, rollData, { missing: 0, warn: true });
+    e_formula = simplifyFormula(formula, rollData);
   } catch (err) {
     console.error(err);
     e_formula = "0";

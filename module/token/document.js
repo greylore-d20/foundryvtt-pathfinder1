@@ -21,6 +21,10 @@ export class TokenDocumentPF extends TokenDocument {
 
   /**
    * Hijack Token health bar rendering to include temporary and temp-max health in the bar display
+   *
+   * @param barName
+   * @param root0
+   * @param root0.alternative
    */
   getBarAttribute(barName, { alternative = null } = {}) {
     let data;

@@ -17,6 +17,7 @@ import {
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./components/spellbook.js";
+import { ItemChange } from "../item/components/change.js";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -35,60 +36,69 @@ export class ActorPF extends ActorBasePF {
   constructor(...args) {
     super(...args);
 
-    /**
-     * Init item flags.
-     */
-    if (this.itemFlags === undefined) this.itemFlags = { boolean: {}, dictionary: {} };
+    if (this.itemFlags === undefined)
+      /**
+       * Init item flags.
+       */
+      this.itemFlags = { boolean: {}, dictionary: {} };
 
-    /**
-     * A list of all the active items with changes.
-     *
-     * @property
-     * @type {Array}
-     */
-    if (this.changeItems === undefined) this.changeItems = [];
+    if (this.changeItems === undefined)
+      /**
+       * A list of all the active items with changes.
+       *
+       * @type {ItemPF[]}
+       */
+      this.changeItems = [];
 
-    /**
-     * Stores all ItemChanges from carried items.
-     *
-     * @property
-     * @public
-     * @type {object}
-     */
-    if (this.changes === undefined) this.changes = new Collection();
+    if (this.changes === undefined)
+      /**
+       * Stores all ItemChanges from carried items.
+       *
+       * @public
+       * @type {Collection<ItemChange>}
+       */
+      this.changes = new Collection();
 
-    /**
-     * Stores updates to be applied to the actor near the end of the _onUpdate method.
-     *
-     * @property
-     * @private
-     * @type {object.<string, any>}
-     */
-    if (this._queuedUpdates === undefined) this._queuedUpdates = {};
+    if (this._queuedUpdates === undefined)
+      /**
+       * Stores updates to be applied to the actor near the end of the _onUpdate method.
+       *
+       * @private
+       * @type {Object<string, any>}
+       */
+      this._queuedUpdates = {};
 
-    /**
-     * @property {object} _rollData
-     * Cached roll data for this item.
-     */
-    if (this._rollData === undefined) this._rollData = null;
+    if (this._rollData === undefined)
+      /**
+       * Cached roll data for this item.
+       *
+       * @type {object}
+       */
+      this._rollData = null;
 
-    /**
-     * @property {object.<string>} _runningFunctions
-     * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
-     */
-    if (this._runningFunctions === undefined) this._runningFunctions = {};
+    if (this._runningFunctions === undefined)
+      /**
+       * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
+       *
+       * @type {Object<string>}
+       */
+      this._runningFunctions = {};
 
-    /**
-     * @property {ItemPF[]} containerItems
-     * All items this actor is holding in containers.
-     */
-    if (this.containerItems === undefined) this.containerItems = [];
+    if (this.containerItems === undefined)
+      /**
+       * All items this actor is holding in containers.
+       *
+       * @type {ItemPF[]}
+       */
+      this.containerItems = [];
 
-    /**
-     * @property {object} _states
-     * Tracks various states which need to be tracked.
-     */
-    if (this._states === undefined) this._states = {};
+    if (this._states === undefined)
+      /**
+       * Tracks various states which need to be tracked.
+       *
+       * @type {object}
+       */
+      this._states = {};
   }
 
   _preCreate(data, options, user) {
@@ -108,7 +118,7 @@ export class ActorPF extends ActorBasePF {
    * @param data
    * @param options
    * @param user
-   * @returns {Object} Update data to replace with.
+   * @returns {object} Update data to replace with.
    */
   preCreateData(data, options, user) {
     return {};
@@ -511,8 +521,8 @@ export class ActorPF extends ActorBasePF {
    * Update specific spellbook.
    *
    * @param {string} bookKey
-   * @param {Object} rollData
-   * @param {Object} cache Pre-calculated data for re-use from _generateSpellbookCache
+   * @param {object} rollData
+   * @param {object} cache Pre-calculated data for re-use from _generateSpellbookCache
    */
   _updateSpellBook(bookKey, rollData, cache) {
     const actorData = this.data.data;

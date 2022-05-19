@@ -11,7 +11,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
   /**
    * Define default rendering options for the NPC sheet
    *
-   * @returns {Object}
+   * @returns {object}
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {

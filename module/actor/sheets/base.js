@@ -156,7 +156,7 @@ export class ActorSheetPF extends ActorSheet {
    * Returns an object containing feature type specific data relevant to feature organization.
    *
    * @static
-   * @type {object.<string, any>}
+   * @type {Object<string, any>}
    */
   static get featTypeData() {
     return {

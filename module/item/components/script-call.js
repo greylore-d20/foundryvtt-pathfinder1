@@ -96,7 +96,7 @@ export class ItemScriptCall {
    * Executes the script.
    *
    * @param {object} shared - An object passed between script calls, and which is passed back as a result of ItemPF.executeScriptCalls.
-   * @param {object.<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
+   * @param {Object<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
    */
   async execute(shared, extraParams = {}) {
     // Add variables to the evaluation scope

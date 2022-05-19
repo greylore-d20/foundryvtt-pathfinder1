@@ -12,7 +12,7 @@ export const ERR_REQUIREMENT = {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {number} - 0 when successful, otherwise one of the ERR_REQUIREMENT constants.
  */
 export const checkRequirements = async function (shared) {
@@ -50,8 +50,8 @@ export const checkRequirements = async function (shared) {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The roll data object for this attack.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The roll data object for this attack.
  */
 export const getRollData = function (shared) {
   const rollData = duplicate(this.getRollData());
@@ -68,7 +68,7 @@ export const getRollData = function (shared) {
 /**
  * Creates and renders an attack roll dialog, and returns a result.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {ItemAttack_Dialog_Result|boolean}
  */
 export const createAttackDialog = async function (shared) {
@@ -79,8 +79,8 @@ export const createAttackDialog = async function (shared) {
 /**
  * Alters roll (and shared) data based on user input during the attack's dialog.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @param {JQuery|Object} form - The attack dialog's jQuery form data or FormData object
+ * @param {object} shared - Shared data between attack functions.
+ * @param {JQuery | object} form - The attack dialog's jQuery form data or FormData object
  */
 export const alterRollData = function (shared, form = {}) {
   let formData;
@@ -196,7 +196,7 @@ export const alterRollData = function (shared, form = {}) {
 };
 
 /**
- * @typedef {Object} ItemAttack_AttackData
+ * @typedef {object} ItemAttack_AttackData
  * @property {string} label - The attack's name
  * @property {number|string|undefined} [attackBonus] - An attack bonus specific to this attack
  * @property {number|string|undefined} [damageBonus] - A damage bonus specific to this attack
@@ -204,7 +204,7 @@ export const alterRollData = function (shared, form = {}) {
 /**
  * Generates attacks for an item's action.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
 export const generateAttacks = function (shared) {
@@ -261,7 +261,7 @@ export const generateAttacks = function (shared) {
 /**
  * Subtracts ammo for this attack.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @param {number} [value=1] - How much ammo to subtract.
  * @returns {Promise}
  */
@@ -297,7 +297,7 @@ export const subtractAmmo = function (shared, value = 1) {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const handleConditionals = function (shared) {
   // Helper to get localized name from CONFIG.PF1 objects
@@ -378,7 +378,7 @@ export const handleConditionals = function (shared) {
 /**
  * Checks all requirements to make the attack. This is after the attack dialog's data has been parsed.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
  */
 export const checkAttackRequirements = function (shared) {
@@ -412,7 +412,7 @@ export const checkAttackRequirements = function (shared) {
 /**
  * Generates ChatAttack entries based off the attack type.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const generateChatAttacks = async function (shared) {
   // Normal attack(s)
@@ -437,7 +437,7 @@ export const generateChatAttacks = async function (shared) {
 /**
  * Adds ChatAttack entries to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addAttacks = async function (shared) {
   for (let a = 0; a < shared.attacks.length; a++) {
@@ -542,7 +542,7 @@ export const addAttacks = async function (shared) {
 /**
  * Adds a ChatAttack entry for damage to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addDamage = async function (shared) {
   // Set conditional modifiers
@@ -568,7 +568,7 @@ export const addDamage = async function (shared) {
 /**
  * Adds a ChatAttack entry for effect notes to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addEffectNotes = async function (shared) {
   const attack = new ChatAttack(this, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
@@ -581,7 +581,7 @@ export const addEffectNotes = async function (shared) {
 };
 
 /**
- * @typedef {Object} Attack_MeasureTemplateResult
+ * @typedef {object} Attack_MeasureTemplateResult
  * @property {boolean} result - Whether an area was selected.
  * @property {Function} [place] - Function to place the template, if an area was selected.
  * @property {Function} [delete] - Function to delete the template, if it has been placed.
@@ -589,7 +589,7 @@ export const addEffectNotes = async function (shared) {
 /**
  * Prompts the user for an area, based on the attack's measure template.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
  */
 export const promptMeasureTemplate = async function (shared) {
@@ -633,7 +633,7 @@ export const promptMeasureTemplate = async function (shared) {
 /**
  * Handles Dice So Nice integration.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const handleDiceSoNice = async function (shared) {
   if (game.dice3d != null && game.dice3d.isEnabled()) {
@@ -700,7 +700,7 @@ export const handleDiceSoNice = async function (shared) {
 /**
  * Adds an attack's chat card data to the shared object.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const getMessageData = async function (shared) {
   if (shared.chatAttacks.length === 0) return;
@@ -853,7 +853,7 @@ export const getMessageData = async function (shared) {
 /**
  * Adds generic property labels to an attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {string[]} The resulting property labels.
  */
 export const addGenericPropertyLabels = function (shared) {
@@ -914,7 +914,7 @@ export const addGenericPropertyLabels = function (shared) {
 /**
  * Adds combat property labels to an attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {string[]} The resulting property labels.
  */
 export const addCombatPropertyLabels = function (shared) {
@@ -929,8 +929,8 @@ export const addCombatPropertyLabels = function (shared) {
 /**
  * Generates metadata for this attack for the chat card to store.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The resulting metadata object.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The resulting metadata object.
  */
 export const generateChatMetadata = function (shared) {
   const metadata = {};
@@ -993,8 +993,8 @@ export const generateChatMetadata = function (shared) {
 /**
  * Executes the item's script calls.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The resulting data from the script calls.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The resulting data from the script calls.
  */
 export const executeScriptCalls = async function (shared) {
   // Extra options for script call
@@ -1046,7 +1046,7 @@ export const executeScriptCalls = async function (shared) {
 /**
  * Posts the attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const postMessage = async function (shared) {
   Hooks.call("itemUse", this, "postAttack", {

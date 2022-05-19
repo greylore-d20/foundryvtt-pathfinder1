@@ -78,7 +78,7 @@ export const linkData = function (expanded, flattened, key, value) {
 };
 
 /**
- * @param {Object} item Item data
+ * @param {object} item Item data
  * @returns {User|null}
  */
 export const getItemOwner = function (item) {
@@ -355,7 +355,7 @@ export const convertDistanceBack = function (value, type = "ft") {
  *
  * @param {Point} p0 Start point on canvas
  * @param {Point} p1 End point on canvas
- * @param {Object} options Measuring options.
+ * @param {object} options Measuring options.
  * @param {boolean} options.altReach Use alternate reach weapon diagonal rule at 10 ft range.
  * @param {"5105"|"555"} options.diagonalRule Used diagonal rule. Defaults to 5/10/5 PF measuring.
  * @param {Ray} options.ray Pre-generated ray to use instead of the points.
@@ -681,7 +681,7 @@ export const colorToInt = function (color) {
  *
  * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
  * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
- * @returns {object.<string, BuffTargetItem>} The resulting array of buff targets.
+ * @returns {Object<string, BuffTargetItem>} The resulting array of buff targets.
  */
 export const getBuffTargets = function (actor, type = "buffs") {
   const buffTargets = duplicate(

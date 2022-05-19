@@ -546,6 +546,7 @@ export const PF1 = {
   /**
    * An array of maximum carry capacities, where the index is the ability/strength score.
    */
+  // prettier-ignore
   encumbranceLoads: [
     0,
     10,
@@ -2003,6 +2004,7 @@ export const PF1 = {
   /**
    * Arrays of Character Level XP Requirements by XP track
    */
+  // prettier-ignore
   CHARACTER_EXP_LEVELS: {
     slow: [
       0,
@@ -2075,6 +2077,7 @@ export const PF1 = {
   /**
    * An array of Challenge Rating XP Levels
    */
+  // prettier-ignore
   CR_EXP_LEVELS: [
     200,
     400,

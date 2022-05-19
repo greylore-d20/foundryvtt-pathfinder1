@@ -26,7 +26,7 @@ export class ActorSheetFlags extends DocumentSheet {
   /**
    * Prepare data used to render the special Actor traits selection UI
    *
-   * @returns {Object}
+   * @returns {object}
    */
   getData() {
     const data = super.getData();
@@ -40,7 +40,7 @@ export class ActorSheetFlags extends DocumentSheet {
    * Prepare an object of flags data which groups flags by section
    * Add some additional data for rendering
    *
-   * @returns {Object}
+   * @returns {object}
    */
   _getFlags() {
     const flags = {};

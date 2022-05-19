@@ -34,7 +34,7 @@ export class ItemWeaponPF extends ItemPF {
 
   /**
    * @param {boolean} active
-   * @param {Object} context Optional update context
+   * @param {object} context Optional update context
    * @returns {Promise} Update promise
    * @override
    */

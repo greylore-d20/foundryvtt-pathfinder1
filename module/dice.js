@@ -26,7 +26,7 @@ export class DicePF {
    * @param {number} critical       The value of d20 result which represents a critical success
    * @param {number} fumble         The value of d20 result which represents a critical failure
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
-   * @param {Object} dialogOptions  Modal dialog options
+   * @param {object} dialogOptions  Modal dialog options
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
    * @param {boolean} autoRender    Whether to automatically render the chat messages
    */

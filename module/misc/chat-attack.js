@@ -242,7 +242,7 @@ export class ChatAttack {
       notes.push(...this.item.data.data.attackNotes);
     }
     if (["mcman", "rcman"].includes(this.item?.data.data.actionType)) {
-      notes.push(...this.item?.actor?.getContextNotesParsed("misc.cmb"));
+      notes.push(...(this.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
     this.attackNotes = notes;

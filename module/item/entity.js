@@ -73,7 +73,7 @@ export class ItemPF extends ItemBasePF {
    * @param data
    * @param options
    * @param user
-   * @returns {Object} Update data to replace with.
+   * @returns {object} Update data to replace with.
    */
   preCreateData(data, options, user) {
     return {};
@@ -740,7 +740,7 @@ export class ItemPF extends ItemBasePF {
    * Executes all script calls on this item of a specified category.
    *
    * @param {string} category - The category of script calls to call.
-   * @param {object.<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
+   * @param {Object<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
    * @returns {Promise.<object>} The shared object between calls which may have been given data.
    */
   async executeScriptCalls(category, extraParams = {}) {
@@ -1194,7 +1194,7 @@ export class ItemPF extends ItemBasePF {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    *
    * @param altChatData
-   * @param {Object} options
+   * @param {object} options
    * @param {boolean} options.addDC
    * @param {string|undefined} options.rollMode Roll mode override.
    * @returns {Promise|undefined}
@@ -1392,7 +1392,7 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
-   * @param {Object} options
+   * @param {object} options
    * @param {Event} options.ev
    * @param {boolean} options.skipDialog
    * @param {boolean} options.chatMessage
@@ -1482,7 +1482,7 @@ export class ItemPF extends ItemBasePF {
 
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    * @param {Event} options.ev
    * @param {boolean} options.skipDialog
    * @param {boolean} options.chatMessage
@@ -2182,7 +2182,7 @@ export class ItemPF extends ItemBasePF {
 
     // Apply damage
     if (action === "applyDamage") {
-      let asNonlethal = [...button.closest(".chat-message")?.querySelectorAll(".tag")]
+      let asNonlethal = [...(button.closest(".chat-message")?.querySelectorAll(".tag") ?? [])]
         .map((o) => o.innerText)
         .includes(game.i18n.localize("PF1.Nonlethal"));
       if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
@@ -2533,7 +2533,7 @@ export class ItemPF extends ItemBasePF {
    * Generates lists of change subtargets this item can have.
    *
    * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
-   * @returns {object.<string, string>} A list of changes
+   * @returns {Object<string, string>} A list of changes
    */
   getChangeSubTargets(target) {
     const result = {};
@@ -2571,7 +2571,7 @@ export class ItemPF extends ItemBasePF {
    * Generates a list of targets this modifier can have.
    *
    * @param {ItemPF} item - The item for which the modifier is to be created.
-   * @returns {object.<string, string>} A list of targets
+   * @returns {Object<string, string>} A list of targets
    */
   getConditionalTargets() {
     const result = {};
@@ -2590,7 +2590,7 @@ export class ItemPF extends ItemBasePF {
    * Generates lists of conditional subtargets this attack can have.
    *
    * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
-   * @returns {object.<string, string>} A list of conditionals
+   * @returns {Object<string, string>} A list of conditionals
    */
   getConditionalSubTargets(target) {
     const result = {};
@@ -2769,7 +2769,7 @@ export class ItemPF extends ItemBasePF {
    * Sets a boolean flag on this item.
    *
    * @param {string} flagName - The name/key of the flag to set.
-   * @param {Object} context Update context
+   * @param {object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async addItemBooleanFlag(flagName, context = {}) {
@@ -2790,7 +2790,7 @@ export class ItemPF extends ItemBasePF {
    * Removes a boolean flag from this item.
    *
    * @param {string} flagName - The name/key of the flag to remove.
-   * @param {Object} context Update context
+   * @param {object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemBooleanFlag(flagName, context = {}) {
@@ -2828,7 +2828,7 @@ export class ItemPF extends ItemBasePF {
    *
    * @param {string} flagName - The name/key of the flag to set.
    * @param {number|string} value - The flag's new value.
-   * @param {Object} context Update context
+   * @param {object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async setItemDictionaryFlag(flagName, value, context = {}) {
@@ -2847,7 +2847,7 @@ export class ItemPF extends ItemBasePF {
    * Removes a dictionary flag from this item.
    *
    * @param {string} flagName - The name/key of the flag to remove.
-   * @param {Object} context Update context
+   * @param {object} context Update context
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName, context = {}) {
@@ -3088,7 +3088,7 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * @param {boolean} active
-   * @param {Object} context Optional update context
+   * @param {object} context Optional update context
    * @returns Update promise if item type supports the operation.
    */
   setActive(active, context) {

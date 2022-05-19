@@ -36,7 +36,7 @@ export class ActorTraitSelector extends DocumentSheet {
   /**
    * Provide data to the HTML template for rendering
    *
-   * @type {Object}
+   * @type {object}
    */
   getData() {
     // Get current values

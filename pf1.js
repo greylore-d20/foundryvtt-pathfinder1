@@ -17,7 +17,6 @@ import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
 import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
 import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
-import { measureDistance } from "./module/lib.js";
 import { TemplateLayerPF } from "./module/measure.js";
 import { MeasuredTemplatePF } from "./module/measure.js";
 import { SightLayerPF } from "./module/low-light-vision.js";
@@ -77,6 +76,7 @@ import {
   normalDie,
   getActorFromId,
   createTag,
+  measureDistance,
   convertWeight,
   convertWeightBack,
   convertDistance,
@@ -88,6 +88,7 @@ import {
   findInCompendia,
   getFirstActiveGM,
   isMinimumCoreVersion,
+  refreshActors,
 } from "./module/lib.js";
 import { getAbilityModifier } from "./module/actor/lib.mjs";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
@@ -225,6 +226,7 @@ Hooks.once("init", function () {
       sortArrayByName,
       findInCompendia,
       getFirstActiveGM,
+      refreshActors,
     },
     // Components
     documentComponents: {

@@ -2,7 +2,7 @@ import { ActorPF } from "../actor/entity";
 import { ChatMessagePF } from "../sidebar/chat-message";
 import { createTestActor } from "./actor-utils";
 
-export const registerActorBasicTests = (quench) => {
+export const registerActorBasicTests = () => {
   // ---------------------------------- //
   // Actor basics                       //
   // ---------------------------------- //
@@ -12,8 +12,16 @@ export const registerActorBasicTests = (quench) => {
       const { describe, it, expect, before, after } = context;
       /** @type {ActorPF} */
       let actor;
+      const messages = [];
       before(async () => {
-        actor = await createTestActor({}, { temporary: true });
+        // Requires actor to NOT be temporary for initiative rolls
+        actor = await createTestActor({}, { temporary: false });
+      });
+      after(async () => {
+        await actor.delete();
+
+        // Clean messages
+        CONFIG.ChatMessage.documentClass.deleteDocuments(messages.map((o) => o.id));
       });
 
       describe("ActorPF basic rolls", function () {
@@ -25,6 +33,7 @@ export const registerActorBasicTests = (quench) => {
           let roll;
           before(async () => {
             roll = await actor.rollBAB();
+            messages.push(roll);
           });
 
           it("should have the correct formula", function () {
@@ -48,6 +57,7 @@ export const registerActorBasicTests = (quench) => {
           let roll;
           before(async () => {
             roll = await actor.rollCMB();
+            messages.push(roll);
           });
 
           it("should have the correct formula", function () {
@@ -67,6 +77,7 @@ export const registerActorBasicTests = (quench) => {
           let roll;
           before(async () => {
             roll = await actor.rollAttack();
+            messages.push(roll);
           });
 
           it("between 1 and 20", function () {
@@ -87,6 +98,7 @@ export const registerActorBasicTests = (quench) => {
             let roll;
             before(async () => {
               roll = await actor.rollSavingThrow("fort", { skipDialog: true });
+              messages.push(roll);
             });
 
             it("should have the correct formula", function () {
@@ -103,6 +115,7 @@ export const registerActorBasicTests = (quench) => {
             let roll;
             before(async () => {
               roll = await actor.rollSavingThrow("ref", { skipDialog: true });
+              messages.push(roll);
             });
 
             it("should have the correct formula", function () {
@@ -119,6 +132,7 @@ export const registerActorBasicTests = (quench) => {
             let roll;
             before(async () => {
               roll = await actor.rollSavingThrow("will", { skipDialog: true });
+              messages.push(roll);
             });
 
             it("should have the correct formula", function () {
@@ -140,7 +154,9 @@ export const registerActorBasicTests = (quench) => {
           /** @type {Combatant} */
           let combatant;
           before(async () => {
-            combat = await actor.rollInitiative({ createCombatants: true, skipDialog: true });
+            const combatResult = await actor.rollInitiative({ createCombatants: true, skipDialog: true });
+            combat = combatResult.combat;
+            messages.push(...combatResult.messages);
             combatant = combat.combatants.find((o) => o.actor.id === actor.id);
           });
           after(async () => {

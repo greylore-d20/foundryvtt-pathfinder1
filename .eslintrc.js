@@ -484,5 +484,6 @@ module.exports = {
     RollTerm: "readonly",
     getDocumentClass: "readonly",
     KeybindingsConfig: "readonly",
+    quench: "readonly",
   },
 };

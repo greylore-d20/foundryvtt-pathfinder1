@@ -53,18 +53,7 @@ export const registerSystemSettings = function () {
     default: HealthConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        if (o) {
-          o.prepareData();
-          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-        }
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Experience configuration
@@ -82,18 +71,7 @@ export const registerSystemSettings = function () {
     default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        if (o) {
-          o.prepareData();
-          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-        }
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Accessibility configuration
@@ -113,7 +91,7 @@ export const registerSystemSettings = function () {
     default: AccessibilityConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: debouncedReload,
+    onChange: () => game.pf1.utils.refreshActors(),
   });
 
   // Tooltip configuration
@@ -188,28 +166,8 @@ export const registerSystemSettings = function () {
     config: false,
     default: "",
     type: String,
-    onChange: () => {
-      [...game.actors.contents, ...Object.values(game.actors.tokens)]
-        .filter((o) => {
-          return o?.data.type === "character";
-        })
-        .forEach((o) => {
-          o.prepareData();
-          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-        });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
-
-  const reRenderSheets = () => {
-    [...game.actors.contents, ...Object.values(game.actors.tokens)]
-      .filter((o) => {
-        return o?.data.type === "character";
-      })
-      .forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-  };
 
   /**
    * System of Units
@@ -225,7 +183,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "distanceUnits", {
@@ -240,7 +198,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "weightUnits", {
@@ -255,7 +213,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -268,14 +226,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        if (o?.sheet && o.sheet.rendered) o.sheet.render(true);
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -288,7 +239,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: debouncedReload,
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -378,14 +329,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: 50,
     type: Number,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        o?.prepareData();
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -524,17 +468,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      const promises = [];
-      const actors = [
-        ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
-        ...Object.values(game.actors.tokens).filter((a) => a != null),
-      ];
-      for (const actor of actors) {
-        promises.push(actor.toggleConditionStatusIcons());
-      }
-      return Promise.all(promises);
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**

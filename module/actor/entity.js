@@ -2406,7 +2406,7 @@ export class ActorPF extends ActorBasePF {
             skipDialog,
           })
         )
-      : combat;
+      : { combat, messages: [] };
   }
 
   rollSavingThrow(

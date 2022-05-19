@@ -219,8 +219,8 @@ export class CombatPF extends Combat {
     if (updateTurn && currentId) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
 
     // Create multiple chat messages
-    await ChatMessage.implementation.create(messages);
-    return this;
+    const chatMessages = await ChatMessage.implementation.create(messages);
+    return { combat: this, messages: chatMessages };
   }
 
   static showInitiativeDialog = function (formula = null) {

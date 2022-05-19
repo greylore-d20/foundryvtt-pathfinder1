@@ -5,8 +5,9 @@ import { createTestActor } from "./actor-utils.js";
 
 /**
  * @param {import("@ethaks/fvtt-quench").Quench} quench - The singleton Quench instance
+ * @param shared
  */
-export const registerActorConditionsTests = (quench) => {
+export const registerActorConditionsTests = (shared) => {
   // ---------------------------------- //
   // Actor stats                        //
   // ---------------------------------- //

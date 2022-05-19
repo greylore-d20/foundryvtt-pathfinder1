@@ -1092,3 +1092,25 @@ export function calculateRange(formula, type = "ft", rollData = {}) {
   const value = calculateRangeFormula(formula, type, rollData);
   return convertDistance(value)[0];
 }
+
+/**
+ * Refreshes all actor data and re-renders sheets.
+ *
+ * @param options
+ */
+export function refreshActors(options = { renderOnly: false, renderForEveryone: false }) {
+  game.actors.contents.forEach((o) => {
+    if (!options.renderOnly) o.prepareData();
+    if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+  });
+  Object.values(game.actors.tokens).forEach((o) => {
+    if (o) {
+      if (!options.renderOnly) o.prepareData();
+      if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+    }
+  });
+
+  if (options.renderForEveryone) {
+    game.socket.emit("pf1", "refreshActorSheets");
+  }
+}

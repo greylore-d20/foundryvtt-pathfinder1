@@ -1,11 +1,7 @@
 import { ActorPF } from "../actor/entity.js";
 import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
 
-/**
- * @param {import("@ethaks/fvtt-quench").Quench} quench - The singleton Quench instance
- * @param shared
- */
-export const registerActorItemRaceTests = (shared) => {
+export const registerActorItemRaceTests = () => {
   // ---------------------------------- //
   // Actor stats                        //
   // ---------------------------------- //

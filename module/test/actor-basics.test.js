@@ -41,7 +41,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should produce a ChatMessage", function () {
-            expect(roll instanceof ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
 
           it("should have the correct subject", function () {
@@ -65,7 +65,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
         });
 
@@ -85,7 +85,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
         });
 
@@ -106,7 +106,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
 
@@ -123,7 +123,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
 
@@ -140,7 +140,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
         });
@@ -153,10 +153,13 @@ export const registerActorBasicTests = () => {
           let combat;
           /** @type {Combatant} */
           let combatant;
+          /** @type {ChatMessage} */
+          let roll;
           before(async () => {
             const combatResult = await actor.rollInitiative({ createCombatants: true, skipDialog: true });
             combat = combatResult.combat;
             messages.push(...combatResult.messages);
+            roll = combatResult.messages[0];
             combatant = combat.combatants.find((o) => o.actor.id === actor.id);
           });
           after(async () => {
@@ -170,8 +173,8 @@ export const registerActorBasicTests = () => {
             expect(combatant instanceof Combatant).to.be.true;
           });
 
-          it("initiative between 1 and 20", function () {
-            expect(combatant.initiative).to.be.within(1, 20);
+          it("should have the correct formula", function () {
+            expect(roll.roll.formula).to.equal("1d20 + 2[Initiative] + 0.02[Tiebreaker]");
           });
         });
 

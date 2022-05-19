@@ -3,11 +3,7 @@ import { getAbilityModifier } from "../actor/lib.mjs";
 import { PF1 } from "../config.js";
 import { createTestActor } from "./actor-utils.js";
 
-/**
- * @param {import("@ethaks/fvtt-quench").Quench} quench - The singleton Quench instance
- * @param shared
- */
-export const registerActorConditionsTests = (shared) => {
+export const registerActorConditionsTests = () => {
   // ---------------------------------- //
   // Actor stats                        //
   // ---------------------------------- //

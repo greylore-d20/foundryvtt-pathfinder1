@@ -1,11 +1,6 @@
-import { ItemClassPF } from "../item/types/class.js";
 import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
 
-/**
- * @param {import("@ethaks/fvtt-quench").Quench} quench - The singleton Quench instance
- * @param shared
- */
-export const registerActorItemClassTests = (shared) => {
+export const registerActorItemClassTests = () => {
   // ---------------------------------- //
   // Actor stats                        //
   // ---------------------------------- //

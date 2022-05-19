@@ -1878,6 +1878,8 @@ export class ActorPF extends ActorBasePF {
     }
 
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
+
+    return itemData[0];
   }
 
   /* -------------------------------------------- */

@@ -109,7 +109,7 @@ export class CombatPF extends Combat {
    * @param {ActorPF} actor
    */
   _getInitiativeFormula(actor) {
-    const defaultParts = ["1d20", "@attributes.init.total"];
+    const defaultParts = ["1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
     if (actor && game.settings.get("pf1", "initiativeTiebreaker"))
       defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
     const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;

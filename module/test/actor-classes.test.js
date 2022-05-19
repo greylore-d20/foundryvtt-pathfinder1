@@ -1,3 +1,4 @@
+import { ActorPF } from "../actor/entity.js";
 import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
 
 export const registerActorItemClassTests = () => {

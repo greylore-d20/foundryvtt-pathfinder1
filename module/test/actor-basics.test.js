@@ -1,6 +1,6 @@
 import { ActorPF } from "../actor/entity";
 import { ChatMessagePF } from "../sidebar/chat-message";
-import { createTestActor } from "./actor-utils";
+import { addCompendiumItemToActor, createTestActor } from "./actor-utils";
 
 export const registerActorBasicTests = () => {
   // ---------------------------------- //
@@ -80,7 +80,7 @@ export const registerActorBasicTests = () => {
             messages.push(roll);
           });
 
-          it("between 1 and 20", function () {
+          it("should have the correct formula", function () {
             expect(roll?.roll?.formula).to.equal("1d20 + 1[Strength]");
           });
 
@@ -141,6 +141,89 @@ export const registerActorBasicTests = () => {
 
             it("should be a ChatMessage", function () {
               expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            });
+          });
+        });
+
+        // ---------------------------------- //
+        // Skills                             //
+        // ---------------------------------- //
+        describe("#rollSkill with defaults", function () {
+          describe("for a regular skill", function () {
+            /** @type {ChatMessage} */
+            let roll;
+            before(async () => {
+              roll = await actor.rollSkill("per", { skipDialog: true });
+              messages.push(roll);
+            });
+
+            it("should have the correct formula", function () {
+              expect(roll.roll.formula).to.equal("1d20 + 2[Wisdom]");
+            });
+
+            it("should be a ChatMessage", function () {
+              expect(roll instanceof ChatMessagePF).to.be.true;
+            });
+
+            it("should have the correct subject", function () {
+              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("per");
+            });
+          });
+
+          describe("for a subSkill", function () {
+            /** @type {ChatMessagePF} */
+            let roll;
+            before(async () => {
+              await actor.update({ "data.skills.crf.subSkills": { crf1: { name: "foo", ability: "int", rank: 1 } } });
+              roll = await actor.rollSkill("crf.subSkills.crf1", { skipDialog: true });
+              messages.push(roll);
+            });
+
+            it("should have the correct formula", function () {
+              expect(roll.roll.formula).to.equal("1d20 + 1[Intelligence] + 1[Skill Ranks]");
+            });
+
+            it("should be a ChatMessage", function () {
+              expect(roll instanceof ChatMessagePF).to.be.true;
+            });
+
+            it("should have the correct subject", function () {
+              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
+            });
+          });
+
+          describe("with ACP and ranks and class skill", function () {
+            /** @type {ChatMessagePF} */
+            let roll;
+            /** @type {Item} */
+            const items = [];
+            before(async () => {
+              items.push(await addCompendiumItemToActor(actor, "pf1.armors-and-shields", "Full Plate"));
+              items.push(await addCompendiumItemToActor(actor, "pf1.classes", "Warpriest"));
+              await actor.update({ "data.skills.clm.rank": 3 });
+              roll = await actor.rollSkill("clm", { skipDialog: true });
+              messages.push(roll);
+            });
+            after(async () => {
+              await actor.deleteEmbeddedDocuments(
+                "Item",
+                items.map((i) => i.id)
+              );
+              await actor.update({ "data.skills.clm.rank": 0 });
+            });
+
+            it("should have the correct formula", function () {
+              expect(roll.roll.formula).to.equal(
+                "1d20 + 1[Strength] + 3[Skill Ranks] + 3[Class Skill] +  - 6[Armor Check Penalty]"
+              );
+            });
+
+            it("should be a ChatMessage", function () {
+              expect(roll instanceof ChatMessagePF).to.be.true;
+            });
+
+            it("should have the correct subject", function () {
+              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("clm");
             });
           });
         });

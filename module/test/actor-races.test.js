@@ -23,9 +23,8 @@ export const registerActorItemRaceTests = () => {
       // Race                               //
       // ---------------------------------- //
       describe("add race", function () {
-        let race;
         before(async () => {
-          race = await addCompendiumItemToActor(actor, "pf1.races", "Human");
+          await addCompendiumItemToActor(actor, "pf1.races", "Human");
         });
         after(async () => {
           await actor.race.delete();

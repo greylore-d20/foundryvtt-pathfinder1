@@ -778,21 +778,6 @@ Hooks.on("controlToken", (token, selected) => {
   });
 });
 
-// Create race on actor
-Hooks.on("preCreateItem", (item, options, userId) => {
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
-
-  // Overwrite race
-  if (actor && actor.race && item.type === "race") {
-    const context = {};
-    // Ensure actor size is updated to match the race, but only if it's same as old race
-    const actorSize = actor.data.data.traits.size;
-    if (actorSize !== item.data.data.size && actor.race.data.data.size === actorSize) context._pf1SizeChanged = true;
-    actor.race.update(item.data._source, context);
-    return false;
-  }
-});
-
 Hooks.on("createItem", (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
   if (userId !== game.user.id) return;

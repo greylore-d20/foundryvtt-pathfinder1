@@ -1,4 +1,5 @@
 import { ActorPF } from "../actor/entity.js";
+import { ItemClassPF } from "../item/types/class.js";
 import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
 
 /**
@@ -26,14 +27,15 @@ export const registerActorItemTests = (quench) => {
       // Race                               //
       // ---------------------------------- //
       describe("add race", function () {
+        let race;
         before(async () => {
-          await addCompendiumItemToActor(actor, "pf1.races", "Human");
+          race = await addCompendiumItemToActor(actor, "pf1.races", "Human");
         });
         after(async () => {
           await actor.race.delete();
         });
 
-        it("add Human", async function () {
+        it("add Human", function () {
           const race = actor.itemTypes.race[0];
           expect(race.name).to.equal("Human");
         });
@@ -45,14 +47,14 @@ export const registerActorItemTests = (quench) => {
         });
 
         describe("has Elf stats", function () {
-          it("has 12 Dex", function () {
-            expect(actor.data.data.abilities.dex.total).to.equal(12);
+          it("has appropriate Dex", function () {
+            expect(actor.data.data.abilities.dex.total).to.equal(16);
           });
-          it("has 12 Int", function () {
-            expect(actor.data.data.abilities.int.total).to.equal(12);
+          it("has appropriate Int", function () {
+            expect(actor.data.data.abilities.int.total).to.equal(15);
           });
-          it("has 8 Con", function () {
-            expect(actor.data.data.abilities.con.total).to.equal(8);
+          it("has appropriate Con", function () {
+            expect(actor.data.data.abilities.con.total).to.equal(14);
           });
         });
       });
@@ -60,11 +62,19 @@ export const registerActorItemTests = (quench) => {
       // ---------------------------------- //
       // Class                              //
       // ---------------------------------- //
-      describe("add class", function () {
-        let cls;
+      describe("add classes", function () {
+        // ---------------------------------- //
+        // Fighter                            //
+        // ---------------------------------- //
         describe("add Fighter", async function () {
+          const cls = {};
           before(async () => {
-            cls = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter");
+            cls.fighter = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter");
+          });
+
+          it("add Fighter", function () {
+            expect(actor.itemTypes.class).to.be.an("array").with.lengthOf(1);
+            expect(actor.itemTypes.class.find((o) => o === cls.fighter).name).to.equal("Fighter");
           });
 
           it("has 1 BAB", function () {
@@ -73,17 +83,16 @@ export const registerActorItemTests = (quench) => {
 
           describe("has appropriate saving throws", function () {
             /**
-             * Combined with the Elf stats from above (-2 Con, +2 Dex),
-             * Fort should be 1, Reflex should be 1 and Will should be 0
+             * Fort should be 5, Reflex should be 2 and Will should be 2
              */
             it("has appropriate Fortitude", function () {
-              expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(1);
+              expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(5);
             });
             it("has appropriate Reflex", function () {
-              expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(1);
+              expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(2);
             });
             it("has appropriate Will", function () {
-              expect(actor.data.data.attributes.savingThrows.will.total).to.equal(0);
+              expect(actor.data.data.attributes.savingThrows.will.total).to.equal(2);
             });
           });
 
@@ -111,11 +120,11 @@ export const registerActorItemTests = (quench) => {
               await game.settings.set("pf1", "healthConfig", previousHealthConfig);
             });
             /**
-             * Combined with the Elf stats from above (-2 Con),
-             * HP should be 9
+             * Combined with base Con (16),
+             * HP should be 13
              */
-            it("should be 9", function () {
-              expect(actor.data.data.attributes.hp.max).to.equal(9);
+            it("should be 13", function () {
+              expect(actor.data.data.attributes.hp.max).to.equal(13);
             });
           });
         });

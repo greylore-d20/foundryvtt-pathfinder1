@@ -1,6 +1,21 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemRacePF extends ItemPF {
+  async _preCreate(data, options, user) {
+    const actor = this.parent instanceof Actor ? this.parent : null;
+
+    // Overwrite race
+    if (actor && actor.race && this.type === "race") {
+      // Delete previous race
+      await actor.race.delete();
+
+      const context = {};
+      // Ensure actor size is updated to match the race, but only if it's same as old race
+      const actorSize = actor.data.data.traits.size;
+      if (actorSize !== this.data.data.size && actor.race.data.data.size === actorSize) context._pf1SizeChanged = true;
+    }
+  }
+
   async _preUpdate(update, context, user) {
     await super._preUpdate(update, context, user);
 

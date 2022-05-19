@@ -200,11 +200,14 @@ export const registerActorConditionsTests = (quench) => {
           await actor.setCondition("pf1_blind", false);
         });
 
-        it("lowered AC by 2", function () {
+        it("lowered AC by 2", async function () {
+          const previousDex = actor.toObject().data.abilities.dex.value;
+          await actor.update({ "data.abilities.dex.value": 10 });
           expect(actor.data.data.attributes.ac.normal.total).to.equal(8);
+          await actor.update({ "data.abilities.dex.value": previousDex });
         });
 
-        it("lost Dexterity to AC", async function () {
+        it("lost Dexterity to AC", function () {
           // Blindness also lowers AC by 2, in addition negating Dex bonus to AC, so this should be 8
           expect(actor.data.data.attributes.ac.normal.total).to.equal(8);
         });

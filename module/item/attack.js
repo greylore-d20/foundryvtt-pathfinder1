@@ -177,7 +177,8 @@ export const alterRollData = function (shared, form = {}) {
   });
 
   // Damage multiplier
-  shared.rollData.item.ability.damageMult = formData["damage-ability-multiplier"] ?? "1";
+  if (formData["damage-ability-multiplier"] != null)
+    shared.rollData.item.ability.damageMult = formData["damage-ability-multiplier"];
 
   // CL check enabled
   shared.casterLevelCheck = formData["cl-check"];
@@ -491,7 +492,7 @@ export const addAttacks = async function (shared) {
       const critParts = [];
 
       // Add power attack bonus
-      if (shared.rollData.powerAttackBonus >= 0) {
+      if (shared.rollData.powerAttackBonus > 0) {
         // Get label
         const label = ["rwak", "rsak"].includes(this.data.data.actionType)
           ? game.i18n.localize("PF1.DeadlyAim")

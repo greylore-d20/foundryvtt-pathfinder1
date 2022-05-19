@@ -115,7 +115,7 @@ export const alterRollData = function (shared, form = {}) {
   }
 
   // Primary attack
-  shared.rollData.item.primaryAttack = formData["primary-attack"];
+  if (formData["primary-attack"] != null) shared.rollData.item.primaryAttack = formData["primary-attack"];
 
   // Use measure template
   shared.useMeasureTemplate = formData["measure-template"];

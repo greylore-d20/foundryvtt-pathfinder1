@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.80.24 - 2022-5-21
+
+### Bug Fixes
+
+- Migration messages would sometimes not auto-clear
+- Fix scene loading with basic actors on it ([1435](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1435))
+- Dice Pools in attack damage broke character sheets
+- Create Attack button didn't link attack to weapon as child
+- Tracked HP in round tracker was empty if 0
+- Fix some styling issues with item sheets
+- Damage ability multiplier was always 1 when skipping attack dialog
+- Secondary natural attacks were treated as primary attacks when skipping its attack dialog
+
+### Changelog
+
+- Races now define their size and update character size to match where appropriate.
+- Scrolling to adjust item charges from an actor sheet now only works while control is held ([203](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/203))
+
 ## 0.80.23 - 2022-5-15
 
 ### Bug Fixes

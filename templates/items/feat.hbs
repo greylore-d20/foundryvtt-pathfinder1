@@ -45,22 +45,24 @@
       {{!-- Feat Type --}}
       <div class="form-group select">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="data.featType" value="{{data.featType}}">
-          {{#select data.featType}}
-          {{#each config.featTypes as |type a|}}
-          <option value="{{a}}">{{type}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.featType" value="{{data.featType}}">
+            {{#select data.featType}}
+            {{#each config.featTypes as |type a|}}
+            <option value="{{a}}">{{type}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
 
-        <select name="data.abilityType" value="{{data.abilityType}}">
-          {{#select data.abilityType}}
-          <option value="none"></option>
-          {{#each config.abilityTypes as |type a|}}
-          <option value="{{a}}">{{localize type.short}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+          <select name="data.abilityType" value="{{data.abilityType}}">
+            {{#select data.abilityType}}
+            <option value="none"></option>
+            {{#each config.abilityTypes as |type a|}}
+            <option value="{{a}}">{{localize type.short}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Proficiencies --}}
@@ -84,7 +86,9 @@
       {{#if isTemplate}}
       <div class="form-group">
         <label>{{localize "PF1.CROffset"}}</label>
-        <input type="text" name="data.crOffset" class="formula" value="{{data.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
+        <div class="form-fields">
+          <input type="text" name="data.crOffset" class="formula" value="{{data.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
+        </div>
       </div>
       {{/if}}
 

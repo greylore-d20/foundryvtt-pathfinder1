@@ -51,38 +51,44 @@
       {{!-- Equipment Type --}}
       <div class="form-group">
         <label>{{localize "PF1.Category"}}</label>
-        <select name="data.equipmentType">
-          {{#select data.equipmentType}}
-          {{#each equipmentCategories.types as |name type|}}
-          <option value="{{type}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.equipmentType">
+            {{#select data.equipmentType}}
+            {{#each equipmentCategories.types as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Equipment Subtype --}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="data.equipmentSubtype">
-          {{#select data.equipmentSubtype}}
-          {{#each equipmentCategories.subTypes as |name type|}}
-          <option value="{{type}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.equipmentSubtype">
+            {{#select data.equipmentSubtype}}
+            {{#each equipmentCategories.subTypes as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Equipment Slot --}}
       {{#if hasMultipleSlots}}
       <div class="form-group">
         <label>{{localize "PF1.Slot"}}</label>
-        <select name="data.slot">
-          {{#select data.slot}}
-          {{#each equipmentSlots as |name type|}}
-          <option value="{{type}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.slot">
+            {{#select data.slot}}
+            {{#each equipmentSlots as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
       {{else}}
       <input type="hidden" name="data.slot" value="{{data.equipmentType}}" />

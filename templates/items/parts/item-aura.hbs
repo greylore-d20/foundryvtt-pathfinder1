@@ -6,7 +6,7 @@
   <div class="tooltipcontent">
     @item.cl : {{data.cl}}
   </div>
-  <label>{{localize "PF1.CasterLevel"}}</label>
+  <label class="header">{{localize "PF1.CasterLevel"}}</label>
   <div class="form-fields">
     <input type="text" class="select-on-click" name="data.cl" value="{{data.cl}}" placeholder="{{localize "PF1.CasterLevel"}}" data-dtype="Number"/>
   </div>
@@ -17,11 +17,14 @@
   <div class="tooltipcontent">
     @item.auraStrength : {{auraStrength}}
   </div>
-  <label>{{localize "PF1.Aura"}}</label>
+  <label class="header">{{localize "PF1.Aura"}}</label>
   {{#if data.aura.custom}}
   <div class="form-fields">
     <label class="aura-strength">{{auraStrength_name}}</label>
     <input type="text" name="data.aura.school" value="{{data.aura.school}}" placeholder="{{localize "PF1.Aura"}}"/>
+    <label class="checkbox">
+      <input type="checkbox" name="data.aura.custom" {{checked data.aura.custom}}/> {{localize "PF1.Custom"}}
+    </label>
   </div>
   {{else}}
   <div class="form-fields">
@@ -34,11 +37,11 @@
       {{/each}}
       {{/select}}
     </select>
+    <label class="checkbox">
+      <input type="checkbox" name="data.aura.custom" {{checked data.aura.custom}}/> {{localize "PF1.Custom"}}
+    </label>
   </div>
   {{/if}}
-  <label class="checkbox">
-    <input type="checkbox" name="data.aura.custom" {{checked data.aura.custom}}/> {{localize "PF1.Custom"}}
-  </label>
 </div>
 
 {{!-- Identify DC --}}

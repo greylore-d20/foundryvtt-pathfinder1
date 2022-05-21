@@ -1,14 +1,16 @@
 {{!-- Action Type --}}
 <div class="form-group select">
   <label>{{localize "PF1.ActionType"}}</label>
-  <select name="data.actionType">
-    {{#select data.actionType}}
-    <option value=""></option>
-    {{#each config.itemActionTypes as |name type|}}
-    <option value="{{type}}">{{name}}</option>
-    {{/each}}
-    {{/select}}
-  </select>
+  <div class="form-fields">
+    <select name="data.actionType">
+      {{#select data.actionType}}
+      <option value=""></option>
+      {{#each config.itemActionTypes as |name type|}}
+      <option value="{{type}}">{{name}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
 </div>
 {{#if data.actionType}}
 
@@ -64,14 +66,16 @@
 {{!-- Attack Ability --}}
 <div class="form-group select">
   <label>{{localize "PF1.AttackAbility"}}</label>
-  <select name="data.ability.attack">
-    {{#select data.ability.attack}}
-    <option value=""></option>
-    {{#each config.abilities as |ability a|}}
-    <option value="{{a}}">{{ability}}</option>
-    {{/each}}
-    {{/select}}
-  </select>
+  <div class="form-fields">
+    <select name="data.ability.attack">
+      {{#select data.ability.attack}}
+      <option value=""></option>
+      {{#each config.abilities as |ability a|}}
+      <option value="{{a}}">{{ability}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
 </div>
 
 <hr />
@@ -93,20 +97,26 @@
 {{!-- Formulaic Extra Attacks --}}
 <h4 class="attack-header">{{localize 'PF1.FormulaicExtraAttacks'}}</h4>
 <div class="formulaic-attacks-box">
-<div class="form-group">
-  <label>{{localize 'PF1.FormulaicAttacksCount'}}</label>
-  <input type="text" class="formulaic-attacks formula" name="data.formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1" />
-  {{!-- to avoid disappearance of .value --}}
-  <input type="text" disabled class="formula-result small" name="data.formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" title="{{localize 'PF1.FormulaResult'}}" placeholder="0" data-dtype="Number" />
-</div>
-<div class="form-group">
-  <label>{{localize 'PF1.AttackBonusFormula'}}</label>
-  <input type="text" class="formula" name="data.formulaicAttacks.bonus.formula" value="{{data.formulaicAttacks.bonus.formula}}" data-dtype="String" placeholder="e.g. @formulaicAttack * -5" />
-</div>
-<div class="form-group">
-  <label>{{localize 'PF1.AttackName'}}</label>
-  <input type="text" name="data.formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" title="{{localize 'PF1.FormulaAttackHint'}}" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}" />
-</div>
+  <div class="form-group">
+    <label>{{localize 'PF1.FormulaicAttacksCount'}}</label>
+    <div class="form-fields">
+      <input type="text" class="formulaic-attacks formula" name="data.formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1" />
+      {{!-- to avoid disappearance of .value --}}
+      <input type="text" disabled class="formula-result small" name="data.formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" title="{{localize 'PF1.FormulaResult'}}" placeholder="0" data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize 'PF1.AttackBonusFormula'}}</label>
+    <div class="form-fields">
+      <input type="text" class="formula" name="data.formulaicAttacks.bonus.formula" value="{{data.formulaicAttacks.bonus.formula}}" data-dtype="String" placeholder="e.g. @formulaicAttack * -5" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize 'PF1.AttackName'}}</label>
+    <div class="form-fields">
+      <input type="text" name="data.formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" title="{{localize 'PF1.FormulaAttackHint'}}" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}" />
+    </div>
+  </div>
 </div>
 
 <hr />
@@ -115,23 +125,25 @@
 {{!-- Damage Ability --}}
 <div class="form-group select">
   <label>{{localize "PF1.DamageAbility"}}</label>
-  <select name="data.ability.damage">
-    {{#select data.ability.damage}}
-    <option value=""></option>
-    {{#each config.abilities as |ability a|}}
-    <option value="{{a}}">{{ability}}</option>
-    {{/each}}
-    {{/select}}
-  </select>
-  <select name="data.ability.damageMult" data-dtype="Number">
-    {{#select data.ability.damageMult}}
-    <option value="0.5">x0.5</option>
-    <option value="1" {{#unless data.ability.damageMult}}selected="selected"{{/unless}}>x1</option>
-    <option value="1.5">x1.5</option>
-    <option value="2">x2</option>
-    <option value="2.5">x2.5</option>
-    {{/select}}
-  </select>
+  <div class="form-fields">
+    <select name="data.ability.damage">
+      {{#select data.ability.damage}}
+      <option value=""></option>
+      {{#each config.abilities as |ability a|}}
+      <option value="{{a}}">{{ability}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+    <select name="data.ability.damageMult" data-dtype="Number">
+      {{#select data.ability.damageMult}}
+      <option value="0.5">x0.5</option>
+      <option value="1" {{#unless data.ability.damageMult}}selected="selected"{{/unless}}>x1</option>
+      <option value="1.5">x1.5</option>
+      <option value="2">x2</option>
+      <option value="2.5">x2.5</option>
+      {{/select}}
+    </select>
+  </div>
 </div>
 
 <hr>

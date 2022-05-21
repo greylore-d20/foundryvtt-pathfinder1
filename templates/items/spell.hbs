@@ -115,11 +115,15 @@
         </select>
       </div>
 
-      {{!-- Subschool and type --}}
+      {{!-- Subschool --}}
       <div class="form-group flexrow">
         <label>{{localize "PF1.SubSchool"}}</label>
         <input type="text" name="data.subschool" value="{{data.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}"/>
-        <label>{{localize "PF1.TypePlural"}}</label>
+      </div>
+
+      {{!-- Descriptors --}}
+      <div class="form-group flexrow">
+        <label>{{localize "PF1.DescriptorPlural"}}</label>
         <input type="text" name="data.types" value="{{data.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}"/>
       </div>
 

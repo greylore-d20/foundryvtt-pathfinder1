@@ -60,25 +60,29 @@
       {{!-- Weapon Type --}}
       <div class="form-group">
         <label>{{localize "PF1.Category"}}</label>
-        <select name="data.weaponType">
-          {{#select data.weaponType}}
-          {{#each weaponCategories.types as |name type|}}
-          <option value="{{ type }}">{{ name }}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.weaponType">
+            {{#select data.weaponType}}
+            {{#each weaponCategories.types as |name type|}}
+            <option value="{{ type }}">{{ name }}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Weapon Subtype --}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="data.weaponSubtype">
-          {{#select data.weaponSubtype}}
-          {{#each weaponCategories.subTypes as |name type|}}
-          <option value="{{ type }}">{{ name }}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.weaponSubtype">
+            {{#select data.weaponSubtype}}
+            {{#each weaponCategories.subTypes as |name type|}}
+            <option value="{{ type }}">{{ name }}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Weapon Size --}}
@@ -87,13 +91,15 @@
       {{!-- Weapon Hold Type --}}
       <div class="form-group">
         <label>{{localize "PF1.Held"}}</label>
-        <select name="data.held">
-          {{#select data.held}}
-          {{#each config.weaponHoldTypes as |name type|}}
-          <option value="{{ type }}">{{ name }}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.held">
+            {{#select data.held}}
+            {{#each config.weaponHoldTypes as |name type|}}
+            <option value="{{ type }}">{{ name }}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Equipment Status --}}

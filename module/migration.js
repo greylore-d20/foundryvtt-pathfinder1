@@ -169,7 +169,7 @@ const _migrateWorldSettings = async function () {
  */
 export const migrateActorData = function (actor, token) {
   // Ignore basic actor type
-  if (actor.type === "basic") return;
+  if (actor.type === "basic") return {};
 
   const updateData = {};
   const linked = token?.isLinked ?? true;

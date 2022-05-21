@@ -1408,12 +1408,14 @@ export class ActorSheetPF extends ActorSheet {
 
   _mouseWheelAdd(event, el) {
     const isInput = el.tagName.toUpperCase() === "INPUT";
+    const { originalEvent } = event;
 
-    if (event && event instanceof WheelEvent) {
+    if (originalEvent && originalEvent instanceof WheelEvent && originalEvent.ctrlKey) {
+      event.preventDefault();
       const value = (isInput ? parseFloat(el.value) : parseFloat(el.innerText)) || 0;
       if (Number.isNaN(value)) return;
 
-      const increase = -Math.sign(event.deltaY);
+      const increase = -Math.sign(originalEvent.deltaY);
       const amount = parseFloat(el.dataset.wheelStep) || 1;
 
       if (isInput) {
@@ -1425,12 +1427,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setFeatUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "data.uses.value", value);
@@ -1446,12 +1448,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setSpellUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const prevValue = getProperty(item.data, "data.preparation.preparedAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -1470,12 +1472,12 @@ export class ActorSheetPF extends ActorSheet {
     } else this._updateItems();
   }
   _setMaxSpellUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const prevValue = getProperty(item.data, "data.preparation.maxAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -1498,10 +1500,10 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _adjustActorPropertyBySpan(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
     // Get base value
     let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
@@ -1531,12 +1533,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setBuffLevel(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     const name = el.getAttribute("name");
     if (name) {

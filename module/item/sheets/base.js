@@ -316,10 +316,7 @@ export class ItemSheetPF extends ItemSheet {
       data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
       data.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       data.isAtWill = data.item.data.atWill;
-      data.spellbooks = {};
-      if (this.actor) {
-        data.spellbooks = deepClone(this.actor.data.data.attributes.spells.spellbooks);
-      }
+      data.spellbooks = deepClone(this.actor?.data.data.attributes?.spells?.spellbooks ?? {});
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",

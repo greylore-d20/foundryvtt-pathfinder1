@@ -154,8 +154,9 @@ export class ItemSpellPF extends ItemPF {
     if (!this.parent) return;
     if (this.data.data.atWill) return;
 
-    const spellbook = this.spellbook,
-      isSpontaneous = spellbook.spontaneous,
+    const spellbook = this.spellbook;
+    if (!spellbook) return;
+    const isSpontaneous = spellbook.spontaneous,
       spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
       spellLevel = getProperty(this.data, "data.level");
 
@@ -223,7 +224,7 @@ export class ItemSpellPF extends ItemPF {
 
   get spellbook() {
     const bookId = this.data.data.spellbook;
-    return this.parent?.data?.data.attributes.spells.spellbooks[bookId];
+    return this.parent?.data?.data.attributes?.spells.spellbooks[bookId];
   }
 
   getDC(rollData = null) {
@@ -251,8 +252,10 @@ export class ItemSpellPF extends ItemPF {
     const itemData = this.data.data;
     if (itemData.atWill) return Number.POSITIVE_INFINITY;
 
-    const spellbook = this.spellbook,
-      isSpontaneous = spellbook.spontaneous,
+    const spellbook = this.spellbook;
+    if (!spellbook) return 0;
+
+    const isSpontaneous = spellbook.spontaneous,
       spellLevel = itemData.level;
 
     if (this.useSpellPoints()) {

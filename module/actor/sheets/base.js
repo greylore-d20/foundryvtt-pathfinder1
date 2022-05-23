@@ -1757,7 +1757,7 @@ export class ActorSheetPF extends ActorSheet {
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
     const mainSkillData = this.document.data.data.skills[skillId];
     const skillData = {
-      name: "",
+      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: mainSkillData.ability,
       rank: 0,
       mod: 0,
@@ -1785,7 +1785,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const isBackground = $(event.currentTarget).parents(".skills-list").attr("data-background") === "true";
     const skillData = {
-      name: "",
+      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: "int",
       rank: 0,
       mod: 0,

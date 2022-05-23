@@ -38,7 +38,7 @@ export class SkillEditor extends FormApplication {
   }
 
   /**
-   * Get the alphabetized Documents which can be chosen as a configuration for the Scene
+   * Get the alphabetized Documents which can be chosen as a configuration for the skill
    *
    * @param {WorldCollection} collection
    * @returns {object[]}

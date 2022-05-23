@@ -45,9 +45,13 @@ export class SkillEditor extends FormApplication {
    * @private
    */
   _getDocuments(collection) {
-    const documents = collection.map((doc) => {
-      return { id: doc.id, name: doc.name };
-    });
+    const documents = collection
+      .filter((doc) => {
+        return doc.testUserPermission(game.user, "LIMITED");
+      })
+      .map((doc) => {
+        return { id: doc.id, name: doc.name };
+      });
     documents.sort((a, b) => a.name.localeCompare(b.name));
     return documents;
   }

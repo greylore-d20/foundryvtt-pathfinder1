@@ -55,6 +55,7 @@ export class DicePF {
     chatMessage = true,
     noSound = false,
     compendiumEntry = null,
+    compendiumEntryType = null,
     originalOptions = {},
   }) {
     // Call pre-roll handlers
@@ -114,6 +115,7 @@ export class DicePF {
               isNat20: d20.total === 20,
               flavor: flavor,
               compendiumEntry: compendiumEntry,
+              compendiumEntryType: compendiumEntryType,
             },
             chatTemplateData || {}
           );

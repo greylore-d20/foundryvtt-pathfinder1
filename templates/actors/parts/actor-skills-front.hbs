@@ -5,7 +5,7 @@
       <label>{{localize "PF1.SkillBonusRankFormula"}}</label>
       <input class="formula" type="text" name="data.details.bonusSkillRankFormula" value="{{data.details.bonusSkillRankFormula}}" placeholder="{{localize "PF1.Formula"}}"/>
     </li>
-    <a class='skill-lock-button' title="{{localize "PF1.ToggleSkillLock"}}"></a>
+    <a class="skill-lock-button{{#unless @root.skillsLocked}} unlocked{{/unless}}" title="{{localize "PF1.ToggleSkillLock"}}"></a>
   </ol>
   {{#unless useBGSkills}}
   <ol class="form-group">

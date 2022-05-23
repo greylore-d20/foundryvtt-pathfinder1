@@ -34,6 +34,7 @@ import { ActorSheetPFBasic } from "./module/actor/sheets/basic.js";
 import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
 import { SensesSelector } from "./module/apps/senses-selector.js";
+import { SkillEditor } from "./module/apps/skill-editor.js";
 import { AmbientLightPF } from "./module/low-light-vision.js";
 import { CombatPF } from "./module/combat.js";
 import { TokenPF } from "./module/token/token.js";
@@ -179,6 +180,7 @@ Hooks.once("init", function () {
       TooltipPF,
       PF1_HelpBrowser,
       ExperienceDistributor,
+      SkillEditor,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,

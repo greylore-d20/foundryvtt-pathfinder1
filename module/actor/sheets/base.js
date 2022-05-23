@@ -106,6 +106,13 @@ export class ActorSheetPF extends ActorSheet {
      * @private
      */
     this._pendingUpdates = {};
+
+    /**
+     * @type {boolean} Whether the skills are currently locked.
+     * @property
+     * @private
+     */
+    this._skillsLocked = true;
   }
 
   static get defaultOptions() {
@@ -201,6 +208,7 @@ export class ActorSheetPF extends ActorSheet {
       race: this.document.race != null ? this.document.race.data : null,
       usesAnySpellbook: this.document.data.data.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
+      skillsLocked: this._skillsLocked,
     });
     data.data = data.data.data;
     const rollData = this.document.getRollData();
@@ -289,7 +297,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
-      skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? null;
+      skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? skl.journal ?? null;
 
       // Add skill rank source
       if (skl.rank > 0) {
@@ -333,6 +341,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (const [s2, skl2] of Object.entries(skl.subSkills)) {
+          skl2.compendiumEntry = skl2.journal ?? null;
           skl2.sourceDetails = [];
           if (skl2.rank > 0) {
             skl2.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skl2.rank });
@@ -1018,6 +1027,9 @@ export class ActorSheetPF extends ActorSheet {
     // Add custom skill
     html.find(".skill-controls.skills .skill-create").click((ev) => this._onSkillCreate(ev));
 
+    // Edit skill
+    html.find(".sub-skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
+    html.find(".skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
     // Delete custom skill
     html.find(".skill > .skill-controls > .skill-delete").click((ev) => this._onSkillDelete(ev));
 
@@ -1201,7 +1213,7 @@ export class ActorSheetPF extends ActorSheet {
     /*  Skills
     /* -------------------------------------------- */
 
-    html.find(".skill-lock-button").click(this._onToggleSkillLock.bind(this)).addClass("unlocked").click();
+    html.find(".skill-lock-button").on("click", this._onToggleSkillLock.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -1589,11 +1601,8 @@ export class ActorSheetPF extends ActorSheet {
 
   _onToggleSkillLock(event) {
     event.preventDefault();
-    const state = event.target.classList.toggle("unlocked");
-    const tab = event.target.closest(".tab.skills");
-    const rareInputs = $(tab).find(".skill-acp input,.skill-rt input, .skill-ability select");
-    rareInputs.prop("disabled", !state);
-    $(tab).find(".skill-controls .skill-delete").toggle();
+    this._skillsLocked = !this._skillsLocked;
+    return this.render();
   }
 
   _onOpenCompendium(event) {
@@ -1743,7 +1752,7 @@ export class ActorSheetPF extends ActorSheet {
 
   /* -------------------------------------------- */
 
-  _onArbitrarySkillCreate(event) {
+  async _onArbitrarySkillCreate(event) {
     event.preventDefault();
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
     const mainSkillData = this.document.data.data.skills[skillId];
@@ -1767,10 +1776,12 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`data.skills.${skillId}.subSkills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+
+    return this._editSkill(skillId, tag);
   }
 
-  _onSkillCreate(event) {
+  async _onSkillCreate(event) {
     event.preventDefault();
     const isBackground = $(event.currentTarget).parents(".skills-list").attr("data-background") === "true";
     const skillData = {
@@ -1794,26 +1805,91 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`data.skills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+
+    return this._editSkill(tag);
+  }
+
+  /**
+   * Opens a dialog to edit a skill.
+   *
+   * @param {string} skillId - The id of the skill in question.
+   * @param {string} [subSkillId] - The id of the subskill, if appropriate.
+   * @returns {Promise.<void>}
+   */
+  _editSkill(skillId, subSkillId) {
+    return new Promise((resolve) => {
+      const app = new game.pf1.applications.SkillEditor(this.document, skillId, subSkillId);
+      app.addCallback(resolve);
+      app.render(true);
+    });
+  }
+
+  _onSkillEdit(event) {
+    event.preventDefault();
+    const mainSkillId =
+      $(event.currentTarget).parents(".sub-skill").attr("data-main-skill") ??
+      $(event.currentTarget).parents(".skill").attr("data-skill");
+    const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
+
+    return this._editSkill(mainSkillId, subSkillId);
   }
 
   _onArbitrarySkillDelete(event) {
     event.preventDefault();
     const mainSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-main-skill");
+    const skill = this.document.data.data.skills[mainSkillId];
     const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
+    const subSkill = skill?.subSkills?.[subSkillId];
+    const skillName = `${CONFIG.PF1.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
 
-    const updateData = {};
-    updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    const deleteSkill = () => {
+      const updateData = {};
+      updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
+      this.document.update(updateData);
+    };
+
+    if (getSkipActionPrompt()) {
+      deleteSkill();
+    } else {
+      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
+      Dialog.confirm({
+        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        content: msg,
+        yes: () => {
+          deleteSkill();
+        },
+        rejectClose: true,
+      });
+    }
   }
 
   _onSkillDelete(event) {
     event.preventDefault();
+    if (!this.document.testUserPermission(game.user, "OWNER")) return;
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
+    const skill = this.document.data.data.skills[skillId];
+    const skillName = CONFIG.PF1.skills[skillId] ?? skill.name;
 
-    const updateData = {};
-    updateData[`data.skills.-=${skillId}`] = null;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    const deleteSkill = () => {
+      const updateData = {};
+      updateData[`data.skills.-=${skillId}`] = null;
+      this.document.update(updateData);
+    };
+
+    if (getSkipActionPrompt()) {
+      deleteSkill();
+    } else {
+      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
+      Dialog.confirm({
+        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        content: msg,
+        yes: () => {
+          deleteSkill();
+        },
+        rejectClose: true,
+      });
+    }
   }
 
   async _onRaceControl(event) {
@@ -2568,7 +2644,19 @@ export class ActorSheetPF extends ActorSheet {
    */
   async _onOpenCompendiumEntry(event) {
     const entryKey = event.currentTarget.dataset.compendiumEntry;
+    const documentType = event.currentTarget.dataset.documentType;
     const parts = entryKey.split(".");
+
+    // World entry
+    if (parts.length === 1 && documentType) {
+      const collectionName = CONFIG[documentType].documentClass.collectionName;
+      const collection = game[collectionName];
+      const entry = collection.get(parts[0]);
+      entry.sheet.render(true, { focus: true });
+      return;
+    }
+
+    // Compendium entry
     const packKey = parts.slice(0, 2).join(".");
     const entryId = parts.slice(-1)[0];
     const pack = game.packs.get(packKey);

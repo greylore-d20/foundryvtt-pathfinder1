@@ -155,7 +155,19 @@ export class ActorPF extends ActorBasePF {
     // Show compendium entry
     else if (action === "open-compendium-entry") {
       const entryKey = button.dataset.compendiumEntry;
+      const documentType = button.dataset.documentType;
       const parts = entryKey.split(".");
+
+      // World entry
+      if (parts.length === 1 && documentType) {
+        const collectionName = CONFIG[documentType].documentClass.collectionName;
+        const collection = game[collectionName];
+        const entry = collection.get(parts[0]);
+        entry.sheet.render(true, { focus: true });
+        return;
+      }
+
+      // Compendium entry
       const packKey = parts.slice(0, 2).join(".");
       const entryId = parts.slice(-1)[0];
       const pack = game.packs.get(packKey);
@@ -2032,7 +2044,8 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
-      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
+      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal,
+      compendiumEntryType: "JournalEntry",
       originalOptions: options,
     });
   }

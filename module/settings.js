@@ -373,7 +373,9 @@ export const registerSystemSettings = function () {
         ...Object.values(game.actors.tokens).filter((a) => a != null),
       ];
       for (const actor of actors) {
-        promises.push(actor.toggleConditionStatusIcons({ render: false }));
+        if (actor.toggleConditionStatusIcons) {
+          promises.push(actor.toggleConditionStatusIcons({ render: false }));
+        }
       }
       return Promise.all(promises);
     },

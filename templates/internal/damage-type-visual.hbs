@@ -1,0 +1,13 @@
+{{#if data.damageTypes.length}}
+<div class="damage-type-visual"{{#if name}} data-name="{{name}}"{{/if}}>
+  {{#each data.damageTypes as |d|}}
+  <div class="damage-type" title="{{localize (lookup (lookup ../damageTypes d) "name")}}">
+    <img class="icon" src="{{lookup (lookup ../damageTypes d) "img"}}">
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<div class="damage-type-visual empty"{{#if name}} data-name="{{name}}"{{/if}}>
+  <span>{{localize "PF1.DamageType"}}</span>
+</div>
+{{/if}}

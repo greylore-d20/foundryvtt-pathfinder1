@@ -103,6 +103,12 @@ export class ItemSheetPF extends ItemSheet {
 
     // Include CONFIG values
     data.config = CONFIG.PF1;
+    data.registry = {
+      damageTypes: Array.from(game.pf1.registry.database.damageTypes).reduce((cur, o) => {
+        cur[o.value.id] = o.value.toObject();
+        return cur;
+      }, {}),
+    };
 
     // Item Type, Status, and Details
     data.itemType = this._getItemType(data.item);
@@ -855,6 +861,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 
     // Modify damage formula
+    html.find(".damage-type-visual").on("click", this._onSelectDamageType.bind(this));
     html.find(".damage-control").click(this._onDamageControl.bind(this));
 
     // Modify buff changes
@@ -1289,6 +1296,13 @@ export class ItemSheetPF extends ItemSheet {
     return result;
   }
 
+  _onSelectDamageType(event) {
+    event.preventDefault();
+
+    const app = new game.pf1.applications.DamageTypeSelector(this.document, event.currentTarget.dataset.name);
+    app.render(true);
+  }
+
   /**
    * Add or remove a damage part from the damage formula
    *
@@ -1307,7 +1321,8 @@ export class ItemSheetPF extends ItemSheet {
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
-      const initialData = ["", ""];
+      const dt = { damageTypes: [] };
+      const initialData = ["", dt];
 
       // Add data
       const damage = getProperty(this.item.data, k2);

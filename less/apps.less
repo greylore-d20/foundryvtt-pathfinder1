@@ -1735,7 +1735,9 @@
   }
 }
 
-// Attack Roll Dialog
+/* ----------------------------------------- */
+/* Attack Roll Dialog
+/* ----------------------------------------- */
 .pf1.attack-dialog {
   .attacks {
     padding: 2px;
@@ -1876,6 +1878,118 @@
           }
         }
       }
+    }
+  }
+}
+
+/* ----------------------------------------- */
+/* Damage Type Selector
+/* ----------------------------------------- */
+.pf1.damage-type-selector {
+  .damage-types {
+    border-right: 1px dashed black;
+    flex: 2;
+  }
+
+  .damage-types,
+  .damage-modifiers {
+    label {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18pt;
+    }
+  }
+
+  .icon-row {
+    display: grid;
+    flex-flow: row wrap;
+    grid-template-columns: repeat(auto-fit, 80px);
+    grid-gap: 0.2rem;
+    padding: 0.2rem;
+
+    .damage-type {
+      cursor: pointer;
+      width: 80px;
+      padding: 4px;
+      align-items: center;
+      border-radius: 4px;
+
+      display: grid;
+      justify-items: center;
+      grid-row-gap: 2px;
+
+      input[type="checkbox"] {
+        cursor: pointer;
+      }
+
+      img {
+        height: 72px;
+        width: 72px;
+        object-fit: cover;
+        object-position: 50% 0;
+      }
+
+      span {
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        display: -webkit-inline-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      &.toggled {
+        background: rgba(155, 155, 155, 0.5);
+        span.name {
+          text-shadow: 0 0 10px red;
+        }
+      }
+
+      &:hover {
+        background: rgba(155, 155, 155, 0.2);
+        span.name {
+          text-shadow: 0 0 10px red;
+        }
+      }
+    }
+  }
+}
+
+.pf1 .damage-type-visual {
+  height: 26px;
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fit, 20px);
+  grid-template-rows: 20px;
+  grid-gap: 0.1rem;
+  justify-content: center;
+  align-content: center;
+  border: 1px solid @colorTan;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+  line-height: 24px;
+
+  &.empty {
+    display: flex;
+    white-space: nowrap;
+  }
+
+  &:hover:not(.disabled) {
+    cursor: pointer;
+    box-shadow: 0 0 8px red;
+  }
+
+  & > span {
+    text-align: center;
+  }
+
+  .damage-type {
+    .icon {
+      width: 20px;
+      height: 20px;
     }
   }
 }

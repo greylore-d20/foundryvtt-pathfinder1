@@ -46,6 +46,7 @@ import { ScriptEditor } from "./module/apps/script-editor.js";
 import { SidebarPF } from "./module/apps/sidebar.js";
 import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
+import { DamageTypeSelector } from "./module/apps/damage-type-selector.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemAttackPF } from "./module/item/types/attack.js";
@@ -109,6 +110,7 @@ import * as macros from "./module/macros.js";
 import * as controls from "./module/controls.js";
 import * as ItemAttack from "./module/item/attack.js";
 import { Registry } from "./module/registry.js";
+import { registerDamageTypes, DamageType } from "./module/registry/damage-types.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -181,6 +183,7 @@ Hooks.once("init", function () {
       PF1_HelpBrowser,
       ExperienceDistributor,
       SkillEditor,
+      DamageTypeSelector,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,
@@ -233,6 +236,7 @@ Hooks.once("init", function () {
     // Components
     documentComponents: {
       ItemChange,
+      DamageType,
     },
     // API
     registry: Registry,
@@ -385,6 +389,8 @@ Hooks.once("init", function () {
     "PF1.ScriptCalls.ChangeLevel.Info"
   );
 
+  registerDamageTypes();
+
   // Initialize socket listener
   initializeSocket();
 
@@ -461,7 +467,6 @@ Hooks.once("setup", function () {
     "measureUnits",
     "measureUnitsShort",
     "languages",
-    "damageTypes",
     "weaponHoldTypes",
     "auraStrengths",
     "conditionalTargets",
@@ -487,7 +492,6 @@ Hooks.once("setup", function () {
     "weaponProperties",
     "spellSchools",
     "languages",
-    "damageTypes",
   ];
 
   /**

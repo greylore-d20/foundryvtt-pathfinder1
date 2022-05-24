@@ -57,7 +57,7 @@ export class SkillEditor extends FormApplication {
   }
 
   async getData(options) {
-    const data = super.getData(options);
+    const data = await super.getData(options);
 
     const isStaticSkill = this.isStaticSkill;
 

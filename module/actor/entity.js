@@ -3948,7 +3948,7 @@ export class ActorPF extends ActorBasePF {
     if (!doc) return;
     const updateData = {};
 
-    // Special key
+    // Special keys
     if (attribute === "attributes.hp") {
       if (!isDelta) value = (current.temp + current.value - value) * -1;
       let dt = value;
@@ -3957,8 +3957,17 @@ export class ActorPF extends ActorBasePF {
         updates["data.attributes.hp.temp"] = Math.max(0, current.temp + value);
       }
       updates["data.attributes.hp.value"] = Math.min(current.value + dt, current.max);
-      // Absolute
-    } else if (!isDelta) {
+    } else if (attribute === "attributes.vigor") {
+      if (!isDelta) value = (current.temp + current.value - value) * -1;
+      let dt = value;
+      if (current.temp > 0 && value < 0) {
+        dt = Math.min(0, current.temp + value);
+        updates["data.attributes.vigor.temp"] = Math.max(0, current.temp + value);
+      }
+      updates["data.attributes.vigor.value"] = Math.min(current.value + dt, current.max);
+    }
+    // Absolute
+    else if (!isDelta) {
       if (doc instanceof Actor) {
         if (isBar) updates[`data.${attribute}.value`] = value;
         else updates[`data.${attribute}`] = value;

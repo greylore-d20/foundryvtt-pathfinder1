@@ -3690,7 +3690,8 @@ export class ActorPF extends ActorBasePF {
         else {
           const existingData = existing.data.toObject();
           const mergedData = mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
-          if (obj.item.data.data.hideFromToken) mergedData.icon = null;
+          const hideIcon = obj.item.data.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+          if (hideIcon) mergedData.icon = null;
           const diffData = diffObject(existingData, mergedData);
           if (!isObjectEmpty(diffData)) {
             diffData._id = existing.id;

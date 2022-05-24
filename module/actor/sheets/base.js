@@ -1071,7 +1071,7 @@ export class ActorSheetPF extends ActorSheet {
     html.find(".item-create").on("click", (ev) => this._onItemCreate(ev));
     html.find(".item-delete").on("click", this._onItemDelete.bind(this));
     html.find(".item-give").on("click", this._onItemGive.bind(this));
-    html.find(".item-split").on("click", this._onItemSplit.bind(this));
+    html.find(".item-split:not(.disabled)").on("click", this._onItemSplit.bind(this));
 
     // Item Rolling
     html.find(".item .item-image").click((event) => this._onItemRoll(event));

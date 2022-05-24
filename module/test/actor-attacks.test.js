@@ -186,7 +186,7 @@ export const registerActorItemAttackTests = () => {
             });
 
             it("should have the correct attack formula", function () {
-              expect(rolls.attack.formula).to.equal("1d20 + 4[Strength] +  - 5[Secondary Attack]");
+              expect(rolls.attack.formula).to.equal("1d20 + 4[Strength] + (-5)[Secondary Attack]");
             });
 
             it("should have the correct damage formula", function () {

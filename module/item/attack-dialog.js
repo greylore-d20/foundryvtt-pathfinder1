@@ -82,6 +82,7 @@ export class AttackDialog extends Application {
       isAttack: this.object.type === "attack",
       isWeapon: this.object.type === "weapon",
       isSpell: this.object.type === "spell",
+      isFeat: this.object.type === "feat",
       hasTemplate: this.object.hasTemplate,
       attacks: this.attacks,
       flags: this.flags,

@@ -126,8 +126,7 @@ export const alterRollData = function (shared, form = {}) {
   // Power Attack
   if (formData["power-attack"]) {
     const basePowerAttackBonus = shared.rollData.item?.powerAttack?.damageBonus ?? 2;
-    let powerAttackBonus =
-      (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * basePowerAttackBonus;
+    let powerAttackBonus = (1 + Math.floor(shared.rollData.attributes.bab.total / 4)) * basePowerAttackBonus;
 
     // Get multiplier
     let powerAttackMultiplier = shared.rollData.item?.powerAttack?.multiplier;

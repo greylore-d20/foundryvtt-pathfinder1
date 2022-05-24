@@ -77,7 +77,7 @@
   </div>
   {{/if}}{{/if}}
 
-  {{#if isAttack}}
+  {{#if (or isAttack isWeapon)}}
   {{#unless isNaturalAttack}}
   <div class="form-group select">
     <label>{{localize "PF1.Held"}}</label>

@@ -3855,11 +3855,10 @@ export class ActorPF extends ActorBasePF {
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffActiveEffects() {
     const buffs = this.items.filter((o) => o.type === "buff");
-    return buffs.reduce((acc, cur) => {
-      const id = cur.uuid;
-      if (!acc[id]) acc[id] = { id: cur.id, label: cur.name, icon: cur.img, item: cur };
-      if (cur.system.active) acc[id].active = true;
-      else acc[id].active = false;
+    return buffs.reduce((acc, buff) => {
+      const id = buff.uuid;
+      acc[id] ??= { id: buff.id, label: buff.name, icon: buff.img, item: buff };
+      acc[id].active = buff.isActive;
       return acc;
     }, {});
   }

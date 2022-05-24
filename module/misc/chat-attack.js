@@ -1,6 +1,5 @@
 export class ChatAttack {
-  constructor(item, { label = "", primaryAttack = true, rollData = {}, targets = null } = {}) {
-    this.primaryAttack = primaryAttack;
+  constructor(item, { label = "", rollData = {}, targets = null } = {}) {
     this._rollData = rollData;
     this.setItem(item);
     this.label = label;
@@ -110,10 +109,6 @@ export class ChatAttack {
     data.critConfirmBonus = RollPF.safeTotal(data.item.critConfirmBonus || "0") ?? 0;
     // Determine ability multiplier
     if (data.item.ability.damageMult != null) data.ablMult = data.item.ability.damageMult;
-    // Lower ability multiplier for secondary attacks
-    if (this.attackType === "natural" && this.primaryAttack === false && getProperty(data.ablMult > 0)) {
-      data.ablMult = 0.5;
-    }
   }
 
   setAttackNotesHTML() {
@@ -186,7 +181,6 @@ export class ChatAttack {
         data: this.rollData,
         bonus: bonus,
         extraParts: extraParts,
-        primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
       });
       data.roll = roll;
       const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
@@ -268,7 +262,6 @@ export class ChatAttack {
       const rolls = await this.item.rollDamage({
         data: rollData,
         extraParts: extraParts,
-        primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
         critical: critical,
         conditionalParts,
       });

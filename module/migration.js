@@ -262,20 +262,11 @@ export const migrateItemData = function (item) {
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
+  _migrateSecondaryAttackData(item, updateData);
 
   // Return the migrated update data
   return updateData;
 };
-
-/**
- * @param item
- * @param updateData
- */
-function _migrateSpellData(item, updateData) {
-  if (item.type === "spell") {
-    updateData["data.description.-=value"] = null;
-  }
-}
 
 /* -------------------------------------------- */
 
@@ -992,6 +983,26 @@ const _migrateItemNotes = function (ent, updateData) {
         updateData[k] = value.trim().split(/[\n\r]/);
       }
     }
+  }
+};
+
+/**
+ * @param item
+ * @param updateData
+ */
+const _migrateSpellData = function (item, updateData) {
+  if (item.type === "spell") {
+    updateData["data.description.-=value"] = null;
+  }
+};
+
+const _migrateSecondaryAttackData = function (item, updateData) {
+  if (item.type !== "attack") return;
+
+  const secondaryAttackData = item.data.data.naturalAttack?.secondary;
+  if (secondaryAttackData == null) {
+    updateData["data.naturalAttack.secondary.attackBonus"] = "-5";
+    updateData["data.naturalAttack.secondary.damageMult"] = 0.5;
   }
 };
 

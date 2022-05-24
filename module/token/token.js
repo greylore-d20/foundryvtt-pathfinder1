@@ -46,6 +46,7 @@ export class TokenPF extends Token {
     if (isGM) return false;
 
     // If a non-GM user controls no other tokens with sight, display sight anyways
+    console.log(this.name, hasTokenVision(this));
     const canObserve = this.actor && hasTokenVision(this);
     if (!canObserve) return false;
     const others = this.layer.controlled.filter((t) => !t.data.hidden && t.hasSight);

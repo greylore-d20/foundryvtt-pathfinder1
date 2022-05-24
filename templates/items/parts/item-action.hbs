@@ -208,21 +208,58 @@
 
 {{!-- Power Attack/Deadly Aim properties --}}
 {{#if hasAttackRoll}}
+  <hr>
+
   <h4 class="attack-header">{{localize "PF1.PowerAttack"}}/{{localize "PF1.DeadlyAim"}}</h4>
 
   <div class="form-group">
     <label>{{localize "PF1.Multiplier"}}</label>
-    <input type="text" name="data.powerAttack.multiplier" value="{{data.powerAttack.multiplier}}" data-dtype="String" placeholder="{{localize "PF1.Held"}}" />
+    <div class="form-fields">
+      <input type="text" name="data.powerAttack.multiplier" value="{{data.powerAttack.multiplier}}" data-dtype="String" placeholder="{{localize "PF1.Held"}}" />
+    </div>
   </div>
 
   <div class="form-group">
     <label>{{localize "PF1.DamageBonus"}}</label>
-    <input type="text" name="data.powerAttack.damageBonus" value="{{data.powerAttack.damageBonus}}" data-dtype="Number" />
+    <div class="form-fields">
+      <input type="text" name="data.powerAttack.damageBonus" value="{{data.powerAttack.damageBonus}}" data-dtype="Number" />
+    </div>
   </div>
 
   <div class="form-group">
     <label>{{localize "PF1.CriticalMultiplier"}}</label>
-    <input type="text" name="data.powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number" />
+    <div class="form-fields">
+      <input type="text" name="data.powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number" />
+    </div>
+  </div>
+{{/if}}
+
+{{!-- Secondary Natural Attack properties --}}
+{{#if isNaturalAttack}}
+  <hr>
+  
+  <h4 class="attack-header">{{localize "PF1.SecondaryAttack"}}</h4>
+
+  <div class="form-group">
+    <label>{{localize "PF1.AttackPenalty"}}</label>
+    <div class="form-fields">
+      <input type="text" name="data.naturalAttack.secondary.attackBonus" value="{{data.naturalAttack.secondary.attackBonus}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "PF1.AbilityMultiplier"}}</label>
+    <div class="form-fields">
+    <select name="data.naturalAttack.secondary.damageMult" data-dtype="Number">
+      {{#select data.naturalAttack.secondary.damageMult}}
+      <option value="0.5" {{#unless data.naturalAttack.secondary.damageMult}}selected="selected"{{/unless}}>x0.5</option>
+      <option value="1">x1</option>
+      <option value="1.5">x1.5</option>
+      <option value="2">x2</option>
+      <option value="2.5">x2.5</option>
+      {{/select}}
+    </select>
+    </div>
   </div>
 {{/if}}
 

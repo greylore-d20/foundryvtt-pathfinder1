@@ -134,9 +134,10 @@ export const alterRollData = function (shared, form = {}) {
     if (!powerAttackMultiplier) {
       powerAttackMultiplier = 1;
       if (this.data.data.attackType === "natural") {
-        if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
-          powerAttackMultiplier = 1.5;
-        else if (!shared.rollData.item?.primaryAttack) powerAttackMultiplier = 0.5;
+        if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.item.ability.damageMult;
+        else if (!shared.rollData.item?.primaryAttack) {
+          powerAttackMultiplier = shared.rollData.item.naturalAttack?.secondary?.damageMult ?? 0.5;
+        }
       } else {
         if (shared.rollData?.item?.held === "2h") powerAttackMultiplier = 1.5;
         else if (shared.rollData?.item?.held === "oh") powerAttackMultiplier = 0.5;
@@ -179,6 +180,14 @@ export const alterRollData = function (shared, form = {}) {
   // Damage multiplier
   if (formData["damage-ability-multiplier"] != null)
     shared.rollData.item.ability.damageMult = formData["damage-ability-multiplier"];
+
+  // Apply secondary attack penalties
+  if (shared.rollData.item.primaryAttack === false) {
+    const attackBonus = shared.rollData.item.naturalAttack?.secondary?.attackBonus ?? "-5";
+    const damageMult = shared.rollData.item.naturalAttack?.secondary?.damageMult ?? 0.5;
+    shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    shared.rollData.item.ability.damageMult = damageMult;
+  }
 
   // CL check enabled
   shared.casterLevelCheck = formData["cl-check"];
@@ -472,7 +481,6 @@ export const addAttacks = async function (shared) {
     // Create attack object
     const attack = new ChatAttack(this, {
       label: atk.label,
-      primaryAttack: shared.rollData.item?.primaryAttack !== false,
       rollData: shared.rollData,
       targets: game.user.targets,
     });

@@ -84,8 +84,9 @@ export class ItemBuffPF extends ItemPF {
   getRawEffectData() {
     const createData = super.getRawEffectData();
 
-    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    if (this.data.data.hideFromToken) createData.icon = null;
+    const hideIcon = this.data.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+    createData["flags.pf1.show"] = !hideIcon;
+    if (hideIcon) createData.icon = null;
 
     // Add buff durations
     let durationValue = this.data.data.duration.value ?? null;

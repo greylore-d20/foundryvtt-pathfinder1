@@ -654,8 +654,7 @@ Hooks.on("canvasInit", function () {
     if (!game.ready) return;
 
     // Add reach measurements on hover
-    const results = await addReachCallback(data.message, html);
-    callbacks.push(...results);
+    await addReachCallback(data.message, html);
   });
 }
 

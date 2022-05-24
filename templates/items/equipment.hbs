@@ -36,12 +36,19 @@
 
   {{!-- Item Sheet Body --}}
   <section class="primary-body">
-
     {{!-- Description Tab --}}
     {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      <div class="form-group stacked">
+        {{#if owner}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+        </label>
+        {{/if}}
+      </div>
+
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       <h3 class="form-header">{{localize "PF1.Details"}}</h3>

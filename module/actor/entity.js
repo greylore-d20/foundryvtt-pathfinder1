@@ -3630,7 +3630,9 @@ export class ActorPF extends ActorBasePF {
     return this.items
       .filter(
         (o) =>
-          o.isActive && o.data.data.showInQuickbar === true && ["weapon", "attack", "spell", "feat"].includes(o.type)
+          o.isActive &&
+          o.data.data.showInQuickbar === true &&
+          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type)
       )
       .sort((a, b) => a.data.data.sort - b.data.data.sort)
       .map((o) => {

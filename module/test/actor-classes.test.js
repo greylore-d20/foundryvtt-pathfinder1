@@ -1,5 +1,5 @@
 import { ActorPF } from "../actor/entity.js";
-import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
+import { createTestActor, addCompendiumItemToActor, unitTest_renderActorSheet } from "./actor-utils.js";
 
 export const registerActorItemClassTests = () => {
   // ---------------------------------- //
@@ -10,10 +10,16 @@ export const registerActorItemClassTests = () => {
     async (context) => {
       const { describe, it, expect, before, after } = context;
 
+      /**
+       * @type {object}
+       * Handles a shared context to pass between functions
+       */
+      const shared = {};
       /** @type {ActorPF} */
       let actor;
       before(async () => {
         actor = await createTestActor({}, { temporary: false });
+        shared.actor = actor;
       });
       after(async () => {
         await actor.delete();
@@ -223,6 +229,11 @@ export const registerActorItemClassTests = () => {
               });
             });
           });
+
+          // ---------------------------------- //
+          // Render sheet                       //
+          // ---------------------------------- //
+          unitTest_renderActorSheet(shared, context);
         });
       });
     },

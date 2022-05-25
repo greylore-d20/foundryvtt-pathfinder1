@@ -1,5 +1,5 @@
 import { ActorPF } from "../actor/entity.js";
-import { createTestActor, addCompendiumItemToActor } from "./actor-utils.js";
+import { createTestActor, addCompendiumItemToActor, unitTest_renderActorSheet } from "./actor-utils.js";
 
 export const registerActorItemAttackTests = () => {
   // ---------------------------------- //
@@ -10,11 +10,17 @@ export const registerActorItemAttackTests = () => {
     async (context) => {
       const { describe, it, expect, before, after } = context;
 
+      /**
+       * @type {object}
+       * Handles a shared context to pass between functions
+       */
+      const shared = {};
       /** @type {ActorPF} */
       let actor;
       const messages = [];
       before(async () => {
         actor = await createTestActor({ data: { abilities: { str: { value: 18 } } } }, { temporary: false });
+        shared.actor = actor;
       });
       after(async () => {
         await actor.delete();
@@ -194,6 +200,11 @@ export const registerActorItemAttackTests = () => {
             });
           });
         });
+
+        // ---------------------------------- //
+        // Render sheet                       //
+        // ---------------------------------- //
+        unitTest_renderActorSheet(shared, context);
       });
     },
     { displayName: "PF1: Actor Attack Item Tests" }

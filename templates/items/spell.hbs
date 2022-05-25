@@ -58,7 +58,7 @@
         <select name="data.spellbook">
           {{#select data.spellbook}}
           {{#each spellbooks as |spellbook a|}}
-          <option value="{{a}}">{{spellbook.name}}</option>
+          <option value="{{a}}">{{localize spellbook.label}}</option>
           {{/each}}
           {{/select}}
         </select>

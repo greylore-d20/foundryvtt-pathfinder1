@@ -544,7 +544,13 @@ export class ActorPF extends ActorBasePF {
       return;
     }
 
+    // Set spellbook label
     book.label = `PF1.SpellBook${bookKey.capitalize()}`;
+    if (book.class) {
+      if (book.class === "_hd") book.label = "PF1.PF1.HitDie";
+      else book.label = this.data.data.classes?.[book.class]?.name;
+    }
+    if (book.name) book.label = book.name;
 
     rollData ??= this.getRollData({ refresh: true });
     cache ??= this._generateSpellbookCache();

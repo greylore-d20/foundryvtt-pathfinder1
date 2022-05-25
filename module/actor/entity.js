@@ -1861,6 +1861,9 @@ export class ActorPF extends ActorBasePF {
     attackData["data.usesAmmo"] = item.data.data.usesAmmo;
     attackData["data.ammoType"] = item.data.data.ammoType;
 
+    // Add properties
+    attackData["data.nonlethal"] = item.data._source.data.properties?.nnl === true;
+
     // Add additional attacks
     attackData["data.attackParts"] = item.data.data.attackParts;
     attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;

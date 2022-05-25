@@ -158,6 +158,44 @@ export const registerActorItemClassTests = () => {
             });
           });
 
+          describe("has appropriate wounds/vigor", function () {
+            const previousHealthConfig = game.settings.get("pf1", "healthConfig");
+            before(async () => {
+              // Set wounds/vigor
+              await game.settings.set(
+                "pf1",
+                "healthConfig",
+                mergeObject(
+                  previousHealthConfig,
+                  {
+                    variants: {
+                      pc: { useWoundsAndVigor: true },
+                      npc: { useWoundsAndVigor: true },
+                    },
+                  },
+                  {
+                    inplace: false,
+                  }
+                )
+              );
+            });
+            after(async () => {
+              await game.settings.set("pf1", "healthConfig", previousHealthConfig);
+            });
+
+            describe("wounds", function () {
+              it("should be 32", function () {
+                expect(actor.data.data.attributes.wounds.max).to.equal(32);
+              });
+            });
+
+            describe("vigor", function () {
+              it("should be 74", function () {
+                expect(actor.data.data.attributes.vigor.max).to.equal(74);
+              });
+            });
+          });
+
           describe("has appropriate BAB", function () {
             describe("under regular rules", function () {
               const prevSetting = game.settings.get("pf1", "useFractionalBaseBonuses");

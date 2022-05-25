@@ -4,8 +4,14 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -14,28 +20,61 @@
         "type": "action"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
     "target": {
       "value": "one creature"
     },
     "range": {
-      "units": "close"
+      "value": null,
+      "units": "close",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "spellsave",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
       "attack": "",
-      "damage": ""
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -44,6 +83,18 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "naturalAttack": {
+      "secondary": {
+        "attackBonus": "-5",
+        "damageMult": 0.5
+      }
+    },
     "links": {
       "children": []
     },
@@ -97,15 +148,50 @@
       "bloodline": []
     },
     "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "enc",
+    "subschool": "",
     "types": "mind-affecting, pain",
+    "nonlethal": false,
     "conditionals": [],
     "components": {
+      "value": "",
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
     "shortDescription": "<p>You telepathically wrack the target's mind and body with agonizing pain that imposes a -4 penalty on attack rolls, skill checks, and ability checks. A successful Will save reduces the duration to 1 round.</p>",
-    "spellDuration": "1 round/level"
+    "spellDuration": "1 round/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "spellPoints": {
+      "cost": "1 + @sl"
+    },
+    "domain": false,
+    "slotCost": 1,
+    "clCheck": false,
+    "identifiedName": "Inflict Pain"
   },
   "effects": [],
   "folder": null,

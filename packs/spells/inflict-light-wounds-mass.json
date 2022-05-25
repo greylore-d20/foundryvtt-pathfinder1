@@ -4,8 +4,14 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -14,19 +20,39 @@
         "type": "action"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
     "target": {
       "value": "one creature/level, no two of which can be more than 30 ft. apart"
     },
     "range": {
-      "units": "close"
+      "value": null,
+      "units": "close",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "spellsave",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -38,9 +64,22 @@
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
       "attack": "",
-      "damage": ""
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
       "dc": "0",
@@ -49,6 +88,18 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "naturalAttack": {
+      "secondary": {
+        "attackBonus": "-5",
+        "damageMult": 0.5
+      }
+    },
     "links": {
       "children": []
     },
@@ -86,15 +137,50 @@
       "bloodline": []
     },
     "level": 5,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "nec",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "conditionals": [],
     "components": {
+      "value": "",
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
     },
     "spellbook": "",
-    "shortDescription": "<p>Negative energy spreads out in all directions from the point of origin, dealing 1d8 points of damage + 1 point per caster level (maximum +25) to nearby living enemies.</p><p>Like other <i>inflict</i> spells, <i>mass inflict light wounds</i> cures undead in its area rather than damaging them. A cleric capable of spontaneously casting <i>inflict</i> spells can also spontaneously cast mass <i>inflict</i> spells.</p>",
-    "spellDuration": "instantaneous"
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p>Negative energy spreads out in all directions from the point of origin, dealing 1d8 points of damage + 1 point per caster level (maximum +25) to nearby living enemies.</p>\n<p>Like other <em>inflict</em> spells, <em>mass inflict light wounds</em> cures undead in its area rather than damaging them. A cleric capable of spontaneously casting <em>inflict</em> spells can also spontaneously cast mass <em>inflict</em> spells.</p>",
+    "spellDuration": "instantaneous",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "spellPoints": {
+      "cost": "1 + @sl"
+    },
+    "domain": false,
+    "slotCost": 1,
+    "clCheck": false,
+    "identifiedName": "Inflict Light Wounds, Mass"
   },
   "effects": [],
   "folder": null,

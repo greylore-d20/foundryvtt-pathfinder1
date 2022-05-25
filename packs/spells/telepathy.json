@@ -4,8 +4,14 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
     "activation": {
+      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -14,34 +20,81 @@
         "type": "action"
       }
     },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
     "target": {
       "value": "you"
     },
     "range": {
-      "units": "personal"
+      "value": null,
+      "units": "personal",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
     },
     "uses": {
-      "per": ""
+      "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
-      "size": "0"
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
     },
+    "attackName": "",
     "actionType": "",
+    "attackBonus": "",
+    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
     "ability": {
       "attack": "",
-      "damage": ""
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
     },
     "save": {
-      "dc": "0"
+      "dc": "0",
+      "type": "",
+      "description": ""
     },
     "effectNotes": [],
     "attackNotes": [],
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "naturalAttack": {
+      "secondary": {
+        "attackBonus": "-5",
+        "damageMult": 0.5
+      }
+    },
     "links": {
       "children": []
     },
@@ -79,15 +132,50 @@
       "bloodline": []
     },
     "level": 6,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "div",
+    "subschool": "",
     "types": "mind-affecting",
+    "nonlethal": false,
     "conditionals": [],
     "components": {
-      "verbal": true
+      "value": "",
+      "verbal": true,
+      "somatic": false,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>You can mentally communicate with any other creature within 100 feet that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as speaking and listening to multiple people simultaneously.</p>",
-    "spellDuration": "1 minute/level"
+    "spellDuration": "1 minute/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "spellPoints": {
+      "cost": "1 + @sl"
+    },
+    "domain": false,
+    "slotCost": 1,
+    "clCheck": false,
+    "identifiedName": "Telepathy"
   },
   "effects": [],
   "folder": null,

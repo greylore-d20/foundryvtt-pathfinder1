@@ -310,7 +310,7 @@ export class ChatAttack {
     }
 
     // Handle nonlethal attacks
-    if (this.item.data.data.nonlethal) {
+    if (this.item.data.data.nonlethal || this.item.data.data.properties?.nnl) {
       this.nonlethal = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
     }

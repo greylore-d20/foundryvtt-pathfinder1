@@ -682,7 +682,13 @@ export class ItemPF extends ItemBasePF {
 
     // Make sure stuff remains an array
     {
-      const keepArray = [{ key: "data.contextNotes" }, { key: "data.scriptCalls" }, { key: "data.actions" }];
+      const keepArray = [
+        { key: "data.attackNotes" },
+        { key: "data.effectNotes" },
+        { key: "data.contextNotes" },
+        { key: "data.scriptCalls" },
+        { key: "data.actions" },
+      ];
 
       for (const kArr of keepArray) {
         if (Object.keys(data).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {

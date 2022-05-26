@@ -226,6 +226,7 @@ export class ChatAttack {
     };
 
     const notes = [];
+    // Add actor notes
     if (this.action.item != null && this.action.item.actor != null) {
       notes.push(...this.action.item.actor.getContextNotesParsed("attacks.attack"));
       if ((typeMap[type]?.length || 0) > 0)
@@ -233,9 +234,15 @@ export class ChatAttack {
           notes.push(...this.action.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
         );
     }
+    // Add item notes
     if (this.action.item != null && this.action.item.data.data.attackNotes) {
       notes.push(...this.action.item.data.data.attackNotes);
     }
+    // Add action notes
+    if (this.action.data.attackNotes) {
+      notes.push(...this.action.data.attackNotes);
+    }
+    // Add CMB notes
     if (["mcman", "rcman"].includes(this.action.item?.data.data.actionType)) {
       notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
@@ -342,8 +349,13 @@ export class ChatAttack {
       }
     }
 
+    // Add item notes
     if (this.action.item != null && this.action.item.data.data.effectNotes) {
       notes.push(...this.action.item.data.data.effectNotes);
+    }
+    // Add action notes
+    if (this.action.data.effectNotes) {
+      notes.push(...this.action.data.effectNotes);
     }
 
     this.effectNotes = this.effectNotes.concat(notes);

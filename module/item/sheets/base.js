@@ -852,7 +852,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
-
     html.find(".entry-control a").click(this._onEntryControl.bind(this));
 
     // Add drop handler to link tabs
@@ -1608,7 +1607,7 @@ export class ItemSheetPF extends ItemSheet {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };
-    new EntrySelector(this.item, options).render(true);
+    new game.pf1.applications.EntrySelector(this.item, options).render(true);
   }
 
   _onEntryControl(event) {

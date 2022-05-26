@@ -99,11 +99,53 @@ export class ItemActionSheet extends FormApplication {
     // Modify action image
     html.find(`img[data-edit="img"]`).on("click", this._onEditImage.bind(this));
 
+    // Add drop handler to textareas
+    html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
+
     // Modify attack formula
     html.find(".attack-control").click(this._onAttackControl.bind(this));
 
     // Modify damage formula
     html.find(".damage-control").click(this._onDamageControl.bind(this));
+
+    // Listen to field entries
+    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
+    html.find(".entry-control a").click(this._onEntryControl.bind(this));
+  }
+
+  _onEntrySelector(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const options = {
+      name: a.getAttribute("for"),
+      title: a.innerText,
+      flag: a.dataset.flag === "true",
+      flat: a.dataset.flat === "true",
+      fields: a.dataset.fields,
+      dtypes: a.dataset.dtypes,
+    };
+    new game.pf1.applications.EntrySelector(this.object, options).render(true);
+  }
+
+  _onEntryControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const key = a.closest(".notes").dataset.name;
+
+    if (a.classList.contains("add-entry")) {
+      const notes = getProperty(this.object, key) ?? [];
+      const updateData = {};
+      updateData[key] = notes.concat("");
+      return this._onSubmit(event, { updateData });
+    } else if (a.classList.contains("delete-entry")) {
+      const index = a.closest(".entry").dataset.index;
+      const notes = duplicate(getProperty(this.object, key));
+      notes.splice(index, 1);
+
+      const updateData = {};
+      updateData[key] = notes;
+      return this._onSubmit(event, { updateData });
+    }
   }
 
   /**
@@ -174,6 +216,38 @@ export class ItemActionSheet extends FormApplication {
       },
     });
     filePicker.render();
+  }
+
+  async _onTextAreaDrop(event) {
+    event.preventDefault();
+    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+    if (!data) return;
+
+    const elem = event.currentTarget;
+    let link;
+
+    // Case 1 - Document from Compendium Pack
+    if (data.pack) {
+      const pack = game.packs.get(data.pack);
+      if (!pack) return;
+      const doc = await pack.getDocument(data.id);
+      link = `@Compendium[${data.pack}.${data.id}]{${doc.name}}`;
+    }
+
+    // Case 2 - Document from World
+    else {
+      const config = CONFIG[data.type];
+      if (!config) return false;
+      const doc = config.collection.instance.get(data.id);
+      if (!doc) return false;
+      link = `@${data.type}[${doc._id}]{${doc.name}}`;
+    }
+
+    // Insert link
+    if (link) {
+      elem.value = !elem.value ? link : elem.value + "\n" + link;
+    }
+    return this._onSubmit(event);
   }
 
   async _updateObject(event, formData) {

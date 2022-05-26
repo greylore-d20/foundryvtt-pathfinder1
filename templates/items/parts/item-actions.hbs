@@ -47,6 +47,7 @@
 {{/if}}
 {{/unless}}
 
+{{!-- Actions --}}
 <div class="actions">
   <ol class="action-parts form-group">
     {{#each data.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
@@ -56,4 +57,40 @@
       </a>
     </li>
   </ol>
+</div>
+
+{{!-- Attack Notes --}}
+<div class="form-group stacked notes attack" data-name="data.attackNotes">
+  <table>
+    <thead>
+      <th>{{localize "PF1.AttackNotes"}}</th>
+      <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
+    </thead>
+    <tbody>
+      {{#each data.attackNotes as |entry index|}}
+      <tr class="entry" data-index="{{index}}">
+        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="data.attackNotes.{{index}}" /></td>
+        <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{!-- Effect Notes --}}
+<div class="form-group stacked notes effect" data-name="data.effectNotes">
+  <table>
+    <thead>
+      <th>{{localize "PF1.EffectNotes"}}</th>
+      <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
+    </thead>
+    <tbody>
+      {{#each data.effectNotes as |entry index|}}
+      <tr class="entry" data-index="{{index}}">
+        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="data.effectNotes.{{index}}" /></td>
+        <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>

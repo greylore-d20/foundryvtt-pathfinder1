@@ -108,34 +108,38 @@ export class ItemPF extends ItemBasePF {
     return this.actions?.some((o) => o.hasAction);
   }
 
+  get isSingleUse() {
+    return this.data.data.uses?.per === "single";
+  }
+
   get isCharged() {
-    return this.actions?.some((o) => o.isCharged);
+    return this.isSingleUse || ["day", "week", "charges"].includes(this.data.data.uses?.per);
   }
 
   get charges() {
     // No actor? No charges!
-    if (!this.parent) return 0;
+    if (!this.parentActor) return 0;
 
     // Get linked charges
-    const link = getProperty(this, "links.charges");
+    const link = this.links?.charges;
     if (link) return link.charges;
 
     // Get own charges
-    if (this.isSingleUse) return getProperty(this.data, "data.quantity");
-    return getProperty(this.data, "data.uses.value") || 0;
+    if (this.isSingleUse) return this.data.data.quantity;
+    return this.data.data.uses?.value ?? 0;
   }
 
   get maxCharges() {
     // No actor? No charges!
-    if (!this.parent) return 0;
+    if (!this.parentActor) return 0;
 
     // Get linked charges
-    const link = getProperty(this, "links.charges");
+    const link = this.links?.charges;
     if (link) return link.maxCharges;
 
     // Get own charges
-    if (this.isSingleUse) return getProperty(this.data, "data.quantity");
-    return getProperty(this.data, "data.uses.max") || 0;
+    if (this.isSingleUse) return this.data.data.quantity;
+    return this.data.data.uses?.max ?? 0;
   }
 
   /**
@@ -997,7 +1001,7 @@ export class ItemPF extends ItemBasePF {
    * @param {string|undefined} options.rollMode Roll mode override.
    * @returns {Promise|undefined}
    */
-  async roll(altChatData = {}, { addDC = true, rollMode } = {}) {
+  async roll(altChatData = {}, { rollMode } = {}) {
     const actor = this.parent;
     if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
@@ -1005,13 +1009,11 @@ export class ItemPF extends ItemBasePF {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("itemUse", this, "description", { altChatData, addDC });
+    const allowed = Hooks.call("itemUse", this, "description", { altChatData });
     if (allowed === false) return;
 
     // Basic template rendering data
     const token = this.parent.token;
-    const saveType = getProperty(this.data, "data.save.type");
-    const saveDC = this.getDC();
     const templateData = {
       actor: this.parent,
       tokenId: token ? token.uuid : null,
@@ -1020,23 +1022,11 @@ export class ItemPF extends ItemBasePF {
       labels: this.labels,
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
-      hasAction: this.hasAction || this.isCharged,
-      isHealing: this.isHealing,
-      hasDamage: this.hasDamage,
-      hasRange: this.hasRange,
-      hasEffect: this.hasEffect,
+      hasAction: this.hasAction,
       isVersatile: this.isVersatile,
-      hasSave: this.hasSave && addDC,
       isSpell: this.data.type === "spell",
       description: this.fullDescription,
       rollData: this.getRollData(),
-      save: {
-        dc: saveDC,
-        type: saveType,
-        label: game.i18n
-          .localize("PF1.SavingThrowButtonLabel")
-          .format(CONFIG.PF1.savingThrows[saveType], saveDC.toString()),
-      },
       hasExtraProperties: false,
       extraProperties: [],
     };

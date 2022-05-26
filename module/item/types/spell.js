@@ -211,11 +211,6 @@ export class ItemSpellPF extends ItemPF {
     return this.getSpellUses(true);
   }
 
-  get chargeCost() {
-    if (this.useSpellPoints()) return this.getSpellPointCost();
-    return 1;
-  }
-
   get spellLevel() {
     return this.data.data.level + (this.data.data.slOffset || 0);
   }
@@ -283,12 +278,6 @@ export class ItemSpellPF extends ItemPF {
     if (!this.parent) return false;
 
     return this.spellbook?.spellPoints?.useSystem ?? false;
-  }
-
-  getSpellPointCost(rollData = null) {
-    if (!rollData) rollData = this.getRollData();
-
-    return RollPF.safeRoll(this.data.data.spellPoints?.cost || "0", rollData).total;
   }
 
   getSpellComponents(srcData) {
@@ -377,6 +366,7 @@ export class ItemSpellPF extends ItemPF {
       type: "consumable",
       name: origData.name,
     };
+    const action = game.pf1.documentComponents.ItemAction.defaultData;
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
     if (origData.sl == null) origData.sl = slcl[0];
@@ -385,12 +375,6 @@ export class ItemSpellPF extends ItemPF {
 
     // Set consumable type
     data["data.consumableType"] = type;
-
-    // Set range
-    data["data.range.units"] = calculateRange(origData.data.range.value, origData.data.range.units, {
-      cl: origData.cl,
-    });
-    data["data.range.value"] = "ft";
 
     // Set name
     if (type === "wand") {
@@ -402,6 +386,8 @@ export class ItemSpellPF extends ItemPF {
       data["data.hardness"] = 5;
       data["data.hp.max"] = 5;
       data["data.hp.value"] = 5;
+      action.name = game.i18n.localize("PF1.Use");
+      action.img = data.img;
     } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
@@ -411,6 +397,8 @@ export class ItemSpellPF extends ItemPF {
       data["data.hp.value"] = 1;
       data["data.range.value"] = 0;
       data["data.range.units"] = "personal";
+      action.name = game.i18n.localize("PF1.Drink");
+      action.img = data.img;
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
@@ -418,6 +406,8 @@ export class ItemSpellPF extends ItemPF {
       data["data.hardness"] = 0;
       data["data.hp.max"] = 1;
       data["data.hp.value"] = 1;
+      action.name = game.i18n.localize("PF1.Use");
+      action.img = data.img;
     }
 
     // Set charges
@@ -429,42 +419,40 @@ export class ItemSpellPF extends ItemPF {
     } else {
       data["data.uses.per"] = "single";
     }
-
     // Set activation method
-    data["data.activation.type"] = "standard";
+    action.activation.type = "standard";
     // Set activation for unchained action economy
-    data["data.unchainedAction.activation.type"] = "action";
-    data["data.unchainedAction.activation.cost"] = 2;
+    action.unchainedAction.activation.type = "action";
+    action.unchainedAction.activation.cost = 2;
 
     // Set measure template
     if (type !== "potion") {
-      data["data.measureTemplate"] = getProperty(origData, "data.measureTemplate");
+      action.measureTemplate = origData.data.measureTemplate;
     }
 
     // Set damage formula
-    data["data.actionType"] = origData.data.actionType;
-    data["data.damage.parts"] = [];
+    action.actionType = origData.data.actionType;
     for (const d of origData.data.damage.parts) {
-      data["data.damage.parts"].push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
+      action.damage.parts.push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
     }
 
     // Set saves
-    data["data.save.description"] = origData.data.save.description;
-    data["data.save.type"] = origData.data.save.type;
-    data["data.save.dc"] = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
+    action.save.description = origData.data.save.description;
+    action.save.type = origData.data.save.type;
+    action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
       origData.sl / 2
     )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
 
     // Copy variables
-    data["data.attackNotes"] = origData.data.attackNotes;
-    data["data.effectNotes"] = origData.data.effectNotes;
-    data["data.attackBonus"] = origData.data.attackBonus;
-    data["data.critConfirmBonus"] = origData.data.critConfirmBonus;
+    action.attackNotes = origData.data.attackNotes;
+    action.effectNotes = origData.data.effectNotes;
+    action.attackBonus = origData.data.attackBonus;
+    action.critConfirmBonus = origData.data.critConfirmBonus;
     data["data.aura.school"] = origData.data.school;
 
     // Replace attack and effect formula data
-    for (const arrKey of ["data.attackNotes", "data.effectNotes"]) {
-      const arr = data[arrKey];
+    for (const arrKey of ["attackNotes", "effectNotes"]) {
+      const arr = getProperty(action, arrKey);
       for (let a = 0; a < arr.length; a++) {
         const note = arr[a];
         arr[a] = this._replaceConsumableConversionString(note, origData);
@@ -490,6 +478,7 @@ export class ItemSpellPF extends ItemPF {
     );
 
     // Create and return synthetic item data
+    data["data.actions"] = [action];
     return new ItemPF(expandObject(data)).toObject();
   }
 

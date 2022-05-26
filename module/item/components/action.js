@@ -50,14 +50,6 @@ export class ItemAction {
     );
   }
 
-  get isCharged() {
-    return this.isSingleUse || ["day", "week", "charges"].includes(this.data.uses.per);
-  }
-
-  get isSingleUse() {
-    return this.data.uses.per === "single";
-  }
-
   get autoDeductCharges() {
     return this.isCharged && this.data.uses.autoDeductCharges === true;
   }
@@ -66,7 +58,7 @@ export class ItemAction {
     const formula = this.data.uses.autoDeductChargesCost;
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
     const cost = RollPF.safeRoll(formula, this.getRollData()).total;
-    return cost;
+    return this.item.isSingleUse ? Math.max(-1, Math.min(1, cost)) : cost;
   }
 
   // Returns range (in system configured units)
@@ -208,7 +200,6 @@ export class ItemAction {
         minUnits: "",
       },
       uses: {
-        per: null,
         autoDeductCharges: true,
         autoDeductChargesCost: "1",
       },
@@ -264,6 +255,7 @@ export class ItemAction {
       },
       attackType: "weapon",
       nonlethal: false,
+      usesAmmo: false,
     };
   }
 

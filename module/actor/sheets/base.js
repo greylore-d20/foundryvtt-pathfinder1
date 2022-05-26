@@ -230,7 +230,7 @@ export class ActorSheetPF extends ActorSheet {
       i.data.hasDamage = i.hasDamage;
       i.data.hasRange = i.hasRange;
       i.data.hasEffect = i.hasEffect;
-      i.data.hasAction = i.hasAction || i.isCharged || i.getScriptCalls("use").length > 0;
+      i.data.hasAction = i.hasAction || i.getScriptCalls("use").length > 0;
       i.data.showUnidentifiedData = i.showUnidentifiedData;
       if (i.showUnidentifiedData)
         i.data.name =

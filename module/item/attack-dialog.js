@@ -100,7 +100,7 @@ export class AttackDialog extends Application {
     return ammo.map((o) => {
       return {
         data: o.data,
-        isDefault: this.object.getFlag("pf1", "defaultAmmo") === o.id,
+        isDefault: this.object.item.getFlag("pf1", "defaultAmmo") === o.id,
       };
     });
   }
@@ -109,7 +109,7 @@ export class AttackDialog extends Application {
     if (!(item.type === "loot" && item.data.data.subType === "ammo")) return false;
     if (item.data.data.quantity <= 0) return false;
 
-    const weaponAmmoType = this.object.data.data.ammoType;
+    const weaponAmmoType = this.object.data.ammoType;
     const ammoType = item.extraType;
     if (!ammoType) return true;
     if (weaponAmmoType === ammoType) return true;
@@ -238,8 +238,8 @@ export class AttackDialog extends Application {
     const ammoId = elem.closest(".ammo-item").dataset.id;
     switch (elem.dataset.type) {
       case "set-default":
-        if (ammoId === "null") await this.object.unsetFlag("pf1", "defaultAmmo");
-        else await this.object.setFlag("pf1", "defaultAmmo", ammoId);
+        if (ammoId === "null") await this.object.item.unsetFlag("pf1", "defaultAmmo");
+        else await this.object.item.setFlag("pf1", "defaultAmmo", ammoId);
         // Apply CSS class, since we can't do a render in here and keep the dropdown menu open
         elem
           .closest("ul")

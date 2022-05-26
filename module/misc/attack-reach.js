@@ -67,10 +67,12 @@ export const showAttackReach = function (token, attack) {
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
-  const rollData = attack.getRollData();
+  const action = attack.firstAction;
+  if (!action) return;
+  const rollData = action.getRollData();
 
   // Determine whether reach
-  const rangeKey = getProperty(attack.data, "data.range.units");
+  const rangeKey = action.data.range.units;
   if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
   const isReach = rangeKey === "reach";
   const range = rollData.range;

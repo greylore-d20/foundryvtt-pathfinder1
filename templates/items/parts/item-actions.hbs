@@ -6,7 +6,8 @@
       <span class="name">{{action.name}}</span>
     </a>
     <div class="action-control">
-      <a class="delete-action"><i class="fas fa-trash"></i></a>
+      <a class="duplicate-action" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
+      <a class="delete-action" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
     </div>
   </li>
 {{/inline}}
@@ -15,6 +16,24 @@
 
 {{!-- Limited Uses --}}
 {{#unless isSpell}}
+<div class="form-group uses-per">
+  <label>{{localize "PF1.LimitedUses"}}</label>
+  <div class="form-fields">
+    {{#if isCharged}}
+    <input type="text" name="data.uses.value" value="{{data.uses.value}}" data-dtype="Number"/>
+    <span class="sep"> / </span>
+    <input type="text" value="{{data.uses.max}}" disabled data-dtype="Number"/>
+    {{/if}}
+    <select name="data.uses.per">
+      {{#select data.uses.per}}
+      <option value=""></option>
+      {{#each config.limitedUsePeriods as |name key|}}
+      <option value="{{key}}">{{name}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
+</div>
 {{#if isCharged}}
 <div class="form-group uses-per">
   <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>

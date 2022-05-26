@@ -7,6 +7,7 @@ import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
 import { PF1_HelpBrowser } from "../../apps/help-browser.js";
+import { getSkipActionPrompt } from "../../settings.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -113,10 +114,10 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
+    data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses?.per);
     data.isPhysical = data.item.data.data.quantity !== undefined;
     data.isNaturalAttack = data.item.data.data.attackType === "natural";
     data.isSpell = this.item.type === "spell";
-    data.canUseAmmo = this.item.data.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;
@@ -1326,7 +1327,33 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("delete-action")) {
       const li = a.closest(".action-part");
       const action = this.item.actions.get(li.dataset.action);
-      return action.delete();
+
+      const deleteItem = async () => {
+        return action.delete();
+      };
+
+      if (getSkipActionPrompt()) {
+        deleteItem();
+      } else {
+        const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
+        Dialog.confirm({
+          title: game.i18n.localize("PF1.DeleteItemTitle").format(action.name),
+          content: msg,
+          yes: () => {
+            deleteItem();
+          },
+          rejectClose: true,
+        });
+      }
+    }
+
+    // Duplicate action
+    if (a.classList.contains("duplicate-action")) {
+      const li = a.closest(".action-part");
+      const action = duplicate(this.item.actions.get(li.dataset.action).data);
+      action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
+      const actionParts = duplicate(this.item.data.data.actions ?? []);
+      return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(action) } });
     }
   }
 

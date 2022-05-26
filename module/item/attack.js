@@ -39,7 +39,7 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.INSUFFUCIENT_QUANTITY;
   }
 
-  if (this.isCharged && this.charges < this.chargeCost) {
+  if (this.isCharged && this.charges < shared.chargeCost) {
     const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
     console.warn(msg);
     ui.notifications.warn(msg);
@@ -392,11 +392,11 @@ export const handleConditionals = function (shared) {
 export const checkAttackRequirements = function (shared) {
   // Determine charge cost
   let cost = 0;
-  if (this.autoDeductCharges) {
-    cost = this.chargeCost;
+  if (shared.action.data.uses.autoDeductCharges) {
+    cost = shared.action.chargeCost;
     let uses = this.charges;
     if (this.data.type === "spell" && this.useSpellPoints()) {
-      cost = this.getSpellPointCost(shared.rollData);
+      cost = shared.action.chargeCost;
       uses = this.getSpellUses();
     }
     // Add charge cost from conditional modifiers
@@ -797,7 +797,7 @@ export const getMessageData = async function (shared) {
 
   // Add range info
   {
-    const range = this.range;
+    const range = shared.action.range;
     if (range != null) {
       shared.templateData.range = range;
       if (typeof range === "string") {
@@ -809,7 +809,7 @@ export const getMessageData = async function (shared) {
       shared.templateData.rangeLabel =
         usystem === "metric" ? `${shared.templateData.range} m` : `${shared.templateData.range} ft.`;
 
-      const rangeUnits = getProperty(this.data, "data.range.units");
+      const rangeUnits = shared.action.data.range.units;
       if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
         shared.templateData.rangeLabel = CONFIG.PF1.distanceUnits[rangeUnits];
       }
@@ -852,6 +852,9 @@ export const getMessageData = async function (shared) {
       });
     }
   }
+
+  // Set item name for attack roll
+  shared.templateData.name = `${this.name} (${shared.action.name})`;
 
   shared.chatData["flags.pf1.metadata"] = metadata;
   shared.chatData["flags.core.canPopout"] = true;

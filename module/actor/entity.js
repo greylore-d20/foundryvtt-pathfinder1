@@ -1851,51 +1851,17 @@ export class ActorPF extends ActorBasePF {
     // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
-    attackData["data.masterwork"] = item.data.data.masterwork;
-    attackData["data.nonlethal"] = item.data.data.nonlethal;
-    attackData["data.attackType"] = item.data.data.attackType;
-    attackData["data.enh"] = item.data.data.enh;
-    attackData["data.ability.critRange"] = item.data.data.ability.critRange || 20;
-    attackData["data.ability.critMult"] = item.data.data.ability.critMult || 2;
-    attackData["data.actionType"] = item.data.data.actionType;
-    attackData["data.activation.type"] = item.data.data.activation.type;
-    attackData["data.duration.units"] = item.data.data.duration.units;
-    attackData["data.range.units"] = item.data.data.range.units;
-    attackData["data.broken"] = item.data.data.broken;
     attackData["img"] = item.data.img;
-    attackData["data.soundEffect"] = item.data.data.soundEffect;
-    attackData["data.usesAmmo"] = item.data.data.usesAmmo;
-    attackData["data.ammoType"] = item.data.data.ammoType;
-
-    // Add properties
-    attackData["data.nonlethal"] = item.data._source.data.properties?.nnl === true;
-
-    // Add additional attacks
-    attackData["data.attackParts"] = item.data.data.attackParts;
-    attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;
-    attackData["data.critConfirmBonus"] = item.data.data.critConfirmBonus;
-
-    // Add damage
-    attackData["data.damage"] = item.data._source.data.damage;
-
-    // Add attack bonus formula
-    attackData["data.attackBonus"] = item.data.data.attackBonus;
-
-    // Add range
-    attackData["data.range"] = item.data._source.data.range;
-
-    // Add measure template
-    attackData["data.measureTemplate"] = item.data._source.data.measureTemplate;
-
-    // Add notes
-    attackData["data.effectNotes"] = item.data._source.data.effectNotes;
-    attackData["data.attackNotes"] = item.data._source.data.attackNotes;
+    attackData["data.attackType"] = item.data.data.attackType;
+    attackData["data.masterwork"] = item.data.data.masterwork;
+    attackData["data.enh"] = item.data.data.enh;
+    attackData["data.broken"] = item.data.data.broken;
 
     // Add conditionals
     attackData["data.conditionals"] = item.data._source.data.conditionals;
 
-    // Add saving throw
-    attackData["data.save"] = item.data._source.data.save;
+    // Add actions
+    attackData["data.actions"] = item.data._source.data.actions;
 
     // Synthetic intermediate item
     const attackItem = new ItemPF(expandObject(attackData));

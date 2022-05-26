@@ -10,9 +10,10 @@
 
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="description" data-group="primary">{{localize "PF1.Description"}}</a>
-    <a class="item" data-tab="activation" data-group="primary">{{localize "PF1.AttackUsage"}}</a>
-    <a class="item" data-tab="action" data-group="primary">{{localize "PF1.AttackAction"}}</a>
+    <a class="item" data-tab="activation" data-group="primary">{{localize "PF1.Usage"}}</a>
+    <a class="item" data-tab="action" data-group="primary">{{localize "PF1.Action"}}</a>
     <a class="item" data-tab="misc" data-group="primary">{{localize "PF1.Misc"}}</a>
+    <a class="item" data-tab="conditionals">{{localize "PF1.Conditionals"}}</a>
   </nav>
 
   <section class="primary-body">
@@ -50,6 +51,11 @@
           </button>
         </div>
       </div>
+    </div>
+
+    {{!-- Conditionals Tab --}}
+    <div class="tab" data-group="primary" data-tab="conditionals">
+      {{> "systems/pf1/templates/apps/item-action/conditionals.hbs"}}
     </div>
   </section>
 </form>

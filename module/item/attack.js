@@ -196,7 +196,7 @@ export const alterRollData = function (shared, form = {}) {
 
   // Conditional defaults for fast-forwarding
   if (!shared.conditionals && isObjectEmpty(formData)) {
-    shared.conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
+    shared.conditionals = shared.action.data.conditionals?.reduce((arr, con, i) => {
       if (con.default) arr.push(i);
       return arr;
     }, []);
@@ -310,14 +310,14 @@ export const subtractAmmo = function (shared, value = 1) {
 export const handleConditionals = function (shared) {
   // Helper to get localized name from CONFIG.PF1 objects
   const localizeType = (target, type) => {
-    const result = this.getConditionalModifierTypes(target);
+    const result = shared.action.getConditionalModifierTypes(target);
     return game.i18n.localize(result[type]) || type;
   };
 
   if (shared.conditionals) {
     const conditionalData = {};
     for (const i of shared.conditionals) {
-      const conditional = this.data.data.conditionals[i];
+      const conditional = shared.action.data.conditionals[i];
       const tag = createTag(conditional.name);
       for (const [i, modifier] of conditional.modifiers.entries()) {
         // Adds a formula's result to rollData to allow referencing it.

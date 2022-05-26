@@ -15,6 +15,24 @@ export class ItemAction {
     return result;
   }
 
+  static get defaultConditional() {
+    return {
+      default: false,
+      name: "",
+      modifiers: [],
+    };
+  }
+
+  static get defaultConditionalModifier() {
+    return {
+      formula: "",
+      target: "",
+      subTarget: "",
+      type: "",
+      critical: "",
+    };
+  }
+
   get item() {
     return this.parent;
   }
@@ -257,6 +275,7 @@ export class ItemAction {
       attackType: "weapon",
       nonlethal: false,
       usesAmmo: false,
+      conditionals: [],
     };
   }
 
@@ -364,6 +383,12 @@ export class ItemAction {
     const prevData = duplicate(this.data);
     const newUpdateData = flattenObject(mergeObject(prevData, updateData));
 
+    // Remove non-array conditionals data
+    {
+      const subData = Object.keys(newUpdateData).filter((e) => e.startsWith("conditionals."));
+      if (subData.length > 0) subData.forEach((s) => delete newUpdateData[s]);
+    }
+
     // Make sure stuff remains an array
     {
       const keepArray = [
@@ -421,6 +446,191 @@ export class ItemAction {
   // -----------------------------------------------------------------------
 
   /**
+   * Place an attack roll using an item (weapon, feat, spell, or equipment)
+   * Rely upon the DicePF.d20Roll logic for the core implementation
+   *
+   * @param root0
+   * @param root0.data
+   * @param root0.extraParts
+   * @param root0.bonus
+   * @param root0.primaryAttack
+   */
+  async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
+    const rollData = duplicate(data ?? this.getRollData());
+    const itemData = rollData.item;
+    const actionData = rollData.action;
+
+    rollData.item.primaryAttack = primaryAttack;
+
+    const isRanged = ["rwak", "rsak", "rcman"].includes(itemData.actionType);
+    const isCMB = ["mcman", "rcman"].includes(itemData.actionType);
+
+    // Determine size bonus
+    rollData.sizeBonus = !isCMB
+      ? CONFIG.PF1.sizeMods[rollData.traits.size]
+      : CONFIG.PF1.sizeSpecialMods[rollData.traits.size];
+
+    // Add misc bonuses/penalties
+    rollData.item.proficiencyPenalty = -4;
+
+    // Determine ability score modifier
+    const abl = actionData.ability.attack;
+
+    // Define Roll parts
+    let parts = [];
+
+    this.actor.sourceDetails["data.attributes.attack.shared"]
+      ?.reverse()
+      .forEach((s) => parts.push(`${s.value}[${s.name}]`));
+
+    // CMB specific modifiers
+    if (isCMB) {
+      this.actor.sourceDetails["data.attributes.cmb.bonus"]
+        ?.reverse()
+        .forEach((s) => parts.push(`${s.value}[${s.name}]`));
+    }
+
+    // Add size bonus
+    if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
+
+    // Add ability modifier
+    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
+      parts.push(`@abilities.${abl}.mod[${CONFIG.PF1.abilities[abl]}]`);
+    }
+    // Add bonus parts
+    parts = parts.concat(extraParts);
+    // Add attack bonus
+    if (typeof actionData.attackBonus === "string" && !["", "0"].includes(actionData.attackBonus)) {
+      parts.push(actionData.attackBonus);
+    }
+    // Backwards compatibility
+    else if (typeof actionData.attackBonus === "number") {
+      rollData.item.attackBonus = actionData.attackBonus;
+      parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
+    }
+
+    // Add change bonus
+    const changes = this.item.getContextChanges(isRanged ? "rattack" : "mattack");
+    let changeBonus = [];
+    {
+      // Get attack bonus
+      changeBonus = getHighestChanges(
+        changes.filter((c) => {
+          c.applyChange(this.actor);
+          return !["set", "="].includes(c.operator);
+        }),
+        { ignoreTarget: true }
+      ).reduce((cur, c) => {
+        cur.push({
+          value: c.value,
+          source: c.flavor,
+        });
+        return cur;
+      }, []);
+    }
+    for (const c of changeBonus) {
+      parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
+    }
+
+    // Add proficiency penalty
+    if (this.item.data.type === "attack" && !itemData.proficient) {
+      parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
+    }
+    // Add secondary natural attack penalty
+    if (this.item.data.data.attackType === "natural" && primaryAttack === false) {
+      const penalty = -5;
+      parts.push(`${penalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    }
+    // Add bonus
+    if (bonus) {
+      rollData.bonus = RollPF.safeRoll(bonus, rollData).total;
+      parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
+    }
+
+    if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
+
+    const roll = await RollPF.create([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData).evaluate();
+    return roll;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Only roll the item's effect.
+   *
+   * @param root0
+   * @param root0.critical
+   * @param root0.primaryAttack
+   */
+  rollEffect({ critical = false, primaryAttack = true } = {}) {
+    const rollData = this.getRollData();
+
+    if (!this.hasEffect) {
+      throw new Error("You may not make an Effect Roll with this Item.");
+    }
+
+    // Determine critical multiplier
+    rollData.critMult = 1;
+    if (critical) rollData.critMult = this.data.data.ability.critMult;
+    // Determine ability multiplier
+    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
+      rollData.ablMult = 0.5;
+
+    // Create effect string
+    const effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
+      o.notes
+        .reduce((cur2, n) => {
+          cur2.push(...n.split(/[\n\r]+/));
+          return cur2;
+        }, [])
+        .forEach((n) => {
+          cur.push(n);
+        });
+      return cur;
+    }, []);
+    effectNotes.push(...this.data.data.effectNotes);
+    let effectContent = "";
+    for (const fx of effectNotes) {
+      if (fx.length > 0) {
+        effectContent += `<span class="tag">${fx}</span>`;
+      }
+    }
+
+    if (effectContent.length === 0) return "";
+
+    const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData });
+    return `<div class="flexcol property-group"><label>${game.i18n.localize(
+      "PF1.EffectNotes"
+    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
+  }
+
+  /**
+   * Place an attack roll using an item (weapon, feat, spell, or equipment)
+   * Rely upon the DicePF.d20Roll logic for the core implementation
+   *
+   * @param options
+   */
+  async rollFormula(options = {}) {
+    const itemData = this.data.data;
+    if (!itemData.formula) {
+      throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
+    }
+
+    // Define Roll Data
+    const rollData = this.parent.getRollData();
+    rollData.item = itemData;
+    const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
+
+    const roll = await RollPF.create(itemData.formula, rollData).evaluate();
+    return roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.parent }),
+      flavor: itemData.chatFlavor || title,
+      rollMode: game.settings.get("core", "rollMode"),
+    });
+  }
+
+  /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the DicePF.damageRoll logic for the core implementation
    *
@@ -463,7 +673,7 @@ export class ItemAction {
     });
     // Add critical damage parts
     if (critical === true) {
-      if (getProperty(this.data, "data.damage.critParts") != null) {
+      if (getProperty(this.data, "damage.critParts") != null) {
         parts = parts.concat(
           this.data.damage.critParts.map((p) => {
             return { base: p[0], extra: [], damageType: p[1], type: "crit" };
@@ -478,7 +688,7 @@ export class ItemAction {
     }
     // Add non-critical damage parts
     if (critical === false) {
-      if (getProperty(this.data, "data.damage.nonCritParts") != null) {
+      if (getProperty(this.data, "damage.nonCritParts") != null) {
         parts = parts.concat(
           this.data.damage.nonCritParts.map((p) => {
             return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" };
@@ -574,5 +784,104 @@ export class ItemAction {
     }
 
     return rolls;
+  }
+
+  /**
+   * Generates a list of targets this modifier can have.
+   *
+   * @param {ItemPF} item - The item for which the modifier is to be created.
+   * @returns {Object<string, string>} A list of targets
+   */
+  getConditionalTargets() {
+    const result = {};
+    if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
+    if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
+    if (this.item.type === "spell" || this.hasSave)
+      result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
+    // Only add Misc target if subTargets are available
+    if (Object.keys(this.getConditionalSubTargets("misc")).length > 0) {
+      result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
+    }
+    return result;
+  }
+
+  /**
+   * Generates lists of conditional subtargets this attack can have.
+   *
+   * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
+   * @returns {Object<string, string>} A list of conditionals
+   */
+  getConditionalSubTargets(target) {
+    const result = {};
+    // Add static targets
+    if (hasProperty(CONFIG.PF1.conditionalTargets, target)) {
+      for (const [k, v] of Object.entries(CONFIG.PF1.conditionalTargets[target])) {
+        if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
+      }
+    }
+    // Add subtargets depending on attacks
+    if (["attack", "damage"].includes(target)) {
+      // Add specific attacks
+      if (this.hasAttack) {
+        result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+      } else {
+        delete result["rapidShotDamage"];
+      }
+      if (this.hasMultiAttack) {
+        for (const [k, v] of Object.entries(this.data.data.attackParts)) {
+          result[`attack.${Number(k) + 1}`] = v[1];
+        }
+      }
+    }
+    // Add subtargets affecting effects
+    if (target === "effect") {
+      if (this.hasSave) result["dc"] = game.i18n.localize("PF1.DC");
+    }
+    // Add misc subtargets
+    if (target === "misc") {
+      // Add charges subTarget with specific label
+      if (this.isCharged && this.type !== "spell") result["charges"] = game.i18n.localize("PF1.ChargeCost");
+    }
+    return result;
+  }
+
+  /* Generates lists of conditional modifier bonus types applicable to a formula.
+   * @param {string} target - The target key as defined in CONFIG.PF1.conditionTargets.
+   * @returns {Object.<string, string>} A list of bonus types.
+   * */
+  getConditionalModifierTypes(target) {
+    const result = {};
+    if (target === "attack" || target === "damage") {
+      // Add bonusModifiers from CONFIG.PF1.bonusModifiers
+      for (const [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
+        result[k] = v;
+      }
+    }
+    if (target === "damage") {
+      for (const [k, v] of Object.entries(CONFIG.PF1.damageTypes)) {
+        result[k] = v;
+      }
+    }
+    return result;
+  }
+
+  /* Generates a list of critical applications for a given formula target.
+   * @param {string} target - The target key as defined in CONFIG.PF1.conditionalTargets.
+   * @returns {Object.<string, string>} A list of critical applications.
+   * */
+  getConditionalCritical(target) {
+    let result = {};
+    // Attack bonuses can only apply as critical confirm bonus
+    if (target === "attack") {
+      result = { ...result, normal: "PF1.Normal", crit: "PF1.CriticalConfirmBonus" };
+    }
+    // Damage bonuses can be multiplied or not
+    if (target === "damage") {
+      result = { ...result, normal: "PF1.Normal" };
+      if (this.hasAttack) {
+        result = { ...result, crit: "PF1.CritDamageBonusFormula", nonCrit: "PF1.NonCritDamageBonusFormula" };
+      }
+    }
+    return result;
   }
 }

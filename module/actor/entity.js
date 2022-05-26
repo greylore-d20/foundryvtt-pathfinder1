@@ -3606,38 +3606,26 @@ export class ActorPF extends ActorBasePF {
   }
 
   getQuickActions() {
-    const actualChargeCost = (i) => (i != null ? Math.floor(i.charges / i.chargeCost) : 0),
-      actualMaxCharge = (i) => (i != null ? Math.floor(i.maxCharges / i.chargeCost) : 0);
     return this.items
       .filter(
         (o) =>
           o.isActive &&
           o.data.data.showInQuickbar === true &&
-          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type)
+          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type) &&
+          !o.showUnidentifiedData
       )
       .sort((a, b) => a.data.data.sort - b.data.data.sort)
       .map((o) => {
         return {
           item: o,
+          isSingleUse: o.isSingleUse,
           get haveAnyCharges() {
-            return (this.item.isCharged && this.item.chargeCost !== 0) || this.hasAmmo;
+            return this.item.isCharged;
           },
-          maxCharge: o.isCharged ? actualMaxCharge(o) : 0,
+          maxCharge: o.maxCharges,
           get charges() {
-            return this.item.isCharged
-              ? this.recharging
-                ? -this.item.chargeCost
-                : actualChargeCost(this.item)
-              : this.ammoValue;
+            return this.item.charges;
           },
-          hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
-          ammoValue:
-            o.data.data.links?.ammunition
-              ?.map((l) => this.items.get(l.id))
-              .filter((l) => l != null)
-              .map((l) => actualChargeCost(l))
-              .reduce((a, b) => a + b, 0) ?? 0,
-          recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),
           color2: ItemPF.getTypeColor(o.type, 1),
         };

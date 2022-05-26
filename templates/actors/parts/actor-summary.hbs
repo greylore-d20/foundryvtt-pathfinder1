@@ -434,15 +434,11 @@
         <span class="icon-label">{{i.item.name}}</span>
         {{#if i.haveAnyCharges}}
         <charges>
-          {{#if i.recharging}}
-          <span class="recharge">+{{i.charges}}</span>
-          {{else}}
           <span class="remaining">{{i.charges}}</span>
-          {{#if i.maxCharge}}
+          {{#unless i.isSingleUse}}
           <span class="delimiter">/</span>
           <span class="max">{{i.maxCharge}}</span>
-          {{/if}}
-          {{/if}}
+          {{/unless}}
         </charges>
         {{/if}}
       </li>

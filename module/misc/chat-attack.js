@@ -73,13 +73,13 @@ export class ChatAttack {
 
   get critRange() {
     if (this.action.item.data.data.broken) return 20;
-    return getProperty(this.action.item, "data.data.ability.critRange") || 20;
+    return getProperty(this.action, "data.ability.critRange") || 20;
   }
 
   /**
    * Sets the attack's item reference.
    *
-   * @param {ItemPF} item - The item to reference.
+   * @param {ItemAction} item - The action to reference.
    * @param action
    */
   setAction(action) {
@@ -107,7 +107,7 @@ export class ChatAttack {
     data.critMult = 1;
     data.critCount = 0;
     // Add critical confirmation bonus
-    data.critConfirmBonus = RollPF.safeTotal(data.item.critConfirmBonus || "0") ?? 0;
+    data.critConfirmBonus = RollPF.safeTotal(data.action.critConfirmBonus || "0") ?? 0;
     // Determine ability multiplier
     if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
   }
@@ -178,7 +178,7 @@ export class ChatAttack {
 
     // Roll attack
     if (!noAttack) {
-      const roll = await this.action.item.rollAttack({
+      const roll = await this.action.rollAttack({
         data: this.rollData,
         bonus: bonus,
         extraParts: extraParts,
@@ -186,7 +186,7 @@ export class ChatAttack {
       data.roll = roll;
       const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
       let critType = 0;
-      const isCmb = ["mcman", "rcman"].includes(this.action.item.data.data.actionType);
+      const isCmb = ["mcman", "rcman"].includes(this.action.data.actionType);
       if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
       else if (d20 === 1) critType = 2;
 
@@ -215,7 +215,7 @@ export class ChatAttack {
   addAttackNotes() {
     if (!this.action.item) return;
 
-    const type = this.action.item.data.data.actionType;
+    const type = this.action.data.actionType;
     const typeMap = {
       rsak: ["ranged", /*"spell",*/ "rangedSpell"],
       rwak: ["ranged", /*"weapon",*/ "rangedWeapon"],
@@ -318,7 +318,7 @@ export class ChatAttack {
     }
 
     // Handle nonlethal attacks
-    if (this.action.item.data.data.nonlethal || this.action.item.data.data.properties?.nnl) {
+    if (this.action.data.nonlethal || this.action.item.data.data.properties?.nnl) {
       this.nonlethal = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
     }

@@ -68,7 +68,7 @@ export class AttackDialog extends Application {
   getData() {
     return {
       data: this.rollData,
-      item: this.object.data.data,
+      item: this.object.data,
       config: CONFIG.PF1,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,
